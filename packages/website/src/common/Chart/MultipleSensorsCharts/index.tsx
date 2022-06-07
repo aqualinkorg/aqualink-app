@@ -5,7 +5,6 @@ import moment from "moment";
 import { camelCase, isNaN, isNumber, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
-import { useHistory } from "react-router-dom";
 import {
   latestDataSelector,
   siteGranularDailyDataSelector,
@@ -36,7 +35,7 @@ import {
   getPublicSondeMetrics,
   getSondeConfig,
 } from "../../../constants/sondeConfig";
-import { useQueryParams } from "../../../hooks/useQueryParams";
+import { useQueryParam } from "../../../hooks/useQueryParams";
 import ChartWithCard from "./ChartWithCard";
 import {
   METLOG_DATA_COLOR,
@@ -85,16 +84,9 @@ const MultipleSensorsCharts = ({
 }: MultipleSensorsChartsProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const getQueryParam = useQueryParams();
-  const [startDateParam, endDateParam, initialChart] = [
-    "start",
-    "end",
-    "chart",
-  ].map(getQueryParam);
-  const initialStart =
-    startDateParam && isISODate(startDateParam) ? startDateParam : undefined;
-  const initialEnd =
-    endDateParam && isISODate(endDateParam) ? endDateParam : undefined;
+  const [startParam, setStartParam] = useQueryParam("start", isISODate);
+  const [endParam, setEndParam] = useQueryParam("end", isISODate);
+  const [chartParam] = useQueryParam("chart");
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
@@ -111,9 +103,8 @@ const MultipleSensorsCharts = ({
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>(
-    initialStart || initialEnd ? "custom" : "one_month"
+    startParam || endParam ? "custom" : "one_month"
   );
-  const history = useHistory();
 
   const today = localizedEndOfDay(undefined, site.timezone);
 
@@ -233,13 +224,13 @@ const MultipleSensorsCharts = ({
           })
       : [];
 
-  // Scroll to the chart defined by the initialChart query param.
+  // Scroll to the chart defined by the chartParam query param.
   useEffect(() => {
-    if (initialChart) {
-      const chartElement = document.getElementById(initialChart);
+    if (chartParam) {
+      const chartElement = document.getElementById(chartParam);
       chartElement?.scrollIntoView();
     }
-  }, [initialChart]);
+  }, [chartParam]);
 
   // Set pickers initial values once the range request is completed
   useEffect(() => {
@@ -253,13 +244,13 @@ const MultipleSensorsCharts = ({
         .startOf("day")
         .toISOString();
       setPickerStartDate(
-        initialStart
-          ? zonedTimeToUtc(initialStart, site.timezone || "UTC").toISOString()
+        startParam
+          ? zonedTimeToUtc(startParam, site.timezone || "UTC").toISOString()
           : utcToZonedTime(pastOneMonth, site.timezone || "UTC").toISOString()
       );
       setPickerEndDate(
-        initialEnd
-          ? zonedTimeToUtc(initialEnd, site.timezone || "UTC").toISOString()
+        endParam
+          ? zonedTimeToUtc(endParam, site.timezone || "UTC").toISOString()
           : utcToZonedTime(
               localizedMaxDate || today,
               site.timezone || "UTC"
@@ -268,8 +259,8 @@ const MultipleSensorsCharts = ({
     }
   }, [
     hoboBottomTemperatureRange,
-    initialEnd,
-    initialStart,
+    endParam,
+    startParam,
     pickerStartDate,
     pickerEndDate,
     rangesLoading,
@@ -371,16 +362,18 @@ const MultipleSensorsCharts = ({
   }, [granularDailyData, pickerEndDate, pickerStartDate, site, timeSeriesData]);
 
   useEffect(() => {
-    if (pickerStartDate && pickerEndDate) {
-      // eslint-disable-next-line fp/no-mutating-methods
-      history.push({
-        search: `?start=${pickerStartDate.split("T")[0]}&end=${
-          pickerEndDate.split("T")[0]
-        }`,
-      });
+    if (pickerStartDate && pickerEndDate && range === "custom") {
+      const newStartParam = moment(
+        utcToZonedTime(pickerStartDate, site.timezone || "UTC")
+      ).format("YYYY-MM-DD");
+      const newEndParam = moment(
+        utcToZonedTime(pickerEndDate, site.timezone || "UTC")
+      ).format("YYYY-MM-DD");
+      setStartParam(newStartParam);
+      setEndParam(newEndParam);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history, pickerEndDate, pickerStartDate, site.timezone]);
+  }, [pickerEndDate, pickerStartDate, range, setEndParam, setStartParam]);
 
   // Set picker error
   useEffect(() => {
@@ -439,6 +432,10 @@ const MultipleSensorsCharts = ({
         .format("MM/DD/YYYY")
     ).toISOString();
     setRange(value);
+    if (value !== "custom") {
+      setStartParam(undefined);
+      setEndParam(undefined);
+    }
     switch (value) {
       case "one_month":
         setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
