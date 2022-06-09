@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   OneToOne,
   JoinColumn,
+  Index,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
@@ -55,9 +56,11 @@ export class SiteApplication {
 
   @OneToOne(() => Site, { onDelete: 'CASCADE' })
   @JoinColumn()
+  @Index()
   site: Site;
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @Index()
   user: User;
 
   @Expose()

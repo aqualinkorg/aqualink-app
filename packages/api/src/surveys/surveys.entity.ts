@@ -9,6 +9,7 @@ import {
   OneToOne,
   OneToMany,
   RelationId,
+  Index,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Site } from '../sites/sites.entity';
@@ -54,6 +55,7 @@ export class Survey {
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'user_id' })
+  @Index()
   user: User;
 
   @RelationId((survey: Survey) => survey.site)
@@ -61,6 +63,7 @@ export class Survey {
 
   @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'site_id' })
+  @Index()
   site: Site;
 
   @CreateDateColumn()

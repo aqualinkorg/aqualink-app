@@ -34,6 +34,7 @@ export class SiteAudit {
   columnName: SiteColumn;
 
   @ManyToOne(() => Site, { nullable: false, onDelete: 'CASCADE' })
+  @Index()
   site: Site;
 
   @Index()

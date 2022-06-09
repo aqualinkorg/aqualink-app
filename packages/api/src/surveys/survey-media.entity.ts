@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   RelationId,
+  Index,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Survey } from './surveys.entity';
@@ -85,6 +86,7 @@ export class SurveyMedia {
     nullable: true,
   })
   @JoinColumn({ name: 'survey_point_id' })
+  @Index()
   surveyPoint: SiteSurveyPoint | null;
 
   @CreateDateColumn()
