@@ -14,7 +14,7 @@ import { TimeSeries } from '../../time-series/time-series.entity';
 import { Sources } from '../../sites/sources.entity';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
-import { getSite, getSiteAndSurveyPoint } from '../site.utils';
+import { getSite } from '../site.utils';
 import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 
 interface Repositories {
@@ -69,7 +69,7 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
 // 1. GMT±1
 // 2. GMT±01
 // 3. GMT±01:00
-const TIMEZONE_REGEX = /[+-][0-9]{1,2}:?[0-9]{0,2}\b/;
+const TIMEZONE_REGEX = /[+-]\d{1,2}:?\d{0,2}\b/;
 const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time', 'Date_Time'];
 // Keep Ignore Header Keys in lower case.
 const IGNORE_HEADER_KEYS = [
@@ -346,7 +346,7 @@ const findSheetDataWithHeader = (
 ) => {
   const { headers, data } = extractHeadersAndData(workSheetData);
 
-  const dataAsObjects = data
+  return data
     .map((row) => {
       if (row.length !== headers.length) {
         return undefined;
@@ -363,8 +363,6 @@ const findSheetDataWithHeader = (
       };
     })
     .filter((object) => object !== undefined);
-
-  return dataAsObjects;
 };
 
 async function refreshMaterializedView(repositories: Repositories) {
@@ -390,26 +388,21 @@ export const uploadTimeSeriesData = async (
   // // TODO
   // // - Add foreign key constraint to sources on site_id
   console.time(`Upload datafile ${fileName}`);
-  const { site, surveyPoint } = surveyPointId
-    ? await getSiteAndSurveyPoint(
-        parseInt(siteId, 10),
-        parseInt(surveyPointId, 10),
-        repositories.siteRepository,
-        repositories.surveyPointRepository,
-      )
-    : {
-        site: await getSite(parseInt(siteId, 10), repositories.siteRepository),
-        surveyPoint: undefined,
-      };
 
-  const existingSourceEntity = await repositories.sourcesRepository.findOne({
-    relations: ['surveyPoint', 'site'],
-    where: {
-      site: { id: siteId },
-      surveyPoint: surveyPointId || null,
-      type: sourceType,
-    },
-  });
+  const [existingSourceEntity, site, surveyPoint] = await Promise.all([
+    repositories.sourcesRepository.findOne({
+      relations: ['surveyPoint', 'site'],
+      where: {
+        site: { id: siteId },
+        surveyPoint: surveyPointId || null,
+        type: sourceType,
+      },
+    }),
+    getSite(parseInt(siteId, 10), repositories.siteRepository),
+    surveyPointId
+      ? repositories.surveyPointRepository.findOne(parseInt(surveyPointId, 10))
+      : undefined,
+  ]);
 
   const sourceEntity =
     existingSourceEntity ||
@@ -420,9 +413,7 @@ export const uploadTimeSeriesData = async (
     }));
 
   if (
-    sourceType === SourceType.SONDE ||
-    sourceType === SourceType.METLOG ||
-    sourceType === SourceType.HOBO
+    [SourceType.SONDE, SourceType.METLOG, SourceType.HOBO].includes(sourceType)
   ) {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
@@ -560,8 +551,7 @@ export const uploadTimeSeriesData = async (
             )
             .execute();
         } catch {
-          console.warn('The following batch failed to upload:');
-          console.warn(batch);
+          console.warn('The following batch failed to upload:\n', batch);
         }
         return true;
       },
