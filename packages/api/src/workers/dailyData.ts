@@ -45,6 +45,7 @@ export async function getDegreeHeatingDays(
   endOfDate: Date,
   maxMonthlyMean: number | null,
 ): Promise<ValueWithTimestamp | undefined> {
+  console.time(`--> getDegreeHeatingDays for ${latitude}, ${longitude}`);
   try {
     // TODO - Get data for the past 84 days.
     const seaSurfaceTemperatures = [] as number[];
@@ -65,6 +66,7 @@ export async function getDegreeHeatingDays(
     // Check if there are any data returned
     // Grab the last one and convert it to degreeHeatingDays
     const latestDegreeHeatingWeek = getLatestData(degreeHeatingWeek);
+    console.timeEnd(`--> getDegreeHeatingDays for ${latitude}, ${longitude}`);
     return (
       latestDegreeHeatingWeek && {
         value: latestDegreeHeatingWeek.value * 7,

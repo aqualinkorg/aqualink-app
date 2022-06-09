@@ -16,7 +16,6 @@ import {
   siteLoadingSelector,
   siteErrorSelector,
   siteRequest,
-  liveDataRequest,
 } from "../../store/Sites/selectedSiteSlice";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
@@ -34,7 +33,6 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
   useEffect(() => {
     if (!siteDetails || `${siteDetails.id}` !== siteId) {
       dispatch(siteRequest(siteId));
-      dispatch(liveDataRequest(siteId));
     }
   }, [dispatch, siteId, siteDetails]);
 
