@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import { Helmet } from "react-helmet";
 import NotFound from "../../routes/NotFound";
 import ErrorBoundary from "./ErrorBoundary";
 import LandingPage from "../../routes/Landing";
@@ -53,6 +54,9 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Helmet>
+        <meta name="description" content="Ocean Monitoring" />
+      </Helmet>
       <Router>
         <ErrorBoundary>
           <div id="app">

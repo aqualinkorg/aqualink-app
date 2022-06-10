@@ -195,7 +195,7 @@ const Site = ({ match, classes }: SiteProps) => {
     <>
       <Helmet>
         <meta
-          name="og:description"
+          name="description"
           content={siteDetails?.name || "Ocean Monitoring"}
         />
         <title>{`Aqualink ${siteDetails?.name}`}</title>
