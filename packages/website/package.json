@@ -59,7 +59,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.3",
     "react-slick": "^0.27.10",
-    "react-snap": "https://github.com/echaidemenos/react-snap",
+    "react-snap": "^1.23.0",
     "react-swipeable-bottom-sheet": "^1.1.2",
     "react-swipeable-views": "^0.13.9",
     "redux": "^4.0.5",
@@ -109,5 +109,14 @@
     "canvas": "^2.8.0",
     "cross-env": "^7.0.2",
     "dotenv-cli": "^4.0.0"
+  },
+  "reactSnap": {
+    "exclude": [
+      "/sites/[0-9]+/.*"
+    ],
+    "include": [
+      "/",
+      "/sites"
+    ]
   }
 }
