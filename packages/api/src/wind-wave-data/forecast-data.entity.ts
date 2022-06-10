@@ -15,13 +15,13 @@ import { WindWaveMetric } from './wind-wave-data.types';
 
 @Entity()
 @Unique('one_row_per_site_per_metric_per_source', ['site', 'metric', 'source'])
-@Index(['site'])
 export class ForecastData {
   @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  @Index()
   site: Site;
 
   @Column({ nullable: false })

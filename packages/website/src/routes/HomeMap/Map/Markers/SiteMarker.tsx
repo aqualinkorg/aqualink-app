@@ -1,4 +1,4 @@
-import { Marker } from "react-leaflet";
+import { Marker, useLeaflet } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import { Site } from "../../../../store/Sites/types";
@@ -19,11 +19,17 @@ import Popup from "../Popup";
 // around -180/+180, we create dummy copies of each site.
 const LNG_OFFSETS = [-360, 0, 360];
 
+interface SiteMarkerProps {
+  site: Site;
+  setCenter: (inputMap: L.Map, latLng: [number, number], zoom: number) => void;
+}
+
 /**
  * All in one site marker with icon, offset duplicates, and popup built in.
  */
-export default function SiteMarker({ site }: { site: Site }) {
+export default function SiteMarker({ site, setCenter }: SiteMarkerProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
+  const { map } = useLeaflet();
   const dispatch = useDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
   const markerIcon = useMarkerIcon(
@@ -43,6 +49,7 @@ export default function SiteMarker({ site }: { site: Site }) {
         return (
           <Marker
             onClick={() => {
+              if (map) setCenter(map, [lat, lng], 6);
               dispatch(setSearchResult());
               dispatch(setSiteOnMap(site));
             }}

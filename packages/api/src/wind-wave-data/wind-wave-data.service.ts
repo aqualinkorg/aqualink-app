@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ForecastData } from './wind-wave-data.entity';
+import { ForecastData } from './forecast-data.entity';
 
 @Injectable()
 export class WindWaveService {

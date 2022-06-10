@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   Unique,
   RelationId,
+  Index,
 } from 'typeorm';
 import { Site } from './sites.entity';
 
@@ -32,6 +33,7 @@ export class HistoricalMonthlyMean {
   siteId: number;
 
   @ManyToOne(() => Site, { onDelete: 'CASCADE' })
+  @Index()
   site: Site;
 
   @UpdateDateColumn()
