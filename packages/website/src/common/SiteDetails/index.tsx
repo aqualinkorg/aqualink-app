@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import {
   createStyles,
   Grid,
@@ -70,6 +70,10 @@ const SiteDetails = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
+
+  useLayoutEffect(() => {
+    if (!isLoading && site?.sketchFab) setIsSketchFabView(true);
+  }, [isLoading, site?.sketchFab]);
 
   useEffect(() => {
     if (site && !liveData) {
