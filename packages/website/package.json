@@ -59,7 +59,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.3",
     "react-slick": "^0.27.10",
-    "react-snap": "^1.23.0",
+    "react-snap": "https://github.com/echaidemenos/react-snap",
     "react-swipeable-bottom-sheet": "^1.1.2",
     "react-swipeable-views": "^0.13.9",
     "redux": "^4.0.5",
@@ -117,6 +117,8 @@
     "include": [
       "/",
       "/sites"
-    ]
+    ],
+    "puppeteerTimeout": 0,
+    "concurrency": 10
   }
 }
