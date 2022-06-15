@@ -10,6 +10,7 @@ import {
   Put,
   Delete,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -18,7 +19,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { AcceptFile } from '../uploads/file.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Auth } from '../auth/auth.decorator';
 import { AdminLevel } from '../users/users.entity';
 import { CreateSurveyDto } from './dto/create-survey.dto';
@@ -33,6 +34,7 @@ import { AuthRequest } from '../auth/auth.types';
 import { Public } from '../auth/public.decorator';
 import { ApiFileUpload } from '../docs/api-properties';
 import { ApiNestNotFoundResponse } from '../docs/api-response';
+import { fileFilter } from '../uploads/file.filter';
 
 @ApiTags('Surveys')
 @UseGuards(IsSiteAdminGuard)
@@ -54,15 +56,14 @@ export class SurveysController {
   @ApiOperation({ summary: 'Uploads a new survey media' })
   @ApiParam({ name: 'siteId', example: 1 })
   @Post('upload')
-  @AcceptFile('file', ['image', 'video'], 'surveys', 'site')
+  @UseInterceptors(
+    FileInterceptor('file', { fileFilter: fileFilter(['image', 'video']) }),
+  )
   upload(
     @Param('siteId', ParseIntPipe) siteId: number,
-    @UploadedFile('file') file: any,
-  ): string {
-    // Override file path because file.path provided an invalid google cloud format and HTTPS is not working correctly
-    // Correct format of a URL pointing to a google cloud object should be
-    // https://storage.googleapis.com/{bucketName}/path/to/object/in/bucket
-    return `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${file.filename}`;
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<string> {
+    return this.surveyService.upload(file);
   }
 
   @ApiBearerAuth()

@@ -90,6 +90,36 @@ export class GoogleCloudService {
     return `https://storage.googleapis.com/${this.GCS_BUCKET}/${publicUrl}`;
   }
 
+  public uploadBuffer(
+    buffer: Buffer,
+    filePath: string,
+    type: string,
+    dir: string,
+    prefix: string,
+  ) {
+    const dest = this.getDestination(filePath, type, dir, prefix);
+    return this.uploadBufferToDestination(buffer, dest);
+  }
+
+  public async uploadBufferToDestination(
+    buffer: Buffer,
+    destination: string,
+    bucket = this.GCS_BUCKET,
+  ) {
+    if (!bucket) {
+      this.logger.error('GCS_BUCKET variable has not been initialized');
+      throw new InternalServerErrorException();
+    }
+    const file = this.storage.bucket(bucket).file(destination);
+    try {
+      await file.save(buffer, { public: true, gzip: true });
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException();
+    }
+    return `https://storage.googleapis.com/${this.GCS_BUCKET}/${destination}`;
+  }
+
   public async findDanglingFiles(): Promise<string[]> {
     if (!this.GCS_BUCKET || !this.STORAGE_FOLDER) {
       this.logger.error(

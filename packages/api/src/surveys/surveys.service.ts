@@ -19,10 +19,19 @@ import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Site } from '../sites/sites.entity';
 import { getFileFromURL } from '../utils/google-cloud.utils';
 import { getSite } from '../utils/site.utils';
+import { getImageData, resize } from '../../scripts/utils/image';
+import { validateMimetype } from '../uploads/mimetypes';
 
 @Injectable()
 export class SurveysService {
   private logger: Logger = new Logger(SurveysService.name);
+  private readonly SURVEY_IMAGE_RESIZE = Number(
+    process.env.SURVEY_IMAGE_RESIZE,
+  );
+  private readonly maxFileSizeMB = process.env.STORAGE_MAX_FILE_SIZE_MB
+    ? parseInt(process.env.STORAGE_MAX_FILE_SIZE_MB, 10)
+    : 1;
+  private readonly maxFileSizeB = this.maxFileSizeMB * 1024 * 1024;
 
   constructor(
     @InjectRepository(Survey)
@@ -55,6 +64,40 @@ export class SurveysService {
     });
 
     return survey;
+  }
+
+  async upload(file: Express.Multer.File): Promise<string> {
+    // Upload original
+    if (Buffer.byteLength(file.buffer) > this.maxFileSizeB) {
+      throw new BadRequestException(
+        `Max size allowed is ${this.maxFileSizeMB} MB`,
+      );
+    }
+    const imageUrl = await this.googleCloudService.uploadBuffer(
+      file.buffer,
+      file.originalname,
+      'image',
+      'surveys',
+      'site',
+    );
+
+    // Upload resized
+    const type = validateMimetype(file.mimetype);
+    if (type !== 'image') return imageUrl;
+    const imageData = await getImageData(file.buffer);
+    if ((imageData.width || 5000) <= this.SURVEY_IMAGE_RESIZE) return imageUrl;
+    const resizedImage = await resize(file.buffer, this.SURVEY_IMAGE_RESIZE);
+    // remove 'https://' from the string
+    const trimmed = imageUrl.substring(8);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_domain, bucket, ...rest] = trimmed.split('/');
+    const destination = `${rest}=s${this.SURVEY_IMAGE_RESIZE}`;
+    await this.googleCloudService.uploadBufferToDestination(
+      resizedImage,
+      destination,
+      bucket,
+    );
+    return imageUrl;
   }
 
   // Create a survey media (video or image)
