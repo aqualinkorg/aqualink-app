@@ -24,6 +24,7 @@ import {
   LatestData,
   SiteSketchFab,
   ForecastData,
+  ValueWithTimestamp,
 } from "../store/Sites/types";
 
 const getSite = (id: string) =>
@@ -64,6 +65,17 @@ const getSiteForecastData = (id: string) =>
 const getSiteLatestData = (id: string) =>
   requests.send<{ latestData: LatestData[] }>({
     url: `sites/${id}/latest_data`,
+    method: "GET",
+  });
+
+const getSiteSpotterPosition = (id: string) =>
+  requests.send<{
+    spotterPosition?: {
+      latitude: ValueWithTimestamp;
+      longitude: ValueWithTimestamp;
+    };
+  }>({
+    url: `sites/${id}/spotter_position`,
     method: "GET",
   });
 
@@ -216,6 +228,7 @@ export default {
   getSiteLiveData,
   getSiteForecastData,
   getSiteLatestData,
+  getSiteSpotterPosition,
   getSiteTimeSeriesData,
   getSiteTimeSeriesDataRange,
   getSiteSurveyPoints,

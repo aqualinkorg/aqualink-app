@@ -23,8 +23,8 @@ import {
   clearTimeSeriesDataRange,
   siteOceanSenseDataRequest,
   clearOceanSenseData,
-  liveDataRequest,
-  liveDataSelector,
+  spotterPositionRequest,
+  spotterPositionSelector,
   siteLoadingSelector,
 } from "../../../store/Sites/selectedSiteSlice";
 import {
@@ -103,7 +103,7 @@ const Site = ({ match, classes }: SiteProps) => {
   const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
-  const liveData = useSelector(liveDataSelector);
+  const spotterPosition = useSelector(spotterPositionSelector);
   const dispatch = useDispatch();
   const siteId = match.params.id;
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
@@ -124,7 +124,7 @@ const Site = ({ match, classes }: SiteProps) => {
   } = featuredMedia || {};
   const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
 
-  const hasSpotterData = Boolean(liveData?.topTemperature);
+  const hasSpotterData = Boolean(spotterPosition);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
@@ -145,7 +145,7 @@ const Site = ({ match, classes }: SiteProps) => {
       dispatch(clearOceanSenseData());
 
       dispatch(siteRequest(siteId));
-      dispatch(liveDataRequest(siteId));
+      dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,7 +154,7 @@ const Site = ({ match, classes }: SiteProps) => {
   // Fetch site and surveys
   useEffect(() => {
     dispatch(siteRequest(siteId));
-    dispatch(liveDataRequest(siteId));
+    dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
     return () => {

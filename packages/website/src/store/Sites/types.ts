@@ -369,7 +369,10 @@ export interface SitesListState {
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
-  liveData?: LiveData | null;
+  spotterPosition?: {
+    latitude: ValueWithTimestamp;
+    longitude: ValueWithTimestamp;
+  } | null;
   latestData?: LatestData[] | null;
   forecastData?: ForecastData[] | null;
   latestOceanSenseData?: OceanSenseData;
@@ -386,6 +389,6 @@ export interface SelectedSiteState {
   timeSeriesMinRequestDate?: string;
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
-  loadingLiveData: number;
+  loadingSpotterPosition: number;
   error?: string | null;
 }

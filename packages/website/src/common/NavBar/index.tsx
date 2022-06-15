@@ -41,7 +41,7 @@ import {
 } from "../../store/Collection/collectionSlice";
 import {
   unsetLatestData,
-  unsetLiveData,
+  unsetSpotterPosition,
   unsetSelectedSite,
 } from "../../store/Sites/selectedSiteSlice";
 
@@ -84,7 +84,7 @@ const NavBar = ({
 
   const onSiteChange = () => {
     dispatch(unsetSelectedSite());
-    dispatch(unsetLiveData());
+    dispatch(unsetSpotterPosition());
     dispatch(unsetLatestData());
   };
 

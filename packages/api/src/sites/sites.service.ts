@@ -15,7 +15,7 @@ import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
 import { getSstAnomaly, getLiveData } from '../utils/liveData';
-import { SofarLiveData } from '../utils/sofar.types';
+import { SofarLiveData, ValueWithTimestamp } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { AdminLevel, User } from '../users/users.entity';
 import { CreateSiteDto, CreateSiteApplicationDto } from './dto/create-site.dto';
@@ -33,7 +33,10 @@ import {
   getSite,
 } from '../utils/site.utils';
 import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
-import { getSpotterData } from '../utils/sofar';
+import {
+  getSpotterData,
+  getLatestData as getLatestDataSofar,
+} from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
@@ -348,6 +351,47 @@ export class SitesService {
       sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst),
       satelliteTemperature: sst,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
+    };
+  }
+
+  async findSpotterPosition(id: number): Promise<{
+    spotterPosition?: {
+      latitude: ValueWithTimestamp;
+      longitude: ValueWithTimestamp;
+    };
+  }> {
+    const site = await getSite(id, this.sitesRepository, [
+      'historicalMonthlyMean',
+    ]);
+    const isDeployed = site.status === SiteStatus.Deployed;
+    if (!isDeployed) return {};
+    const { sensorId } = site;
+    if (!sensorId) return {};
+    const spotterRaw = await getSpotterData(sensorId);
+    const spotterData = spotterRaw
+      ? {
+          longitude:
+            spotterRaw.longitude && getLatestDataSofar(spotterRaw.longitude),
+          latitude:
+            spotterRaw.latitude && getLatestDataSofar(spotterRaw.latitude),
+        }
+      : {};
+
+    const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
+    const validityDate = Date.now() - spotterValidityLimit;
+    if (
+      new Date(spotterData.longitude?.timestamp || 0).getTime() < validityDate
+    )
+      return {};
+
+    return {
+      ...(spotterData.longitude &&
+        spotterData.latitude && {
+          spotterPosition: {
+            longitude: spotterData.longitude,
+            latitude: spotterData.latitude,
+          },
+        }),
     };
   }
 

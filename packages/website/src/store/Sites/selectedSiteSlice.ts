@@ -21,7 +21,7 @@ import { getAxiosErrorMessage } from "../../helpers/errors";
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
   loading: true,
-  loadingLiveData: 0,
+  loadingSpotterPosition: 0,
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
   latestOceanSenseDataLoading: false,
@@ -49,20 +49,21 @@ export const forecastDataRequest = createAsyncThunk<
   }
 );
 
-export const liveDataRequest = createAsyncThunk<
-  SelectedSiteState["liveData"],
+export const spotterPositionRequest = createAsyncThunk<
+  SelectedSiteState["spotterPosition"],
   string,
   CreateAsyncThunkTypes
 >(
-  "selectedSite/requestLiveData",
+  "selectedSite/requestSpotterPosition",
   async (id: string, { rejectWithValue, getState }) => {
     const state = getState();
-    if (state.selectedSite.loadingLiveData !== 1) {
+    if (state.selectedSite.loadingSpotterPosition !== 1) {
       return rejectWithValue(AlreadyLoadingErrorMessage);
     }
     try {
-      const { data } = await siteServices.getSiteLiveData(id);
-      return data;
+      const { data: spotterPositionData } =
+        await siteServices.getSiteSpotterPosition(id);
+      return spotterPositionData.spotterPosition;
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
@@ -228,9 +229,9 @@ const selectedSiteSlice = createSlice({
       ...state,
       details: null,
     }),
-    unsetLiveData: (state) => ({
+    unsetSpotterPosition: (state) => ({
       ...state,
-      liveData: null,
+      spotterPosition: null,
     }),
     unsetLatestData: (state) => ({
       ...state,
@@ -354,20 +355,19 @@ const selectedSiteSlice = createSlice({
         error: null,
       };
     });
-
     builder.addCase(
-      liveDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState["liveData"]>) => {
+      spotterPositionRequest.fulfilled,
+      (state, action: PayloadAction<SelectedSiteState["spotterPosition"]>) => {
         return {
           ...state,
-          liveData: action.payload,
-          loadingLiveData: state.loadingLiveData - 1,
+          spotterPosition: action.payload,
+          loadingSpotterPosition: state.loadingSpotterPosition - 1,
         };
       }
     );
 
     builder.addCase(
-      liveDataRequest.rejected,
+      spotterPositionRequest.rejected,
       (state, action: PayloadAction<SelectedSiteState["error"]>) => {
         return {
           ...state,
@@ -375,16 +375,16 @@ const selectedSiteSlice = createSlice({
             action.payload === AlreadyLoadingErrorMessage
               ? null
               : action.payload,
-          loadingLiveData: state.loadingLiveData - 1,
+          loadingSpotterPosition: state.loadingSpotterPosition - 1,
         };
       }
     );
 
-    builder.addCase(liveDataRequest.pending, (state) => {
+    builder.addCase(spotterPositionRequest.pending, (state) => {
       return {
         ...state,
+        loadingSpotterPosition: state.loadingSpotterPosition + 1,
         error: null,
-        loadingLiveData: state.loadingLiveData + 1,
       };
     });
 
@@ -545,9 +545,9 @@ export const siteDetailsSelector = (
   state: RootState
 ): SelectedSiteState["details"] => state.selectedSite.details;
 
-export const liveDataSelector = (
+export const spotterPositionSelector = (
   state: RootState
-): SelectedSiteState["liveData"] => state.selectedSite.liveData;
+): SelectedSiteState["spotterPosition"] => state.selectedSite.spotterPosition;
 
 export const latestDataSelector = (
   state: RootState
@@ -627,7 +627,7 @@ export const {
   setSelectedSite,
   setSiteData,
   unsetSelectedSite,
-  unsetLiveData,
+  unsetSpotterPosition,
   unsetLatestData,
   unsetForecastData,
   clearTimeSeriesData,

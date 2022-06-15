@@ -39,11 +39,11 @@ import {
   forecastDataSelector,
   latestDataRequest,
   latestDataSelector,
-  liveDataRequest,
-  liveDataSelector,
+  spotterPositionRequest,
+  spotterPositionSelector,
   unsetForecastData,
   unsetLatestData,
-  unsetLiveData,
+  unsetSpotterPosition,
 } from "../../store/Sites/selectedSiteSlice";
 import { parseLatestData } from "../../store/Sites/helpers";
 
@@ -59,7 +59,7 @@ const SiteDetails = ({
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
-  const liveData = useSelector(liveDataSelector);
+  const spotterPosition = useSelector(spotterPositionSelector);
   const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
@@ -72,8 +72,8 @@ const SiteDetails = ({
   const isLoading = !site;
 
   useEffect(() => {
-    if (site && !liveData) {
-      dispatch(liveDataRequest(String(site.id)));
+    if (site && !spotterPosition) {
+      dispatch(spotterPositionRequest(String(site.id)));
     }
     if (site && !latestData) {
       dispatch(latestDataRequest(String(site.id)));
@@ -81,11 +81,11 @@ const SiteDetails = ({
     if (site && !forecastData) {
       dispatch(forecastDataRequest(String(site.id)));
     }
-  }, [dispatch, site, liveData, latestData, forecastData]);
+  }, [dispatch, site, spotterPosition, latestData, forecastData]);
 
   useEffect(() => {
     return () => {
-      dispatch(unsetLiveData());
+      dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       dispatch(unsetForecastData());
     };
@@ -228,7 +228,7 @@ const SiteDetails = ({
           {site && !isSketchFabView && (
             <Map
               siteId={site.id}
-              spotterPosition={liveData?.spotterPosition}
+              spotterPosition={spotterPosition}
               polygon={site.polygon}
               surveyPoints={site.surveyPoints}
             />
