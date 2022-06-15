@@ -15,8 +15,8 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
         <a
           href="/sites/0/survey_details/46"
         >
-          <div
-            class="MuiCardMedia-root makeStyles-cardImage-6"
+          <img
+            class="MuiCardMedia-root makeStyles-cardImage-6 MuiCardMedia-media MuiCardMedia-img"
           />
         </a>
       </div>
