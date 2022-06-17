@@ -20,6 +20,47 @@ const { argv } = yargs
   // Extend definition to use the full-width of the terminal
   .wrap(yargs.terminalWidth());
 
+const resizeImage = async (
+  imageUrl: string,
+  size: number,
+  googleCloudService: GoogleCloudService,
+): Promise<'skipped' | 'success' | 'error'> => {
+  // remove 'https://' from the string
+  const trimmed = imageUrl.substring(8);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_domain, bucket, ...rest] = trimmed.split('/');
+
+  try {
+    const response = await axios.get(imageUrl, {
+      responseType: 'arraybuffer',
+    });
+    const imageBuffer = Buffer.from(response.data, 'utf-8');
+    const imageDetails = await getImageData(imageBuffer);
+    if ((imageDetails.width || 0) <= size) {
+      return 'skipped';
+    }
+    const resizedBuffer = await resize(imageBuffer, size);
+
+    // eslint-disable-next-line fp/no-mutation
+    rest[rest.length - 1] = `thumbnail-${rest[rest.length - 1]}`;
+    // Upload file to google cloud
+    const destination = rest.join('/');
+
+    const res = await googleCloudService.uploadBufferToDestination(
+      resizedBuffer,
+      destination,
+      bucket,
+    );
+
+    console.log(res);
+
+    return 'success';
+  } catch (error: any) {
+    console.error(error?.message || error);
+    return 'error';
+  }
+};
+
 async function main() {
   const conn = await createConnection(dbConfig);
   // Extract command line arguments
@@ -42,48 +83,27 @@ async function main() {
 
     await Promise.all(
       imageUrls.map(async (imageUrl) => {
-        // console.log(`Resizing ${image}`);
-
-        // remove 'https://' from the string
-        const trimmed = imageUrl.substring(8);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [_domain, bucket, ...rest] = trimmed.split('/');
-        const imageWithDashes = rest.join('--');
-
-        try {
-          const response = await axios.get(imageUrl, {
-            responseType: 'arraybuffer',
-          });
-          const imageBuffer = Buffer.from(response.data, 'utf-8');
-          const imageDetails = await getImageData(imageBuffer);
-          if ((imageDetails.width || 5000) <= size) {
+        const result = await resizeImage(imageUrl, size, googleCloudService);
+        switch (result) {
+          case 'success':
+            // eslint-disable-next-line fp/no-mutation
+            successCounter += 1;
+            break;
+          case 'skipped':
             // eslint-disable-next-line fp/no-mutation
             skippedCounter += 1;
-            return;
-          }
-          const resizedBuffer = await resize(imageBuffer, size);
-
-          // Upload file to google cloud
-          const destination = `${imageWithDashes}=s${size}`
-            .split('--')
-            .join('/');
-          await googleCloudService.uploadBufferToDestination(
-            resizedBuffer,
-            destination,
-            bucket,
-          );
-
-          // eslint-disable-next-line fp/no-mutation
-          successCounter += 1;
-        } catch (error) {
-          console.error(error?.message || error);
-          // eslint-disable-next-line fp/no-mutating-methods
-          failImages.push(imageUrl);
+            break;
+          case 'error':
+            // eslint-disable-next-line fp/no-mutating-methods
+            failImages.push(imageUrl);
+            break;
+          default:
         }
       }),
     );
   } catch (err) {
     console.error(`Creating resized survey images failed:\n${err}`);
+    conn.close();
     process.exit(1);
   } finally {
     conn.close();

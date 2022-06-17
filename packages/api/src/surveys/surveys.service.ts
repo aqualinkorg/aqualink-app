@@ -25,9 +25,7 @@ import { validateMimetype } from '../uploads/mimetypes';
 @Injectable()
 export class SurveysService {
   private logger: Logger = new Logger(SurveysService.name);
-  private readonly SURVEY_IMAGE_RESIZE = Number(
-    process.env.SURVEY_IMAGE_RESIZE,
-  );
+  private readonly surveyImageResizeWidth = 512;
   private readonly maxFileSizeMB = process.env.STORAGE_MAX_FILE_SIZE_MB
     ? parseInt(process.env.STORAGE_MAX_FILE_SIZE_MB, 10)
     : 1;
@@ -85,13 +83,15 @@ export class SurveysService {
     const type = validateMimetype(file.mimetype);
     if (type !== 'image') return imageUrl;
     const imageData = await getImageData(file.buffer);
-    if ((imageData.width || 5000) <= this.SURVEY_IMAGE_RESIZE) return imageUrl;
-    const resizedImage = await resize(file.buffer, this.SURVEY_IMAGE_RESIZE);
+    if ((imageData.width || 0) <= this.surveyImageResizeWidth) return imageUrl;
+    const resizedImage = await resize(file.buffer, this.surveyImageResizeWidth);
     // remove 'https://' from the string
     const trimmed = imageUrl.substring(8);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_domain, bucket, ...rest] = trimmed.split('/');
-    const destination = `${rest}=s${this.SURVEY_IMAGE_RESIZE}`;
+    // eslint-disable-next-line fp/no-mutation
+    rest[rest.length - 1] = `thumbnail-${rest[rest.length - 1]}`;
+    const destination = rest.join('/');
     await this.googleCloudService.uploadBufferToDestination(
       resizedImage,
       destination,

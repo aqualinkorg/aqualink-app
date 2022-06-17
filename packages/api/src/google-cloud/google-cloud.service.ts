@@ -117,7 +117,7 @@ export class GoogleCloudService {
       this.logger.error(error);
       throw new InternalServerErrorException();
     }
-    return `https://storage.googleapis.com/${this.GCS_BUCKET}/${destination}`;
+    return `https://storage.googleapis.com/${bucket}/${destination}`;
   }
 
   public async findDanglingFiles(): Promise<string[]> {

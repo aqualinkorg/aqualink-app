@@ -1494,7 +1494,6 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             >
                               <img
                                 class="MuiCardMedia-root makeStyles-cardImage-359 MuiCardMedia-media MuiCardMedia-img"
-                                src="=s512"
                               />
                             </a>
                           </div>
@@ -1622,7 +1621,6 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             >
                               <img
                                 class="MuiCardMedia-root makeStyles-cardImage-359 MuiCardMedia-media MuiCardMedia-img"
-                                src="=s512"
                               />
                             </a>
                           </div>
