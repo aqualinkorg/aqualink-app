@@ -63,7 +63,7 @@ export const spotterPositionRequest = createAsyncThunk<
     try {
       const { data: spotterPositionData } =
         await siteServices.getSiteSpotterPosition(id);
-      return spotterPositionData.spotterPosition;
+      return spotterPositionData;
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }

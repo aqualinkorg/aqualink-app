@@ -95,14 +95,18 @@ const SiteDetails = ({
     if (forecastData && latestData) {
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
-      const hasSpotter = Boolean(parsedData.bottomTemperature);
       const hasSonde = Boolean(parsedData.salinity);
 
       setHasSondeData(hasSonde);
-      setHasSpotterData(hasSpotter);
       setLatestDataAsSofarValues(parsedData);
     }
   }, [forecastData, latestData]);
+
+  useEffect(() => {
+    if (spotterPosition) {
+      setHasSpotterData(spotterPosition.isDeployed);
+    }
+  }, [spotterPosition]);
 
   const { videoStream } = site || {};
 
@@ -228,7 +232,9 @@ const SiteDetails = ({
           {site && !isSketchFabView && (
             <Map
               siteId={site.id}
-              spotterPosition={spotterPosition}
+              spotterPosition={
+                hastSpotterData ? spotterPosition?.spotterPosition : null
+              }
               polygon={site.polygon}
               surveyPoints={site.surveyPoints}
             />

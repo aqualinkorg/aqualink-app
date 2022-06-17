@@ -370,8 +370,12 @@ export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
   spotterPosition?: {
-    latitude: ValueWithTimestamp;
-    longitude: ValueWithTimestamp;
+    spotterPosition?: {
+      longitude: ValueWithTimestamp;
+      latitude: ValueWithTimestamp;
+    };
+    isDeployed: boolean;
+    timestamp?: string;
   } | null;
   latestData?: LatestData[] | null;
   forecastData?: ForecastData[] | null;

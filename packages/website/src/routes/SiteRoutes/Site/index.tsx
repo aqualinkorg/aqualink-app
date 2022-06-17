@@ -124,7 +124,7 @@ const Site = ({ match, classes }: SiteProps) => {
   } = featuredMedia || {};
   const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
 
-  const hasSpotterData = Boolean(spotterPosition);
+  const hasSpotterData = Boolean(spotterPosition?.isDeployed);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 

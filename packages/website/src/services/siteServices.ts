@@ -71,9 +71,11 @@ const getSiteLatestData = (id: string) =>
 const getSiteSpotterPosition = (id: string) =>
   requests.send<{
     spotterPosition?: {
-      latitude: ValueWithTimestamp;
       longitude: ValueWithTimestamp;
+      latitude: ValueWithTimestamp;
     };
+    isDeployed: boolean;
+    timestamp?: string;
   }>({
     url: `sites/${id}/spotter_position`,
     method: "GET",

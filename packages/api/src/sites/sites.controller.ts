@@ -110,10 +110,8 @@ export class SitesController {
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id/spotter_position')
-  findSpotterPosition(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<SofarLiveDataDto> {
-    return this.sitesService.findLiveData(id);
+  findSpotterPosition(@Param('id', ParseIntPipe) id: number) {
+    return this.sitesService.findSpotterPosition(id);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')

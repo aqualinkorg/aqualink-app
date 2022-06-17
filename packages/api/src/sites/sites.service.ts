@@ -15,7 +15,7 @@ import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
 import { getSstAnomaly, getLiveData } from '../utils/liveData';
-import { SofarLiveData, ValueWithTimestamp } from '../utils/sofar.types';
+import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { AdminLevel, User } from '../users/users.entity';
 import { CreateSiteDto, CreateSiteApplicationDto } from './dto/create-site.dto';
@@ -354,19 +354,20 @@ export class SitesService {
     };
   }
 
-  async findSpotterPosition(id: number): Promise<{
-    spotterPosition?: {
-      latitude: ValueWithTimestamp;
-      longitude: ValueWithTimestamp;
-    };
-  }> {
+  async findSpotterPosition(id: number) {
     const site = await getSite(id, this.sitesRepository, [
       'historicalMonthlyMean',
     ]);
     const isDeployed = site.status === SiteStatus.Deployed;
-    if (!isDeployed) return {};
+
     const { sensorId } = site;
-    if (!sensorId) return {};
+    if (!sensorId)
+      return {
+        timestamp: undefined,
+        isDeployed,
+        spotterPosition: undefined,
+      };
+
     const spotterRaw = await getSpotterData(sensorId);
     const spotterData = spotterRaw
       ? {
@@ -377,14 +378,9 @@ export class SitesService {
         }
       : {};
 
-    const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
-    const validityDate = Date.now() - spotterValidityLimit;
-    if (
-      new Date(spotterData.longitude?.timestamp || 0).getTime() < validityDate
-    )
-      return {};
-
     return {
+      isDeployed,
+      timestamp: spotterData.latitude?.timestamp,
       ...(spotterData.longitude &&
         spotterData.latitude && {
           spotterPosition: {

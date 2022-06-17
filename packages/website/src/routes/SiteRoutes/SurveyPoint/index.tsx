@@ -44,7 +44,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
     useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};
   const loading = siteLoading || surveysLoading || timeSeriesRangeLoading;
 
-  const hasSpotterData = Boolean(spotterPosition);
+  const hasSpotterData = Boolean(spotterPosition?.isDeployed);
   const hasRange = !!(
     hoboBottomTemperatureRange?.data &&
     hoboBottomTemperatureRange.data.length > 0
