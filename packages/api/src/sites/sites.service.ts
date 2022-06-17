@@ -383,7 +383,7 @@ export class SitesService {
       timestamp: spotterData.latitude?.timestamp,
       ...(spotterData.longitude &&
         spotterData.latitude && {
-          spotterPosition: {
+          position: {
             longitude: spotterData.longitude,
             latitude: spotterData.latitude,
           },

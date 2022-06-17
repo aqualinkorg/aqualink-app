@@ -370,7 +370,7 @@ export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
   spotterPosition?: {
-    spotterPosition?: {
+    position?: {
       longitude: ValueWithTimestamp;
       latitude: ValueWithTimestamp;
     };

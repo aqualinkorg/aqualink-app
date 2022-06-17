@@ -63,7 +63,7 @@ const SiteDetails = ({
   const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
-  const [hastSpotterData, setHasSpotterData] = useState<boolean>(false);
+  const [hasSpotterData, setHasSpotterData] = useState<boolean>(false);
   const [isSketchFabView, setIsSketchFabView] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
@@ -95,18 +95,14 @@ const SiteDetails = ({
     if (forecastData && latestData) {
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
+      const hasSpotter = Boolean(parsedData.bottomTemperature);
       const hasSonde = Boolean(parsedData.salinity);
 
       setHasSondeData(hasSonde);
+      setHasSpotterData(hasSpotter);
       setLatestDataAsSofarValues(parsedData);
     }
   }, [forecastData, latestData]);
-
-  useEffect(() => {
-    if (spotterPosition) {
-      setHasSpotterData(spotterPosition.isDeployed);
-    }
-  }, [spotterPosition]);
 
   const { videoStream } = site || {};
 
@@ -129,7 +125,7 @@ const SiteDetails = ({
               dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
             />
           ),
-          <Waves data={latestDataAsSofarValues} hasSpotter={hastSpotterData} />,
+          <Waves data={latestDataAsSofarValues} hasSpotter={hasSpotterData} />,
         ]
       : times(4, () => null);
 
@@ -233,7 +229,7 @@ const SiteDetails = ({
             <Map
               siteId={site.id}
               spotterPosition={
-                hastSpotterData ? spotterPosition?.spotterPosition : null
+                hasSpotterData ? spotterPosition?.position : null
               }
               polygon={site.polygon}
               surveyPoints={site.surveyPoints}
