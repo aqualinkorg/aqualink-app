@@ -8,7 +8,10 @@ import { californiaSurveyPoint } from './survey-point.mock';
 import { californiaSurveyOne, californiaSurveyTwo } from './surveys.mock';
 
 export const californiaSurveyOneMedia: DeepPartial<SurveyMedia> = {
-  url: 'https://storage.googleapis.com/storage/reef-image-564894612112.jpg',
+  originalUrl:
+    'https://storage.googleapis.com/storage/reef-image-564894612112.jpg',
+  thumbnailUrl:
+    'https://storage.googleapis.com/storage/thumbnail-reef-image-564894612112.jpg',
   quality: 1,
   featured: true,
   hidden: false,
@@ -21,7 +24,10 @@ export const californiaSurveyOneMedia: DeepPartial<SurveyMedia> = {
 };
 
 export const californiaSurveyTwoMedia: DeepPartial<SurveyMedia> = {
-  url: 'https://storage.googleapis.com/storage/reef-image-564894612112.jpg',
+  originalUrl:
+    'https://storage.googleapis.com/storage/reef-image-564894612112.jpg',
+  thumbnailUrl:
+    'https://storage.googleapis.com/storage/thumbnail-reef-image-564894612112.jpg',
   quality: 1,
   featured: true,
   hidden: false,

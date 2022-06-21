@@ -37,7 +37,10 @@ export const surveyTests = () => {
   let hiddenMediaId: number;
 
   const createSurveyMediaDto = (featured: boolean, hidden: boolean) => ({
-    url: 'https://storage.googleapis.com/storage/reef-image-564894612222.jpg',
+    originalUrl:
+      'https://storage.googleapis.com/storage/reef-image-564894612222.jpg',
+    thumbnailUrl:
+      'https://storage.googleapis.com/storage/thumbnail-reef-image-564894612222.jpg',
     quality: 1,
     featured,
     hidden,
