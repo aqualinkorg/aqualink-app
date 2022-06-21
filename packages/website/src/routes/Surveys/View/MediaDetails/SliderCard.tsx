@@ -25,7 +25,7 @@ const SliderCard = ({
   onSurveyMediaUpdate,
   classes,
 }: SliderCardProps) => {
-  const { id, url, comments, observations, featured } = media;
+  const { id, originalUrl, comments, observations, featured } = media;
   return (
     <Card elevation={3} className={classes.shadowBox}>
       {loading ? (
@@ -42,7 +42,7 @@ const SliderCard = ({
       ) : (
         <Grid className={classes.fullHeight} container>
           <Grid className={classes.imageWrapper} item sm={12} md={6}>
-            <CardMedia className={classes.cardImage} image={url} />
+            <CardMedia className={classes.cardImage} image={originalUrl} />
           </Grid>
           <Grid
             className={classes.mediaInfoWrapper}

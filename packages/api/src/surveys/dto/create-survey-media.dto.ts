@@ -19,7 +19,10 @@ export class CreateSurveyMediaDto {
       'https://storage.googleapis.com/storage/reef-image-564894612222.jpg',
   })
   @IsUrl()
-  readonly url: string;
+  readonly originalUrl: string;
+
+  @IsUrl()
+  readonly thumbnailUrl?: string;
 
   @IsInt()
   @IsOptional()

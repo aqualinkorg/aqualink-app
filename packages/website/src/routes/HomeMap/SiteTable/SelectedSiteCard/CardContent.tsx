@@ -32,7 +32,6 @@ import Chip from "../../../../common/Chip";
 import LoadingSkeleton from "../../../../common/LoadingSkeleton";
 import featuredImageLoading from "../../../../assets/img/loading-image.svg";
 import chartLoading from "../../../../assets/img/chart_skeleton.png";
-import { getThumbnailLink } from "../../../../utils/helpers";
 
 const SelectedSiteCardContent = ({
   site,
@@ -137,12 +136,7 @@ const SelectedSiteCardContent = ({
                       classes.cardImage,
                       classes.imageBorderRadius
                     )}
-                    image={getThumbnailLink(imageUrl)}
-                    component="img"
-                    onError={(e: any) => {
-                      // eslint-disable-next-line fp/no-mutation
-                      e.target.src = imageUrl;
-                    }}
+                    image={imageUrl}
                   />
                 </Link>
               )}

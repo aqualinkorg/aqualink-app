@@ -3,7 +3,7 @@ import type { SurveyMedia } from "../store/Survey/types";
 
 export const getFeaturedMedia = (surveyMedia: SurveyMedia[]) => {
   const media = surveyMedia.find((mediaItem) => mediaItem.featured);
-  return media?.url;
+  return { originalUrl: media?.originalUrl, thumbnailUrl: media?.thumbnailUrl };
 };
 
 export const getNumberOfImages = (surveyMedia: SurveyMedia[]) => {

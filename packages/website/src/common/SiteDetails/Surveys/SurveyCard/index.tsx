@@ -21,7 +21,6 @@ import DeleteButton from "../../../DeleteButton";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
 import surveyServices from "../../../../services/surveyServices";
-import { getThumbnailLink } from "../../../../utils/helpers";
 
 const SurveyCard = ({
   pointId,
@@ -61,18 +60,15 @@ const SurveyCard = ({
               <Link to={`/sites/${siteId}/survey_details/${survey.id}`}>
                 <CardMedia
                   className={classes.cardImage}
-                  component="img"
                   image={
-                    isShowingFeatured && survey.featuredSurveyMedia?.url
-                      ? getThumbnailLink(survey.featuredSurveyMedia?.url)
-                      : survey.surveyPointImage?.[pointId]?.[0]
+                    isShowingFeatured &&
+                    (survey.featuredSurveyMedia?.thumbnailUrl ||
+                      survey.featuredSurveyMedia?.originalUrl)
+                      ? survey.featuredSurveyMedia?.thumbnailUrl ||
+                        survey.featuredSurveyMedia?.originalUrl
+                      : survey.surveyPointImage?.[pointId]?.[0].thumbnailUrl ||
+                        survey.surveyPointImage?.[pointId]?.[0].originalUrl
                   }
-                  onError={(e: any) => {
-                    // eslint-disable-next-line fp/no-mutation
-                    e.target.src = isShowingFeatured
-                      ? survey.featuredSurveyMedia?.url || ""
-                      : survey.surveyPointImage?.[pointId]?.[0] || "";
-                  }}
                 />
               </Link>
             )}

@@ -1492,8 +1492,8 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             <a
                               href="/sites/1/survey_details/46"
                             >
-                              <img
-                                class="MuiCardMedia-root makeStyles-cardImage-359 MuiCardMedia-media MuiCardMedia-img"
+                              <div
+                                class="MuiCardMedia-root makeStyles-cardImage-359"
                               />
                             </a>
                           </div>
@@ -1619,8 +1619,8 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             <a
                               href="/sites/1/survey_details/46"
                             >
-                              <img
-                                class="MuiCardMedia-root makeStyles-cardImage-359 MuiCardMedia-media MuiCardMedia-img"
+                              <div
+                                class="MuiCardMedia-root makeStyles-cardImage-359"
                               />
                             </a>
                           </div>

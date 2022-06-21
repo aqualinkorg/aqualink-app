@@ -92,7 +92,7 @@ const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
               <Slider className={classes.carousel} {...carouselSettings}>
                 {point.surveyMedia.map((media) => (
                   <SliderCard
-                    key={media.url}
+                    key={media.originalUrl}
                     media={media}
                     loading={loading}
                     isSiteAdmin={isAdmin(user, siteId)}

@@ -19,7 +19,6 @@ import uploadIcon from "../../../assets/icon_upload.svg";
 import { isAdmin } from "../../../helpers/user";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { convertOptionsToQueryParams } from "../../../helpers/video";
-import { getThumbnailLink } from "../../../utils/helpers";
 
 const playerOptions = {
   autoplay: 1,
@@ -54,18 +53,12 @@ const FeaturedMedia = ({
   }
 
   if (featuredImage && surveyId) {
-    const thumbnailUrl = getThumbnailLink(featuredImage);
     return (
       <Link to={`/sites/${siteId}/survey_details/${surveyId}`}>
         <CardMedia
           className={classes.card}
           style={{ height: "100%" }}
-          image={thumbnailUrl}
-          component="img"
-          onError={(e: any) => {
-            // eslint-disable-next-line fp/no-mutation
-            e.target.src = featuredImage;
-          }}
+          image={featuredImage}
         />
       </Link>
     );

@@ -11,7 +11,10 @@ const uploadMedia = (
   siteId: string,
   token?: string | null
 ) =>
-  requests.send<string>({
+  requests.send<{
+    originalUrl: string;
+    thumbnailUrl?: string | undefined;
+  }>({
     method: "POST",
     url: `sites/${siteId}/surveys/upload`,
     data: formData,

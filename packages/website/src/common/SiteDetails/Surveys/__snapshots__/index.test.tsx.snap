@@ -340,8 +340,8 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                       <a
                         href="/sites/1/survey_details/46"
                       >
-                        <img
-                          class="MuiCardMedia-root makeStyles-cardImage-48 MuiCardMedia-media MuiCardMedia-img"
+                        <div
+                          class="MuiCardMedia-root makeStyles-cardImage-48"
                         />
                       </a>
                     </div>
@@ -467,8 +467,8 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                       <a
                         href="/sites/1/survey_details/46"
                       >
-                        <img
-                          class="MuiCardMedia-root makeStyles-cardImage-48 MuiCardMedia-media MuiCardMedia-img"
+                        <div
+                          class="MuiCardMedia-root makeStyles-cardImage-48"
                         />
                       </a>
                     </div>

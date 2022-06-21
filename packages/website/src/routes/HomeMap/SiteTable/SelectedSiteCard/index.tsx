@@ -34,7 +34,7 @@ const SelectedSiteCard = () => {
         survey.featuredSurveyMedia.type === "image"
     ) || {};
 
-  const hasMedia = Boolean(featuredSurveyMedia?.url);
+  const hasMedia = Boolean(featuredSurveyMedia?.originalUrl);
 
   // If FEATURED_SITE is not setup, no card is displayed.
   if (featuredSiteId === "" && isFeatured) {
@@ -68,7 +68,10 @@ const SelectedSiteCard = () => {
           site={site}
           loading={loading}
           error={error}
-          imageUrl={featuredSurveyMedia?.url}
+          imageUrl={
+            featuredSurveyMedia?.thumbnailUrl ||
+            featuredSurveyMedia?.originalUrl
+          }
         />
       </Card>
     </Box>

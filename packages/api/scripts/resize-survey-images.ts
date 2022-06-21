@@ -1,4 +1,4 @@
-import { createConnection } from 'typeorm';
+import { createConnection, Repository } from 'typeorm';
 import yargs from 'yargs';
 import axios from 'axios';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
@@ -21,10 +21,13 @@ const { argv } = yargs
   .wrap(yargs.terminalWidth());
 
 const resizeImage = async (
-  imageUrl: string,
+  surveyMedia: SurveyMedia,
   size: number,
   googleCloudService: GoogleCloudService,
+  surveyMediaRepository: Repository<SurveyMedia>,
 ): Promise<'skipped' | 'success' | 'error'> => {
+  const imageUrl = surveyMedia.originalUrl;
+  const { id } = surveyMedia;
   // remove 'https://' from the string
   const trimmed = imageUrl.substring(8);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,10 +44,11 @@ const resizeImage = async (
     }
     const resizedBuffer = await resize(imageBuffer, size);
 
-    // eslint-disable-next-line fp/no-mutation
-    rest[rest.length - 1] = `thumbnail-${rest[rest.length - 1]}`;
+    const prefixed = `thumbnail-${rest.slice(-1)}`;
+    const modified = [...rest.slice(0, -1), prefixed];
+
     // Upload file to google cloud
-    const destination = rest.join('/');
+    const destination = modified.join('/');
 
     const res = await googleCloudService.uploadBufferToDestination(
       resizedBuffer,
@@ -52,7 +56,12 @@ const resizeImage = async (
       bucket,
     );
 
-    console.log(res);
+    await surveyMediaRepository
+      .createQueryBuilder()
+      .update(SurveyMedia)
+      .set({ thumbnailUrl: res })
+      .where('id = :id', { id })
+      .execute();
 
     return 'success';
   } catch (error: any) {
@@ -75,15 +84,21 @@ async function main() {
   let skippedCounter = 0;
   try {
     const surveyMediaRepository = conn.getRepository(SurveyMedia);
-    const surveyMedia = await surveyMediaRepository
+    const surveyMediaArray = await surveyMediaRepository
       .createQueryBuilder('survey_media')
-      .select('survey_media.url')
+      .select('survey_media.originalUrl')
+      .addSelect('survey_media.id')
+      .where('survey_media.thumbnail_url IS NULL')
       .getMany();
-    const imageUrls = surveyMedia.map((s) => s.url);
 
     await Promise.all(
-      imageUrls.map(async (imageUrl) => {
-        const result = await resizeImage(imageUrl, size, googleCloudService);
+      surveyMediaArray.map(async (surveyMedia) => {
+        const result = await resizeImage(
+          surveyMedia,
+          size,
+          googleCloudService,
+          surveyMediaRepository,
+        );
         switch (result) {
           case 'success':
             // eslint-disable-next-line fp/no-mutation
@@ -95,7 +110,7 @@ async function main() {
             break;
           case 'error':
             // eslint-disable-next-line fp/no-mutating-methods
-            failImages.push(imageUrl);
+            failImages.push(surveyMedia.originalUrl);
             break;
           default:
         }
@@ -109,7 +124,7 @@ async function main() {
     conn.close();
     if (failImages.length > 0) {
       console.log(
-        `Images failed to resize:\n${failImages.map((x) => `${x}\n`)}`,
+        `Images failed to resize:\n${failImages.map((x) => `${x}\n`).join('')}`,
       );
     }
     console.log(
