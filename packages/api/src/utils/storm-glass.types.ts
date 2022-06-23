@@ -1,4 +1,4 @@
-type StormGlassSourceType =
+export type StormGlassSourceType =
   | 'sg'
   | 'icon'
   | 'dwd'
@@ -10,7 +10,7 @@ type StormGlassSourceType =
   | 'yr'
   | 'smhi';
 
-type StormGlassParamsType =
+export type StormGlassParamsType =
   | 'airTemperature'
   | 'airTemperature80m'
   | 'airTemperature100m'
@@ -72,6 +72,7 @@ export interface StormGlassWeatherProps {
   start?: string;
   end?: string;
   source?: StormGlassSourceType | StormGlassSourceType[];
+  raw?: boolean;
 }
 
 export interface StormGlassWeatherQueryProps {

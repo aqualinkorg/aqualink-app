@@ -13,6 +13,7 @@ export async function stormGlassGetWeather({
   source,
   start,
   end,
+  raw = false,
 }: StormGlassWeatherProps): Promise<
   Record<StormGlassWeatherQueryProps['params'], ValueWithTimestamp>
 > {
@@ -35,9 +36,12 @@ export async function stormGlassGetWeather({
       params: queryParams,
     })
     .then((response) => {
+      if (raw) return response.data;
       return response.data.hours[0];
     })
     .then((data) => {
+      if (raw) return data;
+
       const { time, ...other } = data;
       const entries = Object.entries(other).map((prop) => {
         const arrValues: number[] = Object.values(prop[1] as {});

@@ -61,7 +61,8 @@
     "upload-sonde-data": "ts-node -r dotenv/config scripts/upload-sonde-data.ts",
     "backfill-sofar-time-series": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts",
     "update-wind-wave-data": "ts-node -r dotenv/config scripts/hindcast-wind-wave-data.ts",
-    "resize-survey-images": "ts-node -r dotenv/config scripts/resize-survey-images.ts"
+    "resize-survey-images": "ts-node -r dotenv/config scripts/resize-survey-images.ts",
+    "stormglass-csv": "ts-node -r dotenv/config scripts/generate-stormglass-csv.ts"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.3.0",
