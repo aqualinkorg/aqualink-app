@@ -44,6 +44,13 @@ export class SurveyMedia {
   @Column()
   url: string;
 
+  @ApiProperty({
+    example:
+      'https://storage.googleapis.com/storage/thumbnail-reef-image-a5b5f5c5d5da5d5e.jpg',
+  })
+  @Column()
+  thumbnailUrl: string;
+
   @ApiProperty({ example: 1 })
   @Column({ default: 1 })
   quality: number;

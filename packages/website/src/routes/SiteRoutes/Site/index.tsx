@@ -122,7 +122,11 @@ const Site = ({ match, classes }: SiteProps) => {
     featuredSurveyMedia,
     diveDate,
   } = featuredMedia || {};
-  const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
+  const {
+    surveyPoint: featuredSurveyPoint,
+    url,
+    thumbnailUrl,
+  } = featuredSurveyMedia || {};
 
   const hasSpotterData = Boolean(spotterPosition?.isDeployed);
 
@@ -131,7 +135,7 @@ const Site = ({ match, classes }: SiteProps) => {
   const today = localizedEndOfDay(undefined, timezone);
 
   const siteWithFeaturedImage: SiteType | undefined = siteDetails
-    ? { ...siteDetails, featuredImage: url }
+    ? { ...siteDetails, featuredImage: thumbnailUrl || url }
     : undefined;
 
   const isLoading = !siteWithFeaturedImage;

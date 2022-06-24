@@ -45,6 +45,13 @@ const SurveyCard = ({
 
   const onSurveyDeleteSuccess = () => dispatch(surveysRequest(`${siteId}`));
 
+  const firstImage =
+    survey?.surveyPointImage?.[pointId]?.[0].thumbnailUrl ||
+    survey?.surveyPointImage?.[pointId]?.[0].url;
+  const featuredImage =
+    survey?.featuredSurveyMedia?.thumbnailUrl ||
+    survey?.featuredSurveyMedia?.url;
+
   return (
     <Paper elevation={0} className={classes.surveyCard}>
       <Grid style={{ height: "100%" }} container justify="space-between">
@@ -61,9 +68,9 @@ const SurveyCard = ({
                 <CardMedia
                   className={classes.cardImage}
                   image={
-                    isShowingFeatured
-                      ? survey.featuredSurveyMedia?.url
-                      : survey.surveyPointImage?.[pointId]?.[0]
+                    isShowingFeatured && featuredImage
+                      ? featuredImage
+                      : firstImage
                   }
                 />
               </Link>

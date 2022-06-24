@@ -54,7 +54,7 @@ The project uses **Firebase** for authenticating users. Requests that should com
 
 ### Google Storage
 
-The project uses **Google Storage** for storing files in buckets. The package used is `multer-google-storage`.
+The project uses **Google Storage** for storing files in buckets.
 
 ### Cloud Functions
 
