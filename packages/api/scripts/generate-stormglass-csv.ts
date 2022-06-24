@@ -13,18 +13,34 @@ import {
 
 const dbConfig = require('../ormconfig');
 
+interface SGSources {
+  sg?: number;
+  icon?: number;
+  dwd?: number;
+  noaa?: number;
+  meteo?: number;
+  meto?: number;
+  fcoo?: number;
+  fmi?: number;
+  yr?: number;
+  smhi?: number;
+  sgSource?: StormGlassSourceType;
+}
+
+interface MySGData {
+  waveHeight: SGSources;
+  waveDirection: SGSources;
+  wavePeriod: SGSources;
+  windSpeed: SGSources;
+  windDirection: SGSources;
+}
+
 const stormGlassParams: StormGlassParamsType[] = [
   'waveHeight',
-  'currentDirection',
-  'currentSpeed',
-  'gust',
   'waveDirection',
-  'waveHeight',
   'wavePeriod',
-  'windWaveDirection',
-  'windWaveHeight',
-  'windWavePeriod',
   'windSpeed',
+  'windDirection',
 ];
 
 async function getSitesInfo() {
@@ -33,6 +49,7 @@ async function getSitesInfo() {
   const sites = await conn
     .getRepository(Site)
     .createQueryBuilder('site')
+    .leftJoinAndSelect('site.region', 'region')
     .getMany();
 
   conn.close();
@@ -88,6 +105,10 @@ const main = async () => {
   const total = sites.length;
   let sofarCompleted = 0;
   let stormglassCompleted = 0;
+  let sofarStart;
+  let sofarEnd;
+  let stormglassStart;
+  let stormglassEnd;
 
   const loading = (() => {
     const P = ['\\', '|', '/', '-'];
@@ -100,6 +121,9 @@ const main = async () => {
       );
       // eslint-disable-next-line fp/no-mutation
       i %= P.length;
+      if (sofarCompleted > 0 && !sofarStart) sofarStart = new Date().getTime();
+      if (stormglassCompleted > 0 && !stormglassStart)
+        stormglassStart = new Date().getTime();
     }, 250);
   })();
 
@@ -107,37 +131,76 @@ const main = async () => {
     'site_name',
     'site_region',
     'aqualink_site_link',
+    'in_sofar_wave_model_zone',
     'point_deviation_in_degrees',
     'point_deviation_in_meters',
     'sofar_time',
+    'stormglass_time',
+
     'sofar_significantWaveHeight',
+    'icon_waveHeight',
+    'dwd_waveHeight',
+    'noaa_waveHeight',
+    'meteo_waveHeight',
+    'meto_waveHeight',
+    'fcoo_waveHeight',
+    'fmi_waveHeight',
+    'yr_waveHeight',
+    'smhi_waveHeight',
+    'sg_waveHeight',
+    'sg_waveHeight_source',
+
     'sofar_waveMeanDirection',
+    'icon_waveDirection',
+    'dwd_waveDirection',
+    'noaa_waveDirection',
+    'meteo_waveDirection',
+    'meto_waveDirection',
+    'fcoo_waveDirection',
+    'fmi_waveDirection',
+    'yr_waveDirection',
+    'smhi_waveDirection',
+    'sg_waveDirection',
+    'sg_waveDirection_source',
+
     'sofar_waveMeanPeriod',
+    'icon_wavePeriod',
+    'dwd_wavePeriod',
+    'noaa_wavePeriod',
+    'meteo_wavePeriod',
+    'meto_wavePeriod',
+    'fcoo_wavePeriod',
+    'fmi_wavePeriod',
+    'yr_wavePeriod',
+    'smhi_wavePeriod',
+    'sg_wavePeriod',
+    'sg_wavePeriod_source',
+
     'sofar_windSpeed',
+    'icon_windSpeed',
+    'dwd_windSpeed',
+    'noaa_windSpeed',
+    'meteo_windSpeed',
+    'meto_windSpeed',
+    'fcoo_windSpeed',
+    'fmi_windSpeed',
+    'yr_windSpeed',
+    'smhi_windSpeed',
+    'sg_windSpeed',
+    'sg_windSpeed_source',
+
     'sofar_windDirection',
-    'stormglass_time',
-    'stormglass_currentDirection',
-    'currentDirection_source',
-    'stormglass_currentSpeed',
-    'currentSpeed_source',
-    'stormglass_gust',
-    'gust_source',
-    'stormglass_time',
-    'time_source',
-    'stormglass_waveDirection',
-    'waveDirection_source',
-    'stormglass_waveHeight',
-    'waveHeight_source',
-    'stormglass_wavePeriod',
-    'wavePeriod_source',
-    'stormglass_windSpeed',
-    'windSpeed_source',
-    'stormglass_windWaveDirection',
-    'windWaveDirection_source',
-    'stormglass_windWaveHeight',
-    'windWaveHeight_source',
-    'stormglass_windWavePeriod',
-    'windWavePeriod_source',
+    'icon_windDirection',
+    'dwd_windDirection',
+    'noaa_windDirection',
+    'meteo_windDirection',
+    'meto_windDirection',
+    'fcoo_windDirection',
+    'fmi_windDirection',
+    'yr_windDirection',
+    'smhi_windDirection',
+    'sg_windDirection',
+    'sg_windDirection_source',
   ].join(';');
 
   const fd = fs.openSync('stormglass.csv', 'w');
@@ -166,21 +229,17 @@ const main = async () => {
         sofarLongitude,
       );
 
-      const sofarData = await getForecastData(sofarLatitude, sofarLongitude);
-      // eslint-disable-next-line fp/no-mutation
-      sofarCompleted += 1;
-      const sofarTime = sofarData.significantWaveHeight?.timestamp as string;
-      const sofarProcessedData = Object.entries(sofarData).map(
-        ([metric, value]) => {
-          return { metric, value };
-        },
+      const originalCordsResponse = await getForecastData(latitude, longitude);
+      const inSofarWaveModelZone = Object.entries(originalCordsResponse).some(
+        (x) => x[1] !== undefined,
       );
-      // eslint-disable-next-line fp/no-mutating-methods
-      const sofarSortedProcessedData = sofarProcessedData.sort((x, y) => {
-        if (x > y) return 1;
-        if (x < y) return -1;
-        return 0;
-      });
+      const sofarData = inSofarWaveModelZone
+        ? originalCordsResponse
+        : await getForecastData(sofarLatitude, sofarLongitude);
+      sofarCompleted += 1;
+      if (sofarCompleted === total) sofarEnd = new Date().getTime();
+
+      const sofarTime = sofarData.significantWaveHeight?.timestamp as string;
 
       const nowISO = new Date().toISOString();
 
@@ -193,49 +252,123 @@ const main = async () => {
         end: nowISO,
         raw: true,
       })) as any;
-      // eslint-disable-next-line fp/no-mutation
       stormglassCompleted += 1;
+      if (stormglassCompleted === total) stormglassEnd = new Date().getTime();
 
-      const { stormglassTime, ...sgData } = sg.hours[0];
-      const stormGlassProcessedData = Object.entries(sgData).map(
-        ([metric, s]) => {
-          const sgSources = Object.entries(s as any).map(([source, value]) => {
+      const { time: stormglassTime, ...sgData } = sg.hours[0];
+
+      const stormglassData = Object.entries(sgData).reduce(
+        (acc, [metric, s]) => {
+          const ss = Object.entries(s as any).map(([source, value]) => {
             return { source, value };
           });
-          const sgAI = sgSources.find(
+          const sgAI = ss.find(
             (x) => (x.source as unknown as StormGlassSourceType) === 'sg',
           );
-          const selectedSource = sgSources.find((x) => x.value === sgAI?.value);
+          const selectedSource = ss.find((x) => x.value === sgAI?.value);
+          const sgSources: SGSources = {
+            sgSource: selectedSource?.source,
+            ...(s as any),
+          };
           return {
-            metric,
-            selectedSource: selectedSource?.source,
-            value: sgAI?.value,
+            ...acc,
+            [metric]: sgSources,
           };
         },
-      );
+        {},
+      ) as MySGData;
 
-      // eslint-disable-next-line fp/no-mutating-methods
-      const stormglassSortedProcessedData = stormGlassProcessedData.sort(
-        (x, y) => {
-          if (x > y) return 1;
-          if (x < y) return -1;
-          return 0;
-        },
-      );
+      const row = [
+        `${site.name}`,
+        `${site.region?.name}`,
+        `https://aqualink.org/sites/${site.id}`,
+        `${inSofarWaveModelZone}`,
+        `${Math.round(deviationInDegrees * 100) / 100}°`,
+        `${Math.round(deviationInMeters / 10) / 100} Km`,
+        `${sofarTime}`,
+        `${stormglassTime}`,
 
-      const row = `${site.name};${site.region};https://aqualink.org/sites/${
-        site.id
-      };${deviationInDegrees};${deviationInMeters};${sofarTime};${sofarSortedProcessedData
-        .map((x) => x.value?.value)
-        .join(';')};${stormglassTime};${stormglassSortedProcessedData
-        .map((x) => `${x.value};${x.selectedSource}`)
-        .join(';')}`;
+        `${sofarData.significantWaveHeight?.value}`,
+        `${stormglassData.waveHeight.icon}`,
+        `${stormglassData.waveHeight.dwd}`,
+        `${stormglassData.waveHeight.noaa}`,
+        `${stormglassData.waveHeight.meteo}`,
+        `${stormglassData.waveHeight.meto}`,
+        `${stormglassData.waveHeight.fcoo}`,
+        `${stormglassData.waveHeight.fmi}`,
+        `${stormglassData.waveHeight.yr}`,
+        `${stormglassData.waveHeight.smhi}`,
+        `${stormglassData.waveHeight.sg}`,
+        `${stormglassData.waveHeight.sgSource}`,
+
+        `${sofarData.waveMeanDirection?.value}`,
+        `${stormglassData.waveDirection.icon}`,
+        `${stormglassData.waveDirection.dwd}`,
+        `${stormglassData.waveDirection.noaa}`,
+        `${stormglassData.waveDirection.meteo}`,
+        `${stormglassData.waveDirection.meto}`,
+        `${stormglassData.waveDirection.fcoo}`,
+        `${stormglassData.waveDirection.fmi}`,
+        `${stormglassData.waveDirection.yr}`,
+        `${stormglassData.waveDirection.smhi}`,
+        `${stormglassData.waveDirection.sg}`,
+        `${stormglassData.waveDirection.sgSource}`,
+
+        `${sofarData.waveMeanPeriod?.value}`,
+        `${stormglassData.wavePeriod.icon}`,
+        `${stormglassData.wavePeriod.dwd}`,
+        `${stormglassData.wavePeriod.noaa}`,
+        `${stormglassData.wavePeriod.meteo}`,
+        `${stormglassData.wavePeriod.meto}`,
+        `${stormglassData.wavePeriod.fcoo}`,
+        `${stormglassData.wavePeriod.fmi}`,
+        `${stormglassData.wavePeriod.yr}`,
+        `${stormglassData.wavePeriod.smhi}`,
+        `${stormglassData.wavePeriod.sg}`,
+        `${stormglassData.wavePeriod.sgSource}`,
+
+        `${sofarData.windSpeed?.value}`,
+        `${stormglassData.windSpeed.icon}`,
+        `${stormglassData.windSpeed.dwd}`,
+        `${stormglassData.windSpeed.noaa}`,
+        `${stormglassData.windSpeed.meteo}`,
+        `${stormglassData.windSpeed.meto}`,
+        `${stormglassData.windSpeed.fcoo}`,
+        `${stormglassData.windSpeed.fmi}`,
+        `${stormglassData.windSpeed.yr}`,
+        `${stormglassData.windSpeed.smhi}`,
+        `${stormglassData.windSpeed.sg}`,
+        `${stormglassData.windSpeed.sgSource}`,
+
+        `${sofarData.windDirection?.value}`,
+        `${stormglassData.windDirection.icon}`,
+        `${stormglassData.windDirection.dwd}`,
+        `${stormglassData.windDirection.noaa}`,
+        `${stormglassData.windDirection.meteo}`,
+        `${stormglassData.windDirection.meto}`,
+        `${stormglassData.windDirection.fcoo}`,
+        `${stormglassData.windDirection.fmi}`,
+        `${stormglassData.windDirection.yr}`,
+        `${stormglassData.windDirection.smhi}`,
+        `${stormglassData.windDirection.sg}`,
+        `${stormglassData.windDirection.sgSource}`,
+      ].join(';');
 
       fs.writeFileSync(fd, `${row}\n`);
     }),
   );
 
   clearInterval(loading);
+  console.log(
+    `\r${total} sofar requests done in ${
+      Math.round((sofarEnd - sofarStart) / 10) / 100
+    }s`,
+  );
+  console.log(
+    `${total} stormglass requests done in ${
+      Math.round((stormglassEnd - stormglassStart) / 10) / 100
+    }s`,
+  );
 };
 
 main();
