@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus, fp/no-mutation */
 import { createConnection } from 'typeorm';
 import { Point } from 'geojson';
 import fs from 'fs';
@@ -84,6 +85,24 @@ function getDistanceInMeters(a1: number, a2: number, b1: number, b2: number) {
 const main = async () => {
   const sites = await getSitesInfo();
 
+  const total = sites.length;
+  let sofarCompleted = 0;
+  let stormglassCompleted = 0;
+
+  const loading = (() => {
+    const P = ['\\', '|', '/', '-'];
+    let i = 0;
+    return setInterval(() => {
+      process.stdout.write(
+        `\r${
+          P[i++]
+        } sofar requests: ${sofarCompleted}/${total}, stormglass requests: ${stormglassCompleted}/${total} `,
+      );
+      // eslint-disable-next-line fp/no-mutation
+      i %= P.length;
+    }, 250);
+  })();
+
   const headRow = [
     'site_name',
     'site_region',
@@ -148,6 +167,8 @@ const main = async () => {
       );
 
       const sofarData = await getForecastData(sofarLatitude, sofarLongitude);
+      // eslint-disable-next-line fp/no-mutation
+      sofarCompleted += 1;
       const sofarTime = sofarData.significantWaveHeight?.timestamp as string;
       const sofarProcessedData = Object.entries(sofarData).map(
         ([metric, value]) => {
@@ -172,6 +193,8 @@ const main = async () => {
         end: nowISO,
         raw: true,
       })) as any;
+      // eslint-disable-next-line fp/no-mutation
+      stormglassCompleted += 1;
 
       const { stormglassTime, ...sgData } = sg.hours[0];
       const stormGlassProcessedData = Object.entries(sgData).map(
@@ -211,6 +234,8 @@ const main = async () => {
       fs.writeFileSync(fd, `${row}\n`);
     }),
   );
+
+  clearInterval(loading);
 };
 
 main();
