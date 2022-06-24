@@ -24,7 +24,6 @@ import {
   LatestData,
   SiteSketchFab,
   ForecastData,
-  ValueWithTimestamp,
 } from "../store/Sites/types";
 
 const getSite = (id: string) =>
@@ -71,8 +70,8 @@ const getSiteLatestData = (id: string) =>
 const getSiteSpotterPosition = (id: string) =>
   requests.send<{
     position?: {
-      longitude: ValueWithTimestamp;
-      latitude: ValueWithTimestamp;
+      longitude: number;
+      latitude: number;
     };
     isDeployed: boolean;
     timestamp?: string;

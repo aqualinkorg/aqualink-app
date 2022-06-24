@@ -365,7 +365,7 @@ export class SitesService {
       return {
         timestamp: undefined,
         isDeployed,
-        spotterPosition: undefined,
+        position: undefined,
       };
 
     const spotterRaw = await getSpotterData(sensorId);
@@ -384,8 +384,8 @@ export class SitesService {
       ...(spotterData.longitude &&
         spotterData.latitude && {
           position: {
-            longitude: spotterData.longitude,
-            latitude: spotterData.latitude,
+            longitude: spotterData.longitude.value,
+            latitude: spotterData.latitude.value,
           },
         }),
     };

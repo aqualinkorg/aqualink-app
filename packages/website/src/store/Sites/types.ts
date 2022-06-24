@@ -22,14 +22,8 @@ export interface SurveyPoints {
 export type Range = "day" | "week" | "month" | "year";
 
 export interface SpotterPosition {
-  latitude: {
-    timestamp: string;
-    value: number;
-  };
-  longitude: {
-    timestamp: string;
-    value: number;
-  };
+  latitude: number;
+  longitude: number;
 }
 
 export interface UpdateSiteNameFromListArgs {
@@ -371,8 +365,8 @@ export interface SelectedSiteState {
   details?: Site | null;
   spotterPosition?: {
     position?: {
-      longitude: ValueWithTimestamp;
-      latitude: ValueWithTimestamp;
+      longitude: number;
+      latitude: number;
     };
     isDeployed: boolean;
     timestamp?: string;
