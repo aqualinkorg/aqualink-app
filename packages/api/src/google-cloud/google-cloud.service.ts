@@ -133,11 +133,11 @@ export class GoogleCloudService {
     }
 
     const surveyMedia = await this.surveyMediaRepository.find({
-      select: ['originalUrl'],
+      select: ['url'],
     });
 
     const mediaSet = new Set(
-      surveyMedia.map((media) => getFileFromURL(media.originalUrl)),
+      surveyMedia.map((media) => getFileFromURL(media.url)),
     );
 
     const fileResponse = await this.storage

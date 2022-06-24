@@ -12,7 +12,7 @@ const uploadMedia = (
   token?: string | null
 ) =>
   requests.send<{
-    originalUrl: string;
+    url: string;
     thumbnailUrl?: string | undefined;
   }>({
     method: "POST",

@@ -63,7 +63,7 @@ export class SurveysController {
     @Param('siteId', ParseIntPipe) siteId: number,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<{
-    originalUrl: string;
+    url: string;
     thumbnailUrl?: string | undefined;
   }> {
     return this.surveyService.upload(file);

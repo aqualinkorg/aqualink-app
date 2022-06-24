@@ -124,7 +124,7 @@ const Site = ({ match, classes }: SiteProps) => {
   } = featuredMedia || {};
   const {
     surveyPoint: featuredSurveyPoint,
-    originalUrl,
+    url,
     thumbnailUrl,
   } = featuredSurveyMedia || {};
 
@@ -135,7 +135,7 @@ const Site = ({ match, classes }: SiteProps) => {
   const today = localizedEndOfDay(undefined, timezone);
 
   const siteWithFeaturedImage: SiteType | undefined = siteDetails
-    ? { ...siteDetails, featuredImage: thumbnailUrl || originalUrl }
+    ? { ...siteDetails, featuredImage: thumbnailUrl || url }
     : undefined;
 
   const isLoading = !siteWithFeaturedImage;

@@ -17,6 +17,6 @@ export const mockSurvey: SurveyListItem = {
     id: 66,
     observations: "possible-disease",
     type: "image",
-    originalUrl: "",
+    url: "",
   },
 };

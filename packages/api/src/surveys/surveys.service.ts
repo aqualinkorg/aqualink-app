@@ -21,6 +21,7 @@ import { getFileFromURL } from '../utils/google-cloud.utils';
 import { getSite } from '../utils/site.utils';
 import { getImageData, resize } from '../../scripts/utils/image';
 import { validateMimetype } from '../uploads/mimetypes';
+import { getThumbnailBucketAndDestination } from '../utils/image-resize';
 
 @Injectable()
 export class SurveysService {
@@ -67,14 +68,14 @@ export class SurveysService {
 
   async upload(
     file: Express.Multer.File,
-  ): Promise<{ originalUrl: string; thumbnailUrl?: string }> {
+  ): Promise<{ url: string; thumbnailUrl?: string }> {
     // Upload original
     if (Buffer.byteLength(file.buffer) > this.maxFileSizeB) {
       throw new BadRequestException(
         `Max size allowed is ${this.maxFileSizeMB} MB`,
       );
     }
-    const originalUrl = await this.googleCloudService.uploadBuffer(
+    const url = await this.googleCloudService.uploadBuffer(
       file.buffer,
       file.originalname,
       'image',
@@ -84,25 +85,19 @@ export class SurveysService {
 
     // Upload resized
     const type = validateMimetype(file.mimetype);
-    if (type !== 'image') return { originalUrl };
+    if (type !== 'image') return { url };
     const imageData = await getImageData(file.buffer);
-    if ((imageData.width || 0) <= this.surveyImageResizeWidth)
-      return { originalUrl };
+    if ((imageData.width || 0) <= this.surveyImageResizeWidth) return { url };
     const resizedImage = await resize(file.buffer, this.surveyImageResizeWidth);
-    // remove 'https://' from the string
-    const trimmed = originalUrl.substring(8);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_domain, bucket, ...rest] = trimmed.split('/');
-    const prefixed = `thumbnail-${rest.slice(-1)}`;
-    const modified = [...rest.slice(0, -1), prefixed];
-    const destination = modified.join('/');
+
+    const { bucket, destination } = getThumbnailBucketAndDestination(url);
     const thumbnailUrl =
       await this.googleCloudService.uploadBufferToDestination(
         resizedImage,
         destination,
         bucket,
       );
-    return { originalUrl, thumbnailUrl };
+    return { url, thumbnailUrl };
   }
 
   // Create a survey media (video or image)
@@ -149,7 +144,7 @@ export class SurveysService {
     (Survey & {
       surveyPointImage?: {
         [surveyPointId: number]: {
-          originalUrl: string;
+          url: string;
           thumbnailUrl?: string;
         }[];
       };
@@ -200,7 +195,7 @@ export class SurveysService {
         'surveyMedia.surveyPoint',
         `array_agg(
           json_build_object(
-            'originalUrl', original_url,
+            'url', url,
             'thumbnailUrl', thumbnail_url
           )
         ) survey_point_images`,
@@ -357,11 +352,11 @@ export class SurveysService {
 
     await Promise.all(
       surveyMedia.map((media) => {
-        const file = getFileFromURL(media.originalUrl);
+        const file = getFileFromURL(media.url);
         // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
         return this.googleCloudService.deleteFile(file).catch(() => {
           this.logger.error(
-            `Could not delete media ${media.originalUrl} of survey ${surveyId}.`,
+            `Could not delete media ${media.url} of survey ${surveyId}.`,
           );
         });
       }),
@@ -390,10 +385,10 @@ export class SurveysService {
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
     await this.googleCloudService
-      .deleteFile(getFileFromURL(surveyMedia.originalUrl))
+      .deleteFile(getFileFromURL(surveyMedia.url))
       .catch((error) => {
         this.logger.error(
-          `Could not delete media ${surveyMedia.originalUrl} of survey media ${mediaId}.`,
+          `Could not delete media ${surveyMedia.url} of survey media ${mediaId}.`,
         );
         throw error;
       });

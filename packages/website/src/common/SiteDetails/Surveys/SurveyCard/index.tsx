@@ -47,10 +47,10 @@ const SurveyCard = ({
 
   const firstImage =
     survey?.surveyPointImage?.[pointId]?.[0].thumbnailUrl ||
-    survey?.surveyPointImage?.[pointId]?.[0].originalUrl;
+    survey?.surveyPointImage?.[pointId]?.[0].url;
   const featuredImage =
     survey?.featuredSurveyMedia?.thumbnailUrl ||
-    survey?.featuredSurveyMedia?.originalUrl;
+    survey?.featuredSurveyMedia?.url;
 
   return (
     <Paper elevation={0} className={classes.surveyCard}>

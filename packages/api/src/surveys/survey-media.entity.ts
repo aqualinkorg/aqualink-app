@@ -42,7 +42,7 @@ export class SurveyMedia {
       'https://storage.googleapis.com/storage/reef-image-a5b5f5c5d5da5d5e.jpg',
   })
   @Column()
-  originalUrl: string;
+  url: string;
 
   @ApiProperty({
     example:

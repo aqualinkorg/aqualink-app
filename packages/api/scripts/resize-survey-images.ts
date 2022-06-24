@@ -4,6 +4,7 @@ import axios from 'axios';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { getImageData, resize } from './utils/image';
+import { getThumbnailBucketAndDestination } from '../src/utils/image-resize';
 
 const dbConfig = require('../ormconfig');
 
@@ -26,12 +27,10 @@ const resizeImage = async (
   googleCloudService: GoogleCloudService,
   surveyMediaRepository: Repository<SurveyMedia>,
 ): Promise<'skipped' | 'success' | 'error'> => {
-  const imageUrl = surveyMedia.originalUrl;
+  const imageUrl = surveyMedia.url;
   const { id } = surveyMedia;
-  // remove 'https://' from the string
-  const trimmed = imageUrl.substring(8);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_domain, bucket, ...rest] = trimmed.split('/');
+
+  const { bucket, destination } = getThumbnailBucketAndDestination(imageUrl);
 
   try {
     const response = await axios.get(imageUrl, {
@@ -44,12 +43,7 @@ const resizeImage = async (
     }
     const resizedBuffer = await resize(imageBuffer, size);
 
-    const prefixed = `thumbnail-${rest.slice(-1)}`;
-    const modified = [...rest.slice(0, -1), prefixed];
-
     // Upload file to google cloud
-    const destination = modified.join('/');
-
     const res = await googleCloudService.uploadBufferToDestination(
       resizedBuffer,
       destination,
@@ -86,7 +80,7 @@ async function main() {
     const surveyMediaRepository = conn.getRepository(SurveyMedia);
     const surveyMediaArray = await surveyMediaRepository
       .createQueryBuilder('survey_media')
-      .select('survey_media.originalUrl')
+      .select('survey_media.url')
       .addSelect('survey_media.id')
       .where('survey_media.thumbnail_url IS NULL')
       .getMany();
@@ -110,7 +104,7 @@ async function main() {
             break;
           case 'error':
             // eslint-disable-next-line fp/no-mutating-methods
-            failImages.push(surveyMedia.originalUrl);
+            failImages.push(surveyMedia.url);
             break;
           default:
         }

@@ -113,10 +113,10 @@ const UploadMedia = ({
       return uploadServices
         .uploadMedia(formData, `${siteId}`, user?.token)
         .then((response) => {
-          const { originalUrl, thumbnailUrl } = response.data;
+          const { url, thumbnailUrl } = response.data;
           const surveyId = survey?.id;
           const surveyMediaData: SurveyMediaData = {
-            originalUrl,
+            url,
             thumbnailUrl,
             surveyPointId: metadata[index].surveyPoint
               ? parseInt(metadata[index].surveyPoint, 10)
