@@ -67,6 +67,19 @@ const getSiteLatestData = (id: string) =>
     method: "GET",
   });
 
+const getSiteSpotterPosition = (id: string) =>
+  requests.send<{
+    position?: {
+      longitude: number;
+      latitude: number;
+    };
+    isDeployed: boolean;
+    timestamp?: string;
+  }>({
+    url: `sites/${id}/spotter_position`,
+    method: "GET",
+  });
+
 const getSiteTimeSeriesData = (params: TimeSeriesDataRequestParams) => {
   return requests.send<TimeSeriesDataResponse>({
     url: constructTimeSeriesDataRequestUrl(params),
@@ -216,6 +229,7 @@ export default {
   getSiteLiveData,
   getSiteForecastData,
   getSiteLatestData,
+  getSiteSpotterPosition,
   getSiteTimeSeriesData,
   getSiteTimeSeriesDataRange,
   getSiteSurveyPoints,

@@ -25,7 +25,7 @@ import { getSiteNameAndRegion } from "../../store/Sites/helpers";
 import mapServices from "../../services/mapServices";
 import {
   unsetLatestData,
-  unsetLiveData,
+  unsetSpotterPosition,
   unsetSelectedSite,
 } from "../../store/Sites/selectedSiteSlice";
 
@@ -83,7 +83,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
       // - through the search
       // - through the admin side panel
       dispatch(unsetSelectedSite());
-      dispatch(unsetLiveData());
+      dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       if (!geocodingEnabled) {
         browserHistory.push(`/sites/${value.id}`);
@@ -96,7 +96,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
       if (!geocodingEnabled) {
         browserHistory.push(`/sites/${searchedSite.id}`);
       }
-      dispatch(unsetLiveData());
+      dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       dispatch(setSiteOnMap(searchedSite));
       setSearchedSite(null);

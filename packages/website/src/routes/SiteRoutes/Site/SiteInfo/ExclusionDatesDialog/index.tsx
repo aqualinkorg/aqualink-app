@@ -24,7 +24,6 @@ import siteServices from "../../../../../services/siteServices";
 import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
-  liveDataRequest,
   setSelectedSite,
   siteRequest,
 } from "../../../../../store/Sites/selectedSiteSlice";
@@ -110,7 +109,6 @@ const ExclusionDatesDialog = ({
           setPickerError("");
           onDeployDialogClose();
           dispatch(siteRequest(`${siteId}`));
-          dispatch(liveDataRequest(`${siteId}`));
         })
         .catch((err) =>
           setDeployError(err?.response?.data?.message || "Something went wrong")
@@ -150,7 +148,6 @@ const ExclusionDatesDialog = ({
           dispatch(clearTimeSeriesDataRange());
           dispatch(setSelectedSite(undefined));
           dispatch(siteRequest(`${siteId}`));
-          dispatch(liveDataRequest(`${siteId}`));
         })
         .catch((err) =>
           setMaintainError(
