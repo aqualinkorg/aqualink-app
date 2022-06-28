@@ -32,6 +32,7 @@ export class SiteSurveyPoint {
   name: string;
 
   @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  @Index()
   site: Site;
 
   @ApiProperty({ example: 1 })

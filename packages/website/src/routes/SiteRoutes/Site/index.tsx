@@ -23,8 +23,8 @@ import {
   clearTimeSeriesDataRange,
   siteOceanSenseDataRequest,
   clearOceanSenseData,
-  liveDataRequest,
-  liveDataSelector,
+  spotterPositionRequest,
+  spotterPositionSelector,
   siteLoadingSelector,
 } from "../../../store/Sites/selectedSiteSlice";
 import {
@@ -38,7 +38,7 @@ import { User } from "../../../store/User/types";
 import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
 import { sortByDate, subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
-import { useQueryParams } from "../../../hooks/useQueryParams";
+import { useQueryParam } from "../../../hooks/useQueryParams";
 import { findSurveyPointFromList } from "../../../helpers/siteUtils";
 import LoadingSkeleton from "../../../common/LoadingSkeleton";
 import { Site as SiteType } from "../../../store/Sites/types";
@@ -103,13 +103,12 @@ const Site = ({ match, classes }: SiteProps) => {
   const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
-  const liveData = useSelector(liveDataSelector);
+  const spotterPosition = useSelector(spotterPositionSelector);
   const dispatch = useDispatch();
-  const getQueryParam = useQueryParams();
   const siteId = match.params.id;
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
-  const querySurveyPointId = getQueryParam("surveyPoint");
-  const refresh = getQueryParam("refresh");
+  const [querySurveyPointId] = useQueryParam("surveyPoint");
+  const [refresh, setRefresh] = useQueryParam("refresh");
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -123,28 +122,34 @@ const Site = ({ match, classes }: SiteProps) => {
     featuredSurveyMedia,
     diveDate,
   } = featuredMedia || {};
-  const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
+  const {
+    surveyPoint: featuredSurveyPoint,
+    url,
+    thumbnailUrl,
+  } = featuredSurveyMedia || {};
 
-  const hasSpotterData = Boolean(liveData?.topTemperature);
+  const hasSpotterData = Boolean(spotterPosition?.isDeployed);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
   const today = localizedEndOfDay(undefined, timezone);
 
   const siteWithFeaturedImage: SiteType | undefined = siteDetails
-    ? { ...siteDetails, featuredImage: url }
+    ? { ...siteDetails, featuredImage: thumbnailUrl || url }
     : undefined;
 
   const isLoading = !siteWithFeaturedImage;
 
   useEffect(() => {
     if (refresh === "true") {
+      setRefresh(undefined);
+
       dispatch(clearTimeSeriesDataRange());
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
       dispatch(siteRequest(siteId));
-      dispatch(liveDataRequest(siteId));
+      dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,7 +158,7 @@ const Site = ({ match, classes }: SiteProps) => {
   // Fetch site and surveys
   useEffect(() => {
     dispatch(siteRequest(siteId));
-    dispatch(liveDataRequest(siteId));
+    dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
     return () => {

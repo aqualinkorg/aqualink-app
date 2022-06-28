@@ -6,6 +6,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import { Site } from './sites.entity';
 
@@ -91,6 +92,7 @@ export class DailyData {
   weeklyAlertLevel: number | null;
 
   @ManyToOne(() => Site, { onDelete: 'CASCADE' })
+  @Index()
   site: Site;
 
   @CreateDateColumn()

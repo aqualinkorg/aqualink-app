@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import {
   createStyles,
   Grid,
@@ -39,11 +39,11 @@ import {
   forecastDataSelector,
   latestDataRequest,
   latestDataSelector,
-  liveDataRequest,
-  liveDataSelector,
+  spotterPositionRequest,
+  spotterPositionSelector,
   unsetForecastData,
   unsetLatestData,
-  unsetLiveData,
+  unsetSpotterPosition,
 } from "../../store/Sites/selectedSiteSlice";
 import { parseLatestData } from "../../store/Sites/helpers";
 
@@ -59,11 +59,11 @@ const SiteDetails = ({
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
-  const liveData = useSelector(liveDataSelector);
+  const spotterPosition = useSelector(spotterPositionSelector);
   const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
-  const [hastSpotterData, setHasSpotterData] = useState<boolean>(false);
+  const [hasSpotterData, setHasSpotterData] = useState<boolean>(false);
   const [isSketchFabView, setIsSketchFabView] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
@@ -71,9 +71,13 @@ const SiteDetails = ({
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
 
+  useLayoutEffect(() => {
+    if (!isLoading && site?.sketchFab) setIsSketchFabView(true);
+  }, [isLoading, site?.sketchFab]);
+
   useEffect(() => {
-    if (site && !liveData) {
-      dispatch(liveDataRequest(String(site.id)));
+    if (site && !spotterPosition) {
+      dispatch(spotterPositionRequest(String(site.id)));
     }
     if (site && !latestData) {
       dispatch(latestDataRequest(String(site.id)));
@@ -81,11 +85,11 @@ const SiteDetails = ({
     if (site && !forecastData) {
       dispatch(forecastDataRequest(String(site.id)));
     }
-  }, [dispatch, site, liveData, latestData, forecastData]);
+  }, [dispatch, site, spotterPosition, latestData, forecastData]);
 
   useEffect(() => {
     return () => {
-      dispatch(unsetLiveData());
+      dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       dispatch(unsetForecastData());
     };
@@ -125,7 +129,7 @@ const SiteDetails = ({
               dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
             />
           ),
-          <Waves data={latestDataAsSofarValues} hasSpotter={hastSpotterData} />,
+          <Waves data={latestDataAsSofarValues} hasSpotter={hasSpotterData} />,
         ]
       : times(4, () => null);
 
@@ -138,12 +142,12 @@ const SiteDetails = ({
     {
       text: `LONG: ${formatNumber(lng, 3)}`,
       variant: "subtitle2",
-      marginRight: 0,
+      marginRight: site?.sketchFab ? "1rem" : 0,
     },
-    ...(site?.sketchFab
+    ...(isSketchFabView
       ? [
           {
-            text: site?.sketchFab.description,
+            text: site?.sketchFab?.description,
             variant: "subtitle2",
             marginRight: 0,
           } as Value,
@@ -228,7 +232,9 @@ const SiteDetails = ({
           {site && !isSketchFabView && (
             <Map
               siteId={site.id}
-              spotterPosition={liveData?.spotterPosition}
+              spotterPosition={
+                hasSpotterData ? spotterPosition?.position : null
+              }
               polygon={site.polygon}
               surveyPoints={site.surveyPoints}
             />

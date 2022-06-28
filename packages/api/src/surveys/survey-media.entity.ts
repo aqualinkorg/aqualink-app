@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   RelationId,
+  Index,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Survey } from './surveys.entity';
@@ -42,6 +43,13 @@ export class SurveyMedia {
   })
   @Column()
   url: string;
+
+  @ApiProperty({
+    example:
+      'https://storage.googleapis.com/storage/thumbnail-reef-image-a5b5f5c5d5da5d5e.jpg',
+  })
+  @Column()
+  thumbnailUrl: string;
 
   @ApiProperty({ example: 1 })
   @Column({ default: 1 })
@@ -85,6 +93,7 @@ export class SurveyMedia {
     nullable: true,
   })
   @JoinColumn({ name: 'survey_point_id' })
+  @Index()
   surveyPoint: SiteSurveyPoint | null;
 
   @CreateDateColumn()

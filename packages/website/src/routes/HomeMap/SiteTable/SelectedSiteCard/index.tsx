@@ -68,7 +68,9 @@ const SelectedSiteCard = () => {
           site={site}
           loading={loading}
           error={error}
-          imageUrl={featuredSurveyMedia?.url}
+          imageUrl={
+            featuredSurveyMedia?.thumbnailUrl || featuredSurveyMedia?.url
+          }
         />
       </Card>
     </Box>

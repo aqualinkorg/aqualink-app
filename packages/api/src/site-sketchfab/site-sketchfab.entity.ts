@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   RelationId,
+  Index,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Site } from '../sites/sites.entity';
@@ -17,6 +18,7 @@ export class SketchFab {
   id: number;
 
   @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  @Index()
   site: Site;
 
   @ApiProperty({ example: 1 })

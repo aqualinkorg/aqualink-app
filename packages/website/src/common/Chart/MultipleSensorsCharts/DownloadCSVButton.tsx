@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import downloadCsv from "download-csv";
 import { Button } from "@material-ui/core";
 import moment from "moment";
+import { useSelector } from "react-redux";
 import { ValueWithTimestamp } from "../../../store/Sites/types";
 import DownloadCSVDialog from "./DownloadCSVDialog";
+import { spotterPositionSelector } from "../../../store/Sites/selectedSiteSlice";
 
 type CSVDataColumn =
   | "spotterBottomTemp"
@@ -80,6 +82,7 @@ function DownloadCSVButton({
 }) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const spotterData = useSelector(spotterPositionSelector);
 
   const onClose = (shouldDownload: boolean) => {
     if (!shouldDownload) {
@@ -125,6 +128,7 @@ function DownloadCSVButton({
         onClick={() => {
           setOpen(true);
         }}
+        style={{ marginBottom: spotterData?.isDeployed ? 0 : "2em" }}
       >
         {/* TODO update this component with LoadingButton from MUILab when newest version is released. */}
         {loading ? "Loading..." : "Download CSV"}

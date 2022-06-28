@@ -1,5 +1,5 @@
 import { Connection } from 'typeorm';
-import { ForecastData } from '../wind-wave-data/wind-wave-data.entity';
+import { ForecastData } from '../wind-wave-data/forecast-data.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';

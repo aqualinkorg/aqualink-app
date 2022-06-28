@@ -239,10 +239,7 @@ const SiteMap = ({
       {!draftSite && spotterPosition && isManager(user) && (
         <Marker
           icon={buoyIcon}
-          position={[
-            spotterPosition.latitude.value,
-            spotterPosition.longitude.value,
-          ]}
+          position={[spotterPosition.latitude, spotterPosition.longitude]}
         />
       )}
     </Map>

@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -32,6 +33,7 @@ export class Collection {
   isPublic: boolean;
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @Index()
   user: User;
 
   @ApiProperty({ example: 1 })

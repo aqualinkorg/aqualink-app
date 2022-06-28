@@ -33,7 +33,10 @@ import {
   getSite,
 } from '../utils/site.utils';
 import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
-import { getSpotterData } from '../utils/sofar';
+import {
+  getSpotterData,
+  getLatestData as getLatestDataSofar,
+} from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
@@ -348,6 +351,43 @@ export class SitesService {
       sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst),
       satelliteTemperature: sst,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
+    };
+  }
+
+  async findSpotterPosition(id: number) {
+    const site = await getSite(id, this.sitesRepository, [
+      'historicalMonthlyMean',
+    ]);
+    const isDeployed = site.status === SiteStatus.Deployed;
+
+    const { sensorId } = site;
+    if (!sensorId)
+      return {
+        timestamp: undefined,
+        isDeployed,
+        position: undefined,
+      };
+
+    const spotterRaw = await getSpotterData(sensorId);
+    const spotterData = spotterRaw
+      ? {
+          longitude:
+            spotterRaw.longitude && getLatestDataSofar(spotterRaw.longitude),
+          latitude:
+            spotterRaw.latitude && getLatestDataSofar(spotterRaw.latitude),
+        }
+      : {};
+
+    return {
+      isDeployed,
+      timestamp: spotterData.latitude?.timestamp,
+      ...(spotterData.longitude &&
+        spotterData.latitude && {
+          position: {
+            longitude: spotterData.longitude.value,
+            latitude: spotterData.latitude.value,
+          },
+        }),
     };
   }
 

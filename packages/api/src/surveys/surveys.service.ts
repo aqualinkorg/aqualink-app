@@ -19,10 +19,19 @@ import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Site } from '../sites/sites.entity';
 import { getFileFromURL } from '../utils/google-cloud.utils';
 import { getSite } from '../utils/site.utils';
+import { getImageData, resize } from '../../scripts/utils/image';
+import { validateMimetype } from '../uploads/mimetypes';
+import { getThumbnailBucketAndDestination } from '../utils/image-resize';
 
 @Injectable()
 export class SurveysService {
   private logger: Logger = new Logger(SurveysService.name);
+  // The target width for the thumbnails generated at survey image upload.
+  private readonly surveyImageResizeWidth = 512;
+  private readonly maxFileSizeMB = process.env.STORAGE_MAX_FILE_SIZE_MB
+    ? parseInt(process.env.STORAGE_MAX_FILE_SIZE_MB, 10)
+    : 1;
+  private readonly maxFileSizeB = this.maxFileSizeMB * 1024 * 1024;
 
   constructor(
     @InjectRepository(Survey)
@@ -55,6 +64,40 @@ export class SurveysService {
     });
 
     return survey;
+  }
+
+  async upload(
+    file: Express.Multer.File,
+  ): Promise<{ url: string; thumbnailUrl?: string }> {
+    // Upload original
+    if (Buffer.byteLength(file.buffer) > this.maxFileSizeB) {
+      throw new BadRequestException(
+        `Max size allowed is ${this.maxFileSizeMB} MB`,
+      );
+    }
+    const url = await this.googleCloudService.uploadBuffer(
+      file.buffer,
+      file.originalname,
+      'image',
+      'surveys',
+      'site',
+    );
+
+    // Upload resized
+    const type = validateMimetype(file.mimetype);
+    if (type !== 'image') return { url };
+    const imageData = await getImageData(file.buffer);
+    if ((imageData.width || 0) <= this.surveyImageResizeWidth) return { url };
+    const resizedImage = await resize(file.buffer, this.surveyImageResizeWidth);
+
+    const { bucket, destination } = getThumbnailBucketAndDestination(url);
+    const thumbnailUrl =
+      await this.googleCloudService.uploadBufferToDestination(
+        resizedImage,
+        destination,
+        bucket,
+      );
+    return { url, thumbnailUrl };
   }
 
   // Create a survey media (video or image)
@@ -97,7 +140,16 @@ export class SurveysService {
   }
 
   // Find all surveys related to a specific site.
-  async find(siteId: number): Promise<Survey[]> {
+  async find(siteId: number): Promise<
+    (Survey & {
+      surveyPointImage?: {
+        [surveyPointId: number]: {
+          url: string;
+          thumbnailUrl?: string;
+        }[];
+      };
+    })[]
+  > {
     const surveyHistoryQuery = await this.surveyRepository
       .createQueryBuilder('survey')
       .leftJoinAndMapOne(
@@ -141,7 +193,12 @@ export class SurveysService {
       .select([
         'surveyMedia.surveyId',
         'surveyMedia.surveyPoint',
-        'array_agg(surveyMedia.url) survey_point_images',
+        `array_agg(
+          json_build_object(
+            'url', url,
+            'thumbnailUrl', thumbnail_url
+          )
+        ) survey_point_images`,
       ])
       .getRawMany();
 
