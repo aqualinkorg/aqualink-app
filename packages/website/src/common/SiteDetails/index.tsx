@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   createStyles,
   Grid,
@@ -64,16 +64,11 @@ const SiteDetails = ({
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const [hasSpotterData, setHasSpotterData] = useState<boolean>(false);
-  const [isSketchFabView, setIsSketchFabView] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
-
-  useLayoutEffect(() => {
-    if (!isLoading && site?.sketchFab) setIsSketchFabView(true);
-  }, [isLoading, site?.sketchFab]);
 
   useEffect(() => {
     if (site && !spotterPosition) {
@@ -144,26 +139,7 @@ const SiteDetails = ({
       variant: "subtitle2",
       marginRight: site?.sketchFab ? "1rem" : 0,
     },
-    ...(isSketchFabView
-      ? [
-          {
-            text: site?.sketchFab?.description,
-            variant: "subtitle2",
-            marginRight: 0,
-          } as Value,
-        ]
-      : []),
   ];
-
-  const switchButton = useMemo(() => {
-    if (site?.sketchFab) {
-      return {
-        onClick: () => setIsSketchFabView(!isSketchFabView),
-        label: isSketchFabView ? "MAP" : "3D-VIEW",
-      };
-    }
-    return undefined;
-  }, [isSketchFabView, site]);
 
   const featuredMediaTitleItems = (): Value[] => {
     switch (true) {
@@ -199,6 +175,15 @@ const SiteDetails = ({
             marginRight: 0,
           },
         ];
+      case !!site?.sketchFab?.description: {
+        return [
+          {
+            text: site?.sketchFab?.description,
+            variant: "subtitle2",
+            marginRight: 0,
+          } as Value,
+        ];
+      }
       default:
         return [];
     }
@@ -224,12 +209,8 @@ const SiteDetails = ({
           titleItems={mapTitleItems}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
-          switchButton={switchButton}
         >
-          {site && site.sketchFab?.uuid && isSketchFabView && (
-            <SketchFab uuid={site.sketchFab?.uuid} />
-          )}
-          {site && !isSketchFabView && (
+          {site && (
             <Map
               siteId={site.id}
               spotterPosition={
@@ -251,7 +232,10 @@ const SiteDetails = ({
           forcedAspectRatio={!!videoStream}
           loadingImage={playIcon}
         >
-          {site && (
+          {site && site.sketchFab?.uuid && (
+            <SketchFab uuid={site.sketchFab?.uuid} />
+          )}
+          {site && !site.sketchFab?.uuid && (
             <FeaturedMedia
               siteId={site.id}
               url={videoStream}
