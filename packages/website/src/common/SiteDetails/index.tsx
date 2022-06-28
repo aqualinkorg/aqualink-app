@@ -178,10 +178,10 @@ const SiteDetails = ({
       case !!site?.sketchFab?.description: {
         return [
           {
-            text: site?.sketchFab?.description,
+            text: site?.sketchFab?.description ?? "",
             variant: "subtitle2",
             marginRight: 0,
-          } as Value,
+          },
         ];
       }
       default:
@@ -233,7 +233,7 @@ const SiteDetails = ({
           loadingImage={playIcon}
         >
           {site && site.sketchFab?.uuid && (
-            <SketchFab uuid={site.sketchFab?.uuid} />
+            <SketchFab uuid={site.sketchFab.uuid} />
           )}
           {site && !site.sketchFab?.uuid && (
             <FeaturedMedia
