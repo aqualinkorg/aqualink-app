@@ -5,7 +5,6 @@ import {
   GridProps,
   Grid,
   Theme,
-  Button,
 } from "@material-ui/core";
 import classNames from "classnames";
 
@@ -21,7 +20,6 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
   forcedAspectRatio,
   children,
   loadingImage,
-  switchButton,
 }: PropsWithChildren<CardWithTitleProps>) => {
   const classes = useStyles();
 
@@ -37,16 +35,6 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
         >
           <LoadingSkeleton loading={loading} variant="text" lines={1}>
             <Title values={titleItems} />
-            {!!switchButton && (
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={switchButton.onClick}
-              >
-                {switchButton.label}
-              </Button>
-            )}
           </LoadingSkeleton>
         </Grid>
       )}
@@ -119,10 +107,6 @@ interface CardWithTitleProps {
   className?: string;
   forcedAspectRatio?: boolean;
   loadingImage?: string;
-  switchButton?: {
-    onClick: () => void;
-    label: string;
-  };
 }
 
 export default CardWithTitle;
