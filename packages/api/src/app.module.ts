@@ -20,6 +20,8 @@ import { AuditModule } from './audit/audit.module';
 import { DataUploadsModule } from './data-uploads/data-uploads.module';
 import { SiteSketchFabModule } from './site-sketchfab/site-sketchfab.module';
 import { WindWaveModule } from './wind-wave-data/wind-wave-data.module';
+import { SensorDataController } from './sensor-data/sensor-data.controller';
+import { SensorDataService } from './sensor-data/sensor-data.service';
 
 @Module({
   imports: [
@@ -43,6 +45,7 @@ import { WindWaveModule } from './wind-wave-data/wind-wave-data.module';
     SiteSketchFabModule,
     WindWaveModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, SensorDataController],
+  providers: [SensorDataService],
 })
 export class AppModule {}
