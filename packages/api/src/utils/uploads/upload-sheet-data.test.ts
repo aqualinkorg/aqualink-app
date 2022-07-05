@@ -2678,12 +2678,13 @@ test('Test convertData function', async () => {
       metric: 'sonde_cable_power_voltage',
       source: {},
     },
-  ];
+  ].map((item) => {
+    const date = new Date(item.timestamp);
+    const offset = date.getTimezoneOffset() / 60;
+    date.setHours(date.getHours() + offset + 3);
 
-  const dataWithStringTimestamp = data.map((item) => ({
-    ...item,
-    timestamp: item.timestamp.toISOString(),
-  }));
+    return { ...item, timestamp: date };
+  });
 
-  expect(dataWithStringTimestamp).toEqual(testRes);
+  expect(data).toEqual(testRes);
 });
