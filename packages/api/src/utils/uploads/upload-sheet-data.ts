@@ -190,6 +190,139 @@ const findTimeStampIndex = (type: SourceType): number | number[] => {
   return [dateIndex, timeIndex];
 };
 
+export const getFilePathData = async (
+  filePath: string,
+  sourceType: SourceType,
+) => {
+  const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
+  const workSheetData = workSheetsFromFile[0]?.data;
+
+  const headerIndex = workSheetData?.findIndex((row) =>
+    Object.keys(sourceItems[sourceType]).some((key) =>
+      row.some((cell) => {
+        return typeof cell === 'string' && headerMatchesKey(cell, key);
+      }),
+    ),
+  );
+
+  const headers = workSheetData[headerIndex] as string[];
+
+  const { ignoredHeaders, importedHeaders } = Object.keys(
+    sourceItems[sourceType],
+  ).reduce<{
+    ignoredHeaders: string[];
+    importedHeaders: Metric[];
+  }>(
+    (res, x) => {
+      if (sourceItems[sourceType][x]?.ignore) {
+        // eslint-disable-next-line fp/no-mutating-methods
+        res.ignoredHeaders.push(x);
+      } else {
+        // eslint-disable-next-line fp/no-mutating-methods
+        res.importedHeaders.push(sourceItems[sourceType][x].metric as Metric);
+      }
+      return res;
+    },
+    { ignoredHeaders: [], importedHeaders: [] },
+  );
+
+  const signature = await md5Fle(filePath);
+
+  return {
+    workSheetData,
+    signature,
+    ignoredHeaders,
+    importedHeaders,
+    headers,
+    headerIndex,
+  };
+};
+
+export const convertData = (
+  workSheetData: any[][],
+  headers: string[],
+  headerIndex: number,
+  sourceType: SourceType,
+  ignoredHeaders: string[],
+  fileName: string,
+  sourceEntity: Sources,
+  mimetype?: Mimetype,
+) => {
+  const preResult: any[] = workSheetData
+    ?.slice(headerIndex + 1)
+    .map((item) => {
+      if (item.length === headers.length) return item;
+      return undefined;
+    })
+    .filter((item) => item);
+
+  const timestampIndex = findTimeStampIndex(sourceType);
+
+  console.time(`Get data from sheet ${fileName}`);
+  const results = preResult.map((item) => {
+    const tempData = Object.keys(sourceItems[sourceType])
+      .map((header, i) => {
+        if (ignoredHeaders.includes(header)) {
+          return [];
+        }
+
+        const columnName = sourceItems[sourceType][header].metric;
+        const convertFn = sourceItems[sourceType][header]?.convertFn;
+        const value = !convertFn
+          ? item[i]
+          : convertFn(parseFloat(item[i])).toFixed(2);
+
+        return [columnName, value];
+      })
+      .filter((filtered) => filtered.length);
+
+    const timezone =
+      typeof timestampIndex === 'number'
+        ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
+        : undefined;
+
+    const timestamp = getTimeStamp(timestampIndex, item, mimetype, timezone);
+
+    // eslint-disable-next-line fp/no-mutating-methods
+    tempData.push(['timestamp', timestamp]);
+
+    return Object.fromEntries(tempData);
+  });
+  console.timeEnd(`Get data from sheet ${fileName}`);
+
+  console.time(`Remove duplicates and empty values ${fileName}`);
+  const data = uniqBy(
+    results
+      .reduce((timeSeriesObjects: any[], object) => {
+        const { timestamp } = object;
+        return [
+          ...timeSeriesObjects,
+          ...Object.keys(object)
+            .filter((k) => k !== 'timestamp')
+            .map((key) => {
+              return {
+                timestamp,
+                value: parseFloat(object[key]),
+                metric: key,
+                source: sourceEntity,
+              };
+            }),
+        ];
+      }, [])
+      .filter((valueObject) => {
+        if (!isNaN(parseFloat(valueObject.value))) {
+          return true;
+        }
+        logger.log('Excluding incompatible value:');
+        logger.log(valueObject);
+        return false;
+      }),
+    ({ timestamp, metric, source }) => `${timestamp}, ${metric}, ${source.id}`,
+  );
+  console.timeEnd(`Remove duplicates and empty values ${fileName}`);
+  return data;
+};
+
 export const uploadTimeSeriesData = async (
   filePath: string,
   fileName: string,
@@ -206,6 +339,7 @@ export const uploadTimeSeriesData = async (
   // // TODO
   // // - Add foreign key constraint to sources on site_id
   console.time(`Upload datafile ${fileName}`);
+  console.log({ filePath });
   const [existingSourceEntity, site, surveyPoint] = await Promise.all([
     repositories.sourcesRepository.findOne({
       relations: ['surveyPoint', 'site'],
@@ -230,37 +364,14 @@ export const uploadTimeSeriesData = async (
     }));
 
   if (Object.keys(sourceItems).includes(sourceType)) {
-    const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
-    const workSheetData = workSheetsFromFile[0]?.data;
-
-    const headerIndex = workSheetData?.findIndex((row) =>
-      Object.keys(sourceItems[sourceType]).some((key) =>
-        row.some((cell) => {
-          return typeof cell === 'string' && headerMatchesKey(cell, key);
-        }),
-      ),
-    );
-
-    const headers: string[] = workSheetData[headerIndex] as string[];
-
-    const { ignoredHeaders, importedHeaders } = Object.keys(
-      sourceItems[sourceType],
-    ).reduce<{
-      ignoredHeaders: string[];
-      importedHeaders: Metric[];
-    }>(
-      (res, x) => {
-        if (sourceItems[sourceType][x]?.ignore) {
-          // eslint-disable-next-line fp/no-mutating-methods
-          res.ignoredHeaders.push(x);
-        } else {
-          // eslint-disable-next-line fp/no-mutating-methods
-          res.importedHeaders.push(sourceItems[sourceType][x].metric as Metric);
-        }
-        return res;
-      },
-      { ignoredHeaders: [], importedHeaders: [] },
-    );
+    const {
+      workSheetData,
+      signature,
+      ignoredHeaders,
+      importedHeaders,
+      headers,
+      headerIndex,
+    } = await getFilePathData(filePath, sourceType);
 
     if (failOnWarning && ignoredHeaders.length > 0) {
       throw new BadRequestException(
@@ -271,8 +382,6 @@ export const uploadTimeSeriesData = async (
           )} are not configured for import yet and cannot be uploaded.`,
       );
     }
-
-    const signature = await md5Fle(filePath);
 
     const uploadExists = await repositories.dataUploadsRepository.findOne({
       where: {
@@ -289,79 +398,16 @@ export const uploadTimeSeriesData = async (
       );
     }
 
-    const preResult: any[] = workSheetData
-      ?.slice(headerIndex + 1)
-      .map((item) => {
-        if (item.length === headers.length) return item;
-        return undefined;
-      })
-      .filter((item) => item);
-
-    const timestampIndex = findTimeStampIndex(sourceType);
-
-    console.time(`Get data from sheet ${fileName}`);
-    const results = preResult.map((item) => {
-      const tempData = Object.keys(sourceItems[sourceType])
-        .map((header, i) => {
-          if (ignoredHeaders.includes(header)) {
-            return [];
-          }
-
-          const columnName = sourceItems[sourceType][header].metric;
-          const convertFn = sourceItems[sourceType][header]?.convertFn;
-          const value = !convertFn
-            ? item[i]
-            : convertFn(parseFloat(item[i])).toFixed(2);
-
-          return [columnName, value];
-        })
-        .filter((filtered) => filtered.length);
-
-      const timezone =
-        typeof timestampIndex === 'number'
-          ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
-          : undefined;
-
-      const timestamp = getTimeStamp(timestampIndex, item, mimetype, timezone);
-
-      // eslint-disable-next-line fp/no-mutating-methods
-      tempData.push(['timestamp', timestamp]);
-
-      return Object.fromEntries(tempData);
-    });
-    console.timeEnd(`Get data from sheet ${fileName}`);
-
-    console.time(`Remove duplicates and empty values ${fileName}`);
-    const data = uniqBy(
-      results
-        .reduce((timeSeriesObjects: any[], object) => {
-          const { timestamp } = object;
-          return [
-            ...timeSeriesObjects,
-            ...Object.keys(object)
-              .filter((k) => k !== 'timestamp')
-              .map((key) => {
-                return {
-                  timestamp,
-                  value: parseFloat(object[key]),
-                  metric: key,
-                  source: sourceEntity,
-                };
-              }),
-          ];
-        }, [])
-        .filter((valueObject) => {
-          if (!isNaN(parseFloat(valueObject.value))) {
-            return true;
-          }
-          logger.log('Excluding incompatible value:');
-          logger.log(valueObject);
-          return false;
-        }),
-      ({ timestamp, metric, source }) =>
-        `${timestamp}, ${metric}, ${source.id}`,
+    const data = convertData(
+      workSheetData,
+      headers,
+      headerIndex,
+      sourceType,
+      ignoredHeaders,
+      fileName,
+      sourceEntity,
+      mimetype,
     );
-    console.timeEnd(`Remove duplicates and empty values ${fileName}`);
 
     const minDate = get(
       minBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
