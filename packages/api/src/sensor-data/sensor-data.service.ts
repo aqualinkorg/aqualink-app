@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { getSpotterData } from '../utils/sofar';
+import { sofarSensor } from '../utils/sofar';
 
 @Injectable()
 export class SensorDataService {
-  get(sensorId: string, endDate?: Date, startDate?: Date) {
-    return getSpotterData(sensorId, endDate, startDate);
+  get(sensorId: string, endDate?: string, startDate?: string) {
+    return sofarSensor(sensorId, startDate, endDate);
   }
 }

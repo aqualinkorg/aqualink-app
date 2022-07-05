@@ -17,9 +17,6 @@ export class SensorDataController {
     @Query('start') start?: string,
     @Query('end') end?: string,
   ) {
-    const startDate = start ? new Date(start) : undefined;
-    const endDate = end ? new Date(end) : undefined;
-
-    return this.sensorDataService.get(id, endDate, startDate);
+    return this.sensorDataService.get(id, start, end);
   }
 }
