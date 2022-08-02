@@ -339,7 +339,7 @@ export const uploadTimeSeriesData = async (
   // // TODO
   // // - Add foreign key constraint to sources on site_id
   console.time(`Upload datafile ${fileName}`);
-  console.log({ filePath });
+
   const [existingSourceEntity, site, surveyPoint] = await Promise.all([
     repositories.sourcesRepository.findOne({
       relations: ['surveyPoint', 'site'],
