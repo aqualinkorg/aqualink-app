@@ -484,7 +484,7 @@ export const uploadTimeSeriesData = async (
     console.timeEnd(`Loading into DB ${fileName}`);
     logger.log('loading complete');
 
-    await refreshMaterializedView(repositories);
+    refreshMaterializedView(repositories);
 
     console.timeEnd(`Upload datafile ${fileName}`);
     return ignoredHeaders;
