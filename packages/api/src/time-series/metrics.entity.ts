@@ -38,6 +38,13 @@ export enum Metric {
   PRECIPITATION = 'precipitation',
   RH = 'rh',
   WIND_GUST_SPEED = 'wind_gust_speed',
+  // HUI Metrics
+  NITROGEN_TOTAL = 'nitrogen_total',
+  PHOSPHORUS_TOTAL = 'phosphorus_total',
+  PHOSPHORUS = 'phosphorus',
+  SILICATE = 'silicate',
+  NNN = 'nitrate_plus_nitrite',
+  AMMONIUM = 'ammonium',
 }
 
 export enum Units {
