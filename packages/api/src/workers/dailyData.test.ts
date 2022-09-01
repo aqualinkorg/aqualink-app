@@ -4,7 +4,7 @@ import { Site } from '../sites/sites.entity';
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
 
-  const date = new Date('2022-06-27');
+  const date = new Date('2022-08-31');
   date.setUTCHours(23, 59, 59, 999);
   const site = {
     id: 1,
@@ -28,21 +28,21 @@ test('It processes Sofar API for daily data.', async () => {
   expect(values).toEqual({
     site: { id: 1 },
     date,
-    dailyAlertLevel: 0,
-    minBottomTemperature: undefined,
-    maxBottomTemperature: undefined,
     avgBottomTemperature: undefined,
+    avgWaveHeight: undefined,
+    avgWindSpeed: 2.462633571849366,
+    dailyAlertLevel: 0,
+    degreeHeatingDays: 19.45257431369285,
+    maxBottomTemperature: undefined,
+    maxWaveHeight: undefined,
+    maxWindSpeed: 5.820930032101256,
+    minBottomTemperature: undefined,
+    minWaveHeight: undefined,
+    minWindSpeed: 1.1440491369818266,
+    satelliteTemperature: 15.229990049528602,
     topTemperature: undefined,
-    satelliteTemperature: 14.0600004196167,
-    degreeHeatingDays: 0,
-    minWaveHeight: 0.602825164794922,
-    maxWaveHeight: 0.688246726989746,
-    avgWaveHeight: 0.6370683908462524,
-    waveMeanDirection: 260,
-    waveMeanPeriod: 5,
-    minWindSpeed: 2.6886074446319257,
-    maxWindSpeed: 5.951999598826317,
-    avgWindSpeed: 3.6391123432405657,
-    windDirection: 295,
+    waveMeanDirection: undefined,
+    waveMeanPeriod: undefined,
+    windDirection: 278,
   });
 });
