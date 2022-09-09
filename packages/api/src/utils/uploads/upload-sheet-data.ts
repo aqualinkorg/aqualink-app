@@ -46,6 +46,7 @@ const TIMEZONE_REGEX = /[+-]\d{1,2}:?\d{0,2}\b/;
 const SECONDS_IN_DAY = 24 * 60 * 60;
 const MISSING_LEAP_YEAR_DAY = SECONDS_IN_DAY * 1000;
 const MAGIC_NUMBER_OF_DAYS = 25569;
+const MAGIC_NUMBER_OF_MINUTES = 1440;
 
 type TimeType = 'Time' | 'Date' | 'Timestamp';
 
@@ -58,8 +59,8 @@ interface SourceItem {
 
 const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
   [SourceType.SONDE]: {
-    'Date (MM/DD/YYYY)': { time: 'Date', ignore: true },
-    'Time (HH:mm:ss)': { time: 'Time', ignore: true },
+    Date: { time: 'Date', ignore: true },
+    Time: { time: 'Time', ignore: true },
     'Time (Fract. Sec)': { ignore: true },
     'Site Name': { ignore: true },
     'Chlorophyll RFU': { metric: Metric.CHOLOROPHYLL_RFU },
@@ -79,6 +80,17 @@ const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
     'Temp °C': { metric: Metric.BOTTOM_TEMPERATURE },
     'Battery V': { metric: Metric.SONDE_BATTERY_VOLTAGE },
     'Cable Pwr V': { metric: Metric.SONDE_CABLE_POWER_VOLTAGE },
+    Temp: { metric: Metric.BOTTOM_TEMPERATURE },
+    Salinity: { metric: Metric.SALINITY },
+    DO: { metric: Metric.ODO_CONCENTRATION },
+    DO_sat: { metric: Metric.ODO_SATURATION },
+    Turbidity: { metric: Metric.TURBIDITY },
+    TotalN: { metric: Metric.NITROGEN_TOTAL },
+    TotalP: { metric: Metric.PHOSPHORUS_TOTAL },
+    Phosphate: { metric: Metric.PHOSPHORUS },
+    Silicate: { metric: Metric.SILICATE },
+    NNN: { metric: Metric.NNN },
+    NH4: { metric: Metric.AMMONIUM },
   },
   [SourceType.METLOG]: {
     '#': { ignore: true },
@@ -132,6 +144,7 @@ const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
 };
 
 export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
+export type Extension = typeof ACCEPTED_FILE_TYPES[number]['extension'];
 
 export const fileFilter: MulterOptions['fileFilter'] = (
   _,
@@ -167,7 +180,21 @@ async function refreshMaterializedView(repositories: Repositories) {
   console.timeEnd(`Refresh Materialized View ${hash}`);
 }
 
-const getJsDateFromExcel = (excelDate, timezone) => {
+const getJsDateFromExcel = (item, index, timezone) => {
+  if (Array.isArray(index)) {
+    const excelDate = item[index[0]];
+    const excelTime = item[index[1]];
+
+    const delta = excelDate - MAGIC_NUMBER_OF_DAYS;
+    const parsed = delta * MISSING_LEAP_YEAR_DAY;
+    const minutes = excelTime * MAGIC_NUMBER_OF_MINUTES;
+
+    const date = new Date(parsed);
+    date.setMinutes(minutes);
+
+    return date;
+  }
+  const excelDate = item[index];
   const delta = excelDate - MAGIC_NUMBER_OF_DAYS;
   const parsed = delta * MISSING_LEAP_YEAR_DAY;
 
@@ -181,30 +208,47 @@ const getJsDateFromExcel = (excelDate, timezone) => {
 const getTimeStamp = (
   index: number | number[],
   item: any[],
-  mimetype?: Mimetype,
+  extension?: Extension,
   timezone?: string,
 ) => {
   const isArray = Array.isArray(index);
-  if (isArray) return new Date(`${item[index[0]]} ${item[index[1]]}`);
-  if (!isArray && mimetype === 'text/csv' && timezone)
+  if (isArray && extension === 'csv')
+    return new Date(`${item[index[0]]} ${item[index[1]]}`);
+  if (!isArray && extension === 'csv' && timezone)
     return new Date(`${item[index]} GMT ${timezone}`);
-  if (!isArray && mimetype === 'text/csv' && !timezone)
+  if (!isArray && extension === 'csv' && !timezone)
     return new Date(item[index]);
-  return getJsDateFromExcel(item[index], timezone);
+  return getJsDateFromExcel(item, index, timezone);
 };
 
-const findTimeStampIndex = (type: SourceType): number | number[] => {
-  const timestampIndex = Object.values(sourceItems[type]).findIndex(
-    (item) => item.time === 'Timestamp',
+const findTimeStampIndex = (
+  type: SourceType,
+  headers: string[],
+): number | number[] => {
+  const findKey = (key) =>
+    first(
+      Object.entries(sourceItems[type]).find(([, value]) => value.time === key),
+    );
+
+  const timestampKey = findKey('Timestamp');
+
+  if (timestampKey) {
+    const timestampIndex = headers.findIndex((item) =>
+      item?.includes(timestampKey as string),
+    );
+
+    if (timestampIndex !== -1) return timestampIndex;
+  }
+
+  const timeKey = findKey('Time');
+  const dateKey = findKey('Date');
+
+  const timeIndex = headers.findIndex((item) =>
+    item?.includes(timeKey as string),
   );
 
-  if (timestampIndex !== -1) return timestampIndex;
-
-  const timeIndex = Object.values(sourceItems[type]).findIndex(
-    (item) => item.time === 'Time',
-  );
-  const dateIndex = Object.values(sourceItems[type]).findIndex(
-    (item) => item.time === 'Date',
+  const dateIndex = headers.findIndex((item) =>
+    item?.includes(dateKey as string),
   );
 
   if (timeIndex === -1 || dateIndex === -1) {
@@ -270,31 +314,27 @@ export const convertData = (
   ignoredHeaders: string[],
   fileName: string,
   sourceEntity: Sources,
-  mimetype?: Mimetype,
 ) => {
-  const preResult: any[] = workSheetData
-    ?.slice(headerIndex + 1)
-    .map((item) => {
-      if (item.length === headers.length) return item;
-      return undefined;
-    })
-    .filter((item) => item);
+  const preResult: any[] = workSheetData?.slice(headerIndex + 1);
+  const extension = fileName.split('.')[1] as Extension;
 
-  const timestampIndex = findTimeStampIndex(sourceType);
+  const timestampIndex = findTimeStampIndex(sourceType, headers);
 
   console.time(`Get data from sheet ${fileName}`);
   const results = preResult.map((item) => {
     const tempData = Object.keys(sourceItems[sourceType])
-      .map((header, i) => {
-        if (ignoredHeaders.includes(header)) {
+      .map((header) => {
+        if (ignoredHeaders.includes(header) || !headers.includes(header)) {
           return [];
         }
+
+        const index = headers.findIndex((h) => h === header);
 
         const columnName = sourceItems[sourceType][header].metric;
         const convertFn = sourceItems[sourceType][header]?.convertFn;
         const value = !convertFn
-          ? item[i]
-          : convertFn(parseFloat(item[i])).toFixed(2);
+          ? item[index]
+          : convertFn(parseFloat(item[index])).toFixed(2);
 
         return [columnName, value];
       })
@@ -305,7 +345,7 @@ export const convertData = (
         ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
         : undefined;
 
-    const timestamp = getTimeStamp(timestampIndex, item, mimetype, timezone);
+    const timestamp = getTimeStamp(timestampIndex, item, extension, timezone);
 
     // eslint-disable-next-line fp/no-mutating-methods
     tempData.push(['timestamp', timestamp]);
@@ -337,8 +377,8 @@ export const convertData = (
         if (!isNaN(parseFloat(valueObject.value))) {
           return true;
         }
-        logger.log('Excluding incompatible value:');
-        logger.log(valueObject);
+        // logger.log('Excluding incompatible value:');
+        // logger.log(valueObject);
         return false;
       }),
     ({ timestamp, metric, source }) => `${timestamp}, ${metric}, ${source.id}`,
@@ -355,7 +395,6 @@ export const uploadTimeSeriesData = async (
   sourceType: SourceType,
   repositories: Repositories,
   failOnWarning?: boolean,
-  mimetype?: Mimetype,
 ) => {
   if (!Object.keys(sourceItems[sourceType]).length) {
     throw new BadRequestException('Schema not provided for this type yet');
@@ -430,7 +469,6 @@ export const uploadTimeSeriesData = async (
       ignoredHeaders,
       fileName,
       sourceEntity,
-      mimetype,
     );
 
     const minDate = get(
