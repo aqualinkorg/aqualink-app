@@ -95,13 +95,13 @@ const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
   [SourceType.METLOG]: {
     '#': { ignore: true },
     'Date Time': { time: 'Timestamp', ignore: true },
-    'Pressure, mbar': { metric: Metric.PRESSURE },
-    'Rain, mm': { metric: Metric.PRECIPITATION },
-    'Temp, °C': { metric: Metric.AIR_TEMPERATURE },
-    'RH, %': { metric: Metric.RH },
-    'Wind Speed, m/s': { metric: Metric.WIND_SPEED },
-    'Gust Speed, m/s': { metric: Metric.WIND_GUST_SPEED },
-    'Wind Direction, ø': { metric: Metric.WIND_DIRECTION },
+    Pressure: { metric: Metric.PRESSURE },
+    Rain: { metric: Metric.PRECIPITATION },
+    Temp: { metric: Metric.AIR_TEMPERATURE },
+    RH: { metric: Metric.RH },
+    'Wind Speed': { metric: Metric.WIND_SPEED },
+    'Gust Speed': { metric: Metric.WIND_GUST_SPEED },
+    'Wind Direction': { metric: Metric.WIND_DIRECTION },
   },
   [SourceType.HOBO]: {
     '': { ignore: true },
@@ -212,12 +212,11 @@ const getTimeStamp = (
   timezone?: string,
 ) => {
   const isArray = Array.isArray(index);
-  if (isArray && extension === 'csv')
-    return new Date(`${item[index[0]]} ${item[index[1]]}`);
-  if (!isArray && extension === 'csv' && timezone)
+  const isCsv = extension === 'csv';
+  if (isArray && isCsv) return new Date(`${item[index[0]]} ${item[index[1]]}`);
+  if (!isArray && isCsv && timezone)
     return new Date(`${item[index]} GMT ${timezone}`);
-  if (!isArray && extension === 'csv' && !timezone)
-    return new Date(item[index]);
+  if (!isArray && isCsv && !timezone) return new Date(item[index]);
   return getJsDateFromExcel(item, index, timezone);
 };
 
@@ -324,11 +323,12 @@ export const convertData = (
   const results = preResult.map((item) => {
     const tempData = Object.keys(sourceItems[sourceType])
       .map((header) => {
-        if (ignoredHeaders.includes(header) || !headers.includes(header)) {
+        const isHeaderContains = headers.some((el) => el?.startsWith(header));
+        if (ignoredHeaders.includes(header) || !isHeaderContains) {
           return [];
         }
 
-        const index = headers.findIndex((h) => h === header);
+        const index = headers.findIndex((h) => h?.startsWith(header));
 
         const columnName = sourceItems[sourceType][header].metric;
         const convertFn = sourceItems[sourceType][header]?.convertFn;
@@ -377,13 +377,14 @@ export const convertData = (
         if (!isNaN(parseFloat(valueObject.value))) {
           return true;
         }
-        // logger.log('Excluding incompatible value:');
-        // logger.log(valueObject);
+        logger.log('Excluding incompatible value:');
+        logger.log(valueObject);
         return false;
       }),
     ({ timestamp, metric, source }) => `${timestamp}, ${metric}, ${source.id}`,
   );
   console.timeEnd(`Remove duplicates and empty values ${fileName}`);
+
   return data;
 };
 
