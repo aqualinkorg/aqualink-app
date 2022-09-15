@@ -56,6 +56,7 @@ export interface SpotterData {
   waveMeanDirection: ValueWithTimestamp[];
   windSpeed: ValueWithTimestamp[];
   windDirection: ValueWithTimestamp[];
+  barometer: ValueWithTimestamp[];
   latitude?: ValueWithTimestamp[];
   longitude?: ValueWithTimestamp[];
 }
