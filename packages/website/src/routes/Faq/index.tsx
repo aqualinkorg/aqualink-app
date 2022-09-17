@@ -61,8 +61,8 @@ const Faq = ({ classes }: FaqProps) => {
                     temperature information from the very top layer of the
                     surface (skin temperature) based on a 5km grid. NOAA
                     publishes observed temperatures on a daily basis and makes
-                    that available in their “Daily Global 5km Satellite Coral
-                    Bleaching Heat Stress Monitoring”. Sofar Ocean imports this
+                    that available in their "Daily Global 5km Satellite Coral
+                    Bleaching Heat Stress Monitoring". Sofar Ocean imports this
                     data into their servers and Aqualink uses their API to
                     render the data in our web application. When a Smart Buoy is
                     deployed we collect temperature information every hour from
@@ -102,7 +102,7 @@ const Faq = ({ classes }: FaqProps) => {
                   </Typography>
                   <p>
                     Scroll to the bottom of your dashboard for your site and click 
-                    on “ADD NEW SURVEY”. Follow the steps and add comments and 
+                    on "ADD NEW SURVEY". Follow the steps and add comments and 
                     pictures to your survey session.
                   </p>
                 </div>
@@ -137,9 +137,9 @@ const Faq = ({ classes }: FaqProps) => {
                           >
                           map
                           </a> 
-                          to Heat Stress. 
-                          You can do this by clicking on the “layer” 
-                          symbol on the map and selecting Heat Stress. 
+                          to heat stress. 
+                          You can do this by clicking on the "layer" 
+                          symbol on the map and selecting "Heat Stress". 
                         </p>
                       </li>
                     </ol>
@@ -151,7 +151,7 @@ const Faq = ({ classes }: FaqProps) => {
                     I’m collecting water quality data. How can I upload it to my dashboard?
                   </Typography>
                   <p>
-                    Go to your dashboard and click on “UPLOAD DATA” in the top right 
+                    Go to your dashboard and click on "UPLOAD DATA" in the top right 
                     corner. Select your survey point and sensor type. If you have a 
                     .xls, .csv, or .xlsx file with your data but aren’t using any of 
                     the selected sensors, please select Sonde data and continue to upload files.
@@ -210,7 +210,15 @@ const Faq = ({ classes }: FaqProps) => {
                   </Typography>
                   <p>
                     Register the site/s that you are monitoring on Aqualink 
-                    and reach out to admin@aqualink.org and let us know that 
+                    and reach out to 
+                    <a
+                      href="mailto:admin@aqualink.org?subject=Aqualink%20Application"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      admin@aqualink.org
+                  </a>
+                    and let us know that 
                     you are interested. You can apply for multiple, but the 
                     demand is high.
                   </p>
@@ -452,7 +460,14 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row">
                 <div className="col">
                   <Typography className={classes.title} variant="h4">
-                    If you have any questions or comments, feel free to contact admin@aqualink.org
+                  If you have any questions or comments, feel free to contact 
+                  <a
+                      href="mailto:admin@aqualink.org?subject=Questions%20or%20Comments"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      admin@aqualink.org.
+                  </a>
                   </Typography>
                 </div>
               </div>
