@@ -88,24 +88,144 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    I am managing a large area and would like more than one
-                    Smart Buoy, can I get multiple?
+                    Who is responsible for the satellite communication costs?
                   </Typography>
                   <p>
-                    Please submit an application for each site or location you
-                    would like a spotter for and we’ll be in touch to figure out
-                    a staged roll out with you.
+                    Aqualink will be responsible for any satellite communication costs.
                   </p>
                 </div>
               </div>
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    Who is responsible for the satellite communication costs?
+                    How do I upload surveys?
                   </Typography>
                   <p>
-                    Aqualink will be responsible for any satellite communication
-                    costs.
+                    Scroll to the bottom of your dashboard for your site and click 
+                    on “ADD NEW SURVEY”. Follow the steps and add comments and 
+                    pictures to your survey session.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    How can I track a heatwave?
+                  </Typography>
+                    <ol>
+                      <li>
+                        <p>
+                          Add multiple sites to your personal 
+                          <a
+                            href="https://aqualink.org/dashboard"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                          dashboard.
+                          </a> 
+                          You can add sites by clicking on the bookmark 
+                          symbol on each individual site.
+                        </p>
+                      </li>
+                      <li>
+                        <p>
+                          Change the view on the
+                          <a
+                            href="https://aqualink.org/map"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                          map
+                          </a> 
+                          to Heat Stress. 
+                          You can do this by clicking on the “layer” 
+                          symbol on the map and selecting Heat Stress. 
+                        </p>
+                      </li>
+                    </ol>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    I’m collecting water quality data. How can I upload it to my dashboard?
+                  </Typography>
+                  <p>
+                    Go to your dashboard and click on “UPLOAD DATA” in the top right 
+                    corner. Select your survey point and sensor type. If you have a 
+                    .xls, .csv, or .xlsx file with your data but aren’t using any of 
+                    the selected sensors, please select Sonde data and continue to upload files.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    Where can a site be placed?
+                  </Typography>
+                  <p>
+                    A site can be placed almost anywhere in the world as 
+                    long as it is placed in the ocean or sea. This is a 
+                    requirement for satellite data to work.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    How many sites can I have?
+                  </Typography>
+                  <p>
+                    You can have an unlimited amount of sites.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    Which parameters does Aqualink currently support for the dashboard?
+                  </Typography>
+                  <p>Please view
+                  <a
+                      href="https://docs.google.com/document/d/14MfB5iDZqzArZ-MAWuzWnnNs0XsRYK3bchotL-hRMUs/edit"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      this document.
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <Typography className={classes.title} variant="h4">
+                    Aqualink Smart Buoy FAQ
+                  </Typography>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    How do I apply for an Aqualink Smart Buoy?
+                  </Typography>
+                  <p>
+                    Register the site/s that you are monitoring on Aqualink 
+                    and reach out to admin@aqualink.org and let us know that 
+                    you are interested. You can apply for multiple, but the 
+                    demand is high.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    How many Smart Buoys are available?
+                  </Typography>
+                  <p>
+                    There is no set schedule for when we have Smart Buoys 
+                    available or how big our batch is. Please register your
+                    site/s and reach out to us, and we’ll let you know if 
+                    we have Smart Buoys available or when we might receive more.
                   </p>
                 </div>
               </div>
@@ -116,6 +236,18 @@ const Faq = ({ classes }: FaqProps) => {
                     Buoy can be deployed?
                   </Typography>
                   <p>100 meters.</p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    Are the Smart Buoys free?
+                  </Typography>
+                  <p>Yes, we cover the costs for the buoys, but you’ll be 
+                     responsible for shipping and customs fees. We’re 
+                     searching for people who can manage the buoys, perform 
+                     surveys, and use the data for research and monitoring programs. 
+                  </p>
                 </div>
               </div>
               <div className="row faqq">
