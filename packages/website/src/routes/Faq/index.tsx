@@ -449,6 +449,13 @@ const Faq = ({ classes }: FaqProps) => {
                   </p>
                 </div>
               </div>
+              <div className="row">
+                <div className="col">
+                  <Typography className={classes.title} variant="h4">
+                    If you have any questions or comments, feel free to contact admin@aqualink.org
+                  </Typography>
+                </div>
+              </div>
             </div>
           </div>
           {/* bloc-11 END */}
