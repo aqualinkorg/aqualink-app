@@ -153,7 +153,7 @@ const Faq = ({ classes }: FaqProps) => {
                   <p>
                     Go to your dashboard and click on "UPLOAD DATA" in the top right 
                     corner. Select your survey point and sensor type. If you have a 
-                    .xls, .csv, or .xlsx file with your data but aren’t using any of 
+                    .xls, .csv, or .xlsx file with your data but aren't using any of 
                     the selected sensors, please select Sonde data and continue to upload files.
                   </p>
                 </div>
@@ -209,7 +209,7 @@ const Faq = ({ classes }: FaqProps) => {
                     How do I apply for an Aqualink Smart Buoy?
                   </Typography>
                   <p>
-                    Register the site/s that you are monitoring on Aqualink 
+                    Register the site(s) that you are monitoring on Aqualink 
                     and reach out to 
                     <a
                       href="mailto:admin@aqualink.org?subject=Aqualink%20Application"
@@ -232,7 +232,7 @@ const Faq = ({ classes }: FaqProps) => {
                   <p>
                     There is no set schedule for when we have Smart Buoys 
                     available or how big our batch is. Please register your
-                    site/s and reach out to us, and we’ll let you know if 
+                    site/s and reach out to us, and we'll let you know if 
                     we have Smart Buoys available or when we might receive more.
                   </p>
                 </div>
@@ -251,8 +251,8 @@ const Faq = ({ classes }: FaqProps) => {
                   <Typography className={classes.question} variant="h5">
                     Are the Smart Buoys free?
                   </Typography>
-                  <p>Yes, we cover the costs for the buoys, but you’ll be 
-                     responsible for shipping and customs fees. We’re 
+                  <p>Yes, we cover the costs for the buoys, but you'll be 
+                     responsible for shipping and customs fees. We're 
                      searching for people who can manage the buoys, perform 
                      surveys, and use the data for research and monitoring programs. 
                   </p>
@@ -466,8 +466,9 @@ const Faq = ({ classes }: FaqProps) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      admin@aqualink.org.
+                      admin@aqualink.org
                   </a>
+                  .
                   </Typography>
                 </div>
               </div>
