@@ -61,8 +61,8 @@ const Faq = ({ classes }: FaqProps) => {
                     temperature information from the very top layer of the
                     surface (skin temperature) based on a 5km grid. NOAA
                     publishes observed temperatures on a daily basis and makes
-                    that available in their "Daily Global 5km Satellite Coral
-                    Bleaching Heat Stress Monitoring". Sofar Ocean imports this
+                    that available in their &quot;Daily Global 5km Satellite Coral
+                    Bleaching Heat Stress Monitoring&quot;. Sofar Ocean imports this
                     data into their servers and Aqualink uses their API to
                     render the data in our web application. When a Smart Buoy is
                     deployed we collect temperature information every hour from
@@ -102,7 +102,7 @@ const Faq = ({ classes }: FaqProps) => {
                   </Typography>
                   <p>
                     Scroll to the bottom of your dashboard for your site and click 
-                    on "ADD NEW SURVEY". Follow the steps and add comments and 
+                    on &quot;ADD NEW SURVEY&quot;. Follow the steps and add comments and 
                     pictures to your survey session.
                   </p>
                 </div>
@@ -115,7 +115,7 @@ const Faq = ({ classes }: FaqProps) => {
                     <ol>
                       <li>
                         <p>
-                          Add multiple sites to your personal 
+                          Add multiple sites to your personal&nbsp;  
                           <a
                             href="https://aqualink.org/dashboard"
                             target="_blank"
@@ -123,13 +123,13 @@ const Faq = ({ classes }: FaqProps) => {
                           >
                           dashboard.
                           </a> 
-                          You can add sites by clicking on the bookmark 
+                          &nbsp;You can add sites by clicking on the bookmark 
                           symbol on each individual site.
                         </p>
                       </li>
                       <li>
                         <p>
-                          Change the view on the
+                          Change the view on the&nbsp;
                           <a
                             href="https://aqualink.org/map"
                             target="_blank"
@@ -137,9 +137,9 @@ const Faq = ({ classes }: FaqProps) => {
                           >
                           map
                           </a> 
-                          to heat stress. 
-                          You can do this by clicking on the "layer" 
-                          symbol on the map and selecting "Heat Stress". 
+                          &nbsp;to heat stress. 
+                          You can do this by clicking on the &quot;layer&quot; 
+                          symbol on the map and selecting &quot;Heat Stress&quot;. 
                         </p>
                       </li>
                     </ol>
@@ -148,12 +148,12 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    I’m collecting water quality data. How can I upload it to my dashboard?
+                    I&apos;m collecting water quality data. How can I upload it to my dashboard?
                   </Typography>
                   <p>
-                    Go to your dashboard and click on "UPLOAD DATA" in the top right 
+                    Go to your dashboard and click on &quot;UPLOAD DATA&quot; in the top right 
                     corner. Select your survey point and sensor type. If you have a 
-                    .xls, .csv, or .xlsx file with your data but aren't using any of 
+                    .xls, .csv, or .xlsx file with your data but aren&apos;t using any of 
                     the selected sensors, please select Sonde data and continue to upload files.
                   </p>
                 </div>
@@ -185,9 +185,9 @@ const Faq = ({ classes }: FaqProps) => {
                   <Typography className={classes.question} variant="h5">
                     Which parameters does Aqualink currently support for the dashboard?
                   </Typography>
-                  <p>Please view
+                  <p>Please view&nbsp;
                   <a
-                      href="https://docs.google.com/document/d/14MfB5iDZqzArZ-MAWuzWnnNs0XsRYK3bchotL-hRMUs/edit"
+                      href="https://docs.google.com/document/d/14MfB5iDZqzArZ-MAWuzWnnNs0XsRYK3bchotL-hRMUs/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -210,7 +210,7 @@ const Faq = ({ classes }: FaqProps) => {
                   </Typography>
                   <p>
                     Register the site(s) that you are monitoring on Aqualink 
-                    and reach out to 
+                    and reach out to&nbsp; 
                     <a
                       href="mailto:admin@aqualink.org?subject=Aqualink%20Application"
                       target="_blank"
@@ -218,7 +218,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       admin@aqualink.org
                   </a>
-                    and let us know that 
+                    &nbsp;and let us know that 
                     you are interested. You can apply for multiple, but the 
                     demand is high.
                   </p>
@@ -232,7 +232,7 @@ const Faq = ({ classes }: FaqProps) => {
                   <p>
                     There is no set schedule for when we have Smart Buoys 
                     available or how big our batch is. Please register your
-                    site/s and reach out to us, and we'll let you know if 
+                    site(s) and reach out to us, and we&apos;ll let you know if 
                     we have Smart Buoys available or when we might receive more.
                   </p>
                 </div>
@@ -251,8 +251,8 @@ const Faq = ({ classes }: FaqProps) => {
                   <Typography className={classes.question} variant="h5">
                     Are the Smart Buoys free?
                   </Typography>
-                  <p>Yes, we cover the costs for the buoys, but you'll be 
-                     responsible for shipping and customs fees. We're 
+                  <p>Yes, we cover the costs for the buoys, but you&apos;ll be 
+                     responsible for shipping and customs fees. We&apos;re 
                      searching for people who can manage the buoys, perform 
                      surveys, and use the data for research and monitoring programs. 
                   </p>
@@ -460,7 +460,7 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row">
                 <div className="col">
                   <Typography className={classes.title} variant="h4">
-                  If you have any questions or comments, feel free to contact 
+                  If you have any questions or comments, feel free to contact&nbsp; 
                   <a
                       href="mailto:admin@aqualink.org?subject=Questions%20or%20Comments"
                       target="_blank"
