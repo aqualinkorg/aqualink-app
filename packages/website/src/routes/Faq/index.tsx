@@ -266,8 +266,15 @@ const Faq = ({ classes }: FaqProps) => {
                   </Typography>
                   <p>
                     Shipping cost will vary greatly depending on your location.
-                    To get an idea of shipping costs you can visit
-                    https://onlineshippingcalculator.com/ and enter the
+                    To get an idea of shipping costs you can visit&nbsp;
+                    <a
+                      href="https://onlineshippingcalculator.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      https://onlineshippingcalculator.com/
+                    </a>
+                    &nbsp;and enter the
                     following:
                     <br />
                   </p>
@@ -362,9 +369,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       here
                     </a>
-                    :<br />
-                    More specifications will be released soon.
-                    <br />
+                    .
                   </p>
                 </div>
               </div>
