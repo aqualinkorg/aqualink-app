@@ -49,46 +49,108 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
-            <mock-typography
-              classname="Sensor-contentTextTitles-4"
-              variant="subtitle2"
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
             >
-              TEMP AT 1m
-            </mock-typography>
-            <mock-typography
-              classname="Sensor-contentTextValues-5"
-              variant="h3"
-            >
-              - -°C
-            </mock-typography>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-5"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-typography
+                      classname="Sensor-contentTextTitles-4"
+                      variant="subtitle2"
+                    >
+                      TEMP AT 1m
+                    </mock-typography>
+                    <mock-typography
+                      classname="Sensor-contentTextValues-5"
+                      variant="h3"
+                    >
+                      - -°C
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-typography
+                      classname="Sensor-contentTextTitles-4"
+                      variant="subtitle2"
+                    >
+                      TEMP AT DEPTH
+                    </mock-typography>
+                    <mock-typography
+                      classname="Sensor-contentTextValues-5"
+                      variant="h3"
+                    >
+                      - -°C
+                    </mock-typography>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+              >
+                <img
+                  alt="sensor"
+                  src="sensor.svg"
+                />
+              </div>
+            </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
-            <mock-typography
-              classname="Sensor-contentTextTitles-4"
-              variant="subtitle2"
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
             >
-              TEMP AT DEPTH
-            </mock-typography>
-            <mock-typography
-              classname="Sensor-contentTextValues-5"
-              variant="h3"
-            >
-              - -°C
-            </mock-typography>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+              >
+                <mock-typography
+                  classname="Sensor-contentTextTitles-4"
+                  variant="subtitle2"
+                >
+                  BAROMETRIC PRESSURE
+                </mock-typography>
+                <mock-typography
+                  classname="Sensor-contentTextValues-5"
+                  variant="h3"
+                >
+                  - - hPa
+                </mock-typography>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+              >
+                <mock-box
+                  style="display: flex; align-items: center; padding-top: 1em;"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+                    />
+                  </svg>
+                  <mock-typography
+                    classname="Sensor-contentTextValues-5"
+                    variant="h3"
+                  >
+                    - - hPa
+                  </mock-typography>
+                </mock-box>
+              </div>
+            </div>
           </div>
         </div>
-        <mock-box
-          bottom="-15"
-          position="absolute"
-          right="0"
-        >
-          <img
-            alt="sensor"
-            src="sensor.svg"
-          />
-        </mock-box>
       </mock-box>
       <div
         class="MuiGrid-root Sensor-noSensorAlert-11 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"

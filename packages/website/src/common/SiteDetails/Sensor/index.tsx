@@ -13,6 +13,8 @@ import {
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import UpdateInfo from "../../UpdateInfo";
 import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
 import { formatNumber } from "../../../helpers/numberUtils";
@@ -63,7 +65,12 @@ const getApplicationTag = (
 };
 
 const Sensor = ({ depth, id, data, classes }: SensorProps) => {
-  const { topTemperature, bottomTemperature } = data;
+  const {
+    topTemperature,
+    bottomTemperature,
+    barometricPressure,
+    barometricPressureDiff,
+  } = data;
 
   const relativeTime =
     (topTemperature?.timestamp && toRelativeTime(topTemperature.timestamp)) ||
@@ -109,25 +116,76 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
           flexGrow={1}
           style={{ position: "relative" }}
         >
-          <Grid container spacing={1}>
-            {metrics.map(({ label, value }) => (
-              <Grid key={label} item xs={12}>
-                <Typography
-                  className={classes.contentTextTitles}
-                  variant="subtitle2"
-                >
-                  {label}
-                </Typography>
-                <Typography className={classes.contentTextValues} variant="h3">
-                  {value}
-                </Typography>
+          <Grid container direction="row" spacing={1}>
+            <Grid item xs={12}>
+              <Grid container spacing={1} direction="row">
+                <Grid item xs={6}>
+                  <Grid container spacing={5} direction="row">
+                    {metrics.map(({ label, value }) => (
+                      <Grid key={label} item xs={12}>
+                        <Typography
+                          className={classes.contentTextTitles}
+                          variant="subtitle2"
+                        >
+                          {label}
+                        </Typography>
+                        <Typography
+                          className={classes.contentTextValues}
+                          variant="h3"
+                        >
+                          {value}
+                        </Typography>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+                <Grid item xs={6}>
+                  <img alt="sensor" src={sensor} />
+                </Grid>
               </Grid>
-            ))}
-          </Grid>
+            </Grid>
 
-          <Box position="absolute" bottom={-15} right={0}>
-            <img alt="sensor" src={sensor} />
-          </Box>
+            <Grid item xs={12}>
+              <Grid container direction="row" spacing={1}>
+                <Grid key={42} item xs={6}>
+                  <Typography
+                    className={classes.contentTextTitles}
+                    variant="subtitle2"
+                  >
+                    BAROMETRIC PRESSURE
+                  </Typography>
+                  <Typography
+                    className={classes.contentTextValues}
+                    variant="h3"
+                  >
+                    {`${formatNumber(barometricPressure?.value, 1)} hPa`}
+                  </Typography>
+                </Grid>
+                <Grid key={12} item xs={6}>
+                  <Box
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingTop: "1em",
+                    }}
+                  >
+                    {(barometricPressureDiff?.value || 0) < 0 ? (
+                      <ArrowDownwardIcon />
+                    ) : (
+                      <ArrowUpwardIcon />
+                    )}
+
+                    <Typography
+                      className={classes.contentTextValues}
+                      variant="h3"
+                    >
+                      {`${formatNumber(barometricPressureDiff?.value, 1)} hPa`}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
         </Box>
         {hasSpotter ? (
           <UpdateInfo
