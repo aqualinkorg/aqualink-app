@@ -69,4 +69,5 @@ export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
   waveMeanDirection: [],
   windSpeed: [],
   windDirection: [],
+  barometer: [],
 };

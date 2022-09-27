@@ -38,6 +38,9 @@ export enum Metric {
   PRECIPITATION = 'precipitation',
   RH = 'rh',
   WIND_GUST_SPEED = 'wind_gust_speed',
+  BAROMETRIC_PRESSURE = 'barometric_pressure',
+  // BAROMETRIC_PRESSURE_DIFF is used only in latest data table and it's the difference from the previous measurement
+  BAROMETRIC_PRESSURE_DIFF = 'barometric_pressure_diff',
 }
 
 export enum Units {
@@ -45,6 +48,7 @@ export enum Units {
   METERS = 'm',
   METERS_PER_SECOND = 'm/s',
   DHW = 'dhw',
+  HPA = 'hPa',
 }
 
 @Entity()
