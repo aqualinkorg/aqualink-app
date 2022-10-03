@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import RemoveIcon from "@material-ui/icons/Remove";
 import UpdateInfo from "../../UpdateInfo";
 import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
 import { formatNumber } from "../../../helpers/numberUtils";
@@ -140,49 +141,78 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
                   </Grid>
                 </Grid>
                 <Grid item xs={6}>
-                  <img alt="sensor" src={sensor} />
+                  <img
+                    alt="sensor"
+                    src={sensor}
+                    height={barometricPressure ? "135" : "150"}
+                    width="auto"
+                  />
                 </Grid>
               </Grid>
             </Grid>
 
             <Grid item xs={12}>
               <Grid container direction="row" spacing={1}>
-                <Grid key={42} item xs={6}>
-                  <Typography
-                    className={classes.contentTextTitles}
-                    variant="subtitle2"
-                  >
-                    BAROMETRIC PRESSURE
-                  </Typography>
-                  <Typography
-                    className={classes.contentTextValues}
-                    variant="h3"
-                  >
-                    {`${formatNumber(barometricPressure?.value, 1)} hPa`}
-                  </Typography>
-                </Grid>
-                <Grid key={12} item xs={6}>
-                  <Box
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      paddingTop: "1em",
-                    }}
-                  >
-                    {(barometricPressureDiff?.value || 0) < 0 ? (
-                      <ArrowDownwardIcon />
-                    ) : (
-                      <ArrowUpwardIcon />
-                    )}
-
+                {barometricPressure && (
+                  <Grid item xs={6}>
                     <Typography
-                      className={classes.contentTextValues}
-                      variant="h3"
+                      className={classes.contentTextTitles}
+                      variant="subtitle2"
                     >
-                      {`${formatNumber(barometricPressureDiff?.value, 1)} hPa`}
+                      BAROMETRIC PRESSURE
                     </Typography>
-                  </Box>
-                </Grid>
+                    <Box
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <Typography
+                        className={classes.contentTextValues}
+                        variant="h3"
+                      >
+                        {formatNumber(barometricPressure?.value, 1)}
+                      </Typography>
+                      <Typography className={classes.contentUnits} variant="h6">
+                        hPa
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+                {barometricPressure && (
+                  <Grid
+                    item
+                    xs={6}
+                    style={{ alignItems: "flex-end", display: "flex" }}
+                  >
+                    <Box
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      {(barometricPressureDiff?.value || 0) === 0 && (
+                        <RemoveIcon />
+                      )}
+                      {(barometricPressureDiff?.value || 0) <= 0 && (
+                        <ArrowDownwardIcon />
+                      )}
+                      {(barometricPressureDiff?.value || 0) >= 0 && (
+                        <ArrowUpwardIcon />
+                      )}
+
+                      <Typography
+                        className={classes.contentTextValues}
+                        variant="h3"
+                      >
+                        {formatNumber(barometricPressureDiff?.value, 1)}
+                      </Typography>
+                      <Typography className={classes.contentUnits} variant="h6">
+                        hPa
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>

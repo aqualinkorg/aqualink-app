@@ -57,6 +57,7 @@ export interface SpotterData {
   windSpeed: ValueWithTimestamp[];
   windDirection: ValueWithTimestamp[];
   barometer: ValueWithTimestamp[];
+  barometricDiff: ValueWithTimestamp[];
   latitude?: ValueWithTimestamp[];
   longitude?: ValueWithTimestamp[];
 }
@@ -70,4 +71,5 @@ export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
   windSpeed: [],
   windDirection: [],
   barometer: [],
+  barometricDiff: [],
 };

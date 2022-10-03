@@ -1,6 +1,15 @@
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
-import { chunk, first, get, isNaN, maxBy, minBy, uniqBy } from 'lodash';
+import {
+  chunk,
+  first,
+  get,
+  groupBy,
+  isNaN,
+  maxBy,
+  minBy,
+  uniqBy,
+} from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
 import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
@@ -441,7 +450,8 @@ export const uploadTimeSeriesData = async (
       fileLocation,
     });
 
-    const dataAsTimeSeries = data.map((x: any) => {
+    const dataAsTimeSeriesNoDiffs = data.map((x: any) => {
+      console.log(x.source);
       return {
         timestamp: x.timestamp,
         value: x.value,
@@ -450,6 +460,41 @@ export const uploadTimeSeriesData = async (
         dataUpload: dataUploadsFile,
       };
     });
+
+    const barometricPressures = dataAsTimeSeriesNoDiffs.filter(
+      (x) => x.metric === Metric.BAROMETRIC_PRESSURE,
+    );
+    const pressuresBySource = groupBy(barometricPressures, 'source.site.id');
+
+    const barometricDiffs = Object.entries(pressuresBySource).map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ([key, pressures]) => {
+        // eslint-disable-next-line fp/no-mutating-methods
+        const sortedPressures = pressures.sort((a, b) => {
+          if (a.timestamp > b.timestamp) return 1;
+          if (a.timestamp < b.timestamp) return -1;
+          return 0;
+        });
+        const lastTowPressures = sortedPressures?.slice(-2);
+        const valueDiff =
+          lastTowPressures?.length === 2
+            ? lastTowPressures[1].value - lastTowPressures[0].value
+            : undefined;
+        return valueDiff !== undefined
+          ? {
+              timestamp: lastTowPressures[1].timestamp,
+              value: valueDiff,
+              metric: Metric.BAROMETRIC_PRESSURE_DIFF,
+              source: lastTowPressures[1].source,
+              dataUpload: dataUploadsFile,
+            }
+          : undefined;
+      },
+    );
+
+    const filteredDiffs = barometricDiffs.filter((x) => x !== undefined);
+
+    const dataAsTimeSeries = [...dataAsTimeSeriesNoDiffs, filteredDiffs];
 
     // Data is too big to added with one bulk insert so we batch the upload.
     console.time(`Loading into DB ${fileName}`);
