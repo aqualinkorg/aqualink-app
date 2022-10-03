@@ -151,7 +151,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
               </Grid>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{ paddingTop: "1em" }}>
               <Grid container direction="row" spacing={1}>
                 {barometricPressure && (
                   <Grid item xs={6}>
