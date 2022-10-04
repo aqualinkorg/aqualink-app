@@ -258,22 +258,24 @@ export const convertData = (
   sourceEntity: Sources,
   mimetype?: Mimetype,
 ) => {
-  const preResult: any[] = workSheetData
+  const preResult = workSheetData
     ?.slice(headerIndex + 1)
     .map((item) => {
-      if (item.length === headers.length) return item;
+      if (item.length === headers.length) return item as string[];
       return undefined;
     })
-    .filter((item) => item);
+    .filter((item) => item) as string[][];
 
   const timestampIndex = findTimeStampIndex(sourceType);
 
   console.time(`Get data from sheet ${fileName}`);
   const results = preResult.map((item) => {
-    const tempData = Object.keys(sourceItems[sourceType])
-      .map((header, i) => {
+    const tempData: ([Metric, string] | ['timestamp', Date])[] = Object.keys(
+      sourceItems[sourceType],
+    )
+      .map<[Metric | undefined, string]>((header, i) => {
         if (ignoredHeaders.includes(header)) {
-          return [];
+          return [undefined, ''];
         }
 
         const columnName = sourceItems[sourceType][header].metric;
@@ -284,7 +286,9 @@ export const convertData = (
 
         return [columnName, value];
       })
-      .filter((filtered) => filtered.length);
+      .filter<[Metric, string]>(
+        (filtered): filtered is [Metric, string] => filtered[0] !== undefined,
+      );
 
     const timezone =
       typeof timestampIndex === 'number'
