@@ -262,20 +262,7 @@ export async function getSpotterData(
     value: data.value,
   }));
 
-  const lastTowPressures = spotterBarometer?.slice(-2);
-  const valueDiff =
-    lastTowPressures?.length === 2
-      ? lastTowPressures[1].value - lastTowPressures[0].value
-      : undefined;
-
-  const spotterBarometricDiff: ValueWithTimestamp[] = valueDiff
-    ? [
-        {
-          value: valueDiff,
-          timestamp: lastTowPressures![1].timestamp,
-        },
-      ]
-    : [];
+  const spotterBarometricDiff = getBarometricDiff(spotterBarometer);
 
   // Sofar increments sensors by distance to the spotter.
   // Sensor 1 -> topTemp and Sensor 2 -> bottomTemp
@@ -323,7 +310,7 @@ export async function getSpotterData(
     windSpeed: sofarWindSpeed,
     windDirection: sofarWindDirection,
     barometer: spotterBarometer,
-    barometricDiff: spotterBarometricDiff,
+    barometricDiff: spotterBarometricDiff ? [spotterBarometricDiff] : [],
     latitude: spotterLatitude,
     longitude: spotterLongitude,
   };
@@ -342,4 +329,21 @@ export function getValueClosestToDate(
       ? nextPoint
       : prevClosest,
   ).value;
+}
+
+export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
+  const lastTowPressures = spotterBarometer?.slice(-2);
+  const valueDiff =
+    lastTowPressures?.length === 2
+      ? lastTowPressures[1].value - lastTowPressures[0].value
+      : undefined;
+
+  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
+    ? {
+        value: valueDiff,
+        timestamp: lastTowPressures![1].timestamp,
+      }
+    : null;
+
+  return spotterBarometricDiff;
 }

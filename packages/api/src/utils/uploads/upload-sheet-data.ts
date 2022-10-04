@@ -25,6 +25,7 @@ import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
 import { getSite } from '../site.utils';
 import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
+import { getBarometricDiff } from '../sofar';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -302,7 +303,14 @@ export const convertData = (
   console.time(`Remove duplicates and empty values ${fileName}`);
   const data = uniqBy(
     results
-      .reduce((timeSeriesObjects: any[], object) => {
+      .reduce<
+        {
+          timestamp: string;
+          value: number;
+          metric: string;
+          source: Sources;
+        }[]
+      >((timeSeriesObjects: any[], object) => {
         const { timestamp } = object;
         return [
           ...timeSeriesObjects,
@@ -319,7 +327,7 @@ export const convertData = (
         ];
       }, [])
       .filter((valueObject) => {
-        if (!isNaN(parseFloat(valueObject.value))) {
+        if (!isNaN(valueObject.value)) {
           return true;
         }
         logger.log('Excluding incompatible value:');
@@ -450,8 +458,7 @@ export const uploadTimeSeriesData = async (
       fileLocation,
     });
 
-    const dataAsTimeSeriesNoDiffs = data.map((x: any) => {
-      console.log(x.source);
+    const dataAsTimeSeriesNoDiffs = data.map((x) => {
       return {
         timestamp: x.timestamp,
         value: x.value,
@@ -475,17 +482,13 @@ export const uploadTimeSeriesData = async (
           if (a.timestamp < b.timestamp) return -1;
           return 0;
         });
-        const lastTowPressures = sortedPressures?.slice(-2);
-        const valueDiff =
-          lastTowPressures?.length === 2
-            ? lastTowPressures[1].value - lastTowPressures[0].value
-            : undefined;
-        return valueDiff !== undefined
+        const valueDiff = getBarometricDiff(sortedPressures);
+        return valueDiff !== null
           ? {
-              timestamp: lastTowPressures[1].timestamp,
-              value: valueDiff,
+              timestamp: valueDiff.timestamp,
+              value: valueDiff.value,
               metric: Metric.BAROMETRIC_PRESSURE_DIFF,
-              source: lastTowPressures[1].source,
+              source: sortedPressures[1].source,
               dataUpload: dataUploadsFile,
             }
           : undefined;

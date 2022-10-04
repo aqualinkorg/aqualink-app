@@ -39,7 +39,6 @@ export enum Metric {
   RH = 'rh',
   WIND_GUST_SPEED = 'wind_gust_speed',
   BAROMETRIC_PRESSURE = 'barometric_pressure',
-  // BAROMETRIC_PRESSURE_DIFF is used only in latest data table and it's the difference from the previous measurement
   BAROMETRIC_PRESSURE_DIFF = 'barometric_pressure_diff',
 }
 
