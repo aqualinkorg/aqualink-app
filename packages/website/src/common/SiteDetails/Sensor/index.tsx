@@ -111,119 +111,94 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
       />
 
       <CardContent className={classes.content}>
-        <Box
-          p="1rem"
-          display="flex"
-          flexGrow={1}
-          style={{ position: "relative" }}
-        >
-          <Grid container direction="row" spacing={1}>
-            <Grid item xs={12}>
-              <Grid container spacing={1} direction="row">
-                <Grid item xs={6}>
-                  <Grid container spacing={5} direction="row">
-                    {metrics.map(({ label, value }) => (
-                      <Grid key={label} item xs={12}>
-                        <Typography
-                          className={classes.contentTextTitles}
-                          variant="subtitle2"
-                        >
-                          {label}
-                        </Typography>
-                        <Typography
-                          className={classes.contentTextValues}
-                          variant="h3"
-                        >
-                          {value}
-                        </Typography>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Grid>
-                <Grid item xs={6}>
-                  <img
-                    alt="sensor"
-                    src={sensor}
-                    height={barometricPressure ? "135" : "150"}
-                    width="auto"
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
+        <div className={classes.gridContainer}>
+          {metrics.map(({ label, value }, index) => (
+            <div style={{ gridArea: `value${index}` }}>
+              <Typography
+                className={classes.contentTextTitles}
+                variant="subtitle2"
+              >
+                {label}
+              </Typography>
+              <Typography className={classes.contentTextValues} variant="h3">
+                {value}
+              </Typography>
+            </div>
+          ))}
+          {barometricPressure && (
+            <div style={{ gridArea: "value2" }}>
+              <Typography
+                className={classes.contentTextTitles}
+                variant="subtitle2"
+              >
+                BAROMETRIC PRESSURE
+              </Typography>
+              <Box
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                }}
+              >
+                <Typography className={classes.contentTextValues} variant="h3">
+                  {formatNumber(barometricPressure?.value, 1)}
+                </Typography>
+                <Typography className={classes.contentUnits} variant="h6">
+                  hPa
+                </Typography>
+              </Box>
+            </div>
+          )}
+          <div style={{ gridArea: "image" }}>
+            <img
+              alt="sensor"
+              src={sensor}
+              height={barometricPressure ? "135" : "150"}
+              width="auto"
+            />
+          </div>
+          <div
+            style={{
+              gridArea: "value3",
+              display: "flex",
+              alignItems: "flex-end",
+            }}
+          >
+            {barometricPressure && (
+              <div>
+                <Box
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  {(barometricPressureDiff?.value || 0) === 0 && <RemoveIcon />}
+                  {(barometricPressureDiff?.value || 0) <= 0 && (
+                    <ArrowDownwardIcon />
+                  )}
+                  {(barometricPressureDiff?.value || 0) >= 0 && (
+                    <ArrowUpwardIcon />
+                  )}
 
-            <Grid item xs={12} style={{ paddingTop: "1em" }}>
-              <Grid container direction="row" spacing={1}>
-                {barometricPressure && (
-                  <Grid item xs={6}>
-                    <Typography
-                      className={classes.contentTextTitles}
-                      variant="subtitle2"
-                    >
-                      BAROMETRIC PRESSURE
-                    </Typography>
-                    <Box
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-end",
-                      }}
-                    >
-                      <Typography
-                        className={classes.contentTextValues}
-                        variant="h3"
-                      >
-                        {formatNumber(barometricPressure?.value, 1)}
-                      </Typography>
-                      <Typography className={classes.contentUnits} variant="h6">
-                        hPa
-                      </Typography>
-                    </Box>
-                  </Grid>
-                )}
-                {barometricPressure && (
-                  <Grid
-                    item
-                    xs={6}
-                    style={{ alignItems: "flex-end", display: "flex" }}
+                  <Typography
+                    className={classes.contentTextValues}
+                    variant="h3"
                   >
-                    <Box
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-end",
-                      }}
-                    >
-                      {(barometricPressureDiff?.value || 0) === 0 && (
-                        <RemoveIcon />
-                      )}
-                      {(barometricPressureDiff?.value || 0) <= 0 && (
-                        <ArrowDownwardIcon />
-                      )}
-                      {(barometricPressureDiff?.value || 0) >= 0 && (
-                        <ArrowUpwardIcon />
-                      )}
-
-                      <Typography
-                        className={classes.contentTextValues}
-                        variant="h3"
-                      >
-                        {formatNumber(barometricPressureDiff?.value, 1)}
-                      </Typography>
-                      <Typography className={classes.contentUnits} variant="h6">
-                        hPa
-                      </Typography>
-                    </Box>
-                  </Grid>
-                )}
-              </Grid>
-            </Grid>
-          </Grid>
-        </Box>
+                    {formatNumber(barometricPressureDiff?.value, 1)}
+                  </Typography>
+                  <Typography className={classes.contentUnits} variant="h6">
+                    hPa
+                  </Typography>
+                </Box>
+              </div>
+            )}
+          </div>
+        </div>
         {hasSpotter ? (
           <UpdateInfo
             relativeTime={relativeTime}
             timeText="Last data received"
             live
             frequency="hourly"
-            withMargin
           />
         ) : (
           <Grid
@@ -292,6 +267,12 @@ const styles = () =>
         color: "inherit",
         textDecoration: "none",
       },
+    },
+    gridContainer: {
+      display: "grid",
+      gap: "1rem",
+      gridTemplateAreas: "'value0 image' 'value1 image' 'value2 value3'",
+      padding: "1rem",
     },
   });
 
