@@ -69,6 +69,10 @@ const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
     // convert from m/s to to km/h
     convert: 3.6,
   },
+  barometricPressure: {
+    unit: "hPa",
+    title: "Barometric Pressure",
+  },
   significantWaveHeight: {
     unit: "m",
     title: "Significant Wave Height",
