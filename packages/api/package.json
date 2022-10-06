@@ -96,7 +96,7 @@
     "multer": "^1.4.2",
     "node-xlsx": "^0.17.2",
     "objects-to-csv": "^1.3.6",
-    "passport": "^0.4.1",
+    "passport": "^0.6.0",
     "passport-custom": "^1.1.1",
     "pg": "^8.2.1",
     "pg-native": "^3.0.0",
