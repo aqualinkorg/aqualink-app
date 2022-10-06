@@ -169,6 +169,8 @@ export const addSpotterData = async (
             ['waveMeanPeriod', Metric.WAVE_MEAN_PERIOD],
             ['windDirection', Metric.WIND_DIRECTION],
             ['windSpeed', Metric.WIND_SPEED],
+            ['barometer', Metric.BAROMETRIC_PRESSURE],
+            ['barometricDiff', Metric.BAROMETRIC_PRESSURE_DIFF],
           ];
 
           // Save data to time_series

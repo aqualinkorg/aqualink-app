@@ -1,6 +1,15 @@
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
-import { chunk, first, get, isNaN, maxBy, minBy, uniqBy } from 'lodash';
+import {
+  chunk,
+  first,
+  get,
+  groupBy,
+  isNaN,
+  maxBy,
+  minBy,
+  uniqBy,
+} from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
 import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
@@ -16,6 +25,7 @@ import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
 import { getSite } from '../site.utils';
 import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
+import { getBarometricDiff } from '../sofar';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -248,22 +258,24 @@ export const convertData = (
   sourceEntity: Sources,
   mimetype?: Mimetype,
 ) => {
-  const preResult: any[] = workSheetData
+  const preResult = workSheetData
     ?.slice(headerIndex + 1)
     .map((item) => {
-      if (item.length === headers.length) return item;
+      if (item.length === headers.length) return item as string[];
       return undefined;
     })
-    .filter((item) => item);
+    .filter((item) => item) as string[][];
 
   const timestampIndex = findTimeStampIndex(sourceType);
 
   console.time(`Get data from sheet ${fileName}`);
   const results = preResult.map((item) => {
-    const tempData = Object.keys(sourceItems[sourceType])
-      .map((header, i) => {
+    const tempData: ([Metric, string] | ['timestamp', Date])[] = Object.keys(
+      sourceItems[sourceType],
+    )
+      .map<[Metric | undefined, string]>((header, i) => {
         if (ignoredHeaders.includes(header)) {
-          return [];
+          return [undefined, ''];
         }
 
         const columnName = sourceItems[sourceType][header].metric;
@@ -274,7 +286,9 @@ export const convertData = (
 
         return [columnName, value];
       })
-      .filter((filtered) => filtered.length);
+      .filter<[Metric, string]>(
+        (filtered): filtered is [Metric, string] => filtered[0] !== undefined,
+      );
 
     const timezone =
       typeof timestampIndex === 'number'
@@ -293,7 +307,14 @@ export const convertData = (
   console.time(`Remove duplicates and empty values ${fileName}`);
   const data = uniqBy(
     results
-      .reduce((timeSeriesObjects: any[], object) => {
+      .reduce<
+        {
+          timestamp: string;
+          value: number;
+          metric: string;
+          source: Sources;
+        }[]
+      >((timeSeriesObjects: any[], object) => {
         const { timestamp } = object;
         return [
           ...timeSeriesObjects,
@@ -310,7 +331,7 @@ export const convertData = (
         ];
       }, [])
       .filter((valueObject) => {
-        if (!isNaN(parseFloat(valueObject.value))) {
+        if (!isNaN(valueObject.value)) {
           return true;
         }
         logger.log('Excluding incompatible value:');
@@ -441,7 +462,7 @@ export const uploadTimeSeriesData = async (
       fileLocation,
     });
 
-    const dataAsTimeSeries = data.map((x: any) => {
+    const dataAsTimeSeriesNoDiffs = data.map((x) => {
       return {
         timestamp: x.timestamp,
         value: x.value,
@@ -450,6 +471,37 @@ export const uploadTimeSeriesData = async (
         dataUpload: dataUploadsFile,
       };
     });
+
+    const barometricPressures = dataAsTimeSeriesNoDiffs.filter(
+      (x) => x.metric === Metric.BAROMETRIC_PRESSURE,
+    );
+    const pressuresBySource = groupBy(barometricPressures, 'source.site.id');
+
+    const barometricDiffs = Object.entries(pressuresBySource).map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ([key, pressures]) => {
+        // eslint-disable-next-line fp/no-mutating-methods
+        const sortedPressures = pressures.sort((a, b) => {
+          if (a.timestamp > b.timestamp) return 1;
+          if (a.timestamp < b.timestamp) return -1;
+          return 0;
+        });
+        const valueDiff = getBarometricDiff(sortedPressures);
+        return valueDiff !== null
+          ? {
+              timestamp: valueDiff.timestamp,
+              value: valueDiff.value,
+              metric: Metric.BAROMETRIC_PRESSURE_DIFF,
+              source: sortedPressures[1].source,
+              dataUpload: dataUploadsFile,
+            }
+          : undefined;
+      },
+    );
+
+    const filteredDiffs = barometricDiffs.filter((x) => x !== undefined);
+
+    const dataAsTimeSeries = [...dataAsTimeSeriesNoDiffs, filteredDiffs];
 
     // Data is too big to added with one bulk insert so we batch the upload.
     console.time(`Loading into DB ${fileName}`);
