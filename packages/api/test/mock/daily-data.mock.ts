@@ -130,6 +130,11 @@ export const getMockSpotterData = (
       timestamp: start.clone().add(i, 'days').toISOString(),
       value: random(-180, 180, true),
     })),
+    barometer: times(diffDays, (i) => ({
+      timestamp: start.clone().add(i, 'days').toISOString(),
+      value: random(900, 1100, true),
+    })),
+    barometricDiff: [],
   };
 };
 

@@ -15,6 +15,7 @@ import {
   OceanSenseKeys,
   ValueWithTimestamp,
   TimeSeriesData,
+  Metrics,
 } from "../../../store/Sites/types";
 import { CardColumn, OceanSenseDataset } from "./types";
 import type { Dataset } from "../index";
@@ -413,7 +414,8 @@ export const generateMetricDataset = (
   color: string,
   chartStartDate?: string,
   chartEndDate?: string,
-  timezone?: string | null
+  timezone?: string | null,
+  metric?: Metrics
 ): Dataset => {
   const display = hasAtLeastNData(CHART_MIN_NUMBER_OF_POINTS)(
     filterSofarData(chartStartDate, chartEndDate)(data)
@@ -429,6 +431,7 @@ export const generateMetricDataset = (
     tooltipMaxHoursGap: 6,
     displayData: display,
     displayCardColumn: display,
+    metric,
   };
 };
 
