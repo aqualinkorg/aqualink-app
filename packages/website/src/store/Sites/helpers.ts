@@ -339,6 +339,8 @@ export const parseLatestData = (
   const spotterTempWhitelist = new Set([
     "bottom_temperature",
     "top_temperature",
+    "barometric_pressure",
+    "barometric_pressure_diff",
   ]);
 
   const filtered = copy.filter(
