@@ -61,13 +61,13 @@ const Faq = ({ classes }: FaqProps) => {
                     temperature information from the very top layer of the
                     surface (skin temperature) based on a 5km grid. NOAA
                     publishes observed temperatures on a daily basis and makes
-                    that available in their &quot;Daily Global 5km Satellite Coral
-                    Bleaching Heat Stress Monitoring&quot;. Sofar Ocean imports this
-                    data into their servers and Aqualink uses their API to
-                    render the data in our web application. When a Smart Buoy is
-                    deployed we collect temperature information every hour from
-                    a depth of 1 meter as well as the moored depth which is at
-                    the sea floor.
+                    that available in their &quot;Daily Global 5km Satellite
+                    Coral Bleaching Heat Stress Monitoring&quot;. Sofar Ocean
+                    imports this data into their servers and Aqualink uses their
+                    API to render the data in our web application. When a Smart
+                    Buoy is deployed we collect temperature information every
+                    hour from a depth of 1 meter as well as the moored depth
+                    which is at the sea floor.
                   </p>
                 </div>
               </div>
@@ -91,7 +91,8 @@ const Faq = ({ classes }: FaqProps) => {
                     Who is responsible for the satellite communication costs?
                   </Typography>
                   <p>
-                    Aqualink will be responsible for any satellite communication costs.
+                    Aqualink will be responsible for any satellite communication
+                    costs.
                   </p>
                 </div>
               </div>
@@ -101,9 +102,9 @@ const Faq = ({ classes }: FaqProps) => {
                     How do I upload surveys?
                   </Typography>
                   <p>
-                    Scroll to the bottom of your dashboard for your site and click 
-                    on &quot;ADD NEW SURVEY&quot;. Follow the steps and add comments and 
-                    pictures to your survey session.
+                    Scroll to the bottom of your dashboard for your site and
+                    click on &quot;ADD NEW SURVEY&quot;. Follow the steps and
+                    add comments and pictures to your survey session.
                   </p>
                 </div>
               </div>
@@ -112,49 +113,51 @@ const Faq = ({ classes }: FaqProps) => {
                   <Typography className={classes.question} variant="h5">
                     How can I track a heatwave?
                   </Typography>
-                    <ol>
-                      <li>
-                        <p>
-                          Add multiple sites to your personal&nbsp;  
-                          <a
-                            href="https://aqualink.org/dashboard"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
+                  <ol>
+                    <li>
+                      <p>
+                        Add multiple sites to your personal&nbsp;
+                        <a
+                          href="https://aqualink.org/dashboard"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           dashboard.
-                          </a> 
-                          &nbsp;You can add sites by clicking on the bookmark 
-                          symbol on each individual site.
-                        </p>
-                      </li>
-                      <li>
-                        <p>
-                          Change the view on the&nbsp;
-                          <a
-                            href="https://aqualink.org/map"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
+                        </a>
+                        &nbsp;You can add sites by clicking on the bookmark
+                        symbol on each individual site.
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        Change the view on the&nbsp;
+                        <a
+                          href="https://aqualink.org/map"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           map
-                          </a> 
-                          &nbsp;to heat stress. 
-                          You can do this by clicking on the &quot;layer&quot; 
-                          symbol on the map and selecting &quot;Heat Stress&quot;. 
-                        </p>
-                      </li>
-                    </ol>
+                        </a>
+                        &nbsp;to heat stress. You can do this by clicking on the
+                        &quot;layer&quot; symbol on the map and selecting
+                        &quot;Heat Stress&quot;.
+                      </p>
+                    </li>
+                  </ol>
                 </div>
               </div>
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    I&apos;m collecting water quality data. How can I upload it to my dashboard?
+                    I&apos;m collecting water quality data. How can I upload it
+                    to my dashboard?
                   </Typography>
                   <p>
-                    Go to your dashboard and click on &quot;UPLOAD DATA&quot; in the top right 
-                    corner. Select your survey point and sensor type. If you have a 
-                    .xls, .csv, or .xlsx file with your data but aren&apos;t using any of 
-                    the selected sensors, please select Sonde data and continue to upload files.
+                    Go to your dashboard and click on &quot;UPLOAD DATA&quot; in
+                    the top right corner. Select your survey point and sensor
+                    type. If you have a .xls, .csv, or .xlsx file with your data
+                    but aren&apos;t using any of the selected sensors, please
+                    select Sonde data and continue to upload files.
                   </p>
                 </div>
               </div>
@@ -164,9 +167,9 @@ const Faq = ({ classes }: FaqProps) => {
                     Where can a site be placed?
                   </Typography>
                   <p>
-                    A site can be placed almost anywhere in the world as 
-                    long as it is placed in the ocean or sea. This is a 
-                    requirement for satellite data to work.
+                    A site can be placed almost anywhere in the world as long as
+                    it is placed in the ocean or sea. This is a requirement for
+                    satellite data to work.
                   </p>
                 </div>
               </div>
@@ -175,18 +178,18 @@ const Faq = ({ classes }: FaqProps) => {
                   <Typography className={classes.question} variant="h5">
                     How many sites can I have?
                   </Typography>
-                  <p>
-                    You can have an unlimited amount of sites.
-                  </p>
+                  <p>You can have an unlimited amount of sites.</p>
                 </div>
               </div>
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    Which parameters does Aqualink currently support for the dashboard?
+                    Which parameters does Aqualink currently support for the
+                    dashboard?
                   </Typography>
-                  <p>Please view&nbsp;
-                  <a
+                  <p>
+                    Please view&nbsp;
+                    <a
                       href="https://docs.google.com/document/d/14MfB5iDZqzArZ-MAWuzWnnNs0XsRYK3bchotL-hRMUs/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -209,18 +212,17 @@ const Faq = ({ classes }: FaqProps) => {
                     How do I apply for an Aqualink Smart Buoy?
                   </Typography>
                   <p>
-                    Register the site(s) that you are monitoring on Aqualink 
-                    and reach out to&nbsp; 
+                    Register the site(s) that you are monitoring on Aqualink and
+                    reach out to&nbsp;
                     <a
                       href="mailto:admin@aqualink.org?subject=Aqualink%20Application"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       admin@aqualink.org
-                  </a>
-                    &nbsp;and let us know that 
-                    you are interested. You can apply for multiple, but the 
-                    demand is high.
+                    </a>
+                    &nbsp;and let us know that you are interested. You can apply
+                    for multiple, but the demand is high.
                   </p>
                 </div>
               </div>
@@ -230,9 +232,9 @@ const Faq = ({ classes }: FaqProps) => {
                     How many Smart Buoys are available?
                   </Typography>
                   <p>
-                    There is no set schedule for when we have Smart Buoys 
+                    There is no set schedule for when we have Smart Buoys
                     available or how big our batch is. Please register your
-                    site(s) and reach out to us, and we&apos;ll let you know if 
+                    site(s) and reach out to us, and we&apos;ll let you know if
                     we have Smart Buoys available or when we might receive more.
                   </p>
                 </div>
@@ -251,10 +253,12 @@ const Faq = ({ classes }: FaqProps) => {
                   <Typography className={classes.question} variant="h5">
                     Are the Smart Buoys free?
                   </Typography>
-                  <p>Yes, we cover the costs for the buoys, but you&apos;ll be 
-                     responsible for shipping and customs fees. We&apos;re 
-                     searching for people who can manage the buoys, perform 
-                     surveys, and use the data for research and monitoring programs. 
+                  <p>
+                    Yes, we cover the costs for the buoys, but you&apos;ll be
+                    responsible for shipping and customs fees. We&apos;re
+                    searching for people who can manage the buoys, perform
+                    surveys, and use the data for research and monitoring
+                    programs.
                   </p>
                 </div>
               </div>
@@ -274,8 +278,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       https://onlineshippingcalculator.com/
                     </a>
-                    &nbsp;and enter the
-                    following:
+                    &nbsp;and enter the following:
                     <br />
                   </p>
                   <ul>
@@ -465,15 +468,16 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row">
                 <div className="col">
                   <Typography className={classes.title} variant="h4">
-                  If you have any questions or comments, feel free to contact&nbsp; 
-                  <a
+                    If you have any questions or comments, feel free to
+                    contact&nbsp;
+                    <a
                       href="mailto:admin@aqualink.org?subject=Questions%20or%20Comments"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       admin@aqualink.org
-                  </a>
-                  .
+                    </a>
+                    .
                   </Typography>
                 </div>
               </div>
