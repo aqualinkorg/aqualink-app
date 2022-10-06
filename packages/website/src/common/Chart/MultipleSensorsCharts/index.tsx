@@ -54,6 +54,7 @@ const DEFAULT_METRICS: MetricsKeys[] = [
   "top_temperature",
   "wind_speed",
   "significant_wave_height",
+  "barometric_pressure",
 ];
 
 interface SpotterConfig {
@@ -163,7 +164,8 @@ const MultipleSensorsCharts = ({
       SPOTTER_METRIC_DATA_COLOR,
       chartStartDate,
       chartEndDate,
-      site.timezone
+      site.timezone,
+      metric
     );
   };
 
@@ -536,40 +538,53 @@ const MultipleSensorsCharts = ({
         areSurveysFiltered={surveysFiltered}
       />
       {hasSpotterData &&
-        Object.entries(spotterConfig).map(([key, { title }]) => (
-          <Box mt={4} key={title}>
-            <ChartWithCard
-              datasets={[spotterMetricDataset(key as Metrics)]}
-              id={key}
-              range={range}
-              onRangeChange={onRangeChange}
-              disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-              chartTitle={title}
-              availableRanges={[
-                {
-                  name: "Spotter",
-                  data: timeSeriesDataRanges?.[key as Metrics]?.spotter?.data,
-                },
-              ]}
-              timeZone={site.timezone}
-              showRangeButtons={false}
-              chartWidth="large"
-              site={site}
-              pickerStartDate={
-                pickerStartDate || subtractFromDate(today, "week")
-              }
-              pickerEndDate={pickerEndDate || today}
-              chartStartDate={chartStartDate}
-              chartEndDate={chartEndDate}
-              onStartDateChange={onPickerDateChange("start")}
-              onEndDateChange={onPickerDateChange("end")}
-              isPickerErrored={pickerErrored}
-              showDatePickers={false}
-              hideYAxisUnits
-              cardColumnJustification="flex-start"
-            />
-          </Box>
-        ))}
+        Object.entries(spotterConfig).map(([key, { title }]) => {
+          const datasets = [spotterMetricDataset(key as Metrics)];
+          console.log(datasets);
+          // Since the data will only be available for a few sites,
+          // we don’t want to display the warning message for all the others.
+          if (
+            !datasets[0] ||
+            (datasets[0].metric === "barometricPressure" &&
+              !datasets[0].displayData)
+          ) {
+            return <></>;
+          }
+          return (
+            <Box mt={4} key={title}>
+              <ChartWithCard
+                datasets={datasets}
+                id={key}
+                range={range}
+                onRangeChange={onRangeChange}
+                disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+                chartTitle={title}
+                availableRanges={[
+                  {
+                    name: "Spotter",
+                    data: timeSeriesDataRanges?.[key as Metrics]?.spotter?.data,
+                  },
+                ]}
+                timeZone={site.timezone}
+                showRangeButtons={false}
+                chartWidth="large"
+                site={site}
+                pickerStartDate={
+                  pickerStartDate || subtractFromDate(today, "week")
+                }
+                pickerEndDate={pickerEndDate || today}
+                chartStartDate={chartStartDate}
+                chartEndDate={chartEndDate}
+                onStartDateChange={onPickerDateChange("start")}
+                onEndDateChange={onPickerDateChange("end")}
+                isPickerErrored={pickerErrored}
+                showDatePickers={false}
+                hideYAxisUnits
+                cardColumnJustification="flex-start"
+              />
+            </Box>
+          );
+        })}
       {displayOceanSenseCharts &&
         hasOceanSenseId &&
         Object.entries(constructOceanSenseDatasets(oceanSenseData)).map(
