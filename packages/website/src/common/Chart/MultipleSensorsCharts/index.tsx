@@ -540,7 +540,6 @@ const MultipleSensorsCharts = ({
       {hasSpotterData &&
         Object.entries(spotterConfig).map(([key, { title }]) => {
           const datasets = [spotterMetricDataset(key as Metrics)];
-          console.log(datasets);
           // Since the data will only be available for a few sites,
           // we don’t want to display the warning message for all the others.
           if (
