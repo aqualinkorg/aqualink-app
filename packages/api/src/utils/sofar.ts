@@ -10,6 +10,7 @@ import {
   SOFAR_WAVE_DATA_URL,
 } from './constants';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
+import { getSofarNearestAvailablePoint } from './sofar-availability';
 
 export const getLatestData = (
   sofarValues: ValueWithTimestamp[] | undefined,
@@ -59,12 +60,17 @@ export async function sofarHindcast(
   start: string,
   end: string,
 ) {
+  const [sofarLatitude, sofarLongitude] = getSofarNearestAvailablePoint({
+    type: 'Point',
+    coordinates: [latitude, longitude],
+  });
+
   return axios
     .get(`${SOFAR_MARINE_URL}${modelId}/hindcast/point`, {
       params: {
         variableIDs: [variableID],
-        latitude,
-        longitude,
+        latitude: sofarLatitude,
+        longitude: sofarLongitude,
         start,
         end,
         token: process.env.SOFAR_API_TOKEN,
@@ -74,7 +80,7 @@ export async function sofarHindcast(
       // The api return an array of requested variables, but since we request one, ours it's always first
       if (!response.data.hindcastVariables[0]) {
         console.error(
-          `No Hindcast variable '${variableID}' available for ${latitude}, ${longitude}`,
+          `No Hindcast variable '${variableID}' available for ${sofarLatitude}, ${sofarLongitude}`,
         );
         return undefined;
       }
