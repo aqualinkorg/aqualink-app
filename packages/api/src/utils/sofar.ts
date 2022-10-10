@@ -63,13 +63,13 @@ export async function sofarHindcast(
 ) {
   // Some models are only available on a specific grid and points
   // need to be clipped before querying the API.
-  const [sofarLatitude, sofarLongitude] =
+  const [sofarLongitude, sofarLatitude] =
     modelId === SofarModels.NOAACoralReefWatch
       ? getSofarNearestAvailablePoint({
           type: 'Point',
-          coordinates: [latitude, longitude],
+          coordinates: [longitude, latitude],
         })
-      : [latitude, longitude];
+      : [longitude, latitude];
 
   return axios
     .get(`${SOFAR_MARINE_URL}${modelId}/hindcast/point`, {
