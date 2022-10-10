@@ -5,6 +5,7 @@ import moment from 'moment';
 import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {
+  SofarModels,
   SOFAR_MARINE_URL,
   SOFAR_SENSOR_DATA_URL,
   SOFAR_WAVE_DATA_URL,
@@ -60,10 +61,15 @@ export async function sofarHindcast(
   start: string,
   end: string,
 ) {
-  const [sofarLatitude, sofarLongitude] = getSofarNearestAvailablePoint({
-    type: 'Point',
-    coordinates: [latitude, longitude],
-  });
+  // Some models are only available on a specific grid and points
+  // need to be clipped before querying the API.
+  const [sofarLatitude, sofarLongitude] =
+    modelId === SofarModels.NOAACoralReefWatch
+      ? getSofarNearestAvailablePoint({
+          type: 'Point',
+          coordinates: [latitude, longitude],
+        })
+      : [latitude, longitude];
 
   return axios
     .get(`${SOFAR_MARINE_URL}${modelId}/hindcast/point`, {
