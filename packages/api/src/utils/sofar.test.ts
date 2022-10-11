@@ -17,6 +17,19 @@ test('It processes Sofar API for daily data.', async () => {
   ]);
 });
 
+test('Clips site location correctly', async () => {
+  jest.setTimeout(30000);
+  const values = await getSofarHindcastData(
+    'NOAACoralReefWatch',
+    'analysedSeaSurfaceTemperature',
+    41.738,
+    -70.625,
+    new Date('2022-08-31'),
+  );
+
+  expect(values.length !== 0).toBeTruthy();
+});
+
 test('It processes Sofar Spotter API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSpotterData(
