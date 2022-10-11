@@ -26,12 +26,13 @@ import "./App.css";
 import "../../assets/css/bootstrap.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";
-import { initGA } from "../../utils/google-analytics";
+import { initGA, useGATagManager } from "../../utils/google-analytics";
 import Terms from "../../routes/Terms";
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
   const dispatch = useDispatch();
+  useGATagManager();
 
   useEffect(() => {
     if (app) {
