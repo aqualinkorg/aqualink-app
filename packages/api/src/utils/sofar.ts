@@ -68,9 +68,6 @@ export async function sofarHindcast(
       ? getNOAANearestAvailablePoint(longitude, latitude)
       : [longitude, latitude];
 
-  // This is kept here for debug. Remove before merge
-  console.log([longitude, latitude], [NOAALongitude, NOAALatitude]);
-
   return axios
     .get(`${SOFAR_MARINE_URL}${modelId}/hindcast/point`, {
       params: {
