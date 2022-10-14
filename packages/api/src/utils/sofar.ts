@@ -11,7 +11,7 @@ import {
   SOFAR_WAVE_DATA_URL,
 } from './constants';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
-import { getSofarNearestAvailablePoint } from './sofar-availability';
+import { getNOAANearestAvailablePoint } from './noaa-availability';
 
 export const getLatestData = (
   sofarValues: ValueWithTimestamp[] | undefined,
@@ -63,20 +63,20 @@ export async function sofarHindcast(
 ) {
   // Some models are only available on a specific grid and points
   // need to be clipped before querying the API.
-  const [sofarLongitude, sofarLatitude] =
+  const [NOAALongitude, NOAALatitude] =
     modelId === SofarModels.NOAACoralReefWatch
-      ? getSofarNearestAvailablePoint({
-          type: 'Point',
-          coordinates: [longitude, latitude],
-        })
+      ? getNOAANearestAvailablePoint(longitude, latitude)
       : [longitude, latitude];
+
+  // This is kept here for debug. Remove before merge
+  console.log([longitude, latitude], [NOAALongitude, NOAALatitude]);
 
   return axios
     .get(`${SOFAR_MARINE_URL}${modelId}/hindcast/point`, {
       params: {
         variableIDs: [variableID],
-        latitude: sofarLatitude,
-        longitude: sofarLongitude,
+        latitude: NOAALatitude,
+        longitude: NOAALongitude,
         start,
         end,
         token: process.env.SOFAR_API_TOKEN,
@@ -86,7 +86,7 @@ export async function sofarHindcast(
       // The api return an array of requested variables, but since we request one, ours it's always first
       if (!response.data.hindcastVariables[0]) {
         console.error(
-          `No Hindcast variable '${variableID}' available for ${sofarLatitude}, ${sofarLongitude}`,
+          `No Hindcast variable '${variableID}' available for ${NOAALatitude}, ${NOAALongitude}`,
         );
         return undefined;
       }
