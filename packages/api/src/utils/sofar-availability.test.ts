@@ -1,3 +1,4 @@
+import { Point } from 'geojson';
 import {
   AVAILABLE_POINTS,
   getSofarNearestAvailablePoint,
@@ -18,4 +19,11 @@ test('null island', () => {
   const point: [number, number] = [0, 0];
   const validPoint = getSofarNearestAvailablePoint(point);
   expect(validPoint).toEqual([0, 0]);
+
+  const pointGeo = {
+    type: 'Point',
+    coordinates: [0, 0],
+  };
+  const validPointBis = getSofarNearestAvailablePoint(pointGeo as Point);
+  expect(validPointBis).toEqual([0, 0]);
 });

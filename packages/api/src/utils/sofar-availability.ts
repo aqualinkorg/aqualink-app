@@ -50,7 +50,9 @@ export function getSofarNearestAvailablePoint(point: Coord): [number, number] {
     ],
   };
 
+  const pointCoordinates = (point as Point)?.coordinates || point;
+
   return booleanPointInPolygon(point, poly)
-    ? ((point as Point).coordinates as [number, number])
+    ? (pointCoordinates as [number, number])
     : [longitude, latitude];
 }
