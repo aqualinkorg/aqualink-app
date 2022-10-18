@@ -66,6 +66,7 @@ function BFS(
   return BFS(visited, stack);
 }
 
+// Points further than 175km away from a noaa available point will result in a maximum stack exited error.
 export function getNOAANearestAvailablePoint(
   longitude: number,
   latitude: number,
@@ -78,5 +79,8 @@ export function getNOAANearestAvailablePoint(
   const result = BFS(visited, stack);
   if (result === null) throw new Error('Did not find nearest point!');
 
-  return [result[0] * 0.05 - 180, result[1] * 0.05 - 90];
+  return [
+    Number((result[0] * 0.05 - 180).toFixed(3)),
+    Number((result[1] * 0.05 - 90).toFixed(3)),
+  ];
 }
