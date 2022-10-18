@@ -10,9 +10,13 @@ async function init() {
   // when the project builds data.npy file moves to different location
   let buff: Buffer;
   try {
-    buff = fs.readFileSync(path.resolve(__dirname, '../../assets/data.npy'));
+    buff = fs.readFileSync(
+      path.resolve(__dirname, '../../assets/NOAA_SST_availability.npy'),
+    );
   } catch (_error) {
-    buff = fs.readFileSync(path.resolve(__dirname, '../assets/data.npy'));
+    buff = fs.readFileSync(
+      path.resolve(__dirname, '../assets/NOAA_SST_availability.npy'),
+    );
   }
 
   const object = fromArrayBuffer(buff.buffer.slice(0, buff.length));
@@ -37,14 +41,14 @@ async function init() {
 
 init();
 
-let visited: Map<string, boolean>;
-let stack: { lon: number; lat: number }[];
-
-function BFS(): [number, number] | null {
+function BFS(
+  visited: Map<string, boolean>,
+  stack: { lon: number; lat: number }[],
+): [number, number] | null {
   const head = stack.shift();
 
   if (!head) return null;
-  if (visited.has(`${head.lon},${head.lat}`)) return BFS();
+  if (visited.has(`${head.lon},${head.lat}`)) return BFS(visited, stack);
   if (worldMap[head.lon][head.lat] === false) return [head.lon, head.lat];
 
   visited.set(`${head.lon},${head.lat}`, true);
@@ -59,7 +63,7 @@ function BFS(): [number, number] | null {
   if (!visited.has(`${right.lon},${right.lat}`)) stack.push(right);
   if (!visited.has(`${left.lon},${left.lat}`)) stack.push(left);
 
-  return BFS();
+  return BFS(visited, stack);
 }
 
 export function getNOAANearestAvailablePoint(
@@ -69,9 +73,9 @@ export function getNOAANearestAvailablePoint(
   const lonIndex = Math.round((180 + longitude) / 0.05);
   const latIndex = Math.round((90 + latitude) / 0.05);
 
-  visited = new Map<string, boolean>();
-  stack = [{ lon: lonIndex, lat: latIndex }];
-  const result = BFS();
+  const visited = new Map<string, boolean>();
+  const stack = [{ lon: lonIndex, lat: latIndex }];
+  const result = BFS(visited, stack);
   if (result === null) throw new Error('Did not find nearest point!');
 
   return [result[0] * 0.05 - 180, result[1] * 0.05 - 90];

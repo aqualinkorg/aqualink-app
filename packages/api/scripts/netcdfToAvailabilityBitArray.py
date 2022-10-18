@@ -1,16 +1,19 @@
 from netCDF4 import Dataset
 import numpy as np
+import pathlib
+import sys 
 
 # Files can be acquired from https://coralreefwatch.noaa.gov/
 # https://www.star.nesdis.noaa.gov/pub/sod/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/sst/2022/
-fn = "/path/to/some/netcdf4.ns"
+# Full path to file, ex "path/to/coraltemp_v3.1_20221012.nc"
+path = sys.argv[1]
 
-ds = Dataset(fn)
+ds = Dataset(path)
 
 # insert some valid variable.
 # variables and additional information can bee checked by uncommenting the line below:
 # print(ds)
-var = ds['degree_heating_week'][:]
+var = ds['analysed_sst'][:]
 
 world = []
 
@@ -22,5 +25,4 @@ for i in range(7200):
 
 bitarray = np.packbits(np.array(world), axis=-1)
 
-# Please move file to assets after generation
-np.save('data.npy', bitarray)
+np.save(pathlib.Path(__file__).parent.parent / 'src/assets/NOAA_SST_availability.npy', bitarray)
