@@ -8,7 +8,7 @@ import path from 'path';
 const worldMap: boolean[][] = [];
 
 async function init() {
-  Logger.warn('Initiating noaa availability...');
+  Logger.warn('Initializing noaa availability...');
   // when the project builds data.npy file moves to different location
   let buff: Buffer;
   try {
