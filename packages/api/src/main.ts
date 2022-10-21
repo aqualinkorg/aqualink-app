@@ -11,6 +11,10 @@ import { HttpExceptionFilter } from './exception-filters/http-exception.filter';
 import { apiLoggerMiddleware } from './middleware/api-logger.middleware';
 import { configService } from './config/config.service';
 
+require('@google-cloud/debug-agent').start({
+  serviceContext: { enableCanary: true },
+});
+
 async function bootstrap() {
   if (Object.values(serviceAccount).every((value) => !!value)) {
     admin.initializeApp({
