@@ -1,4 +1,5 @@
 /* eslint-disable no-plusplus, fp/no-mutation, fp/no-mutating-methods, no-bitwise, react/destructuring-assignment */
+import { Logger } from '@nestjs/common';
 import fs from 'fs';
 import ndarray from 'ndarray';
 import { fromArrayBuffer } from 'numpy-parser';
@@ -7,6 +8,7 @@ import path from 'path';
 const worldMap: boolean[][] = [];
 
 async function init() {
+  Logger.warn('Initiating noaa availability...');
   // when the project builds data.npy file moves to different location
   let buff: Buffer;
   try {
@@ -37,6 +39,7 @@ async function init() {
     }
     worldMap.push(row);
   }
+  Logger.warn('NOAA availability initialization complete');
 }
 
 init();

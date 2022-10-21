@@ -26,3 +26,4 @@ for i in range(7200):
 bitarray = np.packbits(np.array(world), axis=-1)
 
 np.save(pathlib.Path(__file__).parent.parent / 'src/assets/NOAA_SST_availability.npy', bitarray)
+np.save(pathlib.Path(__file__).parent.parent / 'cloud-functions/assets/NOAA_SST_availability.npy', bitarray)
