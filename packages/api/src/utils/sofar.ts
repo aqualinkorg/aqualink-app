@@ -83,7 +83,7 @@ export async function sofarHindcast(
       // The api return an array of requested variables, but since we request one, ours it's always first
       if (!response.data.hindcastVariables[0]) {
         console.error(
-          `No Hindcast variable '${variableID}' available for ${NOAALatitude}, ${NOAALongitude}`,
+          `No Hindcast variable '${variableID}' available for (lat, lon): (${NOAALatitude}, ${NOAALongitude}), ${start}`,
         );
         return undefined;
       }
