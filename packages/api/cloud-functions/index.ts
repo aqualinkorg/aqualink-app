@@ -11,6 +11,7 @@ import {
 import { runSSTTimeSeriesUpdate } from '../src/workers/sstTimeSeries';
 import { checkVideoStreams } from '../src/workers/check-video-streams';
 import { sendSlackMessage } from '../src/utils/slack.utils';
+import NOAAAvailability from '../src/utils/noaa-availability';
 
 // We have to manually import all required entities here, unfortunately - the globbing that is used in ormconfig.ts
 // doesn't work with Webpack. This declaration gets processed by a custom loader (`add-entities.js`) to add import
@@ -85,8 +86,10 @@ exports.dailyUpdate = functions
       url: dbUrl,
       entities,
     });
+    const noaaAvailability = new NOAAAvailability();
     try {
-      await runDailyUpdate(conn);
+      await noaaAvailability.init(functions.config().noaa_availability_url);
+      await runDailyUpdate(conn, noaaAvailability);
       res.json({ result: `Daily update on ${new Date()}` });
     } catch (err) {
       await sendErrorToSlack('dailyUpdate', err);
@@ -111,8 +114,10 @@ exports.scheduledDailyUpdate = functions
       url: dbUrl,
       entities,
     });
+    const noaaAvailability = new NOAAAvailability();
     try {
-      await runDailyUpdate(conn);
+      await noaaAvailability.init(functions.config().noaa_availability_url);
+      await runDailyUpdate(conn, noaaAvailability);
       console.log(`Daily update on ${new Date()}`);
     } catch (err) {
       await sendErrorToSlack('scheduledDailyUpdate', err);
@@ -180,8 +185,10 @@ exports.scheduledWindWaveTimeSeriesUpdate = functions
       url: dbUrl,
       entities,
     });
+    const noaaAvailability = new NOAAAvailability();
     try {
-      await runWindWaveTimeSeriesUpdate(conn);
+      await noaaAvailability.init(functions.config().noaa_availability_url);
+      await runWindWaveTimeSeriesUpdate(conn, noaaAvailability);
       console.log(`Wind and Wave data hourly update on ${new Date()}`);
     } catch (err) {
       await sendErrorToSlack('scheduledWindWaveTimeSeriesUpdate', err);
@@ -208,8 +215,10 @@ exports.scheduledSSTTimeSeriesUpdate = functions
       url: dbUrl,
       entities,
     });
+    const noaaAvailability = new NOAAAvailability();
     try {
-      await runSSTTimeSeriesUpdate(conn);
+      await noaaAvailability.init(functions.config().noaa_availability_url);
+      await runSSTTimeSeriesUpdate(conn, noaaAvailability);
       console.log(`SST data hourly update on ${new Date()}`);
     } catch (err) {
       await sendErrorToSlack('scheduledSSTTimeSeriesUpdate', err);

@@ -35,6 +35,7 @@ import { HistoricalMonthlyMean } from '../../sites/historical-monthly-mean.entit
 import { createPoint } from '../coordinates';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
+import NOAAAvailability from '../noaa-availability';
 
 /**
  * Parse csv data
@@ -607,10 +608,13 @@ const uploadSitePhotos = async (
   await surveyMediaRepository.save(surveyMedia);
 };
 
-export const performBackfill = (siteDiffDays: [number, number][]) => {
+export const performBackfill = (
+  siteDiffDays: [number, number][],
+  noaaAvailability: NOAAAvailability,
+) => {
   siteDiffDays.forEach(([siteId, diff]) => {
     logger.log(`Performing backfill for site ${siteId} for ${diff} days`);
-    backfillSiteData(siteId, diff);
+    backfillSiteData(siteId, noaaAvailability, diff);
   });
 };
 
@@ -621,6 +625,7 @@ export const uploadHoboData = async (
   email: string,
   googleCloudService: GoogleCloudService,
   repositories: Repositories,
+  noaaAvailability: NOAAAvailability,
 ): Promise<Record<string, number>> => {
   // Grab user and check if they exist
   const user = await repositories.userRepository.findOne({
@@ -705,7 +710,7 @@ export const uploadHoboData = async (
     { concurrency: 1 },
   );
 
-  performBackfill(siteDiffArray.flat());
+  performBackfill(siteDiffArray.flat(), noaaAvailability);
 
   // Update materialized view
   logger.log('Refreshing materialized view latest_data');

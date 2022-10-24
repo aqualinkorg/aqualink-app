@@ -10,6 +10,7 @@ import { ForecastData } from '../wind-wave-data/forecast-data.entity';
 import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
+import NOAAAvailability from './noaa-availability';
 import { sofarHindcast } from './sofar';
 import { getSofarNearestAvailablePoint } from './sofar-availability';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
@@ -51,6 +52,7 @@ interface Repositories {
 export const addWindWaveData = async (
   siteIds: number[],
   repositories: Repositories,
+  noaaAvailability: NOAAAvailability,
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
@@ -109,6 +111,7 @@ export const addWindWaveData = async (
             longitude,
             yesterday,
             today,
+            noaaAvailability,
           );
         }),
       );

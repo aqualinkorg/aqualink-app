@@ -29,10 +29,12 @@ import { collections } from './mock/collection.mock';
 import { dailyData } from './mock/daily-data.mock';
 import { surveys } from './mock/surveys.mock';
 import { surveyMedia } from './mock/survey-media.mock';
+import NOAAAvailability from '../src/utils/noaa-availability';
 
 export class TestService {
   private static instance: TestService | null = null;
   private app: INestApplication | null = null;
+  private noaaAvailability: NOAAAvailability;
 
   private constructor() {}
 
@@ -130,6 +132,17 @@ export class TestService {
     }
 
     return this.app!.get(Connection);
+  }
+
+  public async getNOAAAvailability() {
+    if (!this.noaaAvailability) {
+      this.noaaAvailability = new NOAAAvailability();
+      await this.noaaAvailability.init(
+        'https://storage.googleapis.com/reef_media/be-dev/assets/NOAA_SST_availability.npy',
+      );
+    }
+
+    return this.noaaAvailability;
   }
 
   public cleanUpApp() {

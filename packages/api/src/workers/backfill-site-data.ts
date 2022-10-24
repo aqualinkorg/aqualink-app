@@ -3,10 +3,15 @@ import moment from 'moment';
 import { Logger } from '@nestjs/common';
 import { getConnection } from 'typeorm';
 import { getSitesDailyData } from './dailyData';
+import NOAAAvailability from '../utils/noaa-availability';
 
 const logger = new Logger('Backfill Worker');
 
-async function run(siteId: number, days: number) {
+async function run(
+  siteId: number,
+  days: number,
+  noaaAvailability: NOAAAvailability,
+) {
   const backlogArray = Array.from(Array(days).keys());
   const today = moment()
     .utc()
@@ -20,15 +25,24 @@ async function run(siteId: number, days: number) {
     const date = moment(today);
     date.day(today.day() - past - 1);
     try {
-      await getSitesDailyData(getConnection(), date.toDate(), [siteId]);
+      await getSitesDailyData(
+        getConnection(),
+        date.toDate(),
+        noaaAvailability,
+        [siteId],
+      );
     } catch (error) {
       logger.error(error);
     }
   });
 }
 
-export const backfillSiteData = async (siteId: number, days: number = 90) => {
+export const backfillSiteData = async (
+  siteId: number,
+  noaaAvailability: NOAAAvailability,
+  days: number = 90,
+) => {
   logger.log(`Starting backfill data for site ${siteId}`);
-  await run(siteId, days);
+  await run(siteId, days, noaaAvailability);
   logger.log(`Finished backfill data for site ${siteId}`);
 };

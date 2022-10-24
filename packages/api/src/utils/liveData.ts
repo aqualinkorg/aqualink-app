@@ -9,10 +9,12 @@ import { SofarLiveData, ValueWithTimestamp } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
 import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
+import NOAAAvailability from './noaa-availability';
 
 export const getLiveData = async (
   site: Site,
   isDeployed: boolean,
+  noaaAvailability: NOAAAvailability,
 ): Promise<SofarLiveData> => {
   console.time(`getLiveData for site ${site.id}`);
   const { polygon, sensorId, maxMonthlyMean } = site;
@@ -24,7 +26,13 @@ export const getLiveData = async (
   const [spotterRawData, degreeHeatingDays, satelliteTemperature] =
     await Promise.all([
       sensorId && isDeployed ? getSpotterData(sensorId) : undefined,
-      getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
+      getDegreeHeatingDays(
+        latitude,
+        longitude,
+        now,
+        maxMonthlyMean,
+        noaaAvailability,
+      ),
       getSofarHindcastData(
         SofarModels.NOAACoralReefWatch,
         sofarVariableIDs[SofarModels.NOAACoralReefWatch]
@@ -32,6 +40,7 @@ export const getLiveData = async (
         latitude,
         longitude,
         now,
+        noaaAvailability,
         96,
       ),
     ]);

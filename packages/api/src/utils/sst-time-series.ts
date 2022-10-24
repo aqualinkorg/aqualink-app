@@ -15,6 +15,7 @@ import { Metric } from '../time-series/metrics.entity';
 import { calculateAlertLevel } from './bleachingAlert';
 import { getSstAnomaly } from './liveData';
 import { ValueWithTimestamp } from './sofar.types';
+import NOAAAvailability from './noaa-availability';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -53,6 +54,7 @@ export const updateSST = async (
   days: number,
   connection: Connection,
   repositories: Repositories,
+  noaaAvailability: NOAAAvailability,
 ) => {
   const { siteRepository, timeSeriesRepository, sourceRepository } =
     repositories;
@@ -101,6 +103,7 @@ export const updateSST = async (
               longitude,
               startDate,
               endDate,
+              noaaAvailability,
             ),
             // Fetch degree heating weeks data
             sofarHindcast(
@@ -111,6 +114,7 @@ export const updateSST = async (
               longitude,
               startDate,
               endDate,
+              noaaAvailability,
             ),
           ]).then(([SofarSSTRaw, sofarDegreeHeatingWeekRaw]) => {
             // Filter out null values

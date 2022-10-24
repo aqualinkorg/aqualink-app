@@ -6,6 +6,7 @@ import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { addSpotterData } from '../utils/spotter-time-series';
 import { addWindWaveData } from '../utils/hindcast-wind-wave';
+import NOAAAvailability from '../utils/noaa-availability';
 
 export function runSpotterTimeSeriesUpdate(connection: Connection) {
   return addSpotterData([], 1, connection, {
@@ -16,9 +17,16 @@ export function runSpotterTimeSeriesUpdate(connection: Connection) {
   });
 }
 
-export function runWindWaveTimeSeriesUpdate(connection: Connection) {
-  return addWindWaveData([], {
-    siteRepository: connection.getRepository(Site),
-    hindcastRepository: connection.getRepository(ForecastData),
-  });
+export function runWindWaveTimeSeriesUpdate(
+  connection: Connection,
+  noaaAvailability: NOAAAvailability,
+) {
+  return addWindWaveData(
+    [],
+    {
+      siteRepository: connection.getRepository(Site),
+      hindcastRepository: connection.getRepository(ForecastData),
+    },
+    noaaAvailability,
+  );
 }

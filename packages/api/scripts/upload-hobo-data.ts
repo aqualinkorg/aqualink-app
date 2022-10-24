@@ -15,6 +15,9 @@ import { uploadHoboData } from '../src/utils/uploads/upload-hobo-data';
 import { Region } from '../src/regions/regions.entity';
 import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 import { DataUploads } from '../src/data-uploads/data-uploads.entity';
+import NOAAAvailability from '../src/utils/noaa-availability';
+
+const { NOAA_AVAILABILITY_URL } = process.env;
 
 // Initialize command definition
 const { argv } = yargs
@@ -57,6 +60,8 @@ async function run() {
   );
 
   logger.log('Uploading hobo data');
+  const noaaAvailability = new NOAAAvailability();
+  await noaaAvailability.init(NOAA_AVAILABILITY_URL || '');
   const dbIdtTSiteId = await uploadHoboData(
     rootPath,
     userEmail,
@@ -76,6 +81,7 @@ async function run() {
       ),
       dataUploadsRepository: connection.getRepository(DataUploads),
     },
+    noaaAvailability,
   );
 
   logger.log('Finished uploading hobo data');

@@ -55,10 +55,15 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
+import NOAAAvailability from '../utils/noaa-availability';
 
 @Injectable()
 export class SitesService {
   private readonly logger = new Logger(SitesService.name);
+  private noaaAvailability!: NOAAAvailability;
+  private readonly NOAA_AVAILABILITY_URL =
+    process.env.NOAA_AVAILABILITY_URL || '';
+
   constructor(
     @InjectRepository(Site)
     private sitesRepository: Repository<Site>,
@@ -89,7 +94,10 @@ export class SitesService {
 
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
-  ) {}
+  ) {
+    this.noaaAvailability = new NOAAAvailability();
+    this.noaaAvailability.init(this.NOAA_AVAILABILITY_URL);
+  }
 
   async create(
     appParams: CreateSiteApplicationDto,
@@ -138,7 +146,7 @@ export class SitesService {
       );
     }
 
-    backfillSiteData(site.id);
+    backfillSiteData(site.id, this.noaaAvailability);
 
     await Promise.all(
       historicalMonthlyMeans.map(async ({ month, temperature }) => {
@@ -338,7 +346,7 @@ export class SitesService {
 
     const isDeployed = site.status === SiteStatus.Deployed;
 
-    const liveData = await getLiveData(site, isDeployed);
+    const liveData = await getLiveData(site, isDeployed, this.noaaAvailability);
 
     const sst = await getSSTFromLiveOrLatestData(
       liveData,

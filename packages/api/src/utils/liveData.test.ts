@@ -1,8 +1,11 @@
+import { TestService } from '../../test/test.service';
 import { Site } from '../sites/sites.entity';
 import { getLiveData } from './liveData';
 
 test('It creates a liveData object using Sofar API.', async () => {
   jest.setTimeout(30000);
+  const testService = TestService.getInstance();
+  const noaaAvailability = await testService.getNOAAAvailability();
 
   const site = {
     id: 1,
@@ -21,7 +24,11 @@ test('It creates a liveData object using Sofar API.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const liveData = await getLiveData(site as unknown as Site, true);
+  const liveData = await getLiveData(
+    site as unknown as Site,
+    true,
+    noaaAvailability,
+  );
 
   expect(liveData.topTemperature).toBeDefined();
 });

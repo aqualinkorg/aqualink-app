@@ -1,8 +1,11 @@
 import { getDailyData } from './dailyData';
 import { Site } from '../sites/sites.entity';
+import { TestService } from '../../test/test.service';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
+  const testService = TestService.getInstance();
+  const noaaAvailability = await testService.getNOAAAvailability();
 
   const date = new Date('2022-08-31');
   date.setUTCHours(23, 59, 59, 999);
@@ -23,7 +26,12 @@ test('It processes Sofar API for daily data.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const values = await getDailyData(site as unknown as Site, date, []);
+  const values = await getDailyData(
+    site as unknown as Site,
+    date,
+    [],
+    noaaAvailability,
+  );
 
   expect(values).toEqual({
     site: { id: 1 },

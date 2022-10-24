@@ -1,8 +1,12 @@
+import { TestService } from '../../test/test.service';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getSofarHindcastData, getSpotterData, sofarHindcast } from './sofar';
 import { ValueWithTimestamp } from './sofar.types';
 
 test('It processes Sofar API for daily data.', async () => {
+  const testService = TestService.getInstance();
+  const noaaAvailability = await testService.getNOAAAvailability();
+
   jest.setTimeout(30000);
   const values = await getSofarHindcastData(
     'NOAACoralReefWatch',
@@ -10,6 +14,7 @@ test('It processes Sofar API for daily data.', async () => {
     -3.5976336810301888,
     -178.0000002552476,
     new Date('2022-08-31'),
+    noaaAvailability,
   );
 
   expect(values).toEqual([
@@ -18,6 +23,9 @@ test('It processes Sofar API for daily data.', async () => {
 });
 
 test('Clips site location correctly', async () => {
+  const testService = TestService.getInstance();
+  const noaaAvailability = await testService.getNOAAAvailability();
+
   jest.setTimeout(30000);
   const values = await getSofarHindcastData(
     'NOAACoralReefWatch',
@@ -25,6 +33,7 @@ test('Clips site location correctly', async () => {
     41.738,
     -70.625,
     new Date('2022-08-31'),
+    noaaAvailability,
   );
 
   expect(values.length !== 0).toBeTruthy();
@@ -48,6 +57,8 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
   yesterdayDate.setDate(now.getDate() - 1);
   const today = now.toISOString();
   const yesterday = yesterdayDate.toISOString();
+  const testService = TestService.getInstance();
+  const noaaAvailability = await testService.getNOAAAvailability();
 
   const response = await sofarHindcast(
     SofarModels.SofarOperationalWaveModel,
@@ -57,6 +68,7 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
     -178.0000002552476,
     yesterday,
     today,
+    noaaAvailability,
   );
 
   const values = response?.values[0] as ValueWithTimestamp;

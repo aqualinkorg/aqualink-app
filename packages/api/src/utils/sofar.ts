@@ -11,7 +11,7 @@ import {
   SOFAR_WAVE_DATA_URL,
 } from './constants';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
-import { getNOAANearestAvailablePoint } from './noaa-availability';
+import NOAAAvailability from './noaa-availability';
 
 export const getLatestData = (
   sofarValues: ValueWithTimestamp[] | undefined,
@@ -60,12 +60,13 @@ export async function sofarHindcast(
   longitude: number,
   start: string,
   end: string,
+  noaaAvailability: NOAAAvailability,
 ) {
   // Some models are only available on a specific grid and points
   // need to be clipped before querying the API.
   const [NOAALongitude, NOAALatitude] =
-    modelId === SofarModels.NOAACoralReefWatch
-      ? getNOAANearestAvailablePoint(longitude, latitude)
+    modelId === SofarModels.NOAACoralReefWatch && noaaAvailability
+      ? await noaaAvailability.getNearestAvailablePoint(longitude, latitude)
       : [longitude, latitude];
 
   return axios
@@ -156,6 +157,7 @@ export async function getSofarHindcastData(
   latitude: number,
   longitude: number,
   endDate: Date,
+  noaaAvailability: NOAAAvailability,
   hours?: number,
 ) {
   const [start, end] = getStartEndDate(endDate, hours);
@@ -168,6 +170,7 @@ export async function getSofarHindcastData(
     longitude,
     start,
     end,
+    noaaAvailability,
   );
   console.timeEnd(`getSofarHindcast for ${modelId}-${variableID}`);
 

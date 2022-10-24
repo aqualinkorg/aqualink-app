@@ -38,12 +38,14 @@ import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { filterMetricDataByDate, getExclusionDates } from '../utils/site.utils';
+import NOAAAvailability from '../utils/noaa-availability';
 
 export async function getDegreeHeatingDays(
   latitude: number,
   longitude: number,
   endOfDate: Date,
   maxMonthlyMean: number | null,
+  noaaAvailability: NOAAAvailability,
 ): Promise<ValueWithTimestamp | undefined> {
   try {
     // TODO - Get data for the past 84 days.
@@ -59,6 +61,7 @@ export async function getDegreeHeatingDays(
       latitude,
       longitude,
       endOfDate,
+      noaaAvailability,
       96,
     );
 
@@ -78,6 +81,7 @@ export async function getDailyData(
   site: Site,
   endOfDate: Date,
   excludedDates: ExclusionDates[],
+  noaaAvailability: NOAAAvailability,
 ): Promise<SofarDailyData> {
   const { polygon, sensorId, maxMonthlyMean } = site;
   // TODO - Accept Polygon option
@@ -96,7 +100,13 @@ export async function getDailyData(
     sensorId ? getSpotterData(sensorId, endOfDate) : DEFAULT_SPOTTER_DATA_VALUE,
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
-    getDegreeHeatingDays(latitude, longitude, endOfDate, maxMonthlyMean),
+    getDegreeHeatingDays(
+      latitude,
+      longitude,
+      endOfDate,
+      maxMonthlyMean,
+      noaaAvailability,
+    ),
     getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch]
@@ -104,6 +114,7 @@ export async function getDailyData(
       latitude,
       longitude,
       endOfDate,
+      noaaAvailability,
       96,
     ),
     getSofarHindcastData(
@@ -113,6 +124,7 @@ export async function getDailyData(
       latitude,
       longitude,
       endOfDate,
+      noaaAvailability,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.SofarOperationalWaveModel,
@@ -120,6 +132,7 @@ export async function getDailyData(
       latitude,
       longitude,
       endOfDate,
+      noaaAvailability,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.SofarOperationalWaveModel,
@@ -127,6 +140,7 @@ export async function getDailyData(
       latitude,
       longitude,
       endOfDate,
+      noaaAvailability,
     ).then((data) => data.map(({ value }) => value)),
     // Get NOAA GFS wind data
     getSofarHindcastData(
@@ -135,6 +149,7 @@ export async function getDailyData(
       latitude,
       longitude,
       endOfDate,
+      noaaAvailability,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.GFS,
@@ -142,6 +157,7 @@ export async function getDailyData(
       latitude,
       longitude,
       endOfDate,
+      noaaAvailability,
     ).then((data) => data.map(({ value }) => value)),
   ]);
 
@@ -289,6 +305,7 @@ export function getMaxAlert(
 export async function getSitesDailyData(
   connection: Connection,
   endOfDate: Date,
+  noaaAvailability: NOAAAvailability,
   siteIds?: number[],
 ) {
   const siteRepository = connection.getRepository(Site);
@@ -315,7 +332,12 @@ export async function getSitesDailyData(
         site.sensorId,
       );
 
-      const dailyDataInput = await getDailyData(site, endOfDate, excludedDates);
+      const dailyDataInput = await getDailyData(
+        site,
+        endOfDate,
+        excludedDates,
+        noaaAvailability,
+      );
 
       // If no data returned from the update function, skip
       if (hasNoData(dailyDataInput)) {
@@ -369,7 +391,10 @@ export async function getSitesDailyData(
   );
 }
 
-export async function runDailyUpdate(conn: Connection) {
+export async function runDailyUpdate(
+  conn: Connection,
+  noaaAvailability: NOAAAvailability,
+) {
   const today = moment()
     .utc()
     .hours(23)
@@ -381,7 +406,7 @@ export async function runDailyUpdate(conn: Connection) {
   yesterday.day(today.day() - 1);
   console.log(`Daily Update for data ending on ${yesterday.date()}`);
   try {
-    await getSitesDailyData(conn, yesterday.toDate());
+    await getSitesDailyData(conn, yesterday.toDate(), noaaAvailability);
     console.log('Completed daily update.');
   } catch (error) {
     console.error(error);
