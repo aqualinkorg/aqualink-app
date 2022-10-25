@@ -65,7 +65,6 @@
     "noaa-availability": "python3 scripts/netcdfToAvailabilityBitArray.py"
   },
   "dependencies": {
-    "@google-cloud/debug-agent": "^7.1.0",
     "@google-cloud/storage": "^5.3.0",
     "@googlemaps/google-maps-services-js": "^3.1.6",
     "@nestjs/common": "^7.0.0",
