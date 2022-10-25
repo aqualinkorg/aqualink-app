@@ -88,7 +88,7 @@ exports.dailyUpdate = functions
     });
     const noaaAvailability = new NOAAAvailability();
     try {
-      await noaaAvailability.init(functions.config().noaa_availability_url);
+      await noaaAvailability.init(functions.config().noaa_availability.url);
       await runDailyUpdate(conn, noaaAvailability);
       res.json({ result: `Daily update on ${new Date()}` });
     } catch (err) {
@@ -116,7 +116,7 @@ exports.scheduledDailyUpdate = functions
     });
     const noaaAvailability = new NOAAAvailability();
     try {
-      await noaaAvailability.init(functions.config().noaa_availability_url);
+      await noaaAvailability.init(functions.config().noaa_availability.url);
       await runDailyUpdate(conn, noaaAvailability);
       console.log(`Daily update on ${new Date()}`);
     } catch (err) {
@@ -187,7 +187,7 @@ exports.scheduledWindWaveTimeSeriesUpdate = functions
     });
     const noaaAvailability = new NOAAAvailability();
     try {
-      await noaaAvailability.init(functions.config().noaa_availability_url);
+      await noaaAvailability.init(functions.config().noaa_availability.url);
       await runWindWaveTimeSeriesUpdate(conn, noaaAvailability);
       console.log(`Wind and Wave data hourly update on ${new Date()}`);
     } catch (err) {
@@ -217,7 +217,7 @@ exports.scheduledSSTTimeSeriesUpdate = functions
     });
     const noaaAvailability = new NOAAAvailability();
     try {
-      await noaaAvailability.init(functions.config().noaa_availability_url);
+      await noaaAvailability.init(functions.config().noaa_availability.url);
       await runSSTTimeSeriesUpdate(conn, noaaAvailability);
       console.log(`SST data hourly update on ${new Date()}`);
     } catch (err) {
