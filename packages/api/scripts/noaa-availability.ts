@@ -19,7 +19,7 @@ try {
   netcdf4 = require('netcdf4');
 } catch {
   Logger.error(
-    'NetCDF is not installed. Please install NetCDF before continuing',
+    'NetCDF is not installed. Please install NetCDF before continuing.',
   );
   process.exit();
 }
@@ -27,7 +27,7 @@ try {
 function getFileUrl() {
   const date = new Date();
 
-  // No data are available for last 2 days
+  // NOAA data is usually available with a 2-day lag.
   date.setDate(date.getDate() - 2);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
