@@ -72,9 +72,11 @@ export const updateSST = async (
     sources,
     async (source) => {
       const { site } = source;
-      const point = site.polygon as Point;
+      const { polygon, nearestNOAALocation } = site;
       // Extract site coordinates
-      const [longitude, latitude] = point.coordinates;
+      const [NOAALongitude, NOAALatitude] = nearestNOAALocation
+        ? (nearestNOAALocation as Point).coordinates
+        : (polygon as Point).coordinates;
 
       logger.log(`Back-filling site with id ${site.id}.`);
 
@@ -97,8 +99,8 @@ export const updateSST = async (
               SofarModels.NOAACoralReefWatch,
               sofarVariableIDs[SofarModels.NOAACoralReefWatch]
                 .analysedSeaSurfaceTemperature,
-              latitude,
-              longitude,
+              NOAALatitude,
+              NOAALongitude,
               startDate,
               endDate,
             ),
@@ -107,8 +109,8 @@ export const updateSST = async (
               SofarModels.NOAACoralReefWatch,
               sofarVariableIDs[SofarModels.NOAACoralReefWatch]
                 .degreeHeatingWeek,
-              latitude,
-              longitude,
+              NOAALatitude,
+              NOAALongitude,
               startDate,
               endDate,
             ),

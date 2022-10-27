@@ -79,9 +79,12 @@ export async function getDailyData(
   endOfDate: Date,
   excludedDates: ExclusionDates[],
 ): Promise<SofarDailyData> {
-  const { polygon, sensorId, maxMonthlyMean } = site;
+  const { polygon, sensorId, maxMonthlyMean, nearestNOAALocation } = site;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
+  const [NOAALongitude, NOAALatitude] = nearestNOAALocation
+    ? (nearestNOAALocation as Point).coordinates
+    : (polygon as Point).coordinates;
 
   const [
     spotterRawData,
@@ -101,8 +104,8 @@ export async function getDailyData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch]
         .analysedSeaSurfaceTemperature,
-      latitude,
-      longitude,
+      NOAALatitude,
+      NOAALongitude,
       endOfDate,
       96,
     ),
