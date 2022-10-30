@@ -6,7 +6,6 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
 
 import {
   getNumberOfImages,
@@ -17,10 +16,8 @@ import type { Site } from "../../../store/Sites/types";
 import type { SurveyState } from "../../../store/Survey/types";
 import { getSiteNameAndRegion } from "../../../store/Sites/helpers";
 import ObservationBox from "./ObservationBox";
-import { siteGranularDailyDataSelector } from "../../../store/Sites/selectedSiteSlice";
 
 const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
-  const dailyData = useSelector(siteGranularDailyDataSelector);
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getSiteNameAndRegion(site);
@@ -93,7 +90,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
         <ObservationBox
           depth={site.depth}
           date={survey?.diveDate}
-          dailyData={dailyData || []}
+          dailyData={site.dailyData || []}
         />
       </Grid>
     </Grid>
