@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Logger } from '@nestjs/common';
 import fs from 'fs';
 import yargs from 'yargs';
-import { createConnection, In } from 'typeorm';
+import { createConnection, In, IsNull } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { Site } from '../src/sites/sites.entity';
@@ -24,18 +24,9 @@ try {
   process.exit();
 }
 
-function getFileUrl() {
-  const date = new Date();
-
-  // NOAA data is usually available with a 2-day lag.
-  date.setDate(date.getDate() - 2);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-
-  // List of some available files https://www.star.nesdis.noaa.gov/pub/sod/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/sst/2022/
-  return `https://www.star.nesdis.noaa.gov/pub/sod/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/sst/${year}/coraltemp_v3.1_${year}${month}${day}.nc`;
-}
+// List of some available files https://www.star.nesdis.noaa.gov/pub/sod/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/sst/2022/
+const FILE_URL =
+  'https://www.star.nesdis.noaa.gov/pub/sod/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/sst/2022/coraltemp_v3.1_20221024.nc';
 
 const { argv } = yargs
   .scriptName('fill-noaa-availability')
@@ -46,6 +37,12 @@ const { argv } = yargs
       'Specify the sites for which nearest noaa availability point will be filled',
     type: 'array',
   })
+  .option('a', {
+    alias: 'all',
+    describe:
+      'Update all specified sites even if they already have nearest_noaa_location',
+    type: 'boolean',
+  })
   .help();
 
 async function getAvailabilityMapFromNetCDF4() {
@@ -53,7 +50,7 @@ async function getAvailabilityMapFromNetCDF4() {
 
   const tempFileName = './noaa_data.nc';
 
-  const response = await axios.get(getFileUrl(), {
+  const response = await axios.get(FILE_URL, {
     responseType: 'arraybuffer',
   });
   const buff = Buffer.from(response.data);
@@ -130,21 +127,26 @@ async function getNearestAvailablePoint(
 }
 
 async function run() {
-  const { s: sites } = argv;
-  const siteIds = sites && sites.map((site) => parseInt(`${site}`, 10));
+  const { s: sites, a: all } = argv;
+  const parsedIds = sites && sites.map((site) => Number(site));
+  const siteIds =
+    parsedIds?.filter((x, i) => {
+      if (Number.isNaN(x)) {
+        Logger.warn(`Skipping invalid site id: ${(sites as any)[i]}`);
+        return false;
+      }
+      return true;
+    }) || [];
   const availabilityArray = await getAvailabilityMapFromNetCDF4();
   createConnection(dbConfig).then(async (connection) => {
     Logger.log('Fetching sites');
     const siteRepository = connection.getRepository(Site);
-    const allSites = await siteRepository.find(
-      siteIds && siteIds.length > 0
-        ? {
-            where: {
-              id: In(siteIds),
-            },
-          }
-        : {},
-    );
+    const allSites = await siteRepository.find({
+      where: {
+        ...(!all && { nearestNOAALocation: IsNull() }),
+        ...(siteIds.length > 0 && { id: In(siteIds) }),
+      },
+    });
 
     await Bluebird.map(
       allSites,

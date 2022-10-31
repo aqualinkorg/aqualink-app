@@ -1,4 +1,3 @@
-import type { Coord } from '@turf/helpers';
 import type { FeatureCollection, Point, Polygon } from 'geojson';
 import nearestPoint from '@turf/nearest-point';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
@@ -15,7 +14,7 @@ export const AVAILABLE_POINTS: FeatureCollection<Point> = {
   })),
 };
 
-export function getSofarNearestAvailablePoint(point: Coord): [number, number] {
+export function getSofarNearestAvailablePoint(point: Point): [number, number] {
   // deconstructing number[] into [number, number] in order to make typescript compiler happy
   const [longitude, latitude] = nearestPoint(point, AVAILABLE_POINTS).geometry
     .coordinates;
@@ -50,7 +49,7 @@ export function getSofarNearestAvailablePoint(point: Coord): [number, number] {
     ],
   };
 
-  const pointCoordinates = (point as Point).coordinates;
+  const pointCoordinates = point.coordinates;
 
   return booleanPointInPolygon(point, poly)
     ? (pointCoordinates as [number, number])
