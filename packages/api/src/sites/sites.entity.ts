@@ -61,6 +61,14 @@ export class Site {
   @Index({ spatial: true })
   polygon: GeoJSON | null;
 
+  @ApiPointProperty()
+  @Column({
+    type: 'geometry',
+    srid: 4326,
+    nullable: true,
+  })
+  nearestNOAALocation: GeoJSON | null;
+
   @ApiProperty({ example: 23 })
   @Column({ nullable: true, type: 'integer' })
   depth: number | null;

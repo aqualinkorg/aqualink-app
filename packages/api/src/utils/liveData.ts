@@ -15,22 +15,24 @@ export const getLiveData = async (
   isDeployed: boolean,
 ): Promise<SofarLiveData> => {
   console.time(`getLiveData for site ${site.id}`);
-  const { polygon, sensorId, maxMonthlyMean } = site;
+  const { polygon, sensorId, maxMonthlyMean, nearestNOAALocation } = site;
   // TODO - Accept Polygon option
-  const [longitude, latitude] = (polygon as Point).coordinates;
+  const [NOAALongitude, NOAALatitude] = nearestNOAALocation
+    ? (nearestNOAALocation as Point).coordinates
+    : (polygon as Point).coordinates;
 
   const now = new Date();
 
   const [spotterRawData, degreeHeatingDays, satelliteTemperature] =
     await Promise.all([
       sensorId && isDeployed ? getSpotterData(sensorId) : undefined,
-      getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
+      getDegreeHeatingDays(NOAALatitude, NOAALongitude, now, maxMonthlyMean),
       getSofarHindcastData(
         SofarModels.NOAACoralReefWatch,
         sofarVariableIDs[SofarModels.NOAACoralReefWatch]
           .analysedSeaSurfaceTemperature,
-        latitude,
-        longitude,
+        NOAALatitude,
+        NOAALongitude,
         now,
         96,
       ),
