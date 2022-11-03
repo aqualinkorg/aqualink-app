@@ -257,44 +257,60 @@ export async function getSpotterData(
     [[], []],
   );
 
-  const spotterBarometer: ValueWithTimestamp[] = barometerData.map((data) => ({
-    timestamp: data.timestamp,
-    value: data.value,
-  }));
+  const spotterBarometerTop: ValueWithTimestamp[] = barometerData.map(
+    (data) => ({
+      timestamp: data.timestamp,
+      value: data.value,
+    }),
+  );
 
-  const spotterBarometricDiff = getBarometricDiff(spotterBarometer);
+  const spotterBarometricTopDiff = getBarometricDiff(spotterBarometerTop);
 
   // Sofar increments sensors by distance to the spotter.
-  // Sensor 1 -> topTemp and Sensor 2 -> bottomTemp
-  const [sofarTopTemperature, sofarBottomTemperature]: [
+  // Sensor 1 -> top and Sensor 2 -> bottom
+  const [sofarTopTemperature, sofarBottomTemperature, sofarBottomPressure]: [
+    ValueWithTimestamp[],
     ValueWithTimestamp[],
     ValueWithTimestamp[],
   ] = smartMooringData.reduce(
-    ([sensor1Data, sensor2Data], data) => {
+    ([topTemp, bottomTemp, bottomPressure], data) => {
       const { sensorPosition, unit_type: unitType } = data;
 
       if (sensorPosition === 1 && unitType === 'temperature') {
         return [
-          sensor1Data.concat({
+          topTemp.concat({
             timestamp: data.timestamp,
             value: data.value,
           }),
-          sensor2Data,
+          bottomTemp,
+          bottomPressure,
         ];
       }
       if (sensorPosition === 2 && unitType === 'temperature') {
         return [
-          sensor1Data,
-          sensor2Data.concat({
+          topTemp,
+          bottomTemp.concat({
             timestamp: data.timestamp,
             value: data.value,
+          }),
+          bottomPressure,
+        ];
+      }
+      if (sensorPosition === 2 && unitType === 'pressure') {
+        return [
+          topTemp,
+          bottomTemp,
+          bottomPressure.concat({
+            timestamp: data.timestamp,
+            // convert micro bar to hPa
+            value: data.value / 1000,
           }),
         ];
       }
 
-      return [sensor1Data, sensor2Data];
+      return [topTemp, bottomTemp, bottomPressure];
     },
-    [[], []],
+    [[], [], []],
   );
 
   console.timeEnd(`getSpotterData for sensor ${sensorId}`);
@@ -309,8 +325,11 @@ export async function getSpotterData(
     waveMeanDirection: sofarMeanDirection,
     windSpeed: sofarWindSpeed,
     windDirection: sofarWindDirection,
-    barometer: spotterBarometer,
-    barometricDiff: spotterBarometricDiff ? [spotterBarometricDiff] : [],
+    barometerTop: spotterBarometerTop,
+    barometerBottom: sofarBottomPressure.filter((data) => !isNil(data.value)),
+    barometricTopDiff: spotterBarometricTopDiff
+      ? [spotterBarometricTopDiff]
+      : [],
     latitude: spotterLatitude,
     longitude: spotterLongitude,
   };

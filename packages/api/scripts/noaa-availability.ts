@@ -170,7 +170,7 @@ async function run() {
         } catch (error) {
           console.error(error);
           Logger.warn(
-            `Could not get nearest point for (lon, lat): (${longitude}, ${latitude})`,
+            `Could not get nearest point for site id: ${site.id}, (lon, lat): (${longitude}, ${latitude})`,
           );
         }
       },

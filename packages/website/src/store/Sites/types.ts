@@ -84,8 +84,9 @@ export const metricsKeysList = [
   "precipitation",
   "rh",
   "wind_gust_speed",
-  "barometric_pressure",
-  "barometric_pressure_diff",
+  "barometric_pressure_top",
+  "barometric_pressure_bottom",
+  "barometric_pressure_top_diff",
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];

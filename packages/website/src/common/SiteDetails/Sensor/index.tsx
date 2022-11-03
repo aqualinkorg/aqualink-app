@@ -69,8 +69,8 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
   const {
     topTemperature,
     bottomTemperature,
-    barometricPressure,
-    barometricPressureDiff,
+    barometricPressureTop,
+    barometricPressureTopDiff,
   } = data;
 
   const relativeTime =
@@ -113,7 +113,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
       <CardContent className={classes.content}>
         <div className={classes.gridContainer}>
           {metrics.map(({ label, value }, index) => (
-            <div style={{ gridArea: `value${index}` }}>
+            <div style={{ gridArea: `value${index}` }} key={label}>
               <Typography
                 className={classes.contentTextTitles}
                 variant="subtitle2"
@@ -125,7 +125,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
               </Typography>
             </div>
           ))}
-          {barometricPressure && (
+          {barometricPressureTop && (
             <div style={{ gridArea: "value2" }}>
               <Typography
                 className={classes.contentTextTitles}
@@ -140,7 +140,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
                 }}
               >
                 <Typography className={classes.contentTextValues} variant="h3">
-                  {formatNumber(barometricPressure?.value, 1)}
+                  {formatNumber(barometricPressureTop?.value, 1)}
                 </Typography>
                 <Typography className={classes.contentUnits} variant="h6">
                   hPa
@@ -152,7 +152,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
             <img
               alt="sensor"
               src={sensor}
-              height={barometricPressure ? "135" : "150"}
+              height={barometricPressureTop ? "135" : "150"}
               width="auto"
             />
           </div>
@@ -163,7 +163,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
               alignItems: "flex-end",
             }}
           >
-            {barometricPressure && (
+            {barometricPressureTopDiff && (
               <div>
                 <Box
                   style={{
@@ -171,11 +171,13 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
                     alignItems: "flex-end",
                   }}
                 >
-                  {(barometricPressureDiff?.value || 0) === 0 && <RemoveIcon />}
-                  {(barometricPressureDiff?.value || 0) <= 0 && (
+                  {(barometricPressureTopDiff?.value || 0) === 0 && (
+                    <RemoveIcon />
+                  )}
+                  {(barometricPressureTopDiff?.value || 0) <= 0 && (
                     <ArrowDownwardIcon />
                   )}
-                  {(barometricPressureDiff?.value || 0) >= 0 && (
+                  {(barometricPressureTopDiff?.value || 0) >= 0 && (
                     <ArrowUpwardIcon />
                   )}
 
@@ -183,7 +185,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
                     className={classes.contentTextValues}
                     variant="h3"
                   >
-                    {formatNumber(barometricPressureDiff?.value, 1)}
+                    {formatNumber(barometricPressureTopDiff?.value, 1)}
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     hPa

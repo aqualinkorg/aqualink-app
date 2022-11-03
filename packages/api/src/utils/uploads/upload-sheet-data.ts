@@ -473,7 +473,7 @@ export const uploadTimeSeriesData = async (
     });
 
     const barometricPressures = dataAsTimeSeriesNoDiffs.filter(
-      (x) => x.metric === Metric.BAROMETRIC_PRESSURE,
+      (x) => x.metric === Metric.BAROMETRIC_PRESSURE_TOP,
     );
     const pressuresBySource = groupBy(barometricPressures, 'source.site.id');
 
@@ -491,7 +491,7 @@ export const uploadTimeSeriesData = async (
           ? {
               timestamp: valueDiff.timestamp,
               value: valueDiff.value,
-              metric: Metric.BAROMETRIC_PRESSURE_DIFF,
+              metric: Metric.BAROMETRIC_PRESSURE_TOP_DIFF,
               source: sortedPressures[1].source,
               dataUpload: dataUploadsFile,
             }
