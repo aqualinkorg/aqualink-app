@@ -151,7 +151,7 @@ export async function getSofarHindcastData(
 ) {
   const [start, end] = getStartEndDate(endDate, hours);
   // Get data for model and return values
-  console.time(`getSofarHindcast for ${modelId}-${variableID}`);
+  console.time(`getSofarHindcast ${modelId}-${variableID} for lat ${latitude}`);
   const hindcastVariables = await sofarHindcast(
     modelId,
     variableID,
@@ -160,7 +160,9 @@ export async function getSofarHindcastData(
     start,
     end,
   );
-  console.timeEnd(`getSofarHindcast for ${modelId}-${variableID}`);
+  console.timeEnd(
+    `getSofarHindcast ${modelId}-${variableID} for lat ${latitude}`,
+  );
 
   // Filter out unknown values
   return filterSofarResponse(hindcastVariables);
