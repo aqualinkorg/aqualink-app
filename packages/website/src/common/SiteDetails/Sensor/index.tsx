@@ -171,13 +171,13 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
                     alignItems: "flex-end",
                   }}
                 >
-                  {(barometricPressureTopDiff?.value || 0) === 0 && (
+                  {(barometricPressureTopDiff.value || 0) === 0 && (
                     <RemoveIcon />
                   )}
-                  {(barometricPressureTopDiff?.value || 0) <= 0 && (
+                  {(barometricPressureTopDiff.value || 0) <= 0 && (
                     <ArrowDownwardIcon />
                   )}
-                  {(barometricPressureTopDiff?.value || 0) >= 0 && (
+                  {(barometricPressureTopDiff.value || 0) >= 0 && (
                     <ArrowUpwardIcon />
                   )}
 
@@ -185,7 +185,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
                     className={classes.contentTextValues}
                     variant="h3"
                   >
-                    {formatNumber(barometricPressureTopDiff?.value, 1)}
+                    {formatNumber(barometricPressureTopDiff.value, 1)}
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     hPa
