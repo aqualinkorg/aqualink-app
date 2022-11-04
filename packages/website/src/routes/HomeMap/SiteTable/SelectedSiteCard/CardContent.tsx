@@ -44,8 +44,20 @@ const SelectedSiteCardContent = ({
   const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
   const sortedDailyData = sortByDate(site?.dailyData || [], "date");
   const dailyDataLen = sortedDailyData.length;
-  const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
-    (dailyDataLen && sortedDailyData[dailyDataLen - 1]) || {};
+  const {
+    maxBottomTemperature,
+    satelliteTemperature: dailyDataSatelliteTemperature,
+    degreeHeatingDays: dailyDataDegreeHeatingDays,
+  } = (dailyDataLen && sortedDailyData[dailyDataLen - 1]) || {};
+  const {
+    satelliteTemperature: collectionDataSatelliteTemperature,
+    dhw: collectionDataDegreeHeatingWeeks,
+  } = site?.collectionData || {};
+  const satelliteTemperature =
+    collectionDataSatelliteTemperature || dailyDataSatelliteTemperature;
+  const degreeHeatingWeeks =
+    collectionDataDegreeHeatingWeeks ||
+    degreeHeatingWeeksCalculator(dailyDataDegreeHeatingDays);
   const useCardWithImageLayout = Boolean(loading || imageUrl);
 
   const metrics = [
@@ -57,9 +69,9 @@ const SelectedSiteCardContent = ({
     },
     {
       label: "HEAT STRESS",
-      value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
+      value: formatNumber(degreeHeatingWeeks, 1),
       unit: " DHW",
-      display: isNumber(degreeHeatingDays),
+      display: isNumber(degreeHeatingWeeks),
     },
     {
       label: `TEMP AT ${site?.depth}m`,

@@ -17,6 +17,7 @@ import {
   timeSeriesRequest,
 } from "./helpers";
 import { getAxiosErrorMessage } from "../../helpers/errors";
+import { mapCollectionData } from "../Collection/utils";
 
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
@@ -98,6 +99,7 @@ export const siteRequest = createAsyncThunk<
 
       return {
         ...data,
+        collectionData: mapCollectionData(data.collectionData || {}),
         dailyData,
         sketchFab,
         historicalMonthlyMean: sortBy(
