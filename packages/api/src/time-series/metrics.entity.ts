@@ -38,8 +38,9 @@ export enum Metric {
   PRECIPITATION = 'precipitation',
   RH = 'rh',
   WIND_GUST_SPEED = 'wind_gust_speed',
-  BAROMETRIC_PRESSURE = 'barometric_pressure',
-  BAROMETRIC_PRESSURE_DIFF = 'barometric_pressure_diff',
+  BAROMETRIC_PRESSURE_TOP = 'barometric_pressure_top',
+  BAROMETRIC_PRESSURE_TOP_DIFF = 'barometric_pressure_top_diff',
+  BAROMETRIC_PRESSURE_BOTTOM = 'barometric_pressure_bottom',
 }
 
 export enum Units {

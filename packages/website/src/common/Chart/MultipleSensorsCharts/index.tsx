@@ -54,7 +54,8 @@ const DEFAULT_METRICS: MetricsKeys[] = [
   "top_temperature",
   "wind_speed",
   "significant_wave_height",
-  "barometric_pressure",
+  "barometric_pressure_top",
+  "barometric_pressure_bottom",
 ];
 
 interface SpotterConfig {
@@ -70,9 +71,13 @@ const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
     // convert from m/s to to km/h
     convert: 3.6,
   },
-  barometricPressure: {
+  barometricPressureTop: {
     unit: "hPa",
-    title: "Barometric Pressure",
+    title: "Surface Barometric Pressure",
+  },
+  barometricPressureBottom: {
+    unit: "hPa",
+    title: "Bottom Barometric Pressure",
   },
   significantWaveHeight: {
     unit: "m",
@@ -540,11 +545,13 @@ const MultipleSensorsCharts = ({
       {hasSpotterData &&
         Object.entries(spotterConfig).map(([key, { title }]) => {
           const datasets = [spotterMetricDataset(key as Metrics)];
-          // Since the data will only be available for a few sites,
+          // Since barometric data will only be available for a few sites,
           // we don’t want to display the warning message for all the others.
           if (
             !datasets[0] ||
-            (datasets[0].metric === "barometricPressure" &&
+            (datasets[0].metric === "barometricPressureTop" &&
+              !datasets[0].displayData) ||
+            (datasets[0].metric === "barometricPressureBottom" &&
               !datasets[0].displayData)
           ) {
             return <></>;
