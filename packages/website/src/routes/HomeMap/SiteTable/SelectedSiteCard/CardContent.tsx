@@ -18,9 +18,7 @@ import classNames from "classnames";
 import { Alert } from "@material-ui/lab";
 import Chart from "../../../../common/Chart";
 import { formatNumber } from "../../../../helpers/numberUtils";
-import { sortByDate } from "../../../../helpers/dates";
 import { Site } from "../../../../store/Sites/types";
-import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import { getSiteNameAndRegion } from "../../../../store/Sites/helpers";
 import { standardDailyDataDataset } from "../../../../common/Chart/MultipleSensorsCharts/helpers";
 import {
@@ -42,22 +40,8 @@ const SelectedSiteCardContent = ({
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
-  const sortedDailyData = sortByDate(site?.dailyData || [], "date");
-  const dailyDataLen = sortedDailyData.length;
-  const {
-    maxBottomTemperature,
-    satelliteTemperature: dailyDataSatelliteTemperature,
-    degreeHeatingDays: dailyDataDegreeHeatingDays,
-  } = (dailyDataLen && sortedDailyData[dailyDataLen - 1]) || {};
-  const {
-    satelliteTemperature: collectionDataSatelliteTemperature,
-    dhw: collectionDataDegreeHeatingWeeks,
-  } = site?.collectionData || {};
-  const satelliteTemperature =
-    collectionDataSatelliteTemperature || dailyDataSatelliteTemperature;
-  const degreeHeatingWeeks =
-    collectionDataDegreeHeatingWeeks ||
-    degreeHeatingWeeksCalculator(dailyDataDegreeHeatingDays);
+  const { bottomTemperature, satelliteTemperature, dhw } =
+    site?.collectionData || {};
   const useCardWithImageLayout = Boolean(loading || imageUrl);
 
   const metrics = [
@@ -69,15 +53,15 @@ const SelectedSiteCardContent = ({
     },
     {
       label: "HEAT STRESS",
-      value: formatNumber(degreeHeatingWeeks, 1),
+      value: formatNumber(dhw, 1),
       unit: " DHW",
-      display: isNumber(degreeHeatingWeeks),
+      display: isNumber(dhw),
     },
     {
       label: `TEMP AT ${site?.depth}m`,
-      value: formatNumber(maxBottomTemperature, 1),
+      value: formatNumber(bottomTemperature, 1),
       unit: " °C",
-      display: isNumber(maxBottomTemperature) && isNumber(site?.depth),
+      display: isNumber(bottomTemperature) && isNumber(site?.depth),
     },
   ];
 
