@@ -241,12 +241,18 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
+    const mappedSiteData = await getCollectionData(
+      [site],
+      this.latestDataRepository,
+    );
+
     return {
       ...site,
       surveys,
       historicalMonthlyMean,
       videoStream,
       applied: site.applied,
+      collectionData: mappedSiteData[site.id],
     };
   }
 
