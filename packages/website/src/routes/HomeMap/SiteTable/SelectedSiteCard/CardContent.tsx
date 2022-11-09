@@ -40,8 +40,11 @@ const SelectedSiteCardContent = ({
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
-  const { bottomTemperature, satelliteTemperature, dhw } =
-    site?.collectionData || {};
+  const {
+    bottomTemperature,
+    satelliteTemperature,
+    dhw: degreeHeatingWeek,
+  } = site?.collectionData || {};
   const useCardWithImageLayout = Boolean(loading || imageUrl);
 
   const metrics = [
@@ -53,9 +56,9 @@ const SelectedSiteCardContent = ({
     },
     {
       label: "HEAT STRESS",
-      value: formatNumber(dhw, 1),
+      value: formatNumber(degreeHeatingWeek, 1),
       unit: " DHW",
-      display: isNumber(dhw),
+      display: isNumber(degreeHeatingWeek),
     },
     {
       label: `TEMP AT ${site?.depth}m`,
