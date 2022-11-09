@@ -122,6 +122,14 @@ jobs:
       - run: yarn build
       - run: cd packages/api && yarn build:cloud-functions
 
+  deploy_website:
+    working_directory: *working_directory
+    executor: default
+
+    steps:
+      - run: cd packages/website && yarn build
+      - run: surge --project ./build --domain aqualink-app-test.surge.sh
+
 workflows:
   version: 2.1
   build:
@@ -143,3 +151,8 @@ workflows:
       - build_app:
           requires:
             - build_dependencies
+
+      - deploy_website:
+          requires:
+            - build_dependencies
+            - test_website
