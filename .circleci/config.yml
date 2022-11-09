@@ -19,6 +19,10 @@ executors:
           POSTGRES_DB: postgres
           POSTGRES_PASSWORD: "CHANGE-ME"
         name: postgres
+  
+  base:
+    docker:
+      - image: cimg/base:stable
 
 commands:
   install_psql:
@@ -127,8 +131,30 @@ jobs:
     executor: default
 
     steps:
-      - run: cd packages/website && yarn build
-      - run: surge --project ./build --domain aqualink-app-test.surge.sh
+      - checkout_and_restore_dependencies
+
+      - run: cd packages/website && yarn build && yarn surge --project ./build --domain aqualink-app-${CIRCLE_PULL_REQUEST##*/}.surge.sh
+  
+  deploy_website_notification:
+    working_directory: *working_directory
+    executor: base
+    steps:
+      - run: |
+          sudo apt-get install jq
+
+          pr_response=$(curl --location --request GET "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+          -u $GH_USER:$GH_TOKEN)
+
+          if [ $(echo $pr_response | jq length) -eq 0 ]; then
+            echo "No PR found to update"
+          else
+            pr_comment_url=$(echo $pr_response | jq -r ".[]._links.comments.href")
+          fi
+
+          curl --location --request POST "$pr_comment_url" \
+          -u $GH_USER:$GH_TOKEN \
+          --header 'Content-Type: application/json' \
+          --data-raw '{ "body": "Build succeeded and deployed at http://aqualink-app-'"${CIRCLE_PULL_REQUEST##*/}"'.surge.sh \n (hash `'"${CIRCLE_SHA1:0:7}"'` deployed at '"$( date '+%Y/%m/%d %H:%M:%S' )"')" }'
 
 workflows:
   version: 2.1
@@ -154,5 +180,8 @@ workflows:
 
       - deploy_website:
           requires:
-            - build_dependencies
             - test_website
+
+      - deploy_website_notification:
+          requires:
+            - deploy_website
