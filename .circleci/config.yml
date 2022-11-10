@@ -22,7 +22,7 @@ executors:
   
   base:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/base:current-22.04
 
 commands:
   install_psql:
@@ -154,7 +154,7 @@ jobs:
           curl --location --request POST "$pr_comment_url" \
           -u $GH_USER:$GH_TOKEN \
           --header 'Content-Type: application/json' \
-          --data-raw '{ "body": "Build succeeded and deployed at http://aqualink-app-'"${CIRCLE_PULL_REQUEST##*/}"'.surge.sh \n (hash `'"${CIRCLE_SHA1:0:7}"'` deployed at '"$( date '+%Y/%m/%d %H:%M:%S' )"')" }'
+          --data-raw '{ "body": "Build succeeded and deployed at https://aqualink-app-'"${CIRCLE_PULL_REQUEST##*/}"'.surge.sh \n (hash `'"${CIRCLE_SHA1:0:7}"'` deployed at '"$( date '+%Y/%m/%d %H:%M:%S' )"')" }'
 
 workflows:
   version: 2.1
