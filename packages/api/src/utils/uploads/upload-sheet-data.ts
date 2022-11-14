@@ -195,9 +195,9 @@ const getTimeStamp = (
     return new Date(`${item[index[0]]} ${item[index[1]]}`);
   if (isArray) {
     const date = new Date(Date.UTC(1900, 0, 1));
-    date.setDate(date.getDate() + (item[index[0]] || 0));
+    date.setDate(date.getDate() + item[index[0]]);
     date.setSeconds(
-      date.getSeconds() + Math.round(SECONDS_IN_DAY * (item[index[1]] || 0)),
+      date.getSeconds() + Math.round(SECONDS_IN_DAY * item[index[1]]),
     );
     return date;
   }
@@ -385,18 +385,19 @@ export const uploadFileToGCloud = async (
   maxDate: string | undefined,
   importedHeaders: Metric[],
 ) => {
-  logger.warn(`Uploading file to google cloud: ${fileName}`);
   const uploadExists = await dataUploadsRepository.findOne({
     where: {
       signature,
+      site,
+      surveyPoint,
+      sensorType: sourceType,
     },
   });
 
   if (uploadExists) {
-    Logger.warn(
+    throw new ConflictException(
       `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
     );
-    return uploadExists;
   }
   // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService();
@@ -422,62 +423,6 @@ export const uploadFileToGCloud = async (
   });
 
   return dataUploadsFile;
-};
-
-export const findOrCreateSourceEntity = async (
-  site: Site,
-  sourceType: SourceType,
-  surveyPoint: SiteSurveyPoint | null,
-  sourcesRepository: Repository<Sources>,
-) => {
-  const existingSourceEntity = await sourcesRepository.findOne({
-    relations: ['surveyPoint', 'site'],
-    where: {
-      site,
-      surveyPoint,
-      type: sourceType,
-    },
-  });
-  const sourceEntity =
-    existingSourceEntity ||
-    (await sourcesRepository.save({
-      type: sourceType,
-      site,
-      surveyPoint,
-    }));
-  return sourceEntity;
-};
-
-export const saveBatchToTimeSeries = (
-  data: QueryDeepPartialEntity<TimeSeries>[],
-  timeSeriesRepository: Repository<TimeSeries>,
-  batchSize = 100,
-) => {
-  logger.log(`Saving time series data in batches of ${batchSize}`);
-  const inserts = chunk(data, batchSize).map(async (batch: any[]) => {
-    try {
-      await timeSeriesRepository
-        .createQueryBuilder('time_series')
-        .insert()
-        .values(batch)
-        // If there's a conflict, replace data with the new value.
-        // onConflict is deprecated, but updating it is tricky.
-        // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
-        .onConflict(
-          'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
-        )
-        .execute();
-    } catch {
-      console.warn('The following batch failed to upload:\n', batch);
-    }
-    return true;
-  });
-
-  // Return insert promises and print progress updates
-  const actionsLength = inserts.length;
-  return Bluebird.Promise.each(inserts, (props, idx) => {
-    logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
-  });
 };
 
 export const uploadTimeSeriesData = async (
