@@ -6,4 +6,5 @@ export enum SourceType {
   SONDE = 'sonde',
   METLOG = 'metlog',
   SOFAR_WAVE_MODEL = 'sofar_wave_model',
+  HUI = 'hui',
 }

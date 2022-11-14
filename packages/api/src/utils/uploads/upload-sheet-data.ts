@@ -115,6 +115,29 @@ const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
   [SourceType.GFS]: {},
   [SourceType.SPOTTER]: {},
   [SourceType.SOFAR_WAVE_MODEL]: {},
+  [SourceType.HUI]: {
+    '': { ignore: true },
+    SampleID: { ignore: true },
+    SiteName: { ignore: true },
+    Station: { ignore: true },
+    Session: { ignore: true },
+    Date: { time: 'Date', ignore: true },
+    Time: { time: 'Time', ignore: true },
+    Temp: { metric: Metric.BOTTOM_TEMPERATURE },
+    Salinity: { metric: Metric.SALINITY },
+    DO: { metric: Metric.ODO_CONCENTRATION },
+    DO_sat: { metric: Metric.ODO_SATURATION },
+    pH: { metric: Metric.PH },
+    Turbidity: { metric: Metric.TURBIDITY },
+    TotalN: { metric: Metric.NITROGEN_TOTAL },
+    TotalP: { metric: Metric.PHOSPHORUS_TOTAL },
+    Phosphate: { metric: Metric.PHOSPHORUS },
+    Silicate: { metric: Metric.SILICATE },
+    NNN: { metric: Metric.NNN },
+    NH4: { metric: Metric.AMMONIUM },
+    Lat: { ignore: true },
+    Long: { ignore: true },
+  },
 };
 
 export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
@@ -171,7 +194,20 @@ const getTimeStamp = (
   timezone?: string,
 ) => {
   const isArray = Array.isArray(index);
-  if (isArray) return new Date(`${item[index[0]]} ${item[index[1]]}`);
+  if (
+    isArray &&
+    typeof item[index[0]] === 'string' &&
+    typeof item[index[1]] === 'string'
+  )
+    return new Date(`${item[index[0]]} ${item[index[1]]}`);
+  if (isArray) {
+    const date = new Date(Date.UTC(1900, 0, 1));
+    date.setDate(date.getDate() + item[index[0]]);
+    date.setSeconds(
+      date.getSeconds() + Math.round(SECONDS_IN_DAY * item[index[1]]),
+    );
+    return date;
+  }
   if (!isArray && mimetype === 'text/csv' && timezone)
     return new Date(`${item[index]} GMT ${timezone}`);
   if (!isArray && mimetype === 'text/csv' && !timezone)
@@ -344,6 +380,58 @@ export const convertData = (
   return data;
 };
 
+export const uploadFileToGCloud = async (
+  dataUploadsRepository: Repository<DataUploads>,
+  signature: string,
+  site: Site | undefined,
+  surveyPoint: SiteSurveyPoint | undefined,
+  sourceType: SourceType,
+  fileName: string,
+  filePath: string,
+  minDate: string | undefined,
+  maxDate: string | undefined,
+  importedHeaders: Metric[],
+) => {
+  const uploadExists = await dataUploadsRepository.findOne({
+    where: {
+      signature,
+      site,
+      surveyPoint,
+      sensorType: sourceType,
+    },
+  });
+
+  if (uploadExists) {
+    throw new ConflictException(
+      `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
+    );
+  }
+  // Initialize google cloud service, to be used for media upload
+  const googleCloudService = new GoogleCloudService();
+
+  // Note this may fail. It would still return a location, but the file may not have been uploaded
+  const fileLocation = googleCloudService.uploadFileAsync(
+    filePath,
+    sourceType,
+    'data_uploads',
+    'data_upload',
+  );
+
+  const dataUploadsFile = await dataUploadsRepository.save({
+    file: fileName,
+    signature,
+    sensorType: sourceType,
+    site,
+    surveyPoint,
+    minDate,
+    maxDate,
+    metrics: importedHeaders,
+    fileLocation,
+  });
+
+  return dataUploadsFile;
+};
+
 export const uploadTimeSeriesData = async (
   filePath: string,
   fileName: string,
@@ -404,21 +492,6 @@ export const uploadTimeSeriesData = async (
       );
     }
 
-    const uploadExists = await repositories.dataUploadsRepository.findOne({
-      where: {
-        signature,
-        site,
-        surveyPoint,
-        sensorType: sourceType,
-      },
-    });
-
-    if (uploadExists) {
-      throw new ConflictException(
-        `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
-      );
-    }
-
     const data = convertData(
       workSheetData,
       headers,
@@ -439,28 +512,18 @@ export const uploadTimeSeriesData = async (
       'timestamp',
     );
 
-    // Initialize google cloud service, to be used for media upload
-    const googleCloudService = new GoogleCloudService();
-
-    // Note this may fail. It would still return a location, but the file may not have been uploaded
-    const fileLocation = googleCloudService.uploadFileAsync(
-      filePath,
-      sourceType,
-      'data_uploads',
-      'data_upload',
-    );
-
-    const dataUploadsFile = await repositories.dataUploadsRepository.save({
-      file: fileName,
+    const dataUploadsFile = await uploadFileToGCloud(
+      repositories.dataUploadsRepository,
       signature,
-      sensorType: sourceType,
       site,
       surveyPoint,
+      sourceType,
+      fileName,
+      filePath,
       minDate,
       maxDate,
-      metrics: importedHeaders,
-      fileLocation,
-    });
+      importedHeaders,
+    );
 
     const dataAsTimeSeriesNoDiffs = data.map((x) => {
       return {

@@ -21,11 +21,11 @@ export class DataUploads {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  @ManyToOne(() => Site, { onDelete: 'CASCADE' })
   @Index()
   site: Site;
 
-  @ManyToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE', nullable: false })
+  @ManyToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE' })
   @Index()
   surveyPoint: SiteSurveyPoint;
 
