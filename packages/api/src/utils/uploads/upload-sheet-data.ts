@@ -169,6 +169,15 @@ export const fileFilter: MulterOptions['fileFilter'] = (
 const headerMatchesKey = (header: string, key: string) =>
   header.toLowerCase().startsWith(key.toLowerCase());
 
+export const refreshMaterializedView = async (
+  dataUploadsRepository: Repository<DataUploads>,
+) => {
+  const hash = (Math.random() + 1).toString(36).substring(7);
+  console.time(`Refresh Materialized View ${hash}`);
+  await dataUploadsRepository.query('REFRESH MATERIALIZED VIEW latest_data');
+  console.timeEnd(`Refresh Materialized View ${hash}`);
+};
+
 const getJsDateFromExcel = (excelDate, timezone) => {
   const delta = excelDate - MAGIC_NUMBER_OF_DAYS;
   const parsed = delta * MISSING_LEAP_YEAR_DAY;
@@ -385,19 +394,18 @@ export const uploadFileToGCloud = async (
   maxDate: string | undefined,
   importedHeaders: Metric[],
 ) => {
+  logger.warn(`Uploading file to google cloud: ${fileName}`);
   const uploadExists = await dataUploadsRepository.findOne({
     where: {
       signature,
-      site,
-      surveyPoint,
-      sensorType: sourceType,
     },
   });
 
   if (uploadExists) {
-    throw new ConflictException(
+    Logger.warn(
       `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
     );
+    return uploadExists;
   }
   // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService();
@@ -423,6 +431,62 @@ export const uploadFileToGCloud = async (
   });
 
   return dataUploadsFile;
+};
+
+export const findOrCreateSourceEntity = async (
+  site: Site,
+  sourceType: SourceType,
+  surveyPoint: SiteSurveyPoint | null,
+  sourcesRepository: Repository<Sources>,
+) => {
+  const existingSourceEntity = await sourcesRepository.findOne({
+    relations: ['surveyPoint', 'site'],
+    where: {
+      site,
+      surveyPoint,
+      type: sourceType,
+    },
+  });
+  const sourceEntity =
+    existingSourceEntity ||
+    (await sourcesRepository.save({
+      type: sourceType,
+      site,
+      surveyPoint,
+    }));
+  return sourceEntity;
+};
+
+export const saveBatchToTimeSeries = (
+  data: QueryDeepPartialEntity<TimeSeries>[],
+  timeSeriesRepository: Repository<TimeSeries>,
+  batchSize = 100,
+) => {
+  logger.log(`Saving time series data in batches of ${batchSize}`);
+  const inserts = chunk(data, batchSize).map(async (batch: any[]) => {
+    try {
+      await timeSeriesRepository
+        .createQueryBuilder('time_series')
+        .insert()
+        .values(batch)
+        // If there's a conflict, replace data with the new value.
+        // onConflict is deprecated, but updating it is tricky.
+        // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
+        .onConflict(
+          'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
+        )
+        .execute();
+    } catch {
+      console.warn('The following batch failed to upload:\n', batch);
+    }
+    return true;
+  });
+
+  // Return insert promises and print progress updates
+  const actionsLength = inserts.length;
+  return Bluebird.Promise.each(inserts, (props, idx) => {
+    logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
+  });
 };
 
 export const uploadTimeSeriesData = async (
