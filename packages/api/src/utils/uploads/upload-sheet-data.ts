@@ -12,10 +12,11 @@ import {
 } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
-import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
+import { BadRequestException, Logger } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { Site } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { Metric } from '../../time-series/metrics.entity';
@@ -167,14 +168,14 @@ export const fileFilter: MulterOptions['fileFilter'] = (
 const headerMatchesKey = (header: string, key: string) =>
   header.toLowerCase().startsWith(key.toLowerCase());
 
-async function refreshMaterializedView(repositories: Repositories) {
+export const refreshMaterializedView = async (
+  dataUploadsRepository: Repository<DataUploads>,
+) => {
   const hash = (Math.random() + 1).toString(36).substring(7);
   console.time(`Refresh Materialized View ${hash}`);
-  await repositories.dataUploadsRepository.query(
-    'REFRESH MATERIALIZED VIEW latest_data',
-  );
+  await dataUploadsRepository.query('REFRESH MATERIALIZED VIEW latest_data');
   console.timeEnd(`Refresh Materialized View ${hash}`);
-}
+};
 
 const getJsDateFromExcel = (excelDate, timezone) => {
   const delta = excelDate - MAGIC_NUMBER_OF_DAYS;
@@ -392,19 +393,18 @@ export const uploadFileToGCloud = async (
   maxDate: string | undefined,
   importedHeaders: Metric[],
 ) => {
+  logger.warn(`Uploading file to google cloud: ${fileName}`);
   const uploadExists = await dataUploadsRepository.findOne({
     where: {
       signature,
-      site,
-      surveyPoint,
-      sensorType: sourceType,
     },
   });
 
   if (uploadExists) {
-    throw new ConflictException(
+    Logger.warn(
       `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
     );
+    return uploadExists;
   }
   // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService();
@@ -432,6 +432,62 @@ export const uploadFileToGCloud = async (
   return dataUploadsFile;
 };
 
+export const findOrCreateSourceEntity = async (
+  site: Site,
+  sourceType: SourceType,
+  surveyPoint: SiteSurveyPoint | null,
+  sourcesRepository: Repository<Sources>,
+) => {
+  const existingSourceEntity = await sourcesRepository.findOne({
+    relations: ['surveyPoint', 'site'],
+    where: {
+      site,
+      surveyPoint,
+      type: sourceType,
+    },
+  });
+  const sourceEntity =
+    existingSourceEntity ||
+    (await sourcesRepository.save({
+      type: sourceType,
+      site,
+      surveyPoint,
+    }));
+  return sourceEntity;
+};
+
+export const saveBatchToTimeSeries = (
+  data: QueryDeepPartialEntity<TimeSeries>[],
+  timeSeriesRepository: Repository<TimeSeries>,
+  batchSize = 100,
+) => {
+  logger.log(`Saving time series data in batches of ${batchSize}`);
+  const inserts = chunk(data, batchSize).map(async (batch: any[]) => {
+    try {
+      await timeSeriesRepository
+        .createQueryBuilder('time_series')
+        .insert()
+        .values(batch)
+        // If there's a conflict, replace data with the new value.
+        // onConflict is deprecated, but updating it is tricky.
+        // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
+        .onConflict(
+          'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
+        )
+        .execute();
+    } catch {
+      console.warn('The following batch failed to upload:\n', batch);
+    }
+    return true;
+  });
+
+  // Return insert promises and print progress updates
+  const actionsLength = inserts.length;
+  return Bluebird.Promise.each(inserts, (props, idx) => {
+    logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
+  });
+};
+
 export const uploadTimeSeriesData = async (
   filePath: string,
   fileName: string,
@@ -449,28 +505,19 @@ export const uploadTimeSeriesData = async (
   // // - Add foreign key constraint to sources on site_id
   console.time(`Upload datafile ${fileName}`);
 
-  const [existingSourceEntity, site, surveyPoint] = await Promise.all([
-    repositories.sourcesRepository.findOne({
-      relations: ['surveyPoint', 'site'],
-      where: {
-        site: { id: siteId },
-        surveyPoint: surveyPointId || null,
-        type: sourceType,
-      },
-    }),
+  const [site, surveyPoint] = await Promise.all([
     getSite(parseInt(siteId, 10), repositories.siteRepository),
     surveyPointId
       ? repositories.surveyPointRepository.findOne(parseInt(surveyPointId, 10))
       : undefined,
   ]);
 
-  const sourceEntity =
-    existingSourceEntity ||
-    (await repositories.sourcesRepository.save({
-      type: sourceType,
-      site,
-      surveyPoint,
-    }));
+  const sourceEntity = await findOrCreateSourceEntity(
+    site,
+    sourceType,
+    surveyPoint || null,
+    repositories.sourcesRepository,
+  );
 
   if (Object.keys(sourceItems).includes(sourceType)) {
     const {
@@ -568,38 +615,14 @@ export const uploadTimeSeriesData = async (
 
     // Data is too big to added with one bulk insert so we batch the upload.
     console.time(`Loading into DB ${fileName}`);
-    const batchSize = 100;
-    logger.log(`Saving time series data in batches of ${batchSize}`);
-    const inserts = chunk(dataAsTimeSeries, batchSize).map(
-      async (batch: any[]) => {
-        try {
-          await repositories.timeSeriesRepository
-            .createQueryBuilder('time_series')
-            .insert()
-            .values(batch)
-            // If there's a conflict, replace data with the new value.
-            // onConflict is deprecated, but updating it is tricky.
-            // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
-            .onConflict(
-              'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
-            )
-            .execute();
-        } catch {
-          console.warn('The following batch failed to upload:\n', batch);
-        }
-        return true;
-      },
+    await saveBatchToTimeSeries(
+      dataAsTimeSeries as QueryDeepPartialEntity<TimeSeries>[],
+      repositories.timeSeriesRepository,
     );
-
-    // Return insert promises and print progress updates
-    const actionsLength = inserts.length;
-    await Bluebird.Promise.each(inserts, (props, idx) => {
-      logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
-    });
     console.timeEnd(`Loading into DB ${fileName}`);
     logger.log('loading complete');
 
-    refreshMaterializedView(repositories);
+    refreshMaterializedView(repositories.dataUploadsRepository);
 
     console.timeEnd(`Upload datafile ${fileName}`);
     return ignoredHeaders;
