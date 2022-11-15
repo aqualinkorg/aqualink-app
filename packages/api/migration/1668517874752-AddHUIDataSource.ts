@@ -5,10 +5,6 @@ export class AddHUIDataSource1668517874752 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "forecast_data" ALTER COLUMN "source" DROP DEFAULT`,
-    );
-
-    await queryRunner.query(
       `ALTER TABLE "data_uploads" ALTER COLUMN "site_id" DROP NOT NULL`,
     );
     await queryRunner.query(
@@ -70,7 +66,13 @@ export class AddHUIDataSource1668517874752 implements MigrationInterface {
       `CREATE TYPE "public"."sources_type_enum_old" AS ENUM('gfs', 'hobo', 'metlog', 'noaa', 'sofar_wave_model', 'sonde', 'spotter')`,
     );
     await queryRunner.query(
+      `ALTER TABLE "forecast_data" ALTER COLUMN "source" DROP DEFAULT`,
+    );
+    await queryRunner.query(
       `ALTER TABLE "forecast_data" ALTER COLUMN "source" TYPE "public"."sources_type_enum_old" USING "source"::"text"::"public"."sources_type_enum_old"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "forecast_data" ALTER COLUMN "source" SET DEFAULT 'sofar_wave_model'`,
     );
     await queryRunner.query(
       `ALTER TABLE "sources" ALTER COLUMN "type" TYPE "public"."sources_type_enum_old" USING "type"::"text"::"public"."sources_type_enum_old"`,
@@ -87,10 +89,6 @@ export class AddHUIDataSource1668517874752 implements MigrationInterface {
     );
 
     await queryRunner.query(
-      `ALTER TABLE "forecast_data" ALTER COLUMN "source" SET DEFAULT 'sofar_wave_model'`,
-    );
-
-    await queryRunner.query(
       `CREATE MATERIALIZED VIEW "latest_data"
                 AS SELECT
                     DISTINCT ON (metric, type, site_id, survey_point_id)
@@ -98,7 +96,7 @@ export class AddHUIDataSource1668517874752 implements MigrationInterface {
                 FROM "time_series" "time_series"
                 INNER JOIN "sources" "sources" ON "sources"."id" = "time_series"."source_id"
                 WHERE timestamp >= current_date - INTERVAL '7 days'
-                OR type = 'sonde' AND (timestamp >= current_date - INTERVAL '90 days')
+                OR type IN ('sonde') AND (timestamp >= current_date - INTERVAL '90 days')
                 ORDER BY metric, type, site_id, survey_point_id, timestamp DESC`,
     );
   }
