@@ -22,21 +22,29 @@ import { SiteSurveyPoint } from '../src/site-survey-points/site-survey-points.en
 import { DataUploads } from '../src/data-uploads/data-uploads.entity';
 import { createPoint } from '../src/utils/coordinates';
 import { Region } from '../src/regions/regions.entity';
-import { getRegion, getTimezones } from '../src/utils/site.utils';
+import { createSite } from '../src/utils/site.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
+import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
+import { backfillSiteData } from '../src/workers/backfill-site-data';
 
 const { argv } = yargs
   .scriptName('upload-hui-data')
   .usage('$0 <cmd> [args]')
   .example(
     '$0 -f data/file.xml',
-    "This command will import the data contained in 'data/file.xml' to the timeseries table. It will create sites and survey points if needed",
+    "This command will import the data contained in 'data/file.xml' to the timeseries table. It will create sites and survey points if needed.",
   )
   .option('f', {
     alias: 'path',
     describe: 'The path to the sonde file to upload',
     demandOption: true,
     type: 'string',
+  })
+  .option('b', {
+    alias: 'backfill',
+    describe: 'Run backfill for sites created',
+    demandOption: true,
+    type: 'boolean',
   })
   .help();
 
@@ -120,7 +128,7 @@ async function run() {
   // Initialize Nest logger
   const logger = new Logger('ParseHUIData');
 
-  const { f: filePath } = argv;
+  const { f: filePath, b: backfill } = argv;
 
   // Initialize typeorm connection
   const config = configService.getTypeOrmConfig() as ConnectionOptions;
@@ -131,6 +139,9 @@ async function run() {
   const regionRepository = connection.getRepository(Region);
   const sourcesRepository = connection.getRepository(Sources);
   const timeSeriesRepository = connection.getRepository(TimeSeries);
+  const historicalMonthlyMeanRepository = connection.getRepository(
+    HistoricalMonthlyMean,
+  );
 
   logger.log(`Processing data from file: ${filePath}`);
 
@@ -243,32 +254,21 @@ async function run() {
 
   const groupedClusteredSites = groupBy(sitesClustered, (x) => x.cluster);
 
-  const promises = Object.keys(groupedClusteredSites).map(async (key) => {
+  const dataPromises = Object.keys(groupedClusteredSites).map(async (key) => {
     const pointsList = groupedClusteredSites[key];
     const siteIndex = pointsList.findIndex((x) => x.site !== undefined);
     const mainSite = siteIndex !== -1 ? pointsList[siteIndex] : pointsList[0];
-    const timezones = getTimezones(
-      mainSite.coordinates[0],
-      mainSite.coordinates[1],
-    ) as string[];
-    const region = await getRegion(
-      mainSite.coordinates[0],
-      mainSite.coordinates[1],
-      regionRepository,
-    );
     const site = mainSite.site
       ? mainSite.site
-      : await siteRepository.save({
-          name: mainSite.name,
-          region,
-          polygon: createPoint(
-            mainSite.coordinates[1],
-            mainSite.coordinates[0],
-          ),
-          timezone: timezones[0],
-          display: false,
-        });
-
+      : await createSite(
+          mainSite.name,
+          undefined,
+          mainSite.coordinates[1],
+          mainSite.coordinates[0],
+          regionRepository,
+          siteRepository,
+          historicalMonthlyMeanRepository,
+        );
     if (mainSite.site === undefined) {
       // eslint-disable-next-line fp/no-mutating-methods
       sitesCreated.push(site);
@@ -288,8 +288,19 @@ async function run() {
     return key;
   });
 
-  await Bluebird.Promise.each(promises, (clusterId) => {
+  await Bluebird.Promise.each(dataPromises, (clusterId) => {
     logger.log(`Completed cluster ${clusterId}`);
+  });
+
+  const backfillPromises = backfill
+    ? sitesCreated.map(async (x) => {
+        await backfillSiteData(x.id);
+        return x.id;
+      })
+    : [];
+
+  await Bluebird.Promise.each(backfillPromises, (id) => {
+    logger.log(`Completed backfill for site ${id}`);
   });
 
   refreshMaterializedView(dataUploadsRepository);
