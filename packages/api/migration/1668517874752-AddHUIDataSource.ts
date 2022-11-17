@@ -96,7 +96,7 @@ export class AddHUIDataSource1668517874752 implements MigrationInterface {
                 FROM "time_series" "time_series"
                 INNER JOIN "sources" "sources" ON "sources"."id" = "time_series"."source_id"
                 WHERE timestamp >= current_date - INTERVAL '7 days'
-                OR type IN ('sonde') AND (timestamp >= current_date - INTERVAL '90 days')
+                OR type = 'sonde' AND (timestamp >= current_date - INTERVAL '90 days')
                 ORDER BY metric, type, site_id, survey_point_id, timestamp DESC`,
     );
   }

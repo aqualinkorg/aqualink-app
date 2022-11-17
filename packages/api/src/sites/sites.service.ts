@@ -22,8 +22,6 @@ import { CreateSiteDto, CreateSiteApplicationDto } from './dto/create-site.dto';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { Region } from '../regions/regions.entity';
 import {
-  getRegion,
-  getTimezones,
   handleDuplicateSite,
   filterMetricDataByDate,
   getConflictingExclusionDates,
@@ -31,8 +29,8 @@ import {
   getLatestData,
   getSSTFromLiveOrLatestData,
   getSite,
+  createSite,
 } from '../utils/site.utils';
-import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
 import {
   getSpotterData,
   getLatestData as getLatestDataSofar,
@@ -97,27 +95,17 @@ export class SitesService {
     user: User,
   ): Promise<SiteApplication> {
     const { name, latitude, longitude, depth } = siteParams;
-    const region = await getRegion(longitude, latitude, this.regionRepository);
-    const maxMonthlyMean = await getMMM(longitude, latitude);
-    const historicalMonthlyMeans = await getHistoricalMonthlyMeans(
+    const site = await createSite(
+      name,
+      depth,
       longitude,
       latitude,
+      this.regionRepository,
+      this.sitesRepository,
+      this.historicalMonthlyMeanRepository,
     );
+
     const { SLACK_BOT_TOKEN, SLACK_BOT_CHANNEL } = process.env;
-
-    const timezones = getTimezones(latitude, longitude) as string[];
-
-    const site = await this.sitesRepository
-      .save({
-        name,
-        region,
-        polygon: createPoint(longitude, latitude),
-        maxMonthlyMean,
-        timezone: timezones[0],
-        display: false,
-        depth,
-      })
-      .catch(handleDuplicateSite);
 
     // Elevate user to SiteManager
     if (user.adminLevel === AdminLevel.Default) {
@@ -132,26 +120,7 @@ export class SitesService {
       .of(user)
       .add(site);
 
-    if (!maxMonthlyMean) {
-      this.logger.warn(
-        `Max Monthly Mean appears to be null for Site ${site.id} at (lat, lon): (${latitude}, ${longitude}) `,
-      );
-    }
-
     backfillSiteData(site.id);
-
-    await Promise.all(
-      historicalMonthlyMeans.map(async ({ month, temperature }) => {
-        return (
-          temperature &&
-          this.historicalMonthlyMeanRepository.insert({
-            site,
-            month,
-            temperature,
-          })
-        );
-      }),
-    );
 
     const messageTemplate: SlackMessage = {
       channel: SLACK_BOT_CHANNEL as string,
