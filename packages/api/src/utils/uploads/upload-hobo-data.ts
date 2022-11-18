@@ -35,7 +35,7 @@ import { HistoricalMonthlyMean } from '../../sites/historical-monthly-mean.entit
 import { createPoint } from '../coordinates';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
-import { refreshMaterializedView } from './upload-sheet-data';
+import { refreshMaterializedView } from '../time-series.utils';
 
 /**
  * Parse csv data

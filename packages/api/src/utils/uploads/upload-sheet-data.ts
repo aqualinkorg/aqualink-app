@@ -169,13 +169,6 @@ export const fileFilter: MulterOptions['fileFilter'] = (
 const headerMatchesKey = (header: string, key: string) =>
   header.toLowerCase().startsWith(key.toLowerCase());
 
-export const refreshMaterializedView = async (repository: Repository<any>) => {
-  const hash = (Math.random() + 1).toString(36).substring(7);
-  console.time(`Refresh Materialized View ${hash}`);
-  await repository.query('REFRESH MATERIALIZED VIEW latest_data');
-  console.timeEnd(`Refresh Materialized View ${hash}`);
-};
-
 const getJsDateFromExcel = (excelDate, timezone) => {
   const delta = excelDate - MAGIC_NUMBER_OF_DAYS;
   const parsed = delta * MISSING_LEAP_YEAR_DAY;
