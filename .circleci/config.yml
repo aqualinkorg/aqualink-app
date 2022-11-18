@@ -139,8 +139,8 @@ jobs:
       
       - run: |
           cd packages/api
-          export MY_MESSAGE=$(echo -e 'Build succeeded and deployed at https://aqualink-app-'"${CIRCLE_PULL_REQUEST##*/}"'.surge.sh \n(hash `'"${CIRCLE_SHA1:0:7}"'` deployed at '"$( date '+%Y/%m/%d %H:%M:%S' )"')')
-          yarn github-pr-comment -m "$MY_MESSAGE"
+          export PR_MESSAGE=$(echo -e 'Build succeeded and deployed at https://aqualink-app-'"${CIRCLE_PULL_REQUEST##*/}"'.surge.sh \n(hash `'"${CIRCLE_SHA1:0:7}"'` deployed at '"$( date '+%Y/%m/%d %H:%M:%S' )"')')
+          yarn github-pr-comment -m "$PR_MESSAGE"
 
 
 workflows:
