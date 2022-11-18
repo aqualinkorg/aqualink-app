@@ -21,13 +21,12 @@ const SURGE_COMMENT_KEY = 'SURGE_COMMENT_KEY';
 
 async function run() {
   const { m: message } = argv;
+  // eslint-disable-next-line fp/no-mutation
+  process.env.GITHUB_TOKEN = process.env.GH_TOKEN;
+  // eslint-disable-next-line fp/no-mutation
+  process.env.GITHUB_TOKEN_USERNAME = process.env.GH_USER;
 
   const commenter = new Commenter();
-
-  // eslint-disable-next-line fp/no-mutation
-  commenter.env.token = process.env.GH_TOKEN || '';
-  // eslint-disable-next-line fp/no-mutation
-  commenter.env.tokenUserName = process.env.GH_USER || '';
 
   await commenter.createOrUpdateComment(SURGE_COMMENT_KEY, message);
 }
