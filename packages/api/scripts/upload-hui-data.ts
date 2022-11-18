@@ -11,7 +11,6 @@ import {
   convertData,
   findOrCreateSourceEntity,
   getFilePathData,
-  refreshMaterializedView,
   saveBatchToTimeSeries,
   uploadFileToGCloud,
 } from '../src/utils/uploads/upload-sheet-data';
@@ -23,6 +22,7 @@ import { DataUploads } from '../src/data-uploads/data-uploads.entity';
 import { createPoint } from '../src/utils/coordinates';
 import { Region } from '../src/regions/regions.entity';
 import { createSite } from '../src/utils/site.utils';
+import { refreshMaterializedView } from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 import { backfillSiteData } from '../src/workers/backfill-site-data';
