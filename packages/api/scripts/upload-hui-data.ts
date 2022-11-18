@@ -303,8 +303,6 @@ async function run() {
     logger.log(`Completed backfill for site ${id}`);
   });
 
-  refreshMaterializedView(dataUploadsRepository);
-
   logger.warn('The following sites where created:');
   logger.log(
     sitesCreated.map((x) => ({
@@ -314,6 +312,8 @@ async function run() {
   );
   logger.warn(`The following site's survey points where created:`);
   logger.log(siteSurveyPointsCreated.map((x) => ({ id: x.id, name: x.name })));
+
+  refreshMaterializedView(dataUploadsRepository);
 }
 
 run();

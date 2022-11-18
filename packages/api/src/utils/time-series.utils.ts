@@ -253,3 +253,12 @@ export const insertSiteDataToTimeSeries = (
     .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
     .execute();
 };
+
+export const refreshMaterializedView = async (repository: Repository<any>) => {
+  const hash = (Math.random() + 1).toString(36).substring(7);
+  // eslint-disable-next-line no-console
+  console.time(`Refresh Materialized View ${hash}`);
+  await repository.query('REFRESH MATERIALIZED VIEW latest_data');
+  // eslint-disable-next-line no-console
+  console.timeEnd(`Refresh Materialized View ${hash}`);
+};

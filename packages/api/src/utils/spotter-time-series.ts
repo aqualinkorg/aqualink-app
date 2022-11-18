@@ -16,8 +16,7 @@ import {
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
-import { getSources } from './time-series.utils';
-import { refreshMaterializedView } from './uploads/upload-sheet-data';
+import { getSources, refreshMaterializedView } from './time-series.utils';
 
 interface Repositories {
   siteRepository: Repository<Site>;

@@ -10,12 +10,15 @@ import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { filterSofarResponse, getLatestData, sofarHindcast } from './sofar';
-import { getNOAASource, insertSiteDataToTimeSeries } from './time-series.utils';
+import {
+  getNOAASource,
+  insertSiteDataToTimeSeries,
+  refreshMaterializedView,
+} from './time-series.utils';
 import { Metric } from '../time-series/metrics.entity';
 import { calculateAlertLevel } from './bleachingAlert';
 import { getSstAnomaly } from './liveData';
 import { ValueWithTimestamp } from './sofar.types';
-import { refreshMaterializedView } from './uploads/upload-sheet-data';
 
 interface Repositories {
   siteRepository: Repository<Site>;

@@ -27,6 +27,7 @@ import { DataUploads } from '../../data-uploads/data-uploads.entity';
 import { getSite } from '../site.utils';
 import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 import { getBarometricDiff } from '../sofar';
+import { refreshMaterializedView } from '../time-series.utils';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -167,13 +168,6 @@ export const fileFilter: MulterOptions['fileFilter'] = (
 
 const headerMatchesKey = (header: string, key: string) =>
   header.toLowerCase().startsWith(key.toLowerCase());
-
-export const refreshMaterializedView = async (repository: Repository<any>) => {
-  const hash = (Math.random() + 1).toString(36).substring(7);
-  console.time(`Refresh Materialized View ${hash}`);
-  await repository.query('REFRESH MATERIALIZED VIEW latest_data');
-  console.timeEnd(`Refresh Materialized View ${hash}`);
-};
 
 const getJsDateFromExcel = (excelDate, timezone) => {
   const delta = excelDate - MAGIC_NUMBER_OF_DAYS;
