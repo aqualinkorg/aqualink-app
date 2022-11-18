@@ -19,6 +19,7 @@ import { Metric } from '../time-series/metrics.entity';
 import { calculateAlertLevel } from './bleachingAlert';
 import { getSstAnomaly } from './liveData';
 import { ValueWithTimestamp } from './sofar.types';
+import { refreshMaterializedView } from './uploads/upload-sheet-data';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -247,5 +248,5 @@ export const updateSST = async (
   );
 
   // Update materialized view
-  await refreshMaterializedView(repositories.siteRepository);
+  refreshMaterializedView(repositories.siteRepository);
 };

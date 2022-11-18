@@ -13,6 +13,7 @@ import {
 } from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Metric } from '../src/time-series/metrics.entity';
+import { refreshMaterializedView } from '../src/utils/uploads/upload-sheet-data';
 
 const dbConfig = require('../ormconfig');
 
