@@ -19,10 +19,6 @@ executors:
           POSTGRES_DB: postgres
           POSTGRES_PASSWORD: "CHANGE-ME"
         name: postgres
-  
-  base:
-    docker:
-      - image: cimg/base:current-22.04
 
 commands:
   install_psql:
@@ -137,7 +133,7 @@ jobs:
   
   deploy_website_notification:
     working_directory: *working_directory
-    executor: base
+    executor: default
     steps:
       - checkout_and_restore_dependencies
       
