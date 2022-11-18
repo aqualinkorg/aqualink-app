@@ -17,6 +17,7 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
 import { getSources } from './time-series.utils';
+import { refreshMaterializedView } from './uploads/upload-sheet-data';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -204,6 +205,5 @@ export const addSpotterData = async (
   );
 
   // Update materialized view
-  logger.log('Refreshing materialized view latest_data');
-  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+  refreshMaterializedView(repositories.siteRepository);
 };

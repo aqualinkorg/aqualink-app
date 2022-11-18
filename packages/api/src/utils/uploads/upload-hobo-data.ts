@@ -35,6 +35,7 @@ import { HistoricalMonthlyMean } from '../../sites/historical-monthly-mean.entit
 import { createPoint } from '../coordinates';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
+import { refreshMaterializedView } from './upload-sheet-data';
 
 /**
  * Parse csv data
@@ -708,10 +709,7 @@ export const uploadHoboData = async (
   performBackfill(siteDiffArray.flat());
 
   // Update materialized view
-  logger.log('Refreshing materialized view latest_data');
-  repositories.dataUploadsRepository.query(
-    'REFRESH MATERIALIZED VIEW latest_data',
-  );
+  refreshMaterializedView(repositories.dataUploadsRepository);
 
   return dbIdToCSVId;
 };
