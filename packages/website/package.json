@@ -104,6 +104,7 @@
     "@types/validator": "^13.1.0",
     "canvas": "^2.8.0",
     "cross-env": "^7.0.2",
-    "dotenv-cli": "^4.0.0"
+    "dotenv-cli": "^4.0.0",
+    "surge": "^0.23.1"
   }
 }

@@ -122,6 +122,27 @@ jobs:
       - run: yarn build
       - run: cd packages/api && yarn build:cloud-functions
 
+  deploy_website:
+    working_directory: *working_directory
+    executor: default
+
+    steps:
+      - checkout_and_restore_dependencies
+
+      - run: cd packages/website && yarn build && yarn surge --project ./build --domain aqualink-app-${CIRCLE_PULL_REQUEST##*/}.surge.sh
+  
+  deploy_website_notification:
+    working_directory: *working_directory
+    executor: default
+    steps:
+      - checkout_and_restore_dependencies
+      
+      - run: |
+          cd packages/api
+          export PR_MESSAGE=$(echo -e 'Build succeeded and deployed at https://aqualink-app-'"${CIRCLE_PULL_REQUEST##*/}"'.surge.sh \n(hash `'"${CIRCLE_SHA1:0:7}"'` deployed at '"$( date '+%Y/%m/%d %H:%M:%S' )"')')
+          yarn github-pr-comment -m "$PR_MESSAGE"
+
+
 workflows:
   version: 2.1
   build:
@@ -143,3 +164,11 @@ workflows:
       - build_app:
           requires:
             - build_dependencies
+
+      - deploy_website:
+          requires:
+            - test_website
+
+      - deploy_website_notification:
+          requires:
+            - deploy_website
