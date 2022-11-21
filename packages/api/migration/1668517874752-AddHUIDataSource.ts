@@ -5,6 +5,10 @@ export class AddHUIDataSource1668517874752 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
+      `ALTER TABLE "forecast_data" ALTER COLUMN "source" DROP DEFAULT`,
+    );
+
+    await queryRunner.query(
       `ALTER TABLE "data_uploads" ALTER COLUMN "site_id" DROP NOT NULL`,
     );
     await queryRunner.query(
@@ -66,13 +70,7 @@ export class AddHUIDataSource1668517874752 implements MigrationInterface {
       `CREATE TYPE "public"."sources_type_enum_old" AS ENUM('gfs', 'hobo', 'metlog', 'noaa', 'sofar_wave_model', 'sonde', 'spotter')`,
     );
     await queryRunner.query(
-      `ALTER TABLE "forecast_data" ALTER COLUMN "source" DROP DEFAULT`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "forecast_data" ALTER COLUMN "source" TYPE "public"."sources_type_enum_old" USING "source"::"text"::"public"."sources_type_enum_old"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "forecast_data" ALTER COLUMN "source" SET DEFAULT 'sofar_wave_model'`,
     );
     await queryRunner.query(
       `ALTER TABLE "sources" ALTER COLUMN "type" TYPE "public"."sources_type_enum_old" USING "type"::"text"::"public"."sources_type_enum_old"`,
@@ -86,6 +84,10 @@ export class AddHUIDataSource1668517874752 implements MigrationInterface {
     await queryRunner.query(`DROP TYPE "public"."sources_type_enum"`);
     await queryRunner.query(
       `ALTER TYPE "public"."sources_type_enum_old" RENAME TO "sources_type_enum"`,
+    );
+
+    await queryRunner.query(
+      `ALTER TABLE "forecast_data" ALTER COLUMN "source" SET DEFAULT 'sofar_wave_model'`,
     );
 
     await queryRunner.query(
