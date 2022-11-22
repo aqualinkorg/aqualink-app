@@ -254,11 +254,14 @@ export const insertSiteDataToTimeSeries = (
     .execute();
 };
 
+export const getRandomID = (length = 7) =>
+  (Math.random() + 1).toString(36).substring(length);
+
 export const refreshMaterializedView = async (repository: Repository<any>) => {
-  const hash = (Math.random() + 1).toString(36).substring(7);
+  const id = getRandomID();
   // eslint-disable-next-line no-console
-  console.time(`Refresh Materialized View ${hash}`);
+  console.time(`Refresh Materialized View ${id}`);
   await repository.query('REFRESH MATERIALIZED VIEW latest_data');
   // eslint-disable-next-line no-console
-  console.timeEnd(`Refresh Materialized View ${hash}`);
+  console.timeEnd(`Refresh Materialized View ${id}`);
 };
