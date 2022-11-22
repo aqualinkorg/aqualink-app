@@ -20,6 +20,8 @@ const { argv } = yargs
 const SURGE_COMMENT_KEY = 'SURGE_COMMENT_KEY';
 
 async function run() {
+  if (process.env.CIRCLE_BRANCH === 'master') process.exit(0);
+
   const { m: message } = argv;
   // eslint-disable-next-line fp/no-mutation
   process.env.GITHUB_TOKEN = process.env.GH_TOKEN;
