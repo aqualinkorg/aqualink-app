@@ -43,7 +43,6 @@ const { argv } = yargs
   .option('b', {
     alias: 'backfill',
     describe: 'Run backfill for sites created',
-    demandOption: true,
     type: 'boolean',
   })
   .help();
