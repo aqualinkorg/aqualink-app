@@ -8,6 +8,7 @@ import {
   OneToOne,
   JoinColumn,
   Index,
+  Generated,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
@@ -45,7 +46,8 @@ export class SiteApplication {
   trackingUrl: string | null;
 
   @Exclude()
-  @Column({ default: () => 'gen_random_uuid()', unique: true })
+  @Column({ unique: true })
+  @Generated('uuid')
   uid: string;
 
   @CreateDateColumn()

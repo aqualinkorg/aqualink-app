@@ -5,6 +5,7 @@ import {
   Index,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
@@ -15,6 +16,7 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from '../time-series/metrics.entity';
 
 @Entity()
+@Unique(['file', 'signature'])
 export class DataUploads {
   @ApiProperty({ example: 1 })
   @Exclude()

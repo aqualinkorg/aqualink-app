@@ -48,7 +48,9 @@ export class SurveyMedia {
     example:
       'https://storage.googleapis.com/storage/thumbnail-reef-image-a5b5f5c5d5da5d5e.jpg',
   })
-  @Column()
+  @Column({
+    nullable: true,
+  })
   thumbnailUrl: string;
 
   @ApiProperty({ example: 1 })

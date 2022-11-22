@@ -19,7 +19,13 @@ export class VideoStream {
   @Column()
   ownerEmail: string;
 
-  @Column('point')
+  @Column({
+    type: 'geometry',
+    spatialFeatureType: 'Point',
+    unique: true,
+    srid: 4326,
+    nullable: false,
+  })
   @Index({ spatial: true })
   location: GeoJSON;
 
