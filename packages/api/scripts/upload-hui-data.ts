@@ -3,7 +3,12 @@ import yargs from 'yargs';
 import { Logger } from '@nestjs/common';
 import { ConnectionOptions, createConnection, Repository } from 'typeorm';
 import { get, groupBy, last, maxBy, minBy } from 'lodash';
-import clustersDbscan from '@turf/clusters-dbscan';
+import {
+  center,
+  clustersDbscan,
+  points as turfPoints,
+  distance,
+} from '@turf/turf';
 import Bluebird from 'bluebird';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { configService } from '../src/config/config.service';
@@ -121,6 +126,27 @@ function createSourceAndInsertTimeSeries(
       timeSeriesRepository,
     );
   });
+}
+
+function findCenterOfPoints(pointsList: PointInfo[]) {
+  const tPoints = turfPoints(
+    pointsList.map((x) => [x.coordinates[1], x.coordinates[0]]),
+  );
+
+  const centerPoint = center(tPoints);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { d: _d, point } = pointsList.reduce(
+    (acc, curr) => {
+      const dist = distance(centerPoint, [
+        curr.coordinates[1],
+        curr.coordinates[0],
+      ]);
+      return dist < acc.d ? { d: dist, point: curr } : acc;
+    },
+    { d: Number.POSITIVE_INFINITY, point: pointsList[0] },
+  );
+  return point;
 }
 
 async function run() {
@@ -256,7 +282,8 @@ async function run() {
   const dataPromises = Object.keys(groupedClusteredSites).map(async (key) => {
     const pointsList = groupedClusteredSites[key];
     const siteIndex = pointsList.findIndex((x) => x.site !== undefined);
-    const mainSite = siteIndex !== -1 ? pointsList[siteIndex] : pointsList[0];
+    const mainSite =
+      siteIndex !== -1 ? pointsList[siteIndex] : findCenterOfPoints(pointsList);
     const site = mainSite.site
       ? mainSite.site
       : await createSite(

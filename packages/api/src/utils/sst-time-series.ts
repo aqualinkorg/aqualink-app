@@ -247,5 +247,5 @@ export const updateSST = async (
   );
 
   // Update materialized view
-  refreshMaterializedView(repositories.siteRepository);
+  await refreshMaterializedView(repositories.siteRepository);
 };
