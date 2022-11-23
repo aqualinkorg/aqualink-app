@@ -204,5 +204,5 @@ export const addSpotterData = async (
   );
 
   // Update materialized view
-  refreshMaterializedView(repositories.siteRepository);
+  await refreshMaterializedView(repositories.siteRepository);
 };

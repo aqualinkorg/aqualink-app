@@ -20,7 +20,9 @@ const { argv } = yargs
 const SURGE_COMMENT_KEY = 'SURGE_COMMENT_KEY';
 
 async function run() {
-  if (process.env.CIRCLE_BRANCH === 'master') process.exit(0);
+  // If CIRCLE_PULL_REQUEST is not set, the build runs on master branch or in some tag
+  // https://circleci.com/docs/oss/#only-build-pull-requests
+  if (process.env.CIRCLE_PULL_REQUEST === undefined) process.exit(0);
 
   const { m: message } = argv;
   if (message.trim() === '') {
