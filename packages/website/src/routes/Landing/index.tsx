@@ -112,7 +112,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             <Grid container item sm={11} md={7}>
               <Box mt="1.5rem" display="flex">
                 <Typography variant="h1" color="textPrimary">
-                  Monitoring for marine ecosystems
+                  Monitoring for marine ecosystems. test!
                 </Typography>
               </Box>
             </Grid>

@@ -821,7 +821,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
               color="textPrimary"
               variant="h1"
             >
-              Monitoring for marine ecosystems
+              Monitoring for marine ecosystems. test!
             </mock-typography>
           </mock-box>
         </div>
