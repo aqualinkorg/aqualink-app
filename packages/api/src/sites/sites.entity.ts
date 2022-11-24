@@ -113,7 +113,9 @@ export class Site {
   @Index()
   stream: VideoStream | null;
 
-  @ManyToMany(() => User, (user) => user.administeredSites)
+  @ManyToMany(() => User, (user) => user.administeredSites, {
+    onDelete: 'CASCADE',
+  })
   admins: User[];
 
   @ApiPropertyOptional()

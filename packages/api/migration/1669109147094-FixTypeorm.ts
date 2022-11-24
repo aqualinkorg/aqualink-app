@@ -27,6 +27,15 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "site_application" ADD CONSTRAINT "UQ_5f257a9a881454e9b640ea4c303" UNIQUE ("uid")`,
     );
+    await queryRunner.query(
+      `ALTER TABLE "site_application" ALTER COLUMN "permit_requirements" TYPE character varying`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "site_application" ALTER COLUMN "funding_source" TYPE character varying`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "site_application" ALTER COLUMN "installation_resources" TYPE character varying`,
+    );
 
     // change 2, create data_uploads_sensor_type_enum
     await queryRunner.query(
@@ -167,7 +176,7 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `ALTER TABLE "users_administered_sites_site" DROP CONSTRAINT "FK_088a629ef23eb9eba6ac857ed62"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "users_administered_sites_site" ADD CONSTRAINT "FK_f1d615e782e0367e1868c434398" FOREIGN KEY ("site_id") REFERENCES "site"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE "users_administered_sites_site" ADD CONSTRAINT "FK_f1d615e782e0367e1868c434398" FOREIGN KEY ("site_id") REFERENCES "site"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "users_administered_sites_site" DROP CONSTRAINT "FK_da52b9542bf7df43f4840ae4394"`,
@@ -200,6 +209,9 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
     );
     await queryRunner.query(
       `CREATE INDEX "IDX_ff7a13fae129f15180a3e36f9e" ON "site" ("region_id") `,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "site" ALTER COLUMN "name" TYPE character varying`,
     );
 
     // change 16, typeorm collection_sites_site magic
