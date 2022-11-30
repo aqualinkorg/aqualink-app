@@ -46,7 +46,8 @@ The project uses an ORM, **TypeORM**. Changes on entities (a different name for 
 #### Existing issues with the migrations
 
 - In order for typeORM to understand that a view exists it needs to add it to a metadata table. However this caused some issues, so we didn't add it and it keeps trying to create the existing view `latest_data`.
-- Also if you need to change the schema of the view or perform changes on its dependent tables (`time_series`, `sources`), drop and recreate it based on the latest migration (`1623058289647-AddWeeklyAlertMetric.ts`)
+- Also if you need to change the schema of the view or perform changes on its dependent tables (`time_series`, `sources`), drop and recreate it based on the latest migration (`1669109147094-FixTypeorm.ts`).
+- In some cases automatically generated migrations may try to drop `IDX_time_series_metric_source_timestamp_DESC`.
 
 ### Firebase
 
