@@ -115,13 +115,13 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `ALTER TABLE "video_stream" DROP COLUMN "location"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "video_stream" ADD "location" geometry(Point,4326) NOT NULL`,
+      `ALTER TABLE "video_stream" ADD "location" geometry(Point,4326)`,
     );
     await queryRunner.query(
       `ALTER TABLE "video_stream" ADD CONSTRAINT "UQ_de4eb243bae87587f9ca56ba8d2" UNIQUE ("location")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_de4eb243bae87587f9ca56ba8d" ON "video_stream" USING GiST ("location") `,
+      `CREATE INDEX "IDX_de4eb243bae87587f9ca56ba8d" ON "video_stream" USING GiST ("location")`,
     );
 
     // change 10, re-name some sequence ids
@@ -164,13 +164,13 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `DROP INDEX "public"."IDX_088a629ef23eb9eba6ac857ed6"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_f1d615e782e0367e1868c43439" ON "users_administered_sites_site" ("site_id") `,
+      `CREATE INDEX "IDX_f1d615e782e0367e1868c43439" ON "users_administered_sites_site" ("site_id")`,
     );
     await queryRunner.query(
       `DROP INDEX "public"."IDX_da52b9542bf7df43f4840ae439"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_6a8384baa074fd13f1dc8abbf3" ON "users_administered_sites_site" ("users_id") `,
+      `CREATE INDEX "IDX_6a8384baa074fd13f1dc8abbf3" ON "users_administered_sites_site" ("users_id")`,
     );
     await queryRunner.query(
       `ALTER TABLE "users_administered_sites_site" DROP CONSTRAINT "FK_088a629ef23eb9eba6ac857ed62"`,
@@ -199,16 +199,16 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `ALTER TABLE "site" ADD CONSTRAINT "FK_ff7a13fae129f15180a3e36f9e2" FOREIGN KEY ("region_id") REFERENCES "region"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_2d56028954ec00388e734fb266" ON "site" ("stream_id") `,
+      `CREATE INDEX "IDX_2d56028954ec00388e734fb266" ON "site" ("stream_id")`,
     );
     await queryRunner.query(
       `DROP INDEX "public"."IDX_4dd2eeb5079abc8e070e991528"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_ec8dc3dec5ed3c9ab59f22818c" ON "site" USING GiST ("polygon") `,
+      `CREATE INDEX "IDX_ec8dc3dec5ed3c9ab59f22818c" ON "site" USING GiST ("polygon")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_ff7a13fae129f15180a3e36f9e" ON "site" ("region_id") `,
+      `CREATE INDEX "IDX_ff7a13fae129f15180a3e36f9e" ON "site" ("region_id")`,
     );
     await queryRunner.query(
       `ALTER TABLE "site" ALTER COLUMN "name" TYPE character varying`,
@@ -228,10 +228,10 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `ALTER TABLE "collection_sites_site" DROP CONSTRAINT "FK_f6cedba5f7ed68f9e67f525905e"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_8885ccd1c6dcc851e9995099a2" ON "collection_sites_site" ("collection_id") `,
+      `CREATE INDEX "IDX_8885ccd1c6dcc851e9995099a2" ON "collection_sites_site" ("collection_id")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_aca88c0064e4a257e5fb2db7ff" ON "collection_sites_site" ("site_id") `,
+      `CREATE INDEX "IDX_aca88c0064e4a257e5fb2db7ff" ON "collection_sites_site" ("site_id")`,
     );
     await queryRunner.query(
       `ALTER TABLE "collection_sites_site" ADD CONSTRAINT "FK_8885ccd1c6dcc851e9995099a2d" FOREIGN KEY ("collection_id") REFERENCES "collection"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
@@ -254,7 +254,7 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `ALTER TABLE "survey_media" DROP CONSTRAINT "FK_cdb564bc26282caa4e81306cc92"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_c26bf9f5e97e4f58fec60cfbb6" ON "site_survey_point" USING GiST ("polygon") `,
+      `CREATE INDEX "IDX_c26bf9f5e97e4f58fec60cfbb6" ON "site_survey_point" USING GiST ("polygon")`,
     );
     await queryRunner.query(
       `ALTER TABLE "survey_media" ADD CONSTRAINT "FK_687c94fe33408bad80672846e14" FOREIGN KEY ("survey_point_id") REFERENCES "site_survey_point"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
@@ -280,13 +280,13 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `ALTER TABLE "site_audit" DROP CONSTRAINT "FK_8fadafdfdbb6c163a0120ca1e3b"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_928e0f816503baa94ddd494906" ON "site_audit" ("created_at") `,
+      `CREATE INDEX "IDX_928e0f816503baa94ddd494906" ON "site_audit" ("created_at")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_abe9c110dba62d487c211d8db3" ON "site_audit" ("old_value") `,
+      `CREATE INDEX "IDX_abe9c110dba62d487c211d8db3" ON "site_audit" ("old_value")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_f7ee0e04191b8723c5192944ab" ON "site_audit" ("new_value") `,
+      `CREATE INDEX "IDX_f7ee0e04191b8723c5192944ab" ON "site_audit" ("new_value")`,
     );
     await queryRunner.query(
       `ALTER TABLE "site_audit" ADD CONSTRAINT "FK_5ae17cee9e339b189cf3e220e58" FOREIGN KEY ("site_id") REFERENCES "site"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -431,13 +431,13 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `DROP INDEX "public"."IDX_928e0f816503baa94ddd494906"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_8517aece6ef181f640a5915d31" ON "site_audit" ("new_value") `,
+      `CREATE INDEX "IDX_8517aece6ef181f640a5915d31" ON "site_audit" ("new_value")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_abbd8ec473bccd8696f74d654c" ON "site_audit" ("old_value") `,
+      `CREATE INDEX "IDX_abbd8ec473bccd8696f74d654c" ON "site_audit" ("old_value")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_e3f8d897db207896108636769a" ON "site_audit" ("created_at") `,
+      `CREATE INDEX "IDX_e3f8d897db207896108636769a" ON "site_audit" ("created_at")`,
     );
     await queryRunner.query(
       `ALTER TABLE "site_audit" ADD CONSTRAINT "FK_8fadafdfdbb6c163a0120ca1e3b" FOREIGN KEY ("site_id") REFERENCES "site"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -457,7 +457,7 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `DROP INDEX "public"."IDX_c26bf9f5e97e4f58fec60cfbb6"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_7d7b340adbd0c281abf2dd56917" ON "site_survey_point" USING GiST ("polygon") `,
+      `CREATE INDEX "IDX_7d7b340adbd0c281abf2dd56917" ON "site_survey_point" USING GiST ("polygon")`,
     );
     await queryRunner.query(
       `ALTER TABLE "sources" ADD CONSTRAINT "FK_1fc2de0b22c11547cb5f17f14c8" FOREIGN KEY ("survey_point_id") REFERENCES "site_survey_point"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -483,10 +483,10 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `DROP INDEX "public"."IDX_8885ccd1c6dcc851e9995099a2"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_e897d8d19dc532bc8c33dc70b5" ON "collection_sites_site" ("site_id") `,
+      `CREATE INDEX "IDX_e897d8d19dc532bc8c33dc70b5" ON "collection_sites_site" ("site_id")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_f6cedba5f7ed68f9e67f525905" ON "collection_sites_site" ("collection_id") `,
+      `CREATE INDEX "IDX_f6cedba5f7ed68f9e67f525905" ON "collection_sites_site" ("collection_id")`,
     );
     await queryRunner.query(
       `ALTER TABLE "collection_sites_site" ADD CONSTRAINT "FK_e897d8d19dc532bc8c33dc70b52" FOREIGN KEY ("site_id") REFERENCES "site"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -503,7 +503,7 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `DROP INDEX "public"."IDX_ec8dc3dec5ed3c9ab59f22818c"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_4dd2eeb5079abc8e070e991528" ON "site" USING GiST ("polygon") `,
+      `CREATE INDEX "IDX_4dd2eeb5079abc8e070e991528" ON "site" USING GiST ("polygon")`,
     );
     await queryRunner.query(
       `DROP INDEX "public"."IDX_ff7a13fae129f15180a3e36f9e"`,
@@ -526,13 +526,13 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `DROP INDEX "public"."IDX_f1d615e782e0367e1868c43439"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_088a629ef23eb9eba6ac857ed6" ON "users_administered_sites_site" ("site_id") `,
+      `CREATE INDEX "IDX_088a629ef23eb9eba6ac857ed6" ON "users_administered_sites_site" ("site_id")`,
     );
     await queryRunner.query(
       `DROP INDEX "public"."IDX_6a8384baa074fd13f1dc8abbf3"`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_da52b9542bf7df43f4840ae439" ON "users_administered_sites_site" ("users_id") `,
+      `CREATE INDEX "IDX_da52b9542bf7df43f4840ae439" ON "users_administered_sites_site" ("users_id")`,
     );
     await queryRunner.query(
       `ALTER TABLE "users_administered_sites_site" DROP CONSTRAINT "FK_f1d615e782e0367e1868c434398"`,
@@ -605,7 +605,7 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `ALTER TABLE "video_stream" ADD "location" point NOT NULL`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_de4eb243bae87587f9ca56ba8d" ON "video_stream" USING GiST ("location") `,
+      `CREATE INDEX "IDX_de4eb243bae87587f9ca56ba8d" ON "video_stream" USING GiST ("location")`,
     );
 
     // change 8

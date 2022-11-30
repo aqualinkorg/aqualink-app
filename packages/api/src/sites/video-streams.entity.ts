@@ -24,7 +24,7 @@ export class VideoStream {
     spatialFeatureType: 'Point',
     unique: true,
     srid: 4326,
-    nullable: false,
+    nullable: true,
   })
   @Index({ spatial: true })
   location: GeoJSON;
