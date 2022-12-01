@@ -219,6 +219,19 @@ export class SurveysService {
 
     return surveyHistoryQuery.map((survey) => {
       const surveyDailyData = survey.latestDailyData;
+
+      // If no logged temperature exists grab the latest daily temperature of the survey's date and save it
+      const temperature =
+        survey.temperature ||
+        (surveyDailyData &&
+          (surveyDailyData.avgBottomTemperature ||
+            surveyDailyData.satelliteTemperature));
+      if (!survey.temperature)
+        this.surveyRepository.save({
+          id: survey.id,
+          temperature,
+        });
+
       return {
         id: survey.id,
         diveDate: survey.diveDate,
@@ -227,12 +240,7 @@ export class SurveysService {
         user: survey.user,
         site: survey.site,
         siteId: survey.siteId,
-        // If no logged temperature exists grab the latest daily temperature of the survey's date
-        temperature:
-          survey.temperature ||
-          (surveyDailyData &&
-            (surveyDailyData.avgBottomTemperature ||
-              surveyDailyData.satelliteTemperature)),
+        temperature,
         featuredSurveyMedia: survey.featuredSurveyMedia,
         observations: observationsGroupedBySurveyId[survey.id] || [],
         surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
