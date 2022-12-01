@@ -10,7 +10,11 @@ import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { filterSofarResponse, getLatestData, sofarHindcast } from './sofar';
-import { getNOAASource, insertSiteDataToTimeSeries } from './time-series.utils';
+import {
+  getNOAASource,
+  insertSiteDataToTimeSeries,
+  refreshMaterializedView,
+} from './time-series.utils';
 import { Metric } from '../time-series/metrics.entity';
 import { calculateAlertLevel } from './bleachingAlert';
 import { getSstAnomaly } from './liveData';
@@ -243,6 +247,5 @@ export const updateSST = async (
   );
 
   // Update materialized view
-  logger.log('Refreshing materialized view latest_data');
-  connection.query('REFRESH MATERIALIZED VIEW latest_data');
+  await refreshMaterializedView(repositories.siteRepository);
 };

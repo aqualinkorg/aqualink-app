@@ -22,6 +22,8 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
+import { getHistoricalMonthlyMeans, getMMM } from './temperature';
+import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Site Utils');
@@ -286,4 +288,54 @@ export const getLatestData = async (
   return latestDataRepository.find({
     site,
   });
+};
+
+export const createSite = async (
+  name: string,
+  depth: number | undefined,
+  longitude: number,
+  latitude: number,
+  regionRepository: Repository<Region>,
+  sitesRepository: Repository<Site>,
+  historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
+) => {
+  const region = await getRegion(longitude, latitude, regionRepository);
+  const maxMonthlyMean = await getMMM(longitude, latitude);
+  const historicalMonthlyMeans = await getHistoricalMonthlyMeans(
+    longitude,
+    latitude,
+  );
+  const timezones = getTimezones(latitude, longitude) as string[];
+  const site = await sitesRepository
+    .save({
+      name,
+      region,
+      polygon: createPoint(longitude, latitude),
+      maxMonthlyMean,
+      timezone: timezones[0],
+      display: false,
+      depth,
+    })
+    .catch(handleDuplicateSite);
+
+  if (!maxMonthlyMean) {
+    logger.warn(
+      `Max Monthly Mean appears to be null for Site ${site.id} at (lat, lon): (${latitude}, ${longitude}) `,
+    );
+  }
+
+  await Promise.all(
+    historicalMonthlyMeans.map(async ({ month, temperature }) => {
+      return (
+        temperature &&
+        historicalMonthlyMeanRepository.insert({
+          site,
+          month,
+          temperature,
+        })
+      );
+    }),
+  );
+
+  return site;
 };

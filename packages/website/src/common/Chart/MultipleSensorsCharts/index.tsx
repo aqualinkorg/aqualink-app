@@ -77,7 +77,7 @@ const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
   },
   barometricPressureBottom: {
     unit: "hPa",
-    title: "Bottom Barometric Pressure",
+    title: "Bottom Pressure",
   },
   significantWaveHeight: {
     unit: "m",

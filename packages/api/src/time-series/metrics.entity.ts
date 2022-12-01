@@ -17,6 +17,9 @@ export enum Metric {
   WAVE_MEAN_DIRECTION = 'wave_mean_direction',
   WIND_SPEED = 'wind_speed',
   WIND_DIRECTION = 'wind_direction',
+  BAROMETRIC_PRESSURE_TOP = 'barometric_pressure_top',
+  BAROMETRIC_PRESSURE_TOP_DIFF = 'barometric_pressure_top_diff',
+  BAROMETRIC_PRESSURE_BOTTOM = 'barometric_pressure_bottom',
   // Sonde Metrics
   CHOLOROPHYLL_RFU = 'cholorophyll_rfu',
   CHOLOROPHYLL_CONCENTRATION = 'cholorophyll_concentration',
@@ -38,9 +41,13 @@ export enum Metric {
   PRECIPITATION = 'precipitation',
   RH = 'rh',
   WIND_GUST_SPEED = 'wind_gust_speed',
-  BAROMETRIC_PRESSURE_TOP = 'barometric_pressure_top',
-  BAROMETRIC_PRESSURE_TOP_DIFF = 'barometric_pressure_top_diff',
-  BAROMETRIC_PRESSURE_BOTTOM = 'barometric_pressure_bottom',
+  // HUI Metrics
+  NITROGEN_TOTAL = 'nitrogen_total',
+  PHOSPHORUS_TOTAL = 'phosphorus_total',
+  PHOSPHORUS = 'phosphorus',
+  SILICATE = 'silicate',
+  NNN = 'nitrate_plus_nitrite',
+  AMMONIUM = 'ammonium',
 }
 
 export enum Units {

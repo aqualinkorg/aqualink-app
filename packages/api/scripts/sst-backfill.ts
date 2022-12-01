@@ -9,6 +9,7 @@ import { Sources } from '../src/sites/sources.entity';
 import {
   getNOAASource,
   insertSiteDataToTimeSeries,
+  refreshMaterializedView,
 } from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Metric } from '../src/time-series/metrics.entity';
@@ -101,8 +102,7 @@ async function main() {
   });
 
   // Update materialized view
-  console.log('Refreshing materialized view latest_data');
-  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+  refreshMaterializedView(siteRepository);
 
   connection.close();
   process.exit(0);

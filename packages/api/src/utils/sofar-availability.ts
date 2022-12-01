@@ -1,6 +1,5 @@
 import type { FeatureCollection, Point, Polygon } from 'geojson';
-import nearestPoint from '@turf/nearest-point';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import { nearestPoint, booleanPointInPolygon } from '@turf/turf';
 import availabilityPoints from './sofar-availability-points';
 
 export const AVAILABLE_POINTS: FeatureCollection<Point> = {
