@@ -89,7 +89,7 @@ export const surveyTests = () => {
   it('PUT /:id update a non-existing survey', async () => {
     mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
-      .put(`/sites/${floridaSite.id}/surveys`)
+      .put(`/sites/${floridaSite.id}/surveys/0`)
       .send({ comments: 'Does not exist' });
 
     expect(rsp.status).toBe(404);
@@ -208,7 +208,6 @@ export const surveyTests = () => {
       const rsp = await request(app.getHttpServer()).get(
         `/sites/${floridaSite.id}/surveys/${surveyId}`,
       );
-      //
 
       expect(rsp.status).toBe(200);
       expect(rsp.body).toMatchObject({
