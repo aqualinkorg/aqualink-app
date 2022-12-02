@@ -166,7 +166,7 @@ export class CollectionsService {
     const heatStressSiteIds = heatStressData.map((data) => data.siteId);
 
     const heatStressSites = await this.siteRepository.find({
-      where: { id: In(heatStressSiteIds), approved: true },
+      where: { id: In(heatStressSiteIds), display: true },
     });
 
     return this.processCollection(heatStressTracker, heatStressSites);

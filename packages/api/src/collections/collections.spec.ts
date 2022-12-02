@@ -277,4 +277,12 @@ export const collectionTests = () => {
 
     expect(rsp.status).toBe(404);
   });
+
+  it('GET /heat-stress get heat stress collection', async () => {
+    const rsp = await request(app.getHttpServer()).get(
+      '/collections/heat-stress',
+    );
+
+    expect(rsp.status).toBe(200);
+  });
 };
