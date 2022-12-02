@@ -3,8 +3,8 @@ import { INestApplication } from '@nestjs/common';
 import { sortBy } from 'lodash';
 import { TestService } from '../../test/test.service';
 import { CreateSurveyDto } from './dto/create-survey.dto';
-import { WeatherConditions } from './surveys.entity';
-import { floridaSite } from '../../test/mock/site.mock';
+import { Survey, WeatherConditions } from './surveys.entity';
+import { californiaSite, floridaSite } from '../../test/mock/site.mock';
 import {
   mockDeleteFile,
   mockDeleteFileFalling,
@@ -73,10 +73,23 @@ export const surveyTests = () => {
     expect(rsp.status).toBe(404);
   });
 
+  it("GET / fetch site's surveys, expect them to have temperature", async () => {
+    const rsp = await request(app.getHttpServer()).get(
+      `/sites/${californiaSite.id}/surveys/`,
+    );
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.length).toBe(2);
+    const temperatureArray = rsp.body
+      .map((x: Survey) => x.temperature)
+      .filter((x) => x);
+    expect(temperatureArray.length).toBe(2);
+  });
+
   it('PUT /:id update a non-existing survey', async () => {
     mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
-      .put(`/sites/${floridaSite.id}/surveys/0`)
+      .put(`/sites/${floridaSite.id}/surveys`)
       .send({ comments: 'Does not exist' });
 
     expect(rsp.status).toBe(404);
@@ -195,6 +208,7 @@ export const surveyTests = () => {
       const rsp = await request(app.getHttpServer()).get(
         `/sites/${floridaSite.id}/surveys/${surveyId}`,
       );
+      //
 
       expect(rsp.status).toBe(200);
       expect(rsp.body).toMatchObject({

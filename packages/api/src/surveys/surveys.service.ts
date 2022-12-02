@@ -218,19 +218,7 @@ export class SurveysService {
     );
 
     return surveyHistoryQuery.map((survey) => {
-      const surveyDailyData = survey.latestDailyData;
-
-      // If no logged temperature exists grab the latest daily temperature of the survey's date and save it
-      const temperature =
-        survey.temperature ||
-        (surveyDailyData &&
-          (surveyDailyData.avgBottomTemperature ||
-            surveyDailyData.satelliteTemperature));
-      if (!survey.temperature)
-        this.surveyRepository.save({
-          id: survey.id,
-          temperature,
-        });
+      const temperature = this.getSurveyTemperature(survey);
 
       return {
         id: survey.id,
@@ -258,6 +246,12 @@ export class SurveysService {
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
       .leftJoinAndSelect('surveyMedia.surveyPoint', 'surveyPoints')
+      .leftJoinAndMapOne(
+        'survey.latestDailyData',
+        'daily_data',
+        'data',
+        'data.site_id = survey.site_id AND DATE(data.date) = DATE(survey.diveDate)',
+      )
       .where('survey.id = :surveyId', { surveyId })
       .andWhere('surveyMedia.hidden = False')
       .getOne();
@@ -266,7 +260,9 @@ export class SurveysService {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
 
-    return surveyDetails;
+    const temperature = this.getSurveyTemperature(surveyDetails);
+
+    return { ...surveyDetails, temperature };
   }
 
   async findMedia(surveyId: number): Promise<SurveyMedia[]> {
@@ -460,5 +456,22 @@ export class SurveysService {
           : [...(result[current.survey_id] || []), current[key]],
       };
     }, {});
+  }
+
+  /**
+   * Get survey temperature
+   *
+   * @param survey The survey to get the temperature
+   */
+  private getSurveyTemperature(survey: Survey) {
+    const surveyDailyData = survey.latestDailyData;
+
+    // If no logged temperature exists grab the latest daily temperature of the survey's date and save it
+    return (
+      survey.temperature ||
+      (surveyDailyData &&
+        (surveyDailyData.avgBottomTemperature ||
+          surveyDailyData.satelliteTemperature))
+    );
   }
 }
