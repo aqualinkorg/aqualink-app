@@ -218,7 +218,7 @@ export class SurveysService {
     );
 
     return surveyHistoryQuery.map((survey) => {
-      const temperature = this.getSurveyTemperature(survey);
+      const satelliteTemperature = this.getSurveyTemperature(survey);
 
       return {
         id: survey.id,
@@ -228,7 +228,8 @@ export class SurveysService {
         user: survey.user,
         site: survey.site,
         siteId: survey.siteId,
-        temperature,
+        temperature: survey.temperature,
+        satelliteTemperature,
         featuredSurveyMedia: survey.featuredSurveyMedia,
         observations: observationsGroupedBySurveyId[survey.id] || [],
         surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
@@ -260,9 +261,13 @@ export class SurveysService {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
 
-    const temperature = this.getSurveyTemperature(surveyDetails);
+    const satelliteTemperature = this.getSurveyTemperature(surveyDetails);
 
-    return { ...surveyDetails, temperature };
+    return {
+      ...surveyDetails,
+      satelliteTemperature,
+      latestDailyData: undefined,
+    };
   }
 
   async findMedia(surveyId: number): Promise<SurveyMedia[]> {
@@ -468,10 +473,11 @@ export class SurveysService {
 
     // If no logged temperature exists grab the latest daily temperature of the survey's date and save it
     return (
-      survey.temperature ||
-      (surveyDailyData &&
-        (surveyDailyData.avgBottomTemperature ||
-          surveyDailyData.satelliteTemperature))
+      (survey.temperature ||
+        (surveyDailyData &&
+          (surveyDailyData.avgBottomTemperature ||
+            surveyDailyData.satelliteTemperature))) ??
+      undefined
     );
   }
 }

@@ -89,7 +89,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
         <ObservationBox
           depth={site.depth}
           date={survey?.diveDate}
-          satelliteTemperature={survey?.temperature}
+          satelliteTemperature={survey?.satelliteTemperature}
           dailyData={site.dailyData || []}
         />
       </Grid>
