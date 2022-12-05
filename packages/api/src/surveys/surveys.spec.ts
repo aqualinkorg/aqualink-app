@@ -73,7 +73,7 @@ export const surveyTests = () => {
     expect(rsp.status).toBe(404);
   });
 
-  it("GET / fetch site's surveys, expect them to have temperature", async () => {
+  it("GET / fetch site's surveys, expect them to have satelliteTemperature", async () => {
     const rsp = await request(app.getHttpServer()).get(
       `/sites/${californiaSite.id}/surveys/`,
     );
@@ -81,7 +81,7 @@ export const surveyTests = () => {
     expect(rsp.status).toBe(200);
     expect(rsp.body.length).toBe(2);
     const temperatureArray = rsp.body
-      .map((x: Survey) => x.temperature)
+      .map((x: Survey) => x.satelliteTemperature)
       .filter((x) => x);
     expect(temperatureArray.length).toBe(2);
   });
