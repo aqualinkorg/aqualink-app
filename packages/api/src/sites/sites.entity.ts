@@ -54,6 +54,7 @@ export class Site {
   @ApiPointProperty()
   @Column({
     type: 'geometry',
+    spatialFeatureType: 'Point',
     unique: true,
     srid: 4326,
     nullable: false,
@@ -64,6 +65,7 @@ export class Site {
   @ApiPointProperty()
   @Column({
     type: 'geometry',
+    spatialFeatureType: 'Point',
     srid: 4326,
     nullable: true,
   })
@@ -111,7 +113,9 @@ export class Site {
   @Index()
   stream: VideoStream | null;
 
-  @ManyToMany(() => User, (user) => user.administeredSites)
+  @ManyToMany(() => User, (user) => user.administeredSites, {
+    onDelete: 'CASCADE',
+  })
   admins: User[];
 
   @ApiPropertyOptional()

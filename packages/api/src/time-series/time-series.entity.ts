@@ -15,7 +15,9 @@ import { Metric } from './metrics.entity';
 
 @Entity()
 @Unique('no_duplicate_data', ['metric', 'source', 'timestamp'])
-@Index(['metric', 'source', 'timestamp'])
+// https://github.com/typeorm/typeorm/issues/3336
+// CREATE INDEX "IDX_cb2f3e83c09f83e8ce007ffd6f" ON "time_series" ("metric", "source_id", "timestamp" DESC)
+@Index('IDX_time_series_metric_source_timestamp_DESC', { synchronize: false })
 export class TimeSeries {
   @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()

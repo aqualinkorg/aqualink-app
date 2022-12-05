@@ -42,6 +42,7 @@ export class SiteSurveyPoint {
   @ApiPointProperty()
   @Column({
     type: 'geometry',
+    spatialFeatureType: 'Point',
     unique: true,
     srid: 4326,
     nullable: true,

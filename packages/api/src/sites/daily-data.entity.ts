@@ -7,10 +7,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
+  Unique,
 } from 'typeorm';
 import { Site } from './sites.entity';
 
 @Entity()
+@Unique('no_duplicated_date', ['site', 'date'])
 export class DailyData {
   @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
