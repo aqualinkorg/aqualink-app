@@ -12,6 +12,7 @@ import type {
   UserState,
   UserRegisterParams,
   UserSignInParams,
+  CreateUserCollectionRequestParams,
 } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import { isManager } from "../../helpers/user";
@@ -28,6 +29,7 @@ import {
 const userInitialState: UserState = {
   userInfo: null,
   loading: false,
+  loadingCollection: false,
   error: null,
 };
 
@@ -53,9 +55,6 @@ export const createUser = createAsyncThunk<
         organization,
         token
       );
-      const { data: collections } = await collectionServices.getCollections(
-        token
-      );
 
       return {
         id: data.id,
@@ -67,9 +66,6 @@ export const createUser = createAsyncThunk<
         administeredSites: isManager(data)
           ? (await userServices.getAdministeredSites(token)).data
           : [],
-        collection: collections?.[0]?.id
-          ? { id: collections[0].id, siteIds: collections[0].siteIds }
-          : undefined,
         token: await user?.getIdToken(),
       };
     } catch (err) {
@@ -150,6 +146,34 @@ export const signOutUser = createAsyncThunk<
     return Promise.reject(getFirebaseErrorMessage(err));
   }
 });
+
+export const createCollectionRequest = createAsyncThunk<
+  UserState["userInfo"],
+  CreateUserCollectionRequestParams,
+  CreateAsyncThunkTypes
+>(
+  "user/createRequest",
+  async ({ name, isPublic, siteIds, token }, { rejectWithValue, getState }) => {
+    const state = getState();
+    const { userInfo } = state.user;
+    try {
+      const { data } = await collectionServices.createCollection(
+        name,
+        isPublic || false,
+        siteIds,
+        token
+      );
+      return userInfo === null
+        ? null
+        : {
+            ...userInfo,
+            collection: { id: data.id, siteIds: data.siteIds },
+          };
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
+  }
+);
 
 function addAsyncReducer<Out, In, ThunkParams extends CreateAsyncThunkTypes>(
   builder: ActionReducerMapBuilder<UserState>,
@@ -241,6 +265,36 @@ const userSlice = createSlice({
       error: action.payload,
       loading: false,
     }));
+
+    builder.addCase(
+      createCollectionRequest.fulfilled,
+      (state, action: PayloadAction<UserState["userInfo"]>) => {
+        return {
+          ...state,
+          userInfo: action.payload,
+          loadingCollection: false,
+        };
+      }
+    );
+
+    builder.addCase(
+      createCollectionRequest.rejected,
+      (state, action: PayloadAction<UserState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+          loadingCollection: false,
+        };
+      }
+    );
+
+    builder.addCase(createCollectionRequest.pending, (state) => {
+      return {
+        ...state,
+        loadingCollection: true,
+        error: null,
+      };
+    });
   },
 });
 
@@ -249,6 +303,10 @@ export const userInfoSelector = (state: RootState): UserState["userInfo"] =>
 
 export const userLoadingSelector = (state: RootState): UserState["loading"] =>
   state.user.loading;
+
+export const userCollectionLoadingSelector = (
+  state: RootState
+): UserState["loadingCollection"] => state.user.loadingCollection;
 
 export const userErrorSelector = (state: RootState): UserState["error"] =>
   state.user.error;

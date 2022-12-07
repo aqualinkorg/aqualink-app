@@ -50,15 +50,3 @@ export const heatStressTracker: DynamicCollection = {
   siteIds: [],
   isPublic: true,
 };
-
-export const DEFAULT_COLLECTION_NAME = 'My Dashboard';
-
-export const defaultUserCollection = (
-  userId: number,
-  siteIds: number[] = [],
-  name = DEFAULT_COLLECTION_NAME,
-) => ({
-  user: { id: userId },
-  name,
-  sites: siteIds.map((siteId) => ({ id: siteId })),
-});

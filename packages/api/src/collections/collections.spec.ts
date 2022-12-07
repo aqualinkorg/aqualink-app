@@ -27,7 +27,6 @@ import { TestService } from '../../test/test.service';
 import { mockExtractAndVerifyToken } from '../../test/utils';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { DEFAULT_COLLECTION_NAME } from '../utils/collections.utils';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 
@@ -87,13 +86,9 @@ export const collectionTests = () => {
       const rsp = await request(app.getHttpServer()).get('/collections/');
 
       expect(rsp.status).toBe(200);
-      expect(rsp.body.length).toBe(2);
+      expect(rsp.body.length).toBe(1);
       const sortedRsp = sortBy(rsp.body, (o) => o.createdAt);
       expect(sortedRsp[0]).toMatchObject({
-        name: DEFAULT_COLLECTION_NAME,
-        isPublic: false,
-      });
-      expect(sortedRsp[1]).toMatchObject({
         name: createCollectionDto.name,
         isPublic: createCollectionDto.isPublic,
       });
@@ -120,7 +115,7 @@ export const collectionTests = () => {
         .query({ siteId: floridaSite.id });
 
       expect(rsp.status).toBe(200);
-      expect(rsp.body.length).toBe(2);
+      expect(rsp.body.length).toBe(1);
     });
 
     it('PUT /:id update the test collection', async () => {
@@ -278,9 +273,9 @@ export const collectionTests = () => {
     expect(rsp.status).toBe(404);
   });
 
-  it('GET /heat-stress get heat stress collection', async () => {
+  it('GET /heat-stress-tracker get heat stress collection', async () => {
     const rsp = await request(app.getHttpServer()).get(
-      '/collections/heat-stress',
+      '/collections/heat-stress-tracker',
     );
 
     expect(rsp.status).toBe(200);

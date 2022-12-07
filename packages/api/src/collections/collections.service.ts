@@ -10,7 +10,7 @@ import { Repository, MoreThanOrEqual, In } from 'typeorm';
 import { Collection, DynamicCollection } from './collections.entity';
 import { Sources } from '../sites/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
-import { User } from '../users/users.entity';
+import { AdminLevel, User } from '../users/users.entity';
 import { hasHoboDataSubQuery } from '../utils/site.utils';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
@@ -40,8 +40,19 @@ export class CollectionsService {
     private sourcesRepository: Repository<Sources>,
   ) {}
 
-  create(createCollectionDto: CreateCollectionDto): Promise<Collection> {
-    const { name, isPublic, siteIds, userId } = createCollectionDto;
+  create(
+    createCollectionDto: CreateCollectionDto,
+    user?: User,
+  ): Promise<Collection> {
+    const { name, isPublic, siteIds, userId: idFromDTO } = createCollectionDto;
+
+    if (idFromDTO && user?.adminLevel !== AdminLevel.SuperAdmin) {
+      throw new ForbiddenException(
+        'You are not allowed to execute this operation',
+      );
+    }
+
+    const userId = idFromDTO || user?.id;
 
     const sites = siteIds.map((siteId) => ({ id: siteId }));
     return this.collectionRepository.save({
