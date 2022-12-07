@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Grid, LinearProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
-
 import Header from "./Header";
 import Map from "./Map";
 import Info from "./Info";
@@ -12,6 +11,7 @@ import {
   collectionErrorSelector,
   collectionLoadingSelector,
 } from "../../store/Collection/collectionSlice";
+import Tracker from "../Tracker";
 
 const Content = () => {
   const collection = useSelector(collectionDetailsSelector);
@@ -27,9 +27,7 @@ const Content = () => {
   }
 
   if (collection?.sites.length === 0) {
-    return (
-      <FullScreenMessage message="There are no sites in your dashboard. Add sites to your dashboard to monitor multiple locations in a single view." />
-    );
+    return <Tracker shouldShowNav={false} />;
   }
 
   return collection ? (
@@ -45,7 +43,9 @@ const Content = () => {
       </Grid>
       <Table collection={collection} />
     </Container>
-  ) : null;
+  ) : (
+    <Tracker shouldShowNav={false} />
+  );
 };
 
 export default Content;
