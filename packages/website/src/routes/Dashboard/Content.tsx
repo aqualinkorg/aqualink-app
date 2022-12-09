@@ -12,6 +12,11 @@ import {
   collectionLoadingSelector,
 } from "../../store/Collection/collectionSlice";
 import Tracker from "../Tracker";
+import Banner from "../../common/Banner";
+
+const bannerMessage = `You have not saved any sites yet. \
+Follow the instructions on this page and come back \
+to your dashboard after saving a few sites!`;
 
 const Content = () => {
   const collection = useSelector(collectionDetailsSelector);
@@ -27,7 +32,12 @@ const Content = () => {
   }
 
   if (collection?.sites.length === 0) {
-    return <Tracker shouldShowNav={false} />;
+    return (
+      <>
+        <Banner message={bannerMessage} />
+        <Tracker shouldShowNav={false} />
+      </>
+    );
   }
 
   return collection ? (
@@ -44,7 +54,10 @@ const Content = () => {
       <Table collection={collection} />
     </Container>
   ) : (
-    <Tracker shouldShowNav={false} />
+    <>
+      <Banner message={bannerMessage} />
+      <Tracker shouldShowNav={false} />
+    </>
   );
 };
 

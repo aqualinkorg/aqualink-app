@@ -46,7 +46,12 @@ export class CollectionsService {
   ): Promise<Collection> {
     const { name, isPublic, siteIds, userId: idFromDTO } = createCollectionDto;
 
-    if (idFromDTO && user?.adminLevel !== AdminLevel.SuperAdmin) {
+    // Users who are not admins can only create collections for themselves
+    if (
+      idFromDTO &&
+      idFromDTO !== user?.id &&
+      user?.adminLevel !== AdminLevel.SuperAdmin
+    ) {
       throw new ForbiddenException(
         'You are not allowed to execute this operation',
       );
