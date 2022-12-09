@@ -5,6 +5,19 @@ import {
   CollectionUpdateParams,
 } from "../store/Collection/types";
 
+const createCollection = (
+  name: string,
+  isPublic: boolean,
+  siteIds: number[],
+  token?: string
+) =>
+  requests.send<CollectionDetailsResponse>({
+    method: "POST",
+    url: "collections",
+    token,
+    data: { name, isPublic, siteIds },
+  });
+
 const getCollections = (token?: string) =>
   requests.send<CollectionSummary[]>({
     method: "GET",
@@ -43,6 +56,7 @@ const updateCollection = (
   });
 
 export default {
+  createCollection,
   getCollections,
   getPublicCollection,
   getHeatStressCollection,

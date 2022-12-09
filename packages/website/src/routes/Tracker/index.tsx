@@ -120,7 +120,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Tracker = () => {
+interface TrackerProps {
+  shouldShowNav?: boolean;
+}
+
+const Tracker = ({ shouldShowNav = true }: TrackerProps) => {
   const heroAspectRatio = useImageAspectRatio(hero);
   const image1AspectRatio = useImageAspectRatio(image1);
   const image2AspectRatio = useImageAspectRatio(image2);
@@ -135,7 +139,7 @@ const Tracker = () => {
 
   return (
     <>
-      <NavBar searchLocation={false} />
+      {shouldShowNav && <NavBar searchLocation={false} />}
       <Box className={classes.hero}>
         <CardMedia className={classes.image} image={hero} />
         <Container className={classes.titleWrapper}>

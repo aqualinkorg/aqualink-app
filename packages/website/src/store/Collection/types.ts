@@ -10,7 +10,7 @@ export interface CollectionSummary {
 }
 
 export interface CollectionDetails {
-  id?: number;
+  id: number;
   name: string;
   isPublic: boolean;
   sites: Site[];

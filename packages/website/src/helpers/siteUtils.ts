@@ -71,7 +71,7 @@ export const hasDeployedSpotter = (site?: Site | null) =>
   Boolean(site?.sensorId && site?.status === "deployed");
 
 export const belongsToCollection = (siteId: number, siteIds?: number[]) =>
-  siteIds?.includes(siteId);
+  siteIds?.includes(siteId) || false;
 
 export const setSiteNameFromList = ({
   id,

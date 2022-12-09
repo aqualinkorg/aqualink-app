@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import { CollectionState, CollectionRequestParams } from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
 import collectionServices from "../../services/collectionServices";
