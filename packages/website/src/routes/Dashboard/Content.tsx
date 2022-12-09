@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Grid, LinearProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
-
 import Header from "./Header";
 import Map from "./Map";
 import Info from "./Info";
@@ -12,6 +11,12 @@ import {
   collectionErrorSelector,
   collectionLoadingSelector,
 } from "../../store/Collection/collectionSlice";
+import Tracker from "../Tracker";
+import Banner from "../../common/Banner";
+
+const bannerMessage = `You have not saved any sites yet. \
+Follow the instructions on this page and come back \
+to your dashboard after saving a few sites!`;
 
 const Content = () => {
   const collection = useSelector(collectionDetailsSelector);
@@ -28,7 +33,10 @@ const Content = () => {
 
   if (collection?.sites.length === 0) {
     return (
-      <FullScreenMessage message="There are no sites in your dashboard. Add sites to your dashboard to monitor multiple locations in a single view." />
+      <>
+        <Banner message={bannerMessage} />
+        <Tracker shouldShowNav={false} />
+      </>
     );
   }
 
@@ -45,7 +53,12 @@ const Content = () => {
       </Grid>
       <Table collection={collection} />
     </Container>
-  ) : null;
+  ) : (
+    <>
+      <Banner message={bannerMessage} />
+      <Tracker shouldShowNav={false} />
+    </>
+  );
 };
 
 export default Content;

@@ -20,13 +20,11 @@ import {
 import { Auth } from '../auth/auth.decorator';
 import { AuthRequest } from '../auth/auth.types';
 import { CollectionGuard } from '../auth/collection.guard';
-import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { Public } from '../auth/public.decorator';
 import {
   ApiNestNotFoundResponse,
   ApiNestUnauthorizedResponse,
 } from '../docs/api-response';
-import { AdminLevel } from '../users/users.entity';
 import { CollectionsService } from './collections.service';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
@@ -40,10 +38,12 @@ export class CollectionsController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Creates a new collection' })
-  @OverrideLevelAccess(AdminLevel.SuperAdmin)
   @Post()
-  create(@Body() createCollectionDto: CreateCollectionDto) {
-    return this.collectionsService.create(createCollectionDto);
+  create(
+    @Body() createCollectionDto: CreateCollectionDto,
+    @Req() request: AuthRequest,
+  ) {
+    return this.collectionsService.create(createCollectionDto, request.user);
   }
 
   @ApiBearerAuth()

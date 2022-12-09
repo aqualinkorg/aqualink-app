@@ -64,9 +64,10 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
     if (!atDashboard) {
       const { collectionName: urlCollectionName } = match.params;
       const isHeatStress = urlCollectionName === "heat-stress";
-      const urlCollectionId = urlCollectionName
-        ? collections[urlCollectionName]
-        : undefined;
+      const isId = !Number.isNaN(Number(urlCollectionName));
+      const urlCollectionId = isId
+        ? Number(urlCollectionName)
+        : (!!urlCollectionName && collections[urlCollectionName]) || undefined;
 
       if (
         (urlCollectionId && storedCollectionId !== urlCollectionId) ||

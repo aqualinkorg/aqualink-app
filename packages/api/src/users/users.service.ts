@@ -13,7 +13,6 @@ import { SiteApplication } from '../site-applications/site-applications.entity';
 import { Site } from '../sites/sites.entity';
 import { Collection } from '../collections/collections.entity';
 import { extractAndVerifyToken } from '../auth/firebase-auth.utils';
-import { defaultUserCollection } from '../utils/collections.utils';
 
 @Injectable()
 export class UsersService {
@@ -75,19 +74,6 @@ export class UsersService {
       firebaseUid,
     };
     const createdUser = await this.usersRepository.save(user);
-
-    const collection = await this.collectionRepository.findOne({
-      where: { user: createdUser },
-    });
-
-    if (!collection) {
-      await this.collectionRepository.save(
-        defaultUserCollection(
-          createdUser.id,
-          priorAccount?.administeredSites.map((site) => site.id),
-        ),
-      );
-    }
 
     return createdUser;
   }

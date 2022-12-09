@@ -18,6 +18,7 @@ export interface User {
 export interface UserState {
   userInfo: User | null;
   loading: boolean;
+  loadingCollection: boolean;
   error?: string | null;
 }
 
@@ -35,4 +36,11 @@ export interface UserSignInParams {
 
 export interface PasswordResetParams {
   email: string;
+}
+
+export interface CreateUserCollectionRequestParams {
+  name: string;
+  siteIds: number[];
+  token?: string;
+  isPublic?: boolean;
 }
