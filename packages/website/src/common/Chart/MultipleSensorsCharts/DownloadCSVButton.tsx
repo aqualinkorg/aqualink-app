@@ -3,9 +3,10 @@ import downloadCsv from "download-csv";
 import { Button } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { ValueWithTimestamp } from "../../../store/Sites/types";
+import { ValueWithTimestamp, MetricsKeys } from "../../../store/Sites/types";
 import DownloadCSVDialog from "./DownloadCSVDialog";
 import { spotterPositionSelector } from "../../../store/Sites/selectedSiteSlice";
+import siteServices from "../../../services/siteServices";
 
 type CSVDataColumn =
   | "spotterBottomTemp"
@@ -65,6 +66,16 @@ function constructCSVData(
   /* eslint-enable no-param-reassign,fp/no-mutation */
 }
 
+interface DownloadCSVButtonParams {
+  data: { name: string; values: ValueWithTimestamp[] }[];
+  startDate?: string;
+  endDate?: string;
+  className?: string;
+  siteId?: number | string;
+  pointId?: number | string;
+  defaultMetrics?: MetricsKeys[];
+}
+
 function DownloadCSVButton({
   data,
   startDate,
@@ -72,30 +83,52 @@ function DownloadCSVButton({
   className,
   pointId,
   siteId,
-}: {
-  data: { name: string; values: ValueWithTimestamp[] }[];
-  startDate?: string;
-  endDate?: string;
-  className?: string;
-  siteId?: number | string;
-  pointId?: number | string;
-}) {
+  defaultMetrics,
+}: DownloadCSVButtonParams) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const spotterData = useSelector(spotterPositionSelector);
 
-  const onClose = (shouldDownload: boolean) => {
+  const onClose = async (
+    shouldDownload: boolean,
+    additionalData: boolean,
+    allDates: boolean,
+    hourly: boolean
+  ) => {
     if (!shouldDownload) {
       setOpen(false);
       return;
     }
-    setLoading(true);
-    // give time for the loading state to be rendered by react.
-    setTimeout(() => {
+
+    if (!additionalData && !allDates) {
       downloadCsv(getCSVData(data), undefined, fileName);
-      setLoading(false);
       setOpen(false);
-    }, 5);
+      return;
+    }
+
+    setLoading(true);
+
+    const response = await siteServices.getSiteTimeSeriesData({
+      hourly,
+      start: allDates ? undefined : startDate,
+      end: allDates ? undefined : endDate,
+      metrics: additionalData ? undefined : defaultMetrics,
+      siteId: String(siteId),
+    });
+
+    const formattedData = Object.entries(response.data)
+      .map(([metric, sources]) => {
+        return Object.entries(sources).map(([type, values]) => ({
+          name: `${metric}_${type}`,
+          values: values.data,
+        }));
+      })
+      .flat();
+
+    downloadCsv(getCSVData(formattedData), undefined, fileName);
+
+    setLoading(false);
+    setOpen(false);
   };
 
   const getCSVData = (

@@ -510,6 +510,7 @@ const MultipleSensorsCharts = ({
           siteId={site.id}
           pointId={pointId}
           className={classes.button}
+          defaultMetrics={DEFAULT_METRICS}
         />
       </div>
       <ChartWithCard

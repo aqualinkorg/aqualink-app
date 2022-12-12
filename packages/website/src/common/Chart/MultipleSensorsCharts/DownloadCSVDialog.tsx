@@ -1,10 +1,14 @@
 import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
 import { makeStyles, Theme } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import React from "react";
@@ -15,7 +19,12 @@ export interface DownloadCSVDialogProps {
   data: { name: string; values: ValueWithTimestamp[] }[];
   startDate: string;
   endDate: string;
-  onClose: (shouldDownload: boolean) => void;
+  onClose: (
+    shouldDownload: boolean,
+    additionalData: boolean,
+    allDates: boolean,
+    hourly: boolean
+  ) => void;
 }
 
 const DownloadCSVDialog = ({
@@ -26,14 +35,25 @@ const DownloadCSVDialog = ({
   endDate,
 }: DownloadCSVDialogProps) => {
   const classes = useStyles();
+  const [additionalData, setAdditionalData] = React.useState(false);
+  const [allDates, setAllDates] = React.useState(false);
+  const [hourly, setHourly] = React.useState(true);
 
   const handleClose = (shouldDownload: boolean) => {
     if (shouldDownload) {
-      onClose(true);
+      onClose(true, additionalData, allDates, hourly);
     } else {
-      onClose(false);
+      onClose(false, false, false, false);
     }
   };
+
+  React.useEffect(() => {
+    if (open) {
+      setAdditionalData(false);
+      setAllDates(false);
+      setHourly(true);
+    }
+  }, [open]);
 
   return (
     <Dialog
@@ -58,15 +78,60 @@ const DownloadCSVDialog = ({
             {moment(endDate).format("MM/DD/YYYY")}
           </span>
         </DialogContentText>
-        <div className={classes.listWrapper}>
-          <ul>
-            {data.map((x) => (
-              <li key={x.name} className={classes.listItem}>
-                {x.name}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <DialogContentText>
+          <FormGroup row>
+            <Tooltip
+              title="Download all additional data available from all sources for this site"
+              placement="top"
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={additionalData}
+                    onChange={() => setAdditionalData(!additionalData)}
+                  />
+                }
+                label="Additional Data"
+              />
+            </Tooltip>
+            <Tooltip
+              title="Download data for all available dates"
+              placement="top"
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={allDates}
+                    onChange={() => setAllDates(!allDates)}
+                  />
+                }
+                label="All Dates"
+              />
+            </Tooltip>
+            <Tooltip title="Download hourly data" placement="top">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={hourly}
+                    onChange={() => setHourly(!hourly)}
+                  />
+                }
+                label="Hourly Data"
+              />
+            </Tooltip>
+          </FormGroup>
+
+          <div className={classes.listWrapper}>
+            <ul>
+              {data.map((x) => (
+                <li key={x.name}>{x.name}</li>
+              ))}
+            </ul>
+          </div>
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => handleClose(false)} color="secondary">
@@ -88,9 +153,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   listWrapper: {
     display: "flex",
     flexDirection: "column",
-  },
-  listItem: {
-    color: "#2f2f2f",
   },
   bold: {
     fontWeight: 700,
