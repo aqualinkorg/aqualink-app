@@ -9,7 +9,7 @@ export class FixTypeorm1669109147094 implements MigrationInterface {
       `DELETE FROM "typeorm_metadata" WHERE "type" = $1 AND "name" = $2 AND "schema" = $3`,
       ['MATERIALIZED_VIEW', 'latest_data', 'public'],
     );
-    await queryRunner.query(`DROP MATERIALIZED VIEW "latest_data"`);
+    await queryRunner.query(`DROP MATERIALIZED VIEW IF EXISTS "latest_data"`);
 
     // change: 1, use typeorm recommended uid default generation
     await queryRunner.query(

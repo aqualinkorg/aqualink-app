@@ -7,7 +7,7 @@ import { siteManagerUserMock } from './user.mock';
 export const californiaSurveyOne: DeepPartial<Survey> = {
   comments: 'California Survey One',
   diveDate: moment().subtract(6, 'days').toISOString(),
-  temperature: 22,
+  temperature: null,
   weatherConditions: WeatherConditions.Calm,
   user: siteManagerUserMock,
   site: californiaSite,
@@ -16,7 +16,7 @@ export const californiaSurveyOne: DeepPartial<Survey> = {
 export const californiaSurveyTwo: DeepPartial<Survey> = {
   comments: 'California Survey Two',
   diveDate: moment().subtract(2, 'days').toISOString(),
-  temperature: 23,
+  temperature: null,
   weatherConditions: WeatherConditions.Calm,
   user: siteManagerUserMock,
   site: californiaSite,

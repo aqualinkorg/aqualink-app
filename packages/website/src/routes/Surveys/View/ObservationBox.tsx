@@ -24,23 +24,19 @@ const ObservationBox = ({
   dailyData,
   date,
   classes,
+  satelliteTemperature,
 }: ObservationBoxProps) => {
   const { bottomTemperature, topTemperature } =
     useSelector(siteTimeSeriesDataSelector) || {};
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
 
-  const {
-    satelliteTemperature,
-    hoboBottom,
-    hoboSurface,
-    spotterBottom,
-    spotterTop,
-  } = getCardTemperatureValues(
-    dailyData,
-    bottomTemperature,
-    topTemperature,
-    date
-  );
+  const { hoboBottom, hoboSurface, spotterBottom, spotterTop } =
+    getCardTemperatureValues(
+      dailyData,
+      bottomTemperature,
+      topTemperature,
+      date
+    );
 
   return (
     <div className={classes.outerDiv}>
@@ -128,6 +124,7 @@ const styles = () =>
 interface ObservationBoxIncomingProps {
   depth: number | null;
   dailyData: DailyData[];
+  satelliteTemperature?: number;
   date?: string | null;
 }
 

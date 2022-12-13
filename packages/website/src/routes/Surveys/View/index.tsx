@@ -85,13 +85,13 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
 
   // Fetch HOBO and Spotter data near the dive date
   useEffect(() => {
-    if (surveyDetails?.diveDate && pointId) {
+    if (surveyDetails?.diveDate) {
       const start = moment(surveyDetails.diveDate).startOf("day").toISOString();
       const end = moment(surveyDetails.diveDate).endOf("day").toISOString();
       dispatch(
         siteTimeSeriesDataRequest({
           siteId: `${site.id}`,
-          pointId: `${pointId}`,
+          pointId: pointId ? `${pointId}` : undefined,
           start,
           end,
           metrics: ["bottom_temperature", "top_temperature"],
