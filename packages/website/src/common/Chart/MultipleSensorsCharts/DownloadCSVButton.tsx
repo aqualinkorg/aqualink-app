@@ -3,6 +3,7 @@ import downloadCsv from "download-csv";
 import { Button } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
 import { ValueWithTimestamp, MetricsKeys } from "../../../store/Sites/types";
 import DownloadCSVDialog from "./DownloadCSVDialog";
 import { spotterPositionSelector } from "../../../store/Sites/selectedSiteSlice";
@@ -89,6 +90,7 @@ function DownloadCSVButton({
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const spotterData = useSelector(spotterPositionSelector);
+  const { enqueueSnackbar } = useSnackbar();
 
   const onClose = async (
     shouldDownload: boolean,
@@ -109,24 +111,31 @@ function DownloadCSVButton({
 
     setLoading(true);
 
-    const response = await siteServices.getSiteTimeSeriesData({
-      hourly,
-      start: allDates ? undefined : startDate,
-      end: allDates ? undefined : endDate,
-      metrics: additionalData ? undefined : defaultMetrics,
-      siteId: String(siteId),
-    });
+    try {
+      const response = await siteServices.getSiteTimeSeriesData({
+        hourly,
+        start: allDates ? undefined : startDate,
+        end: allDates ? undefined : endDate,
+        metrics: additionalData ? undefined : defaultMetrics,
+        siteId: String(siteId),
+      });
 
-    const formattedData = Object.entries(response.data)
-      .map(([metric, sources]) => {
-        return Object.entries(sources).map(([type, values]) => ({
-          name: `${metric}_${type}`,
-          values: values.data,
-        }));
-      })
-      .flat();
+      const formattedData = Object.entries(response.data)
+        .map(([metric, sources]) => {
+          return Object.entries(sources).map(([type, values]) => ({
+            name: `${metric}_${type}`,
+            values: values.data,
+          }));
+        })
+        .flat();
 
-    downloadCsv(getCSVData(formattedData), undefined, fileName);
+      downloadCsv(getCSVData(formattedData), undefined, fileName);
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar("There was an error downloading csv data", {
+        variant: "error",
+      });
+    }
 
     setLoading(false);
     setOpen(false);
