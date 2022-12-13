@@ -217,27 +217,24 @@ export class SurveysService {
       'survey_point_id',
     );
 
-    return surveyHistoryQuery.map((survey) => {
-      const satelliteTemperature = this.getSurveyTemperature(survey);
-
-      return {
-        id: survey.id,
-        diveDate: survey.diveDate,
-        comments: survey.comments,
-        weatherConditions: survey.weatherConditions,
-        user: survey.user,
-        site: survey.site,
-        siteId: survey.siteId,
-        temperature: survey.temperature,
-        satelliteTemperature,
-        featuredSurveyMedia: survey.featuredSurveyMedia,
-        observations: observationsGroupedBySurveyId[survey.id] || [],
-        surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
-        surveyPointImage: surveyImageGroupedBySurveyPointId[survey.id] || [],
-        createdAt: survey.createdAt,
-        updatedAt: survey.updatedAt,
-      };
-    });
+    return surveyHistoryQuery.map((survey) => ({
+      id: survey.id,
+      diveDate: survey.diveDate,
+      comments: survey.comments,
+      weatherConditions: survey.weatherConditions,
+      user: survey.user,
+      site: survey.site,
+      siteId: survey.siteId,
+      temperature: survey.temperature,
+      satelliteTemperature:
+        survey.latestDailyData?.satelliteTemperature || undefined,
+      featuredSurveyMedia: survey.featuredSurveyMedia,
+      observations: observationsGroupedBySurveyId[survey.id] || [],
+      surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
+      surveyPointImage: surveyImageGroupedBySurveyPointId[survey.id] || [],
+      createdAt: survey.createdAt,
+      updatedAt: survey.updatedAt,
+    }));
   }
 
   // Find one survey provided its id
@@ -261,11 +258,10 @@ export class SurveysService {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
 
-    const satelliteTemperature = this.getSurveyTemperature(surveyDetails);
-
     return {
       ...surveyDetails,
-      satelliteTemperature,
+      satelliteTemperature:
+        surveyDetails.latestDailyData?.satelliteTemperature || undefined,
       latestDailyData: undefined,
     };
   }
@@ -461,23 +457,5 @@ export class SurveysService {
           : [...(result[current.survey_id] || []), current[key]],
       };
     }, {});
-  }
-
-  /**
-   * Get survey temperature
-   *
-   * @param survey The survey to get the temperature
-   */
-  private getSurveyTemperature(survey: Survey) {
-    const surveyDailyData = survey.latestDailyData;
-
-    // If no logged temperature exists grab the latest daily temperature of the survey's date and save it
-    return (
-      (survey.temperature ||
-        (surveyDailyData &&
-          (surveyDailyData.avgBottomTemperature ||
-            surveyDailyData.satelliteTemperature))) ??
-      undefined
-    );
   }
 }

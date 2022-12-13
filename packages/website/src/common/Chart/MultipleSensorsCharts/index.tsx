@@ -512,6 +512,7 @@ const MultipleSensorsCharts = ({
           className={classes.button}
         />
       </div>
+      {console.log(tempAnalysisDatasets)}
       <ChartWithCard
         id="temperature"
         range={range}
