@@ -67,16 +67,23 @@ const DownloadCSVDialog = ({
       <DialogTitle disableTypography className={classes.dialogTitle}>
         <Typography variant="h4">Download CSV</Typography>
       </DialogTitle>
-      <DialogContent dividers>
+      <DialogContent dividers className={classes.dialogContent}>
         <DialogContentText>
-          Selected data to download into CSV format from dates between{" "}
-          <span className={classes.bold}>
-            {moment(startDate).format("MM/DD/YYYY")}
-          </span>{" "}
-          and{" "}
-          <span className={classes.bold}>
-            {moment(endDate).format("MM/DD/YYYY")}
-          </span>
+          Selected data to download into CSV format from{" "}
+          {allDates ? (
+            <span className={classes.bold}>all available dates</span>
+          ) : (
+            <>
+              dates between{" "}
+              <span className={classes.bold}>
+                {moment(startDate).format("MM/DD/YYYY")}
+              </span>{" "}
+              and{" "}
+              <span className={classes.bold}>
+                {moment(endDate).format("MM/DD/YYYY")}
+              </span>
+            </>
+          )}
         </DialogContentText>
         <DialogContentText>
           <FormGroup row>
@@ -110,7 +117,10 @@ const DownloadCSVDialog = ({
                 label="All Dates"
               />
             </Tooltip>
-            <Tooltip title="Download hourly data" placement="top">
+            <Tooltip
+              title="If unchecked, Data will not be averaged per hour"
+              placement="top"
+            >
               <FormControlLabel
                 control={
                   <Checkbox
@@ -156,6 +166,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   bold: {
     fontWeight: 700,
+  },
+  dialogContent: {
+    maxWidth: "31rem",
   },
 }));
 

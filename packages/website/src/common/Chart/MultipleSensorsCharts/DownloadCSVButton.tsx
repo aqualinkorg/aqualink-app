@@ -7,8 +7,9 @@ import { ValueWithTimestamp, MetricsKeys } from "../../../store/Sites/types";
 import DownloadCSVDialog from "./DownloadCSVDialog";
 import { spotterPositionSelector } from "../../../store/Sites/selectedSiteSlice";
 import siteServices from "../../../services/siteServices";
+import { CSVColumnData } from "./types";
 
-type CSVDataColumn =
+type CSVColumnNames =
   | "spotterBottomTemp"
   | "spotterTopTemp"
   | "hoboTemp"
@@ -19,7 +20,7 @@ type CSVDataColumn =
   | "oceanSenseORP"
   | "dailySST";
 
-interface CSVRow extends Partial<Record<CSVDataColumn, number>> {
+interface CSVRow extends Partial<Record<CSVColumnNames, number>> {
   timestamp: string;
 }
 
@@ -34,7 +35,7 @@ const DATE_FORMAT = "YYYY_MM_DD";
  * @param existingData - Should only used by chained() and never directly. Stores the in-progress CSV object.
  */
 function constructCSVData(
-  columnName: CSVDataColumn,
+  columnName: CSVColumnNames,
   data: ValueWithTimestamp[] = [],
   existingData: Record<CSVRow["timestamp"], CSVRow> = {}
 ) {
@@ -59,7 +60,7 @@ function constructCSVData(
           new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
       ),
     chained: (
-      chainedFinalKey: CSVDataColumn,
+      chainedFinalKey: CSVColumnNames,
       chainedData: ValueWithTimestamp[] = []
     ) => constructCSVData(chainedFinalKey, chainedData, result),
   };
@@ -67,7 +68,7 @@ function constructCSVData(
 }
 
 interface DownloadCSVButtonParams {
-  data: { name: string; values: ValueWithTimestamp[] }[];
+  data: CSVColumnData[];
   startDate?: string;
   endDate?: string;
   className?: string;
@@ -131,15 +132,13 @@ function DownloadCSVButton({
     setOpen(false);
   };
 
-  const getCSVData = (
-    selectedData: { name: string; values: ValueWithTimestamp[] }[]
-  ) => {
+  const getCSVData = (selectedData: CSVColumnData[]) => {
     const [head, ...tail] = selectedData;
 
     // TODO: Change either CSVDataColumn names type or make it generic string
-    const start = constructCSVData(head.name as CSVDataColumn, head.values);
+    const start = constructCSVData(head.name as CSVColumnNames, head.values);
     const result = tail.reduce(
-      (prev, curr) => prev.chained(curr.name as CSVDataColumn, curr.values),
+      (prev, curr) => prev.chained(curr.name as CSVColumnNames, curr.values),
       start
     );
     return result.result();
