@@ -11,7 +11,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { SurveyMedia } from "../../../../store/Survey/types";
+import {
+  SurveyMedia,
+  SurveyMediaUpdateRequestData,
+} from "../../../../store/Survey/types";
 import {
   getNumberOfImages,
   getNumberOfVideos,
@@ -20,10 +23,9 @@ import {
 import {
   surveyLoadingSelector,
   selectedSurveyPointSelector,
-  setFeaturedImage,
+  surveyEditRequest,
 } from "../../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../../store/User/userSlice";
-import surveyServices from "../../../../services/surveyServices";
 import { isAdmin } from "../../../../helpers/user";
 import SliderCard from "./SliderCard";
 import MediaCount from "./MediaCount";
@@ -51,14 +53,12 @@ const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
   const selectedPoi = useSelector(selectedSurveyPointSelector);
   const dispatch = useDispatch();
 
-  const onSurveyMediaUpdate = (mediaId: number) => {
+  const onSurveyMediaUpdate = (
+    mediaId: number,
+    data: Partial<SurveyMediaUpdateRequestData>
+  ) => {
     if (user && user.token) {
-      surveyServices
-        .editSurveyMedia(siteId, mediaId, { featured: true }, user.token)
-        .then(() => {
-          dispatch(setFeaturedImage(mediaId));
-        })
-        .catch(console.error);
+      dispatch(surveyEditRequest({ siteId, mediaId, data, token: user.token }));
     }
   };
 

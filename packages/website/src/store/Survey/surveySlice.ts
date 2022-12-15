@@ -4,7 +4,13 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
-import { SelectedSurveyState, SurveyState, SurveyData } from "./types";
+import {
+  SelectedSurveyState,
+  SurveyState,
+  SurveyData,
+  SurveyMediaUpdateRequestData,
+  SurveyMedia,
+} from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import surveyServices from "../../services/surveyServices";
 import { getAxiosErrorMessage } from "../../helpers/errors";
@@ -57,6 +63,34 @@ export const surveyAddRequest = createAsyncThunk<
       const { data } = await surveyServices.addSurvey(siteId, surveyData);
       changeTab(1);
       return data;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
+  }
+);
+
+interface SurveyEditRequestData {
+  siteId: number;
+  mediaId: number;
+  data: Partial<SurveyMediaUpdateRequestData>;
+  token: string;
+}
+
+export const surveyEditRequest = createAsyncThunk<
+  SurveyMedia,
+  SurveyEditRequestData,
+  CreateAsyncThunkTypes
+>(
+  "selectedSurvey/editRequest",
+  async ({ siteId, mediaId, data, token }, { rejectWithValue }) => {
+    try {
+      const response = await surveyServices.editSurveyMedia(
+        siteId,
+        mediaId,
+        data,
+        token
+      );
+      return response.data;
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
@@ -156,6 +190,46 @@ const selectedSurvey = createSlice({
       }
     );
     builder.addCase(surveyAddRequest.pending, (state) => {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    });
+
+    builder.addCase(
+      surveyEditRequest.fulfilled,
+      (state, action: PayloadAction<SurveyMedia>) => {
+        const oldMedia = state.details?.surveyMedia;
+        const newMedia = oldMedia
+          ? oldMedia.map((x) => {
+              if (x.id === action.payload.id) {
+                return action.payload;
+              }
+              return x;
+            })
+          : oldMedia;
+        const newDetails = state.details
+          ? { ...state.details, surveyMedia: newMedia }
+          : state.details;
+        return {
+          ...state,
+          details: newDetails,
+          loading: false,
+        };
+      }
+    );
+    builder.addCase(
+      surveyEditRequest.rejected,
+      (state, action: PayloadAction<SelectedSurveyState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+          loading: false,
+        };
+      }
+    );
+    builder.addCase(surveyEditRequest.pending, (state) => {
       return {
         ...state,
         loading: true,
