@@ -84,7 +84,6 @@ async function run() {
   return fn(
     parsedSiteIds,
     days,
-    connection,
     // Fetch all needed repositories
     {
       siteRepository: connection.getRepository(Site),

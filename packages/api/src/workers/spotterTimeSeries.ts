@@ -8,7 +8,7 @@ import { addSpotterData } from '../utils/spotter-time-series';
 import { addWindWaveData } from '../utils/hindcast-wind-wave';
 
 export function runSpotterTimeSeriesUpdate(connection: Connection) {
-  return addSpotterData([], 1, connection, {
+  return addSpotterData([], 1, {
     siteRepository: connection.getRepository(Site),
     sourceRepository: connection.getRepository(Sources),
     timeSeriesRepository: connection.getRepository(TimeSeries),

@@ -1,8 +1,8 @@
 import { Logger } from '@nestjs/common';
 import Bluebird from 'bluebird';
-import { Connection, In, Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Point } from 'geojson';
-import { isNil, times } from 'lodash';
+import { flatten, groupBy, isNil, times } from 'lodash';
 import moment from 'moment';
 
 import { Site } from '../sites/sites.entity';
@@ -49,13 +49,11 @@ const getSites = (siteIds: number[], siteRepository: Repository<Site>) => {
  * and save all above metrics to time_series table
  * @param siteIds The siteIds for which to perform the update
  * @param days How many days will this script need to backfill (1 = daily update)
- * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
 export const updateSST = async (
   siteIds: number[],
   days: number,
-  connection: Connection,
   repositories: Repositories,
 ) => {
   const { siteRepository, timeSeriesRepository, sourceRepository } =
@@ -72,6 +70,8 @@ export const updateSST = async (
     }),
   );
 
+  logger.log(`Back-filling ${sources.length} sites`);
+
   await Bluebird.map(
     sources,
     async (source) => {
@@ -82,58 +82,80 @@ export const updateSST = async (
         ? (nearestNOAALocation as Point).coordinates
         : (polygon as Point).coordinates;
 
-      logger.log(`Back-filling site with id ${site.id}.`);
+      const endDate = moment().format();
+      const startDate = moment()
+        .subtract(days - 1, 'd')
+        .startOf('day')
+        .format();
 
-      const data = await Bluebird.map(
-        times(days),
-        // A non-async function is used on purpose.
-        // We need for as many http request to be performed simultaneously without one blocking the other
-        // This way we get a much greater speed up due to the concurrency.
-        (i) => {
-          const endDate =
-            i === 0
-              ? moment().format()
-              : moment().subtract(i, 'd').endOf('day').format();
-          const startDate = moment().subtract(i, 'd').startOf('day').format();
+      const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] = await Promise.all([
+        // Fetch satellite surface temperature data
+        sofarHindcast(
+          SofarModels.NOAACoralReefWatch,
+          sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+            .analysedSeaSurfaceTemperature,
+          NOAALatitude,
+          NOAALongitude,
+          startDate,
+          endDate,
+        ),
+        // Fetch degree heating weeks data
+        sofarHindcast(
+          SofarModels.NOAACoralReefWatch,
+          sofarVariableIDs[SofarModels.NOAACoralReefWatch].degreeHeatingWeek,
+          NOAALatitude,
+          NOAALongitude,
+          startDate,
+          endDate,
+        ),
+      ]);
 
-          // use Promise/then to increase concurrency since await halts the event loop
-          return Promise.all([
-            // Fetch satellite surface temperature data
-            sofarHindcast(
-              SofarModels.NOAACoralReefWatch,
-              sofarVariableIDs[SofarModels.NOAACoralReefWatch]
-                .analysedSeaSurfaceTemperature,
-              NOAALatitude,
-              NOAALongitude,
-              startDate,
-              endDate,
-            ),
-            // Fetch degree heating weeks data
-            sofarHindcast(
-              SofarModels.NOAACoralReefWatch,
-              sofarVariableIDs[SofarModels.NOAACoralReefWatch]
-                .degreeHeatingWeek,
-              NOAALatitude,
-              NOAALongitude,
-              startDate,
-              endDate,
-            ),
-          ]).then(([SofarSSTRaw, sofarDegreeHeatingWeekRaw]) => {
-            // Filter out null values
-            const sstFiltered = filterSofarResponse(SofarSSTRaw);
-            const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
-            // Get latest dhw
-            const latestDhw = getLatestData(dhwFiltered);
-            // Get alert level
-            const alertLevel = calculateAlertLevel(
-              site.maxMonthlyMean,
-              getLatestData(sstFiltered)?.value,
-              // Calculate degree heating days
-              latestDhw && latestDhw.value * 7,
-            );
+      // Filter out null values
+      const sstFiltered = filterSofarResponse(SofarSSTRaw);
+      const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
 
-            // Calculate the sstAnomaly
-            const sstAnomaly = sstFiltered
+      const getDateNoTime = (x?: string) => new Date(x || '').toDateString();
+
+      // Get latest dhw
+      // There should be only one value for each date from sofar api
+      const groupedDHWFiltered = groupBy(dhwFiltered, (x) =>
+        getDateNoTime(x.timestamp),
+      );
+      const latestDhw = Object.keys(groupedDHWFiltered).map((x) =>
+        getLatestData(groupedDHWFiltered[x]),
+      );
+
+      // Get alert level
+      const groupedSSTFiltered = groupBy(sstFiltered, (x) =>
+        getDateNoTime(x.timestamp),
+      );
+      const alertLevel = Object.keys(groupedSSTFiltered)
+        .map((x) => {
+          const latest = getLatestData(groupedSSTFiltered[x]);
+          const dhw = latestDhw.find(
+            (y) =>
+              getDateNoTime(y?.timestamp) === getDateNoTime(latest?.timestamp),
+          );
+          const alert = calculateAlertLevel(
+            site.maxMonthlyMean,
+            latest?.value,
+            // Calculate degree heating days
+            dhw && dhw.value * 7,
+          );
+          if (!alert) return undefined;
+          return {
+            value: alert,
+            timestamp: latest?.timestamp,
+          } as ValueWithTimestamp;
+        })
+        .filter((x) => x !== undefined) as ValueWithTimestamp[];
+
+      // Calculate the sstAnomaly
+      const anomaly = flatten(
+        Object.keys(groupedSSTFiltered).map((x) => {
+          const filtered = groupedSSTFiltered[x];
+          return (
+            filtered
               .map((sst) => ({
                 value: getSstAnomaly(site.historicalMonthlyMean, sst),
                 timestamp: sst.timestamp,
@@ -141,30 +163,24 @@ export const updateSST = async (
               // Filter out null values
               .filter((sstAnomalyValue) => {
                 return !isNil(sstAnomalyValue.value);
-              }) as ValueWithTimestamp[];
-
-            // return calculated metrics (sst, dhw, sstAnomaly alert)
-            return {
-              sst: sstFiltered,
-              dhw: dhwFiltered,
-              sstAnomaly,
-              alert:
-                alertLevel !== undefined
-                  ? [
-                      {
-                        value: alertLevel,
-                        timestamp: moment().subtract(i, 'd').hour(12).format(),
-                      },
-                    ]
-                  : [],
-            };
-          });
-        },
-        { concurrency: 100 },
+              }) as ValueWithTimestamp[]
+          );
+        }),
       );
 
+      const data = {
+        sst: sstFiltered,
+        dhw: dhwFiltered,
+        sstAnomaly: anomaly,
+        alert: alertLevel,
+      };
+
+      if (!data.sst.length || data.sst.length === 0) {
+        console.error(`No Hindcast data available for site '${site.id}'`);
+      }
+
       return Bluebird.map(
-        data,
+        [data],
         // Save data on time_series table
         ({ sst, dhw, alert, sstAnomaly }) =>
           Promise.all([
