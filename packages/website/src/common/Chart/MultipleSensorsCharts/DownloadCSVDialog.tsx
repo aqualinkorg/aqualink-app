@@ -37,13 +37,13 @@ const DownloadCSVDialog = ({
   const classes = useStyles();
   const [additionalData, setAdditionalData] = React.useState(false);
   const [allDates, setAllDates] = React.useState(false);
-  const [hourly, setHourly] = React.useState(true);
+  const [hourly, setHourly] = React.useState(false);
 
   const handleClose = (shouldDownload: boolean) => {
     if (shouldDownload) {
       onClose(true, additionalData, allDates, hourly);
     } else {
-      onClose(false, false, false, false);
+      onClose(false, false, false, true);
     }
   };
 
@@ -51,7 +51,7 @@ const DownloadCSVDialog = ({
     if (open) {
       setAdditionalData(false);
       setAllDates(false);
-      setHourly(true);
+      setHourly(false);
     }
   }, [open]);
 
@@ -90,6 +90,7 @@ const DownloadCSVDialog = ({
             <Tooltip
               title="Download all additional data available from all sources for this site"
               placement="top"
+              arrow
             >
               <FormControlLabel
                 control={
@@ -105,6 +106,7 @@ const DownloadCSVDialog = ({
             <Tooltip
               title="Download data for all available dates"
               placement="top"
+              arrow
             >
               <FormControlLabel
                 control={
@@ -117,10 +119,7 @@ const DownloadCSVDialog = ({
                 label="All Dates"
               />
             </Tooltip>
-            <Tooltip
-              title="If unchecked, Data will not be averaged per hour"
-              placement="top"
-            >
+            <Tooltip title="Average data per hour" placement="top" arrow>
               <FormControlLabel
                 control={
                   <Checkbox

@@ -103,7 +103,7 @@ function DownloadCSVButton({
       return;
     }
 
-    if (!additionalData && !allDates) {
+    if (!additionalData && !allDates && hourly) {
       downloadCsv(getCSVData(data), undefined, fileName);
       setOpen(false);
       return;
