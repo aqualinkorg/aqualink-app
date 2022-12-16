@@ -18,6 +18,7 @@ try {
  * available in /api/data/
  *
  * The files used come from https://psl.noaa.gov/cgi-bin/db_search/DBListFiles.pl?did=132&tid=91426&vid=2423
+ * Look for the "NOAA OI SST V2 High Resolution Dataset" and download SST daily data.
  *
  * @param year
  * @param long

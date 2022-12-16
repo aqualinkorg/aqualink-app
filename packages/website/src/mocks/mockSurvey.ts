@@ -4,7 +4,8 @@ export const mockSurvey: SurveyListItem = {
   comments: "No comments",
   diveDate: "2020-09-10T10:27:00.000Z",
   id: 46,
-  temperature: 10,
+  temperature: undefined,
+  satelliteTemperature: 10,
   weatherConditions: "calm",
   observations: ["anthropogenic"],
   user: {
