@@ -21,6 +21,8 @@ import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import EditIcon from "@material-ui/icons/Edit";
 import CancelIcon from "@material-ui/icons/Cancel";
+import { useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
 import observationOptions, {
   findOption,
 } from "../../../../constants/uploadDropdowns";
@@ -29,19 +31,49 @@ import {
   SurveyMedia,
   SurveyMediaUpdateRequestData,
 } from "../../../../store/Survey/types";
+import {
+  surveyErrorSelector,
+  surveyMediaEditLoadingSelector,
+} from "../../../../store/Survey/surveySlice";
 
 const SliderCard = ({
-  loading,
+  loading: propLoading,
   media,
   isSiteAdmin,
   onSurveyMediaUpdate,
   classes,
 }: SliderCardProps) => {
   const { id, url, comments, observations, featured } = media;
+  const { enqueueSnackbar } = useSnackbar();
   const [editing, setEditing] = React.useState(false);
+  const [loading, setLoading] = React.useState(propLoading);
   const [editComments, setEditComments] = React.useState(comments || undefined);
   const [observation, setObservation] =
     React.useState<Observations>(observations);
+
+  const mediaLoading = useSelector(surveyMediaEditLoadingSelector);
+  const surveyError = useSelector(surveyErrorSelector);
+
+  React.useEffect(() => {
+    setLoading(propLoading);
+  }, [propLoading]);
+
+  React.useEffect(() => {
+    if (loading && !mediaLoading) {
+      setLoading(false);
+      if (!surveyError)
+        enqueueSnackbar("Survey media details updated successfully", {
+          variant: "success",
+        });
+    }
+  }, [enqueueSnackbar, loading, mediaLoading, surveyError]);
+
+  React.useEffect(() => {
+    if (surveyError)
+      enqueueSnackbar(surveyError, {
+        variant: "error",
+      });
+  }, [enqueueSnackbar, surveyError]);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -53,27 +85,23 @@ const SliderCard = ({
   }
 
   function onSave() {
-    if (editComments !== comments || observation !== observations)
+    if (editComments !== comments || observation !== observations) {
+      setLoading(true);
       onSurveyMediaUpdate(id, {
         featured,
         comments: editComments !== comments ? editComments : undefined,
         observations: observation !== observations ? observation : observations,
       });
+    }
     onClose();
   }
 
   return (
     <Card elevation={3} className={classes.shadowBox}>
       {loading ? (
-        <Grid
-          className={classes.fullHeight}
-          container
-          alignItems="center"
-          item
-          xs={12}
-        >
+        <div className={classes.loaderWrapper}>
           <CircularProgress size="4rem" thickness={1} />
-        </Grid>
+        </div>
       ) : (
         <Grid className={classes.fullHeight} container>
           <Grid className={classes.imageWrapper} item sm={12} md={6}>
@@ -217,6 +245,12 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("sm")]: {
         height: "32rem",
       },
+    },
+    loaderWrapper: {
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     },
     fullHeight: {
       height: "100%",

@@ -17,6 +17,7 @@ import { getAxiosErrorMessage } from "../../helpers/errors";
 
 const selectedSurveyInitialState: SelectedSurveyState = {
   loading: true,
+  loadingSurveyMediaEdit: false,
   error: null,
 };
 
@@ -69,16 +70,16 @@ export const surveyAddRequest = createAsyncThunk<
   }
 );
 
-interface SurveyEditRequestData {
+interface SurveyMediaEditRequestData {
   siteId: number;
   mediaId: number;
   data: Partial<SurveyMediaUpdateRequestData>;
   token: string;
 }
 
-export const surveyEditRequest = createAsyncThunk<
+export const surveyMediaEditRequest = createAsyncThunk<
   SurveyMedia,
-  SurveyEditRequestData,
+  SurveyMediaEditRequestData,
   CreateAsyncThunkTypes
 >(
   "selectedSurvey/editRequest",
@@ -198,7 +199,7 @@ const selectedSurvey = createSlice({
     });
 
     builder.addCase(
-      surveyEditRequest.fulfilled,
+      surveyMediaEditRequest.fulfilled,
       (state, action: PayloadAction<SurveyMedia>) => {
         const oldMedia = state.details?.surveyMedia;
         const newMedia = oldMedia
@@ -215,24 +216,24 @@ const selectedSurvey = createSlice({
         return {
           ...state,
           details: newDetails,
-          loading: false,
+          loadingSurveyMediaEdit: false,
         };
       }
     );
     builder.addCase(
-      surveyEditRequest.rejected,
+      surveyMediaEditRequest.rejected,
       (state, action: PayloadAction<SelectedSurveyState["error"]>) => {
         return {
           ...state,
           error: action.payload,
-          loading: false,
+          loadingSurveyMediaEdit: false,
         };
       }
     );
-    builder.addCase(surveyEditRequest.pending, (state) => {
+    builder.addCase(surveyMediaEditRequest.pending, (state) => {
       return {
         ...state,
-        loading: true,
+        loadingSurveyMediaEdit: true,
         error: null,
       };
     });
@@ -261,6 +262,11 @@ export const selectedSurveyPointSelector = (
 export const surveyLoadingSelector = (
   state: RootState
 ): SelectedSurveyState["loading"] => state.survey.selectedSurvey.loading;
+
+export const surveyMediaEditLoadingSelector = (
+  state: RootState
+): SelectedSurveyState["loadingSurveyMediaEdit"] =>
+  state.survey.selectedSurvey.loadingSurveyMediaEdit;
 
 export const surveyErrorSelector = (
   state: RootState

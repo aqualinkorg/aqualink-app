@@ -23,7 +23,7 @@ import {
 import {
   surveyLoadingSelector,
   selectedSurveyPointSelector,
-  surveyEditRequest,
+  surveyMediaEditRequest,
 } from "../../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { isAdmin } from "../../../../helpers/user";
@@ -58,7 +58,9 @@ const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
     data: Partial<SurveyMediaUpdateRequestData>
   ) => {
     if (user && user.token) {
-      dispatch(surveyEditRequest({ siteId, mediaId, data, token: user.token }));
+      dispatch(
+        surveyMediaEditRequest({ siteId, mediaId, data, token: user.token })
+      );
     }
   };
 
