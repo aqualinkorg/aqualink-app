@@ -20,6 +20,8 @@ import { calculateAlertLevel } from './bleachingAlert';
 import { getSstAnomaly } from './liveData';
 import { ValueWithTimestamp } from './sofar.types';
 
+const MAX_SOFAR_DATE_DIFF_DAYS = 7;
+
 interface Repositories {
   siteRepository: Repository<Site>;
   sourceRepository: Repository<Sources>;
@@ -82,105 +84,131 @@ export const updateSST = async (
         ? (nearestNOAALocation as Point).coordinates
         : (polygon as Point).coordinates;
 
-      const endDate = moment().format();
-      const startDate = moment()
-        .subtract(days - 1, 'd')
-        .startOf('day')
-        .format();
+      const div = Math.floor(days / MAX_SOFAR_DATE_DIFF_DAYS);
+      const mod = days % MAX_SOFAR_DATE_DIFF_DAYS;
+      const intervals = [
+        ...(Array(div).fill(MAX_SOFAR_DATE_DIFF_DAYS) as number[]),
+        mod,
+      ];
 
-      const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] = await Promise.all([
-        // Fetch satellite surface temperature data
-        sofarHindcast(
-          SofarModels.NOAACoralReefWatch,
-          sofarVariableIDs[SofarModels.NOAACoralReefWatch]
-            .analysedSeaSurfaceTemperature,
-          NOAALatitude,
-          NOAALongitude,
-          startDate,
-          endDate,
-        ),
-        // Fetch degree heating weeks data
-        sofarHindcast(
-          SofarModels.NOAACoralReefWatch,
-          sofarVariableIDs[SofarModels.NOAACoralReefWatch].degreeHeatingWeek,
-          NOAALatitude,
-          NOAALongitude,
-          startDate,
-          endDate,
-        ),
-      ]);
+      const data = await Bluebird.map(
+        intervals,
+        async (interval, index) => {
+          const endDate =
+            index !== 0
+              ? moment()
+                  .subtract(index * MAX_SOFAR_DATE_DIFF_DAYS, 'd')
+                  // subtract 1 minute to be within the api date diff limit
+                  .subtract(1, 'm')
+                  .format()
+              : moment().subtract(1, 'm').format();
+          const startDate = moment()
+            .subtract(index * MAX_SOFAR_DATE_DIFF_DAYS + interval, 'd')
+            .format();
 
-      // Filter out null values
-      const sstFiltered = filterSofarResponse(SofarSSTRaw);
-      const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
+          const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] = await Promise.all([
+            // Fetch satellite surface temperature data
+            sofarHindcast(
+              SofarModels.NOAACoralReefWatch,
+              sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+                .analysedSeaSurfaceTemperature,
+              NOAALatitude,
+              NOAALongitude,
+              startDate,
+              endDate,
+            ),
+            // Fetch degree heating weeks data
+            sofarHindcast(
+              SofarModels.NOAACoralReefWatch,
+              sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+                .degreeHeatingWeek,
+              NOAALatitude,
+              NOAALongitude,
+              startDate,
+              endDate,
+            ),
+          ]);
 
-      const getDateNoTime = (x?: string) => new Date(x || '').toDateString();
+          // Filter out null values
+          const sstFiltered = filterSofarResponse(SofarSSTRaw);
+          const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
 
-      // Get latest dhw
-      // There should be only one value for each date from sofar api
-      const groupedDHWFiltered = groupBy(dhwFiltered, (x) =>
-        getDateNoTime(x.timestamp),
-      );
-      const latestDhw = Object.keys(groupedDHWFiltered).map((x) =>
-        getLatestData(groupedDHWFiltered[x]),
-      );
+          const getDateNoTime = (x?: string) =>
+            new Date(x || '').toDateString();
 
-      // Get alert level
-      const groupedSSTFiltered = groupBy(sstFiltered, (x) =>
-        getDateNoTime(x.timestamp),
-      );
-      const alertLevel = Object.keys(groupedSSTFiltered)
-        .map((x) => {
-          const latest = getLatestData(groupedSSTFiltered[x]);
-          const dhw = latestDhw.find(
-            (y) =>
-              getDateNoTime(y?.timestamp) === getDateNoTime(latest?.timestamp),
+          // Get latest dhw
+          // There should be only one value for each date from sofar api
+          const groupedDHWFiltered = groupBy(dhwFiltered, (x) =>
+            getDateNoTime(x.timestamp),
           );
-          const alert = calculateAlertLevel(
-            site.maxMonthlyMean,
-            latest?.value,
-            // Calculate degree heating days
-            dhw && dhw.value * 7,
+          const latestDhw = Object.keys(groupedDHWFiltered).map((x) =>
+            getLatestData(groupedDHWFiltered[x]),
           );
-          if (!alert) return undefined;
-          return {
-            value: alert,
-            timestamp: latest?.timestamp,
-          } as ValueWithTimestamp;
-        })
-        .filter((x) => x !== undefined) as ValueWithTimestamp[];
 
-      // Calculate the sstAnomaly
-      const anomaly = flatten(
-        Object.keys(groupedSSTFiltered).map((x) => {
-          const filtered = groupedSSTFiltered[x];
-          return (
-            filtered
-              .map((sst) => ({
-                value: getSstAnomaly(site.historicalMonthlyMean, sst),
-                timestamp: sst.timestamp,
-              }))
-              // Filter out null values
-              .filter((sstAnomalyValue) => {
-                return !isNil(sstAnomalyValue.value);
-              }) as ValueWithTimestamp[]
+          // Get alert level
+          const groupedSSTFiltered = groupBy(sstFiltered, (x) =>
+            getDateNoTime(x.timestamp),
           );
-        }),
+          const alertLevel = Object.keys(groupedSSTFiltered)
+            .map((x) => {
+              const latest = getLatestData(groupedSSTFiltered[x]);
+              const dhw = latestDhw.find(
+                (y) =>
+                  getDateNoTime(y?.timestamp) ===
+                  getDateNoTime(latest?.timestamp),
+              );
+              const alert = calculateAlertLevel(
+                site.maxMonthlyMean,
+                latest?.value,
+                // Calculate degree heating days
+                dhw && dhw.value * 7,
+              );
+              if (!alert) return undefined;
+              return {
+                value: alert,
+                timestamp: latest?.timestamp,
+              } as ValueWithTimestamp;
+            })
+            .filter((x) => x !== undefined) as ValueWithTimestamp[];
+
+          // Calculate the sstAnomaly
+          const anomaly = flatten(
+            Object.keys(groupedSSTFiltered).map((x) => {
+              const filtered = groupedSSTFiltered[x];
+              return (
+                filtered
+                  .map((sst) => ({
+                    value: getSstAnomaly(site.historicalMonthlyMean, sst),
+                    timestamp: sst.timestamp,
+                  }))
+                  // Filter out null values
+                  .filter((sstAnomalyValue) => {
+                    return !isNil(sstAnomalyValue.value);
+                  }) as ValueWithTimestamp[]
+              );
+            }),
+          );
+
+          const result = {
+            sst: sstFiltered,
+            dhw: dhwFiltered,
+            sstAnomaly: anomaly,
+            alert: alertLevel,
+          };
+
+          if (!result.sst.length || result.sst.length === 0) {
+            console.error(
+              `No Hindcast data available for site '${site.id}' for dates ${startDate} ${endDate}`,
+            );
+          }
+
+          return result;
+        },
+        { concurrency: 100 },
       );
-
-      const data = {
-        sst: sstFiltered,
-        dhw: dhwFiltered,
-        sstAnomaly: anomaly,
-        alert: alertLevel,
-      };
-
-      if (!data.sst.length || data.sst.length === 0) {
-        console.error(`No Hindcast data available for site '${site.id}'`);
-      }
 
       return Bluebird.map(
-        [data],
+        data,
         // Save data on time_series table
         ({ sst, dhw, alert, sstAnomaly }) =>
           Promise.all([
