@@ -50,7 +50,7 @@ if (app) {
 ReactDOM.render(
   <>
     <Provider store={store}>
-      <SnackbarProvider maxSnack={3} preventDuplicate>
+      <SnackbarProvider maxSnack={3}>
         <App />
       </SnackbarProvider>
     </Provider>

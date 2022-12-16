@@ -201,23 +201,20 @@ const selectedSurvey = createSlice({
     builder.addCase(
       surveyMediaEditRequest.fulfilled,
       (state, action: PayloadAction<SurveyMedia>) => {
-        const oldMedia = state.details?.surveyMedia;
-        const newMedia = oldMedia
-          ? oldMedia.map((x) => {
-              if (x.id === action.payload.id) {
-                return action.payload;
-              }
-              return x;
-            })
-          : oldMedia;
-        const newDetails = state.details
-          ? { ...state.details, surveyMedia: newMedia }
-          : state.details;
-        return {
-          ...state,
-          details: newDetails,
-          loadingSurveyMediaEdit: false,
-        };
+        const surveyMedia = state.details?.surveyMedia?.find(
+          (x) => x.id === action.payload.id
+        );
+        // we need to mutate surveyMedia, else the SliderCard component re-renders
+        if (surveyMedia) {
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.comments = action.payload.comments;
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.featured = action.payload.featured;
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.observations = action.payload.observations;
+        }
+        // eslint-disable-next-line fp/no-mutation, no-param-reassign
+        state.loadingSurveyMediaEdit = false;
       }
     );
     builder.addCase(

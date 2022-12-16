@@ -21,7 +21,6 @@ import {
   getSurveyPointsByName,
 } from "../../../../helpers/surveyMedia";
 import {
-  surveyLoadingSelector,
   selectedSurveyPointSelector,
   surveyMediaEditRequest,
 } from "../../../../store/Survey/surveySlice";
@@ -49,7 +48,6 @@ const carouselSettings = {
 
 const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
   const user = useSelector(userInfoSelector);
-  const loading = useSelector(surveyLoadingSelector);
   const selectedPoi = useSelector(selectedSurveyPointSelector);
   const dispatch = useDispatch();
 
@@ -96,7 +94,6 @@ const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
                   <SliderCard
                     key={media.url}
                     media={media}
-                    loading={loading}
                     isSiteAdmin={isAdmin(user, siteId)}
                     onSurveyMediaUpdate={onSurveyMediaUpdate}
                   />

@@ -33,47 +33,53 @@ import {
 } from "../../../../store/Survey/types";
 import {
   surveyErrorSelector,
+  surveyLoadingSelector,
   surveyMediaEditLoadingSelector,
 } from "../../../../store/Survey/surveySlice";
 
 const SliderCard = ({
-  loading: propLoading,
   media,
   isSiteAdmin,
   onSurveyMediaUpdate,
   classes,
 }: SliderCardProps) => {
-  const { id, url, comments, observations, featured } = media;
+  const {
+    id,
+    url,
+    comments,
+    observations: existingObservations,
+    featured,
+  } = media;
   const { enqueueSnackbar } = useSnackbar();
+  const prevMediaLoading = React.useRef<boolean>();
   const [editing, setEditing] = React.useState(false);
-  const [loading, setLoading] = React.useState(propLoading);
   const [editComments, setEditComments] = React.useState(comments || undefined);
   const [observation, setObservation] =
-    React.useState<Observations>(observations);
+    React.useState<Observations>(existingObservations);
 
   const mediaLoading = useSelector(surveyMediaEditLoadingSelector);
+  const surveyLoading = useSelector(surveyLoadingSelector);
   const surveyError = useSelector(surveyErrorSelector);
 
-  React.useEffect(() => {
-    setLoading(propLoading);
-  }, [propLoading]);
+  const loading = mediaLoading || surveyLoading;
 
   React.useEffect(() => {
-    if (loading && !mediaLoading) {
-      setLoading(false);
-      if (!surveyError)
+    if (!mediaLoading) {
+      if (!surveyError && prevMediaLoading.current) {
         enqueueSnackbar("Survey media details updated successfully", {
           variant: "success",
         });
+      }
+      if (surveyError) {
+        enqueueSnackbar(surveyError, {
+          variant: "error",
+        });
+      }
     }
-  }, [enqueueSnackbar, loading, mediaLoading, surveyError]);
-
-  React.useEffect(() => {
-    if (surveyError)
-      enqueueSnackbar(surveyError, {
-        variant: "error",
-      });
-  }, [enqueueSnackbar, surveyError]);
+    if (prevMediaLoading.current !== mediaLoading) {
+      prevMediaLoading.current = mediaLoading;
+    }
+  }, [enqueueSnackbar, mediaLoading, surveyError]);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -81,19 +87,21 @@ const SliderCard = ({
   function onClose() {
     setEditing(false);
     setEditComments(comments || undefined);
-    setObservation(observations);
+    setObservation(existingObservations);
   }
 
   function onSave() {
-    if (editComments !== comments || observation !== observations) {
-      setLoading(true);
+    if (editComments !== comments || observation !== existingObservations) {
       onSurveyMediaUpdate(id, {
         featured,
         comments: editComments !== comments ? editComments : undefined,
-        observations: observation !== observations ? observation : observations,
+        observations:
+          observation !== existingObservations
+            ? observation
+            : existingObservations,
       });
     }
-    onClose();
+    setEditing(false);
   }
 
   return (
@@ -145,7 +153,7 @@ const SliderCard = ({
                   </TextField>
                 ) : (
                   <Typography variant="subtitle1">
-                    {findOption(observations)}
+                    {findOption(existingObservations)}
                   </Typography>
                 )}
               </Grid>
@@ -293,7 +301,6 @@ const styles = (theme: Theme) =>
 
 interface SliderCardIncomingProps {
   media: SurveyMedia;
-  loading: boolean;
   isSiteAdmin: boolean;
   onSurveyMediaUpdate: (
     mediaId: number,
