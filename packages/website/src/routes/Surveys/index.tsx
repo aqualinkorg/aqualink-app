@@ -20,7 +20,7 @@ import {
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import NewSurvey from "./New";
-import ViewSurvey from "./View";
+import SurveyViewPage from "./View";
 
 const Surveys = ({ match, isView, classes }: SurveysProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
@@ -52,7 +52,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
         {/* eslint-disable-next-line no-nested-ternary */}
         {siteDetails && !error ? (
           isView ? (
-            <ViewSurvey site={siteDetails} surveyId={surveyId} />
+            <SurveyViewPage site={siteDetails} surveyId={surveyId} />
           ) : (
             <NewSurvey site={siteDetails} />
           )

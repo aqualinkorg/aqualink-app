@@ -217,30 +217,24 @@ export class SurveysService {
       'survey_point_id',
     );
 
-    return surveyHistoryQuery.map((survey) => {
-      const surveyDailyData = survey.latestDailyData;
-      return {
-        id: survey.id,
-        diveDate: survey.diveDate,
-        comments: survey.comments,
-        weatherConditions: survey.weatherConditions,
-        user: survey.user,
-        site: survey.site,
-        siteId: survey.siteId,
-        // If no logged temperature exists grab the latest daily temperature of the survey's date
-        temperature:
-          survey.temperature ||
-          (surveyDailyData &&
-            (surveyDailyData.avgBottomTemperature ||
-              surveyDailyData.satelliteTemperature)),
-        featuredSurveyMedia: survey.featuredSurveyMedia,
-        observations: observationsGroupedBySurveyId[survey.id] || [],
-        surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
-        surveyPointImage: surveyImageGroupedBySurveyPointId[survey.id] || [],
-        createdAt: survey.createdAt,
-        updatedAt: survey.updatedAt,
-      };
-    });
+    return surveyHistoryQuery.map((survey) => ({
+      id: survey.id,
+      diveDate: survey.diveDate,
+      comments: survey.comments,
+      weatherConditions: survey.weatherConditions,
+      user: survey.user,
+      site: survey.site,
+      siteId: survey.siteId,
+      temperature: survey.temperature,
+      satelliteTemperature:
+        survey.latestDailyData?.satelliteTemperature || undefined,
+      featuredSurveyMedia: survey.featuredSurveyMedia,
+      observations: observationsGroupedBySurveyId[survey.id] || [],
+      surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
+      surveyPointImage: surveyImageGroupedBySurveyPointId[survey.id] || [],
+      createdAt: survey.createdAt,
+      updatedAt: survey.updatedAt,
+    }));
   }
 
   // Find one survey provided its id
@@ -250,6 +244,12 @@ export class SurveysService {
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
       .leftJoinAndSelect('surveyMedia.surveyPoint', 'surveyPoints')
+      .leftJoinAndMapOne(
+        'survey.latestDailyData',
+        'daily_data',
+        'data',
+        'data.site_id = survey.site_id AND DATE(data.date) = DATE(survey.diveDate)',
+      )
       .where('survey.id = :surveyId', { surveyId })
       .andWhere('surveyMedia.hidden = False')
       .getOne();
@@ -258,7 +258,12 @@ export class SurveysService {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
 
-    return surveyDetails;
+    return {
+      ...surveyDetails,
+      satelliteTemperature:
+        surveyDetails.latestDailyData?.satelliteTemperature || undefined,
+      latestDailyData: undefined,
+    };
   }
 
   async findMedia(surveyId: number): Promise<SurveyMedia[]> {

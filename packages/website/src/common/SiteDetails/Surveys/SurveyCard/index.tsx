@@ -155,7 +155,7 @@ const SurveyCard = ({
                       </Grid>
                     </Grid>
                   )}
-                  {survey.temperature && (
+                  {survey.satelliteTemperature && (
                     <Grid container alignItems="center" item xs={12}>
                       <Typography className={classes.cardFields} variant="h6">
                         Temp:
@@ -164,7 +164,7 @@ const SurveyCard = ({
                         className={`${classes.cardValues} ${classes.valuesWithMargin}`}
                         variant="h6"
                       >
-                        {`${formatNumber(survey.temperature, 1)} °C`}
+                        {`${formatNumber(survey.satelliteTemperature, 1)} °C`}
                       </Typography>
                     </Grid>
                   )}
