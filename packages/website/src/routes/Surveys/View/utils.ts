@@ -24,7 +24,6 @@ export const getCardTemperatureValues = (
     : undefined;
 
   return {
-    satelliteTemperature: surfaceData?.satelliteTemperature,
     spotterBottom:
       getSensorValue(bottomTemperature?.spotter?.data, date) ??
       surfaceData?.avgBottomTemperature,

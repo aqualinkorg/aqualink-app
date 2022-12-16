@@ -17,7 +17,7 @@ import { Metric } from '../src/time-series/metrics.entity';
 const dbConfig = require('../ormconfig');
 
 // Sites and years to backfill SST for
-const yearsArray = [2017, 2018, 2019, 2020];
+const yearsArray = [2017, 2018, 2019, 2020, 2021, 2022];
 const sitesToProcess: number[] = [];
 
 async function main() {

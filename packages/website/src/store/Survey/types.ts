@@ -49,33 +49,29 @@ export interface SurveyPointUpdateParams {
   latitude?: number;
 }
 
-export interface SurveyState {
+export interface SurveyBase {
   id?: number;
   diveLocation?: DiveLocation | null;
   diveDate?: string | null;
   weatherConditions?: WeatherConditions;
   comments?: string;
   temperature?: number;
+  satelliteTemperature?: number;
   user?: publicUser;
-  surveyMedia?: SurveyMedia[];
   featuredSurveyMedia?: SurveyMedia;
 }
 
-export interface SurveyListItem {
-  id?: number;
-  diveLocation?: DiveLocation | null;
-  diveDate?: string | null;
-  weatherConditions?: WeatherConditions;
+export type SurveyState = SurveyBase & {
+  surveyMedia?: SurveyMedia[];
+};
+
+export type SurveyListItem = SurveyBase & {
   observations: Observations[];
-  comments?: string;
-  temperature?: number;
-  user?: publicUser;
   surveyPoints?: number[];
-  featuredSurveyMedia?: SurveyMedia;
   surveyPointImage?: {
     [surveyPointId: number]: { url: string; thumbnailUrl?: string }[];
   };
-}
+};
 
 export interface SurveyData {
   site: number;
