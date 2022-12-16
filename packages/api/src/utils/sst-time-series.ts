@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common';
 import Bluebird from 'bluebird';
 import { In, Repository } from 'typeorm';
 import { Point } from 'geojson';
-import { flatten, groupBy, isNil, times } from 'lodash';
+import { flatten, groupBy, isNil, omit, times } from 'lodash';
 import moment from 'moment';
 
 import { Site } from '../sites/sites.entity';
@@ -136,18 +136,24 @@ export const updateSST = async (
           const getDateNoTime = (x?: string) =>
             new Date(x || '').toDateString();
 
+          const invalidDateKey = getDateNoTime(undefined);
+
           // Get latest dhw
           // There should be only one value for each date from sofar api
-          const groupedDHWFiltered = groupBy(dhwFiltered, (x) =>
-            getDateNoTime(x.timestamp),
+          const groupedDHWFiltered = omit(
+            groupBy(dhwFiltered, (x) => getDateNoTime(x.timestamp)),
+            // remove invalid date entries if any
+            invalidDateKey,
           );
           const latestDhw = Object.keys(groupedDHWFiltered).map((x) =>
             getLatestData(groupedDHWFiltered[x]),
           );
 
           // Get alert level
-          const groupedSSTFiltered = groupBy(sstFiltered, (x) =>
-            getDateNoTime(x.timestamp),
+          const groupedSSTFiltered = omit(
+            groupBy(sstFiltered, (x) => getDateNoTime(x.timestamp)),
+            // remove invalid date entries if any
+            invalidDateKey,
           );
           const alertLevel = Object.keys(groupedSSTFiltered)
             .map((x) => {
@@ -164,16 +170,17 @@ export const updateSST = async (
                 dhw && dhw.value * 7,
               );
               if (!alert) return undefined;
+              if (!latest) return undefined;
               return {
                 value: alert,
                 timestamp: latest?.timestamp,
-              } as ValueWithTimestamp;
+              };
             })
             .filter((x) => x !== undefined) as ValueWithTimestamp[];
 
           // Calculate the sstAnomaly
-          const anomaly = flatten(
-            Object.keys(groupedSSTFiltered).map((x) => {
+          const anomalyPerDateArray = Object.keys(groupedSSTFiltered).map(
+            (x) => {
               const filtered = groupedSSTFiltered[x];
               return (
                 filtered
@@ -186,8 +193,10 @@ export const updateSST = async (
                     return !isNil(sstAnomalyValue.value);
                   }) as ValueWithTimestamp[]
               );
-            }),
+            },
           );
+
+          const anomaly = flatten(anomalyPerDateArray);
 
           const result = {
             sst: sstFiltered,
@@ -196,7 +205,7 @@ export const updateSST = async (
             alert: alertLevel,
           };
 
-          if (!result.sst.length || result.sst.length === 0) {
+          if (!result.sst.length) {
             console.error(
               `No Hindcast data available for site '${site.id}' for dates ${startDate} ${endDate}`,
             );

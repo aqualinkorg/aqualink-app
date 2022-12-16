@@ -7,8 +7,11 @@ import { TimeSeries } from '../time-series/time-series.entity';
 import { addSpotterData } from '../utils/spotter-time-series';
 import { addWindWaveData } from '../utils/hindcast-wind-wave';
 
+// since this is hourly run we want to only take the latest data.
+const DAYS_OF_SPOTTER_DATA = 1;
+
 export function runSpotterTimeSeriesUpdate(connection: Connection) {
-  return addSpotterData([], 1, {
+  return addSpotterData([], DAYS_OF_SPOTTER_DATA, {
     siteRepository: connection.getRepository(Site),
     sourceRepository: connection.getRepository(Sources),
     timeSeriesRepository: connection.getRepository(TimeSeries),
