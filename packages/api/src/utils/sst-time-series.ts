@@ -173,7 +173,7 @@ export const updateSST = async (
               if (!latest) return undefined;
               return {
                 value: alert,
-                timestamp: latest?.timestamp,
+                timestamp: latest.timestamp,
               };
             })
             .filter((x) => x !== undefined) as ValueWithTimestamp[];
