@@ -27,6 +27,14 @@ export interface DownloadCSVDialogProps {
   ) => void;
 }
 
+const additionalDataLabels = [
+  "wave_mean_period_spotter",
+  "wind_direction_spotter",
+  "wave_mean_direction_spotter",
+  "dhw_noaa",
+  "temp_alert_noaa",
+];
+
 const DownloadCSVDialog = ({
   onClose,
   open,
@@ -133,13 +141,24 @@ const DownloadCSVDialog = ({
             </Tooltip>
           </FormGroup>
 
-          <div className={classes.listWrapper}>
+          <div>
             <ul>
               {data.map((x) => (
                 <li key={x.name}>{x.name}</li>
               ))}
             </ul>
           </div>
+
+          {additionalData && (
+            <div>
+              Additional data may include:
+              <ul>
+                {additionalDataLabels.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -158,10 +177,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   dialogTitle: {
     backgroundColor: theme.palette.primary.main,
     overflowWrap: "break-word",
-  },
-  listWrapper: {
-    display: "flex",
-    flexDirection: "column",
   },
   bold: {
     fontWeight: 700,
