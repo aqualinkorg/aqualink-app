@@ -209,7 +209,7 @@ const selectedSurvey = createSlice({
         // <MediaDetails /> component renders <SliderCard /> by mapping surveyMedia redux state.
         // This was causing, in some cases, the first time of calling dispatch(surveyMediaEditRequest({...}))
         // to re initiate the <SliderCard /> component's state causing the SliderCard's snackbar failing to appear.
-        // The creation of a the new surveyMedia array, was probably confusing React.
+        // The creation of a new surveyMedia array, was probably confusing React.
         if (surveyMedia) {
           // eslint-disable-next-line fp/no-mutation
           surveyMedia.comments = action.payload.comments;
