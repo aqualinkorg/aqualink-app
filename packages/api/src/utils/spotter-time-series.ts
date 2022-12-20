@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { get, times } from 'lodash';
 import moment from 'moment';
-import { Connection, In, IsNull, Not, Repository } from 'typeorm';
+import { In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
@@ -95,13 +95,11 @@ const saveDataBatch = (
  * Fetch spotter and wave data from sofar and save them on time_series table
  * @param siteIds The siteIds for which to perform the update
  * @param days How many days will this script need to backfill (1 = daily update)
- * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
 export const addSpotterData = async (
   siteIds: number[],
   days: number,
-  connection: Connection,
   repositories: Repositories,
 ) => {
   logger.log('Fetching sites');
