@@ -143,22 +143,26 @@ const DownloadCSVDialog = ({
 
           <div>
             <ul>
-              {data.map((x) => (
-                <li key={x.name}>{x.name}</li>
-              ))}
+              <li>
+                site-specific data
+                <ul>
+                  {data.map((x) => (
+                    <li key={x.name}>{x.name}</li>
+                  ))}
+                </ul>
+              </li>
+              {additionalData && (
+                <li>
+                  additional site-specific data:
+                  <ul>
+                    {additionalDataLabels.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </li>
+              )}
             </ul>
           </div>
-
-          {additionalData && (
-            <div>
-              Additional data may include:
-              <ul>
-                {additionalDataLabels.map((x) => (
-                  <li key={x}>{x}</li>
-                ))}
-              </ul>
-            </div>
-          )}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
