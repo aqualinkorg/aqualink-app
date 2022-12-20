@@ -33,6 +33,7 @@ const additionalDataLabels = [
   "wave_mean_direction_spotter",
   "dhw_noaa",
   "temp_alert_noaa",
+  "additional site-specific data when available",
 ];
 
 const DownloadCSVDialog = ({
@@ -140,29 +141,23 @@ const DownloadCSVDialog = ({
               />
             </Tooltip>
           </FormGroup>
-
           <div>
             <ul>
-              <li>
-                site-specific data
-                <ul>
-                  {data.map((x) => (
-                    <li key={x.name}>{x.name}</li>
-                  ))}
-                </ul>
-              </li>
-              {additionalData && (
-                <li>
-                  additional site-specific data:
-                  <ul>
-                    {additionalDataLabels.map((x) => (
-                      <li key={x}>{x}</li>
-                    ))}
-                  </ul>
-                </li>
-              )}
+              {data.map((x) => (
+                <li key={x.name}>{x.name}</li>
+              ))}
             </ul>
           </div>
+          {additionalData && (
+            <div>
+              Additional data may include:
+              <ul>
+                {additionalDataLabels.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
