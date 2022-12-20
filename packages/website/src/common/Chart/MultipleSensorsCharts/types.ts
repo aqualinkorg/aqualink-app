@@ -30,3 +30,8 @@ export interface AvailableRange {
   name: string;
   data?: DataRange[];
 }
+
+export interface CSVColumnData {
+  name: string;
+  values: ValueWithTimestamp[];
+}
