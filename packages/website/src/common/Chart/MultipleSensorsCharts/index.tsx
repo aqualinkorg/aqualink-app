@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import isISODate from "validator/lib/isISO8601";
 import { Box, Container, makeStyles, Theme } from "@material-ui/core";
 import moment from "moment";
-import { camelCase, isNaN, isNumber, sortBy } from "lodash";
+import { camelCase, isNaN, isNumber, snakeCase, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import {
@@ -395,15 +395,15 @@ const MultipleSensorsCharts = ({
 
   const dataForCsv = [
     ...tempAnalysisDatasets.map((dataset) => ({
-      name: `${dataset.metric || "unknownMetric"}_${
-        dataset.source || "unknownSource"
+      name: `${snakeCase(dataset.metric) || "unknown_Metric"}_${
+        dataset.source || "unknown_source"
       }`,
       values: dataset.data,
     })),
     ...Object.entries(spotterConfig).map(([key]) => {
       const dataset = spotterMetricDataset(key as Metrics);
       return {
-        name: `${key}_spotter`,
+        name: `${snakeCase(key)}_spotter`,
         values: dataset.data,
       };
     }),
@@ -419,13 +419,13 @@ const MultipleSensorsCharts = ({
           site.timezone
         );
         return {
-          name: `${camelCase(item.title.split(" ")[0])}`,
+          name: `${snakeCase(item.title.split(" ")[0])}`,
           values: dataset.data,
         };
       }
     ),
     ...sondeDatasets().map(({ title, dataset }) => ({
-      name: `${title} ${dataset.label}`,
+      name: snakeCase(`${title}_${dataset.label}`),
       values: dataset.data,
     })),
   ].filter((x) => x.values.length > 0);
