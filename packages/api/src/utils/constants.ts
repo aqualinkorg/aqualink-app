@@ -15,14 +15,14 @@ export const SOFAR_SENSOR_DATA_URL =
   'https://api.sofarocean.com/api/sensor-data';
 
 export enum SofarModels {
-  SofarOperationalWaveModel = 'SofarOperationalWaveModel',
   NOAACoralReefWatch = 'NOAACoralReefWatch',
-  GFS = 'GFS',
+  Wave = 'Wave',
+  Atmosphere = 'Atmosphere',
 }
 
 // Sofar variables
 export const sofarVariableIDs = {
-  [SofarModels.SofarOperationalWaveModel]: {
+  [SofarModels.Wave]: {
     significantWaveHeight: 'significantWaveHeight',
     meanDirection: 'meanDirection',
     meanDirectionalSpread: 'meanDirectionalSpread',
@@ -46,11 +46,9 @@ export const sofarVariableIDs = {
     degreeHeatingWeek: 'degreeHeatingWeek',
     analysedSeaSurfaceTemperature: 'analysedSeaSurfaceTemperature',
   },
-  [SofarModels.GFS]: {
+  [SofarModels.Atmosphere]: {
     windVelocity10MeterEastward: 'windVelocity10MeterEastward',
     windVelocity10MeterNorthward: 'windVelocity10MeterNorthward',
-    significantWaveHeight: 'significantWaveHeight',
-    significantWaveHeightWindWaves: 'significantWaveHeightWindWaves',
   },
 };
 

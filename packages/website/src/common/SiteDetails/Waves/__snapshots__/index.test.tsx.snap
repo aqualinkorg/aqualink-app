@@ -256,7 +256,7 @@ exports[`renders as expected 1`] = `
                   <mock-typography
                     classname="makeStyles-chipText-27"
                   >
-                    NOAA GFS
+                    SOFAR MODEL
                   </mock-typography>
                 </a>
               </mock-button>

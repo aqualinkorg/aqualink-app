@@ -21,18 +21,14 @@ const dataLabels: [keyof SpotterData, WindWaveMetric, SourceType][] = [
   [
     'significantWaveHeight',
     WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT,
-    SourceType.SOFAR_WAVE_MODEL,
+    SourceType.SOFAR_MODEL,
   ],
   [
     'waveMeanDirection',
     WindWaveMetric.WAVE_MEAN_DIRECTION,
-    SourceType.SOFAR_WAVE_MODEL,
+    SourceType.SOFAR_MODEL,
   ],
-  [
-    'waveMeanPeriod',
-    WindWaveMetric.WAVE_MEAN_PERIOD,
-    SourceType.SOFAR_WAVE_MODEL,
-  ],
+  ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD, SourceType.SOFAR_MODEL],
   ['windDirection', WindWaveMetric.WIND_DIRECTION, SourceType.GFS],
   ['windSpeed', WindWaveMetric.WIND_SPEED, SourceType.GFS],
 ];
@@ -78,25 +74,18 @@ export const addWindWaveData = async (
 
       const hindcastOptions = [
         [
-          SofarModels.SofarOperationalWaveModel,
-          sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-            .significantWaveHeight,
+          SofarModels.Wave,
+          sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
+        ],
+        [SofarModels.Wave, sofarVariableIDs[SofarModels.Wave].meanDirection],
+        [SofarModels.Wave, sofarVariableIDs[SofarModels.Wave].meanPeriod],
+        [
+          SofarModels.Atmosphere,
+          sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterEastward,
         ],
         [
-          SofarModels.SofarOperationalWaveModel,
-          sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
-        ],
-        [
-          SofarModels.SofarOperationalWaveModel,
-          sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
-        ],
-        [
-          SofarModels.GFS,
-          sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
-        ],
-        [
-          SofarModels.GFS,
-          sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
+          SofarModels.Atmosphere,
+          sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterNorthward,
         ],
       ];
 
