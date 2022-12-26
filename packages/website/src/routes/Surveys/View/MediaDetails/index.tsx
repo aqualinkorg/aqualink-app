@@ -11,19 +11,20 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { SurveyMedia } from "../../../../store/Survey/types";
+import {
+  SurveyMedia,
+  SurveyMediaUpdateRequestData,
+} from "../../../../store/Survey/types";
 import {
   getNumberOfImages,
   getNumberOfVideos,
   getSurveyPointsByName,
 } from "../../../../helpers/surveyMedia";
 import {
-  surveyLoadingSelector,
   selectedSurveyPointSelector,
-  setFeaturedImage,
+  surveyMediaEditRequest,
 } from "../../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../../store/User/userSlice";
-import surveyServices from "../../../../services/surveyServices";
 import { isAdmin } from "../../../../helpers/user";
 import SliderCard from "./SliderCard";
 import MediaCount from "./MediaCount";
@@ -47,18 +48,17 @@ const carouselSettings = {
 
 const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
   const user = useSelector(userInfoSelector);
-  const loading = useSelector(surveyLoadingSelector);
   const selectedPoi = useSelector(selectedSurveyPointSelector);
   const dispatch = useDispatch();
 
-  const onSurveyMediaUpdate = (mediaId: number) => {
+  const onSurveyMediaUpdate = (
+    mediaId: number,
+    data: Partial<SurveyMediaUpdateRequestData>
+  ) => {
     if (user && user.token) {
-      surveyServices
-        .editSurveyMedia(siteId, mediaId, { featured: true }, user.token)
-        .then(() => {
-          dispatch(setFeaturedImage(mediaId));
-        })
-        .catch(console.error);
+      dispatch(
+        surveyMediaEditRequest({ siteId, mediaId, data, token: user.token })
+      );
     }
   };
 
@@ -94,7 +94,6 @@ const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
                   <SliderCard
                     key={media.url}
                     media={media}
-                    loading={loading}
                     isSiteAdmin={isAdmin(user, siteId)}
                     onSurveyMediaUpdate={onSurveyMediaUpdate}
                   />

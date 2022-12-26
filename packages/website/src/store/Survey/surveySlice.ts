@@ -4,13 +4,20 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
-import { SelectedSurveyState, SurveyState, SurveyData } from "./types";
+import {
+  SelectedSurveyState,
+  SurveyState,
+  SurveyData,
+  SurveyMediaUpdateRequestData,
+  SurveyMedia,
+} from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import surveyServices from "../../services/surveyServices";
 import { getAxiosErrorMessage } from "../../helpers/errors";
 
 const selectedSurveyInitialState: SelectedSurveyState = {
   loading: true,
+  loadingSurveyMediaEdit: false,
   error: null,
 };
 
@@ -57,6 +64,34 @@ export const surveyAddRequest = createAsyncThunk<
       const { data } = await surveyServices.addSurvey(siteId, surveyData);
       changeTab(1);
       return data;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
+  }
+);
+
+interface SurveyMediaEditRequestData {
+  siteId: number;
+  mediaId: number;
+  data: Partial<SurveyMediaUpdateRequestData>;
+  token: string;
+}
+
+export const surveyMediaEditRequest = createAsyncThunk<
+  SurveyMedia,
+  SurveyMediaEditRequestData,
+  CreateAsyncThunkTypes
+>(
+  "selectedSurvey/editRequest",
+  async ({ siteId, mediaId, data, token }, { rejectWithValue }) => {
+    try {
+      const response = await surveyServices.editSurveyMedia(
+        siteId,
+        mediaId,
+        data,
+        token
+      );
+      return response.data;
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
@@ -162,6 +197,48 @@ const selectedSurvey = createSlice({
         error: null,
       };
     });
+
+    builder.addCase(
+      surveyMediaEditRequest.fulfilled,
+      (state, action: PayloadAction<SurveyMedia>) => {
+        const surveyMedia = state.details?.surveyMedia?.find(
+          (x) => x.id === action.payload.id
+        );
+        // Here we mutate surveyMedia state instead of returning a new one, due to
+        // the following strange behavior from redux + react:
+        // <MediaDetails /> component renders <SliderCard /> by mapping surveyMedia redux state.
+        // This was causing, in some cases, the first time of calling dispatch(surveyMediaEditRequest({...}))
+        // to re initiate the <SliderCard /> component's state causing the SliderCard's snackbar failing to appear.
+        // The creation of a new surveyMedia array, was probably confusing React.
+        if (surveyMedia) {
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.comments = action.payload.comments;
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.featured = action.payload.featured;
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.observations = action.payload.observations;
+        }
+        // eslint-disable-next-line fp/no-mutation, no-param-reassign
+        state.loadingSurveyMediaEdit = false;
+      }
+    );
+    builder.addCase(
+      surveyMediaEditRequest.rejected,
+      (state, action: PayloadAction<SelectedSurveyState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+          loadingSurveyMediaEdit: false,
+        };
+      }
+    );
+    builder.addCase(surveyMediaEditRequest.pending, (state) => {
+      return {
+        ...state,
+        loadingSurveyMediaEdit: true,
+        error: null,
+      };
+    });
   },
 });
 
@@ -187,6 +264,11 @@ export const selectedSurveyPointSelector = (
 export const surveyLoadingSelector = (
   state: RootState
 ): SelectedSurveyState["loading"] => state.survey.selectedSurvey.loading;
+
+export const surveyMediaEditLoadingSelector = (
+  state: RootState
+): SelectedSurveyState["loadingSurveyMediaEdit"] =>
+  state.survey.selectedSurvey.loadingSurveyMediaEdit;
 
 export const surveyErrorSelector = (
   state: RootState

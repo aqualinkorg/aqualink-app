@@ -5,6 +5,7 @@ import type {
   SurveyListItem,
   SurveyMediaUpdateRequestData,
   SurveyPointUpdateParams,
+  SurveyMedia,
 } from "../store/Survey/types";
 import requests from "../helpers/requests";
 import { SurveyPoints } from "../store/Sites/types";
@@ -81,7 +82,7 @@ const editSurveyMedia = (
   data: SurveyMediaUpdateRequestData,
   token: string
 ) => {
-  return requests.send({
+  return requests.send<SurveyMedia>({
     url: `sites/${siteId}/surveys/media/${mediaId}`,
     method: "PUT",
     data,

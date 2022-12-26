@@ -104,5 +104,6 @@ export interface SelectedSurveyState {
   selectedPoi?: string;
   details?: SurveyState | null;
   loading: boolean;
+  loadingSurveyMediaEdit: boolean;
   error?: string | null;
 }
