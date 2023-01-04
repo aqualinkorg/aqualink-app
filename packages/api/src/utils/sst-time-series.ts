@@ -87,9 +87,10 @@ export const updateSST = async (
       const div = Math.floor(days / MAX_SOFAR_DATE_DIFF_DAYS);
       const mod = days % MAX_SOFAR_DATE_DIFF_DAYS;
       const intervals = [
-        ...(Array(div).fill(MAX_SOFAR_DATE_DIFF_DAYS) as number[]),
+        ...Array<number>(div).fill(MAX_SOFAR_DATE_DIFF_DAYS),
         mod,
-      ];
+        // remove possible zero at the end due to mod (%) operation
+      ].filter((x) => x !== 0);
 
       const data = await Bluebird.map(
         intervals,
@@ -176,7 +177,7 @@ export const updateSST = async (
                 timestamp: latest.timestamp,
               };
             })
-            .filter((x) => x !== undefined) as ValueWithTimestamp[];
+            .filter((x): x is ValueWithTimestamp => x !== undefined);
 
           // Calculate the sstAnomaly
           const anomalyPerDateArray = Object.keys(groupedSSTFiltered).map(
@@ -189,9 +190,13 @@ export const updateSST = async (
                     timestamp: sst.timestamp,
                   }))
                   // Filter out null values
-                  .filter((sstAnomalyValue) => {
-                    return !isNil(sstAnomalyValue.value);
-                  }) as ValueWithTimestamp[]
+                  .filter(
+                    (
+                      sstAnomalyValue,
+                    ): sstAnomalyValue is ValueWithTimestamp => {
+                      return !isNil(sstAnomalyValue.value);
+                    },
+                  )
               );
             },
           );

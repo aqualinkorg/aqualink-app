@@ -24,9 +24,9 @@ const MediaPointName = ({
       <Grid item>
         <Typography variant="h6">Survey Point: </Typography>
       </Grid>
-      {isNumber(pointId) ? (
-        <Tooltip title="View survey point" arrow placement="top">
-          <Grid className={classes.surveyPointName} item>
+      <Grid className={classes.surveyPointName} item>
+        {isNumber(pointId) ? (
+          <Tooltip title="View survey point" arrow placement="top">
             <Link
               className={classes.link}
               to={`/sites/${siteId}/points/${pointId}`}
@@ -40,18 +40,18 @@ const MediaPointName = ({
                 {pointName}
               </Typography>
             </Link>
-          </Grid>
-        </Tooltip>
-      ) : (
-        <Typography
-          className={classNames(classes.titleName, {
-            [classes.selectedPoi]: pointName === selectedPoint,
-          })}
-          variant="h6"
-        >
-          {pointName}
-        </Typography>
-      )}
+          </Tooltip>
+        ) : (
+          <Typography
+            className={classNames(classes.titleName, {
+              [classes.selectedPoi]: pointName === selectedPoint,
+            })}
+            variant="h6"
+          >
+            {pointName}
+          </Typography>
+        )}
+      </Grid>
     </Grid>
   );
 };
