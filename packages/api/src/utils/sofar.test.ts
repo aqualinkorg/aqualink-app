@@ -37,9 +37,8 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
   const yesterday = yesterdayDate.toISOString();
 
   const response = await sofarHindcast(
-    SofarModels.SofarOperationalWaveModel,
-    sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-      .significantWaveHeight,
+    SofarModels.Wave,
+    sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
     -3.5976336810301888,
     -178.0000002552476,
     yesterday,

@@ -230,7 +230,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
             live={hasSpotter}
             frequency={hasSpotter ? "hourly" : "every 6 hours"}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-            imageText={hasSpotter ? undefined : "NOAA GFS"}
+            imageText={hasSpotter ? undefined : "SOFAR MODEL"}
           />
         </Grid>
       </CardContent>

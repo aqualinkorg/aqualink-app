@@ -116,7 +116,7 @@ const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
   [SourceType.NOAA]: {},
   [SourceType.GFS]: {},
   [SourceType.SPOTTER]: {},
-  [SourceType.SOFAR_WAVE_MODEL]: {},
+  [SourceType.SOFAR_MODEL]: {},
   [SourceType.HUI]: {
     '': { ignore: true },
     SampleID: { ignore: true },
