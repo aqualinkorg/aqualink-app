@@ -18,7 +18,12 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
-import { SubmitErrorHandler, useForm, Controller } from "react-hook-form";
+import {
+  SubmitErrorHandler,
+  useForm,
+  Controller,
+  SubmitHandler,
+} from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -78,17 +83,32 @@ const SignInDialog = ({
     dispatch(signInUser(registerInfo));
   };
 
-  const onResetPassword: SubmitErrorHandler<SignInFormFields> = (
+  const onResetSubmitError: SubmitErrorHandler<SignInFormFields> = (
     err,
     event
+  ) => {
+    if (err.emailAddress) return;
+    const values = getValues();
+    resetPasswordHelper(values.emailAddress, event);
+  };
+
+  const onResetSubmitHandler: SubmitHandler<SignInFormFields> = (
+    data,
+    event
+  ) => {
+    resetPasswordHelper(data.emailAddress, event);
+  };
+
+  const resetPasswordHelper = (
+    email?: string,
+    event?: BaseSyntheticEvent<object, any, any>
   ) => {
     if (event) {
       event.preventDefault();
     }
-    if (err.emailAddress) return;
-    const values = getValues();
-    dispatch(resetPassword({ email: values.emailAddress.toLowerCase() }));
-    setPasswordResetEmail(values.emailAddress.toLowerCase());
+    if (!email) return;
+    dispatch(resetPassword({ email: email.toLowerCase() }));
+    setPasswordResetEmail(email.toLowerCase());
     clearErrors("password");
   };
 
@@ -246,7 +266,10 @@ const SignInDialog = ({
                 <Grid container item xs={12}>
                   <Button
                     className={classes.forgotPasswordButton}
-                    onClick={handleSubmit(() => {}, onResetPassword)}
+                    onClick={handleSubmit(
+                      onResetSubmitHandler,
+                      onResetSubmitError
+                    )}
                   >
                     <Typography variant="subtitle2" color="textSecondary">
                       Forgot your password?
