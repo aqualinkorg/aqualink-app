@@ -18,7 +18,7 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
-import { useForm } from "react-hook-form";
+import { SubmitErrorHandler, useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -45,8 +45,14 @@ const SignInDialog = ({
   const error = useSelector(userErrorSelector);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [passwordResetEmail, setPasswordResetEmail] = useState<string>("");
-  const { register, errors, handleSubmit } = useForm<SignInFormFields>({
-    reValidateMode: "onSubmit",
+  const {
+    formState: { errors },
+    handleSubmit,
+    getValues,
+    clearErrors,
+    control,
+  } = useForm<SignInFormFields>({
+    reValidateMode: "onChange",
   });
 
   useEffect(() => {
@@ -72,15 +78,18 @@ const SignInDialog = ({
     dispatch(signInUser(registerInfo));
   };
 
-  const onResetPassword = (
-    { emailAddress }: SignInFormFields,
-    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+  const onResetPassword: SubmitErrorHandler<SignInFormFields> = (
+    err,
+    event
   ) => {
     if (event) {
       event.preventDefault();
     }
-    dispatch(resetPassword({ email: emailAddress.toLowerCase() }));
-    setPasswordResetEmail(emailAddress.toLowerCase());
+    if (err.emailAddress) return;
+    const values = getValues();
+    dispatch(resetPassword({ email: values.emailAddress.toLowerCase() }));
+    setPasswordResetEmail(values.emailAddress.toLowerCase());
+    clearErrors("password");
   };
 
   const clearUserError = () => dispatch(clearError());
@@ -179,49 +188,65 @@ const SignInDialog = ({
                   {/* <Typography className={classes.formText} variant="subtitle2">
                     or login with email address
                   </Typography> */}
-                  <TextField
-                    id="emailAddress"
+                  <Controller
                     name="emailAddress"
-                    placeholder="Email Address"
-                    helperText={
-                      (errors.emailAddress &&
-                        (errors.emailAddress.type === "validate"
-                          ? "Invalid email address"
-                          : errors.emailAddress.message)) ||
-                      ""
-                    }
-                    label="Email Address"
-                    inputRef={register({
+                    control={control}
+                    rules={{
                       required: "This is a required field",
                       validate: (value) => isEmail(value),
-                    })}
-                    error={!!errors.emailAddress}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="emailAddress"
+                        placeholder="Email Address"
+                        helperText={
+                          (errors.emailAddress &&
+                            (errors.emailAddress.type === "validate"
+                              ? "Invalid email address"
+                              : errors.emailAddress.message)) ||
+                          ""
+                        }
+                        label="Email Address"
+                        error={!!errors.emailAddress}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="password"
+                  <Controller
                     name="password"
-                    type="password"
-                    placeholder="Password"
-                    helperText={errors.password ? errors.password.message : ""}
-                    label="Password"
-                    inputRef={register({
-                      required: "This is a required field",
-                    })}
-                    error={!!errors.password}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: "This is a required field" }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="password"
+                        type="password"
+                        placeholder="Password"
+                        helperText={
+                          passwordResetEmail !== "" && errors.password
+                            ? errors.password.message
+                            : ""
+                        }
+                        label="Password"
+                        error={passwordResetEmail !== "" && !!errors.password}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid container item xs={12}>
                   <Button
                     className={classes.forgotPasswordButton}
-                    onClick={handleSubmit(onResetPassword)}
+                    onClick={handleSubmit(() => {}, onResetPassword)}
                   >
                     <Typography variant="subtitle2" color="textSecondary">
                       Forgot your password?

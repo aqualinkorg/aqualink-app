@@ -50,7 +50,7 @@
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.3",
     "react-ga": "^3.1.2",
-    "react-hook-form": "^6.0.8",
+    "react-hook-form": "^7.41.5",
     "react-leaflet": "^2.7.0",
     "react-leaflet-markercluster": "^2.0.0",
     "react-material-ui-carousel": "^1.8.2",

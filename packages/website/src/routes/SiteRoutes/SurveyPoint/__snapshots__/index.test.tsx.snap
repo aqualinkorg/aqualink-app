@@ -810,6 +810,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                   label="Email Address"
                   name="emailAddress"
                   placeholder="Email Address"
+                  value=""
                   variant="outlined"
                 />
               </div>
@@ -826,6 +827,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                   name="password"
                   placeholder="Password"
                   type="password"
+                  value=""
                   variant="outlined"
                 />
               </div>
