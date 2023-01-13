@@ -120,7 +120,7 @@ const Form = ({
             multiline
             rows={2}
             defaultValue={application?.permitRequirements || null}
-            placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction"
+            placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
             error={!!errors.permitRequirements}
             helperText={errors?.permitRequirements?.message || ""}
           />
@@ -144,7 +144,7 @@ const Form = ({
             multiline
             rows={2}
             defaultValue={application?.fundingSource || null}
-            placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs"
+            placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
             error={!!errors.fundingSource}
             helperText={errors?.fundingSource?.message || ""}
           />

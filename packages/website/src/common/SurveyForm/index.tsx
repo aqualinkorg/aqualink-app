@@ -271,7 +271,7 @@ const SurveyForm = ({
               className={classes.textField}
               variant="outlined"
               multiline
-              placeholder="Did anything stand out during this survey"
+              placeholder="Did anything stand out during this survey?"
               fullWidth
               size={itemsSize}
               inputProps={{
