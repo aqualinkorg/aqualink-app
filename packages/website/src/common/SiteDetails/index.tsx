@@ -46,6 +46,7 @@ import {
   unsetSpotterPosition,
 } from "../../store/Sites/selectedSiteSlice";
 import { parseLatestData } from "../../store/Sites/helpers";
+import HUICard from "./HUICard";
 
 const SiteDetails = ({
   site,
@@ -64,6 +65,7 @@ const SiteDetails = ({
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const [hasSpotterData, setHasSpotterData] = useState<boolean>(false);
+  const [hasHUIData, setHasHUIData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -96,9 +98,11 @@ const SiteDetails = ({
       const parsedData = parseLatestData(combinedArray);
       const hasSpotter = Boolean(parsedData.bottomTemperature);
       const hasSonde = Boolean(parsedData.salinity);
+      const hasHUI = latestData.some((x) => x.source === "hui");
 
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
+      setHasHUIData(hasHUI);
       setLatestDataAsSofarValues(parsedData);
     }
   }, [forecastData, latestData]);
@@ -117,13 +121,30 @@ const SiteDetails = ({
             id={site.id}
             data={latestDataAsSofarValues}
           />,
-          hasSondeData ? (
-            <WaterSamplingCard siteId={site.id.toString()} />
-          ) : (
-            <CoralBleaching
-              dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
-            />
-          ),
+          (() => {
+            if (hasHUIData)
+              return (
+                <HUICard
+                  data={{
+                    salinity: latestDataAsSofarValues.salinity,
+                    turbidity: latestDataAsSofarValues.turbidity,
+                    nitratePlusNitrite:
+                      latestDataAsSofarValues.nitratePlusNitrite,
+                    bottomTemperature:
+                      latestDataAsSofarValues.bottomTemperature,
+                  }}
+                />
+              );
+            if (hasSondeData)
+              return <WaterSamplingCard siteId={site.id.toString()} />;
+            return (
+              <CoralBleaching
+                dailyData={
+                  sortByDate(site.dailyData, "date", "asc").slice(-1)[0]
+                }
+              />
+            );
+          })(),
           <Waves data={latestDataAsSofarValues} hasSpotter={hasSpotterData} />,
         ]
       : times(4, () => null);
