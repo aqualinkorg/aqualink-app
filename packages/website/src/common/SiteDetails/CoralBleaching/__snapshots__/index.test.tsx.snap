@@ -50,7 +50,7 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root makeStyles-updateInfo-12 makeStyles-withMargin-13 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
-            class="MuiGrid-root makeStyles-dateInfoWrapper-16 makeStyles-dateInfoWrapper-18 MuiGrid-item"
+            class="MuiGrid-root makeStyles-dateInfoWrapper-16 makeStyles-dateInfoWrapper-18 MuiGrid-item MuiGrid-grid-xs-8"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -96,26 +96,31 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-chip-19 makeStyles-chip-25 MuiGrid-item"
+            class="MuiGrid-root MuiGrid-grid-xs-4"
+            style="display: flex; justify-content: flex-end;"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+              class="MuiGrid-root makeStyles-chip-19 makeStyles-chip-25 MuiGrid-item"
             >
-              <mock-button
-                classname="makeStyles-button-24"
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
               >
-                <a
-                  class="makeStyles-link-22"
-                  href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
-                  target="_blank"
+                <mock-button
+                  classname="makeStyles-button-24"
                 >
-                  <mock-typography
-                    classname="makeStyles-chipText-20"
+                  <a
+                    class="makeStyles-link-22"
+                    href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
+                    target="_blank"
                   >
-                    NOAA CRW
-                  </mock-typography>
-                </a>
-              </mock-button>
+                    <mock-typography
+                      classname="makeStyles-chipText-20"
+                    >
+                      NOAA CRW
+                    </mock-typography>
+                  </a>
+                </mock-button>
+              </div>
             </div>
           </div>
         </div>
