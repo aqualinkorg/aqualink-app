@@ -16,12 +16,13 @@ import { formatNumber } from "../../../helpers/numberUtils";
 import { LatestDataASSofarValue, Metrics } from "../../../store/Sites/types";
 import UpdateInfo from "../../UpdateInfo";
 import { styles as incomingStyles } from "../styles";
+import { Extends } from "../../types";
+import { colors } from "../../../layout/App/theme";
 
-type HUICardMetrics =
-  | "salinity"
-  | "nitratePlusNitrite"
-  | "bottomTemperature"
-  | "turbidity";
+type HUICardMetrics = Extends<
+  Metrics,
+  "salinity" | "nitratePlusNitrite" | "ph" | "turbidity"
+>;
 
 const watchColor = "#e5bb2bd0";
 const warningColor = "#ef883cd0";
@@ -51,10 +52,7 @@ const thresholds = {
   },
 };
 
-function getAlertColor(
-  metric: Extract<Metrics, HUICardMetrics>,
-  value?: number
-) {
+function getAlertColor(metric: HUICardMetrics, value?: number) {
   if (!value) return undefined;
 
   const compare = (th: { good: number; watch: number; warning: number }) => {
@@ -65,7 +63,7 @@ function getAlertColor(
   };
 
   switch (metric) {
-    case "bottomTemperature":
+    case "ph":
       return compare(thresholds.bottomTemperature);
     case "nitratePlusNitrite":
       return compare(thresholds.nitratePlusNitrite);
@@ -85,25 +83,28 @@ function HUICard({ data, classes }: HUICardProps) {
   const metrics = [
     {
       label: "Turbidity",
-      value: `${formatNumber(data?.turbidity?.value, 1)} FNU`,
+      value: `${formatNumber(data?.turbidity?.value, 1)}`,
+      unit: "FNU",
       color: getAlertColor("turbidity", data?.turbidity?.value),
     },
     {
       label: "Nitrate Nitrite Nitrogen",
-      value: `${formatNumber(data?.nitratePlusNitrite?.value, 1)} psu`,
+      value: `${formatNumber(data?.nitratePlusNitrite?.value, 1)}`,
+      unit: "mg/L",
       color: getAlertColor(
         "nitratePlusNitrite",
         data?.nitratePlusNitrite?.value
       ),
     },
     {
-      label: "Temperature",
-      value: `${formatNumber(data?.bottomTemperature?.value, 1)}°C`,
-      color: getAlertColor("bottomTemperature", data?.bottomTemperature?.value),
+      label: "pH",
+      value: `${formatNumber(data?.ph?.value, 1)}`,
+      color: getAlertColor("ph", data?.ph?.value),
     },
     {
       label: "Salinity",
-      value: `${formatNumber(data?.salinity?.value, 1)} psu`,
+      value: `${formatNumber(data?.salinity?.value, 1)}`,
+      unit: "psu",
       color: getAlertColor("salinity", data?.salinity?.value),
     },
   ];
@@ -125,7 +126,7 @@ function HUICard({ data, classes }: HUICardProps) {
       <CardContent className={classes.content}>
         <Box p="1rem" display="flex" flexGrow={1}>
           <Grid container spacing={1}>
-            {metrics.map(({ label, value, color }) => (
+            {metrics.map(({ label, value, color, unit }) => (
               <>
                 <Grid key={label} item xs={6}>
                   <Grid container>
@@ -135,6 +136,7 @@ function HUICard({ data, classes }: HUICardProps) {
                           display: "flex",
                           alignItems: "center",
                           flexWrap: "nowrap",
+                          minHeight: "2em",
                         }}
                       >
                         <Typography
@@ -156,13 +158,26 @@ function HUICard({ data, classes }: HUICardProps) {
                         )}
                       </div>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid
+                      item
+                      xs={12}
+                      style={{ display: "flex", alignItems: "baseline" }}
+                    >
                       <Typography
                         className={classes.contentTextValues}
                         variant="h3"
+                        style={{ whiteSpace: "nowrap" }}
                       >
                         {value}
                       </Typography>
+                      {unit && (
+                        <Typography
+                          className={classes.contentUnits}
+                          variant="h6"
+                        >
+                          {unit}
+                        </Typography>
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -210,7 +225,7 @@ const styles = () =>
       height: "100%",
       display: "flex",
       flexDirection: "column",
-      backgroundColor: "#37a692",
+      backgroundColor: colors.greenCardColor,
     },
     content: {
       display: "flex",

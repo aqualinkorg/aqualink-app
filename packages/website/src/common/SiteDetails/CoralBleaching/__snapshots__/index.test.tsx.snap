@@ -111,6 +111,7 @@ exports[`renders as expected 1`] = `
                   <a
                     class="makeStyles-link-22"
                     href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <mock-typography

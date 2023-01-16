@@ -74,6 +74,7 @@ const LinkWrapper: FC<
       to={to || { pathname: href }}
       target={href ? "_blank" : undefined}
       className={className}
+      rel="noopener noreferrer"
     >
       {children}
     </Link>

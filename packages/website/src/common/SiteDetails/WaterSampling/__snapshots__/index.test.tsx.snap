@@ -222,6 +222,7 @@ exports[`renders as expected 1`] = `
                 <a
                   class="makeStyles-link-20"
                   href="/sites/1"
+                  rel="noopener noreferrer"
                   target="_blank"
                 >
                   <mock-typography

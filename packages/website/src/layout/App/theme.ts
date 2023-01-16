@@ -18,6 +18,7 @@ const black = "#2f2f2f";
 const white = "#ffffff";
 const lightGray = "#939393";
 const specialSensorColor = "#f78c21";
+const greenCardColor = "#37a692";
 
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
@@ -29,6 +30,7 @@ export const colors = {
   darkGreyBlue,
   black,
   specialSensorColor,
+  greenCardColor,
 };
 
 const breakpoints = createBreakpoints({});

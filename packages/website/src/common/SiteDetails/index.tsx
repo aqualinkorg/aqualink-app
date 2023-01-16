@@ -122,7 +122,7 @@ const SiteDetails = ({
             data={latestDataAsSofarValues}
           />,
           (() => {
-            if (hasHUIData)
+            if (hasHUIData) {
               return (
                 <HUICard
                   data={{
@@ -130,13 +130,14 @@ const SiteDetails = ({
                     turbidity: latestDataAsSofarValues.turbidity,
                     nitratePlusNitrite:
                       latestDataAsSofarValues.nitratePlusNitrite,
-                    bottomTemperature:
-                      latestDataAsSofarValues.bottomTemperature,
+                    ph: latestDataAsSofarValues.ph,
                   }}
                 />
               );
-            if (hasSondeData)
+            }
+            if (hasSondeData) {
               return <WaterSamplingCard siteId={site.id.toString()} />;
+            }
             return (
               <CoralBleaching
                 dailyData={

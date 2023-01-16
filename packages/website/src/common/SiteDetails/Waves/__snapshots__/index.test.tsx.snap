@@ -255,6 +255,7 @@ exports[`renders as expected 1`] = `
                   <a
                     class="makeStyles-link-29"
                     href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
+                    rel="noopener noreferrer"
                     target="_blank"
                   >
                     <mock-typography
