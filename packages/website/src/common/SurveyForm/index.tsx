@@ -23,11 +23,17 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import { diveLocationSelector } from "../../store/Survey/surveySlice";
 import { SurveyData, SurveyState } from "../../store/Survey/types";
 import { setTimeZone } from "../../helpers/dates";
+
+interface SurveyFormFields {
+  diveDate: string;
+  diveTime: string;
+  comments: string;
+}
 
 const SurveyForm = ({
   siteId,
@@ -44,7 +50,12 @@ const SurveyForm = ({
   const itemsSize = isMobile ? "small" : "medium";
   const iconSize = isMobile ? "small" : "default";
 
-  const { register, errors, handleSubmit, reset } = useForm({
+  const {
+    formState: { errors },
+    handleSubmit,
+    reset,
+    control,
+  } = useForm<SurveyFormFields>({
     reValidateMode: "onSubmit",
   });
 
@@ -74,9 +85,9 @@ const SurveyForm = ({
 
   const resetForm = () => {
     reset({
-      diveTime: null,
-      diveDate: null,
-      comments: null,
+      diveTime: undefined,
+      diveDate: undefined,
+      comments: undefined,
     });
     setDiveDateTime(null);
     setWeather("calm");
@@ -96,36 +107,45 @@ const SurveyForm = ({
             Dive Date
           </Typography>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              className={classes.textField}
-              disableToolbar
-              format="MM/dd/yyyy"
-              fullWidth
-              id="dive-date"
+            <Controller
               name="diveDate"
-              autoOk
-              showTodayButton
-              size={itemsSize}
-              helperText={errors?.diveDate?.message || ""}
-              inputRef={register({
+              control={control}
+              rules={{
                 required: "This is a required field",
                 validate: {
                   validDate: (value) =>
                     moment(value, "MM/DD/YYYY", true).isValid() ||
                     "Invalid date",
                 },
-              })}
-              error={!!errors.diveDate}
-              value={diveDateTime}
-              onChange={handleDiveDateTimeChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
               }}
-              inputProps={{
-                className: classes.textField,
-              }}
-              inputVariant="outlined"
-              keyboardIcon={<EventIcon fontSize={iconSize} />}
+              render={({ field }) => (
+                <KeyboardDatePicker
+                  className={classes.textField}
+                  disableToolbar
+                  format="MM/dd/yyyy"
+                  fullWidth
+                  id="dive-date"
+                  autoOk
+                  showTodayButton
+                  size={itemsSize}
+                  helperText={errors?.diveDate?.message || ""}
+                  error={!!errors.diveDate}
+                  value={diveDateTime}
+                  ref={field.ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleDiveDateTimeChange(e);
+                  }}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                  inputProps={{
+                    className: classes.textField,
+                  }}
+                  inputVariant="outlined"
+                  keyboardIcon={<EventIcon fontSize={iconSize} />}
+                />
+              )}
             />
           </MuiPickersUtilsProvider>
         </Grid>
@@ -134,33 +154,42 @@ const SurveyForm = ({
             Dive Local Time
           </Typography>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardTimePicker
-              className={classes.textField}
-              id="time-picker"
+            <Controller
               name="diveTime"
-              fullWidth
-              autoOk
-              size={itemsSize}
-              helperText={errors?.diveTime?.message || ""}
-              inputRef={register({
+              control={control}
+              rules={{
                 required: "This is a required field",
                 pattern: {
                   value: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
                   message: "Invalid time format",
                 },
-              })}
-              error={!!errors.diveTime}
-              format="HH:mm"
-              value={diveDateTime}
-              onChange={handleDiveDateTimeChange}
-              KeyboardButtonProps={{
-                "aria-label": "change time",
               }}
-              InputProps={{
-                className: classes.textField,
-              }}
-              keyboardIcon={<AccessTimeIcon fontSize={iconSize} />}
-              inputVariant="outlined"
+              render={({ field }) => (
+                <KeyboardTimePicker
+                  className={classes.textField}
+                  id="time-picker"
+                  fullWidth
+                  autoOk
+                  size={itemsSize}
+                  helperText={errors?.diveTime?.message || ""}
+                  error={!!errors.diveTime}
+                  format="HH:mm"
+                  value={diveDateTime}
+                  ref={field.ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleDiveDateTimeChange(e);
+                  }}
+                  KeyboardButtonProps={{
+                    "aria-label": "change time",
+                  }}
+                  InputProps={{
+                    className: classes.textField,
+                  }}
+                  keyboardIcon={<AccessTimeIcon fontSize={iconSize} />}
+                  inputVariant="outlined"
+                />
+              )}
             />
           </MuiPickersUtilsProvider>
         </Grid>
@@ -233,18 +262,23 @@ const SurveyForm = ({
         </Typography>
       </Grid>
       <Grid className={classes.extraMargin} item xs={12}>
-        <TextField
-          className={classes.textField}
-          variant="outlined"
-          multiline
+        <Controller
           name="comments"
-          placeholder="Did anything stand out during this survey"
-          inputRef={register()}
-          fullWidth
-          size={itemsSize}
-          inputProps={{
-            className: classes.textField,
-          }}
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className={classes.textField}
+              variant="outlined"
+              multiline
+              placeholder="Did anything stand out during this survey?"
+              fullWidth
+              size={itemsSize}
+              inputProps={{
+                className: classes.textField,
+              }}
+            />
+          )}
         />
       </Grid>
       {/* SUBMIT */}

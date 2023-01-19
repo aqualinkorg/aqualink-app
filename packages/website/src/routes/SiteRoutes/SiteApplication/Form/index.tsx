@@ -8,7 +8,7 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -19,6 +19,14 @@ import {
   SiteApplication,
   SiteApplyParams,
 } from "../../../../store/Sites/types";
+
+interface SiteApplicationFormFields {
+  siteName: string;
+  permitRequirements: string;
+  fundingSource: string;
+  installationResources: string;
+  installationSchedule: string;
+}
 
 const Form = ({
   siteName,
@@ -37,11 +45,15 @@ const Form = ({
     }
   }, [application]);
 
-  const { register, errors, handleSubmit } = useForm({
+  const {
+    formState: { errors },
+    handleSubmit,
+    control,
+  } = useForm<SiteApplicationFormFields>({
     reValidateMode: "onSubmit",
   });
 
-  const handleInstalationChange = (date: Date | null) => {
+  const handleInstallationChange = (date: Date | null) => {
     if (date) {
       setInstallationSchedule(date);
     }
@@ -65,21 +77,26 @@ const Form = ({
       <Typography className={classes.formTitle} variant="h3">
         Your Site
       </Typography>
-
-      <TextField
-        className={`${classes.formField} ${classes.textField}`}
-        variant="outlined"
-        inputProps={{ className: classes.textField }}
-        fullWidth
-        placeholder="Site Name e.g. 'Sombrero Site'"
-        disabled
-        defaultValue={siteName}
+      <Controller
         name="siteName"
-        inputRef={register({
+        control={control}
+        rules={{
           required: "This is a required field",
-        })}
-        error={!!errors.siteName}
-        helperText={errors?.siteName?.message || ""}
+        }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className={`${classes.formField} ${classes.textField}`}
+            variant="outlined"
+            inputProps={{ className: classes.textField }}
+            fullWidth
+            placeholder="Site Name e.g. 'Sombrero Site'"
+            disabled
+            defaultValue={siteName}
+            error={!!errors.siteName}
+            helperText={errors?.siteName?.message || ""}
+          />
+        )}
       />
 
       <Typography className={classes.additionalInfo}>
@@ -87,39 +104,51 @@ const Form = ({
       </Typography>
 
       <Typography>Permitting</Typography>
-      <TextField
-        className={`${classes.formField} ${classes.textField}`}
-        variant="outlined"
-        inputProps={{ className: classes.textField }}
-        fullWidth
-        multiline
-        rows={2}
-        defaultValue={application?.permitRequirements || null}
-        placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction"
+      <Controller
         name="permitRequirements"
-        inputRef={register({
+        control={control}
+        rules={{
           required: "This is a required field",
-        })}
-        error={!!errors.permitRequirements}
-        helperText={errors?.permitRequirements?.message || ""}
+        }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className={`${classes.formField} ${classes.textField}`}
+            variant="outlined"
+            inputProps={{ className: classes.textField }}
+            fullWidth
+            multiline
+            rows={2}
+            defaultValue={application?.permitRequirements || null}
+            placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
+            error={!!errors.permitRequirements}
+            helperText={errors?.permitRequirements?.message || ""}
+          />
+        )}
       />
 
       <Typography>Funding Source</Typography>
-      <TextField
-        className={`${classes.formField} ${classes.textField}`}
-        variant="outlined"
-        inputProps={{ className: classes.textField }}
-        fullWidth
-        multiline
-        rows={2}
-        defaultValue={application?.fundingSource || null}
-        placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs"
+      <Controller
         name="fundingSource"
-        inputRef={register({
+        control={control}
+        rules={{
           required: "This is a required field",
-        })}
-        error={!!errors.fundingSource}
-        helperText={errors?.fundingSource?.message || ""}
+        }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className={`${classes.formField} ${classes.textField}`}
+            variant="outlined"
+            inputProps={{ className: classes.textField }}
+            fullWidth
+            multiline
+            rows={2}
+            defaultValue={application?.fundingSource || null}
+            placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
+            error={!!errors.fundingSource}
+            helperText={errors?.fundingSource?.message || ""}
+          />
+        )}
       />
 
       <Typography>Schedule for installation</Typography>
@@ -128,53 +157,68 @@ const Form = ({
         survey?
       </Typography>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          className={classes.formField}
-          disableToolbar
-          format="MM/dd/yyyy"
-          id="installationSchedule"
+        <Controller
           name="installationSchedule"
-          autoOk
-          showTodayButton
-          helperText={errors?.installationSchedule?.message || ""}
-          inputRef={register({
+          control={control}
+          rules={{
             required: "This is a required field",
             validate: {
               validDate: (value) =>
                 moment(value, "MM/DD/YYYY", true).isValid() || "Invalid date",
             },
-          })}
-          error={!!errors.installationSchedule}
-          value={installationSchedule}
-          onChange={handleInstalationChange}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
           }}
-          inputProps={{
-            className: classes.textField,
-          }}
-          inputVariant="outlined"
+          render={({ field }) => (
+            <KeyboardDatePicker
+              className={classes.formField}
+              disableToolbar
+              format="MM/dd/yyyy"
+              id="installationSchedule"
+              autoOk
+              showTodayButton
+              helperText={errors?.installationSchedule?.message || ""}
+              error={!!errors.installationSchedule}
+              value={installationSchedule}
+              ref={field.ref}
+              onChange={(e) => {
+                field.onChange(e);
+                handleInstallationChange(e);
+              }}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+              inputProps={{
+                className: classes.textField,
+              }}
+              inputVariant="outlined"
+            />
+          )}
         />
       </MuiPickersUtilsProvider>
 
       <Typography>
         Installation, survey and maintenance personnel and equipment
       </Typography>
-      <TextField
-        className={`${classes.formField} ${classes.textField}`}
-        variant="outlined"
-        inputProps={{ className: classes.textField }}
-        fullWidth
-        multiline
-        rows={4}
-        defaultValue={application?.installationResources || null}
-        placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
+      <Controller
         name="installationResources"
-        inputRef={register({
+        control={control}
+        rules={{
           required: "This is a required field",
-        })}
-        error={!!errors.installationResources}
-        helperText={errors?.installationResources?.message || ""}
+        }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            className={`${classes.formField} ${classes.textField}`}
+            variant="outlined"
+            inputProps={{ className: classes.textField }}
+            fullWidth
+            multiline
+            rows={4}
+            defaultValue={application?.installationResources || null}
+            placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
+            error={!!errors.installationResources}
+            helperText={errors?.installationResources?.message || ""}
+          />
+        )}
       />
 
       <Button
