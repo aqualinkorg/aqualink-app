@@ -711,6 +711,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
                   label="Email Address"
                   name="emailAddress"
                   placeholder="Email Address"
+                  value=""
                   variant="outlined"
                 />
               </div>
@@ -727,6 +728,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
                   name="password"
                   placeholder="Password"
                   type="password"
+                  value=""
                   variant="outlined"
                 />
               </div>

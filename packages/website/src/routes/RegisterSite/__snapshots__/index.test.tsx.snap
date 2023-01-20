@@ -684,6 +684,7 @@ exports[`Site registration page should render with given state from Redux store 
                   label="Email Address"
                   name="emailAddress"
                   placeholder="Email Address"
+                  value=""
                   variant="outlined"
                 />
               </div>
@@ -700,6 +701,7 @@ exports[`Site registration page should render with given state from Redux store 
                   name="password"
                   placeholder="Password"
                   type="password"
+                  value=""
                   variant="outlined"
                 />
               </div>

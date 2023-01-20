@@ -21,7 +21,7 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -48,7 +48,11 @@ const RegisterDialog = ({
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
-  const { register, errors, handleSubmit } = useForm<RegisterFormFields>({
+  const {
+    formState: { errors },
+    handleSubmit,
+    control,
+  } = useForm<RegisterFormFields>({
     reValidateMode: "onSubmit",
   });
 
@@ -153,99 +157,133 @@ const RegisterDialog = ({
             <Grid container item xs={10}>
               <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="firstName"
+                  <Controller
                     name="firstName"
-                    placeholder="First Name"
-                    helperText={
-                      errors.firstName ? errors.firstName.message : ""
-                    }
-                    label="First Name"
-                    inputRef={register({
+                    control={control}
+                    rules={{
                       required: "This is a required field",
-                    })}
-                    error={!!errors.firstName}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="firstName"
+                        placeholder="First Name"
+                        helperText={
+                          errors.firstName ? errors.firstName.message : ""
+                        }
+                        label="First Name"
+                        error={!!errors.firstName}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="lastName"
+                  <Controller
                     name="lastName"
-                    placeholder="Last Name"
-                    helperText={errors.lastName ? errors.lastName.message : ""}
-                    label="Last Name"
-                    inputRef={register({
+                    control={control}
+                    rules={{
                       required: "This is a required field",
-                    })}
-                    error={!!errors.lastName}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="lastName"
+                        placeholder="Last Name"
+                        helperText={
+                          errors.lastName ? errors.lastName.message : ""
+                        }
+                        label="Last Name"
+                        error={!!errors.lastName}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="organization"
+                  <Controller
                     name="organization"
-                    placeholder="Organization"
-                    helperText={
-                      errors.organization ? errors.organization.message : ""
-                    }
-                    label="Organization"
-                    inputRef={register({
+                    control={control}
+                    rules={{
                       required: "This is a required field",
-                    })}
-                    error={!!errors.organization}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="organization"
+                        placeholder="Organization"
+                        helperText={
+                          errors.organization ? errors.organization.message : ""
+                        }
+                        label="Organization"
+                        error={!!errors.organization}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="emailAddress"
+                  <Controller
                     name="emailAddress"
-                    placeholder="Email Address"
-                    helperText={
-                      (errors.emailAddress &&
-                        (errors.emailAddress.type === "validate"
-                          ? "Invalid email address"
-                          : errors.emailAddress.message)) ||
-                      ""
-                    }
-                    label="Email Address"
-                    inputRef={register({
+                    control={control}
+                    rules={{
                       required: "This is a required field",
                       validate: (value) => isEmail(value),
-                    })}
-                    error={!!errors.emailAddress}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="emailAddress"
+                        placeholder="Email Address"
+                        helperText={
+                          (errors.emailAddress &&
+                            (errors.emailAddress.type === "validate"
+                              ? "Invalid email address"
+                              : errors.emailAddress.message)) ||
+                          ""
+                        }
+                        label="Email Address"
+                        error={!!errors.emailAddress}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="password"
+                  <Controller
                     name="password"
-                    type="password"
-                    placeholder="Password"
-                    helperText={errors.password ? errors.password.message : ""}
-                    label="Password"
-                    inputRef={register({
+                    control={control}
+                    rules={{
                       required: "This is a required field",
                       minLength: {
                         value: 8,
                         message: "Password must be at least 8 characters",
                       },
-                    })}
-                    error={!!errors.password}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="password"
+                        type="password"
+                        placeholder="Password"
+                        helperText={
+                          errors.password ? errors.password.message : ""
+                        }
+                        label="Password"
+                        error={!!errors.password}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid

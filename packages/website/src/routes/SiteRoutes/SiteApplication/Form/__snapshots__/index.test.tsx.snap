@@ -38,7 +38,7 @@ exports[`renders as expected 1`] = `
       inputprops="[object Object]"
       multiline="true"
       name="permitRequirements"
-      placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction"
+      placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
       rows="2"
       variant="outlined"
     />
@@ -53,7 +53,7 @@ exports[`renders as expected 1`] = `
       inputprops="[object Object]"
       multiline="true"
       name="fundingSource"
-      placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs"
+      placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
       rows="2"
       variant="outlined"
     />
