@@ -60,7 +60,7 @@ const Form = ({
   };
 
   const formSubmit = useCallback(
-    (data: any) => {
+    (data: SiteApplicationFormFields) => {
       const params: SiteApplyParams = {
         fundingSource: data.fundingSource,
         permitRequirements: data.permitRequirements,

@@ -54,6 +54,7 @@ const SurveyForm = ({
     formState: { errors },
     handleSubmit,
     reset,
+    setValue,
     control,
   } = useForm<SurveyFormFields>({
     reValidateMode: "onSubmit",
@@ -134,6 +135,7 @@ const SurveyForm = ({
                   ref={field.ref}
                   onChange={(e) => {
                     field.onChange(e);
+                    setValue("diveTime", moment(e).format("HH:mm"));
                     handleDiveDateTimeChange(e);
                   }}
                   KeyboardButtonProps={{

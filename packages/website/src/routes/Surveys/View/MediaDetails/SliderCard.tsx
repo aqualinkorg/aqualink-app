@@ -22,7 +22,6 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import EditIcon from "@material-ui/icons/Edit";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { useSelector } from "react-redux";
-import { useSnackbar } from "notistack";
 import observationOptions, {
   findOption,
 } from "../../../../constants/uploadDropdowns";
@@ -32,7 +31,6 @@ import {
   SurveyMediaUpdateRequestData,
 } from "../../../../store/Survey/types";
 import {
-  surveyErrorSelector,
   surveyLoadingSelector,
   surveyMediaEditLoadingSelector,
 } from "../../../../store/Survey/surveySlice";
@@ -40,65 +38,54 @@ import {
 const SliderCard = ({
   media,
   isSiteAdmin,
+  editing,
+  setEditing,
+  editSurveyPointId,
   onSurveyMediaUpdate,
   classes,
 }: SliderCardProps) => {
   const {
     id,
     url,
-    comments,
+    comments: existingComments,
     observations: existingObservations,
     featured,
   } = media;
-  const { enqueueSnackbar } = useSnackbar();
-  const prevMediaLoading = React.useRef<boolean>();
-  const [editing, setEditing] = React.useState(false);
-  const [editComments, setEditComments] = React.useState(comments || undefined);
+  const [editComments, setEditComments] = React.useState(
+    existingComments || undefined
+  );
   const [observation, setObservation] =
     React.useState<Observations>(existingObservations);
 
   const mediaLoading = useSelector(surveyMediaEditLoadingSelector);
   const surveyLoading = useSelector(surveyLoadingSelector);
-  const surveyError = useSelector(surveyErrorSelector);
 
   const loading = mediaLoading || surveyLoading;
-
-  React.useEffect(() => {
-    if (!mediaLoading) {
-      if (!surveyError && prevMediaLoading.current) {
-        enqueueSnackbar("Survey media details updated successfully", {
-          variant: "success",
-        });
-      }
-      if (surveyError) {
-        enqueueSnackbar(surveyError, {
-          variant: "error",
-        });
-      }
-    }
-    if (prevMediaLoading.current !== mediaLoading) {
-      prevMediaLoading.current = mediaLoading;
-    }
-  }, [enqueueSnackbar, mediaLoading, surveyError]);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   function onClose() {
     setEditing(false);
-    setEditComments(comments || undefined);
+    setEditComments(existingComments || undefined);
     setObservation(existingObservations);
   }
 
   function onSave() {
-    if (editComments !== comments || observation !== existingObservations) {
+    if (
+      editComments !== existingComments ||
+      observation !== existingObservations ||
+      editSurveyPointId !== media.surveyPoint?.id
+    ) {
       onSurveyMediaUpdate(id, {
         featured,
-        comments: editComments !== comments ? editComments : undefined,
+        comments: editComments !== existingComments ? editComments : undefined,
         observations:
-          observation !== existingObservations
-            ? observation
-            : existingObservations,
+          observation !== existingObservations ? observation : undefined,
+        surveyPoint:
+          editSurveyPointId !== media.surveyPoint?.id
+            ? { id: editSurveyPointId }
+            : undefined,
       });
     }
     setEditing(false);
@@ -174,7 +161,9 @@ const SliderCard = ({
                     }}
                   />
                 ) : (
-                  <Typography variant="subtitle1">{comments}</Typography>
+                  <Typography variant="subtitle1">
+                    {existingComments}
+                  </Typography>
                 )}
               </Grid>
             </Grid>
@@ -302,6 +291,9 @@ const styles = (theme: Theme) =>
 interface SliderCardIncomingProps {
   media: SurveyMedia;
   isSiteAdmin: boolean;
+  editing: boolean;
+  editSurveyPointId?: number;
+  setEditing: React.Dispatch<React.SetStateAction<boolean>>;
   onSurveyMediaUpdate: (
     mediaId: number,
     data: Partial<SurveyMediaUpdateRequestData>

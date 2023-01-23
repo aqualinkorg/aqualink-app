@@ -180,8 +180,8 @@ async function run() {
   } = await getFilePathData(filePath, SourceType.HUI);
   const siteNameIndex = headers.findIndex((x) => x === 'SiteName');
   const groupedBySite = groupBy(
-    // Remove first row with the titles
-    workSheetData.slice(1),
+    // Remove first row with the titles and filter out empty lines
+    workSheetData.filter((x) => x.length > 0).slice(1),
     (x: any) => x[siteNameIndex],
   );
 

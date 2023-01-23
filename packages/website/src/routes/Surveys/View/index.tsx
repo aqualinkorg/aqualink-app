@@ -16,11 +16,14 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import { useSnackbar } from "notistack";
 import {
   surveyDetailsSelector,
   surveyGetRequest,
   clearSurvey,
   surveyLoadingSelector,
+  surveyErrorSelector,
+  surveyMediaEditLoadingSelector,
 } from "../../../store/Survey/surveySlice";
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./MediaDetails";
@@ -38,13 +41,18 @@ import {
   isBetween,
 } from "../../../helpers/dates";
 import { standardDailyDataDataset } from "../../../common/Chart/MultipleSensorsCharts/helpers";
+import { getSurveyPointsByName } from "../../../helpers/surveyMedia";
 
 const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
+  const prevMediaLoading = React.useRef<boolean>();
+  const { enqueueSnackbar } = useSnackbar();
   const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
   const surveyLoading = useSelector(surveyLoadingSelector);
   const surveyListLoading = useSelector(surveyListLoadingSelector);
+  const surveyError = useSelector(surveyErrorSelector);
+  const mediaLoading = useSelector(surveyMediaEditLoadingSelector);
   const loading = surveyLoading || surveyListLoading;
 
   const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)
@@ -100,6 +108,24 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       );
     }
   }, [dispatch, pointId, site.id, surveyDetails]);
+
+  React.useEffect(() => {
+    if (!mediaLoading) {
+      if (!surveyError && prevMediaLoading.current) {
+        enqueueSnackbar("Survey media details updated successfully", {
+          variant: "success",
+        });
+      }
+      if (surveyError) {
+        enqueueSnackbar(surveyError, {
+          variant: "error",
+        });
+      }
+    }
+    if (prevMediaLoading.current !== mediaLoading) {
+      prevMediaLoading.current = mediaLoading;
+    }
+  }, [enqueueSnackbar, mediaLoading, surveyError]);
 
   if (loading) {
     return <LinearProgress className={classes.loading} />;
@@ -182,10 +208,12 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <SurveyMediaDetails
-                  siteId={site.id}
-                  surveyMedia={surveyDetails?.surveyMedia}
-                />
+                {surveyDetails?.surveyMedia &&
+                  getSurveyPointsByName(surveyDetails?.surveyMedia).map(
+                    (point) => (
+                      <SurveyMediaDetails siteId={site.id} point={point} />
+                    )
+                  )}
               </Grid>
             </Grid>
           </Grid>
