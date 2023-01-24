@@ -25,6 +25,7 @@ const storeUser = (
 
 const resetPassword = (email: string) => {
   if (app) {
+    // TODO use env specific URL.
     app.auth().sendPasswordResetEmail(email, { url: "https://aqualink.org" });
   }
 };
