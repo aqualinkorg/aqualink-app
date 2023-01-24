@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Terms page should render with given state from Redux store 1`] = `
+<div>
+  <div>
+    <div
+      class="MuiGrid-root MediaDetails-title-1 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+    >
+      <div
+        class="MuiGrid-root MediaDetails-surveyPointNameWrapper-2 MuiGrid-item"
+      >
+        <mock-dialog
+          fullwidth="true"
+          maxwidth="sm"
+          open="false"
+        >
+          <mock-dialogtitle
+            classname="makeStyles-dialogTitle-10"
+            disabletypography="true"
+          >
+            <mock-typography
+              color="textSecondary"
+              variant="h4"
+            >
+              New Survey Point
+            </mock-typography>
+            <mock-iconbutton
+              disabled="false"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+            </mock-iconbutton>
+          </mock-dialogtitle>
+          <form>
+            <mock-dialogcontent
+              classname="makeStyles-dialogContent-11"
+            >
+              <mock-textfield
+                error="false"
+                fullwidth="true"
+                helpertext=""
+                label="Survey Point Name"
+                variant="outlined"
+              />
+            </mock-dialogcontent>
+            <mock-dialogactions>
+              <mock-button
+                color="primary"
+                disabled="false"
+                size="small"
+                variant="outlined"
+              >
+                Cancel
+              </mock-button>
+              <mock-button
+                color="primary"
+                disabled="true"
+                size="small"
+                type="submit"
+                variant="outlined"
+              >
+                Save
+              </mock-button>
+            </mock-dialogactions>
+          </form>
+        </mock-dialog>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-baseline"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+            style="align-self: end;"
+          >
+            <mock-typography
+              variant="h6"
+            >
+              Survey Point: 
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root MediaPointName-surveyPointName-4 MuiGrid-item"
+          >
+            <mock-tooltip
+              arrow="true"
+              placement="top"
+              title="View survey point"
+            >
+              <a
+                class="MediaPointName-link-5"
+                href="/sites/1/points/1"
+              >
+                <mock-typography
+                  classname="MediaPointName-titleName-6"
+                  variant="h6"
+                >
+                  Point 1
+                </mock-typography>
+              </a>
+            </mock-tooltip>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MediaCount-mediaCount-12"
+        >
+          <mock-box
+            mr="2"
+          >
+            <mock-typography
+              component="span"
+              variant="subtitle1"
+            >
+              1
+               image
+              
+            </mock-typography>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MediaCount-mediaCountIcon-13"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M2 6H0v5h.01L0 20c0 1.1.9 2 2 2h18v-2H2V6zm20-2h-8l-2-2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7 15l4.5-6 3.5 4.51 2.5-3.01L21 15H7z"
+              />
+            </svg>
+          </mock-box>
+        </div>
+      </div>
+    </div>
+    <div
+      class="slick-slider MediaDetails-carousel-3 slick-initialized"
+    >
+      
+      <div
+        class="slick-list"
+      >
+        <div
+          class="slick-track"
+          style="opacity: 1; transform: translate3d(0px, 0px, 0px);"
+        >
+          <div
+            aria-hidden="false"
+            class="slick-slide slick-active slick-current"
+            data-index="0"
+            style="outline: none; width: 0px;"
+            tabindex="-1"
+          >
+            <div>
+              <mock-card
+                classname="SliderCard-shadowBox-14"
+                elevation="3"
+              >
+                <div
+                  class="MuiGrid-root SliderCard-fullHeight-16 MuiGrid-container"
+                >
+                  <div
+                    class="MuiGrid-root SliderCard-imageWrapper-17 MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6"
+                  >
+                    <div
+                      class="MuiCardMedia-root SliderCard-cardImage-18"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root SliderCard-mediaInfoWrapper-19 MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-10"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                      >
+                        <mock-typography
+                          variant="h6"
+                        >
+                          IMAGE OBSERVATION
+                        </mock-typography>
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          Appears healthy
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                      >
+                        <mock-typography
+                          variant="h6"
+                        >
+                          IMAGE COMMENTS
+                        </mock-typography>
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          comment 2222
+                        </mock-typography>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mock-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+`;

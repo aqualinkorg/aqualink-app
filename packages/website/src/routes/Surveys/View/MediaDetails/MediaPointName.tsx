@@ -92,7 +92,9 @@ const MediaPointName = ({
               <Tooltip title="View survey point" arrow placement="top">
                 <Link
                   className={classes.link}
-                  to={`/sites/${siteId}/points/${pointId}`}
+                  to={`/sites/${encodeURIComponent(
+                    siteId
+                  )}/points/${encodeURIComponent(pointId)}`}
                 >
                   <Typography
                     className={classNames(classes.titleName, {

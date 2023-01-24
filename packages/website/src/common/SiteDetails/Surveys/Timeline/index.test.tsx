@@ -5,7 +5,7 @@ import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import Timeline from ".";
-import { mockSurvey } from "../../../../mocks/mockSurvey";
+import { mockSurveyList } from "../../../../mocks/mockSurveyList";
 
 const mockStore = configureStore([]);
 
@@ -14,7 +14,7 @@ describe("SiteRoutes Surveys", () => {
   beforeEach(() => {
     const store = mockStore({
       surveyList: {
-        list: [mockSurvey],
+        list: [mockSurveyList],
         loading: false,
         error: null,
       },

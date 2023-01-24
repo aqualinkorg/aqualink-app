@@ -209,9 +209,13 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
               </Grid>
               <Grid item xs={12}>
                 {surveyDetails?.surveyMedia &&
-                  getSurveyPointsByName(surveyDetails?.surveyMedia).map(
+                  getSurveyPointsByName(surveyDetails.surveyMedia).map(
                     (point) => (
-                      <SurveyMediaDetails siteId={site.id} point={point} />
+                      <SurveyMediaDetails
+                        siteId={site.id}
+                        point={point}
+                        key={point.pointId}
+                      />
                     )
                   )}
               </Grid>

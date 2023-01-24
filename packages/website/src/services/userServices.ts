@@ -3,6 +3,8 @@ import requests from "../helpers/requests";
 import { User } from "../store/User/types";
 import type { Site } from "../store/Sites/types";
 
+const { REACT_APP_WEBSITE_URL: WEBSITE_URL } = process.env;
+
 const createUser = (email: string, password: string) =>
   app && app.auth().createUserWithEmailAndPassword(email, password);
 
@@ -25,8 +27,7 @@ const storeUser = (
 
 const resetPassword = (email: string) => {
   if (app) {
-    // TODO use env specific URL.
-    app.auth().sendPasswordResetEmail(email, { url: "https://aqualink.org" });
+    app.auth().sendPasswordResetEmail(email, { url: WEBSITE_URL || "" });
   }
 };
 

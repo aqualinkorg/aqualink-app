@@ -48,6 +48,21 @@ function stubMuiComponent(componentName: string, namedExports: any = {}) {
   }));
 }
 
+/**
+ * fix: `matchMedia` not present, legacy browsers require a polyfill
+ */
+// eslint-disable-next-line fp/no-mutation
+global.matchMedia =
+  global.matchMedia ||
+  // eslint-disable-next-line func-names
+  function () {
+    return {
+      matches: false,
+      addListener() {},
+      removeListener() {},
+    };
+  };
+
 stubMuiComponent("Typography");
 stubMuiComponent("Button", {
   styles: jest.requireActual("@material-ui/core/Button/Button").styles,

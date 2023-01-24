@@ -40,7 +40,6 @@ export interface SurveyMediaUpdateRequestData {
 export interface SurveyPoint {
   id?: number;
   name: string;
-  surveyMedia: SurveyMedia[];
 }
 
 export interface SurveyPointUpdateParams {
