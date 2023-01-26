@@ -181,7 +181,7 @@ async function run() {
   const siteNameIndex = headers.findIndex((x) => x === 'SiteName');
   const groupedBySite = groupBy(
     // Remove first row with the titles and filter out empty lines
-    workSheetData.filter((x) => x.length > 0).slice(1),
+    workSheetData.slice(1).filter((x) => x.length > 0),
     (x: any) => x[siteNameIndex],
   );
 
