@@ -9,69 +9,6 @@ exports[`Terms page should render with given state from Redux store 1`] = `
       <div
         class="MuiGrid-root MediaDetails-surveyPointNameWrapper-2 MuiGrid-item"
       >
-        <mock-dialog
-          fullwidth="true"
-          maxwidth="sm"
-          open="false"
-        >
-          <mock-dialogtitle
-            classname="makeStyles-dialogTitle-10"
-            disabletypography="true"
-          >
-            <mock-typography
-              color="textSecondary"
-              variant="h4"
-            >
-              New Survey Point
-            </mock-typography>
-            <mock-iconbutton
-              disabled="false"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-            </mock-iconbutton>
-          </mock-dialogtitle>
-          <form>
-            <mock-dialogcontent
-              classname="makeStyles-dialogContent-11"
-            >
-              <mock-textfield
-                error="false"
-                fullwidth="true"
-                helpertext=""
-                label="Survey Point Name"
-                variant="outlined"
-              />
-            </mock-dialogcontent>
-            <mock-dialogactions>
-              <mock-button
-                color="primary"
-                disabled="false"
-                size="small"
-                variant="outlined"
-              >
-                Cancel
-              </mock-button>
-              <mock-button
-                color="primary"
-                disabled="true"
-                size="small"
-                type="submit"
-                variant="outlined"
-              >
-                Save
-              </mock-button>
-            </mock-dialogactions>
-          </form>
-        </mock-dialog>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-baseline"
         >
@@ -112,7 +49,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item"
       >
         <div
-          class="MediaCount-mediaCount-12"
+          class="MediaCount-mediaCount-8"
         >
           <mock-box
             mr="2"
@@ -127,7 +64,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
             </mock-typography>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MediaCount-mediaCountIcon-13"
+              class="MuiSvgIcon-root MediaCount-mediaCountIcon-9"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -159,21 +96,21 @@ exports[`Terms page should render with given state from Redux store 1`] = `
           >
             <div>
               <mock-card
-                classname="SliderCard-shadowBox-14"
+                classname="SliderCard-shadowBox-10"
                 elevation="3"
               >
                 <div
-                  class="MuiGrid-root SliderCard-fullHeight-16 MuiGrid-container"
+                  class="MuiGrid-root SliderCard-fullHeight-12 MuiGrid-container"
                 >
                   <div
-                    class="MuiGrid-root SliderCard-imageWrapper-17 MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6"
+                    class="MuiGrid-root SliderCard-imageWrapper-13 MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6"
                   >
                     <div
-                      class="MuiCardMedia-root SliderCard-cardImage-18"
+                      class="MuiCardMedia-root SliderCard-cardImage-14"
                     />
                   </div>
                   <div
-                    class="MuiGrid-root SliderCard-mediaInfoWrapper-19 MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6"
+                    class="MuiGrid-root SliderCard-mediaInfoWrapper-15 MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-10"
