@@ -9,15 +9,9 @@ import {
   WithStyles,
   createStyles,
   Theme,
-  MenuItem,
-  TextField,
-  Button,
 } from "@material-ui/core";
 import classNames from "classnames";
-import AddIcon from "@material-ui/icons/Add";
-import { useSelector } from "react-redux";
-import NewSurveyPointDialog from "../../../../common/NewSurveyPointDialog";
-import { siteDetailsSelector } from "../../../../store/Sites/selectedSiteSlice";
+import SurveyPointSelector from "../../../../common/SurveyPointSelector";
 
 const MediaPointName = ({
   pointName,
@@ -29,11 +23,6 @@ const MediaPointName = ({
   setEditSurveyPointId,
   classes,
 }: MediaPointNameProps) => {
-  const [addSurveyPointDialogOpen, setAddSurveyPointDialogOpen] =
-    React.useState<boolean>(false);
-  const surveyPointOptions =
-    useSelector(siteDetailsSelector)?.surveyPoints || [];
-
   React.useEffect(() => {
     if (!editing) {
       setEditSurveyPointId(pointId);
@@ -41,85 +30,53 @@ const MediaPointName = ({
   }, [editing, pointId, setEditSurveyPointId]);
 
   return (
-    <>
-      <NewSurveyPointDialog
-        siteId={siteId}
-        open={addSurveyPointDialogOpen}
-        onClose={() => setAddSurveyPointDialogOpen(false)}
-      />
-      <Grid container spacing={1} alignItems="baseline">
-        <Grid style={{ alignSelf: "end" }} item>
-          <Typography variant="h6">Survey Point: </Typography>
-        </Grid>
-        {editing ? (
-          <Grid item xs={10}>
-            <TextField
-              className={classes.textField}
-              select
-              id="surveyPoint"
-              name="surveyPoint"
-              onChange={(e) => setEditSurveyPointId(Number(e.target.value))}
-              value={editSurveyPointId}
-              variant="outlined"
-              fullWidth
-              inputProps={{
-                className: classes.textField,
-              }}
-            >
-              {surveyPointOptions.map((item) => (
-                <MenuItem
-                  className={classNames(classes.textField, classes.menuItem)}
-                  value={item.id}
-                  key={item.id}
-                >
-                  {item.name}
-                </MenuItem>
-              ))}
-              <MenuItem className={classes.textField}>
-                <AddIcon />
-                <Button
-                  style={{ color: "black" }}
-                  onClick={() => setAddSurveyPointDialogOpen(true)}
-                >
-                  Add new survey point
-                </Button>
-              </MenuItem>
-            </TextField>
-          </Grid>
-        ) : (
-          <Grid className={classes.surveyPointName} item>
-            {isNumber(pointId) ? (
-              <Tooltip title="View survey point" arrow placement="top">
-                <Link
-                  className={classes.link}
-                  to={`/sites/${encodeURIComponent(
-                    siteId
-                  )}/points/${encodeURIComponent(pointId)}`}
-                >
-                  <Typography
-                    className={classNames(classes.titleName, {
-                      [classes.selectedPoi]: pointName === selectedPoint,
-                    })}
-                    variant="h6"
-                  >
-                    {pointName}
-                  </Typography>
-                </Link>
-              </Tooltip>
-            ) : (
-              <Typography
-                className={classNames(classes.titleName, {
-                  [classes.selectedPoi]: pointName === selectedPoint,
-                })}
-                variant="h6"
-              >
-                {pointName}
-              </Typography>
-            )}
-          </Grid>
-        )}
+    <Grid container spacing={1} alignItems="baseline">
+      <Grid style={{ alignSelf: "end" }} item>
+        <Typography variant="h6">Survey Point: </Typography>
       </Grid>
-    </>
+      {editing ? (
+        <Grid item xs={10}>
+          <SurveyPointSelector
+            handleSurveyPointChange={(e) =>
+              setEditSurveyPointId(Number(e.target.value))
+            }
+            value={editSurveyPointId}
+            siteId={siteId}
+          />
+        </Grid>
+      ) : (
+        <Grid className={classes.surveyPointName} item>
+          {isNumber(pointId) ? (
+            <Tooltip title="View survey point" arrow placement="top">
+              <Link
+                className={classes.link}
+                to={`/sites/${encodeURIComponent(
+                  siteId
+                )}/points/${encodeURIComponent(pointId)}`}
+              >
+                <Typography
+                  className={classNames(classes.titleName, {
+                    [classes.selectedPoi]: pointName === selectedPoint,
+                  })}
+                  variant="h6"
+                >
+                  {pointName}
+                </Typography>
+              </Link>
+            </Tooltip>
+          ) : (
+            <Typography
+              className={classNames(classes.titleName, {
+                [classes.selectedPoi]: pointName === selectedPoint,
+              })}
+              variant="h6"
+            >
+              {pointName}
+            </Typography>
+          )}
+        </Grid>
+      )}
+    </Grid>
   );
 };
 
@@ -151,20 +108,6 @@ const styles = (theme: Theme) =>
     },
     selectedPoi: {
       color: theme.palette.primary.main,
-    },
-    textField: {
-      color: "black",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: theme.palette.primary.main,
-      },
-    },
-    menuItem: {
-      overflowWrap: "break-word",
-      display: "block",
-      whiteSpace: "unset",
     },
   });
 

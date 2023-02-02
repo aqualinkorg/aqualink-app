@@ -18,14 +18,12 @@ import CloseIcon from "@material-ui/icons/Close";
 import Dropzone, { FileRejection } from "react-dropzone";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-
 import MediaCard from "./MediaCard";
 import uploadServices from "../../../services/uploadServices";
 import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
 import { SurveyMediaData } from "../../../store/Survey/types";
-import { siteDetailsSelector } from "../../../store/Sites/selectedSiteSlice";
 import { SurveyPoints } from "../../../store/Sites/types";
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
@@ -42,8 +40,6 @@ const UploadMedia = ({
   const [metadata, setMetadata] = useState<Metadata[]>([]);
   const user = useSelector(userInfoSelector);
   const survey = useSelector(surveyDetailsSelector);
-  const surveyPointOptions =
-    useSelector(siteDetailsSelector)?.surveyPoints || [];
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -67,7 +63,7 @@ const UploadMedia = ({
         ...metadata,
         ...acceptedFiles.map(() => ({
           observation: null,
-          surveyPoint: "",
+          surveyPoint: undefined,
           comments: "",
         })),
       ]);
@@ -82,7 +78,7 @@ const UploadMedia = ({
       )?.id;
 
       const newMetadata = metadata.map((item, key) =>
-        key === index ? { ...item, surveyPoint: `${newPointId}` } : item
+        key === index ? { ...item, surveyPoint: newPointId } : item
       );
       setMetadata(newMetadata);
     };
@@ -119,7 +115,7 @@ const UploadMedia = ({
             url,
             thumbnailUrl,
             surveyPointId: metadata[index].surveyPoint
-              ? parseInt(metadata[index].surveyPoint, 10)
+              ? metadata[index].surveyPoint || 10
               : (undefined as unknown as number),
             observations: metadata[index].observation,
             comments: metadata[index].comments || undefined,
@@ -154,7 +150,7 @@ const UploadMedia = ({
 
   const handleSurveyPointChange = (index: number) => {
     return (event: ChangeEvent<{ value: unknown }>) => {
-      const surveyPoint = event.target.value as string;
+      const surveyPoint = Number(event.target.value);
       const newMetadata = metadata.map((item, key) => {
         if (key === index) {
           return {
@@ -208,9 +204,8 @@ const UploadMedia = ({
         index={index}
         preview={preview}
         file={files[index]}
-        surveyPointOptions={surveyPointOptions}
         handleSurveyPointOptionAdd={handleSurveyPointOptionAdd(index)}
-        surveyPoint={metadata?.[index]?.surveyPoint || ""}
+        surveyPoint={metadata?.[index]?.surveyPoint}
         observation={metadata?.[index]?.observation || ""}
         comments={metadata?.[index]?.comments || ""}
         deleteCard={deleteCard}
@@ -377,7 +372,7 @@ interface UploadMediaIncomingProps {
 }
 
 interface Metadata {
-  surveyPoint: string;
+  surveyPoint?: number;
   observation: SurveyMediaData["observations"];
   comments: string;
 }
