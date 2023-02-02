@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import Surveys from ".";
 import { mockUser } from "../../../mocks/mockUser";
-import { mockSurvey } from "../../../mocks/mockSurvey";
+import { mockSurveyList } from "../../../mocks/mockSurveyList";
 import { mockSite } from "../../../mocks/mockSite";
 
 const mockStore = configureStore([]);
@@ -16,7 +16,7 @@ describe("Surveys", () => {
   beforeEach(() => {
     const store = mockStore({
       surveyList: {
-        list: [mockSurvey],
+        list: [mockSurveyList],
         loading: false,
         error: null,
       },

@@ -11,10 +11,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import {
-  SurveyMedia,
-  SurveyMediaUpdateRequestData,
-} from "../../../../store/Survey/types";
+import { SurveyMediaUpdateRequestData } from "../../../../store/Survey/types";
 import {
   getNumberOfImages,
   getNumberOfVideos,
@@ -29,6 +26,7 @@ import { isAdmin } from "../../../../helpers/user";
 import SliderCard from "./SliderCard";
 import MediaCount from "./MediaCount";
 import MediaPointName from "./MediaPointName";
+import { ArrayElement } from "../../../../utils/types";
 
 const carouselSettings = {
   dots: true,
@@ -46,7 +44,11 @@ const carouselSettings = {
   ],
 };
 
-const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
+const MediaDetails = ({ siteId, point, classes }: MediaDetailsProps) => {
+  const [editing, setEditing] = React.useState(false);
+  const [editSurveyPointId, setEditSurveyPointId] = React.useState<
+    number | undefined
+  >(point.pointId);
   const user = useSelector(userInfoSelector);
   const selectedPoi = useSelector(selectedSurveyPointSelector);
   const dispatch = useDispatch();
@@ -62,47 +64,45 @@ const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
     }
   };
 
-  return (
-    <>
-      {surveyMedia &&
-        getSurveyPointsByName(surveyMedia).map((point) => {
-          const images = getNumberOfImages(point.surveyMedia);
-          const videos = getNumberOfVideos(point.surveyMedia);
+  const images = getNumberOfImages(point.surveyMedia);
+  const videos = getNumberOfVideos(point.surveyMedia);
 
-          return (
-            <div key={point.name}>
-              <Grid
-                className={classes.title}
-                container
-                spacing={1}
-                alignItems="center"
-              >
-                <Grid className={classes.surveyPointNameWrapper} item>
-                  <MediaPointName
-                    siteId={siteId}
-                    pointName={point.name}
-                    pointId={point.pointId}
-                    selectedPoint={selectedPoi}
-                  />
-                </Grid>
-                <Grid item>
-                  <MediaCount images={images} videos={videos} />
-                </Grid>
-              </Grid>
-              <Slider className={classes.carousel} {...carouselSettings}>
-                {point.surveyMedia.map((media) => (
-                  <SliderCard
-                    key={media.url}
-                    media={media}
-                    isSiteAdmin={isAdmin(user, siteId)}
-                    onSurveyMediaUpdate={onSurveyMediaUpdate}
-                  />
-                ))}
-              </Slider>
-            </div>
-          );
-        })}
-    </>
+  return (
+    <div key={point.name}>
+      <Grid className={classes.title} container spacing={1} alignItems="center">
+        <Grid className={classes.surveyPointNameWrapper} item>
+          <MediaPointName
+            siteId={siteId}
+            pointName={point.name}
+            pointId={point.pointId}
+            selectedPoint={selectedPoi}
+            editing={editing}
+            editSurveyPointId={editSurveyPointId}
+            setEditSurveyPointId={setEditSurveyPointId}
+          />
+        </Grid>
+        <Grid item>
+          <MediaCount images={images} videos={videos} />
+        </Grid>
+      </Grid>
+      <Slider
+        className={classes.carousel}
+        {...carouselSettings}
+        beforeChange={() => setEditing(false)}
+      >
+        {point.surveyMedia.map((media) => (
+          <SliderCard
+            key={media.url}
+            media={media}
+            editing={editing}
+            editSurveyPointId={editSurveyPointId}
+            setEditing={setEditing}
+            isSiteAdmin={isAdmin(user, siteId)}
+            onSurveyMediaUpdate={onSurveyMediaUpdate}
+          />
+        ))}
+      </Slider>
+    </div>
   );
 };
 
@@ -124,12 +124,8 @@ const styles = (theme: Theme) =>
 
 interface MediaDetailsIncomingProps {
   siteId: number;
-  surveyMedia?: SurveyMedia[] | null;
+  point: ArrayElement<ReturnType<typeof getSurveyPointsByName>>;
 }
-
-MediaDetails.defaultProps = {
-  surveyMedia: null,
-};
 
 type MediaDetailsProps = MediaDetailsIncomingProps & WithStyles<typeof styles>;
 

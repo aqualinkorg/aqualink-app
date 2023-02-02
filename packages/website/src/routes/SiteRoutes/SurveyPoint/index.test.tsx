@@ -8,7 +8,7 @@ import { mockSite } from "../../../mocks/mockSite";
 import { mockUser } from "../../../mocks/mockUser";
 
 import SurveyPoint from ".";
-import { mockSurvey } from "../../../mocks/mockSurvey";
+import { mockSurveyList } from "../../../mocks/mockSurveyList";
 import { mockDataRange } from "../../../mocks/mockDataRange";
 import { mockCollection } from "../../../mocks/mockCollection";
 
@@ -49,7 +49,7 @@ describe("Survey Point Detail Page", () => {
         loading: false,
       },
       surveyList: {
-        list: [mockSurvey],
+        list: [mockSurveyList],
       },
       collection: {
         details: mockCollection,

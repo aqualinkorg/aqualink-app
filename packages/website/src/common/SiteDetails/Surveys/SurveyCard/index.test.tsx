@@ -5,7 +5,7 @@ import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 import SurveyCard from ".";
 import { mockUser } from "../../../../mocks/mockUser";
-import { mockSurvey } from "../../../../mocks/mockSurvey";
+import { mockSurveyList } from "../../../../mocks/mockSurveyList";
 
 const mockStore = configureStore([]);
 
@@ -28,7 +28,7 @@ describe("Survey Card", () => {
             pointId={1}
             isAdmin
             siteId={0}
-            survey={mockSurvey}
+            survey={mockSurveyList}
           />
         </Router>
       </Provider>

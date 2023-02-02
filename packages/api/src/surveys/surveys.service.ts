@@ -345,7 +345,16 @@ export class SurveysService {
       ...(trimmedComments ? { comments: trimmedComments } : {}),
     });
 
-    const updated = await this.surveyMediaRepository.findOne(mediaId);
+    const updated = await this.surveyMediaRepository
+      .createQueryBuilder('survey_media')
+      .leftJoinAndMapOne(
+        'survey_media.surveyPoint',
+        'site_survey_point',
+        'point',
+        'point.id = survey_media.survey_point_id',
+      )
+      .where('survey_media.id = :mediaId', { mediaId })
+      .getOne();
 
     return updated!;
   }
