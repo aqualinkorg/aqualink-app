@@ -31,6 +31,7 @@ export enum SiteStatus {
   Deployed = 'deployed',
   Maintenance = 'maintenance',
   Lost = 'lost',
+  EndOfLife = 'end_of_life',
 }
 
 export enum SensorType {
