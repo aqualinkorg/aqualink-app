@@ -50,8 +50,8 @@ const menuRoutes = [
     gaActionLabel: "About",
   },
   {
-    text: "HIGHLIGHTED SITED",
-    href: "https://stories.aqualink.org",
+    text: "HIGHLIGHTED SITES",
+    href: "https://highlights.aqualink.org",
     gaActionLabel: "Highlighted Sites",
   },
   {
