@@ -85,7 +85,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           <mock-typography
             variant="h6"
           >
-            STORIES
+            HIGHLIGHTED SITED
           </mock-typography>
         </mock-button>
         <mock-button

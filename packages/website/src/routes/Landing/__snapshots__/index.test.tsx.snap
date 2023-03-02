@@ -85,7 +85,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           <mock-typography
             variant="h6"
           >
-            STORIES
+            HIGHLIGHTED SITED
           </mock-typography>
         </mock-button>
         <mock-button
