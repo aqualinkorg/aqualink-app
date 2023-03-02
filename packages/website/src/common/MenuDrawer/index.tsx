@@ -97,7 +97,9 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
             )
           }
         >
-          <Typography variant="h6">{text.toUpperCase()}</Typography>
+          <Typography variant="h6" style={{ textTransform: "uppercase" }}>
+            {text}
+          </Typography>
         </Button>
       ))}
       <Box marginTop="auto" padding="25px">
