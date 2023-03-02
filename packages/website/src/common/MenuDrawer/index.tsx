@@ -25,49 +25,40 @@ const darkBlue = "#095877";
 
 const menuRoutes = [
   {
-    text: "HOME",
+    text: "Home",
     to: "/",
-    gaActionLabel: "Home",
   },
   {
-    text: "MAP",
+    text: "Map",
     to: "/map",
-    gaActionLabel: "Map",
   },
   {
-    text: "BUOY",
+    text: "Buoy",
     to: "/buoy",
-    gaActionLabel: "Buoy",
   },
   {
-    text: "DRONE",
+    text: "Drone",
     to: "/drones",
-    gaActionLabel: "Drone",
   },
   {
-    text: "ABOUT",
+    text: "About",
     to: "/about",
-    gaActionLabel: "About",
   },
   {
-    text: "HIGHLIGHTED SITES",
+    text: "Highlighted Sites",
     href: "https://highlights.aqualink.org",
-    gaActionLabel: "Highlighted Sites",
   },
   {
-    text: "FAQ",
+    text: "Faq",
     to: "/faq",
-    gaActionLabel: "Faq",
   },
   {
-    text: "TRACK A HEATWAVE",
+    text: "Track a heatwave",
     to: "/tracker",
-    gaActionLabel: "Track a heatwave",
   },
   {
-    text: "REGISTER A SITE",
+    text: "Register a site",
     to: "/register",
-    gaActionLabel: "Register a site",
   },
 ];
 
@@ -90,7 +81,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       >
         <Clear />
       </IconButton>
-      {menuRoutes.map(({ text, to, href, gaActionLabel }) => (
+      {menuRoutes.map(({ text, to, href }) => (
         <Button
           className={classes.menuDrawerButton}
           key={text}
@@ -102,11 +93,11 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
             trackButtonClick(
               GaCategory.BUTTON_CLICK,
               GaAction.SIDE_MENU_BUTTON_CLICK,
-              gaActionLabel
+              text
             )
           }
         >
-          <Typography variant="h6">{text}</Typography>
+          <Typography variant="h6">{text.toUpperCase()}</Typography>
         </Button>
       ))}
       <Box marginTop="auto" padding="25px">
