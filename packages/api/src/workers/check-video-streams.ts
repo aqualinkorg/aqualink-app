@@ -70,16 +70,14 @@ export const getErrorMessage = (item: YouTubeVideoItem) => {
     return 'Video is not embeddable';
   }
 
-  if (!item.liveStreamingDetails) {
-    return 'Video is not a live stream';
-  }
+  if (item.liveStreamingDetails) {
+    if (item.liveStreamingDetails.actualEndTime) {
+      return 'The live stream has ended';
+    }
 
-  if (item.liveStreamingDetails.actualEndTime) {
-    return 'The live stream has ended';
-  }
-
-  if (!item.liveStreamingDetails.actualStartTime) {
-    return 'The live stream has not started yet';
+    if (!item.liveStreamingDetails.actualStartTime) {
+      return 'The live stream has not started yet';
+    }
   }
 
   return '';
