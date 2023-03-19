@@ -232,10 +232,11 @@ const SiteDetails = ({
           forcedAspectRatio={!!videoStream}
           loadingImage={playIcon}
         >
-          {site && site.sketchFab?.uuid && (
+          {/* video first, then 3d model, then image */}
+          {site && !videoStream && site.sketchFab?.uuid && (
             <SketchFab uuid={site.sketchFab.uuid} />
           )}
-          {site && !site.sketchFab?.uuid && (
+          {site && (videoStream || !site.sketchFab?.uuid) && (
             <FeaturedMedia
               siteId={site.id}
               url={videoStream}
