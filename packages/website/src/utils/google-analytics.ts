@@ -55,7 +55,12 @@ export const useGATagManager = () => {
 
 export const initGA = () => {
   ReactGA.initialize(GA_TRACKING_ID);
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  // TODO - test if custome page path is needed.
+  // ReactGA.send("pageview");
+  ReactGA.send({
+    hitType: "pageview",
+    page: window.location.pathname + window.location.search,
+  });
 };
 
 export enum GaCategory {
