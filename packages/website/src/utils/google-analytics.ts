@@ -1,5 +1,5 @@
 import React from "react";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const GA_TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID || "";
 if (process.env.IS_PROD && !GA_TRACKING_ID) {
