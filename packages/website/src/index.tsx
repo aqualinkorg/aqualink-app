@@ -13,6 +13,7 @@ import * as serviceWorker from "./serviceWorker";
 import requestsConfig from "./helpers/requests";
 import app from "./firebase";
 import { setToken } from "./store/User/userSlice";
+import { initGA } from "./utils/google-analytics";
 
 if (app) {
   app.auth().onAuthStateChanged((user) => {
@@ -46,6 +47,8 @@ if (app) {
     }
   });
 }
+
+initGA();
 
 ReactDOM.render(
   <>
