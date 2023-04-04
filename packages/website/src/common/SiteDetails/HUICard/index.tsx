@@ -28,27 +28,16 @@ const watchColor = "#e5bb2bd0";
 const warningColor = "#ef883cd0";
 const alertColor = "#dd143ed0";
 
-// TODO: Change these thresholds with some meaningful values
 const thresholds = {
-  bottomTemperature: {
-    good: 15,
-    watch: 20,
-    warning: 30,
-  },
   nitratePlusNitrite: {
-    good: 15,
-    watch: 20,
-    warning: 30,
-  },
-  salinity: {
-    good: 15,
-    watch: 20,
-    warning: 30,
+    good: 3.5,
+    watch: 30,
+    warning: 100,
   },
   turbidity: {
-    good: 3,
-    watch: 7,
-    warning: 12,
+    good: 1,
+    watch: 5,
+    warning: 10,
   },
 };
 
@@ -63,12 +52,8 @@ function getAlertColor(metric: HUICardMetrics, value?: number) {
   };
 
   switch (metric) {
-    case "ph":
-      return compare(thresholds.bottomTemperature);
     case "nitratePlusNitrite":
       return compare(thresholds.nitratePlusNitrite);
-    case "salinity":
-      return compare(thresholds.salinity);
     case "turbidity":
       return compare(thresholds.turbidity);
     default:
@@ -99,13 +84,11 @@ function HUICard({ data, classes }: HUICardProps) {
     {
       label: "pH",
       value: `${formatNumber(data?.ph?.value, 1)}`,
-      color: getAlertColor("ph", data?.ph?.value),
     },
     {
       label: "Salinity",
       value: `${formatNumber(data?.salinity?.value, 1)}`,
       unit: "psu",
-      color: getAlertColor("salinity", data?.salinity?.value),
     },
   ];
 
