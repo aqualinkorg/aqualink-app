@@ -26,7 +26,7 @@ import "./App.css";
 import "../../assets/css/bootstrap.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";
-import { initGA, useGATagManager } from "../../utils/google-analytics";
+import { useGATagManager } from "../../utils/google-analytics";
 import Terms from "../../routes/Terms";
 
 function App() {
@@ -49,7 +49,6 @@ function App() {
       });
     }
     setRender(true);
-    initGA();
   }, [dispatch]);
 
   return (

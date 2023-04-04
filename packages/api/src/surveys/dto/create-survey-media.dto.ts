@@ -22,6 +22,7 @@ export class CreateSurveyMediaDto {
   readonly url: string;
 
   @IsUrl()
+  @IsOptional()
   readonly thumbnailUrl?: string;
 
   @IsInt()

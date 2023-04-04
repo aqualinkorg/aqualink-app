@@ -204,6 +204,12 @@ const selectedSurvey = createSlice({
         const surveyMedia = state.details?.surveyMedia?.find(
           (x) => x.id === action.payload.id
         );
+        if (action.payload.featured) {
+          state.details?.surveyMedia?.forEach((media) => {
+            // eslint-disable-next-line fp/no-mutation, no-param-reassign
+            media.featured = false;
+          });
+        }
         // Here we mutate surveyMedia state instead of returning a new one, due to
         // the following strange behavior from redux + react:
         // <MediaDetails /> component renders <SliderCard /> by mapping surveyMedia redux state.
@@ -217,6 +223,8 @@ const selectedSurvey = createSlice({
           surveyMedia.featured = action.payload.featured;
           // eslint-disable-next-line fp/no-mutation
           surveyMedia.observations = action.payload.observations;
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.surveyPoint = action.payload.surveyPoint;
         }
         // eslint-disable-next-line fp/no-mutation, no-param-reassign
         state.loadingSurveyMediaEdit = false;

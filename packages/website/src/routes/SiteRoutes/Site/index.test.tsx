@@ -7,9 +7,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Site from ".";
 import { mockSite } from "../../../mocks/mockSite";
 import { mockUser } from "../../../mocks/mockUser";
-import { mockSurvey } from "../../../mocks/mockSurvey";
+import { mockSurveyList } from "../../../mocks/mockSurveyList";
 import { mockCollection } from "../../../mocks/mockCollection";
 import { mockDataRange } from "../../../mocks/mockDataRange";
+import { mockSurvey } from "../../../mocks/mockSurvey";
 
 const mockStore = configureStore([]);
 
@@ -97,7 +98,7 @@ describe("Site Detail Page", () => {
         error: null,
       },
       surveyList: {
-        list: [mockSurvey],
+        list: [mockSurveyList],
         loading: false,
         error: null,
       },

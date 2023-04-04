@@ -20,9 +20,10 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       to="/"
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        HOME
+        Home
       </mock-typography>
     </mock-button>
     <mock-button
@@ -31,9 +32,10 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       to="/map"
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        MAP
+        Map
       </mock-typography>
     </mock-button>
     <mock-button
@@ -42,9 +44,10 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       to="/buoy"
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        BUOY
+        Buoy
       </mock-typography>
     </mock-button>
     <mock-button
@@ -53,9 +56,10 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       to="/drones"
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        DRONE
+        Drone
       </mock-typography>
     </mock-button>
     <mock-button
@@ -64,22 +68,24 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       to="/about"
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        ABOUT
+        About
       </mock-typography>
     </mock-button>
     <mock-button
       classname="MenuDrawer-menuDrawerButton-3"
       component="mock-Link"
-      href="https://stories.aqualink.org"
+      href="https://highlights.aqualink.org"
       target="_blank"
       to=""
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        STORIES
+        Highlighted Sites
       </mock-typography>
     </mock-button>
     <mock-button
@@ -88,9 +94,10 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       to="/faq"
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        FAQ
+        Faq
       </mock-typography>
     </mock-button>
     <mock-button
@@ -99,9 +106,10 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       to="/tracker"
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        TRACK A HEATWAVE
+        Track a heatwave
       </mock-typography>
     </mock-button>
     <mock-button
@@ -110,9 +118,10 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       to="/register"
     >
       <mock-typography
+        style="text-transform: uppercase;"
         variant="h6"
       >
-        REGISTER A SITE
+        Register a site
       </mock-typography>
     </mock-button>
     <mock-box

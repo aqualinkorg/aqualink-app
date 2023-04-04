@@ -35,12 +35,11 @@ export interface SurveyMediaUpdateRequestData {
   hidden?: boolean;
   observations?: Observations;
   comments?: string;
-  surveyPoint?: SurveyPoint;
+  surveyPoint?: Partial<SurveyPoint>;
 }
 export interface SurveyPoint {
   id?: number;
   name: string;
-  surveyMedia: SurveyMedia[];
 }
 
 export interface SurveyPointUpdateParams {
