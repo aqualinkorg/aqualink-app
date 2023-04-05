@@ -54,6 +54,9 @@ export const useGATagManager = () => {
 };
 
 export const initGA = () => {
+  if (!GA_TRACKING_ID) {
+    return;
+  }
   ReactGA.initialize(GA_TRACKING_ID);
   // TODO - test if custome page path is needed.
   // ReactGA.send("pageview");
