@@ -23,6 +23,7 @@ export class TimeSeries {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Index()
   @Column({ nullable: false })
   timestamp: Date;
 
