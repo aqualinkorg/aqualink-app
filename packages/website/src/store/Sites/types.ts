@@ -87,6 +87,7 @@ export const metricsKeysList = [
   "barometric_pressure_top",
   "barometric_pressure_bottom",
   "barometric_pressure_top_diff",
+  "nitrate_plus_nitrite",
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];
@@ -106,7 +107,14 @@ type CamelCase<S extends string> =
 
 export type Metrics = CamelCase<MetricsKeys>;
 
-export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde" | "metlog";
+export type Sources =
+  | "spotter"
+  | "hobo"
+  | "noaa"
+  | "gfs"
+  | "sonde"
+  | "metlog"
+  | "hui";
 
 export type LatestDataASSofarValue = {
   [keys in Metrics]?: ValueWithTimestamp;

@@ -153,10 +153,6 @@ const styles = () =>
       flexGrow: 1,
       padding: 0,
     },
-    contentText: {
-      marginTop: "1rem",
-      padding: "0 1rem",
-    },
   });
 
 interface SatelliteIncomingProps {

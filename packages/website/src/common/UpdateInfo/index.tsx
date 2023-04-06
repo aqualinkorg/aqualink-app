@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Theme,
-  Grid,
-  Box,
-  Typography,
-  makeStyles,
-  useTheme,
-  useMediaQuery,
-} from "@material-ui/core";
+import { Theme, Grid, Box, Typography, makeStyles } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import UpdateIcon from "@material-ui/icons/Update";
 import Chip from "../Chip";
@@ -31,8 +23,6 @@ const UpdateInfo = ({
   onClick,
 }: UpdateInfoProps) => {
   const classes = useStyles({ chipWidth });
-  const theme = useTheme();
-  const smallChip = useMediaQuery(theme.breakpoints.only("md"));
   return (
     <Grid
       className={`${classes.updateInfo} ${withMargin && classes.withMargin}`}
@@ -41,7 +31,7 @@ const UpdateInfo = ({
       alignItems="center"
       item
     >
-      <Grid item className={classes.dateInfoWrapper}>
+      <Grid item className={classes.dateInfoWrapper} xs={8}>
         <Grid container alignItems="center" justify="center">
           <Grid item>
             <UpdateIcon className={classes.updateIcon} fontSize="small" />
@@ -67,18 +57,15 @@ const UpdateInfo = ({
           </Grid>
         </Grid>
       </Grid>
-      <Chip
-        live={live}
-        href={live ? undefined : href}
-        image={image}
-        imageText={imageText}
-        onClick={onClick}
-        width={
-          smallChip
-            ? chipWidth || CHIP_SMALL_DEFAULT_WIDTH
-            : chipWidth || CHIP_LARGE_DEFAULT_WIDTH
-        }
-      />
+      <Grid xs={4} style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Chip
+          live={live}
+          href={live ? undefined : href}
+          image={image}
+          imageText={imageText}
+          onClick={onClick}
+        />
+      </Grid>
     </Grid>
   );
 };
@@ -112,6 +99,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.only("md")]: {
       width: `calc(100% - ${chipWidth || CHIP_SMALL_DEFAULT_WIDTH}px)`,
     },
+    display: "flex",
+    justifyContent: "flex-start",
   }),
   dateInfo: {
     width: `calc(100% - ${UPDATE_ICON_RIGHT_MARGIN + UPDATE_ICON_SIZE}px)`,

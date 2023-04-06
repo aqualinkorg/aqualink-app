@@ -171,7 +171,7 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root makeStyles-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-16 MuiGrid-item"
+          class="MuiGrid-root makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-16 MuiGrid-item MuiGrid-grid-xs-8"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -207,26 +207,32 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-23 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-grid-xs-4"
+          style="display: flex; justify-content: flex-end;"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+            class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-23 MuiGrid-item"
           >
-            <mock-button
-              classname="makeStyles-button-22"
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
-              <a
-                class="makeStyles-link-20"
-                href="/sites/1"
-                target="_blank"
+              <mock-button
+                classname="makeStyles-button-22"
               >
-                <mock-typography
-                  classname="makeStyles-chipText-18"
+                <a
+                  class="makeStyles-link-20"
+                  href="/sites/1"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
-                  VIEW UPLOAD
-                </mock-typography>
-              </a>
-            </mock-button>
+                  <mock-typography
+                    classname="makeStyles-chipText-18"
+                  >
+                    VIEW UPLOAD
+                  </mock-typography>
+                </a>
+              </mock-button>
+            </div>
           </div>
         </div>
       </div>
