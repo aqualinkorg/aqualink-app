@@ -194,7 +194,7 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root makeStyles-updateInfo-19 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
-            class="MuiGrid-root makeStyles-dateInfoWrapper-23 makeStyles-dateInfoWrapper-25 MuiGrid-item"
+            class="MuiGrid-root makeStyles-dateInfoWrapper-23 makeStyles-dateInfoWrapper-25 MuiGrid-item MuiGrid-grid-xs-8"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -240,26 +240,32 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-chip-26 makeStyles-chip-32 MuiGrid-item"
+            class="MuiGrid-root MuiGrid-grid-xs-4"
+            style="display: flex; justify-content: flex-end;"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+              class="MuiGrid-root makeStyles-chip-26 makeStyles-chip-32 MuiGrid-item"
             >
-              <mock-button
-                classname="makeStyles-button-31"
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
               >
-                <a
-                  class="makeStyles-link-29"
-                  href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-                  target="_blank"
+                <mock-button
+                  classname="makeStyles-button-31"
                 >
-                  <mock-typography
-                    classname="makeStyles-chipText-27"
+                  <a
+                    class="makeStyles-link-29"
+                    href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
-                    SOFAR MODEL
-                  </mock-typography>
-                </a>
-              </mock-button>
+                    <mock-typography
+                      classname="makeStyles-chipText-27"
+                    >
+                      SOFAR MODEL
+                    </mock-typography>
+                  </a>
+                </mock-button>
+              </div>
             </div>
           </div>
         </div>

@@ -24,8 +24,9 @@ import {
 import UpdateInfo from "../../UpdateInfo";
 import requests from "../../../helpers/requests";
 import siteServices from "../../../services/siteServices";
+import { colors } from "../../../layout/App/theme";
 
-const CARD_BACKGROUND_COLOR = "#37A692";
+const CARD_BACKGROUND_COLOR = colors.greenCardColor;
 const METRICS: SondeMetricsKeys[] = [
   "odo_concentration",
   "cholorophyll_concentration",

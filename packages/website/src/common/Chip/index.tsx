@@ -12,7 +12,7 @@ import { grey, green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: ({ width }: { width: number }) => ({
+    chip: ({ width }: { width?: number }) => ({
       backgroundColor: grey[300],
       borderRadius: 8,
       height: 24,
@@ -61,7 +61,7 @@ interface ChipProps {
   liveText?: string;
   imageText?: string | null;
   image?: string | null;
-  width: number;
+  width?: number;
   onClick?: () => void;
 }
 
@@ -74,6 +74,7 @@ const LinkWrapper: FC<
       to={to || { pathname: href }}
       target={href ? "_blank" : undefined}
       className={className}
+      rel="noopener noreferrer"
     >
       {children}
     </Link>

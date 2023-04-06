@@ -10,3 +10,5 @@ export interface RegisterFormFields {
   emailAddress: string;
   password: string;
 }
+
+export type Extends<T, U extends T> = U;
