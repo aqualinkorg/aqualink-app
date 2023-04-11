@@ -2,6 +2,8 @@ import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { max, min, union } from 'lodash';
 import moment from 'moment';
+import { join } from 'path';
+import { readFileSync } from 'fs';
 import { TestService } from '../../test/test.service';
 import { athensSite, californiaSite } from '../../test/mock/site.mock';
 import { athensSurveyPointPiraeus } from '../../test/mock/survey-point.mock';
@@ -142,5 +144,19 @@ export const timeSeriesTests = () => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
       expect(rsp.body[metric][SourceType.SPOTTER].data.length).toBe(10);
     });
+  });
+
+  it('GET sample-upload-files/:source fetch sample data', async () => {
+    const expectedData = readFileSync(
+      join(process.cwd(), 'src/utils/uploads/hobo_data.csv'),
+      'utf-8',
+    );
+    const rsp = await request(app.getHttpServer())
+      .get('/time-series/sample-upload-files/hobo')
+      .set('Accept', 'text/plain');
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.headers['content-type']).toMatch(/^text\/plain/);
+    expect(rsp.text).toMatch(expectedData);
   });
 };
