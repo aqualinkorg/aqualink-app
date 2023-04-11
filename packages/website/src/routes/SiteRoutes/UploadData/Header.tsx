@@ -58,8 +58,8 @@ const Header = ({ site }: HeaderProps) => {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h6">
-          You&apos;re about to upload data for the following parameters: site “
-          {site.name}”.
+          You&apos;re about to upload data for the following parameters: site
+          &quot;{site.name}&quot;.
         </Typography>
         <Typography variant="h6">
           Please confirm survey point and sensor type to continue.
@@ -67,12 +67,16 @@ const Header = ({ site }: HeaderProps) => {
         <Typography style={{ fontSize: "0.8em" }}>
           You can find example file formats here:{" "}
           {exampleFiles.map((file, i) => (
-            <>
+            <span key={file.fileName}>
               <Button
                 className={classes.downloadButton}
                 onClick={() =>
                   downloadFile(
-                    `${process.env.REACT_APP_API_BASE_URL}/time-series/sample-upload-files/${file.source}`,
+                    `${
+                      process.env.REACT_APP_API_BASE_URL
+                    }/time-series/sample-upload-files/${encodeURIComponent(
+                      file.source
+                    )}`,
                     file.fileName
                   )
                 }
@@ -80,7 +84,7 @@ const Header = ({ site }: HeaderProps) => {
                 {file.source}
               </Button>
               {i !== exampleFiles.length - 1 ? ", " : ""}
-            </>
+            </span>
           ))}
         </Typography>
       </Grid>
