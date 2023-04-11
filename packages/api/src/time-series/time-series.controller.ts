@@ -12,6 +12,7 @@ import {
   UploadedFiles,
   Body,
   Res,
+  Header,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -162,6 +163,7 @@ export class TimeSeriesController {
 
   @ApiOperation({ summary: 'Get sample upload files' })
   @Get('sample-upload-files/:source')
+  @Header('Content-Type', 'text/plain')
   getSampleUploadFiles(
     @Param() surveyPointDataRangeDto: SampleUploadFilesDto,
     @Res() res: Response,
