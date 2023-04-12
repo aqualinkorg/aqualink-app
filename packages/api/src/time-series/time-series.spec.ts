@@ -153,10 +153,10 @@ export const timeSeriesTests = () => {
     );
     const rsp = await request(app.getHttpServer())
       .get('/time-series/sample-upload-files/hobo')
-      .set('Accept', 'text/plain');
+      .set('Accept', 'text/csv');
 
     expect(rsp.status).toBe(200);
-    expect(rsp.headers['content-type']).toMatch(/^text\/plain/);
+    expect(rsp.headers['content-type']).toMatch(/^text\/csv/);
     expect(rsp.text).toMatch(expectedData);
   });
 };

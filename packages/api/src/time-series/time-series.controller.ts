@@ -163,7 +163,7 @@ export class TimeSeriesController {
 
   @ApiOperation({ summary: 'Get sample upload files' })
   @Get('sample-upload-files/:source')
-  @Header('Content-Type', 'text/plain')
+  @Header('Content-Type', 'text/csv')
   getSampleUploadFiles(
     @Param() surveyPointDataRangeDto: SampleUploadFilesDto,
     @Res() res: Response,

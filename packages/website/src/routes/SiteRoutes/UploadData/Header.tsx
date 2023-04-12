@@ -14,7 +14,7 @@ function downloadFile(url: string, fileName: string) {
   fetch(url, {
     method: "GET",
     headers: {
-      "Content-Type": "text/plain",
+      "Content-Type": "text/csv",
     },
   })
     .then((response) => response.blob())
