@@ -1,5 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { MetricAsCamelcase } from '../../time-series/metrics.entity';
+import { KeysToCamelCase } from '../../utils/type-utils';
+import { Metric } from '../../time-series/metrics.entity';
+
+type MetricAsCamelcase = KeysToCamelCase<Record<Metric, number>>;
 
 type CollectionDataDtoType = Partial<
   Pick<
