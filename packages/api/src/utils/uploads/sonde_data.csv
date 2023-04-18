@@ -7,7 +7,7 @@ FILE CREATED:,12/8/2021 13:48,,,,,,,,,,,,,,,,,,,
 ,,,STANDARD DEVIATION:,0.02,0.08,426,0.173,10.3,0.61,0.01,33.8,22,0.77,0,0.005,0.04,2.5,0.37,0.03,0
 ,,,,,,,,,,,,,,,,,,,,
 ,,,SENSOR SERIAL NUMBER:,21D220761,21D220761,21B106083,21D104365,21F100019,21F100019,21B106083,21B106083,21B106083,21D220547,21D220547,21F101210,21D221471,21D221471,21B106083,21E102816,21E102816
-Date (MM/DD/YYYY),Time (HH:mm:ss),Time (Fract. Sec),Site Name,Chlorophyll RFU,Chlorophyll ug/L,Cond µS/cm,Depth m,ODO % sat,ODO mg/L,Sal psu,SpCond µS/cm,TDS mg/L,Turbidity FNU,TSS mg/L,Wiper Position volt,pH,pH mV,Temp °C,Battery V,Cable Pwr V
+Date (MM/DD/YYYY),Time (HH:mm:ss),Time (Fract. Sec),Site Name,Chlorophyll RFU,Chlorophyll ug/L,Cond ï¿½S/cm,Depth m,ODO % sat,ODO mg/L,Sal psu,SpCond ï¿½S/cm,TDS mg/L,Turbidity FNU,TSS mg/L,Wiper Position volt,pH,pH mV,Temp ï¿½C,Battery V,Cable Pwr V
 10/22/2021,13:45:00,0,West Bay,0.03,0.3,60698,7.999,116.7,7.21,36.58,55395.2,36007,4.15,0,1.185,8.16,-78.6,30.012,5.47,0
 10/22/2021,14:00:00,0,West Bay,0.08,0.5,60738.3,7.972,117.2,7.24,36.58,55387.70026,36002,5.68,0,1.187,8.16,-78.9,30.058,5.51,0
 10/22/2021,14:15:00,0,West Bay,0.06,0.42,60747.8,7.91,117.6,7.26,36.58,55391.20051,36004,2.23,0,1.191,8.16,-78.9,30.063,5.52,0
