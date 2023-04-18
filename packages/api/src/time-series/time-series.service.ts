@@ -205,11 +205,11 @@ export class TimeSeriesService {
         );
       case SourceType.METLOG:
         return createReadStream(
-          join(process.cwd(), 'src/utils/uploads/metlog_data.csv'),
+          join(process.cwd(), 'src/utils/uploads/metlog_data_simple.csv'),
         );
       case SourceType.SONDE:
         return createReadStream(
-          join(process.cwd(), 'src/utils/uploads/sonde_data.csv'),
+          join(process.cwd(), 'src/utils/uploads/sonde_data_simple.csv'),
         );
       default:
         throw new NotFoundException(
