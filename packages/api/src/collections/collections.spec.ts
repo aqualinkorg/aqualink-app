@@ -39,7 +39,7 @@ const collectionDtoToEntity = (dto: CreateCollectionDto) => ({
 
 const getLatestData = (data: DeepPartial<TimeSeries>[]) =>
   _(data)
-    .groupBy((o) => o.metric)
+    .groupBy((o) => _.camelCase(o.metric))
     .mapValues((o) => maxBy(o, (obj) => obj.timestamp)?.value)
     .toJSON();
 
