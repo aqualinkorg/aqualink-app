@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { camelCase } from 'lodash';
 import { Repository } from 'typeorm';
 import { DynamicCollection } from '../collections/collections.entity';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
@@ -37,7 +37,7 @@ export const getCollectionData = async (
       data.reduce<CollectionDataDto>((acc, siteData): CollectionDataDto => {
         return {
           ...acc,
-          [siteData.metric]: siteData.value,
+          [camelCase(siteData.metric)]: siteData.value,
         };
       }, {}),
     )

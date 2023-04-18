@@ -39,7 +39,7 @@ const collectionDtoToEntity = (dto: CreateCollectionDto) => ({
 
 const getLatestData = (data: DeepPartial<TimeSeries>[]) =>
   _(data)
-    .groupBy((o) => o.metric)
+    .groupBy((o) => _.camelCase(o.metric))
     .mapValues((o) => maxBy(o, (obj) => obj.timestamp)?.value)
     .toJSON();
 
@@ -234,7 +234,11 @@ export const collectionTests = () => {
 
     expect(sortedSites[0].collectionData).toStrictEqual(
       // Omit top and bottom temperature since hobo data are not included in collection data
-      omit(athensLatestData, Metric.TOP_TEMPERATURE, Metric.BOTTOM_TEMPERATURE),
+      omit(
+        athensLatestData,
+        _.camelCase(Metric.TOP_TEMPERATURE),
+        _.camelCase(Metric.BOTTOM_TEMPERATURE),
+      ),
     );
     expect(sortedSites[1].collectionData).toStrictEqual(californiaLatestData);
     expect(sortedSites[2].collectionData).toStrictEqual(floridaLatestData);

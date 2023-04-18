@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Bluebird from 'bluebird';
-import { groupBy, keyBy, mapValues } from 'lodash';
+import { camelCase, groupBy, keyBy, mapKeys, mapValues } from 'lodash';
 import { GeoJSON, Point } from 'geojson';
 import { IsNull, Not, Repository } from 'typeorm';
 import { Site, SensorType } from '../sites/sites.entity';
@@ -197,19 +197,21 @@ export class SensorsService {
       )
       .getOne();
 
-    if (!dailyData) {
+    if (!dailyData || !dailyData.satelliteTemperature) {
       return {};
     }
 
-    // Create a SensorData object that contains the data point
-    return {
+    // create object here to typecheck
+    const ret: SensorDataDto = {
       [SourceType.NOAA]: {
-        [Metric.SATELLITE_TEMPERATURE]: {
+        satelliteTemperature: {
           value: dailyData.satelliteTemperature,
           timestamp: dailyData.date,
         },
       },
     };
+
+    return ret;
   }
 
   private async getClosestTimeSeriesData(
@@ -271,7 +273,10 @@ export class SensorsService {
         // Keep only timestamps and value from the resulting objects
         [sourceMap[key].type]: mapValues(
           // Use key by to group the data by metric and keep only the last entry, i.e. the closest one
-          keyBy(groupedData[key], (grouped) => grouped.metric),
+          mapKeys(
+            keyBy(groupedData[key], (grouped) => grouped.metric),
+            (_v, k) => camelCase(k),
+          ),
           (v) => ({ timestamp: v.timestamp, value: v.value }),
         ),
       };
