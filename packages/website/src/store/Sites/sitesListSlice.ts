@@ -11,7 +11,6 @@ import type {
   UpdateSiteNameFromListArgs,
 } from './types';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
-import { mapCollectionData } from '../Collection/utils';
 import { getAxiosErrorMessage } from '../../helpers/errors';
 
 const sitesListInitialState: SitesListState = {
@@ -34,7 +33,7 @@ export const sitesRequest = createAsyncThunk<
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
-        collectionData: mapCollectionData(item.collectionData || {}),
+        collectionData: item.collectionData || {},
       }));
       return {
         list: transformedData,

@@ -1,7 +1,6 @@
 import { ApiPropertyOptions, getSchemaPath } from '@nestjs/swagger';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { TimeSeriesPoint } from '../time-series/dto/time-series-point.dto';
-import { Metric } from '../time-series/metrics.entity';
 
 export const sensorDataSchema: ApiPropertyOptions = {
   type: 'object',
@@ -9,10 +8,10 @@ export const sensorDataSchema: ApiPropertyOptions = {
     [SourceType.SPOTTER]: {
       type: 'object',
       properties: {
-        [Metric.BOTTOM_TEMPERATURE]: {
+        bottomTemperature: {
           $ref: getSchemaPath(TimeSeriesPoint),
         },
-        [Metric.TOP_TEMPERATURE]: {
+        topTemperature: {
           $ref: getSchemaPath(TimeSeriesPoint),
         },
       },
@@ -20,7 +19,7 @@ export const sensorDataSchema: ApiPropertyOptions = {
     [SourceType.HOBO]: {
       type: 'object',
       properties: {
-        [Metric.BOTTOM_TEMPERATURE]: {
+        bottomTemperature: {
           $ref: getSchemaPath(TimeSeriesPoint),
         },
       },
@@ -28,7 +27,7 @@ export const sensorDataSchema: ApiPropertyOptions = {
     [SourceType.NOAA]: {
       type: 'object',
       properties: {
-        [Metric.SATELLITE_TEMPERATURE]: {
+        satelliteTemperature: {
           $ref: getSchemaPath(TimeSeriesPoint),
         },
       },
