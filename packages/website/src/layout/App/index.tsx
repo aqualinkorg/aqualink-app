@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { ThemeProvider } from "@material-ui/core/styles";
+import React, { useState, useEffect } from 'react';
+import { ThemeProvider } from '@material-ui/core/styles';
 import {
   BrowserRouter as Router,
   Switch,
   Redirect,
   Route,
-} from "react-router-dom";
-import { useDispatch } from "react-redux";
+} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import NotFound from "../../routes/NotFound";
-import ErrorBoundary from "./ErrorBoundary";
-import LandingPage from "../../routes/Landing";
-import HomeMap from "../../routes/HomeMap";
-import SiteRoutes from "../../routes/SiteRoutes";
-import About from "../../routes/About";
-import RegisterSite from "../../routes/RegisterSite";
-import Buoy from "../../routes/Buoy";
-import Drones from "../../routes/Drones";
-import Faq from "../../routes/Faq";
-import Dashboard from "../../routes/Dashboard";
-import Tracker from "../../routes/Tracker";
-import theme from "./theme";
-import "leaflet/dist/leaflet.css";
-import "./App.css";
-import "../../assets/css/bootstrap.css";
-import { getSelf } from "../../store/User/userSlice";
-import app from "../../firebase";
-import { initGA, useGATagManager } from "../../utils/google-analytics";
-import Terms from "../../routes/Terms";
+import NotFound from '../../routes/NotFound';
+import ErrorBoundary from './ErrorBoundary';
+import LandingPage from '../../routes/Landing';
+import HomeMap from '../../routes/HomeMap';
+import SiteRoutes from '../../routes/SiteRoutes';
+import About from '../../routes/About';
+import RegisterSite from '../../routes/RegisterSite';
+import Buoy from '../../routes/Buoy';
+import Drones from '../../routes/Drones';
+import Faq from '../../routes/Faq';
+import Dashboard from '../../routes/Dashboard';
+import Tracker from '../../routes/Tracker';
+import theme from './theme';
+import 'leaflet/dist/leaflet.css';
+import './App.css';
+import '../../assets/css/bootstrap.css';
+import { getSelf } from '../../store/User/userSlice';
+import app from '../../firebase';
+import { useGATagManager } from '../../utils/google-analytics';
+import Terms from '../../routes/Terms';
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
@@ -49,7 +49,6 @@ function App() {
       });
     }
     setRender(true);
-    initGA();
   }, [dispatch]);
 
   return (

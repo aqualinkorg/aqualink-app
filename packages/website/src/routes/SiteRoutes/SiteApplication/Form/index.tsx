@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -7,18 +7,18 @@ import {
   Typography,
   TextField,
   Button,
-} from "@material-ui/core";
-import { useForm, Controller } from "react-hook-form";
+} from '@material-ui/core';
+import { useForm, Controller } from 'react-hook-form';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import moment from "moment";
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import moment from 'moment';
 import {
   SiteApplication,
   SiteApplyParams,
-} from "../../../../store/Sites/types";
+} from '../../../../store/Sites/types';
 
 interface SiteApplicationFormFields {
   siteName: string;
@@ -36,7 +36,7 @@ const Form = ({
   classes,
 }: FormProps) => {
   const [installationSchedule, setInstallationSchedule] = useState<Date | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Form = ({
     handleSubmit,
     control,
   } = useForm<SiteApplicationFormFields>({
-    reValidateMode: "onSubmit",
+    reValidateMode: 'onSubmit',
   });
 
   const handleInstallationChange = (date: Date | null) => {
@@ -69,7 +69,7 @@ const Form = ({
       };
       handleFormSubmit(data.siteName, params);
     },
-    [handleFormSubmit]
+    [handleFormSubmit],
   );
 
   return (
@@ -81,7 +81,7 @@ const Form = ({
         name="siteName"
         control={control}
         rules={{
-          required: "This is a required field",
+          required: 'This is a required field',
         }}
         render={({ field }) => (
           <TextField
@@ -94,7 +94,7 @@ const Form = ({
             disabled
             defaultValue={siteName}
             error={!!errors.siteName}
-            helperText={errors?.siteName?.message || ""}
+            helperText={errors?.siteName?.message || ''}
           />
         )}
       />
@@ -108,7 +108,7 @@ const Form = ({
         name="permitRequirements"
         control={control}
         rules={{
-          required: "This is a required field",
+          required: 'This is a required field',
         }}
         render={({ field }) => (
           <TextField
@@ -122,7 +122,7 @@ const Form = ({
             defaultValue={application?.permitRequirements || null}
             placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
             error={!!errors.permitRequirements}
-            helperText={errors?.permitRequirements?.message || ""}
+            helperText={errors?.permitRequirements?.message || ''}
           />
         )}
       />
@@ -132,7 +132,7 @@ const Form = ({
         name="fundingSource"
         control={control}
         rules={{
-          required: "This is a required field",
+          required: 'This is a required field',
         }}
         render={({ field }) => (
           <TextField
@@ -146,7 +146,7 @@ const Form = ({
             defaultValue={application?.fundingSource || null}
             placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
             error={!!errors.fundingSource}
-            helperText={errors?.fundingSource?.message || ""}
+            helperText={errors?.fundingSource?.message || ''}
           />
         )}
       />
@@ -161,10 +161,10 @@ const Form = ({
           name="installationSchedule"
           control={control}
           rules={{
-            required: "This is a required field",
+            required: 'This is a required field',
             validate: {
               validDate: (value) =>
-                moment(value, "MM/DD/YYYY", true).isValid() || "Invalid date",
+                moment(value, 'MM/DD/YYYY', true).isValid() || 'Invalid date',
             },
           }}
           render={({ field }) => (
@@ -175,7 +175,7 @@ const Form = ({
               id="installationSchedule"
               autoOk
               showTodayButton
-              helperText={errors?.installationSchedule?.message || ""}
+              helperText={errors?.installationSchedule?.message || ''}
               error={!!errors.installationSchedule}
               value={installationSchedule}
               ref={field.ref}
@@ -184,7 +184,7 @@ const Form = ({
                 handleInstallationChange(e);
               }}
               KeyboardButtonProps={{
-                "aria-label": "change date",
+                'aria-label': 'change date',
               }}
               inputProps={{
                 className: classes.textField,
@@ -202,7 +202,7 @@ const Form = ({
         name="installationResources"
         control={control}
         rules={{
-          required: "This is a required field",
+          required: 'This is a required field',
         }}
         render={({ field }) => (
           <TextField
@@ -216,7 +216,7 @@ const Form = ({
             defaultValue={application?.installationResources || null}
             placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
             error={!!errors.installationResources}
-            helperText={errors?.installationResources?.message || ""}
+            helperText={errors?.installationResources?.message || ''}
           />
         )}
       />
@@ -236,27 +236,27 @@ const Form = ({
 const styles = (theme: Theme) =>
   createStyles({
     form: {
-      marginBottom: "3rem",
+      marginBottom: '3rem',
     },
     formTitle: {
-      marginBottom: "2rem",
+      marginBottom: '2rem',
     },
     formField: {
-      marginBottom: "3rem",
+      marginBottom: '3rem',
     },
     additionalInfo: {
-      marginBottom: "3rem",
+      marginBottom: '3rem',
     },
     scheduleDescription: {
       fontWeight: 300,
-      marginBottom: "0.5rem",
+      marginBottom: '0.5rem',
     },
     textField: {
-      color: "black",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
+      color: 'black',
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'rgba(0, 0, 0, 0.23)',
       },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
       },
     },

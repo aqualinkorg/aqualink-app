@@ -1,5 +1,5 @@
-import React, { BaseSyntheticEvent, useEffect, useState } from "react";
-import isEmail from "validator/lib/isEmail";
+import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
+import isEmail from 'validator/lib/isEmail';
 import {
   withStyles,
   WithStyles,
@@ -15,16 +15,16 @@ import {
   Button,
   LinearProgress,
   Collapse,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import CloseIcon from "@material-ui/icons/Close";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
 import {
   SubmitErrorHandler,
   useForm,
   Controller,
   SubmitHandler,
-} from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+} from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   resetPassword,
@@ -33,10 +33,10 @@ import {
   userLoadingSelector,
   userErrorSelector,
   clearError,
-} from "../../store/User/userSlice";
-import { UserSignInParams } from "../../store/User/types";
-import dialogStyles from "../styles/dialogStyles";
-import { SignInFormFields } from "../types";
+} from '../../store/User/userSlice';
+import { UserSignInParams } from '../../store/User/types';
+import dialogStyles from '../styles/dialogStyles';
+import { SignInFormFields } from '../types';
 
 const SignInDialog = ({
   open,
@@ -49,7 +49,7 @@ const SignInDialog = ({
   const loading = useSelector(userLoadingSelector);
   const error = useSelector(userErrorSelector);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
-  const [passwordResetEmail, setPasswordResetEmail] = useState<string>("");
+  const [passwordResetEmail, setPasswordResetEmail] = useState<string>('');
   const {
     formState: { errors },
     handleSubmit,
@@ -57,7 +57,7 @@ const SignInDialog = ({
     clearErrors,
     control,
   } = useForm<SignInFormFields>({
-    reValidateMode: "onChange",
+    reValidateMode: 'onChange',
   });
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const SignInDialog = ({
 
   const onSubmit = (
     data: SignInFormFields,
-    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>,
   ) => {
     if (event) {
       event.preventDefault();
@@ -85,7 +85,7 @@ const SignInDialog = ({
 
   const onResetSubmitError: SubmitErrorHandler<SignInFormFields> = (
     err,
-    event
+    event,
   ) => {
     if (err.emailAddress) return;
     const values = getValues();
@@ -94,14 +94,14 @@ const SignInDialog = ({
 
   const onResetSubmitHandler: SubmitHandler<SignInFormFields> = (
     data,
-    event
+    event,
   ) => {
     resetPasswordHelper(data.emailAddress, event);
   };
 
   const resetPasswordHelper = (
     email?: string,
-    event?: BaseSyntheticEvent<object, any, any>
+    event?: BaseSyntheticEvent<object, any, any>,
   ) => {
     if (event) {
       event.preventDefault();
@@ -109,7 +109,7 @@ const SignInDialog = ({
     if (!email) return;
     dispatch(resetPassword({ email: email.toLowerCase() }));
     setPasswordResetEmail(email.toLowerCase());
-    clearErrors("password");
+    clearErrors('password');
   };
 
   const clearUserError = () => dispatch(clearError());
@@ -118,7 +118,7 @@ const SignInDialog = ({
     <Dialog
       onEnter={() => {
         clearUserError();
-        setPasswordResetEmail("");
+        setPasswordResetEmail('');
       }}
       open={open}
       maxWidth="xs"
@@ -173,7 +173,7 @@ const SignInDialog = ({
             </Alert>
           </Collapse>
         )}
-        <Collapse in={passwordResetEmail !== ""}>
+        <Collapse in={passwordResetEmail !== ''}>
           <Alert
             severity="success"
             action={
@@ -182,7 +182,7 @@ const SignInDialog = ({
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setPasswordResetEmail("");
+                  setPasswordResetEmail('');
                 }}
               >
                 <CloseIcon fontSize="inherit" />
@@ -212,7 +212,7 @@ const SignInDialog = ({
                     name="emailAddress"
                     control={control}
                     rules={{
-                      required: "This is a required field",
+                      required: 'This is a required field',
                       validate: (value) => isEmail(value),
                     }}
                     defaultValue=""
@@ -223,10 +223,10 @@ const SignInDialog = ({
                         placeholder="Email Address"
                         helperText={
                           (errors.emailAddress &&
-                            (errors.emailAddress.type === "validate"
-                              ? "Invalid email address"
+                            (errors.emailAddress.type === 'validate'
+                              ? 'Invalid email address'
                               : errors.emailAddress.message)) ||
-                          ""
+                          ''
                         }
                         label="Email Address"
                         error={!!errors.emailAddress}
@@ -242,7 +242,7 @@ const SignInDialog = ({
                     name="password"
                     control={control}
                     defaultValue=""
-                    rules={{ required: "This is a required field" }}
+                    rules={{ required: 'This is a required field' }}
                     render={({ field }) => (
                       <TextField
                         {...field}
@@ -250,12 +250,12 @@ const SignInDialog = ({
                         type="password"
                         placeholder="Password"
                         helperText={
-                          passwordResetEmail !== "" && errors.password
+                          passwordResetEmail !== '' && errors.password
                             ? errors.password.message
-                            : ""
+                            : ''
                         }
                         label="Password"
-                        error={passwordResetEmail !== "" && !!errors.password}
+                        error={passwordResetEmail !== '' && !!errors.password}
                         inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
@@ -268,7 +268,7 @@ const SignInDialog = ({
                     className={classes.forgotPasswordButton}
                     onClick={handleSubmit(
                       onResetSubmitHandler,
-                      onResetSubmitError
+                      onResetSubmitError,
                     )}
                   >
                     <Typography variant="subtitle2" color="textSecondary">
@@ -293,7 +293,7 @@ const SignInDialog = ({
                     variant="subtitle1"
                     color="textSecondary"
                   >
-                    Don&#39;t have an account?{" "}
+                    Don&#39;t have an account?{' '}
                     <Button
                       onClick={() => {
                         handleRegisterOpen(true);
@@ -318,8 +318,8 @@ const styles = () =>
   createStyles({
     ...dialogStyles,
     forgotPasswordButton: {
-      color: "inherit",
-      textDecoration: "none",
+      color: 'inherit',
+      textDecoration: 'none',
     },
   });
 

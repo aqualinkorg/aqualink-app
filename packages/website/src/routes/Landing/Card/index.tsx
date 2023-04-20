@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -9,12 +9,12 @@ import {
   GridProps,
   CardMedia,
   Theme,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   (
     { title, text, backgroundColor, direction, image, scaleDown, classes },
-    ref
+    ref,
   ) => {
     const titleOnly = !text;
 
@@ -28,7 +28,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
                   <Typography
                     className={classes.cardTitle}
                     variant="h5"
-                    align={titleOnly ? "center" : "inherit"}
+                    align={titleOnly ? 'center' : 'inherit'}
                   >
                     {title}
                   </Typography>
@@ -49,32 +49,32 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         </Box>
       </div>
     );
-  }
+  },
 );
 
 const styles = (theme: Theme) =>
   createStyles({
     container: {
-      marginTop: "5rem",
-      [theme.breakpoints.down("sm")]: {
-        marginTop: "2rem",
+      marginTop: '5rem',
+      [theme.breakpoints.down('sm')]: {
+        marginTop: '2rem',
       },
     },
     textContainer: {
-      padding: "4rem",
-      [theme.breakpoints.down("sm")]: {
-        padding: "1rem",
+      padding: '4rem',
+      [theme.breakpoints.down('sm')]: {
+        padding: '1rem',
       },
     },
     cardTitle: {
       fontWeight: 500,
     },
     cardImage: {
-      height: "100%",
+      height: '100%',
     },
     cardImageScaleDown: {
-      height: "100%",
-      objectFit: "scale-down",
+      height: '100%',
+      objectFit: 'scale-down',
     },
   });
 
@@ -82,7 +82,7 @@ export interface CardIncomingProps {
   title: string;
   text?: string;
   backgroundColor: string;
-  direction: GridProps["direction"];
+  direction: GridProps['direction'];
   image: string;
   scaleDown?: boolean;
 }

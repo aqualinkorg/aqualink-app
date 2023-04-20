@@ -1,18 +1,18 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import MediaDetails from ".";
-import { mockUser } from "../../../../mocks/mockUser";
-import { mockSurvey } from "../../../../mocks/mockSurvey";
-import { mockSite } from "../../../../mocks/mockSite";
-import { getSurveyPointsByName } from "../../../../helpers/surveyMedia";
-import { SurveyMedia } from "../../../../store/Survey/types";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import MediaDetails from '.';
+import { mockUser } from '../../../../mocks/mockUser';
+import { mockSurvey } from '../../../../mocks/mockSurvey';
+import { mockSite } from '../../../../mocks/mockSite';
+import { getSurveyPointsByName } from '../../../../helpers/surveyMedia';
+import { SurveyMedia } from '../../../../store/Survey/types';
 
 const mockStore = configureStore([]);
 
-describe("Terms page", () => {
+describe('Terms page', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -30,7 +30,7 @@ describe("Terms page", () => {
     });
 
     const points = getSurveyPointsByName(
-      mockSurvey.surveyMedia as unknown as SurveyMedia[]
+      mockSurvey.surveyMedia as unknown as SurveyMedia[],
     );
 
     element = render(
@@ -38,11 +38,11 @@ describe("Terms page", () => {
         <Router>
           <MediaDetails siteId={mockSite.id} point={points[0]} />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

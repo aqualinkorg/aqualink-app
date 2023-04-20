@@ -1,18 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { AxiosError, AxiosResponse } from "axios";
-import "./index.css";
-import "leaflet/dist/leaflet.css";
-import "./assets/css/bootstrap.css";
-import jwt from "jsonwebtoken";
-import { Provider } from "react-redux";
-import { SnackbarProvider } from "notistack";
-import App from "./layout/App";
-import { store } from "./store/configure";
-import * as serviceWorker from "./serviceWorker";
-import requestsConfig from "./helpers/requests";
-import app from "./firebase";
-import { setToken } from "./store/User/userSlice";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AxiosError, AxiosResponse } from 'axios';
+import './index.css';
+import 'leaflet/dist/leaflet.css';
+import './assets/css/bootstrap.css';
+import jwt from 'jsonwebtoken';
+import { Provider } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
+import App from './layout/App';
+import { store } from './store/configure';
+import * as serviceWorker from './serviceWorker';
+import requestsConfig from './helpers/requests';
+import app from './firebase';
+import { setToken } from './store/User/userSlice';
+import { initGA } from './utils/google-analytics';
 
 if (app) {
   app.auth().onAuthStateChanged((user) => {
@@ -41,11 +42,13 @@ if (app) {
             return Promise.reject(error);
           }
           return Promise.reject(error);
-        }
+        },
       );
     }
   });
 }
+
+initGA();
 
 ReactDOM.render(
   <>
@@ -55,7 +58,7 @@ ReactDOM.render(
       </SnackbarProvider>
     </Provider>
   </>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

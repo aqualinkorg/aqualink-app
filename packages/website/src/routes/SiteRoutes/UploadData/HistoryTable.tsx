@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   makeStyles,
@@ -11,30 +11,30 @@ import {
   TableHead,
   TableRow,
   TypographyProps,
-} from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
-import { startCase } from "lodash";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import { Site, SiteUploadHistory } from "../../../store/Sites/types";
-import requests from "../../../helpers/requests";
-import { pluralize } from "../../../helpers/stringUtils";
-import DeleteButton from "../../../common/DeleteButton";
+} from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { startCase } from 'lodash';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { Site, SiteUploadHistory } from '../../../store/Sites/types';
+import requests from '../../../helpers/requests';
+import { pluralize } from '../../../helpers/stringUtils';
+import DeleteButton from '../../../common/DeleteButton';
 
 const tableHeaderTitles = [
-  "NAME",
-  "TIMEZONE",
-  "SITE",
-  "SURVEY POINT",
-  "SENSOR TYPE",
-  "UPLOAD DATE",
-  "DATA RANGE",
-  "",
+  'NAME',
+  'TIMEZONE',
+  'SITE',
+  'SURVEY POINT',
+  'SENSOR TYPE',
+  'UPLOAD DATE',
+  'DATA RANGE',
+  '',
 ];
 
 const tableCellTypographyProps: TypographyProps = {
-  color: "textSecondary",
-  variant: "subtitle2",
+  color: 'textSecondary',
+  variant: 'subtitle2',
 };
 
 const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
@@ -44,12 +44,12 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
   const timezoneAbbreviation = timezone
     ? moment().tz(timezone).zoneAbbr()
     : undefined;
-  const dateFormat = "MM/DD/YYYY";
+  const dateFormat = 'MM/DD/YYYY';
 
   const dataVisualizationButtonLink = (
     start: string,
     end: string,
-    surveyPoint: number
+    surveyPoint: number,
   ) =>
     `/sites/${site.id}${requests.generateUrlQueryParams({
       start,
@@ -65,7 +65,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
     <div className={classes.root}>
       <div>
         <Typography variant="h6" gutterBottom>
-          {nUploads} {pluralize(nUploads, "file")} previously uploaded
+          {nUploads} {pluralize(nUploads, 'file')} previously uploaded
         </Typography>
       </div>
       <TableContainer>
@@ -113,14 +113,14 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                         to={dataVisualizationButtonLink(
                           minDate,
                           maxDate,
-                          surveyPoint.id
+                          surveyPoint.id,
                         )}
                         size="small"
                         variant="outlined"
                         color="primary"
                         className={classes.dateIntervalButton}
                       >
-                        {moment(minDate).format(dateFormat)} -{" "}
+                        {moment(minDate).format(dateFormat)} -{' '}
                         {moment(maxDate).format(dateFormat)}
                       </Button>
                     </TableCell>
@@ -131,14 +131,14 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                           <Typography color="textSecondary">
                             Are you sure you want to delete file &quot;
                             <span className={classes.bold}>{file}</span>&quot;?
-                            Data between dates{" "}
+                            Data between dates{' '}
                             <span className={classes.bold}>
-                              {moment(minDate).format("MM/DD/YYYY HH:mm")}
-                            </span>{" "}
-                            and{" "}
+                              {moment(minDate).format('MM/DD/YYYY HH:mm')}
+                            </span>{' '}
+                            and{' '}
                             <span className={classes.bold}>
-                              {moment(maxDate).format("MM/DD/YYYY HH:mm")}
-                            </span>{" "}
+                              {moment(maxDate).format('MM/DD/YYYY HH:mm')}
+                            </span>{' '}
                             will be lost.
                           </Typography>
                         }
@@ -146,7 +146,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                     </TableCell>
                   </TableRow>
                 );
-              }
+              },
             )}
           </TableBody>
         </Table>
@@ -170,7 +170,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 700,
   },
   dateIntervalButton: {
-    whiteSpace: "nowrap",
+    whiteSpace: 'nowrap',
   },
 }));
 

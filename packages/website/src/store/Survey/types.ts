@@ -9,15 +9,15 @@ interface publicUser {
 }
 
 export type Observations =
-  | "healthy"
-  | "possible-disease"
-  | "evident-disease"
-  | "mortality"
-  | "environmental"
-  | "anthropogenic"
-  | "invasive-species";
+  | 'healthy'
+  | 'possible-disease'
+  | 'evident-disease'
+  | 'mortality'
+  | 'environmental'
+  | 'anthropogenic'
+  | 'invasive-species';
 
-type WeatherConditions = "calm" | "waves" | "storm";
+type WeatherConditions = 'calm' | 'waves' | 'storm';
 
 export interface SurveyMedia {
   id: number;
@@ -26,7 +26,7 @@ export interface SurveyMedia {
   featured: boolean;
   observations: Observations;
   comments: string | null;
-  type: "image" | "video";
+  type: 'image' | 'video';
   surveyPoint?: SurveyPoint;
 }
 

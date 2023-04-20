@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -19,31 +19,31 @@ import {
   useMediaQuery,
   Divider,
   LinearProgress,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
-import DashboardTwoToneIcon from "@material-ui/icons/DashboardTwoTone";
-import MenuIcon from "@material-ui/icons/Menu";
-import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { sortBy } from "lodash";
-import { useSelector, useDispatch } from "react-redux";
-import classNames from "classnames";
+} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
+import MenuIcon from '@material-ui/icons/Menu';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { sortBy } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
-import RegisterDialog from "../RegisterDialog";
-import SignInDialog from "../SignInDialog";
-import Search from "../Search";
-import RouteButtons from "../RouteButtons";
-import MenuDrawer from "../MenuDrawer";
-import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
+import RegisterDialog from '../RegisterDialog';
+import SignInDialog from '../SignInDialog';
+import Search from '../Search';
+import RouteButtons from '../RouteButtons';
+import MenuDrawer from '../MenuDrawer';
+import { userInfoSelector, signOutUser } from '../../store/User/userSlice';
 import {
   clearCollection,
   collectionDetailsSelector,
-} from "../../store/Collection/collectionSlice";
+} from '../../store/Collection/collectionSlice';
 import {
   unsetLatestData,
   unsetSpotterPosition,
   unsetSelectedSite,
-} from "../../store/Sites/selectedSiteSlice";
+} from '../../store/Sites/selectedSiteSlice';
 
 const NavBar = ({
   searchLocation,
@@ -56,7 +56,7 @@ const NavBar = ({
   const storedCollection = useSelector(collectionDetailsSelector);
   const dispatch = useDispatch();
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.up("md"));
+  const isTablet = useMediaQuery(theme.breakpoints.up('md'));
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [menuDrawerOpen, setMenuDrawerOpen] = useState<boolean>(false);
@@ -128,7 +128,7 @@ const NavBar = ({
                   <Typography color="textPrimary" variant="h4">
                     Aqua
                   </Typography>
-                  <Typography style={{ color: "#8AC6DE" }} variant="h4">
+                  <Typography style={{ color: '#8AC6DE' }} variant="h4">
                     link
                   </Typography>
                 </MuiLink>
@@ -156,7 +156,7 @@ const NavBar = ({
               {user ? (
                 <>
                   <Box display="flex" flexWrap="nowrap" alignItems="center">
-                    {user.fullName ? user.fullName : "My Profile"}
+                    {user.fullName ? user.fullName : 'My Profile'}
                     <IconButton
                       className={classes.button}
                       onClick={handleClick}
@@ -173,7 +173,7 @@ const NavBar = ({
                       MenuListProps={{ className: classes.userMenu }}
                       PopoverClasses={{ paper: classes.userMenuWrapper }}
                     >
-                      {sortBy(user.administeredSites, "id").map(
+                      {sortBy(user.administeredSites, 'id').map(
                         ({ id, name, region }, index) => {
                           const siteIdentifier = name || region;
                           return (
@@ -190,7 +190,7 @@ const NavBar = ({
                               </MenuItem>
                             </Link>
                           );
-                        }
+                        },
                       )}
                       <Divider className={classes.userMenuDivider} />
                       <Link to="/dashboard" className={classes.menuItemLink}>
@@ -267,19 +267,19 @@ const styles = (theme: Theme) =>
   createStyles({
     appBar: {
       height: 64,
-      "&.MuiPaper-root": {
+      '&.MuiPaper-root': {
         backgroundColor: theme.palette.primary.main,
       },
     },
     navBarLink: {
-      display: "flex",
-      textDecoration: "none",
-      "&:hover": {
-        textDecoration: "none",
+      display: 'flex',
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'none',
       },
     },
     appBarXs: {
-      [theme.breakpoints.only("xs")]: {
+      [theme.breakpoints.only('xs')]: {
         height: 122,
       },
     },
@@ -288,40 +288,40 @@ const styles = (theme: Theme) =>
     },
     userMenuWrapper: {
       marginTop: 36,
-      border: "1px solid rgba(0, 0, 0, 0.12)",
+      border: '1px solid rgba(0, 0, 0, 0.12)',
       maxWidth: 275,
     },
     userMenuDivider: {
-      margin: "4px 0",
+      margin: '4px 0',
     },
     userMenu: {
-      padding: "4px 0",
+      padding: '4px 0',
     },
     menuItem: {
       margin: 0,
       color: theme.palette.text.secondary,
       fontSize: 14,
-      display: "block",
-      overflowWrap: "break-word",
-      whiteSpace: "unset",
-      "&:hover": {
-        backgroundColor: "rgba(22, 141, 189, 0.8)",
+      display: 'block',
+      overflowWrap: 'break-word',
+      whiteSpace: 'unset',
+      '&:hover': {
+        backgroundColor: 'rgba(22, 141, 189, 0.8)',
         color: theme.palette.text.primary,
       },
-      minHeight: "auto",
+      minHeight: 'auto',
     },
     menuItemLink: {
-      textDecoration: "none",
-      "&:hover": {
-        textDecoration: "none",
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'none',
       },
     },
     expandIcon: {
-      color: "#ffffff",
+      color: '#ffffff',
     },
     button: {
       padding: theme.spacing(1),
-      marginLeft: "1rem",
+      marginLeft: '1rem',
     },
   });
 

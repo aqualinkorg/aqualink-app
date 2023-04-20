@@ -1,21 +1,21 @@
-import React from "react";
-import classNames from "classnames";
+import React from 'react';
+import classNames from 'classnames';
 import DefaultDropzone, {
   DropzoneProps as DefaultDropzoneProps,
-} from "react-dropzone";
-import { makeStyles, Theme, Grid, Typography, Button } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import { grey } from "@material-ui/core/colors";
+} from 'react-dropzone';
+import { makeStyles, Theme, Grid, Typography, Button } from '@material-ui/core';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import { grey } from '@material-ui/core/colors';
 
 const GREY_COLOR = grey[500];
 const MAX_SIZE_MB = 10;
 const ACCEPTED_TYPES = [
-  { extension: "xls", mimeType: "application/vnd.ms-excel" },
-  { extension: "csv", mimeType: "text/csv" },
+  { extension: 'xls', mimeType: 'application/vnd.ms-excel' },
+  { extension: 'csv', mimeType: 'text/csv' },
   {
-    extension: "xlsx",
+    extension: 'xlsx',
     mimeType:
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   },
 ];
 
@@ -88,9 +88,9 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
               display="block"
               align="center"
             >
-              Supported format:{" "}
+              Supported format:{' '}
               {ACCEPTED_TYPES.map(({ extension }) => `.${extension}`).join(
-                ", "
+                ', ',
               )}
             </Typography>
             <Typography
@@ -115,22 +115,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: 10,
     backgroundColor: fade(theme.palette.primary.main, 0.1),
     padding: theme.spacing(4),
-    "&:hover": {
-      cursor: "pointer",
+    '&:hover': {
+      cursor: 'pointer',
       backgroundColor: fade(theme.palette.primary.main, 0.15),
     },
     transition: theme.transitions.create(
-      ["background-color", "box-shadow", "border"],
+      ['background-color', 'box-shadow', 'border'],
       {
-        duration: "250ms",
-        delay: "0ms",
-        easing: "cubic-bezier(0.4, 0, 0.2, 1)",
-      }
+        duration: '250ms',
+        delay: '0ms',
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
     ),
   },
   disabled: {
     opacity: 0.5,
-    pointerEvents: "none",
+    pointerEvents: 'none',
     borderColor: GREY_COLOR,
     color: GREY_COLOR,
     backgroundColor: fade(GREY_COLOR, 0.1),
@@ -148,7 +148,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface DropZoneProps {
   disabled: boolean;
-  onFilesDrop: DefaultDropzoneProps["onDropAccepted"];
+  onFilesDrop: DefaultDropzoneProps['onDropAccepted'];
 }
 
 export default DropZone;

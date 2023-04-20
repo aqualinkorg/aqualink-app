@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Card,
   Grid,
@@ -6,11 +6,11 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-} from "@material-ui/core";
-import { Popup } from "react-leaflet";
+} from '@material-ui/core';
+import { Popup } from 'react-leaflet';
 
-import { SurveyPoints } from "../../../../store/Sites/types";
-import Link from "../../../Link";
+import { SurveyPoints } from '../../../../store/Sites/types';
+import Link from '../../../Link';
 
 const SurveyPointPopup = ({
   siteId,
@@ -27,7 +27,7 @@ const SurveyPointPopup = ({
           item
           spacing={2}
         >
-          <Grid title={point.name || ""} item className={classes.nameWrapper}>
+          <Grid title={point.name || ''} item className={classes.nameWrapper}>
             <Typography
               className={classes.name}
               variant="h6"
@@ -58,10 +58,10 @@ const styles = () =>
       padding: 16,
     },
     nameWrapper: {
-      maxWidth: "80%",
+      maxWidth: '80%',
     },
     name: {
-      overflowWrap: "break-word",
+      overflowWrap: 'break-word',
     },
   });
 

@@ -1,13 +1,13 @@
-const { Chart } = require("react-chartjs-2");
+const { Chart } = require('react-chartjs-2');
 /**
  * Adds the subtle alternating rectangles in the background of the chart
  */
 const plugin = {
-  id: "chartJsPluginBarchartBackground",
+  id: 'chartJsPluginBarchartBackground',
   beforeDraw(chart: any, _easingValue: any, options: any) {
-    const xScale = chart.scales["x-axis-0"];
+    const xScale = chart.scales['x-axis-0'];
     const ticksPositions = xScale.ticks.map((_: any, index: number) =>
-      xScale.getPixelForTick(index)
+      xScale.getPixelForTick(index),
     );
     const { ctx, chartArea } = chart;
     const chartHeight = chartArea.bottom - chartArea.top;
@@ -18,7 +18,7 @@ const plugin = {
     ctx.fillStyle = options.color;
     if (options.xTicksFontWeight) {
       // eslint-disable-next-line no-param-reassign,fp/no-mutation
-      chart.scales["x-axis-0"].options.ticks.fontSize =
+      chart.scales['x-axis-0'].options.ticks.fontSize =
         (chartWidth * options.xTicksFontWeight) / 100;
     }
     const nTicks = ticksPositions.length;
@@ -37,7 +37,7 @@ const plugin = {
             start,
             chartArea.top,
             chartArea.right - start,
-            chartHeight
+            chartHeight,
           );
         }
       }

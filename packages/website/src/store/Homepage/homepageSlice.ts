@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { HomePageState } from "./types";
-import { Site } from "../Sites/types";
-import type { RootState } from "../configure";
+import { HomePageState } from './types';
+import { Site } from '../Sites/types';
+import type { RootState } from '../configure';
 
 const homepageInitialState: HomePageState = {
   siteOnMap: null,
@@ -10,7 +10,7 @@ const homepageInitialState: HomePageState = {
 };
 
 const homepageSlice = createSlice({
-  name: "homepage",
+  name: 'homepage',
   initialState: homepageInitialState,
   reducers: {
     setWithSpotterOnly: (state, action: PayloadAction<boolean>) => ({
@@ -19,7 +19,7 @@ const homepageSlice = createSlice({
     }),
     setSearchResult: (
       state,
-      action: PayloadAction<HomePageState["searchResult"]>
+      action: PayloadAction<HomePageState['searchResult']>,
     ) => ({
       ...state,
       searchResult: action.payload,
@@ -36,16 +36,16 @@ const homepageSlice = createSlice({
 });
 
 export const siteOnMapSelector = (
-  state: RootState
-): HomePageState["siteOnMap"] => state.homepage.siteOnMap;
+  state: RootState,
+): HomePageState['siteOnMap'] => state.homepage.siteOnMap;
 
 export const searchResultSelector = (
-  state: RootState
-): HomePageState["searchResult"] => state.homepage.searchResult;
+  state: RootState,
+): HomePageState['searchResult'] => state.homepage.searchResult;
 
 export const withSpotterOnlySelector = (
-  state: RootState
-): HomePageState["withSpotterOnly"] => state.homepage.withSpotterOnly;
+  state: RootState,
+): HomePageState['withSpotterOnly'] => state.homepage.withSpotterOnly;
 
 export const {
   setSearchResult,

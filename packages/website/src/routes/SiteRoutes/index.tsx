@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import Site from "./Site";
-import SiteApplication from "./SiteApplication";
-import SitesList from "./SitesList";
-import Surveys from "../Surveys";
-import SurveyPoint from "./SurveyPoint";
-import UploadData from "./UploadData";
-import StatusSnackbar from "../../common/StatusSnackbar";
-import UploadWarnings from "./UploadData/UploadWarnings";
-import { UploadTimeSeriesResult } from "../../services/uploadServices";
-import { setSelectedSite } from "../../store/Sites/selectedSiteSlice";
+import React, { useEffect, useState } from 'react';
+import { Switch, Route, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import Site from './Site';
+import SiteApplication from './SiteApplication';
+import SitesList from './SitesList';
+import Surveys from '../Surveys';
+import SurveyPoint from './SurveyPoint';
+import UploadData from './UploadData';
+import StatusSnackbar from '../../common/StatusSnackbar';
+import UploadWarnings from './UploadData/UploadWarnings';
+import { UploadTimeSeriesResult } from '../../services/uploadServices';
+import { setSelectedSite } from '../../store/Sites/selectedSiteSlice';
 import {
   clearUploadsError,
   clearUploadsFiles,
@@ -20,7 +20,7 @@ import {
   uploadsInProgressSelector,
   uploadsResponseSelector,
   uploadsTargetSelector,
-} from "../../store/uploads/uploadsSlice";
+} from '../../store/uploads/uploadsSlice';
 
 const SiteRoutes = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const SiteRoutes = () => {
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
     useState(false);
   const [uploadDetails, setUploadDetails] = useState<UploadTimeSeriesResult[]>(
-    []
+    [],
   );
   const uploadLoading = useSelector(uploadsInProgressSelector);
   const uploadError = useSelector(uploadsErrorSelector);
@@ -38,7 +38,7 @@ const SiteRoutes = () => {
   const uploadTarget = useSelector(uploadsTargetSelector);
 
   const hasWarnings = uploadDetails.some(
-    (data) => (data.ignoredHeaders?.length || 0) > 0
+    (data) => (data.ignoredHeaders?.length || 0) > 0,
   );
 
   const handleSnackbarClose = () => setIsUploadSnackbarOpen(false);
@@ -82,8 +82,8 @@ const SiteRoutes = () => {
       <StatusSnackbar
         open={isUploadSnackbarOpen}
         message="Successfully uploaded files"
-        severity={hasWarnings ? "warning" : "success"}
-        furtherActionLabel={hasWarnings ? "View details" : "Refresh page"}
+        severity={hasWarnings ? 'warning' : 'success'}
+        furtherActionLabel={hasWarnings ? 'View details' : 'Refresh page'}
         onFurtherActionTake={
           hasWarnings ? handleDetailsDialogOpen : handleRefreshOnSuccessUpload
         }
@@ -92,9 +92,9 @@ const SiteRoutes = () => {
       <StatusSnackbar
         open={isErrorSnackbarOpen}
         message={
-          typeof uploadError === "string"
+          typeof uploadError === 'string'
             ? uploadError
-            : "Something went wrong with the upload"
+            : 'Something went wrong with the upload'
         }
         furtherActionLabel="View details"
         onFurtherActionTake={onHandleUploadError}

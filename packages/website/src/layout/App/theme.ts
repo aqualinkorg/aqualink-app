@@ -1,23 +1,24 @@
-import { createMuiTheme, Theme } from "@material-ui/core/styles";
-import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
-import { MuiPickersOverrides } from "@material-ui/pickers/typings/overrides";
+import { createMuiTheme, Theme } from '@material-ui/core/styles';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
 
 type OverridesNameToClassKey = {
   [P in keyof Required<MuiPickersOverrides>]: keyof MuiPickersOverrides[P];
 };
 
-declare module "@material-ui/core/styles/overrides" {
+declare module '@material-ui/core/styles/overrides' {
   export interface ComponentNameToClassKey extends OverridesNameToClassKey {}
 }
 
-const skyBlue = "#009ee0";
-const lightBlue = "#168dbd";
-const lighterBlue = "#c0e1f0";
-const darkGreyBlue = "#2d3436";
-const black = "#2f2f2f";
-const white = "#ffffff";
-const lightGray = "#939393";
-const specialSensorColor = "#f78c21";
+const skyBlue = '#009ee0';
+const lightBlue = '#168dbd';
+const lighterBlue = '#c0e1f0';
+const darkGreyBlue = '#2d3436';
+const black = '#2f2f2f';
+const white = '#ffffff';
+const lightGray = '#939393';
+const specialSensorColor = '#f78c21';
+const greenCardColor = '#37a692';
 
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
@@ -29,6 +30,7 @@ export const colors = {
   darkGreyBlue,
   black,
   specialSensorColor,
+  greenCardColor,
 };
 
 const breakpoints = createBreakpoints({});
@@ -52,13 +54,13 @@ const theme: Theme = createMuiTheme({
     MuiAppBar: {
       root: {
         height: 122,
-        justifyContent: "center",
+        justifyContent: 'center',
         backgroundColor: lightBlue,
       },
     },
     MuiToolbar: {
       root: {
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
       },
       dense: {
         minHeight: 40,
@@ -69,7 +71,7 @@ const theme: Theme = createMuiTheme({
         fontSize: 52,
         fontFamily,
         fontWeight: 300,
-        [breakpoints.down("xs")]: {
+        [breakpoints.down('xs')]: {
           fontSize: 34,
         },
       },
@@ -77,7 +79,7 @@ const theme: Theme = createMuiTheme({
         fontSize: 48,
         fontFamily,
         fontWeight: 300,
-        [breakpoints.down("xs")]: {
+        [breakpoints.down('xs')]: {
           fontSize: 30,
         },
       },
@@ -89,7 +91,7 @@ const theme: Theme = createMuiTheme({
         fontSize: 26,
         fontFamily,
         fontWeight: 400,
-        [breakpoints.down("sm")]: {
+        [breakpoints.down('sm')]: {
           fontSize: 22,
         },
       },
@@ -117,16 +119,16 @@ const theme: Theme = createMuiTheme({
       overline: {
         fontSize: 8.5,
         fontFamily,
-        textTransform: "none",
+        textTransform: 'none',
       },
       gutterBottom: {
-        marginBottom: "1rem",
+        marginBottom: '1rem',
       },
     },
     MuiGrid: {
-      "spacing-xs-10": {
-        width: "100%",
-        margin: "0",
+      'spacing-xs-10': {
+        width: '100%',
+        margin: '0',
       },
     },
     MuiButton: {
@@ -142,14 +144,14 @@ const theme: Theme = createMuiTheme({
     },
     MuiButtonBase: {
       root: {
-        "&:focus": {
-          outline: "none",
+        '&:focus': {
+          outline: 'none',
         },
       },
     },
     MuiCardContent: {
       root: {
-        "&:last-child": {
+        '&:last-child': {
           paddingBottom: 0,
         },
       },
@@ -161,32 +163,32 @@ const theme: Theme = createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        height: "100%",
-        "& $disabled": {
-          backgroundColor: "#f5f5f5",
+        height: '100%',
+        '& $disabled': {
+          backgroundColor: '#f5f5f5',
         },
       },
     },
     MuiPickersDay: {
       day: {
-        color: "black",
+        color: 'black',
       },
     },
     MuiPickersCalendarHeader: {
       switchHeader: {
-        color: "black",
+        color: 'black',
       },
     },
     MuiPickersClockNumber: {
       clockNumber: {
-        color: "black",
+        color: 'black',
       },
     },
     MuiOutlinedInput: {
       root: {
         padding: 0,
-        color: "black",
-        "&$focused": {
+        color: 'black',
+        '&$focused': {
           borderColor: lightBlue,
         },
       },
