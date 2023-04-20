@@ -3,6 +3,8 @@ import { get, times } from 'lodash';
 import moment from 'moment';
 import { In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
+import { distance } from '@turf/turf';
+import { Point } from 'geojson';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { Metric } from '../time-series/metrics.entity';
@@ -17,6 +19,8 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
 import { getSources, refreshMaterializedView } from './time-series.utils';
+
+const MAX_DISTANCE_FROM_SITE = 50;
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -101,6 +105,7 @@ export const addSpotterData = async (
   siteIds: number[],
   days: number,
   repositories: Repositories,
+  skipDistanceCheck = false,
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
@@ -137,7 +142,7 @@ export const addSpotterData = async (
     (site) =>
       Bluebird.map(
         times(days),
-        (i) => {
+        async (i) => {
           const startDate = moment().subtract(i, 'd').startOf('day').toDate();
           const endDate = moment().subtract(i, 'd').endOf('day').toDate();
 
@@ -152,9 +157,34 @@ export const addSpotterData = async (
           );
 
           // Fetch spotter and wave data from sofar
-          return getSpotterData(site.sensorId, endDate, startDate).then(
-            (data) => excludeSpotterData(data, sensorExclusionDates),
-          );
+          const spotterData = await getSpotterData(
+            site.sensorId,
+            endDate,
+            startDate,
+          ).then((data) => excludeSpotterData(data, sensorExclusionDates));
+
+          if (
+            !skipDistanceCheck &&
+            spotterData?.latitude?.length &&
+            spotterData?.latitude[0].value &&
+            spotterData?.longitude?.length &&
+            spotterData?.longitude[0].value
+          ) {
+            // Check if spotter in within a specified distance from the site, else don't return any data.
+            const dist = distance(
+              (site.polygon as Point).coordinates,
+              [spotterData.longitude[0].value, spotterData.latitude[0].value],
+              { units: 'kilometers' },
+            );
+            if (dist > MAX_DISTANCE_FROM_SITE) {
+              logger.warn(
+                `Spotter is over ${MAX_DISTANCE_FROM_SITE}km from site ${site.id}`,
+              );
+              return DEFAULT_SPOTTER_DATA_VALUE;
+            }
+          }
+
+          return spotterData;
         },
         { concurrency: 100 },
       )
