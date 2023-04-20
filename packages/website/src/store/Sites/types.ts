@@ -251,9 +251,9 @@ export interface CollectionMetrics {
   sstAnomaly?: number;
 }
 
-export type CollectionDataResponse = Partial<Record<MetricsKeys, number>>;
+export type CollectionDataResponse = Partial<Record<Metrics, number>>;
 
-export type CollectionData = Partial<Record<Metrics, number>>;
+export type CollectionData = CollectionDataResponse;
 
 export interface Site {
   id: number;
