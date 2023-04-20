@@ -1,15 +1,15 @@
-import React from "react";
-import { render } from "@testing-library/react";
+import React from 'react';
+import { render } from '@testing-library/react';
 
-import Form from ".";
+import Form from '.';
 
-jest.mock("@material-ui/pickers", () => ({
-  MuiPickersUtilsProvider: () => "Mock-MuiPickersUtilsProvider",
+jest.mock('@material-ui/pickers', () => ({
+  MuiPickersUtilsProvider: () => 'Mock-MuiPickersUtilsProvider',
 }));
 
-test("renders as expected", () => {
+test('renders as expected', () => {
   const { container } = render(
-    <Form siteName="Mock Site" agreed handleFormSubmit={jest.fn()} />
+    <Form siteName="Mock Site" agreed handleFormSubmit={jest.fn()} />,
   );
   expect(container).toMatchSnapshot();
 });

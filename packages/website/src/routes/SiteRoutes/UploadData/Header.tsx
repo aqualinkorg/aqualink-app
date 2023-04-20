@@ -1,29 +1,29 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Grid,
   IconButton,
   Typography,
   makeStyles,
-} from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { Link } from "react-router-dom";
-import { Site } from "../../../store/Sites/types";
+} from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Link } from 'react-router-dom';
+import { Site } from '../../../store/Sites/types';
 
 function downloadFile(url: string, fileName: string) {
   fetch(url, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "text/csv",
+      'Content-Type': 'text/csv',
     },
   })
     .then((response) => response.blob())
     .then((blob) => {
       const downloadUrl = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       // eslint-disable-next-line fp/no-mutation
       link.href = downloadUrl;
-      link.setAttribute("download", fileName);
+      link.setAttribute('download', fileName);
       document.body.appendChild(link);
       link.click();
     });
@@ -31,16 +31,16 @@ function downloadFile(url: string, fileName: string) {
 
 const exampleFiles = [
   {
-    source: "hobo",
-    fileName: "hobo_example.csv",
+    source: 'hobo',
+    fileName: 'hobo_example.csv',
   },
   {
-    source: "sonde",
-    fileName: "sonde_example.csv",
+    source: 'sonde',
+    fileName: 'sonde_example.csv',
   },
   {
-    source: "metlog",
-    fileName: "metlog_example.csv",
+    source: 'metlog',
+    fileName: 'metlog_example.csv',
   },
 ];
 
@@ -64,8 +64,8 @@ const Header = ({ site }: HeaderProps) => {
         <Typography variant="h6">
           Please confirm survey point and sensor type to continue.
         </Typography>
-        <Typography style={{ fontSize: "0.8em" }}>
-          You can find example file formats here:{" "}
+        <Typography style={{ fontSize: '0.8em' }}>
+          You can find example file formats here:{' '}
           {exampleFiles.map((file, i) => (
             <span key={file.fileName}>
               <Button
@@ -75,15 +75,15 @@ const Header = ({ site }: HeaderProps) => {
                     `${
                       process.env.REACT_APP_API_BASE_URL
                     }/time-series/sample-upload-files/${encodeURIComponent(
-                      file.source
+                      file.source,
                     )}`,
-                    file.fileName
+                    file.fileName,
                   )
                 }
               >
                 {file.source}
               </Button>
-              {i !== exampleFiles.length - 1 ? ", " : ""}
+              {i !== exampleFiles.length - 1 ? ', ' : ''}
             </span>
           ))}
         </Typography>
@@ -94,13 +94,13 @@ const Header = ({ site }: HeaderProps) => {
 
 const useStyles = makeStyles(() => ({
   downloadButton: {
-    background: "none !important",
-    border: "none",
-    padding: "0 !important",
-    color: "#069",
-    textDecoration: "underline",
-    cursor: "pointer",
-    textTransform: "none",
+    background: 'none !important',
+    border: 'none',
+    padding: '0 !important',
+    color: '#069',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    textTransform: 'none',
     minWidth: 0,
   },
 }));

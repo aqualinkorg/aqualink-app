@@ -1,5 +1,5 @@
-import { CollectionMetrics, Point, Site } from "../store/Sites/types";
-import { mockUser } from "./mockUser";
+import { CollectionMetrics, Point, Site } from '../store/Sites/types';
+import { mockUser } from './mockUser';
 
 const now = new Date();
 const minutesAgo = 5;
@@ -7,18 +7,18 @@ const liveDataDate = new Date(now.getTime() - minutesAgo * 60000).toISOString();
 
 export const mockSite: Site = {
   id: 1,
-  name: "",
+  name: '',
   polygon: {
     coordinates: [0, 0],
-    type: "Point",
+    type: 'Point',
   },
   hasHobo: false,
   sensorId: null,
   maxMonthlyMean: 0,
   depth: 0,
-  status: "in_review",
+  status: 'in_review',
   videoStream: null,
-  region: { name: "Hawaii" },
+  region: { name: 'Hawaii' },
   admins: [mockUser],
   surveyPoints: [],
   stream: null,
@@ -76,8 +76,8 @@ export const generateMockSite = ({
   name,
   region: { ...mockSite.region, name: regionName },
   polygon,
-  status: deployed ? "deployed" : mockSite.status,
-  sensorId: deployed ? "SPOT-0930" : mockSite.sensorId,
+  status: deployed ? 'deployed' : mockSite.status,
+  sensorId: deployed ? 'SPOT-0930' : mockSite.sensorId,
   collectionData,
   maxMonthlyMean: historicMax,
 });

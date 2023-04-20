@@ -8,25 +8,25 @@ import {
   Typography,
   WithStyles,
   withStyles,
-} from "@material-ui/core";
-import React from "react";
-import WarningIcon from "@material-ui/icons/Warning";
-import { toRelativeTime } from "../../../helpers/dates";
-import { formatNumber } from "../../../helpers/numberUtils";
-import { LatestDataASSofarValue, Metrics } from "../../../store/Sites/types";
-import UpdateInfo from "../../UpdateInfo";
-import { styles as incomingStyles } from "../styles";
-import { Extends } from "../../types";
-import { colors } from "../../../layout/App/theme";
+} from '@material-ui/core';
+import React from 'react';
+import WarningIcon from '@material-ui/icons/Warning';
+import { toRelativeTime } from '../../../helpers/dates';
+import { formatNumber } from '../../../helpers/numberUtils';
+import { LatestDataASSofarValue, Metrics } from '../../../store/Sites/types';
+import UpdateInfo from '../../UpdateInfo';
+import { styles as incomingStyles } from '../styles';
+import { Extends } from '../../types';
+import { colors } from '../../../layout/App/theme';
 
 type HUICardMetrics = Extends<
   Metrics,
-  "salinity" | "nitratePlusNitrite" | "ph" | "turbidity"
+  'salinity' | 'nitratePlusNitrite' | 'ph' | 'turbidity'
 >;
 
-const watchColor = "#e5bb2bd0";
-const warningColor = "#ef883cd0";
-const alertColor = "#dd143ed0";
+const watchColor = '#e5bb2bd0';
+const warningColor = '#ef883cd0';
+const alertColor = '#dd143ed0';
 
 const thresholds = {
   nitratePlusNitrite: {
@@ -52,9 +52,9 @@ function getAlertColor(metric: HUICardMetrics, value?: number) {
   };
 
   switch (metric) {
-    case "nitratePlusNitrite":
+    case 'nitratePlusNitrite':
       return compare(thresholds.nitratePlusNitrite);
-    case "turbidity":
+    case 'turbidity':
       return compare(thresholds.turbidity);
     default:
       return undefined;
@@ -67,28 +67,28 @@ function HUICard({ data, classes }: HUICardProps) {
 
   const metrics = [
     {
-      label: "Turbidity",
+      label: 'Turbidity',
       value: `${formatNumber(data?.turbidity?.value, 1)}`,
-      unit: "FNU",
-      color: getAlertColor("turbidity", data?.turbidity?.value),
+      unit: 'FNU',
+      color: getAlertColor('turbidity', data?.turbidity?.value),
     },
     {
-      label: "Nitrate Nitrite Nitrogen",
+      label: 'Nitrate Nitrite Nitrogen',
       value: `${formatNumber(data?.nitratePlusNitrite?.value, 1)}`,
-      unit: "mg/L",
+      unit: 'mg/L',
       color: getAlertColor(
-        "nitratePlusNitrite",
-        data?.nitratePlusNitrite?.value
+        'nitratePlusNitrite',
+        data?.nitratePlusNitrite?.value,
       ),
     },
     {
-      label: "pH",
+      label: 'pH',
       value: `${formatNumber(data?.ph?.value, 1)}`,
     },
     {
-      label: "Salinity",
+      label: 'Salinity',
       value: `${formatNumber(data?.salinity?.value, 1)}`,
-      unit: "psu",
+      unit: 'psu',
     },
   ];
 
@@ -116,10 +116,10 @@ function HUICard({ data, classes }: HUICardProps) {
                     <Grid item xs={12}>
                       <div
                         style={{
-                          display: "flex",
-                          alignItems: "center",
-                          flexWrap: "nowrap",
-                          minHeight: "2em",
+                          display: 'flex',
+                          alignItems: 'center',
+                          flexWrap: 'nowrap',
+                          minHeight: '2em',
                         }}
                       >
                         <Typography
@@ -132,9 +132,9 @@ function HUICard({ data, classes }: HUICardProps) {
                           <WarningIcon
                             className={classes.contentTextTitles}
                             style={{
-                              fontSize: "1.1em",
-                              marginRight: "1em",
-                              marginLeft: "auto",
+                              fontSize: '1.1em',
+                              marginRight: '1em',
+                              marginLeft: 'auto',
                               color,
                             }}
                           />
@@ -144,12 +144,12 @@ function HUICard({ data, classes }: HUICardProps) {
                     <Grid
                       item
                       xs={12}
-                      style={{ display: "flex", alignItems: "baseline" }}
+                      style={{ display: 'flex', alignItems: 'baseline' }}
                     >
                       <Typography
                         className={classes.contentTextValues}
                         variant="h3"
-                        style={{ whiteSpace: "nowrap" }}
+                        style={{ whiteSpace: 'nowrap' }}
                       >
                         {value}
                       </Typography>
@@ -171,15 +171,15 @@ function HUICard({ data, classes }: HUICardProps) {
 
         <Grid container>
           {[
-            { text: "watch", color: watchColor },
-            { text: "warning", color: warningColor },
-            { text: "alert", color: alertColor },
+            { text: 'watch', color: watchColor },
+            { text: 'warning', color: warningColor },
+            { text: 'alert', color: alertColor },
           ].map(({ text, color }) => (
             <Grid
               key={text}
               item
               xs={4}
-              style={{ backgroundColor: color, height: "2rem" }}
+              style={{ backgroundColor: color, height: '2rem' }}
             >
               <Box textAlign="center">
                 <Typography variant="caption" align="center">
@@ -205,15 +205,15 @@ const styles = () =>
   createStyles({
     ...incomingStyles,
     root: {
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
       backgroundColor: colors.greenCardColor,
     },
     content: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
       flexGrow: 1,
       padding: 0,
     },

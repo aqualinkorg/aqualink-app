@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import isISODate from "validator/lib/isISO8601";
-import { Box, Container, makeStyles, Theme } from "@material-ui/core";
-import moment from "moment";
-import { camelCase, isNaN, isNumber, snakeCase, sortBy } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
-import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
+import React, { useEffect, useState } from 'react';
+import isISODate from 'validator/lib/isISO8601';
+import { Box, Container, makeStyles, Theme } from '@material-ui/core';
+import moment from 'moment';
+import { camelCase, isNaN, isNumber, snakeCase, sortBy } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import {
   latestDataSelector,
   siteGranularDailyDataSelector,
@@ -14,13 +14,13 @@ import {
   siteTimeSeriesDataRangeSelector,
   siteTimeSeriesDataRequest,
   siteTimeSeriesDataSelector,
-} from "../../../store/Sites/selectedSiteSlice";
-import { Metrics, MetricsKeys, Site } from "../../../store/Sites/types";
+} from '../../../store/Sites/selectedSiteSlice';
+import { Metrics, MetricsKeys, Site } from '../../../store/Sites/types';
 import {
   isBefore,
   setTimeZone,
   subtractFromDate,
-} from "../../../helpers/dates";
+} from '../../../helpers/dates';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -28,34 +28,34 @@ import {
   generateMetricDataset,
   generateTempAnalysisDatasets,
   localizedEndOfDay,
-} from "./helpers";
-import { RangeValue } from "./types";
-import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
+} from './helpers';
+import { RangeValue } from './types';
+import { oceanSenseConfig } from '../../../constants/oceanSenseConfig';
 import {
   getPublicSondeMetrics,
   getSondeConfig,
-} from "../../../constants/sondeConfig";
-import { useQueryParam } from "../../../hooks/useQueryParams";
-import ChartWithCard from "./ChartWithCard";
+} from '../../../constants/sondeConfig';
+import { useQueryParam } from '../../../hooks/useQueryParams';
+import ChartWithCard from './ChartWithCard';
 import {
   METLOG_DATA_COLOR,
   OCEAN_SENSE_DATA_COLOR,
   SONDE_DATA_COLOR,
   SPOTTER_METRIC_DATA_COLOR,
-} from "../../../constants/charts";
+} from '../../../constants/charts';
 import {
   getMetlogConfig,
   getPublicMetlogMetrics,
-} from "../../../constants/metlogConfig";
-import DownloadCSVButton from "./DownloadCSVButton";
+} from '../../../constants/metlogConfig';
+import DownloadCSVButton from './DownloadCSVButton';
 
 const DEFAULT_METRICS: MetricsKeys[] = [
-  "bottom_temperature",
-  "top_temperature",
-  "wind_speed",
-  "significant_wave_height",
-  "barometric_pressure_top",
-  "barometric_pressure_bottom",
+  'bottom_temperature',
+  'top_temperature',
+  'wind_speed',
+  'significant_wave_height',
+  'barometric_pressure_top',
+  'barometric_pressure_bottom',
 ];
 
 interface SpotterConfig {
@@ -66,22 +66,22 @@ interface SpotterConfig {
 
 const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
   windSpeed: {
-    unit: "km/h",
-    title: "Wind Speed",
+    unit: 'km/h',
+    title: 'Wind Speed',
     // convert from m/s to to km/h
     convert: 3.6,
   },
   barometricPressureTop: {
-    unit: "hPa",
-    title: "Surface Barometric Pressure",
+    unit: 'hPa',
+    title: 'Surface Barometric Pressure',
   },
   barometricPressureBottom: {
-    unit: "hPa",
-    title: "Bottom Pressure",
+    unit: 'hPa',
+    title: 'Bottom Pressure',
   },
   significantWaveHeight: {
-    unit: "m",
-    title: "Significant Wave Height",
+    unit: 'm',
+    title: 'Significant Wave Height',
   },
 };
 
@@ -94,9 +94,9 @@ const MultipleSensorsCharts = ({
 }: MultipleSensorsChartsProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [startParam, setStartParam] = useQueryParam("start", isISODate);
-  const [endParam, setEndParam] = useQueryParam("end", isISODate);
-  const [chartParam] = useQueryParam("chart");
+  const [startParam, setStartParam] = useQueryParam('start', isISODate);
+  const [endParam, setEndParam] = useQueryParam('end', isISODate);
+  const [chartParam] = useQueryParam('chart');
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
@@ -113,30 +113,30 @@ const MultipleSensorsCharts = ({
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>(
-    startParam || endParam ? "custom" : "one_month"
+    startParam || endParam ? 'custom' : 'one_month',
   );
 
   const today = localizedEndOfDay(undefined, site.timezone);
 
   const hasSpotterData = Boolean(
-    bottomTemperature?.spotter?.data?.[1] || topTemperature?.spotter?.data?.[1]
+    bottomTemperature?.spotter?.data?.[1] || topTemperature?.spotter?.data?.[1],
   );
 
   const hasSondeData = Boolean(
-    latestData?.some((data) => data.source === "sonde")
+    latestData?.some((data) => data.source === 'sonde'),
   );
 
   const hasMetlogData = Boolean(
-    latestData?.some((data) => data.source === "metlog")
+    latestData?.some((data) => data.source === 'metlog'),
   );
 
-  const chartStartDate = startDate || subtractFromDate(today, "week");
+  const chartStartDate = startDate || subtractFromDate(today, 'week');
   const chartEndDate = moment
     .min(
       moment(),
       moment(endDate)
-        .tz(site.timezone || "UTC")
-        .endOf("day")
+        .tz(site.timezone || 'UTC')
+        .endOf('day'),
     )
     .toISOString();
 
@@ -153,24 +153,24 @@ const MultipleSensorsCharts = ({
     chartStartDate,
     chartEndDate,
     site.timezone,
-    site.depth
+    site.depth,
   );
 
   const spotterMetricDataset = (metric: Metrics) => {
     const { unit, convert } = spotterConfig[metric] || {};
 
     return generateMetricDataset(
-      "SENSOR",
+      'SENSOR',
       timeSeriesData?.[metric]?.spotter?.data?.map((item) => ({
         ...item,
         value: convert ? convert * item.value : item.value,
       })) || [],
-      unit || "",
+      unit || '',
       SPOTTER_METRIC_DATA_COLOR,
       chartStartDate,
       chartEndDate,
       site.timezone,
-      metric
+      metric,
     );
   };
 
@@ -179,7 +179,7 @@ const MultipleSensorsCharts = ({
       ? sortBy(getPublicSondeMetrics(), (key) => getSondeConfig(key).order)
           .filter(
             (key) =>
-              timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.data?.length
+              timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.data?.length,
           )
           .map((key) => {
             const { data, surveyPoint } =
@@ -191,13 +191,13 @@ const MultipleSensorsCharts = ({
               title,
               surveyPoint,
               dataset: generateMetricDataset(
-                "SENSOR",
+                'SENSOR',
                 data || [],
                 units,
                 SONDE_DATA_COLOR,
                 chartStartDate,
                 chartEndDate,
-                site.timezone
+                site.timezone,
               ),
             };
           })
@@ -208,7 +208,7 @@ const MultipleSensorsCharts = ({
       ? sortBy(getPublicMetlogMetrics(), (key) => getMetlogConfig(key).order)
           .filter(
             (key) =>
-              timeSeriesData?.[camelCase(key) as Metrics]?.metlog?.data?.length
+              timeSeriesData?.[camelCase(key) as Metrics]?.metlog?.data?.length,
           )
           .map((key) => {
             const { data, surveyPoint } =
@@ -220,7 +220,7 @@ const MultipleSensorsCharts = ({
               title,
               surveyPoint,
               dataset: generateMetricDataset(
-                "SENSOR",
+                'SENSOR',
                 (data || []).map((item) => ({
                   ...item,
                   value: isNumber(convert) ? item.value * convert : item.value,
@@ -229,7 +229,7 @@ const MultipleSensorsCharts = ({
                 METLOG_DATA_COLOR,
                 chartStartDate,
                 chartEndDate,
-                site.timezone
+                site.timezone,
               ),
             };
           })
@@ -249,23 +249,23 @@ const MultipleSensorsCharts = ({
       const { maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
       const localizedMaxDate = localizedEndOfDay(maxDate, site.timezone);
       const pastOneMonth = moment(
-        subtractFromDate(localizedMaxDate || today, "month", 1)
+        subtractFromDate(localizedMaxDate || today, 'month', 1),
       )
-        .tz(site.timezone || "UTC")
-        .startOf("day")
+        .tz(site.timezone || 'UTC')
+        .startOf('day')
         .toISOString();
       setPickerStartDate(
         startParam
-          ? zonedTimeToUtc(startParam, site.timezone || "UTC").toISOString()
-          : utcToZonedTime(pastOneMonth, site.timezone || "UTC").toISOString()
+          ? zonedTimeToUtc(startParam, site.timezone || 'UTC').toISOString()
+          : utcToZonedTime(pastOneMonth, site.timezone || 'UTC').toISOString(),
       );
       setPickerEndDate(
         endParam
-          ? zonedTimeToUtc(endParam, site.timezone || "UTC").toISOString()
+          ? zonedTimeToUtc(endParam, site.timezone || 'UTC').toISOString()
           : utcToZonedTime(
               localizedMaxDate || today,
-              site.timezone || "UTC"
-            ).toISOString()
+              site.timezone || 'UTC',
+            ).toISOString(),
       );
     }
   }, [
@@ -288,12 +288,12 @@ const MultipleSensorsCharts = ({
     ) {
       const siteLocalStartDate = setTimeZone(
         new Date(pickerStartDate),
-        site.timezone
+        site.timezone,
       );
 
       const siteLocalEndDate = setTimeZone(
         new Date(pickerEndDate),
-        site.timezone
+        site.timezone,
       );
 
       dispatch(
@@ -304,9 +304,9 @@ const MultipleSensorsCharts = ({
           end: siteLocalEndDate,
           metrics: hasSondeData || hasMetlogData ? undefined : DEFAULT_METRICS,
           hourly:
-            moment(siteLocalEndDate).diff(moment(siteLocalStartDate), "days") >
+            moment(siteLocalEndDate).diff(moment(siteLocalStartDate), 'days') >
             2,
-        })
+        }),
       );
 
       if (hasOceanSenseId) {
@@ -316,7 +316,7 @@ const MultipleSensorsCharts = ({
             startDate: siteLocalStartDate,
             endDate: siteLocalEndDate,
             latest: false,
-          })
+          }),
         );
       }
     }
@@ -336,15 +336,15 @@ const MultipleSensorsCharts = ({
   useEffect(() => {
     const pickerLocalEndDate = new Date(
       setTimeZone(
-        new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
-        site?.timezone
-      )
+        new Date(moment(pickerEndDate).format('MM/DD/YYYY')),
+        site?.timezone,
+      ),
     ).toISOString();
     const pickerLocalStartDate = new Date(
       setTimeZone(
-        new Date(moment(pickerStartDate).format("MM/DD/YYYY")),
-        site?.timezone
-      )
+        new Date(moment(pickerStartDate).format('MM/DD/YYYY')),
+        site?.timezone,
+      ),
     ).toISOString();
 
     const [minDataDate, maxDataDate] = findDataLimits(
@@ -352,7 +352,7 @@ const MultipleSensorsCharts = ({
       granularDailyData,
       timeSeriesData,
       pickerLocalStartDate,
-      localizedEndOfDay(pickerLocalEndDate, site.timezone)
+      localizedEndOfDay(pickerLocalEndDate, site.timezone),
     );
 
     setStartDate(
@@ -360,26 +360,26 @@ const MultipleSensorsCharts = ({
         ? moment
             .max(moment(minDataDate), moment(pickerLocalStartDate))
             .toISOString()
-        : pickerLocalStartDate
+        : pickerLocalStartDate,
     );
 
     setEndDate(
       maxDataDate
         ? moment
-            .min(moment(maxDataDate), moment(pickerLocalEndDate).endOf("day"))
+            .min(moment(maxDataDate), moment(pickerLocalEndDate).endOf('day'))
             .toISOString()
-        : moment(pickerLocalEndDate).endOf("day").toISOString()
+        : moment(pickerLocalEndDate).endOf('day').toISOString(),
     );
   }, [granularDailyData, pickerEndDate, pickerStartDate, site, timeSeriesData]);
 
   useEffect(() => {
-    if (pickerStartDate && pickerEndDate && range === "custom") {
+    if (pickerStartDate && pickerEndDate && range === 'custom') {
       const newStartParam = moment(
-        utcToZonedTime(pickerStartDate, site.timezone || "UTC")
-      ).format("YYYY-MM-DD");
+        utcToZonedTime(pickerStartDate, site.timezone || 'UTC'),
+      ).format('YYYY-MM-DD');
       const newEndParam = moment(
-        utcToZonedTime(pickerEndDate, site.timezone || "UTC")
-      ).format("YYYY-MM-DD");
+        utcToZonedTime(pickerEndDate, site.timezone || 'UTC'),
+      ).format('YYYY-MM-DD');
       setStartParam(newStartParam);
       setEndParam(newEndParam);
     }
@@ -395,8 +395,8 @@ const MultipleSensorsCharts = ({
 
   const dataForCsv = [
     ...tempAnalysisDatasets.map((dataset) => ({
-      name: `${snakeCase(dataset.metric) || "unknown_Metric"}_${
-        dataset.source || "unknown_source"
+      name: `${snakeCase(dataset.metric) || 'unknown_Metric'}_${
+        dataset.source || 'unknown_source'
       }`,
       values: dataset.data,
     })),
@@ -416,13 +416,13 @@ const MultipleSensorsCharts = ({
           OCEAN_SENSE_DATA_COLOR,
           chartStartDate,
           chartEndDate,
-          site.timezone
+          site.timezone,
         );
         return {
-          name: `${snakeCase(item.title.split(" ")[0])}`,
+          name: `${snakeCase(item.title.split(' ')[0])}`,
           values: dataset.data,
         };
-      }
+      },
     ),
     ...sondeDatasets().map(({ title, dataset }) => ({
       name: snakeCase(`${title}_${dataset.label}`),
@@ -434,30 +434,30 @@ const MultipleSensorsCharts = ({
     const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
     const localizedMinDate = new Date(
       moment(minDate)
-        .tz(site.timezone || "UTC")
-        .format("MM/DD/YYYY")
+        .tz(site.timezone || 'UTC')
+        .format('MM/DD/YYYY'),
     ).toISOString();
     const localizedMaxDate = new Date(
       moment(maxDate)
-        .tz(site.timezone || "UTC")
-        .format("MM/DD/YYYY")
+        .tz(site.timezone || 'UTC')
+        .format('MM/DD/YYYY'),
     ).toISOString();
     setRange(value);
-    if (value !== "custom") {
+    if (value !== 'custom') {
       setStartParam(undefined);
       setEndParam(undefined);
     }
     switch (value) {
-      case "one_month":
-        setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
-        setPickerStartDate(subtractFromDate(localizedMaxDate, "month", 1));
+      case 'one_month':
+        setPickerEndDate(moment(localizedMaxDate).endOf('day').toISOString());
+        setPickerStartDate(subtractFromDate(localizedMaxDate, 'month', 1));
         break;
-      case "one_year":
-        setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
-        setPickerStartDate(subtractFromDate(localizedMaxDate, "year"));
+      case 'one_year':
+        setPickerEndDate(moment(localizedMaxDate).endOf('day').toISOString());
+        setPickerStartDate(subtractFromDate(localizedMaxDate, 'year'));
         break;
-      case "max":
-        setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
+      case 'max':
+        setPickerEndDate(moment(localizedMaxDate).endOf('day').toISOString());
         setPickerStartDate(localizedMinDate);
         break;
       default:
@@ -465,30 +465,30 @@ const MultipleSensorsCharts = ({
     }
   };
 
-  const onPickerDateChange = (type: "start" | "end") => (date: Date | null) => {
+  const onPickerDateChange = (type: 'start' | 'end') => (date: Date | null) => {
     const time = date?.getTime();
     if (date && time && !isNaN(time)) {
       const dateString = date.toISOString();
-      setRange("custom");
+      setRange('custom');
       switch (type) {
-        case "start":
+        case 'start':
           // Set picker start date only if input date is after zero time
           if (
             moment(dateString)
-              .startOf("day")
-              .isSameOrAfter(moment(0).startOf("day"))
+              .startOf('day')
+              .isSameOrAfter(moment(0).startOf('day'))
           ) {
-            setPickerStartDate(moment(dateString).startOf("day").toISOString());
+            setPickerStartDate(moment(dateString).startOf('day').toISOString());
           }
           break;
-        case "end":
+        case 'end':
           // Set picker end date only if input date is before today
           if (
             moment(dateString)
-              .endOf("day")
-              .isSameOrBefore(moment().endOf("day"))
+              .endOf('day')
+              .isSameOrBefore(moment().endOf('day'))
           ) {
-            setPickerEndDate(moment(dateString).endOf("day").toISOString());
+            setPickerEndDate(moment(dateString).endOf('day').toISOString());
           }
           break;
         default:
@@ -521,11 +521,11 @@ const MultipleSensorsCharts = ({
         chartTitle="TEMPERATURE ANALYSIS"
         availableRanges={[
           {
-            name: "Spotter",
+            name: 'Spotter',
             data: timeSeriesDataRanges?.bottomTemperature?.spotter?.data,
           },
           {
-            name: "HOBO",
+            name: 'HOBO',
             data: timeSeriesDataRanges?.bottomTemperature?.hobo?.data,
           },
         ]}
@@ -534,12 +534,12 @@ const MultipleSensorsCharts = ({
         site={site}
         datasets={tempAnalysisDatasets}
         pointId={pointId ? parseInt(pointId, 10) : undefined}
-        pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
+        pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
         pickerEndDate={pickerEndDate || today}
         chartStartDate={chartStartDate}
         chartEndDate={chartEndDate}
-        onStartDateChange={onPickerDateChange("start")}
-        onEndDateChange={onPickerDateChange("end")}
+        onStartDateChange={onPickerDateChange('start')}
+        onEndDateChange={onPickerDateChange('end')}
         isPickerErrored={pickerErrored}
         areSurveysFiltered={surveysFiltered}
       />
@@ -550,9 +550,9 @@ const MultipleSensorsCharts = ({
           // we don’t want to display the warning message for all the others.
           if (
             !datasets[0] ||
-            (datasets[0].metric === "barometricPressureTop" &&
+            (datasets[0].metric === 'barometricPressureTop' &&
               !datasets[0].displayData) ||
-            (datasets[0].metric === "barometricPressureBottom" &&
+            (datasets[0].metric === 'barometricPressureBottom' &&
               !datasets[0].displayData)
           ) {
             return <></>;
@@ -568,7 +568,7 @@ const MultipleSensorsCharts = ({
                 chartTitle={title}
                 availableRanges={[
                   {
-                    name: "Spotter",
+                    name: 'Spotter',
                     data: timeSeriesDataRanges?.[key as Metrics]?.spotter?.data,
                   },
                 ]}
@@ -577,13 +577,13 @@ const MultipleSensorsCharts = ({
                 chartWidth="large"
                 site={site}
                 pickerStartDate={
-                  pickerStartDate || subtractFromDate(today, "week")
+                  pickerStartDate || subtractFromDate(today, 'week')
                 }
                 pickerEndDate={pickerEndDate || today}
                 chartStartDate={chartStartDate}
                 chartEndDate={chartEndDate}
-                onStartDateChange={onPickerDateChange("start")}
-                onEndDateChange={onPickerDateChange("end")}
+                onStartDateChange={onPickerDateChange('start')}
+                onEndDateChange={onPickerDateChange('end')}
                 isPickerErrored={pickerErrored}
                 showDatePickers={false}
                 hideYAxisUnits
@@ -606,7 +606,7 @@ const MultipleSensorsCharts = ({
                     OCEAN_SENSE_DATA_COLOR,
                     chartStartDate,
                     chartEndDate,
-                    site.timezone
+                    site.timezone,
                   ),
                 ]}
                 id={item.id}
@@ -619,20 +619,20 @@ const MultipleSensorsCharts = ({
                 chartWidth="large"
                 site={site}
                 pickerStartDate={
-                  pickerStartDate || subtractFromDate(today, "week")
+                  pickerStartDate || subtractFromDate(today, 'week')
                 }
                 pickerEndDate={pickerEndDate || today}
                 chartStartDate={chartStartDate}
                 chartEndDate={chartEndDate}
-                onStartDateChange={onPickerDateChange("start")}
-                onEndDateChange={onPickerDateChange("end")}
+                onStartDateChange={onPickerDateChange('start')}
+                onEndDateChange={onPickerDateChange('end')}
                 isPickerErrored={pickerErrored}
                 showDatePickers={false}
                 hideYAxisUnits
                 cardColumnJustification="flex-start"
               />
             </Box>
-          )
+          ),
         )}
       {sondeDatasets().map(({ key, title, surveyPoint, dataset }) => (
         <Box mt={4} key={key}>
@@ -645,7 +645,7 @@ const MultipleSensorsCharts = ({
             chartTitle={title}
             availableRanges={[
               {
-                name: "Sonde",
+                name: 'Sonde',
                 data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.sonde
                   ?.data,
               },
@@ -654,12 +654,12 @@ const MultipleSensorsCharts = ({
             showRangeButtons={false}
             chartWidth="large"
             site={site}
-            pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
+            pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
             pickerEndDate={pickerEndDate || today}
             chartStartDate={chartStartDate}
             chartEndDate={chartEndDate}
-            onStartDateChange={onPickerDateChange("start")}
-            onEndDateChange={onPickerDateChange("end")}
+            onStartDateChange={onPickerDateChange('start')}
+            onEndDateChange={onPickerDateChange('end')}
             isPickerErrored={pickerErrored}
             showDatePickers={false}
             surveyPoint={surveyPoint}
@@ -679,7 +679,7 @@ const MultipleSensorsCharts = ({
             chartTitle={title}
             availableRanges={[
               {
-                name: "Meteorological",
+                name: 'Meteorological',
                 data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.metlog
                   ?.data,
               },
@@ -688,12 +688,12 @@ const MultipleSensorsCharts = ({
             showRangeButtons={false}
             chartWidth="large"
             site={site}
-            pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
+            pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
             pickerEndDate={pickerEndDate || today}
             chartStartDate={chartStartDate}
             chartEndDate={chartEndDate}
-            onStartDateChange={onPickerDateChange("start")}
-            onEndDateChange={onPickerDateChange("end")}
+            onStartDateChange={onPickerDateChange('start')}
+            onEndDateChange={onPickerDateChange('end')}
             isPickerErrored={pickerErrored}
             showDatePickers={false}
             surveyPoint={surveyPoint}
@@ -711,11 +711,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(4),
   },
   button: {
-    width: "fit-content",
+    width: 'fit-content',
   },
   buttonWrapper: {
-    display: "flex",
-    justifyContent: "end",
+    display: 'flex',
+    justifyContent: 'end',
   },
 }));
 

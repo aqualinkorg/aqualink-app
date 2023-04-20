@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Typography,
   CardMedia,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
+import NavBar from '../../common/NavBar';
+import Footer from '../../common/Footer';
 
 const Faq = ({ classes }: FaqProps) => {
   return (
@@ -494,35 +494,35 @@ const Faq = ({ classes }: FaqProps) => {
 const styles = () =>
   createStyles({
     title: {
-      marginTop: "1rem",
-      marginBottom: "1rem",
+      marginTop: '1rem',
+      marginBottom: '1rem',
     },
     question: {
-      marginTop: "1rem",
-      marginBottom: "1rem",
-      fontWeight: "bold",
+      marginTop: '1rem',
+      marginBottom: '1rem',
+      fontWeight: 'bold',
     },
     root: {
       top: 10,
-      height: "100%",
+      height: '100%',
     },
     map: {
-      height: "100%",
+      height: '100%',
     },
     siteTable: {
-      height: "calc(100vh - 64px)",
-      overflowY: "auto",
+      height: 'calc(100vh - 64px)',
+      overflowY: 'auto',
     },
     videoWrapper: {
-      position: "relative",
-      paddingTop: "calc(100% / 16 * 9)",
+      position: 'relative',
+      paddingTop: 'calc(100% / 16 * 9)',
     },
     video: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     },
   });
 

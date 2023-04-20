@@ -1,6 +1,6 @@
-import { AxiosRequestConfig } from "axios";
-import requests from "../helpers/requests";
-import { constructTimeSeriesDataRequestUrl } from "../helpers/siteUtils";
+import { AxiosRequestConfig } from 'axios';
+import requests from '../helpers/requests';
+import { constructTimeSeriesDataRequestUrl } from '../helpers/siteUtils';
 import {
   DailyData,
   LiveData,
@@ -24,18 +24,18 @@ import {
   LatestData,
   SiteSketchFab,
   ForecastData,
-} from "../store/Sites/types";
+} from '../store/Sites/types';
 
 const getSite = (id: string) =>
   requests.send<Site>({
     url: `sites/${id}`,
-    method: "GET",
+    method: 'GET',
   });
 
 const getSiteSketchFab = (siteId: string) =>
   requests.send<SiteSketchFab>({
     url: `site-sketchfab`,
-    method: "GET",
+    method: 'GET',
     params: {
       siteId,
     },
@@ -44,27 +44,27 @@ const getSiteSketchFab = (siteId: string) =>
 const getSiteDailyData = (id: string, start?: string, end?: string) =>
   requests.send<DailyData[]>({
     url: `sites/${id}/daily_data${
-      start && end ? `?end=${end}&start=${start}` : ""
+      start && end ? `?end=${end}&start=${start}` : ''
     }`,
-    method: "GET",
+    method: 'GET',
   });
 
 const getSiteLiveData = (id: string) =>
   requests.send<LiveData>({
     url: `sites/${id}/live_data`,
-    method: "GET",
+    method: 'GET',
   });
 
 const getSiteForecastData = (id: string) =>
   requests.send<ForecastData[]>({
     url: `wind-wave-data-hindcast/sites/${id}`,
-    method: "GET",
+    method: 'GET',
   });
 
 const getSiteLatestData = (id: string) =>
   requests.send<{ latestData: LatestData[] }>({
     url: `sites/${id}/latest_data`,
-    method: "GET",
+    method: 'GET',
   });
 
 const getSiteSpotterPosition = (id: string) =>
@@ -77,13 +77,13 @@ const getSiteSpotterPosition = (id: string) =>
     timestamp?: string;
   }>({
     url: `sites/${id}/spotter_position`,
-    method: "GET",
+    method: 'GET',
   });
 
 const getSiteTimeSeriesData = (params: TimeSeriesDataRequestParams) => {
   return requests.send<TimeSeriesDataResponse>({
     url: constructTimeSeriesDataRequestUrl(params),
-    method: "GET",
+    method: 'GET',
   });
 };
 
@@ -93,31 +93,31 @@ const getSiteTimeSeriesDataRange = ({
 }: TimeSeriesDataRangeRequestParams) =>
   requests.send<TimeSeriesDataRangeResponse>({
     url: `time-series/sites/${siteId}${
-      pointId ? `/site-survey-points/${pointId}` : ""
+      pointId ? `/site-survey-points/${pointId}` : ''
     }/range`,
-    method: "GET",
+    method: 'GET',
   });
 
 const getSites = () =>
   requests.send<SiteResponse[]>({
-    url: "sites",
-    method: "GET",
+    url: 'sites',
+    method: 'GET',
   });
 
 const getSiteSurveyPoints = (
   id: string,
-  cancelToken?: AxiosRequestConfig["cancelToken"]
+  cancelToken?: AxiosRequestConfig['cancelToken'],
 ) =>
   requests.send<SurveyPoints[]>({
     url: `site-survey-points?siteId=${id}`,
-    method: "GET",
+    method: 'GET',
     cancelToken,
   });
 
 const deleteSiteSurveyPoint = (id: number, token?: string | null) =>
   requests.send({
     url: `site-survey-points/${id}`,
-    method: "DELETE",
+    method: 'DELETE',
     token,
   });
 
@@ -126,7 +126,7 @@ const registerSite = (
   latitude: number,
   longitude: number,
   depth: number,
-  token: string
+  token: string,
 ) => {
   const data = {
     siteApplication: {},
@@ -139,8 +139,8 @@ const registerSite = (
   };
 
   return requests.send<SiteRegisterResponseData>({
-    url: "sites",
-    method: "POST",
+    url: 'sites',
+    method: 'POST',
     data,
     token,
   });
@@ -150,11 +150,11 @@ const applySite = (
   siteId: number,
   appId: string,
   data: SiteApplyParams,
-  token: string
+  token: string,
 ) =>
   requests.send({
     url: `site-applications/${appId}/sites/${siteId}`,
-    method: "PUT",
+    method: 'PUT',
     data,
     token,
   });
@@ -162,20 +162,20 @@ const applySite = (
 const getSiteApplication = (siteId: number, token: string) =>
   requests.send<SiteApplication>({
     url: `site-applications/sites/${siteId}`,
-    method: "GET",
+    method: 'GET',
     token,
   });
 
 const getSiteUploadHistory = (siteId: number) =>
   requests.send<SiteUploadHistory>({
     url: `data-uploads/sites/${siteId}`,
-    method: "GET",
+    method: 'GET',
   });
 
 const updateSite = (siteId: number, data: SiteUpdateParams, token: string) =>
   requests.send<Site>({
     url: `sites/${siteId}`,
-    method: "PUT",
+    method: 'PUT',
     data,
     token,
   });
@@ -183,18 +183,18 @@ const updateSite = (siteId: number, data: SiteUpdateParams, token: string) =>
 const getExclusionDates = (siteId: number, token: string) =>
   requests.send<ExclusionDateResponse>({
     url: `sites/${siteId}/exclusion_dates`,
-    method: "GET",
+    method: 'GET',
     token,
   });
 
 const deploySpotter = (
   siteId: number,
   data: DeploySpotterParams,
-  token: string
+  token: string,
 ) =>
   requests.send({
     url: `sites/${siteId}/deploy`,
-    method: "POST",
+    method: 'POST',
     data,
     token,
   });
@@ -202,11 +202,11 @@ const deploySpotter = (
 const maintainSpotter = (
   siteId: number,
   data: MaintainSpotterParams,
-  token: string
+  token: string,
 ) =>
   requests.send({
     url: `sites/${siteId}/exclusion_dates`,
-    method: "POST",
+    method: 'POST',
     data,
     token,
   });
@@ -218,7 +218,7 @@ const getOceanSenseData = ({
 }: OceanSenseDataRequestParams) =>
   requests.send<OceanSenseDataResponse>({
     url: `https://us-central1-oceansense-app.cloudfunctions.net/queryData?sensorID=${sensorID}&param=all&startDate=${startDate}&endDate=${endDate}`,
-    method: "GET",
+    method: 'GET',
   });
 
 export default {

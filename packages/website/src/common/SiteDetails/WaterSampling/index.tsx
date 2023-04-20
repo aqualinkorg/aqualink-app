@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { head } from "lodash";
+import React, { useEffect, useState } from 'react';
+import { head } from 'lodash';
 import {
   Box,
   Card,
@@ -9,37 +9,37 @@ import {
   Typography,
   CardContent,
   GridProps,
-} from "@material-ui/core";
-import moment from "moment";
+} from '@material-ui/core';
+import moment from 'moment';
 
-import { styles as incomingStyles } from "../styles";
-import { calculateSondeDataMeanValues } from "./utils";
-import { TimeSeriesData } from "../../../store/Sites/types";
-import { timeSeriesRequest } from "../../../store/Sites/helpers";
-import { formatNumber } from "../../../helpers/numberUtils";
+import { styles as incomingStyles } from '../styles';
+import { calculateSondeDataMeanValues } from './utils';
+import { TimeSeriesData } from '../../../store/Sites/types';
+import { timeSeriesRequest } from '../../../store/Sites/helpers';
+import { formatNumber } from '../../../helpers/numberUtils';
 import {
   getSondeConfig,
   SondeMetricsKeys,
-} from "../../../constants/sondeConfig";
-import UpdateInfo from "../../UpdateInfo";
-import requests from "../../../helpers/requests";
-import siteServices from "../../../services/siteServices";
-import { colors } from "../../../layout/App/theme";
+} from '../../../constants/sondeConfig';
+import UpdateInfo from '../../UpdateInfo';
+import requests from '../../../helpers/requests';
+import siteServices from '../../../services/siteServices';
+import { colors } from '../../../layout/App/theme';
 
 const CARD_BACKGROUND_COLOR = colors.greenCardColor;
 const METRICS: SondeMetricsKeys[] = [
-  "odo_concentration",
-  "cholorophyll_concentration",
-  "ph",
-  "salinity",
-  "turbidity",
+  'odo_concentration',
+  'cholorophyll_concentration',
+  'ph',
+  'salinity',
+  'turbidity',
 ];
 
 interface Metric {
   label: string;
   value: string;
   unit: string;
-  xs: GridProps["xs"];
+  xs: GridProps['xs'];
 }
 
 interface SurveyPoint {
@@ -48,36 +48,36 @@ interface SurveyPoint {
 }
 
 const metrics = (
-  data: ReturnType<typeof calculateSondeDataMeanValues>
+  data: ReturnType<typeof calculateSondeDataMeanValues>,
 ): Metric[] => [
   {
-    label: "DISSOLVED OXYGEN CONCENTRATION",
+    label: 'DISSOLVED OXYGEN CONCENTRATION',
     value: formatNumber(data?.odoConcentration, 2),
-    unit: getSondeConfig("odo_concentration").units,
+    unit: getSondeConfig('odo_concentration').units,
     xs: 6,
   },
   {
-    label: "CHLOROPHYLL CONCENTRATION",
+    label: 'CHLOROPHYLL CONCENTRATION',
     value: formatNumber(data?.cholorophyllConcentration, 2),
-    unit: getSondeConfig("cholorophyll_concentration").units,
+    unit: getSondeConfig('cholorophyll_concentration').units,
     xs: 6,
   },
   {
-    label: "ACIDITY",
+    label: 'ACIDITY',
     value: formatNumber(data?.ph, 1),
-    unit: getSondeConfig("ph").units,
+    unit: getSondeConfig('ph').units,
     xs: 4,
   },
   {
-    label: "SALINITY",
+    label: 'SALINITY',
     value: formatNumber(data?.salinity, 1),
-    unit: getSondeConfig("salinity").units,
+    unit: getSondeConfig('salinity').units,
     xs: 5,
   },
   {
-    label: "TURBIDITY",
+    label: 'TURBIDITY',
     value: formatNumber(data?.turbidity, 0),
-    unit: getSondeConfig("turbidity").units,
+    unit: getSondeConfig('turbidity').units,
     xs: 3,
   },
 ];
@@ -90,7 +90,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>();
   const meanValues = calculateSondeDataMeanValues(METRICS, timeSeriesData);
   const isPointNameLong = (point?.name?.length || 0) > 24;
-  const surveyPointDisplayName = `${isPointNameLong ? "" : " Survey point:"} ${
+  const surveyPointDisplayName = `${isPointNameLong ? '' : ' Survey point:'} ${
     point?.name || point?.id
   }`;
   const viewUploadButtonLink = `/sites/${siteId}${requests.generateUrlQueryParams(
@@ -98,15 +98,15 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
       start: minDate,
       end: maxDate,
       surveyPoint: point?.id,
-    }
+    },
   )}`;
-  const lastUpload = maxDate ? moment(maxDate).format("MM/DD/YYYY") : undefined;
+  const lastUpload = maxDate ? moment(maxDate).format('MM/DD/YYYY') : undefined;
 
   useEffect(() => {
     const getCardData = async () => {
       try {
         const { data: uploadHistory } = await siteServices.getSiteUploadHistory(
-          parseInt(siteId, 10)
+          parseInt(siteId, 10),
         );
         // Upload history is sorted by `maxDate`, so the first
         // item is the most recent.
@@ -115,7 +115,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
           maxDate: to,
           surveyPoint,
         } = head(uploadHistory) || {};
-        if (typeof surveyPoint?.id === "number") {
+        if (typeof surveyPoint?.id === 'number') {
           const [data] = await timeSeriesRequest({
             siteId,
             pointId: surveyPoint.id.toString(),
@@ -197,15 +197,15 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
 const useStyles = makeStyles(() => ({
   ...incomingStyles,
   root: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     backgroundColor: CARD_BACKGROUND_COLOR,
   },
   content: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     flexGrow: 1,
     padding: 0,
   },

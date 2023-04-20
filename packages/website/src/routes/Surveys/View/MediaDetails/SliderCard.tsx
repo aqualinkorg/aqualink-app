@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Card,
   CardMedia,
@@ -15,25 +15,25 @@ import {
   MenuItem,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
-import SaveIcon from "@material-ui/icons/Save";
-import StarIcon from "@material-ui/icons/Star";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import EditIcon from "@material-ui/icons/Edit";
-import CancelIcon from "@material-ui/icons/Cancel";
-import { useSelector } from "react-redux";
+} from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import EditIcon from '@material-ui/icons/Edit';
+import CancelIcon from '@material-ui/icons/Cancel';
+import { useSelector } from 'react-redux';
 import observationOptions, {
   findOption,
-} from "../../../../constants/uploadDropdowns";
+} from '../../../../constants/uploadDropdowns';
 import {
   Observations,
   SurveyMedia,
   SurveyMediaUpdateRequestData,
-} from "../../../../store/Survey/types";
+} from '../../../../store/Survey/types';
 import {
   surveyLoadingSelector,
   surveyMediaEditLoadingSelector,
-} from "../../../../store/Survey/surveySlice";
+} from '../../../../store/Survey/surveySlice';
 
 const SliderCard = ({
   media,
@@ -52,7 +52,7 @@ const SliderCard = ({
     featured,
   } = media;
   const [editComments, setEditComments] = React.useState(
-    existingComments || undefined
+    existingComments || undefined,
   );
   const [observation, setObservation] =
     React.useState<Observations>(existingObservations);
@@ -63,7 +63,7 @@ const SliderCard = ({
   const loading = mediaLoading || surveyLoading;
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   function onClose() {
     setEditing(false);
@@ -174,7 +174,7 @@ const SliderCard = ({
                 direction="column"
                 xs={2}
                 spacing={1}
-                style={{ flexWrap: "unset" }}
+                style={{ flexWrap: 'unset' }}
               >
                 <Grid item xs={editing ? 8 : 10}>
                   {featured ? (
@@ -235,56 +235,56 @@ const SliderCard = ({
 const styles = (theme: Theme) =>
   createStyles({
     shadowBox: {
-      backgroundColor: "#f5f6f6",
+      backgroundColor: '#f5f6f6',
       color: theme.palette.text.secondary,
-      marginBottom: "4rem",
-      height: "28rem",
-      [theme.breakpoints.down("sm")]: {
-        height: "32rem",
+      marginBottom: '4rem',
+      height: '28rem',
+      [theme.breakpoints.down('sm')]: {
+        height: '32rem',
       },
     },
     loaderWrapper: {
-      height: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     fullHeight: {
-      height: "100%",
+      height: '100%',
     },
     imageWrapper: {
-      width: "100%",
-      [theme.breakpoints.down("sm")]: {
-        height: "50%",
+      width: '100%',
+      [theme.breakpoints.down('sm')]: {
+        height: '50%',
       },
     },
     cardImage: {
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     },
     mediaInfoWrapper: {
-      height: "100%",
-      overflowY: "auto",
+      height: '100%',
+      overflowY: 'auto',
       padding: theme.spacing(2, 2, 2, 3),
-      [theme.breakpoints.down("sm")]: {
-        height: "50%",
+      [theme.breakpoints.down('sm')]: {
+        height: '50%',
       },
     },
     featuredIcon: {
-      height: "3rem",
-      width: "3rem",
+      height: '3rem',
+      width: '3rem',
     },
     textField: {
-      color: "black",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
+      color: 'black',
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'rgba(0, 0, 0, 0.23)',
       },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
       },
     },
     input: {
-      width: "90%",
+      width: '90%',
     },
   });
 
@@ -296,7 +296,7 @@ interface SliderCardIncomingProps {
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
   onSurveyMediaUpdate: (
     mediaId: number,
-    data: Partial<SurveyMediaUpdateRequestData>
+    data: Partial<SurveyMediaUpdateRequestData>,
   ) => void;
 }
 

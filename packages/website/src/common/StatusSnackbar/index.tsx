@@ -1,6 +1,6 @@
-import React from "react";
-import { Button, Snackbar, makeStyles, Theme } from "@material-ui/core";
-import { Alert, AlertProps } from "@material-ui/lab";
+import React from 'react';
+import { Button, Snackbar, makeStyles, Theme } from '@material-ui/core';
+import { Alert, AlertProps } from '@material-ui/lab';
 
 const StatusSnackbar = ({
   open,
@@ -18,8 +18,8 @@ const StatusSnackbar = ({
       open={open}
       onClose={handleClose}
       anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
+        vertical: 'bottom',
+        horizontal: 'left',
       }}
     >
       <Alert
@@ -46,17 +46,17 @@ const StatusSnackbar = ({
 
 const useStyles = makeStyles((theme: Theme) => ({
   snackbar: {
-    maxWidth: "50%",
-    [theme.breakpoints.down("sm")]: {
-      maxWidth: "90%",
+    maxWidth: '50%',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '90%',
     },
   },
   alert: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   alertMessage: (hasMessage: boolean) => ({
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
     ...(hasMessage ? { padding: 0 } : {}),
   }),
   button: {
@@ -68,8 +68,8 @@ interface StatusSnackbarProps {
   open: boolean;
   message?: string;
   furtherActionLabel?: string;
-  severity: AlertProps["severity"];
-  handleClose: AlertProps["onClose"];
+  severity: AlertProps['severity'];
+  handleClose: AlertProps['onClose'];
   onFurtherActionTake?: () => void;
 }
 

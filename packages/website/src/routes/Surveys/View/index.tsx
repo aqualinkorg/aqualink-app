@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import ArrowBack from "@material-ui/icons/ArrowBack";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import {
   Box,
   Button,
@@ -13,10 +13,10 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import { useSnackbar } from "notistack";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import { useSnackbar } from 'notistack';
 import {
   surveyDetailsSelector,
   surveyGetRequest,
@@ -24,24 +24,24 @@ import {
   surveyLoadingSelector,
   surveyErrorSelector,
   surveyMediaEditLoadingSelector,
-} from "../../../store/Survey/surveySlice";
-import SurveyDetails from "./SurveyDetails";
-import SurveyMediaDetails from "./MediaDetails";
-import ChartWithTooltip from "../../../common/Chart/ChartWithTooltip";
-import type { Site } from "../../../store/Sites/types";
+} from '../../../store/Survey/surveySlice';
+import SurveyDetails from './SurveyDetails';
+import SurveyMediaDetails from './MediaDetails';
+import ChartWithTooltip from '../../../common/Chart/ChartWithTooltip';
+import type { Site } from '../../../store/Sites/types';
 import {
   surveyListLoadingSelector,
   surveyListSelector,
   surveysRequest,
-} from "../../../store/Survey/surveyListSlice";
-import { siteTimeSeriesDataRequest } from "../../../store/Sites/selectedSiteSlice";
+} from '../../../store/Survey/surveyListSlice';
+import { siteTimeSeriesDataRequest } from '../../../store/Sites/selectedSiteSlice';
 import {
   displayTimeInLocalTimezone,
   convertSurveyDataToLocalTime,
   isBetween,
-} from "../../../helpers/dates";
-import { standardDailyDataDataset } from "../../../common/Chart/MultipleSensorsCharts/helpers";
-import { getSurveyPointsByName } from "../../../helpers/surveyMedia";
+} from '../../../helpers/dates';
+import { standardDailyDataDataset } from '../../../common/Chart/MultipleSensorsCharts/helpers';
+import { getSurveyPointsByName } from '../../../helpers/surveyMedia';
 
 const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
@@ -64,14 +64,14 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       ? isBetween(
           surveyDetails.diveDate,
           site.dailyData[dailyDataLen - 1].date,
-          site.dailyData[0].date
+          site.dailyData[0].date,
         )
       : false;
   const chartDataset = standardDailyDataDataset(
     site.dailyData,
     site.maxMonthlyMean,
     true,
-    site.timezone
+    site.timezone,
   );
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       surveyGetRequest({
         siteId: `${site.id}`,
         surveyId,
-      })
+      }),
     );
     return () => {
       dispatch(clearSurvey());
@@ -94,17 +94,17 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   // Fetch HOBO and Spotter data near the dive date
   useEffect(() => {
     if (surveyDetails?.diveDate) {
-      const start = moment(surveyDetails.diveDate).startOf("day").toISOString();
-      const end = moment(surveyDetails.diveDate).endOf("day").toISOString();
+      const start = moment(surveyDetails.diveDate).startOf('day').toISOString();
+      const end = moment(surveyDetails.diveDate).endOf('day').toISOString();
       dispatch(
         siteTimeSeriesDataRequest({
           siteId: `${site.id}`,
           pointId: pointId ? `${pointId}` : undefined,
           start,
           end,
-          metrics: ["bottom_temperature", "top_temperature"],
+          metrics: ['bottom_temperature', 'top_temperature'],
           hourly: false,
-        })
+        }),
       );
     }
   }, [dispatch, pointId, site.id, surveyDetails]);
@@ -112,13 +112,13 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   React.useEffect(() => {
     if (!mediaLoading) {
       if (!surveyError && prevMediaLoading.current) {
-        enqueueSnackbar("Survey media details updated successfully", {
-          variant: "success",
+        enqueueSnackbar('Survey media details updated successfully', {
+          variant: 'success',
         });
       }
       if (surveyError) {
         enqueueSnackbar(surveyError, {
-          variant: "error",
+          variant: 'error',
         });
       }
     }
@@ -142,7 +142,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
             component={Link}
             to={`/sites/${site.id}`}
           >
-            <Typography style={{ textTransform: "none" }}>
+            <Typography style={{ textTransform: 'none' }}>
               Back to site
             </Typography>
           </Button>
@@ -180,7 +180,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                         }
                         surveys={convertSurveyDataToLocalTime(
                           surveyList,
-                          site.timezone
+                          site.timezone,
                         )}
                         background
                         timeZone={site.timezone}
@@ -201,7 +201,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                 <Typography className={classes.mediaTitle}>
                   {`${displayTimeInLocalTimezone({
                     isoDate: surveyDetails?.diveDate,
-                    format: "MM/DD/YYYY",
+                    format: 'MM/DD/YYYY',
                     displayTimezone: false,
                     timeZone: site.timezone,
                   })} Survey Media`}
@@ -216,7 +216,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                         point={point}
                         key={point.pointId}
                       />
-                    )
+                    ),
                   )}
               </Grid>
             </Grid>
@@ -230,7 +230,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     loading: {
-      marginBottom: "100vh",
+      marginBottom: '100vh',
     },
     infoWrapper: {
       marginTop: 64,
@@ -250,7 +250,7 @@ const styles = (theme: Theme) =>
       marginTop: 32,
     },
     chartTitle: {
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         fontSize: 14,
       },
     },
