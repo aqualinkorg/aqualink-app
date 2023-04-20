@@ -1,12 +1,12 @@
-import React from "react";
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import React from 'react';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 
-import AddButton from "../AddButton";
-import SurveyCard from "../SurveyCard";
-import incomingStyles from "../styles";
-import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
-import { TimelineProps } from "./types";
-import LoadingSkeleton from "../../../LoadingSkeleton";
+import AddButton from '../AddButton';
+import SurveyCard from '../SurveyCard';
+import incomingStyles from '../styles';
+import { displayTimeInLocalTimezone } from '../../../../helpers/dates';
+import { TimelineProps } from './types';
+import LoadingSkeleton from '../../../LoadingSkeleton';
 
 const TimelineTablet = ({
   siteId,
@@ -19,7 +19,7 @@ const TimelineTablet = ({
   timeZone,
 }: TimelineProps) => {
   const classes = useStyles();
-  const isSiteIdValid = typeof siteId === "number";
+  const isSiteIdValid = typeof siteId === 'number';
 
   return (
     <Grid container item xs={12}>
@@ -54,7 +54,7 @@ const TimelineTablet = ({
                 <Typography variant="h6" className={classes.dates}>
                   {displayTimeInLocalTimezone({
                     isoDate: survey.diveDate,
-                    format: "MM/DD/YYYY",
+                    format: 'MM/DD/YYYY',
                     displayTimezone: false,
                     timeZone,
                   })}
@@ -81,10 +81,10 @@ const TimelineTablet = ({
 const useStyles = makeStyles(() => ({
   ...incomingStyles,
   addNewButtonMobileWrapper: {
-    marginBottom: "1rem",
+    marginBottom: '1rem',
   },
   surveyWrapper: {
-    marginTop: "2rem",
+    marginTop: '2rem',
   },
 }));
 

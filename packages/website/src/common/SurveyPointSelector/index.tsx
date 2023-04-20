@@ -6,14 +6,14 @@ import {
   Theme,
   WithStyles,
   withStyles,
-} from "@material-ui/core";
-import React from "react";
-import { useSelector } from "react-redux";
-import AddIcon from "@material-ui/icons/Add";
-import classNames from "classnames";
-import { siteDetailsSelector } from "../../store/Sites/selectedSiteSlice";
-import NewSurveyPointDialog from "../NewSurveyPointDialog";
-import { SurveyPoints } from "../../store/Sites/types";
+} from '@material-ui/core';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import AddIcon from '@material-ui/icons/Add';
+import classNames from 'classnames';
+import { siteDetailsSelector } from '../../store/Sites/selectedSiteSlice';
+import NewSurveyPointDialog from '../NewSurveyPointDialog';
+import { SurveyPoints } from '../../store/Sites/types';
 
 function SurveyPointSelector({
   handleSurveyPointChange,
@@ -60,7 +60,7 @@ function SurveyPointSelector({
         <MenuItem className={classes.textField}>
           <AddIcon />
           <Button
-            style={{ color: "black" }}
+            style={{ color: 'black' }}
             onClick={() => setAddSurveyPointDialogOpen(true)}
           >
             Add new survey point
@@ -74,25 +74,25 @@ function SurveyPointSelector({
 const styles = (theme: Theme) =>
   createStyles({
     textField: {
-      color: "black",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
+      color: 'black',
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'rgba(0, 0, 0, 0.23)',
       },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
       },
     },
     menuItem: {
       maxWidth: 280,
-      overflowWrap: "break-word",
-      display: "block",
-      whiteSpace: "unset",
+      overflowWrap: 'break-word',
+      display: 'block',
+      whiteSpace: 'unset',
     },
   });
 
 interface SurveyPointSelectorIncomingProps {
   handleSurveyPointChange: (
-    event: React.ChangeEvent<{ value: unknown }>
+    event: React.ChangeEvent<{ value: unknown }>,
   ) => void;
   handleSurveyPointOptionAdd?: (arg0: string, arg1: SurveyPoints[]) => void;
   value: number | undefined;

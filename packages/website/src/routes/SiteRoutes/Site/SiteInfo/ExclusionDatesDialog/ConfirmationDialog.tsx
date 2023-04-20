@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Dialog,
@@ -6,9 +6,9 @@ import {
   DialogContent,
   Typography,
   makeStyles,
-} from "@material-ui/core";
-import moment from "moment";
-import { grey } from "@material-ui/core/colors";
+} from '@material-ui/core';
+import moment from 'moment';
+import { grey } from '@material-ui/core/colors';
 
 const ConfirmationDialog = ({
   open,
@@ -20,21 +20,21 @@ const ConfirmationDialog = ({
   handleMaintainPeriodAddition,
 }: ConfirmationDialogProps) => {
   const classes = useStyles();
-  const startDate = moment(start).format("MM/DD/YYYY HH:mm");
-  const endDate = moment(end).format("MM/DD/YYYY HH:mm");
+  const startDate = moment(start).format('MM/DD/YYYY HH:mm');
+  const endDate = moment(end).format('MM/DD/YYYY HH:mm');
 
   return (
     <Dialog maxWidth="sm" fullWidth open={open} onClose={onClose}>
       <DialogContent className={classes.content}>
         <Typography color="textSecondary">
-          Are you sure you want to proceed? Data between{" "}
+          Are you sure you want to proceed? Data between{' '}
           <span className={classes.bold}>
             {startDate} {timeZone}
-          </span>{" "}
-          and{" "}
+          </span>{' '}
+          and{' '}
           <span className={classes.bold}>
             {endDate} {timeZone}
-          </span>{" "}
+          </span>{' '}
           will be lost.
         </Typography>
       </DialogContent>
@@ -54,7 +54,7 @@ const ConfirmationDialog = ({
           variant="outlined"
           onClick={handleMaintainPeriodAddition}
         >
-          {isConfirmLoading ? "Saving..." : "Save"}
+          {isConfirmLoading ? 'Saving...' : 'Save'}
         </Button>
       </DialogActions>
     </Dialog>

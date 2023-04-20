@@ -1,34 +1,34 @@
 /* eslint-disable fp/no-mutation */
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
-import Site from ".";
-import { mockSite } from "../../../mocks/mockSite";
-import { mockUser } from "../../../mocks/mockUser";
-import { mockSurveyList } from "../../../mocks/mockSurveyList";
-import { mockCollection } from "../../../mocks/mockCollection";
-import { mockDataRange } from "../../../mocks/mockDataRange";
-import { mockSurvey } from "../../../mocks/mockSurvey";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Site from '.';
+import { mockSite } from '../../../mocks/mockSite';
+import { mockUser } from '../../../mocks/mockUser';
+import { mockSurveyList } from '../../../mocks/mockSurveyList';
+import { mockCollection } from '../../../mocks/mockCollection';
+import { mockDataRange } from '../../../mocks/mockDataRange';
+import { mockSurvey } from '../../../mocks/mockSurvey';
 
 const mockStore = configureStore([]);
 
 window.scrollTo = jest.fn();
 
-jest.mock("../../../common/SiteDetails/Map", () => "Mock-Map");
+jest.mock('../../../common/SiteDetails/Map', () => 'Mock-Map');
 jest.mock(
-  "../../../common/SiteDetails/FeaturedMedia",
-  () => "Mock-FeaturedMedia"
+  '../../../common/SiteDetails/FeaturedMedia',
+  () => 'Mock-FeaturedMedia',
 );
 
 jest.mock(
-  "../../../common/Chart/MultipleSensorsCharts",
-  () => "Mock-MultipleSensorsCharts"
+  '../../../common/Chart/MultipleSensorsCharts',
+  () => 'Mock-MultipleSensorsCharts',
 );
 
-jest.mock("react-chartjs-2", () => ({
-  Line: () => "Mock-Line",
+jest.mock('react-chartjs-2', () => ({
+  Line: () => 'Mock-Line',
   Chart: {
     pluginService: {
       register: jest.fn(),
@@ -36,7 +36,7 @@ jest.mock("react-chartjs-2", () => ({
   },
 }));
 
-describe("Site Detail Page", () => {
+describe('Site Detail Page', () => {
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;
   beforeEach(() => {
@@ -120,10 +120,10 @@ describe("Site Detail Page", () => {
     const mockMatch = {
       isExact: true,
       params: {
-        id: "1",
+        id: '1',
       },
-      path: "/sites/:id",
-      url: "/sites/1",
+      path: '/sites/:id',
+      url: '/sites/1',
     };
 
     elementEmpty = render(
@@ -131,7 +131,7 @@ describe("Site Detail Page", () => {
         <Router>
           <Site match={mockMatch} location={{} as any} history={{} as any} />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
 
     elementFull = render(
@@ -139,15 +139,15 @@ describe("Site Detail Page", () => {
         <Router>
           <Site match={mockMatch} location={{} as any} history={{} as any} />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
-    expect(elementEmpty).toMatchSnapshot("snapshot-with-no-data");
+  it('should render with given state from Redux store', () => {
+    expect(elementEmpty).toMatchSnapshot('snapshot-with-no-data');
   });
 
-  it("should render with given state from Redux store", () => {
-    expect(elementFull).toMatchSnapshot("snapshot-with-data");
+  it('should render with given state from Redux store', () => {
+    expect(elementFull).toMatchSnapshot('snapshot-with-data');
   });
 });

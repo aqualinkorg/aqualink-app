@@ -1,8 +1,8 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import Dialog from ".";
+import React from 'react';
+import { render } from '@testing-library/react';
+import Dialog from '.';
 
-test("renders as expected", () => {
+test('renders as expected', () => {
   const { container } = render(
     <Dialog
       open
@@ -10,7 +10,7 @@ test("renders as expected", () => {
       header="Random Header"
       content={<div>Some random content</div>}
       actions={[]}
-    />
+    />,
   );
   expect(container).toMatchSnapshot();
 });

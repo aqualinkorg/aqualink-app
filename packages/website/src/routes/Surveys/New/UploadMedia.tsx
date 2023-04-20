@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from "react";
+import React, { useState, useCallback, ChangeEvent } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -11,20 +11,20 @@ import {
   LinearProgress,
   Tooltip,
   Theme,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
-import CloseIcon from "@material-ui/icons/Close";
-import Dropzone, { FileRejection } from "react-dropzone";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import MediaCard from "./MediaCard";
-import uploadServices from "../../../services/uploadServices";
-import surveyServices from "../../../services/surveyServices";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
-import { SurveyMediaData } from "../../../store/Survey/types";
-import { SurveyPoints } from "../../../store/Sites/types";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { ArrowBack, CloudUploadOutlined } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
+import Dropzone, { FileRejection } from 'react-dropzone';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import MediaCard from './MediaCard';
+import uploadServices from '../../../services/uploadServices';
+import surveyServices from '../../../services/surveyServices';
+import { userInfoSelector } from '../../../store/User/userSlice';
+import { surveyDetailsSelector } from '../../../store/Survey/surveySlice';
+import { SurveyMediaData } from '../../../store/Survey/types';
+import { SurveyPoints } from '../../../store/Sites/types';
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
@@ -64,21 +64,21 @@ const UploadMedia = ({
         ...acceptedFiles.map(() => ({
           observation: null,
           surveyPoint: undefined,
-          comments: "",
+          comments: '',
         })),
       ]);
     },
-    [files, previews, metadata]
+    [files, previews, metadata],
   );
 
   const handleSurveyPointOptionAdd =
     (index: number) => (newPointName: string, newPoints: SurveyPoints[]) => {
       const newPointId = newPoints.find(
-        (point) => point.name === newPointName
+        (point) => point.name === newPointName,
       )?.id;
 
       const newMetadata = metadata.map((item, key) =>
-        key === index ? { ...item, surveyPoint: newPointId } : item
+        key === index ? { ...item, surveyPoint: newPointId } : item,
       );
       setMetadata(newMetadata);
     };
@@ -105,7 +105,7 @@ const UploadMedia = ({
   const onMediaSubmit = () => {
     const promises = files.map((file, index) => {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
       return uploadServices
         .uploadMedia(formData, `${siteId}`, user?.token)
         .then((response) => {
@@ -119,7 +119,7 @@ const UploadMedia = ({
               : (undefined as unknown as number),
             observations: metadata[index].observation,
             comments: metadata[index].comments || undefined,
-            metadata: "{}",
+            metadata: '{}',
             token: user?.token,
             featured: index === featuredFile,
             hidden: false,
@@ -127,7 +127,7 @@ const UploadMedia = ({
           return surveyServices.addSurveyMedia(
             `${siteId}`,
             `${surveyId}`,
-            surveyMediaData
+            surveyMediaData,
           );
         });
     });
@@ -166,7 +166,7 @@ const UploadMedia = ({
 
   const handleObservationChange = (index: number) => {
     return (event: ChangeEvent<{ value: unknown }>) => {
-      const observation = event.target.value as SurveyMediaData["observations"];
+      const observation = event.target.value as SurveyMediaData['observations'];
       const newMetadata = metadata.map((item, key) => {
         if (key === index) {
           return {
@@ -206,8 +206,8 @@ const UploadMedia = ({
         file={files[index]}
         handleSurveyPointOptionAdd={handleSurveyPointOptionAdd(index)}
         surveyPoint={metadata?.[index]?.surveyPoint}
-        observation={metadata?.[index]?.observation || ""}
-        comments={metadata?.[index]?.comments || ""}
+        observation={metadata?.[index]?.observation || ''}
+        comments={metadata?.[index]?.comments || ''}
         deleteCard={deleteCard}
         setFeatured={setFeatured}
         featuredFile={featuredFile}
@@ -262,7 +262,7 @@ const UploadMedia = ({
         </Grid>
         <Grid container justify="center" item xs={4}>
           <Dropzone
-            accept={["image/png", "image/jpeg", "image/gif"]}
+            accept={['image/png', 'image/jpeg', 'image/gif']}
             onDrop={handleFileDrop}
             maxSize={maxUploadSize}
           >
@@ -290,19 +290,19 @@ const UploadMedia = ({
             )}
           </Dropzone>
         </Grid>
-        <Grid style={{ marginBottom: "2rem" }} container item xs={11} lg={9}>
+        <Grid style={{ marginBottom: '2rem' }} container item xs={11} lg={9}>
           {fileCards}
         </Grid>
         {files && files.length > 0 && (
           <Grid
-            style={{ margin: "4rem 0 2rem 0" }}
+            style={{ margin: '4rem 0 2rem 0' }}
             container
             justify="flex-end"
             item
             xs={9}
           >
             <Button
-              style={{ marginRight: "1rem" }}
+              style={{ marginRight: '1rem' }}
               color="primary"
               variant="outlined"
               onClick={removeCards}
@@ -310,7 +310,7 @@ const UploadMedia = ({
               Cancel
             </Button>
             <Tooltip
-              title={missingObservations ? "Missing Observation Info" : ""}
+              title={missingObservations ? 'Missing Observation Info' : ''}
             >
               <div>
                 <Button
@@ -319,7 +319,7 @@ const UploadMedia = ({
                   color="primary"
                   variant="contained"
                 >
-                  {loading ? "Uploading..." : "Save"}
+                  {loading ? 'Uploading...' : 'Save'}
                 </Button>
               </div>
             </Tooltip>
@@ -333,35 +333,35 @@ const UploadMedia = ({
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      marginTop: "2rem",
+      marginTop: '2rem',
     },
     dropzone: {
       borderWidth: 2,
       borderRadius: 2,
-      borderColor: "#eeeeee",
-      borderStyle: "dashed",
-      backgroundColor: "#fafafa",
-      height: "8rem",
-      width: "100%",
-      cursor: "pointer",
-      "&:focus": {
-        outline: "none",
+      borderColor: '#eeeeee',
+      borderStyle: 'dashed',
+      backgroundColor: '#fafafa',
+      height: '8rem',
+      width: '100%',
+      cursor: 'pointer',
+      '&:focus': {
+        outline: 'none',
       },
       marginTop: theme.spacing(2),
     },
     siteName: {
-      maxWidth: "calc(100% - 56px)", // 100% minus the back button
-      overflowWrap: "break-word",
+      maxWidth: 'calc(100% - 56px)', // 100% minus the back button
+      overflowWrap: 'break-word',
     },
     popover: {
-      pointerEvents: "none",
+      pointerEvents: 'none',
     },
     popoverText: {
-      height: "3rem",
-      width: "12rem",
+      height: '3rem',
+      width: '12rem',
     },
     paper: {
-      backgroundColor: "rgba(22, 141, 189, 0.3)",
+      backgroundColor: 'rgba(22, 141, 189, 0.3)',
     },
   });
 
@@ -373,7 +373,7 @@ interface UploadMediaIncomingProps {
 
 interface Metadata {
   surveyPoint?: number;
-  observation: SurveyMediaData["observations"];
+  observation: SurveyMediaData['observations'];
   comments: string;
 }
 

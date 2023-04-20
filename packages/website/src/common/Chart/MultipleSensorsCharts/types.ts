@@ -1,6 +1,6 @@
-import { DataRange, ValueWithTimestamp } from "../../../store/Sites/types";
+import { DataRange, ValueWithTimestamp } from '../../../store/Sites/types';
 
-export type RangeValue = "one_month" | "one_year" | "max" | "custom";
+export type RangeValue = 'one_month' | 'one_year' | 'max' | 'custom';
 
 export interface RangeButton {
   id: RangeValue;

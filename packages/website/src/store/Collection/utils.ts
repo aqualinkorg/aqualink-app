@@ -1,7 +1,7 @@
-import { CollectionDetails, CollectionDetailsResponse } from "./types";
+import { CollectionDetails, CollectionDetailsResponse } from './types';
 
 export const constructCollection = (
-  data: CollectionDetailsResponse
+  data: CollectionDetailsResponse,
 ): CollectionDetails => ({
   ...data,
   sites: data.sites.map((item) => ({

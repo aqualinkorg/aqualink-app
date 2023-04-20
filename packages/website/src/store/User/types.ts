@@ -1,9 +1,9 @@
-import type { Site } from "../Sites/types";
+import type { Site } from '../Sites/types';
 
 export interface User {
   email?: string | null;
   fullName?: string | null;
-  adminLevel?: "default" | "site_manager" | "super_admin";
+  adminLevel?: 'default' | 'site_manager' | 'super_admin';
   firebaseUid?: string | null;
   organization?: string | null;
   administeredSites?: Site[];
