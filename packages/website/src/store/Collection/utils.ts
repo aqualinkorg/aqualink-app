@@ -1,8 +1,8 @@
-import { CollectionData, CollectionDataResponse } from "../Sites/types";
-import { CollectionDetails, CollectionDetailsResponse } from "./types";
+import { CollectionData, CollectionDataResponse } from '../Sites/types';
+import { CollectionDetails, CollectionDetailsResponse } from './types';
 
 export const mapCollectionData = (
-  data: CollectionDataResponse
+  data: CollectionDataResponse,
 ): CollectionData => ({
   bottomTemperature: data.bottom_temperature,
   dhw: data.dhw,
@@ -19,7 +19,7 @@ export const mapCollectionData = (
 });
 
 export const constructCollection = (
-  data: CollectionDetailsResponse
+  data: CollectionDetailsResponse,
 ): CollectionDetails => ({
   ...data,
   sites: data.sites.map((item) => ({

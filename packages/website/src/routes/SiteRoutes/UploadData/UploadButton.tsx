@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Button, CircularProgress, makeStyles } from "@material-ui/core";
+import React from 'react';
+import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core';
 
 const UploadButton = ({ loading, onUpload }: UploadButtonProps) => {
   const classes = useStyles();
@@ -16,7 +16,7 @@ const UploadButton = ({ loading, onUpload }: UploadButtonProps) => {
         {loading ? (
           <CircularProgress color="inherit" size={24.5} />
         ) : (
-          "UPLOAD FILES"
+          'UPLOAD FILES'
         )}
       </Button>
     </Box>
@@ -25,7 +25,7 @@ const UploadButton = ({ loading, onUpload }: UploadButtonProps) => {
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
     minWidth: 140,
   },
 }));

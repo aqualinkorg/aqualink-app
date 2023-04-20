@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Grid,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 import {
   getNumberOfImages,
   getNumberOfSurveyPoints,
-} from "../../../helpers/surveyMedia";
-import { displayTimeInLocalTimezone } from "../../../helpers/dates";
-import type { Site } from "../../../store/Sites/types";
-import type { SurveyState } from "../../../store/Survey/types";
-import { getSiteNameAndRegion } from "../../../store/Sites/helpers";
-import ObservationBox from "./ObservationBox";
+} from '../../../helpers/surveyMedia';
+import { displayTimeInLocalTimezone } from '../../../helpers/dates';
+import type { Site } from '../../../store/Sites/types';
+import type { SurveyState } from '../../../store/Survey/types';
+import { getSiteNameAndRegion } from '../../../store/Sites/helpers';
+import ObservationBox from './ObservationBox';
 
 const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
@@ -29,7 +29,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
             <Typography variant="subtitle1">
               {displayTimeInLocalTimezone({
                 isoDate: survey.diveDate,
-                format: "MM/DD/YYYY [at] h:mm A",
+                format: 'MM/DD/YYYY [at] h:mm A',
                 displayTimezone: false,
                 timeZone: site.timezone,
               })}
@@ -57,7 +57,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
                 variant="h6"
                 className={classes.inlineText}
               >
-                SURVEY POINT{nSurveyPoints === 1 ? "" : "S"}
+                SURVEY POINT{nSurveyPoints === 1 ? '' : 'S'}
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -73,7 +73,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
                 variant="h6"
                 className={classes.inlineText}
               >
-                IMAGE{nImages === 1 ? "" : "S"}
+                IMAGE{nImages === 1 ? '' : 'S'}
               </Typography>
             </Grid>
           </Grid>
@@ -103,13 +103,13 @@ const styles = () =>
       fontSize: 18,
     },
     siteName: {
-      maxWidth: "95%",
-      overflowWrap: "break-word",
+      maxWidth: '95%',
+      overflowWrap: 'break-word',
     },
     inlineText: {
-      display: "inline",
-      fontWeight: "normal",
-      marginLeft: "0.5rem",
+      display: 'inline',
+      fontWeight: 'normal',
+      marginLeft: '0.5rem',
     },
   });
 

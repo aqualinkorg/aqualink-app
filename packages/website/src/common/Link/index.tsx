@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, LinkProps } from "react-router-dom";
+import React from 'react';
+import { Link, LinkProps } from 'react-router-dom';
 import {
   IconButton,
   Tooltip,
@@ -7,8 +7,8 @@ import {
   WithStyles,
   createStyles,
   TooltipProps,
-} from "@material-ui/core";
-import { Launch } from "@material-ui/icons";
+} from '@material-ui/core';
+import { Launch } from '@material-ui/icons';
 
 const CustomLink = ({
   to,
@@ -35,11 +35,11 @@ const CustomLink = ({
 const styles = () =>
   createStyles({
     link: {
-      textDecoration: "none",
-      color: "inherit",
-      "&:hover": {
-        textDecoration: "none",
-        color: "inherit",
+      textDecoration: 'none',
+      color: 'inherit',
+      '&:hover': {
+        textDecoration: 'none',
+        color: 'inherit',
       },
     },
     button: {
@@ -48,10 +48,10 @@ const styles = () =>
   });
 
 interface CustomLinkIncomingProps {
-  to: LinkProps["to"];
+  to: LinkProps['to'];
   isIcon: boolean;
   content?: string | null;
-  tooltipTitle: TooltipProps["title"];
+  tooltipTitle: TooltipProps['title'];
 }
 
 CustomLink.defaultProps = {

@@ -1,9 +1,9 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import PointSelector from ".";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import PointSelector from '.';
 
-test("renders as expected", () => {
+test('renders as expected', () => {
   const { container } = render(
     <Router>
       <PointSelector
@@ -21,7 +21,7 @@ test("renders as expected", () => {
         submitSurveyPointNameUpdate={() => {}}
         onDeleteButtonClick={() => {}}
       />
-    </Router>
+    </Router>,
   );
   expect(container).toMatchSnapshot();
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   createStyles,
   Grid,
@@ -7,33 +7,33 @@ import {
   Box,
   useTheme,
   useMediaQuery,
-} from "@material-ui/core";
-import classNames from "classnames";
-import times from "lodash/times";
+} from '@material-ui/core';
+import classNames from 'classnames';
+import times from 'lodash/times';
 
-import { useDispatch, useSelector } from "react-redux";
-import Map from "./Map";
-import SketchFab from "./SketchFab";
-import FeaturedMedia from "./FeaturedMedia";
-import Satellite from "./Satellite";
-import Sensor from "./Sensor";
-import CoralBleaching from "./CoralBleaching";
-import Waves from "./Waves";
-import OceanSenseMetrics from "./OceanSenseMetrics";
-import Surveys from "./Surveys";
-import CardWithTitle from "./CardWithTitle";
-import { Value } from "./CardWithTitle/types";
-import CombinedCharts from "../Chart/CombinedCharts";
-import type { Site, LatestDataASSofarValue } from "../../store/Sites/types";
-import { getMiddlePoint } from "../../helpers/map";
-import { formatNumber } from "../../helpers/numberUtils";
-import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
-import { displayTimeInLocalTimezone, sortByDate } from "../../helpers/dates";
-import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
-import WaterSamplingCard from "./WaterSampling";
-import { styles as incomingStyles } from "./styles";
-import LoadingSkeleton from "../LoadingSkeleton";
-import playIcon from "../../assets/play-icon.svg";
+import { useDispatch, useSelector } from 'react-redux';
+import Map from './Map';
+import SketchFab from './SketchFab';
+import FeaturedMedia from './FeaturedMedia';
+import Satellite from './Satellite';
+import Sensor from './Sensor';
+import CoralBleaching from './CoralBleaching';
+import Waves from './Waves';
+import OceanSenseMetrics from './OceanSenseMetrics';
+import Surveys from './Surveys';
+import CardWithTitle from './CardWithTitle';
+import { Value } from './CardWithTitle/types';
+import CombinedCharts from '../Chart/CombinedCharts';
+import type { Site, LatestDataASSofarValue } from '../../store/Sites/types';
+import { getMiddlePoint } from '../../helpers/map';
+import { formatNumber } from '../../helpers/numberUtils';
+import { SurveyListItem, SurveyPoint } from '../../store/Survey/types';
+import { displayTimeInLocalTimezone, sortByDate } from '../../helpers/dates';
+import { oceanSenseConfig } from '../../constants/oceanSenseConfig';
+import WaterSamplingCard from './WaterSampling';
+import { styles as incomingStyles } from './styles';
+import LoadingSkeleton from '../LoadingSkeleton';
+import playIcon from '../../assets/play-icon.svg';
 import {
   forecastDataRequest,
   forecastDataSelector,
@@ -44,9 +44,9 @@ import {
   unsetForecastData,
   unsetLatestData,
   unsetSpotterPosition,
-} from "../../store/Sites/selectedSiteSlice";
-import { parseLatestData } from "../../store/Sites/helpers";
-import HUICard from "./HUICard";
+} from '../../store/Sites/selectedSiteSlice';
+import { parseLatestData } from '../../store/Sites/helpers';
+import HUICard from './HUICard';
 
 const SiteDetails = ({
   site,
@@ -68,7 +68,7 @@ const SiteDetails = ({
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
 
@@ -98,7 +98,7 @@ const SiteDetails = ({
       const parsedData = parseLatestData(combinedArray);
       const hasSpotter = Boolean(parsedData.bottomTemperature);
       const hasSonde = Boolean(parsedData.salinity);
-      const hasHUI = latestData.some((x) => x.source === "hui");
+      const hasHUI = latestData.some((x) => x.source === 'hui');
 
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
@@ -141,7 +141,7 @@ const SiteDetails = ({
             return (
               <CoralBleaching
                 dailyData={
-                  sortByDate(site.dailyData, "date", "asc").slice(-1)[0]
+                  sortByDate(site.dailyData, 'date', 'asc').slice(-1)[0]
                 }
               />
             );
@@ -153,13 +153,13 @@ const SiteDetails = ({
   const mapTitleItems: Value[] = [
     {
       text: `LAT: ${formatNumber(lat, 3)}`,
-      variant: "subtitle2",
-      marginRight: "1rem",
+      variant: 'subtitle2',
+      marginRight: '1rem',
     },
     {
       text: `LONG: ${formatNumber(lng, 3)}`,
-      variant: "subtitle2",
-      marginRight: site?.sketchFab ? "1rem" : 0,
+      variant: 'subtitle2',
+      marginRight: site?.sketchFab ? '1rem' : 0,
     },
   ];
 
@@ -168,40 +168,40 @@ const SiteDetails = ({
       case !!videoStream:
         return [
           {
-            text: "LIVE VIDEO",
+            text: 'LIVE VIDEO',
             marginRight: 0,
-            variant: "h6",
+            variant: 'h6',
           },
         ];
       case !!surveyDiveDate && !!featuredSurveyPoint:
         return [
           {
-            text: "SURVEY POINT:",
-            variant: "h6",
-            marginRight: "0.5rem",
+            text: 'SURVEY POINT:',
+            variant: 'h6',
+            marginRight: '0.5rem',
           },
           {
             text: `${featuredSurveyPoint?.name}`,
-            variant: "subtitle2",
-            marginRight: "2rem",
+            variant: 'subtitle2',
+            marginRight: '2rem',
             overflowEllipsis: true,
           },
           {
             text: `${displayTimeInLocalTimezone({
               isoDate: surveyDiveDate,
-              format: "MMM DD[,] YYYY",
+              format: 'MMM DD[,] YYYY',
               displayTimezone: false,
               timeZone: site?.timezone,
             })}`,
-            variant: "subtitle2",
+            variant: 'subtitle2',
             marginRight: 0,
           },
         ];
       case !!site?.sketchFab?.description: {
         return [
           {
-            text: site?.sketchFab?.description ?? "",
-            variant: "subtitle2",
+            text: site?.sketchFab?.description ?? '',
+            variant: 'subtitle2',
             marginRight: 0,
           },
         ];
@@ -214,7 +214,7 @@ const SiteDetails = ({
   return (
     <Box mt="1.5rem">
       <Grid
-        direction={isMobile ? "column-reverse" : "row"}
+        direction={isMobile ? 'column-reverse' : 'row'}
         container
         justify="space-between"
         alignItems="flex-end"
@@ -308,21 +308,21 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     ...incomingStyles,
     root: {
-      marginTop: "2rem",
+      marginTop: '2rem',
     },
     forcedWidth: {
       width: `calc(100% + ${theme.spacing(2)}px)`,
       margin: -theme.spacing(1),
     },
     mobileMargin: {
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         margin: theme.spacing(1, 0),
       },
     },
     metricsWrapper: {
-      marginTop: "1rem",
+      marginTop: '1rem',
     },
-  })
+  }),
 );
 
 interface SiteDetailsProps {

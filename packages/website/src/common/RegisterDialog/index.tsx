@@ -1,6 +1,6 @@
-import React, { BaseSyntheticEvent, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import isEmail from "validator/lib/isEmail";
+import React, { BaseSyntheticEvent, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import isEmail from 'validator/lib/isEmail';
 import {
   withStyles,
   WithStyles,
@@ -18,11 +18,11 @@ import {
   LinearProgress,
   Collapse,
   Box,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import CloseIcon from "@material-ui/icons/Close";
-import { useForm, Controller } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
+import { useForm, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   createUser,
@@ -30,10 +30,10 @@ import {
   userLoadingSelector,
   userErrorSelector,
   clearError,
-} from "../../store/User/userSlice";
-import { UserRegisterParams } from "../../store/User/types";
-import dialogStyles from "../styles/dialogStyles";
-import { RegisterFormFields } from "../types";
+} from '../../store/User/userSlice';
+import { UserRegisterParams } from '../../store/User/types';
+import dialogStyles from '../styles/dialogStyles';
+import { RegisterFormFields } from '../types';
 
 const RegisterDialog = ({
   open,
@@ -53,12 +53,12 @@ const RegisterDialog = ({
     handleSubmit,
     control,
   } = useForm<RegisterFormFields>({
-    reValidateMode: "onSubmit",
+    reValidateMode: 'onSubmit',
   });
 
   const onSubmit = (
     data: RegisterFormFields,
-    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>,
   ) => {
     if (event) {
       event.preventDefault();
@@ -161,7 +161,7 @@ const RegisterDialog = ({
                     name="firstName"
                     control={control}
                     rules={{
-                      required: "This is a required field",
+                      required: 'This is a required field',
                     }}
                     render={({ field }) => (
                       <TextField
@@ -169,7 +169,7 @@ const RegisterDialog = ({
                         id="firstName"
                         placeholder="First Name"
                         helperText={
-                          errors.firstName ? errors.firstName.message : ""
+                          errors.firstName ? errors.firstName.message : ''
                         }
                         label="First Name"
                         error={!!errors.firstName}
@@ -185,7 +185,7 @@ const RegisterDialog = ({
                     name="lastName"
                     control={control}
                     rules={{
-                      required: "This is a required field",
+                      required: 'This is a required field',
                     }}
                     render={({ field }) => (
                       <TextField
@@ -193,7 +193,7 @@ const RegisterDialog = ({
                         id="lastName"
                         placeholder="Last Name"
                         helperText={
-                          errors.lastName ? errors.lastName.message : ""
+                          errors.lastName ? errors.lastName.message : ''
                         }
                         label="Last Name"
                         error={!!errors.lastName}
@@ -209,7 +209,7 @@ const RegisterDialog = ({
                     name="organization"
                     control={control}
                     rules={{
-                      required: "This is a required field",
+                      required: 'This is a required field',
                     }}
                     render={({ field }) => (
                       <TextField
@@ -217,7 +217,7 @@ const RegisterDialog = ({
                         id="organization"
                         placeholder="Organization"
                         helperText={
-                          errors.organization ? errors.organization.message : ""
+                          errors.organization ? errors.organization.message : ''
                         }
                         label="Organization"
                         error={!!errors.organization}
@@ -233,7 +233,7 @@ const RegisterDialog = ({
                     name="emailAddress"
                     control={control}
                     rules={{
-                      required: "This is a required field",
+                      required: 'This is a required field',
                       validate: (value) => isEmail(value),
                     }}
                     render={({ field }) => (
@@ -243,10 +243,10 @@ const RegisterDialog = ({
                         placeholder="Email Address"
                         helperText={
                           (errors.emailAddress &&
-                            (errors.emailAddress.type === "validate"
-                              ? "Invalid email address"
+                            (errors.emailAddress.type === 'validate'
+                              ? 'Invalid email address'
                               : errors.emailAddress.message)) ||
-                          ""
+                          ''
                         }
                         label="Email Address"
                         error={!!errors.emailAddress}
@@ -262,10 +262,10 @@ const RegisterDialog = ({
                     name="password"
                     control={control}
                     rules={{
-                      required: "This is a required field",
+                      required: 'This is a required field',
                       minLength: {
                         value: 8,
-                        message: "Password must be at least 8 characters",
+                        message: 'Password must be at least 8 characters',
                       },
                     }}
                     render={({ field }) => (
@@ -275,7 +275,7 @@ const RegisterDialog = ({
                         type="password"
                         placeholder="Password"
                         helperText={
-                          errors.password ? errors.password.message : ""
+                          errors.password ? errors.password.message : ''
                         }
                         label="Password"
                         error={!!errors.password}
@@ -308,7 +308,7 @@ const RegisterDialog = ({
                         variant="subtitle1"
                         color="textSecondary"
                       >
-                        I have read the{" "}
+                        I have read the{' '}
                         <Link className={classes.termsLink} to="/terms">
                           Terms and Conditions
                         </Link>
@@ -334,7 +334,7 @@ const RegisterDialog = ({
                     variant="subtitle1"
                     color="textSecondary"
                   >
-                    Have an account?{" "}
+                    Have an account?{' '}
                     <Button
                       onClick={() => {
                         handleRegisterOpen(false);
@@ -360,10 +360,10 @@ const styles = () =>
     ...dialogStyles,
     termsCheckbox: {
       padding: 0,
-      margin: "0 0 1rem 0",
+      margin: '0 0 1rem 0',
     },
     termsLink: {
-      color: "black",
+      color: 'black',
     },
   });
 

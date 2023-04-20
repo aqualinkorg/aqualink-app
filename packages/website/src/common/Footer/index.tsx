@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   AppBar,
   Toolbar,
@@ -9,7 +9,7 @@ import {
   createStyles,
   Theme,
   Link,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 const Footer = ({ classes }: FooterProps) => {
   return (
@@ -21,7 +21,7 @@ const Footer = ({ classes }: FooterProps) => {
               <Typography color="textPrimary" variant="h4">
                 Aqua
               </Typography>
-              <Typography style={{ color: "#8AC6DE" }} variant="h4">
+              <Typography style={{ color: '#8AC6DE' }} variant="h4">
                 link
               </Typography>
             </Link>
@@ -35,15 +35,15 @@ const Footer = ({ classes }: FooterProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     appBar: {
-      "&.MuiPaper-root": {
+      '&.MuiPaper-root': {
         backgroundColor: theme.palette.primary.main,
       },
     },
     navBarLink: {
-      display: "flex",
-      textDecoration: "none",
-      "&:hover": {
-        textDecoration: "none",
+      display: 'flex',
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'none',
       },
     },
   });

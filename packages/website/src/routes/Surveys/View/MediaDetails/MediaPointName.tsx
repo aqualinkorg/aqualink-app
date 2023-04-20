@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { isNumber } from "lodash";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { isNumber } from 'lodash';
 import {
   Grid,
   Typography,
@@ -9,9 +9,9 @@ import {
   WithStyles,
   createStyles,
   Theme,
-} from "@material-ui/core";
-import classNames from "classnames";
-import SurveyPointSelector from "../../../../common/SurveyPointSelector";
+} from '@material-ui/core';
+import classNames from 'classnames';
+import SurveyPointSelector from '../../../../common/SurveyPointSelector';
 
 const MediaPointName = ({
   pointName,
@@ -31,7 +31,7 @@ const MediaPointName = ({
 
   return (
     <Grid container spacing={1} alignItems="baseline">
-      <Grid style={{ alignSelf: "end" }} item>
+      <Grid style={{ alignSelf: 'end' }} item>
         <Typography variant="h6">Survey Point: </Typography>
       </Grid>
       {editing ? (
@@ -51,7 +51,7 @@ const MediaPointName = ({
               <Link
                 className={classes.link}
                 to={`/sites/${encodeURIComponent(
-                  siteId
+                  siteId,
                 )}/points/${encodeURIComponent(pointId)}`}
               >
                 <Typography
@@ -83,28 +83,28 @@ const MediaPointName = ({
 const styles = (theme: Theme) =>
   createStyles({
     surveyPointName: {
-      maxWidth: "calc(100% - 120px)", // width of 100% minus the "Survey Point:" label
-      height: "4em",
-      display: "flex",
+      maxWidth: 'calc(100% - 120px)', // width of 100% minus the "Survey Point:" label
+      height: '4em',
+      display: 'flex',
     },
     link: {
-      textDecoration: "none",
-      color: "inherit",
-      "&:hover": {
-        textDecoration: "none",
-        color: "inherit",
+      textDecoration: 'none',
+      color: 'inherit',
+      '&:hover': {
+        textDecoration: 'none',
+        color: 'inherit',
       },
-      display: "flex",
+      display: 'flex',
     },
     titleName: {
       fontSize: 18,
       lineHeight: 1.56,
-      width: "100%",
-      display: "block",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-      alignSelf: "end",
+      width: '100%',
+      display: 'block',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      alignSelf: 'end',
     },
     selectedPoi: {
       color: theme.palette.primary.main,

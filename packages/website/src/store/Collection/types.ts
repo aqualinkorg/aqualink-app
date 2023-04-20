@@ -1,5 +1,5 @@
-import { Site, SiteResponse } from "../Sites/types";
-import { User } from "../User/types";
+import { Site, SiteResponse } from '../Sites/types';
+import { User } from '../User/types';
 
 export interface CollectionSummary {
   id: number;

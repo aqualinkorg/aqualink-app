@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Card,
   CardHeader,
@@ -9,20 +9,20 @@ import {
   Theme,
   Tooltip,
   Typography,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { grey } from "@material-ui/core/colors";
-import CloseIcon from "@material-ui/icons/HighlightOffOutlined";
-import FileIcon from "@material-ui/icons/InsertDriveFileOutlined";
-import classNames from "classnames";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { grey } from '@material-ui/core/colors';
+import CloseIcon from '@material-ui/icons/HighlightOffOutlined';
+import FileIcon from '@material-ui/icons/InsertDriveFileOutlined';
+import classNames from 'classnames';
 
-import { useSelector } from "react-redux";
-import { pluralize } from "../../../helpers/stringUtils";
+import { useSelector } from 'react-redux';
+import { pluralize } from '../../../helpers/stringUtils';
 import {
   uploadsErrorSelector,
   uploadsInProgressSelector,
   uploadsResponseSelector,
-} from "../../../store/uploads/uploadsSlice";
+} from '../../../store/uploads/uploadsSlice';
 
 const CIRCULAR_PROGRESS_SIZE = 36;
 
@@ -39,8 +39,8 @@ const FileList = ({ files, onFileDelete }: FileListProps) => {
     <Grid container spacing={2} className={classes.root}>
       <Grid item xs={12}>
         <Typography gutterBottom variant="h6">
-          {files.length} {pluralize(files.length, "file")}{" "}
-          {loading ? "uploading" : "to be uploaded"}
+          {files.length} {pluralize(files.length, 'file')}{' '}
+          {loading ? 'uploading' : 'to be uploaded'}
         </Typography>
       </Grid>
       {files.map(({ name }) => (
@@ -94,29 +94,29 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(3),
   },
   card: {
-    position: "relative",
+    position: 'relative',
   },
   cardContent: {
-    maxWidth: "calc(100% - 40px - 48px)", // Full width minus the two icons (file icon and delete icon)
+    maxWidth: 'calc(100% - 40px - 48px)', // Full width minus the two icons (file icon and delete icon)
   },
   cardHeaderTitle: {
-    overflow: "hidden",
-    width: "100%",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
+    overflow: 'hidden',
+    width: '100%',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   fileIcon: {
     color: theme.palette.text.secondary,
   },
   loading: {
     opacity: 0.5,
-    pointerEvents: "none",
-    cursor: "default",
+    pointerEvents: 'none',
+    cursor: 'default',
   },
   circularProgress: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
     marginTop: -CIRCULAR_PROGRESS_SIZE / 2,
     marginLeft: -CIRCULAR_PROGRESS_SIZE / 2,
     color: grey[500],

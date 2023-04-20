@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from "react";
+import React, { ChangeEvent, FormEvent } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -6,19 +6,19 @@ import {
   Button,
   Grid,
   Typography,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { useDispatch, useSelector } from "react-redux";
-import { find } from "lodash";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { find } from 'lodash';
 
-import TextField from "../../../../../common/Forms/TextField";
-import { Site, SiteUpdateParams } from "../../../../../store/Sites/types";
-import { getSiteNameAndRegion } from "../../../../../store/Sites/helpers";
+import TextField from '../../../../../common/Forms/TextField';
+import { Site, SiteUpdateParams } from '../../../../../store/Sites/types';
+import { getSiteNameAndRegion } from '../../../../../store/Sites/helpers';
 import {
   siteDraftSelector,
   setSiteDraft,
-} from "../../../../../store/Sites/selectedSiteSlice";
-import { useFormField } from "../../../../../hooks/useFormField";
+} from '../../../../../store/Sites/selectedSiteSlice';
+import { useFormField } from '../../../../../hooks/useFormField';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
@@ -31,12 +31,12 @@ const EditForm = ({
 }: EditFormProps) => {
   const dispatch = useDispatch();
   const draftSite = useSelector(siteDraftSelector);
-  const location = site.polygon.type === "Point" ? site.polygon : null;
+  const location = site.polygon.type === 'Point' ? site.polygon : null;
   const { latitude: draftLatitude, longitude: draftLongitude } =
     draftSite?.coordinates || {};
 
   const setDraftSiteCoordinates =
-    (field: "longitude" | "latitude") => (value: string) => {
+    (field: 'longitude' | 'latitude') => (value: string) => {
       dispatch(
         setSiteDraft({
           ...draftSite,
@@ -44,33 +44,33 @@ const EditForm = ({
             ...draftSite.coordinates,
             [field]: parseFloat(value),
           },
-        })
+        }),
       );
     };
 
   // Form Fields
   const [siteName, setSiteName] = useFormField(
     getSiteNameAndRegion(site).name,
-    ["required", "maxLength"]
+    ['required', 'maxLength'],
   );
 
   const [siteDepth, setSiteDepth] = useFormField(site.depth?.toString(), [
-    "required",
-    "isInt",
+    'required',
+    'isInt',
   ]);
 
   const [siteLatitude, setSiteLatitude] = useFormField(
     location?.coordinates[1].toString(),
-    ["required", "isNumeric", "isLat"],
+    ['required', 'isNumeric', 'isLat'],
     draftLatitude?.toString(),
-    setDraftSiteCoordinates("latitude")
+    setDraftSiteCoordinates('latitude'),
   );
 
   const [siteLongitude, setSiteLongitude] = useFormField(
     location?.coordinates[0].toString(),
-    ["required", "isNumeric", "isLong"],
+    ['required', 'isNumeric', 'isLong'],
     draftLongitude?.toString(),
-    setDraftSiteCoordinates("longitude")
+    setDraftSiteCoordinates('longitude'),
   );
 
   const formSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -94,20 +94,20 @@ const EditForm = ({
   };
 
   const onFieldChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name: field, value: newValue } = event.target;
     switch (field) {
-      case "siteName":
+      case 'siteName':
         setSiteName(newValue);
         break;
-      case "depth":
+      case 'depth':
         setSiteDepth(newValue);
         break;
-      case "latitude":
+      case 'latitude':
         setSiteLatitude(newValue, true);
         break;
-      case "longitude":
+      case 'longitude':
         setSiteLongitude(newValue, true);
         break;
       default:
@@ -188,14 +188,14 @@ const EditForm = ({
                 loading ||
                 !!find(
                   [siteName, siteDepth, siteLongitude, siteLatitude],
-                  (field) => field.error
+                  (field) => field.error,
                 )
               }
               variant="outlined"
               size="medium"
               color="primary"
             >
-              {loading ? "Saving..." : "Save"}
+              {loading ? 'Saving...' : 'Save'}
             </Button>
           </Grid>
         </Grid>
@@ -207,11 +207,11 @@ const EditForm = ({
 const styles = () =>
   createStyles({
     textField: {
-      color: "black",
-      alignItems: "center",
+      color: 'black',
+      alignItems: 'center',
     },
     infoAlert: {
-      marginTop: "0.5rem",
+      marginTop: '0.5rem',
     },
   });
 

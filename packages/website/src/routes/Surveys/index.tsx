@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -7,20 +7,20 @@ import {
   Grid,
   Typography,
   Container,
-} from "@material-ui/core";
-import { RouteComponentProps } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+} from '@material-ui/core';
+import { RouteComponentProps } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   siteDetailsSelector,
   siteLoadingSelector,
   siteErrorSelector,
   siteRequest,
-} from "../../store/Sites/selectedSiteSlice";
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
-import NewSurvey from "./New";
-import SurveyViewPage from "./View";
+} from '../../store/Sites/selectedSiteSlice';
+import NavBar from '../../common/NavBar';
+import Footer from '../../common/Footer';
+import NewSurvey from './New';
+import SurveyViewPage from './View';
 
 const Surveys = ({ match, isView, classes }: SurveysProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
@@ -76,9 +76,9 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
 const styles = () =>
   createStyles({
     noData: {
-      display: "flex",
-      alignItems: "center",
-      height: "100%",
+      display: 'flex',
+      alignItems: 'center',
+      height: '100%',
     },
   });
 

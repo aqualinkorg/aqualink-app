@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Typography,
   CardMedia,
-} from "@material-ui/core";
-import classNames from "classnames";
+} from '@material-ui/core';
+import classNames from 'classnames';
 
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
+import NavBar from '../../common/NavBar';
+import Footer from '../../common/Footer';
 
-import peter from "../../assets/img/peter.jpg";
-import lyndon from "../../assets/img/LYNDON1.jpg";
-import drew from "../../assets/img/drew.jpg";
+import peter from '../../assets/img/peter.jpg';
+import lyndon from '../../assets/img/LYNDON1.jpg';
+import drew from '../../assets/img/drew.jpg';
 
 const About = ({ classes }: AboutProps) => {
   return (
@@ -34,7 +34,7 @@ const About = ({ classes }: AboutProps) => {
                       Aqualink is a philanthropic engineering organization
                       working on building ocean conservation technology. Read
                       more about our inspiration, smart buoy, and web
-                      application in our press release:{" "}
+                      application in our press release:{' '}
                       <a href="https://medium.com/aqualink/introducing-aqualink-dd1023393b8">
                         Introducing Aqualink
                       </a>
@@ -46,7 +46,7 @@ const About = ({ classes }: AboutProps) => {
                     </p>
                   </div>
                   <div
-                    className={classNames("offset-lg-0 col-lg-12 order-lg-1", [
+                    className={classNames('offset-lg-0 col-lg-12 order-lg-1', [
                       classes.videoWrapper,
                     ])}
                   >
@@ -150,19 +150,19 @@ const About = ({ classes }: AboutProps) => {
 const styles = () =>
   createStyles({
     title: {
-      marginTop: "1rem",
-      marginBottom: "1rem",
+      marginTop: '1rem',
+      marginBottom: '1rem',
     },
     videoWrapper: {
-      position: "relative",
-      paddingTop: "calc(100% / 16 * 9)",
+      position: 'relative',
+      paddingTop: 'calc(100% / 16 * 9)',
     },
     video: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     },
   });
 

@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 import {
   Grid,
   Typography,
   createStyles,
   Theme,
   makeStyles,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import footprint from "../../assets/img/tracker-page/footprint.png";
+import footprint from '../../assets/img/tracker-page/footprint.png';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     footPrintImageLink: {
-      textAlign: "right",
+      textAlign: 'right',
     },
     footPrintImage: ({ imageHeight }: FootPrintImageProps) =>
       imageHeight ? { height: imageHeight } : {},
-  })
+  }),
 );
 
 const FootPrintImage = ({ imageHeight }: FootPrintImageProps) => {

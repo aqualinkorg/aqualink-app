@@ -1,5 +1,5 @@
-import React from "react";
-import { useTheme, Box, Typography } from "@material-ui/core";
+import React from 'react';
+import { useTheme, Box, Typography } from '@material-ui/core';
 
 const FullScreenMessage = ({ message }: FullScreenMessageProps) => {
   const theme = useTheme();

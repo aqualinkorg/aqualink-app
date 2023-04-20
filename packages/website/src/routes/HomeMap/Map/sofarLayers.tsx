@@ -1,6 +1,6 @@
-import React from "react";
-import { LayersControl, TileLayer } from "react-leaflet";
-import { MapLayerName } from "../../../store/Homepage/types";
+import React from 'react';
+import { LayersControl, TileLayer } from 'react-leaflet';
+import { MapLayerName } from '../../../store/Homepage/types';
 
 type SofarLayerDefinition = {
   name: MapLayerName;
@@ -11,16 +11,16 @@ type SofarLayerDefinition = {
 
 const SOFAR_LAYERS: SofarLayerDefinition[] = [
   {
-    name: "Sea Surface Temperature",
-    model: "NOAACoralReefWatch",
-    variableId: "analysedSeaSurfaceTemperature",
-    cmap: "turbo",
+    name: 'Sea Surface Temperature',
+    model: 'NOAACoralReefWatch',
+    variableId: 'analysedSeaSurfaceTemperature',
+    cmap: 'turbo',
   },
   {
-    name: "Heat Stress",
-    model: "NOAACoralReefWatch",
-    variableId: "degreeHeatingWeek",
-    cmap: "noaacoral",
+    name: 'Heat Stress',
+    model: 'NOAACoralReefWatch',
+    variableId: 'degreeHeatingWeek',
+    cmap: 'noaacoral',
   },
 ];
 
