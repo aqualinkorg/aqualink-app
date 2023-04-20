@@ -176,7 +176,7 @@ export const addSpotterData = async (
             );
             if (dist > MAX_DISTANCE_FROM_SITE) {
               logger.warn(
-                `Spotter is over ${MAX_DISTANCE_FROM_SITE}km from site ${site.id}`,
+                `Spotter is over ${MAX_DISTANCE_FROM_SITE}km from site ${site.id}. Data will not be saved.`,
               );
               return DEFAULT_SPOTTER_DATA_VALUE;
             }
