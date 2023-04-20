@@ -168,7 +168,7 @@ export const addSpotterData = async (
             spotterData?.latitude?.length &&
             spotterData?.longitude?.length
           ) {
-            // Check if spotter in within a specified distance from the site, else don't return any data.
+            // Check if spotter is within specified distance from its site, else don't return any data.
             const dist = distance(
               (site.polygon as Point).coordinates,
               [spotterData.longitude[0].value, spotterData.latitude[0].value],
