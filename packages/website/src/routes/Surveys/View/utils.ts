@@ -1,12 +1,12 @@
 import {
   getSofarDataClosestToDate,
   sameDay,
-} from "../../../common/Chart/utils";
+} from '../../../common/Chart/utils';
 import {
   DailyData,
   ValueWithTimestamp,
   TimeSeries,
-} from "../../../store/Sites/types";
+} from '../../../store/Sites/types';
 
 const getSensorValue = (data?: ValueWithTimestamp[], date?: string | null) =>
   date && data?.[0]
@@ -17,7 +17,7 @@ export const getCardTemperatureValues = (
   dailyData: DailyData[],
   bottomTemperature: TimeSeries | undefined,
   topTemperature: TimeSeries | undefined,
-  date: string | null | undefined
+  date: string | null | undefined,
 ) => {
   const surfaceData = date
     ? dailyData.find((item) => sameDay(date, item.date))

@@ -4,8 +4,8 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import React from "react";
+} from '@material-ui/core';
+import React from 'react';
 
 function Banner({ message, classes }: BannerProps) {
   return (
@@ -27,10 +27,10 @@ const styles = (theme: Theme) =>
   createStyles({
     banner: {
       backgroundColor: theme.palette.warning.dark,
-      minHeight: "4rem",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
+      minHeight: '4rem',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     text: {
       color: theme.palette.text.primary,

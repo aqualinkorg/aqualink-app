@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from "react";
+import React, { ChangeEvent, useCallback } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -12,12 +12,12 @@ import {
   MenuItem,
   TextField,
   Tooltip,
-} from "@material-ui/core";
-import { DeleteOutlineOutlined } from "@material-ui/icons";
-import observationOptions from "../../../constants/uploadDropdowns";
-import { SurveyPoints } from "../../../store/Sites/types";
-import { ReactComponent as StarIcon } from "../../../assets/starIcon.svg";
-import SurveyPointSelector from "../../../common/SurveyPointSelector";
+} from '@material-ui/core';
+import { DeleteOutlineOutlined } from '@material-ui/icons';
+import observationOptions from '../../../constants/uploadDropdowns';
+import { SurveyPoints } from '../../../store/Sites/types';
+import { ReactComponent as StarIcon } from '../../../assets/starIcon.svg';
+import SurveyPointSelector from '../../../common/SurveyPointSelector';
 
 const MediaCard = ({
   preview,
@@ -43,17 +43,17 @@ const MediaCard = ({
   }, [index, setFeatured]);
 
   return (
-    <Grid style={{ marginTop: "2rem" }} container item xs={12}>
+    <Grid style={{ marginTop: '2rem' }} container item xs={12}>
       <Paper elevation={0} className={classes.mediaCardWrapper}>
         <Grid
-          style={{ height: "100%" }}
+          style={{ height: '100%' }}
           container
           alignItems="center"
           justify="space-between"
           item
           xs={12}
         >
-          <Grid style={{ height: "100%" }} item xs={3}>
+          <Grid style={{ height: '100%' }} item xs={3}>
             <CardMedia className={classes.cardImage} image={preview}>
               {size && (
                 <Grid
@@ -79,12 +79,12 @@ const MediaCard = ({
             </CardMedia>
           </Grid>
           <Grid container justify="center" item xs={3}>
-            <Grid style={{ marginBottom: "1rem" }} item xs={10}>
+            <Grid style={{ marginBottom: '1rem' }} item xs={10}>
               <Typography color="textSecondary" variant="h6">
                 Survey Point
               </Typography>
             </Grid>
-            <Grid style={{ marginBottom: "2rem" }} item xs={10}>
+            <Grid style={{ marginBottom: '2rem' }} item xs={10}>
               <SurveyPointSelector
                 handleSurveyPointChange={handleSurveyPointChange}
                 handleSurveyPointOptionAdd={handleSurveyPointOptionAdd}
@@ -93,12 +93,12 @@ const MediaCard = ({
               />
             </Grid>
 
-            <Grid style={{ marginBottom: "1rem" }} item xs={10}>
+            <Grid style={{ marginBottom: '1rem' }} item xs={10}>
               <Typography color="textSecondary" variant="h6">
                 Observation
               </Typography>
             </Grid>
-            <Grid style={{ marginBottom: "2rem" }} item xs={10}>
+            <Grid style={{ marginBottom: '2rem' }} item xs={10}>
               <TextField
                 className={classes.textField}
                 select
@@ -126,12 +126,12 @@ const MediaCard = ({
             </Grid>
           </Grid>
           <Grid container justify="center" item xs={5}>
-            <Grid style={{ marginBottom: "1rem" }} item xs={12}>
+            <Grid style={{ marginBottom: '1rem' }} item xs={12}>
               <Typography color="textSecondary" variant="h6">
                 Comments
               </Typography>
             </Grid>
-            <Grid style={{ marginBottom: "2rem" }} item xs={12}>
+            <Grid style={{ marginBottom: '2rem' }} item xs={12}>
               <TextField
                 className={classes.textField}
                 variant="outlined"
@@ -148,7 +148,7 @@ const MediaCard = ({
               />
             </Grid>
           </Grid>
-          <Grid style={{ height: "100%" }} container item xs={1}>
+          <Grid style={{ height: '100%' }} container item xs={1}>
             <Grid
               container
               item
@@ -160,12 +160,12 @@ const MediaCard = ({
                 <Tooltip
                   title={
                     index === featuredFile
-                      ? "Featured image"
-                      : "Set this image as featured"
+                      ? 'Featured image'
+                      : 'Set this image as featured'
                   }
                 >
                   <StarIcon
-                    fill={index === featuredFile ? "#168dbd" : "#939393"}
+                    fill={index === featuredFile ? '#168dbd' : '#939393'}
                     className={classes.starIcon}
                   />
                 </Tooltip>
@@ -184,39 +184,39 @@ const MediaCard = ({
 const styles = (theme: Theme) =>
   createStyles({
     mediaCardWrapper: {
-      width: "100%",
+      width: '100%',
       border: 1,
-      borderStyle: "solid",
-      borderColor: "#dddddd",
+      borderStyle: 'solid',
+      borderColor: '#dddddd',
       borderRadius: 2,
-      height: "17rem",
+      height: '17rem',
     },
     cardImage: {
-      height: "100%",
-      width: "100%",
-      borderRadius: "2px 0 0 2px",
-      transition: "all 0.3s ease",
+      height: '100%',
+      width: '100%',
+      borderRadius: '2px 0 0 2px',
+      transition: 'all 0.3s ease',
     },
     textField: {
-      color: "black",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
+      color: 'black',
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'rgba(0, 0, 0, 0.23)',
       },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
       },
     },
     mediaSizeWrapper: {
-      height: "100%",
+      height: '100%',
     },
     mediaSize: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      height: "2rem",
-      borderRadius: "2px 0 0 2px",
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      height: '2rem',
+      borderRadius: '2px 0 0 2px',
     },
     newSurveyPointDialog: {
-      width: "20rem",
-      "& > *:last-child": {
+      width: '20rem',
+      '& > *:last-child': {
         padding: theme.spacing(2),
       },
     },
@@ -225,9 +225,9 @@ const styles = (theme: Theme) =>
       padding: 8,
     },
     image: {
-      height: "100%",
-      cursor: "pointer",
-      outline: "none",
+      height: '100%',
+      cursor: 'pointer',
+      outline: 'none',
     },
   });
 

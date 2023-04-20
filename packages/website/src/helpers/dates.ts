@@ -1,6 +1,6 @@
-import moment from "moment-timezone";
-import { range as createRange, orderBy } from "lodash";
-import { zonedTimeToUtc } from "date-fns-tz";
+import moment from 'moment-timezone';
+import { range as createRange, orderBy } from 'lodash';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 import {
   DailyData,
@@ -8,8 +8,8 @@ import {
   HistoricalMonthlyMeanData,
   Range,
   ValueWithTimestamp,
-} from "../store/Sites/types";
-import { SurveyListItem } from "../store/Survey/types";
+} from '../store/Sites/types';
+import { SurveyListItem } from '../store/Survey/types';
 
 type DateString = string | null | undefined;
 
@@ -24,7 +24,7 @@ interface DisplayDateParams {
 export const isBefore = (
   start: string,
   end: string,
-  excludeEndDate?: boolean
+  excludeEndDate?: boolean,
 ) =>
   excludeEndDate
     ? new Date(start).getTime() < new Date(end).getTime()
@@ -36,24 +36,24 @@ export const isBetween = (date: string, start: string, end: string) =>
 export const subtractFromDate = (
   endDate: string,
   amount: Range,
-  multiple?: number
+  multiple?: number,
 ): string => {
   switch (amount) {
-    case "day":
+    case 'day':
       return moment(endDate)
-        .subtract(multiple || 1, "days")
+        .subtract(multiple || 1, 'days')
         .toISOString();
-    case "week":
+    case 'week':
       return moment(endDate)
-        .subtract(multiple || 1, "weeks")
+        .subtract(multiple || 1, 'weeks')
         .toISOString();
-    case "month":
+    case 'month':
       return moment(endDate)
-        .subtract(multiple || 1, "months")
+        .subtract(multiple || 1, 'months')
         .toISOString();
-    case "year":
+    case 'year':
       return moment(endDate)
-        .subtract(multiple || 1, "years")
+        .subtract(multiple || 1, 'years')
         .toISOString();
     default:
       return endDate;
@@ -79,9 +79,9 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
     case timePeriodInSeconds < hour:
       return `${timePeriodInMinutes} min. ago`;
     case timePeriodInSeconds < day:
-      return `${timePeriodInHours} hour${timePeriodInHours > 1 ? "s" : ""} ago`;
+      return `${timePeriodInHours} hour${timePeriodInHours > 1 ? 's' : ''} ago`;
     default:
-      return `${timePeriodInDays} day${timePeriodInDays > 1 ? "s" : ""} ago`;
+      return `${timePeriodInDays} day${timePeriodInDays > 1 ? 's' : ''} ago`;
   }
 };
 /**
@@ -94,7 +94,7 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
 export const sortByDate = <T>(
   list: T[],
   dateKey: keyof T,
-  order?: "asc" | "desc"
+  order?: 'asc' | 'desc',
 ) =>
   orderBy(list, (item) => new Date(item[dateKey] as unknown as string), order);
 
@@ -112,7 +112,7 @@ export const findMarginalDate = (
   spotterBottomTemperature?: ValueWithTimestamp[],
   spotterTopTemperature?: ValueWithTimestamp[],
   hoboBottomTemperature?: ValueWithTimestamp[],
-  type: "min" | "max" = "max"
+  type: 'min' | 'max' = 'max',
 ): string => {
   const combinedData = [
     ...historicalMonthlyMeanData,
@@ -133,8 +133,8 @@ export const findMarginalDate = (
 
   const sortedData = sortByDate(
     combinedData,
-    "date",
-    type === "max" ? "desc" : "asc"
+    'date',
+    type === 'max' ? 'desc' : 'asc',
   );
 
   return sortedData[0].date;
@@ -142,11 +142,11 @@ export const findMarginalDate = (
 
 export const findChartPeriod = (range: Range) => {
   switch (range) {
-    case "day":
-      return "hour";
-    case "week":
+    case 'day':
+      return 'hour';
+    case 'week':
     default:
-      return "day";
+      return 'day';
   }
 };
 
@@ -154,13 +154,13 @@ export function setTimeZone(date: Date, timeZone?: string | null): string;
 
 export function setTimeZone(
   date: Date | null,
-  timeZone?: string | null
+  timeZone?: string | null,
 ): string | null;
 
 // Returns the same date but for a different time zone
 export function setTimeZone(date: Date | null, timeZone?: string | null) {
   if (date && timeZone) {
-    const localTime = new Date(date.toLocaleString("en-US", { timeZone }));
+    const localTime = new Date(date.toLocaleString('en-US', { timeZone }));
     const diff = date.getTime() - date.getMilliseconds() - localTime.getTime();
     return new Date(date.getTime() + diff).toISOString();
   }
@@ -168,11 +168,11 @@ export function setTimeZone(date: Date | null, timeZone?: string | null) {
 }
 
 export const getTimeZoneName = (timeZone: string): string => {
-  const rawTimeZoneName = moment().tz(timeZone).format("z");
+  const rawTimeZoneName = moment().tz(timeZone).format('z');
   // Only add GMT prefix to raw time differences and not acronyms such as PST.
   const needsGMT =
-    rawTimeZoneName.includes("+") || rawTimeZoneName.includes("-");
-  return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
+    rawTimeZoneName.includes('+') || rawTimeZoneName.includes('-');
+  return `${needsGMT ? 'GMT' : ''}${rawTimeZoneName}`;
 };
 
 export const displayTimeInLocalTimezone = ({
@@ -184,13 +184,13 @@ export const displayTimeInLocalTimezone = ({
 }: DisplayDateParams) => {
   if (isoDate) {
     const timeZoneName = getTimeZoneName(
-      timeZoneToDisplay || timeZone || "UTC"
+      timeZoneToDisplay || timeZone || 'UTC',
     );
     const dateString = moment(isoDate)
-      .tz(timeZone || "UTC")
+      .tz(timeZone || 'UTC')
       .format(format);
 
-    return `${dateString}${displayTimezone ? ` ${timeZoneName}` : ""}`;
+    return `${dateString}${displayTimezone ? ` ${timeZoneName}` : ''}`;
   }
   return isoDate;
 };
@@ -209,17 +209,17 @@ const userLocalTimeZoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
  */
 export const convertToLocalTime = (
   isoTime: string,
-  timeZone?: string | null
+  timeZone?: string | null,
 ) => {
   // Hold only hour info ignoring the timezone
   const dateStringIgnoreTimeZone = moment(isoTime)
-    .tz(timeZone || "UTC")
-    .format("YYYY-MM-DD HH:mm:ss");
+    .tz(timeZone || 'UTC')
+    .format('YYYY-MM-DD HH:mm:ss');
 
   // Set the user's local time zone to the above datestring
   return zonedTimeToUtc(
     dateStringIgnoreTimeZone,
-    userLocalTimeZoneName
+    userLocalTimeZoneName,
   ).toISOString();
 };
 
@@ -233,7 +233,7 @@ export const convertSofarDataToLocalTime =
 
 export const convertSurveyDataToLocalTime = (
   surveys: SurveyListItem[],
-  timeZone?: string | null
+  timeZone?: string | null,
 ): SurveyListItem[] =>
   surveys.map((survey) => ({
     ...survey,
@@ -248,29 +248,29 @@ export const generateHistoricalMonthlyMeanTimestamps = (
   historicalMonthlyMean: HistoricalMonthlyMean[],
   startDate?: string,
   endDate?: string,
-  timeZone?: string | null
+  timeZone?: string | null,
 ): HistoricalMonthlyMeanData[] => {
   if (historicalMonthlyMean.length < 12) {
     return [];
   }
 
   const firstDate = moment(startDate)
-    .tz(timeZone || "UTC")
-    .subtract(1, "months")
-    .set("date", 15)
-    .startOf("day");
+    .tz(timeZone || 'UTC')
+    .subtract(1, 'months')
+    .set('date', 15)
+    .startOf('day');
   const lastDate = moment(endDate)
-    .tz(timeZone || "UTC")
-    .add(1, "months")
-    .set("date", 15)
-    .startOf("day");
+    .tz(timeZone || 'UTC')
+    .add(1, 'months')
+    .set('date', 15)
+    .startOf('day');
 
   const monthsRange = createRange(
-    moment(lastDate).diff(moment(firstDate), "months") + 1
+    moment(lastDate).diff(moment(firstDate), 'months') + 1,
   );
 
   return monthsRange.map((months) => {
-    const date = moment(firstDate).add(months, "months");
+    const date = moment(firstDate).add(months, 'months');
 
     return {
       date: date.toISOString(),

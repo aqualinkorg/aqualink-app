@@ -1,9 +1,9 @@
-import { DailyData } from "../store/Sites/types";
+import { DailyData } from '../store/Sites/types';
 
 const now = new Date();
 const minutesAgo = 5;
 const dailyDataDate = new Date(
-  now.getTime() - minutesAgo * 60000
+  now.getTime() - minutesAgo * 60000,
 ).toISOString();
 
 export const mockDailyData: DailyData = {

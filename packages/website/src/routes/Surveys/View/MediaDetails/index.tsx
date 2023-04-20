@@ -1,32 +1,32 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Theme,
   Grid,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-import { SurveyMediaUpdateRequestData } from "../../../../store/Survey/types";
+import { SurveyMediaUpdateRequestData } from '../../../../store/Survey/types';
 import {
   getNumberOfImages,
   getNumberOfVideos,
   getSurveyPointsByName,
-} from "../../../../helpers/surveyMedia";
+} from '../../../../helpers/surveyMedia';
 import {
   selectedSurveyPointSelector,
   surveyMediaEditRequest,
-} from "../../../../store/Survey/surveySlice";
-import { userInfoSelector } from "../../../../store/User/userSlice";
-import { isAdmin } from "../../../../helpers/user";
-import SliderCard from "./SliderCard";
-import MediaCount from "./MediaCount";
-import MediaPointName from "./MediaPointName";
-import { ArrayElement } from "../../../../utils/types";
+} from '../../../../store/Survey/surveySlice';
+import { userInfoSelector } from '../../../../store/User/userSlice';
+import { isAdmin } from '../../../../helpers/user';
+import SliderCard from './SliderCard';
+import MediaCount from './MediaCount';
+import MediaPointName from './MediaPointName';
+import { ArrayElement } from '../../../../utils/types';
 
 const carouselSettings = {
   dots: true,
@@ -55,11 +55,11 @@ const MediaDetails = ({ siteId, point, classes }: MediaDetailsProps) => {
 
   const onSurveyMediaUpdate = (
     mediaId: number,
-    data: Partial<SurveyMediaUpdateRequestData>
+    data: Partial<SurveyMediaUpdateRequestData>,
   ) => {
     if (user && user.token) {
       dispatch(
-        surveyMediaEditRequest({ siteId, mediaId, data, token: user.token })
+        surveyMediaEditRequest({ siteId, mediaId, data, token: user.token }),
       );
     }
   };
@@ -112,13 +112,13 @@ const styles = (theme: Theme) =>
       margin: theme.spacing(0, 1),
     },
     surveyPointNameWrapper: {
-      width: "70%",
-      [theme.breakpoints.down("sm")]: {
-        width: "90%",
+      width: '70%',
+      [theme.breakpoints.down('sm')]: {
+        width: '90%',
       },
     },
     carousel: {
-      marginBottom: "2rem",
+      marginBottom: '2rem',
     },
   });
 

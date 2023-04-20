@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   makeStyles,
@@ -10,14 +10,14 @@ import {
   Button,
   Chip,
   ButtonProps,
-} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import { Link } from "react-router-dom";
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import { Link } from 'react-router-dom';
 
-import { useSelector } from "react-redux";
-import { Site, Sources } from "../../../store/Sites/types";
-import NewSurveyPointDialog from "../../../common/NewSurveyPointDialog";
-import { uploadsTargetSelector } from "../../../store/uploads/uploadsSlice";
+import { useSelector } from 'react-redux';
+import { Site, Sources } from '../../../store/Sites/types';
+import NewSurveyPointDialog from '../../../common/NewSurveyPointDialog';
+import { uploadsTargetSelector } from '../../../store/uploads/uploadsSlice';
 
 interface SelectOption {
   id: number;
@@ -28,10 +28,10 @@ interface SelectOption {
 type EnhancedSelectOption = SelectOption & { disabled?: boolean };
 
 const SENSOR_TYPES: EnhancedSelectOption[] = [
-  { id: 0, name: "sonde", label: "Sonde data" },
-  { id: 1, name: "metlog", label: "Meteorological data" },
-  { id: 3, name: "hobo", label: "HOBO data" },
-  { id: 2, name: "spotter", label: "Spotter data", disabled: true },
+  { id: 0, name: 'sonde', label: 'Sonde data' },
+  { id: 1, name: 'metlog', label: 'Meteorological data' },
+  { id: 3, name: 'hobo', label: 'HOBO data' },
+  { id: 2, name: 'spotter', label: 'Spotter data', disabled: true },
 ];
 
 const Selectors = ({
@@ -48,25 +48,25 @@ const Selectors = ({
   const [isNewPointDialogOpen, setIsNewPointDialogOpen] = useState(false);
 
   const pointSelectorValue =
-    typeof selectedPointIndex === "number" ? selectedPointIndex : "";
+    typeof selectedPointIndex === 'number' ? selectedPointIndex : '';
   const sensorSelectorValue =
-    typeof selectedSensorIndex === "number" ? selectedSensorIndex : "";
+    typeof selectedSensorIndex === 'number' ? selectedSensorIndex : '';
 
-  const hasSelectedPoint = typeof selectedPointIndex === "number";
-  const hasSelectedSensor = typeof selectedSensorIndex === "number";
+  const hasSelectedPoint = typeof selectedPointIndex === 'number';
+  const hasSelectedSensor = typeof selectedSensorIndex === 'number';
 
   const isContinueDisabled = !hasSelectedPoint || !hasSelectedSensor;
 
-  const selectProps: TextFieldProps["SelectProps"] = {
+  const selectProps: TextFieldProps['SelectProps'] = {
     MenuProps: {
       PaperProps: { className: classes.menuPaper },
       anchorOrigin: {
-        vertical: "bottom",
-        horizontal: "center",
+        vertical: 'bottom',
+        horizontal: 'center',
       },
       transformOrigin: {
-        vertical: "top",
-        horizontal: "center",
+        vertical: 'top',
+        horizontal: 'center',
       },
       getContentAnchorEl: null,
     },
@@ -102,20 +102,20 @@ const Selectors = ({
             />
           )}
         </MenuItem>
-      ) : null
+      ) : null,
     );
 
   const handleChange =
-    (type: "point" | "sensor") =>
+    (type: 'point' | 'sensor') =>
     (event: React.ChangeEvent<{ value: unknown }>) => {
       const value = event.target.value as number;
 
       switch (type) {
-        case "point":
+        case 'point':
           setSelectedPointIndex(value);
           onPointChange(pointOptions[value].id);
           break;
-        case "sensor":
+        case 'sensor':
           setSelectedSensorIndex(value);
           onSensorChange(SENSOR_TYPES[value].name as Sources);
           break;
@@ -124,7 +124,7 @@ const Selectors = ({
       }
     };
 
-  const handleNewPointDialogOpen: ButtonProps["onClick"] = (event) => {
+  const handleNewPointDialogOpen: ButtonProps['onClick'] = (event) => {
     setIsNewPointDialogOpen(true);
     event.stopPropagation();
   };
@@ -135,7 +135,7 @@ const Selectors = ({
     if (uploadsTarget) {
       const newPointIndex = uploadsTarget.selectedPoint - 1;
       const newSensorIndex = SENSOR_TYPES.findIndex(
-        (x) => x.name === uploadsTarget.selectedSensor
+        (x) => x.name === uploadsTarget.selectedSensor,
       );
       setSelectedPointIndex(newPointIndex);
       setSelectedSensorIndex(newSensorIndex);
@@ -172,7 +172,7 @@ const Selectors = ({
           <TextField
             label="Survey point"
             value={pointSelectorValue}
-            onChange={handleChange("point")}
+            onChange={handleChange('point')}
             variant="outlined"
             fullWidth
             select
@@ -197,7 +197,7 @@ const Selectors = ({
           <TextField
             label="Sensor type"
             value={sensorSelectorValue}
-            onChange={handleChange("sensor")}
+            onChange={handleChange('sensor')}
             variant="outlined"
             fullWidth
             select
@@ -245,10 +245,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingBottom: 8.5,
   },
   itemName: {
-    maxWidth: "100%",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
+    maxWidth: '100%',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
     height: 19,
   },
   menuPaper: {

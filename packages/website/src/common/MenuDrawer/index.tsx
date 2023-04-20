@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -12,53 +12,53 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import { Clear, GitHub } from "@material-ui/icons";
-import ovioLogo from "../../assets/img/ovio_logo.png";
+} from '@material-ui/core';
+import { Clear, GitHub } from '@material-ui/icons';
+import ovioLogo from '../../assets/img/ovio_logo.png';
 import {
   GaAction,
   GaCategory,
   trackButtonClick,
-} from "../../utils/google-analytics";
+} from '../../utils/google-analytics';
 
-const darkBlue = "#095877";
+const darkBlue = '#095877';
 
 const menuRoutes = [
   {
-    text: "Home",
-    to: "/",
+    text: 'Home',
+    to: '/',
   },
   {
-    text: "Map",
-    to: "/map",
+    text: 'Map',
+    to: '/map',
   },
   {
-    text: "Buoy",
-    to: "/buoy",
+    text: 'Buoy',
+    to: '/buoy',
   },
   {
-    text: "Drone",
-    to: "/drones",
+    text: 'Drone',
+    to: '/drones',
   },
   {
-    text: "About",
-    to: "/about",
+    text: 'About',
+    to: '/about',
   },
   {
-    text: "Highlighted Sites",
-    href: "https://highlights.aqualink.org",
+    text: 'Highlighted Sites',
+    href: 'https://highlights.aqualink.org',
   },
   {
-    text: "Faq",
-    to: "/faq",
+    text: 'Faq',
+    to: '/faq',
   },
   {
-    text: "Track a heatwave",
-    to: "/tracker",
+    text: 'Track a heatwave',
+    to: '/tracker',
   },
   {
-    text: "Register a site",
-    to: "/register",
+    text: 'Register a site',
+    to: '/register',
   },
 ];
 
@@ -73,10 +73,10 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       <IconButton
         onClick={onClose}
         style={{
-          alignSelf: "flex-end",
+          alignSelf: 'flex-end',
           marginRight: 5,
           marginTop: 5,
-          color: "white",
+          color: 'white',
         }}
       >
         <Clear />
@@ -86,18 +86,18 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           className={classes.menuDrawerButton}
           key={text}
           component={href ? ExternalLink : Link}
-          target={href ? "_blank" : undefined}
+          target={href ? '_blank' : undefined}
           href={href || undefined}
-          to={to || ""}
+          to={to || ''}
           onClick={() =>
             trackButtonClick(
               GaCategory.BUTTON_CLICK,
               GaAction.SIDE_MENU_BUTTON_CLICK,
-              text
+              text,
             )
           }
         >
-          <Typography variant="h6" style={{ textTransform: "uppercase" }}>
+          <Typography variant="h6" style={{ textTransform: 'uppercase' }}>
             {text}
           </Typography>
         </Button>
@@ -133,24 +133,24 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     paper: {
-      width: "16rem",
-      alignItems: "center",
+      width: '16rem',
+      alignItems: 'center',
       backgroundColor: darkBlue,
     },
     contributeButton: {
-      width: "50%",
-      textTransform: "none",
-      "& img": {
-        maxWidth: "100%",
+      width: '50%',
+      textTransform: 'none',
+      '& img': {
+        maxWidth: '100%',
       },
-      "&:hover": {
-        color: "black",
+      '&:hover': {
+        color: 'black',
       },
     },
     menuDrawerButton: {
       margin: theme.spacing(2, 2, 2),
-      "&:hover": {
-        color: "white",
+      '&:hover': {
+        color: 'white',
       },
     },
   });

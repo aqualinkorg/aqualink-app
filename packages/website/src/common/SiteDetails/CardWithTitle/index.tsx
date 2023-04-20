@@ -1,16 +1,16 @@
-import React, { FC, PropsWithChildren } from "react";
+import React, { FC, PropsWithChildren } from 'react';
 import {
   makeStyles,
   createStyles,
   GridProps,
   Grid,
   Theme,
-} from "@material-ui/core";
-import classNames from "classnames";
+} from '@material-ui/core';
+import classNames from 'classnames';
 
-import Title from "./Title";
-import { Value } from "./types";
-import LoadingSkeleton from "../../LoadingSkeleton";
+import Title from './Title';
+import { Value } from './types';
+import LoadingSkeleton from '../../LoadingSkeleton';
 
 const CardWithTitle: FC<CardWithTitleProps> = ({
   loading,
@@ -67,35 +67,35 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
 };
 
 const useStyles = makeStyles((theme: Theme) => {
-  const aspectRatio = "16 / 9";
+  const aspectRatio = '16 / 9';
 
   return createStyles({
     forcedAspectRatioWrapper: {
       paddingTop: `calc((100% - ${theme.spacing(
-        2
+        2,
       )}px) / (${aspectRatio}) + ${theme.spacing(2)}px)`,
       marginTop: -theme.spacing(1),
-      position: "relative",
+      position: 'relative',
     },
     row: {
       margin: theme.spacing(0, 2, 1, 2),
     },
     container: {
-      height: "30rem",
-      [theme.breakpoints.only("md")]: {
-        height: "25rem",
+      height: '30rem',
+      [theme.breakpoints.only('md')]: {
+        height: '25rem',
       },
-      [theme.breakpoints.down("xs")]: {
-        height: "20rem",
+      [theme.breakpoints.down('xs')]: {
+        height: '20rem',
       },
     },
     absolutePositionedContainer: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
       padding: theme.spacing(1),
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     },
   });
 });

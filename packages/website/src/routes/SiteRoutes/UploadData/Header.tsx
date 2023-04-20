@@ -1,9 +1,9 @@
-import React from "react";
-import { Grid, IconButton, Typography } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Grid, IconButton, Typography } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Link } from 'react-router-dom';
 
-import { Site } from "../../../store/Sites/types";
+import { Site } from '../../../store/Sites/types';
 
 const Header = ({ site }: HeaderProps) => (
   <Grid container alignItems="center" spacing={1}>

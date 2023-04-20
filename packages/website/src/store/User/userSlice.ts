@@ -4,7 +4,7 @@ import {
   PayloadAction,
   ActionReducerMapBuilder,
   AsyncThunk,
-} from "@reduxjs/toolkit";
+} from '@reduxjs/toolkit';
 
 import type {
   PasswordResetParams,
@@ -13,18 +13,18 @@ import type {
   UserRegisterParams,
   UserSignInParams,
   CreateUserCollectionRequestParams,
-} from "./types";
-import type { RootState, CreateAsyncThunkTypes } from "../configure";
-import { isManager } from "../../helpers/user";
-import userServices from "../../services/userServices";
-import collectionServices from "../../services/collectionServices";
-import { constructUserObject } from "./helpers";
-import { setSiteNameFromList } from "../../helpers/siteUtils";
-import { UpdateSiteNameFromListArgs } from "../Sites/types";
+} from './types';
+import type { RootState, CreateAsyncThunkTypes } from '../configure';
+import { isManager } from '../../helpers/user';
+import userServices from '../../services/userServices';
+import collectionServices from '../../services/collectionServices';
+import { constructUserObject } from './helpers';
+import { setSiteNameFromList } from '../../helpers/siteUtils';
+import { UpdateSiteNameFromListArgs } from '../Sites/types';
 import {
   getAxiosErrorMessage,
   getFirebaseErrorMessage,
-} from "../../helpers/errors";
+} from '../../helpers/errors';
 
 const userInitialState: UserState = {
   userInfo: null,
@@ -38,10 +38,10 @@ export const createUser = createAsyncThunk<
   UserRegisterParams,
   CreateAsyncThunkTypes
 >(
-  "user/create",
+  'user/create',
   async (
     { fullName, email, organization, password }: UserRegisterParams,
-    { rejectWithValue }
+    { rejectWithValue },
   ) => {
     let user;
     try {
@@ -53,7 +53,7 @@ export const createUser = createAsyncThunk<
         fullName,
         email,
         organization,
-        token
+        token,
       );
 
       return {
@@ -73,7 +73,7 @@ export const createUser = createAsyncThunk<
       await user?.delete();
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 export const signInUser = createAsyncThunk<
@@ -81,27 +81,27 @@ export const signInUser = createAsyncThunk<
   UserSignInParams,
   CreateAsyncThunkTypes
 >(
-  "user/signIn",
+  'user/signIn',
   async ({ email, password }: UserSignInParams, { rejectWithValue }) => {
     try {
       const { user } = (await userServices.signInUser(email, password)) || {};
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
       const { data: collections } = await collectionServices.getCollections(
-        token
+        token,
       );
       return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 export const resetPassword = createAsyncThunk<
   PasswordResetParams,
   PasswordResetParams,
   CreateAsyncThunkTypes
->("user/reset", async ({ email }: PasswordResetParams, { rejectWithValue }) => {
+>('user/reset', async ({ email }: PasswordResetParams, { rejectWithValue }) => {
   try {
     await userServices.resetPassword(email);
     return { email };
@@ -111,12 +111,12 @@ export const resetPassword = createAsyncThunk<
 });
 
 export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
-  "user/getSelf",
+  'user/getSelf',
   async (token: string, { rejectWithValue }) => {
     try {
       const { data: userData } = await userServices.getSelf(token);
       const { data: collections } = await collectionServices.getCollections(
-        token
+        token,
       );
       return constructUserObject(userData, collections, token);
     } catch (err) {
@@ -131,14 +131,14 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
       } = getState();
       return !loading;
     },
-  }
+  },
 );
 
 export const signOutUser = createAsyncThunk<
-  UserState["userInfo"],
+  UserState['userInfo'],
   void,
   CreateAsyncThunkTypes
->("user/signOut", async () => {
+>('user/signOut', async () => {
   try {
     await userServices.signOutUser();
     return null;
@@ -148,11 +148,11 @@ export const signOutUser = createAsyncThunk<
 });
 
 export const createCollectionRequest = createAsyncThunk<
-  UserState["userInfo"],
+  UserState['userInfo'],
   CreateUserCollectionRequestParams,
   CreateAsyncThunkTypes
 >(
-  "user/createRequest",
+  'user/createRequest',
   async ({ name, isPublic, siteIds, token }, { rejectWithValue, getState }) => {
     const state = getState();
     const { userInfo } = state.user;
@@ -161,7 +161,7 @@ export const createCollectionRequest = createAsyncThunk<
         name,
         isPublic || false,
         siteIds,
-        token
+        token,
       );
       return userInfo === null
         ? null
@@ -172,15 +172,15 @@ export const createCollectionRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 function addAsyncReducer<Out, In, ThunkParams extends CreateAsyncThunkTypes>(
   builder: ActionReducerMapBuilder<UserState>,
   thunk: AsyncThunk<Out, In, ThunkParams>,
   // there's no easy way (I know of) to take a type - UserState - and make everything in it optional
-  rejected: (action: PayloadAction<UserState["error"]>) => UserState | any = (
-    action
+  rejected: (action: PayloadAction<UserState['error']>) => UserState | any = (
+    action,
   ) => ({
     userInfo: null,
     error: action.payload,
@@ -189,7 +189,7 @@ function addAsyncReducer<Out, In, ThunkParams extends CreateAsyncThunkTypes>(
   fulfilled: (action: PayloadAction<Out>) => UserState | any = (action) => ({
     userInfo: action.payload,
     loading: false,
-  })
+  }),
 ) {
   builder.addCase(thunk.fulfilled, (state, action: PayloadAction<Out>) => ({
     ...state,
@@ -197,10 +197,10 @@ function addAsyncReducer<Out, In, ThunkParams extends CreateAsyncThunkTypes>(
   }));
   builder.addCase(
     thunk.rejected,
-    (state, action: PayloadAction<UserState["error"]>) => ({
+    (state, action: PayloadAction<UserState['error']>) => ({
       ...state,
       ...rejected(action),
-    })
+    }),
   );
   builder.addCase(thunk.pending, (state) => ({
     ...state,
@@ -210,7 +210,7 @@ function addAsyncReducer<Out, In, ThunkParams extends CreateAsyncThunkTypes>(
 }
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: userInitialState,
   reducers: {
     setToken: (state, action: PayloadAction<string>) => {
@@ -239,7 +239,7 @@ const userSlice = createSlice({
     }),
     setAdministeredSiteName: (
       state,
-      action: PayloadAction<UpdateSiteNameFromListArgs>
+      action: PayloadAction<UpdateSiteNameFromListArgs>,
     ) => ({
       ...state,
       userInfo: state.userInfo
@@ -268,24 +268,24 @@ const userSlice = createSlice({
 
     builder.addCase(
       createCollectionRequest.fulfilled,
-      (state, action: PayloadAction<UserState["userInfo"]>) => {
+      (state, action: PayloadAction<UserState['userInfo']>) => {
         return {
           ...state,
           userInfo: action.payload,
           loadingCollection: false,
         };
-      }
+      },
     );
 
     builder.addCase(
       createCollectionRequest.rejected,
-      (state, action: PayloadAction<UserState["error"]>) => {
+      (state, action: PayloadAction<UserState['error']>) => {
         return {
           ...state,
           error: action.payload,
           loadingCollection: false,
         };
-      }
+      },
     );
 
     builder.addCase(createCollectionRequest.pending, (state) => {
@@ -298,17 +298,17 @@ const userSlice = createSlice({
   },
 });
 
-export const userInfoSelector = (state: RootState): UserState["userInfo"] =>
+export const userInfoSelector = (state: RootState): UserState['userInfo'] =>
   state.user.userInfo;
 
-export const userLoadingSelector = (state: RootState): UserState["loading"] =>
+export const userLoadingSelector = (state: RootState): UserState['loading'] =>
   state.user.loading;
 
 export const userCollectionLoadingSelector = (
-  state: RootState
-): UserState["loadingCollection"] => state.user.loadingCollection;
+  state: RootState,
+): UserState['loadingCollection'] => state.user.loadingCollection;
 
-export const userErrorSelector = (state: RootState): UserState["error"] =>
+export const userErrorSelector = (state: RootState): UserState['error'] =>
   state.user.error;
 
 export const {

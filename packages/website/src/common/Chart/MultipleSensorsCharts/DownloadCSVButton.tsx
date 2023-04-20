@@ -1,31 +1,31 @@
-import React, { useState } from "react";
-import downloadCsv from "download-csv";
-import { Button } from "@material-ui/core";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import { useSnackbar } from "notistack";
-import { ValueWithTimestamp, MetricsKeys } from "../../../store/Sites/types";
-import DownloadCSVDialog from "./DownloadCSVDialog";
-import { spotterPositionSelector } from "../../../store/Sites/selectedSiteSlice";
-import siteServices from "../../../services/siteServices";
-import { CSVColumnData } from "./types";
+import React, { useState } from 'react';
+import downloadCsv from 'download-csv';
+import { Button } from '@material-ui/core';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
+import { ValueWithTimestamp, MetricsKeys } from '../../../store/Sites/types';
+import DownloadCSVDialog from './DownloadCSVDialog';
+import { spotterPositionSelector } from '../../../store/Sites/selectedSiteSlice';
+import siteServices from '../../../services/siteServices';
+import { CSVColumnData } from './types';
 
 type CSVColumnNames =
-  | "spotterBottomTemp"
-  | "spotterTopTemp"
-  | "hoboTemp"
-  | "oceanSensePH"
-  | "oceanSenseEC"
-  | "oceanSensePRESS"
-  | "oceanSenseDO"
-  | "oceanSenseORP"
-  | "dailySST";
+  | 'spotterBottomTemp'
+  | 'spotterTopTemp'
+  | 'hoboTemp'
+  | 'oceanSensePH'
+  | 'oceanSenseEC'
+  | 'oceanSensePRESS'
+  | 'oceanSenseDO'
+  | 'oceanSenseORP'
+  | 'dailySST';
 
 interface CSVRow extends Partial<Record<CSVColumnNames, number>> {
   timestamp: string;
 }
 
-const DATE_FORMAT = "YYYY_MM_DD";
+const DATE_FORMAT = 'YYYY_MM_DD';
 
 /**
  * Construct CSV data to pass into download-csv.
@@ -38,7 +38,7 @@ const DATE_FORMAT = "YYYY_MM_DD";
 function constructCSVData(
   columnName: CSVColumnNames,
   data: ValueWithTimestamp[] = [],
-  existingData: Record<CSVRow["timestamp"], CSVRow> = {}
+  existingData: Record<CSVRow['timestamp'], CSVRow> = {},
 ) {
   // writing this in an immutable fashion will be detrimental to performance.
   /* eslint-disable no-param-reassign,fp/no-mutation,fp/no-mutating-methods */
@@ -58,11 +58,11 @@ function constructCSVData(
     result: () =>
       Object.values(result).sort(
         (a, b) =>
-          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
       ),
     chained: (
       chainedFinalKey: CSVColumnNames,
-      chainedData: ValueWithTimestamp[] = []
+      chainedData: ValueWithTimestamp[] = [],
     ) => constructCSVData(chainedFinalKey, chainedData, result),
   };
   /* eslint-enable no-param-reassign,fp/no-mutation */
@@ -96,7 +96,7 @@ function DownloadCSVButton({
     shouldDownload: boolean,
     additionalData: boolean,
     allDates: boolean,
-    hourly: boolean
+    hourly: boolean,
   ) => {
     if (!shouldDownload) {
       setOpen(false);
@@ -132,8 +132,8 @@ function DownloadCSVButton({
       downloadCsv(getCSVData(formattedData), undefined, fileName);
     } catch (error) {
       console.error(error);
-      enqueueSnackbar("There was an error downloading csv data", {
-        variant: "error",
+      enqueueSnackbar('There was an error downloading csv data', {
+        variant: 'error',
       });
     }
 
@@ -148,15 +148,15 @@ function DownloadCSVButton({
     const start = constructCSVData(head.name as CSVColumnNames, head.values);
     const result = tail.reduce(
       (prev, curr) => prev.chained(curr.name as CSVColumnNames, curr.values),
-      start
+      start,
     );
     return result.result();
   };
 
   const fileName = `data_site_${siteId}${
-    pointId ? `_survey_point_${pointId}` : ""
+    pointId ? `_survey_point_${pointId}` : ''
   }_${moment(startDate).format(DATE_FORMAT)}_${moment(endDate).format(
-    DATE_FORMAT
+    DATE_FORMAT,
   )}.csv`;
 
   return (
@@ -169,17 +169,17 @@ function DownloadCSVButton({
         onClick={() => {
           setOpen(true);
         }}
-        style={{ marginBottom: spotterData?.isDeployed ? 0 : "2em" }}
+        style={{ marginBottom: spotterData?.isDeployed ? 0 : '2em' }}
       >
         {/* TODO update this component with LoadingButton from MUILab when newest version is released. */}
-        {loading ? "Loading..." : "Download CSV"}
+        {loading ? 'Loading...' : 'Download CSV'}
       </Button>
       <DownloadCSVDialog
         open={open}
         onClose={onClose}
         data={data}
-        startDate={startDate || ""}
-        endDate={endDate || ""}
+        startDate={startDate || ''}
+        endDate={endDate || ''}
       />
     </>
   );

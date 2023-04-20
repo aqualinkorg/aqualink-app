@@ -1,18 +1,18 @@
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import moment from "moment";
-import React from "react";
-import { ValueWithTimestamp } from "../../../store/Sites/types";
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import moment from 'moment';
+import React from 'react';
+import { ValueWithTimestamp } from '../../../store/Sites/types';
 
 export interface DownloadCSVDialogProps {
   open: boolean;
@@ -23,17 +23,17 @@ export interface DownloadCSVDialogProps {
     shouldDownload: boolean,
     additionalData: boolean,
     allDates: boolean,
-    hourly: boolean
+    hourly: boolean,
   ) => void;
 }
 
 const additionalDataLabels = [
-  "wave_mean_period_spotter",
-  "wind_direction_spotter",
-  "wave_mean_direction_spotter",
-  "dhw_noaa",
-  "temp_alert_noaa",
-  "additional site-specific data when available",
+  'wave_mean_period_spotter',
+  'wind_direction_spotter',
+  'wave_mean_direction_spotter',
+  'dhw_noaa',
+  'temp_alert_noaa',
+  'additional site-specific data when available',
 ];
 
 const DownloadCSVDialog = ({
@@ -69,8 +69,8 @@ const DownloadCSVDialog = ({
       scroll="paper"
       open={open}
       onClose={(_, reason) => {
-        if (reason === "backdropClick") return;
-        if (reason === "escapeKeyDown") handleClose(false);
+        if (reason === 'backdropClick') return;
+        if (reason === 'escapeKeyDown') handleClose(false);
       }}
     >
       <DialogTitle disableTypography className={classes.dialogTitle}>
@@ -78,18 +78,18 @@ const DownloadCSVDialog = ({
       </DialogTitle>
       <DialogContent dividers className={classes.dialogContent}>
         <DialogContentText>
-          Selected data to download into CSV format from{" "}
+          Selected data to download into CSV format from{' '}
           {allDates ? (
             <span className={classes.bold}>all available dates</span>
           ) : (
             <>
-              dates between{" "}
+              dates between{' '}
               <span className={classes.bold}>
-                {moment(startDate).format("MM/DD/YYYY")}
-              </span>{" "}
-              and{" "}
+                {moment(startDate).format('MM/DD/YYYY')}
+              </span>{' '}
+              and{' '}
               <span className={classes.bold}>
-                {moment(endDate).format("MM/DD/YYYY")}
+                {moment(endDate).format('MM/DD/YYYY')}
               </span>
             </>
           )}
@@ -175,13 +175,13 @@ const DownloadCSVDialog = ({
 const useStyles = makeStyles((theme: Theme) => ({
   dialogTitle: {
     backgroundColor: theme.palette.primary.main,
-    overflowWrap: "break-word",
+    overflowWrap: 'break-word',
   },
   bold: {
     fontWeight: 700,
   },
   dialogContent: {
-    maxWidth: "31rem",
+    maxWidth: '31rem',
   },
 }));
 

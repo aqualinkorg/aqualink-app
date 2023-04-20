@@ -1,4 +1,4 @@
-import { MetricsKeys } from "../store/Sites/types";
+import { MetricsKeys } from '../store/Sites/types';
 
 interface MetlogConfig {
   title: string;
@@ -11,65 +11,65 @@ interface MetlogConfig {
 
 export type MetlogMetricsKeys = Extract<
   MetricsKeys,
-  | "wind_direction"
-  | "wind_speed"
-  | "air_temperature"
-  | "pressure"
-  | "precipitation"
-  | "rh"
-  | "wind_gust_speed"
+  | 'wind_direction'
+  | 'wind_speed'
+  | 'air_temperature'
+  | 'pressure'
+  | 'precipitation'
+  | 'rh'
+  | 'wind_gust_speed'
 >;
 
 export const metlogConfig: Record<MetlogMetricsKeys, MetlogConfig> = {
   air_temperature: {
-    title: "Air Temperature",
-    units: "°C",
-    description: "",
-    visibility: "public",
+    title: 'Air Temperature',
+    units: '°C',
+    description: '',
+    visibility: 'public',
     order: 4,
   },
   rh: {
-    title: "Relative Humidity",
-    units: "%",
-    description: "",
-    visibility: "public",
+    title: 'Relative Humidity',
+    units: '%',
+    description: '',
+    visibility: 'public',
     order: 4,
   },
   precipitation: {
-    title: "Precipitation",
-    units: "mm",
-    description: "",
-    visibility: "public",
+    title: 'Precipitation',
+    units: 'mm',
+    description: '',
+    visibility: 'public',
     order: 4,
   },
   wind_speed: {
-    title: "Wind Speed",
-    units: "km/h",
-    description: "",
-    visibility: "public",
+    title: 'Wind Speed',
+    units: 'km/h',
+    description: '',
+    visibility: 'public',
     order: 4,
     convert: 3.6,
   },
   wind_gust_speed: {
-    title: "Wind Gust Speed",
-    units: "km/h",
-    description: "",
-    visibility: "public",
+    title: 'Wind Gust Speed',
+    units: 'km/h',
+    description: '',
+    visibility: 'public',
     order: 4,
     convert: 3.6,
   },
   wind_direction: {
-    title: "Wind Direction",
-    units: "°",
-    description: "",
-    visibility: "public",
+    title: 'Wind Direction',
+    units: '°',
+    description: '',
+    visibility: 'public',
     order: 4,
   },
   pressure: {
-    title: "Pressure",
-    units: "mbar",
-    description: "",
-    visibility: "public",
+    title: 'Pressure',
+    units: 'mbar',
+    description: '',
+    visibility: 'public',
     order: 4,
   },
 };
@@ -80,6 +80,6 @@ export function getMetlogConfig(configKey: MetlogMetricsKeys) {
 
 export function getPublicMetlogMetrics() {
   return Object.keys(metlogConfig).filter(
-    (key) => metlogConfig[key as MetlogMetricsKeys].visibility !== "admin"
+    (key) => metlogConfig[key as MetlogMetricsKeys].visibility !== 'admin',
   ) as MetlogMetricsKeys[];
 }

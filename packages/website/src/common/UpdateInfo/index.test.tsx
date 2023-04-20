@@ -1,10 +1,10 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import UpdateInfo from ".";
+import UpdateInfo from '.';
 
-test("renders as expected", () => {
+test('renders as expected', () => {
   const { container } = render(
     <Router>
       <UpdateInfo
@@ -15,7 +15,7 @@ test("renders as expected", () => {
         live={false}
         frequency="daily"
       />
-    </Router>
+    </Router>,
   );
   expect(container).toMatchSnapshot();
 });

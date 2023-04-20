@@ -1,7 +1,7 @@
-import app from "../firebase";
-import requests from "../helpers/requests";
-import { User } from "../store/User/types";
-import type { Site } from "../store/Sites/types";
+import app from '../firebase';
+import requests from '../helpers/requests';
+import { User } from '../store/User/types';
+import type { Site } from '../store/Sites/types';
 
 const createUser = (email: string, password: string) =>
   app && app.auth().createUserWithEmailAndPassword(email, password);
@@ -10,11 +10,11 @@ const storeUser = (
   fullName: string,
   email: string,
   organization: string,
-  token?: string
+  token?: string,
 ) =>
   requests.send<User>({
-    method: "POST",
-    url: "users",
+    method: 'POST',
+    url: 'users',
     data: {
       fullName,
       email,
@@ -31,15 +31,15 @@ const resetPassword = (email: string) => {
 
 const getSelf = (token?: string) =>
   requests.send<User>({
-    method: "GET",
-    url: "users/current",
+    method: 'GET',
+    url: 'users/current',
     token,
   });
 
 const getAdministeredSites = (token?: string) =>
   requests.send<Site[]>({
-    method: "GET",
-    url: "users/current/administered-sites",
+    method: 'GET',
+    url: 'users/current/administered-sites',
     token,
   });
 
