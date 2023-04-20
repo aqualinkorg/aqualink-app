@@ -13,21 +13,16 @@ export async function checkBuoysStatus(connection: Connection) {
   const slackToken = process.env.SLACK_BOT_TOKEN;
   const slackChannel = process.env.SLACK_BOT_CHANNEL;
 
-  if (!slackToken) {
-    logger.error('No slack bot token was defined');
-    return;
-  }
-
-  if (!slackChannel) {
-    logger.error('No slack target channel was defined');
-    return;
-  }
-
   const sitesDeployedBuoy = await connection.getRepository(Site).find({
     where: { status: SiteStatus.Deployed },
   });
 
   const siteIds = sitesDeployedBuoy.map((x) => x.id);
+
+  if (!(siteIds.length > 0)) {
+    logger.log('No site with deployed buoys found.');
+    return;
+  }
 
   const latestData = await connection.getRepository(LatestData).find({
     where: {
@@ -48,10 +43,10 @@ export async function checkBuoysStatus(connection: Connection) {
   }
 
   // Create a simple alert template for slack
-  const messageTemplate = {
+  const messageTemplate: SlackMessage = {
     // The channel id is fetched by requesting the list on GET https://slack.com/api/conversations.list
     // (the auth token should be included in the auth headers)
-    channel: slackChannel,
+    channel: slackChannel || '',
     blocks: [
       {
         type: 'section',
@@ -63,10 +58,20 @@ export async function checkBuoysStatus(connection: Connection) {
         },
       },
     ],
-  } as SlackMessage;
+  };
 
   // Log message in stdout
   logger.log(messageTemplate);
+
+  if (!slackToken) {
+    logger.error('No slack bot token was defined.');
+    return;
+  }
+
+  if (!slackChannel) {
+    logger.error('No slack target channel was defined.');
+    return;
+  }
 
   // Send an alert containing all irregular video stream along with the reason
   await sendSlackMessage(messageTemplate, slackToken);

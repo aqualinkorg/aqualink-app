@@ -115,12 +115,12 @@ Spotter data are discarded if the date-sensorId exists in ExclusionDates
 #### scheduledVideoStreamsCheck
 
 - **Description**: A function that checks all sites' video stream and reports any irregularities (stream is not live, stream does not exist etc)
-- **Period**: Runs every day at midnight PST
+- **Period**: Runs every day at midnight PT
 - **Implementation**: Video Streams are currently YouTube streams so a Google API key (Firebase key is used) is needed in order to fetch the details of each video.
 
 #### scheduledBuoysStatusCheck
 - **Description**: A function that checks if spotter buoys have received data recently and notifies slack accordingly 
-- **Period**: Runs every day at midnight PST
+- **Period**: Runs every day at midnight PT
 - **Implementation**: Uses the `latest_data` materialized view to check if data from the spotter where received recently 
 
 All errors are reported on the stdout and on the slack bot `Video Stream Alerter`. To report the error on slack a bot api key and a target channel are needed. For more details about message formating in Slack visit https://api.slack.com/reference/surfaces/formatting
