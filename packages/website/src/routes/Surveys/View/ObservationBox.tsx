@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Box,
   CircularProgress,
@@ -7,17 +7,17 @@ import {
   withStyles,
   WithStyles,
   Typography,
-} from "@material-ui/core";
-import { useSelector } from "react-redux";
-import { some } from "lodash";
+} from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { some } from 'lodash';
 
-import { DailyData } from "../../../store/Sites/types";
-import { formatNumber } from "../../../helpers/numberUtils";
+import { DailyData } from '../../../store/Sites/types';
+import { formatNumber } from '../../../helpers/numberUtils';
 import {
   siteTimeSeriesDataLoadingSelector,
   siteTimeSeriesDataSelector,
-} from "../../../store/Sites/selectedSiteSlice";
-import { getCardTemperatureValues } from "./utils";
+} from '../../../store/Sites/selectedSiteSlice';
+import { getCardTemperatureValues } from './utils';
 
 const ObservationBox = ({
   depth,
@@ -35,7 +35,7 @@ const ObservationBox = ({
       dailyData,
       bottomTemperature,
       topTemperature,
-      date
+      date,
     );
 
   return (
@@ -90,7 +90,7 @@ const ObservationBox = ({
                   </Grid>
                   <Grid container item direction="column" xs={6}>
                     <Typography color="textPrimary" variant="overline">
-                      TEMP AT {depth ? `${depth}m` : "DEPTH"}
+                      TEMP AT {depth ? `${depth}m` : 'DEPTH'}
                     </Typography>
                     <Typography color="textPrimary" variant="h4">
                       {`${formatNumber(spotterBottom || hoboBottom, 1)} °C`}
@@ -109,15 +109,15 @@ const ObservationBox = ({
 const styles = () =>
   createStyles({
     outerDiv: {
-      backgroundColor: "#128cc0",
-      borderRadius: "0.4rem",
-      display: "flex",
-      padding: "1rem",
+      backgroundColor: '#128cc0',
+      borderRadius: '0.4rem',
+      display: 'flex',
+      padding: '1rem',
       flexGrow: 1,
     },
 
     loading: {
-      color: "#ffffff",
+      color: '#ffffff',
     },
   });
 

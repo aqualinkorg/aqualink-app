@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -9,23 +9,23 @@ import {
   CardHeader,
   Grid,
   Box,
-} from "@material-ui/core";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+} from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import RemoveIcon from "@material-ui/icons/Remove";
-import UpdateInfo from "../../UpdateInfo";
-import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
-import { formatNumber } from "../../../helpers/numberUtils";
-import { toRelativeTime } from "../../../helpers/dates";
-import { User } from "../../../store/User/types";
-import sensor from "../../../assets/sensor.svg";
-import { styles as incomingStyles } from "../styles";
-import { isAdmin } from "../../../helpers/user";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { LatestDataASSofarValue } from "../../../store/Sites/types";
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import RemoveIcon from '@material-ui/icons/Remove';
+import UpdateInfo from '../../UpdateInfo';
+import { findAdministeredSite } from '../../../helpers/findAdministeredSite';
+import { formatNumber } from '../../../helpers/numberUtils';
+import { toRelativeTime } from '../../../helpers/dates';
+import { User } from '../../../store/User/types';
+import sensor from '../../../assets/sensor.svg';
+import { styles as incomingStyles } from '../styles';
+import { isAdmin } from '../../../helpers/user';
+import { userInfoSelector } from '../../../store/User/userSlice';
+import { LatestDataASSofarValue } from '../../../store/Sites/types';
 
 /**
  * Get the sensor application tag message and clickability for a user/site combination.
@@ -35,7 +35,7 @@ import { LatestDataASSofarValue } from "../../../store/Sites/types";
  */
 const getApplicationTag = (
   user: User | null,
-  siteId: number
+  siteId: number,
 ): [string, boolean] => {
   const userSite = findAdministeredSite(user, siteId);
   const { applied, status } = userSite || {};
@@ -43,25 +43,25 @@ const getApplicationTag = (
 
   switch (true) {
     case !isSiteAdmin:
-      return ["No Live Telemetry", false];
+      return ['No Live Telemetry', false];
 
     case !applied:
-      return ["No Live Telemetry", false];
+      return ['No Live Telemetry', false];
 
-    case status === "in_review":
-      return ["My Application", true];
+    case status === 'in_review':
+      return ['My Application', true];
 
-    case status === "approved":
-      return ["Smart Buoy Approved", false];
+    case status === 'approved':
+      return ['Smart Buoy Approved', false];
 
-    case status === "rejected":
-      return ["Smart Buoy Not Approved", false];
+    case status === 'rejected':
+      return ['Smart Buoy Not Approved', false];
 
-    case status === "shipped":
-      return ["Your Buoy Has Shipped!", false];
+    case status === 'shipped':
+      return ['Your Buoy Has Shipped!', false];
 
     default:
-      return ["Not Installed Yet", false];
+      return ['Not Installed Yet', false];
   }
 };
 
@@ -84,11 +84,11 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
 
   const metrics = [
     {
-      label: "TEMP AT 1m",
+      label: 'TEMP AT 1m',
       value: `${formatNumber(topTemperature?.value, 1)}°C`,
     },
     {
-      label: `TEMP AT ${depth ? `${depth}m` : "DEPTH"}`,
+      label: `TEMP AT ${depth ? `${depth}m` : 'DEPTH'}`,
       value: `${formatNumber(bottomTemperature?.value, 1)}°C`,
     },
   ];
@@ -126,7 +126,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
             </div>
           ))}
           {barometricPressureTop && (
-            <div style={{ gridArea: "value2" }}>
+            <div style={{ gridArea: 'value2' }}>
               <Typography
                 className={classes.contentTextTitles}
                 variant="subtitle2"
@@ -135,8 +135,8 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
               </Typography>
               <Box
                 style={{
-                  display: "flex",
-                  alignItems: "flex-end",
+                  display: 'flex',
+                  alignItems: 'flex-end',
                 }}
               >
                 <Typography className={classes.contentTextValues} variant="h3">
@@ -148,27 +148,27 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
               </Box>
             </div>
           )}
-          <div style={{ gridArea: "image" }}>
+          <div style={{ gridArea: 'image' }}>
             <img
               alt="sensor"
               src={sensor}
-              height={barometricPressureTop ? "135" : "150"}
+              height={barometricPressureTop ? '135' : '150'}
               width="auto"
             />
           </div>
           <div
             style={{
-              gridArea: "value3",
-              display: "flex",
-              alignItems: "flex-end",
+              gridArea: 'value3',
+              display: 'flex',
+              alignItems: 'flex-end',
             }}
           >
             {barometricPressureTopDiff && (
               <div>
                 <Box
                   style={{
-                    display: "flex",
-                    alignItems: "flex-end",
+                    display: 'flex',
+                    alignItems: 'flex-end',
                   }}
                 >
                   {(barometricPressureTopDiff.value || 0) === 0 && (
@@ -230,27 +230,27 @@ const styles = () =>
   createStyles({
     ...incomingStyles,
     root: {
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      backgroundColor: "#128cc0",
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: '#128cc0',
     },
     titleImage: {
       height: 35,
       width: 35,
     },
     content: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
       flexGrow: 1,
       padding: 0,
     },
     noSensorAlert: {
-      backgroundColor: "#edb86f",
-      borderRadius: "0 0 4px 4px",
-      color: "white",
-      width: "100%",
+      backgroundColor: '#edb86f',
+      borderRadius: '0 0 4px 4px',
+      color: 'white',
+      width: '100%',
       minHeight: 40,
       marginTop: 32,
     },
@@ -258,23 +258,23 @@ const styles = () =>
       fontSize: 11,
     },
     newSpotterLink: {
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "inherit",
-      textDecoration: "none",
-      "&:hover": {
-        color: "inherit",
-        textDecoration: "none",
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'inherit',
+      textDecoration: 'none',
+      '&:hover': {
+        color: 'inherit',
+        textDecoration: 'none',
       },
     },
     gridContainer: {
-      display: "grid",
-      gap: "1rem",
+      display: 'grid',
+      gap: '1rem',
       gridTemplateAreas: "'value0 image' 'value1 image' 'value2 value3'",
-      padding: "1rem",
+      padding: '1rem',
     },
   });
 

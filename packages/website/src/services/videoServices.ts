@@ -1,13 +1,13 @@
-import { YoutubeDataAPI } from "youtube-v3-api";
+import { YoutubeDataAPI } from 'youtube-v3-api';
 
 const youtubeApi = new YoutubeDataAPI(
-  process.env.REACT_APP_FIREBASE_API_KEY || ""
+  process.env.REACT_APP_FIREBASE_API_KEY || '',
 );
 
 export interface VideoInfo {
   id: string;
   snippet: {
-    liveBroadcastContent: "live" | "none" | "upcoming";
+    liveBroadcastContent: 'live' | 'none' | 'upcoming';
   };
 }
 

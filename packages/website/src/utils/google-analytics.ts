@@ -1,22 +1,22 @@
-import React from "react";
-import ReactGA from "react-ga4";
+import React from 'react';
+import ReactGA from 'react-ga4';
 
-const GA_TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID || "";
+const GA_TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID || '';
 if (process.env.IS_PROD && !GA_TRACKING_ID) {
   throw new Error(
-    "You appear to be trying to do a production build, but no Google Analytics" +
-      " tracking id was provided!\nEither set GA_TRACKING_ID as an env variable, or set up a" +
-      " .env.prod file."
+    'You appear to be trying to do a production build, but no Google Analytics' +
+      ' tracking id was provided!\nEither set GA_TRACKING_ID as an env variable, or set up a' +
+      ' .env.prod file.',
   );
 }
 
-const GA_TAG_MANAGER_ID = process.env.REACT_APP_GA_TAG_MANAGER_ID || "";
+const GA_TAG_MANAGER_ID = process.env.REACT_APP_GA_TAG_MANAGER_ID || '';
 
 if (process.env.IS_PROD && !GA_TAG_MANAGER_ID) {
   throw new Error(
-    "You appear to be trying to do a production build, but no Google Analytics" +
-      " tag manager id was provided!\nEither set REACT_APP_GA_TAG_MANAGER_ID as an env variable, or set up a" +
-      " .env.prod file."
+    'You appear to be trying to do a production build, but no Google Analytics' +
+      ' tag manager id was provided!\nEither set REACT_APP_GA_TAG_MANAGER_ID as an env variable, or set up a' +
+      ' .env.prod file.',
   );
 }
 
@@ -41,7 +41,7 @@ export const useGATagManager = () => {
   `;
 
   React.useEffect(() => {
-    const script = document.createElement("script");
+    const script = document.createElement('script');
     // eslint-disable-next-line fp/no-mutation
     script.innerHTML = getScript();
     document.head.appendChild(script);
@@ -61,26 +61,26 @@ export const initGA = () => {
   // TODO - test if custome page path is needed.
   // ReactGA.send("pageview");
   ReactGA.send({
-    hitType: "pageview",
+    hitType: 'pageview',
     page: window.location.pathname + window.location.search,
   });
 };
 
 export enum GaCategory {
-  BUTTON_CLICK = "Button Click",
+  BUTTON_CLICK = 'Button Click',
 }
 
 export enum GaAction {
   // Button clicks
-  LANDING_PAGE_BUTTON_CLICK = "Landing page button click",
-  SIDE_MENU_BUTTON_CLICK = "Side menu button click",
-  MAP_PAGE_BUTTON_CLICK = "Map page button click",
+  LANDING_PAGE_BUTTON_CLICK = 'Landing page button click',
+  SIDE_MENU_BUTTON_CLICK = 'Side menu button click',
+  MAP_PAGE_BUTTON_CLICK = 'Map page button click',
 }
 
 export const trackButtonClick = (
   category: GaCategory,
   action: GaAction,
-  label?: string
+  label?: string,
 ) => {
   ReactGA.event({
     category,

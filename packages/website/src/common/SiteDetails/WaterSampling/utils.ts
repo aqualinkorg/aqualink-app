@@ -1,11 +1,11 @@
-import { mapValues, meanBy, pick, map, camelCase } from "lodash";
-import { SondeMetricsKeys } from "../../../constants/sondeConfig";
-import { TimeSeriesData } from "../../../store/Sites/types";
+import { mapValues, meanBy, pick, map, camelCase } from 'lodash';
+import { SondeMetricsKeys } from '../../../constants/sondeConfig';
+import { TimeSeriesData } from '../../../store/Sites/types';
 
 export const calculateSondeDataMeanValues = (
   metrics: SondeMetricsKeys[],
-  timeSeriesData?: TimeSeriesData
+  timeSeriesData?: TimeSeriesData,
 ) =>
   mapValues(pick(timeSeriesData, map(metrics, camelCase)), (data) =>
-    meanBy(data?.sonde?.data, "value")
+    meanBy(data?.sonde?.data, 'value'),
   );

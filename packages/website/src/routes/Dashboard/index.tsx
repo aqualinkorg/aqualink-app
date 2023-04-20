@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   LinearProgress,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { RouteComponentProps, useLocation } from "react-router-dom";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { RouteComponentProps, useLocation } from 'react-router-dom';
 
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
+import NavBar from '../../common/NavBar';
+import Footer from '../../common/Footer';
 import {
   userInfoSelector,
   userLoadingSelector,
-} from "../../store/User/userSlice";
+} from '../../store/User/userSlice';
 import {
   collectionDetailsSelector,
   collectionRequest,
-} from "../../store/Collection/collectionSlice";
-import Delayed from "../../common/Delayed";
-import DashboardContent from "./Content";
-import FullScreenMessage from "../../common/FullScreenMessage";
+} from '../../store/Collection/collectionSlice';
+import Delayed from '../../common/Delayed';
+import DashboardContent from './Content';
+import FullScreenMessage from '../../common/FullScreenMessage';
 
 // This will be removed when the idea of public collections will be introduced.
 // For now only this static one is being used.
@@ -36,7 +36,7 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
     useSelector(collectionDetailsSelector) || {};
   const [publicNotFound, setPublicNotFound] = useState(false);
   const { pathname } = useLocation();
-  const atDashboard = pathname.endsWith("/dashboard");
+  const atDashboard = pathname.endsWith('/dashboard');
 
   // If we are at `/dashboard`, make a request for
   // user's personal collection.
@@ -51,7 +51,7 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
         collectionRequest({
           id: user.collection.id,
           token: user.token,
-        })
+        }),
       );
     }
   }, [atDashboard, dispatch, storedCollectionId, user]);
@@ -63,7 +63,7 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
   useEffect(() => {
     if (!atDashboard) {
       const { collectionName: urlCollectionName } = match.params;
-      const isHeatStress = urlCollectionName === "heat-stress";
+      const isHeatStress = urlCollectionName === 'heat-stress';
       const isId = !Number.isNaN(Number(urlCollectionName));
       const urlCollectionId = isId
         ? Number(urlCollectionName)
@@ -79,7 +79,7 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
             id: urlCollectionId,
             isPublic: true,
             isHeatStress,
-          })
+          }),
         );
       } else if (!urlCollectionId) {
         setPublicNotFound(true);

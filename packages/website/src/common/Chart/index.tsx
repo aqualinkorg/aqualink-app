@@ -5,28 +5,28 @@ import React, {
   useRef,
   useState,
   memo,
-} from "react";
-import { Line } from "react-chartjs-2";
-import { useSelector } from "react-redux";
-import { mergeWith, isEqual } from "lodash";
+} from 'react';
+import { Line } from 'react-chartjs-2';
+import { useSelector } from 'react-redux';
+import { mergeWith, isEqual } from 'lodash';
 import type {
   Metrics,
   ValueWithTimestamp,
   Sources,
-} from "../../store/Sites/types";
-import "./plugins/backgroundPlugin";
-import "chartjs-plugin-annotation";
-import { SurveyListItem } from "../../store/Survey/types";
-import { surveyDetailsSelector } from "../../store/Survey/surveySlice";
-import { Range } from "../../store/Sites/types";
-import { convertToLocalTime } from "../../helpers/dates";
-import { useProcessedChartData } from "./utils";
+} from '../../store/Sites/types';
+import './plugins/backgroundPlugin';
+import 'chartjs-plugin-annotation';
+import { SurveyListItem } from '../../store/Survey/types';
+import { surveyDetailsSelector } from '../../store/Survey/surveySlice';
+import { Range } from '../../store/Sites/types';
+import { convertToLocalTime } from '../../helpers/dates';
+import { useProcessedChartData } from './utils';
 
 // An interface that describes all the possible options for displaying a dataset on a chart.
 export interface Dataset {
   label: string; // The dataset's label
   data: ValueWithTimestamp[]; // The dataset's data, typed as a ValueWithTimestamp array
-  type: "line" | "scatter"; // The plot's type, either line or scatter
+  type: 'line' | 'scatter'; // The plot's type, either line or scatter
   unit: string; // The unit of the dataset's data, e.g. °C for temperature data
   curveColor: string; // The color used for displaying the data
   threshold?: number; // An optional data threshold
@@ -53,7 +53,7 @@ export interface ChartProps {
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
-  chartPeriod?: "hour" | Range | null;
+  chartPeriod?: 'hour' | Range | null;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
@@ -72,11 +72,11 @@ const makeAnnotation = (
   name: string,
   value: number | null,
   borderColor: string,
-  backgroundColor = "rgb(169,169,169, 0.7)"
+  backgroundColor = 'rgb(169,169,169, 0.7)',
 ) => ({
-  type: "line",
-  mode: "horizontal",
-  scaleID: "y-axis-0",
+  type: 'line',
+  mode: 'horizontal',
+  scaleID: 'y-axis-0',
   value,
   borderColor,
   borderWidth: 2,
@@ -86,7 +86,7 @@ const makeAnnotation = (
     backgroundColor,
     yPadding: 3,
     xPadding: 3,
-    position: "left",
+    position: 'left',
     xAdjust: 10,
     content: name,
   },
@@ -125,7 +125,7 @@ function Chart({
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
-  const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
+  const [xPeriod, setXPeriod] = useState<'week' | 'month'>('week');
 
   const [hideLastTick, setHideLastTick] = useState<boolean>(false);
 
@@ -136,7 +136,7 @@ function Chart({
       endDate,
       surveys,
       temperatureThreshold,
-      selectedSurveyDate
+      selectedSurveyDate,
     );
 
   const nYTicks = 5;
@@ -146,16 +146,16 @@ function Chart({
     const { current } = chartRef;
     if (current) {
       // not sure why 'scales' doesn't have a type. Possibly from a plugin?
-      const xScale = (current.chartInstance as any).scales["x-axis-0"];
+      const xScale = (current.chartInstance as any).scales['x-axis-0'];
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
-        xScale.getPixelForTick(index)
+        xScale.getPixelForTick(index),
       );
       const nTicks = ticksPositions.length;
       const {
         chartArea: { right, left },
       } = current.chartInstance;
       const ticksWidth =
-        typeof nTicks === "number" && nTicks > 0 ? (right - left) / nTicks : 0;
+        typeof nTicks === 'number' && nTicks > 0 ? (right - left) / nTicks : 0;
       // If last tick is too close to the chart's right edge then hide it
       if (right - ticksPositions[nTicks - 1] < ticksWidth) {
         setHideLastTick(true);
@@ -164,9 +164,9 @@ function Chart({
       }
       setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
       if (xScale.width > SMALL_WINDOW) {
-        setXPeriod("week");
+        setXPeriod('week');
       } else {
-        setXPeriod("month");
+        setXPeriod('month');
       }
     }
   };
@@ -181,9 +181,9 @@ function Chart({
 
   // Update chart when window is resized
   useEffect(() => {
-    window.addEventListener("resize", onResize);
+    window.addEventListener('resize', onResize);
     return () => {
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener('resize', onResize);
     };
   }, [onResize]);
 
@@ -199,7 +199,7 @@ function Chart({
       maintainAspectRatio: false,
       plugins: {
         chartJsPluginBarchartBackground: {
-          color: background ? "rgb(158, 166, 170, 0.07)" : "#ffffff",
+          color: background ? 'rgb(158, 166, 170, 0.07)' : '#ffffff',
         },
       },
       tooltips: {
@@ -211,22 +211,22 @@ function Chart({
 
       annotation: {
         annotations: [
-          makeAnnotation("Historical Max", maxMonthlyMean, "rgb(75, 192, 192)"),
+          makeAnnotation('Historical Max', maxMonthlyMean, 'rgb(75, 192, 192)'),
           makeAnnotation(
-            "Bleaching Threshold",
+            'Bleaching Threshold',
             temperatureThreshold,
-            "#ff8d00"
+            '#ff8d00',
           ),
         ],
       },
       scales: {
         xAxes: [
           {
-            type: "time",
+            type: 'time',
             time: {
               displayFormats: {
-                week: `MMM D ${showYearInTicks ? "YY" : ""}`,
-                month: `MMM ${showYearInTicks ? "YY" : ""}`,
+                week: `MMM D ${showYearInTicks ? 'YY' : ''}`,
+                month: `MMM ${showYearInTicks ? 'YY' : ''}`,
               },
               unit: chartPeriod || xPeriod,
             },
@@ -269,9 +269,9 @@ function Chart({
                   (index === values.length - 1 &&
                     values[index - 1] - value > 0.8 * yStepSize)
                 ) {
-                  return `${value}${!hideYAxisUnits ? "°" : ""}  `;
+                  return `${value}${!hideYAxisUnits ? '°' : ''}  `;
                 }
-                return "";
+                return '';
               },
             },
           },
@@ -285,7 +285,7 @@ function Chart({
         return el.concat(toMerge);
       }
       return undefined;
-    }
+    },
   );
 
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -12,12 +12,12 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import WarningIcon from "@material-ui/icons/Warning";
-import { yellow } from "@material-ui/core/colors";
+} from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import WarningIcon from '@material-ui/icons/Warning';
+import { yellow } from '@material-ui/core/colors';
 
-import { UploadTimeSeriesResult } from "../../../services/uploadServices";
+import { UploadTimeSeriesResult } from '../../../services/uploadServices';
 
 const YELLOW = yellow[600];
 
@@ -46,19 +46,19 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
                 <ListItemText
                   primary={file}
                   primaryTypographyProps={{
-                    color: "textSecondary",
-                    variant: "h5",
+                    color: 'textSecondary',
+                    variant: 'h5',
                   }}
                   secondary={`
                       These columns are not configured for import yet and were
                       not uploaded: ${ignoredHeaders
                         .map((header) => `"${header}"`)
-                        .join(", ")}.
+                        .join(', ')}.
                     `}
-                  secondaryTypographyProps={{ variant: "subtitle1" }}
+                  secondaryTypographyProps={{ variant: 'subtitle1' }}
                 />
               </ListItem>
-            ) : null
+            ) : null,
           )}
         </List>
       </DialogContent>
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   closeButton: {
-    position: "absolute",
+    position: 'absolute',
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.text.primary,

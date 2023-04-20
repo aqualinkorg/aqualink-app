@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Tooltip,
   IconButton,
@@ -7,8 +7,8 @@ import {
   WithStyles,
   withStyles,
   Theme,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   createCollectionRequest,
@@ -16,11 +16,11 @@ import {
   userCollectionLoadingSelector,
   userErrorSelector,
   userInfoSelector,
-} from "../../../../../store/User/userSlice";
-import { belongsToCollection } from "../../../../../helpers/siteUtils";
-import { ReactComponent as WatchIcon } from "../../../../../assets/watch.svg";
-import { ReactComponent as UnWatchIcon } from "../../../../../assets/unwatch.svg";
-import collectionServices from "../../../../../services/collectionServices";
+} from '../../../../../store/User/userSlice';
+import { belongsToCollection } from '../../../../../helpers/siteUtils';
+import { ReactComponent as WatchIcon } from '../../../../../assets/watch.svg';
+import { ReactComponent as UnWatchIcon } from '../../../../../assets/unwatch.svg';
+import collectionServices from '../../../../../services/collectionServices';
 
 const CollectionButton = ({
   siteId,
@@ -35,7 +35,7 @@ const CollectionButton = ({
   const [collectionActionLoading, setCollectionActionLoading] = useState(false);
   const siteBelongsToCollection = belongsToCollection(
     siteId,
-    user?.collection?.siteIds
+    user?.collection?.siteIds,
   );
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const CollectionButton = ({
           name: `${user.fullName}'s collection`,
           siteIds: [siteId],
           token: user.token,
-        })
+        }),
       );
     } else if (user?.token && user?.collection && !siteBelongsToCollection) {
       setCollectionActionLoading(true);
@@ -66,7 +66,7 @@ const CollectionButton = ({
             id: user.collection.id,
             addSiteIds: [siteId],
           },
-          user.token
+          user.token,
         )
         .then(() => {
           if (user?.collection) {
@@ -87,14 +87,14 @@ const CollectionButton = ({
             id: user.collection.id,
             removeSiteIds: [siteId],
           },
-          user.token
+          user.token,
         )
         .then(() => {
           if (user?.collection) {
             dispatch(
               setCollectionSites(
-                user.collection.siteIds.filter((item) => item !== siteId)
-              )
+                user.collection.siteIds.filter((item) => item !== siteId),
+              ),
             );
           }
         })
@@ -107,8 +107,8 @@ const CollectionButton = ({
     <Tooltip
       title={
         siteBelongsToCollection
-          ? "Remove from your dashboard"
-          : "Add to your dashboard"
+          ? 'Remove from your dashboard'
+          : 'Add to your dashboard'
       }
       arrow
       placement="top"

@@ -1,9 +1,9 @@
-import React from "react";
-import { Grid, Typography, Box, Button, useTheme } from "@material-ui/core";
-import { useLocation, Link } from "react-router-dom";
+import React from 'react';
+import { Grid, Typography, Box, Button, useTheme } from '@material-ui/core';
+import { useLocation, Link } from 'react-router-dom';
 
-import NavBar from "../NavBar";
-import Footer from "../Footer";
+import NavBar from '../NavBar';
+import Footer from '../Footer';
 
 const ErrorPage = () => {
   const theme = useTheme();
@@ -27,16 +27,16 @@ const ErrorPage = () => {
         </Box>
         <Grid container justify="center">
           <Button
-            style={{ margin: "1rem" }}
+            style={{ margin: '1rem' }}
             color="primary"
             variant="contained"
             onClick={() => window.location.reload()}
           >
             Refresh
           </Button>
-          {pathname !== "/map" && (
+          {pathname !== '/map' && (
             <Button
-              style={{ margin: "1rem", color: "white" }}
+              style={{ margin: '1rem', color: 'white' }}
               component={Link}
               to="/map"
               color="primary"

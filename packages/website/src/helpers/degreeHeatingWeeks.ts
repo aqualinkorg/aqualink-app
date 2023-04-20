@@ -1,5 +1,5 @@
-import { isNil, isNumber } from "lodash";
-import { dhwColorCode } from "../assets/colorCode";
+import { isNil, isNumber } from 'lodash';
+import { dhwColorCode } from '../assets/colorCode';
 
 export const degreeHeatingWeeksCalculator = (degreeHeatingDays?: number) =>
   isNumber(degreeHeatingDays) ? degreeHeatingDays / 7 : null;
@@ -14,7 +14,7 @@ export const dhwColorFinder = (degreeHeatingWeeks?: number | null): string => {
     return dhwColorCode[len - 1].color;
   }
   const index = dhwColorCode.findIndex(
-    (item) => degreeHeatingWeeks < item.value
+    (item) => degreeHeatingWeeks < item.value,
   );
 
   return dhwColorCode[index - 1].color;
