@@ -61,7 +61,7 @@ export async function checkBuoysStatus(connection: Connection) {
   };
 
   // Log message in stdout
-  logger.log(messageTemplate);
+  logger.warn(messageTemplate);
 
   if (!slackToken) {
     logger.error('No slack bot token was defined.');
