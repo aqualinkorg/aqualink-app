@@ -10,7 +10,7 @@ export class EntityExists {
   async validate(id: number, args: ValidationArguments) {
     const found = await this.dataSource
       .getRepository(args.constraints[0])
-      .findOne(id);
+      .findOneBy({ id });
     if (!found) return false;
     return true;
   }

@@ -1,5 +1,5 @@
 import { chunk, Dictionary, groupBy, isNaN, keyBy, minBy } from 'lodash';
-import { Repository } from 'typeorm';
+import { ObjectLiteral, Repository } from 'typeorm';
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -149,12 +149,12 @@ const castCsvValues =
  * @param repository The repository for the entity
  * @param polygon The polygon value
  */
-const handleEntityDuplicate = <T>(
+const handleEntityDuplicate = <T extends ObjectLiteral>(
   repository: Repository<T>,
   query: (
     repository: Repository<T>,
     polygon?: GeoJSON | null,
-  ) => Promise<T | undefined>,
+  ) => Promise<T | null>,
   polygon?: GeoJSON | null,
 ) => {
   return (err) => {
@@ -287,7 +287,9 @@ const createSites = async (
 
       return Promise.all([
         getHistoricalMonthlyMeans(longitude, latitude),
-        historicalMonthlyMeanRepository.findOne({ where: { site } }),
+        historicalMonthlyMeanRepository.findOne({
+          where: { site: { id: site.id } },
+        }),
       ]).then(([historicalMonthlyMean, found]) => {
         if (found || !historicalMonthlyMean) {
           logger.warn(`Site ${site.id} has already monthly max data`);
@@ -411,8 +413,8 @@ const createSources = async (
         .findOne({
           relations: ['surveyPoint', 'site'],
           where: {
-            site: source.site,
-            surveyPoint: source.poi,
+            site: { id: source.site.id },
+            surveyPoint: { id: source.poi.id },
             type: source.type,
           },
         })

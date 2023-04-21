@@ -58,7 +58,11 @@ const getSpotterExclusionDates = (
   exclusionDatesRepository: Repository<ExclusionDates>,
 ) =>
   sources.map((source) =>
-    exclusionDatesRepository.find({ where: { sensorId: source.sensorId } }),
+    exclusionDatesRepository.find({
+      where: {
+        sensorId: source.sensorId ?? IsNull(),
+      },
+    }),
   );
 
 /**
