@@ -38,8 +38,8 @@ const { argv } = yargs
     describe: 'The sites that should be backfilled with spotter data',
     type: 'array',
   })
-  .option('c', {
-    alias: 'check',
+  .option('nc', {
+    alias: 'no-check',
     describe: 'Skip distance check for spotter data',
     type: 'boolean',
     default: false,
@@ -74,7 +74,7 @@ function getTaskFn(task: string) {
 
 async function run() {
   // Extract command line arguments
-  const { d: days, s: siteIds, t: task, c: check } = argv;
+  const { d: days, s: siteIds, t: task, nc: check } = argv;
 
   // Cast siteIds into a number array. If none are given return empty array
   const parsedSiteIds = siteIds ? siteIds.map(Number) : [];
