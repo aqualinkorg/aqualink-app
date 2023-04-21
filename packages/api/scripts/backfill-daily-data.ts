@@ -1,5 +1,5 @@
 import Bluebird from 'bluebird';
-import { createConnection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import yargs from 'yargs';
 import moment from 'moment';
 import { getSitesDailyData } from '../src/workers/dailyData';
@@ -32,17 +32,17 @@ async function run() {
     .minutes(59)
     .seconds(59)
     .milliseconds(999);
-  createConnection(dbConfig).then(async (connection) => {
-    // eslint-disable-next-line fp/no-mutating-methods
-    await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
-      const date = moment(today);
-      date.day(today.day() - past - 1);
-      try {
-        await getSitesDailyData(connection, date.toDate(), siteIds);
-      } catch (error) {
-        console.error(error);
-      }
-    });
+  const dataSource = new DataSource(dbConfig);
+  const connection = await dataSource.initialize();
+  // eslint-disable-next-line fp/no-mutating-methods
+  await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
+    const date = moment(today);
+    date.day(today.day() - past - 1);
+    try {
+      await getSitesDailyData(connection, date.toDate(), siteIds);
+    } catch (error) {
+      console.error(error);
+    }
   });
 }
 

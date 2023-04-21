@@ -1,4 +1,4 @@
-import { createConnection, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import yargs from 'yargs';
 import axios from 'axios';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
@@ -65,7 +65,8 @@ const resizeImage = async (
 };
 
 async function main() {
-  const conn = await createConnection(dbConfig);
+  const dataSource = new DataSource(dbConfig);
+  const conn = await dataSource.initialize();
   // Extract command line arguments
   const { s: size } = argv;
   console.log(`running for size: ${size}`);
@@ -112,10 +113,10 @@ async function main() {
     );
   } catch (err) {
     console.error(`Creating resized survey images failed:\n${err}`);
-    conn.close();
+    conn.destroy();
     process.exit(1);
   } finally {
-    conn.close();
+    conn.destroy();
     if (failImages.length > 0) {
       console.log(
         `Images failed to resize:\n${failImages.map((x) => `${x}\n`).join('')}`,

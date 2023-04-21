@@ -2,7 +2,7 @@
 // We need to assign cloud env variable to node env variables
 import Axios from 'axios';
 import * as functions from 'firebase-functions';
-import { createConnection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { runDailyUpdate } from '../src/workers/dailyData';
 import {
   runSpotterTimeSeriesUpdate,
@@ -72,28 +72,39 @@ const {
   ...dbConfig
 } = require('../ormconfig');
 
+async function runWithDataSource(
+  functionName: string,
+  callback: (conn: DataSource) => void,
+) {
+  const dbUrl = functions.config().database.url;
+  // eslint-disable-next-line no-undef
+  const entities = dbEntities.map(extractEntityDefinition);
+  const dataSource = new DataSource({
+    ...dbConfig,
+    url: dbUrl,
+    entities,
+  });
+  const connection = await dataSource.initialize();
+  try {
+    callback(connection);
+  } catch (err) {
+    await sendErrorToSlack(functionName, err);
+    throw err;
+  } finally {
+    dataSource.destroy();
+  }
+}
+
 // Start a daily update for each sites.
 exports.dailyUpdate = functions
   .runWith({ timeoutSeconds: 540 })
   .https.onRequest(async (req, res) => {
-    const dbUrl = functions.config().database.url;
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
-    // eslint-disable-next-line no-undef
-    const entities = dbEntities.map(extractEntityDefinition);
-    const conn = await createConnection({
-      ...dbConfig,
-      url: dbUrl,
-      entities,
-    });
-    try {
+
+    runWithDataSource('dailyUpdate', async (conn: DataSource) => {
       await runDailyUpdate(conn);
       res.json({ result: `Daily update on ${new Date()}` });
-    } catch (err) {
-      await sendErrorToSlack('dailyUpdate', err);
-      throw err;
-    } finally {
-      conn.close();
-    }
+    });
   });
 
 exports.scheduledDailyUpdate = functions
@@ -102,24 +113,12 @@ exports.scheduledDailyUpdate = functions
   .timeZone('America/Los_Angeles')
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
-    const dbUrl = functions.config().database.url;
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
-    // eslint-disable-next-line no-undef
-    const entities = dbEntities.map(extractEntityDefinition);
-    const conn = await createConnection({
-      ...dbConfig,
-      url: dbUrl,
-      entities,
-    });
-    try {
+
+    runWithDataSource('scheduledDailyUpdate', async (conn: DataSource) => {
       await runDailyUpdate(conn);
       console.log(`Daily update on ${new Date()}`);
-    } catch (err) {
-      await sendErrorToSlack('scheduledDailyUpdate', err);
-      throw err;
-    } finally {
-      conn.close();
-    }
+    });
   });
 
 exports.pingService = functions.pubsub
@@ -144,24 +143,15 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
   .timeZone('America/Los_Angeles')
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
-    const dbUrl = functions.config().database.url;
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
-    // eslint-disable-next-line no-undef
-    const entities = dbEntities.map(extractEntityDefinition);
-    const conn = await createConnection({
-      ...dbConfig,
-      url: dbUrl,
-      entities,
-    });
-    try {
-      await runSpotterTimeSeriesUpdate(conn);
-      console.log(`Spotter data hourly update on ${new Date()}`);
-    } catch (err) {
-      await sendErrorToSlack('scheduledSpotterTimeSeriesUpdate', err);
-      throw err;
-    } finally {
-      conn.close();
-    }
+
+    runWithDataSource(
+      'scheduledSpotterTimeSeriesUpdate',
+      async (conn: DataSource) => {
+        await runSpotterTimeSeriesUpdate(conn);
+        console.log(`Spotter data hourly update on ${new Date()}`);
+      },
+    );
   });
 
 exports.scheduledWindWaveTimeSeriesUpdate = functions
@@ -171,25 +161,15 @@ exports.scheduledWindWaveTimeSeriesUpdate = functions
   .timeZone('America/Los_Angeles')
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
-    const dbUrl = functions.config().database.url;
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
-    // eslint-disable-next-line no-undef
-    const entities = dbEntities.map(extractEntityDefinition);
-    const conn = await createConnection({
-      ...dbConfig,
-      url: dbUrl,
-      entities,
-    });
-    try {
-      await runWindWaveTimeSeriesUpdate(conn);
-      console.log(`Wind and Wave data hourly update on ${new Date()}`);
-    } catch (err) {
-      await sendErrorToSlack('scheduledWindWaveTimeSeriesUpdate', err);
-      console.warn(err);
-      throw err;
-    } finally {
-      conn.close();
-    }
+
+    runWithDataSource(
+      'scheduledWindWaveTimeSeriesUpdate',
+      async (conn: DataSource) => {
+        await runWindWaveTimeSeriesUpdate(conn);
+        console.log(`Wind and Wave data hourly update on ${new Date()}`);
+      },
+    );
   });
 
 exports.scheduledSSTTimeSeriesUpdate = functions
@@ -199,24 +179,15 @@ exports.scheduledSSTTimeSeriesUpdate = functions
   .timeZone('America/Los_Angeles')
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
-    const dbUrl = functions.config().database.url;
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
-    // eslint-disable-next-line no-undef
-    const entities = dbEntities.map(extractEntityDefinition);
-    const conn = await createConnection({
-      ...dbConfig,
-      url: dbUrl,
-      entities,
-    });
-    try {
-      await runSSTTimeSeriesUpdate(conn);
-      console.log(`SST data hourly update on ${new Date()}`);
-    } catch (err) {
-      await sendErrorToSlack('scheduledSSTTimeSeriesUpdate', err);
-      throw err;
-    } finally {
-      conn.close();
-    }
+
+    runWithDataSource(
+      'scheduledSSTTimeSeriesUpdate',
+      async (conn: DataSource) => {
+        await runSSTTimeSeriesUpdate(conn);
+        console.log(`SST data hourly update on ${new Date()}`);
+      },
+    );
   });
 
 exports.scheduledVideoStreamsCheck = functions
@@ -225,7 +196,6 @@ exports.scheduledVideoStreamsCheck = functions
   .pubsub.schedule('0 0 * * *')
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
-    const dbUrl = functions.config().database.url;
     process.env.FIREBASE_API_KEY = functions.config().google.api_key;
     process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
     process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
@@ -245,21 +215,12 @@ exports.scheduledVideoStreamsCheck = functions
     }
 
     const { projectId } = FIREBASE_CONFIG;
-    // eslint-disable-next-line no-undef
-    const entities = dbEntities.map(extractEntityDefinition);
-    const conn = await createConnection({
-      ...dbConfig,
-      url: dbUrl,
-      entities,
-    });
 
-    try {
-      await checkVideoStreams(conn, projectId);
-      console.log(`Video stream daily check on ${new Date()} is complete.`);
-    } catch (err) {
-      await sendErrorToSlack('scheduledVideoStreamsCheck', err);
-      throw err;
-    } finally {
-      conn.close();
-    }
+    runWithDataSource(
+      'scheduledSSTTimeSeriesUpdate',
+      async (conn: DataSource) => {
+        await checkVideoStreams(conn, projectId);
+        console.log(`Video stream daily check on ${new Date()} is complete.`);
+      },
+    );
   });

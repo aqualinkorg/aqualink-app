@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import yargs from 'yargs';
-import { ConnectionOptions, createConnection } from 'typeorm';
+import { DataSourceOptions, DataSource } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
 import { Site } from '../src/sites/sites.entity';
@@ -48,8 +48,9 @@ async function run() {
   logger.log(`Script params: rootPath: ${rootPath}, userEmail: ${userEmail}`);
 
   // Initialize typeorm connection
-  const config = configService.getTypeOrmConfig() as ConnectionOptions;
-  const connection = await createConnection(config);
+  const config = configService.getTypeOrmConfig() as DataSourceOptions;
+  const dataSource = new DataSource(config);
+  const connection = await dataSource.initialize();
 
   // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService(

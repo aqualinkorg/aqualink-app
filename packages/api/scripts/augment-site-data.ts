@@ -1,6 +1,6 @@
 import { isNil, omitBy } from 'lodash';
 import Bluebird from 'bluebird';
-import { Connection, createConnection, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
 import { Site } from '../src/sites/sites.entity';
@@ -61,10 +61,10 @@ async function getAugmentedData(
   );
 }
 
-async function augmentSites(connection: Connection) {
-  const siteRepository = connection.getRepository(Site);
-  const regionRepository = connection.getRepository(Region);
-  const HistoricalMonthlyMeanRepository = connection.getRepository(
+async function augmentSites(dataSource: DataSource) {
+  const siteRepository = dataSource.getRepository(Site);
+  const regionRepository = dataSource.getRepository(Region);
+  const HistoricalMonthlyMeanRepository = dataSource.getRepository(
     HistoricalMonthlyMean,
   );
   const allSites = await siteRepository.find();
@@ -109,9 +109,9 @@ async function augmentSites(connection: Connection) {
 }
 
 async function run() {
-  createConnection(dbConfig).then(async (connection) => {
-    await augmentSites(connection);
-  });
+  const dataSource = new DataSource(dbConfig);
+  const connection = await dataSource.initialize();
+  await augmentSites(connection);
 }
 
 run();

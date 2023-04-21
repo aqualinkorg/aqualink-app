@@ -1,4 +1,4 @@
-import { createConnection, In } from 'typeorm';
+import { DataSource, In } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { keyBy } from 'lodash';
@@ -21,7 +21,8 @@ const yearsArray = [2017, 2018, 2019, 2020, 2021, 2022];
 const sitesToProcess: number[] = [];
 
 async function main() {
-  const connection = await createConnection(dbConfig);
+  const dataSource = new DataSource(dbConfig);
+  const connection = await dataSource.initialize();
   const siteRepository = connection.getRepository(Site);
   const dailyDataRepository = connection.getRepository(DailyData);
   const sourcesRepository = connection.getRepository(Sources);
@@ -104,7 +105,7 @@ async function main() {
   // Update materialized view
   refreshMaterializedView(siteRepository);
 
-  connection.close();
+  connection.destroy();
   process.exit(0);
 }
 

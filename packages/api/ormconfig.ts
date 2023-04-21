@@ -1,6 +1,6 @@
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
-import { ConnectionOptions } from 'typeorm';
+import { DataSourceOptions } from 'typeorm';
 
 // dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
 try {
@@ -17,7 +17,7 @@ const env = process.env.NODE_ENV || 'development';
 // If no TEST_DATABASE_URL is defined then use the same connection as on development but use database TEST_POSTGRES_DATABASE
 const prefix = env === 'test' ? 'TEST_' : '';
 const databaseUrl = process.env[`${prefix}DATABASE_URL`];
-const connectionInfo = databaseUrl
+const dataSourceInfo = databaseUrl
   ? { url: databaseUrl }
   : {
       host: process.env.POSTGRES_HOST || 'localhost',
@@ -37,9 +37,9 @@ const connectionInfo = databaseUrl
 // Unfortunately, we need to use CommonJS/AMD style exports rather than ES6-style modules for this due to how
 // TypeORM expects the config to be available. Typescript doesn't like this- hence the @ts-ignore.
 // @ts-ignore
-export = ({
+export = {
   type: 'postgres',
-  ...connectionInfo,
+  ...dataSourceInfo,
   // We don't want to auto-synchronize production data - we should deliberately run migrations.
   synchronize: false,
   logging: false,
@@ -60,4 +60,4 @@ export = ({
     migrationsDir: 'migration',
     subscribersDir: 'subscriber',
   },
-} as unknown) as ConnectionOptions;
+} as unknown as DataSourceOptions;

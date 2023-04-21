@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import axios, { AxiosPromise } from 'axios';
 import { Dictionary } from 'lodash';
-import { Connection, IsNull, Not } from 'typeorm';
+import { DataSource, IsNull, Not } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { getYouTubeVideoId } from '../utils/urls';
@@ -92,7 +92,7 @@ const checkVideoOptions = (youTubeVideoItems: YouTubeVideoItem[]) =>
   }, {});
 
 export const checkVideoStreams = async (
-  connection: Connection,
+  dataSource: DataSource,
   projectId: string,
 ) => {
   const apiKey = process.env.FIREBASE_API_KEY;
@@ -122,7 +122,7 @@ export const checkVideoStreams = async (
   }
 
   // Fetch sites with streams
-  const sitesWithStream = await connection.getRepository(Site).find({
+  const sitesWithStream = await dataSource.getRepository(Site).find({
     where: { videoStream: Not(IsNull()) },
   });
 
