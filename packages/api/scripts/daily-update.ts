@@ -1,11 +1,8 @@
-import { DataSource } from 'typeorm';
+import AqualinkDataSource from '../ormconfig';
 import { runDailyUpdate } from '../src/workers/dailyData';
 
-const dbConfig = require('../ormconfig');
-
 async function main() {
-  const dataSource = new DataSource(dbConfig);
-  const conn = await dataSource.initialize();
+  const conn = await AqualinkDataSource.initialize();
   try {
     await runDailyUpdate(conn);
   } catch (err) {

@@ -1,12 +1,11 @@
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import yargs from 'yargs';
 import axios from 'axios';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { getImageData, resize } from './utils/image';
 import { getThumbnailBucketAndDestination } from '../src/utils/image-resize';
-
-const dbConfig = require('../ormconfig');
+import AqualinkDataSource from '../ormconfig';
 
 // Initialize command definition
 const { argv } = yargs
@@ -65,8 +64,7 @@ const resizeImage = async (
 };
 
 async function main() {
-  const dataSource = new DataSource(dbConfig);
-  const conn = await dataSource.initialize();
+  const conn = await AqualinkDataSource.initialize();
   // Extract command line arguments
   const { s: size } = argv;
   console.log(`running for size: ${size}`);

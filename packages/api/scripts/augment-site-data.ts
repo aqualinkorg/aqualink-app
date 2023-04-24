@@ -9,8 +9,7 @@ import { Region } from '../src/regions/regions.entity';
 import { getMMM, getHistoricalMonthlyMeans } from '../src/utils/temperature';
 import { getGoogleRegion } from '../src/utils/site.utils';
 import { createPoint } from '../src/utils/coordinates';
-
-const dbConfig = require('../ormconfig');
+import AqualinkDataSource from '../ormconfig';
 
 async function getRegion(
   longitude: number,
@@ -61,10 +60,10 @@ async function getAugmentedData(
   );
 }
 
-async function augmentSites(dataSource: DataSource) {
-  const siteRepository = dataSource.getRepository(Site);
-  const regionRepository = dataSource.getRepository(Region);
-  const HistoricalMonthlyMeanRepository = dataSource.getRepository(
+async function augmentSites(connection: DataSource) {
+  const siteRepository = connection.getRepository(Site);
+  const regionRepository = connection.getRepository(Region);
+  const HistoricalMonthlyMeanRepository = connection.getRepository(
     HistoricalMonthlyMean,
   );
   const allSites = await siteRepository.find();
@@ -109,8 +108,7 @@ async function augmentSites(dataSource: DataSource) {
 }
 
 async function run() {
-  const dataSource = new DataSource(dbConfig);
-  const connection = await dataSource.initialize();
+  const connection = await AqualinkDataSource.initialize();
   await augmentSites(connection);
 }
 

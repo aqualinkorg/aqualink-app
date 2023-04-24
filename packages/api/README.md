@@ -56,10 +56,10 @@ Migrations happen using the TypeORM CLI.
 $ yarn typeorm
 
 # Create a new migration
-$ yarn typeorm migration:generate -n NameOfMigration
+$ yarn migration:generate ./migration/NameOfMigration
 
 # Run Migrations
-$ yarn typeorm migration:run
+$ yarn migration:run
 ```
 
 ### Test

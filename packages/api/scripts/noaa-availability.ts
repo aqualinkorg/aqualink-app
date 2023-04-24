@@ -5,13 +5,12 @@ import axios from 'axios';
 import { Logger } from '@nestjs/common';
 import fs from 'fs';
 import yargs from 'yargs';
-import { DataSource, In, IsNull } from 'typeorm';
+import { In, IsNull } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { Site } from '../src/sites/sites.entity';
 import { createPoint } from '../src/utils/coordinates';
-
-const dbConfig = require('../ormconfig');
+import AqualinkDataSource from '../ormconfig';
 
 let netcdf4;
 try {
@@ -138,8 +137,7 @@ async function run() {
       return true;
     }) || [];
   const availabilityArray = await getAvailabilityMapFromNetCDF4();
-  const dataSource = new DataSource(dbConfig);
-  const connection = await dataSource.initialize();
+  const connection = await AqualinkDataSource.initialize();
   Logger.log('Fetching sites');
   const siteRepository = connection.getRepository(Site);
   const allSites = await siteRepository.find({

@@ -12,6 +12,7 @@ import { runSSTTimeSeriesUpdate } from '../src/workers/sstTimeSeries';
 import { checkVideoStreams } from '../src/workers/check-video-streams';
 import { sendSlackMessage } from '../src/utils/slack.utils';
 import { checkBuoysStatus } from '../src/workers/check-buoys-status';
+import { dataSourceOptions } from '../ormconfig';
 
 // We have to manually import all required entities here, unfortunately - the globbing that is used in ormconfig.ts
 // doesn't work with Webpack. This declaration gets processed by a custom loader (`add-entities.js`) to add import
@@ -71,7 +72,7 @@ const {
   password,
   entities: defaultEntities,
   ...dbConfig
-} = require('../ormconfig');
+} = dataSourceOptions;
 
 async function runWithDataSource(
   functionName: string,

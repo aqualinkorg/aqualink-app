@@ -1,6 +1,7 @@
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
-import { DataSourceOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 // dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
 try {
@@ -34,10 +35,7 @@ const dataSourceInfo = databaseUrl
       }),
     };
 
-// Unfortunately, we need to use CommonJS/AMD style exports rather than ES6-style modules for this due to how
-// TypeORM expects the config to be available. Typescript doesn't like this- hence the @ts-ignore.
-// @ts-ignore
-export = {
+export const dataSourceOptions: PostgresConnectionOptions = {
   type: 'postgres',
   ...dataSourceInfo,
   // We don't want to auto-synchronize production data - we should deliberately run migrations.
@@ -52,12 +50,7 @@ export = {
     join(__dirname, 'src/**', '*.entity.ts'),
     join(__dirname, 'src/**', '*.entity.js'),
   ],
-  seeds: [join(__dirname, 'src/seeds', '*.seeds.ts')],
-  factories: [join(__dirname, 'src/seeds', '*.factory.ts')],
   migrations: [join(__dirname, 'migration/**', '*.ts')],
-  subscribers: [join(__dirname, 'subscriber/**', '*.ts')],
-  cli: {
-    migrationsDir: 'migration',
-    subscribersDir: 'subscriber',
-  },
-} as unknown as DataSourceOptions;
+};
+
+export default new DataSource(dataSourceOptions);

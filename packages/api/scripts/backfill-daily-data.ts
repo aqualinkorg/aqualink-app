@@ -1,10 +1,8 @@
 import Bluebird from 'bluebird';
-import { DataSource } from 'typeorm';
 import yargs from 'yargs';
 import moment from 'moment';
 import { getSitesDailyData } from '../src/workers/dailyData';
-
-const dbConfig = require('../ormconfig');
+import AqualinkDataSource from '../ormconfig';
 
 const { argv } = yargs
   .scriptName('backfill-data')
@@ -32,8 +30,7 @@ async function run() {
     .minutes(59)
     .seconds(59)
     .milliseconds(999);
-  const dataSource = new DataSource(dbConfig);
-  const connection = await dataSource.initialize();
+  const connection = await AqualinkDataSource.initialize();
   // eslint-disable-next-line fp/no-mutating-methods
   await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
     const date = moment(today);
