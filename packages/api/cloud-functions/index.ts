@@ -233,25 +233,11 @@ exports.scheduledBuoysStatusCheck = functions
   .pubsub.schedule('0 0 * * *')
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
-    const dbUrl = functions.config().database.url;
     process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
     process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
 
-    // eslint-disable-next-line no-undef
-    const entities = dbEntities.map(extractEntityDefinition);
-    const conn = await createConnection({
-      ...dbConfig,
-      url: dbUrl,
-      entities,
-    });
-
-    try {
+    runWithDataSource('scheduledBuoysStatusCheck', async (conn: DataSource) => {
       await checkBuoysStatus(conn);
       console.log(`Buoys status daily check on ${new Date()} is complete.`);
-    } catch (err) {
-      await sendErrorToSlack('scheduledBuoysStatusCheck', err);
-      throw err;
-    } finally {
-      conn.close();
-    }
+    });
   });
