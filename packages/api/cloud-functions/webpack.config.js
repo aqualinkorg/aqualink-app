@@ -28,6 +28,10 @@ module.exports = {
     'firebase-admin': 'firebase-admin',
     'firebase-functions': 'firebase-functions',
     'cache-manager': 'cache-manager',
+    '@nestjs/microservices': '@nestjs/microservices',
+    '@nestjs/microservices/microservices-module':
+      '@nestjs/microservices/microservices-module',
+    '@nestjs/websockets/socket-module': '@nestjs/websockets/socket-module',
   },
   optimization: {
     minimize: false,
