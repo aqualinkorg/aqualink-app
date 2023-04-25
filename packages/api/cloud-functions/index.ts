@@ -11,6 +11,7 @@ import {
 import { runSSTTimeSeriesUpdate } from '../src/workers/sstTimeSeries';
 import { checkVideoStreams } from '../src/workers/check-video-streams';
 import { sendSlackMessage } from '../src/utils/slack.utils';
+import { checkBuoysStatus } from '../src/workers/check-buoys-status';
 
 // We have to manually import all required entities here, unfortunately - the globbing that is used in ormconfig.ts
 // doesn't work with Webpack. This declaration gets processed by a custom loader (`add-entities.js`) to add import
@@ -258,6 +259,35 @@ exports.scheduledVideoStreamsCheck = functions
       console.log(`Video stream daily check on ${new Date()} is complete.`);
     } catch (err) {
       await sendErrorToSlack('scheduledVideoStreamsCheck', err);
+      throw err;
+    } finally {
+      conn.close();
+    }
+  });
+
+exports.scheduledBuoysStatusCheck = functions
+  .runWith({ timeoutSeconds: 540 })
+  // VideoStreamCheck will run daily at 12:00 AM
+  .pubsub.schedule('0 0 * * *')
+  .timeZone('America/Los_Angeles')
+  .onRun(async () => {
+    const dbUrl = functions.config().database.url;
+    process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
+    process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
+
+    // eslint-disable-next-line no-undef
+    const entities = dbEntities.map(extractEntityDefinition);
+    const conn = await createConnection({
+      ...dbConfig,
+      url: dbUrl,
+      entities,
+    });
+
+    try {
+      await checkBuoysStatus(conn);
+      console.log(`Buoys status daily check on ${new Date()} is complete.`);
+    } catch (err) {
+      await sendErrorToSlack('scheduledBuoysStatusCheck', err);
       throw err;
     } finally {
       conn.close();
