@@ -88,7 +88,7 @@ async function runWithDataSource(
   });
   const connection = await dataSource.initialize();
   try {
-    callback(connection);
+    await callback(connection);
   } catch (err) {
     await sendErrorToSlack(functionName, err);
     throw err;
