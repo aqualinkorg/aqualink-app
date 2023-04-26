@@ -53,6 +53,7 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
+import { SLACK_BOT_CHANNEL, SLACK_BOT_TOKEN } from '../utils/constants';
 
 @Injectable()
 export class SitesService {
@@ -104,8 +105,6 @@ export class SitesService {
       this.sitesRepository,
       this.historicalMonthlyMeanRepository,
     );
-
-    const { SLACK_BOT_TOKEN, SLACK_BOT_CHANNEL } = process.env;
 
     // Elevate user to SiteManager
     if (user.adminLevel === AdminLevel.Default) {

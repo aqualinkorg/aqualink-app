@@ -1,16 +1,7 @@
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
 import { ConnectionOptions } from 'typeorm';
-
-// dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
-try {
-  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  require('dotenv').config();
-} catch {
-  // Pass
-}
-
-const env = process.env.NODE_ENV || 'development';
+import { env } from './src/utils/constants';
 
 // If we have a DATABASE_URL, use that
 // If the node_env is set to test then use the TEST_DATABASE_URL instead.
