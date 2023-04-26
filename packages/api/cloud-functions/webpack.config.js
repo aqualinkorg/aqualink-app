@@ -1,4 +1,12 @@
 const path = require('path');
+const webpack = require('webpack');
+
+const lazyImports = [
+  '@nestjs/microservices',
+  '@nestjs/microservices/microservices-module',
+  '@nestjs/websockets/socket-module',
+  '@nestjs/platform-express',
+];
 
 module.exports = {
   target: 'node',
@@ -28,12 +36,22 @@ module.exports = {
     'firebase-admin': 'firebase-admin',
     'firebase-functions': 'firebase-functions',
     'cache-manager': 'cache-manager',
-    '@nestjs/microservices': '@nestjs/microservices',
-    '@nestjs/microservices/microservices-module':
-      '@nestjs/microservices/microservices-module',
-    '@nestjs/websockets/socket-module': '@nestjs/websockets/socket-module',
   },
   optimization: {
     minimize: false,
   },
+  plugins: [
+    new webpack.IgnorePlugin({
+      checkResource(resource) {
+        if (lazyImports.includes(resource)) {
+          try {
+            require.resolve(resource);
+          } catch (err) {
+            return true;
+          }
+        }
+        return false;
+      },
+    }),
+  ],
 };
