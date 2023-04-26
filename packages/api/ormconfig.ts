@@ -1,12 +1,12 @@
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
 import { ConnectionOptions } from 'typeorm';
-import { env } from './src/utils/constants';
+import { envName } from './src/utils/constants';
 
 // If we have a DATABASE_URL, use that
 // If the node_env is set to test then use the TEST_DATABASE_URL instead.
 // If no TEST_DATABASE_URL is defined then use the same connection as on development but use database TEST_POSTGRES_DATABASE
-const prefix = env === 'test' ? 'TEST_' : '';
+const prefix = envName === 'test' ? 'TEST_' : '';
 const databaseUrl = process.env[`${prefix}DATABASE_URL`];
 const connectionInfo = databaseUrl
   ? { url: databaseUrl }
@@ -28,7 +28,7 @@ const connectionInfo = databaseUrl
 // Unfortunately, we need to use CommonJS/AMD style exports rather than ES6-style modules for this due to how
 // TypeORM expects the config to be available. Typescript doesn't like this- hence the @ts-ignore.
 // @ts-ignore
-export = ({
+export = {
   type: 'postgres',
   ...connectionInfo,
   // We don't want to auto-synchronize production data - we should deliberately run migrations.
@@ -51,4 +51,4 @@ export = ({
     migrationsDir: 'migration',
     subscribersDir: 'subscriber',
   },
-} as unknown) as ConnectionOptions;
+} as unknown as ConnectionOptions;
