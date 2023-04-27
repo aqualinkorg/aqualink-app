@@ -76,7 +76,7 @@ const {
 
 async function runWithDataSource(
   functionName: string,
-  callback: (conn: DataSource) => void,
+  callback: (conn: DataSource) => void | Promise<void>,
 ) {
   const dbUrl = functions.config().database.url;
   // eslint-disable-next-line no-undef
@@ -103,7 +103,7 @@ exports.dailyUpdate = functions
   .https.onRequest(async (req, res) => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
 
-    runWithDataSource('dailyUpdate', async (conn: DataSource) => {
+    await runWithDataSource('dailyUpdate', async (conn: DataSource) => {
       await runDailyUpdate(conn);
       res.json({ result: `Daily update on ${new Date()}` });
     });
@@ -117,10 +117,13 @@ exports.scheduledDailyUpdate = functions
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
 
-    runWithDataSource('scheduledDailyUpdate', async (conn: DataSource) => {
-      await runDailyUpdate(conn);
-      console.log(`Daily update on ${new Date()}`);
-    });
+    await runWithDataSource(
+      'scheduledDailyUpdate',
+      async (conn: DataSource) => {
+        await runDailyUpdate(conn);
+        console.log(`Daily update on ${new Date()}`);
+      },
+    );
   });
 
 exports.pingService = functions.pubsub
@@ -147,7 +150,7 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
 
-    runWithDataSource(
+    await runWithDataSource(
       'scheduledSpotterTimeSeriesUpdate',
       async (conn: DataSource) => {
         await runSpotterTimeSeriesUpdate(conn);
@@ -165,7 +168,7 @@ exports.scheduledWindWaveTimeSeriesUpdate = functions
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
 
-    runWithDataSource(
+    await runWithDataSource(
       'scheduledWindWaveTimeSeriesUpdate',
       async (conn: DataSource) => {
         await runWindWaveTimeSeriesUpdate(conn);
@@ -183,7 +186,7 @@ exports.scheduledSSTTimeSeriesUpdate = functions
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
 
-    runWithDataSource(
+    await runWithDataSource(
       'scheduledSSTTimeSeriesUpdate',
       async (conn: DataSource) => {
         await runSSTTimeSeriesUpdate(conn);
@@ -193,7 +196,7 @@ exports.scheduledSSTTimeSeriesUpdate = functions
   });
 
 exports.scheduledVideoStreamsCheck = functions
-  .runWith({ timeoutSeconds: 540 })
+  .runWith({ timeoutSeconds: 540, memory: '512MB' })
   // VideoStreamCheck will run daily at 12:00 AM
   .pubsub.schedule('0 0 * * *')
   .timeZone('America/Los_Angeles')
@@ -218,7 +221,7 @@ exports.scheduledVideoStreamsCheck = functions
 
     const { projectId } = FIREBASE_CONFIG;
 
-    runWithDataSource(
+    await runWithDataSource(
       'scheduledSSTTimeSeriesUpdate',
       async (conn: DataSource) => {
         await checkVideoStreams(conn, projectId);
@@ -228,7 +231,7 @@ exports.scheduledVideoStreamsCheck = functions
   });
 
 exports.scheduledBuoysStatusCheck = functions
-  .runWith({ timeoutSeconds: 540 })
+  .runWith({ timeoutSeconds: 540, memory: '512MB' })
   // VideoStreamCheck will run daily at 12:00 AM
   .pubsub.schedule('0 0 * * *')
   .timeZone('America/Los_Angeles')
@@ -236,8 +239,11 @@ exports.scheduledBuoysStatusCheck = functions
     process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
     process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
 
-    runWithDataSource('scheduledBuoysStatusCheck', async (conn: DataSource) => {
-      await checkBuoysStatus(conn);
-      console.log(`Buoys status daily check on ${new Date()} is complete.`);
-    });
+    await runWithDataSource(
+      'scheduledBuoysStatusCheck',
+      async (conn: DataSource) => {
+        await checkBuoysStatus(conn);
+        console.log(`Buoys status daily check on ${new Date()} is complete.`);
+      },
+    );
   });

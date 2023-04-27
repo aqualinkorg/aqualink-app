@@ -41,6 +41,7 @@ export async function checkBuoysStatus(connection: DataSource) {
   const diff = difference(siteIds, sitesWithDeployedSpotters);
 
   if (diff.length === 0) {
+    logger.log("No problems with spotters' status");
     return;
   }
 
