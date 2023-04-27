@@ -1,12 +1,12 @@
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
 import { ConnectionOptions } from 'typeorm';
-import { envName } from './src/utils/constants';
+import { isTestEnv } from './src/utils/constants';
 
 // If we have a DATABASE_URL, use that
 // If the node_env is set to test then use the TEST_DATABASE_URL instead.
 // If no TEST_DATABASE_URL is defined then use the same connection as on development but use database TEST_POSTGRES_DATABASE
-const prefix = envName === 'test' ? 'TEST_' : '';
+const prefix = isTestEnv ? 'TEST_' : '';
 const databaseUrl = process.env[`${prefix}DATABASE_URL`];
 const connectionInfo = databaseUrl
   ? { url: databaseUrl }

@@ -6,6 +6,7 @@ try {
   // Pass
 }
 export const envName = process.env.NODE_ENV || 'development';
+export const isTestEnv = envName === 'test';
 
 // Sofar API urls and token
 export const { SOFAR_API_TOKEN } = process.env;
@@ -55,7 +56,6 @@ export const sofarVariableIDs = {
 
 export const STORM_GLASS_BASE_URL = 'https://api.stormglass.io/v2';
 
-export const { SLACK_BOT_TOKEN, SLACK_BOT_CHANNEL } =
-  envName !== 'test'
-    ? process.env
-    : { SLACK_BOT_TOKEN: undefined, SLACK_BOT_CHANNEL: undefined };
+export const { SLACK_BOT_TOKEN, SLACK_BOT_CHANNEL } = !isTestEnv
+  ? process.env
+  : { SLACK_BOT_TOKEN: undefined, SLACK_BOT_CHANNEL: undefined };
