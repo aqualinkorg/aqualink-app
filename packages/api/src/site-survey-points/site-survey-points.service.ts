@@ -51,7 +51,8 @@ export class SiteSurveyPointsService {
   }
 
   async findOne(id: number): Promise<SiteSurveyPoint> {
-    const found = await this.surveyPointsRepository.findOne(id, {
+    const found = await this.surveyPointsRepository.findOne({
+      where: { id },
       relations: ['site'],
     });
     if (!found) {
@@ -87,7 +88,7 @@ export class SiteSurveyPointsService {
       );
     }
 
-    const updated = await this.surveyPointsRepository.findOne(id);
+    const updated = await this.surveyPointsRepository.findOneBy({ id });
 
     return updated!;
   }

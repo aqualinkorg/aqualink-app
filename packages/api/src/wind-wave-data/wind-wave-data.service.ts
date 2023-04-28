@@ -12,7 +12,7 @@ export class WindWaveService {
 
   async getWindWaveDate(siteId: number) {
     const result = await this.forecastDataRepository.find({
-      where: { site: siteId },
+      where: { site: { id: siteId } },
     });
     return result.map((item) => ({
       ...item,

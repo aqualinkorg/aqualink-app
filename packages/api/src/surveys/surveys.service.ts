@@ -105,7 +105,7 @@ export class SurveysService {
     createSurveyMediaDto: CreateSurveyMediaDto,
     surveyId: number,
   ): Promise<SurveyMedia> {
-    const survey = await this.surveyRepository.findOne(surveyId);
+    const survey = await this.surveyRepository.findOneBy({ id: surveyId });
     if (!survey) {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
@@ -114,7 +114,7 @@ export class SurveysService {
     const featuredMedia = await this.surveyMediaRepository.findOne({
       where: {
         featured: true,
-        surveyId: survey,
+        surveyId: { id: survey.id },
       },
     });
 
@@ -286,7 +286,7 @@ export class SurveysService {
     if (!result.affected) {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
-    const updated = await this.surveyRepository.findOne(surveyId);
+    const updated = await this.surveyRepository.findOneBy({ id: surveyId });
 
     return updated!;
   }
@@ -304,7 +304,9 @@ export class SurveysService {
       );
     }
 
-    const surveyMedia = await this.surveyMediaRepository.findOne(mediaId);
+    const surveyMedia = await this.surveyMediaRepository.findOneBy({
+      id: mediaId,
+    });
 
     if (!surveyMedia) {
       throw new NotFoundException(
@@ -328,7 +330,7 @@ export class SurveysService {
     ) {
       await this.surveyMediaRepository.update(
         {
-          surveyId: surveyMedia.surveyId,
+          surveyId: { id: surveyMedia.surveyId.id },
           featured: true,
         },
         { featured: false },
@@ -361,7 +363,7 @@ export class SurveysService {
 
   async delete(surveyId: number): Promise<void> {
     const surveyMedia = await this.surveyMediaRepository.find({
-      where: { surveyId },
+      where: { surveyId: { id: surveyId } },
     });
 
     await Promise.all(
@@ -384,7 +386,9 @@ export class SurveysService {
   }
 
   async deleteMedia(mediaId: number): Promise<void> {
-    const surveyMedia = await this.surveyMediaRepository.findOne(mediaId);
+    const surveyMedia = await this.surveyMediaRepository.findOneBy({
+      id: mediaId,
+    });
 
     if (!surveyMedia) {
       throw new NotFoundException(

@@ -1,23 +1,15 @@
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
-import { ConnectionOptions } from 'typeorm';
-
-// dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
-try {
-  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  require('dotenv').config();
-} catch {
-  // Pass
-}
-
-const env = process.env.NODE_ENV || 'development';
+import { DataSource } from 'typeorm';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { isTestEnv } from './src/utils/constants';
 
 // If we have a DATABASE_URL, use that
 // If the node_env is set to test then use the TEST_DATABASE_URL instead.
 // If no TEST_DATABASE_URL is defined then use the same connection as on development but use database TEST_POSTGRES_DATABASE
-const prefix = env === 'test' ? 'TEST_' : '';
+const prefix = isTestEnv ? 'TEST_' : '';
 const databaseUrl = process.env[`${prefix}DATABASE_URL`];
-const connectionInfo = databaseUrl
+const dataSourceInfo = databaseUrl
   ? { url: databaseUrl }
   : {
       host: process.env.POSTGRES_HOST || 'localhost',
@@ -34,12 +26,9 @@ const connectionInfo = databaseUrl
       }),
     };
 
-// Unfortunately, we need to use CommonJS/AMD style exports rather than ES6-style modules for this due to how
-// TypeORM expects the config to be available. Typescript doesn't like this- hence the @ts-ignore.
-// @ts-ignore
-export = ({
+export const dataSourceOptions: PostgresConnectionOptions = {
   type: 'postgres',
-  ...connectionInfo,
+  ...dataSourceInfo,
   // We don't want to auto-synchronize production data - we should deliberately run migrations.
   synchronize: false,
   logging: false,
@@ -52,12 +41,7 @@ export = ({
     join(__dirname, 'src/**', '*.entity.ts'),
     join(__dirname, 'src/**', '*.entity.js'),
   ],
-  seeds: [join(__dirname, 'src/seeds', '*.seeds.ts')],
-  factories: [join(__dirname, 'src/seeds', '*.factory.ts')],
   migrations: [join(__dirname, 'migration/**', '*.ts')],
-  subscribers: [join(__dirname, 'subscriber/**', '*.ts')],
-  cli: {
-    migrationsDir: 'migration',
-    subscribersDir: 'subscriber',
-  },
-} as unknown) as ConnectionOptions;
+};
+
+export default new DataSource(dataSourceOptions);

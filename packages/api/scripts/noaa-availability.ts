@@ -5,13 +5,12 @@ import axios from 'axios';
 import { Logger } from '@nestjs/common';
 import fs from 'fs';
 import yargs from 'yargs';
-import { createConnection, In, IsNull } from 'typeorm';
+import { In, IsNull } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { Site } from '../src/sites/sites.entity';
 import { createPoint } from '../src/utils/coordinates';
-
-const dbConfig = require('../ormconfig');
+import AqualinkDataSource from '../ormconfig';
 
 let netcdf4;
 try {
@@ -138,45 +137,44 @@ async function run() {
       return true;
     }) || [];
   const availabilityArray = await getAvailabilityMapFromNetCDF4();
-  createConnection(dbConfig).then(async (connection) => {
-    Logger.log('Fetching sites');
-    const siteRepository = connection.getRepository(Site);
-    const allSites = await siteRepository.find({
-      where: {
-        ...(!all && { nearestNOAALocation: IsNull() }),
-        ...(siteIds.length > 0 && { id: In(siteIds) }),
-      },
-    });
-
-    await Bluebird.map(
-      allSites,
-      async (site) => {
-        const { polygon, id } = site;
-        const [longitude, latitude] = (polygon as Point).coordinates;
-        try {
-          const [NOAALongitude, NOAALatitude] = await getNearestAvailablePoint(
-            longitude,
-            latitude,
-            availabilityArray,
-          );
-
-          await siteRepository.save({
-            id,
-            nearestNOAALocation: createPoint(NOAALongitude, NOAALatitude),
-          });
-          Logger.log(
-            `Updated site ${id} (${longitude}, ${latitude}) -> (${NOAALongitude}, ${NOAALatitude}) `,
-          );
-        } catch (error) {
-          console.error(error);
-          Logger.warn(
-            `Could not get nearest point for site id: ${site.id}, (lon, lat): (${longitude}, ${latitude})`,
-          );
-        }
-      },
-      { concurrency: 8 },
-    );
+  const connection = await AqualinkDataSource.initialize();
+  Logger.log('Fetching sites');
+  const siteRepository = connection.getRepository(Site);
+  const allSites = await siteRepository.find({
+    where: {
+      ...(!all && { nearestNOAALocation: IsNull() }),
+      ...(siteIds.length > 0 && { id: In(siteIds) }),
+    },
   });
+
+  await Bluebird.map(
+    allSites,
+    async (site) => {
+      const { polygon, id } = site;
+      const [longitude, latitude] = (polygon as Point).coordinates;
+      try {
+        const [NOAALongitude, NOAALatitude] = await getNearestAvailablePoint(
+          longitude,
+          latitude,
+          availabilityArray,
+        );
+
+        await siteRepository.save({
+          id,
+          nearestNOAALocation: createPoint(NOAALongitude, NOAALatitude),
+        });
+        Logger.log(
+          `Updated site ${id} (${longitude}, ${latitude}) -> (${NOAALongitude}, ${NOAALatitude}) `,
+        );
+      } catch (error) {
+        console.error(error);
+        Logger.warn(
+          `Could not get nearest point for site id: ${site.id}, (lon, lat): (${longitude}, ${latitude})`,
+        );
+      }
+    },
+    { concurrency: 8 },
+  );
 }
 
 run();

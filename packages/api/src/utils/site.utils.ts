@@ -174,7 +174,10 @@ export const getSite = async (
   siteRepository: Repository<Site>,
   relations?: string[],
 ) => {
-  const site = await siteRepository.findOne(siteId, { relations });
+  const site = await siteRepository.findOne({
+    where: { id: siteId },
+    relations,
+  });
 
   if (!site) {
     throw new NotFoundException(`Site with id ${siteId} does not exist`);
@@ -262,10 +265,10 @@ export const getSSTFromLiveOrLatestData = async (
   liveData: SofarLiveData,
   site: Site,
   latestDataRepository: Repository<LatestData>,
-): Promise<ValueWithTimestamp | undefined> => {
+): Promise<ValueWithTimestamp | null> => {
   if (!liveData.satelliteTemperature) {
-    const sst = await latestDataRepository.findOne({
-      site,
+    const sst = await latestDataRepository.findOneBy({
+      site: { id: site.id },
       source: SourceType.NOAA,
       metric: Metric.SATELLITE_TEMPERATURE,
     });
@@ -285,8 +288,8 @@ export const getLatestData = async (
   site: Site,
   latestDataRepository: Repository<LatestData>,
 ): Promise<LatestData[]> => {
-  return latestDataRepository.find({
-    site,
+  return latestDataRepository.findBy({
+    site: { id: site.id },
   });
 };
 

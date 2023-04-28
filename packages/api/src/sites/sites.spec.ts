@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { omit, sortBy } from 'lodash';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import moment from 'moment';
 import { TestService } from '../../test/test.service';
 import {
@@ -30,7 +30,7 @@ import { californiaDailyData } from '../../test/mock/daily-data.mock';
 export const siteTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
-  let connection: Connection;
+  let dataSource: DataSource;
   let siteId: number;
   const firstExclusionPeriod = {
     startDate: null,
@@ -52,7 +52,7 @@ export const siteTests = () => {
 
   beforeAll(async () => {
     app = await testService.getApp();
-    connection = await testService.getConnection();
+    dataSource = await testService.getDataSource();
   });
 
   it('POST / create a site', async () => {
@@ -78,7 +78,7 @@ export const siteTests = () => {
     expect(rsp2.body.adminLevel).toBe(AdminLevel.SiteManager);
 
     // Approve new site
-    await connection
+    await dataSource
       .getRepository(Site)
       .update({ name: siteDto.site.name }, { display: true });
   });

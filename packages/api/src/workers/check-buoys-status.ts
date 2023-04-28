@@ -1,4 +1,4 @@
-import { Connection, In, MoreThan } from 'typeorm';
+import { DataSource, In, MoreThan } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { difference } from 'lodash';
 import moment from 'moment';
@@ -9,7 +9,7 @@ import { SlackMessage, sendSlackMessage } from '../utils/slack.utils';
 
 const logger = new Logger('checkBuoysStatus');
 
-export async function checkBuoysStatus(connection: Connection) {
+export async function checkBuoysStatus(connection: DataSource) {
   const slackToken = process.env.SLACK_BOT_TOKEN;
   const slackChannel = process.env.SLACK_BOT_CHANNEL;
 
@@ -28,7 +28,9 @@ export async function checkBuoysStatus(connection: Connection) {
     where: {
       source: SourceType.SPOTTER,
       site: { id: In(siteIds) },
-      timestamp: MoreThan(moment().subtract(2, 'd').format('YYYY-MM-DD')),
+      timestamp: MoreThan(
+        new Date(moment().subtract(2, 'd').format('YYYY-MM-DD')),
+      ),
     },
   });
 
@@ -39,6 +41,7 @@ export async function checkBuoysStatus(connection: Connection) {
   const diff = difference(siteIds, sitesWithDeployedSpotters);
 
   if (diff.length === 0) {
+    logger.log("No problems with spotters' status");
     return;
   }
 
