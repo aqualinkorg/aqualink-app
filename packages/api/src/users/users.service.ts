@@ -101,7 +101,7 @@ export class UsersService {
     );
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
+  async findByEmail(email: string): Promise<User | null> {
     // Use query builder to include the firebaseUid
     return this.usersRepository
       .createQueryBuilder('users')
@@ -110,7 +110,7 @@ export class UsersService {
       .getOne();
   }
 
-  async findByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
+  async findByFirebaseUid(firebaseUid: string): Promise<User | null> {
     return this.usersRepository.findOne({ where: { firebaseUid } });
   }
 
@@ -133,12 +133,13 @@ export class UsersService {
    */
   private async migrateUserAssociations(user: User) {
     const siteAssociations = await this.siteApplicationRepository.find({
-      where: { user },
+      where: { user: { id: user.id } },
       relations: ['site'],
     });
 
     const { administeredSites: existingSites = [] } =
-      (await this.usersRepository.findOne(user.id, {
+      (await this.usersRepository.findOne({
+        where: { id: user.id },
         relations: ['administeredSites'],
       })) || {};
 

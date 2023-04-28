@@ -434,8 +434,8 @@ export const findOrCreateSourceEntity = async (
   const existingSourceEntity = await sourcesRepository.findOne({
     relations: ['surveyPoint', 'site'],
     where: {
-      site,
-      surveyPoint,
+      site: { id: site.id },
+      surveyPoint: { id: surveyPoint?.id },
       type: sourceType,
     },
   });
@@ -501,7 +501,9 @@ export const uploadTimeSeriesData = async (
   const [site, surveyPoint] = await Promise.all([
     getSite(parseInt(siteId, 10), repositories.siteRepository),
     surveyPointId
-      ? repositories.surveyPointRepository.findOne(parseInt(surveyPointId, 10))
+      ? repositories.surveyPointRepository.findOneBy({
+          id: parseInt(surveyPointId, 10),
+        })
       : undefined,
   ]);
 
@@ -556,7 +558,7 @@ export const uploadTimeSeriesData = async (
       repositories.dataUploadsRepository,
       signature,
       site,
-      surveyPoint,
+      surveyPoint ?? undefined,
       sourceType,
       fileName,
       filePath,

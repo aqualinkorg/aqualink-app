@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
-  Connection,
+  DataSource,
   ManyToOne,
   PrimaryGeneratedColumn,
   RelationId,
@@ -14,9 +14,9 @@ import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 
 @ViewEntity({
-  expression: (connection: Connection) => {
+  expression: (dataSource: DataSource) => {
     return (
-      connection
+      dataSource
         .createQueryBuilder()
         .select(
           'DISTINCT ON (metric, type, site_id, survey_point_id) time_series.id',

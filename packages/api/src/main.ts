@@ -10,8 +10,11 @@ import { UnauthorizedExceptionFilter } from './exception-filters/unauthorized.fi
 import { HttpExceptionFilter } from './exception-filters/http-exception.filter';
 import { apiLoggerMiddleware } from './middleware/api-logger.middleware';
 import { configService } from './config/config.service';
+import AqualinkDataSource from '../ormconfig';
 
 async function bootstrap() {
+  await AqualinkDataSource.initialize();
+
   if (Object.values(serviceAccount).every((value) => !!value)) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),

@@ -9,7 +9,7 @@ import {
   omit,
   omitBy,
 } from 'lodash';
-import { Connection, In, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import moment from 'moment';
@@ -288,13 +288,13 @@ export function getMaxAlert(
 
 /* eslint-disable no-console */
 export async function getSitesDailyData(
-  connection: Connection,
+  dataSource: DataSource,
   endOfDate: Date,
   siteIds?: number[],
 ) {
-  const siteRepository = connection.getRepository(Site);
-  const dailyDataRepository = connection.getRepository(DailyData);
-  const exclusionDatesRepository = connection.getRepository(ExclusionDates);
+  const siteRepository = dataSource.getRepository(Site);
+  const dailyDataRepository = dataSource.getRepository(DailyData);
+  const exclusionDatesRepository = dataSource.getRepository(ExclusionDates);
   const allSites = await siteRepository.find(
     siteIds && siteIds.length > 0
       ? {
@@ -370,7 +370,7 @@ export async function getSitesDailyData(
   );
 }
 
-export async function runDailyUpdate(conn: Connection) {
+export async function runDailyUpdate(dataSource: DataSource) {
   const today = moment()
     .utc()
     .hours(23)
@@ -382,7 +382,7 @@ export async function runDailyUpdate(conn: Connection) {
   yesterday.day(today.day() - 1);
   console.log(`Daily Update for data ending on ${yesterday.date()}`);
   try {
-    await getSitesDailyData(conn, yesterday.toDate());
+    await getSitesDailyData(dataSource, yesterday.toDate());
     console.log('Completed daily update.');
   } catch (error) {
     console.error(error);

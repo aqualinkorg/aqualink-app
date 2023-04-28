@@ -30,8 +30,8 @@ export class CollectionGuard implements CanActivate {
     if (!Number.isNaN(parseInt(collectionId, 10))) {
       const hasCollection = await this.collectionRepository.findOne({
         where: {
-          id: collectionId,
-          user,
+          id: Number(collectionId),
+          user: { id: user.id },
         },
       });
 

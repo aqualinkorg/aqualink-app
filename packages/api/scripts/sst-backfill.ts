@@ -1,4 +1,4 @@
-import { createConnection, In } from 'typeorm';
+import { In } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { keyBy } from 'lodash';
@@ -13,15 +13,14 @@ import {
 } from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Metric } from '../src/time-series/metrics.entity';
-
-const dbConfig = require('../ormconfig');
+import AqualinkDataSource from '../ormconfig';
 
 // Sites and years to backfill SST for
 const yearsArray = [2017, 2018, 2019, 2020, 2021, 2022];
 const sitesToProcess: number[] = [];
 
 async function main() {
-  const connection = await createConnection(dbConfig);
+  const connection = await AqualinkDataSource.initialize();
   const siteRepository = connection.getRepository(Site);
   const dailyDataRepository = connection.getRepository(DailyData);
   const sourcesRepository = connection.getRepository(Sources);
@@ -104,7 +103,7 @@ async function main() {
   // Update materialized view
   refreshMaterializedView(siteRepository);
 
-  connection.close();
+  connection.destroy();
   process.exit(0);
 }
 

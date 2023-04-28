@@ -258,7 +258,8 @@ export class SitesService {
       throw new NotFoundException(`Site with ID ${id} not found.`);
     }
 
-    const updated = await this.sitesRepository.findOne(id, {
+    const updated = await this.sitesRepository.findOne({
+      where: { id },
       relations: ['admins'],
     });
 
@@ -322,8 +323,8 @@ export class SitesService {
 
     return {
       ...liveData,
-      sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst),
-      satelliteTemperature: sst,
+      sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst ?? undefined),
+      satelliteTemperature: sst ?? undefined,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }
@@ -448,7 +449,7 @@ export class SitesService {
 
     const sources = await this.sourceRepository.find({
       where: {
-        site,
+        site: { id: site.id },
         type: SourceType.SPOTTER,
       },
     });

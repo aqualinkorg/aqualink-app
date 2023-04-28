@@ -1,4 +1,4 @@
-import { ConnectionOptions, createConnection } from 'typeorm';
+import { DataSourceOptions, DataSource } from 'typeorm';
 import yargs from 'yargs';
 import { configService } from '../src/config/config.service';
 import { ExclusionDates } from '../src/sites/exclusion-dates.entity';
@@ -80,8 +80,9 @@ async function run() {
   const parsedSiteIds = siteIds ? siteIds.map(Number) : [];
 
   // Initialize typeorm connection
-  const config = configService.getTypeOrmConfig() as ConnectionOptions;
-  const connection = await createConnection(config);
+  const config = configService.getTypeOrmConfig() as DataSourceOptions;
+  const dataSource = new DataSource(config);
+  const connection = await dataSource.initialize();
 
   // Fetch selected task fn
   const fn = getTaskFn(task);
