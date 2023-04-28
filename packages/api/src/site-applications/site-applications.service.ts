@@ -15,7 +15,7 @@ export class SiteApplicationsService {
   async findOneFromSite(siteId: number): Promise<SiteApplication> {
     const application = await this.siteApplicationRepository.findOne({
       where: {
-        site: siteId,
+        site: { id: siteId },
       },
       relations: ['site', 'user'],
     });

@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import yargs from 'yargs';
-import { ConnectionOptions, createConnection } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { last } from 'lodash';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
@@ -58,8 +58,9 @@ async function run() {
   );
 
   // Initialize typeorm connection
-  const config = configService.getTypeOrmConfig() as ConnectionOptions;
-  const connection = await createConnection(config);
+  const config = configService.getTypeOrmConfig() as DataSourceOptions;
+  const dataSource = new DataSource(config);
+  const connection = await dataSource.initialize();
 
   logger.log('Uploading sonde data');
   await uploadTimeSeriesData(

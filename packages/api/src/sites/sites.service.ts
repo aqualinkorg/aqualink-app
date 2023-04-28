@@ -53,6 +53,7 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
+import { SLACK_BOT_CHANNEL, SLACK_BOT_TOKEN } from '../utils/constants';
 
 @Injectable()
 export class SitesService {
@@ -104,8 +105,6 @@ export class SitesService {
       this.sitesRepository,
       this.historicalMonthlyMeanRepository,
     );
-
-    const { SLACK_BOT_TOKEN, SLACK_BOT_CHANNEL } = process.env;
 
     // Elevate user to SiteManager
     if (user.adminLevel === AdminLevel.Default) {
@@ -259,7 +258,8 @@ export class SitesService {
       throw new NotFoundException(`Site with ID ${id} not found.`);
     }
 
-    const updated = await this.sitesRepository.findOne(id, {
+    const updated = await this.sitesRepository.findOne({
+      where: { id },
       relations: ['admins'],
     });
 
@@ -323,8 +323,8 @@ export class SitesService {
 
     return {
       ...liveData,
-      sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst),
-      satelliteTemperature: sst,
+      sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst ?? undefined),
+      satelliteTemperature: sst ?? undefined,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }
@@ -449,7 +449,7 @@ export class SitesService {
 
     const sources = await this.sourceRepository.find({
       where: {
-        site,
+        site: { id: site.id },
         type: SourceType.SPOTTER,
       },
     });
