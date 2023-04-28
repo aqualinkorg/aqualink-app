@@ -65,6 +65,7 @@ interface SourceItem {
   metric?: Metric;
   time?: TimeType;
   ignore?: boolean;
+  matchExp?: RegExp;
   convertFn?: (arg: number) => number;
 }
 
@@ -76,19 +77,25 @@ const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
     'Site Name': { ignore: true },
     'Chlorophyll RFU': { metric: Metric.CHOLOROPHYLL_RFU },
     'Chlorophyll ug/L': { metric: Metric.CHOLOROPHYLL_CONCENTRATION },
-    'Cond µS/cm': { metric: Metric.CONDUCTIVITY },
+    'Cond µS/cm': {
+      metric: Metric.CONDUCTIVITY,
+      matchExp: /^Cond\s/,
+    },
     'Depth m': { metric: Metric.WATER_DEPTH },
     'ODO % sat': { metric: Metric.ODO_SATURATION },
     'ODO mg/L': { metric: Metric.ODO_CONCENTRATION },
     'Sal psu': { metric: Metric.SALINITY },
-    'SpCond µS/cm': { metric: Metric.SPECIFIC_CONDUCTANCE },
+    'SpCond µS/cm': {
+      metric: Metric.SPECIFIC_CONDUCTANCE,
+      matchExp: /^SpCond\s/,
+    },
     'TDS mg/L': { metric: Metric.TDS },
     'Turbidity FNU': { metric: Metric.TURBIDITY },
     'TSS mg/L': { metric: Metric.TOTAL_SUSPENDED_SOLIDS },
     'Wiper Position volt': { metric: Metric.SONDE_WIPER_POSITION },
     pH: { metric: Metric.PH },
     'pH mV': { metric: Metric.PH_MV },
-    'Temp °C': { metric: Metric.BOTTOM_TEMPERATURE },
+    'Temp °C': { metric: Metric.BOTTOM_TEMPERATURE, matchExp: /^Temp\s/ },
     'Battery V': { metric: Metric.SONDE_BATTERY_VOLTAGE },
     'Cable Pwr V': { metric: Metric.SONDE_CABLE_POWER_VOLTAGE },
   },
@@ -97,11 +104,14 @@ const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
     'Date Time': { time: 'Timestamp', ignore: true },
     'Pressure, mbar': { metric: Metric.PRESSURE },
     'Rain, mm': { metric: Metric.PRECIPITATION },
-    'Temp, °C': { metric: Metric.AIR_TEMPERATURE },
+    'Temp, °C': { metric: Metric.AIR_TEMPERATURE, matchExp: /^Temp,\s/ },
     'RH, %': { metric: Metric.RH },
     'Wind Speed, m/s': { metric: Metric.WIND_SPEED },
     'Gust Speed, m/s': { metric: Metric.WIND_GUST_SPEED },
-    'Wind Direction, ø': { metric: Metric.WIND_DIRECTION },
+    'Wind Direction, ø': {
+      metric: Metric.WIND_DIRECTION,
+      matchExp: /^Wind\sDirection,\s/,
+    },
   },
   [SourceType.HOBO]: {
     '': { ignore: true },
@@ -287,7 +297,15 @@ export const convertData = (
   fileName: string,
   sourceEntity: Sources,
   mimetype?: Mimetype,
-) => {
+): [
+  {
+    timestamp: string;
+    value: number;
+    metric: string;
+    source: Sources;
+  }[],
+  string[],
+] => {
   const preResult = workSheetData
     ?.slice(headerIndex + 1)
     .map((item) => {
@@ -296,7 +314,20 @@ export const convertData = (
     })
     .filter((item) => item) as string[][];
 
-  const timestampIndex = findTimeStampIndex(sourceType);
+  const sourceItemToHeaderMap = Object.keys(sourceItems[sourceType]).map(
+    (sourceHeader) =>
+      headers.findIndex(
+        (x) =>
+          x === sourceHeader ||
+          sourceItems[sourceType][sourceHeader].matchExp?.test(x),
+      ),
+  );
+
+  const timestampIndexRaw = findTimeStampIndex(sourceType);
+  const timestampIndex =
+    typeof timestampIndexRaw === 'number'
+      ? sourceItemToHeaderMap[timestampIndexRaw]
+      : timestampIndexRaw.map((x) => sourceItemToHeaderMap[x]);
 
   console.time(`Get data from sheet ${fileName}`);
   const results = preResult.map((item) => {
@@ -310,9 +341,10 @@ export const convertData = (
 
         const columnName = sourceItems[sourceType][header].metric;
         const convertFn = sourceItems[sourceType][header]?.convertFn;
+        const rawValue = item[sourceItemToHeaderMap[i]];
         const value = !convertFn
-          ? item[i]
-          : convertFn(parseFloat(item[i])).toFixed(2);
+          ? rawValue
+          : convertFn(parseFloat(rawValue)).toFixed(2);
 
         return [columnName, value];
       })
@@ -371,7 +403,10 @@ export const convertData = (
     ({ timestamp, metric, source }) => `${timestamp}, ${metric}, ${source.id}`,
   );
   console.timeEnd(`Remove duplicates and empty values ${fileName}`);
-  return data;
+
+  const unusedHeaders = headers.filter((x) => !sourceItems[sourceType][x]);
+
+  return [data, unusedHeaders];
 };
 
 export const uploadFileToGCloud = async (
@@ -494,8 +529,6 @@ export const uploadTimeSeriesData = async (
   if (!Object.keys(sourceItems[sourceType]).length) {
     throw new BadRequestException('Schema not provided for this type yet');
   }
-  // // TODO
-  // // - Add foreign key constraint to sources on site_id
   console.time(`Upload datafile ${fileName}`);
 
   const [site, surveyPoint] = await Promise.all([
@@ -522,17 +555,7 @@ export const uploadTimeSeriesData = async (
       headerIndex,
     } = await getFilePathData(filePath, sourceType);
 
-    if (failOnWarning && ignoredHeaders.length > 0) {
-      throw new BadRequestException(
-        `${fileName}: The columns ${ignoredHeaders
-          .map((header) => `"${header}"`)
-          .join(
-            ', ',
-          )} are not configured for import yet and cannot be uploaded.`,
-      );
-    }
-
-    const data = convertData(
+    const [data, unusedHeaders] = convertData(
       workSheetData,
       headers,
       headerIndex,
@@ -542,6 +565,16 @@ export const uploadTimeSeriesData = async (
       sourceEntity,
       mimetype,
     );
+
+    if (failOnWarning && unusedHeaders.length > 0) {
+      throw new BadRequestException(
+        `${fileName}: The columns ${unusedHeaders
+          .map((header) => `"${header}"`)
+          .join(
+            ', ',
+          )} are not configured for import yet and cannot be uploaded.`,
+      );
+    }
 
     const minDate = get(
       minBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
@@ -618,7 +651,7 @@ export const uploadTimeSeriesData = async (
     refreshMaterializedView(repositories.dataUploadsRepository);
 
     console.timeEnd(`Upload datafile ${fileName}`);
-    return ignoredHeaders;
+    return unusedHeaders;
   }
 
   return [];

@@ -42,6 +42,10 @@ const exampleFiles = [
     source: 'metlog',
     fileName: 'metlog_example.csv',
   },
+  {
+    source: 'hui',
+    fileName: 'hui_example.csv',
+  },
 ];
 
 const Header = ({ site }: HeaderProps) => {

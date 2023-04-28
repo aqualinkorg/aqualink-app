@@ -208,7 +208,7 @@ async function run() {
           ignoredHeaders,
           '',
           {} as Sources,
-        ) as NewData[],
+        )[0] as NewData[],
       };
     }),
   );
