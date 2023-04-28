@@ -616,8 +616,6 @@ describe('CheckConvertingWork', () => {
         return rest;
       });
 
-      console.log(editRes);
-
       expect(editRes).toEqual(expectedResult);
     },
   );
