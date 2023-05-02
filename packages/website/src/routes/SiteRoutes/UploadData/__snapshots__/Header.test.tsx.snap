@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <mock-iconbutton
+        color="primary"
+        component="[object Object]"
+        to="/sites/1"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          />
+        </svg>
+      </mock-iconbutton>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <mock-typography
+        variant="h5"
+      >
+        Upload Data
+      </mock-typography>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <mock-typography
+        variant="h6"
+      >
+        You're about to upload data for the following parameters: site "
+        
+        ".
+      </mock-typography>
+      <mock-typography
+        variant="h6"
+      >
+        Please confirm survey point and sensor type to continue.
+      </mock-typography>
+      <mock-typography
+        style="font-size: 0.8em;"
+      >
+        You can find example file formats here:
+         
+        <span>
+          <mock-button
+            classname="makeStyles-downloadButton-1"
+          >
+            hobo
+          </mock-button>
+          , 
+        </span>
+        <span>
+          <mock-button
+            classname="makeStyles-downloadButton-1"
+          >
+            sonde
+          </mock-button>
+          , 
+        </span>
+        <span>
+          <mock-button
+            classname="makeStyles-downloadButton-1"
+          >
+            metlog
+          </mock-button>
+          
+        </span>
+      </mock-typography>
+    </div>
+  </div>
+</div>
+`;

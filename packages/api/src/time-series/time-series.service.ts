@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { unlinkSync } from 'fs';
+import { createReadStream, unlinkSync } from 'fs';
 import { Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import {
@@ -7,7 +7,9 @@ import {
   HttpException,
   Injectable,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
+import { join } from 'path';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { Metric } from './metrics.entity';
@@ -30,6 +32,7 @@ import {
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';
+import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 
 @Injectable()
 export class TimeSeriesService {
@@ -190,5 +193,28 @@ export class TimeSeriesService {
     );
 
     return uploadResponse;
+  }
+
+  getSampleUploadFiles(surveyPointDataRangeDto: SampleUploadFilesDto) {
+    const { source } = surveyPointDataRangeDto;
+
+    switch (source) {
+      case SourceType.HOBO:
+        return createReadStream(
+          join(process.cwd(), 'src/utils/uploads/hobo_data.csv'),
+        );
+      case SourceType.METLOG:
+        return createReadStream(
+          join(process.cwd(), 'src/utils/uploads/metlog_data_simple.csv'),
+        );
+      case SourceType.SONDE:
+        return createReadStream(
+          join(process.cwd(), 'src/utils/uploads/sonde_data_simple.csv'),
+        );
+      default:
+        throw new NotFoundException(
+          `Example upload file for source ${source} not found`,
+        );
+    }
   }
 }

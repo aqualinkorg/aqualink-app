@@ -512,8 +512,10 @@ const metlogTestResults = [
 
 const cases: [string, SourceType, any][] = [
   ['sonde_data.csv', SourceType.SONDE, sondeTestResults],
+  ['sonde_data_simple.csv', SourceType.SONDE, sondeTestResults],
   ['hobo_data.csv', SourceType.HOBO, hoboTestResults],
   ['metlog_data.csv', SourceType.METLOG, metlogTestResults],
+  ['metlog_data_simple.csv', SourceType.METLOG, metlogTestResults],
 ];
 
 describe('CheckConvertingWork', () => {

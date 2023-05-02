@@ -11,9 +11,12 @@ import {
   UseGuards,
   UploadedFiles,
   Body,
+  Res,
+  Header,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import type { Response } from 'express';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { Metric } from './metrics.entity';
@@ -30,6 +33,7 @@ import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { fileFilter } from '../utils/uploads/upload-sheet-data';
+import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 
 const MAX_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;
@@ -155,5 +159,18 @@ export class TimeSeriesController {
       files,
       failOnWarning,
     );
+  }
+
+  @ApiOperation({ summary: 'Get sample upload files' })
+  @Get('sample-upload-files/:source')
+  @Header('Content-Type', 'text/csv')
+  getSampleUploadFiles(
+    @Param() surveyPointDataRangeDto: SampleUploadFilesDto,
+    @Res() res: Response,
+  ) {
+    const file = this.timeSeriesService.getSampleUploadFiles(
+      surveyPointDataRangeDto,
+    );
+    return file.pipe(res);
   }
 }
