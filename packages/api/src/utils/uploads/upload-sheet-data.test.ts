@@ -601,7 +601,7 @@ describe('CheckConvertingWork', () => {
       const { workSheetData, ignoredHeaders, headers, headerIndex } =
         await getFilePathData(`src/utils/uploads/${fileName}`, type);
 
-      const [result] = convertData(
+      const { data: result } = convertData(
         workSheetData,
         headers,
         headerIndex,

@@ -297,15 +297,7 @@ export const convertData = (
   fileName: string,
   sourceEntity: Sources,
   mimetype?: Mimetype,
-): [
-  {
-    timestamp: string;
-    value: number;
-    metric: string;
-    source: Sources;
-  }[],
-  string[],
-] => {
+) => {
   const preResult = workSheetData
     ?.slice(headerIndex + 1)
     .map((item) => {
@@ -406,7 +398,7 @@ export const convertData = (
 
   const unusedHeaders = headers.filter((x) => !sourceItems[sourceType][x]);
 
-  return [data, unusedHeaders];
+  return { data, unusedHeaders };
 };
 
 export const uploadFileToGCloud = async (
@@ -557,7 +549,7 @@ export const uploadTimeSeriesData = async (
       headerIndex,
     } = await getFilePathData(filePath, sourceType);
 
-    const [data, unusedHeaders] = convertData(
+    const { data, unusedHeaders } = convertData(
       workSheetData,
       headers,
       headerIndex,
