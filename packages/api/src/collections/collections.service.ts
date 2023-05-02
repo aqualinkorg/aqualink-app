@@ -129,7 +129,9 @@ export class CollectionsService {
   }
 
   async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
-    const collection = await this.collectionRepository.findOne(collectionId);
+    const collection = await this.collectionRepository.findOneBy({
+      id: collectionId,
+    });
 
     if (!collection) {
       throw new NotFoundException(
@@ -160,7 +162,7 @@ export class CollectionsService {
       },
     );
 
-    return this.collectionRepository.findOne(collection!.id);
+    return this.collectionRepository.findOneBy({ id: collection!.id });
   }
 
   async delete(collectionId: number) {
@@ -174,7 +176,7 @@ export class CollectionsService {
   }
 
   async getHeatStressTracker() {
-    const heatStressData = await this.latestDataRepository.find({
+    const heatStressData = await this.latestDataRepository.findBy({
       metric: Metric.DHW,
       value: MoreThanOrEqual(1),
     });

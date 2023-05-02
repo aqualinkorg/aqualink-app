@@ -43,7 +43,8 @@ export class RegionsService {
   }
 
   async findOne(id: number): Promise<Region> {
-    const found = await this.regionsRepository.findOne(id, {
+    const found = await this.regionsRepository.findOne({
+      where: { id },
       relations: ['parent'],
     });
     if (!found) {
@@ -63,7 +64,7 @@ export class RegionsService {
     if (!result.affected) {
       throw new NotFoundException(`Region with ID ${id} not found.`);
     }
-    const updated = await this.regionsRepository.findOne(id);
+    const updated = await this.regionsRepository.findOneBy({ id });
     if (!updated) {
       throw new InternalServerErrorException('Something went wrong.');
     }

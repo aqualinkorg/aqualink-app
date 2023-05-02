@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import yargs from 'yargs';
 import { Logger } from '@nestjs/common';
-import { ConnectionOptions, createConnection, Repository } from 'typeorm';
+import { DataSource, DataSourceOptions, Repository } from 'typeorm';
 import { get, groupBy, last, maxBy, minBy } from 'lodash';
 import {
   center,
@@ -156,8 +156,9 @@ async function run() {
   const { f: filePath, b: backfill } = argv;
 
   // Initialize typeorm connection
-  const config = configService.getTypeOrmConfig() as ConnectionOptions;
-  const connection = await createConnection(config);
+  const config = configService.getTypeOrmConfig() as DataSourceOptions;
+  const dataSource = new DataSource(config);
+  const connection = await dataSource.initialize();
   const siteRepository = connection.getRepository(Site);
   const siteSurveyPointRepository = connection.getRepository(SiteSurveyPoint);
   const dataUploadsRepository = connection.getRepository(DataUploads);

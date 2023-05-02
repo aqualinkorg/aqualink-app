@@ -4,6 +4,7 @@ import {
   SwaggerDocumentOptions,
 } from '@nestjs/swagger';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { dataSourceOptions } from '../../ormconfig';
 import { UpdateSiteApplicationDto } from '../site-applications/dto/update-site-application.dto';
 import { UpdateSiteWithApplicationDto } from '../site-applications/dto/update-site-with-application.dto';
 import {
@@ -20,10 +21,6 @@ try {
 } catch {
   // Pass
 }
-
-// ormconfig is a CommonJS/AMD style import rather than ES6-style module due to how TypeORM CLI works internally.
-// This means we need to use require rather than import, unfortunately.
-const dbConfig = require('../../ormconfig');
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
@@ -60,7 +57,7 @@ class ConfigService {
   // eslint-disable-next-line class-methods-use-this
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
-      ...dbConfig,
+      ...dataSourceOptions,
     };
   }
 

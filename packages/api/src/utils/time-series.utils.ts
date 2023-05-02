@@ -170,7 +170,7 @@ export const getNOAASource = async (
   return sourcesRepository
     .findOne({
       where: {
-        site,
+        site: { id: site.id },
         type: SourceType.NOAA,
         surveyPoint: IsNull(),
       },
@@ -208,10 +208,13 @@ export const getSources = (
       .findOne({
         relations: ['site'],
         where: {
-          site,
+          site: { id: site.id },
           surveyPoint: IsNull(),
           type,
-          sensorId: type === SourceType.SPOTTER ? site.sensorId : IsNull(),
+          sensorId:
+            type === SourceType.SPOTTER && site.sensorId !== null
+              ? site.sensorId
+              : IsNull(),
         },
       })
       .then((source) => {
