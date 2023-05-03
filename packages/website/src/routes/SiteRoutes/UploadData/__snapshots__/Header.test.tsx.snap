@@ -76,6 +76,14 @@ exports[`renders as expected 1`] = `
           >
             metlog
           </mock-button>
+          , 
+        </span>
+        <span>
+          <mock-button
+            classname="makeStyles-downloadButton-1"
+          >
+            hui
+          </mock-button>
           
         </span>
       </mock-typography>

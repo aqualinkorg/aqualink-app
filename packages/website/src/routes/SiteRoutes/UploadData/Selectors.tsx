@@ -31,6 +31,7 @@ const SENSOR_TYPES: EnhancedSelectOption[] = [
   { id: 0, name: 'sonde', label: 'Sonde data' },
   { id: 1, name: 'metlog', label: 'Meteorological data' },
   { id: 3, name: 'hobo', label: 'HOBO data' },
+  { id: 4, name: 'hui', label: 'HUI data' },
   { id: 2, name: 'spotter', label: 'Spotter data', disabled: true },
 ];
 

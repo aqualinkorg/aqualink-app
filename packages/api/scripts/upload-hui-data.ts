@@ -192,6 +192,15 @@ async function run() {
       const siteSurveyPoint = site
         ? undefined
         : await siteSurveyPointRepository.findOne({ where: { name: key } });
+      const { data } = convertData(
+        groupedBySite[key] as any,
+        headers,
+        headerIndex,
+        SourceType.HUI,
+        ignoredHeaders,
+        '',
+        {} as Sources,
+      );
       return {
         name: key,
         site,
@@ -201,15 +210,7 @@ async function run() {
           number,
           number,
         ],
-        data: convertData(
-          groupedBySite[key] as any,
-          headers,
-          headerIndex,
-          SourceType.HUI,
-          ignoredHeaders,
-          '',
-          {} as Sources,
-        ) as NewData[],
+        data,
       };
     }),
   );

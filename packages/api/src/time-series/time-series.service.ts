@@ -211,6 +211,10 @@ export class TimeSeriesService {
         return createReadStream(
           join(process.cwd(), 'src/utils/uploads/sonde_data_simple.csv'),
         );
+      case SourceType.HUI:
+        return createReadStream(
+          join(process.cwd(), 'src/utils/uploads/hui_data.csv'),
+        );
       default:
         throw new NotFoundException(
           `Example upload file for source ${source} not found`,
