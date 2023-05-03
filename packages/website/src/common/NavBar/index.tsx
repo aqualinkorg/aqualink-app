@@ -28,7 +28,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { sortBy } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
-
+import GTranslateOutlinedIcon from '@material-ui/icons/GTranslateOutlined';
 import RegisterDialog from '../RegisterDialog';
 import SignInDialog from '../SignInDialog';
 import Search from '../Search';
@@ -44,6 +44,7 @@ import {
   unsetSpotterPosition,
   unsetSelectedSite,
 } from '../../store/Sites/selectedSiteSlice';
+import { useGoogleTranslation } from '../../utils/google-translate';
 
 const NavBar = ({
   searchLocation,
@@ -61,6 +62,7 @@ const NavBar = ({
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [menuDrawerOpen, setMenuDrawerOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [, setTranslationOpen] = useGoogleTranslation();
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
   const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
@@ -153,6 +155,12 @@ const NavBar = ({
               sm={routeButtons && isTablet ? 3 : 4}
               md={searchLocation || (routeButtons && isTablet) ? 3 : 8}
             >
+              <IconButton
+                style={{ color: 'white', marginRight: '1em' }}
+                onClick={() => setTranslationOpen((prev) => prev + 1)}
+              >
+                <GTranslateOutlinedIcon />
+              </IconButton>
               {user ? (
                 <>
                   <Box display="flex" flexWrap="nowrap" alignItems="center">
