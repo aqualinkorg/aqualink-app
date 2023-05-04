@@ -139,8 +139,8 @@ export class Site {
 
   @ApiHideProperty()
   @Exclude()
-  @Column({ nullable: true, select: false })
-  sofarApiToken?: string;
+  @Column({ nullable: true, select: false, type: 'character varying' })
+  sofarApiToken?: string | null;
 
   hasHobo: boolean;
 
