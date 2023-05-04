@@ -157,7 +157,7 @@ const NavBar = ({
             >
               <IconButton
                 style={{ color: 'white', marginRight: '1em' }}
-                onClick={() => setTranslationOpen((prev) => prev + 1)}
+                onClick={() => setTranslationOpen((prev) => !prev)}
               >
                 <GTranslateOutlinedIcon />
               </IconButton>
@@ -231,18 +231,14 @@ const NavBar = ({
                   </Box>
                 </>
               ) : (
-                <>
-                  <Grid item>
-                    <Button onClick={() => handleSignInDialog(true)}>
-                      SIGN IN
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button onClick={() => handleRegisterDialog(true)}>
-                      SIGN UP
-                    </Button>
-                  </Grid>
-                </>
+                <div style={{ display: 'flex' }}>
+                  <Button onClick={() => handleSignInDialog(true)}>
+                    SIGN IN
+                  </Button>
+                  <Button onClick={() => handleRegisterDialog(true)}>
+                    SIGN UP
+                  </Button>
+                </div>
               )}
             </Grid>
 

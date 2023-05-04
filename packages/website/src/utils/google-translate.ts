@@ -1,20 +1,25 @@
 import React from 'react';
 
 export function useGoogleTranslation() {
-  const [translationOpen, setTranslationOpen] = React.useState<number>(0);
+  const [translationOpen, setTranslationOpen] = React.useState<boolean>(false);
+  const [init, setInit] = React.useState<boolean>(false);
 
   const googleTranslateElementInit = () => {
     // eslint-disable-next-line no-new
-    new (window as any).google.translate.TranslateElement({
-      pageLanguage: 'en',
-    });
+    new (window as any).google.translate.TranslateElement(
+      {
+        pageLanguage: 'en',
+      },
+      'google_translate_element',
+    );
   };
 
   const addScript = () => {
     const script = document.createElement('script');
+    script.setAttribute('type', 'text/javascript');
     script.setAttribute(
       'src',
-      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
+      'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
     );
     document.head.appendChild(script);
     // eslint-disable-next-line fp/no-mutation
@@ -22,22 +27,26 @@ export function useGoogleTranslation() {
   };
 
   React.useEffect(() => {
-    if (translationOpen !== 0) addScript();
+    if (translationOpen && !init) {
+      setInit(true);
+      addScript();
+    }
 
-    return () => {
+    const translationElem = document.getElementById('google_translate_element');
+
+    if (translationOpen && translationElem) {
       // eslint-disable-next-line fp/no-mutation
-      document.getElementsByTagName('body')[0].style.top = '0px';
-      const collection = document.getElementsByClassName('skiptranslate');
+      translationElem.style.display = 'inline';
+    } else if (translationElem) {
       // eslint-disable-next-line fp/no-mutation
-      for (let i = 0; i < collection.length; i += 1) {
-        collection[i].remove();
-      }
-    };
+      translationElem.style.display = 'none';
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [translationOpen]);
 
   return [translationOpen, setTranslationOpen] as [
-    number,
-    React.Dispatch<React.SetStateAction<number>>,
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>,
   ];
 }
