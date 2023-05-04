@@ -19,6 +19,7 @@ import {
   useMediaQuery,
   Divider,
   LinearProgress,
+  Tooltip,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
@@ -28,7 +29,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { sortBy } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import GTranslateOutlinedIcon from '@material-ui/icons/GTranslateOutlined';
+import LanguageIcon from '@material-ui/icons/Language';
 import RegisterDialog from '../RegisterDialog';
 import SignInDialog from '../SignInDialog';
 import Search from '../Search';
@@ -155,12 +156,14 @@ const NavBar = ({
               sm={routeButtons && isTablet ? 3 : 4}
               md={searchLocation || (routeButtons && isTablet) ? 3 : 8}
             >
-              <IconButton
-                style={{ color: 'white', marginRight: '1em' }}
-                onClick={() => setTranslationOpen((prev) => !prev)}
-              >
-                <GTranslateOutlinedIcon />
-              </IconButton>
+              <Tooltip title="Translate">
+                <IconButton
+                  style={{ color: 'white', marginRight: '1em' }}
+                  onClick={() => setTranslationOpen((prev) => !prev)}
+                >
+                  <LanguageIcon />
+                </IconButton>
+              </Tooltip>
               {user ? (
                 <>
                   <Box display="flex" flexWrap="nowrap" alignItems="center">
