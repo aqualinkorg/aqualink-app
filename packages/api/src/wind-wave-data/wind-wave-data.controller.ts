@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { GetWindWaveDataDTO } from './dto/get-wind-wave-date.dto';
+import { GetWindWaveDataDTO } from './dto/get-wind-wave-data.dto';
 import { WindWaveService } from './wind-wave-data.service';
 
 @ApiTags('Wind Wave Data')
