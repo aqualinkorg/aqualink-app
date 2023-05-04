@@ -21,6 +21,7 @@ import { DailyData } from '../sites/daily-data.entity';
 import { Sources } from '../sites/sources.entity';
 import { SensorDataDto } from './dto/sensor-data.dto';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { SOFAR_API_TOKEN } from '../utils/constants';
 
 @Injectable()
 export class SensorsService {
@@ -55,7 +56,8 @@ export class SensorsService {
         if (site.sensorId === null) {
           console.warn(`Spotter for site ${site.id} appears null.`);
         }
-        return getSpotterData(site.sensorId!).then((data) => {
+        const sofarToken = site.sofarApiToken || SOFAR_API_TOKEN;
+        return getSpotterData(site.sensorId!, sofarToken).then((data) => {
           return {
             id: site.id,
             ...data,

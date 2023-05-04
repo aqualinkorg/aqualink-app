@@ -34,7 +34,11 @@ import {
   SofarDailyData,
   ValueWithTimestamp,
 } from '../utils/sofar.types';
-import { SofarModels, sofarVariableIDs } from '../utils/constants';
+import {
+  SofarModels,
+  sofarVariableIDs,
+  SOFAR_API_TOKEN,
+} from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { filterMetricDataByDate, getExclusionDates } from '../utils/site.utils';
@@ -85,6 +89,7 @@ export async function getDailyData(
   const [NOAALongitude, NOAALatitude] = nearestNOAALocation
     ? (nearestNOAALocation as Point).coordinates
     : (polygon as Point).coordinates;
+  const sofarToken = site.sofarApiToken || SOFAR_API_TOKEN;
 
   const [
     spotterRawData,
@@ -96,7 +101,9 @@ export async function getDailyData(
     windVelocity10MeterEastward,
     windVelocity10MeterNorthward,
   ] = await Promise.all([
-    sensorId ? getSpotterData(sensorId, endOfDate) : DEFAULT_SPOTTER_DATA_VALUE,
+    sensorId
+      ? getSpotterData(sensorId, sofarToken, endOfDate)
+      : DEFAULT_SPOTTER_DATA_VALUE,
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
     getDegreeHeatingDays(latitude, longitude, endOfDate, maxMonthlyMean),

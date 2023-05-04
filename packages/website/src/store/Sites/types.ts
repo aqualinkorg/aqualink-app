@@ -331,6 +331,8 @@ export interface SiteUpdateParams {
   };
   name?: string;
   depth?: number;
+  sensorId?: string;
+  sofarApiToken?: string | null;
 }
 
 export interface SiteApplication {

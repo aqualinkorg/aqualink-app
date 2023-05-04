@@ -19,6 +19,7 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
 import { getSources, refreshMaterializedView } from './time-series.utils';
+import { SOFAR_API_TOKEN } from './constants';
 
 const MAX_DISTANCE_FROM_SITE = 50;
 
@@ -160,9 +161,11 @@ export const addSpotterData = async (
             [],
           );
 
+          const sofarToken = site.sofarApiToken || SOFAR_API_TOKEN;
           // Fetch spotter and wave data from sofar
           const spotterData = await getSpotterData(
             site.sensorId,
+            sofarToken,
             endDate,
             startDate,
           ).then((data) => excludeSpotterData(data, sensorExclusionDates));
