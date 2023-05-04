@@ -19,6 +19,7 @@ import {
   useMediaQuery,
   Divider,
   LinearProgress,
+  Tooltip,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
@@ -28,7 +29,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { sortBy } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
-
+import LanguageIcon from '@material-ui/icons/Language';
 import RegisterDialog from '../RegisterDialog';
 import SignInDialog from '../SignInDialog';
 import Search from '../Search';
@@ -44,6 +45,7 @@ import {
   unsetSpotterPosition,
   unsetSelectedSite,
 } from '../../store/Sites/selectedSiteSlice';
+import { useGoogleTranslation } from '../../utils/google-translate';
 
 const NavBar = ({
   searchLocation,
@@ -61,6 +63,7 @@ const NavBar = ({
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [menuDrawerOpen, setMenuDrawerOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [, setTranslationOpen] = useGoogleTranslation();
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
   const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
@@ -153,6 +156,14 @@ const NavBar = ({
               sm={routeButtons && isTablet ? 3 : 4}
               md={searchLocation || (routeButtons && isTablet) ? 3 : 8}
             >
+              <Tooltip title="Translate">
+                <IconButton
+                  style={{ color: 'white', marginRight: '1em' }}
+                  onClick={() => setTranslationOpen((prev) => !prev)}
+                >
+                  <LanguageIcon />
+                </IconButton>
+              </Tooltip>
               {user ? (
                 <>
                   <Box display="flex" flexWrap="nowrap" alignItems="center">
@@ -223,18 +234,14 @@ const NavBar = ({
                   </Box>
                 </>
               ) : (
-                <>
-                  <Grid item>
-                    <Button onClick={() => handleSignInDialog(true)}>
-                      SIGN IN
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button onClick={() => handleRegisterDialog(true)}>
-                      SIGN UP
-                    </Button>
-                  </Grid>
-                </>
+                <div style={{ display: 'flex' }}>
+                  <Button onClick={() => handleSignInDialog(true)}>
+                    SIGN IN
+                  </Button>
+                  <Button onClick={() => handleRegisterDialog(true)}>
+                    SIGN UP
+                  </Button>
+                </div>
               )}
             </Grid>
 
