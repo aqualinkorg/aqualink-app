@@ -168,8 +168,8 @@ const EditForm = ({
           <Grid item xs={12}>
             <Alert className={classes.infoAlert} icon={false} severity="info">
               <Typography variant="subtitle2">
-                Only SofarOcean spotters are supported for now. Please contract
-                us if you would like to connect other live buoys{' '}
+                Only Sofar Ocean spotters are supported for now. Please contact
+                us if you would like to connect other live buoys at{' '}
                 <a
                   href="mailto:admin@aqualink.org?subject=Questions%20or%20Comments"
                   target="_blank"
