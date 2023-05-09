@@ -15,6 +15,7 @@ export async function checkBuoysStatus(connection: DataSource) {
 
   const sitesDeployedBuoy = await connection.getRepository(Site).find({
     where: { status: SiteStatus.Deployed },
+    select: { id: true, sensorId: true, sofarApiToken: true },
   });
 
   const siteIds = sitesDeployedBuoy.map((x) => x.id);
@@ -45,6 +46,8 @@ export async function checkBuoysStatus(connection: DataSource) {
     return;
   }
 
+  const diffSites = sitesDeployedBuoy.filter((x) => diff.includes(x.id));
+
   // Create a simple alert template for slack
   const messageTemplate: SlackMessage = {
     // The channel id is fetched by requesting the list on GET https://slack.com/api/conversations.list
@@ -55,9 +58,14 @@ export async function checkBuoysStatus(connection: DataSource) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `Spotters of site(s) ${diff.join(
-            ', ',
-          )} have not received data for more than 2 days!`,
+          text: `Spotters of:\n${diffSites
+            .map(
+              (x) =>
+                `site: ${x.id}, spotter: ${x.sensorId} ${
+                  x.sofarApiToken ? '(using private token)' : ''
+                }\n`,
+            )
+            .join('')} have not received data for more than 2 days!`,
         },
       },
     ],
