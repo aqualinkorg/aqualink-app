@@ -229,7 +229,7 @@ export const siteTests = () => {
       expect(rsp.body.length).toBe(1);
 
       expect(rsp.body[0]).toMatchObject(
-        omit(floridaSite, 'createdAt', 'updatedAt'),
+        omit(floridaSite, 'createdAt', 'updatedAt', 'sofarApiToken'),
       );
     });
 
@@ -243,7 +243,13 @@ export const siteTests = () => {
 
       const sortedSites = sortBy(rsp.body, 'id');
       expect(sortedSites[0]).toMatchObject(
-        omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
+        omit(
+          californiaSite,
+          'applied',
+          'createdAt',
+          'updatedAt',
+          'sofarApiToken',
+        ),
       );
     });
 

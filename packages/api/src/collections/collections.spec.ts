@@ -171,10 +171,16 @@ export const collectionTests = () => {
       expect(rsp.body.sites.length).toBe(2);
       const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
       expect(sortedSites[0]).toMatchObject(
-        omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
+        omit(
+          californiaSite,
+          'applied',
+          'createdAt',
+          'updatedAt',
+          'sofarApiToken',
+        ),
       );
       expect(sortedSites[1]).toMatchObject(
-        omit(floridaSite, 'applied', 'createdAt', 'updatedAt'),
+        omit(floridaSite, 'applied', 'createdAt', 'updatedAt', 'sofarApiToken'),
       );
 
       const floridaLatestData = getLatestData(floridaTimeSeries);
@@ -219,13 +225,19 @@ export const collectionTests = () => {
 
     const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
     expect(sortedSites[0]).toMatchObject(
-      omit(athensSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(athensSite, 'applied', 'createdAt', 'updatedAt', 'sofarApiToken'),
     );
     expect(sortedSites[1]).toMatchObject(
-      omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(
+        californiaSite,
+        'applied',
+        'createdAt',
+        'updatedAt',
+        'sofarApiToken',
+      ),
     );
     expect(sortedSites[2]).toMatchObject(
-      omit(floridaSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(floridaSite, 'applied', 'createdAt', 'updatedAt', 'sofarApiToken'),
     );
 
     const athensLatestData = getLatestData(athensTimeSeries);
