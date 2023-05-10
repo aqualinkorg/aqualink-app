@@ -204,7 +204,7 @@ const EditForm = ({
                   onChange={() => setEditToken(!editToken)}
                 />
               }
-              label="Update API key"
+              label="Add a custom API token"
             />
           </Grid>
           {editToken && (
@@ -233,7 +233,7 @@ const EditForm = ({
                       onChange={() => setUseDefaultToken(!useDefaultToken)}
                     />
                   }
-                  label="Use default"
+                  label="Use default token"
                 />
               </Grid>
             </>
