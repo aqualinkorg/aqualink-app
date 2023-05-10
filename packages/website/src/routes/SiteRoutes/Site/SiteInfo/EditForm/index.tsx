@@ -171,7 +171,7 @@ const EditForm = ({
                 Only Sofar Ocean spotters are supported for now. Please contact
                 us if you would like to connect other live buoys at{' '}
                 <a
-                  href="mailto:admin@aqualink.org?subject=Questions%20or%20Comments"
+                  href="mailto:admin@aqualink.org?subject=Connect%20a%20buoy"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -204,7 +204,7 @@ const EditForm = ({
                   onChange={() => setEditToken(!editToken)}
                 />
               }
-              label="Update sofar token"
+              label="Update API key"
             />
           </Grid>
           {editToken && (
@@ -213,8 +213,8 @@ const EditForm = ({
                 <TextField
                   disabled={useDefaultToken}
                   formField={siteSofarApiToken}
-                  label="Sofar API token"
-                  placeholder="Sofar API token"
+                  label="Spotter API token"
+                  placeholder="Spotter API token"
                   name="sofarApiToken"
                   onChange={onFieldChange}
                 />
