@@ -13,7 +13,7 @@ import { Exclude } from 'class-transformer';
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
-import { Metric } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 @Entity()
 @Unique(['file', 'signature'])

@@ -25,7 +25,7 @@ import {
 } from '../../test/mock/user.mock';
 import { TestService } from '../../test/test.service';
 import { mockExtractAndVerifyToken } from '../../test/utils';
-import { Metric } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';

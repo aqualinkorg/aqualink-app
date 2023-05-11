@@ -6,7 +6,6 @@ import { GeoJSON, Point } from 'geojson';
 import { IsNull, Not, Repository } from 'typeorm';
 import { Site, SensorType } from '../sites/sites.entity';
 import { Survey } from '../surveys/surveys.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSiteFromSensorId } from '../utils/site.utils';
 import { getSpotterData, getLatestData } from '../utils/sofar';
@@ -22,6 +21,7 @@ import { Sources } from '../sites/sources.entity';
 import { SensorDataDto } from './dto/sensor-data.dto';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { SOFAR_API_TOKEN } from '../utils/constants';
+import { Metric } from '../time-series/metrics.enum';
 
 @Injectable()
 export class SensorsService {

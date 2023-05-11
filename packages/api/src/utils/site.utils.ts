@@ -20,10 +20,10 @@ import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { getHistoricalMonthlyMeans, getMMM } from './temperature';
 import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Site Utils');
