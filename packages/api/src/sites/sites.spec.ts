@@ -229,7 +229,7 @@ export const siteTests = () => {
       expect(rsp.body.length).toBe(1);
 
       expect(rsp.body[0]).toMatchObject(
-        omit(floridaSite, 'createdAt', 'updatedAt', 'sofarApiToken'),
+        omit(floridaSite, 'createdAt', 'updatedAt', 'spotterApiToken'),
       );
     });
 
@@ -248,7 +248,7 @@ export const siteTests = () => {
           'applied',
           'createdAt',
           'updatedAt',
-          'sofarApiToken',
+          'spotterApiToken',
         ),
       );
     });

@@ -23,7 +23,7 @@ export const getLiveData = async (
 
   const now = new Date();
 
-  const sofarToken = site.sofarApiToken || SOFAR_API_TOKEN;
+  const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
   const [spotterRawData, degreeHeatingDays, satelliteTemperature] =
     await Promise.all([
       sensorId && isDeployed ? getSpotterData(sensorId, sofarToken) : undefined,

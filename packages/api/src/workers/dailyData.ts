@@ -89,7 +89,7 @@ export async function getDailyData(
   const [NOAALongitude, NOAALatitude] = nearestNOAALocation
     ? (nearestNOAALocation as Point).coordinates
     : (polygon as Point).coordinates;
-  const sofarToken = site.sofarApiToken || SOFAR_API_TOKEN;
+  const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
 
   const [
     spotterRawData,

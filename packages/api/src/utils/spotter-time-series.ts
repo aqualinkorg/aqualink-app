@@ -161,7 +161,7 @@ export const addSpotterData = async (
             [],
           );
 
-          const sofarToken = site.sofarApiToken || SOFAR_API_TOKEN;
+          const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
           // Fetch spotter and wave data from sofar
           const spotterData = await getSpotterData(
             site.sensorId,

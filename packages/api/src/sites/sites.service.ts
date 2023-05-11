@@ -347,7 +347,7 @@ export class SitesService {
         position: undefined,
       };
 
-    const sofarToken = site.sofarApiToken || SOFAR_API_TOKEN;
+    const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
     const spotterRaw = await getSpotterData(sensorId, sofarToken);
     const spotterData = spotterRaw
       ? {
@@ -394,7 +394,7 @@ export class SitesService {
       endDate,
     );
 
-    const sofarToken = site.sofarApiToken || SOFAR_API_TOKEN;
+    const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
     const { topTemperature, bottomTemperature } = await getSpotterData(
       site.sensorId,
       sofarToken,

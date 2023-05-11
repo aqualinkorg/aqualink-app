@@ -176,11 +176,17 @@ export const collectionTests = () => {
           'applied',
           'createdAt',
           'updatedAt',
-          'sofarApiToken',
+          'spotterApiToken',
         ),
       );
       expect(sortedSites[1]).toMatchObject(
-        omit(floridaSite, 'applied', 'createdAt', 'updatedAt', 'sofarApiToken'),
+        omit(
+          floridaSite,
+          'applied',
+          'createdAt',
+          'updatedAt',
+          'spotterApiToken',
+        ),
       );
 
       const floridaLatestData = getLatestData(floridaTimeSeries);
@@ -225,7 +231,7 @@ export const collectionTests = () => {
 
     const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
     expect(sortedSites[0]).toMatchObject(
-      omit(athensSite, 'applied', 'createdAt', 'updatedAt', 'sofarApiToken'),
+      omit(athensSite, 'applied', 'createdAt', 'updatedAt', 'spotterApiToken'),
     );
     expect(sortedSites[1]).toMatchObject(
       omit(
@@ -233,11 +239,11 @@ export const collectionTests = () => {
         'applied',
         'createdAt',
         'updatedAt',
-        'sofarApiToken',
+        'spotterApiToken',
       ),
     );
     expect(sortedSites[2]).toMatchObject(
-      omit(floridaSite, 'applied', 'createdAt', 'updatedAt', 'sofarApiToken'),
+      omit(floridaSite, 'applied', 'createdAt', 'updatedAt', 'spotterApiToken'),
     );
 
     const athensLatestData = getLatestData(athensTimeSeries);

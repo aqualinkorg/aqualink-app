@@ -15,7 +15,7 @@ export async function checkBuoysStatus(connection: DataSource) {
 
   const sitesDeployedBuoy = await connection.getRepository(Site).find({
     where: { status: SiteStatus.Deployed },
-    select: { id: true, sensorId: true, sofarApiToken: true },
+    select: { id: true, sensorId: true, spotterApiToken: true },
   });
 
   const siteIds = sitesDeployedBuoy.map((x) => x.id);
@@ -62,7 +62,7 @@ export async function checkBuoysStatus(connection: DataSource) {
             .map(
               (x) =>
                 `site: ${x.id}, spotter: ${x.sensorId} ${
-                  x.sofarApiToken ? '(using private token)' : ''
+                  x.spotterApiToken ? '(using private token)' : ''
                 }\n`,
             )
             .join('')} have not received data for more than 2 days!`,

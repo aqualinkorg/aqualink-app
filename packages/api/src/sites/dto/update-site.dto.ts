@@ -81,5 +81,5 @@ export class UpdateSiteDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
-  readonly sofarApiToken?: string | null;
+  readonly spotterApiToken?: string | null;
 }

@@ -140,7 +140,7 @@ export class Site {
   @ApiHideProperty()
   @Exclude()
   @Column({ nullable: true, select: false, type: 'character varying' })
-  sofarApiToken?: string | null;
+  spotterApiToken?: string | null;
 
   hasHobo: boolean;
 

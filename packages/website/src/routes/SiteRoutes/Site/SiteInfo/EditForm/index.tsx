@@ -82,7 +82,7 @@ const EditForm = ({
     'maxLength',
   ]);
 
-  const [siteSofarApiToken, setSiteSofarApiToken] = useFormField(null, [
+  const [siteSpotterApiToken, setSiteSpotterApiToken] = useFormField(null, [
     'maxLength',
   ]);
 
@@ -93,11 +93,11 @@ const EditForm = ({
       siteLatitude.value &&
       siteLongitude.value
     ) {
-      const insertedTokenValue = siteSofarApiToken.value
-        ? siteSofarApiToken.value
+      const insertedTokenValue = siteSpotterApiToken.value
+        ? siteSpotterApiToken.value
         : undefined;
       const tokenValue = useDefaultToken ? null : insertedTokenValue;
-      const sofarApiToken = editToken ? tokenValue : undefined;
+      const spotterApiToken = editToken ? tokenValue : undefined;
       const updateParams: SiteUpdateParams = {
         coordinates: {
           latitude: parseFloat(siteLatitude.value),
@@ -106,7 +106,7 @@ const EditForm = ({
         name: siteName.value,
         depth: parseInt(siteDepth.value, 10),
         sensorId: siteSensorId.value,
-        sofarApiToken,
+        spotterApiToken,
       };
       onSubmit(updateParams);
     }
@@ -133,8 +133,8 @@ const EditForm = ({
       case 'spotterId':
         setSensorId(newValue);
         break;
-      case 'sofarApiToken':
-        setSiteSofarApiToken(newValue);
+      case 'spotterApiToken':
+        setSiteSpotterApiToken(newValue);
         break;
       default:
         break;
@@ -212,10 +212,10 @@ const EditForm = ({
               <Grid item sm={8} xs={8}>
                 <TextField
                   disabled={useDefaultToken}
-                  formField={siteSofarApiToken}
+                  formField={siteSpotterApiToken}
                   label="Spotter API token"
                   placeholder="Spotter API token"
-                  name="sofarApiToken"
+                  name="spotterApiToken"
                   onChange={onFieldChange}
                 />
               </Grid>

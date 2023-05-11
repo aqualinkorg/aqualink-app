@@ -15,7 +15,7 @@ enum SiteColumn {
   VIDEO_STREAM = 'video_stream',
   MAX_MONTHLY_MEAN = 'max_monthly_mean',
   DISPLAY = 'display',
-  SOFAR_API_TOKEN = 'sofarApiToken',
+  SOFAR_API_TOKEN = 'spotter_api_token',
 }
 
 @Entity()
