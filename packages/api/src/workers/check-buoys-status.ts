@@ -58,14 +58,14 @@ export async function checkBuoysStatus(connection: DataSource) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `Spotters of:\n${diffSites
+          text: `The following spotters have not sent data for more than 2 days!\n${diffSites
             .map(
               (x) =>
-                `site: ${x.id}, spotter: ${x.sensorId} ${
-                  x.spotterApiToken ? '(using private token)' : ''
-                }\n`,
+                `${x.sensorId} for <https://aqualink.org/sites/${x.id}|site ${
+                  x.id
+                }> ${x.spotterApiToken ? '(using private token)' : ''}\n`,
             )
-            .join('')} have not received data for more than 2 days!`,
+            .join('')}`,
         },
       },
     ],
