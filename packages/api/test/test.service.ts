@@ -37,9 +37,6 @@ export class TestService {
   private constructor() {}
 
   private async initializeApp() {
-    // eslint-disable-next-line no-extend-native
-    Date.prototype.getTimezoneOffset = jest.fn(() => 0);
-
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();

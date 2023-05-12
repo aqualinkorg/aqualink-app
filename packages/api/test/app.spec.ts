@@ -20,6 +20,10 @@ describe('AppController (e2e)', () => {
     app = await testService.getApp();
   });
 
+  it('timezone should always be UTC', () => {
+    expect(new Date().getTimezoneOffset()).toBe(0);
+  });
+
   it('App is defined', () => {
     expect(app).toBeDefined();
   });
