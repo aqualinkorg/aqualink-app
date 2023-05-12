@@ -15,7 +15,7 @@ export async function checkBuoysStatus(connection: DataSource) {
 
   const sitesDeployedBuoy = await connection.getRepository(Site).find({
     where: { status: SiteStatus.Deployed },
-    select: { id: true, sensorId: true, spotterApiToken: true },
+    select: { id: true, sensorId: true, spotterApiToken: true, name: true },
   });
 
   const siteIds = sitesDeployedBuoy.map((x) => x.id);
@@ -63,7 +63,9 @@ export async function checkBuoysStatus(connection: DataSource) {
               (x) =>
                 `${x.sensorId} for <https://aqualink.org/sites/${x.id}|site ${
                   x.id
-                }> ${x.spotterApiToken ? '(using private token)' : ''}\n`,
+                } ${x.name}> ${
+                  x.spotterApiToken ? '(using private token)' : ''
+                }\n`,
             )
             .join('')}`,
         },
