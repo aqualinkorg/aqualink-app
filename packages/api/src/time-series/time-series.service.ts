@@ -128,7 +128,7 @@ export class TimeSeriesService {
 
   async uploadData(
     surveyPointDataRangeDto: SurveyPointDataRangeDto,
-    sensor: SourceType,
+    sensor: SourceType = SourceType.SHEET_DATA,
     files: Express.Multer.File[],
     failOnWarning?: boolean,
   ) {
