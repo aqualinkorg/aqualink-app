@@ -5,9 +5,9 @@ import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { Sources } from '../sites/sources.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { Metric } from '../time-series/metrics.enum';
 
 export class CreateSite implements Seeder {
   public async run(factory: Factory) {

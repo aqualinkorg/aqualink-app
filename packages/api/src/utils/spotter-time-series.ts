@@ -7,7 +7,6 @@ import { distance } from '@turf/turf';
 import { Point } from 'geojson';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData } from './sofar';
 import {
@@ -20,6 +19,7 @@ import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
 import { getSources, refreshMaterializedView } from './time-series.utils';
 import { SOFAR_API_TOKEN } from './constants';
+import { Metric } from '../time-series/metrics.enum';
 
 const MAX_DISTANCE_FROM_SITE = 50;
 

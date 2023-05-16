@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { Sources } from '../sites/sources.entity';
-import { Metric } from './metrics.entity';
+import { Metric } from './metrics.enum';
 
 @Entity()
 @Unique('no_duplicate_data', ['metric', 'source', 'timestamp'])
