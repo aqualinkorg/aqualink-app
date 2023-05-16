@@ -114,7 +114,8 @@ export type Sources =
   | 'gfs'
   | 'sonde'
   | 'metlog'
-  | 'hui';
+  | 'hui'
+  | 'sheet_data';
 
 export type LatestDataASSofarValue = {
   [keys in Metrics]?: ValueWithTimestamp;
