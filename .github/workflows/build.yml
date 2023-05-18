@@ -30,7 +30,7 @@ jobs:
           key: v6-dependencies-${{ hashFiles('yarn.lock') }}
 
       - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '16.x'
 
@@ -64,6 +64,11 @@ jobs:
           path: node_modules
           key: v6-dependencies-${{ hashFiles('yarn.lock') }}
 
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
       - name: Run lint
         run: yarn lint:all
 
@@ -80,6 +85,11 @@ jobs:
         with:
           path: node_modules
           key: v6-dependencies-${{ hashFiles('yarn.lock') }}
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
 
       - name: Concatenate spec files
         run: find -wholename "./**/*.spec.ts" -exec cat "{}" + > /tmp/all-tests.spec.txt
@@ -100,6 +110,11 @@ jobs:
         with:
           path: node_modules
           key: v6-dependencies-${{ hashFiles('yarn.lock') }}
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
 
       - name: Install psql
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
@@ -139,6 +154,11 @@ jobs:
           path: node_modules
           key: v6-dependencies-${{ hashFiles('yarn.lock') }}
 
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
       - name: Build app
         run: yarn build
 
@@ -158,6 +178,11 @@ jobs:
         with:
           path: node_modules
           key: v6-dependencies-${{ hashFiles('yarn.lock') }}
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
 
       - name: Build website
         run: cd packages/website && yarn build
