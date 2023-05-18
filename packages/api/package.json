@@ -101,7 +101,6 @@
     "passport": "^0.6.0",
     "passport-custom": "^1.1.1",
     "pg": "^8.2.1",
-    "pg-native": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7",
     "sharp": "^0.30.6",

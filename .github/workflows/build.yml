@@ -33,7 +33,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
       - name: Install dependencies
-        run: yarn install --ignore-engines --frozen-lockfile --no-optional
+        run: yarn install --ignore-engines --frozen-lockfile --ignore-optional
 
       - name: Save dependencies cache
         uses: actions/cache@v2
