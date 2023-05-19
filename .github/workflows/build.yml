@@ -96,8 +96,8 @@ jobs:
     needs: build_dependencies
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      TEST_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+      TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
     services:
       postgres:
         image: kartoza/postgis:12.1
