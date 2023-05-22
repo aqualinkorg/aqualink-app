@@ -140,23 +140,6 @@
     "webpack-cli": "^3.3.12",
     "yargs": "^15.4.1"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": [
-      ".spec.ts$",
-      ".test.ts$"
-    ],
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
-  },
   "optionalDependencies": {
     "netcdf4": "https://github.com/parro-it/netcdf4"
   }
