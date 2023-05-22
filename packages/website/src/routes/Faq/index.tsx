@@ -218,8 +218,8 @@ const Faq = ({ classes }: FaqProps) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      HOBO data{' '}
-                    </a>
+                      HOBO data
+                    </a>{' '}
                     ,
                     <a
                       href="https://drive.google.com/file/d/1GA0xnbjB52bISo7iUJh84MQePcQ6M0nX/view?usp=share_link"
