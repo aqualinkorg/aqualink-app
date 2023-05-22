@@ -234,8 +234,8 @@ const Faq = ({ classes }: FaqProps) => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Sonde data{' '}
-                    </a>
+                      Sonde data
+                    </a>{' '}
                     ,
                     <a
                       href="https://drive.google.com/file/d/1nKos1AcZofr7kEJ5cNllkeonH0bWN9h-/view?usp=share_link"

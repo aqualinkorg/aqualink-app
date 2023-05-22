@@ -243,8 +243,8 @@ exports[`Faq should render with given state from Redux store 1`] = `
                   target="_blank"
                 >
                   Sonde data
-                   
                 </a>
+                 
                 ,
                 <a
                   href="https://drive.google.com/file/d/1nKos1AcZofr7kEJ5cNllkeonH0bWN9h-/view?usp=share_link"
