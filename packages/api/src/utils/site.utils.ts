@@ -169,14 +169,26 @@ export const excludeSpotterData = (
   );
 };
 
+/**
+ * Returns all columns from a Entity, including "select: false"
+ * @param repository The repository of the Entity
+ */
+export function getAllColumns<T>(repository: Repository<T>): (keyof T)[] {
+  return repository.metadata.columns.map(
+    (col) => col.propertyName,
+  ) as (keyof T)[];
+}
+
 export const getSite = async (
   siteId: number,
   siteRepository: Repository<Site>,
   relations?: string[],
+  includeAll: boolean = false,
 ) => {
   const site = await siteRepository.findOne({
     where: { id: siteId },
     relations,
+    ...(includeAll ? { select: getAllColumns(siteRepository) } : {}),
   });
 
   if (!site) {

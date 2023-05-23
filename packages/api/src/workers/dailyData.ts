@@ -41,7 +41,11 @@ import {
 } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import { filterMetricDataByDate, getExclusionDates } from '../utils/site.utils';
+import {
+  filterMetricDataByDate,
+  getAllColumns,
+  getExclusionDates,
+} from '../utils/site.utils';
 
 export async function getDegreeHeatingDays(
   latitude: number,
@@ -302,15 +306,16 @@ export async function getSitesDailyData(
   const siteRepository = dataSource.getRepository(Site);
   const dailyDataRepository = dataSource.getRepository(DailyData);
   const exclusionDatesRepository = dataSource.getRepository(ExclusionDates);
-  const allSites = await siteRepository.find(
-    siteIds && siteIds.length > 0
+  const allSites = await siteRepository.find({
+    ...(siteIds && siteIds.length > 0
       ? {
           where: {
             id: In(siteIds),
           },
         }
-      : {},
-  );
+      : {}),
+    select: getAllColumns(siteRepository),
+  });
   const start = new Date();
   console.log(
     `Updating ${allSites.length} sites for ${endOfDate.toDateString()}.`,

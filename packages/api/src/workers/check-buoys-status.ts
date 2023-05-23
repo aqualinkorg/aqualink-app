@@ -15,7 +15,7 @@ export async function checkBuoysStatus(connection: DataSource) {
 
   const sitesDeployedBuoy = await connection.getRepository(Site).find({
     where: { status: SiteStatus.Deployed },
-    select: { id: true, sensorId: true, spotterApiToken: true, name: true },
+    select: ['id', 'sensorId', 'spotterApiToken', 'name'],
   });
 
   const siteIds = sitesDeployedBuoy.map((x) => x.id);

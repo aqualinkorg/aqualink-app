@@ -3,7 +3,7 @@ import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { isNil } from 'lodash';
 import moment from 'moment';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Site } from '../sites/sites.entity';
 import { ForecastData } from '../wind-wave-data/forecast-data.entity';
@@ -13,7 +13,6 @@ import { getWindDirection, getWindSpeed } from './math';
 import { sofarHindcast } from './sofar';
 import { getSofarNearestAvailablePoint } from './sofar-availability';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
-import { getSites } from './spotter-time-series';
 
 const logger = new Logger('hindcastWindWaveData');
 
@@ -50,7 +49,11 @@ export const addWindWaveData = async (
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, false, repositories.siteRepository);
+  const sites = await repositories.siteRepository.find({
+    where: {
+      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
+    },
+  });
 
   const date = new Date();
   const yesterdayDate = new Date(date);

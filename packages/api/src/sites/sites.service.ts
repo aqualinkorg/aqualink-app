@@ -303,9 +303,12 @@ export class SitesService {
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
-    const site = await getSite(id, this.sitesRepository, [
-      'historicalMonthlyMean',
-    ]);
+    const site = await getSite(
+      id,
+      this.sitesRepository,
+      ['historicalMonthlyMean'],
+      true,
+    );
 
     const now = new Date();
 
@@ -334,9 +337,12 @@ export class SitesService {
   }
 
   async findSpotterPosition(id: number) {
-    const site = await getSite(id, this.sitesRepository, [
-      'historicalMonthlyMean',
-    ]);
+    const site = await getSite(
+      id,
+      this.sitesRepository,
+      ['historicalMonthlyMean'],
+      true,
+    );
     const isDeployed = site.status === SiteStatus.Deployed;
 
     const { sensorId } = site;
@@ -380,7 +386,7 @@ export class SitesService {
   }
 
   async getSpotterData(id: number, start?: string, end?: string) {
-    const site = await getSite(id, this.sitesRepository);
+    const site = await getSite(id, this.sitesRepository, undefined, true);
     const { startDate, endDate } = getTimeSeriesDefaultDates(start, end);
 
     if (!site.sensorId) {

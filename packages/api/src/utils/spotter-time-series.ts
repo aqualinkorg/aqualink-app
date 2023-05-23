@@ -33,26 +33,6 @@ interface Repositories {
 const logger = new Logger('SpotterTimeSeries');
 
 /**
- * Fetches all sites with where id is included in the siteIds array and has sensorId
- * If an empty array of siteIds is given then all sites with sensors are returned
- * @param siteIds The requested siteIds
- * @param siteRepository The required repository to make the query
- * @returns An array of site entities
- */
-export const getSites = (
-  siteIds: number[],
-  hasSensorOnly: boolean = false,
-  siteRepository: Repository<Site>,
-) => {
-  return siteRepository.find({
-    where: {
-      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
-      ...(hasSensorOnly ? { sensorId: Not(IsNull()) } : {}),
-    },
-  });
-};
-
-/**
  * Fetches the exclusion dates for the selected sources.
  * @param sources The selected sources
  * @param exclusionDatesRepository The necessary repository to perform the query
@@ -114,7 +94,13 @@ export const addSpotterData = async (
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, true, repositories.siteRepository);
+  const sites = await repositories.siteRepository.find({
+    where: {
+      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
+      sensorId: Not(IsNull()),
+    },
+    select: ['id', 'sensorId', 'spotterApiToken', 'polygon'],
+  });
 
   logger.log('Fetching sources');
   // Fetch sources
