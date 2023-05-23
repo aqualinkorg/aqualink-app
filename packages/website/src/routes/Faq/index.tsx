@@ -107,7 +107,7 @@ const Faq = ({ classes }: FaqProps) => {
                     session.
                     <br />
                     <br />
-                    Watch this video on how to upload surveys and best practices.
+                    Watch this video on how to upload surveys and best practices. 
                     <a
                       href="https://youtu.be/ov64mc2Da_k"
                       target="_blank"
@@ -146,7 +146,7 @@ const Faq = ({ classes }: FaqProps) => {
                     If your survey method is taking pictures of corals in known locations, for
                     example, we recommend that you take the image from the exact same angles
                     and distance. This provides the best comparison between survey sessions.
-                    One good example of this is:
+                    One good example of this is: 
                     <a
                       href="https://aqualink.org/sites/2943/points/558"
                       target="_blank"
@@ -208,21 +208,21 @@ const Faq = ({ classes }: FaqProps) => {
                       rel="noopener noreferrer"
                     >
                       HOBO data</a
-                    >,
+                    >, 
                     <a
                       href="https://drive.google.com/file/d/1GA0xnbjB52bISo7iUJh84MQePcQ6M0nX/view?usp=share_link"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       meteorological data</a
-                    >,
+                    >, 
                     <a
                       href="https://docs.google.com/spreadsheets/d/1C1oqhLKE-6vhx5n6XGV2O8JtDs7ZVEdl/edit?usp=share_link&ouid=101543162312822485121&rtpof=true&sd=true"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       Sonde data</a
-                    >,
+                    >, 
                     <a
                       href="https://drive.google.com/file/d/1nKos1AcZofr7kEJ5cNllkeonH0bWN9h-/view?usp=share_link"
                       target="_blank"
@@ -243,14 +243,14 @@ const Faq = ({ classes }: FaqProps) => {
                     sensor type. If you are using a HOBO temperature logger, you can upload
                     the raw data file. If you're using any other type of temperature logger,
                     add a column for time and date and another column for temperature. Please
-                    use this
+                    use this 
                     <a
                       href="https://docs.google.com/spreadsheets/d/17txhvReJynwC3V9TmQeUJ6dWGTk3jjgs/edit?usp=share_link&ouid=101543162312822485121&rtpof=true&sd=true"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       template</a
-                    >, and watch this
+                    >, and watch this 
                     <a
                       href="https://youtu.be/6wiRd6UFhE4"
                       target="_blank"
@@ -258,7 +258,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       video tutorial</a
                     >
-                    on how to upload temperature data.
+                     on how to upload temperature data.
                   </p>
                 </div>
               </div>
