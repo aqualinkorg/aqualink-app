@@ -25,6 +25,9 @@ export const functionsConfig = {
   database: {
     url: process.env.DATABASE_URL,
   },
+  general: {
+    deploy_env: process.env.DEPLOY_ENV,
+  },
 };
 
 const stringifiedConfigsBySection = Object.entries(functionsConfig)

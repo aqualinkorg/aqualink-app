@@ -149,11 +149,12 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+    const isNotProd = functions.config().general.deploy_env !== 'prod';
 
     await runWithDataSource(
       'scheduledSpotterTimeSeriesUpdate',
       async (conn: DataSource) => {
-        await runSpotterTimeSeriesUpdate(conn);
+        await runSpotterTimeSeriesUpdate(conn, isNotProd);
         console.log(`Spotter data hourly update on ${new Date()}`);
       },
     );
