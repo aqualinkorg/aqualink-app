@@ -8,7 +8,7 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "main": "main.js",
   "dependencies": {

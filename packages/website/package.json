@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cross-env EXTEND_ESLINT=true GENERATE_SOURCEMAP=false BROWSER=none react-scripts start",
-    "build": "cross-env EXTEND_ESLINT=true react-scripts build",
+    "start": "cross-env EXTEND_ESLINT=true GENERATE_SOURCEMAP=false react-scripts start",
+    "build": "cross-env EXTEND_ESLINT=true GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts --expose-gc test --logHeapUsage --maxWorkers=2",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore --max-warnings 0",
@@ -83,7 +83,7 @@
     ]
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.27",
@@ -91,7 +91,7 @@
     "@types/immutable": "^3.8.7",
     "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.149",
-    "@types/node": "^12.0.0",
+    "@types/node": "^20.2.3",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-leaflet": "^2.5.1",
