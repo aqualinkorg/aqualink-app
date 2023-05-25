@@ -11,7 +11,7 @@ test('renders as expected', () => {
 
   const { container } = render(
     <Router>
-      <Waves data={data} hasSpotter />
+      <Waves data={data} hasSpotter={false} />
     </Router>,
   );
   expect(container).toMatchSnapshot();

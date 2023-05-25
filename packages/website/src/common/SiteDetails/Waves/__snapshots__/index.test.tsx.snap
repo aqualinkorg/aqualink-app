@@ -9,7 +9,7 @@ exports[`renders as expected 1`] = `
       classname="makeStyles-contentWrapper-12"
     >
       <div
-        class="MuiGrid-root makeStyles-content-13 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+        class="MuiGrid-root makeStyles-content-13 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
       >
         <div
           class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -102,7 +102,7 @@ exports[`renders as expected 1`] = `
           />
         </div>
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
@@ -191,13 +191,13 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-updateInfo-19 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+          class="MuiGrid-root makeStyles-updateInfo-19 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
         >
           <div
             class="MuiGrid-root makeStyles-dateInfoWrapper-23 makeStyles-dateInfoWrapper-25 MuiGrid-item MuiGrid-grid-xs-8"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
             >
               <div
                 class="MuiGrid-root MuiGrid-item"
@@ -247,7 +247,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root makeStyles-chip-26 makeStyles-chip-32 MuiGrid-item"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
               >
                 <mock-button
                   classname="makeStyles-button-31"

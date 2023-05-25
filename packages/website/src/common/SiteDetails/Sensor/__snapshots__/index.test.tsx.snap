@@ -87,7 +87,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
         />
       </div>
       <div
-        class="MuiGrid-root Sensor-noSensorAlert-11 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+        class="MuiGrid-root Sensor-noSensorAlert-11 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
       >
         <mock-typography
           variant="h6"
