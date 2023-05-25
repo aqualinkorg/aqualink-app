@@ -21,7 +21,10 @@ function getEntityImports() {
           .join('');
         return {
           names: [...names, entityName],
-          importsString: `${importsString}import * as ${entityName} from '${entityPath}';\n`,
+          importsString: `${importsString}import * as ${entityName} from '${entityPath.slice(
+            0,
+            -3,
+          )}';\n`,
         };
       },
       { names: [], importsString: '' },

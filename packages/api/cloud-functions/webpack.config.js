@@ -1,11 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+const nodeExternals = require('webpack-node-externals');
 
 const lazyImports = [
   '@nestjs/microservices',
   '@nestjs/microservices/microservices-module',
   '@nestjs/websockets/socket-module',
   '@nestjs/platform-express',
+  'class-transformer/storage',
 ];
 
 module.exports = {
@@ -32,14 +34,12 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     libraryTarget: 'commonjs',
   },
-  externals: {
-    'firebase-admin': 'firebase-admin',
-    'firebase-functions': 'firebase-functions',
-    'cache-manager': 'cache-manager',
-  },
-  optimization: {
-    minimize: false,
-  },
+  externals: [
+    nodeExternals(),
+    'firebase-functions',
+    'firebase-admin',
+    'cache-manager',
+  ],
   plugins: [
     new webpack.IgnorePlugin({
       checkResource(resource) {
@@ -52,6 +52,9 @@ module.exports = {
         }
         return false;
       },
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^pg-native$|^cloudflare:sockets$/,
     }),
   ],
 };

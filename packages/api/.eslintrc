@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["**/db_data/**"],
+  "ignorePatterns": ["**/db_data/**", "**/node_modules/**", "**/dist/**"],
   "rules": {
     "no-useless-constructor": "off",
     "no-empty-function": ["error", { "allow": ["constructors"] }],

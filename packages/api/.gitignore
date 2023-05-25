@@ -21,6 +21,7 @@
 
 # Firebase Cloud Functions Generated files
 cloud-functions/dist/*.js
+cloud-functions/dist/*.txt
 
 # Google Cloud Storage Congig
 gcloud.json*
