@@ -27,7 +27,6 @@ const StatusSnackbar = ({
         variant="filled"
         onClose={handleClose}
         severity={severity}
-        classes={{ message: classes.alertMessage }}
       >
         {message}
         {furtherActionLabel && onFurtherActionTake && (
@@ -54,11 +53,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   alert: {
     alignItems: 'center',
   },
-  alertMessage: (hasMessage: boolean) => ({
-    display: 'flex',
-    alignItems: 'center',
-    ...(hasMessage ? { padding: 0 } : {}),
-  }),
   button: {
     marginLeft: theme.spacing(1.5),
   },

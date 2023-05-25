@@ -200,7 +200,7 @@ const SliderCard = ({
                   <Grid item xs={2}>
                     <IconButton
                       className={classes.featuredIcon}
-                      onClick={onSave}
+                      onClick={() => onSave()}
                     >
                       <SaveIcon color="primary" />
                     </IconButton>
@@ -210,7 +210,7 @@ const SliderCard = ({
                   {editing ? (
                     <IconButton
                       className={classes.featuredIcon}
-                      onClick={onClose}
+                      onClick={() => onClose()}
                     >
                       <CancelIcon color="secondary" />
                     </IconButton>

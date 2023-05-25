@@ -199,7 +199,7 @@ const Apply = ({ classes }: ApplyProps) => {
                 <LocationMap
                   markerPositionLat={formModel.get('lat', '') as string}
                   markerPositionLng={formModel.get('lng', '') as string}
-                  updateMarkerPosition={updateMarkerPosition}
+                  updateMarkerPosition={(p) => updateMarkerPosition(p)}
                 />
               </Grid>
 
@@ -287,7 +287,7 @@ const Apply = ({ classes }: ApplyProps) => {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                onClick={handleFormSubmission}
+                                onClick={() => handleFormSubmission()}
                               >
                                 {submitLoading ? 'Saving...' : 'Submit'}
                               </Button>

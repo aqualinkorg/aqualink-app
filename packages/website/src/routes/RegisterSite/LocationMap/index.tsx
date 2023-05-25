@@ -49,7 +49,7 @@ const LocationMap = ({
       center={markerPosition}
       zoom={zoom}
       className={classes.map}
-      onclick={updateLatLng}
+      onclick={(e) => updateLatLng(e)}
       onzoomend={onZoomEnd}
       maxBounds={mapConstants.MAX_BOUNDS}
       maxBoundsViscosity={1.0}

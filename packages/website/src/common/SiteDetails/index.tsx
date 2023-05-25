@@ -276,6 +276,8 @@ const SiteDetails = ({
         spacing={2}
       >
         {cards.map((Component, index) => (
+          // TODO: FIX THIS
+          // eslint-disable-next-line react/no-array-index-key
           <Grid key={index.toString()} item xs={12} sm={6} md={3}>
             <div className={classes.card}>
               <LoadingSkeleton
