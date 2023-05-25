@@ -11,11 +11,11 @@ on:
 jobs:
   build_dependencies:
     name: Build dependencies
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
@@ -38,7 +38,7 @@ jobs:
 
   website_test_build_and_deploy:
     needs: build_dependencies
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       REACT_APP_MAPBOX_ACCESS_TOKEN: ${{ secrets.REACT_APP_MAPBOX_ACCESS_TOKEN }}
       REACT_APP_SOFAR_API_TOKEN: ${{ secrets.REACT_APP_SOFAR_API_TOKEN }}
@@ -49,7 +49,7 @@ jobs:
       REACT_APP_FEATURED_SITE_ID: ${{ vars.REACT_APP_FEATURED_SITE_ID }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
@@ -67,16 +67,19 @@ jobs:
 
       - name: Run website lint
         if: success() || failure()
-        run: cd packages/website && yarn lint
+        working-directory: packages/website
+        run: yarn lint
 
       - name: Run website tests
         if: success() || failure()
-        run: cd packages/website && yarn test
+        working-directory: packages/website
+        run: yarn test
 
       - name: Build website
         id: build_website
         if: success() || failure()
-        run: cd packages/website && yarn build
+        working-directory: packages/website
+        run: yarn build
 
       - name: Deploy on surge
         if: steps.build_website.outcome == 'success'
@@ -100,7 +103,7 @@ jobs:
   
   api_test_and_build:
     needs: build_dependencies
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
       TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
@@ -124,7 +127,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
@@ -142,19 +145,21 @@ jobs:
 
       - name: Run API lint
         if: success() || failure()
-        run: cd packages/api && yarn lint
+        working-directory: packages/api
+        run: yarn lint
       
       - name: Build API
         if: success() || failure()
-        run: cd packages/api && yarn build
+        working-directory: packages/api
+        run: yarn build
 
       - name: Run database migrations
         id: migrations
         if: success() || failure()
-        run: cd packages/api && yarn migration:run
+        working-directory: packages/api
+        run: yarn migration:run
 
       - name: Run API tests
         if: steps.migrations.outcome == 'success'
-        run: cd packages/api && yarn test
-
-  
+        working-directory: packages/api
+        run: yarn test

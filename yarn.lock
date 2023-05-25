@@ -8062,13 +8062,6 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-circleci-pr-commenter@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/circleci-pr-commenter/-/circleci-pr-commenter-0.1.2.tgz#e473ac5fa7a8ba2a31e8f7a98d47b2a61a4427ca"
-  integrity sha512-u+AY2sd1gyc31HS+ezIBFhggSdC0V8FEzAUf2/CSFkoFWA9QbfDshfaIDPzBm14laxZRk8gVVrdVr8aHj1DUBg==
-  dependencies:
-    gh-got "^8.1.0"
-
 cjs-module-lexer@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/cjs-module-lexer/-/cjs-module-lexer-0.6.0.tgz#4186fcca0eae175970aee870b9fe2d6cf8d5655f"
@@ -12009,13 +12002,6 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-gh-got@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/gh-got/-/gh-got-8.1.0.tgz#2378d07ac293f524549c75f8dc6f3604a885ab01"
-  integrity sha512-Jy7+73XqsAVeAtM5zA0dd+A7mmzkQVIzFuw3xRjFbPsQVqS+aeci8v8H1heOCAPlBYWED5ZYPhlYqZVXdD3Fmg==
-  dependencies:
-    got "^9.5.0"
-
 git-raw-commits@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/git-raw-commits/-/git-raw-commits-2.0.0.tgz#d92addf74440c14bcc5c83ecce3fb7f8a79118b5"
@@ -12379,7 +12365,7 @@ google-p12-pem@^4.0.0:
   dependencies:
     node-forge "^1.3.1"
 
-got@^9.5.0, got@^9.6.0:
+got@^9.6.0:
   version "9.6.0"
   resolved "https://registry.yarnpkg.com/got/-/got-9.6.0.tgz#edf45e7d67f99545705de1f7bbeeeb121765ed85"
   integrity sha512-R7eWptXuGYxwijs0eV+v3o6+XH1IqVK8dJOEecQfTmkncw9AV4dcw/Dhxi8MdlqPthxxpZyizMzyg8RTmEsG+Q==
