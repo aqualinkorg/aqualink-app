@@ -149,12 +149,15 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
-    const isNotProd = functions.config().general.deploy_env !== 'prod';
+    // Spotter data will not be saved in time-series,
+    // if the spotter is over a threshold far from it's site.
+    // We still want to save these data to stage/development environments, so we skip this check.
+    const skipDistanceCheck = functions.config().general.deploy_env !== 'prod';
 
     await runWithDataSource(
       'scheduledSpotterTimeSeriesUpdate',
       async (conn: DataSource) => {
-        await runSpotterTimeSeriesUpdate(conn, isNotProd);
+        await runSpotterTimeSeriesUpdate(conn, skipDistanceCheck);
         console.log(`Spotter data hourly update on ${new Date()}`);
       },
     );
