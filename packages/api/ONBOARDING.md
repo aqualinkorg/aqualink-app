@@ -151,6 +151,7 @@ The rest of the scripts are used to either augment the models with missing data 
   - Make sure that the `sitesToProcess` array is populated with the desired siteIds to process, before running the script
 - Wind-wave data: Update hindcast data in `forecast_data` table
   - `yarn update-wind-wave-date [-s siteId1 siteId2 ...]`
+- `fill-noaa-nearest-point` requires optional dependency `netcdf4` to run. You may have trouble installing it with python versions at or above `3.11`. `Python 3.10.6` is tested to build the package successfully.
 
 ### Swagger API docs
 
