@@ -40,22 +40,24 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies if needed.
+        id: install
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn install --ignore-engines --frozen-lockfile
 
       - name: Run website lint
+        if: success() || steps.install.conclusion == 'skipped'
         working-directory: packages/website
         run: yarn lint
 
       - name: Run website tests
-        if: success() || failure()
+        if: success() || steps.install.conclusion == 'skipped'
         working-directory: packages/website
         run: yarn test
 
       - name: Build website
         id: build_website
-        if: success() || failure()
+        if: success() || steps.install.conclusion == 'skipped'
         working-directory: packages/website
         run: yarn build
 
