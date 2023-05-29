@@ -152,7 +152,9 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
     // Spotter data will not be saved in time-series,
     // if the spotter is over a threshold far from it's site.
     // We still want to save these data to stage/development environments, so we skip this check.
-    const skipDistanceCheck = functions.config().general.deploy_env !== 'prod';
+    const skipDistanceCheck = functions
+      .config()
+      .api.base_url.includes('ocean-systems');
 
     await runWithDataSource(
       'scheduledSpotterTimeSeriesUpdate',
