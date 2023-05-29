@@ -45,7 +45,6 @@ jobs:
           yarn install --ignore-engines --frozen-lockfile
 
       - name: Run website lint
-        if: success() || failure()
         working-directory: packages/website
         run: yarn lint
 
