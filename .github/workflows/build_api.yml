@@ -52,22 +52,24 @@ jobs:
             ${{ runner.os }}-yarn-
       
       - name: Install dependencies if needed.
+        id: install
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn install --ignore-engines --frozen-lockfile
 
       - name: Run API lint
+        if: success() || steps.install.conclusion == 'skipped'
         working-directory: packages/api
         run: yarn lint
       
       - name: Build API
-        if: success() || failure()
+        if: success() || steps.install.conclusion == 'skipped'
         working-directory: packages/api
         run: yarn build
 
       - name: Run database migrations
         id: migrations
-        if: success() || failure()
+        if: success() || steps.install.conclusion == 'skipped'
         working-directory: packages/api
         run: yarn migration:run
 
