@@ -63,13 +63,13 @@ jobs:
         run: yarn lint
       
       - name: Build API
-        if: success() || steps.install.conclusion == 'skipped'
+        if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
         working-directory: packages/api
         run: yarn build
 
       - name: Run database migrations
         id: migrations
-        if: success() || steps.install.conclusion == 'skipped'
+        if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
         working-directory: packages/api
         run: yarn migration:run
 

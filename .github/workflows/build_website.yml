@@ -51,13 +51,13 @@ jobs:
         run: yarn lint
 
       - name: Run website tests
-        if: success() || steps.install.conclusion == 'skipped'
+        if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
         working-directory: packages/website
         run: yarn test
 
       - name: Build website
         id: build_website
-        if: success() || steps.install.conclusion == 'skipped'
+        if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
         working-directory: packages/website
         run: yarn build
 
