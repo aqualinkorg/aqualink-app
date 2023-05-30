@@ -1,4 +1,4 @@
-import { SofarModels, sofarVariableIDs } from './constants';
+import { SofarModels, sofarVariableIDs, SOFAR_API_TOKEN } from './constants';
 import { getSofarHindcastData, getSpotterData, sofarHindcast } from './sofar';
 import { ValueWithTimestamp } from './sofar.types';
 
@@ -21,6 +21,7 @@ test('It processes Sofar Spotter API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSpotterData(
     'SPOT-300434063450120',
+    SOFAR_API_TOKEN,
     new Date('2020-09-02'),
   );
 

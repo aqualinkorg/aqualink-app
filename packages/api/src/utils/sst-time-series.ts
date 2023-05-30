@@ -15,10 +15,10 @@ import {
   insertSiteDataToTimeSeries,
   refreshMaterializedView,
 } from './time-series.utils';
-import { Metric } from '../time-series/metrics.entity';
 import { calculateAlertLevel } from './bleachingAlert';
 import { getSstAnomaly } from './liveData';
 import { ValueWithTimestamp } from './sofar.types';
+import { Metric } from '../time-series/metrics.enum';
 
 const MAX_SOFAR_DATE_DIFF_DAYS = 7;
 

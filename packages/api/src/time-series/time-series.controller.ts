@@ -19,7 +19,6 @@ import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
-import { Metric } from './metrics.entity';
 import { TimeSeriesService } from './time-series.service';
 import { SurveyPointDataRangeDto } from './dto/survey-point-data-range.dto';
 import { SiteDataRangeDto } from './dto/site-data-range.dto';
@@ -34,6 +33,7 @@ import { Auth } from '../auth/auth.decorator';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { fileFilter } from '../utils/uploads/upload-sheet-data';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
+import { Metric } from './metrics.enum';
 
 const MAX_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;

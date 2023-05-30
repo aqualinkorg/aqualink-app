@@ -53,7 +53,11 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
-import { SLACK_BOT_CHANNEL, SLACK_BOT_TOKEN } from '../utils/constants';
+import {
+  SLACK_BOT_CHANNEL,
+  SLACK_BOT_TOKEN,
+  SOFAR_API_TOKEN,
+} from '../utils/constants';
 
 @Injectable()
 export class SitesService {
@@ -299,9 +303,12 @@ export class SitesService {
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
-    const site = await getSite(id, this.sitesRepository, [
-      'historicalMonthlyMean',
-    ]);
+    const site = await getSite(
+      id,
+      this.sitesRepository,
+      ['historicalMonthlyMean'],
+      true,
+    );
 
     const now = new Date();
 
@@ -330,9 +337,12 @@ export class SitesService {
   }
 
   async findSpotterPosition(id: number) {
-    const site = await getSite(id, this.sitesRepository, [
-      'historicalMonthlyMean',
-    ]);
+    const site = await getSite(
+      id,
+      this.sitesRepository,
+      ['historicalMonthlyMean'],
+      true,
+    );
     const isDeployed = site.status === SiteStatus.Deployed;
 
     const { sensorId } = site;
@@ -343,7 +353,8 @@ export class SitesService {
         position: undefined,
       };
 
-    const spotterRaw = await getSpotterData(sensorId);
+    const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
+    const spotterRaw = await getSpotterData(sensorId, sofarToken);
     const spotterData = spotterRaw
       ? {
           longitude:
@@ -375,7 +386,7 @@ export class SitesService {
   }
 
   async getSpotterData(id: number, start?: string, end?: string) {
-    const site = await getSite(id, this.sitesRepository);
+    const site = await getSite(id, this.sitesRepository, undefined, true);
     const { startDate, endDate } = getTimeSeriesDefaultDates(start, end);
 
     if (!site.sensorId) {
@@ -389,8 +400,10 @@ export class SitesService {
       endDate,
     );
 
+    const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
     const { topTemperature, bottomTemperature } = await getSpotterData(
       site.sensorId,
+      sofarToken,
       endDate,
       startDate,
     );

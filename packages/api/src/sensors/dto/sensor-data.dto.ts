@@ -1,6 +1,6 @@
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { TimeSeriesPoint } from '../../time-series/dto/time-series-point.dto';
-import { Metric } from '../../time-series/metrics.entity';
+import { Metric } from '../../time-series/metrics.enum';
 import { KeysToCamelCase } from '../../utils/type-utils';
 
 type MetricAsCamelcase = KeysToCamelCase<Record<Metric, TimeSeriesPoint>>;

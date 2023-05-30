@@ -250,6 +250,7 @@ const selectedSiteSlice = createSlice({
             ...state.details,
             name: action.payload.name || state.details.name,
             depth: action.payload.depth || state.details.depth,
+            sensorId: action.payload.sensorId || state.details.sensorId,
             polygon:
               state.details.polygon.type === 'Point'
                 ? {

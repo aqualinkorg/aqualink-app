@@ -20,10 +20,10 @@ import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { getHistoricalMonthlyMeans, getMMM } from './temperature';
 import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Site Utils');
@@ -169,14 +169,26 @@ export const excludeSpotterData = (
   );
 };
 
+/**
+ * Returns all columns from a Entity, including "select: false"
+ * @param repository The repository of the Entity
+ */
+export function getAllColumns<T>(repository: Repository<T>): (keyof T)[] {
+  return repository.metadata.columns.map(
+    (col) => col.propertyName,
+  ) as (keyof T)[];
+}
+
 export const getSite = async (
   siteId: number,
   siteRepository: Repository<Site>,
   relations?: string[],
+  includeAll: boolean = false,
 ) => {
   const site = await siteRepository.findOne({
     where: { id: siteId },
     relations,
+    ...(includeAll ? { select: getAllColumns(siteRepository) } : {}),
   });
 
   if (!site) {
