@@ -1,6 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
 export enum Metric {
   // Default Metrics
   ALERT = 'temp_alert',
@@ -48,29 +45,4 @@ export enum Metric {
   SILICATE = 'silicate',
   NNN = 'nitrate_plus_nitrite',
   AMMONIUM = 'ammonium',
-}
-
-export enum Units {
-  CELSIUS = 'celsius',
-  METERS = 'm',
-  METERS_PER_SECOND = 'm/s',
-  DHW = 'dhw',
-  HPA = 'hPa',
-}
-
-@Entity()
-export class Metrics {
-  @ApiProperty({ example: 1 })
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ type: 'enum', enum: Metric, nullable: false })
-  metric: Metric;
-
-  @ApiProperty({ example: 'Metric Description' })
-  @Column({ nullable: true })
-  description: string;
-
-  @Column({ type: 'enum', enum: Units, nullable: true })
-  units: Units;
 }
