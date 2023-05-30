@@ -150,8 +150,8 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
     // Spotter data will not be saved in time-series,
-    // if the spotter is over a threshold far from it's site.
-    // We still want to save these data to stage/development environments, so we skip this check.
+    // if the spotter is too far from it's site.
+    // This check is skipped for staging and test environments.
     const skipDistanceCheck = functions
       .config()
       .api.base_url.includes('ocean-systems');
