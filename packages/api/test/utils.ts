@@ -63,7 +63,7 @@ export const mockGetSpotterData = () => {
   jest
     .spyOn(sofarUtils, 'getSpotterData')
     .mockImplementationOnce(
-      (sensorId: string, endDate?: Date, startDate?: Date) =>
+      (sensorId: string, token?: string, endDate?: Date, startDate?: Date) =>
         Promise.resolve(getMockSpotterData(startDate!, endDate!)),
     );
 };

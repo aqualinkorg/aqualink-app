@@ -332,6 +332,8 @@ export interface SiteUpdateParams {
   };
   name?: string;
   depth?: number;
+  sensorId?: string;
+  spotterApiToken?: string | null;
 }
 
 export interface SiteApplication {

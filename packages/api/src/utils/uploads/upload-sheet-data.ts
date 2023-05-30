@@ -19,7 +19,6 @@ import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { Site } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
-import { Metric } from '../../time-series/metrics.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
 import { Sources } from '../../sites/sources.entity';
 import { SourceType } from '../../sites/schemas/source-type.enum';
@@ -28,6 +27,7 @@ import { getSite } from '../site.utils';
 import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 import { getBarometricDiff } from '../sofar';
 import { refreshMaterializedView } from '../time-series.utils';
+import { Metric } from '../../time-series/metrics.enum';
 
 interface Repositories {
   siteRepository: Repository<Site>;

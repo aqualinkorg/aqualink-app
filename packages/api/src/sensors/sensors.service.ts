@@ -6,9 +6,8 @@ import { GeoJSON, Point } from 'geojson';
 import { IsNull, Not, Repository } from 'typeorm';
 import { Site, SensorType } from '../sites/sites.entity';
 import { Survey } from '../surveys/surveys.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { getSiteFromSensorId } from '../utils/site.utils';
+import { getAllColumns, getSiteFromSensorId } from '../utils/site.utils';
 import { getSpotterData, getLatestData } from '../utils/sofar';
 import { createPoint } from '../utils/coordinates';
 import { SpotterData } from '../utils/sofar.types';
@@ -21,6 +20,8 @@ import { DailyData } from '../sites/daily-data.entity';
 import { Sources } from '../sites/sources.entity';
 import { SensorDataDto } from './dto/sensor-data.dto';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { SOFAR_API_TOKEN } from '../utils/constants';
+import { Metric } from '../time-series/metrics.enum';
 
 @Injectable()
 export class SensorsService {
@@ -46,6 +47,7 @@ export class SensorsService {
   > {
     const sites = await this.siteRepository.find({
       where: { sensorId: Not(IsNull()) },
+      select: getAllColumns(this.siteRepository),
     });
 
     // Get spotter data and add site id to distinguish them
@@ -55,7 +57,8 @@ export class SensorsService {
         if (site.sensorId === null) {
           console.warn(`Spotter for site ${site.id} appears null.`);
         }
-        return getSpotterData(site.sensorId!).then((data) => {
+        const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
+        return getSpotterData(site.sensorId!, sofarToken).then((data) => {
           return {
             id: site.id,
             ...data,
@@ -76,9 +79,11 @@ export class SensorsService {
       const latitude = getLatestData(data.latitude)?.value;
       const sitePosition = site.polygon as Point;
 
+      const { spotterApiToken, ...rest } = site;
+
       // If no longitude or latitude is provided by the spotter fallback to the site coordinates
       return {
-        ...site,
+        ...rest,
         applied: site.applied,
         sensorPosition: createPoint(
           longitude || sitePosition.coordinates[0],

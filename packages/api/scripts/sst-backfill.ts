@@ -12,8 +12,8 @@ import {
   refreshMaterializedView,
 } from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
-import { Metric } from '../src/time-series/metrics.entity';
 import AqualinkDataSource from '../ormconfig';
+import { Metric } from '../src/time-series/metrics.enum';
 
 // Sites and years to backfill SST for
 const yearsArray = [2017, 2018, 2019, 2020, 2021, 2022];

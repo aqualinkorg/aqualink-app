@@ -5,11 +5,15 @@ import moment from 'moment';
 import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {
+  SLACK_BOT_CHANNEL,
+  SLACK_BOT_TOKEN,
+  SOFAR_API_TOKEN,
   SOFAR_MARINE_URL,
   SOFAR_SENSOR_DATA_URL,
   SOFAR_WAVE_DATA_URL,
 } from './constants';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
+import { sendSlackMessage, SlackMessage } from './slack.utils';
 
 export const getLatestData = (
   sofarValues: ValueWithTimestamp[] | undefined,
@@ -67,7 +71,7 @@ export async function sofarHindcast(
         longitude,
         start,
         end,
-        token: process.env.SOFAR_API_TOKEN,
+        token: SOFAR_API_TOKEN,
       },
     })
     .then((response) => {
@@ -93,29 +97,47 @@ export async function sofarHindcast(
     });
 }
 
-export function sofarSensor(sensorId: string, start?: string, end?: string) {
+export function sofarSensor(
+  sensorId: string,
+  token?: string,
+  start?: string,
+  end?: string,
+) {
   return axios
     .get(SOFAR_SENSOR_DATA_URL, {
       params: {
         spotterId: sensorId,
         startDate: start,
         endDate: end,
-        token: process.env.SOFAR_API_TOKEN,
+        token,
       },
     })
     .then((response) => response.data)
-    .catch((error) => {
+    .catch(async (error) => {
       if (error.response) {
-        console.error(
-          `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
-        );
+        const message = `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`;
+        console.error(message);
+        if ([401, 403].includes(error.response.status)) {
+          const messageTemplate: SlackMessage = {
+            channel: SLACK_BOT_CHANNEL as string,
+            text: message,
+            mrkdwn: true,
+          };
+
+          await sendSlackMessage(messageTemplate, SLACK_BOT_TOKEN as string);
+        }
       } else {
         console.error(`An error occurred accessing the Sofar API - ${error}`);
       }
     });
 }
 
-export function sofarWaveData(sensorId: string, start?: string, end?: string) {
+export function sofarWaveData(
+  sensorId: string,
+  token?: string,
+  start?: string,
+  end?: string,
+) {
   return axios
     .get(SOFAR_WAVE_DATA_URL, {
       params: {
@@ -123,7 +145,7 @@ export function sofarWaveData(sensorId: string, start?: string, end?: string) {
         startDate: start,
         endDate: end,
         limit: start && end ? 500 : 100,
-        token: process.env.SOFAR_API_TOKEN,
+        token,
         includeSurfaceTempData: true,
         includeWindData: true,
         includeBarometerData: true,
@@ -170,6 +192,7 @@ export async function getSofarHindcastData(
 
 export async function getSpotterData(
   sensorId: string,
+  sofarToken?: string,
   endDate?: Date,
   startDate?: Date,
 ): Promise<SpotterData> {
@@ -184,9 +207,10 @@ export async function getSpotterData(
 
   const {
     data: { waves = [], wind = [], barometerData = [] },
-  } = (await sofarWaveData(sensorId, start, end)) || { data: {} };
+  } = (await sofarWaveData(sensorId, sofarToken, start, end)) || { data: {} };
   const { data: smartMooringData } = (await sofarSensor(
     sensorId,
+    sofarToken,
     start,
     end,
   )) || { data: [] };

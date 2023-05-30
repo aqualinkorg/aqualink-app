@@ -11,8 +11,12 @@ import {
   OneToMany,
   ManyToMany,
 } from 'typeorm';
-import { Expose } from 'class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
 import { Region } from '../regions/regions.entity';
 import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
@@ -132,6 +136,11 @@ export class Site {
     (historicalMonthlyMean) => historicalMonthlyMean.site,
   )
   historicalMonthlyMean: HistoricalMonthlyMean[];
+
+  @ApiHideProperty()
+  @Exclude()
+  @Column({ nullable: true, select: false, type: 'character varying' })
+  spotterApiToken?: string | null;
 
   hasHobo: boolean;
 
