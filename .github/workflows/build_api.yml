@@ -74,6 +74,6 @@ jobs:
         run: yarn migration:run
 
       - name: Run API tests
-        if: steps.migrations.outcome == 'success'
+        if: success() || steps.migrations.outcome == 'success'
         working-directory: packages/api
         run: yarn test
