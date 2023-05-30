@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Metric } from '../../time-series/metrics.enum';
 import { KeysToCamelCase } from '../../utils/type-utils';
-import { Metric } from '../../time-series/metrics.entity';
 
 type MetricAsCamelcase = KeysToCamelCase<Record<Metric, number>>;
 

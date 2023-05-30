@@ -25,7 +25,7 @@ import {
 } from '../../test/mock/user.mock';
 import { TestService } from '../../test/test.service';
 import { mockExtractAndVerifyToken } from '../../test/utils';
-import { Metric } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
@@ -171,10 +171,22 @@ export const collectionTests = () => {
       expect(rsp.body.sites.length).toBe(2);
       const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
       expect(sortedSites[0]).toMatchObject(
-        omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
+        omit(
+          californiaSite,
+          'applied',
+          'createdAt',
+          'updatedAt',
+          'spotterApiToken',
+        ),
       );
       expect(sortedSites[1]).toMatchObject(
-        omit(floridaSite, 'applied', 'createdAt', 'updatedAt'),
+        omit(
+          floridaSite,
+          'applied',
+          'createdAt',
+          'updatedAt',
+          'spotterApiToken',
+        ),
       );
 
       const floridaLatestData = getLatestData(floridaTimeSeries);
@@ -219,13 +231,19 @@ export const collectionTests = () => {
 
     const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
     expect(sortedSites[0]).toMatchObject(
-      omit(athensSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(athensSite, 'applied', 'createdAt', 'updatedAt', 'spotterApiToken'),
     );
     expect(sortedSites[1]).toMatchObject(
-      omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(
+        californiaSite,
+        'applied',
+        'createdAt',
+        'updatedAt',
+        'spotterApiToken',
+      ),
     );
     expect(sortedSites[2]).toMatchObject(
-      omit(floridaSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(floridaSite, 'applied', 'createdAt', 'updatedAt', 'spotterApiToken'),
     );
 
     const athensLatestData = getLatestData(athensTimeSeries);

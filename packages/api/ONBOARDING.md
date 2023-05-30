@@ -133,11 +133,11 @@ All previously mentioned functions (except scheduledVideoStreamsCheck and pingSe
 
 - scheduledDailyUpdate: (2 options)
   - `yarn daily-worker` (no backfill functionality)
-  - `yarn backfill-daily-data -d days-to-backfill [-r siteId1 siteId2 ...]`
+  - `yarn backfill-daily-data -d days-to-backfill [-s siteId1 siteId2 ...]`
 - scheduledSSTTimeSeriesUpdate
-  - `yarn backfill-sofar-time-series -t sst_backfill -d days-to-backfill [-r siteId1 siteId2 ...]`
+  - `yarn backfill-sofar-time-series -t sst_backfill -d days-to-backfill [-s siteId1 siteId2 ...]`
 - scheduledSpotterTimeSeriesUpdate
-  - `yarn backfill-sofar-time-series -t spotter_backfill -d days-to-backfill [-r siteId1 siteId2 ...]`
+  - `yarn backfill-sofar-time-series -t spotter_backfill -d days-to-backfill [-s siteId1 siteId2 ...]`
 
 The rest of the scripts are used to either augment the models with missing data or perform backfills further back in the past than what Sofar is capable of:
 

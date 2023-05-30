@@ -10,13 +10,21 @@ import { addWindWaveData } from '../utils/hindcast-wind-wave';
 // since this is hourly run we want to only take the latest data.
 const DAYS_OF_SPOTTER_DATA = 1;
 
-export function runSpotterTimeSeriesUpdate(dataSource: DataSource) {
-  return addSpotterData([], DAYS_OF_SPOTTER_DATA, {
-    siteRepository: dataSource.getRepository(Site),
-    sourceRepository: dataSource.getRepository(Sources),
-    timeSeriesRepository: dataSource.getRepository(TimeSeries),
-    exclusionDatesRepository: dataSource.getRepository(ExclusionDates),
-  });
+export function runSpotterTimeSeriesUpdate(
+  dataSource: DataSource,
+  skipDistanceCheck: boolean,
+) {
+  return addSpotterData(
+    [],
+    DAYS_OF_SPOTTER_DATA,
+    {
+      siteRepository: dataSource.getRepository(Site),
+      sourceRepository: dataSource.getRepository(Sources),
+      timeSeriesRepository: dataSource.getRepository(TimeSeries),
+      exclusionDatesRepository: dataSource.getRepository(ExclusionDates),
+    },
+    skipDistanceCheck,
+  );
 }
 
 export function runWindWaveTimeSeriesUpdate(dataSource: DataSource) {

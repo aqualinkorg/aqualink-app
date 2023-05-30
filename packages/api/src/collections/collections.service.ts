@@ -19,8 +19,8 @@ import {
   getCollectionData,
   heatStressTracker,
 } from '../utils/collections.utils';
-import { Metric } from '../time-series/metrics.entity';
 import { Site } from '../sites/sites.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 @Injectable()
 export class CollectionsService {
