@@ -186,8 +186,8 @@ const Faq = ({ classes }: FaqProps) => {
                   </Typography>
                   <p>
                     We allow HOBO data (HOBO data loggers), meteorological data,
-                    and overall data that can be gathered by any sonde or
-                    method. For the overall data, we have two types of dashboard
+                    and overall water quality data that can be gathered by any sonde or
+                    method. For the overall water quality data, we have two types of dashboard
                     cards, and they are named Sonde data and HUI data on
                     Aqualink. Sonde data includes dissolved oxygen
                     concentration, chlorophyll concentration, acidity (pH),
@@ -200,6 +200,24 @@ const Faq = ({ classes }: FaqProps) => {
                     warning, and alert levels once you have determined what
                     those levels are. Please let us know what the levels are,
                     and we&apos;ll help you display your data.
+                    <br />
+                    <br />
+                    <a
+                      href="https://drive.google.com/file/d/1FbogDt1ChmeMXjNWSZFK0EiUc88UEY28/view?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Video tutorial on how to upload Sonde data.
+                    </a>
+                    <br />
+                    <br />
+                    <a
+                      href="https://drive.google.com/file/d/1IU0UUY0mRaCXxwEQ-k6WTgPiCfHK3-Q8/view?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Video tutorial on how to upload HUI data.
+                    </a>
                   </p>
                 </div>
               </div>
@@ -349,24 +367,6 @@ const Faq = ({ classes }: FaqProps) => {
                     How many sites can I have?
                   </Typography>
                   <p>You can have an unlimited amount of sites.</p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    Which parameters does Aqualink currently support for the
-                    dashboard?
-                  </Typography>
-                  <p>
-                    Please view&nbsp;
-                    <a
-                      href="https://docs.google.com/document/d/14MfB5iDZqzArZ-MAWuzWnnNs0XsRYK3bchotL-hRMUs/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      this document.
-                    </a>
-                  </p>
                 </div>
               </div>
               <div className="row">
