@@ -4,7 +4,7 @@ import request from 'supertest';
 import { californiaSite } from '../../test/mock/site.mock';
 import { TestService } from '../../test/test.service';
 import { SourceType } from '../sites/schemas/source-type.enum';
-import { Metric } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 export const sensorTests = () => {
   const testService = TestService.getInstance();

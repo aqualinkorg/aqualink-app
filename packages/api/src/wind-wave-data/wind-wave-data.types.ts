@@ -1,4 +1,4 @@
-import { Metric } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 // This enum should always be a subset of Metric enum
 export enum WindWaveMetric {

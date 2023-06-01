@@ -7,7 +7,6 @@ import { distance } from '@turf/turf';
 import { Point } from 'geojson';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData } from './sofar';
 import {
@@ -19,6 +18,8 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
 import { getSources, refreshMaterializedView } from './time-series.utils';
+import { SOFAR_API_TOKEN } from './constants';
+import { Metric } from '../time-series/metrics.enum';
 
 const MAX_DISTANCE_FROM_SITE = 50;
 
@@ -30,26 +31,6 @@ interface Repositories {
 }
 
 const logger = new Logger('SpotterTimeSeries');
-
-/**
- * Fetches all sites with where id is included in the siteIds array and has sensorId
- * If an empty array of siteIds is given then all sites with sensors are returned
- * @param siteIds The requested siteIds
- * @param siteRepository The required repository to make the query
- * @returns An array of site entities
- */
-export const getSites = (
-  siteIds: number[],
-  hasSensorOnly: boolean = false,
-  siteRepository: Repository<Site>,
-) => {
-  return siteRepository.find({
-    where: {
-      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
-      ...(hasSensorOnly ? { sensorId: Not(IsNull()) } : {}),
-    },
-  });
-};
 
 /**
  * Fetches the exclusion dates for the selected sources.
@@ -113,7 +94,13 @@ export const addSpotterData = async (
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, true, repositories.siteRepository);
+  const sites = await repositories.siteRepository.find({
+    where: {
+      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
+      sensorId: Not(IsNull()),
+    },
+    select: ['id', 'sensorId', 'spotterApiToken', 'polygon'],
+  });
 
   logger.log('Fetching sources');
   // Fetch sources
@@ -160,9 +147,11 @@ export const addSpotterData = async (
             [],
           );
 
+          const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
           // Fetch spotter and wave data from sofar
           const spotterData = await getSpotterData(
             site.sensorId,
+            sofarToken,
             endDate,
             startDate,
           ).then((data) => excludeSpotterData(data, sensorExclusionDates));

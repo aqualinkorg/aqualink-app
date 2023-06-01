@@ -18,11 +18,13 @@ const CustomTextfield = ({
   step,
   fullWidth,
   size,
+  disabled,
   onChange,
   classes,
 }: CustomTextfieldProps) => {
   return (
     <TextField
+      disabled={disabled}
       className={classes.textField}
       variant="outlined"
       inputProps={{ className: classes.textField, step: step || undefined }}
@@ -57,6 +59,7 @@ interface CustomTextfieldIncomingProps {
   step?: number;
   fullWidth?: boolean;
   size?: BaseTextFieldProps['size'];
+  disabled?: boolean;
   onChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;

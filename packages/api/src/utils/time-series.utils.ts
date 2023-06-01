@@ -4,9 +4,9 @@ import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Sources } from '../sites/sources.entity';
 import { TimeSeriesValueDto } from '../time-series/dto/time-series-value.dto';
-import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getTimeSeriesDefaultDates } from './dates';
+import { Metric } from '../time-series/metrics.enum';
 
 interface TimeSeriesGroupable {
   metric: Metric;

@@ -16,7 +16,6 @@ import parse from 'csv-parse/lib/sync';
 
 import { Site, SiteStatus } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
-import { Metric } from '../../time-series/metrics.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
 import { User } from '../../users/users.entity';
 import { Survey, WeatherConditions } from '../../surveys/surveys.entity';
@@ -36,6 +35,7 @@ import { createPoint } from '../coordinates';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
 import { refreshMaterializedView } from '../time-series.utils';
+import { Metric } from '../../time-series/metrics.enum';
 
 /**
  * Parse csv data

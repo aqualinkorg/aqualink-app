@@ -12,7 +12,6 @@ import {
 import { join } from 'path';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
-import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 import { SurveyPointDataRangeDto } from './dto/survey-point-data-range.dto';
 import { SiteDataRangeDto } from './dto/site-data-range.dto';
@@ -33,6 +32,7 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
+import { Metric } from './metrics.enum';
 
 @Injectable()
 export class TimeSeriesService {

@@ -186,12 +186,12 @@ const Faq = ({ classes }: FaqProps) => {
                   </Typography>
                   <p>
                     We allow HOBO data (HOBO data loggers), meteorological data,
-                    and overall water quality data that can be gathered by any sonde or
-                    method. For the overall water quality data, we have two types of dashboard
-                    cards, and they are named Sonde data and HUI data on
-                    Aqualink. Sonde data includes dissolved oxygen
-                    concentration, chlorophyll concentration, acidity (pH),
-                    salinity, and turbidity. You can use all of these five
+                    and overall water quality data that can be gathered by any
+                    sonde or method. For the overall water quality data, we have
+                    two types of dashboard cards, and they are named Sonde data
+                    and HUI data on Aqualink. Sonde data includes dissolved
+                    oxygen concentration, chlorophyll concentration, acidity
+                    (pH), salinity, and turbidity. You can use all of these five
                     parameters or just some of them when uploading data.
                     <br />
                     <br />

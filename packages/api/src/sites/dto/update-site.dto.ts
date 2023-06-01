@@ -68,4 +68,18 @@ export class UpdateSiteDto {
   @IsInt()
   @Validate(EntityExists, [VideoStream])
   readonly streamId?: number;
+
+  @ApiProperty({ example: 'SPOT-1742' })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  readonly sensorId?: string;
+
+  @ApiProperty({ example: 'jl3Xr1kZeqDqs7KAiktXOyr3PlB5Ip' })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  readonly spotterApiToken?: string | null;
 }

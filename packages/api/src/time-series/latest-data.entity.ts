@@ -10,8 +10,8 @@ import {
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
-import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
+import { Metric } from './metrics.enum';
 
 @ViewEntity({
   expression: (dataSource: DataSource) => {

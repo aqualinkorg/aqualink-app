@@ -6,6 +6,8 @@ import {
   Button,
   Grid,
   Typography,
+  Checkbox,
+  FormControlLabel,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,6 +36,9 @@ const EditForm = ({
   const location = site.polygon.type === 'Point' ? site.polygon : null;
   const { latitude: draftLatitude, longitude: draftLongitude } =
     draftSite?.coordinates || {};
+
+  const [editToken, setEditToken] = React.useState(false);
+  const [useDefaultToken, setUseDefaultToken] = React.useState(false);
 
   const setDraftSiteCoordinates =
     (field: 'longitude' | 'latitude') => (value: string) => {
@@ -73,6 +78,14 @@ const EditForm = ({
     setDraftSiteCoordinates('longitude'),
   );
 
+  const [siteSensorId, setSensorId] = useFormField(site.sensorId, [
+    'maxLength',
+  ]);
+
+  const [siteSpotterApiToken, setSiteSpotterApiToken] = useFormField(null, [
+    'maxLength',
+  ]);
+
   const formSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (
       siteName.value &&
@@ -80,6 +93,11 @@ const EditForm = ({
       siteLatitude.value &&
       siteLongitude.value
     ) {
+      const insertedTokenValue = siteSpotterApiToken.value
+        ? siteSpotterApiToken.value
+        : undefined;
+      const tokenValue = useDefaultToken ? null : insertedTokenValue;
+      const spotterApiToken = editToken ? tokenValue : undefined;
       const updateParams: SiteUpdateParams = {
         coordinates: {
           latitude: parseFloat(siteLatitude.value),
@@ -87,6 +105,8 @@ const EditForm = ({
         },
         name: siteName.value,
         depth: parseInt(siteDepth.value, 10),
+        sensorId: siteSensorId.value,
+        spotterApiToken,
       };
       onSubmit(updateParams);
     }
@@ -109,6 +129,12 @@ const EditForm = ({
         break;
       case 'longitude':
         setSiteLongitude(newValue, true);
+        break;
+      case 'spotterId':
+        setSensorId(newValue);
+        break;
+      case 'spotterApiToken':
+        setSiteSpotterApiToken(newValue);
         break;
       default:
         break;
@@ -139,6 +165,79 @@ const EditForm = ({
               onChange={onFieldChange}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Alert className={classes.infoAlert} icon={false} severity="info">
+              <Typography variant="subtitle2">
+                Only Sofar Ocean spotters are supported for now. Please contact
+                us if you would like to connect other live buoys at{' '}
+                <a
+                  href="mailto:admin@aqualink.org?subject=Connect%20a%20buoy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  admin@aqualink.org
+                </a>
+                .
+              </Typography>
+            </Alert>
+          </Grid>
+          <Grid item sm={8} xs={8}>
+            <TextField
+              formField={siteSensorId}
+              label="Spotter ID"
+              placeholder="Spotter ID"
+              name="spotterId"
+              onChange={onFieldChange}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            style={{ display: 'flex', justifyContent: 'flex-end' }}
+          >
+            <FormControlLabel
+              labelPlacement="start"
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={editToken}
+                  onChange={() => setEditToken(!editToken)}
+                />
+              }
+              label="Add a custom API token"
+            />
+          </Grid>
+          {editToken && (
+            <>
+              <Grid item sm={8} xs={8}>
+                <TextField
+                  disabled={useDefaultToken}
+                  formField={siteSpotterApiToken}
+                  label="Spotter API token"
+                  placeholder="Spotter API token"
+                  name="spotterApiToken"
+                  onChange={onFieldChange}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={4}
+                style={{ display: 'flex', justifyContent: 'flex-end' }}
+              >
+                <FormControlLabel
+                  labelPlacement="start"
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={useDefaultToken}
+                      onChange={() => setUseDefaultToken(!useDefaultToken)}
+                    />
+                  }
+                  label="Use default token"
+                />
+              </Grid>
+            </>
+          )}
           <Grid item xs={12}>
             <Alert className={classes.infoAlert} icon={false} severity="info">
               <Typography variant="subtitle2">
