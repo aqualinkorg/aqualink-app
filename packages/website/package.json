@@ -83,7 +83,7 @@
     ]
   },
   "engines": {
-    "node": "20.x"
+    "node": "18.x"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.27",
