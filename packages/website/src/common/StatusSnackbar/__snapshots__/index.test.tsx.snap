@@ -26,7 +26,7 @@ exports[`renders as expected 1`] = `
         </svg>
       </div>
       <div
-        class="MuiAlert-message"
+        class="MuiAlert-message makeStyles-alertMessage-3 makeStyles-alertMessage-5"
       >
         All good!!
       </div>
