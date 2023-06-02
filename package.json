@@ -62,8 +62,13 @@
     "type": "git",
     "url": "git+https://github.com/aqualinkorg/aqualink-app.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Climate Change",
+    "Corals",
+    "Marine",
+    "Ocean"
+  ],
+  "author": "Ovio.org",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/aqualinkorg/aqualink-app/issues"
