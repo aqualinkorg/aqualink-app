@@ -48,6 +48,16 @@ import {
 import { parseLatestData } from '../../store/Sites/helpers';
 import HUICard from './HUICard';
 
+const sondeMetrics: (keyof LatestDataASSofarValue)[] = [
+  'odoConcentration',
+  'cholorophyllConcentration',
+  'ph',
+  'salinity',
+  'turbidity',
+];
+
+const MINIMUM_SONDE_METRICS_TO_SHOW_CARD = 3;
+
 const SiteDetails = ({
   site,
   selectedSurveyPointId,
@@ -97,7 +107,9 @@ const SiteDetails = ({
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
       const hasSpotter = Boolean(parsedData.bottomTemperature);
-      const hasSonde = Boolean(parsedData.salinity);
+      const hasSonde =
+        sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
+        MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
       const hasHUI = latestData.some((x) => x.source === 'hui');
 
       setHasSondeData(hasSonde);
