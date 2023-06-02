@@ -58,16 +58,15 @@
     ]
   },
   "description": "This is the main repository for the Aqualink Coral Monitoring Application.",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aqualinkorg/aqualink-app.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/aqualinkorg/aqualink-app/issues"
   },
-  "homepage": "https://github.com/aqualinkorg/aqualink-app#readme"
+  "homepage": "https://aqualink.org"
 }
