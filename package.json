@@ -56,5 +56,22 @@
     "packages/*/{src,scripts,test}/**/*.{js,jsx,ts,tsx}": [
       "yarn run lint"
     ]
-  }
+  },
+  "description": "This is the main repository for the Aqualink Coral Monitoring Application.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aqualinkorg/aqualink-app.git"
+  },
+  "keywords": [
+    "Climate Change",
+    "Corals",
+    "Marine",
+    "Ocean"
+  ],
+  "author": "Ovio.org",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aqualinkorg/aqualink-app/issues"
+  },
+  "homepage": "https://aqualink.org"
 }
