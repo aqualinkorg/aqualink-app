@@ -1,5 +1,4 @@
-﻿sonde_example,,,,,,,,
-Date (MM/DD/YYYY),Time (HH:mm:ss),Time (Fract. Sec),Site Name,Chlorophyll ug/L,ODO mg/L,Sal psu,Turbidity FNU,pH
+﻿Date (MM/DD/YYYY),Time (HH:mm:ss),Time (Fract. Sec),Site Name,Chlorophyll ug/L,ODO mg/L,Sal psu,Turbidity FNU,pH
 5/1/2023,13:45:00,0,Sandhamn,0.3,7.21,36.58,4.15,8.16
 5/1/2023,14:00:00,0,Sandhamn,0.5,7.24,36.58,5.68,8.16
 5/1/2023,14:15:00,0,Sandhamn,0.42,7.26,36.58,2.23,8.16

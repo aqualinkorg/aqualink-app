@@ -228,10 +228,11 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       this document
                     </a>
-                    &nbsp;to see all the parameters and values that we currently allow.
-                    Note that you can upload a few extra parameters that won&apos;t be
-                    shown on the dashboard card, but these will be included when you
-                    download the CSV file of your site's combined dashboard data.
+                    &nbsp;to see all the parameters and values that we currently
+                    allow. Note that you can upload a few extra parameters that
+                    won&apos;t be shown on the dashboard card, but these will be
+                    included when you download the CSV file of your site's
+                    combined dashboard data.
                   </p>
                 </div>
               </div>
