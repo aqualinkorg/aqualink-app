@@ -5,15 +5,13 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "workspaces": {
-    "nohoist": [
-      "axios-retry"
-    ]
+  "engines": {
+    "node": "18"
   },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build -p tsconfig.build.json --tsc",
-    "build:cloud-functions": "webpack-cli --config cloud-functions/webpack.config.js",
+    "build:cloud-functions": "tsc -p ./cloud-functions/tsconfig.json",
     "gcp-build": "npm install yarn",
     "predeploy:app": "mv .env .env.bkp && cp .env.${DEPLOY_ENV} .env && yarn run build && cp ../../yarn.lock .",
     "deploy:app": "gcloud app deploy app-${DEPLOY_ENV}.yaml && yarn migration:run",
@@ -85,7 +83,7 @@
     "class-validator": "^0.14.0",
     "csv-parse": "^4.15.1",
     "express": "^4.17.1",
-    "firebase-admin": "^9.0.0",
+    "firebase-admin": "^8.6.0",
     "geo-tz": "^6.0.0",
     "geojson": "^0.5.0",
     "geotiff": "^1.0.4",
@@ -118,13 +116,13 @@
     "@types/lodash": "^4.14.156",
     "@types/moment-timezone": "^0.5.13",
     "@types/multer": "^1.4.3",
-    "@types/node": "^20.2.3",
+    "@types/node": "^18.2.3",
     "@types/passport": "^1.0.4",
     "@types/passport-strategy": "^0.2.35",
     "@types/sharp": "^0.30.4",
     "@types/supertest": "^2.0.8",
     "faker": "^4.1.0",
-    "firebase-admin": "^9.0.0",
+    "firebase-admin": "^8.6.0",
     "firebase-functions": "^3.8.0",
     "glob": "^7.1.6",
     "jest": "26.6.0",
@@ -136,9 +134,6 @@
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "typeorm-seeding": "^1.6.1",
-    "webpack": "^5.84.0",
-    "webpack-cli": "^5.1.1",
-    "webpack-node-externals": "^3.0.0",
     "yargs": "^15.4.1"
   },
   "optionalDependencies": {

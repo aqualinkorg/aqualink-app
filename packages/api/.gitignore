@@ -20,8 +20,7 @@
 .runtimeconfig.json
 
 # Firebase Cloud Functions Generated files
-cloud-functions/dist/*.js
-cloud-functions/dist/*.txt
+cloud-functions/dist/*
 
 # Google Cloud Storage Congig
 gcloud.json*

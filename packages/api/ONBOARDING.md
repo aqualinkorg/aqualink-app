@@ -59,7 +59,7 @@ The project uses **Google Storage** for storing files in buckets.
 
 ### Cloud Functions
 
-You can access those either through `firebase -> functions` or through `google cloud -> cloud functions`. Their main purpose is to perform periodical updates of the data. Their definitions exist in `cloud-functions/index.ts`, in the root folder of the api package. The package used to create the functions is `firebase-functions`
+You can access those either through `firebase -> functions` or through `google cloud -> cloud functions`. Their main purpose is to perform periodical updates of the data. Their definitions exist in `cloud-functions/index.ts`, in the root folder of the api package. The package used to create the functions is `firebase-functions`. New typeorm entities must be listed on `cloud-functions/index.ts`. When creating new file or folders that don't need to be sent to firebase, add them to the `"ignore"` field in `firebase.json`.
 
 #### pingService
 

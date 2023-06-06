@@ -14,10 +14,47 @@ import { sendSlackMessage } from '../src/utils/slack.utils';
 import { checkBuoysStatus } from '../src/workers/check-buoys-status';
 import { dataSourceOptions } from '../ormconfig';
 
-// We have to manually import all required entities here, unfortunately - the globbing that is used in ormconfig.ts
-// doesn't work with Webpack. This declaration gets processed by a custom loader (`add-entities.js`) to add import
-// statements for all the entity classes.
-// import-all-entities
+import * as SiteAuditEntity from '../src/audit/site-audit.entity';
+import * as ForecastDataEntity from '../src/wind-wave-data/forecast-data.entity';
+import * as SiteSurveyPointsEntity from '../src/site-survey-points/site-survey-points.entity';
+import * as SiteSketchfabEntity from '../src/site-sketchfab/site-sketchfab.entity';
+import * as DataUploadsEntity from '../src/data-uploads/data-uploads.entity';
+import * as CollectionsEntity from '../src/collections/collections.entity';
+import * as RegionsEntity from '../src/regions/regions.entity';
+import * as VideoStreamsEntity from '../src/sites/video-streams.entity';
+import * as ExclusionDatesEntity from '../src/sites/exclusion-dates.entity';
+import * as DailyDataEntity from '../src/sites/daily-data.entity';
+import * as HistoricalMonthlyMeanEntity from '../src/sites/historical-monthly-mean.entity';
+import * as SourcesEntity from '../src/sites/sources.entity';
+import * as SitesEntity from '../src/sites/sites.entity';
+import * as UsersEntity from '../src/users/users.entity';
+import * as TimeSeriesEntity from '../src/time-series/time-series.entity';
+import * as LatestDataEntity from '../src/time-series/latest-data.entity';
+import * as SiteApplicationsEntity from '../src/site-applications/site-applications.entity';
+import * as SurveysEntity from '../src/surveys/surveys.entity';
+import * as SurveyMediaEntity from '../src/surveys/survey-media.entity';
+
+const dbEntities = [
+  SiteAuditEntity,
+  ForecastDataEntity,
+  SiteSurveyPointsEntity,
+  SiteSketchfabEntity,
+  DataUploadsEntity,
+  CollectionsEntity,
+  RegionsEntity,
+  VideoStreamsEntity,
+  ExclusionDatesEntity,
+  DailyDataEntity,
+  HistoricalMonthlyMeanEntity,
+  SourcesEntity,
+  SitesEntity,
+  UsersEntity,
+  TimeSeriesEntity,
+  LatestDataEntity,
+  SiteApplicationsEntity,
+  SurveysEntity,
+  SurveyMediaEntity,
+];
 
 /**
  * Crude check to try to get the entity itself from the full module import. Checks if the export name begins with an
