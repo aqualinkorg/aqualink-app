@@ -5,9 +5,6 @@ import moment from 'moment';
 import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {
-  SLACK_BOT_CHANNEL,
-  SLACK_BOT_TOKEN,
-  SOFAR_API_TOKEN,
   SOFAR_MARINE_URL,
   SOFAR_SENSOR_DATA_URL,
   SOFAR_WAVE_DATA_URL,
@@ -71,7 +68,7 @@ export async function sofarHindcast(
         longitude,
         start,
         end,
-        token: SOFAR_API_TOKEN,
+        token: process.env.SOFAR_API_TOKEN,
       },
     })
     .then((response) => {
@@ -119,12 +116,15 @@ export function sofarSensor(
         console.error(message);
         if ([401, 403].includes(error.response.status)) {
           const messageTemplate: SlackMessage = {
-            channel: SLACK_BOT_CHANNEL as string,
+            channel: process.env.SLACK_BOT_CHANNEL as string,
             text: message,
             mrkdwn: true,
           };
 
-          await sendSlackMessage(messageTemplate, SLACK_BOT_TOKEN as string);
+          await sendSlackMessage(
+            messageTemplate,
+            process.env.SLACK_BOT_TOKEN as string,
+          );
         }
       } else {
         console.error(`An error occurred accessing the Sofar API - ${error}`);

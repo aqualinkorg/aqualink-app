@@ -53,11 +53,6 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
-import {
-  SLACK_BOT_CHANNEL,
-  SLACK_BOT_TOKEN,
-  SOFAR_API_TOKEN,
-} from '../utils/constants';
 
 @Injectable()
 export class SitesService {
@@ -126,12 +121,15 @@ export class SitesService {
     backfillSiteData(site.id);
 
     const messageTemplate: SlackMessage = {
-      channel: SLACK_BOT_CHANNEL as string,
+      channel: process.env.SLACK_BOT_CHANNEL as string,
       text: `New site ${site.name} created with id=${site.id}, by ${user.fullName}`,
       mrkdwn: true,
     };
 
-    await sendSlackMessage(messageTemplate, SLACK_BOT_TOKEN as string);
+    await sendSlackMessage(
+      messageTemplate,
+      process.env.SLACK_BOT_TOKEN as string,
+    );
 
     return this.siteApplicationRepository.save({
       ...appParams,
@@ -353,7 +351,7 @@ export class SitesService {
         position: undefined,
       };
 
-    const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
+    const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
     const spotterRaw = await getSpotterData(sensorId, sofarToken);
     const spotterData = spotterRaw
       ? {
@@ -400,7 +398,7 @@ export class SitesService {
       endDate,
     );
 
-    const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
+    const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
     const { topTemperature, bottomTemperature } = await getSpotterData(
       site.sensorId,
       sofarToken,

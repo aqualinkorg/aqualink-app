@@ -130,7 +130,6 @@
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0",
-    "ts-loader": "^9.4.3",
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "typeorm-seeding": "^1.6.1",
