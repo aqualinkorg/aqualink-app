@@ -92,7 +92,7 @@ const Header = ({ site }: HeaderProps) => {
           ))}
         </Typography>
         <Typography style={{ fontSize: '0.8em' }}>
-          For more information about uploading data, visit our
+          For more information about uploading data, visit our&nbsp;
           <a
             href="https://aqualink.org/faq"
             target="_blank"
