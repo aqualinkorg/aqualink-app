@@ -36,7 +36,7 @@ const exampleFiles = [
   },
   {
     source: 'sonde',
-    fileName: 'sonde_example.csv',
+    fileName: 'sonde_example_reduced.csv',
   },
   {
     source: 'metlog',
@@ -90,6 +90,17 @@ const Header = ({ site }: HeaderProps) => {
               {i !== exampleFiles.length - 1 ? ', ' : ''}
             </span>
           ))}
+        </Typography>
+        <Typography style={{ fontSize: '0.8em' }}>
+          For more information about uploading data, visit our&nbsp;
+          <a
+            href="https://aqualink.org/faq"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            FAQ page
+          </a>
+          .
         </Typography>
       </Grid>
     </Grid>

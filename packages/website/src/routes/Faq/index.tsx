@@ -108,7 +108,7 @@ const Faq = ({ classes }: FaqProps) => {
                     <br />
                     <br />
                     Watch this video on how to upload surveys and best
-                    practices.
+                    practices.&nbsp;
                     <a
                       href="https://youtu.be/ov64mc2Da_k"
                       target="_blank"
@@ -218,6 +218,21 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       Video tutorial on how to upload HUI data.
                     </a>
+                    <br />
+                    <br />
+                    Please view&nbsp;
+                    <a
+                      href="https://docs.google.com/document/d/14MfB5iDZqzArZ-MAWuzWnnNs0XsRYK3bchotL-hRMUs/edit?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      this document
+                    </a>{' '}
+                    to see all the parameters and values that we currently
+                    allow. Note that you can upload a few extra parameters that
+                    won&apos;t be shown on the dashboard card, but these will be
+                    included when you download the CSV file of your site&apos;s
+                    combined dashboard data.
                   </p>
                 </div>
               </div>
@@ -238,7 +253,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       HOBO data
                     </a>{' '}
-                    ,
+                    ,&nbsp;
                     <a
                       href="https://drive.google.com/file/d/1GA0xnbjB52bISo7iUJh84MQePcQ6M0nX/view?usp=share_link"
                       target="_blank"
@@ -246,7 +261,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       meteorological data
                     </a>
-                    ,
+                    ,&nbsp;
                     <a
                       href="https://docs.google.com/spreadsheets/d/1C1oqhLKE-6vhx5n6XGV2O8JtDs7ZVEdl/edit?usp=share_link&ouid=101543162312822485121&rtpof=true&sd=true"
                       target="_blank"
@@ -254,7 +269,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       Sonde data
                     </a>{' '}
-                    ,
+                    ,&nbsp;
                     <a
                       href="https://drive.google.com/file/d/1nKos1AcZofr7kEJ5cNllkeonH0bWN9h-/view?usp=share_link"
                       target="_blank"
@@ -276,7 +291,7 @@ const Faq = ({ classes }: FaqProps) => {
                     temperature logger, you can upload the raw data file. If
                     you&apos;re using any other type of temperature logger, add
                     a column for time and date and another column for
-                    temperature. Please use this
+                    temperature. Please use this&nbsp;
                     <a
                       href="https://docs.google.com/spreadsheets/d/17txhvReJynwC3V9TmQeUJ6dWGTk3jjgs/edit?usp=share_link&ouid=101543162312822485121&rtpof=true&sd=true"
                       target="_blank"
