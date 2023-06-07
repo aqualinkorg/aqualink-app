@@ -153,7 +153,7 @@ const Faq = ({ classes }: FaqProps) => {
                     locations, for example, we recommend that you take the image
                     from the exact same angles and distance. This provides the
                     best comparison between survey sessions. One good example of
-                    this is:
+                    this is:&nbsp;
                     <a
                       href="https://aqualink.org/sites/2943/points/558"
                       target="_blank"
@@ -252,7 +252,7 @@ const Faq = ({ classes }: FaqProps) => {
                       rel="noopener noreferrer"
                     >
                       HOBO data
-                    </a>{' '}
+                    </a>
                     ,&nbsp;
                     <a
                       href="https://drive.google.com/file/d/1GA0xnbjB52bISo7iUJh84MQePcQ6M0nX/view?usp=share_link"
@@ -268,7 +268,7 @@ const Faq = ({ classes }: FaqProps) => {
                       rel="noopener noreferrer"
                     >
                       Sonde data
-                    </a>{' '}
+                    </a>
                     ,&nbsp;
                     <a
                       href="https://drive.google.com/file/d/1nKos1AcZofr7kEJ5cNllkeonH0bWN9h-/view?usp=share_link"
@@ -299,7 +299,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       template
                     </a>
-                    , and watch this
+                    , and watch this&nbsp;
                     <a
                       href="https://youtu.be/6wiRd6UFhE4"
                       target="_blank"
@@ -307,7 +307,7 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       video tutorial
                     </a>
-                    on how to upload temperature data.
+                    &nbsp;on how to upload temperature data.
                   </p>
                 </div>
               </div>
