@@ -156,7 +156,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 Add comments to the survey and each survey point. The comments can include all the observations and data that you have from that survey session. Write the details of the corals that appeared based on your goals with your monitoring efforts. For example, you can display if the corals were healthy, bleached, or what percent of coral cover they had. You can also add information such as Crown of Thorns Starfish culled.
                 <br />
                 <br />
-                If your survey method is taking pictures of corals in known locations, for example, we recommend that you take the image from the exact same angles and distance. This provides the best comparison between survey sessions. One good example of this is:
+                If your survey method is taking pictures of corals in known locations, for example, we recommend that you take the image from the exact same angles and distance. This provides the best comparison between survey sessions. One good example of this is: 
                 <a
                   href="https://aqualink.org/sites/2943/points/558"
                   rel="noopener noreferrer"
@@ -257,7 +257,6 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   HOBO data
                 </a>
-                 
                 , 
                 <a
                   href="https://drive.google.com/file/d/1GA0xnbjB52bISo7iUJh84MQePcQ6M0nX/view?usp=share_link"
@@ -274,7 +273,6 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   Sonde data
                 </a>
-                 
                 , 
                 <a
                   href="https://drive.google.com/file/d/1nKos1AcZofr7kEJ5cNllkeonH0bWN9h-/view?usp=share_link"
@@ -307,7 +305,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   template
                 </a>
-                , and watch this
+                , and watch this 
                 <a
                   href="https://youtu.be/6wiRd6UFhE4"
                   rel="noopener noreferrer"
@@ -315,7 +313,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   video tutorial
                 </a>
-                on how to upload temperature data.
+                 on how to upload temperature data.
               </p>
             </div>
           </div>
