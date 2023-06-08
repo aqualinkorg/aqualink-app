@@ -98,7 +98,6 @@
     "passport": "^0.6.0",
     "passport-custom": "^1.1.1",
     "pg": "^8.2.1",
-    "pg-native": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7",
     "sharp": "^0.30.6",
@@ -130,7 +129,7 @@
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0",
-    "ts-node": "^8.10.2",
+    "ts-node": "^10.9.1",
     "tsconfig-paths": "^3.9.0",
     "typeorm-seeding": "^1.6.1",
     "yargs": "^15.4.1"
