@@ -3,7 +3,7 @@ import { Point } from 'geojson';
 import { isNil, omitBy, sortBy } from 'lodash';
 import moment from 'moment';
 import { Site } from '../sites/sites.entity';
-import { SofarModels, sofarVariableIDs, SOFAR_API_TOKEN } from './constants';
+import { SofarModels, sofarVariableIDs } from './constants';
 import { getLatestData, getSofarHindcastData, getSpotterData } from './sofar';
 import { SofarLiveData, ValueWithTimestamp } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
@@ -23,7 +23,7 @@ export const getLiveData = async (
 
   const now = new Date();
 
-  const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
+  const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
   const [spotterRawData, degreeHeatingDays, satelliteTemperature] =
     await Promise.all([
       sensorId && isDeployed ? getSpotterData(sensorId, sofarToken) : undefined,
