@@ -87,6 +87,19 @@ exports[`renders as expected 1`] = `
           
         </span>
       </mock-typography>
+      <mock-typography
+        style="font-size: 0.8em;"
+      >
+        For more information about uploading data, visit our 
+        <a
+          href="https://aqualink.org/faq"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          FAQ page
+        </a>
+        .
+      </mock-typography>
     </div>
   </div>
 </div>

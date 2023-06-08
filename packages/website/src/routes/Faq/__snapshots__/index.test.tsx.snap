@@ -126,7 +126,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 Scroll to the bottom of your dashboard for your site and click on "ADD NEW SURVEY". Follow the steps and add comments and pictures to your survey session.
                 <br />
                 <br />
-                Watch this video on how to upload surveys and best practices.
+                Watch this video on how to upload surveys and best practices. 
                 <a
                   href="https://youtu.be/ov64mc2Da_k"
                   rel="noopener noreferrer"
@@ -156,7 +156,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 Add comments to the survey and each survey point. The comments can include all the observations and data that you have from that survey session. Write the details of the corals that appeared based on your goals with your monitoring efforts. For example, you can display if the corals were healthy, bleached, or what percent of coral cover they had. You can also add information such as Crown of Thorns Starfish culled.
                 <br />
                 <br />
-                If your survey method is taking pictures of corals in known locations, for example, we recommend that you take the image from the exact same angles and distance. This provides the best comparison between survey sessions. One good example of this is:
+                If your survey method is taking pictures of corals in known locations, for example, we recommend that you take the image from the exact same angles and distance. This provides the best comparison between survey sessions. One good example of this is: 
                 <a
                   href="https://aqualink.org/sites/2943/points/558"
                   rel="noopener noreferrer"
@@ -219,6 +219,18 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   Video tutorial on how to upload HUI data.
                 </a>
+                <br />
+                <br />
+                Please view 
+                <a
+                  href="https://docs.google.com/document/d/14MfB5iDZqzArZ-MAWuzWnnNs0XsRYK3bchotL-hRMUs/edit?usp=sharing"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  this document
+                </a>
+                 
+                to see all the parameters and values that we currently allow. Note that you can upload a few extra parameters that won't be shown on the dashboard card, but these will be included when you download the CSV file of your site's combined dashboard data.
               </p>
             </div>
           </div>
@@ -245,8 +257,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   HOBO data
                 </a>
-                 
-                ,
+                , 
                 <a
                   href="https://drive.google.com/file/d/1GA0xnbjB52bISo7iUJh84MQePcQ6M0nX/view?usp=share_link"
                   rel="noopener noreferrer"
@@ -254,7 +265,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   meteorological data
                 </a>
-                ,
+                , 
                 <a
                   href="https://docs.google.com/spreadsheets/d/1C1oqhLKE-6vhx5n6XGV2O8JtDs7ZVEdl/edit?usp=share_link&ouid=101543162312822485121&rtpof=true&sd=true"
                   rel="noopener noreferrer"
@@ -262,8 +273,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   Sonde data
                 </a>
-                 
-                ,
+                , 
                 <a
                   href="https://drive.google.com/file/d/1nKos1AcZofr7kEJ5cNllkeonH0bWN9h-/view?usp=share_link"
                   rel="noopener noreferrer"
@@ -287,7 +297,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 How can I upload temperature data to Aqualink?
               </mock-typography>
               <p>
-                When uploading temperature data to Aqualink, please use the "HOBO data" sensor type. If you are using a HOBO temperature logger, you can upload the raw data file. If you're using any other type of temperature logger, add a column for time and date and another column for temperature. Please use this
+                When uploading temperature data to Aqualink, please use the "HOBO data" sensor type. If you are using a HOBO temperature logger, you can upload the raw data file. If you're using any other type of temperature logger, add a column for time and date and another column for temperature. Please use this 
                 <a
                   href="https://docs.google.com/spreadsheets/d/17txhvReJynwC3V9TmQeUJ6dWGTk3jjgs/edit?usp=share_link&ouid=101543162312822485121&rtpof=true&sd=true"
                   rel="noopener noreferrer"
@@ -295,7 +305,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   template
                 </a>
-                , and watch this
+                , and watch this 
                 <a
                   href="https://youtu.be/6wiRd6UFhE4"
                   rel="noopener noreferrer"
@@ -303,7 +313,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   video tutorial
                 </a>
-                on how to upload temperature data.
+                 on how to upload temperature data.
               </p>
             </div>
           </div>
