@@ -91,7 +91,7 @@
     "@types/immutable": "^3.8.7",
     "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.149",
-    "@types/node": "^18.2.3",
+    "@types/node": "^18.16.16",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-leaflet": "^2.5.1",

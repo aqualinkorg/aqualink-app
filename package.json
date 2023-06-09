@@ -4,7 +4,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "main": "./packages/api/cloud-functions/dist/cloud-functions/index.js",
+  "main": "./packages/api/cloud-functions/dist/cloud-functions/main.js",
   "scripts": {
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint --fix",
     "lint:all": "lerna run lint",
