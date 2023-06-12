@@ -61,8 +61,8 @@ jobs:
         working-directory: packages/website
         run: yarn build
 
-      - name: Deploy on surge
-        if: steps.build_website.outcome == 'success'
+      - name: Deploy pull request on surge
+        if: steps.build_website.outcome == 'success' && github.event.pull_request.number != null
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: ${{ env.surge_url }}
