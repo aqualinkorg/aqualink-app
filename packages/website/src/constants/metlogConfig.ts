@@ -1,11 +1,7 @@
 import { MetricsKeys } from '../store/Sites/types';
+import { BaseSourceConfig } from '../utils/types';
 
-interface MetlogConfig {
-  title: string;
-  units: string;
-  description: string;
-  visibility: string;
-  order: number;
+interface MetlogConfig extends BaseSourceConfig {
   convert?: number;
 }
 

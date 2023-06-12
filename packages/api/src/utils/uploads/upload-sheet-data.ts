@@ -204,8 +204,8 @@ const getTimeStamp = (
   )
     return new Date(`${item[index[0]]} ${item[index[1]]}`);
   if (isArray) {
-    const date = new Date(Date.UTC(1900, 0, 1));
-    date.setDate(item[index[0]] || 0);
+    const date = new Date(Date.UTC(1900, 0));
+    date.setDate(item[index[0]] - 1 || 0);
     date.setUTCHours(0);
     date.setUTCMinutes(0);
     date.setUTCSeconds(0);

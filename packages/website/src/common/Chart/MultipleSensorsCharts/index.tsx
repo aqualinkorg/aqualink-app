@@ -38,6 +38,7 @@ import {
 import { useQueryParam } from '../../../hooks/useQueryParams';
 import ChartWithCard from './ChartWithCard';
 import {
+  HUI_DATA_COLOR,
   METLOG_DATA_COLOR,
   OCEAN_SENSE_DATA_COLOR,
   SONDE_DATA_COLOR,
@@ -48,6 +49,10 @@ import {
   getPublicMetlogMetrics,
 } from '../../../constants/metlogConfig';
 import DownloadCSVButton from './DownloadCSVButton';
+import {
+  getHuiConfig,
+  getPublicHuiMetrics,
+} from '../../../constants/huiConfig';
 
 const DEFAULT_METRICS: MetricsKeys[] = [
   'bottom_temperature',
@@ -129,6 +134,8 @@ const MultipleSensorsCharts = ({
   const hasMetlogData = Boolean(
     latestData?.some((data) => data.source === 'metlog'),
   );
+
+  const hasHuiData = Boolean(latestData?.some((data) => data.source === 'hui'));
 
   const chartStartDate = startDate || subtractFromDate(today, 'week');
   const chartEndDate = moment
@@ -235,6 +242,35 @@ const MultipleSensorsCharts = ({
           })
       : [];
 
+  const huiDatasets = () =>
+    hasHuiData
+      ? sortBy(getPublicHuiMetrics(), (key) => getHuiConfig(key).order)
+          .filter((key) => {
+            return timeSeriesData?.[camelCase(key) as Metrics]?.hui?.data
+              ?.length;
+          })
+          .map((key) => {
+            const { data, surveyPoint } =
+              timeSeriesData?.[camelCase(key) as Metrics]?.hui || {};
+            const { title, units } = getHuiConfig(key);
+
+            return {
+              key,
+              title,
+              surveyPoint,
+              dataset: generateMetricDataset(
+                'HUI',
+                data || [],
+                units,
+                HUI_DATA_COLOR,
+                chartStartDate,
+                chartEndDate,
+                site.timezone,
+              ),
+            };
+          })
+      : [];
+
   // Scroll to the chart defined by the chartParam query param.
   useEffect(() => {
     if (chartParam) {
@@ -302,7 +338,10 @@ const MultipleSensorsCharts = ({
           pointId,
           start: siteLocalStartDate,
           end: siteLocalEndDate,
-          metrics: hasSondeData || hasMetlogData ? undefined : DEFAULT_METRICS,
+          metrics:
+            hasSondeData || hasMetlogData || hasHuiData
+              ? undefined
+              : DEFAULT_METRICS,
           hourly:
             moment(siteLocalEndDate).diff(moment(siteLocalStartDate), 'days') >
             2,
@@ -322,6 +361,7 @@ const MultipleSensorsCharts = ({
     }
   }, [
     dispatch,
+    hasHuiData,
     hasMetlogData,
     hasOceanSenseId,
     hasSondeData,
@@ -681,6 +721,40 @@ const MultipleSensorsCharts = ({
               {
                 name: 'Meteorological',
                 data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.metlog
+                  ?.data,
+              },
+            ]}
+            timeZone={site.timezone}
+            showRangeButtons={false}
+            chartWidth="large"
+            site={site}
+            pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
+            pickerEndDate={pickerEndDate || today}
+            chartStartDate={chartStartDate}
+            chartEndDate={chartEndDate}
+            onStartDateChange={onPickerDateChange('start')}
+            onEndDateChange={onPickerDateChange('end')}
+            isPickerErrored={pickerErrored}
+            showDatePickers={false}
+            surveyPoint={surveyPoint}
+            hideYAxisUnits
+            cardColumnJustification="flex-start"
+          />
+        </Box>
+      ))}
+      {huiDatasets().map(({ key, title, surveyPoint, dataset }) => (
+        <Box mt={4} key={key}>
+          <ChartWithCard
+            datasets={[dataset]}
+            id={key}
+            range={range}
+            onRangeChange={onRangeChange}
+            disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+            chartTitle={title}
+            availableRanges={[
+              {
+                name: 'HUI',
+                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.hui
                   ?.data,
               },
             ]}
