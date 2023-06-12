@@ -11,7 +11,7 @@ export const isTestEnv = envName === 'test';
 // Environment variables (especially those used by cloud-functions)
 // should NOT be exported from here (eg. "export const { SOFAR_API_TOKEN } = process.env"),
 // since it will interfere with the way they are set in cloud-functions,
-// causing them to be undefine.
+// causing them to be undefined.
 
 // Sofar API urls
 export const SOFAR_MARINE_URL =
