@@ -8,8 +8,8 @@ import {
   HistoricalMonthlyMeanData,
   Range,
   ValueWithTimestamp,
-} from '../store/Sites/types';
-import { SurveyListItem } from '../store/Survey/types';
+} from 'store/Sites/types';
+import { SurveyListItem } from 'store/Survey/types';
 
 type DateString = string | null | undefined;
 

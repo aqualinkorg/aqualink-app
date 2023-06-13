@@ -11,10 +11,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-import {
-  sitesListSelector,
-  sitesRequest,
-} from '../../../store/Sites/sitesListSlice';
+import { sitesListSelector, sitesRequest } from 'store/Sites/sitesListSlice';
 
 const SitesList = ({ classes }: SitesListProps) => {
   const sitesList = useSelector(sitesListSelector);

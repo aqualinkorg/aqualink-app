@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
+import { mockUser } from 'mocks/mockUser';
 import DeleteButton from '.';
-import { mockUser } from '../../mocks/mockUser';
 
 const mockStore = configureStore([]);
 

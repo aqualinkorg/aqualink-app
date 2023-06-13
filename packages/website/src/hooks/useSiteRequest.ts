@@ -5,7 +5,7 @@ import {
   siteDetailsSelector,
   siteLoadingSelector,
   siteRequest,
-} from '../store/Sites/selectedSiteSlice';
+} from 'store/Sites/selectedSiteSlice';
 
 export const useSiteRequest = (siteId: string) => {
   const dispatch = useDispatch();

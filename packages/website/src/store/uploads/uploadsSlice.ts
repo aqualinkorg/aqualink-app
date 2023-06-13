@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { uniqBy } from 'lodash';
-import { getAxiosErrorMessage } from '../../helpers/errors';
-import uploadServices from '../../services/uploadServices';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import uploadServices from 'services/uploadServices';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
 import { UploadsSliceState } from './types';
 

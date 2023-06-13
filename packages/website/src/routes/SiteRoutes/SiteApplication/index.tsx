@@ -15,28 +15,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
-import { AgreementsChecked } from './types';
-import Obligations from './Obligations';
-import Agreements from './Agreements';
-import SignInDialog from '../../../common/SignInDialog';
-import RegisterDialog from '../../../common/RegisterDialog';
-import Form from './Form';
-import NavBar from '../../../common/NavBar';
-import Footer from '../../../common/Footer';
-import { getSiteNameAndRegion } from '../../../store/Sites/helpers';
-import siteServices from '../../../services/siteServices';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import {
   userInfoSelector,
   getSelf,
   userLoadingSelector,
-} from '../../../store/User/userSlice';
+} from 'store/User/userSlice';
 import {
   siteDetailsSelector,
   siteLoadingSelector,
   siteRequest,
-} from '../../../store/Sites/selectedSiteSlice';
-import { SiteApplication, SiteApplyParams } from '../../../store/Sites/types';
-import { isAdmin } from '../../../helpers/user';
+} from 'store/Sites/selectedSiteSlice';
+import { SiteApplication, SiteApplyParams } from 'store/Sites/types';
+import { isAdmin } from 'helpers/user';
+import SignInDialog from 'common/SignInDialog';
+import RegisterDialog from 'common/RegisterDialog';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import siteServices from 'services/siteServices';
+import { AgreementsChecked } from './types';
+import Obligations from './Obligations';
+import Agreements from './Agreements';
+import Form from './Form';
 
 const Apply = ({ match, classes }: ApplyProps) => {
   const dispatch = useDispatch();

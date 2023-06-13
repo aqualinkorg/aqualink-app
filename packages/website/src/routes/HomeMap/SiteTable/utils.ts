@@ -1,5 +1,5 @@
 import { startCase } from 'lodash';
-import type { TableRow } from '../../../store/Homepage/types';
+import type { TableRow } from 'store/Homepage/types';
 
 export type Order = 'asc' | 'desc';
 

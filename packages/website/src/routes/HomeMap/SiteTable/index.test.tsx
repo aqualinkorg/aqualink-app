@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
+import { mockSite } from 'mocks/mockSite';
+import { mockUser } from 'mocks/mockUser';
 import SiteTable from '.';
-import { mockSite } from '../../../mocks/mockSite';
-import { mockUser } from '../../../mocks/mockUser';
 
 jest.mock('./SelectedSiteCard', () => 'Mock-SelectedSiteCard');
 

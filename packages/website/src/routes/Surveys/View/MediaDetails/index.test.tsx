@@ -3,12 +3,12 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
+import { SurveyMedia } from 'store/Survey/types';
+import { getSurveyPointsByName } from 'helpers/surveyMedia';
+import { mockUser } from 'mocks/mockUser';
+import { mockSurvey } from 'mocks/mockSurvey';
+import { mockSite } from 'mocks/mockSite';
 import MediaDetails from '.';
-import { mockUser } from '../../../../mocks/mockUser';
-import { mockSurvey } from '../../../../mocks/mockSurvey';
-import { mockSite } from '../../../../mocks/mockSite';
-import { getSurveyPointsByName } from '../../../../helpers/surveyMedia';
-import { SurveyMedia } from '../../../../store/Survey/types';
 
 const mockStore = configureStore([]);
 

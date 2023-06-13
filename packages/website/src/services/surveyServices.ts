@@ -6,9 +6,9 @@ import type {
   SurveyMediaUpdateRequestData,
   SurveyPointUpdateParams,
   SurveyMedia,
-} from '../store/Survey/types';
-import requests from '../helpers/requests';
-import { SurveyPoints } from '../store/Sites/types';
+} from 'store/Survey/types';
+import { SurveyPoints } from 'store/Sites/types';
+import requests from 'helpers/requests';
 
 const getSurvey = (siteId: string, surveyId: string) =>
   requests.send<SurveyState>({

@@ -18,16 +18,12 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { Link } from 'react-router-dom';
 
 import classNames from 'classnames';
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import Card from './Card';
 import landingPageImage from '../../assets/img/landing-page/header.jpg';
 import { cardTitles } from './titles';
-import {
-  GaAction,
-  GaCategory,
-  trackButtonClick,
-} from '../../utils/google-analytics';
 
 interface LandingPageButton {
   label: string;

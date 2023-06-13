@@ -16,8 +16,8 @@ import grey from '@material-ui/core/colors/grey';
 import { Alert } from '@material-ui/lab';
 import isEmpty from 'lodash/isEmpty';
 
+import { TimeSeriesSurveyPoint } from 'store/Sites/types';
 import { AvailableRange, RangeButton, RangeValue } from './types';
-import { TimeSeriesSurveyPoint } from '../../../store/Sites/types';
 import { availableRangeString } from './helpers';
 
 const Header = ({

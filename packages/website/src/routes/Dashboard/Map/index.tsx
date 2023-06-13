@@ -10,9 +10,9 @@ import {
 } from '@material-ui/core';
 import { LatLng } from 'leaflet';
 
+import { CollectionDetails } from 'store/Collection/types';
+import { getCollectionCenterAndBounds } from 'helpers/map';
 import Map from '../../HomeMap/Map';
-import { getCollectionCenterAndBounds } from '../../../helpers/map';
-import { CollectionDetails } from '../../../store/Collection/types';
 
 const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
   const theme = useTheme();

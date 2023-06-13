@@ -6,6 +6,11 @@ import {
   AsyncThunk,
 } from '@reduxjs/toolkit';
 
+import { isManager } from 'helpers/user';
+import { setSiteNameFromList } from 'helpers/siteUtils';
+import { getAxiosErrorMessage, getFirebaseErrorMessage } from 'helpers/errors';
+import userServices from 'services/userServices';
+import collectionServices from 'services/collectionServices';
 import type {
   PasswordResetParams,
   User,
@@ -15,16 +20,8 @@ import type {
   CreateUserCollectionRequestParams,
 } from './types';
 import type { RootState, CreateAsyncThunkTypes } from '../configure';
-import { isManager } from '../../helpers/user';
-import userServices from '../../services/userServices';
-import collectionServices from '../../services/collectionServices';
 import { constructUserObject } from './helpers';
-import { setSiteNameFromList } from '../../helpers/siteUtils';
 import { UpdateSiteNameFromListArgs } from '../Sites/types';
-import {
-  getAxiosErrorMessage,
-  getFirebaseErrorMessage,
-} from '../../helpers/errors';
 
 const userInitialState: UserState = {
   userInfo: null,

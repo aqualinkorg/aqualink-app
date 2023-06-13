@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
 
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 
 import ghbttn from '../../assets/img/ghbttn.png';
 import f4 from '../../assets/img/f4.png';

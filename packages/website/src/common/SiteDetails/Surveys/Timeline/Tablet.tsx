@@ -1,10 +1,10 @@
 import React from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 
+import { displayTimeInLocalTimezone } from 'helpers/dates';
 import AddButton from '../AddButton';
 import SurveyCard from '../SurveyCard';
 import incomingStyles from '../styles';
-import { displayTimeInLocalTimezone } from '../../../../helpers/dates';
 import { TimelineProps } from './types';
 import LoadingSkeleton from '../../../LoadingSkeleton';
 

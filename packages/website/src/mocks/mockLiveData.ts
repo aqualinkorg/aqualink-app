@@ -1,4 +1,4 @@
-import { LiveData } from '../store/Sites/types';
+import { LiveData } from 'store/Sites/types';
 
 const now = new Date();
 const minutesAgo = 5;

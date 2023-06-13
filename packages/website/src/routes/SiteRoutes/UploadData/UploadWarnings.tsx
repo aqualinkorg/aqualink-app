@@ -17,7 +17,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import WarningIcon from '@material-ui/icons/Warning';
 import { yellow } from '@material-ui/core/colors';
 
-import { UploadTimeSeriesResult } from '../../../services/uploadServices';
+import { UploadTimeSeriesResult } from 'services/uploadServices';
 
 const YELLOW = yellow[600];
 

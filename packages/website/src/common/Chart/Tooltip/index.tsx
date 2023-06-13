@@ -14,8 +14,8 @@ import { Link } from 'react-router-dom';
 import styled from '@material-ui/core/styles/styled';
 import { isNumber } from 'lodash';
 
-import { formatNumber } from '../../../helpers/numberUtils';
-import { displayTimeInLocalTimezone } from '../../../helpers/dates';
+import { formatNumber } from 'helpers/numberUtils';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
 import { Dataset } from '..';
 
 export const TOOLTIP_WIDTH = 190;

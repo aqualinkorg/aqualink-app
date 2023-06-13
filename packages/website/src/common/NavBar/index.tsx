@@ -30,22 +30,22 @@ import { sortBy } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import LanguageIcon from '@material-ui/icons/Language';
+import { userInfoSelector, signOutUser } from 'store/User/userSlice';
+import {
+  clearCollection,
+  collectionDetailsSelector,
+} from 'store/Collection/collectionSlice';
+import {
+  unsetLatestData,
+  unsetSpotterPosition,
+  unsetSelectedSite,
+} from 'store/Sites/selectedSiteSlice';
+import { useGoogleTranslation } from 'utils/google-translate';
 import RegisterDialog from '../RegisterDialog';
 import SignInDialog from '../SignInDialog';
 import Search from '../Search';
 import RouteButtons from '../RouteButtons';
 import MenuDrawer from '../MenuDrawer';
-import { userInfoSelector, signOutUser } from '../../store/User/userSlice';
-import {
-  clearCollection,
-  collectionDetailsSelector,
-} from '../../store/Collection/collectionSlice';
-import {
-  unsetLatestData,
-  unsetSpotterPosition,
-  unsetSelectedSite,
-} from '../../store/Sites/selectedSiteSlice';
-import { useGoogleTranslation } from '../../utils/google-translate';
 
 const NavBar = ({
   searchLocation,

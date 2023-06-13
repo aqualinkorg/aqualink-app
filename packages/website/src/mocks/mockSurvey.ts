@@ -1,4 +1,4 @@
-import { SurveyState } from '../store/Survey/types';
+import { SurveyState } from 'store/Survey/types';
 
 export const mockSurvey: SurveyState = {
   comments: 'No comments',

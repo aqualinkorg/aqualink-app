@@ -19,21 +19,21 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
-import SelectedSiteCard from './SelectedSiteCard';
-import SiteTableBody from './body';
-import { getOrderKeysFriendlyString, Order, OrderKeys } from './utils';
 import {
   filterSitesWithSpotter,
   sitesListLoadingSelector,
-} from '../../../store/Sites/sitesListSlice';
-import EnhancedTableHead from './tableHead';
-import { useWindowSize } from '../../../hooks/useWindowSize';
+} from 'store/Sites/sitesListSlice';
 import {
   siteOnMapSelector,
   setWithSpotterOnly,
   withSpotterOnlySelector,
-} from '../../../store/Homepage/homepageSlice';
-import { getSiteNameAndRegion } from '../../../store/Sites/helpers';
+} from 'store/Homepage/homepageSlice';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { useWindowSize } from 'hooks/useWindowSize';
+import SelectedSiteCard from './SelectedSiteCard';
+import SiteTableBody from './body';
+import { getOrderKeysFriendlyString, Order, OrderKeys } from './utils';
+import EnhancedTableHead from './tableHead';
 import { Collection } from '../../Dashboard/collection';
 
 const SMALL_HEIGHT = 720;

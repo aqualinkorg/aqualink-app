@@ -14,11 +14,11 @@ import {
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { userInfoSelector } from 'store/User/userSlice';
+import { isAdmin } from 'helpers/user';
+import { convertOptionsToQueryParams } from 'helpers/video';
 import reefImage from '../../../assets/reef-image.jpg';
 import uploadIcon from '../../../assets/icon_upload.svg';
-import { isAdmin } from '../../../helpers/user';
-import { userInfoSelector } from '../../../store/User/userSlice';
-import { convertOptionsToQueryParams } from '../../../helpers/video';
 
 const playerOptions = {
   autoplay: 1,

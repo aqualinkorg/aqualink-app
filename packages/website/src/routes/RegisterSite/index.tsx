@@ -21,14 +21,14 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import { useSelector, useDispatch } from 'react-redux';
 
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
-import RegisterDialog from '../../common/RegisterDialog';
-import SignInDialog from '../../common/SignInDialog';
+import { userInfoSelector, getSelf } from 'store/User/userSlice';
+import validators from 'helpers/validators';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import RegisterDialog from 'common/RegisterDialog';
+import SignInDialog from 'common/SignInDialog';
+import siteServices from 'services/siteServices';
 import LocationMap from './LocationMap';
-import { userInfoSelector, getSelf } from '../../store/User/userSlice';
-import siteServices from '../../services/siteServices';
-import validators from '../../helpers/validators';
 
 interface FormElement {
   id: string;

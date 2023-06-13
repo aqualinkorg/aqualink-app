@@ -8,8 +8,8 @@ import {
 } from '@material-ui/core';
 import classNames from 'classnames';
 
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 
 import peter from '../../assets/img/peter.jpg';
 import lyndon from '../../assets/img/LYNDON1.jpg';

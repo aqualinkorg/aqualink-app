@@ -16,16 +16,16 @@ import { Link } from 'react-router-dom';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import RemoveIcon from '@material-ui/icons/Remove';
-import UpdateInfo from '../../UpdateInfo';
-import { findAdministeredSite } from '../../../helpers/findAdministeredSite';
-import { formatNumber } from '../../../helpers/numberUtils';
-import { toRelativeTime } from '../../../helpers/dates';
-import { User } from '../../../store/User/types';
+import { User } from 'store/User/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { LatestDataASSofarValue } from 'store/Sites/types';
+import { findAdministeredSite } from 'helpers/findAdministeredSite';
+import { formatNumber } from 'helpers/numberUtils';
+import { toRelativeTime } from 'helpers/dates';
+import { isAdmin } from 'helpers/user';
 import sensor from '../../../assets/sensor.svg';
 import { styles as incomingStyles } from '../styles';
-import { isAdmin } from '../../../helpers/user';
-import { userInfoSelector } from '../../../store/User/userSlice';
-import { LatestDataASSofarValue } from '../../../store/Sites/types';
+import UpdateInfo from '../../UpdateInfo';
 
 /**
  * Get the sensor application tag message and clickability for a user/site combination.

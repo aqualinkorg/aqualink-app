@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, createStyles, makeStyles, Typography } from '@material-ui/core';
 
+import { Site } from 'store/Sites/types';
+import { SurveyListItem } from 'store/Survey/types';
+import { convertSurveyDataToLocalTime } from 'helpers/dates';
 import ChartWithTooltip from './ChartWithTooltip';
 import MultipleSensorsCharts from './MultipleSensorsCharts';
-import { Site } from '../../store/Sites/types';
-import { convertSurveyDataToLocalTime } from '../../helpers/dates';
-import { SurveyListItem } from '../../store/Survey/types';
 import { standardDailyDataDataset } from './MultipleSensorsCharts/helpers';
 import LoadingSkeleton from '../LoadingSkeleton';
 import chartSkeletonImage from '../../assets/img/chart_skeleton.png';

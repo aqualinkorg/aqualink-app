@@ -1,9 +1,9 @@
-import requests from '../helpers/requests';
 import {
   CollectionDetailsResponse,
   CollectionSummary,
   CollectionUpdateParams,
-} from '../store/Collection/types';
+} from 'store/Collection/types';
+import requests from 'helpers/requests';
 
 const createCollection = (
   name: string,

@@ -14,10 +14,10 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import { DeleteOutlineOutlined } from '@material-ui/icons';
-import observationOptions from '../../../constants/uploadDropdowns';
-import { SurveyPoints } from '../../../store/Sites/types';
+import observationOptions from 'constants/uploadDropdowns';
+import { SurveyPoints } from 'store/Sites/types';
+import SurveyPointSelector from 'common/SurveyPointSelector';
 import { ReactComponent as StarIcon } from '../../../assets/starIcon.svg';
-import SurveyPointSelector from '../../../common/SurveyPointSelector';
 
 const MediaCard = ({
   preview,

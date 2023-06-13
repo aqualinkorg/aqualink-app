@@ -1,5 +1,5 @@
-import { isManager } from '../../helpers/user';
-import userServices from '../../services/userServices';
+import { isManager } from 'helpers/user';
+import userServices from 'services/userServices';
 import { User } from './types';
 import { CollectionSummary } from '../Collection/types';
 

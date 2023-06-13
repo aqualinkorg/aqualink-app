@@ -11,10 +11,10 @@ import { makeStyles, Theme, Typography } from '@material-ui/core';
 import classNames from 'classnames';
 import grey from '@material-ui/core/colors/grey';
 
+import { displayTimeInLocalTimezone } from 'helpers/dates';
 import AddButton from '../AddButton';
 import SurveyCard from '../SurveyCard';
 import LoadingSkeleton from '../../../LoadingSkeleton';
-import { displayTimeInLocalTimezone } from '../../../../helpers/dates';
 import incomingStyles from '../styles';
 import { TimelineProps } from './types';
 

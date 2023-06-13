@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import collectionServices from 'services/collectionServices';
 import { CollectionState, CollectionRequestParams } from './types';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
-import collectionServices from '../../services/collectionServices';
 import { constructCollection } from './utils';
-import { getAxiosErrorMessage } from '../../helpers/errors';
 
 const collectionInitialState: CollectionState = {
   loading: false,

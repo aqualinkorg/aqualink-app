@@ -12,22 +12,16 @@ import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useHistory, useParams } from 'react-router-dom';
 
-import {
-  setSiteOnMap,
-  setSearchResult,
-} from '../../store/Homepage/homepageSlice';
-import type { Site } from '../../store/Sites/types';
-import {
-  sitesListSelector,
-  sitesRequest,
-} from '../../store/Sites/sitesListSlice';
-import { getSiteNameAndRegion } from '../../store/Sites/helpers';
-import mapServices from '../../services/mapServices';
+import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
+import type { Site } from 'store/Sites/types';
+import { sitesListSelector, sitesRequest } from 'store/Sites/sitesListSlice';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import {
   unsetLatestData,
   unsetSpotterPosition,
   unsetSelectedSite,
-} from '../../store/Sites/selectedSiteSlice';
+} from 'store/Sites/selectedSiteSlice';
+import mapServices from 'services/mapServices';
 
 const siteAugmentedName = (site: Site) => {
   const { name, region } = getSiteNameAndRegion(site);

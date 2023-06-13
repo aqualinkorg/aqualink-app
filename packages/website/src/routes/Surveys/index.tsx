@@ -16,9 +16,9 @@ import {
   siteLoadingSelector,
   siteErrorSelector,
   siteRequest,
-} from '../../store/Sites/selectedSiteSlice';
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
+} from 'store/Sites/selectedSiteSlice';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 import NewSurvey from './New';
 import SurveyViewPage from './View';
 

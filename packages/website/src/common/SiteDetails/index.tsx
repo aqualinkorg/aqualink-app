@@ -12,6 +12,24 @@ import classNames from 'classnames';
 import times from 'lodash/times';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { oceanSenseConfig } from 'constants/oceanSenseConfig';
+import type { Site, LatestDataASSofarValue } from 'store/Sites/types';
+import { SurveyListItem, SurveyPoint } from 'store/Survey/types';
+import {
+  forecastDataRequest,
+  forecastDataSelector,
+  latestDataRequest,
+  latestDataSelector,
+  spotterPositionRequest,
+  spotterPositionSelector,
+  unsetForecastData,
+  unsetLatestData,
+  unsetSpotterPosition,
+} from 'store/Sites/selectedSiteSlice';
+import { parseLatestData } from 'store/Sites/helpers';
+import { getMiddlePoint } from 'helpers/map';
+import { formatNumber } from 'helpers/numberUtils';
+import { displayTimeInLocalTimezone, sortByDate } from 'helpers/dates';
 import Map from './Map';
 import SketchFab from './SketchFab';
 import FeaturedMedia from './FeaturedMedia';
@@ -24,28 +42,10 @@ import Surveys from './Surveys';
 import CardWithTitle from './CardWithTitle';
 import { Value } from './CardWithTitle/types';
 import CombinedCharts from '../Chart/CombinedCharts';
-import type { Site, LatestDataASSofarValue } from '../../store/Sites/types';
-import { getMiddlePoint } from '../../helpers/map';
-import { formatNumber } from '../../helpers/numberUtils';
-import { SurveyListItem, SurveyPoint } from '../../store/Survey/types';
-import { displayTimeInLocalTimezone, sortByDate } from '../../helpers/dates';
-import { oceanSenseConfig } from '../../constants/oceanSenseConfig';
 import WaterSamplingCard from './WaterSampling';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
-import {
-  forecastDataRequest,
-  forecastDataSelector,
-  latestDataRequest,
-  latestDataSelector,
-  spotterPositionRequest,
-  spotterPositionSelector,
-  unsetForecastData,
-  unsetLatestData,
-  unsetSpotterPosition,
-} from '../../store/Sites/selectedSiteSlice';
-import { parseLatestData } from '../../store/Sites/helpers';
 import HUICard from './HUICard';
 
 const sondeMetrics: (keyof LatestDataASSofarValue)[] = [

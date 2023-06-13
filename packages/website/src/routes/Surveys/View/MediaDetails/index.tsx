@@ -11,22 +11,22 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import { SurveyMediaUpdateRequestData } from '../../../../store/Survey/types';
+import { SurveyMediaUpdateRequestData } from 'store/Survey/types';
+import {
+  selectedSurveyPointSelector,
+  surveyMediaEditRequest,
+} from 'store/Survey/surveySlice';
+import { userInfoSelector } from 'store/User/userSlice';
 import {
   getNumberOfImages,
   getNumberOfVideos,
   getSurveyPointsByName,
-} from '../../../../helpers/surveyMedia';
-import {
-  selectedSurveyPointSelector,
-  surveyMediaEditRequest,
-} from '../../../../store/Survey/surveySlice';
-import { userInfoSelector } from '../../../../store/User/userSlice';
-import { isAdmin } from '../../../../helpers/user';
+} from 'helpers/surveyMedia';
+import { isAdmin } from 'helpers/user';
+import { ArrayElement } from 'utils/types';
 import SliderCard from './SliderCard';
 import MediaCount from './MediaCount';
 import MediaPointName from './MediaPointName';
-import { ArrayElement } from '../../../../utils/types';
 
 const carouselSettings = {
   dots: true,

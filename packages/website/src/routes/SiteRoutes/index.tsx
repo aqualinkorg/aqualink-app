@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import Site from './Site';
-import SiteApplication from './SiteApplication';
-import SitesList from './SitesList';
-import Surveys from '../Surveys';
-import SurveyPoint from './SurveyPoint';
-import UploadData from './UploadData';
-import StatusSnackbar from '../../common/StatusSnackbar';
-import UploadWarnings from './UploadData/UploadWarnings';
-import { UploadTimeSeriesResult } from '../../services/uploadServices';
-import { setSelectedSite } from '../../store/Sites/selectedSiteSlice';
+import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
 import {
   clearUploadsError,
   clearUploadsFiles,
@@ -20,7 +11,16 @@ import {
   uploadsInProgressSelector,
   uploadsResponseSelector,
   uploadsTargetSelector,
-} from '../../store/uploads/uploadsSlice';
+} from 'store/uploads/uploadsSlice';
+import StatusSnackbar from 'common/StatusSnackbar';
+import { UploadTimeSeriesResult } from 'services/uploadServices';
+import Site from './Site';
+import SiteApplication from './SiteApplication';
+import SitesList from './SitesList';
+import Surveys from '../Surveys';
+import SurveyPoint from './SurveyPoint';
+import UploadData from './UploadData';
+import UploadWarnings from './UploadData/UploadWarnings';
 
 const SiteRoutes = () => {
   const dispatch = useDispatch();

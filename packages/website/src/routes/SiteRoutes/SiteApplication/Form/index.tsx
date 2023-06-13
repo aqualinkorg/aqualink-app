@@ -15,10 +15,7 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import moment from 'moment';
-import {
-  SiteApplication,
-  SiteApplyParams,
-} from '../../../../store/Sites/types';
+import { SiteApplication, SiteApplyParams } from 'store/Sites/types';
 
 interface SiteApplicationFormFields {
   siteName: string;

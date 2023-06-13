@@ -1,7 +1,7 @@
+import { User } from 'store/User/types';
+import type { Site } from 'store/Sites/types';
+import requests from 'helpers/requests';
 import app from '../firebase';
-import requests from '../helpers/requests';
-import { User } from '../store/User/types';
-import type { Site } from '../store/Sites/types';
 
 const createUser = (email: string, password: string) =>
   app && app.auth().createUserWithEmailAndPassword(email, password);

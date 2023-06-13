@@ -2,13 +2,13 @@ import React, { useCallback } from 'react';
 import { Grid, Collapse, IconButton } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { useSelector, useDispatch } from 'react-redux';
-import { SurveyData, SurveyState } from '../../../store/Survey/types';
+import { SurveyData, SurveyState } from 'store/Survey/types';
 import {
   surveyErrorSelector,
   surveyAddRequest,
-} from '../../../store/Survey/surveySlice';
-import { userInfoSelector } from '../../../store/User/userSlice';
-import Form from '../../../common/SurveyForm';
+} from 'store/Survey/surveySlice';
+import { userInfoSelector } from 'store/User/userSlice';
+import Form from 'common/SurveyForm';
 
 const SurveyForm = ({ siteId, timeZone, changeTab }: SurveyFormProps) => {
   const user = useSelector(userInfoSelector);

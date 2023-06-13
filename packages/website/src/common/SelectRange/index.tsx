@@ -10,7 +10,7 @@ import {
   MenuItem,
 } from '@material-ui/core';
 
-import { Range } from '../../store/Sites/types';
+import { Range } from 'store/Sites/types';
 
 const SelectRange = ({
   open,

@@ -1,4 +1,4 @@
-import { CollectionMetrics, Point, Site } from '../store/Sites/types';
+import { CollectionMetrics, Point, Site } from 'store/Sites/types';
 import { mockUser } from './mockUser';
 
 const now = new Date();

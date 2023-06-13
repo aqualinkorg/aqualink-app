@@ -4,21 +4,9 @@ import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { DropzoneProps } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from '@material-ui/lab';
-import NavBar from '../../../common/NavBar';
-import Header from './Header';
-import Selectors from './Selectors';
-import DropZone from './DropZone';
-import FileList from './FileList';
-import HistoryTable from './HistoryTable';
-import UploadButton from './UploadButton';
-import { useSiteRequest } from '../../../hooks/useSiteRequest';
-import { SiteUploadHistory, Sources } from '../../../store/Sites/types';
-import uploadServices from '../../../services/uploadServices';
-import { userInfoSelector } from '../../../store/User/userSlice';
-import siteServices from '../../../services/siteServices';
-import { setSelectedSite } from '../../../store/Sites/selectedSiteSlice';
-import { getAxiosErrorMessage } from '../../../helpers/errors';
-import StatusSnackbar from '../../../common/StatusSnackbar';
+import { SiteUploadHistory, Sources } from 'store/Sites/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
 import {
   addUploadsFiles,
   clearUploadsError,
@@ -31,8 +19,20 @@ import {
   uploadsFilesSelector,
   uploadsInProgressSelector,
   uploadsTargetSelector,
-} from '../../../store/uploads/uploadsSlice';
-import InfoWithAction from '../../../common/InfoWithAction';
+} from 'store/uploads/uploadsSlice';
+import { useSiteRequest } from 'hooks/useSiteRequest';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import NavBar from 'common/NavBar';
+import StatusSnackbar from 'common/StatusSnackbar';
+import InfoWithAction from 'common/InfoWithAction';
+import uploadServices from 'services/uploadServices';
+import siteServices from 'services/siteServices';
+import Header from './Header';
+import Selectors from './Selectors';
+import DropZone from './DropZone';
+import FileList from './FileList';
+import HistoryTable from './HistoryTable';
+import UploadButton from './UploadButton';
 
 const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const classes = useStyles();

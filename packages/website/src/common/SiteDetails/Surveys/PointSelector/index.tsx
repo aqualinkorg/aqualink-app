@@ -16,10 +16,10 @@ import {
 import { Create, DeleteOutline } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
-import { SurveyPoints } from '../../../../store/Sites/types';
+import { SurveyPoints } from 'store/Sites/types';
+import { maxLengths } from 'constants/names';
 import EditDialog, { Action } from '../../../Dialog';
 import CustomLink from '../../../Link';
-import { maxLengths } from '../../../../constants/names';
 
 const PointSelector = ({
   siteId,

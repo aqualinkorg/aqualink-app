@@ -5,8 +5,8 @@ import {
   Site,
   SurveyPoints,
   UpdateSiteNameFromListArgs,
-} from '../store/Sites/types';
-import type { TimeSeriesDataRequestParams } from '../store/Sites/types';
+} from 'store/Sites/types';
+import type { TimeSeriesDataRequestParams } from 'store/Sites/types';
 import requests from './requests';
 
 export const longDHW = (dhw: number | null): string =>

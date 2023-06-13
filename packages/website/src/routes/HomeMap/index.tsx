@@ -10,18 +10,15 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
-import HomepageNavBar from '../../common/NavBar';
-import HomepageMap from './Map';
-import SiteTable from './SiteTable';
-import {
-  sitesRequest,
-  sitesListSelector,
-} from '../../store/Sites/sitesListSlice';
-import { siteRequest } from '../../store/Sites/selectedSiteSlice';
-import { siteOnMapSelector } from '../../store/Homepage/homepageSlice';
+import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
+import { siteRequest } from 'store/Sites/selectedSiteSlice';
+import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
-import { surveysRequest } from '../../store/Survey/surveyListSlice';
-import { findSiteById, findInitialSitePosition } from '../../helpers/siteUtils';
+import { surveysRequest } from 'store/Survey/surveyListSlice';
+import { findSiteById, findInitialSitePosition } from 'helpers/siteUtils';
+import HomepageNavBar from 'common/NavBar';
+import SiteTable from './SiteTable';
+import HomepageMap from './Map';
 
 enum QueryParamKeys {
   SITE_ID = 'site_id',

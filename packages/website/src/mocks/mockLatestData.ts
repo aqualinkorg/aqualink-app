@@ -1,4 +1,4 @@
-import { LatestData } from '../store/Sites/types';
+import { LatestData } from 'store/Sites/types';
 
 const aDayAgo = new Date(
   new Date().setDate(new Date().getDate() - 1),

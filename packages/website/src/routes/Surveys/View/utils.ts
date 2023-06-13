@@ -1,12 +1,5 @@
-import {
-  getSofarDataClosestToDate,
-  sameDay,
-} from '../../../common/Chart/utils';
-import {
-  DailyData,
-  ValueWithTimestamp,
-  TimeSeries,
-} from '../../../store/Sites/types';
+import { DailyData, ValueWithTimestamp, TimeSeries } from 'store/Sites/types';
+import { getSofarDataClosestToDate, sameDay } from 'common/Chart/utils';
 
 const getSensorValue = (data?: ValueWithTimestamp[], date?: string | null) =>
   date && data?.[0]

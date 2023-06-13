@@ -4,9 +4,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
+import { mockUser } from 'mocks/mockUser';
+import { mockCollection } from 'mocks/mockCollection';
 import Terms from '.';
-import { mockUser } from '../../mocks/mockUser';
-import { mockCollection } from '../../mocks/mockCollection';
 
 const mockStore = configureStore([]);
 

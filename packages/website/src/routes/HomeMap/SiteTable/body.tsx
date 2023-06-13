@@ -14,19 +14,19 @@ import {
 import ErrorIcon from '@material-ui/icons/Error';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TableRow as Row } from '../../../store/Homepage/types';
-import { constructTableData } from '../../../store/Sites/helpers';
-import { colors } from '../../../layout/App/theme';
-import { dhwColorFinder } from '../../../helpers/degreeHeatingWeeks';
-import { formatNumber } from '../../../helpers/numberUtils';
-import { sitesToDisplayListSelector } from '../../../store/Sites/sitesListSlice';
+import { TableRow as Row } from 'store/Homepage/types';
+import { constructTableData } from 'store/Sites/helpers';
+import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
 import {
   siteOnMapSelector,
   setSiteOnMap,
   setSearchResult,
-} from '../../../store/Homepage/homepageSlice';
+} from 'store/Homepage/homepageSlice';
+import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
+import { formatNumber } from 'helpers/numberUtils';
+import { alertColorFinder } from 'helpers/bleachingAlertIntervals';
+import { colors } from 'layout/App/theme';
 import { getComparator, Order, OrderKeys, stableSort } from './utils';
-import { alertColorFinder } from '../../../helpers/bleachingAlertIntervals';
 import { Collection } from '../../Dashboard/collection';
 
 const SCROLLT_TIMEOUT = 500;

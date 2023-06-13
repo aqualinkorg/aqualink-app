@@ -8,6 +8,8 @@ import {
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import { getSelf } from 'store/User/userSlice';
+import { useGATagManager } from 'utils/google-analytics';
 import NotFound from '../../routes/NotFound';
 import ErrorBoundary from './ErrorBoundary';
 import LandingPage from '../../routes/Landing';
@@ -24,9 +26,7 @@ import theme from './theme';
 import 'leaflet/dist/leaflet.css';
 import './App.css';
 import '../../assets/css/bootstrap.css';
-import { getSelf } from '../../store/User/userSlice';
 import app from '../../firebase';
-import { useGATagManager } from '../../utils/google-analytics';
 import Terms from '../../routes/Terms';
 
 function App() {
