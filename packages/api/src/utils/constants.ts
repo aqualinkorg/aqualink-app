@@ -8,8 +8,12 @@ try {
 export const envName = process.env.NODE_ENV || 'development';
 export const isTestEnv = envName === 'test';
 
-// Sofar API urls and token
-export const { SOFAR_API_TOKEN } = process.env;
+// Environment variables (especially those used by cloud-functions)
+// should NOT be exported from here (eg. "export const { SOFAR_API_TOKEN } = process.env"),
+// since it will interfere with the way they are set in cloud-functions,
+// causing them to be undefined.
+
+// Sofar API urls
 export const SOFAR_MARINE_URL =
   'https://api.sofarocean.com/marine-weather/v1/models/';
 export const SOFAR_WAVE_DATA_URL = 'https://api.sofarocean.com/api/wave-data';
@@ -55,7 +59,3 @@ export const sofarVariableIDs = {
 };
 
 export const STORM_GLASS_BASE_URL = 'https://api.stormglass.io/v2';
-
-export const { SLACK_BOT_TOKEN, SLACK_BOT_CHANNEL } = !isTestEnv
-  ? process.env
-  : { SLACK_BOT_TOKEN: undefined, SLACK_BOT_CHANNEL: undefined };

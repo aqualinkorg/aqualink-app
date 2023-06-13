@@ -8,7 +8,7 @@ exports[`renders as expected 1`] = `
   >
     <mock-toolbar>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"

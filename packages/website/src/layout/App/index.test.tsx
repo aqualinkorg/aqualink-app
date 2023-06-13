@@ -22,7 +22,7 @@ test('renders as expected', () => {
         <Route exact path="/" component={() => <div>LandingPage</div>} />
         <Route exact path="/map" component={() => <div>HomeMap</div>} />
         <Route path="/sites" component={() => <div>Sites</div>} />
-        <Route default component={() => <div>Not Found</div>} />
+        <Route path="*" component={() => <div>Not Found</div>} />
       </Switch>
     </Router>,
   );

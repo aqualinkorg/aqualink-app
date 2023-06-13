@@ -4,7 +4,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import './index.css';
 import 'leaflet/dist/leaflet.css';
 import './assets/css/bootstrap.css';
-import jwt from 'jsonwebtoken';
+import { decodeToken } from 'react-jwt';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import App from './layout/App';
@@ -24,7 +24,7 @@ if (app) {
           const { config, status } = error?.response || {};
           const oldToken = store.getState().user.userInfo?.token;
           if (oldToken) {
-            const decoded = jwt.decode(oldToken) as { exp: number };
+            const decoded = decodeToken(oldToken) as { exp: number };
             const now = new Date().getTime();
             if (config && status === 401 && decoded.exp < now) {
               // 401 - Unauthorized eror was due to an expired token, renew it.

@@ -32,7 +32,7 @@ exports[`Delete Button should render with given state from Redux store 1`] = `
       dividers="true"
     >
       <div
-        class="MuiCollapse-container DeleteButton-alert-1 MuiCollapse-hidden"
+        class="MuiCollapse-root DeleteButton-alert-1 MuiCollapse-hidden"
         style="min-height: 0px;"
       >
         <div

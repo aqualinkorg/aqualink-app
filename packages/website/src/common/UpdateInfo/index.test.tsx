@@ -10,7 +10,7 @@ test('renders as expected', () => {
       <UpdateInfo
         relativeTime="02/01 14:00 EET"
         timeText="Last data received"
-        image={null}
+        image={undefined}
         imageText="NOAA"
         live={false}
         frequency="daily"

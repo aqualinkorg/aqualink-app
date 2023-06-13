@@ -181,7 +181,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </mock-drawer>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-6"
@@ -275,7 +275,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           </div>
         </mock-hidden>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
         >
           <mock-tooltip
             title="Translate"
@@ -466,7 +466,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
             >
               <div
                 class="MuiGrid-root MuiGrid-item"
@@ -512,7 +512,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root RegisterDialog-dialogContentTitle-24 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
@@ -611,7 +611,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 />
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
@@ -700,7 +700,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
             >
               <div
                 class="MuiGrid-root MuiGrid-item"
@@ -745,7 +745,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </div>
       </div>
       <div
-        class="MuiCollapse-container MuiCollapse-hidden"
+        class="MuiCollapse-root MuiCollapse-hidden"
         style="min-height: 0px;"
       >
         <div
@@ -803,7 +803,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root SignInDialog-dialogContentTitle-35 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
@@ -939,7 +939,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       class="MuiContainer-root MuiContainer-maxWidthLg"
     >
       <div
-        class="MuiCollapse-container MuiCollapse-hidden"
+        class="MuiCollapse-root MuiCollapse-hidden"
         style="min-height: 0px;"
       >
         <div
@@ -995,7 +995,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </div>
       </div>
       <div
-        class="MuiGrid-root InfoCard-cardWrapper-44 MuiGrid-container MuiGrid-justify-xs-center"
+        class="MuiGrid-root InfoCard-cardWrapper-44 MuiGrid-container MuiGrid-justify-content-xs-center"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12"
@@ -1004,7 +1004,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             elevation="3"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+              class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-space-between"
             >
               <div
                 class="MuiGrid-root Info-cardInfo-45 MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-6"
@@ -1024,7 +1024,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                   </mock-box>
                 </div>
                 <div
-                  class="MuiGrid-root Info-autoWidth-49 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+                  class="MuiGrid-root Info-autoWidth-49 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-content-xs-space-between"
                 >
                   <div
                     class="MuiGrid-root Info-infoWrapper-46 MuiGrid-item"
@@ -1052,7 +1052,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <div
-                      class="MuiGrid-root SurveyInfo-autoWidth-50 MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-justify-xs-space-between"
+                      class="MuiGrid-root SurveyInfo-autoWidth-50 MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-justify-content-xs-space-between"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-item"
@@ -1136,7 +1136,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       class="MuiContainer-root MuiContainer-maxWidthLg"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
       >
         <mock-box
           classname="SurveyHistory-title-52"
@@ -1174,7 +1174,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
   >
     <mock-toolbar>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"

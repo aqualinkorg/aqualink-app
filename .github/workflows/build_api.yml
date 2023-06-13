@@ -37,10 +37,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
       - uses: actions/cache@v2
         id: yarn-cache
@@ -74,6 +74,6 @@ jobs:
         run: yarn migration:run
 
       - name: Run API tests
-        if: steps.migrations.outcome == 'success'
+        if: success() || steps.migrations.outcome == 'success'
         working-directory: packages/api
         run: yarn test
