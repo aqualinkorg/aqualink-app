@@ -7,9 +7,9 @@ import {
   Hidden,
 } from '@material-ui/core';
 
-import { surveyListSelector } from '../../../../store/Survey/surveyListSlice';
-import { filterSurveys } from '../../../../helpers/surveys';
-import { SurveyMedia } from '../../../../store/Survey/types';
+import { surveyListSelector } from 'store/Survey/surveyListSlice';
+import { SurveyMedia } from 'store/Survey/types';
+import { filterSurveys } from 'helpers/surveys';
 import TimelineDesktop from './Desktop';
 import TimelineTablet from './Tablet';
 import { TimelineProps } from './types';

@@ -16,13 +16,13 @@ import { grey } from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { maxLengths } from '../../constants/names';
-import surveyServices from '../../services/surveyServices';
-import { userInfoSelector } from '../../store/User/userSlice';
-import siteServices from '../../services/siteServices';
-import { setSiteSurveyPoints } from '../../store/Sites/selectedSiteSlice';
-import { SurveyPoints } from '../../store/Sites/types';
-import { getAxiosErrorMessage } from '../../helpers/errors';
+import { maxLengths } from 'constants/names';
+import { userInfoSelector } from 'store/User/userSlice';
+import { setSiteSurveyPoints } from 'store/Sites/selectedSiteSlice';
+import { SurveyPoints } from 'store/Sites/types';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import siteServices from 'services/siteServices';
+import surveyServices from 'services/surveyServices';
 
 const NewSurveyPointDialog = ({
   open,

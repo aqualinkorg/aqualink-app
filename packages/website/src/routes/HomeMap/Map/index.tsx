@@ -13,15 +13,15 @@ import {
 import { Alert } from '@material-ui/lab';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 
-import { sitesListLoadingSelector } from '../../../store/Sites/sitesListSlice';
+import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
+import { searchResultSelector } from 'store/Homepage/homepageSlice';
+import { CollectionDetails } from 'store/Collection/types';
+import { MapLayerName } from 'store/Homepage/types';
+import { mapConstants } from 'constants/maps';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
-import { searchResultSelector } from '../../../store/Homepage/homepageSlice';
-import { CollectionDetails } from '../../../store/Collection/types';
-import { MapLayerName } from '../../../store/Homepage/types';
-import { mapConstants } from '../../../constants/maps';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 

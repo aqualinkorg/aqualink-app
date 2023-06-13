@@ -24,24 +24,24 @@ import {
   surveyLoadingSelector,
   surveyErrorSelector,
   surveyMediaEditLoadingSelector,
-} from '../../../store/Survey/surveySlice';
-import SurveyDetails from './SurveyDetails';
-import SurveyMediaDetails from './MediaDetails';
-import ChartWithTooltip from '../../../common/Chart/ChartWithTooltip';
-import type { Site } from '../../../store/Sites/types';
+} from 'store/Survey/surveySlice';
+import type { Site } from 'store/Sites/types';
 import {
   surveyListLoadingSelector,
   surveyListSelector,
   surveysRequest,
-} from '../../../store/Survey/surveyListSlice';
-import { siteTimeSeriesDataRequest } from '../../../store/Sites/selectedSiteSlice';
+} from 'store/Survey/surveyListSlice';
+import { siteTimeSeriesDataRequest } from 'store/Sites/selectedSiteSlice';
 import {
   displayTimeInLocalTimezone,
   convertSurveyDataToLocalTime,
   isBetween,
-} from '../../../helpers/dates';
-import { standardDailyDataDataset } from '../../../common/Chart/MultipleSensorsCharts/helpers';
-import { getSurveyPointsByName } from '../../../helpers/surveyMedia';
+} from 'helpers/dates';
+import { getSurveyPointsByName } from 'helpers/surveyMedia';
+import ChartWithTooltip from 'common/Chart/ChartWithTooltip';
+import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
+import SurveyDetails from './SurveyDetails';
+import SurveyMediaDetails from './MediaDetails';
 
 const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();

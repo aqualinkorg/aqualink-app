@@ -4,8 +4,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
+import { mockSite } from 'mocks/mockSite';
 import SelectedSiteCard from '.';
-import { mockSite } from '../../../../mocks/mockSite';
 
 jest.mock('react-chartjs-2', () => ({
   Line: () => 'Mock-Line',

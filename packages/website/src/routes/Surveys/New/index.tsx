@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 
-import type { Site } from '../../../store/Sites/types';
+import type { Site } from 'store/Sites/types';
 import Map from './Map';
 import Form from './Form';
 import UploadMedia from './UploadMedia';

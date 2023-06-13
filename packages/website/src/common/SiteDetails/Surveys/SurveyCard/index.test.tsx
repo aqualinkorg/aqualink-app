@@ -3,9 +3,9 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { mockUser } from 'mocks/mockUser';
+import { mockSurveyList } from 'mocks/mockSurveyList';
 import SurveyCard from '.';
-import { mockUser } from '../../../../mocks/mockUser';
-import { mockSurveyList } from '../../../../mocks/mockSurveyList';
 
 const mockStore = configureStore([]);
 

@@ -11,10 +11,10 @@ import {
 import classNames from 'classnames';
 import { isNil } from 'lodash';
 
+import type { LatestDataASSofarValue } from 'store/Sites/types';
+import { formatNumber } from 'helpers/numberUtils';
+import { toRelativeTime } from 'helpers/dates';
 import UpdateInfo from '../../UpdateInfo';
-import type { LatestDataASSofarValue } from '../../../store/Sites/types';
-import { formatNumber } from '../../../helpers/numberUtils';
-import { toRelativeTime } from '../../../helpers/dates';
 import waves from '../../../assets/waves.svg';
 import arrow from '../../../assets/directioncircle.svg';
 import wind from '../../../assets/wind.svg';

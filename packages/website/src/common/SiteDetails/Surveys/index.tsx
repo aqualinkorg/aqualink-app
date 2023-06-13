@@ -14,24 +14,24 @@ import {
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Timeline from './Timeline';
-import PointSelector from './PointSelector';
-import { setSiteSurveyPoints } from '../../../store/Sites/selectedSiteSlice';
-import { userInfoSelector } from '../../../store/User/userSlice';
+import observationOptions from 'constants/uploadDropdowns';
+import { setSiteSurveyPoints } from 'store/Sites/selectedSiteSlice';
+import { userInfoSelector } from 'store/User/userSlice';
 import {
   surveysRequest,
   updateSurveyPointName,
-} from '../../../store/Survey/surveyListSlice';
-import { setSelectedPoi } from '../../../store/Survey/surveySlice';
-import observationOptions from '../../../constants/uploadDropdowns';
-import { SurveyMedia } from '../../../store/Survey/types';
-import siteServices from '../../../services/siteServices';
-import { Site } from '../../../store/Sites/types';
-import { isAdmin } from '../../../helpers/user';
+} from 'store/Survey/surveyListSlice';
+import { setSelectedPoi } from 'store/Survey/surveySlice';
+import { SurveyMedia } from 'store/Survey/types';
+import { Site } from 'store/Sites/types';
+import { useBodyLength } from 'hooks/useBodyLength';
+import { isAdmin } from 'helpers/user';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import siteServices from 'services/siteServices';
+import surveyServices from 'services/surveyServices';
+import PointSelector from './PointSelector';
+import Timeline from './Timeline';
 import DeleteSurveyPointDialog, { Action } from '../../Dialog';
-import { useBodyLength } from '../../../hooks/useBodyLength';
-import surveyServices from '../../../services/surveyServices';
-import { getAxiosErrorMessage } from '../../../helpers/errors';
 
 const Surveys = ({ site }: SurveysProps) => {
   const classes = useStyles();

@@ -1,5 +1,5 @@
-import { User } from '../store/User/types';
-import { Site } from '../store/Sites/types';
+import { User } from 'store/User/types';
+import { Site } from 'store/Sites/types';
 
 export const findAdministeredSite = (
   user: User | null,

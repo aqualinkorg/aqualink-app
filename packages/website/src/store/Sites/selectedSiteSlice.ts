@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import siteServices from 'services/siteServices';
 import type {
   OceanSenseData,
   OceanSenseDataRequestParams,
@@ -10,13 +12,11 @@ import type {
   TimeSeriesDataRequestParams,
 } from './types';
 import type { RootState, CreateAsyncThunkTypes } from '../configure';
-import siteServices from '../../services/siteServices';
 import {
   mapOceanSenseData,
   mapTimeSeriesDataRanges,
   timeSeriesRequest,
 } from './helpers';
-import { getAxiosErrorMessage } from '../../helpers/errors';
 
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,

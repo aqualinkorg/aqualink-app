@@ -8,19 +8,16 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, useLocation } from 'react-router-dom';
 
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
-import {
-  userInfoSelector,
-  userLoadingSelector,
-} from '../../store/User/userSlice';
+import { userInfoSelector, userLoadingSelector } from 'store/User/userSlice';
 import {
   collectionDetailsSelector,
   collectionRequest,
-} from '../../store/Collection/collectionSlice';
-import Delayed from '../../common/Delayed';
+} from 'store/Collection/collectionSlice';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import Delayed from 'common/Delayed';
+import FullScreenMessage from 'common/FullScreenMessage';
 import DashboardContent from './Content';
-import FullScreenMessage from '../../common/FullScreenMessage';
 
 // This will be removed when the idea of public collections will be introduced.
 // For now only this static one is being used.

@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 
+import { mockUser } from 'mocks/mockUser';
+import { mockCollection } from 'mocks/mockCollection';
 import ErrorPage from '.';
-import { mockUser } from '../../mocks/mockUser';
-import { mockCollection } from '../../mocks/mockCollection';
 
 const mockStore = configureStore([]);
 

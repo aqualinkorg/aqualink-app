@@ -3,8 +3,8 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import L, { LeafletEvent } from 'leaflet';
 import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
 
+import { mapConstants } from 'constants/maps';
 import marker from '../../../assets/marker.png';
-import { mapConstants } from '../../../constants/maps';
 
 const pinIcon = L.icon({
   iconUrl: marker,

@@ -4,8 +4,8 @@ import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { mockSurveyList } from 'mocks/mockSurveyList';
 import Timeline from '.';
-import { mockSurveyList } from '../../../../mocks/mockSurveyList';
 
 const mockStore = configureStore([]);
 

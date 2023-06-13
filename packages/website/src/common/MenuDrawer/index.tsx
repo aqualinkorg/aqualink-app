@@ -14,12 +14,8 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import { Clear, GitHub } from '@material-ui/icons';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import ovioLogo from '../../assets/img/ovio_logo.png';
-import {
-  GaAction,
-  GaCategory,
-  trackButtonClick,
-} from '../../utils/google-analytics';
 
 const darkBlue = '#095877';
 

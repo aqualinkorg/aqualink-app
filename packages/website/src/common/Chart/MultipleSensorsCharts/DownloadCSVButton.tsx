@@ -4,10 +4,10 @@ import { Button } from '@material-ui/core';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { ValueWithTimestamp, MetricsKeys } from '../../../store/Sites/types';
+import { ValueWithTimestamp, MetricsKeys } from 'store/Sites/types';
+import { spotterPositionSelector } from 'store/Sites/selectedSiteSlice';
+import siteServices from 'services/siteServices';
 import DownloadCSVDialog from './DownloadCSVDialog';
-import { spotterPositionSelector } from '../../../store/Sites/selectedSiteSlice';
-import siteServices from '../../../services/siteServices';
 import { CSVColumnData } from './types';
 
 type CSVColumnNames =

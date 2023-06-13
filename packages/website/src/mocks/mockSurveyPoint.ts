@@ -1,4 +1,4 @@
-import { SurveyPoints } from '../store/Sites/types';
+import { SurveyPoints } from 'store/Sites/types';
 
 export const mockSurveyPoint: SurveyPoints = {
   id: 1,

@@ -4,8 +4,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
+import { mockSite } from 'mocks/mockSite';
 import Search from '.';
-import { mockSite } from '../../mocks/mockSite';
 
 const mockStore = configureStore([]);
 

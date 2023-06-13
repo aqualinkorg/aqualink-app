@@ -17,18 +17,14 @@ import { Popup as LeafletPopup, useLeaflet } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import type { LatLngTuple } from 'leaflet';
-import type { Site } from '../../../../store/Sites/types';
-import { getSiteNameAndRegion } from '../../../../store/Sites/helpers';
-import { colors } from '../../../../layout/App/theme';
-import { formatNumber } from '../../../../helpers/numberUtils';
-import { dhwColorFinder } from '../../../../helpers/degreeHeatingWeeks';
-import { siteOnMapSelector } from '../../../../store/Homepage/homepageSlice';
-import { maxLengths } from '../../../../constants/names';
-import {
-  GaCategory,
-  GaAction,
-  trackButtonClick,
-} from '../../../../utils/google-analytics';
+import type { Site } from 'store/Sites/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import { maxLengths } from 'constants/names';
+import { formatNumber } from 'helpers/numberUtils';
+import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
+import { colors } from 'layout/App/theme';
+import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
 const Popup = ({ site, classes, autoOpen }: PopupProps) => {
   const { map } = useLeaflet();

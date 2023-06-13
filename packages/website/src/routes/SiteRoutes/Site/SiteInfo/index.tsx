@@ -17,26 +17,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 
-import EditForm from './EditForm';
-import ExclusionDatesDialog from './ExclusionDatesDialog';
 import {
   setSelectedSite,
   setSiteData,
   setSiteDraft,
-} from '../../../../store/Sites/selectedSiteSlice';
-import { Site, SiteUpdateParams } from '../../../../store/Sites/types';
-import { getSiteNameAndRegion } from '../../../../store/Sites/helpers';
-import siteServices from '../../../../services/siteServices';
+} from 'store/Sites/selectedSiteSlice';
+import { Site, SiteUpdateParams } from 'store/Sites/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import {
   setAdministeredSiteName,
   userInfoSelector,
-} from '../../../../store/User/userSlice';
-import { displayTimeInLocalTimezone } from '../../../../helpers/dates';
+} from 'store/User/userSlice';
+import { sitesListSelector, setSiteName } from 'store/Sites/sitesListSlice';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
+import siteServices from 'services/siteServices';
+import EditForm from './EditForm';
+import ExclusionDatesDialog from './ExclusionDatesDialog';
 import CollectionButton from './CollectionButton';
-import {
-  sitesListSelector,
-  setSiteName,
-} from '../../../../store/Sites/sitesListSlice';
 
 const SiteNavBar = ({
   hasDailyData,

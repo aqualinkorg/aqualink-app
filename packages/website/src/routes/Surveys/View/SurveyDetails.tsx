@@ -7,14 +7,14 @@ import {
   Typography,
 } from '@material-ui/core';
 
+import type { Site } from 'store/Sites/types';
+import type { SurveyState } from 'store/Survey/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
 import {
   getNumberOfImages,
   getNumberOfSurveyPoints,
-} from '../../../helpers/surveyMedia';
-import { displayTimeInLocalTimezone } from '../../../helpers/dates';
-import type { Site } from '../../../store/Sites/types';
-import type { SurveyState } from '../../../store/Survey/types';
-import { getSiteNameAndRegion } from '../../../store/Sites/helpers';
+} from 'helpers/surveyMedia';
 import ObservationBox from './ObservationBox';
 
 const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {

@@ -15,10 +15,10 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
-import { siteTimeSeriesDataLoadingSelector } from '../../../store/Sites/selectedSiteSlice';
+import { siteTimeSeriesDataLoadingSelector } from 'store/Sites/selectedSiteSlice';
+import { formatNumber } from 'helpers/numberUtils';
 import { calculateCardMetrics } from './helpers';
 import { CardColumn } from './types';
-import { formatNumber } from '../../../helpers/numberUtils';
 import type { Dataset } from '..';
 
 const rows = ['MAX', 'MEAN', 'MIN'];

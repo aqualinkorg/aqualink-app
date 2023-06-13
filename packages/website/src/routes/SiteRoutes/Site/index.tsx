@@ -10,11 +10,6 @@ import { Alert } from '@material-ui/lab';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import classNames from 'classnames';
-import NotFoundPage from '../../NotFound/index';
-import SiteNavBar from '../../../common/NavBar';
-import SiteFooter from '../../../common/Footer';
-import SiteDetails from '../../../common/SiteDetails';
-import SiteInfo from './SiteInfo';
 import {
   siteDetailsSelector,
   siteRequest,
@@ -26,22 +21,27 @@ import {
   spotterPositionRequest,
   spotterPositionSelector,
   siteLoadingSelector,
-} from '../../../store/Sites/selectedSiteSlice';
+} from 'store/Sites/selectedSiteSlice';
 import {
   surveysRequest,
   surveyListSelector,
-} from '../../../store/Survey/surveyListSlice';
-import { userInfoSelector } from '../../../store/User/userSlice';
-import { isAdmin } from '../../../helpers/user';
-import { findAdministeredSite } from '../../../helpers/findAdministeredSite';
-import { User } from '../../../store/User/types';
-import { localizedEndOfDay } from '../../../common/Chart/MultipleSensorsCharts/helpers';
-import { sortByDate, subtractFromDate } from '../../../helpers/dates';
-import { oceanSenseConfig } from '../../../constants/oceanSenseConfig';
-import { useQueryParam } from '../../../hooks/useQueryParams';
-import { findSurveyPointFromList } from '../../../helpers/siteUtils';
-import LoadingSkeleton from '../../../common/LoadingSkeleton';
-import { Site as SiteType } from '../../../store/Sites/types';
+} from 'store/Survey/surveyListSlice';
+import { userInfoSelector } from 'store/User/userSlice';
+import { User } from 'store/User/types';
+import { oceanSenseConfig } from 'constants/oceanSenseConfig';
+import { Site as SiteType } from 'store/Sites/types';
+import { useQueryParam } from 'hooks/useQueryParams';
+import { isAdmin } from 'helpers/user';
+import { findAdministeredSite } from 'helpers/findAdministeredSite';
+import { sortByDate, subtractFromDate } from 'helpers/dates';
+import { findSurveyPointFromList } from 'helpers/siteUtils';
+import SiteNavBar from 'common/NavBar';
+import SiteFooter from 'common/Footer';
+import SiteDetails from 'common/SiteDetails';
+import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
+import LoadingSkeleton from 'common/LoadingSkeleton';
+import SiteInfo from './SiteInfo';
+import NotFoundPage from '../../NotFound/index';
 
 const getAlertMessage = (
   user: User | null,

@@ -11,13 +11,13 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import WarningIcon from '@material-ui/icons/Warning';
-import { toRelativeTime } from '../../../helpers/dates';
-import { formatNumber } from '../../../helpers/numberUtils';
-import { LatestDataASSofarValue, Metrics } from '../../../store/Sites/types';
+import { LatestDataASSofarValue, Metrics } from 'store/Sites/types';
+import { toRelativeTime } from 'helpers/dates';
+import { formatNumber } from 'helpers/numberUtils';
+import { colors } from 'layout/App/theme';
 import UpdateInfo from '../../UpdateInfo';
 import { styles as incomingStyles } from '../styles';
 import { Extends } from '../../types';
-import { colors } from '../../../layout/App/theme';
 
 type HUICardMetrics = Extends<
   Metrics,

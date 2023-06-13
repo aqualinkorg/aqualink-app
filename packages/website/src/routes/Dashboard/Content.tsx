@@ -1,18 +1,18 @@
 import React from 'react';
 import { Container, Grid, LinearProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import Header from './Header';
-import Map from './Map';
-import Info from './Info';
-import Table from './Table';
-import FullScreenMessage from '../../common/FullScreenMessage';
 import {
   collectionDetailsSelector,
   collectionErrorSelector,
   collectionLoadingSelector,
-} from '../../store/Collection/collectionSlice';
+} from 'store/Collection/collectionSlice';
+import FullScreenMessage from 'common/FullScreenMessage';
+import Banner from 'common/Banner';
+import Header from './Header';
+import Map from './Map';
+import Info from './Info';
+import Table from './Table';
 import Tracker from '../Tracker';
-import Banner from '../../common/Banner';
 
 const bannerMessage = `You have not saved any sites yet. \
 Follow the instructions on this page and come back \

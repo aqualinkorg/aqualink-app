@@ -6,8 +6,8 @@ import {
   Container,
 } from '@material-ui/core';
 
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 
 const Terms = ({ classes }: TermsProps) => {
   return (

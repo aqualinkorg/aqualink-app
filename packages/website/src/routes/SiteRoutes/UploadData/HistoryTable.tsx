@@ -16,10 +16,10 @@ import { grey } from '@material-ui/core/colors';
 import { startCase } from 'lodash';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { Site, SiteUploadHistory } from '../../../store/Sites/types';
-import requests from '../../../helpers/requests';
-import { pluralize } from '../../../helpers/stringUtils';
-import DeleteButton from '../../../common/DeleteButton';
+import { Site, SiteUploadHistory } from 'store/Sites/types';
+import requests from 'helpers/requests';
+import { pluralize } from 'helpers/stringUtils';
+import DeleteButton from 'common/DeleteButton';
 
 const tableHeaderTitles = [
   'NAME',

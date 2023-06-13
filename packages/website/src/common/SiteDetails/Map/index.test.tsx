@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
+import { mockUser } from 'mocks/mockUser';
 import Map from '.';
-import { mockUser } from '../../../mocks/mockUser';
 
 jest.mock('react-leaflet');
 

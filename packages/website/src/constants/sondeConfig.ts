@@ -1,4 +1,4 @@
-import { MetricsKeys } from '../store/Sites/types';
+import { MetricsKeys } from 'store/Sites/types';
 
 interface SondeConfig {
   title: string;

@@ -1,4 +1,4 @@
-import { CollectionDetails } from '../store/Collection/types';
+import { CollectionDetails } from 'store/Collection/types';
 import { mockSite } from './mockSite';
 import { mockUser } from './mockUser';
 

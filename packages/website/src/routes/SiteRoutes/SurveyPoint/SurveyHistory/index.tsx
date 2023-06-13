@@ -11,10 +11,10 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
-import TimeLine from '../../../../common/SiteDetails/Surveys/Timeline';
-import { Site } from '../../../../store/Sites/types';
-import { userInfoSelector } from '../../../../store/User/userSlice';
-import { isAdmin } from '../../../../helpers/user';
+import { Site } from 'store/Sites/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { isAdmin } from 'helpers/user';
+import TimeLine from 'common/SiteDetails/Surveys/Timeline';
 
 const SurveyHistory = ({
   site,

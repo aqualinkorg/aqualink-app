@@ -10,20 +10,20 @@ import {
   minBy,
 } from 'lodash';
 import { ChartDataSets, ChartPoint } from 'chart.js';
-import type {
-  DailyData,
-  HistoricalMonthlyMeanData,
-  ValueWithTimestamp,
-} from '../../store/Sites/types';
-import { SurveyListItem } from '../../store/Survey/types';
 import {
   DEFAULT_SURVEY_CHART_POINT_COLOR,
   SELECTED_SURVEY_CHART_POINT_COLOR,
   SURVEY_CHART_POINT_BORDER_COLOR,
   Y_SPACING_PERCENTAGE,
-} from '../../constants/charts';
+} from 'constants/charts';
+import type {
+  DailyData,
+  HistoricalMonthlyMeanData,
+  ValueWithTimestamp,
+} from 'store/Sites/types';
+import { SurveyListItem } from 'store/Survey/types';
+import { sortByDate } from 'helpers/dates';
 import type { ChartProps, Dataset } from '.';
-import { sortByDate } from '../../helpers/dates';
 
 interface Context {
   chart?: Chart;

@@ -7,8 +7,8 @@ import {
   CardMedia,
 } from '@material-ui/core';
 
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 
 const Faq = ({ classes }: FaqProps) => {
   return (

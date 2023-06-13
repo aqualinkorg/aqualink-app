@@ -10,10 +10,10 @@ import {
   siteDetailsSelector,
   siteErrorSelector,
   siteLoadingSelector,
-} from '../../../../store/Sites/selectedSiteSlice';
-import { surveyListSelector } from '../../../../store/Survey/surveyListSlice';
-import { sortByDate } from '../../../../helpers/dates';
-import LoadingSkeleton from '../../../../common/LoadingSkeleton';
+} from 'store/Sites/selectedSiteSlice';
+import { surveyListSelector } from 'store/Survey/surveyListSlice';
+import { sortByDate } from 'helpers/dates';
+import LoadingSkeleton from 'common/LoadingSkeleton';
 import SelectedSiteCardContent from './CardContent';
 
 const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';

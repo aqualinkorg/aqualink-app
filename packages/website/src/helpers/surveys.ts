@@ -4,7 +4,7 @@ import {
   SurveyListState,
   Observations,
   SurveyListItem,
-} from '../store/Survey/types';
+} from 'store/Survey/types';
 import { sortByDate } from './dates';
 
 export const filterSurveys = (

@@ -11,16 +11,16 @@ import {
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { formatNumber } from '../../../../helpers/numberUtils';
-import { SurveyListItem } from '../../../../store/Survey/types';
+import { SurveyListItem } from 'store/Survey/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { surveysRequest } from 'store/Survey/surveyListSlice';
+import { formatNumber } from 'helpers/numberUtils';
+import surveyServices from 'services/surveyServices';
 import incomingStyles from '../styles';
 import CustomLink from '../../../Link';
 import LoadingSkeleton from '../../../LoadingSkeleton';
 import pointImageSkeleton from '../../../../assets/img/loading-image.svg';
 import DeleteButton from '../../../DeleteButton';
-import { userInfoSelector } from '../../../../store/User/userSlice';
-import { surveysRequest } from '../../../../store/Survey/surveyListSlice';
-import surveyServices from '../../../../services/surveyServices';
 
 const SurveyCard = ({
   pointId,

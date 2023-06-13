@@ -2,18 +2,13 @@ import { isEqual, mean, meanBy, minBy } from 'lodash';
 import L, { LatLng, LatLngBounds, Polygon as LeafletPolygon } from 'leaflet';
 import { makeStyles } from '@material-ui/core';
 
-import type {
-  Point,
-  SurveyPoints,
-  Polygon,
-  Position,
-} from '../store/Sites/types';
+import type { Point, SurveyPoints, Polygon, Position } from 'store/Sites/types';
+import { CollectionDetails } from 'store/Collection/types';
 import { spotter } from '../assets/spotter';
 import { spotterSelected } from '../assets/spotterSelected';
 import { spotterAnimation } from '../assets/spotterAnimation';
 import { hobo } from '../assets/hobo';
 import { hoboSelected } from '../assets/hoboSelected';
-import { CollectionDetails } from '../store/Collection/types';
 
 /**
  * Get the middle point of a polygon (average of all points). Returns the point itself if input isn't a polygon.

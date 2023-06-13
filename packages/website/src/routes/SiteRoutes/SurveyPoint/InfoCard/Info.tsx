@@ -10,15 +10,15 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
-import { Site } from '../../../../store/Sites/types';
-import { surveyListSelector } from '../../../../store/Survey/surveyListSlice';
-import { getSiteNameAndRegion } from '../../../../store/Sites/helpers';
-import { filterSurveys } from '../../../../helpers/surveys';
-import { displayTimeInLocalTimezone } from '../../../../helpers/dates';
-import { siteTimeSeriesDataSelector } from '../../../../store/Sites/selectedSiteSlice';
-import { formatNumber } from '../../../../helpers/numberUtils';
-import { isAdmin } from '../../../../helpers/user';
-import { userInfoSelector } from '../../../../store/User/userSlice';
+import { Site } from 'store/Sites/types';
+import { surveyListSelector } from 'store/Survey/surveyListSlice';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { siteTimeSeriesDataSelector } from 'store/Sites/selectedSiteSlice';
+import { userInfoSelector } from 'store/User/userSlice';
+import { filterSurveys } from 'helpers/surveys';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { formatNumber } from 'helpers/numberUtils';
+import { isAdmin } from 'helpers/user';
 import SurveyInfo from './SurveyInfo';
 
 const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {

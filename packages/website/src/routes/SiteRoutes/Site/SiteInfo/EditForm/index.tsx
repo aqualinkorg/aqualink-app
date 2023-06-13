@@ -13,14 +13,11 @@ import Alert from '@material-ui/lab/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { find } from 'lodash';
 
-import TextField from '../../../../../common/Forms/TextField';
-import { Site, SiteUpdateParams } from '../../../../../store/Sites/types';
-import { getSiteNameAndRegion } from '../../../../../store/Sites/helpers';
-import {
-  siteDraftSelector,
-  setSiteDraft,
-} from '../../../../../store/Sites/selectedSiteSlice';
-import { useFormField } from '../../../../../hooks/useFormField';
+import { Site, SiteUpdateParams } from 'store/Sites/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { siteDraftSelector, setSiteDraft } from 'store/Sites/selectedSiteSlice';
+import { useFormField } from 'hooks/useFormField';
+import TextField from 'common/Forms/TextField';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 

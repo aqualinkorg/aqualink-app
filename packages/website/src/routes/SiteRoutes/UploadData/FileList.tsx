@@ -17,12 +17,12 @@ import FileIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import classNames from 'classnames';
 
 import { useSelector } from 'react-redux';
-import { pluralize } from '../../../helpers/stringUtils';
 import {
   uploadsErrorSelector,
   uploadsInProgressSelector,
   uploadsResponseSelector,
-} from '../../../store/uploads/uploadsSlice';
+} from 'store/uploads/uploadsSlice';
+import { pluralize } from 'helpers/stringUtils';
 
 const CIRCULAR_PROGRESS_SIZE = 36;
 

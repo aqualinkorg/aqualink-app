@@ -12,7 +12,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
 import React from 'react';
-import { ValueWithTimestamp } from '../../../store/Sites/types';
+import { ValueWithTimestamp } from 'store/Sites/types';
 
 export interface DownloadCSVDialogProps {
   open: boolean;

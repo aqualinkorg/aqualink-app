@@ -7,7 +7,7 @@ import {
   Theme,
 } from '@material-ui/core';
 
-import { CollectionDetails } from '../../../store/Collection/types';
+import { CollectionDetails } from 'store/Collection/types';
 import Header from './Header';
 import BarChart from './BarChart';
 

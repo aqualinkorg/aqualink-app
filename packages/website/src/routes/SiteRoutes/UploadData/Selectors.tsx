@@ -15,9 +15,9 @@ import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
-import { Site, Sources } from '../../../store/Sites/types';
-import NewSurveyPointDialog from '../../../common/NewSurveyPointDialog';
-import { uploadsTargetSelector } from '../../../store/uploads/uploadsSlice';
+import { Site, Sources } from 'store/Sites/types';
+import { uploadsTargetSelector } from 'store/uploads/uploadsSlice';
+import NewSurveyPointDialog from 'common/NewSurveyPointDialog';
 
 interface SelectOption {
   id: number;

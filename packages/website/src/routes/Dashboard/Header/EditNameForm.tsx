@@ -15,11 +15,11 @@ import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useDispatch } from 'react-redux';
 
-import TextField from '../../../common/Forms/TextField';
-import { useFormField } from '../../../hooks/useFormField';
-import { User } from '../../../store/User/types';
-import collectionServices from '../../../services/collectionServices';
-import { setName } from '../../../store/Collection/collectionSlice';
+import { User } from 'store/User/types';
+import { setName } from 'store/Collection/collectionSlice';
+import { useFormField } from 'hooks/useFormField';
+import TextField from 'common/Forms/TextField';
+import collectionServices from 'services/collectionServices';
 
 const EditNameForm = ({
   collectionId,

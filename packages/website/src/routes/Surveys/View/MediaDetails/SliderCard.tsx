@@ -22,18 +22,16 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import EditIcon from '@material-ui/icons/Edit';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { useSelector } from 'react-redux';
-import observationOptions, {
-  findOption,
-} from '../../../../constants/uploadDropdowns';
+import observationOptions, { findOption } from 'constants/uploadDropdowns';
 import {
   Observations,
   SurveyMedia,
   SurveyMediaUpdateRequestData,
-} from '../../../../store/Survey/types';
+} from 'store/Survey/types';
 import {
   surveyLoadingSelector,
   surveyMediaEditLoadingSelector,
-} from '../../../../store/Survey/surveySlice';
+} from 'store/Survey/surveySlice';
 
 const SliderCard = ({
   media,

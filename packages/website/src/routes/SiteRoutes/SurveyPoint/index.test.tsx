@@ -4,13 +4,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import { mockSite } from '../../../mocks/mockSite';
-import { mockUser } from '../../../mocks/mockUser';
+import { mockSite } from 'mocks/mockSite';
+import { mockUser } from 'mocks/mockUser';
 
+import { mockSurveyList } from 'mocks/mockSurveyList';
+import { mockDataRange } from 'mocks/mockDataRange';
+import { mockCollection } from 'mocks/mockCollection';
 import SurveyPoint from '.';
-import { mockSurveyList } from '../../../mocks/mockSurveyList';
-import { mockDataRange } from '../../../mocks/mockDataRange';
-import { mockCollection } from '../../../mocks/mockCollection';
 
 jest.mock('./InfoCard/Map', () => 'Mock-Map');
 

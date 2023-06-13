@@ -3,8 +3,8 @@ import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
+import { mockUser } from 'mocks/mockUser';
 import FeaturedMedia from '.';
-import { mockUser } from '../../../mocks/mockUser';
 
 const mockStore = configureStore([]);
 

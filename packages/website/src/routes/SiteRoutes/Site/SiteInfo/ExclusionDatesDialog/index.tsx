@@ -18,15 +18,15 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import { useDispatch } from 'react-redux';
 
-import Dialog, { Action } from '../../../../../common/Dialog';
-import { setTimeZone } from '../../../../../helpers/dates';
-import siteServices from '../../../../../services/siteServices';
 import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   setSelectedSite,
   siteRequest,
-} from '../../../../../store/Sites/selectedSiteSlice';
+} from 'store/Sites/selectedSiteSlice';
+import { setTimeZone } from 'helpers/dates';
+import Dialog, { Action } from 'common/Dialog';
+import siteServices from 'services/siteServices';
 import ConfirmationDialog from './ConfirmationDialog';
 
 const ExclusionDatesDialog = ({

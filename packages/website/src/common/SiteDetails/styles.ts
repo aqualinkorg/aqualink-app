@@ -1,4 +1,4 @@
-import theme from '../../layout/App/theme';
+import theme from 'layout/App/theme';
 
 const MD_MID_POINT = 1100;
 const SM_MID_POINT = 780;
