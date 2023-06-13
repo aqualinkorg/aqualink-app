@@ -7,4 +7,5 @@ export enum SourceType {
   METLOG = 'metlog',
   SOFAR_MODEL = 'sofar_model',
   HUI = 'hui',
+  SHEET_DATA = 'sheet_data',
 }

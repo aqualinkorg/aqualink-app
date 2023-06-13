@@ -42,7 +42,7 @@ const { argv } = yargs
     alias: 'sonde_type',
     describe: 'The sonde type indicating how to process the file.',
     type: 'string',
-    demandOption: true,
+    demandOption: false,
   })
   // Extend definition to use the full-width of the terminal
   .wrap(yargs.terminalWidth());
@@ -68,7 +68,7 @@ async function run() {
     last(filePath.split('/')) || '',
     siteId,
     surveyPointId,
-    sourceType as SourceType,
+    (sourceType || SourceType.SHEET_DATA) as SourceType,
     // Fetch all needed repositories
     {
       siteRepository: connection.getRepository(Site),
