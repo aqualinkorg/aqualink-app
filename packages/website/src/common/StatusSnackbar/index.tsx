@@ -10,7 +10,7 @@ const StatusSnackbar = ({
   handleClose,
   onFurtherActionTake,
 }: StatusSnackbarProps) => {
-  const classes = useStyles(!!message);
+  const classes = useStyles({ hasMessage: !!message });
 
   return message ? (
     <Snackbar
@@ -44,25 +44,27 @@ const StatusSnackbar = ({
   ) : null;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
-  snackbar: {
-    maxWidth: '50%',
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: '90%',
+const useStyles = makeStyles<Theme, { hasMessage: boolean }>(
+  (theme: Theme) => ({
+    snackbar: {
+      maxWidth: '50%',
+      [theme.breakpoints.down('sm')]: {
+        maxWidth: '90%',
+      },
     },
-  },
-  alert: {
-    alignItems: 'center',
-  },
-  alertMessage: (hasMessage: boolean) => ({
-    display: 'flex',
-    alignItems: 'center',
-    ...(hasMessage ? { padding: 0 } : {}),
+    alert: {
+      alignItems: 'center',
+    },
+    alertMessage: ({ hasMessage }) => ({
+      display: 'flex',
+      alignItems: 'center',
+      ...(hasMessage ? { padding: 0 } : {}),
+    }),
+    button: {
+      marginLeft: theme.spacing(1.5),
+    },
   }),
-  button: {
-    marginLeft: theme.spacing(1.5),
-  },
-}));
+);
 
 interface StatusSnackbarProps {
   open: boolean;

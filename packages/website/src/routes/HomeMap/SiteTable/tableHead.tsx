@@ -41,13 +41,17 @@ ColumnTitle.defaultProps = {
   bigText: undefined,
 };
 
-const EnhancedTableHead = (props: EnhancedTableProps) => {
+const EnhancedTableHead = ({
+  classes,
+  onRequestSort,
+  order,
+  orderBy,
+  isExtended,
+}: EnhancedTableProps) => {
   const createSortHandler =
     (property: OrderKeys) => (event: React.MouseEvent<unknown>) => {
-      props.onRequestSort(event, property);
+      onRequestSort(event, property);
     };
-
-  const { isExtended } = props;
 
   const headCells: HeadCell[] = [
     {
@@ -107,20 +111,16 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
           (headCell) =>
             headCell.display && (
               <TableCell
-                className={props.classes.headCells}
+                className={classes.headCells}
                 key={headCell.id}
                 style={{ width: headCell.width }}
                 align="left"
                 padding="default"
-                sortDirection={
-                  props.orderBy === headCell.id ? props.order : false
-                }
+                sortDirection={orderBy === headCell.id ? order : false}
               >
                 <TableSortLabel
-                  active={props.orderBy === headCell.id}
-                  direction={
-                    props.orderBy === headCell.id ? props.order : 'asc'
-                  }
+                  active={orderBy === headCell.id}
+                  direction={orderBy === headCell.id ? order : 'asc'}
                   onClick={createSortHandler(headCell.id)}
                 >
                   <ColumnTitle

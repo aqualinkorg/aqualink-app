@@ -2,5 +2,9 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-  }
+    "module": "commonjs",
+    "outDir": "dist",
+    "target": "es2017"
+  },
+  "files": ["main.ts"]
 }

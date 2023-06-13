@@ -34,11 +34,7 @@ import {
   SofarDailyData,
   ValueWithTimestamp,
 } from '../utils/sofar.types';
-import {
-  SofarModels,
-  sofarVariableIDs,
-  SOFAR_API_TOKEN,
-} from '../utils/constants';
+import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import {
@@ -93,7 +89,7 @@ export async function getDailyData(
   const [NOAALongitude, NOAALatitude] = nearestNOAALocation
     ? (nearestNOAALocation as Point).coordinates
     : (polygon as Point).coordinates;
-  const sofarToken = site.spotterApiToken || SOFAR_API_TOKEN;
+  const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
 
   const [
     spotterRawData,

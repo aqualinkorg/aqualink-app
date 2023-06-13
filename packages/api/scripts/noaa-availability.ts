@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable fp/no-mutating-methods */
 /* eslint-disable no-plusplus */
 /* eslint-disable fp/no-mutation */

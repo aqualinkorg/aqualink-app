@@ -268,7 +268,7 @@ exports[`Site registration page should render with given state from Redux store 
   >
     <mock-toolbar>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
@@ -313,7 +313,7 @@ exports[`Site registration page should render with given state from Redux store 
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
             >
               <div
                 class="MuiGrid-root MuiGrid-item"
@@ -359,7 +359,7 @@ exports[`Site registration page should render with given state from Redux store 
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root RegisterDialog-dialogContentTitle-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
@@ -458,7 +458,7 @@ exports[`Site registration page should render with given state from Redux store 
                 />
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
@@ -547,7 +547,7 @@ exports[`Site registration page should render with given state from Redux store 
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
             >
               <div
                 class="MuiGrid-root MuiGrid-item"
@@ -592,7 +592,7 @@ exports[`Site registration page should render with given state from Redux store 
         </div>
       </div>
       <div
-        class="MuiCollapse-container MuiCollapse-hidden"
+        class="MuiCollapse-root MuiCollapse-hidden"
         style="min-height: 0px;"
       >
         <div
@@ -650,7 +650,7 @@ exports[`Site registration page should render with given state from Redux store 
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root SignInDialog-dialogContentTitle-22 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"

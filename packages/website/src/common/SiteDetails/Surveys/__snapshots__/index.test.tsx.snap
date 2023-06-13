@@ -45,7 +45,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
     </mock-dialogactions>
   </mock-dialog>
   <div
-    class="MuiGrid-root makeStyles-root-1 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+    class="MuiGrid-root makeStyles-root-1 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-content-xs-center"
   >
     <mock-box
       bgcolor="#f5f6f6"
@@ -54,10 +54,10 @@ exports[`Surveys should render with given state from Redux store 1`] = `
       zindex="-1"
     />
     <div
-      class="MuiGrid-root makeStyles-surveyWrapper-2 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+      class="MuiGrid-root makeStyles-surveyWrapper-2 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-3"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-3"
       >
         <mock-typography
           classname="makeStyles-title-3"
@@ -144,7 +144,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
       >
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -287,7 +287,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
     >
       <div
         class="SurveyTimeline-root-21"
@@ -331,7 +331,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   class="MuiPaper-root makeStyles-surveyCard-47 MuiPaper-elevation0 MuiPaper-rounded"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-space-between"
                     style="height: 100%;"
                   >
                     <div
@@ -405,7 +405,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
@@ -439,7 +439,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="MuiGrid-root makeStyles-surveyWrapper-71 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+              class="MuiGrid-root makeStyles-surveyWrapper-71 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
             >
               <div
                 class="MuiGrid-root makeStyles-dateWrapper-62 MuiGrid-item MuiGrid-grid-xs-11"
@@ -458,7 +458,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   class="MuiPaper-root makeStyles-surveyCard-47 MuiPaper-elevation0 MuiPaper-rounded"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-space-between"
                     style="height: 100%;"
                   >
                     <div
@@ -532,7 +532,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"

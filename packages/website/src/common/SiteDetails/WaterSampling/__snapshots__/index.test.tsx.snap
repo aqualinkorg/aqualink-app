@@ -168,13 +168,13 @@ exports[`renders as expected 1`] = `
         </div>
       </mock-box>
       <div
-        class="MuiGrid-root makeStyles-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
           class="MuiGrid-root makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-16 MuiGrid-item MuiGrid-grid-xs-8"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -214,7 +214,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-23 MuiGrid-item"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
             >
               <mock-button
                 classname="makeStyles-button-22"

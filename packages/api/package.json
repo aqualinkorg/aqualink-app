@@ -5,15 +5,13 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "workspaces": {
-    "nohoist": [
-      "axios-retry"
-    ]
+  "engines": {
+    "node": "18"
   },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build -p tsconfig.build.json --tsc",
-    "build:cloud-functions": "webpack-cli --config cloud-functions/webpack.config.js",
+    "build:cloud-functions": "node cloud-functions/add-entities.js && tsc -p ./cloud-functions/tsconfig.json",
     "gcp-build": "npm install yarn",
     "predeploy:app": "mv .env .env.bkp && cp .env.${DEPLOY_ENV} .env && yarn run build && cp ../../yarn.lock .",
     "deploy:app": "gcloud app deploy app-${DEPLOY_ENV}.yaml && yarn migration:run",
@@ -100,7 +98,6 @@
     "passport": "^0.6.0",
     "passport-custom": "^1.1.1",
     "pg": "^8.2.1",
-    "pg-native": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7",
     "sharp": "^0.30.6",
@@ -118,7 +115,7 @@
     "@types/lodash": "^4.14.156",
     "@types/moment-timezone": "^0.5.13",
     "@types/multer": "^1.4.3",
-    "@types/node": "^13.9.1",
+    "@types/node": "^18.16.16",
     "@types/passport": "^1.0.4",
     "@types/passport-strategy": "^0.2.35",
     "@types/sharp": "^0.30.4",
@@ -132,15 +129,12 @@
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0",
-    "ts-loader": "^6.2.1",
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "typeorm-seeding": "^1.6.1",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
     "yargs": "^15.4.1"
   },
   "optionalDependencies": {
-    "netcdf4": "https://github.com/parro-it/netcdf4"
+    "netcdf4": "https://github.com/ovio-forks/netcdf4"
   }
 }
