@@ -205,11 +205,11 @@ const getTimeStamp = (
     return new Date(`${item[index[0]]} ${item[index[1]]}`);
   if (isArray) {
     const date = new Date(Date.UTC(1900, 0));
+    // We get the date as days from 1900. We have to subtract 1 to exactly match the date
     date.setDate(item[index[0]] - 1 || 0);
-    date.setUTCHours(0);
-    date.setUTCMinutes(0);
-    date.setUTCSeconds(0);
-    date.setSeconds(Math.round(SECONDS_IN_DAY * (item[index[1]] || 0)));
+    // in some cases 1:30:00 will be interpreted as 25:30:00. In this representation of time seconds are
+    // a number from 0 to 1, so we want to keep only the first 24 hours to avoid such errors (therefore the % 1)
+    date.setSeconds(Math.round(SECONDS_IN_DAY * (item[index[1]] % 1 || 0)));
     return date;
   }
   if (!isArray && mimetype === 'text/csv' && timezone)
