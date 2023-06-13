@@ -75,7 +75,7 @@ function App() {
                   path="/collections/:collectionName"
                   component={Dashboard}
                 />
-                <Route default component={NotFound} />
+                <Route path="*" component={NotFound} />
               </Switch>
             )}
           </div>

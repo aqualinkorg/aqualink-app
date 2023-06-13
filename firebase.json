@@ -1,0 +1,26 @@
+{
+  "functions": {
+    "source": ".",
+    "codebase": "default",
+    "ignore": [
+      "**/.*",
+      "**/node_modules/**",
+      ".git",
+      "**/venv/**",
+      "**/env/**",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "**/packages/api/.jest-cache/**",
+      "**/packages/api/coverage/**",
+      "**/packages/api/db_data/**",
+      "**/packages/api/dist/**",
+      "**/packages/api/migration/**",
+      "**/packages/api/mock_response/**",
+      "**/packages/api/scripts/**",
+      "**/packages/api/src/**",
+      "**/packages/api/test/**",
+      "**/packages/api/gcloud.json",
+      "**/packages/website/**"
+    ]
+  }
+}

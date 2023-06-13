@@ -124,12 +124,12 @@ const SiteRoutes = () => {
         <Route
           exact
           path="/sites/:id/new_survey"
-          render={(props) => <Surveys {...props} isView={false} />}
+          render={(props) => <Surveys {...props} />}
         />
         <Route
           exact
           path="/sites/:id/survey_details/:sid"
-          render={(props) => <Surveys {...props} isView />}
+          render={(props) => <Surveys {...props} />}
         />
         <Route
           exact

@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:18
 
 # Install netcdf
 RUN apt update

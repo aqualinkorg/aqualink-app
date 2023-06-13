@@ -288,7 +288,7 @@ const SiteDetails = ({
         spacing={2}
       >
         {cards.map((Component, index) => (
-          <Grid key={index.toString()} item xs={12} sm={6} md={3}>
+          <Grid key={`card-${index.toString()}`} item xs={12} sm={6} md={3}>
             <div className={classes.card}>
               <LoadingSkeleton
                 variant="rect"

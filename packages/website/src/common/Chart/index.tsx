@@ -48,6 +48,7 @@ export interface Dataset {
 }
 
 export interface ChartProps {
+  // eslint-disable-next-line react/no-unused-prop-types
   siteId: number;
   datasets?: Dataset[];
   timeZone?: string | null;
@@ -59,6 +60,7 @@ export interface ChartProps {
   maxMonthlyMean: number | null;
   background?: boolean;
   showYearInTicks?: boolean;
+  // eslint-disable-next-line react/no-unused-prop-types
   fill?: boolean;
   hideYAxisUnits?: boolean;
 

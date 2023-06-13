@@ -9,7 +9,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { ObjectLiteral, Repository } from 'typeorm';
 import { mapValues, some } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
@@ -173,7 +173,9 @@ export const excludeSpotterData = (
  * Returns all columns from a Entity, including "select: false"
  * @param repository The repository of the Entity
  */
-export function getAllColumns<T>(repository: Repository<T>): (keyof T)[] {
+export function getAllColumns<T extends ObjectLiteral>(
+  repository: Repository<T>,
+): (keyof T)[] {
   return repository.metadata.columns.map(
     (col) => col.propertyName,
   ) as (keyof T)[];

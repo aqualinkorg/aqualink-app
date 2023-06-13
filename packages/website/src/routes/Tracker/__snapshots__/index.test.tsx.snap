@@ -28,7 +28,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     class="MuiContainer-root makeStyles-root-1 MuiContainer-maxWidthLg"
   >
     <div
-      class="MuiGrid-root makeStyles-header-4 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+      class="MuiGrid-root makeStyles-header-4 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-9"
@@ -185,7 +185,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       margin="48px 0 72px 0"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-9"

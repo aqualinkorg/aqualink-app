@@ -22,7 +22,7 @@ import Footer from '../../common/Footer';
 import NewSurvey from './New';
 import SurveyViewPage from './View';
 
-const Surveys = ({ match, isView, classes }: SurveysProps) => {
+const Surveys = ({ match, classes }: SurveysProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
@@ -51,7 +51,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
       <>
         {/* eslint-disable-next-line no-nested-ternary */}
         {siteDetails && !error ? (
-          isView ? (
+          surveyId ? (
             <SurveyViewPage site={siteDetails} surveyId={surveyId} />
           ) : (
             <NewSurvey site={siteDetails} />
@@ -82,11 +82,10 @@ const styles = () =>
     },
   });
 
-interface SurveysIncomingProps {
-  isView: boolean;
-}
+interface SurveysIncomingProps {}
 
-interface MatchProps extends RouteComponentProps<{ id: string; sid: string }> {}
+interface MatchProps
+  extends RouteComponentProps<{ id: string; sid?: string }> {}
 
 type SurveysProps = MatchProps &
   SurveysIncomingProps &
