@@ -59,98 +59,71 @@ const SECONDS_IN_DAY = 24 * 60 * 60;
 const MISSING_LEAP_YEAR_DAY = SECONDS_IN_DAY * 1000;
 const MAGIC_NUMBER_OF_DAYS = 25569;
 
-type TimeType = 'Time' | 'Date' | 'Timestamp';
-
-interface SourceItem {
-  metric?: Metric;
-  time?: TimeType;
-  ignore?: boolean;
-  matchExp?: RegExp;
-  convertFn?: (arg: number) => number;
+interface Data {
+  timestamp: string;
+  value: number;
+  metric: Metric;
+  source: Sources;
 }
 
-const sourceItems: Record<SourceType, Record<string, SourceItem>> = {
-  [SourceType.SONDE]: {
-    'Date (MM/DD/YYYY)': { time: 'Date', ignore: true },
-    'Time (HH:mm:ss)': { time: 'Time', ignore: true },
-    'Time (Fract. Sec)': { ignore: true },
-    'Site Name': { ignore: true },
-    'Chlorophyll RFU': { metric: Metric.CHOLOROPHYLL_RFU },
-    'Chlorophyll ug/L': { metric: Metric.CHOLOROPHYLL_CONCENTRATION },
-    'Cond µS/cm': {
-      metric: Metric.CONDUCTIVITY,
-      matchExp: /^Cond\s/,
-    },
-    'Depth m': { metric: Metric.WATER_DEPTH },
-    'ODO % sat': { metric: Metric.ODO_SATURATION },
-    'ODO mg/L': { metric: Metric.ODO_CONCENTRATION },
-    'Sal psu': { metric: Metric.SALINITY },
-    'SpCond µS/cm': {
-      metric: Metric.SPECIFIC_CONDUCTANCE,
-      matchExp: /^SpCond\s/,
-    },
-    'TDS mg/L': { metric: Metric.TDS },
-    'Turbidity FNU': { metric: Metric.TURBIDITY },
-    'TSS mg/L': { metric: Metric.TOTAL_SUSPENDED_SOLIDS },
-    'Wiper Position volt': { metric: Metric.SONDE_WIPER_POSITION },
-    pH: { metric: Metric.PH },
-    'pH mV': { metric: Metric.PH_MV },
-    'Temp °C': { metric: Metric.BOTTOM_TEMPERATURE, matchExp: /^Temp\s/ },
-    'Battery V': { metric: Metric.SONDE_BATTERY_VOLTAGE },
-    'Cable Pwr V': { metric: Metric.SONDE_CABLE_POWER_VOLTAGE },
+const nonMetric = ['date', 'time', 'timestamp'] as const;
+
+type NonMetric = typeof nonMetric[number];
+
+type Token = Metric | NonMetric;
+
+interface Rule {
+  token: Token;
+  expression: RegExp;
+}
+
+const rules: Rule[] = [
+  // Non Metrics
+  { token: 'date', expression: /^(Date \(MM\/DD\/YYYY\)|Date)$/ },
+  { token: 'time', expression: /^(Time \(HH:mm:ss\)|Time)$/ },
+  { token: 'timestamp', expression: /^(Date Time|Date_Time)$/ },
+  // Default Metrics
+  // should match 'Temp, °C'
+  { token: Metric.AIR_TEMPERATURE, expression: /^Temp, .*C$/ },
+  // should match 'Temp °C'
+  { token: Metric.BOTTOM_TEMPERATURE, expression: /^(Temp .*C|Temp)$/ },
+  { token: Metric.WIND_SPEED, expression: /^Wind Speed, m\/s$/ },
+  // should match 'Wind Direction, ø'
+  { token: Metric.WIND_DIRECTION, expression: /^Wind Direction, .*$/ },
+  // Sonde Metrics
+  { token: Metric.CHOLOROPHYLL_RFU, expression: /^Chlorophyll RFU$/ },
+  {
+    token: Metric.CHOLOROPHYLL_CONCENTRATION,
+    expression: /^Chlorophyll ug\/L$/,
   },
-  [SourceType.METLOG]: {
-    '#': { ignore: true },
-    'Date Time': { time: 'Timestamp', ignore: true },
-    'Pressure, mbar': { metric: Metric.PRESSURE },
-    'Rain, mm': { metric: Metric.PRECIPITATION },
-    'Temp, °C': { metric: Metric.AIR_TEMPERATURE, matchExp: /^Temp,\s/ },
-    'RH, %': { metric: Metric.RH },
-    'Wind Speed, m/s': { metric: Metric.WIND_SPEED },
-    'Gust Speed, m/s': { metric: Metric.WIND_GUST_SPEED },
-    'Wind Direction, ø': {
-      metric: Metric.WIND_DIRECTION,
-      matchExp: /^Wind\sDirection,\s/,
-    },
-  },
-  [SourceType.HOBO]: {
-    '': { ignore: true },
-    'ï..Col': { ignore: true },
-    'X.': { ignore: true },
-    Date_Time: { ignore: true, time: 'Timestamp' },
-    Temp: { metric: Metric.BOTTOM_TEMPERATURE },
-    Date: { ignore: true },
-    Time: { ignore: true },
-    Time_zone: { ignore: true },
-  },
-  [SourceType.NOAA]: {},
-  [SourceType.GFS]: {},
-  [SourceType.SPOTTER]: {},
-  [SourceType.SOFAR_MODEL]: {},
-  [SourceType.HUI]: {
-    '': { ignore: true },
-    SampleID: { ignore: true },
-    SiteName: { ignore: true },
-    Station: { ignore: true },
-    Session: { ignore: true },
-    Date: { time: 'Date', ignore: true },
-    Time: { time: 'Time', ignore: true },
-    Temp: { metric: Metric.BOTTOM_TEMPERATURE },
-    Salinity: { metric: Metric.SALINITY },
-    DO: { metric: Metric.ODO_CONCENTRATION },
-    DO_sat: { metric: Metric.ODO_SATURATION },
-    pH: { metric: Metric.PH },
-    Turbidity: { metric: Metric.TURBIDITY },
-    TotalN: { metric: Metric.NITROGEN_TOTAL },
-    TotalP: { metric: Metric.PHOSPHORUS_TOTAL },
-    Phosphate: { metric: Metric.PHOSPHORUS },
-    Silicate: { metric: Metric.SILICATE },
-    NNN: { metric: Metric.NNN },
-    NH4: { metric: Metric.AMMONIUM },
-    Lat: { ignore: true },
-    Long: { ignore: true },
-  },
-};
+  // should match 'Cond µS/cm'
+  { token: Metric.CONDUCTIVITY, expression: /^Cond .*S\/cm$/ },
+  { token: Metric.WATER_DEPTH, expression: /^Depth m$/ },
+  { token: Metric.ODO_SATURATION, expression: /^(ODO % sat|DO_sat)$/ },
+  { token: Metric.ODO_CONCENTRATION, expression: /^(ODO mg\/L|DO)$/ },
+  { token: Metric.SALINITY, expression: /^(Sal psu|Salinity)$/ },
+  // should match 'SpCond µS/cm'
+  { token: Metric.SPECIFIC_CONDUCTANCE, expression: /^SpCond .*S\/cm$/ },
+  { token: Metric.TDS, expression: /^TDS mg\/L$/ },
+  { token: Metric.TURBIDITY, expression: /^(Turbidity FNU|Turbidity)$/ },
+  { token: Metric.TOTAL_SUSPENDED_SOLIDS, expression: /^TSS mg\/L$/ },
+  { token: Metric.SONDE_WIPER_POSITION, expression: /^Wiper Position volt$/ },
+  { token: Metric.PH, expression: /^pH$/ },
+  { token: Metric.PH_MV, expression: /^pH mV$/ },
+  { token: Metric.SONDE_BATTERY_VOLTAGE, expression: /^Battery V$/ },
+  { token: Metric.SONDE_CABLE_POWER_VOLTAGE, expression: /^Cable Pwr V$/ },
+  { token: Metric.PRESSURE, expression: /^Pressure, mbar$/ },
+  { token: Metric.PRECIPITATION, expression: /^Rain, mm$/ },
+  { token: Metric.RH, expression: /^RH, %$/ },
+  { token: Metric.WIND_GUST_SPEED, expression: /^Gust Speed, m\/s$/ },
+  // HUI Metrics
+  { token: Metric.NITROGEN_TOTAL, expression: /^TotalN$/ },
+  { token: Metric.PHOSPHORUS_TOTAL, expression: /^TotalP$/ },
+  { token: Metric.PHOSPHORUS, expression: /^Phosphate$/ },
+  { token: Metric.SILICATE, expression: /^Silicate$/ },
+  { token: Metric.NNN, expression: /^NNN$/ },
+  { token: Metric.AMMONIUM, expression: /^NH4$/ },
+];
 
 export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
 
@@ -175,9 +148,6 @@ export const fileFilter: MulterOptions['fileFilter'] = (
   }
   callback(null, true);
 };
-
-const headerMatchesKey = (header: string, key: string) =>
-  header.toLowerCase().startsWith(key.toLowerCase());
 
 const getJsDateFromExcel = (excelDate, timezone) => {
   const delta = excelDate - MAGIC_NUMBER_OF_DAYS;
@@ -219,72 +189,54 @@ const getTimeStamp = (
   return getJsDateFromExcel(item[index], timezone);
 };
 
-const findTimeStampIndex = (type: SourceType): number | number[] => {
-  const timestampIndex = Object.values(sourceItems[type]).findIndex(
-    (item) => item.time === 'Timestamp',
-  );
+const findTimeStampIndex = (
+  headerToTokenMap: (Token | undefined)[],
+): number | number[] => {
+  const timestampIndex = headerToTokenMap.findIndex((x) => x === 'timestamp');
 
   if (timestampIndex !== -1) return timestampIndex;
 
-  const timeIndex = Object.values(sourceItems[type]).findIndex(
-    (item) => item.time === 'Time',
-  );
-  const dateIndex = Object.values(sourceItems[type]).findIndex(
-    (item) => item.time === 'Date',
-  );
+  const timeIndex = headerToTokenMap.findIndex((x) => x === 'time');
+  const dateIndex = headerToTokenMap.findIndex((x) => x === 'date');
 
   if (timeIndex === -1 || dateIndex === -1) {
     throw new BadRequestException('Not current timestamp schema');
   }
-
   return [dateIndex, timeIndex];
 };
 
-export const getFilePathData = async (
-  filePath: string,
-  sourceType: SourceType,
-) => {
+export const getFilePathData = async (filePath: string) => {
   const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
   const workSheetData = workSheetsFromFile[0]?.data;
 
   const headerIndex = workSheetData?.findIndex((row) =>
-    Object.keys(sourceItems[sourceType]).some((key) =>
-      row.some((cell) => {
-        return typeof cell === 'string' && headerMatchesKey(cell, key);
-      }),
+    rules.some((rule) =>
+      row.some(
+        (cell) => typeof cell === 'string' && rule.expression.test(cell),
+      ),
     ),
   );
 
   const headers = workSheetData[headerIndex] as string[];
-
-  const { ignoredHeaders, importedHeaders } = Object.keys(
-    sourceItems[sourceType],
-  ).reduce<{
-    ignoredHeaders: string[];
-    importedHeaders: Metric[];
-  }>(
-    (res, x) => {
-      if (sourceItems[sourceType][x]?.ignore) {
-        // eslint-disable-next-line fp/no-mutating-methods
-        res.ignoredHeaders.push(x);
-      } else {
-        // eslint-disable-next-line fp/no-mutating-methods
-        res.importedHeaders.push(sourceItems[sourceType][x].metric as Metric);
-      }
-      return res;
-    },
-    { ignoredHeaders: [], importedHeaders: [] },
+  const headerToTokenMap: (Token | undefined)[] = headers.map(
+    (x) => rules.find((rule) => rule.expression.test(x))?.token,
   );
-
+  const importedMetrics = headerToTokenMap.filter(
+    (x): x is Metric => x !== undefined && !nonMetric.includes(x as NonMetric),
+  );
+  const ignoredHeaders = headers.filter(
+    (x, i) => headerToTokenMap[i] === undefined,
+  );
   const signature = await md5Fle(filePath);
 
   return {
     workSheetData,
     signature,
     ignoredHeaders,
-    importedHeaders,
+    importedMetrics,
     headers,
     headerIndex,
+    headerToTokenMap,
   };
 };
 
@@ -292,10 +244,9 @@ export const convertData = (
   workSheetData: any[][],
   headers: string[],
   headerIndex: number,
-  sourceType: SourceType,
-  ignoredHeaders: string[],
   fileName: string,
   sourceEntity: Sources,
+  headerToTokenMap: (Token | undefined)[],
   mimetype?: Mimetype,
 ) => {
   const preResult = workSheetData
@@ -306,99 +257,56 @@ export const convertData = (
     })
     .filter((item) => item) as string[][];
 
-  const sourceItemToHeaderMap = Object.keys(sourceItems[sourceType]).map(
-    (sourceHeader) =>
-      headers.findIndex(
-        (x) =>
-          x === sourceHeader ||
-          sourceItems[sourceType][sourceHeader].matchExp?.test(x),
-      ),
-  );
-
-  const timestampIndexRaw = findTimeStampIndex(sourceType);
-  const timestampIndex =
-    typeof timestampIndexRaw === 'number'
-      ? sourceItemToHeaderMap[timestampIndexRaw]
-      : timestampIndexRaw.map((x) => sourceItemToHeaderMap[x]);
+  const timestampIndex = findTimeStampIndex(headerToTokenMap);
 
   console.time(`Get data from sheet ${fileName}`);
-  const results = preResult.map((item) => {
-    const tempData: ([Metric, string] | ['timestamp', Date])[] = Object.keys(
-      sourceItems[sourceType],
-    )
-      .map<[Metric | undefined, string]>((header, i) => {
-        if (ignoredHeaders.includes(header)) {
-          return [undefined, ''];
-        }
-
-        const columnName = sourceItems[sourceType][header].metric;
-        const convertFn = sourceItems[sourceType][header]?.convertFn;
-        const rawValue = item[sourceItemToHeaderMap[i]];
-        const value = !convertFn
-          ? rawValue
-          : convertFn(parseFloat(rawValue)).toFixed(2);
-
-        return [columnName, value];
-      })
-      .filter<[Metric, string]>(
-        (filtered): filtered is [Metric, string] => filtered[0] !== undefined,
-      );
-
+  const results = preResult.reduce<Data[]>((acc, row) => {
     const timezone =
       typeof timestampIndex === 'number'
         ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
         : undefined;
 
-    const timestamp = getTimeStamp(timestampIndex, item, mimetype, timezone);
+    const timestamp = getTimeStamp(
+      timestampIndex,
+      row,
+      mimetype,
+      timezone,
+    ).toISOString();
 
-    // eslint-disable-next-line fp/no-mutating-methods
-    tempData.push(['timestamp', timestamp]);
+    const rowValues = row.map<Data | undefined>((cell, i) => {
+      const metric = headerToTokenMap[i];
+      if (metric === undefined || nonMetric.includes(metric as NonMetric)) {
+        return undefined;
+      }
 
-    return Object.fromEntries(tempData);
-  });
+      return {
+        timestamp,
+        value: parseFloat(cell),
+        metric: metric as Metric,
+        source: sourceEntity,
+      };
+    });
+
+    const filtered = rowValues.filter((x): x is Data => x !== undefined);
+    return [...acc, ...filtered];
+  }, []);
   console.timeEnd(`Get data from sheet ${fileName}`);
 
   console.time(`Remove duplicates and empty values ${fileName}`);
   const data = uniqBy(
-    results
-      .reduce<
-        {
-          timestamp: string;
-          value: number;
-          metric: string;
-          source: Sources;
-        }[]
-      >((timeSeriesObjects: any[], object) => {
-        const { timestamp } = object;
-        return [
-          ...timeSeriesObjects,
-          ...Object.keys(object)
-            .filter((k) => k !== 'timestamp')
-            .map((key) => {
-              return {
-                timestamp,
-                value: parseFloat(object[key]),
-                metric: key,
-                source: sourceEntity,
-              };
-            }),
-        ];
-      }, [])
-      .filter((valueObject) => {
-        if (!isNaN(valueObject.value)) {
-          return true;
-        }
-        logger.log('Excluding incompatible value:');
-        logger.log(valueObject);
-        return false;
-      }),
+    results.filter((valueObject) => {
+      if (!isNaN(valueObject.value)) {
+        return true;
+      }
+      logger.log('Excluding incompatible value:');
+      logger.log(valueObject);
+      return false;
+    }),
     ({ timestamp, metric, source }) => `${timestamp}, ${metric}, ${source.id}`,
   );
   console.timeEnd(`Remove duplicates and empty values ${fileName}`);
 
-  const unusedHeaders = headers.filter((x) => !sourceItems[sourceType][x]);
-
-  return { data, unusedHeaders };
+  return data;
 };
 
 export const uploadFileToGCloud = async (
@@ -518,9 +426,6 @@ export const uploadTimeSeriesData = async (
   failOnWarning?: boolean,
   mimetype?: Mimetype,
 ) => {
-  if (!Object.keys(sourceItems[sourceType]).length) {
-    throw new BadRequestException('Schema not provided for this type yet');
-  }
   console.time(`Upload datafile ${fileName}`);
 
   const [site, surveyPoint] = await Promise.all([
@@ -539,114 +444,108 @@ export const uploadTimeSeriesData = async (
     repositories.sourcesRepository,
   );
 
-  if (Object.keys(sourceItems).includes(sourceType)) {
-    const {
-      workSheetData,
-      signature,
-      ignoredHeaders,
-      importedHeaders,
-      headers,
-      headerIndex,
-    } = await getFilePathData(filePath, sourceType);
+  const {
+    workSheetData,
+    signature,
+    ignoredHeaders,
+    importedMetrics,
+    headers,
+    headerIndex,
+    headerToTokenMap,
+  } = await getFilePathData(filePath);
 
-    const { data, unusedHeaders } = convertData(
-      workSheetData,
-      headers,
-      headerIndex,
-      sourceType,
-      ignoredHeaders,
-      fileName,
-      sourceEntity,
-      mimetype,
+  const data = convertData(
+    workSheetData,
+    headers,
+    headerIndex,
+    fileName,
+    sourceEntity,
+    headerToTokenMap,
+    mimetype,
+  );
+
+  if (failOnWarning && ignoredHeaders.length > 0) {
+    throw new BadRequestException(
+      `${fileName}: The columns ${ignoredHeaders
+        .map((header) => `"${header}"`)
+        .join(', ')} are not configured for import yet and cannot be uploaded.`,
     );
-
-    if (failOnWarning && unusedHeaders.length > 0) {
-      throw new BadRequestException(
-        `${fileName}: The columns ${unusedHeaders
-          .map((header) => `"${header}"`)
-          .join(
-            ', ',
-          )} are not configured for import yet and cannot be uploaded.`,
-      );
-    }
-
-    const minDate = get(
-      minBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
-      'timestamp',
-    );
-    const maxDate = get(
-      maxBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
-      'timestamp',
-    );
-
-    const dataUploadsFile = await uploadFileToGCloud(
-      repositories.dataUploadsRepository,
-      signature,
-      site,
-      surveyPoint ?? undefined,
-      sourceType,
-      fileName,
-      filePath,
-      minDate,
-      maxDate,
-      importedHeaders,
-    );
-
-    const dataAsTimeSeriesNoDiffs = data.map((x) => {
-      return {
-        timestamp: x.timestamp,
-        value: x.value,
-        metric: x.metric,
-        source: x.source,
-        dataUpload: dataUploadsFile,
-      };
-    });
-
-    const barometricPressures = dataAsTimeSeriesNoDiffs.filter(
-      (x) => x.metric === Metric.BAROMETRIC_PRESSURE_TOP,
-    );
-    const pressuresBySource = groupBy(barometricPressures, 'source.site.id');
-
-    const barometricDiffs = Object.entries(pressuresBySource).map(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ([key, pressures]) => {
-        // eslint-disable-next-line fp/no-mutating-methods
-        const sortedPressures = pressures.sort((a, b) => {
-          if (a.timestamp > b.timestamp) return 1;
-          if (a.timestamp < b.timestamp) return -1;
-          return 0;
-        });
-        const valueDiff = getBarometricDiff(sortedPressures);
-        return valueDiff !== null
-          ? {
-              timestamp: valueDiff.timestamp,
-              value: valueDiff.value,
-              metric: Metric.BAROMETRIC_PRESSURE_TOP_DIFF,
-              source: sortedPressures[1].source,
-              dataUpload: dataUploadsFile,
-            }
-          : undefined;
-      },
-    );
-
-    const filteredDiffs = barometricDiffs.filter((x) => x !== undefined);
-
-    const dataAsTimeSeries = [...dataAsTimeSeriesNoDiffs, filteredDiffs];
-
-    // Data is too big to added with one bulk insert so we batch the upload.
-    console.time(`Loading into DB ${fileName}`);
-    await saveBatchToTimeSeries(
-      dataAsTimeSeries as QueryDeepPartialEntity<TimeSeries>[],
-      repositories.timeSeriesRepository,
-    );
-    console.timeEnd(`Loading into DB ${fileName}`);
-    logger.log('loading complete');
-
-    refreshMaterializedView(repositories.dataUploadsRepository);
-
-    console.timeEnd(`Upload datafile ${fileName}`);
-    return unusedHeaders;
   }
 
-  return [];
+  const minDate = get(
+    minBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
+    'timestamp',
+  );
+  const maxDate = get(
+    maxBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
+    'timestamp',
+  );
+
+  const dataUploadsFile = await uploadFileToGCloud(
+    repositories.dataUploadsRepository,
+    signature,
+    site,
+    surveyPoint ?? undefined,
+    sourceType,
+    fileName,
+    filePath,
+    minDate,
+    maxDate,
+    importedMetrics,
+  );
+
+  const dataAsTimeSeriesNoDiffs = data.map((x) => {
+    return {
+      timestamp: x.timestamp,
+      value: x.value,
+      metric: x.metric,
+      source: x.source,
+      dataUpload: dataUploadsFile,
+    };
+  });
+
+  const barometricPressures = dataAsTimeSeriesNoDiffs.filter(
+    (x) => x.metric === Metric.BAROMETRIC_PRESSURE_TOP,
+  );
+  const pressuresBySource = groupBy(barometricPressures, 'source.site.id');
+
+  const barometricDiffs = Object.entries(pressuresBySource).map(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ([key, pressures]) => {
+      // eslint-disable-next-line fp/no-mutating-methods
+      const sortedPressures = pressures.sort((a, b) => {
+        if (a.timestamp > b.timestamp) return 1;
+        if (a.timestamp < b.timestamp) return -1;
+        return 0;
+      });
+      const valueDiff = getBarometricDiff(sortedPressures);
+      return valueDiff !== null
+        ? {
+            timestamp: valueDiff.timestamp,
+            value: valueDiff.value,
+            metric: Metric.BAROMETRIC_PRESSURE_TOP_DIFF,
+            source: sortedPressures[1].source,
+            dataUpload: dataUploadsFile,
+          }
+        : undefined;
+    },
+  );
+
+  const filteredDiffs = barometricDiffs.filter((x) => x !== undefined);
+
+  const dataAsTimeSeries = [...dataAsTimeSeriesNoDiffs, filteredDiffs];
+
+  // Data is too big to added with one bulk insert so we batch the upload.
+  console.time(`Loading into DB ${fileName}`);
+  await saveBatchToTimeSeries(
+    dataAsTimeSeries as QueryDeepPartialEntity<TimeSeries>[],
+    repositories.timeSeriesRepository,
+  );
+  console.timeEnd(`Loading into DB ${fileName}`);
+  logger.log('loading complete');
+
+  refreshMaterializedView(repositories.dataUploadsRepository);
+
+  console.timeEnd(`Upload data file ${fileName}`);
+  return ignoredHeaders;
 };

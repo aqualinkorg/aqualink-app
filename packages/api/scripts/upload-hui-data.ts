@@ -174,11 +174,11 @@ async function run() {
   const {
     workSheetData,
     signature,
-    ignoredHeaders,
-    importedHeaders,
     headers,
     headerIndex,
-  } = await getFilePathData(filePath, SourceType.HUI);
+    importedMetrics,
+    headerToTokenMap,
+  } = await getFilePathData(filePath);
   const siteNameIndex = headers.findIndex((x) => x === 'SiteName');
   const groupedBySite = groupBy(
     // Remove first row with the titles and filter out empty lines
@@ -192,14 +192,13 @@ async function run() {
       const siteSurveyPoint = site
         ? undefined
         : await siteSurveyPointRepository.findOne({ where: { name: key } });
-      const { data } = convertData(
+      const data = convertData(
         groupedBySite[key] as any,
         headers,
         headerIndex,
-        SourceType.HUI,
-        ignoredHeaders,
         '',
         {} as Sources,
+        headerToTokenMap,
       );
       return {
         name: key,
@@ -276,7 +275,7 @@ async function run() {
     filePath,
     minDate,
     maxDate,
-    importedHeaders,
+    importedMetrics,
   );
 
   const groupedClusteredSites = groupBy(sitesClustered, (x) => x.cluster);

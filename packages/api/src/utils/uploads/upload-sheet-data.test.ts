@@ -1,5 +1,4 @@
 import { convertData, getFilePathData } from './upload-sheet-data';
-import { SourceType } from '../../sites/schemas/source-type.enum';
 import { Sources } from '../../sites/sources.entity';
 
 const sondeTestResults = [
@@ -585,38 +584,134 @@ const huiTestResults = [
   { value: 1.84, metric: 'ammonium', source: {} },
 ];
 
-const cases: [string, SourceType, any][] = [
-  ['sonde_data.csv', SourceType.SONDE, sondeTestResults],
-  ['sonde_data_simple.csv', SourceType.SONDE, sondeTestResults],
-  ['hobo_data.csv', SourceType.HOBO, hoboTestResults],
-  ['metlog_data.csv', SourceType.METLOG, metlogTestResults],
-  ['metlog_data_simple.csv', SourceType.METLOG, metlogTestResults],
-  ['hui_data.csv', SourceType.HUI, huiTestResults],
+const sheetDataResults = [
+  { value: 25.7, metric: 'bottom_temperature', source: {} },
+  { value: 102.1, metric: 'odo_saturation', source: {} },
+  { value: 13.9, metric: 'turbidity', source: {} },
+  { value: 26.26, metric: 'phosphorus_total', source: {} },
+  { value: 1697.47, metric: 'silicate', source: {} },
+  { value: 2.81, metric: 'ammonium', source: {} },
+  { value: 33.3, metric: 'salinity', source: {} },
+  { value: 8.11, metric: 'ph', source: {} },
+  { value: 24.9, metric: 'bottom_temperature', source: {} },
+  { value: 100.6, metric: 'odo_saturation', source: {} },
+  { value: 16.8, metric: 'turbidity', source: {} },
+  { value: 18.8, metric: 'phosphorus_total', source: {} },
+  { value: 1720.37, metric: 'silicate', source: {} },
+  { value: 4.15, metric: 'ammonium', source: {} },
+  { value: 23.8, metric: 'salinity', source: {} },
+  { value: 8.07, metric: 'ph', source: {} },
+  { value: 26.8, metric: 'bottom_temperature', source: {} },
+  { value: 101.6, metric: 'odo_saturation', source: {} },
+  { value: 2.62, metric: 'turbidity', source: {} },
+  { value: 10.73, metric: 'phosphorus_total', source: {} },
+  { value: 604.37, metric: 'silicate', source: {} },
+  { value: 1.88, metric: 'ammonium', source: {} },
+  { value: 35, metric: 'salinity', source: {} },
+  { value: 8.06, metric: 'ph', source: {} },
+  { value: 27.2, metric: 'bottom_temperature', source: {} },
+  { value: 103.5, metric: 'odo_saturation', source: {} },
+  { value: 5.86, metric: 'turbidity', source: {} },
+  { value: 16.68, metric: 'phosphorus_total', source: {} },
+  { value: 576.28, metric: 'silicate', source: {} },
+  { value: 2.27, metric: 'ammonium', source: {} },
+  { value: 34.7, metric: 'salinity', source: {} },
+  { value: 8.06, metric: 'ph', source: {} },
+  { value: 27.3, metric: 'bottom_temperature', source: {} },
+  { value: 101.8, metric: 'odo_saturation', source: {} },
+  { value: 3.47, metric: 'turbidity', source: {} },
+  { value: 24.07, metric: 'phosphorus_total', source: {} },
+  { value: 822.08, metric: 'silicate', source: {} },
+  { value: 1.5, metric: 'ammonium', source: {} },
+  { value: 34.6, metric: 'salinity', source: {} },
+  { value: 8.15, metric: 'ph', source: {} },
+  { value: 26.7, metric: 'bottom_temperature', source: {} },
+  { value: 94.7, metric: 'odo_saturation', source: {} },
+  { value: 2.89, metric: 'turbidity', source: {} },
+  { value: 17.64, metric: 'phosphorus_total', source: {} },
+  { value: 461.59, metric: 'silicate', source: {} },
+  { value: 1.84, metric: 'ammonium', source: {} },
+  { value: 27.8, metric: 'salinity', source: {} },
+  { value: 8.05, metric: 'ph', source: {} },
+  { value: 26.8, metric: 'bottom_temperature', source: {} },
+  { value: 99.6, metric: 'odo_saturation', source: {} },
+  { value: 2.8, metric: 'turbidity', source: {} },
+  { value: 14.32, metric: 'phosphorus_total', source: {} },
+  { value: 169.92, metric: 'silicate', source: {} },
+  { value: 2.89, metric: 'ammonium', source: {} },
+  { value: 28.1, metric: 'salinity', source: {} },
+  { value: 7.99, metric: 'ph', source: {} },
+  { value: 27.2, metric: 'bottom_temperature', source: {} },
+  { value: 102.4, metric: 'odo_saturation', source: {} },
+  { value: 2.91, metric: 'turbidity', source: {} },
+  { value: 11, metric: 'phosphorus_total', source: {} },
+  { value: 125.36, metric: 'silicate', source: {} },
+  { value: 2.57, metric: 'ammonium', source: {} },
+  { value: 28.2, metric: 'salinity', source: {} },
+  { value: 8.09, metric: 'ph', source: {} },
+  { value: 27.4, metric: 'bottom_temperature', source: {} },
+  { value: 106.1, metric: 'odo_saturation', source: {} },
+  { value: 1.19, metric: 'turbidity', source: {} },
+  { value: 14.41, metric: 'phosphorus_total', source: {} },
+  { value: 72.9, metric: 'silicate', source: {} },
+  { value: 2.8, metric: 'ammonium', source: {} },
+  { value: 29.6, metric: 'salinity', source: {} },
+  { value: 8.11, metric: 'ph', source: {} },
+  { value: 25.3, metric: 'bottom_temperature', source: {} },
+  { value: 101.2, metric: 'odo_saturation', source: {} },
+  { value: 23.3, metric: 'turbidity', source: {} },
+  { value: 10.8, metric: 'phosphorus_total', source: {} },
+  { value: 330.61, metric: 'silicate', source: {} },
+  { value: 2.74, metric: 'ammonium', source: {} },
+  { value: 29.3, metric: 'salinity', source: {} },
+  { value: 7.96, metric: 'ph', source: {} },
+  { value: 25.4, metric: 'bottom_temperature', source: {} },
+  { value: 97.8, metric: 'odo_saturation', source: {} },
+  { value: 5.48, metric: 'turbidity', source: {} },
+  { value: 15.37, metric: 'phosphorus_total', source: {} },
+  { value: 451.55, metric: 'silicate', source: {} },
+  { value: 8.69, metric: 'ammonium', source: {} },
+  { value: 27.7, metric: 'salinity', source: {} },
+  { value: 7.91, metric: 'ph', source: {} },
+  { value: 25.2, metric: 'bottom_temperature', source: {} },
+  { value: 103.1, metric: 'odo_saturation', source: {} },
+  { value: 16.87, metric: 'turbidity', source: {} },
+  { value: 16.77, metric: 'phosphorus_total', source: {} },
+  { value: 112.01, metric: 'silicate', source: {} },
+  { value: 1.79, metric: 'ammonium', source: {} },
+  { value: 28.1, metric: 'salinity', source: {} },
+  { value: 8.06, metric: 'ph', source: {} },
+];
+
+const cases: [string, any][] = [
+  ['sonde_data.csv', sondeTestResults],
+  ['sonde_data_simple.csv', sondeTestResults],
+  ['hobo_data.csv', hoboTestResults],
+  ['metlog_data.csv', metlogTestResults],
+  ['metlog_data_simple.csv', metlogTestResults],
+  ['hui_data.csv', huiTestResults],
+  ['sheet_data.csv', sheetDataResults],
 ];
 
 describe('CheckConvertingWork', () => {
-  test.each(cases)(
-    'Test file %p with %p type',
-    async (fileName, type, expectedResult) => {
-      const { workSheetData, ignoredHeaders, headers, headerIndex } =
-        await getFilePathData(`src/utils/uploads/${fileName}`, type);
+  test.each(cases)('Test file %p', async (fileName, expectedResult) => {
+    const { workSheetData, headers, headerIndex, headerToTokenMap } =
+      await getFilePathData(`src/utils/uploads/${fileName}`);
 
-      const { data: result } = convertData(
-        workSheetData,
-        headers,
-        headerIndex,
-        type,
-        ignoredHeaders,
-        fileName,
-        {} as Sources,
-        'text/csv',
-      );
+    const result = convertData(
+      workSheetData,
+      headers,
+      headerIndex,
+      fileName,
+      {} as Sources,
+      headerToTokenMap,
+      'text/csv',
+    );
 
-      const editRes = result.map(({ timestamp, ...rest }) => {
-        return rest;
-      });
+    const editRes = result.map(({ timestamp, ...rest }) => {
+      return rest;
+    });
 
-      expect(editRes).toEqual(expectedResult);
-    },
-  );
+    expect(editRes).toEqual(expectedResult);
+  });
 });

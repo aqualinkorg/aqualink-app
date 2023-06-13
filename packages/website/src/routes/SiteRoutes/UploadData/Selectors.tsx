@@ -28,6 +28,7 @@ interface SelectOption {
 type EnhancedSelectOption = SelectOption & { disabled?: boolean };
 
 const SENSOR_TYPES: EnhancedSelectOption[] = [
+  { id: 5, name: 'sheet_data', label: 'Default' },
   { id: 0, name: 'sonde', label: 'Sonde data' },
   { id: 1, name: 'metlog', label: 'Meteorological data' },
   { id: 3, name: 'hobo', label: 'HOBO data' },
