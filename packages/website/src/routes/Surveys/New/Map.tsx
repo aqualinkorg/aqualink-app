@@ -11,7 +11,6 @@ import {
   setDiveLocation,
   diveLocationSelector,
 } from '../../../store/Survey/surveySlice';
-// REMOVE BEFORE MERGE
 
 const pinIcon = L.icon({
   iconUrl: marker,
