@@ -1,12 +1,7 @@
 import { MetricsKeys } from 'store/Sites/types';
+import { BaseSourceConfig } from '../utils/types';
 
-interface SondeConfig {
-  title: string;
-  units: string;
-  description: string;
-  visibility: string;
-  order: number;
-}
+type SondeConfig = BaseSourceConfig;
 
 export type SondeMetricsKeys = Extract<
   MetricsKeys,

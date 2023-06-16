@@ -31,3 +31,6 @@ export const SONDE_DATA_COLOR = '#fa8d00';
 
 // Metlog data
 export const METLOG_DATA_COLOR = '#fa8d00';
+
+// Metlog data
+export const HUI_DATA_COLOR = '#fa8d00';

@@ -57,7 +57,7 @@ const UpdateInfo = ({
           </Grid>
         </Grid>
       </Grid>
-      <Grid xs={4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Grid item xs={4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Chip
           live={live}
           href={live ? undefined : href}

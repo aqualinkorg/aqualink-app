@@ -207,7 +207,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-grid-xs-4"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
           style="display: flex; justify-content: flex-end;"
         >
           <div
