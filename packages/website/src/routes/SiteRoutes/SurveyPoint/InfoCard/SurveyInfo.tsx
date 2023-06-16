@@ -8,8 +8,8 @@ import {
   Theme,
 } from '@material-ui/core';
 
-import { SurveyListItem } from '../../../../store/Survey/types';
-import { findImagesAtSurveyPoint } from '../../../../helpers/surveys';
+import { SurveyListItem } from 'store/Survey/types';
+import { findImagesAtSurveyPoint } from 'helpers/surveys';
 
 const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
   const nSurveys = surveys.length;

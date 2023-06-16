@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from 'react-router-dom';
-import { Site } from '../../../store/Sites/types';
+import { Site } from 'store/Sites/types';
 
 function downloadFile(url: string, fileName: string) {
   fetch(url, {

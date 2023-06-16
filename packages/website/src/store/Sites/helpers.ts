@@ -9,9 +9,9 @@ import {
   union,
   isString,
 } from 'lodash';
-import { isBefore } from '../../helpers/dates';
-import { longDHW } from '../../helpers/siteUtils';
-import siteServices from '../../services/siteServices';
+import { isBefore } from 'helpers/dates';
+import { longDHW } from 'helpers/siteUtils';
+import siteServices from 'services/siteServices';
 
 import type { TableRow } from '../Homepage/types';
 import {

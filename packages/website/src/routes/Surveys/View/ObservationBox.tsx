@@ -11,12 +11,12 @@ import {
 import { useSelector } from 'react-redux';
 import { some } from 'lodash';
 
-import { DailyData } from '../../../store/Sites/types';
-import { formatNumber } from '../../../helpers/numberUtils';
+import { DailyData } from 'store/Sites/types';
 import {
   siteTimeSeriesDataLoadingSelector,
   siteTimeSeriesDataSelector,
-} from '../../../store/Sites/selectedSiteSlice';
+} from 'store/Sites/selectedSiteSlice';
+import { formatNumber } from 'helpers/numberUtils';
 import { getCardTemperatureValues } from './utils';
 
 const ObservationBox = ({

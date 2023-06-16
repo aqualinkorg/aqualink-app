@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayersControl, TileLayer } from 'react-leaflet';
-import { MapLayerName } from '../../../store/Homepage/types';
+import { MapLayerName } from 'store/Homepage/types';
 
 type SofarLayerDefinition = {
   name: MapLayerName;

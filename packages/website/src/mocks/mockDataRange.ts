@@ -1,4 +1,4 @@
-import { TimeSeriesDataRange } from '../store/Sites/types';
+import { TimeSeriesDataRange } from 'store/Sites/types';
 
 export const mockDataRange: TimeSeriesDataRange = {
   bottomTemperature: {

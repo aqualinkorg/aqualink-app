@@ -1,4 +1,4 @@
-import requests from '../helpers/requests';
+import requests from 'helpers/requests';
 
 export interface UploadTimeSeriesResult {
   file: string;

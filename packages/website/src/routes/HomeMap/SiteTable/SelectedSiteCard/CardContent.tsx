@@ -16,18 +16,14 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Alert } from '@material-ui/lab';
-import Chart from '../../../../common/Chart';
-import { formatNumber } from '../../../../helpers/numberUtils';
-import { Site } from '../../../../store/Sites/types';
-import { getSiteNameAndRegion } from '../../../../store/Sites/helpers';
-import { standardDailyDataDataset } from '../../../../common/Chart/MultipleSensorsCharts/helpers';
-import {
-  GaAction,
-  GaCategory,
-  trackButtonClick,
-} from '../../../../utils/google-analytics';
-import Chip from '../../../../common/Chip';
-import LoadingSkeleton from '../../../../common/LoadingSkeleton';
+import { Site } from 'store/Sites/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { formatNumber } from 'helpers/numberUtils';
+import Chart from 'common/Chart';
+import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
+import Chip from 'common/Chip';
+import LoadingSkeleton from 'common/LoadingSkeleton';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import featuredImageLoading from '../../../../assets/img/loading-image.svg';
 import chartLoading from '../../../../assets/img/chart_skeleton.png';
 

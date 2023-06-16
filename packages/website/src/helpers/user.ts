@@ -1,5 +1,5 @@
-import { User } from '../store/User/types';
-import { CollectionDetails } from '../store/Collection/types';
+import { User } from 'store/User/types';
+import { CollectionDetails } from 'store/Collection/types';
 
 export const isAdmin = (user: User | null, siteId: number): boolean => {
   return user

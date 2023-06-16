@@ -5,6 +5,19 @@ import moment from 'moment';
 import { camelCase, isNaN, isNumber, snakeCase, sortBy } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+import { oceanSenseConfig } from 'constants/oceanSenseConfig';
+import { getPublicSondeMetrics, getSondeConfig } from 'constants/sondeConfig';
+import {
+  METLOG_DATA_COLOR,
+  OCEAN_SENSE_DATA_COLOR,
+  SONDE_DATA_COLOR,
+  SPOTTER_METRIC_DATA_COLOR,
+  HUI_DATA_COLOR,
+} from 'constants/charts';
+import {
+  getMetlogConfig,
+  getPublicMetlogMetrics,
+} from 'constants/metlogConfig';
 import {
   latestDataSelector,
   siteGranularDailyDataSelector,
@@ -14,13 +27,10 @@ import {
   siteTimeSeriesDataRangeSelector,
   siteTimeSeriesDataRequest,
   siteTimeSeriesDataSelector,
-} from '../../../store/Sites/selectedSiteSlice';
-import { Metrics, MetricsKeys, Site } from '../../../store/Sites/types';
-import {
-  isBefore,
-  setTimeZone,
-  subtractFromDate,
-} from '../../../helpers/dates';
+} from 'store/Sites/selectedSiteSlice';
+import { Metrics, MetricsKeys, Site } from 'store/Sites/types';
+import { useQueryParam } from 'hooks/useQueryParams';
+import { isBefore, setTimeZone, subtractFromDate } from 'helpers/dates';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -30,24 +40,7 @@ import {
   localizedEndOfDay,
 } from './helpers';
 import { RangeValue } from './types';
-import { oceanSenseConfig } from '../../../constants/oceanSenseConfig';
-import {
-  getPublicSondeMetrics,
-  getSondeConfig,
-} from '../../../constants/sondeConfig';
-import { useQueryParam } from '../../../hooks/useQueryParams';
 import ChartWithCard from './ChartWithCard';
-import {
-  HUI_DATA_COLOR,
-  METLOG_DATA_COLOR,
-  OCEAN_SENSE_DATA_COLOR,
-  SONDE_DATA_COLOR,
-  SPOTTER_METRIC_DATA_COLOR,
-} from '../../../constants/charts';
-import {
-  getMetlogConfig,
-  getPublicMetlogMetrics,
-} from '../../../constants/metlogConfig';
 import DownloadCSVButton from './DownloadCSVButton';
 import {
   getHuiConfig,

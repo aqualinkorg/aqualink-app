@@ -4,6 +4,8 @@ import {
   PayloadAction,
   combineReducers,
 } from '@reduxjs/toolkit';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import surveyServices from 'services/surveyServices';
 import {
   SelectedSurveyState,
   SurveyState,
@@ -12,8 +14,6 @@ import {
   SurveyMedia,
 } from './types';
 import type { RootState, CreateAsyncThunkTypes } from '../configure';
-import surveyServices from '../../services/surveyServices';
-import { getAxiosErrorMessage } from '../../helpers/errors';
 
 const selectedSurveyInitialState: SelectedSurveyState = {
   loading: true,

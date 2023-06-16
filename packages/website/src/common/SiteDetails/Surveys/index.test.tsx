@@ -4,10 +4,10 @@ import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { mockUser } from 'mocks/mockUser';
+import { mockSurveyList } from 'mocks/mockSurveyList';
+import { mockSite } from 'mocks/mockSite';
 import Surveys from '.';
-import { mockUser } from '../../../mocks/mockUser';
-import { mockSurveyList } from '../../../mocks/mockSurveyList';
-import { mockSite } from '../../../mocks/mockSite';
 
 const mockStore = configureStore([]);
 

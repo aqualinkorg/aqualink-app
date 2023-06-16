@@ -11,7 +11,7 @@ import {
   Theme,
 } from '@material-ui/core';
 import classNames from 'classnames';
-import SurveyPointSelector from '../../../../common/SurveyPointSelector';
+import SurveyPointSelector from 'common/SurveyPointSelector';
 
 const MediaPointName = ({
   pointName,

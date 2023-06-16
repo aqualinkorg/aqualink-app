@@ -3,12 +3,12 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { mockUser } from '../../mocks/mockUser';
+import { mockUser } from 'mocks/mockUser';
 
+import { mockSite } from 'mocks/mockSite';
 import Homepage from '.';
-import { mockSite } from '../../mocks/mockSite';
 
-jest.mock('../../common/NavBar', () => 'Mock-NavBar');
+jest.mock('common/NavBar', () => 'Mock-NavBar');
 jest.mock('./Map', () => 'Mock-Map');
 jest.mock('./SiteTable', () => 'Mock-SiteTable');
 

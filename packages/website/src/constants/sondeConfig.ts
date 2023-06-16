@@ -1,4 +1,4 @@
-import { MetricsKeys } from '../store/Sites/types';
+import { MetricsKeys } from 'store/Sites/types';
 import { BaseSourceConfig } from '../utils/types';
 
 type SondeConfig = BaseSourceConfig;

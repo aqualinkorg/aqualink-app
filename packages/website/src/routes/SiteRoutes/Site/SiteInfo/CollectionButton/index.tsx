@@ -16,11 +16,11 @@ import {
   userCollectionLoadingSelector,
   userErrorSelector,
   userInfoSelector,
-} from '../../../../../store/User/userSlice';
-import { belongsToCollection } from '../../../../../helpers/siteUtils';
+} from 'store/User/userSlice';
+import { belongsToCollection } from 'helpers/siteUtils';
+import collectionServices from 'services/collectionServices';
 import { ReactComponent as WatchIcon } from '../../../../../assets/watch.svg';
 import { ReactComponent as UnWatchIcon } from '../../../../../assets/unwatch.svg';
-import collectionServices from '../../../../../services/collectionServices';
 
 const CollectionButton = ({
   siteId,

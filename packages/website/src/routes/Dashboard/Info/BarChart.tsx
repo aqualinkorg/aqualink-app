@@ -11,9 +11,9 @@ import {
 } from '@material-ui/core';
 import { groupBy, maxBy, times, reverse } from 'lodash';
 
-import { findIntervalByLevel } from '../../../helpers/bleachingAlertIntervals';
-import { formatNumber } from '../../../helpers/numberUtils';
-import { CollectionDetails } from '../../../store/Collection/types';
+import { CollectionDetails } from 'store/Collection/types';
+import { findIntervalByLevel } from 'helpers/bleachingAlertIntervals';
+import { formatNumber } from 'helpers/numberUtils';
 
 const percentageCalculator = (count: number, max?: number) => {
   // Max width should be 80%

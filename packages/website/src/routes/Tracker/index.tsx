@@ -12,11 +12,11 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-import NavBar from '../../common/NavBar';
-import Footer from '../../common/Footer';
+import { useImageAspectRatio } from 'hooks/useImageAspectRatio';
+import { isPositiveNumber } from 'helpers/numberUtils';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 import FootPrintImage from './FootPrintImage';
-import { useImageAspectRatio } from '../../hooks/useImageAspectRatio';
-import { isPositiveNumber } from '../../helpers/numberUtils';
 
 import hero from '../../assets/img/tracker-page/hero.png';
 import image1 from '../../assets/img/tracker-page/image1.png';

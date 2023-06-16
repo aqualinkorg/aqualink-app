@@ -14,10 +14,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { CollectionDetails } from 'store/Collection/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { isCollectionOwner } from 'helpers/user';
 import EditNameForm from './EditNameForm';
-import { CollectionDetails } from '../../../store/Collection/types';
-import { userInfoSelector } from '../../../store/User/userSlice';
-import { isCollectionOwner } from '../../../helpers/user';
 
 const Header = ({ collection, classes }: HeaderProps) => {
   const signedInUser = useSelector(userInfoSelector);

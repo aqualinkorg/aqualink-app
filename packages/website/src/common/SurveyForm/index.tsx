@@ -25,9 +25,9 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller } from 'react-hook-form';
 
-import { diveLocationSelector } from '../../store/Survey/surveySlice';
-import { SurveyData, SurveyState } from '../../store/Survey/types';
-import { setTimeZone } from '../../helpers/dates';
+import { diveLocationSelector } from 'store/Survey/surveySlice';
+import { SurveyData, SurveyState } from 'store/Survey/types';
+import { setTimeZone } from 'helpers/dates';
 
 interface SurveyFormFields {
   diveDate: string;

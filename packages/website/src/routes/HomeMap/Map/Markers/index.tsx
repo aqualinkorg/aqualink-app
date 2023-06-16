@@ -3,18 +3,18 @@ import { LayerGroup, useLeaflet } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import React, { useCallback, useEffect } from 'react';
 import L from 'leaflet';
-import { sitesToDisplayListSelector } from '../../../../store/Sites/sitesListSlice';
-import { Site } from '../../../../store/Sites/types';
-import { siteOnMapSelector } from '../../../../store/Homepage/homepageSlice';
+import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
+import { Site } from 'store/Sites/types';
+import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
+import { CollectionDetails } from 'store/Collection/types';
 import {
   findIntervalByLevel,
   findMaxLevel,
   getColorByLevel,
   Interval,
-} from '../../../../helpers/bleachingAlertIntervals';
-import { CollectionDetails } from '../../../../store/Collection/types';
+} from 'helpers/bleachingAlertIntervals';
 import SiteMarker from './SiteMarker';
 
 const clusterIcon = (cluster: any) => {

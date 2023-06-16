@@ -2,12 +2,12 @@ import React from 'react';
 import classnames from 'classnames';
 import { Grid, GridProps, makeStyles, Theme } from '@material-ui/core';
 
+import { Site, TimeSeriesSurveyPoint } from 'store/Sites/types';
 import AnalysisCard from './AnalysisCard';
 import Chart from './Chart';
 import Header from './Header';
 import { AvailableRange, RangeValue } from './types';
 import type { Dataset } from '../index';
-import { Site, TimeSeriesSurveyPoint } from '../../../store/Sites/types';
 
 const ChartWithCard = ({
   areSurveysFiltered,

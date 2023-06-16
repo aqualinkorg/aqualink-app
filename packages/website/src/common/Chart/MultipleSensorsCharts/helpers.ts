@@ -2,11 +2,15 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { minBy, maxBy, meanBy, inRange, isNumber } from 'lodash';
 import moment from 'moment';
 import {
-  convertSofarDataToLocalTime,
-  findMarginalDate,
-  generateHistoricalMonthlyMeanTimestamps,
-} from '../../../helpers/dates';
-
+  DAILY_DATA_CURVE_COLOR,
+  HISTORICAL_MONTHLY_MEAN_COLOR,
+  HOBO_BOTTOM_DATA_CURVE_COLOR,
+  CHART_MIN_NUMBER_OF_POINTS,
+  SPOTTER_BOTTOM_DATA_CURVE_COLOR,
+  SPOTTER_TOP_DATA_CURVE_COLOR,
+  DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
+  DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
+} from 'constants/charts';
 import {
   DailyData,
   DataRange,
@@ -16,19 +20,15 @@ import {
   ValueWithTimestamp,
   TimeSeriesData,
   Metrics,
-} from '../../../store/Sites/types';
+} from 'store/Sites/types';
+import {
+  convertSofarDataToLocalTime,
+  findMarginalDate,
+  generateHistoricalMonthlyMeanTimestamps,
+} from 'helpers/dates';
+
 import { CardColumn, OceanSenseDataset } from './types';
 import type { Dataset } from '../index';
-import {
-  DAILY_DATA_CURVE_COLOR,
-  HISTORICAL_MONTHLY_MEAN_COLOR,
-  HOBO_BOTTOM_DATA_CURVE_COLOR,
-  CHART_MIN_NUMBER_OF_POINTS,
-  SPOTTER_BOTTOM_DATA_CURVE_COLOR,
-  SPOTTER_TOP_DATA_CURVE_COLOR,
-  DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
-  DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
-} from '../../../constants/charts';
 import {
   convertDailyToSofar,
   convertHistoricalMonthlyMeanToSofar,

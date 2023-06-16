@@ -13,21 +13,18 @@ import {
 import { Alert } from '@material-ui/lab';
 import { useSelector } from 'react-redux';
 
-import ChartWithTooltip from '../ChartWithTooltip';
-import DatePicker from '../../Datepicker';
-import {
-  convertToLocalTime,
-  displayTimeInLocalTimezone,
-} from '../../../helpers/dates';
-import { Site } from '../../../store/Sites/types';
+import { Site } from 'store/Sites/types';
 import {
   siteTimeSeriesDataLoadingSelector,
   siteTimeSeriesDataRangeLoadingSelector,
   siteTimeSeriesDataRangeSelector,
-} from '../../../store/Sites/selectedSiteSlice';
+} from 'store/Sites/selectedSiteSlice';
+import { surveyListSelector } from 'store/Survey/surveyListSlice';
+import { convertToLocalTime, displayTimeInLocalTimezone } from 'helpers/dates';
+import { filterSurveys } from 'helpers/surveys';
+import ChartWithTooltip from '../ChartWithTooltip';
+import DatePicker from '../../Datepicker';
 import { findChartPeriod, moreThanOneYear } from './helpers';
-import { surveyListSelector } from '../../../store/Survey/surveyListSlice';
-import { filterSurveys } from '../../../helpers/surveys';
 import { Dataset } from '..';
 
 const Chart = ({

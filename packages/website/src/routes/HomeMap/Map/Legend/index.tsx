@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
 import classNames from 'classnames';
 
-import CustomLegend from '../../../../common/Legend';
+import CustomLegend from 'common/Legend';
 import {
   dhwColorCode,
   surfaceTempColorCode,

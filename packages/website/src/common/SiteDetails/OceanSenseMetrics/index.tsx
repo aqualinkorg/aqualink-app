@@ -16,19 +16,19 @@ import { grey } from '@material-ui/core/colors';
 import { useSelector } from 'react-redux';
 import { last } from 'lodash';
 
+import {
+  siteLatestOceanSenseDataLoadingSelector,
+  siteLatestOceanSenseDataSelector,
+} from 'store/Sites/selectedSiteSlice';
+import { OceanSenseData, OceanSenseKeys } from 'store/Sites/types';
+import { formatNumber } from 'helpers/numberUtils';
+import { toRelativeTime } from 'helpers/dates';
 import UpdateInfo from '../../UpdateInfo';
 import { ReactComponent as AcidityIcon } from '../../../assets/acidity.svg';
 import { ReactComponent as ConductivityIcon } from '../../../assets/conductivuty.svg';
 import { ReactComponent as PressureIcon } from '../../../assets/pressure.svg';
 import { ReactComponent as DissolvedOxygenIcon } from '../../../assets/dissolved_oxygen.svg';
 import { ReactComponent as OrpIcon } from '../../../assets/orp.svg';
-import {
-  siteLatestOceanSenseDataLoadingSelector,
-  siteLatestOceanSenseDataSelector,
-} from '../../../store/Sites/selectedSiteSlice';
-import { OceanSenseData, OceanSenseKeys } from '../../../store/Sites/types';
-import { formatNumber } from '../../../helpers/numberUtils';
-import { toRelativeTime } from '../../../helpers/dates';
 
 interface Metric {
   label: string;

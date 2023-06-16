@@ -4,9 +4,9 @@ import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { mockUser } from 'mocks/mockUser';
+import { mockCollection } from 'mocks/mockCollection';
 import HomePageNavBar from '.';
-import { mockUser } from '../../mocks/mockUser';
-import { mockCollection } from '../../mocks/mockCollection';
 
 jest.mock('../RegisterDialog', () => 'Mock-RegisterDialog');
 jest.mock('../SignInDialog', () => 'Mock-SignInDialog');

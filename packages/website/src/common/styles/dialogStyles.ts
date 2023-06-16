@@ -1,4 +1,4 @@
-import theme from '../../layout/App/theme';
+import theme from 'layout/App/theme';
 
 const styles = {
   closeButton: {

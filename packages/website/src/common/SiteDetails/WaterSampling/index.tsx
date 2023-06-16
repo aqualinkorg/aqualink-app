@@ -12,19 +12,16 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 
+import { getSondeConfig, SondeMetricsKeys } from 'constants/sondeConfig';
+import { TimeSeriesData } from 'store/Sites/types';
+import { timeSeriesRequest } from 'store/Sites/helpers';
+import { formatNumber } from 'helpers/numberUtils';
+import requests from 'helpers/requests';
+import { colors } from 'layout/App/theme';
+import siteServices from 'services/siteServices';
 import { styles as incomingStyles } from '../styles';
 import { calculateSondeDataMeanValues } from './utils';
-import { TimeSeriesData } from '../../../store/Sites/types';
-import { timeSeriesRequest } from '../../../store/Sites/helpers';
-import { formatNumber } from '../../../helpers/numberUtils';
-import {
-  getSondeConfig,
-  SondeMetricsKeys,
-} from '../../../constants/sondeConfig';
 import UpdateInfo from '../../UpdateInfo';
-import requests from '../../../helpers/requests';
-import siteServices from '../../../services/siteServices';
-import { colors } from '../../../layout/App/theme';
 
 const CARD_BACKGROUND_COLOR = colors.greenCardColor;
 const METRICS: SondeMetricsKeys[] = [

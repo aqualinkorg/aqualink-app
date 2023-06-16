@@ -1,6 +1,4 @@
 import { AxiosRequestConfig } from 'axios';
-import requests from '../helpers/requests';
-import { constructTimeSeriesDataRequestUrl } from '../helpers/siteUtils';
 import {
   DailyData,
   LiveData,
@@ -24,7 +22,9 @@ import {
   LatestData,
   SiteSketchFab,
   ForecastData,
-} from '../store/Sites/types';
+} from 'store/Sites/types';
+import requests from 'helpers/requests';
+import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
 const getSite = (id: string) =>
   requests.send<Site>({

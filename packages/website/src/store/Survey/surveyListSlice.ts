@@ -1,11 +1,11 @@
 import { sortBy } from 'lodash';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
+import { getAxiosErrorMessage } from 'helpers/errors';
+import surveyServices from 'services/surveyServices';
 import { SurveyListState } from './types';
 
 import type { RootState, CreateAsyncThunkTypes } from '../configure';
-import surveyServices from '../../services/surveyServices';
-import { getAxiosErrorMessage } from '../../helpers/errors';
 
 const surveyListInitialState: SurveyListState = {
   list: [],

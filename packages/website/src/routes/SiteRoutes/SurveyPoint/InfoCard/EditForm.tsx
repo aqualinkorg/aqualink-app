@@ -10,8 +10,8 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import { find } from 'lodash';
 
-import { FormField } from '../../../../hooks/useFormField';
-import TextField from '../../../../common/Forms/TextField';
+import { FormField } from 'hooks/useFormField';
+import TextField from 'common/Forms/TextField';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 

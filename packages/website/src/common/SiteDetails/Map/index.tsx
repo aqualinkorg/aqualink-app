@@ -6,27 +6,24 @@ import './plugins/leaflet-tilelayer-subpixel-fix';
 import { withStyles, WithStyles, createStyles } from '@material-ui/core';
 import { some } from 'lodash';
 
-import SurveyPointPopup from './SurveyPointPopup';
+import { mapConstants } from 'constants/maps';
 import {
   Site,
   Position,
   SpotterPosition,
   SurveyPoints,
   Point,
-} from '../../../store/Sites/types';
-import { samePosition } from '../../../helpers/map';
+} from 'store/Sites/types';
+import { siteDraftSelector, setSiteDraft } from 'store/Sites/selectedSiteSlice';
+import { userInfoSelector } from 'store/User/userSlice';
+import { samePosition } from 'helpers/map';
+import { isManager } from 'helpers/user';
+import SurveyPointPopup from './SurveyPointPopup';
 
 import marker from '../../../assets/marker.png';
 import buoy from '../../../assets/buoy-marker.svg';
-import {
-  siteDraftSelector,
-  setSiteDraft,
-} from '../../../store/Sites/selectedSiteSlice';
-import { userInfoSelector } from '../../../store/User/userSlice';
-import { isManager } from '../../../helpers/user';
 import pointIcon from '../../../assets/alerts/pin_nostress@2x.png';
 import selectedPointIcon from '../../../assets/alerts/pin_warning@2x.png';
-import { mapConstants } from '../../../constants/maps';
 
 const pinIcon = L.icon({
   iconUrl: marker,

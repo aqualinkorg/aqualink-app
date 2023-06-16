@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import L from 'leaflet';
 import { withStyles, WithStyles, createStyles } from '@material-ui/core';
 
-import { Site } from '../../../store/Sites/types';
+import { Site } from 'store/Sites/types';
 
-import marker from '../../../assets/marker.png';
 import {
   setDiveLocation,
   diveLocationSelector,
-} from '../../../store/Survey/surveySlice';
+} from 'store/Survey/surveySlice';
+import marker from '../../../assets/marker.png';
 
 const pinIcon = L.icon({
   iconUrl: marker,

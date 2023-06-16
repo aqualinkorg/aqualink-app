@@ -4,8 +4,8 @@ import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import { BrowserRouter as Router } from 'react-router-dom';
+import { mockSite } from 'mocks/mockSite';
 import Popup from '.';
-import { mockSite } from '../../../../mocks/mockSite';
 
 jest.mock('react-leaflet', () => ({
   __esModule: true,

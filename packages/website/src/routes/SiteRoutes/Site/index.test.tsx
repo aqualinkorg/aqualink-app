@@ -4,26 +4,23 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { mockSite } from 'mocks/mockSite';
+import { mockUser } from 'mocks/mockUser';
+import { mockSurveyList } from 'mocks/mockSurveyList';
+import { mockCollection } from 'mocks/mockCollection';
+import { mockDataRange } from 'mocks/mockDataRange';
+import { mockSurvey } from 'mocks/mockSurvey';
 import Site from '.';
-import { mockSite } from '../../../mocks/mockSite';
-import { mockUser } from '../../../mocks/mockUser';
-import { mockSurveyList } from '../../../mocks/mockSurveyList';
-import { mockCollection } from '../../../mocks/mockCollection';
-import { mockDataRange } from '../../../mocks/mockDataRange';
-import { mockSurvey } from '../../../mocks/mockSurvey';
 
 const mockStore = configureStore([]);
 
 window.scrollTo = jest.fn();
 
-jest.mock('../../../common/SiteDetails/Map', () => 'Mock-Map');
-jest.mock(
-  '../../../common/SiteDetails/FeaturedMedia',
-  () => 'Mock-FeaturedMedia',
-);
+jest.mock('common/SiteDetails/Map', () => 'Mock-Map');
+jest.mock('common/SiteDetails/FeaturedMedia', () => 'Mock-FeaturedMedia');
 
 jest.mock(
-  '../../../common/Chart/MultipleSensorsCharts',
+  'common/Chart/MultipleSensorsCharts',
   () => 'Mock-MultipleSensorsCharts',
 );
 

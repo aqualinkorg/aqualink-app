@@ -12,17 +12,17 @@ import {
   Box,
 } from '@material-ui/core';
 
-import { dhwColorCode } from '../../../assets/colorCode';
-import { formatNumber } from '../../../helpers/numberUtils';
-import satellite from '../../../assets/satellite.svg';
+import { LatestDataASSofarValue } from 'store/Sites/types';
+import { formatNumber } from 'helpers/numberUtils';
 import {
   dhwColorFinder,
   degreeHeatingWeeksCalculator,
-} from '../../../helpers/degreeHeatingWeeks';
+} from 'helpers/degreeHeatingWeeks';
+import { toRelativeTime } from 'helpers/dates';
+import { dhwColorCode } from '../../../assets/colorCode';
+import satellite from '../../../assets/satellite.svg';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
-import { toRelativeTime } from '../../../helpers/dates';
-import { LatestDataASSofarValue } from '../../../store/Sites/types';
 
 const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
   const { dhw, satelliteTemperature, sstAnomaly } = data;

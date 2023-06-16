@@ -1,5 +1,5 @@
 import { groupBy, sortBy } from 'lodash';
-import type { SurveyMedia } from '../store/Survey/types';
+import type { SurveyMedia } from 'store/Survey/types';
 
 export const getFeaturedMedia = (surveyMedia: SurveyMedia[]) => {
   const media = surveyMedia.find((mediaItem) => mediaItem.featured);

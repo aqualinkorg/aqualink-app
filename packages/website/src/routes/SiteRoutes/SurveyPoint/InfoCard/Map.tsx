@@ -7,9 +7,9 @@ import {
   Theme,
 } from '@material-ui/core';
 
-import { Site } from '../../../../store/Sites/types';
-import Map from '../../../../common/SiteDetails/Map';
-import { FormField } from '../../../../hooks/useFormField';
+import { Site } from 'store/Sites/types';
+import { FormField } from 'hooks/useFormField';
+import Map from 'common/SiteDetails/Map';
 
 const SurveyPointMap = ({
   site,

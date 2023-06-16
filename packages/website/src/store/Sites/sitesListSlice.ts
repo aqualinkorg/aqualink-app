@@ -1,17 +1,14 @@
 import { sortBy } from 'lodash';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import siteServices from '../../services/siteServices';
-import {
-  hasDeployedSpotter,
-  setSiteNameFromList,
-} from '../../helpers/siteUtils';
+import { hasDeployedSpotter, setSiteNameFromList } from 'helpers/siteUtils';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import siteServices from 'services/siteServices';
 import type {
   SitesListState,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
 } from './types';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
-import { getAxiosErrorMessage } from '../../helpers/errors';
 
 const sitesListInitialState: SitesListState = {
   loading: false,

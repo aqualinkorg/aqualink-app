@@ -30,8 +30,8 @@ import {
   userLoadingSelector,
   userErrorSelector,
   clearError,
-} from '../../store/User/userSlice';
-import { UserRegisterParams } from '../../store/User/types';
+} from 'store/User/userSlice';
+import { UserRegisterParams } from 'store/User/types';
 import dialogStyles from '../styles/dialogStyles';
 import { RegisterFormFields } from '../types';
 
