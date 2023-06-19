@@ -25,6 +25,7 @@ export interface SofarDailyData {
   maxWindSpeed?: number;
   avgWindSpeed?: number;
   windDirection?: number;
+  surfaceTemperature?: number;
 }
 
 export interface SofarLiveData {
@@ -59,11 +60,12 @@ export interface SpotterData {
   barometerTop: ValueWithTimestamp[];
   barometerBottom: ValueWithTimestamp[];
   barometricTopDiff: ValueWithTimestamp[];
+  surfaceTemperature: ValueWithTimestamp[];
   latitude?: ValueWithTimestamp[];
   longitude?: ValueWithTimestamp[];
 }
 
-export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
+export const DEFAULT_SPOTTER_DATA_VALUE = {
   topTemperature: [],
   bottomTemperature: [],
   significantWaveHeight: [],
@@ -74,4 +76,5 @@ export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
   barometerTop: [],
   barometerBottom: [],
   barometricTopDiff: [],
+  surfaceTemperature: [],
 };

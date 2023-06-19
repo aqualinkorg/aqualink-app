@@ -19,6 +19,10 @@ export const SOFAR_MARINE_URL =
 export const SOFAR_WAVE_DATA_URL = 'https://api.sofarocean.com/api/wave-data';
 export const SOFAR_SENSOR_DATA_URL =
   'https://api.sofarocean.com/api/sensor-data';
+export const SOFAR_LATEST_DATA_URL =
+  'https://api.sofarocean.com/api/latest-data';
+export const SOFAR_HISTORICAL_DATA_URL =
+  'https://api.sofarocean.com/api/wave-data';
 
 export enum SofarModels {
   NOAACoralReefWatch = 'NOAACoralReefWatch',

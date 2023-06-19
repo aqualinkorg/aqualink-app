@@ -157,20 +157,12 @@ export async function getDailyData(
     ? mapValues(spotterRawData, (v) =>
         extractSofarValues(filterMetricDataByDate(excludedDates, v)),
       )
-    : {
-        topTemperature: [],
-        bottomTemperature: [],
-        significantWaveHeight: [],
-        waveMeanPeriod: [],
-        waveMeanDirection: [],
-        windSpeed: [],
-        windDirection: [],
-      };
+    : DEFAULT_SPOTTER_DATA_VALUE;
 
   const minBottomTemperature = getMin(spotterData.bottomTemperature);
   const maxBottomTemperature = getMax(spotterData.bottomTemperature);
   const avgBottomTemperature = getAverage(spotterData.bottomTemperature);
-
+  const surfaceTemperature = getAverage(spotterData.surfaceTemperature);
   const topTemperature = getAverage(spotterData.topTemperature);
 
   // Get satelliteTemperature
@@ -261,6 +253,7 @@ export async function getDailyData(
     maxWindSpeed,
     avgWindSpeed,
     windDirection,
+    surfaceTemperature,
   };
 }
 

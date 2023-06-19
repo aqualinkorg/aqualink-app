@@ -5,6 +5,8 @@ import moment from 'moment';
 import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {
+  SOFAR_HISTORICAL_DATA_URL,
+  SOFAR_LATEST_DATA_URL,
   SOFAR_MARINE_URL,
   SOFAR_SENSOR_DATA_URL,
   SOFAR_WAVE_DATA_URL,
@@ -52,6 +54,40 @@ interface HindcastResponse {
   values: ValueWithTimestamp[];
 }
 
+async function sofarErrorHandler({
+  error,
+  sensorId,
+  sendToSlack = false,
+}: {
+  error: any;
+  sensorId?: string;
+  sendToSlack?: boolean;
+}) {
+  if (error.response) {
+    const spotterMessagePart = sensorId ? `for spotter ${sensorId}.` : '.';
+    const message = `Sofar API responded with a ${error.response.status} status ${spotterMessagePart} ${error.response.data.message}`;
+    console.error(message);
+
+    if (!sendToSlack) {
+      return;
+    }
+    if ([401, 403].includes(error.response.status)) {
+      const messageTemplate: SlackMessage = {
+        channel: process.env.SLACK_BOT_CHANNEL as string,
+        text: message,
+        mrkdwn: true,
+      };
+
+      await sendSlackMessage(
+        messageTemplate,
+        process.env.SLACK_BOT_TOKEN as string,
+      );
+    }
+  } else {
+    console.error(`An error occurred accessing the Sofar API - ${error}`);
+  }
+}
+
 export async function sofarHindcast(
   modelId: string,
   variableID: string,
@@ -81,17 +117,7 @@ export async function sofarHindcast(
       }
       return response.data.hindcastVariables[0] as HindcastResponse;
     })
-    .catch((error) => {
-      if (error.response) {
-        console.error(
-          `Sofar Hindcast API responded with a ${error.response.status} status. ${error.response.data.message}`,
-        );
-      } else {
-        console.error(
-          `An error occurred accessing the Sofar Hindcast API - ${error}`,
-        );
-      }
-    });
+    .catch((error) => sofarErrorHandler({ error }));
 }
 
 export function sofarSensor(
@@ -110,26 +136,9 @@ export function sofarSensor(
       },
     })
     .then((response) => response.data)
-    .catch(async (error) => {
-      if (error.response) {
-        const message = `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`;
-        console.error(message);
-        if ([401, 403].includes(error.response.status)) {
-          const messageTemplate: SlackMessage = {
-            channel: process.env.SLACK_BOT_CHANNEL as string,
-            text: message,
-            mrkdwn: true,
-          };
-
-          await sendSlackMessage(
-            messageTemplate,
-            process.env.SLACK_BOT_TOKEN as string,
-          );
-        }
-      } else {
-        console.error(`An error occurred accessing the Sofar API - ${error}`);
-      }
-    });
+    .catch((error) =>
+      sofarErrorHandler({ error, sensorId, sendToSlack: true }),
+    );
 }
 
 export function sofarWaveData(
@@ -152,15 +161,55 @@ export function sofarWaveData(
       },
     })
     .then((response) => response.data)
-    .catch((error) => {
-      if (error.response) {
-        console.error(
-          `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
-        );
-      } else {
-        console.error(`An error occurred accessing the Sofar API - ${error}`);
-      }
-    });
+    .catch((error) => sofarErrorHandler({ error, sensorId }));
+}
+
+export function sofarHistorical({
+  sensorId,
+  token,
+  start,
+  end,
+}: {
+  sensorId: string;
+  token?: string;
+  start?: string;
+  end?: string;
+}) {
+  return axios
+    .get(SOFAR_HISTORICAL_DATA_URL, {
+      params: {
+        spotterId: sensorId,
+        includeSurfaceTempData: true,
+        includeWaves: false,
+        start,
+        end,
+        token,
+      },
+    })
+    .then((response) => response.data)
+    .catch((error) =>
+      sofarErrorHandler({ error, sensorId, sendToSlack: true }),
+    );
+}
+
+export async function sofarLatest({
+  sensorId,
+  token,
+}: {
+  sensorId: string;
+  token?: string;
+}) {
+  return axios
+    .get(SOFAR_LATEST_DATA_URL, {
+      params: {
+        spotterId: sensorId,
+        token,
+      },
+    })
+    .then((response) => response.data.data)
+    .catch((error) =>
+      sofarErrorHandler({ error, sensorId, sendToSlack: true }),
+    );
 }
 
 export async function getSofarHindcastData(
@@ -214,6 +263,19 @@ export async function getSpotterData(
     start,
     end,
   )) || { data: [] };
+
+  const { data: sofarHistoricalData } = await sofarHistorical({
+    sensorId,
+    token: sofarToken,
+    start,
+    end,
+  });
+
+  const sofarSpotterSurfaceTemp: ValueWithTimestamp[] =
+    sofarHistoricalData.surfaceTemp.map((x: any) => ({
+      timestamp: x.location.timestamp,
+      value: x.degrees,
+    }));
 
   const [
     sofarSignificantWaveHeight,
@@ -356,6 +418,7 @@ export async function getSpotterData(
     barometricTopDiff: spotterBarometricTopDiff
       ? [spotterBarometricTopDiff]
       : [],
+    surfaceTemperature: sofarSpotterSurfaceTemp,
     latitude: spotterLatitude,
     longitude: spotterLongitude,
   };

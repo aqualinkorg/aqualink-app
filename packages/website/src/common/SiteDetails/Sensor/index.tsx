@@ -71,6 +71,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
     bottomTemperature,
     barometricPressureTop,
     barometricPressureTopDiff,
+    surfaceTemperature,
   } = data;
 
   const relativeTime =
@@ -95,6 +96,30 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
 
   const [alertText, clickable] = getApplicationTag(user, id);
 
+  const getGridTemplateAreas = () => {
+    if (barometricPressureTop && surfaceTemperature)
+      return "'value3 image' 'value0 image' 'value1 image' 'value2 value4'";
+    if (surfaceTemperature)
+      return "'value3 image' 'value0 image' 'value1 image'";
+    if (barometricPressureTop)
+      return "'value0 image' 'value1 image' 'value2 value4'";
+    return "'value0 image' 'spacer image' 'value1 image'";
+  };
+
+  const getImageHeight = () => {
+    if (barometricPressureTop && surfaceTemperature) return '150';
+    if (surfaceTemperature) return '150';
+    if (barometricPressureTop) return '135';
+    return '150';
+  };
+
+  const getSpaceDisplay = () => {
+    if (barometricPressureTop && surfaceTemperature) return 'none';
+    if (surfaceTemperature) return 'none';
+    if (barometricPressureTop) return 'none';
+    return 'inherit';
+  };
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -111,7 +136,14 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
       />
 
       <CardContent className={classes.content}>
-        <div className={classes.gridContainer}>
+        <div
+          style={{
+            display: 'grid',
+            gap: '1rem',
+            gridTemplateAreas: getGridTemplateAreas(),
+            padding: '1rem',
+          }}
+        >
           {metrics.map(({ label, value }, index) => (
             <div style={{ gridArea: `value${index}` }} key={label}>
               <Typography
@@ -148,17 +180,45 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
               </Box>
             </div>
           )}
-          <div style={{ gridArea: 'image' }}>
+          <div
+            style={{
+              gridArea: 'spacer',
+              display: getSpaceDisplay(),
+              minHeight: '2em',
+            }}
+          />
+          {surfaceTemperature && (
+            <div style={{ gridArea: 'value3' }}>
+              <Typography
+                className={classes.contentTextTitles}
+                variant="subtitle2"
+              >
+                Surface Temperature
+              </Typography>
+              <Box
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                }}
+              >
+                <Typography className={classes.contentTextValues} variant="h3">
+                  {`${formatNumber(surfaceTemperature?.value, 1)}°C`}
+                </Typography>
+              </Box>
+            </div>
+          )}
+          <div style={{ gridArea: 'image', position: 'relative' }}>
             <img
+              style={{ position: 'absolute', bottom: '0' }}
               alt="sensor"
               src={sensor}
-              height={barometricPressureTop ? '135' : '150'}
+              height={getImageHeight()}
               width="auto"
             />
           </div>
           <div
             style={{
-              gridArea: 'value3',
+              gridArea: 'value4',
               display: 'flex',
               alignItems: 'flex-end',
             }}
@@ -242,7 +302,7 @@ const styles = () =>
     content: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       flexGrow: 1,
       padding: 0,
     },
@@ -252,7 +312,6 @@ const styles = () =>
       color: 'white',
       width: '100%',
       minHeight: 40,
-      marginTop: 32,
     },
     rejectedAlert: {
       fontSize: 11,
@@ -269,12 +328,6 @@ const styles = () =>
         color: 'inherit',
         textDecoration: 'none',
       },
-    },
-    gridContainer: {
-      display: 'grid',
-      gap: '1rem',
-      gridTemplateAreas: "'value0 image' 'value1 image' 'value2 value3'",
-      padding: '1rem',
     },
   });
 
