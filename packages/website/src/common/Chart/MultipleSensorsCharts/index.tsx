@@ -19,7 +19,6 @@ import {
   getPublicMetlogMetrics,
 } from 'constants/metlogConfig';
 import {
-  latestDataSelector,
   siteGranularDailyDataSelector,
   siteOceanSenseDataRequest,
   siteOceanSenseDataSelector,
@@ -28,9 +27,15 @@ import {
   siteTimeSeriesDataRequest,
   siteTimeSeriesDataSelector,
 } from 'store/Sites/selectedSiteSlice';
-import { Metrics, MetricsKeys, Site } from 'store/Sites/types';
+import { Metrics, MetricsKeys, Site, Sources } from 'store/Sites/types';
 import { useQueryParam } from 'hooks/useQueryParams';
-import { isBefore, setTimeZone, subtractFromDate } from 'helpers/dates';
+import {
+  rangeOverlapWithRange,
+  isBefore,
+  setTimeZone,
+  subtractFromDate,
+} from 'helpers/dates';
+import { getSourceRanges } from 'helpers/siteUtils';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -98,13 +103,13 @@ const MultipleSensorsCharts = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const latestData = useSelector(latestDataSelector);
   const { bottomTemperature, topTemperature } = timeSeriesData || {};
   const { hobo: hoboBottomTemperature } = bottomTemperature || {};
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { hobo: hoboBottomTemperatureRange } =
     timeSeriesDataRanges?.bottomTemperature || {};
   const rangesLoading = useSelector(siteTimeSeriesDataRangeLoadingSelector);
+  const [availableSources, setAvailableSources] = useState<Sources[]>([]);
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
@@ -120,15 +125,11 @@ const MultipleSensorsCharts = ({
     bottomTemperature?.spotter?.data?.[1] || topTemperature?.spotter?.data?.[1],
   );
 
-  const hasSondeData = Boolean(
-    latestData?.some((data) => data.source === 'sonde'),
-  );
+  const hasSondeData = availableSources.includes('sonde');
 
-  const hasMetlogData = Boolean(
-    latestData?.some((data) => data.source === 'metlog'),
-  );
+  const hasMetlogData = availableSources.includes('metlog');
 
-  const hasHuiData = Boolean(latestData?.some((data) => data.source === 'hui'));
+  const hasHuiData = availableSources.includes('hui');
 
   const chartStartDate = startDate || subtractFromDate(today, 'week');
   const chartEndDate = moment
@@ -313,8 +314,58 @@ const MultipleSensorsCharts = ({
     if (
       pickerStartDate &&
       pickerEndDate &&
-      isBefore(pickerStartDate, pickerEndDate)
+      isBefore(pickerStartDate, pickerEndDate) &&
+      timeSeriesDataRanges
     ) {
+      const sondeRanges = getSourceRanges(timeSeriesDataRanges, 'sonde').filter(
+        (x) =>
+          rangeOverlapWithRange(
+            x.minDate,
+            x.maxDate,
+            pickerStartDate,
+            pickerEndDate,
+          ),
+      );
+
+      const metlogRanges = getSourceRanges(
+        timeSeriesDataRanges,
+        'metlog',
+      ).filter((x) =>
+        rangeOverlapWithRange(
+          x.minDate,
+          x.maxDate,
+          pickerStartDate,
+          pickerEndDate,
+        ),
+      );
+
+      const huiRanges = getSourceRanges(timeSeriesDataRanges, 'hui').filter(
+        (x) =>
+          rangeOverlapWithRange(
+            x.minDate,
+            x.maxDate,
+            pickerStartDate,
+            pickerEndDate,
+          ),
+      );
+
+      const allMetrics = [
+        ...DEFAULT_METRICS,
+        ...sondeRanges.map((x) => x.metric),
+        ...metlogRanges.map((x) => x.metric),
+        ...huiRanges.map((x) => x.metric),
+      ];
+
+      setAvailableSources(
+        [
+          sondeRanges.length > 0 && 'sonde',
+          metlogRanges.length > 0 && 'metlog',
+          huiRanges.length > 0 && 'hui',
+        ].filter((x): x is Sources => x !== false),
+      );
+
+      const uniqueMetrics = [...new Map(allMetrics.map((x) => [x, x])).keys()];
+
       const siteLocalStartDate = setTimeZone(
         new Date(pickerStartDate),
         site.timezone,
@@ -331,10 +382,7 @@ const MultipleSensorsCharts = ({
           pointId,
           start: siteLocalStartDate,
           end: siteLocalEndDate,
-          metrics:
-            hasSondeData || hasMetlogData || hasHuiData
-              ? undefined
-              : DEFAULT_METRICS,
+          metrics: uniqueMetrics,
           hourly:
             moment(siteLocalEndDate).diff(moment(siteLocalStartDate), 'days') >
             2,
@@ -354,15 +402,13 @@ const MultipleSensorsCharts = ({
     }
   }, [
     dispatch,
-    hasHuiData,
-    hasMetlogData,
     hasOceanSenseId,
-    hasSondeData,
     pickerEndDate,
     pickerStartDate,
     pointId,
     site.id,
     site.timezone,
+    timeSeriesDataRanges,
   ]);
 
   // Set chart start/end dates based on data received
