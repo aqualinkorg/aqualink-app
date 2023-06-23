@@ -102,7 +102,7 @@ const EditForm = ({
         },
         name: siteName.value,
         depth: parseInt(siteDepth.value, 10),
-        sensorId: siteSensorId.value,
+        sensorId: siteSensorId.value || undefined,
         spotterApiToken,
       };
       onSubmit(updateParams);
