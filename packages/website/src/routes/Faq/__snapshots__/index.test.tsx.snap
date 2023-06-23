@@ -147,6 +147,23 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 classname="Faq-question-2"
                 variant="h5"
               >
+                What happens if I upload the same file?
+              </mock-typography>
+              <p>
+                The upload process will update any row that has changed and will also include any new rows inserted.
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <mock-typography
+                classname="Faq-question-2"
+                variant="h5"
+              >
                 How can I best conduct surveys using Aqualink?
               </mock-typography>
               <p>
