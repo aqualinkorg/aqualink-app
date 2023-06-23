@@ -202,7 +202,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
                 }}
               >
                 <Typography className={classes.contentTextValues} variant="h3">
-                  {`${formatNumber(surfaceTemperature?.value, 1)}°C`}
+                  {`${formatNumber(surfaceTemperature.value, 1)}°C`}
                 </Typography>
               </Box>
             </div>

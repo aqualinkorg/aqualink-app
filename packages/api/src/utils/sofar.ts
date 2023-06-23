@@ -5,13 +5,18 @@ import moment from 'moment';
 import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {
-  SOFAR_HISTORICAL_DATA_URL,
   SOFAR_LATEST_DATA_URL,
   SOFAR_MARINE_URL,
   SOFAR_SENSOR_DATA_URL,
   SOFAR_WAVE_DATA_URL,
 } from './constants';
-import { ValueWithTimestamp, SpotterData } from './sofar.types';
+import {
+  ValueWithTimestamp,
+  SpotterData,
+  HindcastResponse,
+  EMPTY_SOFAR_WAVE_RESPONSE,
+  SofarWaveDateResponse,
+} from './sofar.types';
 import { sendSlackMessage, SlackMessage } from './slack.utils';
 
 export const getLatestData = (
@@ -45,14 +50,6 @@ export const filterSofarResponse = (responseData: any) => {
       : []
   ) as ValueWithTimestamp[];
 };
-
-interface HindcastResponse {
-  variableID: string;
-  variableName: string;
-  dataCategory: string;
-  physicalUnit: string;
-  values: ValueWithTimestamp[];
-}
 
 async function sofarErrorHandler({
   error,
@@ -160,36 +157,8 @@ export function sofarWaveData(
         includeBarometerData: true,
       },
     })
-    .then((response) => response.data)
+    .then((response) => response.data as { data: SofarWaveDateResponse })
     .catch((error) => sofarErrorHandler({ error, sensorId }));
-}
-
-export function sofarHistorical({
-  sensorId,
-  token,
-  start,
-  end,
-}: {
-  sensorId: string;
-  token?: string;
-  start?: string;
-  end?: string;
-}) {
-  return axios
-    .get(SOFAR_HISTORICAL_DATA_URL, {
-      params: {
-        spotterId: sensorId,
-        includeSurfaceTempData: true,
-        includeWaves: false,
-        start,
-        end,
-        token,
-      },
-    })
-    .then((response) => response.data)
-    .catch((error) =>
-      sofarErrorHandler({ error, sensorId, sendToSlack: true }),
-    );
 }
 
 export async function sofarLatest({
@@ -255,8 +224,10 @@ export async function getSpotterData(
         ];
 
   const {
-    data: { waves = [], wind = [], barometerData = [] },
-  } = (await sofarWaveData(sensorId, sofarToken, start, end)) || { data: {} };
+    data: { waves = [], wind = [], barometerData = [], surfaceTemp = [] },
+  } = (await sofarWaveData(sensorId, sofarToken, start, end)) || {
+    data: EMPTY_SOFAR_WAVE_RESPONSE,
+  };
   const { data: smartMooringData } = (await sofarSensor(
     sensorId,
     sofarToken,
@@ -264,18 +235,12 @@ export async function getSpotterData(
     end,
   )) || { data: [] };
 
-  const { data: sofarHistoricalData } = await sofarHistorical({
-    sensorId,
-    token: sofarToken,
-    start,
-    end,
-  });
-
-  const sofarSpotterSurfaceTemp: ValueWithTimestamp[] =
-    sofarHistoricalData.surfaceTemp.map((x: any) => ({
-      timestamp: x.location.timestamp,
+  const sofarSpotterSurfaceTemp: ValueWithTimestamp[] = surfaceTemp.map(
+    (x) => ({
+      timestamp: x.timestamp,
       value: x.degrees,
-    }));
+    }),
+  );
 
   const [
     sofarSignificantWaveHeight,
@@ -283,12 +248,6 @@ export async function getSpotterData(
     sofarMeanDirection,
     spotterLatitude,
     spotterLongitude,
-  ]: [
-    ValueWithTimestamp[],
-    ValueWithTimestamp[],
-    ValueWithTimestamp[],
-    ValueWithTimestamp[],
-    ValueWithTimestamp[],
   ] = waves.reduce(
     (
       [
@@ -323,13 +282,16 @@ export async function getSpotterData(
         }),
       ];
     },
-    [[], [], [], [], []],
+    [[], [], [], [], []] as [
+      ValueWithTimestamp[],
+      ValueWithTimestamp[],
+      ValueWithTimestamp[],
+      ValueWithTimestamp[],
+      ValueWithTimestamp[],
+    ],
   );
 
-  const [sofarWindSpeed, sofarWindDirection]: [
-    ValueWithTimestamp[],
-    ValueWithTimestamp[],
-  ] = wind.reduce(
+  const [sofarWindSpeed, sofarWindDirection] = wind.reduce(
     ([speed, direction], data) => {
       return [
         speed.concat({
@@ -342,7 +304,7 @@ export async function getSpotterData(
         }),
       ];
     },
-    [[], []],
+    [[], []] as [ValueWithTimestamp[], ValueWithTimestamp[]],
   );
 
   const spotterBarometerTop: ValueWithTimestamp[] = barometerData.map(
