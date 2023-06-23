@@ -403,8 +403,9 @@ export const saveBatchToTimeSeries = (
           'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
         )
         .execute();
-    } catch {
+    } catch (err) {
       console.warn('The following batch failed to upload:\n', batch);
+      console.error(err);
     }
     return true;
   });
@@ -531,9 +532,19 @@ export const uploadTimeSeriesData = async (
     },
   );
 
-  const filteredDiffs = barometricDiffs.filter((x) => x !== undefined);
+  const filteredDiffs = barometricDiffs.filter(
+    (
+      x,
+    ): x is {
+      timestamp: string;
+      value: number;
+      metric: Metric;
+      source: Sources;
+      dataUpload: DataUploads;
+    } => x !== undefined,
+  );
 
-  const dataAsTimeSeries = [...dataAsTimeSeriesNoDiffs, filteredDiffs];
+  const dataAsTimeSeries = [...dataAsTimeSeriesNoDiffs, ...filteredDiffs];
 
   // Data is too big to added with one bulk insert so we batch the upload.
   console.time(`Loading into DB ${fileName}`);
