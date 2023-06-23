@@ -321,7 +321,10 @@ async function run() {
 
   const backfillPromises = backfill
     ? sitesCreated.map(async (x) => {
-        await backfillSiteData(x.id);
+        await backfillSiteData({
+          siteId: x.id,
+          dataSource,
+        });
         return x.id;
       })
     : [];

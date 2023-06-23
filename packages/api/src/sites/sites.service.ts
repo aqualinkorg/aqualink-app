@@ -6,7 +6,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
 import moment from 'moment';
 import Bluebird from 'bluebird';
@@ -87,6 +87,8 @@ export class SitesService {
 
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
+
+    private dataSource: DataSource,
   ) {}
 
   async create(
@@ -118,7 +120,10 @@ export class SitesService {
       .of(user)
       .add(site);
 
-    backfillSiteData(site.id);
+    backfillSiteData({
+      dataSource: this.dataSource,
+      siteId: site.id,
+    });
 
     const messageTemplate: SlackMessage = {
       channel: process.env.SLACK_BOT_CHANNEL as string,

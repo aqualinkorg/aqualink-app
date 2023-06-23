@@ -56,7 +56,7 @@ export const mockDeleteFileFalling = (app: INestApplication) => {
 export const mockBackfillSiteData = () => {
   jest
     .spyOn(backfillSiteData, 'backfillSiteData')
-    .mockImplementationOnce((props: number) => Promise.resolve());
+    .mockImplementationOnce(() => Promise.resolve());
 };
 
 export const mockGetSpotterData = () => {
