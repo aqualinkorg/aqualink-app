@@ -153,11 +153,10 @@ export async function getDailyData(
     ).then((data) => data.map(({ value }) => value)),
   ]);
 
-  const spotterData = spotterRawData
-    ? mapValues(spotterRawData, (v) =>
-        extractSofarValues(filterMetricDataByDate(excludedDates, v)),
-      )
-    : DEFAULT_SPOTTER_DATA_VALUE;
+  const inputVal = spotterRawData || DEFAULT_SPOTTER_DATA_VALUE;
+  const spotterData = mapValues(inputVal, (v) =>
+    extractSofarValues(filterMetricDataByDate(excludedDates, v)),
+  );
 
   const minBottomTemperature = getMin(spotterData.bottomTemperature);
   const maxBottomTemperature = getMax(spotterData.bottomTemperature);
