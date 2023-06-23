@@ -38,6 +38,9 @@ import { Metric } from './metrics.enum';
         .orWhere(
           "type IN ('hui') AND (timestamp >= current_date - INTERVAL '180 days')",
         )
+        .orWhere(
+          "type IN ('sheet_data') AND (timestamp >= current_date - INTERVAL '180 days')",
+        )
         .orderBy('metric, type, site_id, survey_point_id, timestamp', 'DESC')
     );
   },
