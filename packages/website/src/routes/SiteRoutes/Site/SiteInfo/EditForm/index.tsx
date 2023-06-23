@@ -95,6 +95,9 @@ const EditForm = ({
         : undefined;
       const tokenValue = useDefaultToken ? null : insertedTokenValue;
       const spotterApiToken = editToken ? tokenValue : undefined;
+      // fields need to be undefined in order not be affected by the update.
+      // siteSensorId.value here can be <empty string> which our api does not accept
+      const sensorId = siteSensorId.value || undefined;
       const updateParams: SiteUpdateParams = {
         coordinates: {
           latitude: parseFloat(siteLatitude.value),
@@ -102,7 +105,7 @@ const EditForm = ({
         },
         name: siteName.value,
         depth: parseInt(siteDepth.value, 10),
-        sensorId: siteSensorId.value,
+        sensorId,
         spotterApiToken,
       };
       onSubmit(updateParams);
