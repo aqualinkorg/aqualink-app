@@ -122,11 +122,11 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    What happens if i upload the same file?
+                    What happens if I upload the same file?
                   </Typography>
                   <p>
                     The upload process will update any row that has changed and
-                    will also include any new rows inserted
+                    will also include any new rows inserted.
                   </p>
                 </div>
               </div>
