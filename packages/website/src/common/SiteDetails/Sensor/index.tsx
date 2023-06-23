@@ -77,9 +77,15 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
   const relativeTime =
     (topTemperature?.timestamp && toRelativeTime(topTemperature.timestamp)) ||
     (bottomTemperature?.timestamp &&
-      toRelativeTime(bottomTemperature.timestamp));
+      toRelativeTime(bottomTemperature.timestamp)) ||
+    (surfaceTemperature?.timestamp &&
+      toRelativeTime(surfaceTemperature.timestamp));
 
-  const hasSpotter = Boolean(topTemperature?.value || bottomTemperature?.value);
+  const hasSpotter = Boolean(
+    topTemperature?.value ||
+      bottomTemperature?.value ||
+      surfaceTemperature?.value,
+  );
 
   const user = useSelector(userInfoSelector);
 
