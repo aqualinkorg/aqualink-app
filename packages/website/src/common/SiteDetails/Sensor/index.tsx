@@ -199,7 +199,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
                 className={classes.contentTextTitles}
                 variant="subtitle2"
               >
-                Surface Temperature
+                SURFACE TEMP
               </Typography>
               <Box
                 style={{
