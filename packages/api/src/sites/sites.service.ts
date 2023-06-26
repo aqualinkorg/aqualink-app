@@ -31,10 +31,7 @@ import {
   getSite,
   createSite,
 } from '../utils/site.utils';
-import {
-  getSpotterData,
-  getLatestData as getLatestDataSofar,
-} from '../utils/sofar';
+import { getSpotterData, sofarLatest } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
@@ -352,13 +349,23 @@ export class SitesService {
       };
 
     const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
-    const spotterRaw = await getSpotterData(sensorId, sofarToken);
-    const spotterData = spotterRaw
+    const spotterLatest = await sofarLatest({ sensorId, token: sofarToken });
+
+    const lastTrack =
+      spotterLatest.track &&
+      spotterLatest.track.length &&
+      spotterLatest.track[spotterLatest.track.length - 1];
+
+    const spotterData = lastTrack
       ? {
-          longitude:
-            spotterRaw.longitude && getLatestDataSofar(spotterRaw.longitude),
-          latitude:
-            spotterRaw.latitude && getLatestDataSofar(spotterRaw.latitude),
+          longitude: {
+            value: lastTrack.longitude,
+            timestamp: lastTrack.timestamp,
+          },
+          latitude: {
+            value: lastTrack.latitude,
+            timestamp: lastTrack.timestamp,
+          },
         }
       : {};
 

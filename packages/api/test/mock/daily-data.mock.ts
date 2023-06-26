@@ -139,6 +139,10 @@ export const getMockSpotterData = (
       value: random(900, 1100, true),
     })),
     barometricTopDiff: [],
+    surfaceTemperature: times(diffDays, (i) => ({
+      timestamp: start.clone().add(i, 'days').toISOString(),
+      value: random(900, 1100, true),
+    })),
   };
 };
 
