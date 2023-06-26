@@ -122,6 +122,17 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
+                    What happens if I upload the same file?
+                  </Typography>
+                  <p>
+                    The upload process will update any row that has changed and
+                    will also include any new rows inserted.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
                     How can I best conduct surveys using Aqualink?
                   </Typography>
                   <p>
