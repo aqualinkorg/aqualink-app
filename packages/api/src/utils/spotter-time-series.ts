@@ -191,6 +191,7 @@ export const addSpotterData = async (
             ['barometerTop', Metric.BAROMETRIC_PRESSURE_TOP],
             ['barometerBottom', Metric.BAROMETRIC_PRESSURE_BOTTOM],
             ['barometricTopDiff', Metric.BAROMETRIC_PRESSURE_TOP_DIFF],
+            ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
           ];
 
           // Save data to time_series

@@ -1,5 +1,10 @@
 import { SofarModels, sofarVariableIDs } from './constants';
-import { getSofarHindcastData, getSpotterData, sofarHindcast } from './sofar';
+import {
+  getSofarHindcastData,
+  getSpotterData,
+  sofarHindcast,
+  sofarWaveData,
+} from './sofar';
 import { ValueWithTimestamp } from './sofar.types';
 
 test('It processes Sofar API for daily data.', async () => {
@@ -51,4 +56,24 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
   expect(new Date(values?.timestamp).getTime()).toBeLessThanOrEqual(
     now.getTime(),
   );
+});
+
+test('it process Sofar Wave Date API for surface temperature', async () => {
+  jest.setTimeout(30000);
+  const now = new Date();
+  const yesterdayDate = new Date(now);
+  yesterdayDate.setDate(now.getDate() - 1);
+  const today = now.toISOString();
+  const yesterday = yesterdayDate.toISOString();
+
+  const response = await sofarWaveData(
+    'SPOT-1576',
+    process.env.SOFAR_API_TOKEN,
+    yesterday,
+    today,
+  );
+
+  const values = response && response.data.surfaceTemp.length;
+
+  expect(values).toBeGreaterThan(0);
 });

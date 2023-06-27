@@ -88,6 +88,7 @@ export const metricsKeysList = [
   'barometric_pressure_bottom',
   'barometric_pressure_top_diff',
   'nitrate_plus_nitrite',
+  'surface_temperature',
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];

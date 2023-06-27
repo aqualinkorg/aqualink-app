@@ -86,6 +86,10 @@ const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
     unit: 'm',
     title: 'Significant Wave Height',
   },
+  surfaceTemperature: {
+    unit: '°C',
+    title: 'Surface Temperature',
+  },
 };
 
 const MultipleSensorsCharts = ({
