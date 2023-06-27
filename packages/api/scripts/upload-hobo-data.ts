@@ -77,6 +77,7 @@ async function run() {
       ),
       dataUploadsRepository: connection.getRepository(DataUploads),
     },
+    dataSource,
   );
 
   logger.log('Finished uploading hobo data');

@@ -1,5 +1,5 @@
 import { chunk, Dictionary, groupBy, isNaN, keyBy, minBy } from 'lodash';
-import { ObjectLiteral, Repository } from 'typeorm';
+import { DataSource, ObjectLiteral, Repository } from 'typeorm';
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -610,10 +610,17 @@ const uploadSitePhotos = async (
   await surveyMediaRepository.save(surveyMedia);
 };
 
-export const performBackfill = (siteDiffDays: [number, number][]) => {
+export const performBackfill = (
+  siteDiffDays: [number, number][],
+  dataSource: DataSource,
+) => {
   siteDiffDays.forEach(([siteId, diff]) => {
     logger.log(`Performing backfill for site ${siteId} for ${diff} days`);
-    backfillSiteData(siteId, diff);
+    backfillSiteData({
+      siteId,
+      days: diff,
+      dataSource,
+    });
   });
 };
 
@@ -624,6 +631,7 @@ export const uploadHoboData = async (
   email: string,
   googleCloudService: GoogleCloudService,
   repositories: Repositories,
+  dataSource: DataSource,
 ): Promise<Record<string, number>> => {
   // Grab user and check if they exist
   const user = await repositories.userRepository.findOne({
@@ -708,7 +716,7 @@ export const uploadHoboData = async (
     { concurrency: 1 },
   );
 
-  performBackfill(siteDiffArray.flat());
+  performBackfill(siteDiffArray.flat(), dataSource);
 
   // Update materialized view
   refreshMaterializedView(repositories.dataUploadsRepository);
