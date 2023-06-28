@@ -9,6 +9,9 @@ import {
   CircularProgress,
   IconButton,
   Snackbar,
+  useTheme,
+  useMediaQuery,
+  Theme,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
@@ -18,6 +21,7 @@ import { searchResultSelector } from 'store/Homepage/homepageSlice';
 import { CollectionDetails } from 'store/Collection/types';
 import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
+import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import Legend from './Legend';
@@ -41,6 +45,7 @@ const currentLocationMarker = L.divIcon({
 const HomepageMap = ({
   initialCenter,
   initialZoom,
+  setShowSiteTable,
   initialBounds,
   collection,
   showAlertLevelLegend,
@@ -60,6 +65,9 @@ const HomepageMap = ({
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -140,6 +148,17 @@ const HomepageMap = ({
           {currentLocationErrorMessage}
         </Alert>
       </Snackbar>
+      {!isMobile && (
+        <div className={classes.expandIcon}>
+          <IconButton
+            onClick={() =>
+              setShowSiteTable && setShowSiteTable((prev) => !prev)
+            }
+          >
+            <ZoomOutMapIcon color="primary" />
+          </IconButton>
+        </div>
+      )}
       <TileLayer attribution={attribution} url={tileURL} />
       <SofarLayers defaultLayerName={defaultLayerName} />
       <SiteMarkers collection={collection} />
@@ -166,10 +185,11 @@ const HomepageMap = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     map: {
       flex: 1,
+      width: '100%',
     },
     loading: {
       height: '100%',
@@ -187,11 +207,27 @@ const styles = () =>
       left: 0,
       top: 80,
       zIndex: 1000,
-      height: 34,
-      width: 34,
+      height: theme.spacing(4),
+      width: theme.spacing(4),
       border: '2px solid rgba(0,0,0,0.2)',
       borderRadius: 5,
       margin: '10px 0 0 10px',
+      backgroundColor: 'white',
+      backgroundClip: 'padding-box',
+    },
+    expandIcon: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      right: 0,
+      top: 80,
+      zIndex: 1000,
+      height: theme.spacing(4),
+      width: theme.spacing(4),
+      border: '2px solid rgba(0,0,0,0.2)',
+      borderRadius: 5,
+      margin: '10px',
       backgroundColor: 'white',
       backgroundClip: 'padding-box',
     },
@@ -200,6 +236,7 @@ const styles = () =>
 interface HomepageMapIncomingProps {
   initialCenter: LatLng;
   initialZoom: number;
+  setShowSiteTable?: React.Dispatch<React.SetStateAction<boolean>>;
   initialBounds?: LatLngBounds;
   collection?: CollectionDetails;
   showAlertLevelLegend?: boolean;
@@ -211,6 +248,7 @@ interface HomepageMapIncomingProps {
 }
 
 HomepageMap.defaultProps = {
+  setShowSiteTable: undefined,
   initialBounds: undefined,
   collection: undefined,
   showAlertLevelLegend: true,
