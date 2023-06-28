@@ -198,6 +198,10 @@ export interface DataRange {
   maxDate: string;
 }
 
+export interface DataRangeWithMetric extends DataRange {
+  metric: MetricsKeys;
+}
+
 export type TimeSeriesSurveyPoint = Pick<SurveyPoints, 'id' | 'name'>;
 
 export type TimeSeries = Partial<
