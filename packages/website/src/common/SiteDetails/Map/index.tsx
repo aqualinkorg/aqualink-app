@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
+import { MapContainer as Map, TileLayer, Polygon, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import L, { LatLngTuple } from 'leaflet';
 import './plugins/leaflet-tilelayer-subpixel-fix';
@@ -60,9 +60,9 @@ const SiteMap = ({
   classes,
 }: SiteMapProps) => {
   const dispatch = useDispatch();
-  const mapRef = useRef<Map>(null);
-  const markerRef = useRef<Marker>(null);
-  const editPointMarkerRer = useRef<Marker>(null);
+  const mapRef = useRef<typeof Map>(null);
+  const markerRef = useRef<typeof Marker>(null);
+  const editPointMarkerRer = useRef<typeof Marker>(null);
   const draftSite = useSelector(siteDraftSelector);
   const user = useSelector(userInfoSelector);
   const [focusedPoint, setFocusedPoint] = useState<SurveyPoints>();

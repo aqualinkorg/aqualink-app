@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { LayerGroup, useLeaflet } from 'react-leaflet';
+import { LayerGroup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import React, { useCallback, useEffect } from 'react';
 import L from 'leaflet';
@@ -36,7 +36,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
   const storedSites = useSelector(sitesToDisplayListSelector);
   const sitesList = collection?.sites || storedSites || [];
   const siteOnMap = useSelector(siteOnMapSelector);
-  const { map } = useLeaflet();
+  const map = useMap();
 
   const setCenter = useCallback(
     (inputMap: L.Map, latLng: [number, number], zoom: number) => {

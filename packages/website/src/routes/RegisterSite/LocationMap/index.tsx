@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Map, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer as Map, TileLayer, Marker } from 'react-leaflet';
 import L, { LeafletEvent } from 'leaflet';
 import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
 

@@ -9,10 +9,8 @@ import Popup from '.';
 
 jest.mock('react-leaflet', () => ({
   __esModule: true,
-  useLeaflet: () => {
-    return {
-      map: jest.requireActual('react').createElement('mock-LeafletPopup', {}),
-    };
+  useMap: () => {
+    return jest.requireActual('react').createElement('mock-LeafletMap', {});
   },
   Popup: (props: any) =>
     jest.requireActual('react').createElement('mock-LeafletPopup', props),

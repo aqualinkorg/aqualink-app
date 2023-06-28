@@ -13,7 +13,7 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Popup as LeafletPopup, useLeaflet } from 'react-leaflet';
+import { Popup as LeafletPopup, useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import type { LatLngTuple } from 'leaflet';
@@ -27,9 +27,9 @@ import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
 const Popup = ({ site, classes, autoOpen }: PopupProps) => {
-  const { map } = useLeaflet();
+  const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
-  const popupRef = useRef<LeafletPopup>(null);
+  const popupRef = useRef<typeof LeafletPopup>(null);
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
 

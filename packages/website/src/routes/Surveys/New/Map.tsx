@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Map, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer as Map, TileLayer, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import L from 'leaflet';
 import { withStyles, WithStyles, createStyles } from '@material-ui/core';
@@ -20,7 +20,7 @@ const pinIcon = L.icon({
 });
 
 const SiteMap = ({ polygon, classes }: SiteMapProps) => {
-  const mapRef = useRef<Map>(null);
+  const mapRef = useRef<typeof Map>(null);
   const diveLocation = useSelector(diveLocationSelector);
   const [markerLat, setMarkerLat] = useState<number | null>(null);
   const [markerLng, setMarkerLng] = useState<number | null>(null);

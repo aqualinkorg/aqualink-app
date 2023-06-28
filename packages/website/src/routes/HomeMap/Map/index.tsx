@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Map, TileLayer, Marker, Circle } from 'react-leaflet';
+import { MapContainer as Map, TileLayer, Marker, Circle } from 'react-leaflet';
 import L, { LatLng, LatLngBounds, LayersControlEvent } from 'leaflet';
 import {
   createStyles,
@@ -59,7 +59,7 @@ const HomepageMap = ({
     useState<string>();
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
-  const ref = useRef<Map>(null);
+  const ref = useRef<typeof Map>(null);
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
