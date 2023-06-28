@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayersControl, TileLayer } from 'react-leaflet';
+import { LayersControl, TileLayer, WMSTileLayer } from 'react-leaflet';
 import { MapLayerName } from 'store/Homepage/types';
 
 type SofarLayerDefinition = {
@@ -54,6 +54,20 @@ export const SofarLayers = ({ defaultLayerName }: SofarLayersProps) => {
           />
         </LayersControl.BaseLayer>
       ))}
+      <LayersControl.BaseLayer
+        checked={defaultLayerName === ('SST Anomaly' as MapLayerName)}
+        name="SST Anomaly"
+        key="SST Anomaly"
+      >
+        <WMSTileLayer
+          layers="anom"
+          styles="boxfill/x-sst"
+          transparent
+          format="image/png"
+          opacity={0.7}
+          url="https://www.ncei.noaa.gov/thredds/wms/ncFC/fc-oisst-daily-avhrr-only-dly-prelim/OISST_Preliminary_Daily_AVHRR-only_Feature_Collection_best.ncd?COLORSCALERANGE=-5,5"
+        />
+      </LayersControl.BaseLayer>
     </LayersControl>
   );
 };
