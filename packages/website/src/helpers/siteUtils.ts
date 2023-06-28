@@ -1,9 +1,13 @@
 import { LatLng } from 'leaflet';
-import { maxBy, meanBy } from 'lodash';
+import { maxBy, meanBy, snakeCase } from 'lodash';
 
 import {
+  DataRangeWithMetric,
+  MetricsKeys,
   Site,
+  Sources,
   SurveyPoints,
+  TimeSeriesDataRange,
   UpdateSiteNameFromListArgs,
 } from 'store/Sites/types';
 import type { TimeSeriesDataRequestParams } from 'store/Sites/types';
@@ -101,3 +105,20 @@ export const findSurveyPointFromList = (
       name: item.name || undefined,
     }))
     .find(({ id }) => id === pointId);
+
+export const getSourceRanges = (
+  dataRanges: TimeSeriesDataRange,
+  source: Sources,
+): DataRangeWithMetric[] => {
+  const result = Object.entries(dataRanges).map(([metric, sources]) => {
+    return (
+      sources[source]?.data.map((range) => ({
+        metric: snakeCase(metric) as MetricsKeys,
+        minDate: range.minDate,
+        maxDate: range.maxDate,
+      })) || []
+    );
+  });
+
+  return result.flat();
+};

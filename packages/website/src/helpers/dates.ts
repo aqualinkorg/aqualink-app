@@ -278,3 +278,15 @@ export const generateHistoricalMonthlyMeanTimestamps = (
     };
   });
 };
+
+export const rangeOverlapWithRange = (
+  minDate1: string,
+  maxDate1: string,
+  minDate2: string,
+  maxDate2: string,
+) => {
+  return (
+    (minDate2 <= minDate1 && minDate1 <= maxDate2) ||
+    (minDate2 <= maxDate1 && maxDate1 <= maxDate2)
+  );
+};
