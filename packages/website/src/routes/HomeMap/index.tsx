@@ -118,6 +118,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           >
             <HomepageMap
               setShowSiteTable={setShowSiteTable}
+              showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
             />

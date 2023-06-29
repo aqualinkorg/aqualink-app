@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.leaflet-control-layers-toggle {
+  height: 32px !important;
+  width: 32px !important;
+}

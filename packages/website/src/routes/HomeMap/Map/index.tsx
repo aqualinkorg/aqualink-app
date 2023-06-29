@@ -15,13 +15,13 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
-
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import { searchResultSelector } from 'store/Homepage/homepageSlice';
 import { CollectionDetails } from 'store/Collection/types';
 import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
-import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import Legend from './Legend';
@@ -45,6 +45,7 @@ const currentLocationMarker = L.divIcon({
 const HomepageMap = ({
   initialCenter,
   initialZoom,
+  showSiteTable,
   setShowSiteTable,
   initialBounds,
   collection,
@@ -151,11 +152,22 @@ const HomepageMap = ({
       {!isMobile && (
         <div className={classes.expandIcon}>
           <IconButton
-            onClick={() =>
-              setShowSiteTable && setShowSiteTable((prev) => !prev)
-            }
+            onClick={() => {
+              if (setShowSiteTable) {
+                setShowSiteTable((prev) => !prev);
+              }
+              setTimeout(() => {
+                if (ref.current && ref.current.leafletElement) {
+                  ref.current.leafletElement.invalidateSize();
+                }
+              });
+            }}
           >
-            <ZoomOutMapIcon color="primary" />
+            {showSiteTable ? (
+              <FullscreenIcon color="primary" fontSize="large" />
+            ) : (
+              <FullscreenExitIcon color="primary" fontSize="large" />
+            )}
           </IconButton>
         </div>
       )}
@@ -221,10 +233,10 @@ const styles = (theme: Theme) =>
       justifyContent: 'center',
       position: 'absolute',
       right: 0,
-      top: 80,
-      zIndex: 1000,
-      height: theme.spacing(4),
-      width: theme.spacing(4),
+      top: 50,
+      zIndex: 400,
+      height: '34px',
+      width: '34px',
       border: '2px solid rgba(0,0,0,0.2)',
       borderRadius: 5,
       margin: '10px',
@@ -236,6 +248,7 @@ const styles = (theme: Theme) =>
 interface HomepageMapIncomingProps {
   initialCenter: LatLng;
   initialZoom: number;
+  showSiteTable?: boolean;
   setShowSiteTable?: React.Dispatch<React.SetStateAction<boolean>>;
   initialBounds?: LatLngBounds;
   collection?: CollectionDetails;
@@ -248,6 +261,7 @@ interface HomepageMapIncomingProps {
 }
 
 HomepageMap.defaultProps = {
+  showSiteTable: true,
   setShowSiteTable: undefined,
   initialBounds: undefined,
   collection: undefined,
