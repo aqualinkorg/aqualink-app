@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import L, { LatLngTuple } from 'leaflet';
-import './plugins/leaflet-tilelayer-subpixel-fix';
 import { withStyles, WithStyles, createStyles } from '@material-ui/core';
 import { some } from 'lodash';
 
