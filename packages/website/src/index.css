@@ -12,7 +12,26 @@ code {
     monospace;
 }
 
+.leaflet-control-layers:not(:hover) {
+  height: 2.5rem !important;
+  width: 2.5rem !important;
+}
+
 .leaflet-control-layers-toggle {
-  height: 32px !important;
-  width: 32px !important;
+  height: 2.4rem !important;
+  width: 2.4rem !important;
+}
+
+.leaflet-control-zoom {
+  border: unset !important;
+}
+
+.leaflet-control-zoom-out {
+  height: 2.5rem !important;
+  width: 2.5rem !important;
+}
+
+.leaflet-control-zoom-in {
+  height: 2.5rem !important;
+  width: 2.5rem !important;
 }

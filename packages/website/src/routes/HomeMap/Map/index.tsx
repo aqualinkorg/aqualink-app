@@ -11,7 +11,6 @@ import {
   Snackbar,
   useTheme,
   useMediaQuery,
-  Theme,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
@@ -22,6 +21,10 @@ import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
+import {
+  CreateCSSProperties,
+  CSSProperties,
+} from '@material-ui/core/styles/withStyles';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import Legend from './Legend';
@@ -150,7 +153,7 @@ const HomepageMap = ({
         </Alert>
       </Snackbar>
       {!isMobile && (
-        <div className={classes.expandIcon}>
+        <div className={classes.expandIconButton}>
           <IconButton
             onClick={() => {
               if (setShowSiteTable) {
@@ -164,9 +167,12 @@ const HomepageMap = ({
             }}
           >
             {showSiteTable ? (
-              <FullscreenIcon color="primary" fontSize="large" />
+              <FullscreenIcon color="primary" className={classes.expandIcon} />
             ) : (
-              <FullscreenExitIcon color="primary" fontSize="large" />
+              <FullscreenExitIcon
+                color="primary"
+                className={classes.expandIcon}
+              />
             )}
           </IconButton>
         </div>
@@ -197,7 +203,21 @@ const HomepageMap = ({
   );
 };
 
-const styles = (theme: Theme) =>
+const mapButtonStyles: CSSProperties | CreateCSSProperties<{}> = {
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'absolute',
+  height: '2.5rem',
+  width: '2.5rem',
+  borderRadius: 5,
+  margin: '10px',
+  backgroundColor: 'white',
+  backgroundClip: 'padding-box',
+};
+
+const styles = () =>
   createStyles({
     map: {
       flex: 1,
@@ -211,37 +231,20 @@ const styles = (theme: Theme) =>
       alignItems: 'center',
     },
     locationIconButton: {
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'absolute',
       left: 0,
-      top: 80,
+      top: 90,
       zIndex: 1000,
-      height: theme.spacing(4),
-      width: theme.spacing(4),
-      border: '2px solid rgba(0,0,0,0.2)',
-      borderRadius: 5,
-      margin: '10px 0 0 10px',
-      backgroundColor: 'white',
-      backgroundClip: 'padding-box',
+      ...mapButtonStyles,
     },
-    expandIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'absolute',
+    expandIconButton: {
       right: 0,
       top: 50,
       zIndex: 400,
-      height: '34px',
-      width: '34px',
       border: '2px solid rgba(0,0,0,0.2)',
-      borderRadius: 5,
-      margin: '10px',
-      backgroundColor: 'white',
-      backgroundClip: 'padding-box',
+      ...mapButtonStyles,
+    },
+    expandIcon: {
+      fontSize: '34px',
     },
   });
 
