@@ -9,6 +9,12 @@ type SofarLayerDefinition = {
   cmap: string;
 };
 
+type WMSLayerDefinition = {
+  name: MapLayerName;
+  layer: string;
+  url: string;
+};
+
 const SOFAR_LAYERS: SofarLayerDefinition[] = [
   {
     name: 'Sea Surface Temperature',
@@ -21,6 +27,14 @@ const SOFAR_LAYERS: SofarLayerDefinition[] = [
     model: 'NOAACoralReefWatch',
     variableId: 'degreeHeatingWeek',
     cmap: 'noaacoral',
+  },
+];
+
+const WMS_LAYERS: WMSLayerDefinition[] = [
+  {
+    name: 'SST Anomaly',
+    url: 'https://www.ncei.noaa.gov/thredds/wms/ncFC/fc-oisst-daily-avhrr-only-dly-prelim/OISST_Preliminary_Daily_AVHRR-only_Feature_Collection_best.ncd?COLORSCALERANGE=-5,5',
+    layer: 'anom',
   },
 ];
 
@@ -54,20 +68,22 @@ export const SofarLayers = ({ defaultLayerName }: SofarLayersProps) => {
           />
         </LayersControl.BaseLayer>
       ))}
-      <LayersControl.BaseLayer
-        checked={defaultLayerName === ('SST Anomaly' as MapLayerName)}
-        name="SST Anomaly"
-        key="SST Anomaly"
-      >
-        <WMSTileLayer
-          layers="anom"
-          styles="boxfill/x-sst"
-          transparent
-          format="image/png"
-          opacity={0.7}
-          url="https://www.ncei.noaa.gov/thredds/wms/ncFC/fc-oisst-daily-avhrr-only-dly-prelim/OISST_Preliminary_Daily_AVHRR-only_Feature_Collection_best.ncd?COLORSCALERANGE=-5,5"
-        />
-      </LayersControl.BaseLayer>
+      {WMS_LAYERS.map((def) => (
+        <LayersControl.BaseLayer
+          checked={def.name === defaultLayerName}
+          name={def.name}
+          key={def.name}
+        >
+          <WMSTileLayer
+            layers={def.layer}
+            styles="boxfill/x-sst"
+            transparent
+            format="image/png"
+            opacity={0.7}
+            url={def.url}
+          />
+        </LayersControl.BaseLayer>
+      ))}
     </LayersControl>
   );
 };

@@ -8,7 +8,10 @@ export interface MapboxGeolocationData {
   placeName: string;
 }
 
-export type MapLayerName = 'Heat Stress' | 'Sea Surface Temperature';
+export type MapLayerName =
+  | 'Heat Stress'
+  | 'Sea Surface Temperature'
+  | 'SST Anomaly';
 
 export interface HomePageState {
   siteOnMap: Site | null;
