@@ -91,19 +91,23 @@ export const surfaceTempColorCode = [
 export const sstAnomalyColorCode = [
   {
     value: -5,
-    color: '#1d2967',
+    color: '#000294',
+  },
+  {
+    value: -2,
+    color: '#3D89E2',
   },
   {
     value: 0,
-    color: '#446f1c',
+    color: '#CFE149',
   },
   {
     value: 2,
-    color: '#FFF200',
+    color: '#E19535',
   },
   {
     value: 5,
-    color: '#EF0000',
+    color: '#981D13',
   },
 ];
 
