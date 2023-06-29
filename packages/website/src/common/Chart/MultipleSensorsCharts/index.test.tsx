@@ -48,6 +48,8 @@ describe('MultipleSensorsCharts', () => {
 
     store.dispatch = jest.fn();
 
+    (jest as any).setSystemTime(new Date('2023-06-28T21:00:00.000Z'));
+
     element = render(
       <MemoryRouter
         initialEntries={[
@@ -66,6 +68,8 @@ describe('MultipleSensorsCharts', () => {
         </SnackbarProvider>
       </MemoryRouter>,
     ).container;
+
+    (jest as any).setSystemTime(new Date());
   });
 
   it('should render with given state from Redux store', () => {
