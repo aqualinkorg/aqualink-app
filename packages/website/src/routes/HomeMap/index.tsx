@@ -64,6 +64,7 @@ function useQuery() {
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const siteOnMap = useSelector(siteOnMapSelector);
+  const [showSiteTable, setShowSiteTable] = React.useState(true);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -109,17 +110,26 @@ const Homepage = ({ classes }: HomepageProps) => {
       </div>
       <div className={classes.root}>
         <Grid container>
-          <Grid className={classes.map} item xs={12} md={6}>
+          <Grid
+            className={classes.map}
+            item
+            xs={12}
+            md={showSiteTable ? 6 : 12}
+          >
             <HomepageMap
+              setShowSiteTable={setShowSiteTable}
+              showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
             />
           </Grid>
-          <Hidden smDown>
-            <Grid className={classes.siteTable} item md={6}>
-              <SiteTable />
-            </Grid>
-          </Hidden>
+          {showSiteTable && (
+            <Hidden smDown>
+              <Grid className={classes.siteTable} item md={6}>
+                <SiteTable />
+              </Grid>
+            </Hidden>
+          )}
           <Hidden mdUp>
             <SwipeableBottomSheet
               overflowHeight={60}
