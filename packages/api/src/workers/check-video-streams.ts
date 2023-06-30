@@ -124,7 +124,7 @@ const getYTErrors = async (
     .filter((id) => id) as string[];
 
   // Fetch the youTube video information for each id
-  const axiosResponse = await fetchVideoDetails(youTubeIds, apiKey);
+  const axiosResponse = await fetchVideoDetails(youTubeIds, apiKey, isPlaylist);
 
   // Validate that the streams are valid
   // For ids with no errors an empty string is returned

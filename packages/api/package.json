@@ -61,7 +61,8 @@
     "backfill-sofar-time-series": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts",
     "update-wind-wave-data": "ts-node -r dotenv/config scripts/hindcast-wind-wave-data.ts",
     "resize-survey-images": "ts-node -r dotenv/config scripts/resize-survey-images.ts",
-    "fill-noaa-nearest-point": "ts-node -r dotenv/config scripts/noaa-availability.ts"
+    "fill-noaa-nearest-point": "ts-node -r dotenv/config scripts/noaa-availability.ts",
+    "check-video-streams": "ts-node -r dotenv/config scripts/check-video-streams.ts"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.3.0",
