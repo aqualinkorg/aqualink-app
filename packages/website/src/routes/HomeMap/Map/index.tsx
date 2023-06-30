@@ -120,6 +120,8 @@ const HomepageMap = ({
     setLegendName(name);
   };
 
+  const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
+
   return loading ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
@@ -163,14 +165,7 @@ const HomepageMap = ({
               });
             }}
           >
-            {showSiteTable ? (
-              <FullscreenIcon color="primary" className={classes.expandIcon} />
-            ) : (
-              <FullscreenExitIcon
-                color="primary"
-                className={classes.expandIcon}
-              />
-            )}
+            <ExpandIcon color="primary" className={classes.expandIcon} />
           </IconButton>
         </div>
       </Hidden>
