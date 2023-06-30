@@ -25,6 +25,7 @@ import {
   CreateCSSProperties,
   CSSProperties,
 } from '@material-ui/core/styles/withStyles';
+import { mapIconSize } from 'layout/App/theme';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import Legend from './Legend';
@@ -209,12 +210,13 @@ const mapButtonStyles: CSSProperties | CreateCSSProperties<{}> = {
   alignItems: 'center',
   justifyContent: 'center',
   position: 'absolute',
-  height: '2.5rem',
-  width: '2.5rem',
+  height: mapIconSize,
+  width: mapIconSize,
   borderRadius: 5,
   margin: '10px',
   backgroundColor: 'white',
   backgroundClip: 'padding-box',
+  border: '2px solid rgba(0,0,0,0.2)',
 };
 
 const styles = () =>
@@ -231,17 +233,16 @@ const styles = () =>
       alignItems: 'center',
     },
     locationIconButton: {
+      ...mapButtonStyles,
       left: 0,
       top: 90,
       zIndex: 1000,
-      ...mapButtonStyles,
     },
     expandIconButton: {
+      ...mapButtonStyles,
       right: 0,
       top: 50,
       zIndex: 400,
-      border: '2px solid rgba(0,0,0,0.2)',
-      ...mapButtonStyles,
     },
     expandIcon: {
       fontSize: '34px',

@@ -12,26 +12,34 @@ code {
     monospace;
 }
 
+.leaflet-control-layers label {
+  cursor: pointer;
+} 
+
 .leaflet-control-layers:not(:hover) {
-  height: 2.5rem !important;
-  width: 2.5rem !important;
+  height: var(--map-icons-size) !important;
+  width: var(--map-icons-size) !important;
 }
 
 .leaflet-control-layers-toggle {
-  height: 2.4rem !important;
-  width: 2.4rem !important;
+  height: 1.8rem !important;
+  width: 1.8rem !important;
 }
 
 .leaflet-control-zoom {
-  border: unset !important;
+  width: var(--map-icons-size) !important;
 }
 
 .leaflet-control-zoom-out {
-  height: 2.5rem !important;
-  width: 2.5rem !important;
+  width: 100% !important;
+  height: unset !important;
+  aspect-ratio : 1 / 1 !important;
+  text-decoration: none !important;
 }
 
 .leaflet-control-zoom-in {
-  height: 2.5rem !important;
-  width: 2.5rem !important;
+  width: 100% !important;
+  height: unset !important;
+  aspect-ratio : 1 / 1 !important;
+  text-decoration: none !important;
 }
