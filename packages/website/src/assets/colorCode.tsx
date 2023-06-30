@@ -88,6 +88,29 @@ export const surfaceTempColorCode = [
   },
 ];
 
+export const sstAnomalyColorCode = [
+  {
+    value: -5,
+    color: '#000294',
+  },
+  {
+    value: -2,
+    color: '#3D89E2',
+  },
+  {
+    value: 0,
+    color: '#CFE149',
+  },
+  {
+    value: 2,
+    color: '#E19535',
+  },
+  {
+    value: 5,
+    color: '#981D13',
+  },
+];
+
 export const alertLevelColorCode = [
   {
     value: 'no alert',
