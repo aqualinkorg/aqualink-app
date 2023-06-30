@@ -13,7 +13,11 @@ export const isValidId = (id: string) => id.match(/^[0-9]+$/);
 // Same as function `getYouTubeVideoId` in `packages/website/src/helpers/video.ts`
 // Works for the following url format:
 // - https://www.youtube.com/embed/videoID/?someArgs
-export const getYouTubeVideoId = (url: string) => {
+export const getYouTubeVideoId = (url: string, isPlaylist: boolean) => {
+  if (isPlaylist) {
+    return url.split('=')[1];
+  }
+
   const urlParts = url?.split('?')[0]?.split('/embed/');
 
   // For an expected video url format we expect the url to be split in 2 parts

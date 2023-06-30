@@ -38,13 +38,16 @@ const FeaturedMedia = ({
   const isSiteAdmin = isAdmin(user, siteId);
 
   if (url) {
+    const paramsPrefix = url.includes('?') ? '&' : '?';
     return (
       <Card className={classes.card}>
         <CardContent className={classes.content}>
           <iframe
             className={classes.fullHeightAndWidth}
             title="live-video-stream"
-            src={`${url}${convertOptionsToQueryParams(playerOptions)}`}
+            src={`${url}${paramsPrefix}${convertOptionsToQueryParams(
+              playerOptions,
+            )}`}
             allowFullScreen
           />
         </CardContent>
