@@ -9,8 +9,7 @@ import {
   CircularProgress,
   IconButton,
   Snackbar,
-  useTheme,
-  useMediaQuery,
+  Hidden,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
@@ -70,9 +69,6 @@ const HomepageMap = ({
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
-
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -153,7 +149,7 @@ const HomepageMap = ({
           {currentLocationErrorMessage}
         </Alert>
       </Snackbar>
-      {!isMobile && (
+      <Hidden smDown>
         <div className={classes.expandIconButton}>
           <IconButton
             onClick={() => {
@@ -177,7 +173,7 @@ const HomepageMap = ({
             )}
           </IconButton>
         </div>
-      )}
+      </Hidden>
       <TileLayer attribution={attribution} url={tileURL} />
       <SofarLayers defaultLayerName={defaultLayerName} />
       <SiteMarkers collection={collection} />
