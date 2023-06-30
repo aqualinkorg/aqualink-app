@@ -6,6 +6,7 @@ import CustomLegend from 'common/Legend';
 import {
   dhwColorCode,
   surfaceTempColorCode,
+  sstAnomalyColorCode,
 } from '../../../../assets/colorCode';
 
 const legends = [
@@ -16,6 +17,10 @@ const legends = [
   {
     name: 'Heat Stress',
     element: <CustomLegend unit="DHW" colorCode={dhwColorCode} />,
+  },
+  {
+    name: 'SST Anomaly',
+    element: <CustomLegend unit="°C" colorCode={sstAnomalyColorCode} />,
   },
 ];
 
