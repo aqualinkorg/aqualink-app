@@ -33,6 +33,8 @@ export const colors = {
   greenCardColor,
 };
 
+export const mapIconSize = '2rem';
+
 const breakpoints = createBreakpoints({});
 
 const theme: Theme = createMuiTheme({
