@@ -553,6 +553,7 @@ export class SitesService {
       return null;
     }
 
+    const isPlaylist = site.videoStream.includes('videoseries');
     const apiKey = process.env.FIREBASE_API_KEY;
 
     // Api key must be specified for the process to continue
@@ -562,21 +563,21 @@ export class SitesService {
       return null;
     }
 
-    const videoId = getYouTubeVideoId(site.videoStream);
+    const videoId = getYouTubeVideoId(site.videoStream, isPlaylist);
 
     // Video id could not be extracted, because the video stream url wan not in the correct format
     if (!videoId) {
       return null;
     }
 
-    const rsp = await fetchVideoDetails([videoId], apiKey);
+    const rsp = await fetchVideoDetails([videoId], apiKey, isPlaylist);
 
     // Video was not found.
     if (!rsp.data.items.length) {
       return null;
     }
 
-    const msg = getErrorMessage(rsp.data.items[0]);
+    const msg = getErrorMessage(rsp.data.items[0], isPlaylist);
 
     // An error was returned (Video is not live, it is not public etc).
     if (msg) {

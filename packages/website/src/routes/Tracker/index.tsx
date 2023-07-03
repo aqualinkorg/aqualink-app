@@ -122,9 +122,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface TrackerProps {
   shouldShowNav?: boolean;
+  shouldShowFooter?: boolean;
 }
 
-const Tracker = ({ shouldShowNav = true }: TrackerProps) => {
+const Tracker = ({
+  shouldShowNav = true,
+  shouldShowFooter = true,
+}: TrackerProps) => {
   const heroAspectRatio = useImageAspectRatio(hero);
   const image1AspectRatio = useImageAspectRatio(image1);
   const image2AspectRatio = useImageAspectRatio(image2);
@@ -302,7 +306,7 @@ const Tracker = ({ shouldShowNav = true }: TrackerProps) => {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
+      {shouldShowFooter && <Footer />}
     </>
   );
 };

@@ -35,7 +35,7 @@ const Content = () => {
     return (
       <>
         <Banner message={bannerMessage} />
-        <Tracker shouldShowNav={false} />
+        <Tracker shouldShowNav={false} shouldShowFooter={false} />
       </>
     );
   }
@@ -56,7 +56,7 @@ const Content = () => {
   ) : (
     <>
       <Banner message={bannerMessage} />
-      <Tracker shouldShowNav={false} />
+      <Tracker shouldShowNav={false} shouldShowFooter={false} />
     </>
   );
 };

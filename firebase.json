@@ -12,6 +12,7 @@
       "firebase-debug.*.log",
       "**/packages/api/.jest-cache/**",
       "**/packages/api/coverage/**",
+      "**/packages/api/data/**",
       "**/packages/api/db_data/**",
       "**/packages/api/dist/**",
       "**/packages/api/migration/**",
