@@ -26,10 +26,9 @@ export class GoogleCloudService {
     private surveyMediaRepository?: Repository<SurveyMedia>,
   ) {
     this.storage = new Storage({
-      autoRetry: true,
       keyFilename: this.GCS_KEYFILE,
       projectId: this.GCS_PROJECT,
-      maxRetries: 3,
+      retryOptions: { autoRetry: true, maxRetries: 3 },
     });
   }
 
@@ -142,7 +141,7 @@ export class GoogleCloudService {
 
     const fileResponse = await this.storage
       .bucket(this.GCS_BUCKET)
-      .getFiles({ directory: this.STORAGE_FOLDER });
+      .getFiles({ prefix: this.STORAGE_FOLDER });
 
     return fileResponse[0]
       .filter((file) => !mediaSet.has(file.name))
