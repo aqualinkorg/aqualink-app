@@ -106,6 +106,9 @@ const NavBar = ({
         async (error) => {
           if ([401, 403].includes(error?.response?.status)) {
             onUserSignOut();
+            // temporarily log server errors here to investigate
+            // potential erroneous 403 errors.
+            console.error(error);
             await new Promise((resolve) => setTimeout(resolve));
             handleSignInDialog(true);
           }
