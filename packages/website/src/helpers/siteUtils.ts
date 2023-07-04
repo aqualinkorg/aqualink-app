@@ -94,6 +94,15 @@ export const constructTimeSeriesDataRequestUrl = ({
   }${requests.generateUrlQueryParams(rest)}`;
 };
 
+export const constructTimeSeriesDataCsvRequestUrl = ({
+  siteId,
+  ...rest
+}: TimeSeriesDataRequestParams) => {
+  return `time-series/sites/${siteId}/csv${requests.generateUrlQueryParams(
+    rest,
+  )}`;
+};
+
 export const findSurveyPointFromList = (
   pointId?: string,
   points?: SurveyPoints[],

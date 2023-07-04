@@ -591,7 +591,6 @@ const MultipleSensorsCharts = ({
           startDate={pickerStartDate}
           endDate={pickerEndDate}
           siteId={site.id}
-          pointId={pointId}
           className={classes.button}
           defaultMetrics={DEFAULT_METRICS}
         />

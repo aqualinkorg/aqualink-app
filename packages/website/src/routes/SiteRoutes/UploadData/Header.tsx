@@ -9,25 +9,7 @@ import {
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import { Site } from 'store/Sites/types';
-
-function downloadFile(url: string, fileName: string) {
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'text/csv',
-    },
-  })
-    .then((response) => response.blob())
-    .then((blob) => {
-      const downloadUrl = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      // eslint-disable-next-line fp/no-mutation
-      link.href = downloadUrl;
-      link.setAttribute('download', fileName);
-      document.body.appendChild(link);
-      link.click();
-    });
-}
+import { downloadCsvFile } from 'utils/utils';
 
 const exampleFiles = [
   {
@@ -75,7 +57,7 @@ const Header = ({ site }: HeaderProps) => {
               <Button
                 className={classes.downloadButton}
                 onClick={() =>
-                  downloadFile(
+                  downloadCsvFile(
                     `${
                       process.env.REACT_APP_API_BASE_URL
                     }/time-series/sample-upload-files/${encodeURIComponent(

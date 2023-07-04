@@ -78,16 +78,30 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
     .toJSON();
 };
 
-export const getDataQuery = (
-  timeSeriesRepository: Repository<TimeSeries>,
-  siteId: number,
-  metrics: Metric[],
-  start?: string,
-  end?: string,
-  hourly?: boolean,
-  surveyPointId?: number,
-): Promise<TimeSeriesData[]> => {
-  const { endDate, startDate } = getTimeSeriesDefaultDates(start, end);
+interface GetDataQueryParams {
+  timeSeriesRepository: Repository<TimeSeries>;
+  siteId: number;
+  metrics: Metric[];
+  start?: string;
+  end?: string;
+  hourly?: boolean;
+  surveyPointId?: number;
+  csv?: boolean;
+}
+
+export const getDataQuery = ({
+  timeSeriesRepository,
+  siteId,
+  metrics,
+  start,
+  end,
+  hourly,
+  surveyPointId,
+  csv = false,
+}: GetDataQueryParams): Promise<TimeSeriesData[]> => {
+  const { endDate, startDate } = csv
+    ? { startDate: start, endDate: end }
+    : getTimeSeriesDefaultDates(start, end);
 
   const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`

@@ -10,6 +10,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { join } from 'path';
+import { groupBy } from 'lodash';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { TimeSeries } from './time-series.entity';
@@ -64,15 +65,15 @@ export class TimeSeriesService {
   ) {
     const { siteId, surveyPointId } = surveyPointDataDto;
 
-    const data: TimeSeriesData[] = await getDataQuery(
-      this.timeSeriesRepository,
+    const data: TimeSeriesData[] = await getDataQuery({
+      timeSeriesRepository: this.timeSeriesRepository,
       siteId,
       metrics,
-      startDate,
-      endDate,
+      start: startDate,
+      end: endDate,
       hourly,
       surveyPointId,
-    );
+    });
 
     return groupByMetricAndSource(data);
   }
@@ -86,16 +87,72 @@ export class TimeSeriesService {
   ) {
     const { siteId } = siteDataDto;
 
-    const data: TimeSeriesData[] = await getDataQuery(
-      this.timeSeriesRepository,
+    const data: TimeSeriesData[] = await getDataQuery({
+      timeSeriesRepository: this.timeSeriesRepository,
       siteId,
       metrics,
-      startDate,
-      endDate,
+      start: startDate,
+      end: endDate,
       hourly,
-    );
+    });
 
     return groupByMetricAndSource(data);
+  }
+
+  async findSiteDataCsv(
+    siteDataDto: SiteDataDto,
+    metrics: Metric[],
+    startDate?: string,
+    endDate?: string,
+    hourly?: boolean,
+  ) {
+    const { siteId } = siteDataDto;
+
+    const data: TimeSeriesData[] = await getDataQuery({
+      timeSeriesRepository: this.timeSeriesRepository,
+      siteId,
+      metrics,
+      start: startDate,
+      end: endDate,
+      hourly,
+      csv: true,
+    });
+
+    const metricSourceAsKey = data.map((x) => ({
+      key: `${x.metric}_${x.source}`,
+      value: x.value,
+      timestamp: x.timestamp,
+    }));
+
+    const allKeys = [
+      'timestamp',
+      ...new Map(metricSourceAsKey.map((x) => [x.key, x])).keys(),
+    ];
+
+    const emptyRow = Object.fromEntries(allKeys.map((x) => [x, undefined])) as {
+      [k: string]: any;
+    };
+
+    const groupedByTimestamp = groupBy(metricSourceAsKey, (x) =>
+      x.timestamp.toISOString(),
+    );
+
+    const rows = Object.entries(groupedByTimestamp).map(([timestamp, values]) =>
+      values.reduce((acc, curr) => {
+        // eslint-disable-next-line fp/no-mutation
+        acc[curr.key] = curr.value;
+        // eslint-disable-next-line fp/no-mutation
+        acc.timestamp = timestamp;
+        return acc;
+      }, structuredClone(emptyRow)),
+    );
+
+    const rowsAsStrings = [
+      allKeys.join(','),
+      ...rows.map((row) => Object.values(row).join(',')),
+    ];
+
+    return rowsAsStrings.join('\n');
   }
 
   async findSurveyPointDataRange(

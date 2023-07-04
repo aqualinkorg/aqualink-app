@@ -173,4 +173,37 @@ export class TimeSeriesController {
     );
     return file.pipe(res);
   }
+
+  @ApiOperation({
+    summary: 'Returns specified time series data for a specified site as csv',
+  })
+  @ApiQuery({ name: 'start', example: '2021-05-18T10:20:28.017Z' })
+  @ApiQuery({ name: 'end', example: '2021-05-18T10:20:28.017Z' })
+  @ApiQuery({
+    name: 'metrics',
+    example: [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
+  })
+  @ApiQuery({ name: 'hourly', example: false, required: false })
+  @Header('Content-Type', 'text/csv')
+  @Get('sites/:siteId/csv')
+  findSiteDataCsv(
+    @Param() siteDataDto: SiteDataDto,
+    @Query(
+      'metrics',
+      new DefaultValuePipe(Object.values(Metric)),
+      ParseArrayPipe,
+    )
+    metrics: Metric[],
+    @Query('start', ParseDatePipe) startDate?: string,
+    @Query('end', ParseDatePipe) endDate?: string,
+    @Query('hourly', ParseBoolPipe) hourly?: boolean,
+  ) {
+    return this.timeSeriesService.findSiteDataCsv(
+      siteDataDto,
+      metrics,
+      startDate,
+      endDate,
+      hourly,
+    );
+  }
 }
