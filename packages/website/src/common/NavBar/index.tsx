@@ -46,6 +46,7 @@ import SignInDialog from '../SignInDialog';
 import Search from '../Search';
 import RouteButtons from '../RouteButtons';
 import MenuDrawer from '../MenuDrawer';
+import requests from '../../helpers/requests';
 
 const NavBar = ({
   searchLocation,
@@ -66,7 +67,12 @@ const NavBar = ({
   const [, setTranslationOpen] = useGoogleTranslation();
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
-  const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
+  const handleSignInDialog = React.useCallback(
+    (open: boolean) => {
+      setSignInDialogOpen(open);
+    },
+    [setSignInDialogOpen],
+  );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -76,20 +82,43 @@ const NavBar = ({
     setAnchorEl(null);
   };
 
-  const onUserSignOut = () => {
+  const onUserSignOut = React.useCallback(() => {
     // Clear collection if it belongs to the signed in user
     if (storedCollection?.id === user?.collection?.id) {
       dispatch(clearCollection());
     }
     dispatch(signOutUser());
     handleMenuClose();
-  };
+  }, [dispatch, storedCollection?.id, user?.collection?.id]);
 
   const onSiteChange = () => {
     dispatch(unsetSelectedSite());
     dispatch(unsetSpotterPosition());
     dispatch(unsetLatestData());
   };
+
+  React.useEffect(() => {
+    const responseInterceptor =
+      requests.axiosInstance.interceptors.response.use(
+        (response) => {
+          return response;
+        },
+        async (error) => {
+          if ([401, 403].includes(error?.response?.status)) {
+            onUserSignOut();
+            // temporarily log server errors here to investigate
+            // potential erroneous 403 errors.
+            console.error(error);
+            await new Promise((resolve) => setTimeout(resolve));
+            handleSignInDialog(true);
+          }
+        },
+      );
+
+    return () => {
+      requests.axiosInstance.interceptors.response.eject(responseInterceptor);
+    };
+  }, [handleSignInDialog, onUserSignOut]);
 
   return (
     <>
@@ -155,6 +184,7 @@ const NavBar = ({
               xs={7}
               sm={routeButtons && isTablet ? 3 : 4}
               md={searchLocation || (routeButtons && isTablet) ? 3 : 8}
+              className={classes.languageUserWrapper}
             >
               <Tooltip title="Translate">
                 <IconButton
@@ -329,6 +359,11 @@ const styles = (theme: Theme) =>
     button: {
       padding: theme.spacing(1),
       marginLeft: '1rem',
+    },
+    languageUserWrapper: {
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
     },
   });
 
