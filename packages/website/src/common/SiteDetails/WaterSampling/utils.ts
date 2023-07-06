@@ -45,21 +45,19 @@ function getAlertColor(metric: HUICardMetrics, value?: number) {
   }
 }
 
-function calculateGeometricMean(data: number[]) {
+function calculateGeometricMean(data: number[]): number {
   const product = data.reduce((acc, curr) => acc * curr);
-  const geometricMean = product ** (1 / data.length);
-  return geometricMean;
+  return product ** (1 / data.length);
 }
 
-function calculateMean(data: number[]) {
+function calculateMean(data: number[]): number {
   const sum = data.reduce((acc, curr) => acc + curr);
-  const mean = sum / data.length;
-  return mean;
+  return sum / data.length;
 }
 
 export function getMeanCalculationFunction(
   source: Extract<Sources, 'hui' | 'sonde'>,
-) {
+): (a: number[]) => number {
   switch (source) {
     case 'hui':
       return calculateGeometricMean;
@@ -93,8 +91,8 @@ interface MetricField {
 }
 
 export function metricFields(
-  data: Partial<Record<Metrics, number>>,
   source: Extract<Sources, 'hui' | 'sonde'>,
+  data?: Partial<Record<Metrics, number>>,
 ): MetricField[] {
   switch (source) {
     case 'hui':

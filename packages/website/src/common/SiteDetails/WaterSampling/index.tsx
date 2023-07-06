@@ -117,7 +117,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
       <CardContent className={classes.content}>
         <Box p="1rem" display="flex" flexGrow={1}>
           <Grid container spacing={1}>
-            {metricFields(meanValues, source).map(
+            {metricFields(source, meanValues).map(
               ({ label, value, color, unit, xs }) => (
                 <Grid key={label} item xs={xs}>
                   <Grid container>
