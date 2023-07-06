@@ -7,7 +7,7 @@ import WaterSamplingCard from '.';
 test('renders as expected', () => {
   const { container } = render(
     <Router>
-      <WaterSamplingCard siteId="1" />
+      <WaterSamplingCard siteId="1" source="sonde" />
     </Router>,
   );
   expect(container).toMatchSnapshot();

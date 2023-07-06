@@ -98,6 +98,7 @@ const MultipleSensorsCharts = ({
   surveysFiltered,
   disableGutters,
   displayOceanSenseCharts,
+  setParentAvailableSources,
 }: MultipleSensorsChartsProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -360,15 +361,18 @@ const MultipleSensorsCharts = ({
         ...huiRanges.map((x) => x.metric),
       ];
 
-      setAvailableSources(
-        [
-          sondeRanges.length > 0 && 'sonde',
-          metlogRanges.length > 0 && 'metlog',
-          huiRanges.length > 0 && 'hui',
-        ].filter((x): x is Sources => x !== false),
-      );
-
       const uniqueMetrics = [...new Map(allMetrics.map((x) => [x, x])).keys()];
+
+      const newAvailableSources = [
+        sondeRanges.length > 0 && 'sonde',
+        metlogRanges.length > 0 && 'metlog',
+        huiRanges.length > 0 && 'hui',
+      ].filter((x): x is Sources => x !== false);
+
+      setAvailableSources(newAvailableSources);
+      if (typeof setParentAvailableSources !== 'undefined') {
+        setParentAvailableSources(newAvailableSources);
+      }
 
       const siteLocalStartDate = setTimeZone(
         new Date(pickerStartDate),
@@ -410,6 +414,7 @@ const MultipleSensorsCharts = ({
     pickerEndDate,
     pickerStartDate,
     pointId,
+    setParentAvailableSources,
     site.id,
     site.timezone,
     timeSeriesDataRanges,
@@ -842,6 +847,7 @@ interface MultipleSensorsChartsProps {
   surveysFiltered: boolean;
   disableGutters: boolean;
   displayOceanSenseCharts?: boolean;
+  setParentAvailableSources?: React.Dispatch<React.SetStateAction<Sources[]>>;
 }
 
 MultipleSensorsCharts.defaultProps = {

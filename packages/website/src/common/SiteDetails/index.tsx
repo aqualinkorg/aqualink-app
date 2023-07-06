@@ -13,7 +13,7 @@ import times from 'lodash/times';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
-import type { Site, LatestDataASSofarValue } from 'store/Sites/types';
+import type { Site, LatestDataASSofarValue, Sources } from 'store/Sites/types';
 import { SurveyListItem, SurveyPoint } from 'store/Survey/types';
 import {
   forecastDataRequest,
@@ -76,6 +76,10 @@ const SiteDetails = ({
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const [hasSpotterData, setHasSpotterData] = useState<boolean>(false);
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
+  const [
+    availableSourcesForSelectedDates,
+    setAvailableSourcesForSelectedDates,
+  ] = useState<Sources[]>([]);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -109,15 +113,18 @@ const SiteDetails = ({
       const hasSpotter = Boolean(parsedData.bottomTemperature);
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
-        MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
-      const hasHUI = latestData.some((x) => x.source === 'hui');
+          MINIMUM_SONDE_METRICS_TO_SHOW_CARD ||
+        availableSourcesForSelectedDates.includes('sonde');
+      const hasHUI =
+        latestData.some((x) => x.source === 'hui') ||
+        availableSourcesForSelectedDates.includes('hui');
 
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
       setHasHUIData(hasHUI);
       setLatestDataAsSofarValues(parsedData);
     }
-  }, [forecastData, latestData]);
+  }, [availableSourcesForSelectedDates, forecastData, latestData]);
 
   const { videoStream } = site || {};
 
@@ -148,7 +155,9 @@ const SiteDetails = ({
               );
             }
             if (hasSondeData) {
-              return <WaterSamplingCard siteId={site.id.toString()} />;
+              return (
+                <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
+              );
             }
             return (
               <CoralBleaching
@@ -309,6 +318,7 @@ const SiteDetails = ({
           site={site}
           selectedSurveyPointId={selectedSurveyPointId}
           surveys={surveys}
+          setParentAvailableSources={setAvailableSourcesForSelectedDates}
         />
         <Surveys site={site} />
       </Box>
