@@ -10,7 +10,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { join } from 'path';
-import { groupBy } from 'lodash';
+// eslint-disable-next-line import/no-unresolved
+import { stringify } from 'csv-stringify/sync';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { TimeSeries } from './time-series.entity';
@@ -133,8 +134,26 @@ export class TimeSeriesService {
       [k: string]: any;
     };
 
-    const groupedByTimestamp = groupBy(metricSourceAsKey, (x) =>
-      x.timestamp.toISOString(),
+    const groupedByTimestamp = metricSourceAsKey.reduce(
+      (acc, curr) => {
+        const key = curr.timestamp.toISOString();
+        const accValue = acc[key];
+        if (typeof accValue === 'object') {
+          // eslint-disable-next-line fp/no-mutating-methods
+          accValue.push(curr);
+        } else {
+          // eslint-disable-next-line fp/no-mutation
+          acc[key] = [curr];
+        }
+        return acc;
+      },
+      {} as {
+        [k: string]: {
+          key: string;
+          value: number;
+          timestamp: Date;
+        }[];
+      },
     );
 
     const rows = Object.entries(groupedByTimestamp).map(([timestamp, values]) =>
@@ -147,12 +166,7 @@ export class TimeSeriesService {
       }, structuredClone(emptyRow)),
     );
 
-    const rowsAsStrings = [
-      allKeys.join(','),
-      ...rows.map((row) => Object.values(row).join(',')),
-    ];
-
-    return rowsAsStrings.join('\n');
+    return stringify(rows, { header: true });
   }
 
   async findSurveyPointDataRange(
