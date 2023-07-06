@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, createStyles, makeStyles, Typography } from '@material-ui/core';
 
-import { Site, Sources } from 'store/Sites/types';
+import { Site } from 'store/Sites/types';
 import { SurveyListItem } from 'store/Survey/types';
 import { convertSurveyDataToLocalTime } from 'helpers/dates';
 import ChartWithTooltip from './ChartWithTooltip';
@@ -14,7 +14,6 @@ const CombinedCharts = ({
   site,
   selectedSurveyPointId,
   surveys,
-  setParentAvailableSources,
 }: CombinedChartsProps) => {
   const classes = useStyles();
   const isLoading = !site;
@@ -64,7 +63,6 @@ const CombinedCharts = ({
               pointId={selectedSurveyPointId}
               surveysFiltered={false}
               disableGutters
-              setParentAvailableSources={setParentAvailableSources}
             />
           </>
         )}
@@ -93,7 +91,6 @@ interface CombinedChartsProps {
   site?: Site;
   selectedSurveyPointId: string | undefined;
   surveys: SurveyListItem[];
-  setParentAvailableSources?: React.Dispatch<React.SetStateAction<Sources[]>>;
 }
 
 export default CombinedCharts;
