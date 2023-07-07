@@ -16,7 +16,7 @@ export class MetricArrayPipe
     value: string,
     metadata: ArgumentMetadata,
   ): Promise<string[]> {
-    if (!value || value.trim() === '') {
+    if (!value) {
       return this.options.defaultArray;
     }
 

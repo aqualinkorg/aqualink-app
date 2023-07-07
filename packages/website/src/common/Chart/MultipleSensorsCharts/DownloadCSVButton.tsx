@@ -6,11 +6,8 @@ import { MetricsKeys } from 'store/Sites/types';
 import { spotterPositionSelector } from 'store/Sites/selectedSiteSlice';
 import { downloadCsvFile } from 'utils/utils';
 import { constructTimeSeriesDataCsvRequestUrl } from 'helpers/siteUtils';
-import moment from 'moment';
 import DownloadCSVDialog from './DownloadCSVDialog';
 import { CSVColumnData } from './types';
-
-const DATE_FORMAT = 'YYYY_MM_DD';
 
 interface DownloadCSVButtonParams {
   data: CSVColumnData[];
@@ -45,10 +42,6 @@ function DownloadCSVButton({
       return;
     }
 
-    const fileName = `data_site_${siteId}_${moment(startDate).format(
-      DATE_FORMAT,
-    )}_${moment(endDate).format(DATE_FORMAT)}.csv`;
-
     setLoading(true);
     try {
       await downloadCsvFile(
@@ -61,7 +54,6 @@ function DownloadCSVButton({
           metrics: additionalData ? undefined : defaultMetrics,
           siteId: String(siteId),
         })}`,
-        fileName,
       );
     } catch (error) {
       console.error(error);

@@ -174,6 +174,9 @@ export class TimeSeriesController {
     const file = this.timeSeriesService.getSampleUploadFiles(
       surveyPointDataRangeDto,
     );
+    res.set({
+      'Content-Disposition': `attachment; filename=${surveyPointDataRangeDto.source}_example.csv`,
+    });
     return file.pipe(res);
   }
 
@@ -190,6 +193,7 @@ export class TimeSeriesController {
   @Header('Content-Type', 'text/csv')
   @Get('sites/:siteId/csv')
   findSiteDataCsv(
+    @Res() res: Response,
     @Param() siteDataDto: SiteDataDto,
     @Query(
       'metrics',
@@ -204,6 +208,7 @@ export class TimeSeriesController {
     @Query('hourly', ParseBoolPipe) hourly?: boolean,
   ) {
     return this.timeSeriesService.findSiteDataCsv(
+      res,
       siteDataDto,
       metrics,
       startDate,

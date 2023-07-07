@@ -2,6 +2,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { createReadStream, unlinkSync } from 'fs';
 import { Repository } from 'typeorm';
 import Bluebird from 'bluebird';
+import type { Response } from 'express';
+import moment from 'moment';
 import {
   BadRequestException,
   HttpException,
@@ -36,6 +38,8 @@ import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
+
+const DATE_FORMAT = 'YYYY_MM_DD';
 
 @Injectable()
 export class TimeSeriesService {
@@ -102,6 +106,7 @@ export class TimeSeriesService {
   }
 
   async findSiteDataCsv(
+    res: Response,
     siteDataDto: SiteDataDto,
     metrics: Metric[],
     startDate?: string,
@@ -167,7 +172,13 @@ export class TimeSeriesService {
       }, structuredClone(emptyRow)),
     );
 
-    return stringify(rows, { header: true });
+    const fileName = `data_site_${siteId}_${moment(startDate).format(
+      DATE_FORMAT,
+    )}_${moment(endDate).format(DATE_FORMAT)}.csv`;
+
+    res
+      .set({ 'Content-Disposition': `attachment; filename=${fileName}` })
+      .send(stringify(rows, { header: true }));
   }
 
   async findSurveyPointDataRange(
