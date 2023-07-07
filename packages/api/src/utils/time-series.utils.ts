@@ -103,9 +103,13 @@ export const getDataQuery = ({
     ? { startDate: start, endDate: end }
     : getTimeSeriesDefaultDates(start, end);
 
-  const surveyPointCondition = surveyPointId
-    ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
-    : `1=1`;
+  const { sql: surveyPointConditionSql, params: surveyPointConditionParams } =
+    surveyPointId
+      ? {
+          sql: 'AND (source.survey_point_id = :surveyPointId OR source.survey_point_id IS NULL)',
+          params: { surveyPointId },
+        }
+      : { sql: '', params: {} };
 
   const mainQuery = timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -119,8 +123,8 @@ export const getDataQuery = ({
     .innerJoin(
       'time_series.source',
       'source',
-      `source.site_id = :siteId AND ${surveyPointCondition}`,
-      { siteId },
+      `source.site_id = :siteId ${surveyPointConditionSql}`,
+      { siteId, ...surveyPointConditionParams },
     )
     .leftJoin('source.surveyPoint', 'surveyPoint')
     .addSelect('surveyPoint.id', 'surveyPointId')

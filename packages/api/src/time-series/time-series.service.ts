@@ -10,6 +10,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { join } from 'path';
+// https://github.com/adaltas/node-csv/issues/372
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/sync';
 import { SiteDataDto } from './dto/site-data.dto';
