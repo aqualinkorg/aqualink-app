@@ -4,8 +4,6 @@ import {
   Param,
   Query,
   ParseBoolPipe,
-  ParseArrayPipe,
-  DefaultValuePipe,
   Post,
   UseInterceptors,
   UseGuards,
@@ -34,6 +32,7 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { fileFilter } from '../utils/uploads/upload-sheet-data';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
+import { MetricArrayPipe } from '../pipes/parse-metric-array.pipe';
 
 const MAX_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;
@@ -60,8 +59,10 @@ export class TimeSeriesController {
     @Param() surveyPointDataDto: SurveyPointDataDto,
     @Query(
       'metrics',
-      new DefaultValuePipe(Object.values(Metric)),
-      ParseArrayPipe,
+      new MetricArrayPipe({
+        predefinedSet: Object.values(Metric),
+        defaultArray: Object.values(Metric),
+      }),
     )
     metrics: Metric[],
     @Query('start', ParseDatePipe) startDate?: string,
@@ -93,8 +94,10 @@ export class TimeSeriesController {
     @Param() siteDataDto: SiteDataDto,
     @Query(
       'metrics',
-      new DefaultValuePipe(Object.values(Metric)),
-      ParseArrayPipe,
+      new MetricArrayPipe({
+        predefinedSet: Object.values(Metric),
+        defaultArray: Object.values(Metric),
+      }),
     )
     metrics: Metric[],
     @Query('start', ParseDatePipe) startDate?: string,
@@ -190,8 +193,10 @@ export class TimeSeriesController {
     @Param() siteDataDto: SiteDataDto,
     @Query(
       'metrics',
-      new DefaultValuePipe(Object.values(Metric)),
-      ParseArrayPipe,
+      new MetricArrayPipe({
+        predefinedSet: Object.values(Metric),
+        defaultArray: Object.values(Metric),
+      }),
     )
     metrics: Metric[],
     @Query('start', ParseDatePipe) startDate?: string,
