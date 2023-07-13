@@ -2,6 +2,8 @@ import { getSondeConfig } from 'constants/sondeConfig';
 import { formatNumber } from 'helpers/numberUtils';
 import { Metrics, MetricsKeys, Sources } from 'store/Sites/types';
 import { GridProps } from '@material-ui/core';
+import siteServices from 'services/siteServices';
+import { timeSeriesRequest } from 'store/Sites/helpers';
 
 type HUICardMetrics = Extract<
   Metrics,
@@ -68,7 +70,7 @@ export function getMeanCalculationFunction(
   }
 }
 
-export const metricsForSource: Pick<
+const metricsForSource: Pick<
   { [Key in Sources]: MetricsKeys[] },
   'hui' | 'sonde'
 > = {
@@ -159,5 +161,83 @@ export function metricFields(
       ];
     default:
       throw new Error(`Unknown source: ${source}`);
+  }
+}
+
+export async function getCardData(
+  siteId: string,
+  source: Extract<Sources, 'hui' | 'sonde'>,
+) {
+  try {
+    const { data: uploadHistory } = await siteServices.getSiteUploadHistory(
+      parseInt(siteId, 10),
+    );
+
+    const uploads = uploadHistory.filter((x) => x.sensorType === source) || [];
+    if (uploads.length < 1) {
+      return {};
+    }
+
+    switch (source) {
+      case 'hui': {
+        const now = new Date();
+        const lastYear = now.setFullYear(now.getFullYear() - 1);
+        const inLastYear = uploads.filter(
+          ({ maxDate }) => new Date(maxDate) > new Date(lastYear),
+        );
+
+        const minDate = inLastYear.reduce(
+          (min, curr) => (curr.minDate < min ? curr.minDate : min),
+          new Date().toISOString(),
+        );
+
+        const maxDate = inLastYear.reduce(
+          (max, curr) => (curr.maxDate > max ? curr.maxDate : max),
+          new Date(0).toISOString(),
+        );
+
+        const [data] = await timeSeriesRequest({
+          siteId,
+          start: minDate,
+          end: maxDate,
+          metrics: metricsForSource[source],
+          hourly: true,
+        });
+
+        const pointId = inLastYear[0].surveyPoint;
+        const samePoint = inLastYear.reduce(
+          (acc, curr) => acc && curr.surveyPoint.id === pointId.id,
+          true,
+        );
+
+        return {
+          data,
+          minDate,
+          maxDate,
+          point: samePoint ? pointId : undefined,
+        };
+      }
+      case 'sonde': {
+        const { minDate, maxDate, surveyPoint } = uploads[0];
+        const [data] = await timeSeriesRequest({
+          siteId,
+          start: minDate,
+          end: maxDate,
+          metrics: metricsForSource[source],
+          hourly: true,
+        });
+        return {
+          data,
+          minDate,
+          maxDate,
+          point: surveyPoint,
+        };
+      }
+      default:
+        throw new Error(`Unknown source: ${source}`);
+    }
+  } catch (err) {
+    console.error(err);
+    return {};
   }
 }

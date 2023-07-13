@@ -10,8 +10,6 @@ import {
 import React from 'react';
 import { colors } from 'layout/App/theme';
 import { Metrics, Sources, TimeSeriesData } from 'store/Sites/types';
-import siteServices from 'services/siteServices';
-import { timeSeriesRequest } from 'store/Sites/helpers';
 import { SurveyPoint } from 'store/Survey/types';
 import requests from 'helpers/requests';
 import moment from 'moment';
@@ -20,9 +18,9 @@ import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
 import {
   alertColor,
+  getCardData,
   getMeanCalculationFunction,
   metricFields,
-  metricsForSource,
   warningColor,
   watchColor,
 } from './utils';
@@ -53,38 +51,18 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
   const lastUpload = maxDate ? moment(maxDate).format('MM/DD/YYYY') : undefined;
 
   React.useEffect(() => {
-    const getCardData = async () => {
-      try {
-        const { data: uploadHistory } = await siteServices.getSiteUploadHistory(
-          parseInt(siteId, 10),
-        );
-        // Upload history is sorted by `maxDate`, so the first
-        // item is the most recent.
-        const {
-          minDate: from,
-          maxDate: to,
-          surveyPoint,
-        } = uploadHistory.find((x) => x.sensorType === source) || {};
-        if (typeof surveyPoint?.id === 'number') {
-          const [data] = await timeSeriesRequest({
-            siteId,
-            pointId: surveyPoint.id.toString(),
-            start: from,
-            end: to,
-            metrics: metricsForSource[source],
-            hourly: true,
-          });
-          setMinDate(from);
-          setMaxDate(to);
-          setTimeSeriesData(data);
-          setPoint(surveyPoint);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    getCardData();
+    (async () => {
+      const {
+        data,
+        maxDate: max,
+        minDate: min,
+        point: p,
+      } = await getCardData(siteId, source);
+      setMinDate(min);
+      setMaxDate(max);
+      setTimeSeriesData(data);
+      setPoint(p);
+    })();
   }, [siteId, source]);
 
   React.useEffect(() => {
