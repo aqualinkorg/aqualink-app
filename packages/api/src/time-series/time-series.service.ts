@@ -177,7 +177,11 @@ export class TimeSeriesService {
     )}_${moment(endDate).format(DATE_FORMAT)}.csv`;
 
     res
-      .set({ 'Content-Disposition': `attachment; filename=${fileName}` })
+      .set({
+        'Content-Disposition': `attachment; filename=${encodeURIComponent(
+          fileName,
+        )}`,
+      })
       .send(stringify(rows, { header: true }));
   }
 

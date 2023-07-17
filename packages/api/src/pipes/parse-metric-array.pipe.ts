@@ -7,15 +7,10 @@ import {
 } from '@nestjs/common';
 
 @Injectable()
-export class MetricArrayPipe
-  implements PipeTransform<string, Promise<string[]>>
-{
+export class MetricArrayPipe implements PipeTransform<any, Promise<string[]>> {
   constructor(private readonly options: UniqueSubsetArrayOptions) {}
 
-  async transform(
-    value: string,
-    metadata: ArgumentMetadata,
-  ): Promise<string[]> {
+  async transform(value: any, metadata: ArgumentMetadata): Promise<string[]> {
     if (!value) {
       return this.options.defaultArray;
     }

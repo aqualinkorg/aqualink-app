@@ -11,6 +11,7 @@ import {
   Body,
   Res,
   Header,
+  BadRequestException,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -175,7 +176,9 @@ export class TimeSeriesController {
       surveyPointDataRangeDto,
     );
     res.set({
-      'Content-Disposition': `attachment; filename=${surveyPointDataRangeDto.source}_example.csv`,
+      'Content-Disposition': `attachment; filename=${encodeURIComponent(
+        `${surveyPointDataRangeDto.source}_example.csv`,
+      )}`,
     });
     return file.pipe(res);
   }
@@ -207,6 +210,11 @@ export class TimeSeriesController {
     @Query('end', ParseDatePipe) endDate?: string,
     @Query('hourly', ParseBoolPipe) hourly?: boolean,
   ) {
+    if (startDate && endDate && startDate > endDate) {
+      throw new BadRequestException(
+        `Invalid Dates: start date can't be after end date`,
+      );
+    }
     return this.timeSeriesService.findSiteDataCsv(
       res,
       siteDataDto,
