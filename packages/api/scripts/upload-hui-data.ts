@@ -62,8 +62,8 @@ interface NewData {
 interface PointInfo {
   cluster: number | undefined;
   name: string;
-  site: Site | undefined;
-  siteSurveyPoint: SiteSurveyPoint | undefined;
+  site: Site | null | undefined;
+  siteSurveyPoint: SiteSurveyPoint | null | undefined;
   coordinates: [number, number];
   data: NewData[];
 }
@@ -78,17 +78,21 @@ function createSourceAndInsertTimeSeries(
   siteSurveyPointRepository: Repository<SiteSurveyPoint>,
   sourcesRepository: Repository<Sources>,
   timeSeriesRepository: Repository<TimeSeries>,
+  dataUploadsRepository: Repository<DataUploads>,
 ) {
   return points.map(async (point) => {
     let targetSite: Site;
     let targetSiteSurveyPoint: SiteSurveyPoint | null;
 
-    if (point.site !== undefined) {
+    if (point.site !== undefined && point.site !== null) {
       // eslint-disable-next-line fp/no-mutation
       targetSite = point.site;
       // eslint-disable-next-line fp/no-mutation
       targetSiteSurveyPoint = null;
-    } else if (point.siteSurveyPoint !== undefined) {
+    } else if (
+      point.siteSurveyPoint !== undefined &&
+      point.siteSurveyPoint !== null
+    ) {
       // eslint-disable-next-line fp/no-mutation
       targetSite = point.siteSurveyPoint.site;
       // eslint-disable-next-line fp/no-mutation
@@ -121,10 +125,16 @@ function createSourceAndInsertTimeSeries(
         dataUpload: dataUploadsFile,
       };
     });
-    return saveBatchToTimeSeries(
+    await saveBatchToTimeSeries(
       dataAsTimeSeries as QueryDeepPartialEntity<TimeSeries>[],
       timeSeriesRepository,
     );
+
+    await dataUploadsRepository
+      .createQueryBuilder('data_uploads')
+      .relation('sites')
+      .of(dataUploadsFile)
+      .add(site);
   });
 }
 
@@ -268,8 +278,6 @@ async function run() {
   const dataUploadsFile = await uploadFileToGCloud(
     dataUploadsRepository,
     signature,
-    undefined,
-    undefined,
     SourceType.HUI,
     last(filePath.split('/')) || '',
     filePath,
@@ -310,6 +318,7 @@ async function run() {
         siteSurveyPointRepository,
         sourcesRepository,
         timeSeriesRepository,
+        dataUploadsRepository,
       ),
     );
     return key;

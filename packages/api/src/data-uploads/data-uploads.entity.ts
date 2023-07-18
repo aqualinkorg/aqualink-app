@@ -2,8 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Index,
-  ManyToOne,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -11,7 +11,6 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Site } from '../sites/sites.entity';
-import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from '../time-series/metrics.enum';
 
@@ -23,13 +22,9 @@ export class DataUploads {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Site, { onDelete: 'CASCADE' })
-  @Index()
-  site: Site;
-
-  @ManyToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE' })
-  @Index()
-  surveyPoint: SiteSurveyPoint;
+  @ManyToMany(() => Site, (site) => site.dataUploads, { onDelete: 'CASCADE' })
+  @JoinTable()
+  sites: Site;
 
   @Column({ type: 'enum', enum: SourceType })
   sensorType: SourceType;

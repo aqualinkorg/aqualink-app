@@ -33,6 +33,7 @@ import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
+import { User } from '../users/users.entity';
 
 @Injectable()
 export class TimeSeriesService {
@@ -126,12 +127,21 @@ export class TimeSeriesService {
     return groupByMetricAndSource(data);
   }
 
-  async uploadData(
-    surveyPointDataRangeDto: SurveyPointDataRangeDto,
-    sensor: SourceType = SourceType.SHEET_DATA,
-    files: Express.Multer.File[],
-    failOnWarning?: boolean,
-  ) {
+  async uploadData({
+    user,
+    sensor = SourceType.SHEET_DATA,
+    files,
+    multiSiteUpload,
+    surveyPointDataRangeDto,
+    failOnWarning,
+  }: {
+    user?: Express.User & User;
+    sensor?: SourceType;
+    files: Express.Multer.File[];
+    multiSiteUpload: boolean;
+    surveyPointDataRangeDto?: SurveyPointDataRangeDto;
+    failOnWarning?: boolean;
+  }) {
     if (!sensor || !Object.values(SourceType).includes(sensor)) {
       throw new BadRequestException(
         `Field 'sensor' is required and must have one of the following values: ${Object.values(
@@ -140,13 +150,7 @@ export class TimeSeriesService {
       );
     }
 
-    const { siteId, surveyPointId } = surveyPointDataRangeDto;
-
-    await surveyPointBelongsToSite(
-      siteId,
-      surveyPointId,
-      this.surveyPointRepository,
-    );
+    const { siteId, surveyPointId } = surveyPointDataRangeDto || {};
 
     if (!files?.length) {
       throw new BadRequestException(
@@ -158,13 +162,15 @@ export class TimeSeriesService {
       files,
       async ({ path, originalname, mimetype }) => {
         try {
-          const ignoredHeaders = await uploadTimeSeriesData(
-            path,
-            originalname,
-            siteId.toString(),
-            surveyPointId.toString(),
-            sensor,
-            {
+          const ignoredHeaders = await uploadTimeSeriesData({
+            user,
+            multiSiteUpload,
+            filePath: path,
+            fileName: originalname,
+            siteId,
+            surveyPointId,
+            sourceType: sensor,
+            repositories: {
               siteRepository: this.siteRepository,
               sourcesRepository: this.sourcesRepository,
               surveyPointRepository: this.surveyPointRepository,
@@ -172,8 +178,8 @@ export class TimeSeriesService {
               dataUploadsRepository: this.dataUploadsRepository,
             },
             failOnWarning,
-            mimetype as Mimetype,
-          );
+            mimetype: mimetype as Mimetype,
+          });
           return { file: originalname, ignoredHeaders, error: null };
         } catch (err: unknown) {
           const error = err as HttpException;

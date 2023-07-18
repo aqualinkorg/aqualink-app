@@ -13,6 +13,7 @@ import {
   Body,
   Res,
   Header,
+  Req,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -34,6 +35,7 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { fileFilter } from '../utils/uploads/upload-sheet-data';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
+import { AuthRequest } from '../auth/auth.types';
 
 const MAX_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;
@@ -147,18 +149,46 @@ export class TimeSeriesController {
       },
     }),
   )
-  uploadTimeSeriesData(
+  uploadSiteTimeSeriesData(
     @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
     @UploadedFiles() files: Express.Multer.File[],
     @Body('sensor') sensor?: SourceType,
     @Query('failOnWarning', ParseBoolPipe) failOnWarning?: boolean,
   ) {
-    return this.timeSeriesService.uploadData(
-      surveyPointDataRangeDto,
+    return this.timeSeriesService.uploadData({
       sensor,
       files,
+      multiSiteUpload: false,
+      surveyPointDataRangeDto,
       failOnWarning,
-    );
+    });
+  }
+
+  @ApiOperation({ summary: 'Upload time series data' })
+  @Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
+  @Post('upload')
+  @UseInterceptors(
+    FilesInterceptor('files', MAX_FILE_COUNT, {
+      dest: './upload',
+      fileFilter,
+      limits: {
+        fileSize: MAX_FILE_SIZE_MB * 10 ** 6,
+      },
+    }),
+  )
+  uploadTimeSeriesData(
+    @Req() req: AuthRequest,
+    @UploadedFiles() files: Express.Multer.File[],
+    @Body('sensor') sensor?: SourceType,
+    @Query('failOnWarning', ParseBoolPipe) failOnWarning?: boolean,
+  ) {
+    return this.timeSeriesService.uploadData({
+      user: req.user,
+      sensor,
+      files,
+      multiSiteUpload: true,
+      failOnWarning,
+    });
   }
 
   @ApiOperation({ summary: 'Get sample upload files' })

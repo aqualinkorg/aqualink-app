@@ -13,16 +13,13 @@ export class DataUploadsService {
   ) {}
 
   async getDataUploads({ siteId }: SiteDataRangeDto) {
-    const query = this.dataUploadsRepository
+    return this.dataUploadsRepository
       .createQueryBuilder('data_uploads')
-      .leftJoin('data_uploads.surveyPoint', 'site_survey_point')
-      .addSelect(['site_survey_point.id', 'site_survey_point.name'])
-      .andWhere('data_uploads.site_id = :site', {
-        site: siteId,
+      .innerJoin('data_uploads.sites', 'sites', 'sites.id = :siteId', {
+        siteId,
       })
-      .orderBy('data_uploads.max_date', 'DESC');
-
-    return query.getMany();
+      .orderBy('data_uploads.max_date', 'DESC')
+      .getMany();
   }
 
   async deleteDataUploads({ ids }: DataUploadsDeleteDto) {
