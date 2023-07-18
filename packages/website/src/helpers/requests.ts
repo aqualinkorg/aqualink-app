@@ -1,15 +1,20 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { isUndefined, omitBy } from 'lodash';
 
-const agent = (contentType?: string) =>
-  axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL,
-    headers: {
-      'Content-Type': contentType || 'application/json',
-      Accept: 'application/json, text/html',
-      crossDomain: true,
-    },
-  });
+const instance = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URL,
+  headers: {
+    Accept: 'application/json, text/html',
+    crossDomain: true,
+  },
+});
+
+const agent = (contentType?: string) => {
+  // eslint-disable-next-line fp/no-mutation
+  instance.defaults.headers['Content-Type'] = contentType || 'application/json';
+
+  return instance;
+};
 
 function send<T>(request: Request): Promise<AxiosResponse<T>> {
   const headers = request.token
@@ -46,6 +51,7 @@ interface Request {
 }
 
 export default {
+  axiosInstance: instance,
   agent,
   send,
   generateUrlQueryParams,
