@@ -175,10 +175,9 @@ export class TimeSeriesController {
     const file = this.timeSeriesService.getSampleUploadFiles(
       surveyPointDataRangeDto,
     );
+    const filename = `${surveyPointDataRangeDto.source}_example.csv`;
     res.set({
-      'Content-Disposition': `attachment; filename=${encodeURIComponent(
-        `${surveyPointDataRangeDto.source}_example.csv`,
-      )}`,
+      'Content-Disposition': `attachment; filename=${encodeURIComponent(filename)}`,
     });
     return file.pipe(res);
   }
