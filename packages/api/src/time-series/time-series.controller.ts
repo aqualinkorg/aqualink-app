@@ -177,7 +177,9 @@ export class TimeSeriesController {
     );
     const filename = `${surveyPointDataRangeDto.source}_example.csv`;
     res.set({
-      'Content-Disposition': `attachment; filename=${encodeURIComponent(filename)}`,
+      'Content-Disposition': `attachment; filename=${encodeURIComponent(
+        filename,
+      )}`,
     });
     return file.pipe(res);
   }
