@@ -7,9 +7,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Storage } from '@google-cloud/storage';
 import { Repository } from 'typeorm';
 import path from 'path';
-import { SurveyMedia } from '../surveys/survey-media.entity';
-import { getFileFromURL } from '../utils/google-cloud.utils';
 import { getRandomName } from '../uploads/file.decorator';
+import { DataUploads } from '../data-uploads/data-uploads.entity';
+import {
+  getSurveyMediaFileFromURL,
+  GoogleCloudDir,
+} from '../utils/google-cloud.utils';
+import { SurveyMedia } from '../surveys/survey-media.entity';
 
 @Injectable()
 export class GoogleCloudService {
@@ -24,6 +28,9 @@ export class GoogleCloudService {
   constructor(
     @InjectRepository(SurveyMedia)
     private surveyMediaRepository?: Repository<SurveyMedia>,
+
+    @InjectRepository(DataUploads)
+    private dataUploadsRepository?: Repository<DataUploads>,
   ) {
     this.storage = new Storage({
       keyFilename: this.GCS_KEYFILE,
@@ -127,25 +134,50 @@ export class GoogleCloudService {
       throw new InternalServerErrorException();
     }
 
-    if (!this.surveyMediaRepository) {
+    if (!this.surveyMediaRepository || !this.dataUploadsRepository) {
       throw new InternalServerErrorException();
     }
 
     const surveyMedia = await this.surveyMediaRepository.find({
-      select: ['url'],
+      select: ['url', 'thumbnailUrl'],
     });
 
-    const mediaSet = new Set(
-      surveyMedia.map((media) => getFileFromURL(media.url)),
+    const dataUploads = await this.dataUploadsRepository.find({
+      select: ['fileLocation'],
+    });
+
+    const originalMediaSet = new Set(
+      surveyMedia.map((media) => getSurveyMediaFileFromURL(media.url)),
     );
 
-    const fileResponse = await this.storage
-      .bucket(this.GCS_BUCKET)
-      .getFiles({ prefix: this.STORAGE_FOLDER });
+    const thumbnailMediaSet = new Set(
+      surveyMedia.map((media) =>
+        getSurveyMediaFileFromURL(media.thumbnailUrl || ''),
+      ),
+    );
 
-    return fileResponse[0]
-      .filter((file) => !mediaSet.has(file.name))
-      .map((file) => file.name);
+    const dataUploadsSet = new Set(dataUploads.map((x) => x.fileLocation));
+
+    const [mediaFileResponse] = await this.storage
+      .bucket(this.GCS_BUCKET)
+      .getFiles({ prefix: `${this.STORAGE_FOLDER}/${GoogleCloudDir.SURVEYS}` });
+
+    const [dataUploadsFileResponse] = await this.storage
+      .bucket(this.GCS_BUCKET)
+      .getFiles({
+        prefix: `${this.STORAGE_FOLDER}/${GoogleCloudDir.DATA_UPLOADS}`,
+      });
+
+    const mediaFiltered = mediaFileResponse
+      .filter((f) => !originalMediaSet.has(f.name))
+      .filter((f) => !thumbnailMediaSet.has(f.name))
+      .map((f) => f.name);
+
+    const dataUploadsFiltered = dataUploadsFileResponse
+      .filter((f) => !dataUploadsSet.has(f.name))
+      .map((f) => f.name);
+
+    return [...mediaFiltered, ...dataUploadsFiltered];
   }
 
   public async deleteDanglingFiles(): Promise<void[]> {
