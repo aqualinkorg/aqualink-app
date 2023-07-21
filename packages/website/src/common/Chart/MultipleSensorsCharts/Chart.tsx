@@ -129,7 +129,7 @@ const Chart = ({
             <Alert severity="warning">
               <Typography>
                 {minDateLocal && maxDateLocal
-                  ? `No ${source} data available - data available from ${minDateLocal} to ${maxDateLocal}.`
+                  ? `No ${source?.toUpperCase()} data available - data available from ${minDateLocal} to ${maxDateLocal}.`
                   : 'No data available in this time range.'}
               </Typography>
             </Alert>
