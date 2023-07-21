@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import isISODate from 'validator/lib/isISO8601';
 import { Box, Container, makeStyles, Theme } from '@material-ui/core';
 import moment from 'moment';
-import { camelCase, isNaN, isNumber, snakeCase, sortBy } from 'lodash';
+import { camelCase, isNaN, snakeCase, sortBy } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
-import { getPublicSondeMetrics, getSondeConfig } from 'constants/sondeConfig';
 import {
   METLOG_DATA_COLOR,
   OCEAN_SENSE_DATA_COLOR,
@@ -14,10 +13,6 @@ import {
   SPOTTER_METRIC_DATA_COLOR,
   HUI_DATA_COLOR,
 } from 'constants/charts';
-import {
-  getMetlogConfig,
-  getPublicMetlogMetrics,
-} from 'constants/metlogConfig';
 import {
   siteGranularDailyDataSelector,
   siteOceanSenseDataRequest,
@@ -36,6 +31,20 @@ import {
   subtractFromDate,
 } from 'helpers/dates';
 import { getSourceRanges } from 'helpers/siteUtils';
+import { BaseSourceConfig } from 'utils/types';
+import {
+  DEFAULT_METRICS,
+  getPublicSpotterMetrics,
+  getSpotterConfig,
+} from 'constants/chartConfigs/spotterConfig';
+import {
+  getPublicSondeMetrics,
+  getSondeConfig,
+} from 'constants/chartConfigs/sondeConfig';
+import {
+  getMetlogConfig,
+  getPublicMetlogMetrics,
+} from 'constants/chartConfigs/metlogConfig';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -45,52 +54,12 @@ import {
   localizedEndOfDay,
 } from './helpers';
 import { RangeValue } from './types';
-import ChartWithCard from './ChartWithCard';
 import DownloadCSVButton from './DownloadCSVButton';
 import {
   getHuiConfig,
   getPublicHuiMetrics,
-} from '../../../constants/huiConfig';
-
-const DEFAULT_METRICS: MetricsKeys[] = [
-  'bottom_temperature',
-  'top_temperature',
-  'wind_speed',
-  'significant_wave_height',
-  'barometric_pressure_top',
-  'barometric_pressure_bottom',
-];
-
-interface SpotterConfig {
-  unit: string;
-  title: string;
-  convert?: number;
-}
-
-const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
-  windSpeed: {
-    unit: 'km/h',
-    title: 'Wind Speed',
-    // convert from m/s to to km/h
-    convert: 3.6,
-  },
-  barometricPressureTop: {
-    unit: 'hPa',
-    title: 'Surface Barometric Pressure',
-  },
-  barometricPressureBottom: {
-    unit: 'hPa',
-    title: 'Bottom Pressure',
-  },
-  significantWaveHeight: {
-    unit: 'm',
-    title: 'Significant Wave Height',
-  },
-  surfaceTemperature: {
-    unit: '°C',
-    title: 'Surface Temperature',
-  },
-};
+} from '../../../constants/chartConfigs/huiConfig';
+import ChartWithCard from './ChartWithCard';
 
 const MultipleSensorsCharts = ({
   site,
@@ -161,77 +130,42 @@ const MultipleSensorsCharts = ({
     site.depth,
   );
 
-  const spotterMetricDataset = (metric: Metrics) => {
-    const { unit, convert } = spotterConfig[metric] || {};
-
-    return generateMetricDataset(
-      'SENSOR',
-      timeSeriesData?.[metric]?.spotter?.data?.map((item) => ({
-        ...item,
-        value: convert ? convert * item.value : item.value,
-      })) || [],
-      unit || '',
-      SPOTTER_METRIC_DATA_COLOR,
-      chartStartDate,
-      chartEndDate,
-      site.timezone,
-      metric,
-    );
-  };
-
-  const sondeDatasets = () =>
-    hasSondeData
-      ? sortBy(getPublicSondeMetrics(), (key) => getSondeConfig(key).order)
+  const getDatesetFun = <T extends MetricsKeys>(
+    hasData: boolean,
+    color: string,
+    source: Sources,
+    sensor: string,
+    rangeLabel: string,
+    getMetrics: () => T[],
+    getConfig: (key: T) => BaseSourceConfig,
+  ) =>
+    hasData
+      ? sortBy(getMetrics(), (key) => getConfig(key).order)
           .filter(
             (key) =>
-              timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.data?.length,
+              timeSeriesData?.[camelCase(key) as Metrics]?.[source]?.data
+                ?.length,
           )
           .map((key) => {
             const { data, surveyPoint } =
-              timeSeriesData?.[camelCase(key) as Metrics]?.sonde || {};
-            const { title, units } = getSondeConfig(key);
+              timeSeriesData?.[camelCase(key) as Metrics]?.[source] || {};
+            const { title, units, convert } = getConfig(key);
 
             return {
               key,
               title,
               surveyPoint,
+              source,
+              rangeLabel,
               dataset: generateMetricDataset(
-                'SENSOR',
-                data || [],
-                units,
-                SONDE_DATA_COLOR,
-                chartStartDate,
-                chartEndDate,
-                site.timezone,
-              ),
-            };
-          })
-      : [];
-
-  const metlogDatasets = () =>
-    hasMetlogData
-      ? sortBy(getPublicMetlogMetrics(), (key) => getMetlogConfig(key).order)
-          .filter(
-            (key) =>
-              timeSeriesData?.[camelCase(key) as Metrics]?.metlog?.data?.length,
-          )
-          .map((key) => {
-            const { data, surveyPoint } =
-              timeSeriesData?.[camelCase(key) as Metrics]?.metlog || {};
-            const { title, units, convert } = getMetlogConfig(key);
-
-            return {
-              key,
-              title,
-              surveyPoint,
-              dataset: generateMetricDataset(
-                'SENSOR',
-                (data || []).map((item) => ({
-                  ...item,
-                  value: isNumber(convert) ? item.value * convert : item.value,
+                sensor,
+                (data || []).map((x) => ({
+                  ...x,
+                  value:
+                    typeof convert === 'number' ? convert * x.value : x.value,
                 })),
                 units,
-                METLOG_DATA_COLOR,
+                color,
                 chartStartDate,
                 chartEndDate,
                 site.timezone,
@@ -239,35 +173,50 @@ const MultipleSensorsCharts = ({
             };
           })
       : [];
+
+  const spotterDatasets = () =>
+    getDatesetFun(
+      hasSpotterData,
+      SPOTTER_METRIC_DATA_COLOR,
+      'spotter',
+      'SENSOR',
+      'Spotter',
+      getPublicSpotterMetrics,
+      getSpotterConfig,
+    );
+
+  const sondeDatasets = () =>
+    getDatesetFun(
+      hasSondeData,
+      SONDE_DATA_COLOR,
+      'sonde',
+      'SENSOR',
+      'Sonde',
+      getPublicSondeMetrics,
+      getSondeConfig,
+    );
+
+  const metlogDatasets = () =>
+    getDatesetFun(
+      hasMetlogData,
+      METLOG_DATA_COLOR,
+      'metlog',
+      'SENSOR',
+      'Meteorological',
+      getPublicMetlogMetrics,
+      getMetlogConfig,
+    );
 
   const huiDatasets = () =>
-    hasHuiData
-      ? sortBy(getPublicHuiMetrics(), (key) => getHuiConfig(key).order)
-          .filter((key) => {
-            return timeSeriesData?.[camelCase(key) as Metrics]?.hui?.data
-              ?.length;
-          })
-          .map((key) => {
-            const { data, surveyPoint } =
-              timeSeriesData?.[camelCase(key) as Metrics]?.hui || {};
-            const { title, units } = getHuiConfig(key);
-
-            return {
-              key,
-              title,
-              surveyPoint,
-              dataset: generateMetricDataset(
-                'HUI',
-                data || [],
-                units,
-                HUI_DATA_COLOR,
-                chartStartDate,
-                chartEndDate,
-                site.timezone,
-              ),
-            };
-          })
-      : [];
+    getDatesetFun(
+      hasHuiData,
+      HUI_DATA_COLOR,
+      'hui',
+      'HUI',
+      'HUI',
+      getPublicHuiMetrics,
+      getHuiConfig,
+    );
 
   // Scroll to the chart defined by the chartParam query param.
   useEffect(() => {
@@ -483,13 +432,10 @@ const MultipleSensorsCharts = ({
       }`,
       values: dataset.data,
     })),
-    ...Object.entries(spotterConfig).map(([key]) => {
-      const dataset = spotterMetricDataset(key as Metrics);
-      return {
-        name: `${snakeCase(key)}_spotter`,
-        values: dataset.data,
-      };
-    }),
+    ...spotterDatasets().map(({ title, dataset }) => ({
+      name: snakeCase(`${title}_${dataset.label}`),
+      values: dataset.data,
+    })),
     ...Object.entries(constructOceanSenseDatasets(oceanSenseData)).map(
       ([key, item]) => {
         const dataset = generateMetricDataset(
@@ -625,56 +571,49 @@ const MultipleSensorsCharts = ({
         onEndDateChange={onPickerDateChange('end')}
         isPickerErrored={pickerErrored}
         areSurveysFiltered={surveysFiltered}
+        source="spotter"
       />
-      {hasSpotterData &&
-        Object.entries(spotterConfig).map(([key, { title }]) => {
-          const datasets = [spotterMetricDataset(key as Metrics)];
-          // Since barometric data will only be available for a few sites,
-          // we don’t want to display the warning message for all the others.
-          if (
-            !datasets[0] ||
-            (datasets[0].metric === 'barometricPressureTop' &&
-              !datasets[0].displayData) ||
-            (datasets[0].metric === 'barometricPressureBottom' &&
-              !datasets[0].displayData)
-          ) {
-            return <></>;
-          }
-          return (
-            <Box mt={4} key={title}>
-              <ChartWithCard
-                datasets={datasets}
-                id={key}
-                range={range}
-                onRangeChange={onRangeChange}
-                disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-                chartTitle={title}
-                availableRanges={[
-                  {
-                    name: 'Spotter',
-                    data: timeSeriesDataRanges?.[key as Metrics]?.spotter?.data,
-                  },
-                ]}
-                timeZone={site.timezone}
-                showRangeButtons={false}
-                chartWidth="large"
-                site={site}
-                pickerStartDate={
-                  pickerStartDate || subtractFromDate(today, 'week')
-                }
-                pickerEndDate={pickerEndDate || today}
-                chartStartDate={chartStartDate}
-                chartEndDate={chartEndDate}
-                onStartDateChange={onPickerDateChange('start')}
-                onEndDateChange={onPickerDateChange('end')}
-                isPickerErrored={pickerErrored}
-                showDatePickers={false}
-                hideYAxisUnits
-                cardColumnJustification="flex-start"
-              />
-            </Box>
-          );
-        })}
+      {[
+        ...spotterDatasets(),
+        ...sondeDatasets(),
+        ...metlogDatasets(),
+        ...huiDatasets(),
+      ].map(({ key, title, surveyPoint, source, rangeLabel, dataset }) => (
+        <Box mt={4} key={key}>
+          <ChartWithCard
+            datasets={[dataset]}
+            id={key}
+            range={range}
+            onRangeChange={onRangeChange}
+            disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+            chartTitle={title}
+            availableRanges={[
+              {
+                name: rangeLabel,
+                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.[
+                  source
+                ]?.data,
+              },
+            ]}
+            timeZone={site.timezone}
+            showRangeButtons={false}
+            chartWidth="large"
+            site={site}
+            pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
+            pickerEndDate={pickerEndDate || today}
+            chartStartDate={chartStartDate}
+            chartEndDate={chartEndDate}
+            onStartDateChange={onPickerDateChange('start')}
+            onEndDateChange={onPickerDateChange('end')}
+            isPickerErrored={pickerErrored}
+            showDatePickers={false}
+            surveyPoint={surveyPoint}
+            hideYAxisUnits
+            cardColumnJustification="flex-start"
+            source={source}
+          />
+        </Box>
+      ))}
       {displayOceanSenseCharts &&
         hasOceanSenseId &&
         Object.entries(constructOceanSenseDatasets(oceanSenseData)).map(
@@ -717,108 +656,6 @@ const MultipleSensorsCharts = ({
             </Box>
           ),
         )}
-      {sondeDatasets().map(({ key, title, surveyPoint, dataset }) => (
-        <Box mt={4} key={key}>
-          <ChartWithCard
-            datasets={[dataset]}
-            id={key}
-            range={range}
-            onRangeChange={onRangeChange}
-            disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-            chartTitle={title}
-            availableRanges={[
-              {
-                name: 'Sonde',
-                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.sonde
-                  ?.data,
-              },
-            ]}
-            timeZone={site.timezone}
-            showRangeButtons={false}
-            chartWidth="large"
-            site={site}
-            pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
-            pickerEndDate={pickerEndDate || today}
-            chartStartDate={chartStartDate}
-            chartEndDate={chartEndDate}
-            onStartDateChange={onPickerDateChange('start')}
-            onEndDateChange={onPickerDateChange('end')}
-            isPickerErrored={pickerErrored}
-            showDatePickers={false}
-            surveyPoint={surveyPoint}
-            hideYAxisUnits
-            cardColumnJustification="flex-start"
-          />
-        </Box>
-      ))}
-      {metlogDatasets().map(({ key, title, surveyPoint, dataset }) => (
-        <Box mt={4} key={key}>
-          <ChartWithCard
-            datasets={[dataset]}
-            id={key}
-            range={range}
-            onRangeChange={onRangeChange}
-            disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-            chartTitle={title}
-            availableRanges={[
-              {
-                name: 'Meteorological',
-                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.metlog
-                  ?.data,
-              },
-            ]}
-            timeZone={site.timezone}
-            showRangeButtons={false}
-            chartWidth="large"
-            site={site}
-            pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
-            pickerEndDate={pickerEndDate || today}
-            chartStartDate={chartStartDate}
-            chartEndDate={chartEndDate}
-            onStartDateChange={onPickerDateChange('start')}
-            onEndDateChange={onPickerDateChange('end')}
-            isPickerErrored={pickerErrored}
-            showDatePickers={false}
-            surveyPoint={surveyPoint}
-            hideYAxisUnits
-            cardColumnJustification="flex-start"
-          />
-        </Box>
-      ))}
-      {huiDatasets().map(({ key, title, surveyPoint, dataset }) => (
-        <Box mt={4} key={key}>
-          <ChartWithCard
-            datasets={[dataset]}
-            id={key}
-            range={range}
-            onRangeChange={onRangeChange}
-            disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-            chartTitle={title}
-            availableRanges={[
-              {
-                name: 'HUI',
-                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.hui
-                  ?.data,
-              },
-            ]}
-            timeZone={site.timezone}
-            showRangeButtons={false}
-            chartWidth="large"
-            site={site}
-            pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
-            pickerEndDate={pickerEndDate || today}
-            chartStartDate={chartStartDate}
-            chartEndDate={chartEndDate}
-            onStartDateChange={onPickerDateChange('start')}
-            onEndDateChange={onPickerDateChange('end')}
-            isPickerErrored={pickerErrored}
-            showDatePickers={false}
-            surveyPoint={surveyPoint}
-            hideYAxisUnits
-            cardColumnJustification="flex-start"
-          />
-        </Box>
-      ))}
     </Container>
   );
 };
