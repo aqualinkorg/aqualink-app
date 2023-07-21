@@ -13,7 +13,7 @@ import {
 import { Alert } from '@material-ui/lab';
 import { useSelector } from 'react-redux';
 
-import { Site } from 'store/Sites/types';
+import { Site, Sources } from 'store/Sites/types';
 import {
   siteTimeSeriesDataLoadingSelector,
   siteTimeSeriesDataRangeLoadingSelector,
@@ -39,14 +39,20 @@ const Chart = ({
   surveysFiltered,
   pickerErrored,
   showDatePickers,
+  source,
   onStartDateChange,
   onEndDateChange,
   classes,
 }: ChartProps) => {
   const theme = useTheme();
-  const { hobo: hoboBottomTemperatureRange } =
-    useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};
-  const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
+  const dataRanges = useSelector(siteTimeSeriesDataRangeSelector) || {};
+  const someMetricRangeWithCurrentSource =
+    source && Object.values(dataRanges).find((x) => x[source] !== undefined);
+  const { minDate, maxDate } =
+    (someMetricRangeWithCurrentSource &&
+      someMetricRangeWithCurrentSource[source]?.data?.[0]) ||
+    {};
+
   const isTimeSeriesDataRangeLoading = useSelector(
     siteTimeSeriesDataRangeLoadingSelector,
   );
@@ -123,7 +129,7 @@ const Chart = ({
             <Alert severity="warning">
               <Typography>
                 {minDateLocal && maxDateLocal
-                  ? `No HOBO data available - data available from ${minDateLocal} to ${maxDateLocal}.`
+                  ? `No ${source} data available - data available from ${minDateLocal} to ${maxDateLocal}.`
                   : 'No data available in this time range.'}
               </Typography>
             </Alert>
@@ -212,6 +218,7 @@ interface ChartIncomingProps {
   pickerErrored: boolean;
   surveysFiltered?: boolean;
   showDatePickers?: boolean;
+  source?: Sources;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
 }
