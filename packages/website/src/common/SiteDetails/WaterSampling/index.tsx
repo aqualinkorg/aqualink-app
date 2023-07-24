@@ -12,13 +12,16 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 
-import { getSondeConfig, SondeMetricsKeys } from 'constants/sondeConfig';
 import { TimeSeriesData } from 'store/Sites/types';
 import { timeSeriesRequest } from 'store/Sites/helpers';
 import { formatNumber } from 'helpers/numberUtils';
 import requests from 'helpers/requests';
 import { colors } from 'layout/App/theme';
 import siteServices from 'services/siteServices';
+import {
+  getSondeConfig,
+  SondeMetricsKeys,
+} from 'constants/chartConfigs/sondeConfig';
 import { styles as incomingStyles } from '../styles';
 import { calculateSondeDataMeanValues } from './utils';
 import UpdateInfo from '../../UpdateInfo';
