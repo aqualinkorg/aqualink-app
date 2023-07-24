@@ -611,7 +611,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       <mock-typography
                         variant="subtitle2"
                       >
-                        HUI range: 06/11/2022 - 06/11/2022
+                        HUI range: 06/11/2022 - 06/14/2022
                       </mock-typography>
                     </div>
                   </div>
@@ -652,7 +652,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 class="MuiAlert-message"
               >
                 <mock-typography>
-                  No HUI data available - data available from 06/11/2022 to 06/11/2022.
+                  No HUI data available - data available from 06/11/2022 to 06/14/2022.
                 </mock-typography>
               </div>
             </div>
@@ -745,7 +745,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 class="MuiAlert-message"
               >
                 <mock-typography>
-                  No HUI data available - data available from 06/11/2022 to 06/11/2022.
+                  No HUI data available - data available from 06/11/2022 to 06/14/2022.
                 </mock-typography>
               </div>
             </div>
@@ -838,7 +838,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 class="MuiAlert-message"
               >
                 <mock-typography>
-                  No HUI data available - data available from 06/11/2022 to 06/11/2022.
+                  No HUI data available - data available from 06/11/2022 to 06/14/2022.
                 </mock-typography>
               </div>
             </div>
