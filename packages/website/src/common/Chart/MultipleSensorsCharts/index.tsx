@@ -76,7 +76,7 @@ const MultipleSensorsCharts = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const { bottomTemperature, topTemperature } = timeSeriesData || {};
+  const { bottomTemperature } = timeSeriesData || {};
   const { hobo: hoboBottomTemperature } = bottomTemperature || {};
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { hobo: hoboBottomTemperatureRange } =
@@ -94,9 +94,7 @@ const MultipleSensorsCharts = ({
 
   const today = localizedEndOfDay(undefined, site.timezone);
 
-  const hasSpotterData = Boolean(
-    bottomTemperature?.spotter?.data?.[1] || topTemperature?.spotter?.data?.[1],
-  );
+  const hasSpotterData = availableSources.includes('spotter');
 
   const hasSondeData = availableSources.includes('sonde');
 
@@ -270,35 +268,16 @@ const MultipleSensorsCharts = ({
       isBefore(pickerStartDate, pickerEndDate) &&
       timeSeriesDataRanges
     ) {
-      const sondeRanges = getSourceRanges(timeSeriesDataRanges, 'sonde').filter(
-        (x) =>
-          rangeOverlapWithRange(
-            x.minDate,
-            x.maxDate,
-            pickerStartDate,
-            pickerEndDate,
-          ),
-      );
-
-      const metlogRanges = getSourceRanges(
-        timeSeriesDataRanges,
-        'metlog',
-      ).filter((x) =>
-        rangeOverlapWithRange(
-          x.minDate,
-          x.maxDate,
-          pickerStartDate,
-          pickerEndDate,
-        ),
-      );
-
-      const huiRanges = getSourceRanges(timeSeriesDataRanges, 'hui').filter(
-        (x) =>
-          rangeOverlapWithRange(
-            x.minDate,
-            x.maxDate,
-            pickerStartDate,
-            pickerEndDate,
+      const sources: Sources[] = ['spotter', 'sonde', 'metlog', 'hui'];
+      const [spotterRanges, sondeRanges, metlogRanges, huiRanges] = sources.map(
+        (source) =>
+          getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
+            rangeOverlapWithRange(
+              x.minDate,
+              x.maxDate,
+              pickerStartDate,
+              pickerEndDate,
+            ),
           ),
       );
 
@@ -311,6 +290,7 @@ const MultipleSensorsCharts = ({
 
       setAvailableSources(
         [
+          spotterRanges.length > 0 && 'spotter',
           sondeRanges.length > 0 && 'sonde',
           metlogRanges.length > 0 && 'metlog',
           huiRanges.length > 0 && 'hui',
