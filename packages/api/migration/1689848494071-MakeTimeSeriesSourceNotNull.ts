@@ -6,6 +6,9 @@ export class MakeTimeSeriesSourceNotNull1689848494071
   name = 'MakeTimeSeriesSourceNotNull1689848494071';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    // lock time_series so we can safely execute DDL operations
+    await queryRunner.query('LOCK TABLE time_series IN ACCESS EXCLUSIVE MODE');
+
     // delete rows with null source_id, since they are meaningless for the app.
     await queryRunner.query('delete from time_series where source_id is null');
 
