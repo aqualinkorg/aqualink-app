@@ -59,10 +59,7 @@ jobs:
         id: build_website
         if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
         working-directory: packages/website
-        run: |
-          yarn build
-          cd build
-          cp index.html 200.html
+        run: yarn build
 
       - name: Deploy pull request on surge
         if: steps.build_website.outcome == 'success' && github.event.pull_request.number != null
