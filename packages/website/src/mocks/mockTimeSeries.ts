@@ -28,7 +28,7 @@ export const mockTimeSeries: TimeSeriesData = {
         { value: 8.1725, timestamp: '2022-06-11T20:00:00.000Z' },
         { value: 8.149999999999999, timestamp: '2022-06-11T21:00:00.000Z' },
         { value: 8.145, timestamp: '2022-06-11T22:00:00.000Z' },
-        { value: 8.27, timestamp: '2022-06-11T23:00:00.000Z' },
+        { value: 8.27, timestamp: '2022-06-14T23:00:00.000Z' },
       ],
     },
   },
