@@ -1,9 +1,9 @@
-import { getSondeConfig } from 'constants/sondeConfig';
 import { formatNumber } from 'helpers/numberUtils';
 import { Metrics, MetricsKeys, Sources } from 'store/Sites/types';
 import { GridProps } from '@material-ui/core';
 import siteServices from 'services/siteServices';
 import { timeSeriesRequest } from 'store/Sites/helpers';
+import { getSondeConfig } from 'constants/chartConfigs/sondeConfig';
 
 type HUICardMetrics = Extract<
   Metrics,

@@ -34,7 +34,7 @@ export class TimeSeries {
   @Column({ type: 'enum', enum: Metric, nullable: false })
   metric: Metric;
 
-  @ManyToOne(() => Sources, { onDelete: 'SET NULL', nullable: true })
+  @ManyToOne(() => Sources, { onDelete: 'CASCADE', nullable: false })
   source: Sources | null;
 
   @ManyToOne(() => DataUploads, { onDelete: 'CASCADE', nullable: true })

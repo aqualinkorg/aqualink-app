@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { Grid, GridProps, makeStyles, Theme } from '@material-ui/core';
 
-import { Site, TimeSeriesSurveyPoint } from 'store/Sites/types';
+import { Site, Sources, TimeSeriesSurveyPoint } from 'store/Sites/types';
 import AnalysisCard from './AnalysisCard';
 import Chart from './Chart';
 import Header from './Header';
@@ -31,6 +31,7 @@ const ChartWithCard = ({
   site,
   surveyPoint,
   timeZone,
+  source,
   onEndDateChange,
   onStartDateChange,
   onRangeChange,
@@ -82,6 +83,7 @@ const ChartWithCard = ({
             surveysFiltered={areSurveysFiltered}
             hideYAxisUnits={hideYAxisUnits}
             showDatePickers={showDatePickers}
+            source={source}
           />
         </Grid>
         {!isPickerErrored && (
@@ -161,6 +163,7 @@ interface ChartWithCardProps {
   site: Site;
   surveyPoint?: TimeSeriesSurveyPoint;
   timeZone?: string | null;
+  source?: Sources;
   onEndDateChange: (date: Date | null) => void;
   onStartDateChange: (date: Date | null) => void;
   onRangeChange: (value: RangeValue) => void;

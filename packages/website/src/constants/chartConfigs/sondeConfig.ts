@@ -1,7 +1,5 @@
 import { MetricsKeys } from 'store/Sites/types';
-import { BaseSourceConfig } from '../utils/types';
-
-type SondeConfig = BaseSourceConfig;
+import { BaseSourceConfig } from '../../utils/types';
 
 export type SondeMetricsKeys = Extract<
   MetricsKeys,
@@ -24,7 +22,7 @@ export type SondeMetricsKeys = Extract<
   | 'sonde_cable_power_voltage'
 >;
 
-export const sondeConfig: Record<SondeMetricsKeys, SondeConfig> = {
+export const sondeConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
   salinity: {
     title: 'Salinity',
     units: 'psu',
@@ -152,6 +150,6 @@ export function getSondeConfig(configKey: SondeMetricsKeys) {
 
 export function getPublicSondeMetrics() {
   return Object.keys(sondeConfig).filter(
-    (key) => sondeConfig[key as SondeMetricsKeys].visibility !== 'admin',
+    (key) => sondeConfig[key as SondeMetricsKeys].visibility === 'public',
   ) as SondeMetricsKeys[];
 }
