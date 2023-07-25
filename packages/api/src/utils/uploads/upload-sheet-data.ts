@@ -77,6 +77,7 @@ const nonMetric = [
   'timestamp',
   'aqualink_site_id',
   'aqualink_survey_point_id',
+  'aqualink_sensor_type',
 ] as const;
 
 type NonMetric = typeof nonMetric[number];
@@ -98,6 +99,7 @@ const rules: Rule[] = [
     token: 'aqualink_survey_point_id',
     expression: /^aqualink_survey_point_id$/,
   },
+  { token: 'aqualink_sensor_type', expression: /^aqualink_sensor_type$/ },
   // Default Metrics
   // should match 'Temp, °C'
   { token: Metric.AIR_TEMPERATURE, expression: /^Temp, .*C$/ },
@@ -269,7 +271,7 @@ const trimWorkSheetData = (
     })
     .filter((item) => item) as string[][];
 
-const groupBySiteAndPoint = (
+const groupBySitePointAndType = (
   trimmedWorkSheetData: string[][],
   headerToTokenMap: (Token | undefined)[],
 ): { [key: string]: string[][] } => {
@@ -279,9 +281,12 @@ const groupBySiteAndPoint = (
   const surveyPointIdIndex = headerToTokenMap.findIndex(
     (x) => x === 'aqualink_survey_point_id',
   );
+  const sourceTypeIndex = headerToTokenMap.findIndex(
+    (x) => x === 'aqualink_sensor_type',
+  );
 
   return trimmedWorkSheetData.reduce((acc, curr) => {
-    const key = `${curr[siteIdIndex]}_ ${curr[surveyPointIdIndex]}`;
+    const key = `${curr[siteIdIndex]}_ ${curr[surveyPointIdIndex]}_${curr[sourceTypeIndex]}`;
     // eslint-disable-next-line fp/no-mutating-methods, fp/no-mutation
     (acc[key] = acc[key] || []).push(curr);
     return acc;
@@ -597,11 +602,16 @@ const uploadPerSiteAndPoint = async ({
     `Loading into DB site: ${site.id}, surveyPoint: ${surveyPoint?.id}`,
   );
 
-  await repositories.dataUploadsRepository
-    .createQueryBuilder('data_uploads')
-    .relation('sites')
-    .of(dataUploadsFileEntity)
-    .add(site);
+  try {
+    // This will fail on file re upload
+    await repositories.dataUploadsRepository
+      .createQueryBuilder('data_uploads')
+      .relation('sites')
+      .of(dataUploadsFileEntity)
+      .add(site);
+  } catch (error: any) {
+    logger.warn(error?.message);
+  }
 
   logger.log('loading complete');
 };
@@ -623,7 +633,7 @@ export const uploadTimeSeriesData = async ({
   fileName: string;
   siteId: number | undefined;
   surveyPointId: number | undefined;
-  sourceType: SourceType;
+  sourceType?: SourceType;
   repositories: Repositories;
   multiSiteUpload: boolean;
   failOnWarning?: boolean;
@@ -690,14 +700,15 @@ export const uploadTimeSeriesData = async ({
   const trimmed = trimWorkSheetData(workSheetData, headers, headerIndex);
 
   const uploadData = multiSiteUpload
-    ? Object.entries(groupBySiteAndPoint(trimmed, headerToTokenMap)).map(
+    ? Object.entries(groupBySitePointAndType(trimmed, headerToTokenMap)).map(
         ([key, data]) => ({
           data,
           siteId: key.split('_')[0],
           surveyPointId: key.split('_')[1],
+          sourceType: key.split('_')[2],
         }),
       )
-    : [{ data: trimmed, siteId, surveyPointId }];
+    : [{ data: trimmed, siteId, surveyPointId, sourceType }];
 
   const converted = await Promise.all(
     uploadData.map((x) => {
@@ -709,7 +720,7 @@ export const uploadTimeSeriesData = async ({
         headerIndex,
         fileName,
         headerToTokenMap,
-        sourceType,
+        sourceType: x.sourceType,
         repositories,
         mimetype,
       });
@@ -734,7 +745,7 @@ export const uploadTimeSeriesData = async ({
   const dataUploadsFile = await uploadFileToGCloud(
     repositories.dataUploadsRepository,
     signature,
-    sourceType,
+    sourceType || SourceType.SHEET_DATA,
     fileName,
     filePath,
     minDate,

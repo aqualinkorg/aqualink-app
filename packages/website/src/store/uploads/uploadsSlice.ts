@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { uniqBy } from 'lodash';
 import { getAxiosErrorMessage } from 'helpers/errors';
-import uploadServices from 'services/uploadServices';
+import uploadServices, {
+  UploadTimeSeriesResult,
+} from 'services/uploadServices';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
 import { UploadsSliceState } from './types';
 
@@ -12,6 +14,24 @@ const uploadsSliceInitialState: UploadsSliceState = {
   uploadResponse: undefined,
   error: undefined,
 };
+
+function getErrorFromFileUploadResponse(
+  response: UploadTimeSeriesResult[] | undefined,
+) {
+  const hasError = response?.some((x) => !!x.error);
+  const error = response?.reduce((acc, cur) => {
+    if (!cur.error) {
+      return acc;
+    }
+    const [maybeFileName, ...maybeFileError] = cur.error.split(': ');
+    return {
+      ...acc,
+      [maybeFileName]: maybeFileError.join(': '),
+    };
+  }, {});
+
+  return hasError ? error : undefined;
+}
 
 export const uploadFiles = createAsyncThunk<
   UploadsSliceState['uploadResponse'],
@@ -44,6 +64,24 @@ export const uploadFiles = createAsyncThunk<
         return uploadResponse;
       }
       return rejectWithValue('Invalid arguments');
+    } catch (err) {
+      const errorMessage = getAxiosErrorMessage(err);
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
+
+export const uploadMultiSiteFiles = createAsyncThunk<
+  UploadsSliceState['uploadResponse'],
+  { token: string | null | undefined; files: File[] },
+  CreateAsyncThunkTypes
+>(
+  'uploads/uploadMultiSiteFiles',
+  async ({ token, files }, { rejectWithValue }) => {
+    try {
+      const { data: uploadResponse } =
+        await uploadServices.uploadMultiSiteTimeSeriesData(files, token, false);
+      return uploadResponse;
     } catch (err) {
       const errorMessage = getAxiosErrorMessage(err);
       return rejectWithValue(errorMessage);
@@ -110,27 +148,48 @@ const uploadsSlice = createSlice({
       uploadFiles.fulfilled,
       (state, action: PayloadAction<UploadsSliceState['uploadResponse']>) => {
         const response = action.payload;
-        const hasError = response?.some((x) => !!x.error);
-        const error = response?.reduce((acc, cur) => {
-          if (!cur.error) {
-            return acc;
-          }
-          const [maybeFileName, ...maybeFileError] = cur.error.split(': ');
-          return {
-            ...acc,
-            [maybeFileName]: maybeFileError.join(': '),
-          };
-        }, {});
+        const error = getErrorFromFileUploadResponse(response);
         return {
           ...state,
           uploadInProgress: false,
           uploadResponse: action.payload,
-          error: hasError ? error : undefined,
+          error,
         };
       },
     );
     builder.addCase(
       uploadFiles.rejected,
+      (state, action: PayloadAction<UploadsSliceState['error']>) => {
+        return {
+          ...state,
+          error: action.payload,
+          uploadInProgress: false,
+        };
+      },
+    );
+
+    builder.addCase(uploadMultiSiteFiles.pending, (state) => {
+      return {
+        ...state,
+        error: undefined,
+        uploadInProgress: true,
+      };
+    });
+    builder.addCase(
+      uploadMultiSiteFiles.fulfilled,
+      (state, action: PayloadAction<UploadsSliceState['uploadResponse']>) => {
+        const response = action.payload;
+        const error = getErrorFromFileUploadResponse(response);
+        return {
+          ...state,
+          uploadInProgress: false,
+          uploadResponse: action.payload,
+          error,
+        };
+      },
+    );
+    builder.addCase(
+      uploadMultiSiteFiles.rejected,
       (state, action: PayloadAction<UploadsSliceState['error']>) => {
         return {
           ...state,

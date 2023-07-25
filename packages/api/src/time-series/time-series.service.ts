@@ -129,7 +129,7 @@ export class TimeSeriesService {
 
   async uploadData({
     user,
-    sensor = SourceType.SHEET_DATA,
+    sensor,
     files,
     multiSiteUpload,
     surveyPointDataRangeDto,
@@ -142,7 +142,7 @@ export class TimeSeriesService {
     surveyPointDataRangeDto?: SurveyPointDataRangeDto;
     failOnWarning?: boolean;
   }) {
-    if (!sensor || !Object.values(SourceType).includes(sensor)) {
+    if (sensor && !Object.values(SourceType).includes(sensor)) {
       throw new BadRequestException(
         `Field 'sensor' is required and must have one of the following values: ${Object.values(
           SourceType,

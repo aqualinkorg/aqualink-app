@@ -23,6 +23,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
+import PublishIcon from '@material-ui/icons/Publish';
 import MenuIcon from '@material-ui/icons/Menu';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -233,6 +234,29 @@ const NavBar = ({
                           );
                         },
                       )}
+                      {user &&
+                        (user.adminLevel === 'site_manager' ||
+                          user.adminLevel === 'super_admin') && (
+                          <>
+                            <Divider className={classes.userMenuDivider} />
+                            <Link
+                              to="/uploads"
+                              className={classes.menuItemLink}
+                            >
+                              <MenuItem
+                                key="user-menu-uploads"
+                                className={classes.menuItem}
+                              >
+                                <Grid container spacing={1}>
+                                  <Grid item>
+                                    <PublishIcon fontSize="small" />
+                                  </Grid>
+                                  <Grid item>Uploads</Grid>
+                                </Grid>
+                              </MenuItem>
+                            </Link>
+                          </>
+                        )}
                       <Divider className={classes.userMenuDivider} />
                       <Link to="/dashboard" className={classes.menuItemLink}>
                         <MenuItem

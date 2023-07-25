@@ -23,8 +23,26 @@ const uploadMedia = (
     responseType: 'text',
   });
 
+const uploadMultiSiteTimeSeriesData = (
+  files: File[],
+  token?: string | null,
+  failOnWarning?: boolean,
+) => {
+  const data = new FormData();
+  files.forEach((file) => data.append('files', file));
+  return requests.send<UploadTimeSeriesResult[]>({
+    method: 'POST',
+    url: `time-series/upload${requests.generateUrlQueryParams({
+      failOnWarning,
+    })}`,
+    data,
+    token,
+    contentType: 'multipart/form-data',
+  });
+};
+
 const uploadTimeSeriesData = (
-  formdData: FormData,
+  formData: FormData,
   siteId: number,
   pointId: number,
   token?: string | null,
@@ -35,7 +53,7 @@ const uploadTimeSeriesData = (
     url: `time-series/sites/${siteId}/site-survey-points/${pointId}/upload${requests.generateUrlQueryParams(
       { failOnWarning },
     )}`,
-    data: formdData,
+    data: formData,
     token,
     contentType: 'multipart/form-data',
   });
@@ -52,4 +70,9 @@ const deleteFileTimeSeriesData = (
     contentType: 'application/json',
   });
 
-export default { uploadMedia, uploadTimeSeriesData, deleteFileTimeSeriesData };
+export default {
+  uploadMedia,
+  uploadTimeSeriesData,
+  deleteFileTimeSeriesData,
+  uploadMultiSiteTimeSeriesData,
+};

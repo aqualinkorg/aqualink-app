@@ -156,7 +156,7 @@ export class TimeSeriesController {
     @Query('failOnWarning', ParseBoolPipe) failOnWarning?: boolean,
   ) {
     return this.timeSeriesService.uploadData({
-      sensor,
+      sensor: sensor || SourceType.SHEET_DATA,
       files,
       multiSiteUpload: false,
       surveyPointDataRangeDto,
@@ -179,12 +179,10 @@ export class TimeSeriesController {
   uploadTimeSeriesData(
     @Req() req: AuthRequest,
     @UploadedFiles() files: Express.Multer.File[],
-    @Body('sensor') sensor?: SourceType,
     @Query('failOnWarning', ParseBoolPipe) failOnWarning?: boolean,
   ) {
     return this.timeSeriesService.uploadData({
       user: req.user,
-      sensor,
       files,
       multiSiteUpload: true,
       failOnWarning,
