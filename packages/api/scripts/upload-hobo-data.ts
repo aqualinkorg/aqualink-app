@@ -55,6 +55,7 @@ async function run() {
   // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService(
     connection.getRepository(SurveyMedia),
+    connection.getRepository(DataUploads),
   );
 
   logger.log('Uploading hobo data');
