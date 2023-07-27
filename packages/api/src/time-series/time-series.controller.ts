@@ -4,8 +4,6 @@ import {
   Param,
   Query,
   ParseBoolPipe,
-  ParseArrayPipe,
-  DefaultValuePipe,
   Post,
   UseInterceptors,
   UseGuards,
@@ -13,6 +11,7 @@ import {
   Body,
   Res,
   Header,
+  BadRequestException,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -34,6 +33,7 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { fileFilter } from '../utils/uploads/upload-sheet-data';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
+import { MetricArrayPipe } from '../pipes/parse-metric-array.pipe';
 
 const MAX_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;
@@ -60,8 +60,10 @@ export class TimeSeriesController {
     @Param() surveyPointDataDto: SurveyPointDataDto,
     @Query(
       'metrics',
-      new DefaultValuePipe(Object.values(Metric)),
-      ParseArrayPipe,
+      new MetricArrayPipe({
+        predefinedSet: Object.values(Metric),
+        defaultArray: Object.values(Metric),
+      }),
     )
     metrics: Metric[],
     @Query('start', ParseDatePipe) startDate?: string,
@@ -93,8 +95,10 @@ export class TimeSeriesController {
     @Param() siteDataDto: SiteDataDto,
     @Query(
       'metrics',
-      new DefaultValuePipe(Object.values(Metric)),
-      ParseArrayPipe,
+      new MetricArrayPipe({
+        predefinedSet: Object.values(Metric),
+        defaultArray: Object.values(Metric),
+      }),
     )
     metrics: Metric[],
     @Query('start', ParseDatePipe) startDate?: string,
@@ -171,6 +175,54 @@ export class TimeSeriesController {
     const file = this.timeSeriesService.getSampleUploadFiles(
       surveyPointDataRangeDto,
     );
+    const filename = `${surveyPointDataRangeDto.source}_example.csv`;
+    res.set({
+      'Content-Disposition': `attachment; filename=${encodeURIComponent(
+        filename,
+      )}`,
+    });
     return file.pipe(res);
+  }
+
+  @ApiOperation({
+    summary: 'Returns specified time series data for a specified site as csv',
+  })
+  @ApiQuery({ name: 'start', example: '2021-05-18T10:20:28.017Z' })
+  @ApiQuery({ name: 'end', example: '2021-05-18T10:20:28.017Z' })
+  @ApiQuery({
+    name: 'metrics',
+    example: [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
+  })
+  @ApiQuery({ name: 'hourly', example: false, required: false })
+  @Header('Content-Type', 'text/csv')
+  @Get('sites/:siteId/csv')
+  findSiteDataCsv(
+    @Res() res: Response,
+    @Param() siteDataDto: SiteDataDto,
+    @Query(
+      'metrics',
+      new MetricArrayPipe({
+        predefinedSet: Object.values(Metric),
+        defaultArray: Object.values(Metric),
+      }),
+    )
+    metrics: Metric[],
+    @Query('start', ParseDatePipe) startDate?: string,
+    @Query('end', ParseDatePipe) endDate?: string,
+    @Query('hourly', ParseBoolPipe) hourly?: boolean,
+  ) {
+    if (startDate && endDate && startDate > endDate) {
+      throw new BadRequestException(
+        `Invalid Dates: start date can't be after end date`,
+      );
+    }
+    return this.timeSeriesService.findSiteDataCsv(
+      res,
+      siteDataDto,
+      metrics,
+      startDate,
+      endDate,
+      hourly,
+    );
   }
 }
