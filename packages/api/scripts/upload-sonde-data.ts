@@ -11,6 +11,7 @@ import { Sources } from '../src/sites/sources.entity';
 import { uploadTimeSeriesData } from '../src/utils/uploads/upload-sheet-data';
 import { DataUploads } from '../src/data-uploads/data-uploads.entity';
 import { SourceType } from '../src/sites/schemas/source-type.enum';
+import { DataUploadsSites } from '../src/data-uploads/data-uploads-sites.entity';
 
 // Initialize command definition
 const { argv } = yargs
@@ -76,6 +77,7 @@ async function run() {
       timeSeriesRepository: connection.getRepository(TimeSeries),
       sourcesRepository: connection.getRepository(Sources),
       dataUploadsRepository: connection.getRepository(DataUploads),
+      dataUploadsSitesRepository: connection.getRepository(DataUploadsSites),
     },
   });
 

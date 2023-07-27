@@ -26,7 +26,6 @@ import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { ApiPointProperty } from '../docs/api-properties';
 import { SofarLiveDataDto } from './dto/live-data.dto';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
-import { DataUploads } from '../data-uploads/data-uploads.entity';
 
 export enum SiteStatus {
   InReview = 'in_review',
@@ -142,11 +141,6 @@ export class Site {
   @Exclude()
   @Column({ nullable: true, select: false, type: 'character varying' })
   spotterApiToken?: string | null;
-
-  @ManyToMany(() => DataUploads, (dataUpload) => dataUpload.sites, {
-    onDelete: 'CASCADE',
-  })
-  dataUploads: DataUploads[];
 
   hasHobo: boolean;
 

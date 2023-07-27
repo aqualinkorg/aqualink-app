@@ -2,15 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from '../time-series/metrics.enum';
 
@@ -22,12 +19,8 @@ export class DataUploads {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToMany(() => Site, (site) => site.dataUploads, { onDelete: 'CASCADE' })
-  @JoinTable()
-  sites: Site;
-
-  @Column({ type: 'enum', enum: SourceType })
-  sensorType: SourceType;
+  @Column('character varying', { array: true, nullable: true })
+  sensorTypes: SourceType[];
 
   @Column({ nullable: false })
   file: string;

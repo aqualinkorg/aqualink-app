@@ -31,6 +31,7 @@ import { refreshMaterializedView } from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 import { backfillSiteData } from '../src/workers/backfill-site-data';
+import { DataUploadsSites } from '../src/data-uploads/data-uploads-sites.entity';
 
 const { argv } = yargs
   .scriptName('upload-hui-data')
@@ -78,7 +79,7 @@ function createSourceAndInsertTimeSeries(
   siteSurveyPointRepository: Repository<SiteSurveyPoint>,
   sourcesRepository: Repository<Sources>,
   timeSeriesRepository: Repository<TimeSeries>,
-  dataUploadsRepository: Repository<DataUploads>,
+  dataUploadsSitesRepository: Repository<DataUploadsSites>,
 ) {
   return points.map(async (point) => {
     let targetSite: Site;
@@ -130,11 +131,11 @@ function createSourceAndInsertTimeSeries(
       timeSeriesRepository,
     );
 
-    await dataUploadsRepository
-      .createQueryBuilder('data_uploads')
-      .relation('sites')
-      .of(dataUploadsFile)
-      .add(site);
+    await dataUploadsSitesRepository.save({
+      dataUpload: dataUploadsFile,
+      targetSite,
+      targetSiteSurveyPoint,
+    });
   });
 }
 
@@ -172,6 +173,7 @@ async function run() {
   const siteRepository = connection.getRepository(Site);
   const siteSurveyPointRepository = connection.getRepository(SiteSurveyPoint);
   const dataUploadsRepository = connection.getRepository(DataUploads);
+  const dataUploadsSitesRepository = connection.getRepository(DataUploadsSites);
   const regionRepository = connection.getRepository(Region);
   const sourcesRepository = connection.getRepository(Sources);
   const timeSeriesRepository = connection.getRepository(TimeSeries);
@@ -278,7 +280,7 @@ async function run() {
   const dataUploadsFile = await uploadFileToGCloud(
     dataUploadsRepository,
     signature,
-    SourceType.HUI,
+    [SourceType.HUI],
     last(filePath.split('/')) || '',
     filePath,
     minDate,
@@ -318,7 +320,7 @@ async function run() {
         siteSurveyPointRepository,
         sourcesRepository,
         timeSeriesRepository,
-        dataUploadsRepository,
+        dataUploadsSitesRepository,
       ),
     );
     return key;

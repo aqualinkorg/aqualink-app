@@ -237,7 +237,7 @@ const NavBar = ({
                       {user &&
                         (user.adminLevel === 'site_manager' ||
                           user.adminLevel === 'super_admin') && (
-                          <>
+                          <div>
                             <Divider className={classes.userMenuDivider} />
                             <Link
                               to="/uploads"
@@ -255,7 +255,7 @@ const NavBar = ({
                                 </Grid>
                               </MenuItem>
                             </Link>
-                          </>
+                          </div>
                         )}
                       <Divider className={classes.userMenuDivider} />
                       <Link to="/dashboard" className={classes.menuItemLink}>

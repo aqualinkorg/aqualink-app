@@ -34,6 +34,7 @@ import { surveyPointBelongsToSite } from '../utils/site.utils';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
 import { User } from '../users/users.entity';
+import { DataUploadsSites } from '../data-uploads/data-uploads-sites.entity';
 
 @Injectable()
 export class TimeSeriesService {
@@ -54,6 +55,9 @@ export class TimeSeriesService {
 
     @InjectRepository(DataUploads)
     private dataUploadsRepository: Repository<DataUploads>,
+
+    @InjectRepository(DataUploadsSites)
+    private dataUploadsSitesRepository: Repository<DataUploadsSites>,
   ) {}
 
   async findSurveyPointData(
@@ -176,6 +180,7 @@ export class TimeSeriesService {
               surveyPointRepository: this.surveyPointRepository,
               timeSeriesRepository: this.timeSeriesRepository,
               dataUploadsRepository: this.dataUploadsRepository,
+              dataUploadsSitesRepository: this.dataUploadsSitesRepository,
             },
             failOnWarning,
             mimetype: mimetype as Mimetype,

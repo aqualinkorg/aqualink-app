@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 
-import { TimeSeriesData } from 'store/Sites/types';
+import { SurveyPoints, TimeSeriesData } from 'store/Sites/types';
 import { timeSeriesRequest } from 'store/Sites/helpers';
 import { formatNumber } from 'helpers/numberUtils';
 import requests from 'helpers/requests';
@@ -40,11 +40,6 @@ interface Metric {
   value: string;
   unit: string;
   xs: GridProps['xs'];
-}
-
-interface SurveyPoint {
-  id: number;
-  name: string;
 }
 
 const metrics = (
@@ -86,7 +81,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   const classes = useStyles();
   const [minDate, setMinDate] = useState<string>();
   const [maxDate, setMaxDate] = useState<string>();
-  const [point, setPoint] = useState<SurveyPoint>();
+  const [point, setPoint] = useState<SurveyPoints>();
   const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>();
   const meanValues = calculateSondeDataMeanValues(METRICS, timeSeriesData);
   const isPointNameLong = (point?.name?.length || 0) > 24;
@@ -111,10 +106,9 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
         // Upload history is sorted by `maxDate`, so the first
         // item is the most recent.
         const {
-          minDate: from,
-          maxDate: to,
+          dataUpload: { minDate: from, maxDate: to },
           surveyPoint,
-        } = head(uploadHistory) || {};
+        } = head(uploadHistory) || { dataUpload: {} };
         if (typeof surveyPoint?.id === 'number') {
           const [data] = await timeSeriesRequest({
             siteId,

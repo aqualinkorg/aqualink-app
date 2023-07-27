@@ -49,12 +49,12 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
   const dataVisualizationButtonLink = (
     start: string,
     end: string,
-    surveyPoint: number,
+    surveyPointId?: number,
   ) =>
     `/sites/${site.id}${requests.generateUrlQueryParams({
       start,
       end,
-      surveyPoint,
+      surveyPoint: surveyPointId,
     })}`;
 
   if (nUploads === 0) {
@@ -80,74 +80,70 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {uploadHistory.map(
-              ({
-                id,
-                file,
-                surveyPoint,
-                sensorType,
-                minDate,
-                maxDate,
-                createdAt,
-              }) => {
-                const row = [
-                  file,
-                  timezoneAbbreviation || timezone,
-                  site.name,
-                  surveyPoint.name,
-                  startCase(sensorType),
-                  moment(createdAt).format(dateFormat),
-                ];
-                return (
-                  <TableRow key={id}>
-                    {row.map((item) => (
-                      <TableCell>
-                        <Typography {...tableCellTypographyProps}>
-                          {item}
+            {uploadHistory.map(({ dataUpload, surveyPoint }) => {
+              const row = [
+                dataUpload.file,
+                timezoneAbbreviation || timezone,
+                site.name,
+                surveyPoint?.name,
+                dataUpload.sensorTypes.map((x) => startCase(x)).join(', '),
+                moment(dataUpload.createdAt).format(dateFormat),
+              ];
+              return (
+                <TableRow key={dataUpload.id}>
+                  {row.map((item) => (
+                    <TableCell>
+                      <Typography {...tableCellTypographyProps}>
+                        {item}
+                      </Typography>
+                    </TableCell>
+                  ))}
+                  <TableCell>
+                    <Button
+                      component={Link}
+                      to={dataVisualizationButtonLink(
+                        dataUpload.minDate,
+                        dataUpload.maxDate,
+                        surveyPoint?.id,
+                      )}
+                      size="small"
+                      variant="outlined"
+                      color="primary"
+                      className={classes.dateIntervalButton}
+                    >
+                      {moment(dataUpload.minDate).format(dateFormat)} -{' '}
+                      {moment(dataUpload.maxDate).format(dateFormat)}
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <DeleteButton
+                      onConfirm={() => onDelete([dataUpload.id])}
+                      content={
+                        <Typography color="textSecondary">
+                          Are you sure you want to delete file &quot;
+                          <span className={classes.bold}>
+                            {dataUpload.file}
+                          </span>
+                          &quot;? Data between dates{' '}
+                          <span className={classes.bold}>
+                            {moment(dataUpload.minDate).format(
+                              'MM/DD/YYYY HH:mm',
+                            )}
+                          </span>{' '}
+                          and{' '}
+                          <span className={classes.bold}>
+                            {moment(dataUpload.maxDate).format(
+                              'MM/DD/YYYY HH:mm',
+                            )}
+                          </span>{' '}
+                          will be lost.
                         </Typography>
-                      </TableCell>
-                    ))}
-                    <TableCell>
-                      <Button
-                        component={Link}
-                        to={dataVisualizationButtonLink(
-                          minDate,
-                          maxDate,
-                          surveyPoint.id,
-                        )}
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                        className={classes.dateIntervalButton}
-                      >
-                        {moment(minDate).format(dateFormat)} -{' '}
-                        {moment(maxDate).format(dateFormat)}
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <DeleteButton
-                        onConfirm={() => onDelete([id])}
-                        content={
-                          <Typography color="textSecondary">
-                            Are you sure you want to delete file &quot;
-                            <span className={classes.bold}>{file}</span>&quot;?
-                            Data between dates{' '}
-                            <span className={classes.bold}>
-                              {moment(minDate).format('MM/DD/YYYY HH:mm')}
-                            </span>{' '}
-                            and{' '}
-                            <span className={classes.bold}>
-                              {moment(maxDate).format('MM/DD/YYYY HH:mm')}
-                            </span>{' '}
-                            will be lost.
-                          </Typography>
-                        }
-                      />
-                    </TableCell>
-                  </TableRow>
-                );
-              },
-            )}
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

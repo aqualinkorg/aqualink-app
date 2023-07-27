@@ -33,6 +33,7 @@ import { getBarometricDiff } from '../sofar';
 import { refreshMaterializedView } from '../time-series.utils';
 import { Metric } from '../../time-series/metrics.enum';
 import { User } from '../../users/users.entity';
+import { DataUploadsSites } from '../../data-uploads/data-uploads-sites.entity';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -40,6 +41,7 @@ interface Repositories {
   timeSeriesRepository: Repository<TimeSeries>;
   sourcesRepository: Repository<Sources>;
   dataUploadsRepository: Repository<DataUploads>;
+  dataUploadsSitesRepository: Repository<DataUploadsSites>;
 }
 
 const logger = new Logger('ParseSondeData');
@@ -286,7 +288,11 @@ const groupBySitePointAndType = (
   );
 
   return trimmedWorkSheetData.reduce((acc, curr) => {
-    const key = `${curr[siteIdIndex]}_ ${curr[surveyPointIdIndex]}_${curr[sourceTypeIndex]}`;
+    const siteId = curr[siteIdIndex] || '';
+    const surveyPointId = curr[surveyPointIdIndex] || '';
+    const sourceType = curr[sourceTypeIndex] || '';
+
+    const key = `${siteId}_${surveyPointId}_${sourceType}`;
     // eslint-disable-next-line fp/no-mutating-methods, fp/no-mutation
     (acc[key] = acc[key] || []).push(curr);
     return acc;
@@ -365,7 +371,7 @@ export const convertData = (
 export const uploadFileToGCloud = async (
   dataUploadsRepository: Repository<DataUploads>,
   signature: string,
-  sourceType: SourceType,
+  sources: SourceType[],
   fileName: string,
   filePath: string,
   minDate: string | undefined,
@@ -391,7 +397,7 @@ export const uploadFileToGCloud = async (
   // Note this may fail. It would still return a location, but the file may not have been uploaded
   const fileLocation = googleCloudService.uploadFileAsync(
     filePath,
-    sourceType,
+    sources.length === 1 ? sources[0] : 'multi_source',
     'data_uploads',
     'data_upload',
   );
@@ -399,7 +405,7 @@ export const uploadFileToGCloud = async (
   const dataUploadsFile = await dataUploadsRepository.save({
     file: fileName,
     signature,
-    sensorType: sourceType,
+    sensorTypes: sources,
     minDate,
     maxDate,
     metrics: importedHeaders,
@@ -604,11 +610,11 @@ const uploadPerSiteAndPoint = async ({
 
   try {
     // This will fail on file re upload
-    await repositories.dataUploadsRepository
-      .createQueryBuilder('data_uploads')
-      .relation('sites')
-      .of(dataUploadsFileEntity)
-      .add(site);
+    await repositories.dataUploadsSitesRepository.save({
+      dataUpload: dataUploadsFileEntity,
+      site,
+      surveyPoint,
+    });
   } catch (error: any) {
     logger.warn(error?.message);
   }
@@ -640,6 +646,10 @@ export const uploadTimeSeriesData = async ({
   mimetype?: Mimetype;
 }) => {
   console.time(`Upload datafile ${fileName}`);
+
+  if (!multiSiteUpload && !siteId) {
+    throw new BadRequestException('SiteId is undefined');
+  }
 
   const {
     workSheetData,
@@ -704,11 +714,20 @@ export const uploadTimeSeriesData = async ({
         ([key, data]) => ({
           data,
           siteId: key.split('_')[0],
-          surveyPointId: key.split('_')[1],
-          sourceType: key.split('_')[2],
+          surveyPointId: key.split('_')[1] || undefined,
+          sourceType: (key.split('_')[2] ||
+            SourceType.SHEET_DATA) as SourceType,
         }),
       )
-    : [{ data: trimmed, siteId, surveyPointId, sourceType }];
+    : [
+        {
+          data: trimmed,
+          siteId: String(siteId),
+          surveyPointId:
+            surveyPointId !== undefined ? String(surveyPointId) : undefined,
+          sourceType: sourceType || SourceType.SHEET_DATA,
+        },
+      ];
 
   const converted = await Promise.all(
     uploadData.map((x) => {
@@ -742,10 +761,15 @@ export const uploadTimeSeriesData = async ({
     'timestamp',
   );
 
+  const sourceTypes = uploadData.map((x) => x.sourceType);
+  const uniqueSourceTypes = [
+    ...new Map(sourceTypes.map((x) => [x, x])).values(),
+  ];
+
   const dataUploadsFile = await uploadFileToGCloud(
     repositories.dataUploadsRepository,
     signature,
-    sourceType || SourceType.SHEET_DATA,
+    uniqueSourceTypes,
     fileName,
     filePath,
     minDate,
