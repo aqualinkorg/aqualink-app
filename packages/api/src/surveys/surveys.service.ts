@@ -17,7 +17,10 @@ import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Site } from '../sites/sites.entity';
-import { getFileFromURL } from '../utils/google-cloud.utils';
+import {
+  getSurveyMediaFileFromURL,
+  GoogleCloudDir,
+} from '../utils/google-cloud.utils';
 import { getSite } from '../utils/site.utils';
 import { getImageData, resize } from '../../scripts/utils/image';
 import { validateMimetype } from '../uploads/mimetypes';
@@ -79,7 +82,7 @@ export class SurveysService {
       file.buffer,
       file.originalname,
       'image',
-      'surveys',
+      GoogleCloudDir.SURVEYS,
       'site',
     );
 
@@ -368,7 +371,7 @@ export class SurveysService {
 
     await Promise.all(
       surveyMedia.map((media) => {
-        const file = getFileFromURL(media.url);
+        const file = getSurveyMediaFileFromURL(media.url);
         // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
         return this.googleCloudService.deleteFile(file).catch(() => {
           this.logger.error(
@@ -403,7 +406,7 @@ export class SurveysService {
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
     await this.googleCloudService
-      .deleteFile(getFileFromURL(surveyMedia.url))
+      .deleteFile(getSurveyMediaFileFromURL(surveyMedia.url))
       .catch((error) => {
         this.logger.error(
           `Could not delete media ${surveyMedia.url} of survey media ${mediaId}.`,

@@ -28,6 +28,7 @@ import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 import { getBarometricDiff } from '../sofar';
 import { refreshMaterializedView } from '../time-series.utils';
 import { Metric } from '../../time-series/metrics.enum';
+import { GoogleCloudDir } from '../google-cloud.utils';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -341,7 +342,7 @@ export const uploadFileToGCloud = async (
   const fileLocation = googleCloudService.uploadFileAsync(
     filePath,
     sourceType,
-    'data_uploads',
+    GoogleCloudDir.DATA_UPLOADS,
     'data_upload',
   );
 
