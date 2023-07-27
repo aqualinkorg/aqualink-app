@@ -1,14 +1,12 @@
-import { MetricsKeys } from '../store/Sites/types';
-import { BaseSourceConfig } from '../utils/types';
+import { MetricsKeys } from '../../store/Sites/types';
+import { BaseSourceConfig } from '../../utils/types';
 
 export type SondeMetricsKeys = Extract<
   MetricsKeys,
   'salinity' | 'turbidity' | 'nitrate_plus_nitrite' | 'ph'
 >;
 
-type HuiConfig = BaseSourceConfig;
-
-export const huiConfig: Record<SondeMetricsKeys, HuiConfig> = {
+export const huiConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
   salinity: {
     title: 'Salinity',
     units: 'psu',
@@ -45,6 +43,6 @@ export function getHuiConfig(configKey: SondeMetricsKeys) {
 
 export function getPublicHuiMetrics() {
   return Object.keys(huiConfig).filter(
-    (key) => huiConfig[key as SondeMetricsKeys].visibility !== 'admin',
+    (key) => huiConfig[key as SondeMetricsKeys].visibility === 'public',
   ) as SondeMetricsKeys[];
 }

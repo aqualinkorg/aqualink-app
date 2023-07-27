@@ -41,7 +41,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node $(yarn bin typeorm) -d ormconfig.ts",
     "migration:generate": "yarn typeorm migration:generate",
-    "migration:run": "yarn typeorm migration:run -t each",
+    "migration:run": "yarn typeorm migration:run --transaction each",
     "migration:revert": "yarn typeorm migration:revert",
     "hashId": "ts-node -r dotenv/config scripts/url-hash.ts toHash",
     "hashId:prod": "DOTENV_CONFIG_PATH=.env.prod ts-node -r dotenv/config scripts/url-hash.ts toHash",

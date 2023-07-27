@@ -54,7 +54,7 @@ export const mockDataRange: TimeSeriesDataRange = {
       data: [
         {
           minDate: '2022-06-11T00:00:00.000Z',
-          maxDate: '2022-06-11T23:45:00.000Z',
+          maxDate: '2022-06-14T23:45:00.000Z',
         },
       ],
     },

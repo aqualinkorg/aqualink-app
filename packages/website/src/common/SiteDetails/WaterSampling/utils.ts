@@ -1,5 +1,5 @@
+import { SondeMetricsKeys } from 'constants/chartConfigs/sondeConfig';
 import { mapValues, meanBy, pick, map, camelCase } from 'lodash';
-import { SondeMetricsKeys } from 'constants/sondeConfig';
 import { TimeSeriesData } from 'store/Sites/types';
 
 export const calculateSondeDataMeanValues = (

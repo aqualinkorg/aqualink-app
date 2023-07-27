@@ -1,9 +1,5 @@
 import { MetricsKeys } from 'store/Sites/types';
-import { BaseSourceConfig } from '../utils/types';
-
-interface MetlogConfig extends BaseSourceConfig {
-  convert?: number;
-}
+import { BaseSourceConfig } from '../../utils/types';
 
 export type MetlogMetricsKeys = Extract<
   MetricsKeys,
@@ -16,7 +12,7 @@ export type MetlogMetricsKeys = Extract<
   | 'wind_gust_speed'
 >;
 
-export const metlogConfig: Record<MetlogMetricsKeys, MetlogConfig> = {
+export const metlogConfig: Record<MetlogMetricsKeys, BaseSourceConfig> = {
   air_temperature: {
     title: 'Air Temperature',
     units: '°C',
@@ -76,6 +72,6 @@ export function getMetlogConfig(configKey: MetlogMetricsKeys) {
 
 export function getPublicMetlogMetrics() {
   return Object.keys(metlogConfig).filter(
-    (key) => metlogConfig[key as MetlogMetricsKeys].visibility !== 'admin',
+    (key) => metlogConfig[key as MetlogMetricsKeys].visibility === 'public',
   ) as MetlogMetricsKeys[];
 }
