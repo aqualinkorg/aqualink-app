@@ -100,7 +100,7 @@ const SurveyForm = ({
       <Grid
         className={classes.section}
         container
-        justify="space-between"
+        justifyContent="space-between"
         spacing={2}
       >
         <Grid item xs={12} sm={6}>
@@ -287,7 +287,7 @@ const SurveyForm = ({
       <Grid
         className={classes.section}
         container
-        justify="flex-end"
+        justifyContent="flex-end"
         item
         spacing={2}
       >

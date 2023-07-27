@@ -15,7 +15,7 @@ const Footer = ({ classes }: FooterProps) => {
   return (
     <AppBar className={classes.appBar} position="static">
       <Toolbar>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid item xs={10} container>
             <Link className={classes.navBarLink} href="/map">
               <Typography color="textPrimary" variant="h4">

@@ -147,8 +147,8 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
             </Typography>
           </Button>
           <Paper elevation={3} className={classes.surveyDetailsCard}>
-            <Grid container justify="space-between" item xs={12}>
-              <Grid container justify="center" item md={12}>
+            <Grid container justifyContent="space-between" item xs={12}>
+              <Grid container justifyContent="center" item md={12}>
                 <Grid container item xs={12}>
                   <SurveyDetails site={site} survey={surveyDetails} />
                 </Grid>
@@ -156,7 +156,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                   <Grid
                     className={classes.chartWrapper}
                     container
-                    justify="center"
+                    justifyContent="center"
                     item
                     xs={12}
                   >
@@ -195,7 +195,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       </Box>
       <Box>
         <Container className={classes.mediaWrapper}>
-          <Grid container justify="center" item xs={12}>
+          <Grid container justifyContent="center" item xs={12}>
             <Grid container item xs={11}>
               <Grid item>
                 <Typography className={classes.mediaTitle}>

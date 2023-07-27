@@ -95,7 +95,7 @@ const Chip = ({
   const classes = useStyles({ width });
   return (
     <Grid className={classes.chip} item>
-      <Grid container alignItems="center" justify="center">
+      <Grid container alignItems="center" justifyContent="center">
         <Button className={classes.button} onClick={onClick}>
           <LinkWrapper to={to} href={href} className={classes.link}>
             {live ? (

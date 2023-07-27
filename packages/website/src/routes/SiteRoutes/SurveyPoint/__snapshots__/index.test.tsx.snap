@@ -451,6 +451,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     maxwidth="xs"
     open="false"
     scroll="body"
+    transitionprops="[object Object]"
   >
     <mock-card>
       <div
@@ -683,6 +684,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
   <mock-dialog
     maxwidth="xs"
     open="false"
+    transitionprops="[object Object]"
   >
     <mock-card
       elevation="0"

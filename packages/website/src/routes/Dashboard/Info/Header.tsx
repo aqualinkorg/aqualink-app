@@ -15,7 +15,7 @@ import { User } from 'store/User/types';
 
 const Header = ({ user, nSites, classes }: HeaderProps) => (
   <>
-    <Grid container justify="space-between">
+    <Grid container justifyContent="space-between">
       <Grid item>
         <Grid container direction="column">
           <Grid item>

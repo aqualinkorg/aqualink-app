@@ -6,6 +6,7 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
     maxwidth="xs"
     open="true"
     scroll="body"
+    transitionprops="[object Object]"
   >
     <mock-card>
       <div

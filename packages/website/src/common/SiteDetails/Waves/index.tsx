@@ -49,7 +49,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
         <Grid
           className={classes.content}
           container
-          justify="center"
+          justifyContent="center"
           alignContent="space-between"
           item
           xs={12}
@@ -137,7 +137,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
             item
             xs={12}
             container
-            justify="space-between"
+            justifyContent="space-between"
           >
             <Grid item lg={4}>
               <Typography

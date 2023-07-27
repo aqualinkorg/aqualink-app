@@ -273,7 +273,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
             className={classes.noSensorAlert}
             container
             alignItems="center"
-            justify="center"
+            justifyContent="center"
           >
             {clickable ? (
               <Link

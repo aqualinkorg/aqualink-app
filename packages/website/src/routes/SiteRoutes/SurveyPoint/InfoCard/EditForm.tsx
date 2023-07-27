@@ -44,7 +44,7 @@ const EditForm = ({
         />
       </Grid>
       <Grid item>
-        <Grid container justify="space-between" spacing={2}>
+        <Grid container justifyContent="space-between" spacing={2}>
           <Grid item xs={12}>
             <Alert className={classes.infoAlert} icon={false} severity="info">
               <Typography variant="subtitle2">
@@ -78,7 +78,7 @@ const EditForm = ({
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container justify="flex-end" spacing={2}>
+        <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
             <Button
               onClick={onCancelButtonClick}

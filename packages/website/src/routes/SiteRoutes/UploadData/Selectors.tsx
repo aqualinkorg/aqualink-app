@@ -159,7 +159,7 @@ const Selectors = ({
         container
         className={classes.selectorsWrapper}
         spacing={3}
-        justify="space-between"
+        justifyContent="space-between"
       >
         <Grid item md={4} xs={12}>
           <TextField

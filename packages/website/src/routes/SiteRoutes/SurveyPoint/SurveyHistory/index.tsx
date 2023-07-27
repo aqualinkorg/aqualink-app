@@ -29,7 +29,7 @@ const SurveyHistory = ({
   return (
     <Box bgcolor={bgColor}>
       <Container>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Box className={classes.title}>
             <Typography variant="h4">{pointName} Survey History</Typography>
           </Box>

@@ -23,7 +23,7 @@ const SurveyPointPopup = ({
         <Grid
           container
           alignItems="center"
-          justify="space-between"
+          justifyContent="space-between"
           item
           spacing={2}
         >

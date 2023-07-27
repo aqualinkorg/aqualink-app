@@ -228,7 +228,7 @@ const SiteDetails = ({
       <Grid
         direction={isMobile ? 'column-reverse' : 'row'}
         container
-        justify="space-between"
+        justifyContent="space-between"
         alignItems="flex-end"
         spacing={videoStream ? 0 : 2}
         className={classNames({
@@ -284,7 +284,7 @@ const SiteDetails = ({
       <Grid
         className={classes.metricsWrapper}
         container
-        justify="space-between"
+        justifyContent="space-between"
         spacing={2}
       >
         {cards.map((Component, index) => (

@@ -352,6 +352,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
     maxwidth="xs"
     open="false"
     scroll="body"
+    transitionprops="[object Object]"
   >
     <mock-card>
       <div
@@ -584,6 +585,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
   <mock-dialog
     maxwidth="xs"
     open="false"
+    transitionprops="[object Object]"
   >
     <mock-card
       elevation="0"

@@ -137,7 +137,7 @@ const NavBar = ({
           />
           <Grid
             container
-            justify="space-between"
+            justifyContent="space-between"
             alignItems="center"
             spacing={1}
           >
@@ -180,7 +180,7 @@ const NavBar = ({
 
             <Grid
               container
-              justify="flex-end"
+              justifyContent="flex-end"
               item
               xs={7}
               sm={routeButtons && isTablet ? 3 : 4}

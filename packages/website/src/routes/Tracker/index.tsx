@@ -160,7 +160,7 @@ const Tracker = ({
         <Grid
           container
           className={classes.header}
-          justify="space-between"
+          justifyContent="space-between"
           alignItems="flex-end"
         >
           <Grid item xs={12} sm={7} md={9}>
@@ -267,7 +267,7 @@ const Tracker = ({
         <Box margin="48px 0 72px 0">
           <Grid
             container
-            justify="space-between"
+            justifyContent="space-between"
             alignItems="center"
             spacing={3}
           >

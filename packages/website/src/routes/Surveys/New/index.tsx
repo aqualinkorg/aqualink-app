@@ -43,7 +43,7 @@ const NewSurvey = ({ site, classes }: NewSurveyProps) => {
     <Box flexGrow={1}>
       <SwipeableViews index={value} axis="x">
         <TabPanel value={value} index={0}>
-          <Grid className={classes.root} container justify="center">
+          <Grid className={classes.root} container justifyContent="center">
             <Grid item xs={10}>
               {site.name && (
                 <Typography
@@ -55,7 +55,7 @@ const NewSurvey = ({ site, classes }: NewSurveyProps) => {
             <Grid
               style={{ marginTop: '2rem' }}
               container
-              justify="space-between"
+              justifyContent="space-between"
               item
               xs={10}
             >
