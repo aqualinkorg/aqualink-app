@@ -1,0 +1,1235 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Multi Site Uploads should render with given state from Redux store 1`] = `
+<div>
+  <mock-snackbar
+    anchororigin="[object Object]"
+    classname="makeStyles-snackbar-2"
+    open="false"
+  >
+    <div
+      class="MuiPaper-root MuiAlert-root MuiAlert-filledSuccess makeStyles-alert-3 MuiPaper-elevation0"
+      role="alert"
+    >
+      <div
+        class="MuiAlert-icon"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+          />
+        </svg>
+      </div>
+      <div
+        class="MuiAlert-message makeStyles-alertMessage-4 makeStyles-alertMessage-6"
+      >
+        Successfully uploaded files
+        <mock-button
+          classname="makeStyles-button-5"
+          size="small"
+        >
+          Go to map
+        </mock-button>
+      </div>
+      <div
+        class="MuiAlert-action"
+      >
+        <mock-iconbutton
+          aria-label="Close"
+          color="inherit"
+          size="small"
+          title="Close"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </mock-iconbutton>
+      </div>
+    </div>
+  </mock-snackbar>
+  <mock-snackbar
+    anchororigin="[object Object]"
+    classname="makeStyles-snackbar-2"
+    open="false"
+  >
+    <div
+      class="MuiPaper-root MuiAlert-root MuiAlert-filledError makeStyles-alert-3 MuiPaper-elevation0"
+      role="alert"
+    >
+      <div
+        class="MuiAlert-icon"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+          />
+        </svg>
+      </div>
+      <div
+        class="MuiAlert-message makeStyles-alertMessage-4 makeStyles-alertMessage-7"
+      >
+        Something went wrong with the upload
+        <mock-button
+          classname="makeStyles-button-5"
+          size="small"
+        >
+          View details
+        </mock-button>
+      </div>
+      <div
+        class="MuiAlert-action"
+      >
+        <mock-iconbutton
+          aria-label="Close"
+          color="inherit"
+          size="small"
+          title="Close"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </mock-iconbutton>
+      </div>
+    </div>
+  </mock-snackbar>
+  <mock-dialog
+    fullwidth="true"
+    maxwidth="md"
+    open="false"
+  >
+    <mock-dialogtitle
+      classname="makeStyles-dialogTitle-8"
+      disabletypography="true"
+    >
+      <mock-typography
+        variant="h4"
+      >
+        Upload Details
+      </mock-typography>
+      <mock-iconbutton
+        classname="makeStyles-closeButton-9"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+          />
+        </svg>
+      </mock-iconbutton>
+    </mock-dialogtitle>
+    <mock-dialogcontent>
+      <mock-list />
+    </mock-dialogcontent>
+  </mock-dialog>
+  <mock-appbar
+    classname="NavBar-appBar-11"
+    color="primary"
+    position="static"
+  >
+    <mock-toolbar
+      classname="NavBar-toolbar-14"
+    >
+      <mock-drawer
+        anchor="left"
+        classes="[object Object]"
+        open="false"
+      >
+        <mock-iconbutton
+          style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
+        >
+          <clear />
+        </mock-iconbutton>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="[object Object]"
+          to="/"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Home
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="[object Object]"
+          to="/map"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Map
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="[object Object]"
+          to="/buoy"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Buoy
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="[object Object]"
+          to="/drones"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Drone
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="[object Object]"
+          to="/about"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            About
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="mock-Link"
+          href="https://highlights.aqualink.org"
+          target="_blank"
+          to=""
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Highlighted Sites
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="[object Object]"
+          to="/faq"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Faq
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="[object Object]"
+          to="/tracker"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Track a heatwave
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-25"
+          component="[object Object]"
+          to="/register"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Register a site
+          </mock-typography>
+        </mock-button>
+        <mock-box
+          margintop="auto"
+          padding="25px"
+        >
+          <mock-typography
+            variant="subtitle1"
+          >
+            Aqualink is open-source (MIT). Join us and contribute!
+          </mock-typography>
+          <div
+            class="MuiButtonGroup-root MuiButtonGroup-contained"
+            role="group"
+          >
+            <mock-button
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-24"
+              color="default"
+              disabled="false"
+              disableelevation="false"
+              disablefocusripple="false"
+              disableripple="false"
+              fullwidth="false"
+              href="https://github.com/aqualinkorg/aqualink-app"
+              size="medium"
+              starticon="[object Object]"
+              target="_blank"
+              variant="contained"
+            >
+              GitHub
+            </mock-button>
+            <mock-button
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-24"
+              color="default"
+              disabled="false"
+              disableelevation="false"
+              disablefocusripple="false"
+              disableripple="false"
+              fullwidth="false"
+              href="https://ovio.org/project/aqualinkorg/aqualink-app"
+              size="medium"
+              target="_blank"
+              variant="contained"
+            >
+              <img
+                alt="Ovio Logo"
+                src="ovio_logo.png"
+              />
+            </mock-button>
+          </div>
+        </mock-box>
+      </mock-drawer>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-4"
+        >
+          <mock-box
+            alignitems="center"
+            display="flex"
+            flexwrap="nowrap"
+          >
+            <mock-iconbutton
+              color="inherit"
+              edge="start"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                />
+              </svg>
+            </mock-iconbutton>
+            <mock-link
+              classname="NavBar-navBarLink-12"
+              href="/map"
+            >
+              <mock-typography
+                color="textPrimary"
+                variant="h4"
+              >
+                Aqua
+              </mock-typography>
+              <mock-typography
+                style="color: rgb(138, 198, 222);"
+                variant="h4"
+              >
+                link
+              </mock-typography>
+            </mock-link>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root NavBar-languageUserWrapper-22 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
+        >
+          <mock-tooltip
+            title="Translate"
+          >
+            <mock-iconbutton
+              style="color: white; margin-right: 1em;"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"
+                />
+              </svg>
+            </mock-iconbutton>
+          </mock-tooltip>
+          <mock-box
+            alignitems="center"
+            display="flex"
+            flexwrap="nowrap"
+          >
+            Mock User
+            <mock-iconbutton
+              classname="NavBar-button-21"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root NavBar-expandIcon-20"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </mock-iconbutton>
+            <mock-menu
+              classname="NavBar-userMenu-17"
+              keepmounted="true"
+              menulistprops="[object Object]"
+              open="false"
+              popoverclasses="[object Object]"
+            >
+              <a
+                class="NavBar-menuItemLink-19"
+                href="/sites/1"
+              >
+                <mock-menuitem
+                  classname="NavBar-menuItem-18"
+                >
+                  site name
+                </mock-menuitem>
+              </a>
+              <mock-divider
+                classname="NavBar-userMenuDivider-16"
+              />
+              <a
+                class="NavBar-menuItemLink-19"
+                href="/dashboard"
+              >
+                <mock-menuitem
+                  classname="NavBar-menuItem-18"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z"
+                          opacity=".3"
+                        />
+                        <path
+                          d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      Dashboard
+                    </div>
+                  </div>
+                </mock-menuitem>
+              </a>
+              <mock-divider
+                classname="NavBar-userMenuDivider-16"
+              />
+              <mock-menuitem
+                classname="NavBar-menuItem-18"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
+                    Logout
+                  </div>
+                </div>
+              </mock-menuitem>
+            </mock-menu>
+          </mock-box>
+        </div>
+      </div>
+    </mock-toolbar>
+  </mock-appbar>
+  <mock-dialog
+    maxwidth="xs"
+    open="false"
+    scroll="body"
+    transitionprops="[object Object]"
+  >
+    <mock-card>
+      <div
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-27"
+      >
+        <div
+          class="MuiCardHeader-content"
+        >
+          <mock-typography
+            classname="MuiCardHeader-title"
+            component="span"
+            display="block"
+            variant="h5"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container"
+                >
+                  <mock-typography
+                    variant="h4"
+                  >
+                    Aqua
+                  </mock-typography>
+                  <mock-typography
+                    classname="RegisterDialog-dialogHeaderSecondPart-28"
+                    variant="h4"
+                  >
+                    link
+                  </mock-typography>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-iconbutton
+                  classname="RegisterDialog-closeButton-26"
+                  size="small"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                </mock-iconbutton>
+              </div>
+            </div>
+          </mock-typography>
+        </div>
+      </div>
+      <mock-cardcontent>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root RegisterDialog-dialogContentTitle-29 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-typography
+                color="textSecondary"
+                variant="h5"
+              >
+                Create an account
+              </mock-typography>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+          >
+            <form
+              class="RegisterDialog-form-30"
+            >
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="firstName"
+                  inputprops="[object Object]"
+                  label="First Name"
+                  name="firstName"
+                  placeholder="First Name"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="lastName"
+                  inputprops="[object Object]"
+                  label="Last Name"
+                  name="lastName"
+                  placeholder="Last Name"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="organization"
+                  inputprops="[object Object]"
+                  label="Organization"
+                  name="organization"
+                  placeholder="Organization"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="emailAddress"
+                  inputprops="[object Object]"
+                  label="Email Address"
+                  name="emailAddress"
+                  placeholder="Email Address"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="password"
+                  inputprops="[object Object]"
+                  label="Password"
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                >
+                  <mock-checkbox
+                    checked="false"
+                    classname="RegisterDialog-termsCheckbox-35"
+                    color="primary"
+                  />
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11"
+                >
+                  <mock-box>
+                    <mock-typography
+                      classname="RegisterDialog-formText-33"
+                      color="textSecondary"
+                      variant="subtitle1"
+                    >
+                      I have read the
+                       
+                      <a
+                        class="RegisterDialog-termsLink-36"
+                        href="/terms"
+                      >
+                        Terms and Conditions
+                      </a>
+                    </mock-typography>
+                  </mock-box>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-button-34 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-button
+                  color="primary"
+                  disabled="true"
+                  fullwidth="true"
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                >
+                  CREATE ACCOUNT
+                </mock-button>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-typography
+                  classname="RegisterDialog-formText-33"
+                  color="textSecondary"
+                  variant="subtitle1"
+                >
+                  Have an account?
+                   
+                  <mock-button
+                    color="primary"
+                  >
+                    SIGN IN
+                  </mock-button>
+                </mock-typography>
+              </div>
+            </form>
+          </div>
+        </div>
+      </mock-cardcontent>
+    </mock-card>
+  </mock-dialog>
+  <mock-dialog
+    maxwidth="xs"
+    open="false"
+    transitionprops="[object Object]"
+  >
+    <mock-card
+      elevation="0"
+    >
+      <div
+        class="MuiCardHeader-root SignInDialog-dialogHeader-38"
+      >
+        <div
+          class="MuiCardHeader-content"
+        >
+          <mock-typography
+            classname="MuiCardHeader-title"
+            component="span"
+            display="block"
+            variant="h5"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container"
+                >
+                  <mock-typography
+                    variant="h4"
+                  >
+                    Aqua
+                  </mock-typography>
+                  <mock-typography
+                    classname="SignInDialog-dialogHeaderSecondPart-39"
+                    variant="h4"
+                  >
+                    link
+                  </mock-typography>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-iconbutton
+                  classname="SignInDialog-closeButton-37"
+                  size="small"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                </mock-iconbutton>
+              </div>
+            </div>
+          </mock-typography>
+        </div>
+      </div>
+      <div
+        class="MuiCollapse-root MuiCollapse-hidden"
+        style="min-height: 0px;"
+      >
+        <div
+          class="MuiCollapse-wrapper"
+        >
+          <div
+            class="MuiCollapse-wrapperInner"
+          >
+            <div
+              class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess MuiPaper-elevation0"
+              role="alert"
+            >
+              <div
+                class="MuiAlert-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiAlert-message"
+              >
+                Password reset email sent to .
+              </div>
+              <div
+                class="MuiAlert-action"
+              >
+                <mock-iconbutton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                </mock-iconbutton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <mock-cardcontent>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root SignInDialog-dialogContentTitle-40 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-typography
+                color="textSecondary"
+                variant="h5"
+              >
+                Sign In
+              </mock-typography>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+          >
+            <form
+              class="SignInDialog-form-41"
+            >
+              <div
+                class="MuiGrid-root SignInDialog-textFieldWrapper-42 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="emailAddress"
+                  inputprops="[object Object]"
+                  label="Email Address"
+                  name="emailAddress"
+                  placeholder="Email Address"
+                  value=""
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root SignInDialog-textFieldWrapper-42 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="password"
+                  inputprops="[object Object]"
+                  label="Password"
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                  value=""
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-button
+                  classname="SignInDialog-forgotPasswordButton-46"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                    variant="subtitle2"
+                  >
+                    Forgot your password?
+                  </mock-typography>
+                </mock-button>
+              </div>
+              <div
+                class="MuiGrid-root SignInDialog-button-45 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-button
+                  color="primary"
+                  fullwidth="true"
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                >
+                  SIGN IN
+                </mock-button>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-typography
+                  classname="SignInDialog-formText-44"
+                  color="textSecondary"
+                  variant="subtitle1"
+                >
+                  Don't have an account?
+                   
+                  <mock-button
+                    color="primary"
+                  >
+                    SIGN UP
+                  </mock-button>
+                </mock-typography>
+              </div>
+            </form>
+          </div>
+        </div>
+      </mock-cardcontent>
+    </mock-card>
+  </mock-dialog>
+  <div
+    class="MuiContainer-root makeStyles-root-1 MuiContainer-maxWidthLg"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <mock-typography
+          variant="h5"
+        >
+          Upload Data
+        </mock-typography>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <mock-typography
+          variant="h6"
+        >
+          You're about to upload data for multiple sites.
+        </mock-typography>
+        <mock-typography
+          variant="h6"
+        >
+          The file to be upload should include:
+          <ul>
+            <li>
+              <code>
+                aqualink_site_id
+              </code>
+            </li>
+            <li>
+              <code>
+                aqualink_survey_point_id
+              </code>
+               (optional)
+            </li>
+            <li>
+              <code>
+                aqualink_sensor_type
+              </code>
+               (optional, valid types are:
+               
+              <code>
+                hobo
+              </code>
+              , 
+              <code>
+                sonde
+              </code>
+              , 
+              <code>
+                spotter
+              </code>
+              ,
+               
+              <code>
+                metlog
+              </code>
+              , 
+              <code>
+                sheet_data
+              </code>
+              )
+            </li>
+          </ul>
+        </mock-typography>
+        <mock-typography
+          style="font-size: 0.8em;"
+        >
+          For more information about uploading data, visit our 
+          <a
+            href="https://aqualink.org/faq"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            FAQ page
+          </a>
+          .
+        </mock-typography>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root makeStyles-root-47 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+      role="button"
+      tabindex="0"
+    >
+      <input
+        accept="application/vnd.ms-excel,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        autocomplete="off"
+        multiple=""
+        style="display: none;"
+        tabindex="-1"
+        type="file"
+      />
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <mock-typography
+          align="center"
+          classname="makeStyles-bold-49"
+          display="block"
+          gutterbottom="true"
+          variant="subtitle2"
+        >
+          Drag and Drop your file(s)
+        </mock-typography>
+        <mock-typography
+          align="center"
+          display="block"
+          gutterbottom="true"
+          variant="caption"
+        >
+          or
+        </mock-typography>
+        <mock-typography
+          align="center"
+          classname="makeStyles-bold-49"
+          display="block"
+          gutterbottom="true"
+          variant="subtitle2"
+        >
+          Upload file(s)
+        </mock-typography>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <mock-button
+          classname="makeStyles-button-51"
+          color="primary"
+          disabled="false"
+          size="small"
+          variant="outlined"
+        >
+          Select Files
+        </mock-button>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <mock-typography
+          align="center"
+          classname="makeStyles-bold-49 makeStyles-grey-50"
+          display="block"
+          variant="caption"
+        >
+          Supported format:
+           
+          .xls, .csv, .xlsx
+        </mock-typography>
+        <mock-typography
+          align="center"
+          classname="makeStyles-bold-49 makeStyles-grey-50"
+          display="block"
+          variant="caption"
+        >
+          Maximum upload total size: 
+          10
+          MB
+        </mock-typography>
+      </div>
+    </div>
+    <mock-tablecontainer
+      classname="makeStyles-tableContainer-52"
+      component="[object Object]"
+    >
+      <mock-table
+        classname="makeStyles-table-53"
+        size="small"
+      >
+        <mock-tablehead>
+          <mock-tablerow>
+            <mock-tablecell>
+              <mock-typography
+                nowrap="true"
+                style="color: black;"
+                variant="subtitle1"
+              />
+            </mock-tablecell>
+            <mock-tablecell
+              align="left"
+            >
+              <mock-typography
+                nowrap="true"
+                style="color: black;"
+                variant="h6"
+              >
+                Your Administrated Sites' Names
+              </mock-typography>
+            </mock-tablecell>
+            <mock-tablecell
+              align="right"
+            >
+              <mock-typography
+                nowrap="true"
+                style="color: black;"
+                variant="h6"
+              >
+                Site IDs
+              </mock-typography>
+            </mock-tablecell>
+          </mock-tablerow>
+        </mock-tablehead>
+        <mock-tablebody>
+          <mock-tablerow
+            classname="makeStyles-root-54"
+          >
+            <mock-tablecell>
+              <mock-iconbutton
+                aria-label="expand row"
+                disabled="true"
+                size="small"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                  />
+                </svg>
+              </mock-iconbutton>
+            </mock-tablecell>
+            <mock-tablecell
+              align="left"
+              component="th"
+              scope="row"
+            >
+              <mock-typography
+                nowrap="true"
+                style="color: black;"
+                variant="subtitle1"
+              >
+                site name
+              </mock-typography>
+            </mock-tablecell>
+            <mock-tablecell
+              align="right"
+            >
+              <mock-typography
+                nowrap="true"
+                style="color: black;"
+                variant="subtitle1"
+              >
+                1
+              </mock-typography>
+            </mock-tablecell>
+          </mock-tablerow>
+          <mock-tablerow>
+            <mock-tablecell
+              classname="makeStyles-collapseWrap-55"
+              colspan="6"
+            />
+          </mock-tablerow>
+        </mock-tablebody>
+      </mock-table>
+    </mock-tablecontainer>
+  </div>
+</div>
+`;
