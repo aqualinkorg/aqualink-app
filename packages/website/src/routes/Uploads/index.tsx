@@ -1,15 +1,4 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@material-ui/core';
+import { Box, Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import DropZone from 'common/FileUploads/Dropzone';
 import NavBar from 'common/NavBar';
@@ -30,7 +19,7 @@ import StatusSnackbar from 'common/StatusSnackbar';
 import { UploadTimeSeriesResult } from 'services/uploadServices';
 import UploadWarnings from 'common/FileUploads/UploadWarnings';
 import { useHistory } from 'react-router-dom';
-import { TableCellWrap } from './utils';
+import SitesTable from './SitesTable';
 
 function Uploads() {
   const classes = useStyles();
@@ -143,7 +132,9 @@ function Uploads() {
                   <code>aqualink_survey_point_id</code> (optional)
                 </li>
                 <li>
-                  <code>aqualink_sensor_type</code> (optional)
+                  <code>aqualink_sensor_type</code> (optional, valid types are:{' '}
+                  <code>hobo</code>, <code>sonde</code>, <code>spotter</code>,{' '}
+                  <code>metlog</code>, <code>sheet_data</code>)
                 </li>
               </ul>
             </Typography>
@@ -179,30 +170,7 @@ function Uploads() {
           </Box>
         )}
 
-        <TableContainer component={Paper} className={classes.tableContainer}>
-          <Table className={classes.table} size="small">
-            <TableHead>
-              <TableRow>
-                <TableCellWrap align="left" bigText>
-                  Your Administrated Sites&apos; Names
-                </TableCellWrap>
-                <TableCellWrap align="right" bigText>
-                  Site IDs
-                </TableCellWrap>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {user?.administeredSites?.map((row) => (
-                <TableRow key={row.name}>
-                  <TableCellWrap align="left" component="th" scope="row">
-                    {row.name}
-                  </TableCellWrap>
-                  <TableCellWrap align="right">{row.id}</TableCellWrap>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <SitesTable />
       </Container>
     </>
   );
@@ -212,12 +180,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
-  },
-  tableContainer: {
-    marginTop: theme.spacing(3),
-  },
-  table: {
-    minWidth: 650,
   },
 }));
 
