@@ -34,6 +34,7 @@ import { refreshMaterializedView } from '../time-series.utils';
 import { Metric } from '../../time-series/metrics.enum';
 import { User } from '../../users/users.entity';
 import { DataUploadsSites } from '../../data-uploads/data-uploads-sites.entity';
+import { GoogleCloudDir } from '../google-cloud.utils';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -398,7 +399,7 @@ export const uploadFileToGCloud = async (
   const fileLocation = googleCloudService.uploadFileAsync(
     filePath,
     sources.length === 1 ? sources[0] : 'multi_source',
-    'data_uploads',
+    GoogleCloudDir.DATA_UPLOADS,
     'data_upload',
   );
 

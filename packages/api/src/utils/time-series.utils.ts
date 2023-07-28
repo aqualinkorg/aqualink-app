@@ -78,20 +78,38 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
     .toJSON();
 };
 
-export const getDataQuery = (
-  timeSeriesRepository: Repository<TimeSeries>,
-  siteId: number,
-  metrics: Metric[],
-  start?: string,
-  end?: string,
-  hourly?: boolean,
-  surveyPointId?: number,
-): Promise<TimeSeriesData[]> => {
-  const { endDate, startDate } = getTimeSeriesDefaultDates(start, end);
+interface GetDataQueryParams {
+  timeSeriesRepository: Repository<TimeSeries>;
+  siteId: number;
+  metrics: Metric[];
+  start?: string;
+  end?: string;
+  hourly?: boolean;
+  surveyPointId?: number;
+  csv?: boolean;
+}
 
-  const surveyPointCondition = surveyPointId
-    ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
-    : `1=1`;
+export const getDataQuery = ({
+  timeSeriesRepository,
+  siteId,
+  metrics,
+  start,
+  end,
+  hourly,
+  surveyPointId,
+  csv = false,
+}: GetDataQueryParams): Promise<TimeSeriesData[]> => {
+  const { endDate, startDate } = csv
+    ? { startDate: start, endDate: end }
+    : getTimeSeriesDefaultDates(start, end);
+
+  const { sql: surveyPointConditionSql, params: surveyPointConditionParams } =
+    surveyPointId
+      ? {
+          sql: 'AND (source.survey_point_id = :surveyPointId OR source.survey_point_id IS NULL)',
+          params: { surveyPointId },
+        }
+      : { sql: '', params: {} };
 
   const mainQuery = timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -105,8 +123,8 @@ export const getDataQuery = (
     .innerJoin(
       'time_series.source',
       'source',
-      `source.site_id = :siteId AND ${surveyPointCondition}`,
-      { siteId },
+      `source.site_id = :siteId ${surveyPointConditionSql}`,
+      { siteId, ...surveyPointConditionParams },
     )
     .leftJoin('source.surveyPoint', 'surveyPoint')
     .addSelect('surveyPoint.id', 'surveyPointId')

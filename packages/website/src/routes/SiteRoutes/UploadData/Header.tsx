@@ -9,44 +9,9 @@ import {
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import { Site } from 'store/Sites/types';
+import { downloadCsvFile } from 'utils/utils';
 
-function downloadFile(url: string, fileName: string) {
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'text/csv',
-    },
-  })
-    .then((response) => response.blob())
-    .then((blob) => {
-      const downloadUrl = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      // eslint-disable-next-line fp/no-mutation
-      link.href = downloadUrl;
-      link.setAttribute('download', fileName);
-      document.body.appendChild(link);
-      link.click();
-    });
-}
-
-const exampleFiles = [
-  {
-    source: 'hobo',
-    fileName: 'hobo_example.csv',
-  },
-  {
-    source: 'sonde',
-    fileName: 'sonde_example_reduced.csv',
-  },
-  {
-    source: 'metlog',
-    fileName: 'metlog_example.csv',
-  },
-  {
-    source: 'hui',
-    fileName: 'hui_example.csv',
-  },
-];
+const exampleFiles = ['hobo', 'sonde', 'metlog', 'hui'];
 
 const Header = ({ site }: HeaderProps) => {
   const classes = useStyles();
@@ -71,21 +36,20 @@ const Header = ({ site }: HeaderProps) => {
         <Typography style={{ fontSize: '0.8em' }}>
           You can find example file formats here:{' '}
           {exampleFiles.map((file, i) => (
-            <span key={file.fileName}>
+            <span key={file}>
               <Button
                 className={classes.downloadButton}
                 onClick={() =>
-                  downloadFile(
+                  downloadCsvFile(
                     `${
                       process.env.REACT_APP_API_BASE_URL
                     }/time-series/sample-upload-files/${encodeURIComponent(
-                      file.source,
+                      file,
                     )}`,
-                    file.fileName,
                   )
                 }
               >
-                {file.source}
+                {file}
               </Button>
               {i !== exampleFiles.length - 1 ? ', ' : ''}
             </span>

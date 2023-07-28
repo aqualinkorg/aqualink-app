@@ -4,6 +4,7 @@ import { max, min, union } from 'lodash';
 import moment from 'moment';
 import { join } from 'path';
 import { readFileSync } from 'fs';
+import * as structuredClone from '@ungap/structured-clone';
 import { TestService } from '../../test/test.service';
 import { athensSite, californiaSite } from '../../test/mock/site.mock';
 import { athensSurveyPointPiraeus } from '../../test/mock/survey-point.mock';
@@ -13,6 +14,9 @@ import {
   NOAAMetrics,
   spotterMetrics,
 } from '../../test/mock/time-series.mock';
+
+// https://github.com/jsdom/jsdom/issues/3363
+global.structuredClone = structuredClone.default as any;
 
 type StringDateRange = [string, string];
 
@@ -158,5 +162,15 @@ export const timeSeriesTests = () => {
     expect(rsp.status).toBe(200);
     expect(rsp.headers['content-type']).toMatch(/^text\/csv/);
     expect(rsp.text).toMatch(expectedData);
+  });
+
+  it('GET sites/:siteId/csv fetch data as csv', async () => {
+    const rsp = await request(app.getHttpServer())
+      .get(`/time-series/sites/${californiaSite.id}/csv`)
+      .query({ hourly: true })
+      .set('Accept', 'text/csv');
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.headers['content-type']).toMatch(/^text\/csv/);
   });
 };

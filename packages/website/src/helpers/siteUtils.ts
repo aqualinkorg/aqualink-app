@@ -89,9 +89,18 @@ export const constructTimeSeriesDataRequestUrl = ({
   pointId,
   ...rest
 }: TimeSeriesDataRequestParams) => {
-  return `time-series/sites/${siteId}${
-    pointId ? `/site-survey-points/${pointId}` : ''
+  return `time-series/sites/${encodeURIComponent(siteId)}${
+    pointId ? `/site-survey-points/${encodeURIComponent(pointId)}` : ''
   }${requests.generateUrlQueryParams(rest)}`;
+};
+
+export const constructTimeSeriesDataCsvRequestUrl = ({
+  siteId,
+  ...rest
+}: TimeSeriesDataRequestParams) => {
+  return `time-series/sites/${encodeURIComponent(
+    siteId,
+  )}/csv${requests.generateUrlQueryParams(rest)}`;
 };
 
 export const findSurveyPointFromList = (

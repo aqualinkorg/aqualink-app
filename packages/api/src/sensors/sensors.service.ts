@@ -111,14 +111,14 @@ export class SensorsService {
 
     const site = await getSiteFromSensorId(sensorId, this.siteRepository);
 
-    const data = await getDataQuery(
-      this.timeSeriesRepository,
-      site.id,
-      metrics as Metric[],
-      startDate,
-      endDate,
-      false,
-    );
+    const data = await getDataQuery({
+      timeSeriesRepository: this.timeSeriesRepository,
+      siteId: site.id,
+      metrics: metrics as Metric[],
+      start: startDate,
+      end: endDate,
+      hourly: false,
+    });
 
     return groupByMetricAndSource(data);
   }

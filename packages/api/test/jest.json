@@ -22,5 +22,9 @@
   "transform": {
     "\\.ts$": "ts-jest"
   },
-  "globalSetup": "./test/global-setup.js"
+  "globalSetup": "./test/global-setup.js",
+  "moduleNameMapper": {
+    "^csv-stringify/sync":
+      "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs"
+  }
 }

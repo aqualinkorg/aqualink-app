@@ -50,8 +50,9 @@ export class SurveyMedia {
   })
   @Column({
     nullable: true,
+    type: 'character varying',
   })
-  thumbnailUrl: string;
+  thumbnailUrl: string | null;
 
   @ApiProperty({ example: 1 })
   @Column({ default: 1 })
