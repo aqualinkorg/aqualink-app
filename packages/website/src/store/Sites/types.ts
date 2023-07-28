@@ -365,6 +365,7 @@ export interface DataUploadsSites {
   site: Site;
   dataUpload: DataUploads;
   surveyPoint: SurveyPoints | null;
+  sitesAffectedByDataUpload?: number[];
 }
 
 export type SiteUploadHistory = DataUploadsSites[];

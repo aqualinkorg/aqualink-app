@@ -37,4 +37,6 @@ export class DataUploadsSites {
     (dataUploadsSite: DataUploadsSites) => dataUploadsSite.surveyPoint,
   )
   surveyPointId?: number;
+
+  sitesAffectedByDataUpload?: number[];
 }

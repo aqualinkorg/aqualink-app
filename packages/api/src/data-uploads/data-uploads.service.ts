@@ -16,14 +16,43 @@ export class DataUploadsService {
     private dataUploadsSitesRepository: Repository<DataUploadsSites>,
   ) {}
 
-  async getDataUploads({ siteId }: SiteDataRangeDto) {
-    return this.dataUploadsSitesRepository
+  async getDataUploads({
+    siteId,
+  }: SiteDataRangeDto): Promise<DataUploadsSites[]> {
+    const uploadsData = await this.dataUploadsSitesRepository
       .createQueryBuilder('dataUploadsSites')
       .leftJoinAndSelect('dataUploadsSites.site', 'site')
       .leftJoinAndSelect('dataUploadsSites.dataUpload', 'dataUpload')
       .leftJoinAndSelect('dataUploadsSites.surveyPoint', 'surveyPoint')
       .where('dataUploadsSites.siteId = :siteId', { siteId })
       .getMany();
+
+    const otherSiteRelations = await this.dataUploadsSitesRepository
+      .createQueryBuilder('dus')
+      .select(['dus.site_id', 'dus2.site_id', 'dus.data_upload_id'])
+      .innerJoin(
+        'data_uploads_sites',
+        'dus2',
+        'dus.data_upload_id = dus2.data_upload_id',
+      )
+      .where('dus.site_id = :siteId', { siteId })
+      .getRawMany();
+
+    const groupedByDataUploadId = otherSiteRelations.reduce(
+      (acc: Map<number, number[]>, cur) => {
+        const uploadId = cur.data_upload_id;
+        const id = cur.site_id;
+        const val = acc.get(uploadId);
+        acc.set(uploadId, val ? [...val, id] : [id]);
+        return acc;
+      },
+      new Map<number, number[]>(),
+    );
+
+    return uploadsData.map((x) => ({
+      ...x,
+      sitesAffectedByDataUpload: groupedByDataUploadId.get(x.dataUploadId),
+    }));
   }
 
   async deleteDataUploads({ ids }: DataUploadsDeleteDto) {

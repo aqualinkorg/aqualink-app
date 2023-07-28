@@ -28,6 +28,7 @@ const tableHeaderTitles = [
   'SURVEY POINT',
   'SENSOR TYPE',
   'UPLOAD DATE',
+  'AFFECTED SITE IDS',
   'DATA RANGE',
   '',
 ];
@@ -80,70 +81,73 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {uploadHistory.map(({ dataUpload, surveyPoint }) => {
-              const row = [
-                dataUpload.file,
-                timezoneAbbreviation || timezone,
-                site.name,
-                surveyPoint?.name,
-                dataUpload.sensorTypes.map((x) => startCase(x)).join(', '),
-                moment(dataUpload.createdAt).format(dateFormat),
-              ];
-              return (
-                <TableRow key={dataUpload.id}>
-                  {row.map((item) => (
-                    <TableCell>
-                      <Typography {...tableCellTypographyProps}>
-                        {item}
-                      </Typography>
-                    </TableCell>
-                  ))}
-                  <TableCell>
-                    <Button
-                      component={Link}
-                      to={dataVisualizationButtonLink(
-                        dataUpload.minDate,
-                        dataUpload.maxDate,
-                        surveyPoint?.id,
-                      )}
-                      size="small"
-                      variant="outlined"
-                      color="primary"
-                      className={classes.dateIntervalButton}
-                    >
-                      {moment(dataUpload.minDate).format(dateFormat)} -{' '}
-                      {moment(dataUpload.maxDate).format(dateFormat)}
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <DeleteButton
-                      onConfirm={() => onDelete([dataUpload.id])}
-                      content={
-                        <Typography color="textSecondary">
-                          Are you sure you want to delete file &quot;
-                          <span className={classes.bold}>
-                            {dataUpload.file}
-                          </span>
-                          &quot;? Data between dates{' '}
-                          <span className={classes.bold}>
-                            {moment(dataUpload.minDate).format(
-                              'MM/DD/YYYY HH:mm',
-                            )}
-                          </span>{' '}
-                          and{' '}
-                          <span className={classes.bold}>
-                            {moment(dataUpload.maxDate).format(
-                              'MM/DD/YYYY HH:mm',
-                            )}
-                          </span>{' '}
-                          will be lost.
+            {uploadHistory.map(
+              ({ dataUpload, surveyPoint, sitesAffectedByDataUpload }) => {
+                const row = [
+                  dataUpload.file,
+                  timezoneAbbreviation || timezone,
+                  site.name,
+                  surveyPoint?.name,
+                  dataUpload.sensorTypes.map((x) => startCase(x)).join(', '),
+                  moment(dataUpload.createdAt).format(dateFormat),
+                  sitesAffectedByDataUpload?.join(', '),
+                ];
+                return (
+                  <TableRow key={dataUpload.id}>
+                    {row.map((item) => (
+                      <TableCell>
+                        <Typography {...tableCellTypographyProps}>
+                          {item}
                         </Typography>
-                      }
-                    />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                      </TableCell>
+                    ))}
+                    <TableCell>
+                      <Button
+                        component={Link}
+                        to={dataVisualizationButtonLink(
+                          dataUpload.minDate,
+                          dataUpload.maxDate,
+                          surveyPoint?.id,
+                        )}
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        className={classes.dateIntervalButton}
+                      >
+                        {moment(dataUpload.minDate).format(dateFormat)} -{' '}
+                        {moment(dataUpload.maxDate).format(dateFormat)}
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <DeleteButton
+                        onConfirm={() => onDelete([dataUpload.id])}
+                        content={
+                          <Typography color="textSecondary">
+                            Are you sure you want to delete file &quot;
+                            <span className={classes.bold}>
+                              {dataUpload.file}
+                            </span>
+                            &quot;? Data between dates{' '}
+                            <span className={classes.bold}>
+                              {moment(dataUpload.minDate).format(
+                                'MM/DD/YYYY HH:mm',
+                              )}
+                            </span>{' '}
+                            and{' '}
+                            <span className={classes.bold}>
+                              {moment(dataUpload.maxDate).format(
+                                'MM/DD/YYYY HH:mm',
+                              )}
+                            </span>{' '}
+                            will be lost.
+                          </Typography>
+                        }
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              },
+            )}
           </TableBody>
         </Table>
       </TableContainer>
