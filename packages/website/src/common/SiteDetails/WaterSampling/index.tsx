@@ -37,6 +37,9 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     Partial<Record<Metrics, number>>
   >({});
 
+  // disable showing color for now
+  const showAlertColors = source === 'hui' && false;
+
   const isPointNameLong = (point?.name?.length || 0) > 24;
   const surveyPointDisplayName = `${isPointNameLong ? '' : ' Survey point:'} ${
     point?.name || point?.id
@@ -114,7 +117,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                         >
                           {label}
                         </Typography>
-                        {color && (
+                        {color && showAlertColors && (
                           <WarningIcon
                             className={classes.contentTextTitles}
                             style={{
@@ -154,7 +157,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
             )}
           </Grid>
         </Box>
-        {source === 'hui' && (
+        {showAlertColors && (
           <Grid container>
             {[
               { text: 'watch', color: watchColor },
