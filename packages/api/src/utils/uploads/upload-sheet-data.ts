@@ -261,7 +261,7 @@ export const getFilePathData = async (filePath: string) => {
   };
 };
 
-const trimWorkSheetData = (
+export const trimWorkSheetData = (
   workSheetData: any[][],
   headers: string[],
   headerIndex: number,
@@ -301,7 +301,7 @@ const groupBySitePointAndType = (
 };
 
 export const convertData = (
-  workSheetData: any[][],
+  workSheetData: string[][],
   headers: string[],
   headerIndex: number,
   fileName: string,
@@ -309,18 +309,10 @@ export const convertData = (
   headerToTokenMap: (Token | undefined)[],
   mimetype?: Mimetype,
 ) => {
-  const preResult = workSheetData
-    ?.slice(headerIndex + 1)
-    .map((item) => {
-      if (item.length === headers.length) return item as string[];
-      return undefined;
-    })
-    .filter((item) => item) as string[][];
-
   const timestampIndex = findTimeStampIndex(headerToTokenMap);
 
   console.time(`Get data from sheet ${fileName}`);
-  const results = preResult.reduce<Data[]>((acc, row) => {
+  const results = workSheetData.reduce<Data[]>((acc, row) => {
     const timezone =
       typeof timestampIndex === 'number'
         ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
@@ -692,16 +684,19 @@ export const uploadTimeSeriesData = async ({
 
     const ids = workSheetData
       .map((x) => x[siteIdIndex])
-      .filter((x) => typeof x === 'number');
+      .filter((x) => !Number.isNaN(Number(x)));
     const uniqueIds = [...new Map(ids.map((x) => [x, x])).keys()];
 
-    const isSiteAdmin = await repositories.siteRepository
-      .createQueryBuilder('site')
-      .innerJoin('site.admins', 'admins', 'admins.id = :userId', {
-        userId: user.id,
-      })
-      .andWhere('site.id IN (:...siteIds)', { siteIds: uniqueIds })
-      .getMany();
+    const isSiteAdmin =
+      uniqueIds.length > 0
+        ? await repositories.siteRepository
+            .createQueryBuilder('site')
+            .innerJoin('site.admins', 'admins', 'admins.id = :userId', {
+              userId: user.id,
+            })
+            .andWhere('site.id IN (:...siteIds)', { siteIds: uniqueIds })
+            .getMany()
+        : [];
 
     if (isSiteAdmin.length !== uniqueIds.length) {
       throw new BadRequestException(`Invalid values for 'aqualink_site_id'`);

@@ -69,6 +69,11 @@ export const siteManagerFirebaseUserMock = createMockFirebaseUser(
   siteManagerUserMock.email as string,
 );
 
+export const siteManager2FirebaseUserMock = createMockFirebaseUser(
+  siteManagerUserMock.firebaseUid as string,
+  siteManagerUserMock.email as string,
+);
+
 export const defaultFirebaseUserMock = createMockFirebaseUser(
   defaultUserMock.firebaseUid as string,
   defaultUserMock.email as string,
