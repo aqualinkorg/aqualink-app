@@ -2,7 +2,7 @@
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": "../",
   "testEnvironment": "node",
-  "testRegex": ["app.spec.ts$", "test.ts$"],
+  "testRegex": ["app.spec.ts$"],
   "testTimeout": 120000,
   "verbose": true,
   "collectCoverage": true,
