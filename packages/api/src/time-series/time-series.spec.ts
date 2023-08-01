@@ -1,5 +1,5 @@
 /* eslint-disable dot-notation */
-import request from 'supertest';
+import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { max, min, union } from 'lodash';
 import moment from 'moment';
@@ -53,9 +53,11 @@ export const timeSeriesTests = () => {
   });
 
   it('GET /sites/:siteId/site-survey-points/:surveyPointId/range fetch range of poi data', async () => {
-    const rsp = await request(app.getHttpServer()).get(
-      `/time-series/sites/${athensSite.id}/site-survey-points/${athensSurveyPointPiraeus.id}/range`,
-    );
+    const rsp = await request
+      .default(app.getHttpServer())
+      .get(
+        `/time-series/sites/${athensSite.id}/site-survey-points/${athensSurveyPointPiraeus.id}/range`,
+      );
 
     expect(rsp.status).toBe(200);
     const metrics = union(hoboMetrics, NOAAMetrics);
@@ -85,9 +87,9 @@ export const timeSeriesTests = () => {
   });
 
   it('GET /sites/:id/range fetch range of site data', async () => {
-    const rsp = await request(app.getHttpServer()).get(
-      `/time-series/sites/${californiaSite.id}/range`,
-    );
+    const rsp = await request
+      .default(app.getHttpServer())
+      .get(`/time-series/sites/${californiaSite.id}/range`);
 
     expect(rsp.status).toBe(200);
     const metrics = union(NOAAMetrics, spotterMetrics);
@@ -112,7 +114,8 @@ export const timeSeriesTests = () => {
 
   it('GET /sites/:siteId/site-survey-points/:surveyPointId fetch poi data', async () => {
     const [startDate, endDate] = surveyPointDataRange;
-    const rsp = await request(app.getHttpServer())
+    const rsp = await request
+      .default(app.getHttpServer())
       .get(
         `/time-series/sites/${athensSite.id}/site-survey-points/${athensSurveyPointPiraeus.id}`,
       )
@@ -141,7 +144,8 @@ export const timeSeriesTests = () => {
 
   it('GET /sites/:siteId fetch site data', async () => {
     const [startDate, endDate] = siteDataRange;
-    const rsp = await request(app.getHttpServer())
+    const rsp = await request
+      .default(app.getHttpServer())
       .get(`/time-series/sites/${californiaSite.id}`)
       .query({
         // Increase the search window to combat precision issues with the dates
@@ -171,7 +175,8 @@ export const timeSeriesTests = () => {
       join(process.cwd(), 'src/utils/uploads/hobo_data.csv'),
       'utf-8',
     );
-    const rsp = await request(app.getHttpServer())
+    const rsp = await request
+      .default(app.getHttpServer())
       .get('/time-series/sample-upload-files/hobo')
       .set('Accept', 'text/csv');
 
@@ -237,94 +242,96 @@ export const timeSeriesTests = () => {
     console.log(6);
 
     mockExtractAndVerifyToken(siteManager2FirebaseUserMock);
-    const response = await request(await app.getHttpServer())
+    return request
+      .default(app.getHttpServer())
       .post('/time-series/upload?failOnWarning=false')
       .attach('files', Buffer.from(csvString), 'data.csv')
-      .set('Content-Type', 'text/csv');
+      .set('Content-Type', 'text/csv')
+      .then(async (response) => {
+        console.log(7);
 
-    console.log(7);
+        const result1 = await dataSource
+          .getRepository(TimeSeries)
+          .createQueryBuilder('ts')
+          .select('count(*)', 'count')
+          .innerJoin(
+            'ts.source',
+            'source',
+            'source.site_id = :siteId AND source.survey_point_id = :surveyPointId',
+            { siteId: sites[0].id, surveyPointId: fistSitePointId },
+          )
+          .leftJoin('source.surveyPoint', 'surveyPoint')
+          .andWhere('timestamp >= :startDate', {
+            startDate: '2023/01/01 00:00:00.000',
+          })
+          .andWhere('timestamp <= :endDate', {
+            endDate: '2023/01/01 23:59:59.999',
+          })
+          .getRawOne();
 
-    const result1 = await dataSource
-      .getRepository(TimeSeries)
-      .createQueryBuilder('ts')
-      .select('count(*)', 'count')
-      .innerJoin(
-        'ts.source',
-        'source',
-        'source.site_id = :siteId AND source.survey_point_id = :surveyPointId',
-        { siteId: sites[0].id, surveyPointId: fistSitePointId },
-      )
-      .leftJoin('source.surveyPoint', 'surveyPoint')
-      .andWhere('timestamp >= :startDate', {
-        startDate: '2023/01/01 00:00:00.000',
-      })
-      .andWhere('timestamp <= :endDate', {
-        endDate: '2023/01/01 23:59:59.999',
-      })
-      .getRawOne();
+        console.log(8);
 
-    console.log(8);
+        const result2 = await dataSource
+          .getRepository(TimeSeries)
+          .createQueryBuilder('ts')
+          .select('count(*)', 'count')
+          .innerJoin(
+            'ts.source',
+            'source',
+            'source.site_id = :siteId AND source.survey_point_id is NULL',
+            { siteId: sites[1].id },
+          )
+          .leftJoin('source.surveyPoint', 'surveyPoint')
+          .andWhere('timestamp >= :startDate', {
+            startDate: '2023/01/01 00:00:00.000',
+          })
+          .andWhere('timestamp <= :endDate', {
+            endDate: '2023/01/01 23:59:59.999',
+          })
+          .getRawOne();
 
-    const result2 = await dataSource
-      .getRepository(TimeSeries)
-      .createQueryBuilder('ts')
-      .select('count(*)', 'count')
-      .innerJoin(
-        'ts.source',
-        'source',
-        'source.site_id = :siteId AND source.survey_point_id is NULL',
-        { siteId: sites[1].id },
-      )
-      .leftJoin('source.surveyPoint', 'surveyPoint')
-      .andWhere('timestamp >= :startDate', {
-        startDate: '2023/01/01 00:00:00.000',
-      })
-      .andWhere('timestamp <= :endDate', {
-        endDate: '2023/01/01 23:59:59.999',
-      })
-      .getRawOne();
+        console.log(9);
 
-    console.log(9);
+        const result3 = await dataSource
+          .getRepository(TimeSeries)
+          .createQueryBuilder('ts')
+          .select('count(*)', 'count')
+          .innerJoin(
+            'ts.source',
+            'source',
+            `source.site_id = :siteId AND source.survey_point_id = :surveyPointId AND source.type = 'hui'`,
+            { siteId: sites[0].id, surveyPointId: fistSitePointId },
+          )
+          .leftJoin('source.surveyPoint', 'surveyPoint')
+          .andWhere('timestamp >= :startDate', {
+            startDate: '2023/01/01 00:00:00.000',
+          })
+          .andWhere('timestamp <= :endDate', {
+            endDate: '2023/01/01 23:59:59.999',
+          })
+          .getRawOne();
 
-    const result3 = await dataSource
-      .getRepository(TimeSeries)
-      .createQueryBuilder('ts')
-      .select('count(*)', 'count')
-      .innerJoin(
-        'ts.source',
-        'source',
-        `source.site_id = :siteId AND source.survey_point_id = :surveyPointId AND source.type = 'hui'`,
-        { siteId: sites[0].id, surveyPointId: fistSitePointId },
-      )
-      .leftJoin('source.surveyPoint', 'surveyPoint')
-      .andWhere('timestamp >= :startDate', {
-        startDate: '2023/01/01 00:00:00.000',
-      })
-      .andWhere('timestamp <= :endDate', {
-        endDate: '2023/01/01 23:59:59.999',
-      })
-      .getRawOne();
+        console.log(10);
 
-    console.log(10);
+        // we have 3 data columns
+        expect(Number(result1.count)).toBe(firstSiteRows * 3);
 
-    // we have 3 data columns
-    expect(Number(result1.count)).toBe(firstSiteRows * 3);
+        console.log(11);
 
-    console.log(11);
+        expect(Number(result2.count)).toBe(
+          (csvDataMock.length - firstSiteRows) * 3,
+        );
 
-    expect(Number(result2.count)).toBe(
-      (csvDataMock.length - firstSiteRows) * 3,
-    );
+        console.log(12);
 
-    console.log(12);
+        expect(Number(result3.count)).toBe((firstSiteRows - 10) * 3);
 
-    expect(Number(result3.count)).toBe((firstSiteRows - 10) * 3);
+        console.log(13);
 
-    console.log(13);
+        expect(response.status).toBe(201);
 
-    expect(response.status).toBe(201);
-
-    console.log(14);
+        console.log(14);
+      });
   });
 
   // it('POST upload fails for wrong site id', async () => {
@@ -368,7 +375,8 @@ export const timeSeriesTests = () => {
   // });
 
   it('GET sites/:siteId/csv fetch data as csv', async () => {
-    const rsp = await request(app.getHttpServer())
+    const rsp = await request
+      .default(app.getHttpServer())
       .get(`/time-series/sites/${californiaSite.id}/csv`)
       .query({ hourly: true })
       .set('Accept', 'text/csv');
