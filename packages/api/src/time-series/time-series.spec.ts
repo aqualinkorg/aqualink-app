@@ -181,13 +181,19 @@ export const timeSeriesTests = () => {
   });
 
   it('POST upload uploads data', async () => {
+    console.log(1);
+
     const user = await dataSource.getRepository(User).findOne({
       where: { firebaseUid: siteManagerUserMock.firebaseUid as string },
       select: ['id'],
     });
 
+    console.log(2);
+
     const sites = await dataSource.getRepository(Site).find();
     expect(sites.length).toBe(3);
+
+    console.log(3);
 
     const surveyPoints = await dataSource.getRepository(SiteSurveyPoint).find();
     const fistSitePointId = surveyPoints.find((x) => x.siteId === sites[0].id)
@@ -196,12 +202,16 @@ export const timeSeriesTests = () => {
     expect(fistSitePointId).toBeDefined();
     expect(csvDataMock.length).toBe(30);
 
+    console.log(4);
+
     await dataSource
       .getRepository(User)
       .createQueryBuilder('user')
       .relation('administeredSites')
       .of(user)
       .add(sites.slice(0, 2));
+
+    console.log(5);
 
     const firstSiteRows = 20;
 
@@ -224,11 +234,15 @@ export const timeSeriesTests = () => {
 
     const csvString = stringify(editedData, { header: true });
 
+    console.log(6);
+
     mockExtractAndVerifyToken(siteManager2FirebaseUserMock);
     const response = await request(app.getHttpServer())
       .post('/time-series/upload?failOnWarning=false')
       .attach('files', Buffer.from(csvString), 'data.csv')
       .set('Content-Type', 'text/csv');
+
+    console.log(7);
 
     const result1 = await dataSource
       .getRepository(TimeSeries)
@@ -249,6 +263,8 @@ export const timeSeriesTests = () => {
       })
       .getRawOne();
 
+    console.log(8);
+
     const result2 = await dataSource
       .getRepository(TimeSeries)
       .createQueryBuilder('ts')
@@ -268,6 +284,8 @@ export const timeSeriesTests = () => {
       })
       .getRawOne();
 
+    console.log(9);
+
     const result3 = await dataSource
       .getRepository(TimeSeries)
       .createQueryBuilder('ts')
@@ -286,6 +304,8 @@ export const timeSeriesTests = () => {
         endDate: '2023/01/01 23:59:59.999',
       })
       .getRawOne();
+
+    console.log(10);
 
     // we have 3 data columns
     expect(Number(result1.count)).toBe(firstSiteRows * 3);
