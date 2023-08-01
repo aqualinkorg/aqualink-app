@@ -237,7 +237,7 @@ export const timeSeriesTests = () => {
     console.log(6);
 
     mockExtractAndVerifyToken(siteManager2FirebaseUserMock);
-    const response = await request(app.getHttpServer())
+    const response = await request(await app.getHttpServer())
       .post('/time-series/upload?failOnWarning=false')
       .attach('files', Buffer.from(csvString), 'data.csv')
       .set('Content-Type', 'text/csv');
