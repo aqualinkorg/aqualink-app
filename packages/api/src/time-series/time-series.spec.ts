@@ -310,16 +310,25 @@ export const timeSeriesTests = () => {
     // we have 3 data columns
     expect(Number(result1.count)).toBe(firstSiteRows * 3);
 
+    console.log(11);
+
     expect(Number(result2.count)).toBe(
       (csvDataMock.length - firstSiteRows) * 3,
     );
 
+    console.log(12);
+
     expect(Number(result3.count)).toBe((firstSiteRows - 10) * 3);
 
+    console.log(13);
+
     expect(response.status).toBe(201);
+
+    console.log(14);
   });
 
   it('POST upload fails for wrong site id', async () => {
+    console.log(20);
     const sites = await dataSource.getRepository(Site).find();
     expect(sites.length).toBe(3);
 
@@ -337,6 +346,8 @@ export const timeSeriesTests = () => {
       return result;
     });
 
+    console.log(21);
+
     const csvString = stringify(editedData, { header: true });
 
     mockExtractAndVerifyToken(siteManager2FirebaseUserMock);
@@ -345,11 +356,15 @@ export const timeSeriesTests = () => {
       .attach('files', Buffer.from(csvString), 'data2.csv')
       .set('Content-Type', 'text/csv');
 
+    console.log(22);
+
     expect(
       response.body.find(
         (x) => x.error === `Invalid values for 'aqualink_site_id'`,
       ),
     ).toBeDefined();
+
+    console.log(23);
   });
 
   it('GET sites/:siteId/csv fetch data as csv', async () => {
