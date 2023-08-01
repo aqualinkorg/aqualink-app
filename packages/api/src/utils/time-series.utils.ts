@@ -78,6 +78,85 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
     .toJSON();
 };
 
+export const getAvailableMetricsQuery = ({
+  timeSeriesRepository,
+  siteId,
+  start: startDate,
+  end: endDate,
+  surveyPointId,
+  metrics,
+}: {
+  timeSeriesRepository: Repository<TimeSeries>;
+  siteId: number;
+  start?: string;
+  end?: string;
+  surveyPointId?: number;
+  metrics: Metric[];
+}) => {
+  const { sql: surveyPointConditionSql, params: surveyPointConditionParams } =
+    surveyPointId
+      ? {
+          sql: 'AND (source.survey_point_id = :surveyPointId OR source.survey_point_id IS NULL)',
+          params: { surveyPointId },
+        }
+      : { sql: '', params: {} };
+
+  return timeSeriesRepository
+    .createQueryBuilder('time_series')
+    .select('metric')
+    .addSelect('source.type', 'source')
+    .distinct(true)
+    .innerJoin(
+      'time_series.source',
+      'source',
+      `source.site_id = :siteId ${surveyPointConditionSql}`,
+      { siteId, ...surveyPointConditionParams },
+    )
+    .leftJoin('source.surveyPoint', 'surveyPoint')
+    .andWhere(startDate ? 'timestamp >= :startDate' : '1=1', { startDate })
+    .andWhere(endDate ? 'timestamp <= :endDate' : '1=1', { endDate })
+    .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
+      metrics,
+    })
+    .getRawMany();
+};
+
+export const getAvailableDataDates = ({
+  timeSeriesRepository,
+  siteId,
+  surveyPointId,
+  metrics,
+}: {
+  timeSeriesRepository: Repository<TimeSeries>;
+  siteId: number;
+  surveyPointId?: number;
+  metrics: Metric[];
+}): Promise<{ min: Date; max: Date } | undefined> => {
+  const { sql: surveyPointConditionSql, params: surveyPointConditionParams } =
+    surveyPointId
+      ? {
+          sql: 'AND (source.survey_point_id = :surveyPointId OR source.survey_point_id IS NULL)',
+          params: { surveyPointId },
+        }
+      : { sql: '', params: {} };
+
+  return timeSeriesRepository
+    .createQueryBuilder('time_series')
+    .select('min("timestamp")')
+    .addSelect('max("timestamp")')
+    .innerJoin(
+      'time_series.source',
+      'source',
+      `source.site_id = :siteId ${surveyPointConditionSql}`,
+      { siteId, ...surveyPointConditionParams },
+    )
+    .leftJoin('source.surveyPoint', 'surveyPoint')
+    .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
+      metrics,
+    })
+    .getRawOne();
+};
+
 interface GetDataQueryParams {
   timeSeriesRepository: Repository<TimeSeries>;
   siteId: number;
