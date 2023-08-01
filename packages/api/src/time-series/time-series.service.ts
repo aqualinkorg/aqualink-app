@@ -198,6 +198,7 @@ export class TimeSeriesService {
           end: chunks[i].end.toISO() as string,
           hourly,
           csv: true,
+          order: 'DESC',
         });
 
         const metricSourceAsKey = data.map((x) => ({

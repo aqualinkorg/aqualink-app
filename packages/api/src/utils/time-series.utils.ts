@@ -166,6 +166,7 @@ interface GetDataQueryParams {
   hourly?: boolean;
   surveyPointId?: number;
   csv?: boolean;
+  order?: 'ASC' | 'DESC';
 }
 
 export const getDataQuery = ({
@@ -177,6 +178,7 @@ export const getDataQuery = ({
   hourly,
   surveyPointId,
   csv = false,
+  order = 'ASC',
 }: GetDataQueryParams): Promise<TimeSeriesData[]> => {
   const { endDate, startDate } = csv
     ? { startDate: start, endDate: end }
@@ -219,9 +221,9 @@ export const getDataQuery = ({
         .groupBy(
           "date_trunc('hour', timestamp), metric, source.type, surveyPoint.id",
         )
-        .orderBy("date_trunc('hour', timestamp)", 'ASC')
+        .orderBy("date_trunc('hour', timestamp)", order)
         .getRawMany()
-    : mainQuery.orderBy('timestamp', 'ASC').getRawMany();
+    : mainQuery.orderBy('timestamp', order).getRawMany();
 };
 
 export const getDataRangeQuery = (
