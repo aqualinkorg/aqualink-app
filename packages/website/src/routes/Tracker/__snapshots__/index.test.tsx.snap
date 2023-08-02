@@ -44,13 +44,20 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
       >
         <mock-card
-          classname="makeStyles-card2-8 makeStyles-card2-16"
+          classname="makeStyles-card1-7 makeStyles-card1-15"
           variant="outlined"
         >
-          <div
-            class="MuiCardMedia-root makeStyles-image-10"
-            style="background-image: url(image4.png);"
-          />
+          <a
+            class="makeStyles-link-11"
+            href="https://highlights.aqualink.org/florida-heatwave-tracking"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <div
+              class="MuiCardMedia-root makeStyles-image-10"
+              style="background-image: url(image4.png);"
+            />
+          </a>
         </mock-card>
       </div>
       <div
