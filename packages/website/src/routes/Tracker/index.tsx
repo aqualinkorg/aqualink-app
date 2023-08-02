@@ -172,7 +172,7 @@ const Tracker = ({
                 target="_blank"
                 href="https://highlights.aqualink.org/florida-heatwave-tracking"
               >
-              <CardMedia className={classes.image} image={image4} />
+                <CardMedia className={classes.image} image={image4} />
               </a>
             </Card>
           </Grid>
