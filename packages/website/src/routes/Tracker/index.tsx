@@ -165,8 +165,15 @@ const Tracker = ({
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12} md={7} lg={8}>
-            <Card className={classes.card2} variant="outlined">
+            <Card className={classes.card1} variant="outlined">
+              <a
+                className={classes.link}
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://highlights.aqualink.org/florida-heatwave-tracking"
+              >
               <CardMedia className={classes.image} image={image4} />
+              </a>
             </Card>
           </Grid>
           <Grid item xs={12} md={5} lg={4}>
