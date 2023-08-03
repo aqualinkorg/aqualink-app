@@ -22,13 +22,13 @@ export class MakeManyToManySiteDataUploadsRelation1690467999203
       `CREATE TABLE "data_uploads_sites" ("site_id" integer NOT NULL, "data_upload_id" integer NOT NULL, "survey_point_id" integer, CONSTRAINT "PK_6515b1d83e2075084dc02057a22" PRIMARY KEY ("site_id", "data_upload_id"))`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_9788850820bf6b28b8bcf18aab" ON "data_uploads_sites" ("site_id") `,
+      `CREATE INDEX "IDX_9788850820bf6b28b8bcf18aab" ON "data_uploads_sites" ("site_id")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_fc03fec1cc91193fddbe21ca14" ON "data_uploads_sites" ("data_upload_id") `,
+      `CREATE INDEX "IDX_fc03fec1cc91193fddbe21ca14" ON "data_uploads_sites" ("data_upload_id")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_9b7753518e6f82ff4c679de966" ON "data_uploads_sites" ("survey_point_id") `,
+      `CREATE INDEX "IDX_9b7753518e6f82ff4c679de966" ON "data_uploads_sites" ("survey_point_id")`,
     );
     await queryRunner.query(
       `ALTER TABLE "data_uploads" DROP COLUMN "sensor_type"`,
@@ -88,10 +88,10 @@ export class MakeManyToManySiteDataUploadsRelation1690467999203
     );
     await queryRunner.query(`DROP TABLE "data_uploads_sites"`);
     await queryRunner.query(
-      `CREATE INDEX "IDX_1ed4a7be821c5819d382e4b72e" ON "data_uploads" ("site_id") `,
+      `CREATE INDEX "IDX_1ed4a7be821c5819d382e4b72e" ON "data_uploads" ("site_id")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_a0eaf4da731fb39079b1fbf9fb" ON "data_uploads" ("survey_point_id") `,
+      `CREATE INDEX "IDX_a0eaf4da731fb39079b1fbf9fb" ON "data_uploads" ("survey_point_id")`,
     );
     await queryRunner.query(
       `ALTER TABLE "data_uploads" ADD CONSTRAINT "FK_a0eaf4da731fb39079b1fbf9fb9" FOREIGN KEY ("survey_point_id") REFERENCES "site_survey_point"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
