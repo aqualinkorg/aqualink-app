@@ -101,7 +101,7 @@ export const getAvailableMetricsQuery = ({
         }
       : { sql: '', params: {} };
 
-  return timeSeriesRepository
+  const query = timeSeriesRepository
     .createQueryBuilder('time_series')
     .select('metric')
     .addSelect('source.type', 'source')
@@ -112,13 +112,22 @@ export const getAvailableMetricsQuery = ({
       `source.site_id = :siteId ${surveyPointConditionSql}`,
       { siteId, ...surveyPointConditionParams },
     )
-    .leftJoin('source.surveyPoint', 'surveyPoint')
-    .andWhere(startDate ? 'timestamp >= :startDate' : '1=1', { startDate })
-    .andWhere(endDate ? 'timestamp <= :endDate' : '1=1', { endDate })
-    .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
-      metrics,
-    })
-    .getRawMany();
+    .leftJoin('source.surveyPoint', 'surveyPoint');
+
+  const withStartDate = startDate
+    ? query.andWhere('timestamp >= :startDate', { startDate })
+    : query;
+
+  const withEndDate = endDate
+    ? withStartDate.andWhere('timestamp <= :endDate', { endDate })
+    : withStartDate;
+
+  const withMetrics =
+    metrics.length > 0
+      ? withEndDate.andWhere('metric IN (:...metrics)', { metrics })
+      : withEndDate;
+
+  return withMetrics.getRawMany();
 };
 
 export const getAvailableDataDates = ({
@@ -140,7 +149,7 @@ export const getAvailableDataDates = ({
         }
       : { sql: '', params: {} };
 
-  return timeSeriesRepository
+  const query = timeSeriesRepository
     .createQueryBuilder('time_series')
     .select('min("timestamp")')
     .addSelect('max("timestamp")')
@@ -150,11 +159,16 @@ export const getAvailableDataDates = ({
       `source.site_id = :siteId ${surveyPointConditionSql}`,
       { siteId, ...surveyPointConditionParams },
     )
-    .leftJoin('source.surveyPoint', 'surveyPoint')
-    .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
-      metrics,
-    })
-    .getRawOne();
+    .leftJoin('source.surveyPoint', 'surveyPoint');
+
+  const withMetrics =
+    metrics.length > 0
+      ? query.andWhere('metric IN (:...metrics)', {
+          metrics,
+        })
+      : query;
+
+  return withMetrics.getRawOne();
 };
 
 interface GetDataQueryParams {
@@ -192,7 +206,7 @@ export const getDataQuery = ({
         }
       : { sql: '', params: {} };
 
-  const mainQuery = timeSeriesRepository
+  const query = timeSeriesRepository
     .createQueryBuilder('time_series')
     .select(hourly ? 'avg(value)' : 'value', 'value')
     .addSelect('metric')
@@ -209,21 +223,29 @@ export const getDataQuery = ({
     )
     .leftJoin('source.surveyPoint', 'surveyPoint')
     .addSelect('surveyPoint.id', 'surveyPointId')
-    .addSelect('surveyPoint.name', 'surveyPointName')
-    .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
-      metrics,
-    })
-    .andWhere(startDate ? 'timestamp >= :startDate' : '1=1', { startDate })
-    .andWhere(endDate ? 'timestamp <= :endDate' : '1=1', { endDate });
+    .addSelect('surveyPoint.name', 'surveyPointName');
+
+  const withStartDate = startDate
+    ? query.andWhere('timestamp >= :startDate', { startDate })
+    : query;
+
+  const withEndDate = endDate
+    ? withStartDate.andWhere('timestamp <= :endDate', { endDate })
+    : withStartDate;
+
+  const withMetrics =
+    metrics.length > 0
+      ? withEndDate.andWhere('metric IN (:...metrics)', { metrics })
+      : withEndDate;
 
   return hourly
-    ? mainQuery
+    ? withMetrics
         .groupBy(
           "date_trunc('hour', timestamp), metric, source.type, surveyPoint.id",
         )
         .orderBy("date_trunc('hour', timestamp)", order)
         .getRawMany()
-    : mainQuery.orderBy('timestamp', order).getRawMany();
+    : withMetrics.orderBy('timestamp', order).getRawMany();
 };
 
 export const getDataRangeQuery = (
