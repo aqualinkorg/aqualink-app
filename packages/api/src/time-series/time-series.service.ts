@@ -188,7 +188,7 @@ export class TimeSeriesService {
       for (let i = 0; i < chunks.length; i++) {
         const first = i === 0;
 
-        // we want this not to run in parallel, thats why it is ok her to disable no-await-in-loop
+        // we want this not to run in parallel, that's why it is ok here to disable no-await-in-loop
         // eslint-disable-next-line no-await-in-loop
         const data: TimeSeriesData[] = await getDataQuery({
           timeSeriesRepository: this.timeSeriesRepository,
