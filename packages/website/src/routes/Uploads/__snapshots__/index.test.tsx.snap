@@ -1134,7 +1134,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       </div>
     </div>
     <mock-tablecontainer
-      classname="makeStyles-tableContainer-52"
+      classname="makeStyles-container-52"
       component="[object Object]"
     >
       <mock-table
