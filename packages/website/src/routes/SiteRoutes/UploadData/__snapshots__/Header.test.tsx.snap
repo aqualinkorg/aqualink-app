@@ -55,35 +55,47 @@ exports[`renders as expected 1`] = `
         You can find example file formats here:
          
         <span>
-          <mock-button
-            classname="makeStyles-downloadButton-1"
+          <a
+            class="makeStyles-downloadButton-1"
+            href="http://localhost:8080/api/time-series/sample-upload-files/hobo"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             hobo
-          </mock-button>
+          </a>
           , 
         </span>
         <span>
-          <mock-button
-            classname="makeStyles-downloadButton-1"
+          <a
+            class="makeStyles-downloadButton-1"
+            href="http://localhost:8080/api/time-series/sample-upload-files/sonde"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             sonde
-          </mock-button>
+          </a>
           , 
         </span>
         <span>
-          <mock-button
-            classname="makeStyles-downloadButton-1"
+          <a
+            class="makeStyles-downloadButton-1"
+            href="http://localhost:8080/api/time-series/sample-upload-files/metlog"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             metlog
-          </mock-button>
+          </a>
           , 
         </span>
         <span>
-          <mock-button
-            classname="makeStyles-downloadButton-1"
+          <a
+            class="makeStyles-downloadButton-1"
+            href="http://localhost:8080/api/time-series/sample-upload-files/hui"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             hui
-          </mock-button>
+          </a>
           
         </span>
       </mock-typography>

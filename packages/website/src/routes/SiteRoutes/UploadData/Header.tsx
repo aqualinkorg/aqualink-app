@@ -1,15 +1,8 @@
 import React from 'react';
-import {
-  Button,
-  Grid,
-  IconButton,
-  Typography,
-  makeStyles,
-} from '@material-ui/core';
+import { Grid, IconButton, Typography, makeStyles } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import { Site } from 'store/Sites/types';
-import { downloadCsvFile } from 'utils/utils';
 
 const exampleFiles = ['hobo', 'sonde', 'metlog', 'hui'];
 
@@ -37,20 +30,16 @@ const Header = ({ site }: HeaderProps) => {
           You can find example file formats here:{' '}
           {exampleFiles.map((file, i) => (
             <span key={file}>
-              <Button
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`${
+                  process.env.REACT_APP_API_BASE_URL
+                }/time-series/sample-upload-files/${encodeURIComponent(file)}`}
                 className={classes.downloadButton}
-                onClick={() =>
-                  downloadCsvFile(
-                    `${
-                      process.env.REACT_APP_API_BASE_URL
-                    }/time-series/sample-upload-files/${encodeURIComponent(
-                      file,
-                    )}`,
-                  )
-                }
               >
                 {file}
-              </Button>
+              </a>
               {i !== exampleFiles.length - 1 ? ', ' : ''}
             </span>
           ))}

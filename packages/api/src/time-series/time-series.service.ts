@@ -259,6 +259,10 @@ export class TimeSeriesService {
         )}`,
       });
 
+      res.set({
+        'Access-Control-Expose-Headers': 'Content-Disposition',
+      });
+
       readStream.pipe(res);
 
       readStream.on('end', () => {
