@@ -43,7 +43,7 @@ export class DataUploadsService {
         const uploadId = cur.data_upload_id;
         const id = cur.site_id;
         const val = acc.get(uploadId);
-        acc.set(uploadId, val ? [...val, id] : [id]);
+        acc.set(uploadId, val !== undefined ? [...val, id] : [id]);
         return acc;
       },
       new Map<number, number[]>(),

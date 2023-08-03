@@ -266,13 +266,13 @@ export const trimWorkSheetData = (
   headers: string[],
   headerIndex: number,
 ) =>
-  workSheetData
-    ?.slice(headerIndex + 1)
+  (workSheetData ?? [])
+    .slice(headerIndex + 1)
     .map((item) => {
       if (item.length === headers.length) return item as string[];
       return undefined;
     })
-    .filter((item) => item) as string[][];
+    .filter((item): item is string[] => item !== undefined);
 
 const groupBySitePointAndType = (
   trimmedWorkSheetData: string[][],
@@ -288,16 +288,23 @@ const groupBySitePointAndType = (
     (x) => x === 'aqualink_sensor_type',
   );
 
-  return trimmedWorkSheetData.reduce((acc, curr) => {
-    const siteId = curr[siteIdIndex] || '';
-    const surveyPointId = curr[surveyPointIdIndex] || '';
-    const sourceType = curr[sourceTypeIndex] || '';
+  const groupedByMap = new Map<string, string[][]>();
+
+  trimmedWorkSheetData.forEach((val) => {
+    const siteId = val[siteIdIndex] || '';
+    const surveyPointId = val[surveyPointIdIndex] || '';
+    const sourceType = val[sourceTypeIndex] || '';
 
     const key = `${siteId}_${surveyPointId}_${sourceType}`;
-    // eslint-disable-next-line fp/no-mutating-methods, fp/no-mutation
-    (acc[key] = acc[key] || []).push(curr);
-    return acc;
-  }, {} as { [key: string]: string[][] });
+    const item = groupedByMap.get(key);
+    if (item !== undefined) {
+      groupedByMap.set(key, [...item, val]);
+    } else {
+      groupedByMap.set(key, [val]);
+    }
+  });
+
+  return Object.fromEntries(Array.from(groupedByMap));
 };
 
 export const convertData = (
@@ -478,8 +485,8 @@ const createEntitiesAndConvert = async ({
   mimetype,
 }: {
   workSheetData: string[][];
-  siteId: string;
-  surveyPointId?: string;
+  siteId: number;
+  surveyPointId?: number;
   headers: string[];
   headerIndex: number;
   fileName: string;
@@ -489,10 +496,10 @@ const createEntitiesAndConvert = async ({
   mimetype?: Mimetype;
 }) => {
   const [site, surveyPoint] = await Promise.all([
-    getSite(parseInt(siteId, 10), repositories.siteRepository),
+    getSite(siteId, repositories.siteRepository),
     surveyPointId
       ? repositories.surveyPointRepository.findOneBy({
-          id: parseInt(surveyPointId, 10),
+          id: surveyPointId,
         })
       : undefined,
   ]);
@@ -609,7 +616,7 @@ const uploadPerSiteAndPoint = async ({
       surveyPoint,
     });
   } catch (error: any) {
-    logger.warn(error?.message);
+    logger.warn(error?.message || error);
   }
 
   logger.log('loading complete');
@@ -638,7 +645,7 @@ export const uploadTimeSeriesData = async ({
   failOnWarning?: boolean;
   mimetype?: Mimetype;
 }) => {
-  console.time(`Upload datafile ${fileName}`);
+  console.time(`Upload data file ${fileName}`);
 
   if (!multiSiteUpload && !siteId) {
     throw new BadRequestException('SiteId is undefined');
@@ -657,7 +664,7 @@ export const uploadTimeSeriesData = async ({
   if (failOnWarning && ignoredHeaders.length > 0) {
     throw new BadRequestException(
       `${fileName}: The columns ${ignoredHeaders
-        .map((header) => `"${header}"`)
+        .map((header) => header.replace(/\r?\n|\r/g, ''))
         .join(', ')} are not configured for import yet and cannot be uploaded.`,
     );
   }
@@ -709,8 +716,8 @@ export const uploadTimeSeriesData = async ({
     ? Object.entries(groupBySitePointAndType(trimmed, headerToTokenMap)).map(
         ([key, data]) => ({
           data,
-          siteId: key.split('_')[0],
-          surveyPointId: key.split('_')[1] || undefined,
+          siteId: parseInt(key.split('_')[0], 10),
+          surveyPointId: parseInt(key.split('_')[1], 10) || undefined,
           sourceType: (key.split('_')[2] ||
             SourceType.SHEET_DATA) as SourceType,
         }),
@@ -718,9 +725,11 @@ export const uploadTimeSeriesData = async ({
     : [
         {
           data: trimmed,
-          siteId: String(siteId),
+          // at this point siteId should be a number,
+          // since we explicitly check that in case multiSiteUpload is false
+          siteId: siteId as number,
           surveyPointId:
-            surveyPointId !== undefined ? String(surveyPointId) : undefined,
+            surveyPointId !== undefined ? surveyPointId : undefined,
           sourceType: sourceType || SourceType.SHEET_DATA,
         },
       ];

@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
   Theme,
+  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -45,8 +46,19 @@ function SitesTable() {
     })();
   }, [user, user?.administeredSites]);
 
+  if (
+    user?.administeredSites === undefined ||
+    user.administeredSites.length < 0
+  ) {
+    return (
+      <Typography className={classes.container} variant="h5">
+        No administrated sites to show
+      </Typography>
+    );
+  }
+
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
+    <TableContainer component={Paper} className={classes.container}>
       <Table className={classes.table} size="small">
         <TableHead>
           <TableRow>
@@ -60,7 +72,7 @@ function SitesTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {user?.administeredSites?.map((row) => {
+          {user.administeredSites.map((row) => {
             const sitePoints = sitesSurveyPoints.find(
               (x) => x.siteId === row.id,
             );
@@ -81,7 +93,7 @@ function SitesTable() {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  tableContainer: {
+  container: {
     marginTop: theme.spacing(3),
   },
   table: {

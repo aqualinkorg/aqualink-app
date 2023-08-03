@@ -24,7 +24,7 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
 
   return (
     <DefaultDropzone
-      maxSize={MAX_SIZE_MB * 10 ** 6}
+      maxSize={MAX_SIZE_MB * 2 ** 20}
       accept={ACCEPTED_TYPES.map(({ mimeType }) => mimeType)}
       onDropAccepted={onFilesDrop}
       disabled={disabled}

@@ -149,7 +149,7 @@ export class TimeSeriesController {
       dest: './upload',
       fileFilter,
       limits: {
-        fileSize: MAX_FILE_SIZE_MB * 10 ** 6,
+        fileSize: MAX_FILE_SIZE_MB * 2 ** 20,
       },
     }),
   )
@@ -176,7 +176,7 @@ export class TimeSeriesController {
       dest: './upload',
       fileFilter,
       limits: {
-        fileSize: MAX_FILE_SIZE_MB * 10 ** 6,
+        fileSize: MAX_FILE_SIZE_MB * 2 ** 20,
       },
     }),
   )

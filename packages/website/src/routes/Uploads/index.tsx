@@ -41,7 +41,7 @@ function Uploads() {
   const uploadResult = useSelector(uploadsResponseSelector);
 
   const hasWarnings = uploadDetails.some(
-    (data) => (data.ignoredHeaders?.length || 0) > 0,
+    (data) => (data.ignoredHeaders?.length ?? 0) > 0,
   );
 
   React.useEffect(() => {
@@ -164,7 +164,7 @@ function Uploads() {
         {uploadLoading && (
           <Box mb="20px" style={{ paddingTop: '1em' }}>
             <Alert severity="info">
-              Upload in progress. please DO NOT reload the page, it may take a
+              Upload in progress. Please DO NOT reload the page. It may take a
               while.
             </Alert>
           </Box>
