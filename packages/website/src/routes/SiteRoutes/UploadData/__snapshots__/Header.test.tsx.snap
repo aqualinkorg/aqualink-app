@@ -57,7 +57,7 @@ exports[`renders as expected 1`] = `
         <span>
           <a
             class="makeStyles-downloadButton-1"
-            href="http://localhost:8080/api/time-series/sample-upload-files/hobo"
+            href="https://programize-dot-ocean-systems.uc.r.appspot.com/api//time-series/sample-upload-files/hobo"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -68,7 +68,7 @@ exports[`renders as expected 1`] = `
         <span>
           <a
             class="makeStyles-downloadButton-1"
-            href="http://localhost:8080/api/time-series/sample-upload-files/sonde"
+            href="https://programize-dot-ocean-systems.uc.r.appspot.com/api//time-series/sample-upload-files/sonde"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -79,7 +79,7 @@ exports[`renders as expected 1`] = `
         <span>
           <a
             class="makeStyles-downloadButton-1"
-            href="http://localhost:8080/api/time-series/sample-upload-files/metlog"
+            href="https://programize-dot-ocean-systems.uc.r.appspot.com/api//time-series/sample-upload-files/metlog"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -90,7 +90,7 @@ exports[`renders as expected 1`] = `
         <span>
           <a
             class="makeStyles-downloadButton-1"
-            href="http://localhost:8080/api/time-series/sample-upload-files/hui"
+            href="https://programize-dot-ocean-systems.uc.r.appspot.com/api//time-series/sample-upload-files/hui"
             rel="noopener noreferrer"
             target="_blank"
           >

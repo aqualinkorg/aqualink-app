@@ -63,6 +63,10 @@ global.matchMedia =
     };
   };
 
+// eslint-disable-next-line fp/no-mutation
+process.env.REACT_APP_API_BASE_URL =
+  'https://programize-dot-ocean-systems.uc.r.appspot.com/api/';
+
 stubMuiComponent('Typography');
 stubMuiComponent('Button', {
   styles: jest.requireActual('@material-ui/core/Button/Button').styles,

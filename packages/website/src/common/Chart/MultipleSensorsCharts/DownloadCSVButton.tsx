@@ -55,7 +55,7 @@ function DownloadCSVButton({
           siteId: String(siteId),
         })}`,
       );
-      if (!(resp.status >= 200 && resp.status <= 399)) {
+      if (!(resp.status >= 200 && resp.status <= 299)) {
         throw new Error(await resp.text());
       }
       const header = resp.headers.get('Content-Disposition');
