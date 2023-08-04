@@ -288,6 +288,8 @@ const MultipleSensorsCharts = ({
         ...huiRanges.map((x) => x.metric),
       ];
 
+      const uniqueMetrics = [...new Map(allMetrics.map((x) => [x, x])).keys()];
+
       setAvailableSources(
         [
           spotterRanges.length > 0 && 'spotter',
@@ -296,8 +298,6 @@ const MultipleSensorsCharts = ({
           huiRanges.length > 0 && 'hui',
         ].filter((x): x is Sources => x !== false),
       );
-
-      const uniqueMetrics = [...new Map(allMetrics.map((x) => [x, x])).keys()];
 
       const siteLocalStartDate = setTimeZone(
         new Date(pickerStartDate),

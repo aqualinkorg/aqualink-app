@@ -20,6 +20,7 @@
     "jsx": "react",
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "strictNullChecks": true
   }
 }
