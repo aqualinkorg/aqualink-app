@@ -38,7 +38,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
       classname="Sensor-content-10"
     >
       <div
-        style="display: grid; gap: 1rem; grid-template-areas: 'value0 image' 'spacer image' 'value1 image'; padding: 1rem;"
+        style="display: grid; gap: 1rem; grid-template-areas: 'value0 image' 'spacer1 image' 'value1 image'; padding: 1rem;"
       >
         <div
           style="grid-area: value0;"
@@ -73,7 +73,10 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
           </mock-typography>
         </div>
         <div
-          style="grid-area: spacer; display: inherit; min-height: 2em;"
+          style="grid-area: spacer1; display: inherit; min-height: 2em;"
+        />
+        <div
+          style="grid-area: spacer2; display: inherit;"
         />
         <div
           style="grid-area: image; position: relative;"
