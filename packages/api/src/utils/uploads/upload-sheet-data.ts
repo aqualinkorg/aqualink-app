@@ -245,21 +245,17 @@ export const getFilePathData = async (filePath: string) => {
   const ignoredHeaders = headers.filter(
     (x, i) => headerToTokenMap[i] === undefined,
   );
+  const signature = await md5Fle(filePath);
 
-  try {
-    const signature = await md5Fle(filePath);
-    return {
-      workSheetData,
-      signature,
-      ignoredHeaders,
-      importedMetrics,
-      headers,
-      headerIndex,
-      headerToTokenMap,
-    };
-  } catch (error) {
-    throw new BadRequestException('Path not found');
-  }
+  return {
+    workSheetData,
+    signature,
+    ignoredHeaders,
+    importedMetrics,
+    headers,
+    headerIndex,
+    headerToTokenMap,
+  };
 };
 
 export const trimWorkSheetData = (
