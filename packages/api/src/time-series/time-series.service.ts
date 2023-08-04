@@ -252,6 +252,7 @@ export class TimeSeriesService {
     const uploadResponse = await Bluebird.Promise.map(
       files,
       async ({ path, originalname, mimetype }) => {
+        console.log('path', path);
         try {
           const ignoredHeaders = await uploadTimeSeriesData({
             user,
@@ -281,8 +282,10 @@ export class TimeSeriesService {
             error: error.message,
           };
         } finally {
+          console.log('unlinkSync path', path);
           // Remove file once its processing is over
           unlinkSync(path);
+          console.log('unlinkSync path completed', path);
         }
       },
       {

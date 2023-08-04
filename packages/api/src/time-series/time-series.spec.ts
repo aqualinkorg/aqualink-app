@@ -186,14 +186,22 @@ export const timeSeriesTests = () => {
     let surveyPoints: SiteSurveyPoint[];
     let fistSitePointId: number;
 
+    console.log(0);
+
     it('setups the user relations', async () => {
+      console.log(1);
+
       user = await dataSource.getRepository(User).findOne({
         where: { firebaseUid: siteManagerUserMock.firebaseUid as string },
         select: ['id'],
       });
 
+      console.log(2);
+
       sites = await dataSource.getRepository(Site).find();
       expect(sites.length).toBe(3);
+
+      console.log(3);
 
       surveyPoints = await dataSource.getRepository(SiteSurveyPoint).find();
       fistSitePointId = surveyPoints.find((x) => x.siteId === sites[0].id)
@@ -202,12 +210,16 @@ export const timeSeriesTests = () => {
       expect(fistSitePointId).toBeDefined();
       expect(csvDataMock.length).toBe(30);
 
+      console.log(4);
+
       await dataSource
         .getRepository(User)
         .createQueryBuilder('user')
         .relation('administeredSites')
         .of(user)
         .add(sites.slice(0, 2));
+
+      console.log(5);
 
       firstSiteRows = 20;
     });
@@ -230,6 +242,8 @@ export const timeSeriesTests = () => {
         return result;
       });
 
+      console.log(6);
+
       const csvString = stringify(editedData, { header: true });
 
       mockExtractAndVerifyToken(siteManager2FirebaseUserMock);
@@ -237,6 +251,8 @@ export const timeSeriesTests = () => {
         .post('/time-series/upload?failOnWarning=false')
         .attach('files', Buffer.from(csvString), 'data.csv')
         .set('Content-Type', 'text/csv');
+
+      console.log(7);
 
       expect(resp.status).toBe(201);
 
@@ -246,6 +262,8 @@ export const timeSeriesTests = () => {
     });
 
     it('upload fails for wrong site id', async () => {
+      console.log(8);
+
       const editedData = csvDataMock.map((row, i) => {
         const result = row;
 
@@ -264,6 +282,8 @@ export const timeSeriesTests = () => {
         .attach('files', Buffer.from(csvString), 'data2.csv')
         .set('Content-Type', 'text/csv');
 
+      console.log(9);
+
       expect(
         response.body.find(
           (x) => x.error === `Invalid values for 'aqualink_site_id'`,
@@ -272,6 +292,7 @@ export const timeSeriesTests = () => {
     });
 
     it('upload fails for wrong survey point id', async () => {
+      console.log(10);
       const wrongPointId = surveyPoints.find((x) => x.id !== fistSitePointId)
         ?.id as number;
 
@@ -295,6 +316,8 @@ export const timeSeriesTests = () => {
         .post('/time-series/upload?failOnWarning=false')
         .attach('files', Buffer.from(csvString), 'data2.csv')
         .set('Content-Type', 'text/csv');
+
+      console.log(11);
 
       expect(
         response.body.find((x) =>
