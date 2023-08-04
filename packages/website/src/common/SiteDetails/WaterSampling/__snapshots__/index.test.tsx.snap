@@ -48,130 +48,210 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              variant="subtitle2"
+            <div
+              class="MuiGrid-root MuiGrid-container"
             >
-              DISSOLVED OXYGEN CONCENTRATION
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentTextValues-5"
-              display="inline"
-              variant="h3"
-            >
-              - -
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentUnits-6"
-              display="inline"
-              variant="h6"
-            >
-              mg/L
-            </mock-typography>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <div
+                  style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
+                >
+                  <mock-typography
+                    classname="makeStyles-contentTextTitles-4"
+                    variant="subtitle2"
+                  >
+                    DISSOLVED OXYGEN CONCENTRATION
+                  </mock-typography>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                style="display: flex; align-items: baseline;"
+              >
+                <mock-typography
+                  classname="makeStyles-contentTextValues-5"
+                  style="white-space: nowrap;"
+                  variant="h3"
+                >
+                  - -
+                </mock-typography>
+                <mock-typography
+                  classname="makeStyles-contentUnits-6"
+                  variant="h6"
+                >
+                  mg/L
+                </mock-typography>
+              </div>
+            </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              variant="subtitle2"
+            <div
+              class="MuiGrid-root MuiGrid-container"
             >
-              CHLOROPHYLL CONCENTRATION
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentTextValues-5"
-              display="inline"
-              variant="h3"
-            >
-              - -
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentUnits-6"
-              display="inline"
-              variant="h6"
-            >
-              µg/L
-            </mock-typography>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <div
+                  style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
+                >
+                  <mock-typography
+                    classname="makeStyles-contentTextTitles-4"
+                    variant="subtitle2"
+                  >
+                    CHLOROPHYLL CONCENTRATION
+                  </mock-typography>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                style="display: flex; align-items: baseline;"
+              >
+                <mock-typography
+                  classname="makeStyles-contentTextValues-5"
+                  style="white-space: nowrap;"
+                  variant="h3"
+                >
+                  - -
+                </mock-typography>
+                <mock-typography
+                  classname="makeStyles-contentUnits-6"
+                  variant="h6"
+                >
+                  µg/L
+                </mock-typography>
+              </div>
+            </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              variant="subtitle2"
+            <div
+              class="MuiGrid-root MuiGrid-container"
             >
-              ACIDITY
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentTextValues-5"
-              display="inline"
-              variant="h3"
-            >
-              - -
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentUnits-6"
-              display="inline"
-              variant="h6"
-            >
-              pH
-            </mock-typography>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <div
+                  style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
+                >
+                  <mock-typography
+                    classname="makeStyles-contentTextTitles-4"
+                    variant="subtitle2"
+                  >
+                    ACIDITY
+                  </mock-typography>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                style="display: flex; align-items: baseline;"
+              >
+                <mock-typography
+                  classname="makeStyles-contentTextValues-5"
+                  style="white-space: nowrap;"
+                  variant="h3"
+                >
+                  - -
+                </mock-typography>
+                <mock-typography
+                  classname="makeStyles-contentUnits-6"
+                  variant="h6"
+                >
+                  pH
+                </mock-typography>
+              </div>
+            </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              variant="subtitle2"
+            <div
+              class="MuiGrid-root MuiGrid-container"
             >
-              SALINITY
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentTextValues-5"
-              display="inline"
-              variant="h3"
-            >
-              - -
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentUnits-6"
-              display="inline"
-              variant="h6"
-            >
-              psu
-            </mock-typography>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <div
+                  style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
+                >
+                  <mock-typography
+                    classname="makeStyles-contentTextTitles-4"
+                    variant="subtitle2"
+                  >
+                    SALINITY
+                  </mock-typography>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                style="display: flex; align-items: baseline;"
+              >
+                <mock-typography
+                  classname="makeStyles-contentTextValues-5"
+                  style="white-space: nowrap;"
+                  variant="h3"
+                >
+                  - -
+                </mock-typography>
+                <mock-typography
+                  classname="makeStyles-contentUnits-6"
+                  variant="h6"
+                >
+                  psu
+                </mock-typography>
+              </div>
+            </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              variant="subtitle2"
+            <div
+              class="MuiGrid-root MuiGrid-container"
             >
-              TURBIDITY
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentTextValues-5"
-              display="inline"
-              variant="h3"
-            >
-              - -
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-contentUnits-6"
-              display="inline"
-              variant="h6"
-            >
-              FNU
-            </mock-typography>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <div
+                  style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
+                >
+                  <mock-typography
+                    classname="makeStyles-contentTextTitles-4"
+                    variant="subtitle2"
+                  >
+                    TURBIDITY
+                  </mock-typography>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                style="display: flex; align-items: baseline;"
+              >
+                <mock-typography
+                  classname="makeStyles-contentTextValues-5"
+                  style="white-space: nowrap;"
+                  variant="h3"
+                >
+                  - -
+                </mock-typography>
+                <mock-typography
+                  classname="makeStyles-contentUnits-6"
+                  variant="h6"
+                >
+                  FNU
+                </mock-typography>
+              </div>
+            </div>
           </div>
         </div>
       </mock-box>
       <div
-        class="MuiGrid-root makeStyles-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root makeStyles-updateInfo-12 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
-          class="MuiGrid-root makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-16 MuiGrid-item MuiGrid-grid-xs-8"
+          class="MuiGrid-root makeStyles-dateInfoWrapper-16 makeStyles-dateInfoWrapper-18 MuiGrid-item MuiGrid-grid-xs-8"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -181,7 +261,7 @@ exports[`renders as expected 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-updateIcon-12 MuiSvgIcon-fontSizeSmall"
+                class="MuiSvgIcon-root makeStyles-updateIcon-14 MuiSvgIcon-fontSizeSmall"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -191,7 +271,7 @@ exports[`renders as expected 1`] = `
               </svg>
             </div>
             <div
-              class="MuiGrid-root makeStyles-dateInfo-15 MuiGrid-item"
+              class="MuiGrid-root makeStyles-dateInfo-17 MuiGrid-item"
             >
               <mock-box
                 display="flex"
@@ -199,7 +279,7 @@ exports[`renders as expected 1`] = `
                 width="100%"
               >
                 <mock-typography
-                  classname="makeStyles-updateInfoText-13"
+                  classname="makeStyles-updateInfoText-15"
                   variant="caption"
                 />
               </mock-box>
@@ -211,22 +291,22 @@ exports[`renders as expected 1`] = `
           style="display: flex; justify-content: flex-end;"
         >
           <div
-            class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-23 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-19 makeStyles-chip-25 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
             >
               <mock-button
-                classname="makeStyles-button-22"
+                classname="makeStyles-button-24"
               >
                 <a
-                  class="makeStyles-link-20"
+                  class="makeStyles-link-22"
                   href="/sites/1"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
                   <mock-typography
-                    classname="makeStyles-chipText-18"
+                    classname="makeStyles-chipText-20"
                   >
                     VIEW UPLOAD
                   </mock-typography>

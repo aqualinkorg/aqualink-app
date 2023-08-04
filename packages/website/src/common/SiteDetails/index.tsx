@@ -46,7 +46,6 @@ import WaterSamplingCard from './WaterSampling';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
-import HUICard from './HUICard';
 
 const sondeMetrics: (keyof LatestDataASSofarValue)[] = [
   'odoConcentration',
@@ -136,19 +135,13 @@ const SiteDetails = ({
           (() => {
             if (hasHUIData) {
               return (
-                <HUICard
-                  data={{
-                    salinity: latestDataAsSofarValues.salinity,
-                    turbidity: latestDataAsSofarValues.turbidity,
-                    nitratePlusNitrite:
-                      latestDataAsSofarValues.nitratePlusNitrite,
-                    ph: latestDataAsSofarValues.ph,
-                  }}
-                />
+                <WaterSamplingCard siteId={site.id.toString()} source="hui" />
               );
             }
             if (hasSondeData) {
-              return <WaterSamplingCard siteId={site.id.toString()} />;
+              return (
+                <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
+              );
             }
             return (
               <CoralBleaching

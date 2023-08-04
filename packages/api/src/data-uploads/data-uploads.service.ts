@@ -57,5 +57,6 @@ export class DataUploadsService {
 
   async deleteDataUploads({ ids }: DataUploadsDeleteDto) {
     await this.dataUploadsRepository.delete({ id: In(ids) });
+    this.dataUploadsRepository.query('REFRESH MATERIALIZED VIEW latest_data');
   }
 }

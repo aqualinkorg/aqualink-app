@@ -1,89 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { head } from 'lodash';
 import {
   Box,
   Card,
-  makeStyles,
+  CardContent,
   CardHeader,
   Grid,
+  makeStyles,
   Typography,
-  CardContent,
-  GridProps,
 } from '@material-ui/core';
-import moment from 'moment';
-
-import { SurveyPoints, TimeSeriesData } from 'store/Sites/types';
-import { timeSeriesRequest } from 'store/Sites/helpers';
-import { formatNumber } from 'helpers/numberUtils';
-import requests from 'helpers/requests';
+import React from 'react';
 import { colors } from 'layout/App/theme';
-import siteServices from 'services/siteServices';
 import {
-  getSondeConfig,
-  SondeMetricsKeys,
-} from 'constants/chartConfigs/sondeConfig';
+  Metrics,
+  Sources,
+  SurveyPoints,
+  TimeSeriesData,
+} from 'store/Sites/types';
+import requests from 'helpers/requests';
+import moment from 'moment';
+import WarningIcon from '@material-ui/icons/Warning';
 import { styles as incomingStyles } from '../styles';
-import { calculateSondeDataMeanValues } from './utils';
 import UpdateInfo from '../../UpdateInfo';
+import {
+  alertColor,
+  getCardData,
+  getMeanCalculationFunction,
+  metricFields,
+  warningColor,
+  watchColor,
+} from './utils';
 
-const CARD_BACKGROUND_COLOR = colors.greenCardColor;
-const METRICS: SondeMetricsKeys[] = [
-  'odo_concentration',
-  'cholorophyll_concentration',
-  'ph',
-  'salinity',
-  'turbidity',
-];
-
-interface Metric {
-  label: string;
-  value: string;
-  unit: string;
-  xs: GridProps['xs'];
-}
-
-const metrics = (
-  data: ReturnType<typeof calculateSondeDataMeanValues>,
-): Metric[] => [
-  {
-    label: 'DISSOLVED OXYGEN CONCENTRATION',
-    value: formatNumber(data?.odoConcentration, 2),
-    unit: getSondeConfig('odo_concentration').units,
-    xs: 6,
-  },
-  {
-    label: 'CHLOROPHYLL CONCENTRATION',
-    value: formatNumber(data?.cholorophyllConcentration, 2),
-    unit: getSondeConfig('cholorophyll_concentration').units,
-    xs: 6,
-  },
-  {
-    label: 'ACIDITY',
-    value: formatNumber(data?.ph, 1),
-    unit: getSondeConfig('ph').units,
-    xs: 4,
-  },
-  {
-    label: 'SALINITY',
-    value: formatNumber(data?.salinity, 1),
-    unit: getSondeConfig('salinity').units,
-    xs: 5,
-  },
-  {
-    label: 'TURBIDITY',
-    value: formatNumber(data?.turbidity, 0),
-    unit: getSondeConfig('turbidity').units,
-    xs: 3,
-  },
-];
-
-const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
+function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
   const classes = useStyles();
-  const [minDate, setMinDate] = useState<string>();
-  const [maxDate, setMaxDate] = useState<string>();
-  const [point, setPoint] = useState<SurveyPoints>();
-  const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>();
-  const meanValues = calculateSondeDataMeanValues(METRICS, timeSeriesData);
+
+  const [minDate, setMinDate] = React.useState<string>();
+  const [maxDate, setMaxDate] = React.useState<string>();
+  const [point, setPoint] = React.useState<SurveyPoints>();
+  const [timeSeriesData, setTimeSeriesData] = React.useState<TimeSeriesData>();
+
+  const [meanValues, setMeanValues] = React.useState<
+    Partial<Record<Metrics, number>>
+  >({});
+
+  // disable showing color for now
+  const showAlertColors = source === 'hui' && false;
+
   const isPointNameLong = (point?.name?.length || 0) > 24;
   const surveyPointDisplayName = `${isPointNameLong ? '' : ' Survey point:'} ${
     point?.name || point?.id
@@ -97,39 +57,33 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   )}`;
   const lastUpload = maxDate ? moment(maxDate).format('MM/DD/YYYY') : undefined;
 
-  useEffect(() => {
-    const getCardData = async () => {
-      try {
-        const { data: uploadHistory } = await siteServices.getSiteUploadHistory(
-          parseInt(siteId, 10),
-        );
-        // Upload history is sorted by `maxDate`, so the first
-        // item is the most recent.
-        const {
-          dataUpload: { minDate: from, maxDate: to },
-          surveyPoint,
-        } = head(uploadHistory) || { dataUpload: {} };
-        if (typeof surveyPoint?.id === 'number') {
-          const [data] = await timeSeriesRequest({
-            siteId,
-            pointId: surveyPoint.id.toString(),
-            start: from,
-            end: to,
-            metrics: METRICS,
-            hourly: true,
-          });
-          setMinDate(from);
-          setMaxDate(to);
-          setTimeSeriesData(data);
-          setPoint(surveyPoint);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  React.useEffect(() => {
+    (async () => {
+      const {
+        data,
+        maxDate: max,
+        minDate: min,
+        point: p,
+      } = await getCardData(siteId, source);
+      setMinDate(min);
+      setMaxDate(max);
+      setTimeSeriesData(data);
+      setPoint(p ?? undefined);
+    })();
+  }, [siteId, source]);
 
-    getCardData();
-  }, [siteId]);
+  React.useEffect(() => {
+    const newMeans = Object.fromEntries(
+      Object.entries(timeSeriesData || {})
+        .map(([key, val]) => {
+          const values = val[source]?.data.map((x) => x.value);
+          if (!values) return [undefined, undefined];
+          return [key, getMeanCalculationFunction(source)(values)];
+        })
+        .filter((x) => x && x[0]),
+    ) as Partial<Record<Metrics, number>>;
+    setMeanValues(newMeans);
+  }, [source, timeSeriesData]);
 
   return (
     <Card className={classes.root}>
@@ -145,36 +99,90 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
           </Grid>
         }
       />
-
       <CardContent className={classes.content}>
         <Box p="1rem" display="flex" flexGrow={1}>
           <Grid container spacing={1}>
-            {metrics(meanValues).map(({ label, value, unit, xs }) => (
-              <Grid key={label} item xs={xs}>
-                <Typography
-                  className={classes.contentTextTitles}
-                  variant="subtitle2"
-                >
-                  {label}
-                </Typography>
-                <Typography
-                  className={classes.contentTextValues}
-                  variant="h3"
-                  display="inline"
-                >
-                  {value}
-                </Typography>
-                <Typography
-                  className={classes.contentUnits}
-                  display="inline"
-                  variant="h6"
-                >
-                  {unit}
-                </Typography>
+            {metricFields(source, meanValues).map(
+              ({ label, value, color, unit, xs }) => (
+                <Grid key={label} item xs={xs}>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          flexWrap: 'nowrap',
+                          minHeight: '2em',
+                        }}
+                      >
+                        <Typography
+                          className={classes.contentTextTitles}
+                          variant="subtitle2"
+                        >
+                          {label}
+                        </Typography>
+                        {color && showAlertColors && (
+                          <WarningIcon
+                            className={classes.contentTextTitles}
+                            style={{
+                              fontSize: '1.1em',
+                              marginRight: '1em',
+                              marginLeft: 'auto',
+                              color,
+                            }}
+                          />
+                        )}
+                      </div>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      style={{ display: 'flex', alignItems: 'baseline' }}
+                    >
+                      <Typography
+                        className={classes.contentTextValues}
+                        variant="h3"
+                        style={{ whiteSpace: 'nowrap' }}
+                      >
+                        {value}
+                      </Typography>
+                      {unit && (
+                        <Typography
+                          className={classes.contentUnits}
+                          variant="h6"
+                        >
+                          {unit}
+                        </Typography>
+                      )}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              ),
+            )}
+          </Grid>
+        </Box>
+        {showAlertColors && (
+          <Grid container>
+            {[
+              { text: 'watch', color: watchColor },
+              { text: 'warning', color: warningColor },
+              { text: 'alert', color: alertColor },
+            ].map(({ text, color }) => (
+              <Grid
+                key={text}
+                item
+                xs={4}
+                style={{ backgroundColor: color, height: '2rem' }}
+              >
+                <Box textAlign="center">
+                  <Typography variant="caption" align="center">
+                    {text}
+                  </Typography>
+                </Box>
               </Grid>
             ))}
           </Grid>
-        </Box>
+        )}
         <UpdateInfo
           relativeTime={lastUpload}
           chipWidth={64}
@@ -186,7 +194,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 const useStyles = makeStyles(() => ({
   ...incomingStyles,
@@ -194,7 +202,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    backgroundColor: CARD_BACKGROUND_COLOR,
+    backgroundColor: colors.greenCardColor,
   },
   content: {
     display: 'flex',
@@ -203,10 +211,21 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     padding: 0,
   },
+  labelWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    minHeight: '2em',
+  },
+  valueWrapper: {
+    display: 'flex',
+    alignItems: 'baseline',
+  },
 }));
 
 interface WaterSamplingCardProps {
   siteId: string;
+  source: Extract<Sources, 'hui' | 'sonde'>;
 }
 
 export default WaterSamplingCard;

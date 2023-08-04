@@ -108,8 +108,8 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
     if (surfaceTemperature)
       return "'value3 image' 'value0 image' 'value1 image'";
     if (barometricPressureTop)
-      return "'value0 image' 'value1 image' 'value2 value4'";
-    return "'value0 image' 'spacer image' 'value1 image'";
+      return "'value0 image' 'spacer1 image' 'value1 image' 'spacer2 image' 'value2 value4'";
+    return "'value0 image' 'spacer1 image' 'value1 image'";
   };
 
   const getImageHeight = () => {
@@ -119,11 +119,11 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
     return '150';
   };
 
-  const getSpaceDisplay = () => {
-    if (barometricPressureTop && surfaceTemperature) return 'none';
-    if (surfaceTemperature) return 'none';
-    if (barometricPressureTop) return 'none';
-    return 'inherit';
+  const getSpace1Height = () => {
+    if (barometricPressureTop && surfaceTemperature) return 'inherit';
+    if (surfaceTemperature) return 'inherit';
+    if (barometricPressureTop) return 'inherit';
+    return '2em';
   };
 
   return (
@@ -188,9 +188,15 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
           )}
           <div
             style={{
-              gridArea: 'spacer',
-              display: getSpaceDisplay(),
-              minHeight: '2em',
+              gridArea: 'spacer1',
+              display: 'inherit',
+              minHeight: getSpace1Height(),
+            }}
+          />
+          <div
+            style={{
+              gridArea: 'spacer2',
+              display: 'inherit',
             }}
           />
           {surfaceTemperature && (

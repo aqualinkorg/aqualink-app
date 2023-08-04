@@ -22,6 +22,7 @@ import hero from '../../assets/img/tracker-page/hero.png';
 import image1 from '../../assets/img/tracker-page/image1.png';
 import image2 from '../../assets/img/tracker-page/image2.png';
 import image3 from '../../assets/img/tracker-page/image3.png';
+import image4 from '../../assets/img/tracker-page/image4.png';
 
 interface StyleProps {
   heroAspectRatio?: number;
@@ -157,6 +158,45 @@ const Tracker = ({
         </Container>
       </Box>
       <Container className={classes.root}>
+        <Box margin="72px 0 48px 0">
+          <Typography className={classes.title} variant="h2">
+            Florida Heatwave Tracking
+          </Typography>
+        </Box>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={7} lg={8}>
+            <Card className={classes.card1} variant="outlined">
+              <a
+                className={classes.link}
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://highlights.aqualink.org/florida-heatwave-tracking"
+              >
+                <CardMedia className={classes.image} image={image4} />
+              </a>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={5} lg={4}>
+            <Typography variant="h6">
+              Track the heatwave in Florida with Aqualink. Corals are very
+              sensitive to temperature increases. An increase of just 1℃ can
+              start a bleaching process, eventually killing the coral unless the
+              temperature returns to normal. Aqualink is dedicated to sharing
+              data and awareness publicly. On the{' '}
+              <a
+                className={classes.link}
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://highlights.aqualink.org/florida-heatwave-tracking"
+              >
+                Florida Heatwave Tracking page
+              </a>
+              , you can see this site&apos;s data, live stream, and the
+              devastating effects the heatwave has had on the corals in the past
+              couple of weeks.
+            </Typography>
+          </Grid>
+        </Grid>
         <Grid
           container
           className={classes.header}
