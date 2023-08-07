@@ -32,7 +32,7 @@ import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 import { getBarometricDiff } from '../sofar';
 import { refreshMaterializedView } from '../time-series.utils';
 import { Metric } from '../../time-series/metrics.enum';
-import { User } from '../../users/users.entity';
+import { AdminLevel, User } from '../../users/users.entity';
 import { DataUploadsSites } from '../../data-uploads/data-uploads-sites.entity';
 import { GoogleCloudDir } from '../google-cloud.utils';
 
@@ -701,7 +701,9 @@ export const uploadTimeSeriesData = async ({
             .getMany()
         : [];
 
-    if (isSiteAdmin.length !== uniqueIds.length) {
+    const isSuperAdmin = user.adminLevel === AdminLevel.SuperAdmin;
+
+    if (isSiteAdmin.length !== uniqueIds.length && !isSuperAdmin) {
       throw new BadRequestException(`Invalid values for 'aqualink_site_id'`);
     }
   }
