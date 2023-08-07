@@ -148,14 +148,10 @@ const rules: Rule[] = [
 
 export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
 
-export const fileFilter: MulterOptions['fileFilter'] = (
-  _,
-  { mimetype: inputMimetype },
-  callback,
-) => {
+export const fileFilter: MulterOptions['fileFilter'] = (_, file, callback) => {
   if (
     !ACCEPTED_FILE_TYPES.map(({ mimetype }) => mimetype as string).includes(
-      inputMimetype,
+      file.mimetype,
     )
   ) {
     callback(
