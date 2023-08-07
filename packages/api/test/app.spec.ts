@@ -28,25 +28,25 @@ describe('AppController (e2e)', () => {
     expect(app).toBeDefined();
   });
 
-  // describe('HealthCheck (e2e) /health-check', healthCheckTests);
+  describe('HealthCheck (e2e) /health-check', healthCheckTests);
 
-  // describe('User (e2e) /users', userTests);
+  describe('User (e2e) /users', userTests);
 
-  // describe('Site SurveyPoints (e2e) /site-survey-points', surveyPointTests);
+  describe('Site SurveyPoints (e2e) /site-survey-points', surveyPointTests);
 
-  // describe('Collection (e2e) /collections', collectionTests);
+  describe('Collection (e2e) /collections', collectionTests);
 
   describe('Time Series (e2e) /time-series', timeSeriesTests);
 
-  // describe('Region (e2e) /regions', regionTests);
+  describe('Region (e2e) /regions', regionTests);
 
-  // describe('Site Application {e2e) /site-applications', siteApplicationTests);
+  describe('Site Application {e2e) /site-applications', siteApplicationTests);
 
-  // describe('Survey (e2e) /sites/:id/surveys', surveyTests);
+  describe('Survey (e2e) /sites/:id/surveys', surveyTests);
 
-  // describe('Sites (e2e) /sites', siteTests);
+  describe('Sites (e2e) /sites', siteTests);
 
-  // describe('Sensors (e2e) /sensors', sensorTests);
+  describe('Sensors (e2e) /sensors', sensorTests);
 
   afterAll(async () => {
     await testService.cleanUpApp();
