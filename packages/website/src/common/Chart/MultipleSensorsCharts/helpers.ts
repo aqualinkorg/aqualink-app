@@ -1,6 +1,5 @@
 import { utcToZonedTime } from 'date-fns-tz';
-import { minBy, maxBy, meanBy, inRange, isNumber } from 'lodash';
-import moment from 'moment';
+import { minBy, maxBy, meanBy, isNumber } from 'lodash';
 import {
   DAILY_DATA_CURVE_COLOR,
   HISTORICAL_MONTHLY_MEAN_COLOR,
@@ -26,7 +25,7 @@ import {
   findMarginalDate,
   generateHistoricalMonthlyMeanTimestamps,
 } from 'helpers/dates';
-
+import { DateTime } from 'luxon';
 import { CardColumn, OceanSenseDataset } from './types';
 import type { Dataset } from '../index';
 import {
@@ -41,12 +40,11 @@ const filterSofarData =
       return data;
     }
 
-    return data?.filter(({ timestamp }) =>
-      inRange(
-        moment(timestamp).valueOf(),
-        moment(from).valueOf(),
-        moment(to).valueOf() + 1,
-      ),
+    return data?.filter(
+      ({ timestamp }) =>
+        DateTime.fromISO(timestamp).valueOf() >=
+          DateTime.fromISO(from).valueOf() &&
+        DateTime.fromISO(timestamp).valueOf() <= DateTime.fromISO(to).valueOf(),
     );
   };
 
@@ -80,11 +78,11 @@ export const calculateCardMetrics = (
 
 // Show at least 3 ticks on the chart
 export const findChartPeriod = (startDate: string, endDate: string) => {
-  const from = moment(new Date(startDate).toISOString());
-  const to = moment(new Date(endDate).toISOString());
+  const from = DateTime.fromISO(startDate);
+  const to = DateTime.fromISO(endDate);
   const week = 7;
   const month = 30;
-  const diffDays = to.diff(from, 'days');
+  const diffDays = to.diff(from, 'days').days;
 
   switch (true) {
     case diffDays < 2:
@@ -178,10 +176,14 @@ export const availableRangeString = (
 ): string | undefined => {
   const { minDate, maxDate } = range || {};
   const formattedStartDate = minDate
-    ? moment(utcToZonedTime(minDate, timeZone || 'UTC')).format('MM/DD/YYYY')
+    ? DateTime.fromJSDate(utcToZonedTime(minDate, timeZone || 'UTC')).toFormat(
+        'LL/dd/yyyy',
+      )
     : undefined;
   const formattedEndDate = maxDate
-    ? moment(utcToZonedTime(maxDate, timeZone || 'UTC')).format('MM/DD/YYYY')
+    ? DateTime.fromJSDate(utcToZonedTime(maxDate, timeZone || 'UTC')).toFormat(
+        'LL/dd/yyyy',
+      )
     : undefined;
   return formattedStartDate && formattedEndDate
     ? `${sensor} range: ${formattedStartDate} - ${formattedEndDate}`
@@ -194,18 +196,19 @@ export const availableRangeString = (
  * @param endDate - The ending date
  */
 export const moreThanOneYear = (startDate: string, endDate: string) => {
-  const from = moment(startDate);
-  const to = moment(endDate);
-  return to.diff(from, 'years') >= 1;
+  const from = DateTime.fromISO(startDate);
+  const to = DateTime.fromISO(endDate);
+  return to.diff(from, 'years').years >= 1;
 };
 
 export const localizedEndOfDay = (
   date?: string,
   timeZone?: string | null | undefined,
 ): string =>
-  moment(date)
-    .tz(timeZone || 'UTC')
+  (date ? DateTime.fromISO(date) : DateTime.now())
+    .setZone(timeZone || 'UTC')
     .endOf('day')
+    .toJSDate()
     .toISOString();
 
 export const constructOceanSenseDatasets = (

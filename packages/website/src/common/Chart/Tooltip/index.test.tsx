@@ -19,7 +19,7 @@ test('renders as expected', () => {
   const { container } = render(
     <Tooltip
       siteId={0}
-      date="12/20/20, 02:19 AM GMT-5"
+      date="2020-12-20T02:19:00-05:00"
       datasets={[mockDataset]}
       userTimeZone="UTC"
       siteTimeZone="UTC"

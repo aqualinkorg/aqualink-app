@@ -11,7 +11,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import React from 'react';
 import { ValueWithTimestamp } from 'store/Sites/types';
 
@@ -89,11 +89,11 @@ const DownloadCSVDialog = ({
             <>
               dates between{' '}
               <span className={classes.bold}>
-                {moment(startDate).format('MM/DD/YYYY')}
+                {DateTime.fromISO(startDate).toFormat('LL/dd/yyyy')}
               </span>{' '}
               and{' '}
               <span className={classes.bold}>
-                {moment(endDate).format('MM/DD/YYYY')}
+                {DateTime.fromISO(endDate).toFormat('LL/dd/yyyy')}
               </span>
             </>
           )}

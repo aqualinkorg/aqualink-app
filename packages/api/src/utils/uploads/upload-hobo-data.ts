@@ -9,11 +9,11 @@ import fs from 'fs';
 import path from 'path';
 import { CastingContext, CastingFunction } from 'csv-parse';
 import { Point, GeoJSON } from 'geojson';
-import moment from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
 import parse from 'csv-parse/lib/sync';
 
+import { DateTime } from 'luxon';
 import { Site, SiteStatus } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
@@ -489,9 +489,9 @@ const parseHoboData = async (
         return [parseInt(siteId, 10), 0];
       }
 
-      const start = moment(startDate.timestamp);
-      const end = moment();
-      const diff = Math.min(end.diff(start, 'd'), 200);
+      const start = DateTime.fromJSDate(startDate.timestamp);
+      const end = DateTime.now();
+      const diff = Math.min(end.diff(start, 'days').days, 200);
 
       return [startDate.source.site.id, diff];
     },
@@ -560,8 +560,8 @@ const uploadSitePhotos = async (
         ).parse();
         const createdDate =
           data.tags && data.tags.CreateDate
-            ? moment.unix(data.tags.CreateDate).toDate()
-            : moment().toDate();
+            ? DateTime.fromSeconds(data.tags.CreateDate).toJSDate()
+            : DateTime.now().toJSDate();
         return {
           imagePath: path.join(colonyFolderPath, image),
           site: poi.site,

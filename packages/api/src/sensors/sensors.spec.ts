@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import request from 'supertest';
 import { californiaSite } from '../../test/mock/site.mock';
 import { TestService } from '../../test/test.service';
@@ -25,8 +25,12 @@ export const sensorTests = () => {
     const rsp = await request(app.getHttpServer())
       .get(`/sensors/${californiaSite.sensorId}/data`)
       .query({
-        startDate: moment().subtract(5, 'days').startOf('day').toISOString(),
-        endDate: moment().endOf('day').toISOString(),
+        startDate: DateTime.now()
+          .minus({ days: 5 })
+          .startOf('day')
+          .toJSDate()
+          .toISOString(),
+        endDate: DateTime.now().endOf('day').toJSDate().toISOString(),
         metrics: Metric.TOP_TEMPERATURE,
       });
 
@@ -53,8 +57,12 @@ export const sensorTests = () => {
     const rsp = await request(app.getHttpServer())
       .get(`/sensors/${californiaSite.sensorId}/data`)
       .query({
-        startDate: moment().subtract(5, 'days').startOf('day').toISOString(),
-        endDate: moment().endOf('day').toISOString(),
+        startDate: DateTime.now()
+          .minus({ days: 5 })
+          .startOf('day')
+          .toJSDate()
+          .toISOString(),
+        endDate: DateTime.now().endOf('day').toJSDate().toISOString(),
         metrics: 'invalidMetric',
       });
 

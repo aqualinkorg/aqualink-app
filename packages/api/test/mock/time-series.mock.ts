@@ -1,5 +1,5 @@
 import { random, times } from 'lodash';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { DeepPartial } from 'typeorm';
 import { SourceType } from '../../src/sites/schemas/source-type.enum';
 import { Sources } from '../../src/sites/sources.entity';
@@ -75,11 +75,10 @@ const createTimeSeriesData = (
   return metrics
     .map((metric) =>
       times(10, (i) => {
-        const date = moment()
-          .subtract(i, 'days')
-          .set('hour', random(23))
-          .set('minute', random(59))
-          .toDate();
+        const date = DateTime.now()
+          .minus({ days: i })
+          .set({ hour: random(23), minute: random(59) })
+          .toJSDate();
 
         return {
           timestamp: date,

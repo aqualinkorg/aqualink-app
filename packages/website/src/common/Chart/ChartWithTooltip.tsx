@@ -7,7 +7,6 @@ import React, {
 import { Line } from 'react-chartjs-2';
 import type { ChartTooltipModel } from 'chart.js';
 import { head, isNumber, maxBy, minBy } from 'lodash';
-import moment from 'moment';
 import Chart, { ChartProps } from '.';
 import Tooltip, { TooltipData, TOOLTIP_WIDTH } from './Tooltip';
 import {
@@ -82,15 +81,10 @@ function ChartWithTooltip({
 
       // We display the tooltip only if there are data to display at this point and it lands
       // between the chart's X axis limits.
-      if (
-        nValues > 0 &&
-        moment(date).isBetween(
-          moment(startDate || minDataDate),
-          moment(endDate || maxDataDate),
-          undefined,
-          '[]',
-        )
-      ) {
+      const start = startDate || minDataDate || '';
+      const end = endDate || maxDataDate || '';
+      const isBetween = date >= start && date <= end;
+      if (nValues > 0 && isBetween) {
         setTooltipPosition({ top, left });
         setTooltipData({
           ...tooltipData,

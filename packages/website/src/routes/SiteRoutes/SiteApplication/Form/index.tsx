@@ -14,8 +14,8 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import moment from 'moment';
 import { SiteApplication, SiteApplyParams } from 'store/Sites/types';
+import { DateTime } from 'luxon';
 
 interface SiteApplicationFormFields {
   siteName: string;
@@ -161,7 +161,8 @@ const Form = ({
             required: 'This is a required field',
             validate: {
               validDate: (value) =>
-                moment(value, 'MM/DD/YYYY', true).isValid() || 'Invalid date',
+                DateTime.fromFormat(value, 'LL/dd/yyyy').isValid ||
+                'Invalid date',
             },
           }}
           render={({ field }) => (

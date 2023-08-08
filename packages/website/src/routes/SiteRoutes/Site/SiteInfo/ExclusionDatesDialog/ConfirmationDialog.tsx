@@ -7,8 +7,8 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import moment from 'moment';
 import { grey } from '@material-ui/core/colors';
+import { DateTime } from 'luxon';
 
 const ConfirmationDialog = ({
   open,
@@ -20,8 +20,10 @@ const ConfirmationDialog = ({
   handleMaintainPeriodAddition,
 }: ConfirmationDialogProps) => {
   const classes = useStyles();
-  const startDate = moment(start).format('MM/DD/YYYY HH:mm');
-  const endDate = moment(end).format('MM/DD/YYYY HH:mm');
+  if (!start || !end) return null;
+
+  const startDate = DateTime.fromJSDate(start).toFormat('LL/dd/yyyy HH:mm');
+  const endDate = DateTime.fromJSDate(end).toFormat('LL/dd/yyyy HH:mm');
 
   return (
     <Dialog maxWidth="sm" fullWidth open={open} onClose={onClose}>
@@ -79,10 +81,5 @@ interface ConfirmationDialogProps {
   onClose: () => void;
   handleMaintainPeriodAddition: () => void;
 }
-
-ConfirmationDialog.defaultProps = {
-  start: undefined,
-  end: undefined,
-};
 
 export default ConfirmationDialog;

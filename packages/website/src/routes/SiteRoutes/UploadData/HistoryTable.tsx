@@ -15,11 +15,11 @@ import {
 import { grey } from '@material-ui/core/colors';
 import { startCase } from 'lodash';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import { Site, SiteUploadHistory } from 'store/Sites/types';
 import requests from 'helpers/requests';
 import { pluralize } from 'helpers/stringUtils';
 import DeleteButton from 'common/DeleteButton';
+import { DateTime } from 'luxon';
 
 const tableHeaderTitles = [
   'NAME',
@@ -42,9 +42,9 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
   const classes = useStyles();
   const { timezone } = site;
   const timezoneAbbreviation = timezone
-    ? moment().tz(timezone).zoneAbbr()
+    ? DateTime.local().setZone(timezone).toFormat('zzz')
     : undefined;
-  const dateFormat = 'MM/DD/YYYY';
+  const dateFormat = 'LL/dd/yyyy';
 
   const dataVisualizationButtonLink = (
     start: string,
@@ -96,7 +96,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                   site.name,
                   surveyPoint.name,
                   startCase(sensorType),
-                  moment(createdAt).format(dateFormat),
+                  DateTime.fromISO(createdAt).toFormat(dateFormat),
                 ];
                 return (
                   <TableRow key={id}>
@@ -120,8 +120,8 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                         color="primary"
                         className={classes.dateIntervalButton}
                       >
-                        {moment(minDate).format(dateFormat)} -{' '}
-                        {moment(maxDate).format(dateFormat)}
+                        {DateTime.fromISO(minDate).toFormat(dateFormat)} -{' '}
+                        {DateTime.fromISO(maxDate).toFormat(dateFormat)}
                       </Button>
                     </TableCell>
                     <TableCell>
@@ -133,11 +133,15 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                             <span className={classes.bold}>{file}</span>&quot;?
                             Data between dates{' '}
                             <span className={classes.bold}>
-                              {moment(minDate).format('MM/DD/YYYY HH:mm')}
+                              {DateTime.fromISO(minDate).toFormat(
+                                'LL/dd/yyyy HH:mm',
+                              )}
                             </span>{' '}
                             and{' '}
                             <span className={classes.bold}>
-                              {moment(maxDate).format('MM/DD/YYYY HH:mm')}
+                              {DateTime.fromISO(maxDate).toFormat(
+                                'LL/dd/yyyy HH:mm',
+                              )}
                             </span>{' '}
                             will be lost.
                           </Typography>

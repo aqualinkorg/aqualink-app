@@ -1,7 +1,7 @@
 import { DataSource, In, MoreThan } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { difference } from 'lodash';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { Site, SiteStatus } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
@@ -30,7 +30,7 @@ export async function checkBuoysStatus(connection: DataSource) {
       source: SourceType.SPOTTER,
       site: { id: In(siteIds) },
       timestamp: MoreThan(
-        new Date(moment().subtract(2, 'd').format('YYYY-MM-DD')),
+        DateTime.now().minus({ days: 2 }).startOf('day').toJSDate(),
       ),
     },
   });

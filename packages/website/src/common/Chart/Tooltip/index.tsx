@@ -65,7 +65,7 @@ const Tooltip = ({
   const hasHourlyData = datasets.some(({ isDailyUpdated }) => !isDailyUpdated);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
-    format: `MM/DD/YY${hasHourlyData ? ' hh:mm A' : ''}`,
+    format: `MM/dd/yy${hasHourlyData ? ' HH:mm a' : ''}`,
     displayTimezone: hasHourlyData,
     timeZone: userTimeZone,
     timeZoneToDisplay: siteTimeZone,
@@ -89,7 +89,11 @@ const Tooltip = ({
         <CardHeader
           className={classes.tooltipHeader}
           title={
-            <Typography color="textPrimary" variant="caption">
+            <Typography
+              color="textPrimary"
+              variant="caption"
+              style={{ whiteSpace: 'nowrap' }}
+            >
               {dateString}
             </Typography>
           }

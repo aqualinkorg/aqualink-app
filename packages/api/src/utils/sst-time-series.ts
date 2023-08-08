@@ -3,8 +3,7 @@ import Bluebird from 'bluebird';
 import { In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import { flatten, groupBy, isNil, omit, times } from 'lodash';
-import moment from 'moment';
-
+import { DateTime } from 'luxon';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
@@ -97,15 +96,14 @@ export const updateSST = async (
         async (interval, index) => {
           const endDate =
             index !== 0
-              ? moment()
-                  .subtract(index * MAX_SOFAR_DATE_DIFF_DAYS, 'd')
-                  // subtract 1 minute to be within the api date diff limit
-                  .subtract(1, 'm')
-                  .format()
-              : moment().subtract(1, 'm').format();
-          const startDate = moment()
-            .subtract(index * MAX_SOFAR_DATE_DIFF_DAYS + interval, 'd')
-            .format();
+              ? // subtract 1 minute to be within the api date diff limit
+                DateTime.now()
+                  .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS, minutes: 1 })
+                  .toString()
+              : DateTime.now().minus({ minutes: 1 }).toString();
+          const startDate = DateTime.now()
+            .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS })
+            .toString();
 
           const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] = await Promise.all([
             // Fetch satellite surface temperature data
@@ -266,8 +264,8 @@ export const updateSST = async (
     async (i) => {
       const endDate =
         i === 0
-          ? moment().format()
-          : moment().subtract(i, 'd').endOf('day').format();
+          ? DateTime.now().toString()
+          : DateTime.now().minus({ days: i }).endOf('day').toString();
 
       logger.log(`Back-filling weekly alert for ${endDate}`);
       // Calculate max alert by fetching the max alert in the last 7 days

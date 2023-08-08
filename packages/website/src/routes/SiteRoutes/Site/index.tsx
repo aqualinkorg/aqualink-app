@@ -33,13 +33,14 @@ import { Site as SiteType } from 'store/Sites/types';
 import { useQueryParam } from 'hooks/useQueryParams';
 import { isAdmin } from 'helpers/user';
 import { findAdministeredSite } from 'helpers/findAdministeredSite';
-import { sortByDate, subtractFromDate } from 'helpers/dates';
+import { sortByDate } from 'helpers/dates';
 import { findSurveyPointFromList } from 'helpers/siteUtils';
 import SiteNavBar from 'common/NavBar';
 import SiteFooter from 'common/Footer';
 import SiteDetails from 'common/SiteDetails';
 import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
 import LoadingSkeleton from 'common/LoadingSkeleton';
+import { DateTime } from 'luxon';
 import SiteInfo from './SiteInfo';
 import NotFoundPage from '../../NotFound/index';
 
@@ -186,7 +187,10 @@ const Site = ({ match, classes }: SiteProps) => {
       dispatch(
         siteOceanSenseDataRequest({
           sensorID: 'oceansense-2',
-          startDate: subtractFromDate(today, 'month', 6),
+          startDate: DateTime.fromISO(today)
+            .minus({ months: 6 })
+            .toJSDate()
+            .toISOString(),
           endDate: today,
           latest: true,
         }),

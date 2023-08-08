@@ -12,8 +12,8 @@ import { colors } from 'layout/App/theme';
 import { Metrics, Sources, TimeSeriesData } from 'store/Sites/types';
 import { SurveyPoint } from 'store/Survey/types';
 import requests from 'helpers/requests';
-import moment from 'moment';
 import WarningIcon from '@material-ui/icons/Warning';
+import { DateTime } from 'luxon';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
 import {
@@ -51,7 +51,9 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
       surveyPoint: point?.id,
     },
   )}`;
-  const lastUpload = maxDate ? moment(maxDate).format('MM/DD/YYYY') : undefined;
+  const lastUpload = maxDate
+    ? DateTime.fromISO(maxDate).toFormat('LL/dd/yyyy')
+    : undefined;
 
   React.useEffect(() => {
     (async () => {

@@ -17,7 +17,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 const DatePicker = ({
   value,
@@ -44,10 +44,10 @@ const DatePicker = ({
               disableToolbar
               format="MM/dd/yyyy"
               name="datePicker"
-              maxDate={moment()
-                .tz(timeZone || 'UTC')
-                .format('YYYY/MM/DD')}
-              minDate={moment(0).format('YYYY/MM/DD')}
+              maxDate={DateTime.now()
+                .setZone(timeZone || 'UTC')
+                .toFormat('yyyy/MM/dd')}
+              minDate={DateTime.fromMillis(0).toFormat('yyyy/MM/dd')}
               autoOk={autoOk}
               showTodayButton
               value={value || null}

@@ -9,13 +9,13 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { SurveyListItem } from 'store/Survey/types';
 import { userInfoSelector } from 'store/User/userSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { formatNumber } from 'helpers/numberUtils';
 import surveyServices from 'services/surveyServices';
+import { DateTime } from 'luxon';
 import incomingStyles from '../styles';
 import CustomLink from '../../../Link';
 import LoadingSkeleton from '../../../LoadingSkeleton';
@@ -32,7 +32,6 @@ const SurveyCard = ({
 }: SurveyCardProps) => {
   const classes = useStyles();
   const isShowingFeatured = pointId === -1;
-  const displayDeleteButton = isAdmin && typeof siteId === 'number';
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
 
@@ -185,21 +184,23 @@ const SurveyCard = ({
                         </Button>
                       </Link>
                     </Grid>
-                    {displayDeleteButton && (
-                      <Grid container justify="flex-end" item xs={2}>
-                        <DeleteButton
-                          content={
-                            <Typography color="textSecondary">{`Are you sure you would like to delete the survey for ${moment(
-                              survey.diveDate,
-                            ).format(
-                              'MM/DD/YYYY',
-                            )}? It will delete all media associated with this survey.`}</Typography>
-                          }
-                          onConfirm={onSurveyDelete}
-                          onSuccess={onSurveyDeleteSuccess}
-                        />
-                      </Grid>
-                    )}
+                    {isAdmin &&
+                      typeof siteId === 'number' &&
+                      typeof survey?.diveDate === 'string' && (
+                        <Grid container justify="flex-end" item xs={2}>
+                          <DeleteButton
+                            content={
+                              <Typography color="textSecondary">{`Are you sure you would like to delete the survey for ${DateTime.fromISO(
+                                survey.diveDate,
+                              ).toFormat(
+                                'LL/dd/yyyy',
+                              )}? It will delete all media associated with this survey.`}</Typography>
+                            }
+                            onConfirm={onSurveyDelete}
+                            onSuccess={onSurveyDeleteSuccess}
+                          />
+                        </Grid>
+                      )}
                   </Grid>
                 </>
               )}

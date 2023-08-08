@@ -1,6 +1,6 @@
 import Bluebird from 'bluebird';
 import yargs from 'yargs';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { getSitesDailyData } from '../src/workers/dailyData';
 import AqualinkDataSource from '../ormconfig';
 
@@ -24,19 +24,13 @@ async function run() {
   const { d: days, s: sites } = argv;
   const backlogArray = Array.from(Array(days).keys());
   const siteIds = sites && sites.map((site) => parseInt(`${site}`, 10));
-  const today = moment()
-    .utc()
-    .hours(23)
-    .minutes(59)
-    .seconds(59)
-    .milliseconds(999);
+  const today = DateTime.utc().endOf('day');
   const connection = await AqualinkDataSource.initialize();
   // eslint-disable-next-line fp/no-mutating-methods
   await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
-    const date = moment(today);
-    date.day(today.day() - past - 1);
+    const date = today.set({ day: today.day - past - 1 });
     try {
-      await getSitesDailyData(connection, date.toDate(), siteIds);
+      await getSitesDailyData(connection, date.toJSDate(), siteIds);
     } catch (error) {
       console.error(error);
     }

@@ -194,7 +194,7 @@ const SiteDetails = ({
           {
             text: `${displayTimeInLocalTimezone({
               isoDate: surveyDiveDate,
-              format: 'MMM DD[,] YYYY',
+              format: 'MMM dd, yyyy',
               displayTimezone: false,
               timeZone: site?.timezone,
             })}`,

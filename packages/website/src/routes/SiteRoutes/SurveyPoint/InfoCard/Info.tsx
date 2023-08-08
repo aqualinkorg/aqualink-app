@@ -40,7 +40,7 @@ const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
     isoDate: surveys[0]?.diveDate,
     displayTimezone: false,
     timeZone: site.timezone,
-    format: 'MMM DD[,] YYYY',
+    format: 'MMM dd, yyyy',
   });
 
   return (

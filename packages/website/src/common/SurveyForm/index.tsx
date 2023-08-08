@@ -1,6 +1,5 @@
 import React, { useState, useCallback, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
-import moment from 'moment';
 import {
   withStyles,
   WithStyles,
@@ -28,6 +27,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { diveLocationSelector } from 'store/Survey/surveySlice';
 import { SurveyData, SurveyState } from 'store/Survey/types';
 import { setTimeZone } from 'helpers/dates';
+import { DateTime } from 'luxon';
 
 interface SurveyFormFields {
   diveDate: string;
@@ -115,8 +115,8 @@ const SurveyForm = ({
                 required: 'This is a required field',
                 validate: {
                   validDate: (value) =>
-                    moment(value, 'MM/DD/YYYY', true).isValid() ||
-                    'Invalid date',
+                    DateTime.fromFormat(value, 'LL/dd/yyyy', { zone: 'UTC' })
+                      .isValid || 'Invalid date',
                 },
               }}
               render={({ field }) => (
@@ -135,7 +135,10 @@ const SurveyForm = ({
                   ref={field.ref}
                   onChange={(e) => {
                     field.onChange(e);
-                    setValue('diveTime', moment(e).format('HH:mm'));
+                    setValue(
+                      'diveTime',
+                      DateTime.fromJSDate(e || new Date(NaN)).toFormat('HH:mm'),
+                    );
                     handleDiveDateTimeChange(e);
                   }}
                   KeyboardButtonProps={{

@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { DeepPartial } from 'typeorm';
 import { Survey, WeatherConditions } from '../../src/surveys/surveys.entity';
 import { californiaSite } from './site.mock';
@@ -6,7 +6,7 @@ import { siteManagerUserMock } from './user.mock';
 
 export const californiaSurveyOne: DeepPartial<Survey> = {
   comments: 'California Survey One',
-  diveDate: moment().subtract(6, 'days').toISOString(),
+  diveDate: DateTime.now().minus({ days: 6 }).toJSDate().toISOString(),
   temperature: null,
   weatherConditions: WeatherConditions.Calm,
   user: siteManagerUserMock,
@@ -15,7 +15,7 @@ export const californiaSurveyOne: DeepPartial<Survey> = {
 
 export const californiaSurveyTwo: DeepPartial<Survey> = {
   comments: 'California Survey Two',
-  diveDate: moment().subtract(2, 'days').toISOString(),
+  diveDate: DateTime.now().minus({ days: 2 }).toJSDate().toISOString(),
   temperature: null,
   weatherConditions: WeatherConditions.Calm,
   user: siteManagerUserMock,

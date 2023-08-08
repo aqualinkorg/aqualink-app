@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /** Utility function to access the Sofar API and retrieve relevant data. */
 import { isNil } from 'lodash';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {
@@ -219,8 +219,8 @@ export async function getSpotterData(
     endDate && !startDate
       ? getStartEndDate(endDate)
       : [
-          startDate && moment(startDate).format(),
-          endDate && moment(endDate).format(),
+          startDate && DateTime.fromJSDate(startDate).toString(),
+          endDate && DateTime.fromJSDate(endDate).toString(),
         ];
 
   const {
