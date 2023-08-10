@@ -1,3 +1,4 @@
+import { LinearProgress } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
@@ -25,6 +26,7 @@ export interface DownloadCSVDialogProps {
     allDates: boolean,
     hourly: boolean,
   ) => void;
+  loading: boolean;
 }
 
 const additionalDataLabels = [
@@ -42,6 +44,7 @@ const DownloadCSVDialog = ({
   data,
   startDate,
   endDate,
+  loading,
 }: DownloadCSVDialogProps) => {
   const classes = useStyles();
   const [additionalData, setAdditionalData] = React.useState(false);
@@ -76,6 +79,7 @@ const DownloadCSVDialog = ({
       <DialogTitle disableTypography className={classes.dialogTitle}>
         <Typography variant="h4">Download CSV</Typography>
       </DialogTitle>
+      {loading && <LinearProgress color="secondary" />}
       <DialogContent dividers className={classes.dialogContent}>
         <DialogContentText>
           Selected data to download into CSV format from{' '}
@@ -165,7 +169,7 @@ const DownloadCSVDialog = ({
           Cancel
         </Button>
         <Button onClick={() => handleClose(true)} color="primary" autoFocus>
-          Download
+          {loading ? 'Loading...' : 'Download'}
         </Button>
       </DialogActions>
     </Dialog>
