@@ -1,4 +1,5 @@
 import requests from 'helpers/requests';
+import { Sources } from 'store/Sites/types';
 
 export interface UploadTimeSeriesResult {
   file: string;
@@ -25,16 +26,18 @@ const uploadMedia = (
 
 const uploadMultiSiteTimeSeriesData = (
   files: File[],
+  source: Sources,
   token?: string | null,
   failOnWarning?: boolean,
 ) => {
   const data = new FormData();
   files.forEach((file) => data.append('files', file));
+  data.append('sensor', source);
+  if (failOnWarning !== undefined)
+    data.append('failOnWarning', String(failOnWarning));
   return requests.send<UploadTimeSeriesResult[]>({
     method: 'POST',
-    url: `time-series/upload${requests.generateUrlQueryParams({
-      failOnWarning,
-    })}`,
+    url: `time-series/upload`,
     data,
     token,
     contentType: 'multipart/form-data',

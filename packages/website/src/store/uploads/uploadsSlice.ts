@@ -4,6 +4,7 @@ import { getAxiosErrorMessage } from 'helpers/errors';
 import uploadServices, {
   UploadTimeSeriesResult,
 } from 'services/uploadServices';
+import { Sources } from 'store/Sites/types';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
 import { UploadsSliceState } from './types';
 
@@ -73,14 +74,19 @@ export const uploadFiles = createAsyncThunk<
 
 export const uploadMultiSiteFiles = createAsyncThunk<
   UploadsSliceState['uploadResponse'],
-  { token: string | null | undefined; files: File[] },
+  { token: string | null | undefined; files: File[]; source: Sources },
   CreateAsyncThunkTypes
 >(
   'uploads/uploadMultiSiteFiles',
-  async ({ token, files }, { rejectWithValue }) => {
+  async ({ token, files, source }, { rejectWithValue }) => {
     try {
       const { data: uploadResponse } =
-        await uploadServices.uploadMultiSiteTimeSeriesData(files, token, false);
+        await uploadServices.uploadMultiSiteTimeSeriesData(
+          files,
+          source,
+          token,
+          false,
+        );
       return uploadResponse;
     } catch (err) {
       const errorMessage = getAxiosErrorMessage(err);

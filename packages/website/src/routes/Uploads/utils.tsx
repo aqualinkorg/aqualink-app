@@ -1,14 +1,18 @@
 import {
   Box,
+  Chip,
   Collapse,
   IconButton,
   makeStyles,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableCellProps,
   TableHead,
   TableRow,
+  TextFieldProps,
+  Theme,
   Typography,
 } from '@material-ui/core';
 import React from 'react';
@@ -115,3 +119,90 @@ export function CollapsibleTableRow(props: {
     </>
   );
 }
+
+interface SelectOption {
+  id: number;
+  name: string | null;
+  label?: string;
+}
+
+type EnhancedSelectOption = SelectOption & { disabled?: boolean };
+
+export const SENSOR_TYPES: EnhancedSelectOption[] = [
+  { id: 5, name: 'sheet_data', label: 'Default' },
+  { id: 0, name: 'sonde', label: 'Sonde data' },
+  { id: 1, name: 'metlog', label: 'Meteorological data' },
+  { id: 3, name: 'hobo', label: 'HOBO data' },
+  { id: 4, name: 'hui', label: 'HUI data' },
+  { id: 2, name: 'spotter', label: 'Spotter data', disabled: true },
+];
+
+export const OptionsList = <T extends EnhancedSelectOption>(options: T[]) => {
+  const classes = OptionsListStyles();
+  return options.map(({ id, name, label, disabled }, index) =>
+    name ? (
+      <MenuItem
+        disabled={disabled}
+        key={id}
+        value={index}
+        className={classes.menuItem}
+      >
+        <Typography
+          title={label || name}
+          className={classes.itemName}
+          color="textSecondary"
+        >
+          {label || name}
+        </Typography>
+        {disabled && (
+          <Chip
+            className={classes.comingSoonChip}
+            label={
+              <Typography
+                className={classes.comingSoonChipText}
+                variant="subtitle2"
+              >
+                COMING SOON
+              </Typography>
+            }
+          />
+        )}
+      </MenuItem>
+    ) : null,
+  );
+};
+
+const OptionsListStyles = makeStyles((theme: Theme) => ({
+  menuItem: {
+    paddingTop: 8.5,
+    paddingBottom: 8.5,
+  },
+  itemName: {
+    maxWidth: '100%',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    height: 19,
+  },
+  comingSoonChip: {
+    marginLeft: theme.spacing(1),
+    height: 18,
+  },
+  comingSoonChipText: {
+    fontSize: 8,
+  },
+}));
+
+export const selectProps: TextFieldProps['SelectProps'] = {
+  MenuProps: {
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center',
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'center',
+    },
+    getContentAnchorEl: null,
+  },
+};

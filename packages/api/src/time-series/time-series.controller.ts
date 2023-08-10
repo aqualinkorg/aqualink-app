@@ -36,6 +36,7 @@ import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
 import { AuthRequest } from '../auth/auth.types';
 import { MetricArrayPipe } from '../pipes/parse-metric-array.pipe';
+import { UploadTimeSeriesDataDto } from './dto/upload-time-series-data.dto';
 
 const MAX_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;
@@ -183,13 +184,14 @@ export class TimeSeriesController {
   uploadTimeSeriesData(
     @Req() req: AuthRequest,
     @UploadedFiles() files: Express.Multer.File[],
-    @Query('failOnWarning', ParseBoolPipe) failOnWarning?: boolean,
+    @Body() uploadTimeSeriesDataDto: UploadTimeSeriesDataDto,
   ) {
     return this.timeSeriesService.uploadData({
       user: req.user,
+      sensor: uploadTimeSeriesDataDto.sensor,
       files,
       multiSiteUpload: true,
-      failOnWarning,
+      failOnWarning: uploadTimeSeriesDataDto.failOnWarning,
     });
   }
 

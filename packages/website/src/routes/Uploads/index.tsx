@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from '@material-ui/core';
+import { Box, Container, Grid, TextField, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import DropZone from 'common/FileUploads/Dropzone';
 import NavBar from 'common/NavBar';
@@ -19,7 +19,9 @@ import StatusSnackbar from 'common/StatusSnackbar';
 import { UploadTimeSeriesResult } from 'services/uploadServices';
 import UploadWarnings from 'common/FileUploads/UploadWarnings';
 import { useHistory } from 'react-router-dom';
+import { Sources } from 'store/Sites/types';
 import SitesTable from './SitesTable';
+import { OptionsList, selectProps, SENSOR_TYPES } from './utils';
 
 function Uploads() {
   const classes = useStyles();
@@ -34,6 +36,9 @@ function Uploads() {
   const [uploadDetails, setUploadDetails] = React.useState<
     UploadTimeSeriesResult[]
   >([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [selectedSource, setSelectedSource] =
+    React.useState<Sources>('sheet_data');
 
   const user = useSelector(userInfoSelector);
   const uploadLoading = useSelector(uploadsInProgressSelector);
@@ -81,7 +86,13 @@ function Uploads() {
   };
 
   const onUpload = () => {
-    dispatch(uploadMultiSiteFiles({ files, token: user?.token }));
+    dispatch(
+      uploadMultiSiteFiles({
+        files,
+        token: user?.token,
+        source: selectedSource,
+      }),
+    );
   };
 
   return (
@@ -131,11 +142,6 @@ function Uploads() {
                 <li>
                   <code>aqualink_survey_point_id</code> (optional)
                 </li>
-                <li>
-                  <code>aqualink_sensor_type</code> (optional, valid types are:{' '}
-                  <code>hobo</code>, <code>sonde</code>, <code>spotter</code>,{' '}
-                  <code>metlog</code>, <code>sheet_data</code>)
-                </li>
               </ul>
             </Typography>
             <Typography style={{ fontSize: '0.8em' }}>
@@ -149,6 +155,23 @@ function Uploads() {
               </a>
               .
             </Typography>
+          </Grid>
+          <Grid md={4} xs={12}>
+            <TextField
+              label="Sensor type"
+              value={SENSOR_TYPES.findIndex((x) => x.name === selectedSource)}
+              onChange={(e) => {
+                setSelectedSource(
+                  SENSOR_TYPES[Number(e.target.value)].name as Sources,
+                );
+              }}
+              variant="outlined"
+              fullWidth
+              select
+              SelectProps={selectProps}
+            >
+              {OptionsList(SENSOR_TYPES)}
+            </TextField>
           </Grid>
         </Grid>
 

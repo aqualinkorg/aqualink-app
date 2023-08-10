@@ -316,7 +316,7 @@ export class TimeSeriesService {
     failOnWarning,
   }: {
     user?: Express.User & User;
-    sensor?: SourceType;
+    sensor: SourceType;
     files: Express.Multer.File[];
     multiSiteUpload: boolean;
     surveyPointDataRangeDto?: SurveyPointDataRangeDto;

@@ -4,11 +4,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
 <div>
   <mock-snackbar
     anchororigin="[object Object]"
-    classname="makeStyles-snackbar-2"
+    classname="makeStyles-snackbar-6"
     open="false"
   >
     <div
-      class="MuiPaper-root MuiAlert-root MuiAlert-filledSuccess makeStyles-alert-3 MuiPaper-elevation0"
+      class="MuiPaper-root MuiAlert-root MuiAlert-filledSuccess makeStyles-alert-7 MuiPaper-elevation0"
       role="alert"
     >
       <div
@@ -26,11 +26,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </svg>
       </div>
       <div
-        class="MuiAlert-message makeStyles-alertMessage-4 makeStyles-alertMessage-6"
+        class="MuiAlert-message makeStyles-alertMessage-8 makeStyles-alertMessage-10"
       >
         Successfully uploaded files
         <mock-button
-          classname="makeStyles-button-5"
+          classname="makeStyles-button-9"
           size="small"
         >
           Go to map
@@ -61,11 +61,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
   </mock-snackbar>
   <mock-snackbar
     anchororigin="[object Object]"
-    classname="makeStyles-snackbar-2"
+    classname="makeStyles-snackbar-6"
     open="false"
   >
     <div
-      class="MuiPaper-root MuiAlert-root MuiAlert-filledError makeStyles-alert-3 MuiPaper-elevation0"
+      class="MuiPaper-root MuiAlert-root MuiAlert-filledError makeStyles-alert-7 MuiPaper-elevation0"
       role="alert"
     >
       <div
@@ -83,11 +83,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </svg>
       </div>
       <div
-        class="MuiAlert-message makeStyles-alertMessage-4 makeStyles-alertMessage-7"
+        class="MuiAlert-message makeStyles-alertMessage-8 makeStyles-alertMessage-11"
       >
         Something went wrong with the upload
         <mock-button
-          classname="makeStyles-button-5"
+          classname="makeStyles-button-9"
           size="small"
         >
           View details
@@ -122,7 +122,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
     open="false"
   >
     <mock-dialogtitle
-      classname="makeStyles-dialogTitle-8"
+      classname="makeStyles-dialogTitle-12"
       disabletypography="true"
     >
       <mock-typography
@@ -131,7 +131,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         Upload Details
       </mock-typography>
       <mock-iconbutton
-        classname="makeStyles-closeButton-9"
+        classname="makeStyles-closeButton-13"
       >
         <svg
           aria-hidden="true"
@@ -150,12 +150,12 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
     </mock-dialogcontent>
   </mock-dialog>
   <mock-appbar
-    classname="NavBar-appBar-11"
+    classname="NavBar-appBar-15"
     color="primary"
     position="static"
   >
     <mock-toolbar
-      classname="NavBar-toolbar-14"
+      classname="NavBar-toolbar-18"
     >
       <mock-drawer
         anchor="left"
@@ -168,7 +168,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           <clear />
         </mock-iconbutton>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="[object Object]"
           to="/"
         >
@@ -180,7 +180,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="[object Object]"
           to="/map"
         >
@@ -192,7 +192,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="[object Object]"
           to="/buoy"
         >
@@ -204,7 +204,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="[object Object]"
           to="/drones"
         >
@@ -216,7 +216,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="[object Object]"
           to="/about"
         >
@@ -228,7 +228,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="mock-Link"
           href="https://highlights.aqualink.org"
           target="_blank"
@@ -242,7 +242,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="[object Object]"
           to="/faq"
         >
@@ -254,7 +254,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="[object Object]"
           to="/tracker"
         >
@@ -266,7 +266,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-25"
+          classname="MenuDrawer-menuDrawerButton-29"
           component="[object Object]"
           to="/register"
         >
@@ -291,7 +291,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             role="group"
           >
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-24"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-28"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -307,7 +307,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               GitHub
             </mock-button>
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-24"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-28"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -354,7 +354,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               </svg>
             </mock-iconbutton>
             <mock-link
-              classname="NavBar-navBarLink-12"
+              classname="NavBar-navBarLink-16"
               href="/map"
             >
               <mock-typography
@@ -373,7 +373,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-22 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
+          class="MuiGrid-root NavBar-languageUserWrapper-26 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
         >
           <mock-tooltip
             title="Translate"
@@ -400,11 +400,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           >
             Mock User
             <mock-iconbutton
-              classname="NavBar-button-21"
+              classname="NavBar-button-25"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-20"
+                class="MuiSvgIcon-root NavBar-expandIcon-24"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -414,31 +414,31 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               </svg>
             </mock-iconbutton>
             <mock-menu
-              classname="NavBar-userMenu-17"
+              classname="NavBar-userMenu-21"
               keepmounted="true"
               menulistprops="[object Object]"
               open="false"
               popoverclasses="[object Object]"
             >
               <a
-                class="NavBar-menuItemLink-19"
+                class="NavBar-menuItemLink-23"
                 href="/sites/1"
               >
                 <mock-menuitem
-                  classname="NavBar-menuItem-18"
+                  classname="NavBar-menuItem-22"
                 >
                   site name
                 </mock-menuitem>
               </a>
               <mock-divider
-                classname="NavBar-userMenuDivider-16"
+                classname="NavBar-userMenuDivider-20"
               />
               <a
-                class="NavBar-menuItemLink-19"
+                class="NavBar-menuItemLink-23"
                 href="/dashboard"
               >
                 <mock-menuitem
-                  classname="NavBar-menuItem-18"
+                  classname="NavBar-menuItem-22"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -470,10 +470,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </mock-menuitem>
               </a>
               <mock-divider
-                classname="NavBar-userMenuDivider-16"
+                classname="NavBar-userMenuDivider-20"
               />
               <mock-menuitem
-                classname="NavBar-menuItem-18"
+                classname="NavBar-menuItem-22"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -513,7 +513,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-27"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-31"
       >
         <div
           class="MuiCardHeader-content"
@@ -539,7 +539,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-28"
+                    classname="RegisterDialog-dialogHeaderSecondPart-32"
                     variant="h4"
                   >
                     link
@@ -550,7 +550,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-iconbutton
-                  classname="RegisterDialog-closeButton-26"
+                  classname="RegisterDialog-closeButton-30"
                   size="small"
                 >
                   <svg
@@ -574,7 +574,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-29 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root RegisterDialog-dialogContentTitle-33 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -591,10 +591,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="RegisterDialog-form-30"
+              class="RegisterDialog-form-34"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -609,7 +609,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -624,7 +624,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -639,7 +639,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -654,7 +654,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -677,7 +677,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-35"
+                    classname="RegisterDialog-termsCheckbox-39"
                     color="primary"
                   />
                 </div>
@@ -686,14 +686,14 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 >
                   <mock-box>
                     <mock-typography
-                      classname="RegisterDialog-formText-33"
+                      classname="RegisterDialog-formText-37"
                       color="textSecondary"
                       variant="subtitle1"
                     >
                       I have read the
                        
                       <a
-                        class="RegisterDialog-termsLink-36"
+                        class="RegisterDialog-termsLink-40"
                         href="/terms"
                       >
                         Terms and Conditions
@@ -703,7 +703,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-34 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-button-38 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -720,7 +720,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-33"
+                  classname="RegisterDialog-formText-37"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -748,7 +748,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-38"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-42"
       >
         <div
           class="MuiCardHeader-content"
@@ -774,7 +774,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-39"
+                    classname="SignInDialog-dialogHeaderSecondPart-43"
                     variant="h4"
                   >
                     link
@@ -785,7 +785,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-37"
+                  classname="SignInDialog-closeButton-41"
                   size="small"
                 >
                   <svg
@@ -866,7 +866,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-40 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-44 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -883,10 +883,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-41"
+              class="SignInDialog-form-45"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-42 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-46 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -902,7 +902,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-42 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-46 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -922,7 +922,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  classname="SignInDialog-forgotPasswordButton-46"
+                  classname="SignInDialog-forgotPasswordButton-50"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -933,7 +933,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-45 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-49 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -949,7 +949,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-44"
+                  classname="SignInDialog-formText-48"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -1007,34 +1007,6 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               </code>
                (optional)
             </li>
-            <li>
-              <code>
-                aqualink_sensor_type
-              </code>
-               (optional, valid types are:
-               
-              <code>
-                hobo
-              </code>
-              , 
-              <code>
-                sonde
-              </code>
-              , 
-              <code>
-                spotter
-              </code>
-              ,
-               
-              <code>
-                metlog
-              </code>
-              , 
-              <code>
-                sheet_data
-              </code>
-              )
-            </li>
           </ul>
         </mock-typography>
         <mock-typography
@@ -1051,9 +1023,99 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           .
         </mock-typography>
       </div>
+      <div
+        class="MuiGrid-root MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+      >
+        <mock-textfield
+          fullwidth="true"
+          label="Sensor type"
+          select="true"
+          selectprops="[object Object]"
+          value="0"
+          variant="outlined"
+        >
+          <mock-menuitem
+            classname="makeStyles-menuItem-2"
+            value="0"
+          >
+            <mock-typography
+              classname="makeStyles-itemName-3"
+              color="textSecondary"
+              title="Default"
+            >
+              Default
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            classname="makeStyles-menuItem-2"
+            value="1"
+          >
+            <mock-typography
+              classname="makeStyles-itemName-3"
+              color="textSecondary"
+              title="Sonde data"
+            >
+              Sonde data
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            classname="makeStyles-menuItem-2"
+            value="2"
+          >
+            <mock-typography
+              classname="makeStyles-itemName-3"
+              color="textSecondary"
+              title="Meteorological data"
+            >
+              Meteorological data
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            classname="makeStyles-menuItem-2"
+            value="3"
+          >
+            <mock-typography
+              classname="makeStyles-itemName-3"
+              color="textSecondary"
+              title="HOBO data"
+            >
+              HOBO data
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            classname="makeStyles-menuItem-2"
+            value="4"
+          >
+            <mock-typography
+              classname="makeStyles-itemName-3"
+              color="textSecondary"
+              title="HUI data"
+            >
+              HUI data
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            classname="makeStyles-menuItem-2"
+            disabled="true"
+            value="5"
+          >
+            <mock-typography
+              classname="makeStyles-itemName-3"
+              color="textSecondary"
+              title="Spotter data"
+            >
+              Spotter data
+            </mock-typography>
+            <mock-chip
+              classname="makeStyles-comingSoonChip-4"
+              label="[object Object]"
+            />
+          </mock-menuitem>
+        </mock-textfield>
+      </div>
     </div>
     <div
-      class="MuiGrid-root makeStyles-root-47 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+      class="MuiGrid-root makeStyles-root-51 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
       role="button"
       tabindex="0"
     >
@@ -1070,7 +1132,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       >
         <mock-typography
           align="center"
-          classname="makeStyles-bold-49"
+          classname="makeStyles-bold-53"
           display="block"
           gutterbottom="true"
           variant="subtitle2"
@@ -1087,7 +1149,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
         <mock-typography
           align="center"
-          classname="makeStyles-bold-49"
+          classname="makeStyles-bold-53"
           display="block"
           gutterbottom="true"
           variant="subtitle2"
@@ -1099,7 +1161,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         class="MuiGrid-root MuiGrid-item"
       >
         <mock-button
-          classname="makeStyles-button-51"
+          classname="makeStyles-button-55"
           color="primary"
           disabled="false"
           size="small"
@@ -1113,7 +1175,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       >
         <mock-typography
           align="center"
-          classname="makeStyles-bold-49 makeStyles-grey-50"
+          classname="makeStyles-bold-53 makeStyles-grey-54"
           display="block"
           variant="caption"
         >
@@ -1123,7 +1185,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
         <mock-typography
           align="center"
-          classname="makeStyles-bold-49 makeStyles-grey-50"
+          classname="makeStyles-bold-53 makeStyles-grey-54"
           display="block"
           variant="caption"
         >
@@ -1134,11 +1196,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       </div>
     </div>
     <mock-tablecontainer
-      classname="makeStyles-container-52"
+      classname="makeStyles-container-56"
       component="[object Object]"
     >
       <mock-table
-        classname="makeStyles-table-53"
+        classname="makeStyles-table-57"
         size="small"
       >
         <mock-tablehead>
@@ -1176,7 +1238,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-tablehead>
         <mock-tablebody>
           <mock-tablerow
-            classname="makeStyles-root-54"
+            classname="makeStyles-root-58"
           >
             <mock-tablecell>
               <mock-iconbutton
@@ -1223,7 +1285,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-tablerow>
           <mock-tablerow>
             <mock-tablecell
-              classname="makeStyles-collapseWrap-55"
+              classname="makeStyles-collapseWrap-59"
               colspan="6"
             />
           </mock-tablerow>

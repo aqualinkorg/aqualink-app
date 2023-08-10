@@ -80,7 +80,6 @@ const nonMetric = [
   'timestamp',
   'aqualink_site_id',
   'aqualink_survey_point_id',
-  'aqualink_sensor_type',
 ] as const;
 
 type NonMetric = typeof nonMetric[number];
@@ -102,7 +101,6 @@ const rules: Rule[] = [
     token: 'aqualink_survey_point_id',
     expression: /^aqualink_survey_point_id$/,
   },
-  { token: 'aqualink_sensor_type', expression: /^aqualink_sensor_type$/ },
   // Default Metrics
   // should match 'Temp, °C'
   { token: Metric.AIR_TEMPERATURE, expression: /^Temp, .*C$/ },
@@ -270,7 +268,7 @@ export const trimWorkSheetData = (
     })
     .filter((item): item is string[] => item !== undefined);
 
-const groupBySitePointAndType = (
+const groupBySiteAndPoint = (
   trimmedWorkSheetData: string[][],
   headerToTokenMap: (Token | undefined)[],
 ): { [key: string]: string[][] } => {
@@ -280,18 +278,14 @@ const groupBySitePointAndType = (
   const surveyPointIdIndex = headerToTokenMap.findIndex(
     (x) => x === 'aqualink_survey_point_id',
   );
-  const sourceTypeIndex = headerToTokenMap.findIndex(
-    (x) => x === 'aqualink_sensor_type',
-  );
 
   const groupedByMap = new Map<string, string[][]>();
 
   trimmedWorkSheetData.forEach((val) => {
     const siteId = val[siteIdIndex] || '';
     const surveyPointId = val[surveyPointIdIndex] || '';
-    const sourceType = val[sourceTypeIndex] || '';
 
-    const key = `${siteId}_${surveyPointId}_${sourceType}`;
+    const key = `${siteId}_${surveyPointId}`;
     const item = groupedByMap.get(key);
     if (item !== undefined) {
       groupedByMap.set(key, [...item, val]);
@@ -635,7 +629,7 @@ export const uploadTimeSeriesData = async ({
   fileName: string;
   siteId: number | undefined;
   surveyPointId: number | undefined;
-  sourceType?: SourceType;
+  sourceType: SourceType;
   repositories: Repositories;
   multiSiteUpload: boolean;
   failOnWarning?: boolean;
@@ -711,13 +705,11 @@ export const uploadTimeSeriesData = async ({
   const trimmed = trimWorkSheetData(workSheetData, headers, headerIndex);
 
   const uploadData = multiSiteUpload
-    ? Object.entries(groupBySitePointAndType(trimmed, headerToTokenMap)).map(
+    ? Object.entries(groupBySiteAndPoint(trimmed, headerToTokenMap)).map(
         ([key, data]) => ({
           data,
           siteId: parseInt(key.split('_')[0], 10),
           surveyPointId: parseInt(key.split('_')[1], 10) || undefined,
-          sourceType: (key.split('_')[2] ||
-            SourceType.SHEET_DATA) as SourceType,
         }),
       )
     : [
@@ -728,7 +720,6 @@ export const uploadTimeSeriesData = async ({
           siteId: siteId as number,
           surveyPointId:
             surveyPointId !== undefined ? surveyPointId : undefined,
-          sourceType: sourceType || SourceType.SHEET_DATA,
         },
       ];
 
@@ -742,7 +733,7 @@ export const uploadTimeSeriesData = async ({
         headerIndex,
         fileName,
         headerToTokenMap,
-        sourceType: x.sourceType,
+        sourceType,
         repositories,
         mimetype,
       });
@@ -764,15 +755,10 @@ export const uploadTimeSeriesData = async ({
     'timestamp',
   );
 
-  const sourceTypes = uploadData.map((x) => x.sourceType);
-  const uniqueSourceTypes = [
-    ...new Map(sourceTypes.map((x) => [x, x])).values(),
-  ];
-
   const dataUploadsFile = await uploadFileToGCloud(
     repositories.dataUploadsRepository,
     signature,
-    uniqueSourceTypes,
+    [sourceType],
     fileName,
     filePath,
     minDate,
