@@ -1,5 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { createReadStream, unlinkSync } from 'fs';
+import {
+  closeSync,
+  createReadStream,
+  openSync,
+  unlinkSync,
+  writeSync,
+} from 'fs';
 import { Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import type { Response } from 'express';
@@ -15,6 +21,7 @@ import { join } from 'path';
 // https://github.com/adaltas/node-csv/issues/372
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/sync';
+import { DateTime } from 'luxon';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { TimeSeries } from './time-series.entity';
@@ -25,6 +32,8 @@ import {
   getDataQuery,
   getDataRangeQuery,
   groupByMetricAndSource,
+  getAvailableMetricsQuery,
+  getAvailableDataDates,
 } from '../utils/time-series.utils';
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
@@ -115,74 +124,154 @@ export class TimeSeriesService {
   ) {
     const { siteId } = siteDataDto;
 
-    const data: TimeSeriesData[] = await getDataQuery({
+    const uniqueMetrics = await getAvailableMetricsQuery({
       timeSeriesRepository: this.timeSeriesRepository,
       siteId,
-      metrics,
       start: startDate,
       end: endDate,
-      hourly,
-      csv: true,
+      metrics,
     });
 
-    const metricSourceAsKey = data.map((x) => ({
-      key: `${x.metric}_${x.source}`,
-      value: x.value,
-      timestamp: x.timestamp,
-    }));
-
-    const allKeys = [
+    const headerKeys = [
       'timestamp',
-      ...new Map(metricSourceAsKey.map((x) => [x.key, x])).keys(),
+      ...uniqueMetrics.map((x) => `${x.metric}_${x.source}`),
     ];
 
-    const emptyRow = Object.fromEntries(allKeys.map((x) => [x, undefined])) as {
+    const emptyRow = Object.fromEntries(
+      headerKeys.map((x) => [x, undefined]),
+    ) as {
       [k: string]: any;
     };
 
-    const groupedByTimestamp = metricSourceAsKey.reduce(
-      (acc, curr) => {
-        const key = curr.timestamp.toISOString();
-        const accValue = acc[key];
-        if (typeof accValue === 'object') {
-          // eslint-disable-next-line fp/no-mutating-methods
-          accValue.push(curr);
-        } else {
-          // eslint-disable-next-line fp/no-mutation
-          acc[key] = [curr];
-        }
-        return acc;
-      },
-      {} as {
-        [k: string]: {
-          key: string;
-          value: number;
-          timestamp: Date;
-        }[];
-      },
+    const { min, max } = (await getAvailableDataDates({
+      timeSeriesRepository: this.timeSeriesRepository,
+      siteId,
+      metrics,
+    })) || { min: new Date(), max: new Date() };
+
+    const minDate = DateTime.fromISO(startDate || min.toISOString()).startOf(
+      'hour',
+    );
+    const maxDate = DateTime.fromISO(endDate || max.toISOString()).startOf(
+      'hour',
     );
 
-    const rows = Object.entries(groupedByTimestamp).map(([timestamp, values]) =>
-      values.reduce((acc, curr) => {
-        // eslint-disable-next-line fp/no-mutation
-        acc[curr.key] = curr.value;
-        // eslint-disable-next-line fp/no-mutation
-        acc.timestamp = timestamp;
-        return acc;
-      }, structuredClone(emptyRow)),
+    const monthChunkSize = 6;
+
+    const createChunks = (
+      curr: DateTime,
+      acc: { start: DateTime; end: DateTime }[],
+    ): { start: DateTime; end: DateTime }[] => {
+      if (curr.diff(minDate, 'months').months < monthChunkSize)
+        return [
+          ...acc,
+          { end: curr.minus({ milliseconds: 1 }), start: minDate },
+        ];
+
+      const next = curr.minus({ months: monthChunkSize });
+      const item = { end: curr.minus({ milliseconds: 1 }), start: next };
+
+      return createChunks(next, [...acc, item]);
+    };
+
+    const chunks = createChunks(maxDate, []);
+
+    const tempFileName = join(
+      process.cwd(),
+      Math.random().toString(36).substring(2, 15),
     );
 
-    const fileName = `data_site_${siteId}_${moment(startDate).format(
-      DATE_FORMAT,
-    )}_${moment(endDate).format(DATE_FORMAT)}.csv`;
+    const fd = openSync(tempFileName, 'w');
 
-    res
-      .set({
+    try {
+      // eslint-disable-next-line fp/no-mutation, no-plusplus
+      for (let i = 0; i < chunks.length; i++) {
+        const first = i === 0;
+
+        // we want this not to run in parallel, that's why it is ok here to disable no-await-in-loop
+        // eslint-disable-next-line no-await-in-loop
+        const data: TimeSeriesData[] = await getDataQuery({
+          timeSeriesRepository: this.timeSeriesRepository,
+          siteId,
+          metrics,
+          start: chunks[i].start.toISO() as string,
+          end: chunks[i].end.toISO() as string,
+          hourly,
+          csv: true,
+          order: 'DESC',
+        });
+
+        const metricSourceAsKey = data.map((x) => ({
+          key: `${x.metric}_${x.source}`,
+          value: x.value,
+          timestamp: x.timestamp,
+        }));
+
+        const groupedByTimestamp = metricSourceAsKey.reduce(
+          (acc, curr) => {
+            const key = curr.timestamp.toISOString();
+            const accValue = acc[key];
+            if (typeof accValue === 'object') {
+              // eslint-disable-next-line fp/no-mutating-methods
+              accValue.push(curr);
+            } else {
+              // eslint-disable-next-line fp/no-mutation
+              acc[key] = [curr];
+            }
+            return acc;
+          },
+          {} as {
+            [k: string]: {
+              key: string;
+              value: number;
+              timestamp: Date;
+            }[];
+          },
+        );
+
+        const rows = Object.entries(groupedByTimestamp).map(
+          ([timestamp, values]) =>
+            values.reduce((acc, curr) => {
+              // eslint-disable-next-line fp/no-mutation
+              acc[curr.key] = curr.value;
+              // eslint-disable-next-line fp/no-mutation
+              acc.timestamp = timestamp;
+              return acc;
+            }, structuredClone(emptyRow)),
+        );
+
+        const csvLines = stringify(rows, { header: first });
+
+        writeSync(fd, csvLines);
+      }
+
+      closeSync(fd);
+
+      const fileName = `data_site_${siteId}_${moment(startDate).format(
+        DATE_FORMAT,
+      )}_${moment(endDate).format(DATE_FORMAT)}.csv`;
+
+      const readStream = createReadStream(tempFileName);
+
+      res.set({
         'Content-Disposition': `attachment; filename=${encodeURIComponent(
           fileName,
         )}`,
-      })
-      .send(stringify(rows, { header: true }));
+      });
+
+      res.set({
+        'Access-Control-Expose-Headers': 'Content-Disposition',
+      });
+
+      readStream.pipe(res);
+
+      readStream.on('end', () => {
+        unlinkSync(tempFileName);
+      });
+    } catch (error) {
+      console.error(error);
+      unlinkSync(tempFileName);
+    }
   }
 
   async findSurveyPointDataRange(

@@ -78,6 +78,99 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
     .toJSON();
 };
 
+export const getAvailableMetricsQuery = ({
+  timeSeriesRepository,
+  siteId,
+  start: startDate,
+  end: endDate,
+  surveyPointId,
+  metrics,
+}: {
+  timeSeriesRepository: Repository<TimeSeries>;
+  siteId: number;
+  start?: string;
+  end?: string;
+  surveyPointId?: number;
+  metrics: Metric[];
+}) => {
+  const { sql: surveyPointConditionSql, params: surveyPointConditionParams } =
+    surveyPointId
+      ? {
+          sql: 'AND (source.survey_point_id = :surveyPointId OR source.survey_point_id IS NULL)',
+          params: { surveyPointId },
+        }
+      : { sql: '', params: {} };
+
+  const query = timeSeriesRepository
+    .createQueryBuilder('time_series')
+    .select('metric')
+    .addSelect('source.type', 'source')
+    .distinct(true)
+    .innerJoin(
+      'time_series.source',
+      'source',
+      `source.site_id = :siteId ${surveyPointConditionSql}`,
+      { siteId, ...surveyPointConditionParams },
+    )
+    .leftJoin('source.surveyPoint', 'surveyPoint');
+
+  const withStartDate = startDate
+    ? query.andWhere('timestamp >= :startDate', { startDate })
+    : query;
+
+  const withEndDate = endDate
+    ? withStartDate.andWhere('timestamp <= :endDate', { endDate })
+    : withStartDate;
+
+  const withMetrics =
+    metrics.length > 0
+      ? withEndDate.andWhere('metric IN (:...metrics)', { metrics })
+      : withEndDate;
+
+  return withMetrics.getRawMany();
+};
+
+export const getAvailableDataDates = ({
+  timeSeriesRepository,
+  siteId,
+  surveyPointId,
+  metrics,
+}: {
+  timeSeriesRepository: Repository<TimeSeries>;
+  siteId: number;
+  surveyPointId?: number;
+  metrics: Metric[];
+}): Promise<{ min: Date; max: Date } | undefined> => {
+  const { sql: surveyPointConditionSql, params: surveyPointConditionParams } =
+    surveyPointId
+      ? {
+          sql: 'AND (source.survey_point_id = :surveyPointId OR source.survey_point_id IS NULL)',
+          params: { surveyPointId },
+        }
+      : { sql: '', params: {} };
+
+  const query = timeSeriesRepository
+    .createQueryBuilder('time_series')
+    .select('min("timestamp")')
+    .addSelect('max("timestamp")')
+    .innerJoin(
+      'time_series.source',
+      'source',
+      `source.site_id = :siteId ${surveyPointConditionSql}`,
+      { siteId, ...surveyPointConditionParams },
+    )
+    .leftJoin('source.surveyPoint', 'surveyPoint');
+
+  const withMetrics =
+    metrics.length > 0
+      ? query.andWhere('metric IN (:...metrics)', {
+          metrics,
+        })
+      : query;
+
+  return withMetrics.getRawOne();
+};
+
 interface GetDataQueryParams {
   timeSeriesRepository: Repository<TimeSeries>;
   siteId: number;
@@ -87,6 +180,7 @@ interface GetDataQueryParams {
   hourly?: boolean;
   surveyPointId?: number;
   csv?: boolean;
+  order?: 'ASC' | 'DESC';
 }
 
 export const getDataQuery = ({
@@ -98,6 +192,7 @@ export const getDataQuery = ({
   hourly,
   surveyPointId,
   csv = false,
+  order = 'ASC',
 }: GetDataQueryParams): Promise<TimeSeriesData[]> => {
   const { endDate, startDate } = csv
     ? { startDate: start, endDate: end }
@@ -111,7 +206,7 @@ export const getDataQuery = ({
         }
       : { sql: '', params: {} };
 
-  const mainQuery = timeSeriesRepository
+  const query = timeSeriesRepository
     .createQueryBuilder('time_series')
     .select(hourly ? 'avg(value)' : 'value', 'value')
     .addSelect('metric')
@@ -128,21 +223,29 @@ export const getDataQuery = ({
     )
     .leftJoin('source.surveyPoint', 'surveyPoint')
     .addSelect('surveyPoint.id', 'surveyPointId')
-    .addSelect('surveyPoint.name', 'surveyPointName')
-    .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
-      metrics,
-    })
-    .andWhere(startDate ? 'timestamp >= :startDate' : '1=1', { startDate })
-    .andWhere(endDate ? 'timestamp <= :endDate' : '1=1', { endDate });
+    .addSelect('surveyPoint.name', 'surveyPointName');
+
+  const withStartDate = startDate
+    ? query.andWhere('timestamp >= :startDate', { startDate })
+    : query;
+
+  const withEndDate = endDate
+    ? withStartDate.andWhere('timestamp <= :endDate', { endDate })
+    : withStartDate;
+
+  const withMetrics =
+    metrics.length > 0
+      ? withEndDate.andWhere('metric IN (:...metrics)', { metrics })
+      : withEndDate;
 
   return hourly
-    ? mainQuery
+    ? withMetrics
         .groupBy(
           "date_trunc('hour', timestamp), metric, source.type, surveyPoint.id",
         )
-        .orderBy("date_trunc('hour', timestamp)", 'ASC')
+        .orderBy("date_trunc('hour', timestamp)", order)
         .getRawMany()
-    : mainQuery.orderBy('timestamp', 'ASC').getRawMany();
+    : withMetrics.orderBy('timestamp', order).getRawMany();
 };
 
 export const getDataRangeQuery = (
