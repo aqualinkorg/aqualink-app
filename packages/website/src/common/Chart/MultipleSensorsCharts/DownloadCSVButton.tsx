@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { siteTimeSeriesDataRangeSelector } from 'store/Sites/selectedSiteSlice';
 import { useSnackbar } from 'notistack';
 import { MetricsKeys } from 'store/Sites/types';
-import { spotterPositionSelector } from 'store/Sites/selectedSiteSlice';
 import { downloadBlob } from 'utils/utils';
 import { constructTimeSeriesDataCsvRequestUrl } from 'helpers/siteUtils';
 import DownloadCSVDialog from './DownloadCSVDialog';
@@ -13,7 +13,6 @@ interface DownloadCSVButtonParams {
   data: CSVColumnData[];
   startDate?: string;
   endDate?: string;
-  className?: string;
   siteId?: number | string;
   defaultMetrics?: MetricsKeys[];
 }
@@ -22,13 +21,12 @@ function DownloadCSVButton({
   data,
   startDate,
   endDate,
-  className,
   siteId,
   defaultMetrics,
 }: DownloadCSVButtonParams) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const spotterData = useSelector(spotterPositionSelector);
+  const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { enqueueSnackbar } = useSnackbar();
 
   const onClose = async (
@@ -75,16 +73,19 @@ function DownloadCSVButton({
   };
 
   return (
-    <>
+    <div>
       <Button
         disabled={loading}
         variant="outlined"
         color="primary"
-        className={className}
         onClick={() => {
           setOpen(true);
         }}
-        style={{ marginBottom: spotterData?.isDeployed ? 0 : '2em' }}
+        style={{
+          marginBottom: timeSeriesDataRanges?.bottomTemperature?.spotter?.data
+            ? 0
+            : '2em',
+        }}
       >
         {/* TODO update this component with LoadingButton from MUILab when newest version is released. */}
         {loading ? 'Loading...' : 'Download CSV'}
@@ -97,7 +98,7 @@ function DownloadCSVButton({
         endDate={endDate || ''}
         loading={loading}
       />
-    </>
+    </div>
   );
 }
 
@@ -105,7 +106,6 @@ DownloadCSVButton.defaultProps = {
   startDate: undefined,
   endDate: undefined,
   siteId: undefined,
-  className: undefined,
 };
 
 export default DownloadCSVButton;
