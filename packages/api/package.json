@@ -34,7 +34,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main.js",
     "lint": "eslint \"{src,apps,libs,test,scripts}/**/*.{ts,js}\" --max-warnings 0",
-    "test": "cross-env NODE_ENV=test jest --config ./test/jest.json  --silent",
+    "test": "cross-env NODE_ENV=test jest --config ./test/jest.json --silent",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
