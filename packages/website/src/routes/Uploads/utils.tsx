@@ -137,39 +137,43 @@ export const SENSOR_TYPES: EnhancedSelectOption[] = [
   { id: 2, name: 'spotter', label: 'Spotter data', disabled: true },
 ];
 
-export const OptionsList = <T extends EnhancedSelectOption>(options: T[]) => {
+export const OptionsList = <T extends EnhancedSelectOption>(
+  options: T[],
+): React.JSX.Element[] => {
   const classes = OptionsListStyles();
-  return options.map(({ id, name, label, disabled }, index) =>
-    name ? (
-      <MenuItem
-        disabled={disabled}
-        key={id}
-        value={index}
-        className={classes.menuItem}
-      >
-        <Typography
-          title={label || name}
-          className={classes.itemName}
-          color="textSecondary"
+  return options
+    .map(({ id, name, label, disabled }, index) =>
+      name ? (
+        <MenuItem
+          disabled={disabled}
+          key={id}
+          value={index}
+          className={classes.menuItem}
         >
-          {label || name}
-        </Typography>
-        {disabled && (
-          <Chip
-            className={classes.comingSoonChip}
-            label={
-              <Typography
-                className={classes.comingSoonChipText}
-                variant="subtitle2"
-              >
-                COMING SOON
-              </Typography>
-            }
-          />
-        )}
-      </MenuItem>
-    ) : null,
-  );
+          <Typography
+            title={label || name}
+            className={classes.itemName}
+            color="textSecondary"
+          >
+            {label || name}
+          </Typography>
+          {disabled && (
+            <Chip
+              className={classes.comingSoonChip}
+              label={
+                <Typography
+                  className={classes.comingSoonChipText}
+                  variant="subtitle2"
+                >
+                  COMING SOON
+                </Typography>
+              }
+            />
+          )}
+        </MenuItem>
+      ) : null,
+    )
+    .filter((x): x is React.JSX.Element => x !== null);
 };
 
 const OptionsListStyles = makeStyles((theme: Theme) => ({
