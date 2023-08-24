@@ -20,6 +20,7 @@ const RouteButtons = () => {
             component={to ? Link : 'a'}
             to={to || ''}
             href={href || to}
+            target={href ? '_blank' : undefined}
           >
             {title}
           </Button>

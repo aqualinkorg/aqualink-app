@@ -48,6 +48,7 @@ exports[`renders as expected 1`] = `
         component="a"
         href="https://highlights.aqualink.org/"
         style="color: white;"
+        target="_blank"
         to=""
       >
         Highlighted Sites
