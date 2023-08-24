@@ -3,17 +3,18 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
+    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-6"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
     >
       <mock-button
         component="[object Object]"
+        href="/map"
         style="color: white;"
         to="/map"
       >
-        MAP
+        Map
       </mock-button>
     </div>
     <div
@@ -21,10 +22,11 @@ exports[`renders as expected 1`] = `
     >
       <mock-button
         component="[object Object]"
+        href="/tracker"
         style="color: white;"
-        to="/about"
+        to="/tracker"
       >
-        ABOUT
+        Track a Heatwave
       </mock-button>
     </div>
     <div
@@ -32,10 +34,35 @@ exports[`renders as expected 1`] = `
     >
       <mock-button
         component="[object Object]"
+        href="/register"
         style="color: white;"
         to="/register"
       >
-        REGISTER YOUR SITE
+        Register Your Site
+      </mock-button>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <mock-button
+        component="a"
+        href="https://highlights.aqualink.org/"
+        style="color: white;"
+        to=""
+      >
+        Highlighted Sites
+      </mock-button>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <mock-button
+        component="[object Object]"
+        href="/faq"
+        style="color: white;"
+        to="/faq"
+      >
+        FAQ
       </mock-button>
     </div>
   </div>
