@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const links = [
   { title: 'Map', to: '/map' },
   { title: 'Track a Heatwave', to: '/tracker' },
-  { title: 'Register Your Site', to: '/register' },
+  { title: 'Register your Site', to: '/register' },
   { title: 'Highlighted Sites', href: 'https://highlights.aqualink.org/' },
   { title: 'FAQ', to: '/faq' },
 ];
@@ -21,6 +21,7 @@ const RouteButtons = () => {
             to={to || ''}
             href={href || to}
             target={href ? '_blank' : undefined}
+            rel="noopener noreferrer"
           >
             {title}
           </Button>
