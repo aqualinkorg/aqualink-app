@@ -11,7 +11,6 @@ exports[`renders as expected 1`] = `
       <mock-button
         component="[object Object]"
         href="/map"
-        rel="noopener noreferrer"
         style="color: white;"
         to="/map"
       >
@@ -24,7 +23,6 @@ exports[`renders as expected 1`] = `
       <mock-button
         component="[object Object]"
         href="/tracker"
-        rel="noopener noreferrer"
         style="color: white;"
         to="/tracker"
       >
@@ -37,11 +35,10 @@ exports[`renders as expected 1`] = `
       <mock-button
         component="[object Object]"
         href="/register"
-        rel="noopener noreferrer"
         style="color: white;"
         to="/register"
       >
-        Register Your Site
+        Register your Site
       </mock-button>
     </div>
     <div
@@ -50,7 +47,7 @@ exports[`renders as expected 1`] = `
       <mock-button
         component="a"
         href="https://highlights.aqualink.org/"
-        rel="noopener noreferrer"
+        rel="noopener"
         style="color: white;"
         target="_blank"
         to=""
@@ -64,7 +61,6 @@ exports[`renders as expected 1`] = `
       <mock-button
         component="[object Object]"
         href="/faq"
-        rel="noopener noreferrer"
         style="color: white;"
         to="/faq"
       >

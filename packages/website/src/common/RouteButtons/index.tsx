@@ -21,7 +21,7 @@ const RouteButtons = () => {
             to={to || ''}
             href={href || to}
             target={href ? '_blank' : undefined}
-            rel="noopener noreferrer"
+            rel={href ? 'noopener' : undefined}
           >
             {title}
           </Button>
