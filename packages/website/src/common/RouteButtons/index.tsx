@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const links = [
   { title: 'Map', to: '/map' },
-  { title: 'Track a Heatwave', to: '/tracker' },
   { title: 'Register your Site', to: '/register' },
   { title: 'Highlighted Sites', href: 'https://highlights.aqualink.org/' },
+  { title: 'Track a Heatwave', to: '/tracker' },
   { title: 'FAQ', to: '/faq' },
 ];
 

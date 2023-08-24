@@ -22,18 +22,6 @@ exports[`renders as expected 1`] = `
     >
       <mock-button
         component="[object Object]"
-        href="/tracker"
-        style="color: white;"
-        to="/tracker"
-      >
-        Track a Heatwave
-      </mock-button>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-item"
-    >
-      <mock-button
-        component="[object Object]"
         href="/register"
         style="color: white;"
         to="/register"
@@ -53,6 +41,18 @@ exports[`renders as expected 1`] = `
         to=""
       >
         Highlighted Sites
+      </mock-button>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <mock-button
+        component="[object Object]"
+        href="/tracker"
+        style="color: white;"
+        to="/tracker"
+      >
+        Track a Heatwave
       </mock-button>
     </div>
     <div
