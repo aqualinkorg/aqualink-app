@@ -142,7 +142,7 @@ const NavBar = ({
           >
             <Grid
               item
-              xs={5}
+              xs={4}
               sm={2}
               // eslint-disable-next-line no-nested-ternary
               md={routeButtons ? 2 : searchLocation ? 6 : 4}
@@ -181,14 +181,14 @@ const NavBar = ({
               container
               justify="flex-end"
               item
-              xs={7}
+              xs={8}
               sm={routeButtons && isTablet ? 3 : 4}
               md={searchLocation || (routeButtons && isTablet) ? 3 : 8}
               className={classes.languageUserWrapper}
             >
               <Tooltip title="Translate">
                 <IconButton
-                  style={{ color: 'white', marginRight: '1em' }}
+                  style={{ color: 'white' }}
                   onClick={() => setTranslationOpen((prev) => !prev)}
                 >
                   <LanguageIcon />
