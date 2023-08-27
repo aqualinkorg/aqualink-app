@@ -184,7 +184,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-2"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-2"
         >
           <mock-box
             alignitems="center"
@@ -226,13 +226,13 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-18 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
+          class="MuiGrid-root NavBar-languageUserWrapper-18 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
         >
           <mock-tooltip
             title="Translate"
           >
             <mock-iconbutton
-              style="color: white; margin-right: 1em;"
+              style="color: white;"
             >
               <svg
                 aria-hidden="true"
