@@ -184,7 +184,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-6"
         >
           <mock-box
             alignitems="center"
@@ -275,13 +275,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </div>
         </mock-hidden>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-204 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
+          class="MuiGrid-root NavBar-languageUserWrapper-204 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
         >
           <mock-tooltip
             title="Translate"
           >
             <mock-iconbutton
-              style="color: white; margin-right: 1em;"
+              style="color: white;"
             >
               <svg
                 aria-hidden="true"
@@ -1984,7 +1984,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-6"
         >
           <mock-box
             alignitems="center"
@@ -2075,13 +2075,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </div>
         </mock-hidden>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-14 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
+          class="MuiGrid-root NavBar-languageUserWrapper-14 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
         >
           <mock-tooltip
             title="Translate"
           >
             <mock-iconbutton
-              style="color: white; margin-right: 1em;"
+              style="color: white;"
             >
               <svg
                 aria-hidden="true"
