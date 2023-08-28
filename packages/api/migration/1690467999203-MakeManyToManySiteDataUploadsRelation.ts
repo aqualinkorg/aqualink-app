@@ -22,6 +22,12 @@ export class MakeManyToManySiteDataUploadsRelation1690467999203
       `CREATE TABLE "data_uploads_sites" ("site_id" integer NOT NULL, "data_upload_id" integer NOT NULL, "survey_point_id" integer, CONSTRAINT "PK_6515b1d83e2075084dc02057a22" PRIMARY KEY ("site_id", "data_upload_id"))`,
     );
     await queryRunner.query(
+      `
+      INSERT INTO data_uploads_sites (site_id, data_upload_id, survey_point_id)
+      SELECT du.site_id, du.id as data_upload_id, du.survey_point_id FROM data_uploads du
+      `,
+    );
+    await queryRunner.query(
       `CREATE INDEX "IDX_9788850820bf6b28b8bcf18aab" ON "data_uploads_sites" ("site_id")`,
     );
     await queryRunner.query(
@@ -29,6 +35,17 @@ export class MakeManyToManySiteDataUploadsRelation1690467999203
     );
     await queryRunner.query(
       `CREATE INDEX "IDX_9b7753518e6f82ff4c679de966" ON "data_uploads_sites" ("survey_point_id")`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "data_uploads" ADD "sensor_types" character varying array`,
+    );
+    await queryRunner.query(
+      `
+      UPDATE data_uploads AS dt
+      SET sensor_types = (
+        SELECT ARRAY(SELECT sensor_type FROM data_uploads st WHERE st.id = dt.id)
+      )
+      `,
     );
     await queryRunner.query(
       `ALTER TABLE "data_uploads" DROP COLUMN "sensor_type"`,
@@ -40,9 +57,6 @@ export class MakeManyToManySiteDataUploadsRelation1690467999203
       `ALTER TABLE "data_uploads" DROP COLUMN "survey_point_id"`,
     );
     await queryRunner.query(`ALTER TABLE "data_uploads" DROP COLUMN "site_id"`);
-    await queryRunner.query(
-      `ALTER TABLE "data_uploads" ADD "sensor_types" character varying array`,
-    );
     await queryRunner.query(
       `ALTER TABLE "data_uploads_sites" ADD CONSTRAINT "FK_9788850820bf6b28b8bcf18aabe" FOREIGN KEY ("site_id") REFERENCES "site"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
