@@ -173,7 +173,9 @@ export async function getCardData(
       parseInt(siteId, 10),
     );
 
-    const uploads = uploadHistory.filter((x) => x.sensorType === source) || [];
+    const uploads =
+      uploadHistory.filter((x) => x.dataUpload.sensorTypes.includes(source)) ||
+      [];
     if (uploads.length < 1) {
       return {};
     }
@@ -183,16 +185,19 @@ export async function getCardData(
         const now = new Date();
         const lastYear = now.setFullYear(now.getFullYear() - 1);
         const inLastYear = uploads.filter(
-          ({ maxDate }) => new Date(maxDate) > new Date(lastYear),
+          ({ dataUpload: { maxDate } }) =>
+            new Date(maxDate) > new Date(lastYear),
         );
 
         const minDate = inLastYear.reduce(
-          (min, curr) => (curr.minDate < min ? curr.minDate : min),
+          (min, curr) =>
+            curr.dataUpload.minDate < min ? curr.dataUpload.minDate : min,
           new Date().toISOString(),
         );
 
         const maxDate = inLastYear.reduce(
-          (max, curr) => (curr.maxDate > max ? curr.maxDate : max),
+          (max, curr) =>
+            curr.dataUpload.maxDate > max ? curr.dataUpload.maxDate : max,
           new Date(0).toISOString(),
         );
 
@@ -205,10 +210,13 @@ export async function getCardData(
         });
 
         const pointId = inLastYear[0].surveyPoint;
-        const samePoint = inLastYear.reduce(
-          (acc, curr) => acc && curr.surveyPoint.id === pointId.id,
-          true,
-        );
+        const samePoint =
+          pointId !== null
+            ? inLastYear.reduce(
+                (acc, curr) => acc && curr.surveyPoint?.id === pointId.id,
+                true,
+              )
+            : false;
 
         return {
           data,
@@ -218,7 +226,8 @@ export async function getCardData(
         };
       }
       case 'sonde': {
-        const { minDate, maxDate, surveyPoint } = uploads[0];
+        const { minDate, maxDate } = uploads[0].dataUpload;
+        const { surveyPoint } = uploads[0];
         const [data] = await timeSeriesRequest({
           siteId,
           start: minDate,

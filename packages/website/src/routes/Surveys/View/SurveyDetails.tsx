@@ -22,7 +22,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getSiteNameAndRegion(site);
   return (
-    <Grid container item xs={12} justify="space-between" spacing={2}>
+    <Grid container item xs={12} justifyContent="space-between" spacing={2}>
       {survey && (
         <Grid container item direction="column" spacing={3} xs={12} lg={8}>
           <Grid item>

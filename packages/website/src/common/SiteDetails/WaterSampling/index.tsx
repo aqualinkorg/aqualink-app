@@ -9,8 +9,12 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { colors } from 'layout/App/theme';
-import { Metrics, Sources, TimeSeriesData } from 'store/Sites/types';
-import { SurveyPoint } from 'store/Survey/types';
+import {
+  Metrics,
+  Sources,
+  SurveyPoints,
+  TimeSeriesData,
+} from 'store/Sites/types';
 import requests from 'helpers/requests';
 import WarningIcon from '@material-ui/icons/Warning';
 import { DateTime } from 'luxon';
@@ -30,7 +34,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
 
   const [minDate, setMinDate] = React.useState<string>();
   const [maxDate, setMaxDate] = React.useState<string>();
-  const [point, setPoint] = React.useState<SurveyPoint>();
+  const [point, setPoint] = React.useState<SurveyPoints>();
   const [timeSeriesData, setTimeSeriesData] = React.useState<TimeSeriesData>();
 
   const [meanValues, setMeanValues] = React.useState<
@@ -66,7 +70,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
       setMinDate(min);
       setMaxDate(max);
       setTimeSeriesData(data);
-      setPoint(p);
+      setPoint(p ?? undefined);
     })();
   }, [siteId, source]);
 

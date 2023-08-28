@@ -5,10 +5,7 @@ import {
   TextField,
   Theme,
   MenuItem,
-  Typography,
-  TextFieldProps,
   Button,
-  Chip,
   ButtonProps,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -18,23 +15,7 @@ import { useSelector } from 'react-redux';
 import { Site, Sources } from 'store/Sites/types';
 import { uploadsTargetSelector } from 'store/uploads/uploadsSlice';
 import NewSurveyPointDialog from 'common/NewSurveyPointDialog';
-
-interface SelectOption {
-  id: number;
-  name: string | null;
-  label?: string;
-}
-
-type EnhancedSelectOption = SelectOption & { disabled?: boolean };
-
-const SENSOR_TYPES: EnhancedSelectOption[] = [
-  { id: 5, name: 'sheet_data', label: 'Default' },
-  { id: 0, name: 'sonde', label: 'Sonde data' },
-  { id: 1, name: 'metlog', label: 'Meteorological data' },
-  { id: 3, name: 'hobo', label: 'HOBO data' },
-  { id: 4, name: 'hui', label: 'HUI data' },
-  { id: 2, name: 'spotter', label: 'Spotter data', disabled: true },
-];
+import { OptionsList, selectProps, SENSOR_TYPES } from 'routes/Uploads/utils';
 
 const Selectors = ({
   site,
@@ -58,54 +39,6 @@ const Selectors = ({
   const hasSelectedSensor = typeof selectedSensorIndex === 'number';
 
   const isContinueDisabled = !hasSelectedPoint || !hasSelectedSensor;
-
-  const selectProps: TextFieldProps['SelectProps'] = {
-    MenuProps: {
-      PaperProps: { className: classes.menuPaper },
-      anchorOrigin: {
-        vertical: 'bottom',
-        horizontal: 'center',
-      },
-      transformOrigin: {
-        vertical: 'top',
-        horizontal: 'center',
-      },
-      getContentAnchorEl: null,
-    },
-  };
-
-  const OptionsList = <T extends EnhancedSelectOption>(options: T[]) =>
-    options.map(({ id, name, label, disabled }, index) =>
-      name ? (
-        <MenuItem
-          disabled={disabled}
-          key={id}
-          value={index}
-          className={classes.menuItem}
-        >
-          <Typography
-            title={label || name}
-            className={classes.itemName}
-            color="textSecondary"
-          >
-            {label || name}
-          </Typography>
-          {disabled && (
-            <Chip
-              className={classes.comingSoonChip}
-              label={
-                <Typography
-                  className={classes.comingSoonChipText}
-                  variant="subtitle2"
-                >
-                  COMING SOON
-                </Typography>
-              }
-            />
-          )}
-        </MenuItem>
-      ) : null,
-    );
 
   const handleChange =
     (type: 'point' | 'sensor') =>
@@ -159,7 +92,7 @@ const Selectors = ({
         container
         className={classes.selectorsWrapper}
         spacing={3}
-        justify="space-between"
+        justifyContent="space-between"
       >
         <Grid item md={4} xs={12}>
           <TextField
@@ -242,26 +175,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
-  menuItem: {
-    paddingTop: 8.5,
-    paddingBottom: 8.5,
-  },
-  itemName: {
-    maxWidth: '100%',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    height: 19,
-  },
   menuPaper: {
     width: 240,
-  },
-  comingSoonChip: {
-    marginLeft: theme.spacing(1),
-    height: 18,
-  },
-  comingSoonChipText: {
-    fontSize: 8,
   },
   buttonMenuItem: {
     padding: 0,

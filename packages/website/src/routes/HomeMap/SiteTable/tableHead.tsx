@@ -115,7 +115,7 @@ const EnhancedTableHead = ({
                 key={headCell.id}
                 style={{ width: headCell.width }}
                 align="left"
-                padding="default"
+                padding="normal"
                 sortDirection={orderBy === headCell.id ? order : false}
               >
                 <TableSortLabel

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import { Skeleton, SkeletonProps } from '@material-ui/lab';
 import random from 'lodash/random';
 import times from 'lodash/times';
@@ -86,7 +86,7 @@ const useStyles = makeStyles(() => ({
     borderRadius: 4,
   },
   dark: {
-    backgroundColor: fade('#000000', 0.11),
+    backgroundColor: alpha('#000000', 0.11),
   },
   textHeight: ({ textHeight }: LoadingSkeletonStyleProps) =>
     typeof textHeight !== 'undefined'

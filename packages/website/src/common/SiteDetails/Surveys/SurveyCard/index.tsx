@@ -53,7 +53,7 @@ const SurveyCard = ({
 
   return (
     <Paper elevation={0} className={classes.surveyCard}>
-      <Grid style={{ height: '100%' }} container justify="space-between">
+      <Grid style={{ height: '100%' }} container justifyContent="space-between">
         <Grid className={classes.cardImageWrapper} item xs={12} md={5}>
           <LoadingSkeleton
             loading={loading}
@@ -83,7 +83,7 @@ const SurveyCard = ({
             item
             xs={12}
             direction={loading ? 'column' : 'row'}
-            justify={loading ? 'center' : 'flex-start'}
+            justifyContent={loading ? 'center' : 'flex-start'}
           >
             <LoadingSkeleton
               loading={loading}
@@ -170,7 +170,7 @@ const SurveyCard = ({
                   <Grid
                     container
                     alignItems="center"
-                    justify="space-between"
+                    justifyContent="space-between"
                     item
                     xs={12}
                   >
@@ -187,7 +187,7 @@ const SurveyCard = ({
                     {isAdmin &&
                       typeof siteId === 'number' &&
                       typeof survey?.diveDate === 'string' && (
-                        <Grid container justify="flex-end" item xs={2}>
+                        <Grid container justifyContent="flex-end" item xs={2}>
                           <DeleteButton
                             content={
                               <Typography color="textSecondary">{`Are you sure you would like to delete the survey for ${DateTime.fromISO(

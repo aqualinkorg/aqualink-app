@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 
 import { getSelf } from 'store/User/userSlice';
 import { useGATagManager } from 'utils/google-analytics';
+import Uploads from 'routes/Uploads';
 import NotFound from '../../routes/NotFound';
 import ErrorBoundary from './ErrorBoundary';
 import LandingPage from '../../routes/Landing';
@@ -68,6 +69,7 @@ function App() {
                 <Route exact path="/terms" component={Terms} />
                 <Redirect from="/reefs/:id" to="/sites/:id" />
                 <Route path="/sites" component={SiteRoutes} />
+                <Route exact path="/uploads" component={Uploads} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/tracker" component={Tracker} />
                 <Route

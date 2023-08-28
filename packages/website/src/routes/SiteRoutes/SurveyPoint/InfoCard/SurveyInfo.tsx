@@ -20,7 +20,7 @@ const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
       <Grid
         className={classes.autoWidth}
         container
-        justify="space-between"
+        justifyContent="space-between"
         spacing={4}
       >
         <Grid item>

@@ -269,7 +269,14 @@ const EditForm = ({
             />
           </Grid>
         </Grid>
-        <Grid container justify="flex-end" item sm={12} md={4} spacing={3}>
+        <Grid
+          container
+          justifyContent="flex-end"
+          item
+          sm={12}
+          md={4}
+          spacing={3}
+        >
           <Grid item>
             <Button
               onClick={onClose}

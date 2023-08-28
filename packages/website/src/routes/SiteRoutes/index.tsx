@@ -14,13 +14,13 @@ import {
 } from 'store/uploads/uploadsSlice';
 import StatusSnackbar from 'common/StatusSnackbar';
 import { UploadTimeSeriesResult } from 'services/uploadServices';
+import UploadWarnings from 'common/FileUploads/UploadWarnings';
 import Site from './Site';
 import SiteApplication from './SiteApplication';
 import SitesList from './SitesList';
 import Surveys from '../Surveys';
 import SurveyPoint from './SurveyPoint';
 import UploadData from './UploadData';
-import UploadWarnings from './UploadData/UploadWarnings';
 
 const SiteRoutes = () => {
   const dispatch = useDispatch();

@@ -103,11 +103,11 @@ const Tooltip = ({
             style={{ height: '100%' }}
             item
             container
-            justify="space-between"
+            justifyContent="space-between"
           >
             <Grid
               container
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               item
               xs={12}

@@ -23,6 +23,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
+import PublishIcon from '@material-ui/icons/Publish';
 import MenuIcon from '@material-ui/icons/Menu';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -136,13 +137,13 @@ const NavBar = ({
           />
           <Grid
             container
-            justify="space-between"
+            justifyContent="space-between"
             alignItems="center"
             spacing={1}
           >
             <Grid
               item
-              xs={5}
+              xs={4}
               sm={2}
               // eslint-disable-next-line no-nested-ternary
               md={routeButtons ? 2 : searchLocation ? 6 : 4}
@@ -179,16 +180,16 @@ const NavBar = ({
 
             <Grid
               container
-              justify="flex-end"
+              justifyContent="flex-end"
               item
-              xs={7}
+              xs={8}
               sm={routeButtons && isTablet ? 3 : 4}
               md={searchLocation || (routeButtons && isTablet) ? 3 : 8}
               className={classes.languageUserWrapper}
             >
               <Tooltip title="Translate">
                 <IconButton
-                  style={{ color: 'white', marginRight: '1em' }}
+                  style={{ color: 'white' }}
                   onClick={() => setTranslationOpen((prev) => !prev)}
                 >
                   <LanguageIcon />
@@ -233,6 +234,29 @@ const NavBar = ({
                           );
                         },
                       )}
+                      {user &&
+                        (user.adminLevel === 'site_manager' ||
+                          user.adminLevel === 'super_admin') && (
+                          <div>
+                            <Divider className={classes.userMenuDivider} />
+                            <Link
+                              to="/uploads"
+                              className={classes.menuItemLink}
+                            >
+                              <MenuItem
+                                key="user-menu-uploads"
+                                className={classes.menuItem}
+                              >
+                                <Grid container spacing={1}>
+                                  <Grid item>
+                                    <PublishIcon fontSize="small" />
+                                  </Grid>
+                                  <Grid item>Uploads</Grid>
+                                </Grid>
+                              </MenuItem>
+                            </Link>
+                          </div>
+                        )}
                       <Divider className={classes.userMenuDivider} />
                       <Link to="/dashboard" className={classes.menuItemLink}>
                         <MenuItem

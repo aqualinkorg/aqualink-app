@@ -43,7 +43,7 @@ export class TestService {
 
     this.app = moduleFixture.createNestApplication();
 
-    this.app = await this.app.init();
+    await this.app.init();
 
     this.app.useGlobalPipes(
       new GlobalValidationPipe({

@@ -204,7 +204,12 @@ const Surveys = ({ site }: SurveysProps) => {
         }
         actions={deleteSurveyPointDialogActions}
       />
-      <Grid className={classes.root} container justify="center" spacing={2}>
+      <Grid
+        className={classes.root}
+        container
+        justifyContent="center"
+        spacing={2}
+      >
         <Box
           bgcolor="#f5f6f6"
           position="absolute"
@@ -216,7 +221,7 @@ const Surveys = ({ site }: SurveysProps) => {
           <Grid
             className={classes.surveyWrapper}
             container
-            justify="space-between"
+            justifyContent="space-between"
             item
             lg={12}
             xs={11}
@@ -225,7 +230,7 @@ const Surveys = ({ site }: SurveysProps) => {
           >
             <Grid
               container
-              justify={isTablet ? 'flex-start' : 'center'}
+              justifyContent={isTablet ? 'flex-start' : 'center'}
               item
               md={12}
               lg={3}
@@ -250,7 +255,7 @@ const Surveys = ({ site }: SurveysProps) => {
             <Grid
               container
               alignItems="center"
-              justify={isTablet ? 'flex-start' : 'center'}
+              justifyContent={isTablet ? 'flex-start' : 'center'}
               item
               md={12}
               lg={4}
@@ -294,7 +299,7 @@ const Surveys = ({ site }: SurveysProps) => {
             </Grid>
           </Grid>
         )}
-        <Grid container justify="center" item xs={11} lg={12}>
+        <Grid container justifyContent="center" item xs={11} lg={12}>
           <Timeline
             isAdmin={isSiteAdmin}
             loading={isLoading}

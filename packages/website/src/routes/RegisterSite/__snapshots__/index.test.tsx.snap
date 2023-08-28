@@ -298,6 +298,7 @@ exports[`Site registration page should render with given state from Redux store 
     maxwidth="xs"
     open="false"
     scroll="body"
+    transitionprops="[object Object]"
   >
     <mock-card>
       <div
@@ -530,6 +531,7 @@ exports[`Site registration page should render with given state from Redux store 
   <mock-dialog
     maxwidth="xs"
     open="false"
+    transitionprops="[object Object]"
   >
     <mock-card
       elevation="0"

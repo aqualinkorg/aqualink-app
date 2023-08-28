@@ -156,13 +156,13 @@ const Chart = ({
         />
       )}
       {!isTimeSeriesDataRangeLoading && showDatePickers && (
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid
             className={classes.datePickersWrapper}
             item
             xs={12}
             container
-            justify="space-between"
+            justifyContent="space-between"
             spacing={1}
           >
             <Grid item>

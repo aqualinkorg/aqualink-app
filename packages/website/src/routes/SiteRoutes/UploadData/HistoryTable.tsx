@@ -28,6 +28,7 @@ const tableHeaderTitles = [
   'SURVEY POINT',
   'SENSOR TYPE',
   'UPLOAD DATE',
+  'AFFECTED SITE IDS',
   'DATA RANGE',
   '',
 ];
@@ -49,12 +50,12 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
   const dataVisualizationButtonLink = (
     start: string,
     end: string,
-    surveyPoint: number,
+    surveyPointId?: number,
   ) =>
     `/sites/${site.id}${requests.generateUrlQueryParams({
       start,
       end,
-      surveyPoint,
+      surveyPoint: surveyPointId,
     })}`;
 
   if (nUploads === 0) {
@@ -81,25 +82,18 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
           </TableHead>
           <TableBody>
             {uploadHistory.map(
-              ({
-                id,
-                file,
-                surveyPoint,
-                sensorType,
-                minDate,
-                maxDate,
-                createdAt,
-              }) => {
+              ({ dataUpload, surveyPoint, sitesAffectedByDataUpload }) => {
                 const row = [
-                  file,
+                  dataUpload.file,
                   timezoneAbbreviation || timezone,
                   site.name,
-                  surveyPoint.name,
-                  startCase(sensorType),
-                  DateTime.fromISO(createdAt).toFormat(dateFormat),
+                  surveyPoint?.name,
+                  dataUpload.sensorTypes.map((x) => startCase(x)).join(', '),
+                  DateTime.fromISO(dataUpload.createdAt).toFormat(dateFormat),
+                  sitesAffectedByDataUpload?.join(', '),
                 ];
                 return (
-                  <TableRow key={id}>
+                  <TableRow key={dataUpload.id}>
                     {row.map((item) => (
                       <TableCell>
                         <Typography {...tableCellTypographyProps}>
@@ -111,35 +105,38 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                       <Button
                         component={Link}
                         to={dataVisualizationButtonLink(
-                          minDate,
-                          maxDate,
-                          surveyPoint.id,
+                          dataUpload.minDate,
+                          dataUpload.maxDate,
+                          surveyPoint?.id,
                         )}
                         size="small"
                         variant="outlined"
                         color="primary"
                         className={classes.dateIntervalButton}
                       >
-                        {DateTime.fromISO(minDate).toFormat(dateFormat)} -{' '}
-                        {DateTime.fromISO(maxDate).toFormat(dateFormat)}
+                        {DateTime.fromISO(dataUpload.minDate).toFormat(
+                          dateFormat,
+                        )}{' '}
+                        -{' '}
+                        {DateTime.fromISO(dataUpload.maxDate).toFormat(
+                          dateFormat,
+                        )}
                       </Button>
                     </TableCell>
                     <TableCell>
                       <DeleteButton
-                        onConfirm={() => onDelete([id])}
+                        onConfirm={() => onDelete([dataUpload.id])}
                         content={
                           <Typography color="textSecondary">
                             Are you sure you want to delete file &quot;
-                            <span className={classes.bold}>{file}</span>&quot;?
-                            Data between dates{' '}
                             <span className={classes.bold}>
-                              {DateTime.fromISO(minDate).toFormat(
+                              {DateTime.fromISO(dataUpload.minDate).toFormat(
                                 'LL/dd/yyyy HH:mm',
                               )}
                             </span>{' '}
                             and{' '}
                             <span className={classes.bold}>
-                              {DateTime.fromISO(maxDate).toFormat(
+                              {DateTime.fromISO(dataUpload.maxDate).toFormat(
                                 'LL/dd/yyyy HH:mm',
                               )}
                             </span>{' '}

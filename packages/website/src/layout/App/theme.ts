@@ -1,4 +1,4 @@
-import { createMuiTheme, Theme } from '@material-ui/core/styles';
+import { createTheme, Theme } from '@material-ui/core/styles';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
 import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
 
@@ -37,7 +37,7 @@ export const mapIconSize = '2rem';
 
 const breakpoints = createBreakpoints({});
 
-const theme: Theme = createMuiTheme({
+const theme: Theme = createTheme({
   palette: {
     primary: {
       main: lightBlue,

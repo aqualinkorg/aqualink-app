@@ -1,4 +1,8 @@
-import { convertData, getFilePathData } from './upload-sheet-data';
+import {
+  convertData,
+  getFilePathData,
+  trimWorkSheetData,
+} from './upload-sheet-data';
 import { Sources } from '../../sites/sources.entity';
 
 const sondeTestResults = [
@@ -698,8 +702,10 @@ describe('CheckConvertingWork', () => {
     const { workSheetData, headers, headerIndex, headerToTokenMap } =
       await getFilePathData(`src/utils/uploads/${fileName}`);
 
+    const trimmed = trimWorkSheetData(workSheetData, headers, headerIndex);
+
     const result = convertData(
-      workSheetData,
+      trimmed,
       headers,
       headerIndex,
       fileName,

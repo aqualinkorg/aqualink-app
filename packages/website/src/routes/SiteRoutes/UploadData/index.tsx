@@ -27,12 +27,12 @@ import StatusSnackbar from 'common/StatusSnackbar';
 import InfoWithAction from 'common/InfoWithAction';
 import uploadServices from 'services/uploadServices';
 import siteServices from 'services/siteServices';
+import DropZone from 'common/FileUploads/Dropzone';
+import FileList from 'common/FileUploads/FileList';
+import UploadButton from 'common/FileUploads/UploadButton';
 import Header from './Header';
 import Selectors from './Selectors';
-import DropZone from './DropZone';
-import FileList from './FileList';
 import HistoryTable from './HistoryTable';
-import UploadButton from './UploadButton';
 
 const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const classes = useStyles();

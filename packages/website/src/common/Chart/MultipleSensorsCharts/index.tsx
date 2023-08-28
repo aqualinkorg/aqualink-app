@@ -569,7 +569,6 @@ const MultipleSensorsCharts = ({
           startDate={pickerStartDate}
           endDate={pickerEndDate}
           siteId={site.id}
-          className={classes.button}
           defaultMetrics={DEFAULT_METRICS}
         />
       </div>
@@ -707,9 +706,6 @@ const MultipleSensorsCharts = ({
 const useStyles = makeStyles((theme: Theme) => ({
   chartWithRange: {
     marginTop: theme.spacing(4),
-  },
-  button: {
-    width: 'fit-content',
   },
   buttonWrapper: {
     display: 'flex',

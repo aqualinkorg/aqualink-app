@@ -55,7 +55,7 @@ const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
       <Grid
         className={classes.autoWidth}
         container
-        justify="space-between"
+        justifyContent="space-between"
         spacing={2}
       >
         <Grid className={classes.infoWrapper} item>

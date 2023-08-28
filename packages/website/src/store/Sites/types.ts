@@ -350,22 +350,25 @@ export interface SiteApplication {
   applied: boolean;
 }
 
-export interface SiteUploadHistoryItem {
+export interface DataUploads {
   id: number;
-  sensorType: Sources;
+  sensorTypes: Sources[];
   file: string;
   minDate: string;
   maxDate: string;
   createdAt: string;
   updatedAt: string;
   metrics: MetricsKeys[];
-  surveyPoint: {
-    id: number;
-    name: string;
-  };
 }
 
-export type SiteUploadHistory = SiteUploadHistoryItem[];
+export interface DataUploadsSites {
+  site: Site;
+  dataUpload: DataUploads;
+  surveyPoint: SurveyPoints | null;
+  sitesAffectedByDataUpload?: number[];
+}
+
+export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
