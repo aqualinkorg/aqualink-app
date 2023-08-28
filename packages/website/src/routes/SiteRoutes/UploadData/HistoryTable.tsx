@@ -130,6 +130,10 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                           <Typography color="textSecondary">
                             Are you sure you want to delete file &quot;
                             <span className={classes.bold}>
+                              {dataUpload.file}
+                            </span>
+                            &quot;? Data between dates{' '}
+                            <span className={classes.bold}>
                               {DateTime.fromISO(dataUpload.minDate).toFormat(
                                 'LL/dd/yyyy HH:mm',
                               )}
