@@ -249,7 +249,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               <mock-tablecell
                 align="left"
                 classname="EnhancedTableHead-headCells-11"
-                padding="default"
+                padding="normal"
                 sortdirection="false"
                 style="width: 40%;"
               >
@@ -269,7 +269,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               <mock-tablecell
                 align="left"
                 classname="EnhancedTableHead-headCells-11"
-                padding="default"
+                padding="normal"
                 sortdirection="false"
               >
                 <mock-tablesortlabel
@@ -295,7 +295,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               <mock-tablecell
                 align="left"
                 classname="EnhancedTableHead-headCells-11"
-                padding="default"
+                padding="normal"
                 sortdirection="false"
               >
                 <mock-tablesortlabel
@@ -321,7 +321,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               <mock-tablecell
                 align="left"
                 classname="EnhancedTableHead-headCells-11"
-                padding="default"
+                padding="normal"
                 sortdirection="desc"
                 style="width: 5%;"
               >

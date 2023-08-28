@@ -11,6 +11,7 @@ import {
   Body,
   Res,
   Header,
+  Req,
   BadRequestException,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -33,7 +34,9 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { fileFilter } from '../utils/uploads/upload-sheet-data';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
+import { AuthRequest } from '../auth/auth.types';
 import { MetricArrayPipe } from '../pipes/parse-metric-array.pipe';
+import { UploadTimeSeriesDataDto } from './dto/upload-time-series-data.dto';
 
 const MAX_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;
@@ -147,22 +150,49 @@ export class TimeSeriesController {
       dest: './upload',
       fileFilter,
       limits: {
-        fileSize: MAX_FILE_SIZE_MB * 10 ** 6,
+        fileSize: MAX_FILE_SIZE_MB * 2 ** 20,
       },
     }),
   )
-  uploadTimeSeriesData(
+  uploadSiteTimeSeriesData(
     @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
     @UploadedFiles() files: Express.Multer.File[],
     @Body('sensor') sensor?: SourceType,
     @Query('failOnWarning', ParseBoolPipe) failOnWarning?: boolean,
   ) {
-    return this.timeSeriesService.uploadData(
-      surveyPointDataRangeDto,
-      sensor,
+    return this.timeSeriesService.uploadData({
+      sensor: sensor || SourceType.SHEET_DATA,
       files,
+      multiSiteUpload: false,
+      surveyPointDataRangeDto,
       failOnWarning,
-    );
+    });
+  }
+
+  @ApiOperation({ summary: 'Upload time series data' })
+  @Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
+  @Post('upload')
+  @UseInterceptors(
+    FilesInterceptor('files', MAX_FILE_COUNT, {
+      dest: './upload',
+      fileFilter,
+      limits: {
+        fileSize: MAX_FILE_SIZE_MB * 2 ** 20,
+      },
+    }),
+  )
+  uploadTimeSeriesData(
+    @Req() req: AuthRequest,
+    @UploadedFiles() files: Express.Multer.File[],
+    @Body() uploadTimeSeriesDataDto: UploadTimeSeriesDataDto,
+  ) {
+    return this.timeSeriesService.uploadData({
+      user: req.user,
+      sensor: uploadTimeSeriesDataDto.sensor,
+      files,
+      multiSiteUpload: true,
+      failOnWarning: uploadTimeSeriesDataDto.failOnWarning,
+    });
   }
 
   @ApiOperation({ summary: 'Get sample upload files' })

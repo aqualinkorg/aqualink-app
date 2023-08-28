@@ -12,7 +12,7 @@ const links = [
 
 const RouteButtons = () => {
   return (
-    <Grid container justify="space-evenly" item xs={12} sm={7} md={6}>
+    <Grid container justifyContent="space-evenly" item xs={12} sm={7} md={6}>
       {links.map(({ title, to, href }) => (
         <Grid item key={title}>
           <Button

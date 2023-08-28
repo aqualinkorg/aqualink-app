@@ -150,7 +150,7 @@ const SiteNavBar = ({
             : 'Something went wrong'}
         </Alert>
       </Collapse>
-      <Grid container justify="space-between" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center">
         <Grid item xs={12}>
           <Grid alignItems="center" container spacing={1}>
             {!editEnabled ? (

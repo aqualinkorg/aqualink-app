@@ -111,7 +111,7 @@ const SelectedSiteCardContent = ({
     <Grid
       className={classes.cardWrapper}
       container
-      justify="space-between"
+      justifyContent="space-between"
       spacing={1}
     >
       {useCardWithImageLayout && (
@@ -160,7 +160,7 @@ const SelectedSiteCardContent = ({
                   <Grid
                     container
                     alignItems="center"
-                    justify={
+                    justifyContent={
                       site.videoStream && isTablet
                         ? 'space-between'
                         : 'flex-end'

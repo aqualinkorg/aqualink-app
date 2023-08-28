@@ -85,7 +85,12 @@ const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
   return (
     <>
       <Box className={classes.root}>
-        <Grid container justify="space-between" alignItems="center" spacing={2}>
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+        >
           {Object.values(metrics(data)).map((item) => (
             <Grid
               item

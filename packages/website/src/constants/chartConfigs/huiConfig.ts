@@ -22,7 +22,7 @@ export const huiConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
     order: 2,
   },
   nitrate_plus_nitrite: {
-    title: 'Nitrate Nitrate Nitrogen',
+    title: 'Nitrate Nitrite Nitrogen',
     units: 'mg/L',
     description: '',
     visibility: 'public',

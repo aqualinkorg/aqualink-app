@@ -40,7 +40,7 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
         <Grid
           className={classes.alertsWrapper}
           container
-          justify="space-between"
+          justifyContent="space-between"
           direction="column"
         >
           {reverse(times(nLevels, Number)).map((level) => {

@@ -49,7 +49,7 @@ const MediaCard = ({
           style={{ height: '100%' }}
           container
           alignItems="center"
-          justify="space-between"
+          justifyContent="space-between"
           item
           xs={12}
         >
@@ -62,13 +62,13 @@ const MediaCard = ({
                   item
                   xs={12}
                   alignItems="flex-end"
-                  justify="flex-end"
+                  justifyContent="flex-end"
                 >
                   <Grid
                     className={classes.mediaSize}
                     container
                     alignItems="center"
-                    justify="center"
+                    justifyContent="center"
                     item
                     xs={3}
                   >
@@ -78,7 +78,7 @@ const MediaCard = ({
               )}
             </CardMedia>
           </Grid>
-          <Grid container justify="center" item xs={3}>
+          <Grid container justifyContent="center" item xs={3}>
             <Grid style={{ marginBottom: '1rem' }} item xs={10}>
               <Typography color="textSecondary" variant="h6">
                 Survey Point
@@ -125,7 +125,7 @@ const MediaCard = ({
               </TextField>
             </Grid>
           </Grid>
-          <Grid container justify="center" item xs={5}>
+          <Grid container justifyContent="center" item xs={5}>
             <Grid style={{ marginBottom: '1rem' }} item xs={12}>
               <Typography color="textSecondary" variant="h6">
                 Comments
@@ -153,7 +153,7 @@ const MediaCard = ({
               container
               item
               alignContent="space-between"
-              justify="flex-end"
+              justifyContent="flex-end"
               xs={12}
             >
               <IconButton onClick={onImageClick}>

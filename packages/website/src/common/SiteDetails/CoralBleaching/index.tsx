@@ -44,7 +44,7 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
           container
           alignItems="center"
           alignContent="space-between"
-          justify="center"
+          justifyContent="center"
           item
           xs={12}
         >
