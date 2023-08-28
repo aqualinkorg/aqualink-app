@@ -93,9 +93,12 @@ interface Rule {
 
 const rules: Rule[] = [
   // Non Metrics
-  { token: 'date', expression: /^(Date \(MM\/DD\/YYYY\)|Date)$/ },
-  { token: 'time', expression: /^(Time \(HH:mm:ss\)|Time)$/ },
-  { token: 'timestamp', expression: /^(Date Time|Date_Time)$/ },
+  { token: 'date', expression: /^Date \(MM\/DD\/YYYY\)$/ },
+  { token: 'date', expression: /^Date$/ },
+  { token: 'time', expression: /^Time \(HH:mm:ss\)$/ },
+  { token: 'time', expression: /^Time$/ },
+  { token: 'timestamp', expression: /^Date Time$/ },
+  { token: 'timestamp', expression: /^Date_Time$/ },
   { token: 'aqualink_site_id', expression: /^aqualink_site_id$/ },
   {
     token: 'aqualink_survey_point_id',
@@ -105,7 +108,8 @@ const rules: Rule[] = [
   // should match 'Temp, °C'
   { token: Metric.AIR_TEMPERATURE, expression: /^Temp, .*C$/ },
   // should match 'Temp °C'
-  { token: Metric.BOTTOM_TEMPERATURE, expression: /^(Temp .*C|Temp)$/ },
+  { token: Metric.BOTTOM_TEMPERATURE, expression: /^Temp .*C$/ },
+  { token: Metric.BOTTOM_TEMPERATURE, expression: /^Temp$/ },
   { token: Metric.WIND_SPEED, expression: /^Wind Speed, m\/s$/ },
   // should match 'Wind Direction, ø'
   { token: Metric.WIND_DIRECTION, expression: /^Wind Direction, .*$/ },
@@ -118,13 +122,17 @@ const rules: Rule[] = [
   // should match 'Cond µS/cm'
   { token: Metric.CONDUCTIVITY, expression: /^Cond .*S\/cm$/ },
   { token: Metric.WATER_DEPTH, expression: /^Depth m$/ },
-  { token: Metric.ODO_SATURATION, expression: /^(ODO % sat|DO_sat)$/ },
-  { token: Metric.ODO_CONCENTRATION, expression: /^(ODO mg\/L|DO)$/ },
-  { token: Metric.SALINITY, expression: /^(Sal psu|Salinity)$/ },
+  { token: Metric.ODO_SATURATION, expression: /^ODO % sat$/ },
+  { token: Metric.ODO_SATURATION, expression: /^DO_sat$/ },
+  { token: Metric.ODO_CONCENTRATION, expression: /^ODO mg\/L$/ },
+  { token: Metric.ODO_CONCENTRATION, expression: /^DO$/ },
+  { token: Metric.SALINITY, expression: /^Sal psu$/ },
+  { token: Metric.SALINITY, expression: /^Salinity$/ },
   // should match 'SpCond µS/cm'
   { token: Metric.SPECIFIC_CONDUCTANCE, expression: /^SpCond .*S\/cm$/ },
   { token: Metric.TDS, expression: /^TDS mg\/L$/ },
-  { token: Metric.TURBIDITY, expression: /^(Turbidity FNU|Turbidity)$/ },
+  { token: Metric.TURBIDITY, expression: /^Turbidity FNU$/ },
+  { token: Metric.TURBIDITY, expression: /^Turbidity$/ },
   { token: Metric.TOTAL_SUSPENDED_SOLIDS, expression: /^TSS mg\/L$/ },
   { token: Metric.SONDE_WIPER_POSITION, expression: /^Wiper Position volt$/ },
   { token: Metric.PH, expression: /^pH$/ },
