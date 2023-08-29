@@ -1,10 +1,22 @@
 import { User } from 'store/User/types';
 import type { Site } from 'store/Sites/types';
 import requests from 'helpers/requests';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
 import app from '../firebase';
 
-const createUser = (email: string, password: string) =>
-  app && app.auth().createUserWithEmailAndPassword(email, password);
+const createUser = (email: string, password: string) => {
+  if (app) {
+    const auth = getAuth(app);
+    return createUserWithEmailAndPassword(auth, email, password);
+  }
+  return undefined;
+};
 
 const storeUser = (
   fullName: string,
@@ -25,7 +37,8 @@ const storeUser = (
 
 const resetPassword = (email: string) => {
   if (app) {
-    app.auth().sendPasswordResetEmail(email, { url: window.location.origin });
+    const auth = getAuth(app);
+    sendPasswordResetEmail(auth, email, { url: window.location.origin });
   }
 };
 
@@ -43,10 +56,21 @@ const getAdministeredSites = (token?: string) =>
     token,
   });
 
-const signInUser = (email: string, password: string) =>
-  app && app.auth().signInWithEmailAndPassword(email, password);
+const signInUser = (email: string, password: string) => {
+  if (app) {
+    const auth = getAuth(app);
+    return signInWithEmailAndPassword(auth, email, password);
+  }
+  return undefined;
+};
 
-const signOutUser = () => app && app.auth().signOut();
+const signOutUser = () => {
+  if (app) {
+    const auth = getAuth(app);
+    return signOut(auth);
+  }
+  return undefined;
+};
 
 export default {
   createUser,

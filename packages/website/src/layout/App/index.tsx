@@ -7,7 +7,7 @@ import {
   Route,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getSelf } from 'store/User/userSlice';
 import { useGATagManager } from 'utils/google-analytics';
 import NotFound from '../../routes/NotFound';
@@ -36,7 +36,8 @@ function App() {
 
   useEffect(() => {
     if (app) {
-      app.auth().onAuthStateChanged((user) => {
+      const auth = getAuth(app);
+      onAuthStateChanged(auth, (user) => {
         if (user) {
           // User is signed in
           user
