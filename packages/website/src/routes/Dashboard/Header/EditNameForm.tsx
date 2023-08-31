@@ -72,7 +72,7 @@ const EditNameForm = ({
         <Grid item xs={12} sm={5}>
           <Grid
             container
-            justify={isMobile ? 'flex-end' : 'flex-start'}
+            justifyContent={isMobile ? 'flex-end' : 'flex-start'}
             spacing={1}
           >
             <Grid item>

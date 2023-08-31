@@ -65,7 +65,7 @@ const Header = ({
         className={classes.autoWidth}
         container
         alignItems="flex-end"
-        justify="space-between"
+        justifyContent="space-between"
         spacing={2}
       >
         <Grid item>
@@ -126,7 +126,7 @@ const Header = ({
               <Grid
                 className={classes.autoWidth}
                 container
-                justify={isMobile ? 'center' : 'flex-start'}
+                justifyContent={isMobile ? 'center' : 'flex-start'}
                 alignItems="center"
                 spacing={2}
               >

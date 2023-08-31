@@ -5,6 +5,7 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
   <mock-dialog
     maxwidth="xs"
     open="true"
+    transitionprops="[object Object]"
   >
     <mock-card
       elevation="0"

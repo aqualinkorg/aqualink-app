@@ -153,7 +153,7 @@ const PointSelector = ({
                         <Grid
                           container
                           alignItems="center"
-                          justify="space-between"
+                          justifyContent="space-between"
                           spacing={1}
                         >
                           <Grid className={classes.itemName} item>

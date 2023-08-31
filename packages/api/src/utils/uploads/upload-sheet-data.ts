@@ -12,7 +12,11 @@ import {
 } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
-import { BadRequestException, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
@@ -23,11 +27,13 @@ import { TimeSeries } from '../../time-series/time-series.entity';
 import { Sources } from '../../sites/sources.entity';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
-import { getSite } from '../site.utils';
+import { getSite, surveyPointBelongsToSite } from '../site.utils';
 import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 import { getBarometricDiff } from '../sofar';
 import { refreshMaterializedView } from '../time-series.utils';
 import { Metric } from '../../time-series/metrics.enum';
+import { AdminLevel, User } from '../../users/users.entity';
+import { DataUploadsSites } from '../../data-uploads/data-uploads-sites.entity';
 import { GoogleCloudDir } from '../google-cloud.utils';
 
 interface Repositories {
@@ -36,6 +42,7 @@ interface Repositories {
   timeSeriesRepository: Repository<TimeSeries>;
   sourcesRepository: Repository<Sources>;
   dataUploadsRepository: Repository<DataUploads>;
+  dataUploadsSitesRepository: Repository<DataUploadsSites>;
 }
 
 const logger = new Logger('ParseSondeData');
@@ -67,7 +74,13 @@ interface Data {
   source: Sources;
 }
 
-const nonMetric = ['date', 'time', 'timestamp'] as const;
+const nonMetric = [
+  'date',
+  'time',
+  'timestamp',
+  'aqualink_site_id',
+  'aqualink_survey_point_id',
+] as const;
 
 type NonMetric = typeof nonMetric[number];
 
@@ -80,14 +93,23 @@ interface Rule {
 
 const rules: Rule[] = [
   // Non Metrics
-  { token: 'date', expression: /^(Date \(MM\/DD\/YYYY\)|Date)$/ },
-  { token: 'time', expression: /^(Time \(HH:mm:ss\)|Time)$/ },
-  { token: 'timestamp', expression: /^(Date Time|Date_Time)$/ },
+  { token: 'date', expression: /^Date \(MM\/DD\/YYYY\)$/ },
+  { token: 'date', expression: /^Date$/ },
+  { token: 'time', expression: /^Time \(HH:mm:ss\)$/ },
+  { token: 'time', expression: /^Time$/ },
+  { token: 'timestamp', expression: /^Date Time$/ },
+  { token: 'timestamp', expression: /^Date_Time$/ },
+  { token: 'aqualink_site_id', expression: /^aqualink_site_id$/ },
+  {
+    token: 'aqualink_survey_point_id',
+    expression: /^aqualink_survey_point_id$/,
+  },
   // Default Metrics
   // should match 'Temp, °C'
   { token: Metric.AIR_TEMPERATURE, expression: /^Temp, .*C$/ },
   // should match 'Temp °C'
-  { token: Metric.BOTTOM_TEMPERATURE, expression: /^(Temp .*C|Temp)$/ },
+  { token: Metric.BOTTOM_TEMPERATURE, expression: /^Temp .*C$/ },
+  { token: Metric.BOTTOM_TEMPERATURE, expression: /^Temp$/ },
   { token: Metric.WIND_SPEED, expression: /^Wind Speed, m\/s$/ },
   // should match 'Wind Direction, ø'
   { token: Metric.WIND_DIRECTION, expression: /^Wind Direction, .*$/ },
@@ -100,13 +122,17 @@ const rules: Rule[] = [
   // should match 'Cond µS/cm'
   { token: Metric.CONDUCTIVITY, expression: /^Cond .*S\/cm$/ },
   { token: Metric.WATER_DEPTH, expression: /^Depth m$/ },
-  { token: Metric.ODO_SATURATION, expression: /^(ODO % sat|DO_sat)$/ },
-  { token: Metric.ODO_CONCENTRATION, expression: /^(ODO mg\/L|DO)$/ },
-  { token: Metric.SALINITY, expression: /^(Sal psu|Salinity)$/ },
+  { token: Metric.ODO_SATURATION, expression: /^ODO % sat$/ },
+  { token: Metric.ODO_SATURATION, expression: /^DO_sat$/ },
+  { token: Metric.ODO_CONCENTRATION, expression: /^ODO mg\/L$/ },
+  { token: Metric.ODO_CONCENTRATION, expression: /^DO$/ },
+  { token: Metric.SALINITY, expression: /^Sal psu$/ },
+  { token: Metric.SALINITY, expression: /^Salinity$/ },
   // should match 'SpCond µS/cm'
   { token: Metric.SPECIFIC_CONDUCTANCE, expression: /^SpCond .*S\/cm$/ },
   { token: Metric.TDS, expression: /^TDS mg\/L$/ },
-  { token: Metric.TURBIDITY, expression: /^(Turbidity FNU|Turbidity)$/ },
+  { token: Metric.TURBIDITY, expression: /^Turbidity FNU$/ },
+  { token: Metric.TURBIDITY, expression: /^Turbidity$/ },
   { token: Metric.TOTAL_SUSPENDED_SOLIDS, expression: /^TSS mg\/L$/ },
   { token: Metric.SONDE_WIPER_POSITION, expression: /^Wiper Position volt$/ },
   { token: Metric.PH, expression: /^pH$/ },
@@ -128,14 +154,10 @@ const rules: Rule[] = [
 
 export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
 
-export const fileFilter: MulterOptions['fileFilter'] = (
-  _,
-  { mimetype: inputMimetype },
-  callback,
-) => {
+export const fileFilter: MulterOptions['fileFilter'] = (_, file, callback) => {
   if (
     !ACCEPTED_FILE_TYPES.map(({ mimetype }) => mimetype as string).includes(
-      inputMimetype,
+      file.mimetype,
     )
   ) {
     callback(
@@ -241,8 +263,50 @@ export const getFilePathData = async (filePath: string) => {
   };
 };
 
-export const convertData = (
+export const trimWorkSheetData = (
   workSheetData: any[][],
+  headers: string[],
+  headerIndex: number,
+) =>
+  (workSheetData ?? [])
+    .slice(headerIndex + 1)
+    .map((item) => {
+      if (item.length === headers.length) return item as string[];
+      return undefined;
+    })
+    .filter((item): item is string[] => item !== undefined);
+
+const groupBySiteAndPoint = (
+  trimmedWorkSheetData: string[][],
+  headerToTokenMap: (Token | undefined)[],
+): { [key: string]: string[][] } => {
+  const siteIdIndex = headerToTokenMap.findIndex(
+    (x) => x === 'aqualink_site_id',
+  );
+  const surveyPointIdIndex = headerToTokenMap.findIndex(
+    (x) => x === 'aqualink_survey_point_id',
+  );
+
+  const groupedByMap = new Map<string, string[][]>();
+
+  trimmedWorkSheetData.forEach((val) => {
+    const siteId = val[siteIdIndex] || '';
+    const surveyPointId = val[surveyPointIdIndex] || '';
+
+    const key = `${siteId}_${surveyPointId}`;
+    const item = groupedByMap.get(key);
+    if (item !== undefined) {
+      groupedByMap.set(key, [...item, val]);
+    } else {
+      groupedByMap.set(key, [val]);
+    }
+  });
+
+  return Object.fromEntries(Array.from(groupedByMap));
+};
+
+export const convertData = (
+  workSheetData: string[][],
   headers: string[],
   headerIndex: number,
   fileName: string,
@@ -250,18 +314,10 @@ export const convertData = (
   headerToTokenMap: (Token | undefined)[],
   mimetype?: Mimetype,
 ) => {
-  const preResult = workSheetData
-    ?.slice(headerIndex + 1)
-    .map((item) => {
-      if (item.length === headers.length) return item as string[];
-      return undefined;
-    })
-    .filter((item) => item) as string[][];
-
   const timestampIndex = findTimeStampIndex(headerToTokenMap);
 
   console.time(`Get data from sheet ${fileName}`);
-  const results = preResult.reduce<Data[]>((acc, row) => {
+  const results = workSheetData.reduce<Data[]>((acc, row) => {
     const timezone =
       typeof timestampIndex === 'number'
         ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
@@ -313,9 +369,7 @@ export const convertData = (
 export const uploadFileToGCloud = async (
   dataUploadsRepository: Repository<DataUploads>,
   signature: string,
-  site: Site | undefined,
-  surveyPoint: SiteSurveyPoint | undefined,
-  sourceType: SourceType,
+  sources: SourceType[],
   fileName: string,
   filePath: string,
   minDate: string | undefined,
@@ -341,7 +395,7 @@ export const uploadFileToGCloud = async (
   // Note this may fail. It would still return a location, but the file may not have been uploaded
   const fileLocation = googleCloudService.uploadFileAsync(
     filePath,
-    sourceType,
+    sources.length === 1 ? sources[0] : 'multi_source',
     GoogleCloudDir.DATA_UPLOADS,
     'data_upload',
   );
@@ -349,9 +403,7 @@ export const uploadFileToGCloud = async (
   const dataUploadsFile = await dataUploadsRepository.save({
     file: fileName,
     signature,
-    sensorType: sourceType,
-    site,
-    surveyPoint,
+    sensorTypes: sources,
     minDate,
     maxDate,
     metrics: importedHeaders,
@@ -418,26 +470,45 @@ export const saveBatchToTimeSeries = (
   });
 };
 
-export const uploadTimeSeriesData = async (
-  filePath: string,
-  fileName: string,
-  siteId: string,
-  surveyPointId: string | undefined,
-  sourceType: SourceType,
-  repositories: Repositories,
-  failOnWarning?: boolean,
-  mimetype?: Mimetype,
-) => {
-  console.time(`Upload datafile ${fileName}`);
-
+const createEntitiesAndConvert = async ({
+  workSheetData,
+  siteId,
+  surveyPointId,
+  headers,
+  headerIndex,
+  fileName,
+  headerToTokenMap,
+  sourceType,
+  repositories,
+  mimetype,
+}: {
+  workSheetData: string[][];
+  siteId: number;
+  surveyPointId?: number;
+  headers: string[];
+  headerIndex: number;
+  fileName: string;
+  headerToTokenMap: (Token | undefined)[];
+  sourceType: SourceType;
+  repositories: Repositories;
+  mimetype?: Mimetype;
+}) => {
   const [site, surveyPoint] = await Promise.all([
-    getSite(parseInt(siteId, 10), repositories.siteRepository),
+    getSite(siteId, repositories.siteRepository),
     surveyPointId
       ? repositories.surveyPointRepository.findOneBy({
-          id: parseInt(surveyPointId, 10),
+          id: surveyPointId,
         })
       : undefined,
   ]);
+
+  if (surveyPoint) {
+    await surveyPointBelongsToSite(
+      site.id,
+      surveyPoint.id,
+      repositories.surveyPointRepository,
+    );
+  }
 
   const sourceEntity = await findOrCreateSourceEntity(
     site,
@@ -445,16 +516,6 @@ export const uploadTimeSeriesData = async (
     surveyPoint || null,
     repositories.sourcesRepository,
   );
-
-  const {
-    workSheetData,
-    signature,
-    ignoredHeaders,
-    importedMetrics,
-    headers,
-    headerIndex,
-    headerToTokenMap,
-  } = await getFilePathData(filePath);
 
   const data = convertData(
     workSheetData,
@@ -466,43 +527,29 @@ export const uploadTimeSeriesData = async (
     mimetype,
   );
 
-  if (failOnWarning && ignoredHeaders.length > 0) {
-    throw new BadRequestException(
-      `${fileName}: The columns ${ignoredHeaders
-        .map((header) => `"${header}"`)
-        .join(', ')} are not configured for import yet and cannot be uploaded.`,
-    );
-  }
+  return { data, sourceEntity, site, surveyPoint };
+};
 
-  const minDate = get(
-    minBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
-    'timestamp',
-  );
-  const maxDate = get(
-    maxBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
-    'timestamp',
-  );
-
-  const dataUploadsFile = await uploadFileToGCloud(
-    repositories.dataUploadsRepository,
-    signature,
-    site,
-    surveyPoint ?? undefined,
-    sourceType,
-    fileName,
-    filePath,
-    minDate,
-    maxDate,
-    importedMetrics,
-  );
-
+const uploadPerSiteAndPoint = async ({
+  data,
+  site,
+  surveyPoint,
+  repositories,
+  dataUploadsFileEntity,
+}: {
+  data: Data[];
+  site: Site;
+  surveyPoint?: SiteSurveyPoint;
+  repositories: Repositories;
+  dataUploadsFileEntity: DataUploads;
+}) => {
   const dataAsTimeSeriesNoDiffs = data.map((x) => {
     return {
       timestamp: x.timestamp,
       value: x.value,
       metric: x.metric,
       source: x.source,
-      dataUpload: dataUploadsFile,
+      dataUpload: dataUploadsFileEntity,
     };
   });
 
@@ -527,7 +574,7 @@ export const uploadTimeSeriesData = async (
             value: valueDiff.value,
             metric: Metric.BAROMETRIC_PRESSURE_TOP_DIFF,
             source: sortedPressures[1].source,
-            dataUpload: dataUploadsFile,
+            dataUpload: dataUploadsFileEntity,
           }
         : undefined;
     },
@@ -548,13 +595,196 @@ export const uploadTimeSeriesData = async (
   const dataAsTimeSeries = [...dataAsTimeSeriesNoDiffs, ...filteredDiffs];
 
   // Data is too big to added with one bulk insert so we batch the upload.
-  console.time(`Loading into DB ${fileName}`);
+  console.time(
+    `Loading into DB site: ${site.id}, surveyPoint: ${surveyPoint?.id}`,
+  );
   await saveBatchToTimeSeries(
     dataAsTimeSeries as QueryDeepPartialEntity<TimeSeries>[],
     repositories.timeSeriesRepository,
   );
-  console.timeEnd(`Loading into DB ${fileName}`);
+  console.timeEnd(
+    `Loading into DB site: ${site.id}, surveyPoint: ${surveyPoint?.id}`,
+  );
+
+  try {
+    // This will fail on file re upload
+    await repositories.dataUploadsSitesRepository.save({
+      dataUpload: dataUploadsFileEntity,
+      site,
+      surveyPoint,
+    });
+  } catch (error: any) {
+    logger.warn(error?.message || error);
+  }
+
   logger.log('loading complete');
+};
+
+export const uploadTimeSeriesData = async ({
+  user,
+  filePath,
+  fileName,
+  siteId,
+  surveyPointId,
+  sourceType,
+  repositories,
+  multiSiteUpload,
+  failOnWarning,
+  mimetype,
+}: {
+  user?: Express.User & User;
+  filePath: string;
+  fileName: string;
+  siteId: number | undefined;
+  surveyPointId: number | undefined;
+  sourceType: SourceType;
+  repositories: Repositories;
+  multiSiteUpload: boolean;
+  failOnWarning?: boolean;
+  mimetype?: Mimetype;
+}) => {
+  console.time(`Upload data file ${fileName}`);
+
+  if (!multiSiteUpload && !siteId) {
+    throw new BadRequestException('SiteId is undefined');
+  }
+
+  const {
+    workSheetData,
+    signature,
+    ignoredHeaders,
+    importedMetrics,
+    headers,
+    headerIndex,
+    headerToTokenMap,
+  } = await getFilePathData(filePath);
+
+  if (failOnWarning && ignoredHeaders.length > 0) {
+    throw new BadRequestException(
+      `${fileName}: The columns ${ignoredHeaders
+        .map((header) => header.replace(/\r?\n|\r/g, ''))
+        .join(', ')} are not configured for import yet and cannot be uploaded.`,
+    );
+  }
+
+  const siteInfo =
+    headerToTokenMap.findIndex(
+      (x) => x === 'aqualink_survey_point_id' || x === 'aqualink_site_id',
+    ) > -1;
+  if (!multiSiteUpload && siteInfo)
+    throw new BadRequestException(
+      'File can not include aqualink site information, in this type of request',
+    );
+
+  if (multiSiteUpload) {
+    // user should never be undefined here since this is a protected endpoint
+    if (!user) throw new InternalServerErrorException();
+
+    const siteIdIndex = headerToTokenMap.findIndex(
+      (x) => x === 'aqualink_site_id',
+    );
+
+    if (siteIdIndex < 0)
+      throw new BadRequestException(`no 'aqualink_site_id' column specified`);
+
+    const ids = workSheetData
+      .map((x) => x[siteIdIndex])
+      .filter((x) => !Number.isNaN(Number(x)));
+    const uniqueIds = [...new Map(ids.map((x) => [x, x])).keys()];
+
+    const isSiteAdmin =
+      uniqueIds.length > 0
+        ? await repositories.siteRepository
+            .createQueryBuilder('site')
+            .innerJoin('site.admins', 'admins', 'admins.id = :userId', {
+              userId: user.id,
+            })
+            .andWhere('site.id IN (:...siteIds)', { siteIds: uniqueIds })
+            .getMany()
+        : [];
+
+    const isSuperAdmin = user.adminLevel === AdminLevel.SuperAdmin;
+
+    if (isSiteAdmin.length !== uniqueIds.length && !isSuperAdmin) {
+      throw new BadRequestException(`Invalid values for 'aqualink_site_id'`);
+    }
+  }
+
+  const trimmed = trimWorkSheetData(workSheetData, headers, headerIndex);
+
+  const uploadData = multiSiteUpload
+    ? Object.entries(groupBySiteAndPoint(trimmed, headerToTokenMap)).map(
+        ([key, data]) => ({
+          data,
+          siteId: parseInt(key.split('_')[0], 10),
+          surveyPointId: parseInt(key.split('_')[1], 10) || undefined,
+        }),
+      )
+    : [
+        {
+          data: trimmed,
+          // at this point siteId should be a number,
+          // since we explicitly check that in case multiSiteUpload is false
+          siteId: siteId as number,
+          surveyPointId:
+            surveyPointId !== undefined ? surveyPointId : undefined,
+        },
+      ];
+
+  const converted = await Promise.all(
+    uploadData.map((x) => {
+      return createEntitiesAndConvert({
+        workSheetData: x.data,
+        siteId: x.siteId,
+        surveyPointId: x.surveyPointId,
+        headers,
+        headerIndex,
+        fileName,
+        headerToTokenMap,
+        sourceType,
+        repositories,
+        mimetype,
+      });
+    }),
+  );
+
+  const allDataCombined = converted.map((x) => x.data).flat();
+
+  const minDate = get(
+    minBy(allDataCombined, (item) =>
+      new Date(get(item, 'timestamp')).getTime(),
+    ),
+    'timestamp',
+  );
+  const maxDate = get(
+    maxBy(allDataCombined, (item) =>
+      new Date(get(item, 'timestamp')).getTime(),
+    ),
+    'timestamp',
+  );
+
+  const dataUploadsFile = await uploadFileToGCloud(
+    repositories.dataUploadsRepository,
+    signature,
+    [sourceType],
+    fileName,
+    filePath,
+    minDate,
+    maxDate,
+    importedMetrics,
+  );
+
+  await Promise.all(
+    converted.map((x) => {
+      return uploadPerSiteAndPoint({
+        data: x.data,
+        site: x.site,
+        surveyPoint: x.surveyPoint ?? undefined,
+        repositories,
+        dataUploadsFileEntity: dataUploadsFile,
+      });
+    }),
+  );
 
   refreshMaterializedView(repositories.dataUploadsRepository);
 

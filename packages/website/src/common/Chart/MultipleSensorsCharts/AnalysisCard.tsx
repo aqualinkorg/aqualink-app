@@ -84,7 +84,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
         <Grid
           className={classes.metricsWrapper}
           container
-          justify={columnJustification || 'space-between'}
+          justifyContent={columnJustification || 'space-between'}
           alignItems="flex-end"
           spacing={isCardSmall ? 2 : 1}
         >

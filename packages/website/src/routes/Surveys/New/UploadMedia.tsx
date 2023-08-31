@@ -242,7 +242,13 @@ const UploadMedia = ({
           </Alert>
         </Collapse>
       </Grid>
-      <Grid className={classes.root} container justify="center" item xs={12}>
+      <Grid
+        className={classes.root}
+        container
+        justifyContent="center"
+        item
+        xs={12}
+      >
         <Grid container alignItems="center" item xs={10}>
           <Grid item>
             <IconButton
@@ -260,7 +266,7 @@ const UploadMedia = ({
             )}
           </Grid>
         </Grid>
-        <Grid container justify="center" item xs={4}>
+        <Grid container justifyContent="center" item xs={4}>
           <Dropzone
             accept={['image/png', 'image/jpeg', 'image/gif']}
             onDrop={handleFileDrop}
@@ -269,19 +275,19 @@ const UploadMedia = ({
             {({ getRootProps, getInputProps }) => (
               <Grid
                 container
-                justify="center"
+                justifyContent="center"
                 {...getRootProps({ className: classes.dropzone })}
               >
                 <input {...getInputProps()} />
-                <Grid container justify="center" item xs={12}>
+                <Grid container justifyContent="center" item xs={12}>
                   <CloudUploadOutlined fontSize="large" color="primary" />
                 </Grid>
-                <Grid container justify="center" item xs={12}>
+                <Grid container justifyContent="center" item xs={12}>
                   <Typography variant="h5">
                     Drag and drop or click here
                   </Typography>
                 </Grid>
-                <Grid container justify="center" item xs={12}>
+                <Grid container justifyContent="center" item xs={12}>
                   <Typography variant="subtitle2">
                     Supported formats: .jpg .png .gif Max 40mb.
                   </Typography>
@@ -297,7 +303,7 @@ const UploadMedia = ({
           <Grid
             style={{ margin: '4rem 0 2rem 0' }}
             container
-            justify="flex-end"
+            justifyContent="flex-end"
             item
             xs={9}
           >

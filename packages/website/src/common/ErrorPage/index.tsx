@@ -25,7 +25,7 @@ const ErrorPage = () => {
             Sorry, something went wrong...
           </Typography>
         </Box>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Button
             style={{ margin: '1rem' }}
             color="primary"

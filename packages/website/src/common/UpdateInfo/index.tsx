@@ -27,12 +27,12 @@ const UpdateInfo = ({
     <Grid
       className={`${classes.updateInfo} ${withMargin && classes.withMargin}`}
       container
-      justify="space-between"
+      justifyContent="space-between"
       alignItems="center"
       item
     >
       <Grid item className={classes.dateInfoWrapper} xs={8}>
-        <Grid container alignItems="center" justify="center">
+        <Grid container alignItems="center" justifyContent="center">
           <Grid item>
             <UpdateIcon className={classes.updateIcon} fontSize="small" />
           </Grid>

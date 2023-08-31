@@ -39,7 +39,7 @@ const TimelineTablet = ({
           key={survey?.id || `loading-survey-${index}`}
           className={classes.surveyWrapper}
           container
-          justify="center"
+          justifyContent="center"
           item
           xs={12}
         >

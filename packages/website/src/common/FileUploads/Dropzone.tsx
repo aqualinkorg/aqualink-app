@@ -4,7 +4,7 @@ import DefaultDropzone, {
   DropzoneProps as DefaultDropzoneProps,
 } from 'react-dropzone';
 import { makeStyles, Theme, Grid, Typography, Button } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import { grey } from '@material-ui/core/colors';
 
 const GREY_COLOR = grey[500];
@@ -24,7 +24,7 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
 
   return (
     <DefaultDropzone
-      maxSize={MAX_SIZE_MB * 10 ** 6}
+      maxSize={MAX_SIZE_MB * 2 ** 20}
       accept={ACCEPTED_TYPES.map(({ mimeType }) => mimeType)}
       onDropAccepted={onFilesDrop}
       disabled={disabled}
@@ -37,7 +37,7 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
               [classes.disabled]: disabled,
             }),
           })}
-          justify="center"
+          justifyContent="center"
           direction="column"
           alignItems="center"
         >
@@ -113,11 +113,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(5),
     border: `1px dashed ${theme.palette.primary.main}`,
     borderRadius: 10,
-    backgroundColor: fade(theme.palette.primary.main, 0.1),
+    backgroundColor: alpha(theme.palette.primary.main, 0.1),
     padding: theme.spacing(4),
     '&:hover': {
       cursor: 'pointer',
-      backgroundColor: fade(theme.palette.primary.main, 0.15),
+      backgroundColor: alpha(theme.palette.primary.main, 0.15),
     },
     transition: theme.transitions.create(
       ['background-color', 'box-shadow', 'border'],
@@ -133,7 +133,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     pointerEvents: 'none',
     borderColor: GREY_COLOR,
     color: GREY_COLOR,
-    backgroundColor: fade(GREY_COLOR, 0.1),
+    backgroundColor: alpha(GREY_COLOR, 0.1),
   },
   bold: {
     fontWeight: 700,

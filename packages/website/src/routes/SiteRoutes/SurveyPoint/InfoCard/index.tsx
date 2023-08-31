@@ -141,10 +141,10 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
               : 'Something went wrong'}
           </Alert>
         </Collapse>
-        <Grid className={classes.cardWrapper} container justify="center">
+        <Grid className={classes.cardWrapper} container justifyContent="center">
           <Grid item xs={12} sm={12}>
             <Card elevation={3}>
-              <Grid container justify="space-between">
+              <Grid container justifyContent="space-between">
                 {editModeEnabled ? (
                   <EditForm
                     editLoading={editLoading}

@@ -43,7 +43,7 @@ const Content = () => {
   return collection ? (
     <Container>
       <Header collection={collection} />
-      <Grid container justify="center" spacing={2}>
+      <Grid container justifyContent="center" spacing={2}>
         <Grid item xs={12} sm={11} md={6}>
           <Map collection={collection} />
         </Grid>

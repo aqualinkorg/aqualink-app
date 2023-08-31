@@ -85,9 +85,11 @@ const RegisterDialog = ({
 
   return (
     <Dialog
-      onEnter={() => {
-        clearUserError();
-        setReadTerms(false);
+      TransitionProps={{
+        onEnter: () => {
+          clearUserError();
+          setReadTerms(false);
+        },
       }}
       scroll="body"
       open={open}
@@ -97,7 +99,7 @@ const RegisterDialog = ({
         <CardHeader
           className={classes.dialogHeader}
           title={
-            <Grid container alignItems="center" justify="space-between">
+            <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
                 <Grid container>
                   <Typography variant="h4">Aqua</Typography>
@@ -146,7 +148,7 @@ const RegisterDialog = ({
           </Collapse>
         )}
         <CardContent>
-          <Grid container justify="center" item xs={12}>
+          <Grid container justifyContent="center" item xs={12}>
             <Grid className={classes.dialogContentTitle} container item xs={10}>
               <Grid item>
                 <Typography variant="h5" color="textSecondary">
@@ -288,7 +290,7 @@ const RegisterDialog = ({
                 </Grid>
                 <Grid
                   container
-                  justify="space-between"
+                  justifyContent="space-between"
                   alignItems="center"
                   item
                   xs={12}

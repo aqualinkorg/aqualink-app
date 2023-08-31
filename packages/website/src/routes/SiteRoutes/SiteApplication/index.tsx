@@ -165,7 +165,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             className={classes.thankYouMessage}
             container
             alignItems="center"
-            justify="center"
+            justifyContent="center"
           >
             <CircularProgress size="4rem" thickness={2} />
           </Grid>
@@ -176,7 +176,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             className={classes.thankYouMessage}
             container
             alignItems="center"
-            justify="center"
+            justifyContent="center"
             direction="column"
           >
             <Grid item>
@@ -244,7 +244,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             </Grid>
           </Container>
           <Container>
-            <Grid container justify="space-between">
+            <Grid container justifyContent="space-between">
               <Grid item xs={11} md={6}>
                 <Obligations />
                 <Agreements

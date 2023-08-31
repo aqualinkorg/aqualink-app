@@ -64,7 +64,7 @@ const ChartWithCard = ({
       <Grid
         className={classes.chartWrapper}
         container
-        justify="space-between"
+        justifyContent="space-between"
         item
         spacing={1}
       >
