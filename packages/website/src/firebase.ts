@@ -1,5 +1,4 @@
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import { initializeApp } from 'firebase/app';
 
 const { REACT_APP_FIREBASE_API_KEY: apiKey } = process.env;
 
@@ -10,7 +9,7 @@ if (!apiKey) {
 }
 
 const app = apiKey
-  ? firebase.initializeApp({
+  ? initializeApp({
       apiKey,
     })
   : undefined;
