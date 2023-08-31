@@ -50,6 +50,10 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
+import {
+  getAvailabilityMapFromFile,
+  updateNOAALocation,
+} from '../utils/noaa-availability-utils';
 
 @Injectable()
 export class SitesService {
@@ -253,6 +257,14 @@ export class SitesService {
         ...updateCoordinates,
       })
       .catch(handleDuplicateSite);
+
+    if (coordinates) {
+      const site = await this.sitesRepository.findOne({ where: { id } });
+      if (site !== null) {
+        const availability = getAvailabilityMapFromFile();
+        updateNOAALocation(site, availability, this.sitesRepository);
+      }
+    }
 
     if (adminIds) {
       await this.updateAdmins(id, adminIds);
