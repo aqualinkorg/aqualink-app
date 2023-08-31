@@ -7,6 +7,7 @@ import './assets/css/bootstrap.css';
 import { decodeToken } from 'react-jwt';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import App from './layout/App';
 import { store } from './store/configure';
 import * as serviceWorker from './serviceWorker';
@@ -16,7 +17,8 @@ import { setToken } from './store/User/userSlice';
 import { initGA } from './utils/google-analytics';
 
 if (app) {
-  app.auth().onAuthStateChanged((user) => {
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
     if (user) {
       requestsConfig.agent().interceptors.response.use(
         (response: AxiosResponse) => Promise.resolve(response),
