@@ -6,10 +6,11 @@ import { Logger } from '@nestjs/common';
 import fs from 'fs';
 import { Point } from 'geojson';
 import { Repository } from 'typeorm';
+import { join } from 'path';
 import { Site } from '../sites/sites.entity';
 import { createPoint } from './coordinates';
 
-const AVAILABILITY_FILE = 'assets/noaa-availability';
+const AVAILABILITY_FILE = join(__dirname, '../../assets/noaa-availability');
 
 export function createAndSaveCompactFile(worldMap: number[][]) {
   Logger.log('Creating word map binary file...');

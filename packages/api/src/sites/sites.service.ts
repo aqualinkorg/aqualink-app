@@ -50,10 +50,7 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
-import {
-  getAvailabilityMapFromFile,
-  updateNOAALocation,
-} from '../utils/noaa-availability-utils';
+import { ScheduledUpdate } from './scheduled-updates.entity';
 
 @Injectable()
 export class SitesService {
@@ -88,6 +85,9 @@ export class SitesService {
 
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
+
+    @InjectRepository(ScheduledUpdate)
+    private scheduledUpdateRepository: Repository<ScheduledUpdate>,
 
     private dataSource: DataSource,
   ) {}
@@ -259,11 +259,7 @@ export class SitesService {
       .catch(handleDuplicateSite);
 
     if (coordinates) {
-      const site = await this.sitesRepository.findOne({ where: { id } });
-      if (site !== null) {
-        const availability = getAvailabilityMapFromFile();
-        updateNOAALocation(site, availability, this.sitesRepository);
-      }
+      this.scheduledUpdateRepository.save({ site: { id } });
     }
 
     if (adminIds) {
