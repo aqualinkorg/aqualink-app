@@ -11,13 +11,14 @@ export async function NOAALocationUpdate(connection: DataSource) {
   const siteRepository = connection.getRepository(Site);
 
   const updates = await scheduledUpdateRepository.find({ relations: ['site'] });
-  const availability = getAvailabilityMapFromFile();
+  if (updates.length === 0) return;
 
-  await Promise.all([
+  const availability = getAvailabilityMapFromFile();
+  await Promise.all(
     updates.map((x) =>
       updateNOAALocation(x.site, availability, siteRepository),
     ),
-  ]);
+  );
 
   await scheduledUpdateRepository.delete({ id: In(updates.map((x) => x.id)) });
 }
