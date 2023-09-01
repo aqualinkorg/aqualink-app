@@ -7,7 +7,6 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { isNil, omit } from 'lodash';
-import { SchedulerRegistry } from '@nestjs/schedule';
 import { Survey } from './surveys.entity';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { User } from '../users/users.entity';
@@ -47,8 +46,6 @@ export class SurveysService {
     private siteRepository: Repository<Site>,
 
     public googleCloudService: GoogleCloudService,
-
-    private scheduleRegistry: SchedulerRegistry,
   ) {}
 
   // Create a survey
