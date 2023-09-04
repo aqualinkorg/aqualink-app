@@ -132,6 +132,9 @@ export class SitesService {
       mrkdwn: true,
     };
 
+    // Add site to scheduled noaa location updates
+    await this.scheduledUpdateRepository.save({ site: { id: site.id } });
+
     await sendSlackMessage(
       messageTemplate,
       process.env.SLACK_BOT_TOKEN as string,
