@@ -11,6 +11,7 @@ import { Site } from '../sites/sites.entity';
 import { createPoint } from './coordinates';
 
 const AVAILABILITY_FILE = join(__dirname, '../../assets/noaa-availability');
+const MAX_SEARCH_DEPTH = 1000; // This will give us around 120km of range between the site and the nearest point
 
 export function createAndSaveCompactFile(worldMap: number[][]) {
   Logger.log('Creating word map binary file...');
@@ -58,12 +59,17 @@ function BFS(
   visited: Map<string, boolean>,
   stack: { lon: number; lat: number }[],
   worldMap: number[][],
+  count = 0,
 ): [number, number] | null {
+  if (count > MAX_SEARCH_DEPTH) {
+    throw new Error('Maximum search depth exceeded');
+  }
+
   const head = stack.shift();
 
   if (!head) return null;
   if (visited.has(`${head.lon},${head.lat}`))
-    return BFS(visited, stack, worldMap);
+    return BFS(visited, stack, worldMap, count);
   if (Boolean(worldMap[head.lon][head.lat]) === false)
     return [head.lon, head.lat];
 
@@ -79,9 +85,8 @@ function BFS(
   if (!visited.has(`${right.lon},${right.lat}`)) stack.push(right);
   if (!visited.has(`${left.lon},${left.lat}`)) stack.push(left);
 
-  return BFS(visited, stack, worldMap);
+  return BFS(visited, stack, worldMap, count + 1);
 }
-// Points further than 175km away from a noaa available point will result in a maximum stack exited error.
 async function getNearestAvailablePoint(
   longitude: number,
   latitude: number,
