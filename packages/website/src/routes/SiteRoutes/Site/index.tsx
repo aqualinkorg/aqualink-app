@@ -187,10 +187,7 @@ const Site = ({ match, classes }: SiteProps) => {
       dispatch(
         siteOceanSenseDataRequest({
           sensorID: 'oceansense-2',
-          startDate: DateTime.fromISO(today)
-            .minus({ months: 6 })
-            .toJSDate()
-            .toISOString(),
+          startDate: DateTime.fromISO(today).minus({ months: 6 }).toISOString(),
           endDate: today,
           latest: true,
         }),

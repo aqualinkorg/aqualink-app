@@ -95,72 +95,64 @@ export const getMockSpotterData = (
 
   return {
     bottomTemperature: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(15, 35, true),
     })),
     topTemperature: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(15, 35, true),
     })),
     significantWaveHeight: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(15, 35, true),
     })),
     waveMeanPeriod: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(15, 35, true),
     })),
     waveMeanDirection: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(359),
     })),
     windSpeed: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(10, true),
     })),
     windDirection: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(359),
     })),
     latitude: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(-90, 90, true),
     })),
     longitude: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(-180, 180, true),
     })),
     barometerTop: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(900, 1100, true),
     })),
     barometerBottom: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(900, 1100, true),
     })),
     barometricTopDiff: [],
     surfaceTemperature: times(diffDays, (i) => ({
-      timestamp: start.plus({ days: i }).toJSDate().toISOString(),
+      timestamp: start.plus({ days: i }).toISOString(),
       value: random(900, 1100, true),
     })),
   };
 };
 
 export const californiaDailyData: DeepPartial<DailyData>[] = times(10, (i) => {
-  const dataDate = DateTime.now()
-    .minus({ days: i })
-    .endOf('day')
-    .toJSDate()
-    .toISOString();
+  const dataDate = DateTime.now().minus({ days: i }).endOf('day').toISOString();
   return getMockDailyData(dataDate, californiaSite);
 });
 
 export const athensDailyData: DeepPartial<DailyData>[] = times(10, (i) => {
-  const dataDate = DateTime.now()
-    .minus({ days: i })
-    .endOf('day')
-    .toJSDate()
-    .toISOString();
+  const dataDate = DateTime.now().minus({ days: i }).endOf('day').toISOString();
   return getMockDailyData(dataDate, athensSite);
 });
 

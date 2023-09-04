@@ -28,9 +28,8 @@ export const sensorTests = () => {
         startDate: DateTime.now()
           .minus({ days: 5 })
           .startOf('day')
-          .toJSDate()
           .toISOString(),
-        endDate: DateTime.now().endOf('day').toJSDate().toISOString(),
+        endDate: DateTime.now().endOf('day').toISOString(),
         metrics: Metric.TOP_TEMPERATURE,
       });
 
@@ -60,9 +59,8 @@ export const sensorTests = () => {
         startDate: DateTime.now()
           .minus({ days: 5 })
           .startOf('day')
-          .toJSDate()
           .toISOString(),
-        endDate: DateTime.now().endOf('day').toJSDate().toISOString(),
+        endDate: DateTime.now().endOf('day').toISOString(),
         metrics: 'invalidMetric',
       });
 

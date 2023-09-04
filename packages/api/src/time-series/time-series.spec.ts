@@ -117,14 +117,8 @@ export const timeSeriesTests = () => {
       )
       .query({
         // Increase the search window to combat precision issues with the dates
-        start: DateTime.fromISO(startDate)
-          .minus({ minutes: 1 })
-          .toJSDate()
-          .toISOString(),
-        end: DateTime.fromISO(endDate)
-          .plus({ days: 1 })
-          .toJSDate()
-          .toISOString(),
+        start: DateTime.fromISO(startDate).minus({ minutes: 1 }).toISOString(),
+        end: DateTime.fromISO(endDate).plus({ days: 1 }).toISOString(),
         metrics: hoboMetrics.concat(NOAAMetrics),
         hourly: false,
       });
@@ -150,14 +144,8 @@ export const timeSeriesTests = () => {
       .get(`/time-series/sites/${californiaSite.id}`)
       .query({
         // Increase the search window to combat precision issues with the dates
-        start: DateTime.fromISO(startDate)
-          .minus({ minutes: 1 })
-          .toJSDate()
-          .toISOString(),
-        end: DateTime.fromISO(endDate)
-          .plus({ days: 1 })
-          .toJSDate()
-          .toISOString(),
+        start: DateTime.fromISO(startDate).minus({ minutes: 1 }).toISOString(),
+        end: DateTime.fromISO(endDate).plus({ days: 1 }).toISOString(),
         metrics: spotterMetrics.concat(NOAAMetrics),
         hourly: false,
       });

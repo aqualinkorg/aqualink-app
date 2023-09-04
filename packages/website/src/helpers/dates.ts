@@ -247,7 +247,7 @@ export const generateHistoricalMonthlyMeanTimestamps = (
     const date = firstDate.plus({ months });
 
     return {
-      date: date.toJSDate().toISOString(),
+      date: date.toISOString(),
       value: historicalMonthlyMean[date.month - 1].temperature,
     };
   });

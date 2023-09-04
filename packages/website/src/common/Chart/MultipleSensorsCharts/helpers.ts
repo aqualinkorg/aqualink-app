@@ -208,7 +208,6 @@ export const localizedEndOfDay = (
   (date ? DateTime.fromISO(date) : DateTime.now())
     .setZone(timeZone || 'UTC')
     .endOf('day')
-    .toJSDate()
     .toISOString();
 
 export const constructOceanSenseDatasets = (

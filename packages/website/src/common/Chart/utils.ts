@@ -82,10 +82,10 @@ export const filterHistoricalMonthlyMeanData = (
   )?.value;
 
   const closestToStartArray: HistoricalMonthlyMeanData[] = closestToStart
-    ? [{ date: start.toJSDate().toISOString(), value: closestToStart }]
+    ? [{ date: start.toISOString(), value: closestToStart }]
     : [];
   const closestToEndArray: HistoricalMonthlyMeanData[] = closestToEnd
-    ? [{ date: end.toJSDate().toISOString(), value: closestToEnd }]
+    ? [{ date: end.toISOString(), value: closestToEnd }]
     : [];
 
   const filteredData = historicalMonthlyMean.filter(

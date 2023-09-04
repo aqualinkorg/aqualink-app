@@ -34,23 +34,11 @@ export const siteTests = () => {
   let siteId: number;
   const firstExclusionPeriod = {
     startDate: null,
-    endDate: DateTime.now()
-      .minus({ days: 8 })
-      .endOf('day')
-      .toJSDate()
-      .toISOString(),
+    endDate: DateTime.now().minus({ days: 8 }).endOf('day').toISOString(),
   };
   const secondExclusionPeriod = {
-    startDate: DateTime.now()
-      .minus({ days: 6 })
-      .startOf('day')
-      .toJSDate()
-      .toISOString(),
-    endDate: DateTime.now()
-      .minus({ days: 4 })
-      .endOf('day')
-      .toJSDate()
-      .toISOString(),
+    startDate: DateTime.now().minus({ days: 6 }).startOf('day').toISOString(),
+    endDate: DateTime.now().minus({ days: 4 }).endOf('day').toISOString(),
   };
   const siteDto = {
     site: {
@@ -129,12 +117,8 @@ export const siteTests = () => {
     const rsp = await request(app.getHttpServer())
       .get(`/sites/${californiaSite.id}/daily_data`)
       .query({
-        start: DateTime.now()
-          .minus({ days: 5 })
-          .startOf('day')
-          .toJSDate()
-          .toISOString(),
-        end: DateTime.now().endOf('day').toJSDate().toISOString(),
+        start: DateTime.now().minus({ days: 5 }).startOf('day').toISOString(),
+        end: DateTime.now().endOf('day').toISOString(),
       });
 
     expect(rsp.status).toBe(200);
@@ -227,9 +211,8 @@ export const siteTests = () => {
           startDate: DateTime.now()
             .minus({ days: 9 })
             .startOf('day')
-            .toJSDate()
             .toISOString(),
-          endDate: DateTime.now().endOf('day').toJSDate().toISOString(),
+          endDate: DateTime.now().endOf('day').toISOString(),
         });
 
       expect(rsp.status).toBe(200);
@@ -319,8 +302,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .get('/sites/0/daily_data')
         .query({
-          start: DateTime.now().minus({ days: 1 }).toJSDate().toISOString(),
-          end: DateTime.now().toJSDate().toISOString(),
+          start: DateTime.now().minus({ days: 1 }).toISOString(),
+          end: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(404);
@@ -400,8 +383,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .post('/sites/0/exclusion_dates')
         .send({
-          startDate: DateTime.now().minus({ days: 1 }).toJSDate().toISOString(),
-          endDate: DateTime.now().toJSDate().toISOString(),
+          startDate: DateTime.now().minus({ days: 1 }).toISOString(),
+          endDate: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(404);
@@ -412,8 +395,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .post(`/sites/${floridaSite.id}/exclusion_dates`)
         .send({
-          startDate: DateTime.now().minus({ days: 1 }).toJSDate().toISOString(),
-          endDate: DateTime.now().toJSDate().toISOString(),
+          startDate: DateTime.now().minus({ days: 1 }).toISOString(),
+          endDate: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(400);

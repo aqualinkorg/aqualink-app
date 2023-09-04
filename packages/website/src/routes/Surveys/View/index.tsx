@@ -96,11 +96,9 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
     if (surveyDetails?.diveDate) {
       const start = DateTime.fromISO(surveyDetails.diveDate)
         .startOf('day')
-        .toJSDate()
         .toISOString();
       const end = DateTime.fromISO(surveyDetails.diveDate)
         .endOf('day')
-        .toJSDate()
         .toISOString();
       dispatch(
         siteTimeSeriesDataRequest({
