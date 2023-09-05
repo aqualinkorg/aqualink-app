@@ -1,6 +1,6 @@
 import { random, times } from 'lodash';
-import { DateTime } from 'luxon-extensions';
 import { DeepPartial } from 'typeorm';
+import { DateTime } from '../../src/luxon-extensions';
 import { DailyData } from '../../src/sites/daily-data.entity';
 import { SofarLiveDataDto } from '../../src/sites/dto/live-data.dto';
 import { Site } from '../../src/sites/sites.entity';

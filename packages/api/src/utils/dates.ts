@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon-extensions';
+import { DateTime } from '../luxon-extensions';
 
 export function getStartEndDate(endDate: Date, hours: number = 24) {
   const endMoment = DateTime.fromJSDate(endDate);

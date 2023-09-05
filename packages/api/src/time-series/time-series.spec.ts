@@ -5,10 +5,10 @@ import { max, min, union } from 'lodash';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import * as structuredClone from '@ungap/structured-clone';
-import { DateTime } from 'luxon-extensions';
 import { DataSource } from 'typeorm';
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/sync';
+import { DateTime } from '../luxon-extensions';
 import { TestService } from '../../test/test.service';
 import { athensSite, californiaSite } from '../../test/mock/site.mock';
 import { athensSurveyPointPiraeus } from '../../test/mock/survey-point.mock';

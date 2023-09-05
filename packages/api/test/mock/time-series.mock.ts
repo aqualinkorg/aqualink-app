@@ -1,6 +1,6 @@
 import { random, times } from 'lodash';
-import { DateTime } from 'luxon-extensions';
 import { DeepPartial } from 'typeorm';
+import { DateTime } from '../../src/luxon-extensions';
 import { SourceType } from '../../src/sites/schemas/source-type.enum';
 import { Sources } from '../../src/sites/sources.entity';
 import { Metric } from '../../src/time-series/metrics.enum';

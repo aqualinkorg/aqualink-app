@@ -13,7 +13,7 @@ import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
 import parse from 'csv-parse/lib/sync';
 
-import { DateTime } from 'luxon-extensions';
+import { DateTime } from '../../luxon-extensions';
 import { Site, SiteStatus } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
