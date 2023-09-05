@@ -17,7 +17,7 @@ import {
 } from 'store/Sites/types';
 import requests from 'helpers/requests';
 import WarningIcon from '@material-ui/icons/Warning';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
 import {

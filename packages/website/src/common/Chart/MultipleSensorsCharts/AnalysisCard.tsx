@@ -16,7 +16,7 @@ import classNames from 'classnames';
 
 import { siteTimeSeriesDataLoadingSelector } from 'store/Sites/selectedSiteSlice';
 import { formatNumber } from 'helpers/numberUtils';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { calculateCardMetrics } from './helpers';
 import { CardColumn } from './types';
 import type { Dataset } from '..';

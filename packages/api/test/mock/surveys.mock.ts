@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { DeepPartial } from 'typeorm';
 import { Survey, WeatherConditions } from '../../src/surveys/surveys.entity';
 import { californiaSite } from './site.mock';

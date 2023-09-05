@@ -17,7 +17,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 
 const DatePicker = ({
   value,

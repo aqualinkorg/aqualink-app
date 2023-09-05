@@ -9,7 +9,7 @@ import {
   ValueWithTimestamp,
 } from 'store/Sites/types';
 import { SurveyListItem } from 'store/Survey/types';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 
 type DateString = string | null | undefined;
 

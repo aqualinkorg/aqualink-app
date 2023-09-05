@@ -1,5 +1,5 @@
 import { random, times } from 'lodash';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { DeepPartial } from 'typeorm';
 import { DailyData } from '../../src/sites/daily-data.entity';
 import { SofarLiveDataDto } from '../../src/sites/dto/live-data.dto';

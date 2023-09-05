@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Point } from 'geojson';
 import { isNil, omitBy, sortBy } from 'lodash';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { Site } from '../sites/sites.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getLatestData, getSofarHindcastData, getSpotterData } from './sofar';

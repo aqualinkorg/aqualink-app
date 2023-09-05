@@ -11,7 +11,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import React from 'react';
 import { ValueWithTimestamp } from 'store/Sites/types';
 

@@ -2,7 +2,7 @@ import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { omit, sortBy } from 'lodash';
 import { DataSource } from 'typeorm';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { TestService } from '../../test/test.service';
 import {
   mockBackfillSiteData,

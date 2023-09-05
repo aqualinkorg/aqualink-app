@@ -20,7 +20,7 @@ import { join } from 'path';
 // https://github.com/adaltas/node-csv/issues/372
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/sync';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { TimeSeries } from './time-series.entity';

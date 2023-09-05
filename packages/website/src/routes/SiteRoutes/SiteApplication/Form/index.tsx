@@ -15,7 +15,7 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { SiteApplication, SiteApplyParams } from 'store/Sites/types';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 
 interface SiteApplicationFormFields {
   siteName: string;

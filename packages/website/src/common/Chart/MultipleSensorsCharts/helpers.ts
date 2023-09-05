@@ -25,7 +25,7 @@ import {
   findMarginalDate,
   generateHistoricalMonthlyMeanTimestamps,
 } from 'helpers/dates';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { CardColumn, OceanSenseDataset } from './types';
 import type { Dataset } from '../index';
 import {

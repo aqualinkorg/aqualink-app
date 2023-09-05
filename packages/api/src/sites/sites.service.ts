@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
 import Bluebird from 'bluebird';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /** Utility function to access the Sofar API and retrieve relevant data. */
 import { isNil } from 'lodash';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {

@@ -13,7 +13,7 @@ import type {
 } from 'store/Sites/types';
 import { SurveyListItem } from 'store/Survey/types';
 import { sortByDate } from 'helpers/dates';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import type { ChartProps, Dataset } from '.';
 
 interface Context {

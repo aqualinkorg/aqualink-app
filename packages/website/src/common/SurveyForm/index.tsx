@@ -27,7 +27,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { diveLocationSelector } from 'store/Survey/surveySlice';
 import { SurveyData, SurveyState } from 'store/Survey/types';
 import { setTimeZone } from 'helpers/dates';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 
 interface SurveyFormFields {
   diveDate: string;

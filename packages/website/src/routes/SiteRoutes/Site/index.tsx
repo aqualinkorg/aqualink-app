@@ -40,7 +40,7 @@ import SiteFooter from 'common/Footer';
 import SiteDetails from 'common/SiteDetails';
 import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
 import LoadingSkeleton from 'common/LoadingSkeleton';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import SiteInfo from './SiteInfo';
 import NotFoundPage from '../../NotFound/index';
 

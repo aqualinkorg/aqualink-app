@@ -39,7 +39,7 @@ import {
   getMetlogConfig,
   getPublicMetlogMetrics,
 } from 'constants/chartConfigs/metlogConfig';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import {
   constructOceanSenseDatasets,
   findChartWidth,

@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { isNil } from 'lodash';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import { In, Repository } from 'typeorm';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Site } from '../sites/sites.entity';

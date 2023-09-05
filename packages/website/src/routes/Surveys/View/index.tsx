@@ -39,7 +39,7 @@ import {
 import { getSurveyPointsByName } from 'helpers/surveyMedia';
 import ChartWithTooltip from 'common/Chart/ChartWithTooltip';
 import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import SurveyDetails from './SurveyDetails';
 import SurveyMediaDetails from './MediaDetails';
 

@@ -15,7 +15,7 @@ import { userInfoSelector } from 'store/User/userSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { formatNumber } from 'helpers/numberUtils';
 import surveyServices from 'services/surveyServices';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import incomingStyles from '../styles';
 import CustomLink from '../../../Link';
 import LoadingSkeleton from '../../../LoadingSkeleton';

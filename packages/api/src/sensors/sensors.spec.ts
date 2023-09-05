@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 import request from 'supertest';
 import { californiaSite } from '../../test/mock/site.mock';
 import { TestService } from '../../test/test.service';

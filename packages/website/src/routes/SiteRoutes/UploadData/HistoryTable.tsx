@@ -19,7 +19,7 @@ import { Site, SiteUploadHistory } from 'store/Sites/types';
 import requests from 'helpers/requests';
 import { pluralize } from 'helpers/stringUtils';
 import DeleteButton from 'common/DeleteButton';
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon-extensions';
 
 const tableHeaderTitles = [
   'NAME',
