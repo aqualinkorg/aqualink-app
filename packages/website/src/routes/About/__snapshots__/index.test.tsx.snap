@@ -118,18 +118,18 @@ exports[`About should render with given state from Redux store 1`] = `
                     <img
                       alt="placeholder user"
                       class="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
-                      src="LYNDON1.jpg"
+                      src="caesar.jpg"
                       width="100"
                     />
                     <h5
                       class="text-center mg-sm"
                     >
-                      Lyndon Rive
+                      Caesar Hjerten
                     </h5>
                     <p
                       class="text-lg-center"
                     >
-                      Also a co-founder of SolarCity, current National Geographic board member, and member of the USA underwater hockey team.
+                      Swedish-born, Hawaii-based Business graduate, ex-collegiate soccer player, and a passionate contributor to saving our oceans
                       <br />
                     </p>
                   </div>
@@ -147,22 +147,22 @@ exports[`About should render with given state from Redux store 1`] = `
                     <img
                       alt="placeholder user"
                       class="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
-                      src="drew.jpg"
+                      src="eric.jpg"
                       width="100"
                     />
                     <h5
                       class="text-center mg-sm"
                     >
                       <a
-                        href="https://www.linkedin.com/in/drewjgray/"
+                        href="https://www.linkedin.com/in/ericpboucher/"
                       >
-                        Drew Gray
+                        Eric Boucher
                       </a>
                     </h5>
                     <p
                       class="text-lg-center"
                     >
-                      Computer-vision/AI software engineer, PhD in robotics, and experience building autonomous systems at Tesla, Cruise, and Uber.
+                      Entrepreneur and software engineer, passionate about open source and social impact. Loves sailing and exploring the ocean.
                     </p>
                   </div>
                 </div>
