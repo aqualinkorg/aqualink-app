@@ -124,7 +124,10 @@ const About = ({ classes }: AboutProps) => {
                           alt="placeholder user"
                         />
                         <h5 className="text-center mg-sm">
-                          <a href="https://www.linkedin.com/in/ericpboucher/">
+                          <a
+                            style={{ color: 'inherit' }}
+                            href="https://www.linkedin.com/in/ericpboucher/"
+                          >
                             Eric Boucher
                           </a>
                         </h5>
