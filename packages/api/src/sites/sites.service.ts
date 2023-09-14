@@ -50,6 +50,7 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
+import { ScheduledUpdate } from './scheduled-updates.entity';
 
 @Injectable()
 export class SitesService {
@@ -84,6 +85,9 @@ export class SitesService {
 
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
+
+    @InjectRepository(ScheduledUpdate)
+    private scheduledUpdateRepository: Repository<ScheduledUpdate>,
 
     private dataSource: DataSource,
   ) {}
@@ -127,6 +131,9 @@ export class SitesService {
       text: `New site ${site.name} created with id=${site.id}, by ${user.fullName}`,
       mrkdwn: true,
     };
+
+    // Add site to scheduled noaa location updates
+    await this.scheduledUpdateRepository.save({ site: { id: site.id } });
 
     await sendSlackMessage(
       messageTemplate,
@@ -253,6 +260,10 @@ export class SitesService {
         ...updateCoordinates,
       })
       .catch(handleDuplicateSite);
+
+    if (coordinates) {
+      this.scheduledUpdateRepository.save({ site: { id } });
+    }
 
     if (adminIds) {
       await this.updateAdmins(id, adminIds);
