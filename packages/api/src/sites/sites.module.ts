@@ -14,6 +14,7 @@ import { Sources } from './sources.entity';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { LatestData } from '../time-series/latest-data.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
+import { ScheduledUpdate } from './scheduled-updates.entity';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TimeSeries } from '../time-series/time-series.entity';
       Sources,
       LatestData,
       TimeSeries,
+      ScheduledUpdate,
     ]),
   ],
   controllers: [SitesController],

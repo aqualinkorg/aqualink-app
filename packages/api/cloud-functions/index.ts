@@ -12,6 +12,7 @@ import { runSSTTimeSeriesUpdate } from '../src/workers/sstTimeSeries';
 import { checkVideoStreams } from '../src/workers/check-video-streams';
 import { sendSlackMessage } from '../src/utils/slack.utils';
 import { checkBuoysStatus } from '../src/workers/check-buoys-status';
+import { NOAALocationUpdate } from '../src/workers/noaa-location-update';
 import { dataSourceOptions } from '../ormconfig';
 
 // We have to manually import all required entities here, unfortunately - the globbing that is used in ormconfig.ts
@@ -238,7 +239,7 @@ exports.scheduledVideoStreamsCheck = functions
 
 exports.scheduledBuoysStatusCheck = functions
   .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // VideoStreamCheck will run daily at 12:00 AM
+  // BuoysStatusCheck will run daily at 12:00 AM
   .pubsub.schedule('0 0 * * *')
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
@@ -250,6 +251,23 @@ exports.scheduledBuoysStatusCheck = functions
       async (conn: DataSource) => {
         await checkBuoysStatus(conn);
         console.log(`Buoys status daily check on ${new Date()} is complete.`);
+      },
+    );
+  });
+
+exports.scheduledNOAALocationUpdate = functions
+  .runWith({ timeoutSeconds: 540, memory: '512MB' })
+  // NOAALocationUpdate will run daily at 1:00 AM
+  .pubsub.schedule('0 1 * * *')
+  .timeZone('America/Los_Angeles')
+  .onRun(async () => {
+    await runWithDataSource(
+      'scheduledNOAALocationUpdate',
+      async (conn: DataSource) => {
+        await NOAALocationUpdate(conn);
+        console.log(
+          `NOAA location daily update check on ${new Date()} is complete.`,
+        );
       },
     );
   });
