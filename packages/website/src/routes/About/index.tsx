@@ -12,8 +12,8 @@ import NavBar from 'common/NavBar';
 import Footer from 'common/Footer';
 
 import peter from '../../assets/img/peter.jpg';
-import lyndon from '../../assets/img/LYNDON1.jpg';
-import drew from '../../assets/img/drew.jpg';
+import caesar from '../../assets/img/caesar.jpg';
+import eric from '../../assets/img/eric.jpg';
 
 const About = ({ classes }: AboutProps) => {
   return (
@@ -99,16 +99,16 @@ const About = ({ classes }: AboutProps) => {
                     <div className="card border-0">
                       <div className="card-body team-card">
                         <img
-                          src={lyndon}
+                          src={caesar}
                           className="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
                           width={100}
                           alt="placeholder user"
                         />
-                        <h5 className="text-center mg-sm">Lyndon Rive</h5>
+                        <h5 className="text-center mg-sm">Caesar Hjerten</h5>
                         <p className="text-lg-center">
-                          Also a co-founder of SolarCity, current National
-                          Geographic board member, and member of the USA
-                          underwater hockey team.
+                          Swedish-born, Hawaii-based Business graduate,
+                          ex-collegiate soccer player, and a passionate
+                          contributor to saving our oceans
                           <br />
                         </p>
                       </div>
@@ -118,20 +118,23 @@ const About = ({ classes }: AboutProps) => {
                     <div className="card border-0">
                       <div className="card-body team-card">
                         <img
-                          src={drew}
+                          src={eric}
                           className="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
                           width={100}
                           alt="placeholder user"
                         />
                         <h5 className="text-center mg-sm">
-                          <a href="https://www.linkedin.com/in/drewjgray/">
-                            Drew Gray
+                          <a
+                            style={{ color: 'inherit' }}
+                            href="https://www.linkedin.com/in/ericpboucher/"
+                          >
+                            Eric Boucher
                           </a>
                         </h5>
                         <p className="text-lg-center">
-                          Computer-vision/AI software engineer, PhD in robotics,
-                          and experience building autonomous systems at Tesla,
-                          Cruise, and Uber.
+                          Entrepreneur and software engineer, passionate about
+                          open source and social impact. Loves sailing and
+                          exploring the ocean.
                         </p>
                       </div>
                     </div>
