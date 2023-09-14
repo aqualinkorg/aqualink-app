@@ -239,7 +239,7 @@ exports.scheduledVideoStreamsCheck = functions
 
 exports.scheduledBuoysStatusCheck = functions
   .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // VideoStreamCheck will run daily at 12:00 AM
+  // BuoysStatusCheck will run daily at 12:00 AM
   .pubsub.schedule('0 0 * * *')
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
@@ -257,7 +257,8 @@ exports.scheduledBuoysStatusCheck = functions
 
 exports.scheduledNOAALocationUpdate = functions
   .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  .pubsub.schedule('0 0 * * *')
+  // NOAALocationUpdate will run daily at 1:00 AM
+  .pubsub.schedule('0 1 * * *')
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
     await runWithDataSource(
