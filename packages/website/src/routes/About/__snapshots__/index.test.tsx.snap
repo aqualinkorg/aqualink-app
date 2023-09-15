@@ -129,7 +129,7 @@ exports[`About should render with given state from Redux store 1`] = `
                     <p
                       class="text-lg-center"
                     >
-                      Swedish-born, Hawaii-based Business graduate, ex-collegiate soccer player, and a passionate contributor to saving our oceans
+                      Swedish-born, University of Hawaii-based Business graduate, ex-collegiate soccer player, and a passionate contributor to saving our ocean. Aqualink's point of contact for customer relations.
                       <br />
                     </p>
                   </div>
