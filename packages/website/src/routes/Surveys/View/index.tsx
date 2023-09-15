@@ -15,7 +15,6 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import {
   surveyDetailsSelector,
@@ -40,6 +39,7 @@ import {
 import { getSurveyPointsByName } from 'helpers/surveyMedia';
 import ChartWithTooltip from 'common/Chart/ChartWithTooltip';
 import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
+import { DateTime } from 'luxon-extensions';
 import SurveyDetails from './SurveyDetails';
 import SurveyMediaDetails from './MediaDetails';
 
@@ -94,8 +94,12 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   // Fetch HOBO and Spotter data near the dive date
   useEffect(() => {
     if (surveyDetails?.diveDate) {
-      const start = moment(surveyDetails.diveDate).startOf('day').toISOString();
-      const end = moment(surveyDetails.diveDate).endOf('day').toISOString();
+      const start = DateTime.fromISO(surveyDetails.diveDate)
+        .startOf('day')
+        .toISOString();
+      const end = DateTime.fromISO(surveyDetails.diveDate)
+        .endOf('day')
+        .toISOString();
       dispatch(
         siteTimeSeriesDataRequest({
           siteId: `${site.id}`,
@@ -201,7 +205,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                 <Typography className={classes.mediaTitle}>
                   {`${displayTimeInLocalTimezone({
                     isoDate: surveyDetails?.diveDate,
-                    format: 'MM/DD/YYYY',
+                    format: 'LL/dd/yyyy',
                     displayTimezone: false,
                     timeZone: site.timezone,
                   })} Survey Media`}

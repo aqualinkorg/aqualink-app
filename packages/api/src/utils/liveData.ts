@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Point } from 'geojson';
 import { isNil, omitBy, sortBy } from 'lodash';
-import moment from 'moment';
+import { DateTime } from '../luxon-extensions';
 import { Site } from '../sites/sites.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getLatestData, getSofarHindcastData, getSpotterData } from './sofar';
@@ -103,27 +103,24 @@ export const getSstAnomaly = (
   }
 
   const orderedMontlyMax = sortBy(historicalMonthlyMean, 'month');
-  const now = moment().startOf('day');
+  const now = DateTime.now().startOf('day');
 
   // The date of the previous value. Subtract 15 days from the current date
   // and see in which month the result falls. The date we are looking for is
   // the 15th day of this month.
-  const previousDate = now
-    .clone()
-    .subtract(15, 'days')
-    .set('date', 15)
-    .startOf('day');
+  const previousDate = now.minus({ days: 15 }).set({ day: 15 }).startOf('day');
 
   // The date of the next value. It must fall on the next month of the previous
   // value.
-  const nextDate = previousDate.clone().add(1, 'month');
+  const nextDate = previousDate.plus({ months: 1 });
 
-  // We can index `orderedMontlyMax` with `moment.get('month')` since it returns
-  // a value between 0 and 11, with 0 corresponding to January and 11 corresponding to December
-  const previousValue = orderedMontlyMax[previousDate.get('month')].temperature;
-  const previousDistance = now.diff(previousDate, 'days');
-  const nextValue = orderedMontlyMax[nextDate.get('month')].temperature;
-  const nextDistance = nextDate.diff(now, 'days');
+  // We can index `orderedMontlyMax` with `DateTime.get('month')` since it returns
+  // a value between 1 and 12
+  const previousValue =
+    orderedMontlyMax[previousDate.get('month') - 1].temperature;
+  const previousDistance = now.diff(previousDate, 'days').days;
+  const nextValue = orderedMontlyMax[nextDate.get('month') - 1].temperature;
+  const nextDistance = nextDate.diff(now, 'days').days;
   const deltaDays = previousDistance + nextDistance;
 
   const interpolated =

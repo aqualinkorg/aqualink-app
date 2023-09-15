@@ -215,7 +215,7 @@ const SiteNavBar = ({
                       <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
                         {
                           isoDate: lastSurvey,
-                          format: 'MMM DD[,] YYYY',
+                          format: 'MMM dd, yyyy',
                           displayTimezone: false,
                           timeZone: site.timezone,
                         },

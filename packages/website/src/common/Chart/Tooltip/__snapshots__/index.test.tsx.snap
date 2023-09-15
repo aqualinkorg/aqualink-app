@@ -16,6 +16,7 @@ exports[`renders as expected 1`] = `
         >
           <mock-typography
             color="textPrimary"
+            style="white-space: nowrap;"
             variant="caption"
           >
             12/20/20 07:19 AM UTC

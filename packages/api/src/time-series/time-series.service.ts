@@ -9,7 +9,6 @@ import {
 import { Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import type { Response } from 'express';
-import moment from 'moment';
 import {
   BadRequestException,
   HttpException,
@@ -21,7 +20,7 @@ import { join } from 'path';
 // https://github.com/adaltas/node-csv/issues/372
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/sync';
-import { DateTime } from 'luxon';
+import { DateTime } from '../luxon-extensions';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { TimeSeries } from './time-series.entity';
@@ -199,8 +198,8 @@ export class TimeSeriesService {
           timeSeriesRepository: this.timeSeriesRepository,
           siteId,
           metrics,
-          start: chunks[i].start.toISO() as string,
-          end: chunks[i].end.toISO() as string,
+          start: chunks[i].start.toISOString(),
+          end: chunks[i].end.toISOString(),
           hourly,
           csv: true,
           order: 'DESC',
@@ -252,9 +251,9 @@ export class TimeSeriesService {
 
       closeSync(fd);
 
-      const fileName = `data_site_${siteId}_${moment(startDate).format(
+      const fileName = `data_site_${siteId}_${minDate.toFormat(
         DATE_FORMAT,
-      )}_${moment(endDate).format(DATE_FORMAT)}.csv`;
+      )}_${maxDate.toFormat(DATE_FORMAT)}.csv`;
 
       const readStream = createReadStream(tempFileName);
 

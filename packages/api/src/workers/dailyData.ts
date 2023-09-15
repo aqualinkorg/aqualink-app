@@ -12,7 +12,7 @@ import {
 import { DataSource, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
 import {
@@ -371,18 +371,12 @@ export async function getSitesDailyData(
 }
 
 export async function runDailyUpdate(dataSource: DataSource) {
-  const today = moment()
-    .utc()
-    .hours(23)
-    .minutes(59)
-    .seconds(59)
-    .milliseconds(999);
+  const today = DateTime.utc().endOf('day');
 
-  const yesterday = moment(today);
-  yesterday.day(today.day() - 1);
-  console.log(`Daily Update for data ending on ${yesterday.date()}`);
+  const yesterday = today.set({ day: today.day - 1 });
+  console.log(`Daily Update for data ending on ${yesterday.day}`);
   try {
-    await getSitesDailyData(dataSource, yesterday.toDate());
+    await getSitesDailyData(dataSource, yesterday.toJSDate());
     console.log('Completed daily update.');
   } catch (error) {
     console.error(error);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import isISODate from 'validator/lib/isISO8601';
 import { Box, Container, makeStyles, Theme } from '@material-ui/core';
-import moment from 'moment';
 import { camelCase, isNaN, snakeCase, sortBy } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
@@ -24,12 +23,7 @@ import {
 } from 'store/Sites/selectedSiteSlice';
 import { Metrics, MetricsKeys, Site, Sources } from 'store/Sites/types';
 import { useQueryParam } from 'hooks/useQueryParams';
-import {
-  rangeOverlapWithRange,
-  isBefore,
-  setTimeZone,
-  subtractFromDate,
-} from 'helpers/dates';
+import { rangeOverlapWithRange, isBefore, setTimeZone } from 'helpers/dates';
 import { getSourceRanges } from 'helpers/siteUtils';
 import { BaseSourceConfig } from 'utils/types';
 import {
@@ -45,6 +39,7 @@ import {
   getMetlogConfig,
   getPublicMetlogMetrics,
 } from 'constants/chartConfigs/metlogConfig';
+import { DateTime } from 'luxon-extensions';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -102,15 +97,18 @@ const MultipleSensorsCharts = ({
 
   const hasHuiData = availableSources.includes('hui');
 
-  const chartStartDate = startDate || subtractFromDate(today, 'week');
-  const chartEndDate = moment
-    .min(
-      moment(),
-      moment(endDate)
-        .tz(site.timezone || 'UTC')
-        .endOf('day'),
-    )
-    .toISOString();
+  const chartStartDate =
+    startDate || DateTime.fromISO(today).minus({ weeks: 1 }).toISOString();
+  const now = DateTime.now();
+  const end =
+    endDate !== undefined
+      ? DateTime.fromISO(endDate)
+          .setZone(site.timezone || 'UTC')
+          .endOf('day')
+      : now;
+  const chartEndDate = (
+    now.valueOf() < end.valueOf() ? now : end
+  ).toISOString();
 
   const hasOceanSenseId = Boolean(oceanSenseConfig?.[site.id]);
 
@@ -229,10 +227,9 @@ const MultipleSensorsCharts = ({
     if (!rangesLoading && !pickerStartDate && !pickerEndDate) {
       const { maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
       const localizedMaxDate = localizedEndOfDay(maxDate, site.timezone);
-      const pastOneMonth = moment(
-        subtractFromDate(localizedMaxDate || today, 'month', 1),
-      )
-        .tz(site.timezone || 'UTC')
+      const pastOneMonth = DateTime.fromISO(localizedMaxDate || today)
+        .minus({ months: 1 })
+        .setZone(site.timezone || 'UTC')
         .startOf('day')
         .toISOString();
       setPickerStartDate(
@@ -317,8 +314,10 @@ const MultipleSensorsCharts = ({
           end: siteLocalEndDate,
           metrics: uniqueMetrics,
           hourly:
-            moment(siteLocalEndDate).diff(moment(siteLocalStartDate), 'days') >
-            2,
+            DateTime.fromISO(siteLocalEndDate).diff(
+              DateTime.fromISO(siteLocalStartDate),
+              'days',
+            ).days > 2,
         }),
       );
 
@@ -348,13 +347,17 @@ const MultipleSensorsCharts = ({
   useEffect(() => {
     const pickerLocalEndDate = new Date(
       setTimeZone(
-        new Date(moment(pickerEndDate).format('MM/DD/YYYY')),
+        (pickerEndDate ? DateTime.fromISO(pickerEndDate) : DateTime.now())
+          .startOf('day')
+          .toJSDate(),
         site?.timezone,
       ),
     ).toISOString();
     const pickerLocalStartDate = new Date(
       setTimeZone(
-        new Date(moment(pickerStartDate).format('MM/DD/YYYY')),
+        (pickerStartDate ? DateTime.fromISO(pickerStartDate) : DateTime.now())
+          .startOf('day')
+          .toJSDate(),
         site?.timezone,
       ),
     ).toISOString();
@@ -369,29 +372,31 @@ const MultipleSensorsCharts = ({
 
     setStartDate(
       minDataDate
-        ? moment
-            .max(moment(minDataDate), moment(pickerLocalStartDate))
-            .toISOString()
+        ? DateTime.max(
+            DateTime.fromISO(minDataDate),
+            DateTime.fromISO(pickerLocalStartDate),
+          ).toISOString()
         : pickerLocalStartDate,
     );
 
     setEndDate(
       maxDataDate
-        ? moment
-            .min(moment(maxDataDate), moment(pickerLocalEndDate).endOf('day'))
-            .toISOString()
-        : moment(pickerLocalEndDate).endOf('day').toISOString(),
+        ? DateTime.min(
+            DateTime.fromISO(maxDataDate),
+            DateTime.fromISO(pickerLocalEndDate).endOf('day'),
+          ).toISOString()
+        : DateTime.fromISO(pickerLocalEndDate).endOf('day').toISOString(),
     );
   }, [granularDailyData, pickerEndDate, pickerStartDate, site, timeSeriesData]);
 
   useEffect(() => {
     if (pickerStartDate && pickerEndDate && range === 'custom') {
-      const newStartParam = moment(
+      const newStartParam = DateTime.fromJSDate(
         utcToZonedTime(pickerStartDate, site.timezone || 'UTC'),
-      ).format('YYYY-MM-DD');
-      const newEndParam = moment(
+      ).toFormat('yyyy-MM-dd');
+      const newEndParam = DateTime.fromJSDate(
         utcToZonedTime(pickerEndDate, site.timezone || 'UTC'),
-      ).format('YYYY-MM-DD');
+      ).toFormat('yyyy-MM-dd');
       setStartParam(newStartParam);
       setEndParam(newEndParam);
     }
@@ -441,16 +446,19 @@ const MultipleSensorsCharts = ({
 
   const onRangeChange = (value: RangeValue) => {
     const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
-    const localizedMinDate = new Date(
-      moment(minDate)
-        .tz(site.timezone || 'UTC')
-        .format('MM/DD/YYYY'),
-    ).toISOString();
-    const localizedMaxDate = new Date(
-      moment(maxDate)
-        .tz(site.timezone || 'UTC')
-        .format('MM/DD/YYYY'),
-    ).toISOString();
+    const localizedMinDate = (
+      minDate ? DateTime.fromISO(minDate) : DateTime.now()
+    )
+      .setZone(site.timezone || 'UTC')
+      .startOf('day')
+      .toISOString();
+    const localizedMaxDate = (
+      maxDate ? DateTime.fromISO(maxDate) : DateTime.now()
+    )
+      .setZone(site.timezone || 'UTC')
+      .startOf('day')
+      .toISOString();
+
     setRange(value);
     if (value !== 'custom') {
       setStartParam(undefined);
@@ -458,15 +466,25 @@ const MultipleSensorsCharts = ({
     }
     switch (value) {
       case 'one_month':
-        setPickerEndDate(moment(localizedMaxDate).endOf('day').toISOString());
-        setPickerStartDate(subtractFromDate(localizedMaxDate, 'month', 1));
+        setPickerEndDate(
+          DateTime.fromISO(localizedMaxDate).endOf('day').toISOString(),
+        );
+        setPickerStartDate(
+          DateTime.fromISO(localizedMaxDate).minus({ months: 1 }).toISOString(),
+        );
         break;
       case 'one_year':
-        setPickerEndDate(moment(localizedMaxDate).endOf('day').toISOString());
-        setPickerStartDate(subtractFromDate(localizedMaxDate, 'year'));
+        setPickerEndDate(
+          DateTime.fromISO(localizedMaxDate).endOf('day').toISOString(),
+        );
+        setPickerStartDate(
+          DateTime.fromISO(localizedMaxDate).minus({ years: 1 }).toISOString(),
+        );
         break;
       case 'max':
-        setPickerEndDate(moment(localizedMaxDate).endOf('day').toISOString());
+        setPickerEndDate(
+          DateTime.fromISO(localizedMaxDate).endOf('day').toISOString(),
+        );
         setPickerStartDate(localizedMinDate);
         break;
       default:
@@ -483,21 +501,23 @@ const MultipleSensorsCharts = ({
         case 'start':
           // Set picker start date only if input date is after zero time
           if (
-            moment(dateString)
-              .startOf('day')
-              .isSameOrAfter(moment(0).startOf('day'))
+            DateTime.fromISO(dateString).startOf('day') >=
+            DateTime.fromMillis(0).startOf('day')
           ) {
-            setPickerStartDate(moment(dateString).startOf('day').toISOString());
+            setPickerStartDate(
+              DateTime.fromISO(dateString).startOf('day').toISOString(),
+            );
           }
           break;
         case 'end':
           // Set picker end date only if input date is before today
           if (
-            moment(dateString)
-              .endOf('day')
-              .isSameOrBefore(moment().endOf('day'))
+            DateTime.fromISO(dateString).endOf('day') <=
+            DateTime.now().endOf('day')
           ) {
-            setPickerEndDate(moment(dateString).endOf('day').toISOString());
+            setPickerEndDate(
+              DateTime.fromISO(dateString).endOf('day').toISOString(),
+            );
           }
           break;
         default:
@@ -541,7 +561,10 @@ const MultipleSensorsCharts = ({
         site={site}
         datasets={tempAnalysisDatasets}
         pointId={pointId ? parseInt(pointId, 10) : undefined}
-        pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
+        pickerStartDate={
+          pickerStartDate ||
+          DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
+        }
         pickerEndDate={pickerEndDate || today}
         chartStartDate={chartStartDate}
         chartEndDate={chartEndDate}
@@ -577,7 +600,10 @@ const MultipleSensorsCharts = ({
             showRangeButtons={false}
             chartWidth="large"
             site={site}
-            pickerStartDate={pickerStartDate || subtractFromDate(today, 'week')}
+            pickerStartDate={
+              pickerStartDate ||
+              DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
+            }
             pickerEndDate={pickerEndDate || today}
             chartStartDate={chartStartDate}
             chartEndDate={chartEndDate}
@@ -619,7 +645,8 @@ const MultipleSensorsCharts = ({
                 chartWidth="large"
                 site={site}
                 pickerStartDate={
-                  pickerStartDate || subtractFromDate(today, 'week')
+                  pickerStartDate ||
+                  DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
                 }
                 pickerEndDate={pickerEndDate || today}
                 chartStartDate={chartStartDate}

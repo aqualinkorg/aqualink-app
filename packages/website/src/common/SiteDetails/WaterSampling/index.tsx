@@ -16,8 +16,8 @@ import {
   TimeSeriesData,
 } from 'store/Sites/types';
 import requests from 'helpers/requests';
-import moment from 'moment';
 import WarningIcon from '@material-ui/icons/Warning';
+import { DateTime } from 'luxon-extensions';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
 import {
@@ -55,7 +55,9 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
       surveyPoint: point?.id,
     },
   )}`;
-  const lastUpload = maxDate ? moment(maxDate).format('MM/DD/YYYY') : undefined;
+  const lastUpload = maxDate
+    ? DateTime.fromISO(maxDate).toFormat('LL/dd/yyyy')
+    : undefined;
 
   React.useEffect(() => {
     (async () => {

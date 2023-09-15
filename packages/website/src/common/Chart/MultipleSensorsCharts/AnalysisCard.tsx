@@ -11,12 +11,12 @@ import {
   withStyles,
   WithStyles,
 } from '@material-ui/core';
-import moment from 'moment';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { siteTimeSeriesDataLoadingSelector } from 'store/Sites/selectedSiteSlice';
 import { formatNumber } from 'helpers/numberUtils';
+import { DateTime } from 'luxon-extensions';
 import { calculateCardMetrics } from './helpers';
 import { CardColumn } from './types';
 import type { Dataset } from '..';
@@ -66,8 +66,10 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
     }),
   );
 
-  const formattedpickerStartDate = moment(pickerStartDate).format('MM/DD/YYYY');
-  const formattedpickerEndDate = moment(pickerEndDate).format('MM/DD/YYYY');
+  const formattedpickerStartDate =
+    DateTime.fromISO(pickerStartDate).toFormat('LL/dd/yyyy');
+  const formattedpickerEndDate =
+    DateTime.fromISO(pickerEndDate).toFormat('LL/dd/yyyy');
 
   return (
     <Box

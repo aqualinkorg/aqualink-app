@@ -131,7 +131,7 @@ const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
           imageText="NOAA"
           live={false}
           frequency="daily"
-          href="https://coralsitewatch.noaa.gov/"
+          href="https://coralreefwatch.noaa.gov/"
         />
       </CardContent>
     </Card>

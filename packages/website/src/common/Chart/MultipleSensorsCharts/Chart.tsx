@@ -75,13 +75,13 @@ const Chart = ({
   const minDateLocal = displayTimeInLocalTimezone({
     isoDate: minDate,
     timeZone: site.timezone,
-    format: 'MM/DD/YYYY',
+    format: 'LL/dd/yyyy',
     displayTimezone: false,
   });
   const maxDateLocal = displayTimeInLocalTimezone({
     isoDate: maxDate,
     timeZone: site.timezone,
-    format: 'MM/DD/YYYY',
+    format: 'LL/dd/yyyy',
     displayTimezone: false,
   });
 

@@ -106,9 +106,11 @@ const About = ({ classes }: AboutProps) => {
                         />
                         <h5 className="text-center mg-sm">Caesar Hjerten</h5>
                         <p className="text-lg-center">
-                          Swedish-born, Hawaii-based Business graduate,
-                          ex-collegiate soccer player, and a passionate
-                          contributor to saving our oceans
+                          Swedish-born, University of Hawaii-based Business
+                          graduate, ex-collegiate soccer player, and a
+                          passionate contributor to saving our ocean.
+                          Aqualink&apos;s point of contact for customer
+                          relations.
                           <br />
                         </p>
                       </div>

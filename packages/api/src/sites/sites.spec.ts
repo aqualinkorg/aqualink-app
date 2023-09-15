@@ -2,7 +2,7 @@ import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { omit, sortBy } from 'lodash';
 import { DataSource } from 'typeorm';
-import moment from 'moment';
+import { DateTime } from '../luxon-extensions';
 import { TestService } from '../../test/test.service';
 import {
   mockBackfillSiteData,
@@ -34,11 +34,11 @@ export const siteTests = () => {
   let siteId: number;
   const firstExclusionPeriod = {
     startDate: null,
-    endDate: moment().subtract(8, 'days').endOf('day').toISOString(),
+    endDate: DateTime.now().minus({ days: 8 }).endOf('day').toISOString(),
   };
   const secondExclusionPeriod = {
-    startDate: moment().subtract(6, 'days').startOf('day').toISOString(),
-    endDate: moment().subtract(4, 'days').endOf('day').toISOString(),
+    startDate: DateTime.now().minus({ days: 6 }).startOf('day').toISOString(),
+    endDate: DateTime.now().minus({ days: 4 }).endOf('day').toISOString(),
   };
   const siteDto = {
     site: {
@@ -117,8 +117,8 @@ export const siteTests = () => {
     const rsp = await request(app.getHttpServer())
       .get(`/sites/${californiaSite.id}/daily_data`)
       .query({
-        start: moment().subtract(5, 'days').startOf('day').toISOString(),
-        end: moment().endOf('day').toISOString(),
+        start: DateTime.now().minus({ days: 5 }).startOf('day').toISOString(),
+        end: DateTime.now().endOf('day').toISOString(),
       });
 
     expect(rsp.status).toBe(200);
@@ -208,8 +208,11 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .get(`/sites/${athensSite.id}/spotter_data`)
         .query({
-          startDate: moment().subtract(9, 'days').startOf('day').toISOString(),
-          endDate: moment().endOf('day').toISOString(),
+          startDate: DateTime.now()
+            .minus({ days: 9 })
+            .startOf('day')
+            .toISOString(),
+          endDate: DateTime.now().endOf('day').toISOString(),
         });
 
       expect(rsp.status).toBe(200);
@@ -299,8 +302,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .get('/sites/0/daily_data')
         .query({
-          start: moment().subtract(1, 'days').toISOString(),
-          end: moment().toISOString(),
+          start: DateTime.now().minus({ days: 1 }).toISOString(),
+          end: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(404);
@@ -380,8 +383,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .post('/sites/0/exclusion_dates')
         .send({
-          startDate: moment().subtract(1, 'days').toISOString(),
-          endDate: moment().toISOString(),
+          startDate: DateTime.now().minus({ days: 1 }).toISOString(),
+          endDate: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(404);
@@ -392,8 +395,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .post(`/sites/${floridaSite.id}/exclusion_dates`)
         .send({
-          startDate: moment().subtract(1, 'days').toISOString(),
-          endDate: moment().toISOString(),
+          startDate: DateTime.now().minus({ days: 1 }).toISOString(),
+          endDate: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(400);

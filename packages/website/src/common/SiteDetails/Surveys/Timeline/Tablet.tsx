@@ -54,7 +54,7 @@ const TimelineTablet = ({
                 <Typography variant="h6" className={classes.dates}>
                   {displayTimeInLocalTimezone({
                     isoDate: survey.diveDate,
-                    format: 'MM/DD/YYYY',
+                    format: 'LL/dd/yyyy',
                     displayTimezone: false,
                     timeZone,
                   })}

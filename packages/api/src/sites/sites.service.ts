@@ -8,8 +8,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
-import moment from 'moment';
 import Bluebird from 'bluebird';
+import { DateTime } from '../luxon-extensions';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
@@ -295,7 +295,10 @@ export class SitesService {
   ): Promise<DailyData[]> {
     await getSite(id, this.sitesRepository);
 
-    if (!moment(start).isValid() || !moment(end).isValid()) {
+    if (
+      (start && !DateTime.fromISO(start).isValid) ||
+      (end && !DateTime.fromISO(end).isValid)
+    ) {
       throw new BadRequestException('Start or end is not a valid date');
     }
 
@@ -466,7 +469,7 @@ export class SitesService {
     id: number,
     excludeSpotterDatesDto: ExcludeSpotterDatesDto,
   ) {
-    const dateFormat = 'MM/DD/YYYY HH:mm';
+    const dateFormat = 'LL/dd/yyyy HH:mm';
     const { startDate, endDate } = excludeSpotterDatesDto;
 
     const site = await getSite(id, this.sitesRepository);
@@ -505,11 +508,11 @@ export class SitesService {
 
       if (alreadyExists) {
         throw new ConflictException(
-          `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
-            endDate,
-          ).format(dateFormat)}] already exists for spotter ${
-            source.sensorId
-          }.`,
+          `Exclusion period [${DateTime.fromJSDate(startDate).toFormat(
+            dateFormat,
+          )}, ${DateTime.fromJSDate(endDate).toFormat(
+            dateFormat,
+          )}] already exists for spotter ${source.sensorId}.`,
         );
       }
 

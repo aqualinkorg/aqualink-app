@@ -1,14 +1,4 @@
-import moment from 'moment';
-import {
-  filter,
-  flatten,
-  inRange,
-  isNil,
-  isNumber,
-  map,
-  maxBy,
-  minBy,
-} from 'lodash';
+import { filter, flatten, isNil, isNumber, map, maxBy, minBy } from 'lodash';
 import { ChartDataSets, ChartPoint } from 'chart.js';
 import {
   DEFAULT_SURVEY_CHART_POINT_COLOR,
@@ -23,6 +13,7 @@ import type {
 } from 'store/Sites/types';
 import { SurveyListItem } from 'store/Survey/types';
 import { sortByDate } from 'helpers/dates';
+import { DateTime } from 'luxon-extensions';
 import type { ChartProps, Dataset } from '.';
 
 interface Context {
@@ -78,16 +69,16 @@ export const filterHistoricalMonthlyMeanData = (
     return historicalMonthlyMean;
   }
 
-  const start = moment(from);
-  const end = moment(to);
+  const start = DateTime.fromISO(from);
+  const end = DateTime.fromISO(to);
 
   const closestToStart = getHistoricalMonthlyMeanDataClosestToDate(
     historicalMonthlyMean,
-    new Date(start.toISOString()),
+    start.toJSDate(),
   )?.value;
   const closestToEnd = getHistoricalMonthlyMeanDataClosestToDate(
     historicalMonthlyMean,
-    new Date(end.toISOString()),
+    end.toJSDate(),
   )?.value;
 
   const closestToStartArray: HistoricalMonthlyMeanData[] = closestToStart
@@ -97,8 +88,10 @@ export const filterHistoricalMonthlyMeanData = (
     ? [{ date: end.toISOString(), value: closestToEnd }]
     : [];
 
-  const filteredData = historicalMonthlyMean.filter((item) =>
-    inRange(moment(item.date).valueOf(), start.valueOf(), end.valueOf() + 1),
+  const filteredData = historicalMonthlyMean.filter(
+    (item) =>
+      DateTime.fromISO(item.date).valueOf() >= start.valueOf() &&
+      DateTime.fromISO(item.date).valueOf() <= end.valueOf(),
   );
 
   return [...closestToStartArray, ...filteredData, ...closestToEndArray];
@@ -236,8 +229,12 @@ const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
       if (
         currIndex !== 0 &&
         currIndex !== nPoints - 1 &&
-        Math.abs(moment(data[currIndex + 1].x).diff(moment(curr.x), 'hours')) >
-          maxHoursGap
+        Math.abs(
+          DateTime.fromISO(data[currIndex + 1].x as string).diff(
+            DateTime.fromISO(curr.x as string),
+            'hours',
+          ).hours,
+        ) > maxHoursGap
       ) {
         return [
           ...acc,
@@ -245,8 +242,8 @@ const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
           {
             y: undefined,
             x: new Date(
-              (moment(data[currIndex + 1].x).valueOf() +
-                moment(curr.x).valueOf()) /
+              (DateTime.fromISO(data[currIndex + 1].x as string).valueOf() +
+                DateTime.fromISO(curr.x as string).valueOf()) /
                 2,
             ).toISOString(),
           },

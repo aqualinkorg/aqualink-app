@@ -2,13 +2,13 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { max, min, union } from 'lodash';
-import moment from 'moment';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import * as structuredClone from '@ungap/structured-clone';
 import { DataSource } from 'typeorm';
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/sync';
+import { DateTime } from '../luxon-extensions';
 import { TestService } from '../../test/test.service';
 import { athensSite, californiaSite } from '../../test/mock/site.mock';
 import { athensSurveyPointPiraeus } from '../../test/mock/survey-point.mock';
@@ -117,8 +117,8 @@ export const timeSeriesTests = () => {
       )
       .query({
         // Increase the search window to combat precision issues with the dates
-        start: moment(startDate).subtract(1, 'minute').toISOString(),
-        end: moment(endDate).add(1, 'day').toISOString(),
+        start: DateTime.fromISO(startDate).minus({ minutes: 1 }).toISOString(),
+        end: DateTime.fromISO(endDate).plus({ days: 1 }).toISOString(),
         metrics: hoboMetrics.concat(NOAAMetrics),
         hourly: false,
       });
@@ -144,8 +144,8 @@ export const timeSeriesTests = () => {
       .get(`/time-series/sites/${californiaSite.id}`)
       .query({
         // Increase the search window to combat precision issues with the dates
-        start: moment(startDate).subtract(1, 'minute').toISOString(),
-        end: moment(endDate).add(1, 'day').toISOString(),
+        start: DateTime.fromISO(startDate).minus({ minutes: 1 }).toISOString(),
+        end: DateTime.fromISO(endDate).plus({ days: 1 }).toISOString(),
         metrics: spotterMetrics.concat(NOAAMetrics),
         hourly: false,
       });

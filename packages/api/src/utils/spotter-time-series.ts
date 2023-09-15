@@ -1,10 +1,10 @@
 import { Logger } from '@nestjs/common';
 import { get, times } from 'lodash';
-import moment from 'moment';
 import { In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import { distance } from '@turf/turf';
 import { Point } from 'geojson';
+import { DateTime } from '../luxon-extensions';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
@@ -71,7 +71,9 @@ const saveDataBatch = (
       batch.map((data) => ({
         metric,
         value: data.value,
-        timestamp: moment(data.timestamp).startOf('minute').toDate(),
+        timestamp: DateTime.fromISO(data.timestamp)
+          .startOf('minute')
+          .toJSDate(),
         source,
       })),
     )
@@ -133,8 +135,14 @@ export const addSpotterData = async (
       Bluebird.map(
         times(days),
         async (i) => {
-          const startDate = moment().subtract(i, 'd').startOf('day').toDate();
-          const endDate = moment().subtract(i, 'd').endOf('day').toDate();
+          const startDate = DateTime.now()
+            .minus({ days: i })
+            .startOf('day')
+            .toJSDate();
+          const endDate = DateTime.now()
+            .minus({ days: i })
+            .endOf('day')
+            .toJSDate();
 
           if (!site.sensorId) {
             return DEFAULT_SPOTTER_DATA_VALUE;
@@ -212,10 +220,11 @@ export const addSpotterData = async (
         })
         .then(() => {
           // After each successful execution, log the event
-          const startDate = moment()
-            .subtract(days - 1, 'd')
+          const startDate = DateTime.now()
+            .minus({ days: days - 1 })
             .startOf('day');
-          const endDate = moment().endOf('day');
+
+          const endDate = DateTime.now().endOf('day');
           logger.debug(
             `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
           );

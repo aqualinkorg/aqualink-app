@@ -67,6 +67,11 @@ jobs:
         working-directory: packages/api
         run: yarn build
 
+      - name: Build Cloud functions
+        if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
+        working-directory: packages/api
+        run: yarn build:cloud-functions
+
       - name: Run database migrations
         id: migrations
         if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'

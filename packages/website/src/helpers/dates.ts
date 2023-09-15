@@ -1,4 +1,3 @@
-import moment from 'moment-timezone';
 import { range as createRange, orderBy } from 'lodash';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
@@ -10,6 +9,7 @@ import {
   ValueWithTimestamp,
 } from 'store/Sites/types';
 import { SurveyListItem } from 'store/Survey/types';
+import { DateTime } from 'luxon-extensions';
 
 type DateString = string | null | undefined;
 
@@ -32,33 +32,6 @@ export const isBefore = (
 
 export const isBetween = (date: string, start: string, end: string) =>
   isBefore(date, end) && isBefore(start, date);
-
-export const subtractFromDate = (
-  endDate: string,
-  amount: Range,
-  multiple?: number,
-): string => {
-  switch (amount) {
-    case 'day':
-      return moment(endDate)
-        .subtract(multiple || 1, 'days')
-        .toISOString();
-    case 'week':
-      return moment(endDate)
-        .subtract(multiple || 1, 'weeks')
-        .toISOString();
-    case 'month':
-      return moment(endDate)
-        .subtract(multiple || 1, 'months')
-        .toISOString();
-    case 'year':
-      return moment(endDate)
-        .subtract(multiple || 1, 'years')
-        .toISOString();
-    default:
-      return endDate;
-  }
-};
 
 export const toRelativeTime = (timestamp: Date | string | number) => {
   const minute = 60;
@@ -168,7 +141,7 @@ export function setTimeZone(date: Date | null, timeZone?: string | null) {
 }
 
 export const getTimeZoneName = (timeZone: string): string => {
-  const rawTimeZoneName = moment().tz(timeZone).format('z');
+  const rawTimeZoneName = DateTime.now().setZone(timeZone).toFormat('z');
   // Only add GMT prefix to raw time differences and not acronyms such as PST.
   const needsGMT =
     rawTimeZoneName.includes('+') || rawTimeZoneName.includes('-');
@@ -186,9 +159,9 @@ export const displayTimeInLocalTimezone = ({
     const timeZoneName = getTimeZoneName(
       timeZoneToDisplay || timeZone || 'UTC',
     );
-    const dateString = moment(isoDate)
-      .tz(timeZone || 'UTC')
-      .format(format);
+    const dateString = DateTime.fromISO(isoDate)
+      .setZone(timeZone || 'UTC')
+      .toFormat(format);
 
     return `${dateString}${displayTimezone ? ` ${timeZoneName}` : ''}`;
   }
@@ -212,9 +185,9 @@ export const convertToLocalTime = (
   timeZone?: string | null,
 ) => {
   // Hold only hour info ignoring the timezone
-  const dateStringIgnoreTimeZone = moment(isoTime)
-    .tz(timeZone || 'UTC')
-    .format('YYYY-MM-DD HH:mm:ss');
+  const dateStringIgnoreTimeZone = DateTime.fromISO(isoTime)
+    .setZone(timeZone || 'UTC')
+    .toFormat('yyyy-MM-dd HH:mm:ss');
 
   // Set the user's local time zone to the above datestring
   return zonedTimeToUtc(
@@ -254,27 +227,28 @@ export const generateHistoricalMonthlyMeanTimestamps = (
     return [];
   }
 
-  const firstDate = moment(startDate)
-    .tz(timeZone || 'UTC')
-    .subtract(1, 'months')
-    .set('date', 15)
+  const firstDate = (startDate ? DateTime.fromISO(startDate) : DateTime.now())
+    .setZone(timeZone || 'UTC')
+    .minus({ months: 1 })
+    .set({ day: 15 })
     .startOf('day');
-  const lastDate = moment(endDate)
-    .tz(timeZone || 'UTC')
-    .add(1, 'months')
-    .set('date', 15)
+
+  const lastDate = (endDate ? DateTime.fromISO(endDate) : DateTime.now())
+    .setZone(timeZone || 'UTC')
+    .plus({ months: 1 })
+    .set({ day: 15 })
     .startOf('day');
 
   const monthsRange = createRange(
-    moment(lastDate).diff(moment(firstDate), 'months') + 1,
+    lastDate.diff(firstDate, 'months').months + 1,
   );
 
   return monthsRange.map((months) => {
-    const date = moment(firstDate).add(months, 'months');
+    const date = firstDate.plus({ months });
 
     return {
       date: date.toISOString(),
-      value: historicalMonthlyMean[date.month()].temperature,
+      value: historicalMonthlyMean[date.month - 1].temperature,
     };
   });
 };
