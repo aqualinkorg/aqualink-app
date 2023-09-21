@@ -121,6 +121,7 @@ const SiteDetails = ({
   const { videoStream } = site || {};
 
   const cards =
+    // should we test for `latestDataAsSofarValues` instead of `latestData`?
     site && latestData
       ? [
           <Satellite
