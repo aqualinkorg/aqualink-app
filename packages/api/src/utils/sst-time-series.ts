@@ -102,7 +102,7 @@ export const updateSST = async (
                   .toString()
               : DateTime.now().minus({ minutes: 1 }).toString();
           const startDate = DateTime.now()
-            .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS })
+            .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS + interval })
             .toString();
 
           const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] = await Promise.all([
