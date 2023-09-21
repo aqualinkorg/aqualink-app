@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { dailyDataDate } from 'mocks/mockDailyData';
+import { mockTempWeeklyAlert } from 'mocks/mockDailyData';
 import Bleaching from '.';
 
 test('renders as expected', () => {
@@ -10,7 +10,7 @@ test('renders as expected', () => {
     <Router>
       <Bleaching
         data={{
-          tempWeeklyAlert: { timestamp: dailyDataDate.toString(), value: 3 },
+          tempWeeklyAlert: mockTempWeeklyAlert,
         }}
       />
     </Router>,

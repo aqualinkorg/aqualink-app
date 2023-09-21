@@ -26,3 +26,8 @@ export const mockDailyData: DailyData = {
   windDirection: 96,
   weeklyAlertLevel: 3,
 };
+
+export const mockTempWeeklyAlert = {
+  timestamp: dailyDataDate.toString(),
+  value: 3,
+};
