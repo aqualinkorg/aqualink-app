@@ -18,7 +18,9 @@ import UpdateInfo from '../../UpdateInfo';
 import { styles as incomingStyles } from '../styles';
 
 const Bleaching = ({ data, classes }: BleachingProps) => {
-  const { timestamp, value } = data.tempWeeklyAlert || { value: 0 };
+  const { timestamp, value: tempWeeklyAlertValue } = data.tempWeeklyAlert || {
+    value: 0,
+  };
   const relativeTime = timestamp && toRelativeTime(timestamp);
 
   return (
@@ -51,7 +53,7 @@ const Bleaching = ({ data, classes }: BleachingProps) => {
         >
           <img
             className={classes.alertImage}
-            src={findIntervalByLevel(value).image}
+            src={findIntervalByLevel(tempWeeklyAlertValue).image}
             alt="alert-level"
           />
           <UpdateInfo
