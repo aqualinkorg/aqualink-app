@@ -18,8 +18,8 @@ import UpdateInfo from '../../UpdateInfo';
 import { styles as incomingStyles } from '../styles';
 
 const Bleaching = ({ data, classes }: BleachingProps) => {
-  const { timestamp, value } = data.tempWeeklyAlert || {};
-  const relativeTime = toRelativeTime(timestamp || '');
+  const { timestamp, value } = data.tempWeeklyAlert || { value: 0 };
+  const relativeTime = timestamp && toRelativeTime(timestamp);
 
   return (
     <Card className={classes.root}>
@@ -51,7 +51,7 @@ const Bleaching = ({ data, classes }: BleachingProps) => {
         >
           <img
             className={classes.alertImage}
-            src={findIntervalByLevel(value || 0).image}
+            src={findIntervalByLevel(value).image}
             alt="alert-level"
           />
           <UpdateInfo

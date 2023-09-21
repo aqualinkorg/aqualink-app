@@ -46,6 +46,14 @@ const UpdateInfo = ({
                   {timeText} {relativeTime}
                 </Typography>
               )}
+              {!relativeTime && (
+                <Typography
+                  className={classes.updateInfoText}
+                  variant="caption"
+                >
+                  No data available
+                </Typography>
+              )}
               <Typography
                 title={subtitle}
                 className={classes.updateInfoText}
