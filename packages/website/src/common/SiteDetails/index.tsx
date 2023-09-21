@@ -29,7 +29,7 @@ import {
 import { parseLatestData } from 'store/Sites/helpers';
 import { getMiddlePoint } from 'helpers/map';
 import { formatNumber } from 'helpers/numberUtils';
-import { displayTimeInLocalTimezone, sortByDate } from 'helpers/dates';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
 import Map from './Map';
 import SketchFab from './SketchFab';
 import FeaturedMedia from './FeaturedMedia';
@@ -60,7 +60,6 @@ const MINIMUM_SONDE_METRICS_TO_SHOW_CARD = 3;
 const SiteDetails = ({
   site,
   selectedSurveyPointId,
-  hasDailyData,
   surveys,
   featuredSurveyId = null,
   featuredSurveyPoint = null,
@@ -121,7 +120,7 @@ const SiteDetails = ({
   const { videoStream } = site || {};
 
   const cards =
-    site && latestData
+    site && latestDataAsSofarValues
       ? [
           <Satellite
             data={latestDataAsSofarValues}
@@ -143,13 +142,7 @@ const SiteDetails = ({
                 <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
               );
             }
-            return (
-              <CoralBleaching
-                dailyData={
-                  sortByDate(site.dailyData, 'date', 'asc').slice(-1)[0]
-                }
-              />
-            );
+            return <CoralBleaching data={latestDataAsSofarValues} />;
           })(),
           <Waves data={latestDataAsSofarValues} hasSpotter={hasSpotterData} />,
         ]
@@ -283,11 +276,7 @@ const SiteDetails = ({
         {cards.map((Component, index) => (
           <Grid key={`card-${index.toString()}`} item xs={12} sm={6} md={3}>
             <div className={classes.card}>
-              <LoadingSkeleton
-                variant="rect"
-                height="100%"
-                loading={isLoading || !hasDailyData}
-              >
+              <LoadingSkeleton variant="rect" height="100%" loading={isLoading}>
                 {Component}
               </LoadingSkeleton>
             </div>
@@ -334,7 +323,6 @@ interface SiteDetailsProps {
   site?: Site;
   selectedSurveyPointId?: string;
   featuredSurveyId?: number | null;
-  hasDailyData: boolean;
   surveys: SurveyListItem[];
   featuredSurveyPoint?: SurveyPoint | null;
   surveyDiveDate?: string | null;

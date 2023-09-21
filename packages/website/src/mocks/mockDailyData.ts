@@ -2,7 +2,7 @@ import { DailyData } from 'store/Sites/types';
 
 const now = new Date();
 const minutesAgo = 5;
-const dailyDataDate = new Date(
+export const dailyDataDate = new Date(
   now.getTime() - minutesAgo * 60000,
 ).toISOString();
 
@@ -25,4 +25,9 @@ export const mockDailyData: DailyData = {
   avgWindSpeed: 4,
   windDirection: 96,
   weeklyAlertLevel: 3,
+};
+
+export const mockTempWeeklyAlert = {
+  timestamp: dailyDataDate.toString(),
+  value: 3,
 };

@@ -29,7 +29,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
             <Typography variant="subtitle1">
               {displayTimeInLocalTimezone({
                 isoDate: survey.diveDate,
-                format: 'LL/dd/yyyy [at] h:mm A',
+                format: "LL/dd/yyyy 'at' h:mm a",
                 displayTimezone: false,
                 timeZone: site.timezone,
               })}

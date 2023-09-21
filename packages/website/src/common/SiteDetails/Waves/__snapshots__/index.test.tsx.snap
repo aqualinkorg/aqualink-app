@@ -225,9 +225,7 @@ exports[`renders as expected 1`] = `
                     classname="makeStyles-updateInfoText-22"
                     variant="caption"
                   >
-                    Valid
-                     
-                    1 day ago
+                    Valid 1 day ago
                   </mock-typography>
                   <mock-typography
                     classname="makeStyles-updateInfoText-22"

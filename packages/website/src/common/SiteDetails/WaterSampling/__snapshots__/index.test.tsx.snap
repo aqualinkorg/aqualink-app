@@ -281,6 +281,12 @@ exports[`renders as expected 1`] = `
                 <mock-typography
                   classname="makeStyles-updateInfoText-15"
                   variant="caption"
+                >
+                  No data available
+                </mock-typography>
+                <mock-typography
+                  classname="makeStyles-updateInfoText-15"
+                  variant="caption"
                 />
               </mock-box>
             </div>

@@ -38,14 +38,11 @@ const UpdateInfo = ({
           </Grid>
           <Grid item className={classes.dateInfo}>
             <Box display="flex" flexDirection="column" width="100%">
-              {relativeTime && (
-                <Typography
-                  className={classes.updateInfoText}
-                  variant="caption"
-                >
-                  {timeText} {relativeTime}
-                </Typography>
-              )}
+              <Typography className={classes.updateInfoText} variant="caption">
+                {relativeTime
+                  ? `${timeText} ${relativeTime}`
+                  : 'No data available'}
+              </Typography>
               <Typography
                 title={subtitle}
                 className={classes.updateInfoText}
