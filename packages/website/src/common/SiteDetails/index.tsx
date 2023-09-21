@@ -29,7 +29,7 @@ import {
 import { parseLatestData } from 'store/Sites/helpers';
 import { getMiddlePoint } from 'helpers/map';
 import { formatNumber } from 'helpers/numberUtils';
-import { displayTimeInLocalTimezone, sortByDate } from 'helpers/dates';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
 import Map from './Map';
 import SketchFab from './SketchFab';
 import FeaturedMedia from './FeaturedMedia';
@@ -81,6 +81,8 @@ const SiteDetails = ({
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
 
+  console.log({ latestData });
+
   useEffect(() => {
     if (site && !spotterPosition) {
       dispatch(spotterPositionRequest(String(site.id)));
@@ -120,6 +122,8 @@ const SiteDetails = ({
 
   const { videoStream } = site || {};
 
+  console.log({ latestDataAsSofarValues });
+
   const cards =
     site && latestData
       ? [
@@ -143,13 +147,7 @@ const SiteDetails = ({
                 <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
               );
             }
-            return (
-              <CoralBleaching
-                dailyData={
-                  sortByDate(site.dailyData, 'date', 'asc').slice(-1)[0]
-                }
-              />
-            );
+            return <CoralBleaching data={latestDataAsSofarValues} />;
           })(),
           <Waves data={latestDataAsSofarValues} hasSpotter={hasSpotterData} />,
         ]

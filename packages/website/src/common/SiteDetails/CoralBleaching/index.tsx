@@ -10,15 +10,16 @@ import {
   Grid,
 } from '@material-ui/core';
 
-import type { DailyData } from 'store/Sites/types';
+import type { LatestDataASSofarValue } from 'store/Sites/types';
 import { findIntervalByLevel } from 'helpers/bleachingAlertIntervals';
 import { toRelativeTime } from 'helpers/dates';
 import UpdateInfo from '../../UpdateInfo';
 
 import { styles as incomingStyles } from '../styles';
 
-const Bleaching = ({ dailyData, classes }: BleachingProps) => {
-  const relativeTime = toRelativeTime(dailyData.date);
+const Bleaching = ({ data, classes }: BleachingProps) => {
+  const { timestamp, value } = data.tempWeeklyAlert || {};
+  const relativeTime = toRelativeTime(timestamp || '');
 
   return (
     <Card className={classes.root}>
@@ -50,7 +51,7 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
         >
           <img
             className={classes.alertImage}
-            src={findIntervalByLevel(dailyData.weeklyAlertLevel).image}
+            src={findIntervalByLevel(value || 0).image}
             alt="alert-level"
           />
           <UpdateInfo
@@ -96,7 +97,7 @@ const styles = () =>
   });
 
 interface BleachingIncomingProps {
-  dailyData: DailyData;
+  data: LatestDataASSofarValue;
 }
 
 type BleachingProps = WithStyles<typeof styles> & BleachingIncomingProps;
