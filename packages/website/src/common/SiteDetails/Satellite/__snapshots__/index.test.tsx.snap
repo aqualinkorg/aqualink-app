@@ -347,9 +347,7 @@ exports[`renders as expected 1`] = `
                   classname="makeStyles-updateInfoText-13"
                   variant="caption"
                 >
-                  Last data received
-                   
-                  1 day ago
+                  Last data received 1 day ago
                 </mock-typography>
                 <mock-typography
                   classname="makeStyles-updateInfoText-13"
