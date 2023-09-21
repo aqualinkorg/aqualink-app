@@ -81,8 +81,6 @@ const SiteDetails = ({
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
 
-  console.log({ latestData });
-
   useEffect(() => {
     if (site && !spotterPosition) {
       dispatch(spotterPositionRequest(String(site.id)));
@@ -121,8 +119,6 @@ const SiteDetails = ({
   }, [forecastData, latestData]);
 
   const { videoStream } = site || {};
-
-  console.log({ latestDataAsSofarValues });
 
   const cards =
     site && latestData
