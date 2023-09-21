@@ -228,7 +228,6 @@ const Site = ({ match, classes }: SiteProps) => {
             site={siteWithFeaturedImage}
             selectedSurveyPointId={selectedSurveyPointId}
             featuredSurveyId={featuredSurveyId}
-            hasDailyData={hasDailyData}
             surveys={surveyList}
             featuredSurveyPoint={featuredSurveyPoint}
             surveyDiveDate={diveDate}
