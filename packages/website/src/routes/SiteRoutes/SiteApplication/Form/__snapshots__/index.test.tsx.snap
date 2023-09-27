@@ -18,8 +18,8 @@ exports[`renders as expected 1`] = `
       fullwidth="true"
       helpertext=""
       inputprops="[object Object]"
-      name="siteName"
       placeholder="Site Name e.g. 'Sombrero Site'"
+      value="Mock Site"
       variant="outlined"
     />
     <mock-typography
