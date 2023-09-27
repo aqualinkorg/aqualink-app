@@ -139,6 +139,12 @@ const SurveyForm = ({
                       'diveTime',
                       DateTime.fromJSDate(e || new Date(NaN)).toFormat('HH:mm'),
                     );
+                    setValue(
+                      'diveDate',
+                      DateTime.fromJSDate(e || new Date(NaN)).toFormat(
+                        'LL/dd/yyyy',
+                      ),
+                    );
                     handleDiveDateTimeChange(e);
                   }}
                   KeyboardButtonProps={{
