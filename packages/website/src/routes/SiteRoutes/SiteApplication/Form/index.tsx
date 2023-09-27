@@ -45,6 +45,7 @@ const Form = ({
   const {
     formState: { errors },
     handleSubmit,
+    setValue,
     control,
   } = useForm<SiteApplicationFormFields>({
     reValidateMode: 'onSubmit',
@@ -74,26 +75,17 @@ const Form = ({
       <Typography className={classes.formTitle} variant="h3">
         Your Site
       </Typography>
-      <Controller
-        name="siteName"
-        control={control}
-        rules={{
-          required: 'This is a required field',
-        }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className={`${classes.formField} ${classes.textField}`}
-            variant="outlined"
-            inputProps={{ className: classes.textField }}
-            fullWidth
-            placeholder="Site Name e.g. 'Sombrero Site'"
-            disabled
-            defaultValue={siteName}
-            error={!!errors.siteName}
-            helperText={errors?.siteName?.message || ''}
-          />
-        )}
+      <TextField
+        className={`${classes.formField} ${classes.textField}`}
+        variant="outlined"
+        inputProps={{ className: classes.textField }}
+        fullWidth
+        placeholder="Site Name e.g. 'Sombrero Site'"
+        disabled
+        defaultValue={siteName}
+        value={siteName}
+        error={!!errors.siteName}
+        helperText={errors?.siteName?.message || ''}
       />
 
       <Typography className={classes.additionalInfo}>
@@ -179,6 +171,12 @@ const Form = ({
               ref={field.ref}
               onChange={(e) => {
                 field.onChange(e);
+                setValue(
+                  'installationSchedule',
+                  DateTime.fromJSDate(e || new Date(NaN)).toFormat(
+                    'LL/dd/yyyy',
+                  ),
+                );
                 handleInstallationChange(e);
               }}
               KeyboardButtonProps={{
