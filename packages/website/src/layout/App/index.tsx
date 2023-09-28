@@ -11,6 +11,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getSelf } from 'store/User/userSlice';
 import { useGATagManager } from 'utils/google-analytics';
 import Uploads from 'routes/Uploads';
+import SpotterInfo from 'routes/SpotterInfo';
 import NotFound from '../../routes/NotFound';
 import ErrorBoundary from './ErrorBoundary';
 import LandingPage from '../../routes/Landing';
@@ -78,6 +79,7 @@ function App() {
                   path="/collections/:collectionName"
                   component={Dashboard}
                 />
+                <Route exact path="/spotter-info" component={SpotterInfo} />
                 <Route path="*" component={NotFound} />
               </Switch>
             )}
