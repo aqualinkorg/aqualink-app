@@ -44,13 +44,10 @@ function SpotterInfo() {
 
     setLoading(true);
     try {
-      const response = await siteServices.getSpotterInfo(
+      const { data } = await siteServices.getSpotterInfo(
         query,
         user?.token || '',
       );
-      if (!response) return;
-
-      const { data } = response;
 
       const res = {
         batteryPower: data.batteryPower,

@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -38,12 +37,13 @@ export class SensorDataService {
       relations: ['admins'],
     });
 
-    if (!site) throw new BadRequestException('Invalid siteId or sensorId');
     if (
-      !site.admins.find((x) => x.id === user.id) &&
-      !(user.adminLevel === AdminLevel.SuperAdmin)
+      !site ||
+      (!site.admins.find((x) => x.id === user.id) &&
+        !(user.adminLevel === AdminLevel.SuperAdmin))
     )
-      throw new ForbiddenException('Forbidden');
+      throw new BadRequestException('Invalid siteId or sensorId');
+
     if (!site.sensorId)
       throw new BadRequestException('No deployed spotter for this site');
 
