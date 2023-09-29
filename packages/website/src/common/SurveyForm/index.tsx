@@ -1,8 +1,6 @@
-import React, { useState, useCallback, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  withStyles,
-  WithStyles,
   createStyles,
   Theme,
   Grid,
@@ -12,15 +10,11 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  makeStyles,
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import EventIcon from '@material-ui/icons/Event';
 import { Link } from 'react-router-dom';
-import {
-  KeyboardDatePicker,
-  KeyboardTimePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -28,6 +22,9 @@ import { diveLocationSelector } from 'store/Survey/surveySlice';
 import { SurveyData, SurveyState } from 'store/Survey/types';
 import { setTimeZone } from 'helpers/dates';
 import { DateTime } from 'luxon-extensions';
+import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
+import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
+import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 
 interface SurveyFormFields {
   diveDate: string;
@@ -35,13 +32,29 @@ interface SurveyFormFields {
   comments: string;
 }
 
-const SurveyForm = ({
-  siteId,
-  timeZone,
-  onSubmit,
-  classes,
-}: SurveyFormProps) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    textField: {
+      color: 'black',
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'rgba(0, 0, 0, 0.23)',
+      },
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.primary.main,
+      },
+    },
+    section: {
+      marginBottom: '1rem',
+    },
+    extraMargin: {
+      marginBottom: '2rem',
+    },
+  }),
+);
+
+function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
   const theme = useTheme();
+  const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
@@ -125,7 +138,7 @@ const SurveyForm = ({
                   disableToolbar
                   format="MM/dd/yyyy"
                   fullWidth
-                  id="dive-date"
+                  data-testid="dive-date"
                   autoOk
                   showTodayButton
                   size={itemsSize}
@@ -179,6 +192,7 @@ const SurveyForm = ({
                 <KeyboardTimePicker
                   className={classes.textField}
                   id="time-picker"
+                  data-testid="dive-time"
                   fullWidth
                   autoOk
                   size={itemsSize}
@@ -194,7 +208,7 @@ const SurveyForm = ({
                   KeyboardButtonProps={{
                     'aria-label': 'change time',
                   }}
-                  InputProps={{
+                  inputProps={{
                     className: classes.textField,
                   }}
                   keyboardIcon={<AccessTimeIcon fontSize={iconSize} />}
@@ -245,6 +259,7 @@ const SurveyForm = ({
           className={classes.textField}
           select
           id="weather"
+          data-testid="weather"
           name="weather"
           value={weather}
           onChange={handleWeatherChange}
@@ -280,6 +295,7 @@ const SurveyForm = ({
             <TextField
               {...field}
               className={classes.textField}
+              data-testid="comments"
               variant="outlined"
               multiline
               placeholder="Did anything stand out during this survey?"
@@ -328,6 +344,7 @@ const SurveyForm = ({
             type="submit"
             color="primary"
             variant="contained"
+            data-testid="submit"
           >
             Next
           </Button>
@@ -335,28 +352,9 @@ const SurveyForm = ({
       </Grid>
     </form>
   );
-};
+}
 
-const styles = (theme: Theme) =>
-  createStyles({
-    textField: {
-      color: 'black',
-      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-        borderColor: 'rgba(0, 0, 0, 0.23)',
-      },
-      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: theme.palette.primary.main,
-      },
-    },
-    section: {
-      marginBottom: '1rem',
-    },
-    extraMargin: {
-      marginBottom: '2rem',
-    },
-  });
-
-interface SurveyFormIncomingProps {
+interface SurveyFormProps {
   siteId: number;
   timeZone?: string | null;
   onSubmit: (
@@ -371,6 +369,4 @@ SurveyForm.defaultProps = {
   timeZone: null,
 };
 
-type SurveyFormProps = SurveyFormIncomingProps & WithStyles<typeof styles>;
-
-export default withStyles(styles)(SurveyForm);
+export default SurveyForm;
