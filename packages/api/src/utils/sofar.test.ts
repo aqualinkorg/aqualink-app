@@ -67,13 +67,13 @@ test('it process Sofar Wave Date API for surface temperature', async () => {
   const yesterday = yesterdayDate.toISOString();
 
   const response = await sofarWaveData(
-    'SPOT-1576',
+    'SPOT-0792',
     process.env.SOFAR_API_TOKEN,
     yesterday,
     today,
   );
 
-  const values = response && response.data.surfaceTemp.length;
+  const values = response && response.data.waves.length;
 
   expect(values).toBeGreaterThan(0);
 });

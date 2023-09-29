@@ -113,6 +113,7 @@ const NavBar = ({
             await new Promise((resolve) => setTimeout(resolve));
             handleSignInDialog(true);
           }
+          return Promise.reject(error);
         },
       );
 

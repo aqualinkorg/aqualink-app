@@ -22,6 +22,7 @@ import {
   LatestData,
   SiteSketchFab,
   ForecastData,
+  SpotterInfoResponse,
 } from 'store/Sites/types';
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
@@ -221,6 +222,13 @@ const getOceanSenseData = ({
     method: 'GET',
   });
 
+const getSpotterInfo = (query: string, token?: string) =>
+  requests.send<SpotterInfoResponse>({
+    url: `sensor-data/info/${query}`,
+    method: 'GET',
+    token,
+  });
+
 export default {
   getSite,
   getSites,
@@ -243,4 +251,5 @@ export default {
   deploySpotter,
   maintainSpotter,
   getOceanSenseData,
+  getSpotterInfo,
 };

@@ -412,3 +412,18 @@ export interface SelectedSiteState {
   loadingSpotterPosition: number;
   error?: string | null;
 }
+
+export interface SpotterInfoResponse {
+  batteryPower: number;
+  batteryVoltage: number;
+  humidity: number;
+  payloadType: string;
+  solarVoltage: number;
+  spotterId: string;
+  spotterName: string;
+  track: Array<{
+    latitude: number;
+    longitude: number;
+    timestamp: string;
+  }>;
+}
