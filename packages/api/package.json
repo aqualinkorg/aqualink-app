@@ -101,7 +101,7 @@
     "pg": "^8.2.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7",
-    "sharp": "^0.30.6",
+    "sharp": "^0.32.6",
     "ts-exif-parser": "^0.2.1",
     "typeorm": "^0.3.14",
     "typeorm-naming-strategies": "^1.1.0"
