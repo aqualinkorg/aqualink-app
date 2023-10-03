@@ -1,3 +1,5 @@
+import { DailyData } from 'sites/daily-data.entity';
+import { DeepPartial } from 'typeorm';
 import { getDailyData } from './dailyData';
 import { Site } from '../sites/sites.entity';
 
@@ -23,26 +25,14 @@ test('It processes Sofar API for daily data.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const values = await getDailyData(site as unknown as Site, date, []);
-
-  expect(values).toEqual({
+  const values = await getDailyData(site as unknown as Site, date);
+  const expected: DeepPartial<DailyData> = {
     site: { id: 1 },
     date,
-    avgBottomTemperature: undefined,
-    avgWaveHeight: undefined,
-    avgWindSpeed: 2.604348000556476,
     dailyAlertLevel: 0,
     degreeHeatingDays: 21.206205519211903,
-    maxBottomTemperature: undefined,
-    maxWaveHeight: undefined,
-    maxWindSpeed: 3.9386400379835846,
-    minBottomTemperature: undefined,
-    minWaveHeight: undefined,
-    minWindSpeed: 1.6684284914871916,
-    satelliteTemperature: 16.029768748901425,
-    topTemperature: undefined,
-    waveMeanDirection: undefined,
-    waveMeanPeriod: undefined,
-    windDirection: 291,
-  });
+    satelliteTemperature: 15.327310137346782,
+  };
+
+  expect(values).toEqual(expected);
 });

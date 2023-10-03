@@ -10,22 +10,8 @@ export interface SofarDailyData {
   date: Date;
   dailyAlertLevel?: number;
   weeklyAlertLevel?: number;
-  minBottomTemperature?: number;
-  maxBottomTemperature?: number;
-  avgBottomTemperature?: number;
-  topTemperature?: number;
   satelliteTemperature?: number;
   degreeHeatingDays?: number;
-  minWaveHeight?: number;
-  maxWaveHeight?: number;
-  avgWaveHeight?: number;
-  waveMeanDirection?: number;
-  waveMeanPeriod?: number;
-  minWindSpeed?: number;
-  maxWindSpeed?: number;
-  avgWindSpeed?: number;
-  windDirection?: number;
-  surfaceTemperature?: number;
 }
 
 export interface SofarLiveData {

@@ -11,25 +11,11 @@ const getMockDailyData = (
   date: string,
   site: DeepPartial<Site>,
 ): DeepPartial<DailyData> => ({
-  avgBottomTemperature: random(15, 35, true),
-  avgWaveHeight: random(10, true),
-  avgWindSpeed: random(10, true),
   dailyAlertLevel: random(4),
   degreeHeatingDays: random(70, true),
   date,
   site,
-  maxBottomTemperature: random(15, 35, true),
-  minBottomTemperature: random(15, 35, true),
-  maxWaveHeight: random(10, true),
-  minWaveHeight: random(10, true),
-  maxWindSpeed: random(10, true),
-  minWindSpeed: random(10, true),
   satelliteTemperature: random(15, 35, true),
-  topTemperature: random(15, 35, true),
-  waveMeanDirection: random(359),
-  waveMeanPeriod: random(10),
-  weeklyAlertLevel: random(4),
-  windDirection: random(359),
 });
 
 export const getMockLiveData = (siteId: number): SofarLiveDataDto => ({

@@ -1,47 +1,18 @@
 /** Worker to process daily data for all sites. */
-import {
-  get,
-  isEmpty,
-  isNil,
-  isNumber,
-  isUndefined,
-  mapValues,
-  omit,
-  omitBy,
-} from 'lodash';
+import { get, isNil, isNumber, isUndefined, omit, omitBy } from 'lodash';
 import { DataSource, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { DateTime } from 'luxon';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
-import {
-  getMin,
-  getMax,
-  getAverage,
-  getWindSpeed,
-  getWindDirection,
-} from '../utils/math';
-import {
-  extractSofarValues,
-  getLatestData,
-  getSofarHindcastData,
-  getSpotterData,
-} from '../utils/sofar';
+import { getMax, getAverage } from '../utils/math';
+import { getLatestData, getSofarHindcastData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
-import {
-  DEFAULT_SPOTTER_DATA_VALUE,
-  SofarDailyData,
-  ValueWithTimestamp,
-} from '../utils/sofar.types';
+import { SofarDailyData, ValueWithTimestamp } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
-import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import {
-  filterMetricDataByDate,
-  getAllColumns,
-  getExclusionDates,
-} from '../utils/site.utils';
+import { getAllColumns } from '../utils/site.utils';
 
 export async function getDegreeHeatingDays(
   latitude: number,
@@ -81,27 +52,13 @@ export async function getDegreeHeatingDays(
 export async function getDailyData(
   site: Site,
   endOfDate: Date,
-  excludedDates: ExclusionDates[],
 ): Promise<SofarDailyData> {
-  const { polygon, sensorId, maxMonthlyMean, nearestNOAALocation } = site;
+  const { polygon, maxMonthlyMean, nearestNOAALocation } = site;
   const [NOAALongitude, NOAALatitude] = nearestNOAALocation
     ? (nearestNOAALocation as Point).coordinates
     : (polygon as Point).coordinates;
-  const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
 
-  const [
-    spotterRawData,
-    degreeHeatingDays,
-    satelliteTemperatureData,
-    significantWaveHeightsRaw,
-    waveMeanDirectionRaw,
-    waveMeanPeriodRaw,
-    windVelocity10MeterEastward,
-    windVelocity10MeterNorthward,
-  ] = await Promise.all([
-    sensorId
-      ? getSpotterData(sensorId, sofarToken, endOfDate)
-      : DEFAULT_SPOTTER_DATA_VALUE,
+  const [degreeHeatingDays, satelliteTemperatureData] = await Promise.all([
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
     getDegreeHeatingDays(
@@ -118,117 +75,11 @@ export async function getDailyData(
       NOAALongitude,
       endOfDate,
       96,
-    ),
-    getSofarHindcastData(
-      SofarModels.Wave,
-      sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
-      NOAALatitude,
-      NOAALongitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
-    getSofarHindcastData(
-      SofarModels.Wave,
-      sofarVariableIDs[SofarModels.Wave].meanDirection,
-      NOAALatitude,
-      NOAALongitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
-    getSofarHindcastData(
-      SofarModels.Wave,
-      sofarVariableIDs[SofarModels.Wave].meanPeriod,
-      NOAALatitude,
-      NOAALongitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
-    getSofarHindcastData(
-      SofarModels.Atmosphere,
-      sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterEastward,
-      NOAALatitude,
-      NOAALongitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
-    getSofarHindcastData(
-      SofarModels.Atmosphere,
-      sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterNorthward,
-      NOAALatitude,
-      NOAALongitude,
-      endOfDate,
     ).then((data) => data.map(({ value }) => value)),
   ]);
 
-  const inputVal = spotterRawData || DEFAULT_SPOTTER_DATA_VALUE;
-  const spotterData = mapValues(inputVal, (v) =>
-    extractSofarValues(filterMetricDataByDate(excludedDates, v)),
-  );
-
-  const minBottomTemperature = getMin(spotterData.bottomTemperature);
-  const maxBottomTemperature = getMax(spotterData.bottomTemperature);
-  const avgBottomTemperature = getAverage(spotterData.bottomTemperature);
-  const surfaceTemperature = getAverage(spotterData.surfaceTemperature);
-  const topTemperature = getAverage(spotterData.topTemperature);
-
   // Get satelliteTemperature
-  const latestSatelliteTemperature =
-    satelliteTemperatureData && getLatestData(satelliteTemperatureData);
-  const satelliteTemperature =
-    latestSatelliteTemperature && latestSatelliteTemperature.value;
-
-  // Get waves data if unavailable through a spotter
-  const significantWaveHeights =
-    spotterData.significantWaveHeight.length > 0
-      ? spotterData.significantWaveHeight
-      : significantWaveHeightsRaw;
-
-  const minWaveHeight =
-    significantWaveHeights && getMin(significantWaveHeights);
-  const maxWaveHeight =
-    significantWaveHeights && getMax(significantWaveHeights);
-  const avgWaveHeight =
-    significantWaveHeights && getAverage(significantWaveHeights);
-
-  const meanDirectionWaves =
-    spotterData.waveMeanDirection.length > 0
-      ? spotterData.waveMeanDirection
-      : waveMeanDirectionRaw;
-
-  const waveMeanDirection =
-    meanDirectionWaves && getAverage(meanDirectionWaves, true);
-
-  const meanPeriodWaves =
-    spotterData.waveMeanPeriod.length > 0
-      ? spotterData.waveMeanPeriod
-      : waveMeanPeriodRaw;
-
-  const waveMeanPeriod = meanPeriodWaves && getAverage(meanPeriodWaves, true);
-
-  // Make sure that windVelocity10MeterEastward and windVelocity10MeterNorthward have the same length.
-  const modelWindCheck =
-    windVelocity10MeterEastward.length === windVelocity10MeterNorthward.length;
-
-  const windSpeedsRaw = modelWindCheck
-    ? windVelocity10MeterEastward.map((eastValue, index) =>
-        getWindSpeed(eastValue, windVelocity10MeterNorthward[index]),
-      )
-    : [];
-  const windDirectionsRaw = modelWindCheck
-    ? windVelocity10MeterEastward.map((eastValue, index) =>
-        getWindDirection(eastValue, windVelocity10MeterNorthward[index]),
-      )
-    : [];
-
-  // Get wind data if unavailable through a spotter
-  const windSpeeds = isEmpty(spotterData.windSpeed)
-    ? windSpeedsRaw
-    : spotterData.windSpeed;
-  const windDirections = isEmpty(spotterData.windDirection)
-    ? windDirectionsRaw
-    : spotterData.windDirection;
-
-  const minWindSpeed = windSpeeds && getMin(windSpeeds);
-  const maxWindSpeed = windSpeeds && getMax(windSpeeds);
-  const avgWindSpeed = windSpeeds && getAverage(windSpeeds);
-
-  const windDirection = windDirections && getAverage(windDirections, true);
+  const satelliteTemperature = getAverage(satelliteTemperatureData);
 
   const dailyAlertLevel = calculateAlertLevel(
     maxMonthlyMean,
@@ -240,22 +91,8 @@ export async function getDailyData(
     site: { id: site.id },
     date: endOfDate,
     dailyAlertLevel,
-    minBottomTemperature,
-    maxBottomTemperature,
-    avgBottomTemperature,
-    topTemperature,
     satelliteTemperature,
     degreeHeatingDays: degreeHeatingDays?.value,
-    minWaveHeight,
-    maxWaveHeight,
-    avgWaveHeight,
-    waveMeanDirection,
-    waveMeanPeriod,
-    minWindSpeed,
-    maxWindSpeed,
-    avgWindSpeed,
-    windDirection,
-    surfaceTemperature,
   };
 }
 
@@ -296,7 +133,6 @@ export async function getSitesDailyData(
 ) {
   const siteRepository = dataSource.getRepository(Site);
   const dailyDataRepository = dataSource.getRepository(DailyData);
-  const exclusionDatesRepository = dataSource.getRepository(ExclusionDates);
   const allSites = await siteRepository.find({
     ...(siteIds && siteIds.length > 0
       ? {
@@ -314,12 +150,7 @@ export async function getSitesDailyData(
   await Bluebird.map(
     allSites,
     async (site) => {
-      const excludedDates = await getExclusionDates(
-        exclusionDatesRepository,
-        site.sensorId,
-      );
-
-      const dailyDataInput = await getDailyData(site, endOfDate, excludedDates);
+      const dailyDataInput = await getDailyData(site, endOfDate);
 
       // If no data returned from the update function, skip
       if (hasNoData(dailyDataInput)) {
