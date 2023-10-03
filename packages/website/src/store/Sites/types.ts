@@ -132,16 +132,6 @@ export interface LatestData {
   source: Sources;
   metric: MetricsKeys;
 }
-export interface LiveData {
-  site: { id: number };
-  bottomTemperature?: ValueWithTimestamp;
-  topTemperature?: ValueWithTimestamp;
-  satelliteTemperature?: ValueWithTimestamp;
-  degreeHeatingDays?: ValueWithTimestamp;
-  weeklyAlertLevel?: number;
-  spotterPosition?: SpotterPosition;
-  sstAnomaly?: number;
-}
 
 export interface ForecastData {
   timestamp: string;

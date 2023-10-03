@@ -1,7 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import {
   DailyData,
-  LiveData,
   Site,
   SurveyPoints,
   SiteRegisterResponseData,
@@ -47,12 +46,6 @@ const getSiteDailyData = (id: string, start?: string, end?: string) =>
     url: `sites/${id}/daily_data${
       start && end ? `?end=${end}&start=${start}` : ''
     }`,
-    method: 'GET',
-  });
-
-const getSiteLiveData = (id: string) =>
-  requests.send<LiveData>({
-    url: `sites/${id}/live_data`,
     method: 'GET',
   });
 
@@ -234,7 +227,6 @@ export default {
   getSites,
   getSiteSketchFab,
   getSiteDailyData,
-  getSiteLiveData,
   getSiteForecastData,
   getSiteLatestData,
   getSiteSpotterPosition,
