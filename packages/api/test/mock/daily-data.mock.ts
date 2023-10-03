@@ -2,7 +2,6 @@ import { random, times } from 'lodash';
 import { DeepPartial } from 'typeorm';
 import { DateTime } from '../../src/luxon-extensions';
 import { DailyData } from '../../src/sites/daily-data.entity';
-import { SofarLiveDataDto } from '../../src/sites/dto/live-data.dto';
 import { Site } from '../../src/sites/sites.entity';
 import { SpotterData } from '../../src/utils/sofar.types';
 import { athensSite, californiaSite } from './site.mock';
@@ -16,59 +15,6 @@ const getMockDailyData = (
   date,
   site,
   satelliteTemperature: random(15, 35, true),
-});
-
-export const getMockLiveData = (siteId: number): SofarLiveDataDto => ({
-  site: { id: siteId },
-  dailyAlertLevel: random(4),
-  weeklyAlertLevel: random(4),
-  bottomTemperature: {
-    timestamp: new Date().toISOString(),
-    value: random(15, 35, true),
-  },
-  topTemperature: {
-    value: random(15, 35, true),
-    timestamp: new Date().toISOString(),
-  },
-  satelliteTemperature: {
-    timestamp: new Date().toISOString(),
-    value: random(15, 35, true),
-  },
-  degreeHeatingDays: {
-    timestamp: new Date().toISOString(),
-    value: random(70, true),
-  },
-  waveHeight: {
-    timestamp: new Date().toISOString(),
-    value: random(10, true),
-  },
-  waveMeanDirection: {
-    timestamp: new Date().toISOString(),
-    value: random(359),
-  },
-  waveMeanPeriod: {
-    timestamp: new Date().toISOString(),
-    value: random(10),
-  },
-  windSpeed: {
-    timestamp: new Date().toISOString(),
-    value: random(10, true),
-  },
-  windDirection: {
-    timestamp: new Date().toISOString(),
-    value: random(359),
-  },
-  sstAnomaly: random(15, 35, true),
-  spotterPosition: {
-    latitude: {
-      timestamp: new Date().toISOString(),
-      value: random(15, 35, true),
-    },
-    longitude: {
-      timestamp: new Date().toISOString(),
-      value: random(15, 35, true),
-    },
-  },
 });
 
 export const getMockSpotterData = (

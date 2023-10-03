@@ -7,7 +7,6 @@ import { TestService } from '../../test/test.service';
 import {
   mockBackfillSiteData,
   mockExtractAndVerifyToken,
-  mockGetLiveData,
   mockGetMMM,
   mockGetSpotterData,
 } from '../../test/utils';
@@ -127,15 +126,6 @@ export const siteTests = () => {
       .slice(0, 6)
       .map((entry) => omit(entry, 'site', 'updatedAt', 'createdAt'));
     expect(rsp.body).toMatchObject(data);
-  });
-
-  it('GET /:id/live_data', async () => {
-    mockGetLiveData();
-    const rsp = await request(app.getHttpServer()).get(
-      `/sites/${siteId}/live_data`,
-    );
-
-    expect(rsp.status).toBe(200);
   });
 
   it('PUT /:id update a site', async () => {
@@ -318,12 +308,6 @@ export const siteTests = () => {
         });
 
       expect(rsp.status).toBe(400);
-    });
-
-    it('GET /:id/live_data retrieve live data from non-existing site', async () => {
-      const rsp = await request(app.getHttpServer()).get('/sites/0/live_data');
-
-      expect(rsp.status).toBe(404);
     });
 
     it('GET /:id/spotter_data retrieve spotter data from non-existing site', async () => {

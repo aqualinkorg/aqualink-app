@@ -3,7 +3,9 @@ import { mockUser } from './mockUser';
 
 const now = new Date();
 const minutesAgo = 5;
-const liveDataDate = new Date(now.getTime() - minutesAgo * 60000).toISOString();
+const dailyDataDate = new Date(
+  now.getTime() - minutesAgo * 60000,
+).toISOString();
 
 export const mockSite: Site = {
   id: 1,
@@ -26,7 +28,7 @@ export const mockSite: Site = {
   dailyData: [
     {
       id: 171,
-      date: liveDataDate,
+      date: dailyDataDate,
       minBottomTemperature: 37,
       maxBottomTemperature: 39,
       avgBottomTemperature: 38,

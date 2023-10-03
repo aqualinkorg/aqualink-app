@@ -1,5 +1,3 @@
-import type { LatestData } from '../time-series/latest-data.entity';
-
 export interface ValueWithTimestamp {
   timestamp: string;
   value: number;
@@ -12,27 +10,6 @@ export interface SofarDailyData {
   weeklyAlertLevel?: number;
   satelliteTemperature?: number;
   degreeHeatingDays?: number;
-}
-
-export interface SofarLiveData {
-  site: { id: number };
-  latestData?: LatestData[];
-  dailyAlertLevel?: number;
-  weeklyAlertLevel?: number;
-  bottomTemperature?: ValueWithTimestamp;
-  topTemperature?: ValueWithTimestamp;
-  satelliteTemperature?: ValueWithTimestamp;
-  degreeHeatingDays?: ValueWithTimestamp;
-  waveHeight?: ValueWithTimestamp;
-  waveMeanDirection?: ValueWithTimestamp;
-  waveMeanPeriod?: ValueWithTimestamp;
-  windSpeed?: ValueWithTimestamp;
-  windDirection?: ValueWithTimestamp;
-  sstAnomaly?: number;
-  spotterPosition?: {
-    latitude: ValueWithTimestamp;
-    longitude: ValueWithTimestamp;
-  };
 }
 
 export interface SpotterData {
