@@ -84,8 +84,6 @@ export async function getDailyData(
   excludedDates: ExclusionDates[],
 ): Promise<SofarDailyData> {
   const { polygon, sensorId, maxMonthlyMean, nearestNOAALocation } = site;
-  // TODO - Accept Polygon option
-  const [longitude, latitude] = (polygon as Point).coordinates;
   const [NOAALongitude, NOAALatitude] = nearestNOAALocation
     ? (nearestNOAALocation as Point).coordinates
     : (polygon as Point).coordinates;
@@ -106,7 +104,12 @@ export async function getDailyData(
       : DEFAULT_SPOTTER_DATA_VALUE,
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
-    getDegreeHeatingDays(latitude, longitude, endOfDate, maxMonthlyMean),
+    getDegreeHeatingDays(
+      NOAALatitude,
+      NOAALongitude,
+      endOfDate,
+      maxMonthlyMean,
+    ),
     getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch]
@@ -119,36 +122,36 @@ export async function getDailyData(
     getSofarHindcastData(
       SofarModels.Wave,
       sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
-      latitude,
-      longitude,
+      NOAALatitude,
+      NOAALongitude,
       endOfDate,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.Wave,
       sofarVariableIDs[SofarModels.Wave].meanDirection,
-      latitude,
-      longitude,
+      NOAALatitude,
+      NOAALongitude,
       endOfDate,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.Wave,
       sofarVariableIDs[SofarModels.Wave].meanPeriod,
-      latitude,
-      longitude,
+      NOAALatitude,
+      NOAALongitude,
       endOfDate,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.Atmosphere,
       sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterEastward,
-      latitude,
-      longitude,
+      NOAALatitude,
+      NOAALongitude,
       endOfDate,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.Atmosphere,
       sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterNorthward,
-      latitude,
-      longitude,
+      NOAALatitude,
+      NOAALongitude,
       endOfDate,
     ).then((data) => data.map(({ value }) => value)),
   ]);
