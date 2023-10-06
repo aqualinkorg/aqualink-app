@@ -6,7 +6,7 @@ import Bluebird from 'bluebird';
 import { DateTime } from 'luxon';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
-import { getMax, getAverage } from '../utils/math';
+import { getMax } from '../utils/math';
 import { getLatestData, getSofarHindcastData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 import { SofarDailyData, ValueWithTimestamp } from '../utils/sofar.types';
@@ -75,11 +75,14 @@ export async function getDailyData(
       NOAALongitude,
       endOfDate,
       96,
-    ).then((data) => data.map(({ value }) => value)),
+    ),
   ]);
 
   // Get satelliteTemperature
-  const satelliteTemperature = getAverage(satelliteTemperatureData);
+  const latestSatelliteTemperature =
+    satelliteTemperatureData && getLatestData(satelliteTemperatureData);
+  const satelliteTemperature =
+    latestSatelliteTemperature && latestSatelliteTemperature.value;
 
   const dailyAlertLevel = calculateAlertLevel(
     maxMonthlyMean,
