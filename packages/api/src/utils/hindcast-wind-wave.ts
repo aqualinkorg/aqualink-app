@@ -37,6 +37,88 @@ interface Repositories {
   hindcastRepository: Repository<ForecastData>;
 }
 
+const getTodayYesterdayDates = () => {
+  const date = new Date();
+  const yesterdayDate = new Date(date);
+  yesterdayDate.setDate(date.getDate() - 1);
+  const today = date.toISOString();
+  const yesterday = yesterdayDate.toISOString();
+  return { today, yesterday };
+};
+
+export const getForecastData = async (latitude: number, longitude: number) => {
+  const { today, yesterday } = getTodayYesterdayDates();
+  const hindcastOptions = [
+    [
+      SofarModels.Wave,
+      sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
+    ],
+    [SofarModels.Wave, sofarVariableIDs[SofarModels.Wave].meanDirection],
+    [SofarModels.Wave, sofarVariableIDs[SofarModels.Wave].meanPeriod],
+    [
+      SofarModels.Atmosphere,
+      sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterEastward,
+    ],
+    [
+      SofarModels.Atmosphere,
+      sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterNorthward,
+    ],
+  ];
+
+  const response = await Promise.all(
+    hindcastOptions.map(([sofarModel, sofarVariableId]) => {
+      return sofarHindcast(
+        sofarModel,
+        sofarVariableId,
+        latitude,
+        longitude,
+        yesterday,
+        today,
+      );
+    }),
+  );
+
+  const [
+    significantWaveHeight,
+    waveMeanDirection,
+    waveMeanPeriod,
+    windVelocity10MeterEastward,
+    windVelocity10MeterNorthward,
+  ] = response.map((x) => {
+    if (!x || x.values.length < 1) return undefined;
+    return x.values[x.values.length - 1]; // latest available forecast in the past
+  });
+
+  // Calculate wind speed and direction from velocity
+  const windNorthwardVelocity = windVelocity10MeterNorthward?.value;
+  const windEastwardVelocity = windVelocity10MeterEastward?.value;
+  const sameTimestamps =
+    windVelocity10MeterEastward?.timestamp ===
+    windVelocity10MeterNorthward?.timestamp;
+  const windSpeed: ValueWithTimestamp | undefined =
+    windNorthwardVelocity && windEastwardVelocity && sameTimestamps
+      ? {
+          timestamp: windVelocity10MeterNorthward?.timestamp,
+          value: getWindSpeed(windEastwardVelocity, windNorthwardVelocity),
+        }
+      : undefined;
+  const windDirection: ValueWithTimestamp | undefined =
+    windNorthwardVelocity && windEastwardVelocity && sameTimestamps
+      ? {
+          timestamp: windVelocity10MeterNorthward?.timestamp,
+          value: getWindDirection(windEastwardVelocity, windNorthwardVelocity),
+        }
+      : undefined;
+
+  return {
+    significantWaveHeight,
+    waveMeanDirection,
+    waveMeanPeriod,
+    windSpeed,
+    windDirection,
+  };
+};
+
 /**
  * Fetch spotter and wave data from sofar and save them on time_series table
  * @param siteIds The siteIds for which to perform the update
@@ -55,11 +137,7 @@ export const addWindWaveData = async (
     },
   });
 
-  const date = new Date();
-  const yesterdayDate = new Date(date);
-  yesterdayDate.setDate(date.getDate() - 1);
-  const today = date.toISOString();
-  const yesterday = yesterdayDate.toISOString();
+  const { today } = getTodayYesterdayDates();
 
   logger.log('Saving wind & wave forecast data');
   await Bluebird.map(
@@ -75,78 +153,7 @@ export const addWindWaveData = async (
         `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
       );
 
-      const hindcastOptions = [
-        [
-          SofarModels.Wave,
-          sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
-        ],
-        [SofarModels.Wave, sofarVariableIDs[SofarModels.Wave].meanDirection],
-        [SofarModels.Wave, sofarVariableIDs[SofarModels.Wave].meanPeriod],
-        [
-          SofarModels.Atmosphere,
-          sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterEastward,
-        ],
-        [
-          SofarModels.Atmosphere,
-          sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterNorthward,
-        ],
-      ];
-
-      const response = await Promise.all(
-        hindcastOptions.map(([sofarModel, sofarVariableId]) => {
-          return sofarHindcast(
-            sofarModel,
-            sofarVariableId,
-            latitude,
-            longitude,
-            yesterday,
-            today,
-          );
-        }),
-      );
-
-      const [
-        significantWaveHeight,
-        waveMeanDirection,
-        waveMeanPeriod,
-        windVelocity10MeterEastward,
-        windVelocity10MeterNorthward,
-      ] = response.map((x) => {
-        if (!x || x.values.length < 1) return undefined;
-        return x.values[x.values.length - 1]; // latest available forecast in the past
-      });
-
-      // Calculate wind speed and direction from velocity
-      const windNorthwardVelocity = windVelocity10MeterNorthward?.value;
-      const windEastwardVelocity = windVelocity10MeterEastward?.value;
-      const sameTimestamps =
-        windVelocity10MeterEastward?.timestamp ===
-        windVelocity10MeterNorthward?.timestamp;
-      const windSpeed: ValueWithTimestamp | undefined =
-        windNorthwardVelocity && windEastwardVelocity && sameTimestamps
-          ? {
-              timestamp: windVelocity10MeterNorthward?.timestamp,
-              value: getWindSpeed(windEastwardVelocity, windNorthwardVelocity),
-            }
-          : undefined;
-      const windDirection: ValueWithTimestamp | undefined =
-        windNorthwardVelocity && windEastwardVelocity && sameTimestamps
-          ? {
-              timestamp: windVelocity10MeterNorthward?.timestamp,
-              value: getWindDirection(
-                windEastwardVelocity,
-                windNorthwardVelocity,
-              ),
-            }
-          : undefined;
-
-      const forecastData = {
-        significantWaveHeight,
-        waveMeanDirection,
-        waveMeanPeriod,
-        windSpeed,
-        windDirection,
-      };
+      const forecastData = await getForecastData(latitude, longitude);
 
       // Save wind wave data to forecast_data
       await Promise.all(
