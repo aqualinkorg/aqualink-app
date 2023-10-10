@@ -1,4 +1,4 @@
-import L from "leaflet";
+import L from 'leaflet';
 
 export const mapConstants = {
   // Allow the map to move infinitely left or right but force it

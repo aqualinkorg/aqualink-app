@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -7,10 +7,10 @@ import {
   Grid,
   Typography,
   Theme,
-} from "@material-ui/core";
-import classNames from "classnames";
+} from '@material-ui/core';
+import classNames from 'classnames';
 
-import { Value } from "./types";
+import { Value } from './types';
 
 const Title = ({ classes, values }: TitleProps) => {
   return (
@@ -47,17 +47,17 @@ const styles = (theme: Theme) =>
       flex: 1,
     },
     maxWidth: {
-      maxWidth: "45%",
-      [theme.breakpoints.down("xs")]: {
-        maxWidth: "40%",
+      maxWidth: '45%',
+      [theme.breakpoints.down('xs')]: {
+        maxWidth: '40%',
       },
     },
     overflowEllipsis: {
-      width: "100%",
-      display: "block",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
+      width: '100%',
+      display: 'block',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
     },
   });
 

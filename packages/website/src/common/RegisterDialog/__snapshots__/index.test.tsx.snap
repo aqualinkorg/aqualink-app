@@ -6,6 +6,7 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
     maxwidth="xs"
     open="true"
     scroll="body"
+    transitionprops="[object Object]"
   >
     <mock-card>
       <div
@@ -21,7 +22,7 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
             >
               <div
                 class="MuiGrid-root MuiGrid-item"
@@ -67,7 +68,7 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root RegisterDialog-dialogContentTitle-4 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
@@ -166,7 +167,7 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"

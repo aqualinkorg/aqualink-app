@@ -1,10 +1,12 @@
+import { DailyData } from 'sites/daily-data.entity';
+import { DeepPartial } from 'typeorm';
 import { getDailyData } from './dailyData';
 import { Site } from '../sites/sites.entity';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
 
-  const date = new Date('2022-03-07');
+  const date = new Date('2022-08-31');
   date.setUTCHours(23, 59, 59, 999);
   const site = {
     id: 1,
@@ -23,26 +25,14 @@ test('It processes Sofar API for daily data.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const values = await getDailyData(site as unknown as Site, date, []);
-
-  expect(values).toEqual({
+  const values = await getDailyData(site as unknown as Site, date);
+  const expected: DeepPartial<DailyData> = {
     site: { id: 1 },
     date,
     dailyAlertLevel: 0,
-    minBottomTemperature: undefined,
-    maxBottomTemperature: undefined,
-    avgBottomTemperature: undefined,
-    topTemperature: undefined,
-    satelliteTemperature: 11,
-    degreeHeatingDays: 0,
-    minWaveHeight: 1.18205952644348,
-    maxWaveHeight: 1.98118472099304,
-    avgWaveHeight: 1.5180400510629015,
-    waveMeanDirection: 291,
-    waveMeanPeriod: 7,
-    minWindSpeed: 1.3530414402214594,
-    maxWindSpeed: 5.570303083245357,
-    avgWindSpeed: 3.130121028412539,
-    windDirection: 227,
-  });
+    degreeHeatingDays: 21.206205519211903,
+    satelliteTemperature: 16.029768748901425,
+  };
+
+  expect(values).toEqual(expected);
 });

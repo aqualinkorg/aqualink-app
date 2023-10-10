@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import ArrowBack from "@material-ui/icons/ArrowBack";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import {
   Box,
   Button,
@@ -13,38 +13,46 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import {
   surveyDetailsSelector,
   surveyGetRequest,
   clearSurvey,
   surveyLoadingSelector,
-} from "../../../store/Survey/surveySlice";
-import SurveyDetails from "./SurveyDetails";
-import SurveyMediaDetails from "./MediaDetails";
-import ChartWithTooltip from "../../../common/Chart/ChartWithTooltip";
-import type { Site } from "../../../store/Sites/types";
+  surveyErrorSelector,
+  surveyMediaEditLoadingSelector,
+} from 'store/Survey/surveySlice';
+import type { Site } from 'store/Sites/types';
 import {
   surveyListLoadingSelector,
   surveyListSelector,
   surveysRequest,
-} from "../../../store/Survey/surveyListSlice";
-import { siteTimeSeriesDataRequest } from "../../../store/Sites/selectedSiteSlice";
+} from 'store/Survey/surveyListSlice';
+import { siteTimeSeriesDataRequest } from 'store/Sites/selectedSiteSlice';
 import {
   displayTimeInLocalTimezone,
   convertSurveyDataToLocalTime,
   isBetween,
-} from "../../../helpers/dates";
-import { standardDailyDataDataset } from "../../../common/Chart/MultipleSensorsCharts/helpers";
+} from 'helpers/dates';
+import { getSurveyPointsByName } from 'helpers/surveyMedia';
+import ChartWithTooltip from 'common/Chart/ChartWithTooltip';
+import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
+import { DateTime } from 'luxon-extensions';
+import SurveyDetails from './SurveyDetails';
+import SurveyMediaDetails from './MediaDetails';
 
 const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
+  const prevMediaLoading = React.useRef<boolean>();
+  const { enqueueSnackbar } = useSnackbar();
   const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
   const surveyLoading = useSelector(surveyLoadingSelector);
   const surveyListLoading = useSelector(surveyListLoadingSelector);
+  const surveyError = useSelector(surveyErrorSelector);
+  const mediaLoading = useSelector(surveyMediaEditLoadingSelector);
   const loading = surveyLoading || surveyListLoading;
 
   const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)
@@ -56,14 +64,14 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       ? isBetween(
           surveyDetails.diveDate,
           site.dailyData[dailyDataLen - 1].date,
-          site.dailyData[0].date
+          site.dailyData[0].date,
         )
       : false;
   const chartDataset = standardDailyDataDataset(
     site.dailyData,
     site.maxMonthlyMean,
     true,
-    site.timezone
+    site.timezone,
   );
 
   useEffect(() => {
@@ -76,7 +84,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       surveyGetRequest({
         siteId: `${site.id}`,
         surveyId,
-      })
+      }),
     );
     return () => {
       dispatch(clearSurvey());
@@ -85,21 +93,43 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
 
   // Fetch HOBO and Spotter data near the dive date
   useEffect(() => {
-    if (surveyDetails?.diveDate && pointId) {
-      const start = moment(surveyDetails.diveDate).startOf("day").toISOString();
-      const end = moment(surveyDetails.diveDate).endOf("day").toISOString();
+    if (surveyDetails?.diveDate) {
+      const start = DateTime.fromISO(surveyDetails.diveDate)
+        .startOf('day')
+        .toISOString();
+      const end = DateTime.fromISO(surveyDetails.diveDate)
+        .endOf('day')
+        .toISOString();
       dispatch(
         siteTimeSeriesDataRequest({
           siteId: `${site.id}`,
-          pointId: `${pointId}`,
+          pointId: pointId ? `${pointId}` : undefined,
           start,
           end,
-          metrics: ["bottom_temperature", "top_temperature"],
+          metrics: ['bottom_temperature', 'top_temperature'],
           hourly: false,
-        })
+        }),
       );
     }
   }, [dispatch, pointId, site.id, surveyDetails]);
+
+  React.useEffect(() => {
+    if (!mediaLoading) {
+      if (!surveyError && prevMediaLoading.current) {
+        enqueueSnackbar('Survey media details updated successfully', {
+          variant: 'success',
+        });
+      }
+      if (surveyError) {
+        enqueueSnackbar(surveyError, {
+          variant: 'error',
+        });
+      }
+    }
+    if (prevMediaLoading.current !== mediaLoading) {
+      prevMediaLoading.current = mediaLoading;
+    }
+  }, [enqueueSnackbar, mediaLoading, surveyError]);
 
   if (loading) {
     return <LinearProgress className={classes.loading} />;
@@ -116,13 +146,13 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
             component={Link}
             to={`/sites/${site.id}`}
           >
-            <Typography style={{ textTransform: "none" }}>
+            <Typography style={{ textTransform: 'none' }}>
               Back to site
             </Typography>
           </Button>
           <Paper elevation={3} className={classes.surveyDetailsCard}>
-            <Grid container justify="space-between" item xs={12}>
-              <Grid container justify="center" item md={12}>
+            <Grid container justifyContent="space-between" item xs={12}>
+              <Grid container justifyContent="center" item md={12}>
                 <Grid container item xs={12}>
                   <SurveyDetails site={site} survey={surveyDetails} />
                 </Grid>
@@ -130,7 +160,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                   <Grid
                     className={classes.chartWrapper}
                     container
-                    justify="center"
+                    justifyContent="center"
                     item
                     xs={12}
                   >
@@ -154,7 +184,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                         }
                         surveys={convertSurveyDataToLocalTime(
                           surveyList,
-                          site.timezone
+                          site.timezone,
                         )}
                         background
                         timeZone={site.timezone}
@@ -169,23 +199,29 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       </Box>
       <Box>
         <Container className={classes.mediaWrapper}>
-          <Grid container justify="center" item xs={12}>
+          <Grid container justifyContent="center" item xs={12}>
             <Grid container item xs={11}>
               <Grid item>
                 <Typography className={classes.mediaTitle}>
                   {`${displayTimeInLocalTimezone({
                     isoDate: surveyDetails?.diveDate,
-                    format: "MM/DD/YYYY",
+                    format: 'LL/dd/yyyy',
                     displayTimezone: false,
                     timeZone: site.timezone,
                   })} Survey Media`}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <SurveyMediaDetails
-                  siteId={site.id}
-                  surveyMedia={surveyDetails?.surveyMedia}
-                />
+                {surveyDetails?.surveyMedia &&
+                  getSurveyPointsByName(surveyDetails.surveyMedia).map(
+                    (point) => (
+                      <SurveyMediaDetails
+                        siteId={site.id}
+                        point={point}
+                        key={point.pointId}
+                      />
+                    ),
+                  )}
               </Grid>
             </Grid>
           </Grid>
@@ -198,7 +234,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     loading: {
-      marginBottom: "100vh",
+      marginBottom: '100vh',
     },
     infoWrapper: {
       marginTop: 64,
@@ -218,7 +254,7 @@ const styles = (theme: Theme) =>
       marginTop: 32,
     },
     chartTitle: {
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         fontSize: 14,
       },
     },

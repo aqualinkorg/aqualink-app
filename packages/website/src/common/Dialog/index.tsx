@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   withStyles,
   WithStyles,
@@ -13,8 +13,8 @@ import {
   ButtonProps,
   Button,
   CircularProgress,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 const Dialog = ({
   open,
@@ -66,7 +66,7 @@ const Dialog = ({
               return (
                 <Link
                   key={action.text}
-                  style={{ color: "inherit", textDecoration: "none" }}
+                  style={{ color: 'inherit', textDecoration: 'none' }}
                   to={action.link}
                 >
                   {ActionButton(action)}
@@ -84,18 +84,19 @@ const styles = (theme: Theme) =>
   createStyles({
     dialogTitle: {
       backgroundColor: theme.palette.primary.main,
-      overflowWrap: "break-word",
+      overflowWrap: 'break-word',
     },
     loading: {
-      color: "white",
+      color: 'white',
     },
   });
 
 export interface Action {
-  size: ButtonProps["size"];
-  variant: ButtonProps["variant"];
-  color: ButtonProps["color"];
+  size: ButtonProps['size'];
+  variant: ButtonProps['variant'];
+  color: ButtonProps['color'];
   text: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   link?: string;
   disabled?: boolean;
   loading?: boolean;

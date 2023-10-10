@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Box,
   Grid,
@@ -7,25 +7,25 @@ import {
   WithStyles,
   createStyles,
   Button,
-} from "@material-ui/core";
-import { useSelector } from "react-redux";
+} from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
-import { Site } from "../../../../store/Sites/types";
-import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
-import { getSiteNameAndRegion } from "../../../../store/Sites/helpers";
-import { filterSurveys } from "../../../../helpers/surveys";
-import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
-import { siteTimeSeriesDataSelector } from "../../../../store/Sites/selectedSiteSlice";
-import { formatNumber } from "../../../../helpers/numberUtils";
-import { isAdmin } from "../../../../helpers/user";
-import { userInfoSelector } from "../../../../store/User/userSlice";
-import SurveyInfo from "./SurveyInfo";
+import { Site } from 'store/Sites/types';
+import { surveyListSelector } from 'store/Survey/surveyListSlice';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { siteTimeSeriesDataSelector } from 'store/Sites/selectedSiteSlice';
+import { userInfoSelector } from 'store/User/userSlice';
+import { filterSurveys } from 'helpers/surveys';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { formatNumber } from 'helpers/numberUtils';
+import { isAdmin } from 'helpers/user';
+import SurveyInfo from './SurveyInfo';
 
 const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
   const surveys = filterSurveys(
     useSelector(surveyListSelector),
-    "any",
-    pointId
+    'any',
+    pointId,
   );
   const user = useSelector(userInfoSelector);
   const { hobo: hoboBottomTemperature } =
@@ -34,13 +34,13 @@ const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
     site.surveyPoints.filter((point) => point.id === pointId)[0] || {};
   const { name: siteName, region: siteRegion } = getSiteNameAndRegion(site);
   const [lng, lat] =
-    pointPolygon?.type === "Point" ? pointPolygon.coordinates : [];
+    pointPolygon?.type === 'Point' ? pointPolygon.coordinates : [];
   const nHoboPoints = hoboBottomTemperature?.data?.length || 0;
   const lastSurveyed = displayTimeInLocalTimezone({
     isoDate: surveys[0]?.diveDate,
     displayTimezone: false,
     timeZone: site.timezone,
-    format: "MMM DD[,] YYYY",
+    format: 'MMM dd, yyyy',
   });
 
   return (
@@ -55,7 +55,7 @@ const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
       <Grid
         className={classes.autoWidth}
         container
-        justify="space-between"
+        justifyContent="space-between"
         spacing={2}
       >
         <Grid className={classes.infoWrapper} item>
@@ -126,12 +126,12 @@ const styles = () =>
     },
 
     infoWrapper: {
-      maxWidth: "100%",
+      maxWidth: '100%',
     },
 
     nameWrapper: {
-      maxWidth: "100%",
-      overflowWrap: "break-word",
+      maxWidth: '100%',
+      overflowWrap: 'break-word',
     },
 
     coordinates: {
@@ -139,7 +139,7 @@ const styles = () =>
     },
 
     autoWidth: {
-      width: "auto",
+      width: 'auto',
     },
   });
 

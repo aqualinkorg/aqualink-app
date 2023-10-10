@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { camelCase } from 'lodash';
 import { Repository } from 'typeorm';
 import { DynamicCollection } from '../collections/collections.entity';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
@@ -37,7 +37,7 @@ export const getCollectionData = async (
       data.reduce<CollectionDataDto>((acc, siteData): CollectionDataDto => {
         return {
           ...acc,
-          [siteData.metric]: siteData.value,
+          [camelCase(siteData.metric)]: siteData.value,
         };
       }, {}),
     )
@@ -50,15 +50,3 @@ export const heatStressTracker: DynamicCollection = {
   siteIds: [],
   isPublic: true,
 };
-
-export const DEFAULT_COLLECTION_NAME = 'My Dashboard';
-
-export const defaultUserCollection = (
-  userId: number,
-  siteIds: number[] = [],
-  name = DEFAULT_COLLECTION_NAME,
-) => ({
-  user: { id: userId },
-  name,
-  sites: siteIds.map((siteId) => ({ id: siteId })),
-});

@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Typography,
   Theme,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 
-import fullDiagramBuoy from "../../assets/img/fulldiag3_1.svg";
-import fullDiagramInfra from "../../assets/img/fulldiag3.svg";
+import fullDiagramBuoy from '../../assets/img/fulldiag3_1.svg';
+import fullDiagramInfra from '../../assets/img/fulldiag3.svg';
 
 const Buoy = ({ classes }: BuoyProps) => {
   return (
@@ -81,18 +81,18 @@ const Buoy = ({ classes }: BuoyProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     title: {
-      marginTop: "1rem",
-      marginBottom: "1rem",
+      marginTop: '1rem',
+      marginBottom: '1rem',
     },
     root: {
-      marginTop: "1rem",
+      marginTop: '1rem',
     },
 
     listItem: {
       backgroundColor: theme.palette.grey[100],
       padding: theme.spacing(3),
 
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.down('md')]: {
         margin: theme.spacing(3, 0),
       },
     },

@@ -1,15 +1,15 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
-import { mockUser } from "../../mocks/mockUser";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { mockUser } from 'mocks/mockUser';
 
-import SignInDialog from ".";
+import SignInDialog from '.';
 
 const mockStore = configureStore([]);
 
-describe("SignInDialog", () => {
+describe('SignInDialog', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -31,11 +31,11 @@ describe("SignInDialog", () => {
             handleSignInOpen={jest.fn}
           />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

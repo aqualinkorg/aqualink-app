@@ -1,6 +1,6 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer } from 'react';
 
-import validators from "../helpers/validators";
+import validators from 'helpers/validators';
 
 export interface FormField {
   value: string;
@@ -19,16 +19,16 @@ export interface FormField {
 export const useFormField = (
   initialValue: string | null | undefined,
   checks: (
-    | "required"
-    | "maxLength"
-    | "isInt"
-    | "isNumeric"
-    | "isLong"
-    | "isLat"
-    | "isEmail"
+    | 'required'
+    | 'maxLength'
+    | 'isInt'
+    | 'isNumeric'
+    | 'isLong'
+    | 'isLat'
+    | 'isEmail'
   )[],
   draftValue?: string,
-  extraHandler?: (value: string) => void
+  extraHandler?: (value: string) => void,
 ): [FormField, (value: string, runExtraHandler?: boolean) => void] => {
   const reducer = (_state: FormField, newValue: string): FormField => ({
     value: newValue,
@@ -36,7 +36,7 @@ export const useFormField = (
       .map((check) => validators[check](newValue))
       .filter((error) => error)[0],
   });
-  const [field, dispatch] = useReducer(reducer, { value: initialValue || "" });
+  const [field, dispatch] = useReducer(reducer, { value: initialValue || '' });
 
   useEffect(() => {
     if (draftValue) {

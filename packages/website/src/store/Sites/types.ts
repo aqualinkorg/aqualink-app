@@ -1,16 +1,16 @@
 /* eslint-disable camelcase */
-import { User } from "../User/types";
+import { User } from '../User/types';
 
 export type Position = [number, number];
 
 export interface Polygon {
   coordinates: [Position[]];
-  type: "Polygon";
+  type: 'Polygon';
 }
 
 export interface Point {
   coordinates: Position;
-  type: "Point";
+  type: 'Point';
 }
 
 export interface SurveyPoints {
@@ -19,7 +19,7 @@ export interface SurveyPoints {
   polygon: Polygon | Point | null;
 }
 
-export type Range = "day" | "week" | "month" | "year";
+export type Range = 'day' | 'week' | 'month' | 'year';
 
 export interface SpotterPosition {
   latitude: number;
@@ -51,44 +51,49 @@ export type ExclusionDateResponse = {
 // The API sends time series data with the following snake_case keys.
 // We need to create a new type with the same keys but in camelCase
 export const metricsKeysList = [
-  "dhw",
-  "satellite_temperature",
-  "air_temperature",
-  "top_temperature",
-  "bottom_temperature",
-  "sst_anomaly",
-  "significant_wave_height",
-  "temp_alert",
-  "temp_weekly_alert",
-  "wave_mean_period",
-  "wave_mean_direction",
-  "wind_speed",
-  "wind_direction",
-  "odo_concentration",
-  "cholorophyll_concentration",
-  "ph",
-  "salinity",
-  "turbidity",
-  "water_depth",
-  "conductivity",
-  "cholorophyll_rfu",
-  "odo_saturation",
-  "specific_conductance",
-  "tds",
-  "total_suspended_solids",
-  "sonde_wiper_position",
-  "ph_mv",
-  "sonde_battery_voltage",
-  "sonde_cable_power_voltage",
-  "pressure",
-  "precipitation",
-  "rh",
-  "wind_gust_speed",
+  'dhw',
+  'satellite_temperature',
+  'air_temperature',
+  'top_temperature',
+  'bottom_temperature',
+  'sst_anomaly',
+  'significant_wave_height',
+  'temp_alert',
+  'temp_weekly_alert',
+  'wave_mean_period',
+  'wave_mean_direction',
+  'wind_speed',
+  'wind_direction',
+  'odo_concentration',
+  'cholorophyll_concentration',
+  'ph',
+  'salinity',
+  'turbidity',
+  'water_depth',
+  'conductivity',
+  'cholorophyll_rfu',
+  'odo_saturation',
+  'specific_conductance',
+  'tds',
+  'total_suspended_solids',
+  'sonde_wiper_position',
+  'ph_mv',
+  'sonde_battery_voltage',
+  'sonde_cable_power_voltage',
+  'pressure',
+  'precipitation',
+  'rh',
+  'wind_gust_speed',
+  'barometric_pressure_top',
+  'barometric_pressure_bottom',
+  'barometric_pressure_top_diff',
+  'nitrate_plus_nitrite',
+  'surface_temperature',
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];
 
-type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
+type Status = 'in_review' | 'rejected' | 'approved' | 'shipped' | 'deployed';
 
 // This recursive type converts string literals from snake_case to camelCase.
 // It splits the input string into three parts: P1, P2 and P3.
@@ -103,7 +108,15 @@ type CamelCase<S extends string> =
 
 export type Metrics = CamelCase<MetricsKeys>;
 
-export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde" | "metlog";
+export type Sources =
+  | 'spotter'
+  | 'hobo'
+  | 'noaa'
+  | 'gfs'
+  | 'sonde'
+  | 'metlog'
+  | 'hui'
+  | 'sheet_data';
 
 export type LatestDataASSofarValue = {
   [keys in Metrics]?: ValueWithTimestamp;
@@ -118,16 +131,6 @@ export interface LatestData {
   surveyPoint?: { id: number };
   source: Sources;
   metric: MetricsKeys;
-}
-export interface LiveData {
-  site: { id: number };
-  bottomTemperature?: ValueWithTimestamp;
-  topTemperature?: ValueWithTimestamp;
-  satelliteTemperature?: ValueWithTimestamp;
-  degreeHeatingDays?: ValueWithTimestamp;
-  weeklyAlertLevel?: number;
-  spotterPosition?: SpotterPosition;
-  sstAnomaly?: number;
 }
 
 export interface ForecastData {
@@ -185,7 +188,11 @@ export interface DataRange {
   maxDate: string;
 }
 
-export type TimeSeriesSurveyPoint = Pick<SurveyPoints, "id" | "name">;
+export interface DataRangeWithMetric extends DataRange {
+  metric: MetricsKeys;
+}
+
+export type TimeSeriesSurveyPoint = Pick<SurveyPoints, 'id' | 'name'>;
 
 export type TimeSeries = Partial<
   Record<
@@ -208,7 +215,7 @@ export type TimeSeriesDataRangeResponse = Partial<
 
 export type TimeSeriesDataRange = Partial<Record<Metrics, TimeSeriesRange>>;
 
-export const OceanSenseKeysList = ["DO", "EC", "ORP", "PH", "PRESS"] as const;
+export const OceanSenseKeysList = ['DO', 'EC', 'ORP', 'PH', 'PRESS'] as const;
 
 export type OceanSenseKeys = typeof OceanSenseKeysList[number];
 
@@ -240,9 +247,9 @@ export interface CollectionMetrics {
   sstAnomaly?: number;
 }
 
-export type CollectionDataResponse = Partial<Record<MetricsKeys, number>>;
+export type CollectionDataResponse = Partial<Record<Metrics, number>>;
 
-export type CollectionData = Partial<Record<Metrics, number>>;
+export type CollectionData = CollectionDataResponse;
 
 export interface Site {
   id: number;
@@ -320,6 +327,8 @@ export interface SiteUpdateParams {
   };
   name?: string;
   depth?: number;
+  sensorId?: string;
+  spotterApiToken?: string | null;
 }
 
 export interface SiteApplication {
@@ -331,22 +340,25 @@ export interface SiteApplication {
   applied: boolean;
 }
 
-export interface SiteUploadHistoryItem {
+export interface DataUploads {
   id: number;
-  sensorType: Sources;
+  sensorTypes: Sources[];
   file: string;
   minDate: string;
   maxDate: string;
   createdAt: string;
   updatedAt: string;
   metrics: MetricsKeys[];
-  surveyPoint: {
-    id: number;
-    name: string;
-  };
 }
 
-export type SiteUploadHistory = SiteUploadHistoryItem[];
+export interface DataUploadsSites {
+  site: Site;
+  dataUpload: DataUploads;
+  surveyPoint: SurveyPoints | null;
+  sitesAffectedByDataUpload?: number[];
+}
+
+export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
@@ -389,4 +401,19 @@ export interface SelectedSiteState {
   loading: boolean;
   loadingSpotterPosition: number;
   error?: string | null;
+}
+
+export interface SpotterInfoResponse {
+  batteryPower: number;
+  batteryVoltage: number;
+  humidity: number;
+  payloadType: string;
+  solarVoltage: number;
+  spotterId: string;
+  spotterName: string;
+  track: Array<{
+    latitude: number;
+    longitude: number;
+    timestamp: string;
+  }>;
 }

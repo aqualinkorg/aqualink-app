@@ -1,20 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Container,
   Box,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, RouteComponentProps } from "react-router-dom";
-import classNames from "classnames";
-import NotFoundPage from "../../NotFound/index";
-import SiteNavBar from "../../../common/NavBar";
-import SiteFooter from "../../../common/Footer";
-import SiteDetails from "../../../common/SiteDetails";
-import SiteInfo from "./SiteInfo";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import classNames from 'classnames';
 import {
   siteDetailsSelector,
   siteRequest,
@@ -26,38 +21,44 @@ import {
   spotterPositionRequest,
   spotterPositionSelector,
   siteLoadingSelector,
-} from "../../../store/Sites/selectedSiteSlice";
+} from 'store/Sites/selectedSiteSlice';
 import {
   surveysRequest,
   surveyListSelector,
-} from "../../../store/Survey/surveyListSlice";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { isAdmin } from "../../../helpers/user";
-import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
-import { User } from "../../../store/User/types";
-import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
-import { sortByDate, subtractFromDate } from "../../../helpers/dates";
-import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
-import { useQueryParam } from "../../../hooks/useQueryParams";
-import { findSurveyPointFromList } from "../../../helpers/siteUtils";
-import LoadingSkeleton from "../../../common/LoadingSkeleton";
-import { Site as SiteType } from "../../../store/Sites/types";
+} from 'store/Survey/surveyListSlice';
+import { userInfoSelector } from 'store/User/userSlice';
+import { User } from 'store/User/types';
+import { oceanSenseConfig } from 'constants/oceanSenseConfig';
+import { Site as SiteType } from 'store/Sites/types';
+import { useQueryParam } from 'hooks/useQueryParams';
+import { isAdmin } from 'helpers/user';
+import { findAdministeredSite } from 'helpers/findAdministeredSite';
+import { sortByDate } from 'helpers/dates';
+import { findSurveyPointFromList } from 'helpers/siteUtils';
+import SiteNavBar from 'common/NavBar';
+import SiteFooter from 'common/Footer';
+import SiteDetails from 'common/SiteDetails';
+import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
+import LoadingSkeleton from 'common/LoadingSkeleton';
+import { DateTime } from 'luxon-extensions';
+import SiteInfo from './SiteInfo';
+import NotFoundPage from '../../NotFound/index';
 
 const getAlertMessage = (
   user: User | null,
   siteId: string,
-  hasDailyData: boolean
+  hasDailyData: boolean,
 ) => {
   const userSite = findAdministeredSite(user, parseInt(siteId, 10));
   const { applied, status } = userSite || {};
   const isSiteAdmin = isAdmin(user, parseInt(siteId, 10));
 
   const defaultMessage =
-    "Currently no Smart Buoy deployed at this site location. Real-time values are derived from a combination of NOAA satellite readings and weather models.";
+    'Currently no Smart Buoy deployed at this site location. Real-time values are derived from a combination of NOAA satellite readings and weather models.';
 
   switch (true) {
     case !hasDailyData:
-      return "Welcome to your virtual site, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.";
+      return 'Welcome to your virtual site, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.';
 
     case !isSiteAdmin:
       return defaultMessage;
@@ -69,7 +70,7 @@ const getAlertMessage = (
         </div>
       );
 
-    case status === "in_review":
+    case status === 'in_review':
       return (
         <div>
           {defaultMessage} Your application for an Aqualink Smart Buoy is being
@@ -78,13 +79,13 @@ const getAlertMessage = (
         </div>
       );
 
-    case status === "approved":
-      return "Your application for an Aqualink Smart Buoy has been approved.";
+    case status === 'approved':
+      return 'Your application for an Aqualink Smart Buoy has been approved.';
 
-    case status === "shipped":
+    case status === 'shipped':
       return "Your Smart Buoy is on its way! Mark it as 'deployed' once it's installed to access its data.";
 
-    case status === "rejected":
+    case status === 'rejected':
       return (
         <div>
           Your application for an Aqualink Smart Buoy was not approved at this
@@ -107,14 +108,14 @@ const Site = ({ match, classes }: SiteProps) => {
   const dispatch = useDispatch();
   const siteId = match.params.id;
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
-  const [querySurveyPointId] = useQueryParam("surveyPoint");
-  const [refresh, setRefresh] = useQueryParam("refresh");
+  const [querySurveyPointId] = useQueryParam('surveyPoint');
+  const [refresh, setRefresh] = useQueryParam('refresh');
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
-  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
+  const featuredMedia = sortByDate(surveyList, 'diveDate', 'desc').find(
     (survey) =>
-      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
+      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === 'image',
   );
 
   const {
@@ -141,7 +142,7 @@ const Site = ({ match, classes }: SiteProps) => {
   const isLoading = !siteWithFeaturedImage;
 
   useEffect(() => {
-    if (refresh === "true") {
+    if (refresh === 'true') {
       setRefresh(undefined);
 
       dispatch(clearTimeSeriesDataRange());
@@ -176,7 +177,7 @@ const Site = ({ match, classes }: SiteProps) => {
         siteTimeSeriesDataRangeRequest({
           siteId,
           pointId: selectedSurveyPointId,
-        })
+        }),
       );
     }
   }, [dispatch, id, selectedSurveyPointId, siteId]);
@@ -185,11 +186,11 @@ const Site = ({ match, classes }: SiteProps) => {
     if (id && oceanSenseConfig?.[id] && siteId === id.toString()) {
       dispatch(
         siteOceanSenseDataRequest({
-          sensorID: "oceansense-2",
-          startDate: subtractFromDate(today, "month", 6),
+          sensorID: 'oceansense-2',
+          startDate: DateTime.fromISO(today).minus({ months: 6 }).toISOString(),
           endDate: today,
           latest: true,
-        })
+        }),
       );
     }
   }, [dispatch, id, siteId, today]);
@@ -227,7 +228,6 @@ const Site = ({ match, classes }: SiteProps) => {
             site={siteWithFeaturedImage}
             selectedSurveyPointId={selectedSurveyPointId}
             featuredSurveyId={featuredSurveyId}
-            hasDailyData={hasDailyData}
             surveys={surveyList}
             featuredSurveyPoint={featuredSurveyPoint}
             surveyDiveDate={diveDate}
@@ -242,12 +242,12 @@ const Site = ({ match, classes }: SiteProps) => {
 const styles = () =>
   createStyles({
     noData: {
-      display: "flex",
-      alignItems: "center",
-      height: "80vh",
+      display: 'flex',
+      alignItems: 'center',
+      height: '80vh',
     },
     noDataWrapper: {
-      height: "100%",
+      height: '100%',
     },
   });
 

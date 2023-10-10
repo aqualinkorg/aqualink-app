@@ -1,12 +1,12 @@
-import { TimeSeriesDataRange } from "../store/Sites/types";
+import { TimeSeriesDataRange } from 'store/Sites/types';
 
 export const mockDataRange: TimeSeriesDataRange = {
   bottomTemperature: {
     hobo: {
       data: [
         {
-          minDate: "2017-11-02T15:00:00.000Z",
-          maxDate: "2020-02-02T21:00:00.000Z",
+          minDate: '2017-11-02T15:00:00.000Z',
+          maxDate: '2020-02-02T21:00:00.000Z',
         },
       ],
     },
@@ -15,8 +15,8 @@ export const mockDataRange: TimeSeriesDataRange = {
     sonde: {
       data: [
         {
-          minDate: "2017-11-02T15:00:00.000Z",
-          maxDate: "2020-02-02T21:00:00.000Z",
+          minDate: '2017-11-02T15:00:00.000Z',
+          maxDate: '2020-02-02T21:00:00.000Z',
         },
       ],
     },
@@ -25,8 +25,8 @@ export const mockDataRange: TimeSeriesDataRange = {
     sonde: {
       data: [
         {
-          minDate: "2017-11-02T15:00:00.000Z",
-          maxDate: "2020-02-02T21:00:00.000Z",
+          minDate: '2017-11-02T15:00:00.000Z',
+          maxDate: '2020-02-02T21:00:00.000Z',
         },
       ],
     },
@@ -35,8 +35,8 @@ export const mockDataRange: TimeSeriesDataRange = {
     sonde: {
       data: [
         {
-          minDate: "2017-11-02T15:00:00.000Z",
-          maxDate: "2020-02-02T21:00:00.000Z",
+          minDate: '2017-11-02T15:00:00.000Z',
+          maxDate: '2020-02-02T21:00:00.000Z',
         },
       ],
     },
@@ -45,8 +45,16 @@ export const mockDataRange: TimeSeriesDataRange = {
     sonde: {
       data: [
         {
-          minDate: "2017-11-02T15:00:00.000Z",
-          maxDate: "2020-02-02T21:00:00.000Z",
+          minDate: '2017-11-02T15:00:00.000Z',
+          maxDate: '2020-02-02T21:00:00.000Z',
+        },
+      ],
+    },
+    hui: {
+      data: [
+        {
+          minDate: '2022-06-11T00:00:00.000Z',
+          maxDate: '2022-06-14T23:45:00.000Z',
         },
       ],
     },
@@ -55,8 +63,8 @@ export const mockDataRange: TimeSeriesDataRange = {
     sonde: {
       data: [
         {
-          minDate: "2017-11-02T15:00:00.000Z",
-          maxDate: "2020-02-02T21:00:00.000Z",
+          minDate: '2017-11-02T15:00:00.000Z',
+          maxDate: '2020-02-02T21:00:00.000Z',
         },
       ],
     },

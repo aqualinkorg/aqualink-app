@@ -1,5 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { sortBy } from "lodash";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { sortBy } from 'lodash';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import siteServices from 'services/siteServices';
 import type {
   OceanSenseData,
   OceanSenseDataRequestParams,
@@ -8,15 +10,13 @@ import type {
   SelectedSiteState,
   TimeSeriesDataRangeRequestParams,
   TimeSeriesDataRequestParams,
-} from "./types";
-import type { RootState, CreateAsyncThunkTypes } from "../configure";
-import siteServices from "../../services/siteServices";
+} from './types';
+import type { RootState, CreateAsyncThunkTypes } from '../configure';
 import {
   mapOceanSenseData,
   mapTimeSeriesDataRanges,
   timeSeriesRequest,
-} from "./helpers";
-import { getAxiosErrorMessage } from "../../helpers/errors";
+} from './helpers';
 
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
@@ -31,14 +31,14 @@ const selectedSiteInitialState: SelectedSiteState = {
   error: null,
 };
 
-const AlreadyLoadingErrorMessage = "Request already loading";
+const AlreadyLoadingErrorMessage = 'Request already loading';
 
 export const forecastDataRequest = createAsyncThunk<
-  SelectedSiteState["forecastData"],
+  SelectedSiteState['forecastData'],
   string,
   CreateAsyncThunkTypes
 >(
-  "selectedSite/requestForecastData",
+  'selectedSite/requestForecastData',
   async (id: string, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getSiteForecastData(id);
@@ -46,15 +46,15 @@ export const forecastDataRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 export const spotterPositionRequest = createAsyncThunk<
-  SelectedSiteState["spotterPosition"],
+  SelectedSiteState['spotterPosition'],
   string,
   CreateAsyncThunkTypes
 >(
-  "selectedSite/requestSpotterPosition",
+  'selectedSite/requestSpotterPosition',
   async (id: string, { rejectWithValue, getState }) => {
     const state = getState();
     if (state.selectedSite.loadingSpotterPosition !== 1) {
@@ -67,14 +67,14 @@ export const spotterPositionRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 export const latestDataRequest = createAsyncThunk<
-  SelectedSiteState["latestData"],
+  SelectedSiteState['latestData'],
   string,
   CreateAsyncThunkTypes
->("selectedSite/requestLatestData", async (id: string, { rejectWithValue }) => {
+>('selectedSite/requestLatestData', async (id: string, { rejectWithValue }) => {
   try {
     const { data: latestData } = await siteServices.getSiteLatestData(id);
     return latestData.latestData;
@@ -84,11 +84,11 @@ export const latestDataRequest = createAsyncThunk<
 });
 
 export const siteRequest = createAsyncThunk<
-  SelectedSiteState["details"],
+  SelectedSiteState['details'],
   string,
   CreateAsyncThunkTypes
 >(
-  "selectedSite/request",
+  'selectedSite/request',
   async (id: string, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getSite(id);
@@ -98,11 +98,12 @@ export const siteRequest = createAsyncThunk<
 
       return {
         ...data,
+        collectionData: data.collectionData || {},
         dailyData,
         sketchFab,
         historicalMonthlyMean: sortBy(
           data.historicalMonthlyMean,
-          (item) => item.month
+          (item) => item.month,
         ).map((item) => ({
           id: item.id,
           month: item.month,
@@ -125,7 +126,7 @@ export const siteRequest = createAsyncThunk<
       } = getState();
       return `${details?.id}` !== id;
     },
-  }
+  },
 );
 
 export const siteOceanSenseDataRequest = createAsyncThunk<
@@ -133,7 +134,7 @@ export const siteOceanSenseDataRequest = createAsyncThunk<
   OceanSenseDataRequestParams & { latest?: boolean },
   CreateAsyncThunkTypes
 >(
-  "selectedSite/oceanSenseDataRequest",
+  'selectedSite/oceanSenseDataRequest',
   async ({ latest, ...params }, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getOceanSenseData(params);
@@ -141,23 +142,23 @@ export const siteOceanSenseDataRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 export const siteTimeSeriesDataRequest = createAsyncThunk<
   {
-    granularDailyData: SelectedSiteState["granularDailyData"];
-    timeSeriesData: SelectedSiteState["timeSeriesData"];
-    timeSeriesMinRequestDate: SelectedSiteState["timeSeriesMinRequestDate"];
-    timeSeriesMaxRequestDate: SelectedSiteState["timeSeriesMaxRequestDate"];
+    granularDailyData: SelectedSiteState['granularDailyData'];
+    timeSeriesData: SelectedSiteState['timeSeriesData'];
+    timeSeriesMinRequestDate: SelectedSiteState['timeSeriesMinRequestDate'];
+    timeSeriesMaxRequestDate: SelectedSiteState['timeSeriesMaxRequestDate'];
   },
   TimeSeriesDataRequestParams,
   CreateAsyncThunkTypes
 >(
-  "selectedSite/timeSeriesDataRequest",
+  'selectedSite/timeSeriesDataRequest',
   async (
     params: TimeSeriesDataRequestParams,
-    { rejectWithValue, getState }
+    { rejectWithValue, getState },
   ) => {
     try {
       const {
@@ -176,7 +177,7 @@ export const siteTimeSeriesDataRequest = createAsyncThunk<
         storedTimeSeries,
         storedDailyData,
         storedStart,
-        storedEnd
+        storedEnd,
       );
 
       return {
@@ -188,15 +189,15 @@ export const siteTimeSeriesDataRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 export const siteTimeSeriesDataRangeRequest = createAsyncThunk<
-  SelectedSiteState["timeSeriesDataRange"],
+  SelectedSiteState['timeSeriesDataRange'],
   TimeSeriesDataRangeRequestParams,
   CreateAsyncThunkTypes
 >(
-  "selectedSite/timeSeriesDataRangeRequest",
+  'selectedSite/timeSeriesDataRangeRequest',
   async (params: TimeSeriesDataRangeRequestParams, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getSiteTimeSeriesDataRange(params);
@@ -204,23 +205,23 @@ export const siteTimeSeriesDataRangeRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 const selectedSiteSlice = createSlice({
-  name: "selectedSite",
+  name: 'selectedSite',
   initialState: selectedSiteInitialState,
   reducers: {
     setSiteDraft: (
       state,
-      action: PayloadAction<SelectedSiteState["draft"]>
+      action: PayloadAction<SelectedSiteState['draft']>,
     ) => ({
       ...state,
       draft: action.payload,
     }),
     setSelectedSite: (
       state,
-      action: PayloadAction<SelectedSiteState["details"]>
+      action: PayloadAction<SelectedSiteState['details']>,
     ) => ({
       ...state,
       details: action.payload,
@@ -249,8 +250,9 @@ const selectedSiteSlice = createSlice({
             ...state.details,
             name: action.payload.name || state.details.name,
             depth: action.payload.depth || state.details.depth,
+            sensorId: action.payload.sensorId || state.details.sensorId,
             polygon:
-              state.details.polygon.type === "Point"
+              state.details.polygon.type === 'Point'
                 ? {
                     ...state.details.polygon,
                     coordinates: [
@@ -301,24 +303,24 @@ const selectedSiteSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState["details"]>) => {
+      (state, action: PayloadAction<SelectedSiteState['details']>) => {
         return {
           ...state,
           details: action.payload,
           loading: false,
         };
-      }
+      },
     );
 
     builder.addCase(
       siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+      (state, action: PayloadAction<SelectedSiteState['error']>) => {
         return {
           ...state,
           error: action.payload,
           loading: false,
         };
-      }
+      },
     );
 
     builder.addCase(siteRequest.pending, (state) => {
@@ -331,22 +333,22 @@ const selectedSiteSlice = createSlice({
 
     builder.addCase(
       forecastDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState["forecastData"]>) => {
+      (state, action: PayloadAction<SelectedSiteState['forecastData']>) => {
         return {
           ...state,
           forecastData: action.payload,
         };
-      }
+      },
     );
 
     builder.addCase(
       forecastDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+      (state, action: PayloadAction<SelectedSiteState['error']>) => {
         return {
           ...state,
           error: action.payload,
         };
-      }
+      },
     );
 
     builder.addCase(forecastDataRequest.pending, (state) => {
@@ -357,18 +359,18 @@ const selectedSiteSlice = createSlice({
     });
     builder.addCase(
       spotterPositionRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState["spotterPosition"]>) => {
+      (state, action: PayloadAction<SelectedSiteState['spotterPosition']>) => {
         return {
           ...state,
           spotterPosition: action.payload,
           loadingSpotterPosition: state.loadingSpotterPosition - 1,
         };
-      }
+      },
     );
 
     builder.addCase(
       spotterPositionRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+      (state, action: PayloadAction<SelectedSiteState['error']>) => {
         return {
           ...state,
           error:
@@ -377,7 +379,7 @@ const selectedSiteSlice = createSlice({
               : action.payload,
           loadingSpotterPosition: state.loadingSpotterPosition - 1,
         };
-      }
+      },
     );
 
     builder.addCase(spotterPositionRequest.pending, (state) => {
@@ -390,22 +392,22 @@ const selectedSiteSlice = createSlice({
 
     builder.addCase(
       latestDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState["latestData"]>) => {
+      (state, action: PayloadAction<SelectedSiteState['latestData']>) => {
         return {
           ...state,
           latestData: action.payload,
         };
-      }
+      },
     );
 
     builder.addCase(
       latestDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+      (state, action: PayloadAction<SelectedSiteState['error']>) => {
         return {
           ...state,
           error: action.payload,
         };
-      }
+      },
     );
 
     builder.addCase(latestDataRequest.pending, (state) => {
@@ -419,7 +421,7 @@ const selectedSiteSlice = createSlice({
       siteOceanSenseDataRequest.fulfilled,
       (
         state,
-        action: PayloadAction<{ data: OceanSenseData; latest?: boolean }>
+        action: PayloadAction<{ data: OceanSenseData; latest?: boolean }>,
       ) => ({
         ...state,
         latestOceanSenseData: action.payload.latest
@@ -434,7 +436,7 @@ const selectedSiteSlice = createSlice({
         oceanSenseDataLoading: !action.payload.latest
           ? false
           : state.oceanSenseDataLoading,
-      })
+      }),
     );
 
     builder.addCase(siteOceanSenseDataRequest.rejected, (state, action) => {
@@ -478,11 +480,11 @@ const selectedSiteSlice = createSlice({
       (
         state,
         action: PayloadAction<{
-          granularDailyData: SelectedSiteState["granularDailyData"];
-          timeSeriesData: SelectedSiteState["timeSeriesData"];
-          timeSeriesMinRequestDate: SelectedSiteState["timeSeriesMinRequestDate"];
-          timeSeriesMaxRequestDate: SelectedSiteState["timeSeriesMaxRequestDate"];
-        }>
+          granularDailyData: SelectedSiteState['granularDailyData'];
+          timeSeriesData: SelectedSiteState['timeSeriesData'];
+          timeSeriesMinRequestDate: SelectedSiteState['timeSeriesMinRequestDate'];
+          timeSeriesMaxRequestDate: SelectedSiteState['timeSeriesMaxRequestDate'];
+        }>,
       ) => ({
         ...state,
         granularDailyData: action.payload.granularDailyData,
@@ -490,16 +492,16 @@ const selectedSiteSlice = createSlice({
         timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
         timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
         timeSeriesDataLoading: false,
-      })
+      }),
     );
 
     builder.addCase(
       siteTimeSeriesDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState["error"]>) => ({
+      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
         ...state,
         error: action.payload,
         timeSeriesDataLoading: false,
-      })
+      }),
     );
 
     builder.addCase(siteTimeSeriesDataRequest.pending, (state) => {
@@ -514,21 +516,21 @@ const selectedSiteSlice = createSlice({
       siteTimeSeriesDataRangeRequest.fulfilled,
       (
         state,
-        action: PayloadAction<SelectedSiteState["timeSeriesDataRange"]>
+        action: PayloadAction<SelectedSiteState['timeSeriesDataRange']>,
       ) => ({
         ...state,
         timeSeriesDataRange: action.payload,
         timeSeriesDataRangeLoading: false,
-      })
+      }),
     );
 
     builder.addCase(
       siteTimeSeriesDataRangeRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState["error"]>) => ({
+      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
         ...state,
         error: action.payload,
         timeSeriesDataRangeLoading: false,
-      })
+      }),
     );
 
     builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state) => {
@@ -542,84 +544,84 @@ const selectedSiteSlice = createSlice({
 });
 
 export const siteDetailsSelector = (
-  state: RootState
-): SelectedSiteState["details"] => state.selectedSite.details;
+  state: RootState,
+): SelectedSiteState['details'] => state.selectedSite.details;
 
 export const spotterPositionSelector = (
-  state: RootState
-): SelectedSiteState["spotterPosition"] => state.selectedSite.spotterPosition;
+  state: RootState,
+): SelectedSiteState['spotterPosition'] => state.selectedSite.spotterPosition;
 
 export const latestDataSelector = (
-  state: RootState
-): SelectedSiteState["latestData"] => state.selectedSite.latestData;
+  state: RootState,
+): SelectedSiteState['latestData'] => state.selectedSite.latestData;
 
 export const forecastDataSelector = (
-  state: RootState
-): SelectedSiteState["forecastData"] => state.selectedSite.forecastData;
+  state: RootState,
+): SelectedSiteState['forecastData'] => state.selectedSite.forecastData;
 
 export const siteGranularDailyDataSelector = (
-  state: RootState
-): SelectedSiteState["granularDailyData"] =>
+  state: RootState,
+): SelectedSiteState['granularDailyData'] =>
   state.selectedSite.granularDailyData;
 
 export const siteTimeSeriesDataSelector = (
-  state: RootState
-): SelectedSiteState["timeSeriesData"] => state.selectedSite.timeSeriesData;
+  state: RootState,
+): SelectedSiteState['timeSeriesData'] => state.selectedSite.timeSeriesData;
 
 export const siteTimeSeriesDataLoadingSelector = (
-  state: RootState
-): SelectedSiteState["timeSeriesDataLoading"] =>
+  state: RootState,
+): SelectedSiteState['timeSeriesDataLoading'] =>
   state.selectedSite.timeSeriesDataLoading;
 
 export const siteTimeSeriesDataRangeSelector = (
-  state: RootState
-): SelectedSiteState["timeSeriesDataRange"] =>
+  state: RootState,
+): SelectedSiteState['timeSeriesDataRange'] =>
   state.selectedSite.timeSeriesDataRange;
 
 export const siteTimeSeriesDataRangeLoadingSelector = (
-  state: RootState
-): SelectedSiteState["timeSeriesDataRangeLoading"] =>
+  state: RootState,
+): SelectedSiteState['timeSeriesDataRangeLoading'] =>
   state.selectedSite.timeSeriesDataRangeLoading;
 
 export const siteDraftSelector = (
-  state: RootState
-): SelectedSiteState["draft"] => state.selectedSite.draft;
+  state: RootState,
+): SelectedSiteState['draft'] => state.selectedSite.draft;
 
 export const siteLoadingSelector = (
-  state: RootState
-): SelectedSiteState["loading"] => state.selectedSite.loading;
+  state: RootState,
+): SelectedSiteState['loading'] => state.selectedSite.loading;
 
 export const siteErrorSelector = (
-  state: RootState
-): SelectedSiteState["error"] => state.selectedSite.error;
+  state: RootState,
+): SelectedSiteState['error'] => state.selectedSite.error;
 
 export const siteLatestOceanSenseDataSelector = (
-  state: RootState
-): SelectedSiteState["latestOceanSenseData"] =>
+  state: RootState,
+): SelectedSiteState['latestOceanSenseData'] =>
   state.selectedSite.latestOceanSenseData;
 
 export const siteLatestOceanSenseDataLoadingSelector = (
-  state: RootState
-): SelectedSiteState["latestOceanSenseDataLoading"] =>
+  state: RootState,
+): SelectedSiteState['latestOceanSenseDataLoading'] =>
   state.selectedSite.latestOceanSenseDataLoading;
 
 export const siteLatestOceanSenseDataErrorSelector = (
-  state: RootState
-): SelectedSiteState["latestOceanSenseDataError"] =>
+  state: RootState,
+): SelectedSiteState['latestOceanSenseDataError'] =>
   state.selectedSite.latestOceanSenseDataError;
 
 export const siteOceanSenseDataSelector = (
-  state: RootState
-): SelectedSiteState["oceanSenseData"] => state.selectedSite.oceanSenseData;
+  state: RootState,
+): SelectedSiteState['oceanSenseData'] => state.selectedSite.oceanSenseData;
 
 export const siteOceanSenseDataLoadingSelector = (
-  state: RootState
-): SelectedSiteState["oceanSenseDataLoading"] =>
+  state: RootState,
+): SelectedSiteState['oceanSenseDataLoading'] =>
   state.selectedSite.oceanSenseDataLoading;
 
 export const siteOceanSenseDataErrorSelector = (
-  state: RootState
-): SelectedSiteState["oceanSenseDataError"] =>
+  state: RootState,
+): SelectedSiteState['oceanSenseDataError'] =>
   state.selectedSite.oceanSenseDataError;
 
 export const {

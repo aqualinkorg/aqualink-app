@@ -1,3 +1,4 @@
+import { createPoint } from './coordinates';
 import {
   AVAILABLE_POINTS,
   getSofarNearestAvailablePoint,
@@ -9,13 +10,13 @@ test('getting Sofar Wave Model availability zones', () => {
 });
 
 test('snapping point to availability zones', () => {
-  const point: [number, number] = [150.091, -5.432];
+  const point = createPoint(150.091, -5.432);
   const validPoint = getSofarNearestAvailablePoint(point);
   expect(validPoint).toEqual([150, -5]);
 });
 
 test('null island', () => {
-  const point: [number, number] = [0, 0];
+  const point = createPoint(0, 0);
   const validPoint = getSofarNearestAvailablePoint(point);
   expect(validPoint).toEqual([0, 0]);
 });

@@ -1,12 +1,5 @@
-import {
-  getSofarDataClosestToDate,
-  sameDay,
-} from "../../../common/Chart/utils";
-import {
-  DailyData,
-  ValueWithTimestamp,
-  TimeSeries,
-} from "../../../store/Sites/types";
+import { ValueWithTimestamp, TimeSeries } from 'store/Sites/types';
+import { getSofarDataClosestToDate } from 'common/Chart/utils';
 
 const getSensorValue = (data?: ValueWithTimestamp[], date?: string | null) =>
   date && data?.[0]
@@ -14,17 +7,11 @@ const getSensorValue = (data?: ValueWithTimestamp[], date?: string | null) =>
     : undefined;
 
 export const getCardTemperatureValues = (
-  dailyData: DailyData[],
   bottomTemperature: TimeSeries | undefined,
   topTemperature: TimeSeries | undefined,
-  date: string | null | undefined
+  date: string | null | undefined,
 ) => {
-  const surfaceData = date
-    ? dailyData.find((item) => sameDay(date, item.date))
-    : undefined;
-
   return {
-    satelliteTemperature: surfaceData?.satelliteTemperature,
     spotterBottom: getSensorValue(bottomTemperature?.spotter?.data, date),
     spotterTop: getSensorValue(topTemperature?.spotter?.data, date),
     hoboBottom: getSensorValue(bottomTemperature?.hobo?.data, date),

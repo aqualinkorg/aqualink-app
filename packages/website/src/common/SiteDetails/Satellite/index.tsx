@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -10,19 +10,19 @@ import {
   Grid,
   Tooltip,
   Box,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { dhwColorCode } from "../../../assets/colorCode";
-import { formatNumber } from "../../../helpers/numberUtils";
-import satellite from "../../../assets/satellite.svg";
+import { LatestDataASSofarValue } from 'store/Sites/types';
+import { formatNumber } from 'helpers/numberUtils';
 import {
   dhwColorFinder,
   degreeHeatingWeeksCalculator,
-} from "../../../helpers/degreeHeatingWeeks";
-import { styles as incomingStyles } from "../styles";
-import UpdateInfo from "../../UpdateInfo";
-import { toRelativeTime } from "../../../helpers/dates";
-import { LatestDataASSofarValue } from "../../../store/Sites/types";
+} from 'helpers/degreeHeatingWeeks';
+import { toRelativeTime } from 'helpers/dates';
+import { dhwColorCode } from '../../../assets/colorCode';
+import satellite from '../../../assets/satellite.svg';
+import { styles as incomingStyles } from '../styles';
+import UpdateInfo from '../../UpdateInfo';
 
 const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
   const { dhw, satelliteTemperature, sstAnomaly } = data;
@@ -32,35 +32,35 @@ const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
     toRelativeTime(satelliteTemperature.timestamp);
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
-    degreeHeatingDays?.value
+    degreeHeatingDays?.value,
   );
 
   const metrics = [
     {
-      label: "SURFACE TEMP",
+      label: 'SURFACE TEMP',
       value: `${formatNumber(satelliteTemperature?.value, 1)}°C`,
     },
     {
-      label: "HISTORICAL MAX",
+      label: 'HISTORICAL MAX',
       value: `${formatNumber(maxMonthlyMean, 1)}°C`,
-      tooltipTitle: "Historical maximum monthly average over the past 20 years",
+      tooltipTitle: 'Historical maximum monthly average over the past 20 years',
     },
     {
-      label: "DEGREE HEATING WEEKS",
+      label: 'DEGREE HEATING WEEKS',
       value: formatNumber(degreeHeatingWeeks, 1),
       tooltipTitle:
-        "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
+        'Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures',
     },
     {
-      label: "SST ANOMALY",
-      tooltipTitle: "Difference between current SST and longterm average",
+      label: 'SST ANOMALY',
+      tooltipTitle: 'Difference between current SST and longterm average',
       value: `${
         sstAnomaly
-          ? `${sstAnomaly.value > 0 ? "+" : ""}${formatNumber(
+          ? `${sstAnomaly.value > 0 ? '+' : ''}${formatNumber(
               sstAnomaly.value,
-              1
+              1,
             )}`
-          : "- -"
+          : '- -'
       }°C`,
     },
   ];
@@ -94,7 +94,7 @@ const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
                 >
                   {label}
                 </Typography>
-                <Tooltip title={tooltipTitle || ""}>
+                <Tooltip title={tooltipTitle || ''}>
                   <Typography
                     className={classes.contentTextValues}
                     variant="h3"
@@ -113,7 +113,7 @@ const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
               key={value}
               item
               xs={1}
-              style={{ backgroundColor: `${color}`, height: "2rem" }}
+              style={{ backgroundColor: `${color}`, height: '2rem' }}
             >
               <Box textAlign="center">
                 <Typography variant="caption" align="center">
@@ -131,7 +131,7 @@ const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
           imageText="NOAA"
           live={false}
           frequency="daily"
-          href="https://coralsitewatch.noaa.gov/"
+          href="https://coralreefwatch.noaa.gov/"
         />
       </CardContent>
     </Card>
@@ -142,20 +142,16 @@ const styles = () =>
   createStyles({
     ...incomingStyles,
     root: {
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
     },
     content: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
       flexGrow: 1,
       padding: 0,
-    },
-    contentText: {
-      marginTop: "1rem",
-      padding: "0 1rem",
     },
   });
 

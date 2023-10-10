@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { AppModule } from '../src/app.module';
@@ -43,7 +43,7 @@ export class TestService {
 
     this.app = moduleFixture.createNestApplication();
 
-    this.app = await this.app.init();
+    await this.app.init();
 
     this.app.useGlobalPipes(
       new GlobalValidationPipe({
@@ -52,7 +52,7 @@ export class TestService {
       }),
     );
 
-    const connection = this.app.get(Connection);
+    const connection = this.app.get(DataSource);
     try {
       // Clean up database
       await this.cleanAllEntities(connection);
@@ -81,7 +81,7 @@ export class TestService {
     }
   }
 
-  private async loadMocks(connection: Connection) {
+  private async loadMocks(connection: DataSource) {
     await connection.getRepository(User).save(users);
     await connection.getRepository(Site).save(sites);
     await connection.getRepository(SiteSurveyPoint).save(surveyPoints);
@@ -124,12 +124,12 @@ export class TestService {
     return this.app!;
   }
 
-  public async getConnection() {
+  public async getDataSource() {
     if (!this.app) {
       await this.initializeApp();
     }
 
-    return this.app!.get(Connection);
+    return this.app!.get(DataSource);
   }
 
   public cleanUpApp() {
@@ -140,7 +140,7 @@ export class TestService {
     return this.app.close();
   }
 
-  public async cleanAllEntities(connection: Connection) {
+  public async cleanAllEntities(connection: DataSource) {
     await connection.getRepository(TimeSeries).delete({});
     await connection.getRepository(Sources).delete({});
     await connection.getRepository(Collection).delete({});

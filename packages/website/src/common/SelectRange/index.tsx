@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -8,9 +8,9 @@ import {
   Typography,
   Select,
   MenuItem,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { Range } from "../../store/Sites/types";
+import { Range } from 'store/Sites/types';
 
 const SelectRange = ({
   open,
@@ -48,11 +48,11 @@ const SelectRange = ({
 const styles = () =>
   createStyles({
     selectorWrapper: {
-      height: "3rem",
+      height: '3rem',
     },
     selector: {
-      marginLeft: "0.5rem",
-      height: "2rem",
+      marginLeft: '0.5rem',
+      height: '2rem',
     },
   });
 

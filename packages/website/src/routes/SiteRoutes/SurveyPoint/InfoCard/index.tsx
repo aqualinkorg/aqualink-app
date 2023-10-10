@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Container,
@@ -10,20 +10,20 @@ import {
   createStyles,
   Grid,
   Theme,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import CloseIcon from "@material-ui/icons/Close";
-import { useSelector, useDispatch } from "react-redux";
-import { every } from "lodash";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import CloseIcon from '@material-ui/icons/Close';
+import { useSelector, useDispatch } from 'react-redux';
+import { every } from 'lodash';
 
-import EditForm from "./EditForm";
-import Info from "./Info";
-import Map from "./Map";
-import { Site } from "../../../../store/Sites/types";
-import { useFormField } from "../../../../hooks/useFormField";
-import { userInfoSelector } from "../../../../store/User/userSlice";
-import surveyServices from "../../../../services/surveyServices";
-import { setSiteSurveyPoints } from "../../../../store/Sites/selectedSiteSlice";
+import { Site } from 'store/Sites/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { setSiteSurveyPoints } from 'store/Sites/selectedSiteSlice';
+import { useFormField } from 'hooks/useFormField';
+import surveyServices from 'services/surveyServices';
+import EditForm from './EditForm';
+import Info from './Info';
+import Map from './Map';
 
 const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
   const user = useSelector(userInfoSelector);
@@ -33,38 +33,38 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
   const [editLoading, setEditLoading] = useState(false);
   const [editAlertOpen, setEditAlertOpen] = useState(false);
   const [editAlertSeverity, setEditAlertSeverity] = useState<
-    "success" | "error"
+    'success' | 'error'
   >();
 
   const [editPointName, setEditPointName] = useFormField(surveyPoint?.name, [
-    "required",
-    "maxLength",
+    'required',
+    'maxLength',
   ]);
   const [editPointLatitude, setEditPointLatitude] = useFormField(
-    surveyPoint?.polygon?.type === "Point"
+    surveyPoint?.polygon?.type === 'Point'
       ? surveyPoint.polygon.coordinates[1].toString()
       : undefined,
-    ["required", "isNumeric", "isLat"]
+    ['required', 'isNumeric', 'isLat'],
   );
   const [editPointLongitude, setEditPointLongitude] = useFormField(
-    surveyPoint?.polygon?.type === "Point"
+    surveyPoint?.polygon?.type === 'Point'
       ? surveyPoint.polygon.coordinates[0].toString()
       : undefined,
-    ["required", "isNumeric", "isLong"]
+    ['required', 'isNumeric', 'isLong'],
   );
 
   const onFieldChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name: field, value: newValue } = event.target;
     switch (field) {
-      case "pointName":
+      case 'pointName':
         setEditPointName(newValue);
         break;
-      case "latitude":
+      case 'latitude':
         setEditPointLatitude(newValue);
         break;
-      case "longitude":
+      case 'longitude':
         setEditPointLongitude(newValue);
         break;
       default:
@@ -82,7 +82,7 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
       user?.token &&
       every(
         [editPointName, editPointLatitude, editPointLongitude],
-        (item) => item.value
+        (item) => item.value,
       )
     ) {
       setEditLoading(true);
@@ -94,7 +94,7 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
             latitude: parseFloat(editPointLatitude.value),
             longitude: parseFloat(editPointLongitude.value),
           },
-          user.token
+          user.token,
         )
         .then(({ data: newPoint }) => {
           dispatch(
@@ -104,12 +104,12 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
                 name: point.id === pointId ? newPoint.name : point.name,
                 polygon:
                   point.id === pointId ? newPoint.polygon : point.polygon,
-              }))
-            )
+              })),
+            ),
           );
-          setEditAlertSeverity("success");
+          setEditAlertSeverity('success');
         })
-        .catch(() => setEditAlertSeverity("error"))
+        .catch(() => setEditAlertSeverity('error'))
         .finally(() => {
           setEditLoading(false);
           setEditModeEnabled(false);
@@ -136,15 +136,15 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
               </IconButton>
             }
           >
-            {editAlertSeverity === "success"
-              ? "Successfully updated survey point information"
-              : "Something went wrong"}
+            {editAlertSeverity === 'success'
+              ? 'Successfully updated survey point information'
+              : 'Something went wrong'}
           </Alert>
         </Collapse>
-        <Grid className={classes.cardWrapper} container justify="center">
+        <Grid className={classes.cardWrapper} container justifyContent="center">
           <Grid item xs={12} sm={12}>
             <Card elevation={3}>
-              <Grid container justify="space-between">
+              <Grid container justifyContent="space-between">
                 {editModeEnabled ? (
                   <EditForm
                     editLoading={editLoading}
@@ -183,7 +183,7 @@ const styles = (theme: Theme) =>
   createStyles({
     cardWrapper: {
       marginBottom: 100,
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         marginBottom: 50,
       },
     },

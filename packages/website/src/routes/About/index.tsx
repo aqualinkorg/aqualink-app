@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Typography,
   CardMedia,
-} from "@material-ui/core";
-import classNames from "classnames";
+} from '@material-ui/core';
+import classNames from 'classnames';
 
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 
-import peter from "../../assets/img/peter.jpg";
-import lyndon from "../../assets/img/LYNDON1.jpg";
-import drew from "../../assets/img/drew.jpg";
+import peter from '../../assets/img/peter.jpg';
+import caesar from '../../assets/img/caesar.jpg';
+import eric from '../../assets/img/eric.jpg';
 
 const About = ({ classes }: AboutProps) => {
   return (
@@ -34,7 +34,7 @@ const About = ({ classes }: AboutProps) => {
                       Aqualink is a philanthropic engineering organization
                       working on building ocean conservation technology. Read
                       more about our inspiration, smart buoy, and web
-                      application in our press release:{" "}
+                      application in our press release:{' '}
                       <a href="https://medium.com/aqualink/introducing-aqualink-dd1023393b8">
                         Introducing Aqualink
                       </a>
@@ -46,7 +46,7 @@ const About = ({ classes }: AboutProps) => {
                     </p>
                   </div>
                   <div
-                    className={classNames("offset-lg-0 col-lg-12 order-lg-1", [
+                    className={classNames('offset-lg-0 col-lg-12 order-lg-1', [
                       classes.videoWrapper,
                     ])}
                   >
@@ -99,16 +99,18 @@ const About = ({ classes }: AboutProps) => {
                     <div className="card border-0">
                       <div className="card-body team-card">
                         <img
-                          src={lyndon}
+                          src={caesar}
                           className="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
                           width={100}
                           alt="placeholder user"
                         />
-                        <h5 className="text-center mg-sm">Lyndon Rive</h5>
+                        <h5 className="text-center mg-sm">Caesar Hjerten</h5>
                         <p className="text-lg-center">
-                          Also a co-founder of SolarCity, current National
-                          Geographic board member, and member of the USA
-                          underwater hockey team.
+                          Swedish-born, University of Hawaii-based Business
+                          graduate, ex-collegiate soccer player, and a
+                          passionate contributor to saving our ocean.
+                          Aqualink&apos;s point of contact for customer
+                          relations.
                           <br />
                         </p>
                       </div>
@@ -118,20 +120,23 @@ const About = ({ classes }: AboutProps) => {
                     <div className="card border-0">
                       <div className="card-body team-card">
                         <img
-                          src={drew}
+                          src={eric}
                           className="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
                           width={100}
                           alt="placeholder user"
                         />
                         <h5 className="text-center mg-sm">
-                          <a href="https://www.linkedin.com/in/drewjgray/">
-                            Drew Gray
+                          <a
+                            style={{ color: 'inherit' }}
+                            href="https://www.linkedin.com/in/ericpboucher/"
+                          >
+                            Eric Boucher
                           </a>
                         </h5>
                         <p className="text-lg-center">
-                          Computer-vision/AI software engineer, PhD in robotics,
-                          and experience building autonomous systems at Tesla,
-                          Cruise, and Uber.
+                          Entrepreneur and software engineer, passionate about
+                          open source and social impact. Loves sailing and
+                          exploring the ocean.
                         </p>
                       </div>
                     </div>
@@ -150,19 +155,19 @@ const About = ({ classes }: AboutProps) => {
 const styles = () =>
   createStyles({
     title: {
-      marginTop: "1rem",
-      marginBottom: "1rem",
+      marginTop: '1rem',
+      marginBottom: '1rem',
     },
     videoWrapper: {
-      position: "relative",
-      paddingTop: "calc(100% / 16 * 9)",
+      position: 'relative',
+      paddingTop: 'calc(100% / 16 * 9)',
     },
     video: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
     },
   });
 

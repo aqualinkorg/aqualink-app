@@ -1,18 +1,18 @@
-import { startCase } from "lodash";
-import type { TableRow } from "../../../store/Homepage/types";
+import { startCase } from 'lodash';
+import type { TableRow } from 'store/Homepage/types';
 
-export type Order = "asc" | "desc";
+export type Order = 'asc' | 'desc';
 
 export enum OrderKeys {
-  ALERT = "alert",
-  DEPTH = "depth",
-  DHW = "dhw",
-  LOCATION_NAME = "locationName",
-  SST = "sst",
-  HISTORIC_MAX = "historicMax",
-  SST_ANOMALY = "sstAnomaly",
-  BUOY_TOP = "buoyTop",
-  BUOY_BOTTOM = "buoyBottom",
+  ALERT = 'alert',
+  DEPTH = 'depth',
+  DHW = 'dhw',
+  LOCATION_NAME = 'locationName',
+  SST = 'sst',
+  HISTORIC_MAX = 'historicMax',
+  SST_ANOMALY = 'sstAnomaly',
+  BUOY_TOP = 'buoyTop',
+  BUOY_BOTTOM = 'buoyBottom',
 }
 
 // This type isn't used anywhere, it just forces the above enum to only hold valid keys to TableRow.
@@ -26,7 +26,7 @@ type __CheckOrderKeys = TableRow[OrderKeys];
 export function getOrderKeysFriendlyString(orderKey: OrderKeys) {
   switch (orderKey) {
     case OrderKeys.DHW:
-      return "DHW";
+      return 'DHW';
     default:
       return startCase(orderKey);
   }
@@ -38,16 +38,16 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 export function getComparator(
   order: Order,
-  orderBy: OrderKeys
+  orderBy: OrderKeys,
 ): (
   a: {
     [key in OrderKeys]: number | string | null;
   },
   b: {
     [key in OrderKeys]: number | string | null;
-  }
+  },
 ) => number {
-  return order === "desc"
+  return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }

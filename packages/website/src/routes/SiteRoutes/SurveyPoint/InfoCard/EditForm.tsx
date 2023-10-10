@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from 'react';
 import {
   Button,
   Grid,
@@ -6,12 +6,12 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { find } from "lodash";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { find } from 'lodash';
 
-import { FormField } from "../../../../hooks/useFormField";
-import TextField from "../../../../common/Forms/TextField";
+import { FormField } from 'hooks/useFormField';
+import TextField from 'common/Forms/TextField';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
@@ -44,7 +44,7 @@ const EditForm = ({
         />
       </Grid>
       <Grid item>
-        <Grid container justify="space-between" spacing={2}>
+        <Grid container justifyContent="space-between" spacing={2}>
           <Grid item xs={12}>
             <Alert className={classes.infoAlert} icon={false} severity="info">
               <Typography variant="subtitle2">
@@ -78,7 +78,7 @@ const EditForm = ({
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container justify="flex-end" spacing={2}>
+        <Grid container justifyContent="flex-end" spacing={2}>
           <Grid item>
             <Button
               onClick={onCancelButtonClick}
@@ -99,11 +99,11 @@ const EditForm = ({
                 editLoading ||
                 !!find(
                   [editPointName, editPointLatitude, editPointLongitude],
-                  (field) => field.error
+                  (field) => field.error,
                 )
               }
             >
-              {editLoading ? "Saving..." : "Save"}
+              {editLoading ? 'Saving...' : 'Save'}
             </Button>
           </Grid>
         </Grid>
@@ -119,7 +119,7 @@ const styles = () =>
     },
 
     infoAlert: {
-      marginTop: "0.5rem",
+      marginTop: '0.5rem',
     },
   });
 
@@ -131,7 +131,7 @@ interface EditFormIncomingProps {
   onCancelButtonClick: () => void;
   onSaveButtonClick: () => void;
   onFieldChange: (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
 }
 

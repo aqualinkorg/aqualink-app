@@ -1,18 +1,14 @@
-import { sortBy } from "lodash";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import siteServices from "../../services/siteServices";
-import {
-  hasDeployedSpotter,
-  setSiteNameFromList,
-} from "../../helpers/siteUtils";
+import { sortBy } from 'lodash';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { hasDeployedSpotter, setSiteNameFromList } from 'helpers/siteUtils';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import siteServices from 'services/siteServices';
 import type {
   SitesListState,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
-} from "./types";
-import type { CreateAsyncThunkTypes, RootState } from "../configure";
-import { mapCollectionData } from "../Collection/utils";
-import { getAxiosErrorMessage } from "../../helpers/errors";
+} from './types';
+import type { CreateAsyncThunkTypes, RootState } from '../configure';
 
 const sitesListInitialState: SitesListState = {
   loading: false,
@@ -24,17 +20,17 @@ export const sitesRequest = createAsyncThunk<
   undefined,
   CreateAsyncThunkTypes
 >(
-  "sitesList/request",
+  'sitesList/request',
   async (arg, { rejectWithValue, getState }) => {
     try {
       const { data } = await siteServices.getSites();
       const {
         homepage: { withSpotterOnly },
       } = getState();
-      const sortedData = sortBy(data, "name");
+      const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
-        collectionData: mapCollectionData(item.collectionData || {}),
+        collectionData: item.collectionData || {},
       }));
       return {
         list: transformedData,
@@ -53,11 +49,11 @@ export const sitesRequest = createAsyncThunk<
       } = getState();
       return !list;
     },
-  }
+  },
 );
 
 const sitesListSlice = createSlice({
-  name: "sitesList",
+  name: 'sitesList',
   initialState: sitesListInitialState,
   reducers: {
     filterSitesWithSpotter: (state, action: PayloadAction<boolean>) => ({
@@ -68,7 +64,7 @@ const sitesListSlice = createSlice({
     }),
     setSiteName: (
       state,
-      action: PayloadAction<UpdateSiteNameFromListArgs>
+      action: PayloadAction<UpdateSiteNameFromListArgs>,
     ) => ({
       ...state,
       list: setSiteNameFromList(action.payload),
@@ -84,7 +80,7 @@ const sitesListSlice = createSlice({
           sitesToDisplay: action.payload.sitesToDisplay,
           loading: false,
         };
-      }
+      },
     );
 
     builder.addCase(sitesRequest.rejected, (state, action) => {
@@ -107,20 +103,20 @@ const sitesListSlice = createSlice({
   },
 });
 
-export const sitesListSelector = (state: RootState): SitesListState["list"] =>
+export const sitesListSelector = (state: RootState): SitesListState['list'] =>
   state.sitesList.list;
 
 export const sitesToDisplayListSelector = (
-  state: RootState
-): SitesListState["sitesToDisplay"] => state.sitesList.sitesToDisplay;
+  state: RootState,
+): SitesListState['sitesToDisplay'] => state.sitesList.sitesToDisplay;
 
 export const sitesListLoadingSelector = (
-  state: RootState
-): SitesListState["loading"] => state.sitesList.loading;
+  state: RootState,
+): SitesListState['loading'] => state.sitesList.loading;
 
 export const sitesListErrorSelector = (
-  state: RootState
-): SitesListState["error"] => state.sitesList.error;
+  state: RootState,
+): SitesListState['error'] => state.sitesList.error;
 
 export const { filterSitesWithSpotter, setSiteName } = sitesListSlice.actions;
 

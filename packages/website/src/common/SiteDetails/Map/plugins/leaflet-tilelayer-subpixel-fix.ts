@@ -1,4 +1,4 @@
-import L, { GridLayer } from "leaflet";
+import L, { GridLayer } from 'leaflet';
 
 /*
  * Workaround for 1px lines appearing in some browsers due to fractional transforms

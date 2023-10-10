@@ -1,21 +1,21 @@
-import { useSelector } from "react-redux";
-import { LayerGroup, useLeaflet } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-markercluster";
-import React, { useCallback, useEffect } from "react";
-import L from "leaflet";
-import { sitesToDisplayListSelector } from "../../../../store/Sites/sitesListSlice";
-import { Site } from "../../../../store/Sites/types";
-import { siteOnMapSelector } from "../../../../store/Homepage/homepageSlice";
-import "leaflet/dist/leaflet.css";
-import "react-leaflet-markercluster/dist/styles.min.css";
+import { useSelector } from 'react-redux';
+import { LayerGroup, useLeaflet } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
+import React, { useCallback, useEffect } from 'react';
+import L from 'leaflet';
+import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
+import { Site } from 'store/Sites/types';
+import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import 'leaflet/dist/leaflet.css';
+import 'react-leaflet-markercluster/dist/styles.min.css';
+import { CollectionDetails } from 'store/Collection/types';
 import {
   findIntervalByLevel,
   findMaxLevel,
   getColorByLevel,
   Interval,
-} from "../../../../helpers/bleachingAlertIntervals";
-import { CollectionDetails } from "../../../../store/Collection/types";
-import SiteMarker from "./SiteMarker";
+} from 'helpers/bleachingAlertIntervals';
+import SiteMarker from './SiteMarker';
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
@@ -48,11 +48,11 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
         paddingTopLeft: L.point(0, 200),
       });
     },
-    []
+    [],
   );
   // zoom in and center on site marker when it's clicked
   useEffect(() => {
-    if (map && siteOnMap?.polygon.type === "Point") {
+    if (map && siteOnMap?.polygon.type === 'Point') {
       const [lng, lat] = siteOnMap.polygon.coordinates;
       setCenter(map, [lat, lng], 6);
     }

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from "react";
+import React, { useState, useCallback, ChangeEvent } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -11,22 +11,20 @@ import {
   LinearProgress,
   Tooltip,
   Theme,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
-import CloseIcon from "@material-ui/icons/Close";
-import Dropzone, { FileRejection } from "react-dropzone";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-
-import MediaCard from "./MediaCard";
-import uploadServices from "../../../services/uploadServices";
-import surveyServices from "../../../services/surveyServices";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
-import { SurveyMediaData } from "../../../store/Survey/types";
-import { siteDetailsSelector } from "../../../store/Sites/selectedSiteSlice";
-import { SurveyPoints } from "../../../store/Sites/types";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { ArrowBack, CloudUploadOutlined } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
+import Dropzone, { FileRejection } from 'react-dropzone';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { userInfoSelector } from 'store/User/userSlice';
+import { surveyDetailsSelector } from 'store/Survey/surveySlice';
+import { SurveyMediaData } from 'store/Survey/types';
+import { SurveyPoints } from 'store/Sites/types';
+import surveyServices from 'services/surveyServices';
+import uploadServices from 'services/uploadServices';
+import MediaCard from './MediaCard';
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
@@ -42,8 +40,6 @@ const UploadMedia = ({
   const [metadata, setMetadata] = useState<Metadata[]>([]);
   const user = useSelector(userInfoSelector);
   const survey = useSelector(surveyDetailsSelector);
-  const surveyPointOptions =
-    useSelector(siteDetailsSelector)?.surveyPoints || [];
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -67,22 +63,22 @@ const UploadMedia = ({
         ...metadata,
         ...acceptedFiles.map(() => ({
           observation: null,
-          surveyPoint: "",
-          comments: "",
+          surveyPoint: undefined,
+          comments: '',
         })),
       ]);
     },
-    [files, previews, metadata]
+    [files, previews, metadata],
   );
 
   const handleSurveyPointOptionAdd =
     (index: number) => (newPointName: string, newPoints: SurveyPoints[]) => {
       const newPointId = newPoints.find(
-        (point) => point.name === newPointName
+        (point) => point.name === newPointName,
       )?.id;
 
       const newMetadata = metadata.map((item, key) =>
-        key === index ? { ...item, surveyPoint: `${newPointId}` } : item
+        key === index ? { ...item, surveyPoint: newPointId } : item,
       );
       setMetadata(newMetadata);
     };
@@ -109,7 +105,7 @@ const UploadMedia = ({
   const onMediaSubmit = () => {
     const promises = files.map((file, index) => {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
       return uploadServices
         .uploadMedia(formData, `${siteId}`, user?.token)
         .then((response) => {
@@ -119,11 +115,11 @@ const UploadMedia = ({
             url,
             thumbnailUrl,
             surveyPointId: metadata[index].surveyPoint
-              ? parseInt(metadata[index].surveyPoint, 10)
+              ? metadata[index].surveyPoint || 10
               : (undefined as unknown as number),
             observations: metadata[index].observation,
             comments: metadata[index].comments || undefined,
-            metadata: "{}",
+            metadata: '{}',
             token: user?.token,
             featured: index === featuredFile,
             hidden: false,
@@ -131,7 +127,7 @@ const UploadMedia = ({
           return surveyServices.addSurveyMedia(
             `${siteId}`,
             `${surveyId}`,
-            surveyMediaData
+            surveyMediaData,
           );
         });
     });
@@ -154,7 +150,7 @@ const UploadMedia = ({
 
   const handleSurveyPointChange = (index: number) => {
     return (event: ChangeEvent<{ value: unknown }>) => {
-      const surveyPoint = event.target.value as string;
+      const surveyPoint = Number(event.target.value);
       const newMetadata = metadata.map((item, key) => {
         if (key === index) {
           return {
@@ -170,7 +166,7 @@ const UploadMedia = ({
 
   const handleObservationChange = (index: number) => {
     return (event: ChangeEvent<{ value: unknown }>) => {
-      const observation = event.target.value as SurveyMediaData["observations"];
+      const observation = event.target.value as SurveyMediaData['observations'];
       const newMetadata = metadata.map((item, key) => {
         if (key === index) {
           return {
@@ -208,11 +204,10 @@ const UploadMedia = ({
         index={index}
         preview={preview}
         file={files[index]}
-        surveyPointOptions={surveyPointOptions}
         handleSurveyPointOptionAdd={handleSurveyPointOptionAdd(index)}
-        surveyPoint={metadata?.[index]?.surveyPoint || ""}
-        observation={metadata?.[index]?.observation || ""}
-        comments={metadata?.[index]?.comments || ""}
+        surveyPoint={metadata?.[index]?.surveyPoint}
+        observation={metadata?.[index]?.observation || ''}
+        comments={metadata?.[index]?.comments || ''}
         deleteCard={deleteCard}
         setFeatured={setFeatured}
         featuredFile={featuredFile}
@@ -247,7 +242,13 @@ const UploadMedia = ({
           </Alert>
         </Collapse>
       </Grid>
-      <Grid className={classes.root} container justify="center" item xs={12}>
+      <Grid
+        className={classes.root}
+        container
+        justifyContent="center"
+        item
+        xs={12}
+      >
         <Grid container alignItems="center" item xs={10}>
           <Grid item>
             <IconButton
@@ -265,28 +266,28 @@ const UploadMedia = ({
             )}
           </Grid>
         </Grid>
-        <Grid container justify="center" item xs={4}>
+        <Grid container justifyContent="center" item xs={4}>
           <Dropzone
-            accept={["image/png", "image/jpeg", "image/gif"]}
+            accept={['image/png', 'image/jpeg', 'image/gif']}
             onDrop={handleFileDrop}
             maxSize={maxUploadSize}
           >
             {({ getRootProps, getInputProps }) => (
               <Grid
                 container
-                justify="center"
+                justifyContent="center"
                 {...getRootProps({ className: classes.dropzone })}
               >
                 <input {...getInputProps()} />
-                <Grid container justify="center" item xs={12}>
+                <Grid container justifyContent="center" item xs={12}>
                   <CloudUploadOutlined fontSize="large" color="primary" />
                 </Grid>
-                <Grid container justify="center" item xs={12}>
+                <Grid container justifyContent="center" item xs={12}>
                   <Typography variant="h5">
                     Drag and drop or click here
                   </Typography>
                 </Grid>
-                <Grid container justify="center" item xs={12}>
+                <Grid container justifyContent="center" item xs={12}>
                   <Typography variant="subtitle2">
                     Supported formats: .jpg .png .gif Max 40mb.
                   </Typography>
@@ -295,19 +296,19 @@ const UploadMedia = ({
             )}
           </Dropzone>
         </Grid>
-        <Grid style={{ marginBottom: "2rem" }} container item xs={11} lg={9}>
+        <Grid style={{ marginBottom: '2rem' }} container item xs={11} lg={9}>
           {fileCards}
         </Grid>
         {files && files.length > 0 && (
           <Grid
-            style={{ margin: "4rem 0 2rem 0" }}
+            style={{ margin: '4rem 0 2rem 0' }}
             container
-            justify="flex-end"
+            justifyContent="flex-end"
             item
             xs={9}
           >
             <Button
-              style={{ marginRight: "1rem" }}
+              style={{ marginRight: '1rem' }}
               color="primary"
               variant="outlined"
               onClick={removeCards}
@@ -315,7 +316,7 @@ const UploadMedia = ({
               Cancel
             </Button>
             <Tooltip
-              title={missingObservations ? "Missing Observation Info" : ""}
+              title={missingObservations ? 'Missing Observation Info' : ''}
             >
               <div>
                 <Button
@@ -324,7 +325,7 @@ const UploadMedia = ({
                   color="primary"
                   variant="contained"
                 >
-                  {loading ? "Uploading..." : "Save"}
+                  {loading ? 'Uploading...' : 'Save'}
                 </Button>
               </div>
             </Tooltip>
@@ -338,35 +339,35 @@ const UploadMedia = ({
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      marginTop: "2rem",
+      marginTop: '2rem',
     },
     dropzone: {
       borderWidth: 2,
       borderRadius: 2,
-      borderColor: "#eeeeee",
-      borderStyle: "dashed",
-      backgroundColor: "#fafafa",
-      height: "8rem",
-      width: "100%",
-      cursor: "pointer",
-      "&:focus": {
-        outline: "none",
+      borderColor: '#eeeeee',
+      borderStyle: 'dashed',
+      backgroundColor: '#fafafa',
+      height: '8rem',
+      width: '100%',
+      cursor: 'pointer',
+      '&:focus': {
+        outline: 'none',
       },
       marginTop: theme.spacing(2),
     },
     siteName: {
-      maxWidth: "calc(100% - 56px)", // 100% minus the back button
-      overflowWrap: "break-word",
+      maxWidth: 'calc(100% - 56px)', // 100% minus the back button
+      overflowWrap: 'break-word',
     },
     popover: {
-      pointerEvents: "none",
+      pointerEvents: 'none',
     },
     popoverText: {
-      height: "3rem",
-      width: "12rem",
+      height: '3rem',
+      width: '12rem',
     },
     paper: {
-      backgroundColor: "rgba(22, 141, 189, 0.3)",
+      backgroundColor: 'rgba(22, 141, 189, 0.3)',
     },
   });
 
@@ -377,8 +378,8 @@ interface UploadMediaIncomingProps {
 }
 
 interface Metadata {
-  surveyPoint: string;
-  observation: SurveyMediaData["observations"];
+  surveyPoint?: number;
+  observation: SurveyMediaData['observations'];
   comments: string;
 }
 

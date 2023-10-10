@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataUploadsSites } from '../data-uploads/data-uploads-sites.entity';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Site } from '../sites/sites.entity';
@@ -19,6 +20,7 @@ import { TimeSeriesService } from './time-series.service';
       SiteSurveyPoint,
       Sources,
       DataUploads,
+      DataUploadsSites,
     ]),
   ],
 })

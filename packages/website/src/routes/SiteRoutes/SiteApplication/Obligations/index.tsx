@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 const obligations = [
-  "Pay for shipping and any applicable duties",
-  "Obtain any necessary permits (if applicable)",
-  "Deploy the buoy with an appropriate mooring or anchor weight",
-  "Maintain buoy (inspect and clean every 6 months)",
-  "Conduct initial and periodic photographic surveys and upload imagery to our website",
+  'Pay for shipping and any applicable duties',
+  'Obtain any necessary permits (if applicable)',
+  'Deploy the buoy with an appropriate mooring or anchor weight',
+  'Maintain buoy (inspect and clean every 6 months)',
+  'Conduct initial and periodic photographic surveys and upload imagery to our website',
 ];
 
 const Obligations = ({ classes }: ObligationsProps) => {
@@ -36,15 +36,15 @@ const Obligations = ({ classes }: ObligationsProps) => {
 const styles = () =>
   createStyles({
     obligations: {
-      backgroundColor: "#F5F5F5",
-      padding: "1.5rem",
+      backgroundColor: '#F5F5F5',
+      padding: '1.5rem',
     },
     obligationsTitle: {
-      marginBottom: "2rem",
+      marginBottom: '2rem',
     },
     obligationsList: {
-      marginTop: "1rem",
-      padding: "0 1rem 0 1rem",
+      marginTop: '1rem',
+      padding: '0 1rem 0 1rem',
     },
   });
 

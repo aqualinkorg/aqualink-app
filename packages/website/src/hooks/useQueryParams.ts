@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable fp/no-mutating-methods */
 /* eslint-disable fp/no-mutation */
-import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 let processing = false;
 const queue: { key: string; value?: string }[] = [];
@@ -17,7 +17,7 @@ const queue: { key: string; value?: string }[] = [];
  */
 export const useQueryParam = (
   key: string,
-  valid: (value: string) => boolean = () => true
+  valid: (value: string) => boolean = () => true,
 ) => {
   const { search } = useLocation();
   const history = useHistory();
@@ -60,6 +60,6 @@ export const useQueryParam = (
 
   return [value && valid(value) ? value : undefined, setValue] as [
     string | undefined,
-    React.Dispatch<React.SetStateAction<string | undefined>>
+    React.Dispatch<React.SetStateAction<string | undefined>>,
   ];
 };

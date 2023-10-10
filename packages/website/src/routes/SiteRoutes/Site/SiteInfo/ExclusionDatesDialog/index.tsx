@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -7,27 +7,27 @@ import {
   Box,
   Typography,
   Grid,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import { useDispatch } from "react-redux";
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { useDispatch } from 'react-redux';
 
-import Dialog, { Action } from "../../../../../common/Dialog";
-import { setTimeZone } from "../../../../../helpers/dates";
-import siteServices from "../../../../../services/siteServices";
 import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   setSelectedSite,
   siteRequest,
-} from "../../../../../store/Sites/selectedSiteSlice";
-import ConfirmationDialog from "./ConfirmationDialog";
+} from 'store/Sites/selectedSiteSlice';
+import { setTimeZone } from 'helpers/dates';
+import Dialog, { Action } from 'common/Dialog';
+import siteServices from 'services/siteServices';
+import ConfirmationDialog from './ConfirmationDialog';
 
 const ExclusionDatesDialog = ({
   dialogType,
@@ -44,18 +44,18 @@ const ExclusionDatesDialog = ({
   const [deployDateTime, setDeployDateTime] = useState<Date | null>(null);
   const [deployLoading, setDeployLoading] = useState(false);
   const [deployError, setDeployError] = useState<string>();
-  const [pickerError, setPickerError] = useState("");
+  const [pickerError, setPickerError] = useState('');
 
   // State variables for maintain dialog
   const [maintainStartDateTime, setMaintainStartDateTime] =
     useState<Date | null>(null);
   const [maintainEndDateTime, setMaintainEndDateTime] = useState<Date | null>(
-    null
+    null,
   );
   const [maintainLoading, setMaintainLoading] = useState(false);
   const [maintainError, setMaintainError] = useState<string>();
-  const [startPickerError, setStartPickerError] = useState("");
-  const [endPickerError, setEndPickerError] = useState("");
+  const [startPickerError, setStartPickerError] = useState('');
+  const [endPickerError, setEndPickerError] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
     useState(false);
   const isMaintainDisabled =
@@ -63,17 +63,17 @@ const ExclusionDatesDialog = ({
 
   useEffect(() => {
     switch (dialogType) {
-      case "deploy":
+      case 'deploy':
         if (deployDateTime) {
-          setPickerError("");
+          setPickerError('');
         }
         break;
-      case "maintain":
+      case 'maintain':
         if (maintainStartDateTime) {
-          setStartPickerError("");
+          setStartPickerError('');
         }
         if (maintainEndDateTime) {
-          setEndPickerError("");
+          setEndPickerError('');
         }
         break;
       default:
@@ -85,7 +85,7 @@ const ExclusionDatesDialog = ({
     setDeployLoading(false);
     setDeployDateTime(null);
     setDeployError(undefined);
-    setPickerError("");
+    setPickerError('');
     onClose();
   };
 
@@ -94,8 +94,8 @@ const ExclusionDatesDialog = ({
     setMaintainStartDateTime(null);
     setMaintainEndDateTime(null);
     setMaintainError(undefined);
-    setStartPickerError("");
-    setEndPickerError("");
+    setStartPickerError('');
+    setEndPickerError('');
     onClose();
   };
 
@@ -106,16 +106,18 @@ const ExclusionDatesDialog = ({
       siteServices
         .deploySpotter(siteId, { endDate: localDate.toString() }, token)
         .then(() => {
-          setPickerError("");
+          setPickerError('');
           onDeployDialogClose();
           dispatch(siteRequest(`${siteId}`));
         })
         .catch((err) =>
-          setDeployError(err?.response?.data?.message || "Something went wrong")
+          setDeployError(
+            err?.response?.data?.message || 'Something went wrong',
+          ),
         )
         .finally(() => setDeployLoading(false));
     } else {
-      setPickerError("Cannot be empty");
+      setPickerError('Cannot be empty');
     }
   };
 
@@ -124,10 +126,10 @@ const ExclusionDatesDialog = ({
     const localEndDate = setTimeZone(maintainEndDateTime, timeZone);
 
     if (!localStartDate) {
-      setStartPickerError("Cannot be empty");
+      setStartPickerError('Cannot be empty');
     }
     if (!localEndDate) {
-      setEndPickerError("Cannot be empty");
+      setEndPickerError('Cannot be empty');
     }
     if (localStartDate && localEndDate) {
       setMaintainLoading(true);
@@ -138,11 +140,11 @@ const ExclusionDatesDialog = ({
             endDate: localEndDate,
             startDate: localStartDate,
           },
-          token
+          token,
         )
         .then(() => {
-          setStartPickerError("");
-          setEndPickerError("");
+          setStartPickerError('');
+          setEndPickerError('');
           onMaintainDialogClose();
           dispatch(clearTimeSeriesData());
           dispatch(clearTimeSeriesDataRange());
@@ -151,8 +153,8 @@ const ExclusionDatesDialog = ({
         })
         .catch((err) =>
           setMaintainError(
-            err?.response?.data?.message || "Something went wrong"
-          )
+            err?.response?.data?.message || 'Something went wrong',
+          ),
         )
         .finally(() => {
           setMaintainLoading(false);
@@ -163,12 +165,12 @@ const ExclusionDatesDialog = ({
 
   const confirmActionButtonText = () => {
     switch (dialogType) {
-      case "deploy":
-        return deployLoading ? "Deploying..." : "Deploy";
-      case "maintain":
-        return "Add Period";
+      case 'deploy':
+        return deployLoading ? 'Deploying...' : 'Deploy';
+      case 'maintain':
+        return 'Add Period';
       default:
-        return "";
+        return '';
     }
   };
 
@@ -178,19 +180,19 @@ const ExclusionDatesDialog = ({
   const actions: Action[] = [
     {
       action:
-        dialogType === "deploy" ? onDeployDialogClose : onMaintainDialogClose,
-      color: "secondary",
-      size: "small",
-      text: "Cancel",
-      variant: "outlined",
+        dialogType === 'deploy' ? onDeployDialogClose : onMaintainDialogClose,
+      color: 'secondary',
+      size: 'small',
+      text: 'Cancel',
+      variant: 'outlined',
     },
     {
-      action: dialogType === "deploy" ? onDeploy : onConfirmationDialogOpen,
-      color: "primary",
-      size: "small",
+      action: dialogType === 'deploy' ? onDeploy : onConfirmationDialogOpen,
+      color: 'primary',
+      size: 'small',
       text: confirmActionButtonText(),
-      variant: "outlined",
-      disabled: dialogType === "deploy" ? deployLoading : isMaintainDisabled,
+      variant: 'outlined',
+      disabled: dialogType === 'deploy' ? deployLoading : isMaintainDisabled,
     },
   ];
 
@@ -203,26 +205,26 @@ const ExclusionDatesDialog = ({
         handleMaintainPeriodAddition={onMaintainAdd}
         start={maintainStartDateTime || undefined}
         end={maintainEndDateTime || undefined}
-        timeZone={timeZone || "UTC"}
+        timeZone={timeZone || 'UTC'}
       />
       <Dialog
         open={open}
         actions={actions}
         header={
-          dialogType === "deploy" ? "Mark as deployed" : "Data Exclusion Dates"
+          dialogType === 'deploy' ? 'Mark as deployed' : 'Data Exclusion Dates'
         }
         onClose={
-          dialogType === "deploy" ? onDeployDialogClose : onMaintainDialogClose
+          dialogType === 'deploy' ? onDeployDialogClose : onMaintainDialogClose
         }
         content={
           <div className={classes.dialogContent}>
             <Box mb="20px">
               <Alert severity="info">
-                {dialogType === "deploy"
-                  ? "Spotter data before this date will be deleted."
-                  : "Spotter data between these dates will be deleted."}{" "}
+                {dialogType === 'deploy'
+                  ? 'Spotter data before this date will be deleted.'
+                  : 'Spotter data between these dates will be deleted.'}{' '}
                 Note: The dates below are in the site&apos;s local timezone (
-                {timeZone || "UTC"}).
+                {timeZone || 'UTC'}).
               </Alert>
             </Box>
             <Box mb="5px">
@@ -235,11 +237,11 @@ const ExclusionDatesDialog = ({
               color="textSecondary"
               variant="h5"
             >
-              {dialogType === "deploy" ? "Activation Date" : "Start"}
+              {dialogType === 'deploy' ? 'Activation Date' : 'Start'}
             </Typography>
             <Grid
               className={
-                dialogType === "maintain"
+                dialogType === 'maintain'
                   ? classes.startDateContainer
                   : undefined
               }
@@ -258,29 +260,29 @@ const ExclusionDatesDialog = ({
                     fullWidth
                     showTodayButton
                     value={
-                      dialogType === "deploy"
+                      dialogType === 'deploy'
                         ? deployDateTime
                         : maintainStartDateTime
                     }
                     onChange={
-                      dialogType === "deploy"
+                      dialogType === 'deploy'
                         ? setDeployDateTime
                         : setMaintainStartDateTime
                     }
                     KeyboardButtonProps={{
-                      "aria-label": "change date",
+                      'aria-label': 'change date',
                     }}
                     inputProps={{
                       className: classes.textField,
                     }}
                     inputVariant="outlined"
                     error={
-                      dialogType === "deploy"
-                        ? pickerError !== ""
-                        : startPickerError !== ""
+                      dialogType === 'deploy'
+                        ? pickerError !== ''
+                        : startPickerError !== ''
                     }
                     helperText={
-                      dialogType === "deploy" ? pickerError : startPickerError
+                      dialogType === 'deploy' ? pickerError : startPickerError
                     }
                   />
                 </MuiPickersUtilsProvider>
@@ -296,17 +298,17 @@ const ExclusionDatesDialog = ({
                     fullWidth
                     format="HH:mm"
                     value={
-                      dialogType === "deploy"
+                      dialogType === 'deploy'
                         ? deployDateTime
                         : maintainStartDateTime
                     }
                     onChange={
-                      dialogType === "deploy"
+                      dialogType === 'deploy'
                         ? setDeployDateTime
                         : setMaintainStartDateTime
                     }
                     KeyboardButtonProps={{
-                      "aria-label": "change time",
+                      'aria-label': 'change time',
                     }}
                     InputProps={{
                       className: classes.textField,
@@ -314,18 +316,18 @@ const ExclusionDatesDialog = ({
                     keyboardIcon={<AccessTimeIcon />}
                     inputVariant="outlined"
                     error={
-                      dialogType === "deploy"
-                        ? pickerError !== ""
-                        : startPickerError !== ""
+                      dialogType === 'deploy'
+                        ? pickerError !== ''
+                        : startPickerError !== ''
                     }
                     helperText={
-                      dialogType === "deploy" ? pickerError : startPickerError
+                      dialogType === 'deploy' ? pickerError : startPickerError
                     }
                   />
                 </MuiPickersUtilsProvider>
               </Grid>
             </Grid>
-            {dialogType === "maintain" && (
+            {dialogType === 'maintain' && (
               <>
                 <Typography
                   className={classes.dateTitle}
@@ -348,13 +350,13 @@ const ExclusionDatesDialog = ({
                         value={maintainEndDateTime}
                         onChange={setMaintainEndDateTime}
                         KeyboardButtonProps={{
-                          "aria-label": "change date",
+                          'aria-label': 'change date',
                         }}
                         inputProps={{
                           className: classes.textField,
                         }}
                         inputVariant="outlined"
-                        error={endPickerError !== ""}
+                        error={endPickerError !== ''}
                         helperText={endPickerError}
                       />
                     </MuiPickersUtilsProvider>
@@ -372,14 +374,14 @@ const ExclusionDatesDialog = ({
                         value={maintainEndDateTime}
                         onChange={setMaintainEndDateTime}
                         KeyboardButtonProps={{
-                          "aria-label": "change time",
+                          'aria-label': 'change time',
                         }}
                         InputProps={{
                           className: classes.textField,
                         }}
                         keyboardIcon={<AccessTimeIcon />}
                         inputVariant="outlined"
-                        error={endPickerError !== ""}
+                        error={endPickerError !== ''}
                         helperText={endPickerError}
                       />
                     </MuiPickersUtilsProvider>
@@ -406,18 +408,18 @@ const styles = (theme: Theme) =>
       marginBottom: 20,
     },
     textField: {
-      color: "black",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
+      color: 'black',
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'rgba(0, 0, 0, 0.23)',
       },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
       },
     },
   });
 
 interface ExclusionDatesDialogIncomingProps {
-  dialogType: "deploy" | "maintain";
+  dialogType: 'deploy' | 'maintain';
   open: boolean;
   token: string;
   timeZone?: string | null;

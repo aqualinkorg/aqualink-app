@@ -1,31 +1,28 @@
-import { LatLng } from "leaflet";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { LatLng } from 'leaflet';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import {
   createStyles,
   Grid,
   Hidden,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
-import HomepageNavBar from "../../common/NavBar";
-import HomepageMap from "./Map";
-import SiteTable from "./SiteTable";
-import {
-  sitesRequest,
-  sitesListSelector,
-} from "../../store/Sites/sitesListSlice";
-import { siteRequest } from "../../store/Sites/selectedSiteSlice";
-import { siteOnMapSelector } from "../../store/Homepage/homepageSlice";
+} from '@material-ui/core';
+import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
+import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
+import { siteRequest } from 'store/Sites/selectedSiteSlice';
+import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
-import { surveysRequest } from "../../store/Survey/surveyListSlice";
-import { findSiteById, findInitialSitePosition } from "../../helpers/siteUtils";
+import { surveysRequest } from 'store/Survey/surveyListSlice';
+import { findSiteById, findInitialSitePosition } from 'helpers/siteUtils';
+import HomepageNavBar from 'common/NavBar';
+import SiteTable from './SiteTable';
+import HomepageMap from './Map';
 
 enum QueryParamKeys {
-  SITE_ID = "site_id",
-  ZOOM_LEVEL = "zoom",
+  SITE_ID = 'site_id',
+  ZOOM_LEVEL = 'zoom',
 }
 
 interface MapQueryParams {
@@ -41,20 +38,20 @@ function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
-  const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || "";
+  const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
   const sitesList = useSelector(sitesListSelector) || [];
-  const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || "";
+  const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
   const initialSiteId = queryParamSiteId
     ? findSiteById(sitesList, queryParamSiteId)?.id.toString() ||
       findSiteById(sitesList, featuredSiteId)?.id.toString() ||
-      ""
+      ''
     : featuredSiteId;
 
   // Focus on the site provided in the queryParamSiteId or the site with highest alert level.
   const initialCenter =
     findInitialSitePosition(
       sitesList,
-      queryParamSiteId === initialSiteId ? initialSiteId : undefined
+      queryParamSiteId === initialSiteId ? initialSiteId : undefined,
     ) || INITIAL_CENTER;
 
   return {
@@ -67,6 +64,7 @@ function useQuery() {
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const siteOnMap = useSelector(siteOnMapSelector);
+  const [showSiteTable, setShowSiteTable] = React.useState(true);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -96,7 +94,7 @@ const Homepage = ({ classes }: HomepageProps) => {
   // scrollTopAtClose prop doesn't work with manually controlled state
   useEffect(() => {
     if (isDrawerOpen) return;
-    const className = "ReactSwipeableBottomSheet";
+    const className = 'ReactSwipeableBottomSheet';
     const drawer =
       document.getElementsByClassName(`${className}--opened`)[0] ||
       document.getElementsByClassName(`${className}--closed`)[0];
@@ -112,24 +110,33 @@ const Homepage = ({ classes }: HomepageProps) => {
       </div>
       <div className={classes.root}>
         <Grid container>
-          <Grid className={classes.map} item xs={12} md={6}>
+          <Grid
+            className={classes.map}
+            item
+            xs={12}
+            md={showSiteTable ? 6 : 12}
+          >
             <HomepageMap
+              setShowSiteTable={setShowSiteTable}
+              showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
             />
           </Grid>
-          <Hidden smDown>
-            <Grid className={classes.siteTable} item md={6}>
-              <SiteTable />
-            </Grid>
-          </Hidden>
+          {showSiteTable && (
+            <Hidden smDown>
+              <Grid className={classes.siteTable} item md={6}>
+                <SiteTable />
+              </Grid>
+            </Hidden>
+          )}
           <Hidden mdUp>
             <SwipeableBottomSheet
               overflowHeight={60}
               bodyStyle={{
-                borderTopLeftRadius: "25px",
-                borderTopRightRadius: "25px",
-                maxHeight: "80vh",
+                borderTopLeftRadius: '25px',
+                borderTopRightRadius: '25px',
+                maxHeight: '80vh',
               }}
               onChange={setDrawerOpen}
               open={isDrawerOpen}
@@ -148,18 +155,18 @@ const Homepage = ({ classes }: HomepageProps) => {
 const styles = () =>
   createStyles({
     root: {
-      display: "flex",
+      display: 'flex',
       flexGrow: 1,
     },
     map: {
-      display: "flex",
+      display: 'flex',
       zIndex: 0,
     },
     siteTable: {
-      display: "flex",
-      flexDirection: "column",
-      height: "calc(100vh - 64px);", // subtract height of the navbar
-      overflowY: "auto",
+      display: 'flex',
+      flexDirection: 'column',
+      height: 'calc(100vh - 64px);', // subtract height of the navbar
+      overflowY: 'auto',
     },
   });
 

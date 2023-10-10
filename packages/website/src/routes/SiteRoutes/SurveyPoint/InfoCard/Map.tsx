@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   Grid,
   withStyles,
   WithStyles,
   createStyles,
   Theme,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { Site } from "../../../../store/Sites/types";
-import Map from "../../../../common/SiteDetails/Map";
-import { FormField } from "../../../../hooks/useFormField";
+import { Site } from 'store/Sites/types';
+import { FormField } from 'hooks/useFormField';
+import Map from 'common/SiteDetails/Map';
 
 const SurveyPointMap = ({
   site,
@@ -41,7 +41,7 @@ const styles = (theme: Theme) =>
     mapWrapper: {
       padding: 16,
       height: 280,
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         height: 300,
       },
     },

@@ -27,3 +27,6 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 .vscode/*
+
+# Firebase emulator
+.runtimeconfig.json

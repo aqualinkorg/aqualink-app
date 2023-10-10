@@ -1,13 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 
-import type { MapboxGeolocationData } from "../store/Homepage/types";
+import type { MapboxGeolocationData } from 'store/Homepage/types';
 
 const { REACT_APP_MAPBOX_ACCESS_TOKEN: mapboxToken } = process.env;
-const mapboxBaseUrl = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
+const mapboxBaseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
 
 const getLocation = (location: string) =>
   axios({
-    method: "GET",
+    method: 'GET',
     url: `${mapboxBaseUrl}${location}.json`,
     params: {
       access_token: mapboxToken,

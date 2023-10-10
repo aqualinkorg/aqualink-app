@@ -1,25 +1,20 @@
-import { isEqual, mean, meanBy, minBy } from "lodash";
-import L, { LatLng, LatLngBounds, Polygon as LeafletPolygon } from "leaflet";
-import { makeStyles } from "@material-ui/core";
+import { isEqual, mean, meanBy, minBy } from 'lodash';
+import L, { LatLng, LatLngBounds, Polygon as LeafletPolygon } from 'leaflet';
+import { makeStyles } from '@material-ui/core';
 
-import type {
-  Point,
-  SurveyPoints,
-  Polygon,
-  Position,
-} from "../store/Sites/types";
-import { spotter } from "../assets/spotter";
-import { spotterSelected } from "../assets/spotterSelected";
-import { spotterAnimation } from "../assets/spotterAnimation";
-import { hobo } from "../assets/hobo";
-import { hoboSelected } from "../assets/hoboSelected";
-import { CollectionDetails } from "../store/Collection/types";
+import type { Point, SurveyPoints, Polygon, Position } from 'store/Sites/types';
+import { CollectionDetails } from 'store/Collection/types';
+import { spotter } from '../assets/spotter';
+import { spotterSelected } from '../assets/spotterSelected';
+import { spotterAnimation } from '../assets/spotterAnimation';
+import { hobo } from '../assets/hobo';
+import { hoboSelected } from '../assets/hoboSelected';
 
 /**
  * Get the middle point of a polygon (average of all points). Returns the point itself if input isn't a polygon.
  */
 export const getMiddlePoint = (point: Point | Polygon): Position => {
-  if (point.type === "Point") {
+  if (point.type === 'Point') {
     return point.coordinates;
   }
 
@@ -35,14 +30,14 @@ export const getMiddlePoint = (point: Point | Polygon): Position => {
 
 export const samePosition = (
   polygon1: Polygon | Point,
-  polygon2: Polygon | Point
+  polygon2: Polygon | Point,
 ) => {
   const coords1 =
-    polygon1.type === "Polygon"
+    polygon1.type === 'Polygon'
       ? getMiddlePoint(polygon1)
       : polygon1.coordinates;
   const coords2 =
-    polygon2.type === "Polygon"
+    polygon2.type === 'Polygon'
       ? getMiddlePoint(polygon2)
       : polygon2.coordinates;
 
@@ -50,25 +45,25 @@ export const samePosition = (
 };
 
 export const getCollectionCenterAndBounds = (
-  collection?: CollectionDetails
+  collection?: CollectionDetails,
 ): [LatLng | undefined, LatLngBounds | undefined] => {
   if (!collection) {
     return [undefined, undefined];
   }
 
   const coordinates = collection.sites.map((item) =>
-    getMiddlePoint(item.polygon)
+    getMiddlePoint(item.polygon),
   );
 
   const center = new LatLng(
     meanBy(coordinates, (item) => item[1]),
-    meanBy(coordinates, (item) => item[0])
+    meanBy(coordinates, (item) => item[0]),
   );
 
   const bounds =
     coordinates.length > 1
       ? new LeafletPolygon(
-          coordinates.map((item) => new LatLng(item[1], item[0]))
+          coordinates.map((item) => new LatLng(item[1], item[0])),
         ).getBounds()
       : undefined;
 
@@ -100,14 +95,14 @@ export const radDistanceCalculator = (point1: Position, point2: Position) => {
 
 export const findClosestSurveyPoint = (
   sitePolygon?: Polygon | Point,
-  points?: SurveyPoints[]
+  points?: SurveyPoints[],
 ) => {
   if (!sitePolygon || !points) {
     return undefined;
   }
 
   const [siteLng, siteLat] =
-    sitePolygon.type === "Polygon"
+    sitePolygon.type === 'Polygon'
       ? getMiddlePoint(sitePolygon)
       : sitePolygon.coordinates;
 
@@ -117,13 +112,15 @@ export const findClosestSurveyPoint = (
       const polygon = point.polygon as Polygon | Point;
       return radDistanceCalculator(
         [siteLng, siteLat],
-        polygon.type === "Point" ? polygon.coordinates : getMiddlePoint(polygon)
+        polygon.type === 'Point'
+          ? polygon.coordinates
+          : getMiddlePoint(polygon),
       );
-    }
+    },
   );
 
   // if there is no closestPoint - return the first one by id.
-  const resultingPoint = closestPoint || minBy(points, "id");
+  const resultingPoint = closestPoint || minBy(points, 'id');
 
   return {
     ...resultingPoint,
@@ -135,26 +132,26 @@ export const findClosestSurveyPoint = (
 const useMarkerStyles = makeStyles({
   spotterIconWrapper: {},
   hoboIcon: {
-    height: "inherit",
-    width: "inherit",
+    height: 'inherit',
+    width: 'inherit',
   },
   spotterIconSteady: {
-    height: "inherit",
-    width: "inherit",
-    position: "relative",
+    height: 'inherit',
+    width: 'inherit',
+    position: 'relative',
     left: 0,
     right: 0,
-    top: "-100%",
+    top: '-100%',
   },
   spotterIconBlinking: {
-    width: "inherit",
-    height: "inherit",
-    WebkitAnimationName: "pulse",
-    WebkitAnimationDuration: "2s",
-    WebkitAnimationIterationCount: "infinite",
-    animationName: "pulse",
-    animationDuration: "2s",
-    animationIterationCount: "infinite",
+    width: 'inherit',
+    height: 'inherit',
+    WebkitAnimationName: 'pulse',
+    WebkitAnimationDuration: '2s',
+    WebkitAnimationIterationCount: 'infinite',
+    animationName: 'pulse',
+    animationDuration: '2s',
+    animationIterationCount: 'infinite',
   },
 });
 
@@ -167,18 +164,18 @@ export const buoyIcon = (iconUrl: string) =>
   });
 
 export const useSensorIcon = (
-  sensor: "spotter" | "hobo",
+  sensor: 'spotter' | 'hobo',
   selected: boolean,
-  color: string
+  color: string,
 ) => {
   const classes = useMarkerStyles();
-  const iconWidth = sensor === "spotter" ? 20 : 25;
-  const iconHeight = sensor === "spotter" ? 20 : 25;
+  const iconWidth = sensor === 'spotter' ? 20 : 25;
+  const iconHeight = sensor === 'spotter' ? 20 : 25;
   return L.divIcon({
     iconSize: [iconWidth, iconHeight],
     iconAnchor: [iconWidth / 2, 0],
     html:
-      sensor === "spotter"
+      sensor === 'spotter'
         ? `
           <div class=${classes.spotterIconBlinking}>
             ${spotterAnimation(color)}
@@ -201,12 +198,12 @@ export const useMarkerIcon = (
   hasHobo: boolean,
   selected: boolean,
   color: string,
-  iconUrl: string
+  iconUrl: string,
 ) => {
   const sensorIcon = useSensorIcon(
-    hasSpotter ? "spotter" : "hobo",
+    hasSpotter ? 'spotter' : 'hobo',
     selected,
-    color
+    color,
   );
   if (hasSpotter || hasHobo) return sensorIcon;
   return buoyIcon(iconUrl);

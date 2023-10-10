@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { Map, TileLayer, Marker, Circle } from "react-leaflet";
-import L, { LatLng, LatLngBounds, LayersControlEvent } from "leaflet";
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Map, TileLayer, Marker, Circle } from 'react-leaflet';
+import L, { LatLng, LatLngBounds, LayersControlEvent } from 'leaflet';
 import {
   createStyles,
   withStyles,
@@ -9,38 +9,47 @@ import {
   CircularProgress,
   IconButton,
   Snackbar,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import MyLocationIcon from "@material-ui/icons/MyLocation";
-
-import { sitesListLoadingSelector } from "../../../store/Sites/sitesListSlice";
-import { SiteMarkers } from "./Markers";
-import { SofarLayers } from "./sofarLayers";
-import Legend from "./Legend";
-import AlertLevelLegend from "./alertLevelLegend";
-import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
-import { CollectionDetails } from "../../../store/Collection/types";
-import { MapLayerName } from "../../../store/Homepage/types";
-import { mapConstants } from "../../../constants/maps";
+  Hidden,
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import MyLocationIcon from '@material-ui/icons/MyLocation';
+import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
+import { searchResultSelector } from 'store/Homepage/homepageSlice';
+import { CollectionDetails } from 'store/Collection/types';
+import { MapLayerName } from 'store/Homepage/types';
+import { mapConstants } from 'constants/maps';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
+import {
+  CreateCSSProperties,
+  CSSProperties,
+} from '@material-ui/core/styles/withStyles';
+import { mapIconSize } from 'layout/App/theme';
+import { SiteMarkers } from './Markers';
+import { SofarLayers } from './sofarLayers';
+import Legend from './Legend';
+import AlertLevelLegend from './alertLevelLegend';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const tileURL = accessToken
   ? `https://api.mapbox.com/styles/v1/eric-ovio/ckesyzu658klw19s6zc0adlgp/tiles/{z}/{x}/{y}@2x?access_token=${accessToken}`
-  : "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}@2x";
+  : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}@2x';
 
 const attribution = accessToken
   ? '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
-  : "";
+  : '';
 
 const currentLocationMarker = L.divIcon({
-  className: "current-position-marker",
+  className: 'current-position-marker',
   iconSize: L.point(16, 16, true),
 });
 
 const HomepageMap = ({
   initialCenter,
   initialZoom,
+  showSiteTable,
+  setShowSiteTable,
   initialBounds,
   collection,
   showAlertLevelLegend,
@@ -51,7 +60,7 @@ const HomepageMap = ({
   legendLeft,
   classes,
 }: HomepageMapProps) => {
-  const [legendName, setLegendName] = useState<string>(defaultLayerName || "");
+  const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] =
     useState<number>();
@@ -81,12 +90,12 @@ const HomepageMap = ({
           }
         },
         () => {
-          setCurrentLocationErrorMessage("Unable to find your location");
-        }
+          setCurrentLocationErrorMessage('Unable to find your location');
+        },
       );
     } else {
       setCurrentLocationErrorMessage(
-        "Geolocation is not supported by your browser"
+        'Geolocation is not supported by your browser',
       );
     }
   };
@@ -111,6 +120,8 @@ const HomepageMap = ({
     setLegendName(name);
   };
 
+  const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
+
   return loading ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
@@ -133,13 +144,31 @@ const HomepageMap = ({
       <Snackbar
         open={Boolean(currentLocationErrorMessage)}
         autoHideDuration={5000}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         onClose={onLocationErrorAlertClose}
       >
         <Alert severity="error" onClose={onLocationErrorAlertClose}>
           {currentLocationErrorMessage}
         </Alert>
       </Snackbar>
+      <Hidden smDown>
+        <div className={classes.expandIconButton}>
+          <IconButton
+            onClick={() => {
+              if (setShowSiteTable) {
+                setShowSiteTable((prev) => !prev);
+              }
+              setTimeout(() => {
+                if (ref.current && ref.current.leafletElement) {
+                  ref.current.leafletElement.invalidateSize();
+                }
+              });
+            }}
+          >
+            <ExpandIcon color="primary" className={classes.expandIcon} />
+          </IconButton>
+        </div>
+      </Hidden>
       <TileLayer attribution={attribution} url={tileURL} />
       <SofarLayers defaultLayerName={defaultLayerName} />
       <SiteMarkers collection={collection} />
@@ -166,40 +195,56 @@ const HomepageMap = ({
   );
 };
 
+const mapButtonStyles: CSSProperties | CreateCSSProperties<{}> = {
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'absolute',
+  height: mapIconSize,
+  width: mapIconSize,
+  borderRadius: 5,
+  margin: '10px',
+  backgroundColor: 'white',
+  backgroundClip: 'padding-box',
+  border: '2px solid rgba(0,0,0,0.2)',
+};
+
 const styles = () =>
   createStyles({
     map: {
       flex: 1,
+      width: '100%',
     },
     loading: {
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     locationIconButton: {
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      position: "absolute",
+      ...mapButtonStyles,
       left: 0,
-      top: 80,
+      top: 90,
       zIndex: 1000,
-      height: 34,
-      width: 34,
-      border: "2px solid rgba(0,0,0,0.2)",
-      borderRadius: 5,
-      margin: "10px 0 0 10px",
-      backgroundColor: "white",
-      backgroundClip: "padding-box",
+    },
+    expandIconButton: {
+      ...mapButtonStyles,
+      right: 0,
+      top: 50,
+      zIndex: 400,
+    },
+    expandIcon: {
+      fontSize: '34px',
     },
   });
 
 interface HomepageMapIncomingProps {
   initialCenter: LatLng;
   initialZoom: number;
+  showSiteTable?: boolean;
+  setShowSiteTable?: React.Dispatch<React.SetStateAction<boolean>>;
   initialBounds?: LatLngBounds;
   collection?: CollectionDetails;
   showAlertLevelLegend?: boolean;
@@ -211,6 +256,8 @@ interface HomepageMapIncomingProps {
 }
 
 HomepageMap.defaultProps = {
+  showSiteTable: true,
+  setShowSiteTable: undefined,
   initialBounds: undefined,
   collection: undefined,
   showAlertLevelLegend: true,

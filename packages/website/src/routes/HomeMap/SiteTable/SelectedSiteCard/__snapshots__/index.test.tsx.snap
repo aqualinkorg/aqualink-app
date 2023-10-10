@@ -31,7 +31,7 @@ exports[`renders as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-9 makeStyles-cardWrapper-21 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-cardWrapper-9 makeStyles-cardWrapper-21 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-content-xs-space-between"
       >
         <div
           class="MuiGrid-root makeStyles-cardAnalyticsWrapper-13 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10"
@@ -113,7 +113,7 @@ exports[`renders as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                23.0
+                15.9
                  
                 <mock-typography
                   component="span"
@@ -136,7 +136,7 @@ exports[`renders as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                4.9
+                0.0
                  
                 <mock-typography
                   component="span"
@@ -159,7 +159,7 @@ exports[`renders as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                39.0
+                10.7
                  
                 <mock-typography
                   component="span"
@@ -208,7 +208,7 @@ exports[`renders loading as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-content-xs-space-between"
       >
         <div
           class="MuiGrid-root makeStyles-cardAnalyticsWrapper-56 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10"
@@ -290,7 +290,7 @@ exports[`renders loading as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                23.0
+                15.9
                  
                 <mock-typography
                   component="span"
@@ -313,7 +313,7 @@ exports[`renders loading as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                4.9
+                0.0
                  
                 <mock-typography
                   component="span"
@@ -336,7 +336,7 @@ exports[`renders loading as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                39.0
+                10.7
                  
                 <mock-typography
                   component="span"

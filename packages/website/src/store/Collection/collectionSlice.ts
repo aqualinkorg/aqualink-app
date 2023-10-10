@@ -1,10 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-import { CollectionState, CollectionRequestParams } from "./types";
-import type { CreateAsyncThunkTypes, RootState } from "../configure";
-import collectionServices from "../../services/collectionServices";
-import { constructCollection } from "./utils";
-import { getAxiosErrorMessage } from "../../helpers/errors";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import collectionServices from 'services/collectionServices';
+import { CollectionState, CollectionRequestParams } from './types';
+import type { CreateAsyncThunkTypes, RootState } from '../configure';
+import { constructCollection } from './utils';
 
 const collectionInitialState: CollectionState = {
   loading: false,
@@ -12,11 +11,11 @@ const collectionInitialState: CollectionState = {
 };
 
 export const collectionRequest = createAsyncThunk<
-  CollectionState["details"],
+  CollectionState['details'],
   CollectionRequestParams,
   CreateAsyncThunkTypes
 >(
-  "collection/request",
+  'collection/request',
   async ({ id, isHeatStress, isPublic, token }, { rejectWithValue }) => {
     try {
       if (isHeatStress && !id) {
@@ -33,11 +32,11 @@ export const collectionRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 const collectionSlice = createSlice({
-  name: "collection",
+  name: 'collection',
   initialState: collectionInitialState,
   reducers: {
     clearCollection: (state) => ({ ...state, details: undefined }),
@@ -51,20 +50,20 @@ const collectionSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       collectionRequest.fulfilled,
-      (state, action: PayloadAction<CollectionState["details"]>) => ({
+      (state, action: PayloadAction<CollectionState['details']>) => ({
         ...state,
         details: action.payload,
         loading: false,
-      })
+      }),
     );
 
     builder.addCase(
       collectionRequest.rejected,
-      (state, action: PayloadAction<CollectionState["error"]>) => ({
+      (state, action: PayloadAction<CollectionState['error']>) => ({
         ...state,
         loading: false,
         error: action.payload,
-      })
+      }),
     );
 
     builder.addCase(collectionRequest.pending, (state) => ({
@@ -76,16 +75,16 @@ const collectionSlice = createSlice({
 });
 
 export const collectionDetailsSelector = (
-  state: RootState
-): CollectionState["details"] => state.collection.details;
+  state: RootState,
+): CollectionState['details'] => state.collection.details;
 
 export const collectionLoadingSelector = (
-  state: RootState
-): CollectionState["loading"] => state.collection.loading;
+  state: RootState,
+): CollectionState['loading'] => state.collection.loading;
 
 export const collectionErrorSelector = (
-  state: RootState
-): CollectionState["error"] => state.collection.error;
+  state: RootState,
+): CollectionState['error'] => state.collection.error;
 
 export const { clearCollection, setName } = collectionSlice.actions;
 

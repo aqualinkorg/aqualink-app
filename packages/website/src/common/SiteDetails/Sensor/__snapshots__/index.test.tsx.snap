@@ -37,61 +37,64 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
     <mock-cardcontent
       classname="Sensor-content-10"
     >
-      <mock-box
-        display="flex"
-        flexgrow="1"
-        p="1rem"
-        style="position: relative;"
+      <div
+        style="display: grid; gap: 1rem; grid-template-areas: 'value0 image' 'spacer1 image' 'value1 image'; padding: 1rem;"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+          style="grid-area: value0;"
         >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          <mock-typography
+            classname="Sensor-contentTextTitles-4"
+            variant="subtitle2"
           >
-            <mock-typography
-              classname="Sensor-contentTextTitles-4"
-              variant="subtitle2"
-            >
-              TEMP AT 1m
-            </mock-typography>
-            <mock-typography
-              classname="Sensor-contentTextValues-5"
-              variant="h3"
-            >
-              - -°C
-            </mock-typography>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            TEMP AT 1m
+          </mock-typography>
+          <mock-typography
+            classname="Sensor-contentTextValues-5"
+            variant="h3"
           >
-            <mock-typography
-              classname="Sensor-contentTextTitles-4"
-              variant="subtitle2"
-            >
-              TEMP AT DEPTH
-            </mock-typography>
-            <mock-typography
-              classname="Sensor-contentTextValues-5"
-              variant="h3"
-            >
-              - -°C
-            </mock-typography>
-          </div>
+            - -°C
+          </mock-typography>
         </div>
-        <mock-box
-          bottom="-15"
-          position="absolute"
-          right="0"
+        <div
+          style="grid-area: value1;"
+        >
+          <mock-typography
+            classname="Sensor-contentTextTitles-4"
+            variant="subtitle2"
+          >
+            TEMP AT DEPTH
+          </mock-typography>
+          <mock-typography
+            classname="Sensor-contentTextValues-5"
+            variant="h3"
+          >
+            - -°C
+          </mock-typography>
+        </div>
+        <div
+          style="grid-area: spacer1; display: inherit; min-height: 2em;"
+        />
+        <div
+          style="grid-area: spacer2; display: inherit;"
+        />
+        <div
+          style="grid-area: image; position: relative;"
         >
           <img
             alt="sensor"
+            height="150"
             src="sensor.svg"
+            style="position: absolute; bottom: 0px;"
+            width="auto"
           />
-        </mock-box>
-      </mock-box>
+        </div>
+        <div
+          style="grid-area: value4; display: flex; align-items: flex-end;"
+        />
+      </div>
       <div
-        class="MuiGrid-root Sensor-noSensorAlert-11 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+        class="MuiGrid-root Sensor-noSensorAlert-11 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
       >
         <mock-typography
           variant="h6"

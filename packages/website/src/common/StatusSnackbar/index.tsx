@@ -1,6 +1,6 @@
-import React from "react";
-import { Button, Snackbar, makeStyles, Theme } from "@material-ui/core";
-import { Alert, AlertProps } from "@material-ui/lab";
+import React from 'react';
+import { Button, Snackbar, makeStyles, Theme } from '@material-ui/core';
+import { Alert, AlertProps } from '@material-ui/lab';
 
 const StatusSnackbar = ({
   open,
@@ -10,7 +10,7 @@ const StatusSnackbar = ({
   handleClose,
   onFurtherActionTake,
 }: StatusSnackbarProps) => {
-  const classes = useStyles(!!message);
+  const classes = useStyles({ hasMessage: !!message });
 
   return message ? (
     <Snackbar
@@ -18,8 +18,8 @@ const StatusSnackbar = ({
       open={open}
       onClose={handleClose}
       anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
+        vertical: 'bottom',
+        horizontal: 'left',
       }}
     >
       <Alert
@@ -44,32 +44,34 @@ const StatusSnackbar = ({
   ) : null;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
-  snackbar: {
-    maxWidth: "50%",
-    [theme.breakpoints.down("sm")]: {
-      maxWidth: "90%",
+const useStyles = makeStyles<Theme, { hasMessage: boolean }>(
+  (theme: Theme) => ({
+    snackbar: {
+      maxWidth: '50%',
+      [theme.breakpoints.down('sm')]: {
+        maxWidth: '90%',
+      },
     },
-  },
-  alert: {
-    alignItems: "center",
-  },
-  alertMessage: (hasMessage: boolean) => ({
-    display: "flex",
-    alignItems: "center",
-    ...(hasMessage ? { padding: 0 } : {}),
+    alert: {
+      alignItems: 'center',
+    },
+    alertMessage: ({ hasMessage }) => ({
+      display: 'flex',
+      alignItems: 'center',
+      ...(hasMessage ? { padding: 0 } : {}),
+    }),
+    button: {
+      marginLeft: theme.spacing(1.5),
+    },
   }),
-  button: {
-    marginLeft: theme.spacing(1.5),
-  },
-}));
+);
 
 interface StatusSnackbarProps {
   open: boolean;
   message?: string;
   furtherActionLabel?: string;
-  severity: AlertProps["severity"];
-  handleClose: AlertProps["onClose"];
+  severity: AlertProps['severity'];
+  handleClose: AlertProps['onClose'];
   onFurtherActionTake?: () => void;
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -8,16 +8,16 @@ import {
   Box,
   Typography,
   TypographyProps,
-} from "@material-ui/core";
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
-import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+} from '@material-ui/core';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import {
   KeyboardDatePicker,
   KeyboardDatePickerProps,
   MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import moment from "moment";
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { DateTime } from 'luxon-extensions';
 
 const DatePicker = ({
   value,
@@ -32,8 +32,8 @@ const DatePicker = ({
   return (
     <Grid item>
       <Box display="flex" alignItems="flex-end">
-        <Typography variant={dateNameTextVariant || "h6"} color="textSecondary">
-          {`${dateName || "Date"}:`}
+        <Typography variant={dateNameTextVariant || 'h6'} color="textSecondary">
+          {`${dateName || 'Date'}:`}
         </Typography>
         <div className={classes.datePicker}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -44,10 +44,10 @@ const DatePicker = ({
               disableToolbar
               format="MM/dd/yyyy"
               name="datePicker"
-              maxDate={moment()
-                .tz(timeZone || "UTC")
-                .format("YYYY/MM/DD")}
-              minDate={moment(0).format("YYYY/MM/DD")}
+              maxDate={DateTime.now()
+                .setZone(timeZone || 'UTC')
+                .toFormat('yyyy/MM/dd')}
+              minDate={DateTime.fromMillis(0).toFormat('yyyy/MM/dd')}
               autoOk={autoOk}
               showTodayButton
               value={value || null}
@@ -70,21 +70,21 @@ const DatePicker = ({
 const styles = (theme: Theme) =>
   createStyles({
     datePicker: {
-      marginLeft: "0.5rem",
+      marginLeft: '0.5rem',
     },
     calendarButton: {
-      padding: "0 0 2px 0",
+      padding: '0 0 2px 0',
     },
     smallPadding: {
       paddingBottom: 2,
     },
     textField: {
       width: 115,
-      color: "black",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
+      color: 'black',
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'rgba(0, 0, 0, 0.23)',
       },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
       },
     },
@@ -93,8 +93,8 @@ const styles = (theme: Theme) =>
 interface DatePickerIncomingProps {
   value: string | null;
   dateName?: string;
-  dateNameTextVariant?: TypographyProps["variant"];
-  pickerSize?: KeyboardDatePickerProps["size"];
+  dateNameTextVariant?: TypographyProps['variant'];
+  pickerSize?: KeyboardDatePickerProps['size'];
   autoOk?: boolean;
   timeZone: string | null | undefined;
   onChange: (date: MaterialUiPickersDate, value?: string | null) => void;

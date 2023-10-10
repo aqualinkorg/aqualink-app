@@ -1,5 +1,5 @@
 import { times } from 'lodash';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { Extent, pointToIndex } from '../../src/utils/coordinates';
 
 let netcdf4;
@@ -18,6 +18,7 @@ try {
  * available in /api/data/
  *
  * The files used come from https://psl.noaa.gov/cgi-bin/db_search/DBListFiles.pl?did=132&tid=91426&vid=2423
+ * Look for the "NOAA OI SST V2 High Resolution Dataset" and download SST daily data.
  *
  * @param year
  * @param long
@@ -42,11 +43,10 @@ export function getNOAAData(year: number = 2020, long: number, lat: number) {
     height,
   );
 
-  const startDate = moment(new Date(year, 0, 1));
+  const startDate = DateTime.fromJSDate(new Date(year, 0, 1));
 
   return times(dateRange, (dateIndex) => {
-    const date = moment(startDate);
-    date.day(startDate.day() + dateIndex);
+    const date = startDate.set({ day: startDate.day + dateIndex });
     const data: number[] = variables.sst.readSlice(
       dateIndex,
       1,
@@ -56,6 +56,6 @@ export function getNOAAData(year: number = 2020, long: number, lat: number) {
       10,
     );
     const filteredData = data.filter((value) => value <= 9999999);
-    return { date: date.toDate(), satelliteTemperature: filteredData[0] };
+    return { date: date.toJSDate(), satelliteTemperature: filteredData[0] };
   });
 }

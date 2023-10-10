@@ -5,26 +5,27 @@ import type {
   SurveyListItem,
   SurveyMediaUpdateRequestData,
   SurveyPointUpdateParams,
-} from "../store/Survey/types";
-import requests from "../helpers/requests";
-import { SurveyPoints } from "../store/Sites/types";
+  SurveyMedia,
+} from 'store/Survey/types';
+import { SurveyPoints } from 'store/Sites/types';
+import requests from 'helpers/requests';
 
 const getSurvey = (siteId: string, surveyId: string) =>
   requests.send<SurveyState>({
     url: `sites/${siteId}/surveys/${surveyId}`,
-    method: "GET",
+    method: 'GET',
   });
 
 const getSurveys = (siteId: string) =>
   requests.send<SurveyListItem[]>({
     url: `sites/${siteId}/surveys`,
-    method: "GET",
+    method: 'GET',
   });
 
 const addSurvey = (siteId: string, surveyData: SurveyData) => {
   return requests.send<SurveyState>({
     url: `sites/${siteId}/surveys`,
-    method: "POST",
+    method: 'POST',
     data: { ...surveyData, token: undefined },
     token: surveyData.token === null ? undefined : surveyData.token,
   });
@@ -33,7 +34,7 @@ const addSurvey = (siteId: string, surveyData: SurveyData) => {
 const deleteSurvey = (siteId: number, surveyId: number, token: string) => {
   return requests.send({
     url: `sites/${siteId}/surveys/${surveyId}`,
-    method: "DELETE",
+    method: 'DELETE',
     token,
   });
 };
@@ -41,11 +42,11 @@ const deleteSurvey = (siteId: number, surveyId: number, token: string) => {
 const addSurveyMedia = (
   siteId: string,
   surveyId: string,
-  mediaData: SurveyMediaData
+  mediaData: SurveyMediaData,
 ) => {
   return requests.send<[]>({
     url: `sites/${siteId}/surveys/${surveyId}/media`,
-    method: "POST",
+    method: 'POST',
     data: { ...mediaData, token: undefined },
     token: mediaData.token === null ? undefined : mediaData.token,
   });
@@ -53,8 +54,8 @@ const addSurveyMedia = (
 
 const addNewPoi = (siteId: number, name: string, token?: string | null) => {
   return requests.send({
-    url: "site-survey-points",
-    method: "POST",
+    url: 'site-survey-points',
+    method: 'POST',
     data: {
       siteId,
       name,
@@ -66,11 +67,11 @@ const addNewPoi = (siteId: number, name: string, token?: string | null) => {
 const updatePoi = (
   surveyPointId: number,
   updateParams: SurveyPointUpdateParams,
-  token: string
+  token: string,
 ) =>
   requests.send<SurveyPoints>({
     url: `site-survey-points/${surveyPointId}`,
-    method: "PUT",
+    method: 'PUT',
     data: updateParams,
     token,
   });
@@ -79,11 +80,11 @@ const editSurveyMedia = (
   siteId: number,
   mediaId: number,
   data: SurveyMediaUpdateRequestData,
-  token: string
+  token: string,
 ) => {
-  return requests.send({
+  return requests.send<SurveyMedia>({
     url: `sites/${siteId}/surveys/media/${mediaId}`,
-    method: "PUT",
+    method: 'PUT',
     data,
     token,
   });

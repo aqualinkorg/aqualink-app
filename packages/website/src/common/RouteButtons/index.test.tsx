@@ -1,9 +1,9 @@
-import React from "react";
-import { render } from "@testing-library/react";
+import React from 'react';
+import { render } from '@testing-library/react';
 
-import RouteButtons from ".";
+import RouteButtons from '.';
 
-test("renders as expected", () => {
+test('renders as expected', () => {
   const { container } = render(<RouteButtons />);
   expect(container).toMatchSnapshot();
 });

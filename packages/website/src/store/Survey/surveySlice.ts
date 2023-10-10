@@ -3,14 +3,21 @@ import {
   createAsyncThunk,
   PayloadAction,
   combineReducers,
-} from "@reduxjs/toolkit";
-import { SelectedSurveyState, SurveyState, SurveyData } from "./types";
-import type { RootState, CreateAsyncThunkTypes } from "../configure";
-import surveyServices from "../../services/surveyServices";
-import { getAxiosErrorMessage } from "../../helpers/errors";
+} from '@reduxjs/toolkit';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import surveyServices from 'services/surveyServices';
+import {
+  SelectedSurveyState,
+  SurveyState,
+  SurveyData,
+  SurveyMediaUpdateRequestData,
+  SurveyMedia,
+} from './types';
+import type { RootState, CreateAsyncThunkTypes } from '../configure';
 
 const selectedSurveyInitialState: SelectedSurveyState = {
   loading: true,
+  loadingSurveyMediaEdit: false,
   error: null,
 };
 
@@ -25,11 +32,11 @@ interface GetSurveyParams {
 }
 
 export const surveyGetRequest = createAsyncThunk<
-  SelectedSurveyState["details"],
+  SelectedSurveyState['details'],
   GetSurveyParams,
   CreateAsyncThunkTypes
 >(
-  "selectedSurvey/getRequest",
+  'selectedSurvey/getRequest',
   async ({ surveyId, siteId }, { rejectWithValue }) => {
     try {
       const { data } = await surveyServices.getSurvey(siteId, surveyId);
@@ -37,7 +44,7 @@ export const surveyGetRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
 );
 
 interface UserAttributes {
@@ -47,11 +54,11 @@ interface UserAttributes {
 }
 
 export const surveyAddRequest = createAsyncThunk<
-  SelectedSurveyState["details"],
+  SelectedSurveyState['details'],
   UserAttributes,
   CreateAsyncThunkTypes
 >(
-  "selectedSurvey/addRequest",
+  'selectedSurvey/addRequest',
   async ({ surveyData, siteId, changeTab }, { rejectWithValue }) => {
     try {
       const { data } = await surveyServices.addSurvey(siteId, surveyData);
@@ -60,16 +67,44 @@ export const surveyAddRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  }
+  },
+);
+
+interface SurveyMediaEditRequestData {
+  siteId: number;
+  mediaId: number;
+  data: Partial<SurveyMediaUpdateRequestData>;
+  token: string;
+}
+
+export const surveyMediaEditRequest = createAsyncThunk<
+  SurveyMedia,
+  SurveyMediaEditRequestData,
+  CreateAsyncThunkTypes
+>(
+  'selectedSurvey/editRequest',
+  async ({ siteId, mediaId, data, token }, { rejectWithValue }) => {
+    try {
+      const response = await surveyServices.editSurveyMedia(
+        siteId,
+        mediaId,
+        data,
+        token,
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
+  },
 );
 
 const surveyFormDraft = createSlice({
-  name: "survey",
+  name: 'survey',
   initialState: surveyFormDraftInitialState,
   reducers: {
     setDiveLocation: (
       state,
-      action: PayloadAction<SurveyState["diveLocation"]>
+      action: PayloadAction<SurveyState['diveLocation']>,
     ) => ({
       ...state,
       diveLocation: action.payload,
@@ -78,7 +113,7 @@ const surveyFormDraft = createSlice({
 });
 
 const selectedSurvey = createSlice({
-  name: "selectedSurvey",
+  name: 'selectedSurvey',
   initialState: selectedSurveyInitialState,
   reducers: {
     clearSurvey: (state) => ({
@@ -87,7 +122,7 @@ const selectedSurvey = createSlice({
     }),
     setSelectedPoi: (
       state,
-      action: PayloadAction<SelectedSurveyState["selectedPoi"]>
+      action: PayloadAction<SelectedSurveyState['selectedPoi']>,
     ) => ({
       ...state,
       selectedPoi: action.payload,
@@ -110,23 +145,23 @@ const selectedSurvey = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       surveyGetRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSurveyState["details"]>) => {
+      (state, action: PayloadAction<SelectedSurveyState['details']>) => {
         return {
           ...state,
           details: action.payload,
           loading: false,
         };
-      }
+      },
     );
     builder.addCase(
       surveyGetRequest.rejected,
-      (state, action: PayloadAction<SelectedSurveyState["error"]>) => {
+      (state, action: PayloadAction<SelectedSurveyState['error']>) => {
         return {
           ...state,
           error: action.payload,
           loading: false,
         };
-      }
+      },
     );
     builder.addCase(surveyGetRequest.pending, (state) => {
       return {
@@ -137,28 +172,78 @@ const selectedSurvey = createSlice({
     });
     builder.addCase(
       surveyAddRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSurveyState["details"]>) => {
+      (state, action: PayloadAction<SelectedSurveyState['details']>) => {
         return {
           ...state,
           details: action.payload,
           loading: false,
         };
-      }
+      },
     );
     builder.addCase(
       surveyAddRequest.rejected,
-      (state, action: PayloadAction<SelectedSurveyState["error"]>) => {
+      (state, action: PayloadAction<SelectedSurveyState['error']>) => {
         return {
           ...state,
           error: action.payload,
           loading: false,
         };
-      }
+      },
     );
     builder.addCase(surveyAddRequest.pending, (state) => {
       return {
         ...state,
         loading: true,
+        error: null,
+      };
+    });
+
+    builder.addCase(
+      surveyMediaEditRequest.fulfilled,
+      (state, action: PayloadAction<SurveyMedia>) => {
+        const surveyMedia = state.details?.surveyMedia?.find(
+          (x) => x.id === action.payload.id,
+        );
+        if (action.payload.featured) {
+          state.details?.surveyMedia?.forEach((media) => {
+            // eslint-disable-next-line fp/no-mutation, no-param-reassign
+            media.featured = false;
+          });
+        }
+        // Here we mutate surveyMedia state instead of returning a new one, due to
+        // the following strange behavior from redux + react:
+        // <MediaDetails /> component renders <SliderCard /> by mapping surveyMedia redux state.
+        // This was causing, in some cases, the first time of calling dispatch(surveyMediaEditRequest({...}))
+        // to re initiate the <SliderCard /> component's state causing the SliderCard's snackbar failing to appear.
+        // The creation of a new surveyMedia array, was probably confusing React.
+        if (surveyMedia) {
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.comments = action.payload.comments;
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.featured = action.payload.featured;
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.observations = action.payload.observations;
+          // eslint-disable-next-line fp/no-mutation
+          surveyMedia.surveyPoint = action.payload.surveyPoint;
+        }
+        // eslint-disable-next-line fp/no-mutation, no-param-reassign
+        state.loadingSurveyMediaEdit = false;
+      },
+    );
+    builder.addCase(
+      surveyMediaEditRequest.rejected,
+      (state, action: PayloadAction<SelectedSurveyState['error']>) => {
+        return {
+          ...state,
+          error: action.payload,
+          loadingSurveyMediaEdit: false,
+        };
+      },
+    );
+    builder.addCase(surveyMediaEditRequest.pending, (state) => {
+      return {
+        ...state,
+        loadingSurveyMediaEdit: true,
         error: null,
       };
     });
@@ -171,26 +256,31 @@ const survey = combineReducers({
 });
 
 export const diveLocationSelector = (
-  state: RootState
-): SurveyState["diveLocation"] => state.survey.surveyFormDraft.diveLocation;
+  state: RootState,
+): SurveyState['diveLocation'] => state.survey.surveyFormDraft.diveLocation;
 
 /* For surveyRequest */
 export const surveyDetailsSelector = (
-  state: RootState
-): SelectedSurveyState["details"] => state.survey.selectedSurvey.details;
+  state: RootState,
+): SelectedSurveyState['details'] => state.survey.selectedSurvey.details;
 
 export const selectedSurveyPointSelector = (
-  state: RootState
-): SelectedSurveyState["selectedPoi"] =>
+  state: RootState,
+): SelectedSurveyState['selectedPoi'] =>
   state.survey.selectedSurvey.selectedPoi;
 
 export const surveyLoadingSelector = (
-  state: RootState
-): SelectedSurveyState["loading"] => state.survey.selectedSurvey.loading;
+  state: RootState,
+): SelectedSurveyState['loading'] => state.survey.selectedSurvey.loading;
+
+export const surveyMediaEditLoadingSelector = (
+  state: RootState,
+): SelectedSurveyState['loadingSurveyMediaEdit'] =>
+  state.survey.selectedSurvey.loadingSurveyMediaEdit;
 
 export const surveyErrorSelector = (
-  state: RootState
-): SelectedSurveyState["error"] => state.survey.selectedSurvey.error;
+  state: RootState,
+): SelectedSurveyState['error'] => state.survey.selectedSurvey.error;
 
 export const { setDiveLocation } = surveyFormDraft.actions;
 export const { setSelectedPoi, clearSurvey, setFeaturedImage } =

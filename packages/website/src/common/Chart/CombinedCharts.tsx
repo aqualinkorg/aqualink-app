@@ -1,14 +1,14 @@
-import React from "react";
-import { Box, createStyles, makeStyles, Typography } from "@material-ui/core";
+import React from 'react';
+import { Box, createStyles, makeStyles, Typography } from '@material-ui/core';
 
-import ChartWithTooltip from "./ChartWithTooltip";
-import MultipleSensorsCharts from "./MultipleSensorsCharts";
-import { Site } from "../../store/Sites/types";
-import { convertSurveyDataToLocalTime } from "../../helpers/dates";
-import { SurveyListItem } from "../../store/Survey/types";
-import { standardDailyDataDataset } from "./MultipleSensorsCharts/helpers";
-import LoadingSkeleton from "../LoadingSkeleton";
-import chartSkeletonImage from "../../assets/img/chart_skeleton.png";
+import { Site } from 'store/Sites/types';
+import { SurveyListItem } from 'store/Survey/types';
+import { convertSurveyDataToLocalTime } from 'helpers/dates';
+import ChartWithTooltip from './ChartWithTooltip';
+import MultipleSensorsCharts from './MultipleSensorsCharts';
+import { standardDailyDataDataset } from './MultipleSensorsCharts/helpers';
+import LoadingSkeleton from '../LoadingSkeleton';
+import chartSkeletonImage from '../../assets/img/chart_skeleton.png';
 
 const CombinedCharts = ({
   site,
@@ -22,7 +22,7 @@ const CombinedCharts = ({
         site.dailyData,
         site.maxMonthlyMean,
         true,
-        site.timezone
+        site.timezone,
       )
     : undefined;
 
@@ -50,7 +50,7 @@ const CombinedCharts = ({
               datasets={[heatStressDataset]}
               surveys={convertSurveyDataToLocalTime(surveys, site.timezone)}
               temperatureThreshold={
-                typeof site.maxMonthlyMean === "number"
+                typeof site.maxMonthlyMean === 'number'
                   ? site.maxMonthlyMean + 1
                   : null
               }
@@ -74,9 +74,9 @@ const CombinedCharts = ({
 const useStyles = makeStyles(() =>
   createStyles({
     chart: {
-      height: "16rem",
-      marginBottom: "3rem",
-      marginTop: "1rem",
+      height: '16rem',
+      marginBottom: '3rem',
+      marginTop: '1rem',
     },
     graphtTitleWrapper: {
       marginLeft: 42,
@@ -84,7 +84,7 @@ const useStyles = makeStyles(() =>
     graphTitle: {
       lineHeight: 1.5,
     },
-  })
+  }),
 );
 
 interface CombinedChartsProps {

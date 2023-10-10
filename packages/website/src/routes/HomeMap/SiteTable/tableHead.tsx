@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   createStyles,
   TableCell,
@@ -8,8 +8,8 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import { Order, OrderKeys } from "./utils";
+} from '@material-ui/core';
+import { Order, OrderKeys } from './utils';
 
 const ColumnTitle = ({
   title,
@@ -21,15 +21,15 @@ const ColumnTitle = ({
   bigText?: boolean;
 }) => (
   <Typography
-    variant={bigText ? "h6" : "subtitle1"}
-    style={{ color: "black" }}
+    variant={bigText ? 'h6' : 'subtitle1'}
+    style={{ color: 'black' }}
     noWrap
   >
     {title}
     {unit && (
       <Typography
         variant="subtitle2"
-        style={{ color: "black" }}
+        style={{ color: 'black' }}
         component="span"
       >{` (${unit})`}</Typography>
     )}
@@ -41,86 +41,86 @@ ColumnTitle.defaultProps = {
   bigText: undefined,
 };
 
-const EnhancedTableHead = (props: EnhancedTableProps) => {
+const EnhancedTableHead = ({
+  classes,
+  onRequestSort,
+  order,
+  orderBy,
+  isExtended,
+}: EnhancedTableProps) => {
   const createSortHandler =
     (property: OrderKeys) => (event: React.MouseEvent<unknown>) => {
-      props.onRequestSort(event, property);
+      onRequestSort(event, property);
     };
-
-  const { isExtended } = props;
 
   const headCells: HeadCell[] = [
     {
       id: OrderKeys.LOCATION_NAME,
-      label: "SITE",
-      width: isExtended ? "20%" : "40%",
+      label: 'SITE',
+      width: isExtended ? '20%' : '40%',
       display: true,
     },
     {
       id: OrderKeys.SST,
-      label: "SST",
-      unit: "°C",
+      label: 'SST',
+      unit: '°C',
       display: true,
     },
     {
       id: OrderKeys.HISTORIC_MAX,
-      label: "HISTORIC MAX",
-      unit: "°C",
+      label: 'HISTORIC MAX',
+      unit: '°C',
       display: !!isExtended,
     },
     {
       id: OrderKeys.SST_ANOMALY,
-      label: "SST ANOMALY",
-      unit: "°C",
+      label: 'SST ANOMALY',
+      unit: '°C',
       display: !!isExtended,
     },
     {
       id: OrderKeys.DHW,
-      label: "STRESS",
-      unit: "DHW",
+      label: 'STRESS',
+      unit: 'DHW',
       display: true,
     },
     {
       id: OrderKeys.BUOY_TOP,
-      label: "BUOY",
-      unit: "1m",
+      label: 'BUOY',
+      unit: '1m',
       display: !!isExtended,
     },
     {
       id: OrderKeys.BUOY_BOTTOM,
-      label: "BUOY",
-      unit: "DEPTH",
+      label: 'BUOY',
+      unit: 'DEPTH',
       display: !!isExtended,
     },
     {
       id: OrderKeys.ALERT,
-      label: "ALERT",
+      label: 'ALERT',
       display: true,
-      width: isExtended ? undefined : "5%",
+      width: isExtended ? undefined : '5%',
     },
   ];
 
   return (
-    <TableHead style={{ backgroundColor: "rgb(244, 244, 244)" }}>
+    <TableHead style={{ backgroundColor: 'rgb(244, 244, 244)' }}>
       <TableRow>
         {headCells.map(
           (headCell) =>
             headCell.display && (
               <TableCell
-                className={props.classes.headCells}
+                className={classes.headCells}
                 key={headCell.id}
                 style={{ width: headCell.width }}
                 align="left"
-                padding="default"
-                sortDirection={
-                  props.orderBy === headCell.id ? props.order : false
-                }
+                padding="normal"
+                sortDirection={orderBy === headCell.id ? order : false}
               >
                 <TableSortLabel
-                  active={props.orderBy === headCell.id}
-                  direction={
-                    props.orderBy === headCell.id ? props.order : "asc"
-                  }
+                  active={orderBy === headCell.id}
+                  direction={orderBy === headCell.id ? order : 'asc'}
                   onClick={createSortHandler(headCell.id)}
                 >
                   <ColumnTitle
@@ -130,7 +130,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
                   />
                 </TableSortLabel>
               </TableCell>
-            )
+            ),
         )}
       </TableRow>
     </TableHead>
@@ -148,7 +148,7 @@ interface HeadCell {
 interface EnhancedTableIncomingProps {
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: OrderKeys
+    property: OrderKeys,
   ) => void;
   order: Order;
   orderBy: OrderKeys;

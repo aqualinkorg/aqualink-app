@@ -1,29 +1,20 @@
-import moment from "moment";
-import {
-  filter,
-  flatten,
-  inRange,
-  isNil,
-  isNumber,
-  map,
-  maxBy,
-  minBy,
-} from "lodash";
-import { ChartDataSets, ChartPoint } from "chart.js";
-import type {
-  DailyData,
-  HistoricalMonthlyMeanData,
-  ValueWithTimestamp,
-} from "../../store/Sites/types";
-import { SurveyListItem } from "../../store/Survey/types";
+import { filter, flatten, isNil, isNumber, map, maxBy, minBy } from 'lodash';
+import { ChartDataSets, ChartPoint } from 'chart.js';
 import {
   DEFAULT_SURVEY_CHART_POINT_COLOR,
   SELECTED_SURVEY_CHART_POINT_COLOR,
   SURVEY_CHART_POINT_BORDER_COLOR,
   Y_SPACING_PERCENTAGE,
-} from "../../constants/charts";
-import type { ChartProps, Dataset } from ".";
-import { sortByDate } from "../../helpers/dates";
+} from 'constants/charts';
+import type {
+  DailyData,
+  HistoricalMonthlyMeanData,
+  ValueWithTimestamp,
+} from 'store/Sites/types';
+import { SurveyListItem } from 'store/Survey/types';
+import { sortByDate } from 'helpers/dates';
+import { DateTime } from 'luxon-extensions';
+import type { ChartProps, Dataset } from '.';
 
 interface Context {
   chart?: Chart;
@@ -39,7 +30,7 @@ export const getSurveyDates = (surveys: SurveyListItem[]): number[] =>
 
 export const sameDay = (
   date1: string | number | Date,
-  date2: string | number | Date
+  date2: string | number | Date,
 ) => new Date(date1).toDateString() === new Date(date2).toDateString();
 
 const timeDiff = (incomingDate: string, date: Date) =>
@@ -47,24 +38,24 @@ const timeDiff = (incomingDate: string, date: Date) =>
 
 export const findSurveyFromDate = (
   inputDate: string,
-  surveys: SurveyListItem[]
+  surveys: SurveyListItem[],
 ): number | null | undefined => {
   return (
     surveys.find(
-      (survey) => survey.diveDate && sameDay(survey.diveDate, inputDate)
+      (survey) => survey.diveDate && sameDay(survey.diveDate, inputDate),
     )?.id || null
   );
 };
 
 export function getHistoricalMonthlyMeanDataClosestToDate(
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
-  date: Date
+  date: Date,
 ) {
   return historicalMonthlyMeanData.length > 0
     ? historicalMonthlyMeanData.reduce((prevClosest, nextPoint) =>
         timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
           ? nextPoint
-          : prevClosest
+          : prevClosest,
       )
     : undefined;
 }
@@ -72,22 +63,22 @@ export function getHistoricalMonthlyMeanDataClosestToDate(
 export const filterHistoricalMonthlyMeanData = (
   historicalMonthlyMean: HistoricalMonthlyMeanData[],
   from?: string,
-  to?: string
+  to?: string,
 ) => {
   if (!from || !to) {
     return historicalMonthlyMean;
   }
 
-  const start = moment(from);
-  const end = moment(to);
+  const start = DateTime.fromISO(from);
+  const end = DateTime.fromISO(to);
 
   const closestToStart = getHistoricalMonthlyMeanDataClosestToDate(
     historicalMonthlyMean,
-    new Date(start.toISOString())
+    start.toJSDate(),
   )?.value;
   const closestToEnd = getHistoricalMonthlyMeanDataClosestToDate(
     historicalMonthlyMean,
-    new Date(end.toISOString())
+    end.toJSDate(),
   )?.value;
 
   const closestToStartArray: HistoricalMonthlyMeanData[] = closestToStart
@@ -97,8 +88,10 @@ export const filterHistoricalMonthlyMeanData = (
     ? [{ date: end.toISOString(), value: closestToEnd }]
     : [];
 
-  const filteredData = historicalMonthlyMean.filter((item) =>
-    inRange(moment(item.date).valueOf(), start.valueOf(), end.valueOf() + 1)
+  const filteredData = historicalMonthlyMean.filter(
+    (item) =>
+      DateTime.fromISO(item.date).valueOf() >= start.valueOf() &&
+      DateTime.fromISO(item.date).valueOf() <= end.valueOf(),
   );
 
   return [...closestToStartArray, ...filteredData, ...closestToEndArray];
@@ -107,7 +100,7 @@ export const filterHistoricalMonthlyMeanData = (
 export function getSofarDataClosestToDate(
   spotterData: ValueWithTimestamp[],
   date: Date,
-  maxHours?: number
+  maxHours?: number,
 ) {
   if (spotterData.length === 0) {
     return undefined;
@@ -116,7 +109,7 @@ export function getSofarDataClosestToDate(
   const closest = spotterData.reduce((prevClosest, nextPoint) =>
     timeDiff(prevClosest.timestamp, date) > timeDiff(nextPoint.timestamp, date)
       ? nextPoint
-      : prevClosest
+      : prevClosest,
   );
 
   return timeDiff(closest.timestamp, date) < (maxHours || 12) * 60 * 60 * 1000
@@ -126,13 +119,13 @@ export function getSofarDataClosestToDate(
 
 export const convertDailyToSofar = (
   dailyData?: DailyData[],
-  metrics?: Exclude<keyof DailyData, "id" | "date">[]
+  metrics?: Exclude<keyof DailyData, 'id' | 'date'>[],
 ):
   | Partial<
-      Record<Exclude<keyof DailyData, "id" | "date">, ValueWithTimestamp[]>
+      Record<Exclude<keyof DailyData, 'id' | 'date'>, ValueWithTimestamp[]>
     >
   | undefined => {
-  const sortedData = sortByDate(dailyData || [], "date");
+  const sortedData = sortByDate(dailyData || [], 'date');
 
   return metrics?.reduce(
     (acc, metric) => ({
@@ -142,12 +135,12 @@ export const convertDailyToSofar = (
         timestamp: item.date,
       })),
     }),
-    {}
+    {},
   );
 };
 
 export const convertHistoricalMonthlyMeanToSofar = (
-  data?: HistoricalMonthlyMeanData[]
+  data?: HistoricalMonthlyMeanData[],
 ): ValueWithTimestamp[] | undefined =>
   data?.map((item) => ({ timestamp: item.date, value: item.value }));
 
@@ -168,7 +161,7 @@ export const convertHistoricalMonthlyMeanToSofar = (
 export const chartFillColor =
   (threshold: number | null, above: string, below: string) =>
   ({ chart }: Context) => {
-    const yScale = (chart as any).scales["y-axis-0"];
+    const yScale = (chart as any).scales['y-axis-0'];
     const top = yScale.getPixelForValue(40);
     const zero = yScale.getPixelForValue(threshold);
     const bottom = yScale.getPixelForValue(0);
@@ -178,7 +171,7 @@ export const chartFillColor =
         0,
         top,
         0,
-        bottom
+        bottom,
       ) as CanvasGradient;
       const ratio = Math.min((zero - top) / (bottom - top), 1);
       if (threshold) {
@@ -193,7 +186,7 @@ export const chartFillColor =
       return gradient;
     }
 
-    return "transparent";
+    return 'transparent';
   };
 
 /**
@@ -207,7 +200,7 @@ const pointColor = (surveyDate?: Date) => (context: Context) => {
   if (
     surveyDate &&
     context.dataset?.data &&
-    typeof context.dataIndex === "number"
+    typeof context.dataIndex === 'number'
   ) {
     const chartPoint = context.dataset.data[context.dataIndex] as ChartPoint;
     const chartDate = new Date(chartPoint.x as string);
@@ -236,8 +229,12 @@ const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
       if (
         currIndex !== 0 &&
         currIndex !== nPoints - 1 &&
-        Math.abs(moment(data[currIndex + 1].x).diff(moment(curr.x), "hours")) >
-          maxHoursGap
+        Math.abs(
+          DateTime.fromISO(data[currIndex + 1].x as string).diff(
+            DateTime.fromISO(curr.x as string),
+            'hours',
+          ).hours,
+        ) > maxHoursGap
       ) {
         return [
           ...acc,
@@ -245,9 +242,9 @@ const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
           {
             y: undefined,
             x: new Date(
-              (moment(data[currIndex + 1].x).valueOf() +
-                moment(curr.x).valueOf()) /
-                2
+              (DateTime.fromISO(data[currIndex + 1].x as string).valueOf() +
+                DateTime.fromISO(curr.x as string).valueOf()) /
+                2,
             ).toISOString(),
           },
         ];
@@ -266,9 +263,9 @@ const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
  * @returns An array of datasets that will be passed on the chart
  */
 export const createDatasets = (
-  datasets: ChartProps["datasets"],
-  surveys: ChartProps["surveys"],
-  selectedSurveyDate?: Date
+  datasets: ChartProps['datasets'],
+  surveys: ChartProps['surveys'],
+  selectedSurveyDate?: Date,
 ): ChartDataSets[] => {
   const surveyDates = getSurveyDates(surveys || []);
   const processedDatasets = datasets
@@ -292,7 +289,7 @@ export const createDatasets = (
             y: value,
           }));
         const chartData =
-          typeof maxHoursGap === "number"
+          typeof maxHoursGap === 'number'
             ? createGaps(processedData, maxHoursGap)
             : processedData;
 
@@ -307,7 +304,7 @@ export const createDatasets = (
           borderWidth: 2,
           pointRadius: 0,
           cubicInterpolationMode:
-            "monotone" as ChartDataSets["cubicInterpolationMode"],
+            'monotone' as ChartDataSets['cubicInterpolationMode'],
           backgroundColor:
             isNumber(threshold) &&
             fillColorAboveThreshold &&
@@ -315,22 +312,22 @@ export const createDatasets = (
               ? chartFillColor(
                   threshold,
                   fillColorAboveThreshold,
-                  fillColorBelowThreshold
+                  fillColorBelowThreshold,
                 )
               : fillColor,
           data: chartData,
         };
-      }
+      },
     );
 
   const datasetToAttachSurveysOn = datasets?.find(
-    (dataset) => dataset.surveysAttached
+    (dataset) => dataset.surveysAttached,
   );
 
   const surveysDataset = datasetToAttachSurveysOn
     ? {
-        type: "scatter",
-        label: "SURVEYS",
+        type: 'scatter',
+        label: 'SURVEYS',
         pointBackgroundColor: pointColor(selectedSurveyDate),
         borderWidth: 1.5,
         pointRadius: 5,
@@ -341,11 +338,12 @@ export const createDatasets = (
               !isNil(item.value) &&
               surveyDates.some(
                 (surveyDate) =>
-                  isNumber(surveyDate) && sameDay(surveyDate, item.timestamp)
-              )
+                  isNumber(surveyDate) && sameDay(surveyDate, item.timestamp),
+              ),
           )
           .map(
-            ({ timestamp, value }) => ({ x: timestamp, y: value } as ChartPoint)
+            ({ timestamp, value }) =>
+              ({ x: timestamp, y: value } as ChartPoint),
           ),
       }
     : undefined;
@@ -356,7 +354,7 @@ export const createDatasets = (
   ];
 };
 
-export const getDatasetsTimestamps = (datasets: ChartProps["datasets"]) =>
+export const getDatasetsTimestamps = (datasets: ChartProps['datasets']) =>
   flatten(map(datasets, ({ data }) => map(data, ({ timestamp }) => timestamp)));
 
 /**
@@ -372,7 +370,7 @@ export const getTooltipClosestData = (date: Date, datasets?: Dataset[]) =>
       getSofarDataClosestToDate(
         dataset.data,
         date,
-        dataset.tooltipMaxHoursGap
+        dataset.tooltipMaxHoursGap,
       ) || undefined;
     return {
       ...dataset,
@@ -389,31 +387,31 @@ export const getTooltipClosestData = (date: Date, datasets?: Dataset[]) =>
  * @returns The chart's horizontal and vertical limits
  */
 export const calculateAxisLimits = (
-  datasets: ChartProps["datasets"],
-  startDate: ChartProps["startDate"],
-  endDate: ChartProps["endDate"],
-  temperatureThreshold: ChartProps["temperatureThreshold"]
+  datasets: ChartProps['datasets'],
+  startDate: ChartProps['startDate'],
+  endDate: ChartProps['endDate'],
+  temperatureThreshold: ChartProps['temperatureThreshold'],
 ) => {
   const timestampsToConsiderForXAxis = getDatasetsTimestamps(
-    datasets?.filter((dataset) => dataset.considerForXAxisLimits)
+    datasets?.filter((dataset) => dataset.considerForXAxisLimits),
   );
   const accumulatedYAxisData = flatten(
     map(datasets, ({ data }) =>
       map(
         filter(data, ({ value }) => !isNil(value)),
-        ({ value }) => value
-      )
-    )
+        ({ value }) => value,
+      ),
+    ),
   );
 
   // x axis limits calculation
   const datasetsXMin = minBy(
     timestampsToConsiderForXAxis,
-    (timestamp) => new Date(timestamp)
+    (timestamp) => new Date(timestamp),
   );
   const datasetsXMax = maxBy(
     timestampsToConsiderForXAxis,
-    (timestamp) => new Date(timestamp)
+    (timestamp) => new Date(timestamp),
   );
   const xAxisMin = startDate || datasetsXMin;
   const xAxisMax = endDate || datasetsXMax;
@@ -422,19 +420,19 @@ export const calculateAxisLimits = (
   const datasetsYMin = Math.min(...accumulatedYAxisData);
   const datasetsYMax = Math.max(...accumulatedYAxisData);
   const ySpacing = Math.ceil(
-    Y_SPACING_PERCENTAGE * (datasetsYMax - datasetsYMin)
+    Y_SPACING_PERCENTAGE * (datasetsYMax - datasetsYMin),
   ); // Set ySpacing as a percentage of the data range
   const yAxisMinTemp = datasetsYMin - ySpacing;
   const yAxisMaxTemp = datasetsYMax + ySpacing;
   const yAxisMin = Math.round(
     temperatureThreshold
       ? Math.min(yAxisMinTemp, temperatureThreshold - ySpacing)
-      : yAxisMinTemp
+      : yAxisMinTemp,
   );
   const yAxisMax = Math.round(
     temperatureThreshold
       ? Math.max(yAxisMaxTemp, temperatureThreshold + ySpacing)
-      : yAxisMaxTemp
+      : yAxisMaxTemp,
   );
 
   return { xAxisMin, xAxisMax, yAxisMin, yAxisMax };
@@ -452,23 +450,23 @@ export const calculateAxisLimits = (
  * @returns An array of datasets passed on the chart and chart's axis limits
  */
 export const useProcessedChartData = (
-  datasets: ChartProps["datasets"],
-  startDate: ChartProps["startDate"],
-  endDate: ChartProps["endDate"],
-  surveys: ChartProps["surveys"],
-  temperatureThreshold: ChartProps["temperatureThreshold"],
-  selectedSurveyDate?: Date
+  datasets: ChartProps['datasets'],
+  startDate: ChartProps['startDate'],
+  endDate: ChartProps['endDate'],
+  surveys: ChartProps['surveys'],
+  temperatureThreshold: ChartProps['temperatureThreshold'],
+  selectedSurveyDate?: Date,
 ) => {
   const processedDatasets = createDatasets(
     datasets,
     surveys,
-    selectedSurveyDate
+    selectedSurveyDate,
   );
   const axisLimits = calculateAxisLimits(
     datasets,
     startDate,
     endDate,
-    temperatureThreshold
+    temperatureThreshold,
   );
 
   return { processedDatasets, ...axisLimits };

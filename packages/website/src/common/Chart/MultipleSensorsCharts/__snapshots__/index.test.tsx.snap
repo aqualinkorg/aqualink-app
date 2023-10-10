@@ -1,0 +1,870 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MultipleSensorsCharts should render with given state from Redux store 1`] = `
+<div>
+  <div
+    class="MuiContainer-root makeStyles-chartWithRange-1 MuiContainer-disableGutters MuiContainer-maxWidthLg"
+  >
+    <div
+      class="makeStyles-buttonWrapper-2"
+    >
+      <div>
+        <mock-button
+          color="primary"
+          disabled="false"
+          style="margin-bottom: 2em;"
+          variant="outlined"
+        >
+          Download CSV
+        </mock-button>
+        <mock-dialog
+          open="false"
+          scroll="paper"
+        >
+          <mock-dialogtitle
+            classname="makeStyles-dialogTitle-3"
+            disabletypography="true"
+          >
+            <mock-typography
+              variant="h4"
+            >
+              Download CSV
+            </mock-typography>
+          </mock-dialogtitle>
+          <mock-dialogcontent
+            classname="makeStyles-dialogContent-5"
+            dividers="true"
+          >
+            <mock-dialogcontenttext>
+              Selected data to download into CSV format from
+               
+              dates between
+               
+              <span
+                class="makeStyles-bold-4"
+              >
+                05/28/2022
+              </span>
+               
+              and
+               
+              <span
+                class="makeStyles-bold-4"
+              >
+                06/28/2022
+              </span>
+            </mock-dialogcontenttext>
+            <mock-dialogcontenttext>
+              <div
+                class="MuiFormGroup-root MuiFormGroup-row"
+              >
+                <mock-tooltip
+                  arrow="true"
+                  placement="top"
+                  title="Download all additional data available from all sources for this site"
+                >
+                  <label
+                    class="MuiFormControlLabel-root"
+                  >
+                    <mock-checkbox
+                      checked="false"
+                      color="primary"
+                    />
+                    <mock-typography
+                      classname="MuiFormControlLabel-label"
+                      component="span"
+                    >
+                      Additional Data
+                    </mock-typography>
+                  </label>
+                </mock-tooltip>
+                <mock-tooltip
+                  arrow="true"
+                  placement="top"
+                  title="Download data for all available dates"
+                >
+                  <label
+                    class="MuiFormControlLabel-root"
+                  >
+                    <mock-checkbox
+                      checked="false"
+                      color="primary"
+                    />
+                    <mock-typography
+                      classname="MuiFormControlLabel-label"
+                      component="span"
+                    >
+                      All Dates
+                    </mock-typography>
+                  </label>
+                </mock-tooltip>
+                <mock-tooltip
+                  arrow="true"
+                  placement="top"
+                  title="Average data per hour"
+                >
+                  <label
+                    class="MuiFormControlLabel-root"
+                  >
+                    <mock-checkbox
+                      checked="false"
+                      color="primary"
+                    />
+                    <mock-typography
+                      classname="MuiFormControlLabel-label"
+                      component="span"
+                    >
+                      Hourly Data
+                    </mock-typography>
+                  </label>
+                </mock-tooltip>
+              </div>
+              <div>
+                <ul>
+                  <li>
+                    sst_anomaly_noaa
+                  </li>
+                </ul>
+              </div>
+            </mock-dialogcontenttext>
+          </mock-dialogcontent>
+          <mock-dialogactions>
+            <mock-button
+              color="secondary"
+            >
+              Cancel
+            </mock-button>
+            <mock-button
+              color="primary"
+            >
+              Download
+            </mock-button>
+          </mock-dialogactions>
+        </mock-dialog>
+      </div>
+    </div>
+    <div
+      id="temperature"
+    >
+      <div
+        class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <mock-box
+            ml="4"
+          >
+            <mock-typography
+              classname="Header-title-15"
+              color="textSecondary"
+              variant="h6"
+            >
+              TEMPERATURE ANALYSIS
+            </mock-typography>
+            <div
+              class="MuiGrid-root Header-rangesWrapper-13 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <div
+                  class="MuiPaper-root MuiAlert-root Header-rangeItem-14 MuiAlert-standardInfo MuiPaper-elevation0"
+                  role="alert"
+                >
+                  <div
+                    class="MuiAlert-icon Header-rangeIcon-17"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiAlert-message"
+                  >
+                    <mock-typography
+                      variant="subtitle2"
+                    >
+                      HOBO range: 11/02/2017 - 02/02/2020
+                    </mock-typography>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <mock-box
+            ml="4"
+          >
+            <div
+              class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-typography
+                  classname="Header-rangeTitle-16"
+                  color="textSecondary"
+                  variant="subtitle1"
+                >
+                  View Range:
+                </mock-typography>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-tooltip
+                  arrow="true"
+                  placement="top"
+                  title="1 month from maximum date"
+                >
+                  <div>
+                    <mock-button
+                      color="primary"
+                      fullwidth="true"
+                      size="small"
+                      variant="outlined"
+                    >
+                      <mock-typography
+                        variant="subtitle1"
+                      >
+                        1 Month
+                      </mock-typography>
+                    </mock-button>
+                  </div>
+                </mock-tooltip>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-tooltip
+                  arrow="true"
+                  placement="top"
+                  title="Range of 1 year from maximum date"
+                >
+                  <div>
+                    <mock-button
+                      color="primary"
+                      fullwidth="true"
+                      size="small"
+                      variant="outlined"
+                    >
+                      <mock-typography
+                        variant="subtitle1"
+                      >
+                        1 Year
+                      </mock-typography>
+                    </mock-button>
+                  </div>
+                </mock-tooltip>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-tooltip
+                  arrow="true"
+                  placement="top"
+                  title="Maximun range"
+                >
+                  <div>
+                    <mock-button
+                      color="primary"
+                      disabled="false"
+                      fullwidth="true"
+                      size="small"
+                      variant="outlined"
+                    >
+                      <mock-typography
+                        variant="subtitle1"
+                      >
+                        Max
+                      </mock-typography>
+                    </mock-button>
+                  </div>
+                </mock-tooltip>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-tooltip
+                  arrow="true"
+                  placement="top"
+                  title="Custom range"
+                >
+                  <div>
+                    <mock-button
+                      color="primary"
+                      fullwidth="true"
+                      size="small"
+                      variant="contained"
+                    >
+                      <mock-typography
+                        variant="subtitle1"
+                      >
+                        Custom
+                      </mock-typography>
+                    </mock-button>
+                  </div>
+                </mock-tooltip>
+              </div>
+            </div>
+          </mock-box>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root makeStyles-chartWrapper-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between"
+    >
+      <div
+        class="MuiGrid-root makeStyles-chart-7 makeStyles-largeChart-8 MuiGrid-item"
+      >
+        <div
+          class="Chart-chart-18"
+        >
+          <canvas
+            class="chartjs-render-monitor"
+            height="0"
+            style="display: block;"
+            width="0"
+          />
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
+        >
+          <div
+            class="MuiGrid-root Chart-datePickersWrapper-19 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-box
+                  alignitems="flex-end"
+                  display="flex"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                    variant="subtitle1"
+                  >
+                    START DATE:
+                  </mock-typography>
+                  <div
+                    class="DatePicker-datePicker-20"
+                  >
+                    <muipickersutilsprovider>
+                      <keyboarddatepicker
+                        class="DatePicker-textField-23"
+                        format="MM/dd/yyyy"
+                        helpertext=""
+                        inputprops="[object Object]"
+                        inputvariant="standard"
+                        keyboardbuttonprops="[object Object]"
+                        keyboardicon="[object Object]"
+                        maxdate="2023/06/28"
+                        mindate="1970/01/01"
+                        name="datePicker"
+                        value="2022-05-28T00:00:00.000Z"
+                      />
+                    </muipickersutilsprovider>
+                  </div>
+                </mock-box>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-box
+                  alignitems="flex-end"
+                  display="flex"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                    variant="subtitle1"
+                  >
+                    END DATE:
+                  </mock-typography>
+                  <div
+                    class="DatePicker-datePicker-20"
+                  >
+                    <muipickersutilsprovider>
+                      <keyboarddatepicker
+                        class="DatePicker-textField-23"
+                        format="MM/dd/yyyy"
+                        helpertext=""
+                        inputprops="[object Object]"
+                        inputvariant="standard"
+                        keyboardbuttonprops="[object Object]"
+                        keyboardicon="[object Object]"
+                        maxdate="2023/06/28"
+                        mindate="1970/01/01"
+                        name="datePicker"
+                        value="2022-06-28T00:00:00.000Z"
+                      />
+                    </muipickersutilsprovider>
+                  </div>
+                </mock-box>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root makeStyles-card-11 MuiGrid-item"
+      >
+        <mock-box
+          display="flex"
+          flexdirection="column"
+          height="100%"
+          justifycontent="space-between"
+          minwidth="220"
+        >
+          <mock-card
+            classname="AnalysisCard-AnalysisCardCard-25"
+          >
+            <mock-typography
+              color="textSecondary"
+              gutterbottom="true"
+              variant="subtitle1"
+            >
+              05/28/2022
+               - 
+              06/28/2022
+            </mock-typography>
+            <div
+              class="MuiGrid-root AnalysisCard-metricsWrapper-27 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <div
+                  class="MuiGrid-root AnalysisCard-metricsTitle-28 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                >
+                  <div
+                    class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                  >
+                    <mock-typography
+                      color="textSecondary"
+                      variant="caption"
+                    >
+                      MAX
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                  >
+                    <mock-typography
+                      color="textSecondary"
+                      variant="caption"
+                    >
+                      MEAN
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                  >
+                    <mock-typography
+                      color="textSecondary"
+                      variant="caption"
+                    >
+                      MIN
+                    </mock-typography>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  class="MuiGrid-root AnalysisCard-autoWidth-24 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
+                    <mock-tooltip
+                      title=""
+                    >
+                      <mock-typography
+                        classname="AnalysisCard-values-30"
+                        style="color: rgb(107, 193, 225);"
+                        variant="subtitle2"
+                      >
+                        SST
+                      </mock-typography>
+                    </mock-tooltip>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
+                    <mock-typography
+                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      color="textSecondary"
+                      variant="h5"
+                    >
+                      24.2
+                       
+                      °C
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
+                    <mock-typography
+                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      color="textSecondary"
+                      variant="h5"
+                    >
+                      24.2
+                       
+                      °C
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
+                    <mock-typography
+                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      color="textSecondary"
+                      variant="h5"
+                    >
+                      24.2
+                       
+                      °C
+                    </mock-typography>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mock-card>
+        </mock-box>
+      </div>
+    </div>
+    <mock-box
+      mt="4"
+    >
+      <div
+        id="salinity"
+      >
+        <div
+          class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <mock-box
+              ml="4"
+            >
+              <mock-typography
+                classname="Header-title-15"
+                color="textSecondary"
+                variant="h6"
+              >
+                SALINITY
+              </mock-typography>
+              <mock-typography
+                classname="Header-title-15"
+                variant="subtitle1"
+              >
+                Survey point: 
+                point1
+              </mock-typography>
+              <div
+                class="MuiGrid-root Header-rangesWrapper-13 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiPaper-root MuiAlert-root Header-rangeItem-14 MuiAlert-standardInfo MuiPaper-elevation0"
+                    role="alert"
+                  >
+                    <div
+                      class="MuiAlert-icon Header-rangeIcon-17"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="MuiAlert-message"
+                    >
+                      <mock-typography
+                        variant="subtitle2"
+                      >
+                        HUI range: 06/11/2022 - 06/14/2022
+                      </mock-typography>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mock-box>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root makeStyles-chartWrapper-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root makeStyles-chart-7 makeStyles-largeChart-8 MuiGrid-item"
+        >
+          <mock-box
+            mt="8px"
+          >
+            <div
+              class="MuiPaper-root MuiAlert-root MuiAlert-standardWarning MuiPaper-elevation0"
+              role="alert"
+            >
+              <div
+                class="MuiAlert-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiAlert-message"
+              >
+                <mock-typography>
+                  No HUI data available - data available from 06/11/2022 to 06/14/2022.
+                </mock-typography>
+              </div>
+            </div>
+          </mock-box>
+          <mock-box
+            alignitems="center"
+            color="#3f51b5"
+            display="flex"
+            height="215px"
+            justifycontent="center"
+            margin="8px 0"
+            textalign="center"
+          >
+            <mock-typography
+              variant="h2"
+            >
+              No data to display
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root makeStyles-card-11 MuiGrid-item"
+        />
+      </div>
+    </mock-box>
+    <mock-box
+      mt="4"
+    >
+      <div
+        id="turbidity"
+      >
+        <div
+          class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <mock-box
+              ml="4"
+            >
+              <mock-typography
+                classname="Header-title-15"
+                color="textSecondary"
+                variant="h6"
+              >
+                TURBIDITY
+              </mock-typography>
+              <mock-typography
+                classname="Header-title-15"
+                variant="subtitle1"
+              >
+                Survey point: 
+                point1
+              </mock-typography>
+              <div
+                class="MuiGrid-root Header-rangesWrapper-13 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+              />
+            </mock-box>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root makeStyles-chartWrapper-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root makeStyles-chart-7 makeStyles-largeChart-8 MuiGrid-item"
+        >
+          <mock-box
+            mt="8px"
+          >
+            <div
+              class="MuiPaper-root MuiAlert-root MuiAlert-standardWarning MuiPaper-elevation0"
+              role="alert"
+            >
+              <div
+                class="MuiAlert-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiAlert-message"
+              >
+                <mock-typography>
+                  No HUI data available - data available from 06/11/2022 to 06/14/2022.
+                </mock-typography>
+              </div>
+            </div>
+          </mock-box>
+          <mock-box
+            alignitems="center"
+            color="#3f51b5"
+            display="flex"
+            height="215px"
+            justifycontent="center"
+            margin="8px 0"
+            textalign="center"
+          >
+            <mock-typography
+              variant="h2"
+            >
+              No data to display
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root makeStyles-card-11 MuiGrid-item"
+        />
+      </div>
+    </mock-box>
+    <mock-box
+      mt="4"
+    >
+      <div
+        id="ph"
+      >
+        <div
+          class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <mock-box
+              ml="4"
+            >
+              <mock-typography
+                classname="Header-title-15"
+                color="textSecondary"
+                variant="h6"
+              >
+                ACIDITY
+              </mock-typography>
+              <mock-typography
+                classname="Header-title-15"
+                variant="subtitle1"
+              >
+                Survey point: 
+                point1
+              </mock-typography>
+              <div
+                class="MuiGrid-root Header-rangesWrapper-13 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+              />
+            </mock-box>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root makeStyles-chartWrapper-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root makeStyles-chart-7 makeStyles-largeChart-8 MuiGrid-item"
+        >
+          <mock-box
+            mt="8px"
+          >
+            <div
+              class="MuiPaper-root MuiAlert-root MuiAlert-standardWarning MuiPaper-elevation0"
+              role="alert"
+            >
+              <div
+                class="MuiAlert-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiAlert-message"
+              >
+                <mock-typography>
+                  No HUI data available - data available from 06/11/2022 to 06/14/2022.
+                </mock-typography>
+              </div>
+            </div>
+          </mock-box>
+          <mock-box
+            alignitems="center"
+            color="#3f51b5"
+            display="flex"
+            height="215px"
+            justifycontent="center"
+            margin="8px 0"
+            textalign="center"
+          >
+            <mock-typography
+              variant="h2"
+            >
+              No data to display
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root makeStyles-card-11 MuiGrid-item"
+        />
+      </div>
+    </mock-box>
+  </div>
+</div>
+`;

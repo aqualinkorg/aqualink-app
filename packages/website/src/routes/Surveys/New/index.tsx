@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, useEffect } from "react";
+import React, { useState, ReactNode, useEffect } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -8,19 +8,19 @@ import {
   Container,
   Box,
   Theme,
-} from "@material-ui/core";
-import SwipeableViews from "react-swipeable-views";
+} from '@material-ui/core';
+import SwipeableViews from 'react-swipeable-views';
 
-import type { Site } from "../../../store/Sites/types";
-import Map from "./Map";
-import Form from "./Form";
-import UploadMedia from "./UploadMedia";
+import type { Site } from 'store/Sites/types';
+import Map from './Map';
+import Form from './Form';
+import UploadMedia from './UploadMedia';
 
 const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
 
   return (
-    <div style={{ overflow: "hidden" }}>
+    <div style={{ overflow: 'hidden' }}>
       <Container hidden={value !== index} {...other}>
         {value === index && <div>{children}</div>}
       </Container>
@@ -43,7 +43,7 @@ const NewSurvey = ({ site, classes }: NewSurveyProps) => {
     <Box flexGrow={1}>
       <SwipeableViews index={value} axis="x">
         <TabPanel value={value} index={0}>
-          <Grid className={classes.root} container justify="center">
+          <Grid className={classes.root} container justifyContent="center">
             <Grid item xs={10}>
               {site.name && (
                 <Typography
@@ -53,15 +53,15 @@ const NewSurvey = ({ site, classes }: NewSurveyProps) => {
               )}
             </Grid>
             <Grid
-              style={{ marginTop: "2rem" }}
+              style={{ marginTop: '2rem' }}
               container
-              justify="space-between"
+              justifyContent="space-between"
               item
               xs={10}
             >
               <Grid item xs={12}>
                 <Typography
-                  style={{ fontWeight: "normal", marginBottom: "0.5rem" }}
+                  style={{ fontWeight: 'normal', marginBottom: '0.5rem' }}
                   variant="h6"
                 >
                   Select your survey location by clicking on the map.
@@ -95,18 +95,18 @@ const NewSurvey = ({ site, classes }: NewSurveyProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      marginTop: "2rem",
+      marginTop: '2rem',
     },
     title: {
-      overflowWrap: "break-word",
+      overflowWrap: 'break-word',
     },
     mapContainer: {
-      height: "30rem",
-      [theme.breakpoints.down("lg")]: {
-        marginBottom: "3rem",
+      height: '30rem',
+      [theme.breakpoints.down('lg')]: {
+        marginBottom: '3rem',
       },
-      [theme.breakpoints.down("xs")]: {
-        height: "15rem",
+      [theme.breakpoints.down('xs')]: {
+        height: '15rem',
       },
     },
   });

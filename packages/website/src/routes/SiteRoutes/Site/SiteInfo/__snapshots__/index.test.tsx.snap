@@ -3,7 +3,7 @@
 exports[`SiteNavBar should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="MuiCollapse-container MuiCollapse-hidden"
+    class="MuiCollapse-root MuiCollapse-hidden"
     style="min-height: 0px;"
   >
     <div
@@ -59,7 +59,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
     </div>
   </div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+    class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -112,7 +112,24 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
                 </div>
                 <div
                   class="MuiGrid-root SiteNavBar-headerButtonWrapper-3 MuiGrid-item"
-                />
+                >
+                  <mock-tooltip
+                    arrow="true"
+                    placement="top"
+                    title="Add to your dashboard"
+                  >
+                    <mock-iconbutton
+                      classname="CollectionButton-root-6"
+                      disabled="false"
+                    >
+                      <svg
+                        color="#3f51b5"
+                      >
+                        watch.svg
+                      </svg>
+                    </mock-iconbutton>
+                  </mock-tooltip>
+                </div>
               </div>
             </div>
             <div

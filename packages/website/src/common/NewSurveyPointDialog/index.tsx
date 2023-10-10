@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -11,18 +11,18 @@ import {
   makeStyles,
   Theme,
   IconButton,
-} from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
-import CloseIcon from "@material-ui/icons/Close";
-import { useDispatch, useSelector } from "react-redux";
+} from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import CloseIcon from '@material-ui/icons/Close';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { maxLengths } from "../../constants/names";
-import surveyServices from "../../services/surveyServices";
-import { userInfoSelector } from "../../store/User/userSlice";
-import siteServices from "../../services/siteServices";
-import { setSiteSurveyPoints } from "../../store/Sites/selectedSiteSlice";
-import { SurveyPoints } from "../../store/Sites/types";
-import { getAxiosErrorMessage } from "../../helpers/errors";
+import { maxLengths } from 'constants/names';
+import { userInfoSelector } from 'store/User/userSlice';
+import { setSiteSurveyPoints } from 'store/Sites/selectedSiteSlice';
+import { SurveyPoints } from 'store/Sites/types';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import siteServices from 'services/siteServices';
+import surveyServices from 'services/surveyServices';
 
 const NewSurveyPointDialog = ({
   open,
@@ -33,25 +33,25 @@ const NewSurveyPointDialog = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
-  const [pointName, setPointName] = useState("");
+  const [pointName, setPointName] = useState('');
   const [newPointError, setNewPointError] = useState<string>();
   const [newPointLoading, setNewPointLoading] = useState(false);
   const isNameErrored = pointName.length > 100;
   const isSaveButtonDisabled =
     isNameErrored || pointName.length === 0 || newPointLoading;
 
-  const handleNameChange: TextFieldProps["onChange"] = (event) =>
+  const handleNameChange: TextFieldProps['onChange'] = (event) =>
     setPointName(event.target.value);
 
   const onDialogClose = () => {
     setNewPointError(undefined);
     setNewPointLoading(false);
-    setPointName("");
+    setPointName('');
     onClose();
   };
 
   const onPointSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
     setNewPointError(undefined);
@@ -59,7 +59,7 @@ const NewSurveyPointDialog = ({
     try {
       await surveyServices.addNewPoi(siteId, pointName, user?.token);
       const { data: newPoints } = await siteServices.getSiteSurveyPoints(
-        siteId.toString()
+        siteId.toString(),
       );
       const resultingPoints = newPoints.map(({ id, name }) => ({
         id,
@@ -85,7 +85,7 @@ const NewSurveyPointDialog = ({
       case !!newPointError:
         return newPointError;
       default:
-        return "";
+        return '';
     }
   };
 
@@ -129,7 +129,7 @@ const NewSurveyPointDialog = ({
             disabled={isSaveButtonDisabled}
             onClick={(e) => onPointSave(e)}
           >
-            {newPointLoading ? "Saving..." : "Save"}
+            {newPointLoading ? 'Saving...' : 'Save'}
           </Button>
         </DialogActions>
       </form>
@@ -140,9 +140,9 @@ const NewSurveyPointDialog = ({
 const useStyles = makeStyles((theme: Theme) => ({
   dialogTitle: {
     borderBottom: `1px solid ${grey[400]}`,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   dialogContent: {
     paddingTop: theme.spacing(3),

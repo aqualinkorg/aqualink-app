@@ -2,8 +2,8 @@ import { Logger } from '@nestjs/common';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { isNil } from 'lodash';
-import moment from 'moment';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { DateTime } from '../luxon-extensions';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Site } from '../sites/sites.entity';
 import { ForecastData } from '../wind-wave-data/forecast-data.entity';
@@ -13,7 +13,6 @@ import { getWindDirection, getWindSpeed } from './math';
 import { sofarHindcast } from './sofar';
 import { getSofarNearestAvailablePoint } from './sofar-availability';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
-import { getSites } from './spotter-time-series';
 
 const logger = new Logger('hindcastWindWaveData');
 
@@ -21,18 +20,14 @@ const dataLabels: [keyof SpotterData, WindWaveMetric, SourceType][] = [
   [
     'significantWaveHeight',
     WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT,
-    SourceType.SOFAR_WAVE_MODEL,
+    SourceType.SOFAR_MODEL,
   ],
   [
     'waveMeanDirection',
     WindWaveMetric.WAVE_MEAN_DIRECTION,
-    SourceType.SOFAR_WAVE_MODEL,
+    SourceType.SOFAR_MODEL,
   ],
-  [
-    'waveMeanPeriod',
-    WindWaveMetric.WAVE_MEAN_PERIOD,
-    SourceType.SOFAR_WAVE_MODEL,
-  ],
+  ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD, SourceType.SOFAR_MODEL],
   ['windDirection', WindWaveMetric.WIND_DIRECTION, SourceType.GFS],
   ['windSpeed', WindWaveMetric.WIND_SPEED, SourceType.GFS],
 ];
@@ -55,25 +50,18 @@ export const getForecastData = async (latitude: number, longitude: number) => {
   const { today, yesterday } = getTodayYesterdayDates();
   const hindcastOptions = [
     [
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-        .significantWaveHeight,
+      SofarModels.Wave,
+      sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
+    ],
+    [SofarModels.Wave, sofarVariableIDs[SofarModels.Wave].meanDirection],
+    [SofarModels.Wave, sofarVariableIDs[SofarModels.Wave].meanPeriod],
+    [
+      SofarModels.Atmosphere,
+      sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterEastward,
     ],
     [
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
-    ],
-    [
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
-    ],
-    [
-      SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
-    ],
-    [
-      SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
+      SofarModels.Atmosphere,
+      sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterNorthward,
     ],
   ];
 
@@ -143,7 +131,11 @@ export const addWindWaveData = async (
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, false, repositories.siteRepository);
+  const sites = await repositories.siteRepository.find({
+    where: {
+      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
+    },
+  });
 
   const { today } = getTodayYesterdayDates();
 
@@ -175,9 +167,9 @@ export const addWindWaveData = async (
               .values([
                 {
                   site,
-                  timestamp: moment(sofarValue.timestamp)
+                  timestamp: DateTime.fromISO(sofarValue.timestamp)
                     .startOf('minute')
-                    .toDate(),
+                    .toJSDate(),
                   metric,
                   source,
                   value: sofarValue.value,

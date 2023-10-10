@@ -16,6 +16,7 @@ exports[`renders as expected 1`] = `
         >
           <mock-typography
             color="textPrimary"
+            style="white-space: nowrap;"
             variant="caption"
           >
             12/20/20 07:19 AM UTC
@@ -26,11 +27,11 @@ exports[`renders as expected 1`] = `
         classname="Tooltip-tooltipContent-4"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-space-between"
           style="height: 100%;"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
           >
             <div
               class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"

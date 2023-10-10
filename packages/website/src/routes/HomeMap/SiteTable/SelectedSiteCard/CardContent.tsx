@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Theme,
   makeStyles,
@@ -10,28 +10,22 @@ import {
   Hidden,
   Typography,
   Button,
-} from "@material-ui/core";
-import { isNumber } from "lodash";
-import { Link } from "react-router-dom";
-import classNames from "classnames";
+} from '@material-ui/core';
+import { isNumber } from 'lodash';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
-import { Alert } from "@material-ui/lab";
-import Chart from "../../../../common/Chart";
-import { formatNumber } from "../../../../helpers/numberUtils";
-import { sortByDate } from "../../../../helpers/dates";
-import { Site } from "../../../../store/Sites/types";
-import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
-import { getSiteNameAndRegion } from "../../../../store/Sites/helpers";
-import { standardDailyDataDataset } from "../../../../common/Chart/MultipleSensorsCharts/helpers";
-import {
-  GaAction,
-  GaCategory,
-  trackButtonClick,
-} from "../../../../utils/google-analytics";
-import Chip from "../../../../common/Chip";
-import LoadingSkeleton from "../../../../common/LoadingSkeleton";
-import featuredImageLoading from "../../../../assets/img/loading-image.svg";
-import chartLoading from "../../../../assets/img/chart_skeleton.png";
+import { Alert } from '@material-ui/lab';
+import { Site } from 'store/Sites/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { formatNumber } from 'helpers/numberUtils';
+import Chart from 'common/Chart';
+import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
+import Chip from 'common/Chip';
+import LoadingSkeleton from 'common/LoadingSkeleton';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
+import featuredImageLoading from '../../../../assets/img/loading-image.svg';
+import chartLoading from '../../../../assets/img/chart_skeleton.png';
 
 const SelectedSiteCardContent = ({
   site,
@@ -41,31 +35,32 @@ const SelectedSiteCardContent = ({
 }: SelectedSiteCardContentProps) => {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
-  const sortedDailyData = sortByDate(site?.dailyData || [], "date");
-  const dailyDataLen = sortedDailyData.length;
-  const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
-    (dailyDataLen && sortedDailyData[dailyDataLen - 1]) || {};
+  const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
+  const {
+    bottomTemperature,
+    satelliteTemperature,
+    dhw: degreeHeatingWeek,
+  } = site?.collectionData || {};
   const useCardWithImageLayout = Boolean(loading || imageUrl);
 
   const metrics = [
     {
-      label: "SURFACE TEMP",
+      label: 'SURFACE TEMP',
       value: formatNumber(satelliteTemperature, 1),
-      unit: " °C",
+      unit: ' °C',
       display: isNumber(satelliteTemperature),
     },
     {
-      label: "HEAT STRESS",
-      value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
-      unit: " DHW",
-      display: isNumber(degreeHeatingDays),
+      label: 'HEAT STRESS',
+      value: formatNumber(degreeHeatingWeek, 1),
+      unit: ' DHW',
+      display: isNumber(degreeHeatingWeek),
     },
     {
       label: `TEMP AT ${site?.depth}m`,
-      value: formatNumber(maxBottomTemperature, 1),
-      unit: " °C",
-      display: isNumber(maxBottomTemperature) && isNumber(site?.depth),
+      value: formatNumber(bottomTemperature, 1),
+      unit: ' °C',
+      display: isNumber(bottomTemperature) && isNumber(site?.depth),
     },
   ];
 
@@ -78,7 +73,7 @@ const SelectedSiteCardContent = ({
         site.dailyData,
         site.maxMonthlyMean,
         false,
-        site.timezone
+        site.timezone,
       )
     : undefined;
 
@@ -100,7 +95,7 @@ const SelectedSiteCardContent = ({
     trackButtonClick(
       GaCategory.BUTTON_CLICK,
       GaAction.MAP_PAGE_BUTTON_CLICK,
-      "Explore"
+      'Explore',
     );
   };
 
@@ -116,7 +111,7 @@ const SelectedSiteCardContent = ({
     <Grid
       className={classes.cardWrapper}
       container
-      justify="space-between"
+      justifyContent="space-between"
       spacing={1}
     >
       {useCardWithImageLayout && (
@@ -134,7 +129,7 @@ const SelectedSiteCardContent = ({
                   <CardMedia
                     className={classNames(
                       classes.cardImage,
-                      classes.imageBorderRadius
+                      classes.imageBorderRadius,
                     )}
                     image={imageUrl}
                   />
@@ -165,10 +160,10 @@ const SelectedSiteCardContent = ({
                   <Grid
                     container
                     alignItems="center"
-                    justify={
+                    justifyContent={
                       site.videoStream && isTablet
-                        ? "space-between"
-                        : "flex-end"
+                        ? 'space-between'
+                        : 'flex-end'
                     }
                   >
                     {site.videoStream && isTablet && (
@@ -223,7 +218,7 @@ const SelectedSiteCardContent = ({
                     color="textSecondary"
                     variant="h5"
                   >
-                    <span title={name || ""}>{name}</span>
+                    <span title={name || ''}>{name}</span>
                   </Typography>
                 </Grid>
                 {site?.videoStream && (
@@ -248,10 +243,10 @@ const SelectedSiteCardContent = ({
                 variant="h6"
                 className={classNames(
                   classes.cardTitle,
-                  classes.siteRegionName
+                  classes.siteRegionName,
                 )}
               >
-                <span title={regionName || ""}>{regionName}</span>
+                <span title={regionName || ''}>{regionName}</span>
               </Typography>
             </LoadingSkeleton>
           </Hidden>
@@ -334,81 +329,81 @@ const SelectedSiteCardContent = ({
 
 const useStyles = makeStyles((theme: Theme) => ({
   cardWrapper: ({ imageUrl, loading }: SelectedSiteCardContentStyleProps) => ({
-    minHeight: "18rem",
-    [theme.breakpoints.down("md")]: {
-      minHeight: "24rem",
+    minHeight: '18rem',
+    [theme.breakpoints.down('md')]: {
+      minHeight: '24rem',
     },
-    [theme.breakpoints.down("sm")]: {
-      height: imageUrl || loading ? "42rem" : "27rem",
+    [theme.breakpoints.down('sm')]: {
+      height: imageUrl || loading ? '42rem' : '27rem',
     },
   }),
   imageBorderRadius: {
-    borderRadius: "4px 0 0 4px",
-    [theme.breakpoints.down("md")]: {
-      borderRadius: "4px 0 0 0",
+    borderRadius: '4px 0 0 4px',
+    [theme.breakpoints.down('md')]: {
+      borderRadius: '4px 0 0 0',
     },
-    [theme.breakpoints.down("sm")]: {
-      borderRadius: "4px 4px 0 0",
+    [theme.breakpoints.down('sm')]: {
+      borderRadius: '4px 4px 0 0',
     },
   },
   cardImage: {
-    height: "100%",
+    height: '100%',
 
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       height: 300,
     },
   },
   cardImageTextWrapper: {
-    position: "absolute",
+    position: 'absolute',
     top: 16,
     left: 16,
     right: 16,
-    overflowWrap: "break-word",
+    overflowWrap: 'break-word',
   },
   cardAnalyticsWrapper: {
-    marginBottom: "2rem",
-    maxHeight: "14rem",
+    marginBottom: '2rem',
+    maxHeight: '14rem',
   },
   cardTitleWrapper: {
-    maxWidth: "calc(100% - 88px)",
+    maxWidth: 'calc(100% - 88px)',
     marginRight: theme.spacing(1),
   },
   cardTitle: {
-    width: "100%",
-    display: "block",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
+    width: '100%',
+    display: 'block',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
   },
   siteRegionName: {
-    marginBottom: "0.6rem",
+    marginBottom: '0.6rem',
   },
   metricsContainer: {
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    flexDirection: "row",
-    width: "100%",
-    [theme.breakpoints.down("sm")]: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(3),
     },
 
-    [theme.breakpoints.up("lg")]: {
-      flexDirection: "column",
-      alignItems: "start",
+    [theme.breakpoints.up('lg')]: {
+      flexDirection: 'column',
+      alignItems: 'start',
     },
   },
   metric: {
-    marginLeft: "auto",
-    marginRight: "auto",
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   mobileChartLoading: {
-    margin: "auto",
+    margin: 'auto',
   },
   exporeButton: {
-    "&:hover": {
-      color: "white",
+    '&:hover': {
+      color: 'white',
     },
   },
 }));
@@ -422,7 +417,7 @@ interface SelectedSiteCardContentProps {
 
 type SelectedSiteCardContentStyleProps = Pick<
   SelectedSiteCardContentProps,
-  "imageUrl" | "loading"
+  'imageUrl' | 'loading'
 >;
 
 export default SelectedSiteCardContent;

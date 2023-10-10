@@ -11,8 +11,12 @@ import {
   OneToMany,
   ManyToMany,
 } from 'typeorm';
-import { Expose } from 'class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
 import { Region } from '../regions/regions.entity';
 import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
@@ -20,7 +24,6 @@ import { User } from '../users/users.entity';
 import { SiteApplication } from '../site-applications/site-applications.entity';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { ApiPointProperty } from '../docs/api-properties';
-import { SofarLiveDataDto } from './dto/live-data.dto';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 
 export enum SiteStatus {
@@ -31,6 +34,7 @@ export enum SiteStatus {
   Deployed = 'deployed',
   Maintenance = 'maintenance',
   Lost = 'lost',
+  EndOfLife = 'end_of_life',
 }
 
 export enum SensorType {
@@ -54,12 +58,22 @@ export class Site {
   @ApiPointProperty()
   @Column({
     type: 'geometry',
+    spatialFeatureType: 'Point',
     unique: true,
     srid: 4326,
     nullable: false,
   })
   @Index({ spatial: true })
   polygon: GeoJSON | null;
+
+  @ApiPointProperty()
+  @Column({
+    type: 'geometry',
+    spatialFeatureType: 'Point',
+    srid: 4326,
+    nullable: true,
+  })
+  nearestNOAALocation: GeoJSON | null;
 
   @ApiProperty({ example: 23 })
   @Column({ nullable: true, type: 'integer' })
@@ -103,7 +117,9 @@ export class Site {
   @Index()
   stream: VideoStream | null;
 
-  @ManyToMany(() => User, (user) => user.administeredSites)
+  @ManyToMany(() => User, (user) => user.administeredSites, {
+    onDelete: 'CASCADE',
+  })
   admins: User[];
 
   @ApiPropertyOptional()
@@ -120,9 +136,12 @@ export class Site {
   )
   historicalMonthlyMean: HistoricalMonthlyMean[];
 
-  hasHobo: boolean;
+  @ApiHideProperty()
+  @Exclude()
+  @Column({ nullable: true, select: false, type: 'character varying' })
+  spotterApiToken?: string | null;
 
-  liveData?: SofarLiveDataDto[];
+  hasHobo: boolean;
 
   collectionData?: CollectionDataDto;
 

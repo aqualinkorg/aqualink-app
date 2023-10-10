@@ -1,4 +1,4 @@
-import { ConnectionOptions, createConnection } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import yargs from 'yargs';
 import { configService } from '../src/config/config.service';
 import { Site } from '../src/sites/sites.entity';
@@ -7,7 +7,7 @@ import { ForecastData } from '../src/wind-wave-data/forecast-data.entity';
 
 // Initialize command definition
 const { argv } = yargs
-  .scriptName('backfill-sofar-time-series')
+  .scriptName('update-wind-wave-data')
   .usage('$0 <cmd> [args]')
   .option('s', {
     alias: 'sites',
@@ -25,8 +25,9 @@ const run = async () => {
   // Cast siteIds into a number array.
   const parsedSiteIds = siteIds.map(Number);
 
-  const config = configService.getTypeOrmConfig() as ConnectionOptions;
-  const connection = await createConnection(config);
+  const config = configService.getTypeOrmConfig() as DataSourceOptions;
+  const dataSource = new DataSource(config);
+  const connection = await dataSource.initialize();
 
   return addWindWaveData(parsedSiteIds, {
     siteRepository: connection.getRepository(Site),

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   createStyles,
   Theme,
@@ -7,18 +7,18 @@ import {
   Typography,
   Grid,
   makeStyles,
-} from "@material-ui/core";
-import classNames from "classnames";
-import { isNil } from "lodash";
+} from '@material-ui/core';
+import classNames from 'classnames';
+import { isNil } from 'lodash';
 
-import UpdateInfo from "../../UpdateInfo";
-import type { LatestDataASSofarValue } from "../../../store/Sites/types";
-import { formatNumber } from "../../../helpers/numberUtils";
-import { toRelativeTime } from "../../../helpers/dates";
-import waves from "../../../assets/waves.svg";
-import arrow from "../../../assets/directioncircle.svg";
-import wind from "../../../assets/wind.svg";
-import { styles as incomingStyles } from "../styles";
+import type { LatestDataASSofarValue } from 'store/Sites/types';
+import { formatNumber } from 'helpers/numberUtils';
+import { toRelativeTime } from 'helpers/dates';
+import UpdateInfo from '../../UpdateInfo';
+import waves from '../../../assets/waves.svg';
+import arrow from '../../../assets/directioncircle.svg';
+import wind from '../../../assets/wind.svg';
+import { styles as incomingStyles } from '../styles';
 
 const Waves = ({ data, hasSpotter }: WavesProps) => {
   const {
@@ -49,7 +49,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
         <Grid
           className={classes.content}
           container
-          justify="center"
+          justifyContent="center"
           alignContent="space-between"
           item
           xs={12}
@@ -105,7 +105,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
                   <img
                     className={classNames(
                       classes.arrow,
-                      classes.windDirectionArrow
+                      classes.windDirectionArrow,
                     )}
                     alt="arrow"
                     src={arrow}
@@ -118,7 +118,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
                 >
                   {!isNil(windDirectionFrom)
                     ? `${formatNumber(windDirectionFrom)}\u00B0`
-                    : "- -"}
+                    : '- -'}
                 </Typography>
               </Grid>
             </Grid>
@@ -137,7 +137,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
             item
             xs={12}
             container
-            justify="space-between"
+            justifyContent="space-between"
           >
             <Grid item lg={4}>
               <Typography
@@ -206,7 +206,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
                   <img
                     className={classNames(
                       classes.arrow,
-                      classes.wavesDirectionArrow
+                      classes.wavesDirectionArrow,
                     )}
                     alt="arrow"
                     src={arrow}
@@ -219,18 +219,18 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
                 >
                   {!isNil(waveDirectionFrom)
                     ? `${formatNumber(waveDirectionFrom)}\u00B0`
-                    : "- -"}
+                    : '- -'}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
           <UpdateInfo
             relativeTime={windRelativeTime}
-            timeText={hasSpotter ? "Last data received" : "Valid"}
+            timeText={hasSpotter ? 'Last data received' : 'Valid'}
             live={hasSpotter}
-            frequency={hasSpotter ? "hourly" : "every 6 hours"}
+            frequency={hasSpotter ? 'hourly' : 'every 6 hours'}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-            imageText={hasSpotter ? undefined : "NOAA GFS"}
+            imageText={hasSpotter ? undefined : 'SOFAR MODEL'}
           />
         </Grid>
       </CardContent>
@@ -242,36 +242,36 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     ...incomingStyles,
     root: {
-      height: "100%",
-      width: "100%",
-      backgroundColor: "#eff0f0",
-      display: "flex",
-      flexDirection: "column",
+      height: '100%',
+      width: '100%',
+      backgroundColor: '#eff0f0',
+      display: 'flex',
+      flexDirection: 'column',
     },
     coloredText: {
       color: theme.palette.primary.main,
     },
     titleImages: {
       height: 24,
-      marginLeft: "0.5rem",
+      marginLeft: '0.5rem',
     },
     paddingContainer: {
-      padding: "0.5rem 1rem",
+      padding: '0.5rem 1rem',
     },
     contentWrapper: {
-      height: "100%",
-      flex: "1 1 auto",
+      height: '100%',
+      flex: '1 1 auto',
       padding: 0,
     },
     content: {
-      height: "100%",
+      height: '100%',
     },
     arrow: {
       width: 20,
       height: 20,
-      marginRight: "1rem",
+      marginRight: '1rem',
       marginBottom: 10,
-      [theme.breakpoints.between("md", 1350)]: {
+      [theme.breakpoints.between('md', 1350)]: {
         width: 15,
         height: 15,
       },
@@ -282,7 +282,7 @@ const useStyles = makeStyles((theme: Theme) =>
     wavesDirectionArrow: ({ wavesDirection }: StyleProps) => ({
       transform: `rotate(${(wavesDirection || 0) + 180}deg)`,
     }),
-  })
+  }),
 );
 
 interface WavesProps {

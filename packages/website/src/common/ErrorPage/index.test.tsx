@@ -1,16 +1,16 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
-import configureStore from "redux-mock-store";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
 
-import ErrorPage from ".";
-import { mockUser } from "../../mocks/mockUser";
-import { mockCollection } from "../../mocks/mockCollection";
+import { mockUser } from 'mocks/mockUser';
+import { mockCollection } from 'mocks/mockCollection';
+import ErrorPage from '.';
 
 const mockStore = configureStore([]);
 
-describe("Error Page", () => {
+describe('Error Page', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -32,11 +32,11 @@ describe("Error Page", () => {
         <Router>
           <ErrorPage />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

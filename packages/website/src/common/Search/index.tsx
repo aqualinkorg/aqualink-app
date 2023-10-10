@@ -1,47 +1,41 @@
 /* eslint-disable fp/no-mutating-methods */
-import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   withStyles,
   WithStyles,
   createStyles,
   IconButton,
   TextField,
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useHistory, useParams } from "react-router-dom";
+} from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { useHistory, useParams } from 'react-router-dom';
 
-import {
-  setSiteOnMap,
-  setSearchResult,
-} from "../../store/Homepage/homepageSlice";
-import type { Site } from "../../store/Sites/types";
-import {
-  sitesListSelector,
-  sitesRequest,
-} from "../../store/Sites/sitesListSlice";
-import { getSiteNameAndRegion } from "../../store/Sites/helpers";
-import mapServices from "../../services/mapServices";
+import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
+import type { Site } from 'store/Sites/types';
+import { sitesListSelector, sitesRequest } from 'store/Sites/sitesListSlice';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import {
   unsetLatestData,
   unsetSpotterPosition,
   unsetSelectedSite,
-} from "../../store/Sites/selectedSiteSlice";
+} from 'store/Sites/selectedSiteSlice';
+import mapServices from 'services/mapServices';
 
 const siteAugmentedName = (site: Site) => {
   const { name, region } = getSiteNameAndRegion(site);
   if (name && region) {
     return `${name}, ${region}`;
   }
-  return name || region || "";
+  return name || region || '';
 };
 
 const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   const browserHistory = useHistory();
   const { id } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
   const sites = useSelector(sitesListSelector);
   const filteredSites = (sites || [])
@@ -59,12 +53,12 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   }, [dispatch]);
 
   const onChangeSearchText = (
-    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     const searchInput = event.target.value;
     const index = filteredSites.findIndex(
       (site) =>
-        siteAugmentedName(site).toLowerCase() === searchInput.toLowerCase()
+        siteAugmentedName(site).toLowerCase() === searchInput.toLowerCase(),
     );
     if (index > -1) {
       setSearchedSite(filteredSites[index]);
@@ -109,7 +103,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   };
 
   const onKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       onSearchSubmit();
     }
   };
@@ -139,7 +133,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
           value={searchedSite}
           onChange={onDropdownItemSelect}
           onInputChange={(_event, _value, reason) =>
-            reason === "clear" && setSearchedSite(null)
+            reason === 'clear' && setSearchedSite(null)
           }
           renderInput={(params) => (
             <TextField
@@ -161,41 +155,41 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
 const styles = () =>
   createStyles({
     searchBar: {
-      display: "flex",
-      alignItems: "stretch",
+      display: 'flex',
+      alignItems: 'stretch',
       borderRadius: 4,
-      overflow: "hidden",
+      overflow: 'hidden',
     },
     searchBarIcon: {
-      display: "flex",
-      justifyContent: "center",
-      backgroundColor: "#6ba8c0",
+      display: 'flex',
+      justifyContent: 'center',
+      backgroundColor: '#6ba8c0',
       width: 40,
     },
     searchBarText: {
-      paddingLeft: "0.5rem",
-      backgroundColor: "#469abb",
+      paddingLeft: '0.5rem',
+      backgroundColor: '#469abb',
       flexGrow: 1,
     },
     searchBarInput: {
-      "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
         borderWidth: 0,
       },
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
         borderWidth: 0,
       },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderWidth: 0,
       },
-      height: "100%",
-      width: "100%",
+      height: '100%',
+      width: '100%',
     },
     listbox: {
-      overflowX: "hidden",
+      overflowX: 'hidden',
     },
     option: {
-      display: "block",
-      overflowWrap: "break-word",
+      display: 'block',
+      overflowWrap: 'break-word',
     },
   });
 

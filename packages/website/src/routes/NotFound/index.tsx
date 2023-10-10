@@ -1,8 +1,8 @@
-import React from "react";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import NotFoundButton from "../../assets/img/404_click.png";
-import NotFoundBG from "../../assets/img/404_background.jpg";
+import React from 'react';
+import { withStyles, WithStyles, createStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import NotFoundButton from '../../assets/img/404_click.png';
+import NotFoundBG from '../../assets/img/404_background.jpg';
 
 const NotFoundPage = ({ classes }: NotFoundPageProps) => {
   return (
@@ -18,10 +18,10 @@ const styles = () =>
   createStyles({
     background: {
       backgroundImage: `url("${NotFoundBG}")`,
-      height: "100vh",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      height: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 

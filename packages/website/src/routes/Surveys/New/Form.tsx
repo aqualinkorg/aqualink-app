@@ -1,14 +1,14 @@
-import React, { useCallback } from "react";
-import { Grid, Collapse, IconButton } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { useSelector, useDispatch } from "react-redux";
-import { SurveyData, SurveyState } from "../../../store/Survey/types";
+import React, { useCallback } from 'react';
+import { Grid, Collapse, IconButton } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { useSelector, useDispatch } from 'react-redux';
+import { SurveyData, SurveyState } from 'store/Survey/types';
 import {
   surveyErrorSelector,
   surveyAddRequest,
-} from "../../../store/Survey/surveySlice";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import Form from "../../../common/SurveyForm";
+} from 'store/Survey/surveySlice';
+import { userInfoSelector } from 'store/User/userSlice';
+import Form from 'common/SurveyForm';
 
 const SurveyForm = ({ siteId, timeZone, changeTab }: SurveyFormProps) => {
   const user = useSelector(userInfoSelector);
@@ -19,9 +19,9 @@ const SurveyForm = ({ siteId, timeZone, changeTab }: SurveyFormProps) => {
   const onSubmit = useCallback(
     (
       diveDateTime: string,
-      diveLocation: SurveyState["diveLocation"],
-      weatherConditions: SurveyData["weatherConditions"],
-      comments: string
+      diveLocation: SurveyState['diveLocation'],
+      weatherConditions: SurveyData['weatherConditions'],
+      comments: string,
     ) => {
       const surveyData: SurveyData = {
         site: siteId,
@@ -36,10 +36,10 @@ const SurveyForm = ({ siteId, timeZone, changeTab }: SurveyFormProps) => {
           siteId: `${siteId}`,
           surveyData,
           changeTab,
-        })
+        }),
       );
     },
-    [dispatch, changeTab, siteId, user]
+    [dispatch, changeTab, siteId, user],
   );
 
   return (

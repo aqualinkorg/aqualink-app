@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -6,11 +6,11 @@ import {
   IconButton,
   Collapse,
   LinearProgress,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import CloseIcon from "@material-ui/icons/Close";
-import DeleteDialog, { Action } from "../Dialog";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import CloseIcon from '@material-ui/icons/Close';
+import DeleteDialog, { Action } from '../Dialog';
 
 const DeleteButton = ({
   header,
@@ -22,7 +22,7 @@ const DeleteButton = ({
 }: DeleteButtonProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
-  const [alertText, setAlertText] = useState<string>("");
+  const [alertText, setAlertText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleClickOpen = () => {
@@ -32,7 +32,7 @@ const DeleteButton = ({
   const handleClose = () => {
     setOpen(false);
     setAlertOpen(false);
-    setAlertText("");
+    setAlertText('');
   };
 
   const onDelete = async () => {
@@ -50,17 +50,17 @@ const DeleteButton = ({
 
   const dialogActions: Action[] = [
     {
-      size: "small",
-      variant: "outlined",
-      color: "secondary",
-      text: "Cancel",
+      size: 'small',
+      variant: 'outlined',
+      color: 'secondary',
+      text: 'Cancel',
       action: handleClose,
     },
     {
-      size: "small",
-      variant: "outlined",
-      color: "primary",
-      text: "Yes",
+      size: 'small',
+      variant: 'outlined',
+      color: 'primary',
+      text: 'Yes',
       action: onDelete,
     },
   ];
@@ -107,7 +107,7 @@ const DeleteButton = ({
 const styles = () =>
   createStyles({
     alert: {
-      width: "100%",
+      width: '100%',
     },
   });
 

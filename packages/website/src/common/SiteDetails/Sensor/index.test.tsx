@@ -1,18 +1,18 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Sensor from ".";
-import { mockUser } from "../../../mocks/mockUser";
-import { mockSite } from "../../../mocks/mockSite";
-import { mockLatestData } from "../../../mocks/mockLatestData";
-import { parseLatestData } from "../../../store/Sites/helpers";
+import { parseLatestData } from 'store/Sites/helpers';
+import { mockUser } from 'mocks/mockUser';
+import { mockSite } from 'mocks/mockSite';
+import { mockLatestData } from 'mocks/mockLatestData';
+import Sensor from '.';
 
 const mockStore = configureStore([]);
 
-describe("Sensor Card", () => {
+describe('Sensor Card', () => {
   let element: HTMLElement;
 
   const data = parseLatestData(mockLatestData);
@@ -31,11 +31,11 @@ describe("Sensor Card", () => {
         <Router>
           <Sensor depth={mockSite.depth} id={mockSite.id} data={data} />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

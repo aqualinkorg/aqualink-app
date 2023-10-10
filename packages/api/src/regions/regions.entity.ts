@@ -25,6 +25,7 @@ export class Region {
   @ApiPointProperty()
   @Column({
     type: 'geometry',
+    spatialFeatureType: 'Point',
     unique: true,
     srid: 4326,
     nullable: false,

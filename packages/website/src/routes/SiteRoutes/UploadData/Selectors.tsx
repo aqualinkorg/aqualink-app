@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   makeStyles,
   TextField,
   Theme,
   MenuItem,
-  Typography,
-  TextFieldProps,
   Button,
-  Chip,
   ButtonProps,
-} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import { Link } from "react-router-dom";
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import { Link } from 'react-router-dom';
 
-import { useSelector } from "react-redux";
-import { Site, Sources } from "../../../store/Sites/types";
-import NewSurveyPointDialog from "../../../common/NewSurveyPointDialog";
-import { uploadsTargetSelector } from "../../../store/uploads/uploadsSlice";
-
-interface SelectOption {
-  id: number;
-  name: string | null;
-  label?: string;
-}
-
-type EnhancedSelectOption = SelectOption & { disabled?: boolean };
-
-const SENSOR_TYPES: EnhancedSelectOption[] = [
-  { id: 0, name: "sonde", label: "Sonde data" },
-  { id: 1, name: "metlog", label: "Meteorological data" },
-  { id: 3, name: "hobo", label: "HOBO data" },
-  { id: 2, name: "spotter", label: "Spotter data", disabled: true },
-];
+import { useSelector } from 'react-redux';
+import { Site, Sources } from 'store/Sites/types';
+import { uploadsTargetSelector } from 'store/uploads/uploadsSlice';
+import NewSurveyPointDialog from 'common/NewSurveyPointDialog';
+import { OptionsList, selectProps, SENSOR_TYPES } from 'routes/Uploads/utils';
 
 const Selectors = ({
   site,
@@ -48,74 +31,26 @@ const Selectors = ({
   const [isNewPointDialogOpen, setIsNewPointDialogOpen] = useState(false);
 
   const pointSelectorValue =
-    typeof selectedPointIndex === "number" ? selectedPointIndex : "";
+    typeof selectedPointIndex === 'number' ? selectedPointIndex : '';
   const sensorSelectorValue =
-    typeof selectedSensorIndex === "number" ? selectedSensorIndex : "";
+    typeof selectedSensorIndex === 'number' ? selectedSensorIndex : '';
 
-  const hasSelectedPoint = typeof selectedPointIndex === "number";
-  const hasSelectedSensor = typeof selectedSensorIndex === "number";
+  const hasSelectedPoint = typeof selectedPointIndex === 'number';
+  const hasSelectedSensor = typeof selectedSensorIndex === 'number';
 
   const isContinueDisabled = !hasSelectedPoint || !hasSelectedSensor;
 
-  const selectProps: TextFieldProps["SelectProps"] = {
-    MenuProps: {
-      PaperProps: { className: classes.menuPaper },
-      anchorOrigin: {
-        vertical: "bottom",
-        horizontal: "center",
-      },
-      transformOrigin: {
-        vertical: "top",
-        horizontal: "center",
-      },
-      getContentAnchorEl: null,
-    },
-  };
-
-  const OptionsList = <T extends EnhancedSelectOption>(options: T[]) =>
-    options.map(({ id, name, label, disabled }, index) =>
-      name ? (
-        <MenuItem
-          disabled={disabled}
-          key={id}
-          value={index}
-          className={classes.menuItem}
-        >
-          <Typography
-            title={label || name}
-            className={classes.itemName}
-            color="textSecondary"
-          >
-            {label || name}
-          </Typography>
-          {disabled && (
-            <Chip
-              className={classes.comingSoonChip}
-              label={
-                <Typography
-                  className={classes.comingSoonChipText}
-                  variant="subtitle2"
-                >
-                  COMING SOON
-                </Typography>
-              }
-            />
-          )}
-        </MenuItem>
-      ) : null
-    );
-
   const handleChange =
-    (type: "point" | "sensor") =>
+    (type: 'point' | 'sensor') =>
     (event: React.ChangeEvent<{ value: unknown }>) => {
       const value = event.target.value as number;
 
       switch (type) {
-        case "point":
+        case 'point':
           setSelectedPointIndex(value);
           onPointChange(pointOptions[value].id);
           break;
-        case "sensor":
+        case 'sensor':
           setSelectedSensorIndex(value);
           onSensorChange(SENSOR_TYPES[value].name as Sources);
           break;
@@ -124,7 +59,7 @@ const Selectors = ({
       }
     };
 
-  const handleNewPointDialogOpen: ButtonProps["onClick"] = (event) => {
+  const handleNewPointDialogOpen: ButtonProps['onClick'] = (event) => {
     setIsNewPointDialogOpen(true);
     event.stopPropagation();
   };
@@ -135,7 +70,7 @@ const Selectors = ({
     if (uploadsTarget) {
       const newPointIndex = uploadsTarget.selectedPoint - 1;
       const newSensorIndex = SENSOR_TYPES.findIndex(
-        (x) => x.name === uploadsTarget.selectedSensor
+        (x) => x.name === uploadsTarget.selectedSensor,
       );
       setSelectedPointIndex(newPointIndex);
       setSelectedSensorIndex(newSensorIndex);
@@ -157,7 +92,7 @@ const Selectors = ({
         container
         className={classes.selectorsWrapper}
         spacing={3}
-        justify="space-between"
+        justifyContent="space-between"
       >
         <Grid item md={4} xs={12}>
           <TextField
@@ -172,7 +107,7 @@ const Selectors = ({
           <TextField
             label="Survey point"
             value={pointSelectorValue}
-            onChange={handleChange("point")}
+            onChange={handleChange('point')}
             variant="outlined"
             fullWidth
             select
@@ -197,7 +132,7 @@ const Selectors = ({
           <TextField
             label="Sensor type"
             value={sensorSelectorValue}
-            onChange={handleChange("sensor")}
+            onChange={handleChange('sensor')}
             variant="outlined"
             fullWidth
             select
@@ -240,26 +175,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
-  menuItem: {
-    paddingTop: 8.5,
-    paddingBottom: 8.5,
-  },
-  itemName: {
-    maxWidth: "100%",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    height: 19,
-  },
   menuPaper: {
     width: 240,
-  },
-  comingSoonChip: {
-    marginLeft: theme.spacing(1),
-    height: 18,
-  },
-  comingSoonChipText: {
-    fontSize: 8,
   },
   buttonMenuItem: {
     padding: 0,

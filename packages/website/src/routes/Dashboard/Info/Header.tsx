@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -7,15 +7,15 @@ import {
   Typography,
   Theme,
   Divider,
-} from "@material-ui/core";
-import EmailIcon from "@material-ui/icons/Email";
-import classNames from "classnames";
+} from '@material-ui/core';
+import EmailIcon from '@material-ui/icons/Email';
+import classNames from 'classnames';
 
-import { User } from "../../../store/User/types";
+import { User } from 'store/User/types';
 
 const Header = ({ user, nSites, classes }: HeaderProps) => (
   <>
-    <Grid container justify="space-between">
+    <Grid container justifyContent="space-between">
       <Grid item>
         <Grid container direction="column">
           <Grid item>

@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   siteDetailsSelector,
   siteLoadingSelector,
   siteRequest,
-} from "../store/Sites/selectedSiteSlice";
+} from 'store/Sites/selectedSiteSlice';
 
 export const useSiteRequest = (siteId: string) => {
   const dispatch = useDispatch();

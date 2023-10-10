@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Grid,
   Box,
@@ -11,14 +11,14 @@ import {
   useMediaQuery,
   Tooltip,
   Theme,
-} from "@material-ui/core";
-import grey from "@material-ui/core/colors/grey";
-import { Alert } from "@material-ui/lab";
-import isEmpty from "lodash/isEmpty";
+} from '@material-ui/core';
+import grey from '@material-ui/core/colors/grey';
+import { Alert } from '@material-ui/lab';
+import isEmpty from 'lodash/isEmpty';
 
-import { AvailableRange, RangeButton, RangeValue } from "./types";
-import { TimeSeriesSurveyPoint } from "../../../store/Sites/types";
-import { availableRangeString } from "./helpers";
+import { TimeSeriesSurveyPoint } from 'store/Sites/types';
+import { AvailableRange, RangeButton, RangeValue } from './types';
+import { availableRangeString } from './helpers';
 
 const Header = ({
   id,
@@ -33,29 +33,29 @@ const Header = ({
   surveyPoint,
 }: HeaderProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const buttons: RangeButton[] = [
     {
-      id: "one_month",
-      title: "1 Month",
-      tooltip: "1 month from maximum date",
+      id: 'one_month',
+      title: '1 Month',
+      tooltip: '1 month from maximum date',
     },
     {
-      id: "one_year",
-      title: "1 Year",
-      tooltip: "Range of 1 year from maximum date",
+      id: 'one_year',
+      title: '1 Year',
+      tooltip: 'Range of 1 year from maximum date',
     },
     {
-      id: "max",
-      title: "Max",
+      id: 'max',
+      title: 'Max',
       disabled: disableMaxRange,
-      tooltip: disableMaxRange ? "No maximum range" : "Maximun range",
+      tooltip: disableMaxRange ? 'No maximum range' : 'Maximun range',
     },
     {
-      id: "custom",
-      title: "Custom",
-      tooltip: "Custom range",
+      id: 'custom',
+      title: 'Custom',
+      tooltip: 'Custom range',
     },
   ];
 
@@ -65,7 +65,7 @@ const Header = ({
         className={classes.autoWidth}
         container
         alignItems="flex-end"
-        justify="space-between"
+        justifyContent="space-between"
         spacing={2}
       >
         <Grid item>
@@ -75,7 +75,7 @@ const Header = ({
               variant="h6"
               color="textSecondary"
             >
-              {title?.toUpperCase() || "TEMPERATURE"}
+              {title?.toUpperCase() || 'TEMPERATURE'}
             </Typography>
             {surveyPoint?.name && (
               <Typography className={classes.title} variant="subtitle1">
@@ -93,7 +93,7 @@ const Header = ({
                   const dateRangeString = availableRangeString(
                     name,
                     data?.[0],
-                    timeZone
+                    timeZone,
                   );
 
                   if (!dateRangeString) {
@@ -126,7 +126,7 @@ const Header = ({
               <Grid
                 className={classes.autoWidth}
                 container
-                justify={isMobile ? "center" : "flex-start"}
+                justifyContent={isMobile ? 'center' : 'flex-start'}
                 alignItems="center"
                 spacing={2}
               >
@@ -147,7 +147,7 @@ const Header = ({
                           onClick={() => onRangeChange(button.id)}
                           size="small"
                           variant={
-                            range === button.id ? "contained" : "outlined"
+                            range === button.id ? 'contained' : 'outlined'
                           }
                           color="primary"
                           disabled={button.disabled}
@@ -173,30 +173,30 @@ const Header = ({
 const styles = (theme: Theme) =>
   createStyles({
     autoWidth: {
-      width: "auto",
+      width: 'auto',
     },
     rangesWrapper: {
       marginTop: 0,
     },
     rangeItem: {
       height: 28,
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
       backgroundColor: grey[100],
       color: grey[600],
       borderRadius: 5,
-      padding: "2px 5px",
+      padding: '2px 5px',
     },
     title: {
       marginLeft: theme.spacing(1.5),
     },
     rangeTitle: {
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         marginLeft: theme.spacing(1.5),
       },
     },
     rangeIcon: {
-      color: "inherit !important",
+      color: 'inherit !important',
       fontSize: theme.spacing(2),
       marginRight: 5,
     },
@@ -216,7 +216,7 @@ interface HeaderIncomingProps {
 
 Header.defaultProps = {
   id: undefined,
-  title: "",
+  title: '',
   timeZone: null,
   showRangeButtons: true,
   surveyPoint: undefined,

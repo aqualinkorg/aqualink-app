@@ -19,7 +19,16 @@
     "docs",
     "config"
   ],
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ],
   "transform": {
     "\\.ts$": "ts-jest"
+  },
+  "globalSetup": "./test/global-setup.js",
+  "moduleNameMapper": {
+    "^csv-stringify/sync":
+      "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs"
   }
 }

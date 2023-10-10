@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Theme,
   Paper,
@@ -7,20 +7,20 @@ import {
   Typography,
   Button,
   makeStyles,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
-import { formatNumber } from "../../../../helpers/numberUtils";
-import { SurveyListItem } from "../../../../store/Survey/types";
-import incomingStyles from "../styles";
-import CustomLink from "../../../Link";
-import LoadingSkeleton from "../../../LoadingSkeleton";
-import pointImageSkeleton from "../../../../assets/img/loading-image.svg";
-import DeleteButton from "../../../DeleteButton";
-import { userInfoSelector } from "../../../../store/User/userSlice";
-import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
-import surveyServices from "../../../../services/surveyServices";
+} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { SurveyListItem } from 'store/Survey/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { surveysRequest } from 'store/Survey/surveyListSlice';
+import { formatNumber } from 'helpers/numberUtils';
+import surveyServices from 'services/surveyServices';
+import { DateTime } from 'luxon-extensions';
+import incomingStyles from '../styles';
+import CustomLink from '../../../Link';
+import LoadingSkeleton from '../../../LoadingSkeleton';
+import pointImageSkeleton from '../../../../assets/img/loading-image.svg';
+import DeleteButton from '../../../DeleteButton';
 
 const SurveyCard = ({
   pointId,
@@ -32,7 +32,6 @@ const SurveyCard = ({
 }: SurveyCardProps) => {
   const classes = useStyles();
   const isShowingFeatured = pointId === -1;
-  const displayDeleteButton = isAdmin && typeof siteId === "number";
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
 
@@ -54,7 +53,7 @@ const SurveyCard = ({
 
   return (
     <Paper elevation={0} className={classes.surveyCard}>
-      <Grid style={{ height: "100%" }} container justify="space-between">
+      <Grid style={{ height: '100%' }} container justifyContent="space-between">
         <Grid className={classes.cardImageWrapper} item xs={12} md={5}>
           <LoadingSkeleton
             loading={loading}
@@ -83,8 +82,8 @@ const SurveyCard = ({
             container
             item
             xs={12}
-            direction={loading ? "column" : "row"}
-            justify={loading ? "center" : "flex-start"}
+            direction={loading ? 'column' : 'row'}
+            justifyContent={loading ? 'center' : 'flex-start'}
           >
             <LoadingSkeleton
               loading={loading}
@@ -126,7 +125,7 @@ const SurveyCard = ({
                           isIcon={false}
                           tooltipTitle=""
                           content={
-                            pointName === "All"
+                            pointName === 'All'
                               ? survey.featuredSurveyMedia.surveyPoint.name
                               : pointName
                           }
@@ -142,7 +141,7 @@ const SurveyCard = ({
                       item
                       xs={12}
                     >
-                      <Grid style={{ height: "80%" }} item xs={12}>
+                      <Grid style={{ height: '80%' }} item xs={12}>
                         <Typography className={classes.cardFields} variant="h6">
                           Comments:
                         </Typography>
@@ -155,7 +154,7 @@ const SurveyCard = ({
                       </Grid>
                     </Grid>
                   )}
-                  {survey.temperature && (
+                  {survey.satelliteTemperature && (
                     <Grid container alignItems="center" item xs={12}>
                       <Typography className={classes.cardFields} variant="h6">
                         Temp:
@@ -164,20 +163,20 @@ const SurveyCard = ({
                         className={`${classes.cardValues} ${classes.valuesWithMargin}`}
                         variant="h6"
                       >
-                        {`${formatNumber(survey.temperature, 1)} °C`}
+                        {`${formatNumber(survey.satelliteTemperature, 1)} °C`}
                       </Typography>
                     </Grid>
                   )}
                   <Grid
                     container
                     alignItems="center"
-                    justify="space-between"
+                    justifyContent="space-between"
                     item
                     xs={12}
                   >
                     <Grid item xs={10}>
                       <Link
-                        style={{ color: "inherit", textDecoration: "none" }}
+                        style={{ color: 'inherit', textDecoration: 'none' }}
                         to={`/sites/${siteId}/survey_details/${survey.id}`}
                       >
                         <Button size="small" variant="outlined" color="primary">
@@ -185,21 +184,23 @@ const SurveyCard = ({
                         </Button>
                       </Link>
                     </Grid>
-                    {displayDeleteButton && (
-                      <Grid container justify="flex-end" item xs={2}>
-                        <DeleteButton
-                          content={
-                            <Typography color="textSecondary">{`Are you sure you would like to delete the survey for ${moment(
-                              survey.diveDate
-                            ).format(
-                              "MM/DD/YYYY"
-                            )}? It will delete all media associated with this survey.`}</Typography>
-                          }
-                          onConfirm={onSurveyDelete}
-                          onSuccess={onSurveyDeleteSuccess}
-                        />
-                      </Grid>
-                    )}
+                    {isAdmin &&
+                      typeof siteId === 'number' &&
+                      typeof survey?.diveDate === 'string' && (
+                        <Grid container justifyContent="flex-end" item xs={2}>
+                          <DeleteButton
+                            content={
+                              <Typography color="textSecondary">{`Are you sure you would like to delete the survey for ${DateTime.fromISO(
+                                survey.diveDate,
+                              ).toFormat(
+                                'LL/dd/yyyy',
+                              )}? It will delete all media associated with this survey.`}</Typography>
+                            }
+                            onConfirm={onSurveyDelete}
+                            onSuccess={onSurveyDeleteSuccess}
+                          />
+                        </Grid>
+                      )}
                   </Grid>
                 </>
               )}
@@ -214,38 +215,38 @@ const SurveyCard = ({
 const useStyles = makeStyles((theme: Theme) => ({
   ...incomingStyles,
   cardImageWrapper: {
-    height: "100%",
-    [theme.breakpoints.down("sm")]: {
-      height: "50%",
+    height: '100%',
+    [theme.breakpoints.down('sm')]: {
+      height: '50%',
     },
   },
   infoWrapper: {
-    height: "100%",
-    [theme.breakpoints.down("sm")]: {
-      height: "50%",
+    height: '100%',
+    [theme.breakpoints.down('sm')]: {
+      height: '50%',
     },
   },
   commentsWrapper: {
-    maxHeight: "51%",
+    maxHeight: '51%',
   },
   comments: {
-    height: "100%",
-    overflowY: "auto",
+    height: '100%',
+    overflowY: 'auto',
   },
   valuesWithMargin: {
-    marginLeft: "1rem",
-    maxWidth: "60%",
-    display: "block",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
+    marginLeft: '1rem',
+    maxWidth: '60%',
+    display: 'block',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   blueText: {
     color: theme.palette.primary.main,
   },
   info: {
-    height: "100%",
-    padding: "0.5rem 0.5rem 0.5rem 1rem",
+    height: '100%',
+    padding: '0.5rem 0.5rem 0.5rem 1rem',
   },
 }));
 

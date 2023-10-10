@@ -1,11 +1,12 @@
 import { Logger } from '@nestjs/common';
 import { get, times } from 'lodash';
-import moment from 'moment';
-import { Connection, In, IsNull, Not, Repository } from 'typeorm';
+import { In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
+import { distance } from '@turf/turf';
+import { Point } from 'geojson';
+import { DateTime } from '../luxon-extensions';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData } from './sofar';
 import {
@@ -16,7 +17,10 @@ import {
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
-import { getSources } from './time-series.utils';
+import { getSources, refreshMaterializedView } from './time-series.utils';
+import { Metric } from '../time-series/metrics.enum';
+
+const MAX_DISTANCE_FROM_SITE = 50;
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -26,26 +30,6 @@ interface Repositories {
 }
 
 const logger = new Logger('SpotterTimeSeries');
-
-/**
- * Fetches all sites with where id is included in the siteIds array and has sensorId
- * If an empty array of siteIds is given then all sites with sensors are returned
- * @param siteIds The requested siteIds
- * @param siteRepository The required repository to make the query
- * @returns An array of site entities
- */
-export const getSites = (
-  siteIds: number[],
-  hasSensorOnly: boolean = false,
-  siteRepository: Repository<Site>,
-) => {
-  return siteRepository.find({
-    where: {
-      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
-      ...(hasSensorOnly ? { sensorId: Not(IsNull()) } : {}),
-    },
-  });
-};
 
 /**
  * Fetches the exclusion dates for the selected sources.
@@ -58,7 +42,11 @@ const getSpotterExclusionDates = (
   exclusionDatesRepository: Repository<ExclusionDates>,
 ) =>
   sources.map((source) =>
-    exclusionDatesRepository.find({ where: { sensorId: source.sensorId } }),
+    exclusionDatesRepository.find({
+      where: {
+        sensorId: source.sensorId ?? IsNull(),
+      },
+    }),
   );
 
 /**
@@ -83,7 +71,9 @@ const saveDataBatch = (
       batch.map((data) => ({
         metric,
         value: data.value,
-        timestamp: moment(data.timestamp).startOf('minute').toDate(),
+        timestamp: DateTime.fromISO(data.timestamp)
+          .startOf('minute')
+          .toJSDate(),
         source,
       })),
     )
@@ -95,18 +85,23 @@ const saveDataBatch = (
  * Fetch spotter and wave data from sofar and save them on time_series table
  * @param siteIds The siteIds for which to perform the update
  * @param days How many days will this script need to backfill (1 = daily update)
- * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
 export const addSpotterData = async (
   siteIds: number[],
   days: number,
-  connection: Connection,
   repositories: Repositories,
+  skipDistanceCheck = false,
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, true, repositories.siteRepository);
+  const sites = await repositories.siteRepository.find({
+    where: {
+      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
+      sensorId: Not(IsNull()),
+    },
+    select: ['id', 'sensorId', 'spotterApiToken', 'polygon'],
+  });
 
   logger.log('Fetching sources');
   // Fetch sources
@@ -139,9 +134,15 @@ export const addSpotterData = async (
     (site) =>
       Bluebird.map(
         times(days),
-        (i) => {
-          const startDate = moment().subtract(i, 'd').startOf('day').toDate();
-          const endDate = moment().subtract(i, 'd').endOf('day').toDate();
+        async (i) => {
+          const startDate = DateTime.now()
+            .minus({ days: i })
+            .startOf('day')
+            .toJSDate();
+          const endDate = DateTime.now()
+            .minus({ days: i })
+            .endOf('day')
+            .toJSDate();
 
           if (!site.sensorId) {
             return DEFAULT_SPOTTER_DATA_VALUE;
@@ -153,10 +154,36 @@ export const addSpotterData = async (
             [],
           );
 
+          const sofarToken =
+            site.spotterApiToken || process.env.SOFAR_API_TOKEN;
           // Fetch spotter and wave data from sofar
-          return getSpotterData(site.sensorId, endDate, startDate).then(
-            (data) => excludeSpotterData(data, sensorExclusionDates),
-          );
+          const spotterData = await getSpotterData(
+            site.sensorId,
+            sofarToken,
+            endDate,
+            startDate,
+          ).then((data) => excludeSpotterData(data, sensorExclusionDates));
+
+          if (
+            !skipDistanceCheck &&
+            spotterData?.latitude?.length &&
+            spotterData?.longitude?.length
+          ) {
+            // Check if spotter is within specified distance from its site, else don't return any data.
+            const dist = distance(
+              (site.polygon as Point).coordinates,
+              [spotterData.longitude[0].value, spotterData.latitude[0].value],
+              { units: 'kilometers' },
+            );
+            if (dist > MAX_DISTANCE_FROM_SITE) {
+              logger.warn(
+                `Spotter is over ${MAX_DISTANCE_FROM_SITE}km from site ${site.id}. Data will not be saved.`,
+              );
+              return DEFAULT_SPOTTER_DATA_VALUE;
+            }
+          }
+
+          return spotterData;
         },
         { concurrency: 100 },
       )
@@ -169,6 +196,10 @@ export const addSpotterData = async (
             ['waveMeanPeriod', Metric.WAVE_MEAN_PERIOD],
             ['windDirection', Metric.WIND_DIRECTION],
             ['windSpeed', Metric.WIND_SPEED],
+            ['barometerTop', Metric.BAROMETRIC_PRESSURE_TOP],
+            ['barometerBottom', Metric.BAROMETRIC_PRESSURE_BOTTOM],
+            ['barometricTopDiff', Metric.BAROMETRIC_PRESSURE_TOP_DIFF],
+            ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
           ];
 
           // Save data to time_series
@@ -189,10 +220,11 @@ export const addSpotterData = async (
         })
         .then(() => {
           // After each successful execution, log the event
-          const startDate = moment()
-            .subtract(days - 1, 'd')
+          const startDate = DateTime.now()
+            .minus({ days: days - 1 })
             .startOf('day');
-          const endDate = moment().endOf('day');
+
+          const endDate = DateTime.now().endOf('day');
           logger.debug(
             `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
           );
@@ -201,6 +233,5 @@ export const addSpotterData = async (
   );
 
   // Update materialized view
-  logger.log('Refreshing materialized view latest_data');
-  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+  await refreshMaterializedView(repositories.siteRepository);
 };

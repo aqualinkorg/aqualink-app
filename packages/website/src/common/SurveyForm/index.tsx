@@ -1,6 +1,5 @@
-import React, { useState, useCallback, ChangeEvent } from "react";
-import { useSelector } from "react-redux";
-import moment from "moment";
+import React, { useState, useCallback, ChangeEvent } from 'react';
+import { useSelector } from 'react-redux';
 import {
   withStyles,
   WithStyles,
@@ -13,21 +12,28 @@ import {
   Button,
   useTheme,
   useMediaQuery,
-} from "@material-ui/core";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import EventIcon from "@material-ui/icons/Event";
-import { Link } from "react-router-dom";
+} from '@material-ui/core';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import EventIcon from '@material-ui/icons/Event';
+import { Link } from 'react-router-dom';
 import {
   KeyboardDatePicker,
   KeyboardTimePicker,
   MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import { useForm } from "react-hook-form";
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { useForm, Controller } from 'react-hook-form';
 
-import { diveLocationSelector } from "../../store/Survey/surveySlice";
-import { SurveyData, SurveyState } from "../../store/Survey/types";
-import { setTimeZone } from "../../helpers/dates";
+import { diveLocationSelector } from 'store/Survey/surveySlice';
+import { SurveyData, SurveyState } from 'store/Survey/types';
+import { setTimeZone } from 'helpers/dates';
+import { DateTime } from 'luxon-extensions';
+
+interface SurveyFormFields {
+  diveDate: string;
+  diveTime: string;
+  comments: string;
+}
 
 const SurveyForm = ({
   siteId,
@@ -36,16 +42,22 @@ const SurveyForm = ({
   classes,
 }: SurveyFormProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
   const [weather, setWeather] =
-    useState<SurveyData["weatherConditions"]>("calm");
-  const itemsSize = isMobile ? "small" : "medium";
-  const iconSize = isMobile ? "small" : "default";
+    useState<SurveyData['weatherConditions']>('calm');
+  const itemsSize = isMobile ? 'small' : 'medium';
+  const iconSize = isMobile ? 'small' : 'default';
 
-  const { register, errors, handleSubmit, reset } = useForm({
-    reValidateMode: "onSubmit",
+  const {
+    formState: { errors },
+    handleSubmit,
+    reset,
+    setValue,
+    control,
+  } = useForm<SurveyFormFields>({
+    reValidateMode: 'onSubmit',
   });
 
   const handleDiveDateTimeChange = (date: Date | null) => {
@@ -55,31 +67,31 @@ const SurveyForm = ({
   };
 
   const handleWeatherChange = (event: ChangeEvent<{ value: unknown }>) => {
-    setWeather(event.target.value as SurveyData["weatherConditions"]);
+    setWeather(event.target.value as SurveyData['weatherConditions']);
   };
 
   const nativeSubmit = useCallback(
     (data: { comments: string }) => {
       if (diveDateTime) {
         const dateTime = new Date(
-          setTimeZone(diveDateTime, timeZone) || diveDateTime
+          setTimeZone(diveDateTime, timeZone) || diveDateTime,
         ).toISOString();
         const weatherConditions = weather;
         const { comments } = data;
         onSubmit(dateTime, diveLocation, weatherConditions, comments);
       }
     },
-    [onSubmit, diveDateTime, timeZone, weather, diveLocation]
+    [onSubmit, diveDateTime, timeZone, weather, diveLocation],
   );
 
   const resetForm = () => {
     reset({
-      diveTime: null,
-      diveDate: null,
-      comments: null,
+      diveTime: undefined,
+      diveDate: undefined,
+      comments: undefined,
     });
     setDiveDateTime(null);
-    setWeather("calm");
+    setWeather('calm');
   };
 
   return (
@@ -88,7 +100,7 @@ const SurveyForm = ({
       <Grid
         className={classes.section}
         container
-        justify="space-between"
+        justifyContent="space-between"
         spacing={2}
       >
         <Grid item xs={12} sm={6}>
@@ -96,36 +108,49 @@ const SurveyForm = ({
             Dive Date
           </Typography>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              className={classes.textField}
-              disableToolbar
-              format="MM/dd/yyyy"
-              fullWidth
-              id="dive-date"
+            <Controller
               name="diveDate"
-              autoOk
-              showTodayButton
-              size={itemsSize}
-              helperText={errors?.diveDate?.message || ""}
-              inputRef={register({
-                required: "This is a required field",
+              control={control}
+              rules={{
+                required: 'This is a required field',
                 validate: {
                   validDate: (value) =>
-                    moment(value, "MM/DD/YYYY", true).isValid() ||
-                    "Invalid date",
+                    DateTime.fromFormat(value, 'LL/dd/yyyy', { zone: 'UTC' })
+                      .isValid || 'Invalid date',
                 },
-              })}
-              error={!!errors.diveDate}
-              value={diveDateTime}
-              onChange={handleDiveDateTimeChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
               }}
-              inputProps={{
-                className: classes.textField,
-              }}
-              inputVariant="outlined"
-              keyboardIcon={<EventIcon fontSize={iconSize} />}
+              render={({ field }) => (
+                <KeyboardDatePicker
+                  className={classes.textField}
+                  disableToolbar
+                  format="MM/dd/yyyy"
+                  fullWidth
+                  id="dive-date"
+                  autoOk
+                  showTodayButton
+                  size={itemsSize}
+                  helperText={errors?.diveDate?.message || ''}
+                  error={!!errors.diveDate}
+                  value={diveDateTime}
+                  ref={field.ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    setValue(
+                      'diveTime',
+                      DateTime.fromJSDate(e || new Date(NaN)).toFormat('HH:mm'),
+                    );
+                    handleDiveDateTimeChange(e);
+                  }}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                  inputProps={{
+                    className: classes.textField,
+                  }}
+                  inputVariant="outlined"
+                  keyboardIcon={<EventIcon fontSize={iconSize} />}
+                />
+              )}
             />
           </MuiPickersUtilsProvider>
         </Grid>
@@ -134,33 +159,42 @@ const SurveyForm = ({
             Dive Local Time
           </Typography>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardTimePicker
-              className={classes.textField}
-              id="time-picker"
+            <Controller
               name="diveTime"
-              fullWidth
-              autoOk
-              size={itemsSize}
-              helperText={errors?.diveTime?.message || ""}
-              inputRef={register({
-                required: "This is a required field",
+              control={control}
+              rules={{
+                required: 'This is a required field',
                 pattern: {
                   value: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
-                  message: "Invalid time format",
+                  message: 'Invalid time format',
                 },
-              })}
-              error={!!errors.diveTime}
-              format="HH:mm"
-              value={diveDateTime}
-              onChange={handleDiveDateTimeChange}
-              KeyboardButtonProps={{
-                "aria-label": "change time",
               }}
-              InputProps={{
-                className: classes.textField,
-              }}
-              keyboardIcon={<AccessTimeIcon fontSize={iconSize} />}
-              inputVariant="outlined"
+              render={({ field }) => (
+                <KeyboardTimePicker
+                  className={classes.textField}
+                  id="time-picker"
+                  fullWidth
+                  autoOk
+                  size={itemsSize}
+                  helperText={errors?.diveTime?.message || ''}
+                  error={!!errors.diveTime}
+                  format="HH:mm"
+                  value={diveDateTime}
+                  ref={field.ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleDiveDateTimeChange(e);
+                  }}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                  }}
+                  InputProps={{
+                    className: classes.textField,
+                  }}
+                  keyboardIcon={<AccessTimeIcon fontSize={iconSize} />}
+                  inputVariant="outlined"
+                />
+              )}
             />
           </MuiPickersUtilsProvider>
         </Grid>
@@ -176,7 +210,7 @@ const SurveyForm = ({
             fullWidth
             placeholder="LAT"
             label="Latitude"
-            value={diveLocation?.lat || ""}
+            value={diveLocation?.lat || ''}
             disabled
             size={itemsSize}
           />
@@ -188,7 +222,7 @@ const SurveyForm = ({
             fullWidth
             placeholder="LONG"
             label="Longitude"
-            value={diveLocation?.lng || ""}
+            value={diveLocation?.lng || ''}
             disabled
             size={itemsSize}
           />
@@ -233,25 +267,30 @@ const SurveyForm = ({
         </Typography>
       </Grid>
       <Grid className={classes.extraMargin} item xs={12}>
-        <TextField
-          className={classes.textField}
-          variant="outlined"
-          multiline
+        <Controller
           name="comments"
-          placeholder="Did anything stand out during this survey"
-          inputRef={register()}
-          fullWidth
-          size={itemsSize}
-          inputProps={{
-            className: classes.textField,
-          }}
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              className={classes.textField}
+              variant="outlined"
+              multiline
+              placeholder="Did anything stand out during this survey?"
+              fullWidth
+              size={itemsSize}
+              inputProps={{
+                className: classes.textField,
+              }}
+            />
+          )}
         />
       </Grid>
       {/* SUBMIT */}
       <Grid
         className={classes.section}
         container
-        justify="flex-end"
+        justifyContent="flex-end"
         item
         spacing={2}
       >
@@ -295,19 +334,19 @@ const SurveyForm = ({
 const styles = (theme: Theme) =>
   createStyles({
     textField: {
-      color: "black",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
+      color: 'black',
+      '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'rgba(0, 0, 0, 0.23)',
       },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
       },
     },
     section: {
-      marginBottom: "1rem",
+      marginBottom: '1rem',
     },
     extraMargin: {
-      marginBottom: "2rem",
+      marginBottom: '2rem',
     },
   });
 
@@ -316,9 +355,9 @@ interface SurveyFormIncomingProps {
   timeZone?: string | null;
   onSubmit: (
     diveDateTime: string,
-    diveLocation: SurveyState["diveLocation"],
-    weatherConditions: SurveyData["weatherConditions"],
-    comments: string
+    diveLocation: SurveyState['diveLocation'],
+    weatherConditions: SurveyData['weatherConditions'],
+    comments: string,
   ) => void;
 }
 

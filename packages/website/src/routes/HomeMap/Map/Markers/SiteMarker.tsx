@@ -1,19 +1,19 @@
-import { Marker, useLeaflet } from "react-leaflet";
-import { useDispatch, useSelector } from "react-redux";
-import React from "react";
-import { Site } from "../../../../store/Sites/types";
+import { Marker, useLeaflet } from 'react-leaflet';
+import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { Site } from 'store/Sites/types';
 import {
   siteOnMapSelector,
   setSiteOnMap,
   setSearchResult,
-} from "../../../../store/Homepage/homepageSlice";
-import { useMarkerIcon } from "../../../../helpers/map";
-import { hasDeployedSpotter } from "../../../../helpers/siteUtils";
+} from 'store/Homepage/homepageSlice';
+import { useMarkerIcon } from 'helpers/map';
+import { hasDeployedSpotter } from 'helpers/siteUtils';
 import {
   alertColorFinder,
   alertIconFinder,
-} from "../../../../helpers/bleachingAlertIntervals";
-import Popup from "../Popup";
+} from 'helpers/bleachingAlertIntervals';
+import Popup from '../Popup';
 
 // To make sure we can see all the sites all the time, and especially
 // around -180/+180, we create dummy copies of each site.
@@ -37,10 +37,10 @@ export default function SiteMarker({ site, setCenter }: SiteMarkerProps) {
     site.hasHobo,
     siteOnMap?.id === site.id,
     alertColorFinder(tempWeeklyAlert),
-    alertIconFinder(tempWeeklyAlert)
+    alertIconFinder(tempWeeklyAlert),
   );
 
-  if (site.polygon.type !== "Point") return null;
+  if (site.polygon.type !== 'Point') return null;
 
   const [lng, lat] = site.polygon.coordinates;
   return (

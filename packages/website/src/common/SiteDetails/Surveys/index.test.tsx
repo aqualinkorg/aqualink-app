@@ -1,22 +1,22 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Surveys from ".";
-import { mockUser } from "../../../mocks/mockUser";
-import { mockSurvey } from "../../../mocks/mockSurvey";
-import { mockSite } from "../../../mocks/mockSite";
+import { mockUser } from 'mocks/mockUser';
+import { mockSurveyList } from 'mocks/mockSurveyList';
+import { mockSite } from 'mocks/mockSite';
+import Surveys from '.';
 
 const mockStore = configureStore([]);
 
-describe("Surveys", () => {
+describe('Surveys', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
       surveyList: {
-        list: [mockSurvey],
+        list: [mockSurveyList],
         loading: false,
         error: null,
       },
@@ -34,11 +34,11 @@ describe("Surveys", () => {
         <Router>
           <Surveys site={mockSite} />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

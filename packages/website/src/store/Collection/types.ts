@@ -1,5 +1,5 @@
-import { Site, SiteResponse } from "../Sites/types";
-import { User } from "../User/types";
+import { Site, SiteResponse } from '../Sites/types';
+import { User } from '../User/types';
 
 export interface CollectionSummary {
   id: number;
@@ -10,7 +10,7 @@ export interface CollectionSummary {
 }
 
 export interface CollectionDetails {
-  id?: number;
+  id: number;
   name: string;
   isPublic: boolean;
   sites: Site[];

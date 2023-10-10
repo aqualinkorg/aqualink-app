@@ -13,7 +13,6 @@ import { SiteApplication } from '../site-applications/site-applications.entity';
 import { Site } from '../sites/sites.entity';
 import { Collection } from '../collections/collections.entity';
 import { extractAndVerifyToken } from '../auth/firebase-auth.utils';
-import { defaultUserCollection } from '../utils/collections.utils';
 
 @Injectable()
 export class UsersService {
@@ -76,19 +75,6 @@ export class UsersService {
     };
     const createdUser = await this.usersRepository.save(user);
 
-    const collection = await this.collectionRepository.findOne({
-      where: { user: createdUser },
-    });
-
-    if (!collection) {
-      await this.collectionRepository.save(
-        defaultUserCollection(
-          createdUser.id,
-          priorAccount?.administeredSites.map((site) => site.id),
-        ),
-      );
-    }
-
     return createdUser;
   }
 
@@ -115,7 +101,7 @@ export class UsersService {
     );
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
+  async findByEmail(email: string): Promise<User | null> {
     // Use query builder to include the firebaseUid
     return this.usersRepository
       .createQueryBuilder('users')
@@ -124,7 +110,7 @@ export class UsersService {
       .getOne();
   }
 
-  async findByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
+  async findByFirebaseUid(firebaseUid: string): Promise<User | null> {
     return this.usersRepository.findOne({ where: { firebaseUid } });
   }
 
@@ -147,12 +133,13 @@ export class UsersService {
    */
   private async migrateUserAssociations(user: User) {
     const siteAssociations = await this.siteApplicationRepository.find({
-      where: { user },
+      where: { user: { id: user.id } },
       relations: ['site'],
     });
 
     const { administeredSites: existingSites = [] } =
-      (await this.usersRepository.findOne(user.id, {
+      (await this.usersRepository.findOne({
+        where: { id: user.id },
         relations: ['administeredSites'],
       })) || {};
 

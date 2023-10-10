@@ -1,16 +1,27 @@
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { TimeSeriesPoint } from '../../time-series/dto/time-series-point.dto';
-import { Metric } from '../../time-series/metrics.entity';
+import { Metric } from '../../time-series/metrics.enum';
+import { KeysToCamelCase } from '../../utils/type-utils';
 
-export class SensorDataDto {
+type MetricAsCamelcase = KeysToCamelCase<Record<Metric, TimeSeriesPoint>>;
+
+interface SensorDataDtoType {
+  [SourceType.SPOTTER]?: Partial<
+    Pick<MetricAsCamelcase, 'bottomTemperature' | 'topTemperature'>
+  >;
+  [SourceType.HOBO]?: Partial<Pick<MetricAsCamelcase, 'bottomTemperature'>>;
+  [SourceType.NOAA]?: Partial<Pick<MetricAsCamelcase, 'satelliteTemperature'>>;
+}
+
+export class SensorDataDto implements SensorDataDtoType {
   [SourceType.SPOTTER]?: {
-    [Metric.BOTTOM_TEMPERATURE]?: TimeSeriesPoint;
-    [Metric.TOP_TEMPERATURE]?: TimeSeriesPoint;
+    bottomTemperature?: TimeSeriesPoint;
+    topTemperature?: TimeSeriesPoint;
   };
   [SourceType.HOBO]?: {
-    [Metric.BOTTOM_TEMPERATURE]?: TimeSeriesPoint;
+    bottomTemperature?: TimeSeriesPoint;
   };
   [SourceType.NOAA]?: {
-    [Metric.SATELLITE_TEMPERATURE]?: TimeSeriesPoint;
+    satelliteTemperature?: TimeSeriesPoint;
   };
 }

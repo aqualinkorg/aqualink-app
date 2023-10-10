@@ -1,20 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { AxiosError, AxiosResponse } from "axios";
-import "./index.css";
-import "leaflet/dist/leaflet.css";
-import "./assets/css/bootstrap.css";
-import jwt from "jsonwebtoken";
-import { Provider } from "react-redux";
-import App from "./layout/App";
-import { store } from "./store/configure";
-import * as serviceWorker from "./serviceWorker";
-import requestsConfig from "./helpers/requests";
-import app from "./firebase";
-import { setToken } from "./store/User/userSlice";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AxiosError, AxiosResponse } from 'axios';
+import './index.css';
+import 'leaflet/dist/leaflet.css';
+import './assets/css/bootstrap.css';
+import { decodeToken } from 'react-jwt';
+import { Provider } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import App from './layout/App';
+import { store } from './store/configure';
+import * as serviceWorker from './serviceWorker';
+import requestsConfig from './helpers/requests';
+import app from './firebase';
+import { setToken } from './store/User/userSlice';
+import { initGA } from './utils/google-analytics';
 
 if (app) {
-  app.auth().onAuthStateChanged((user) => {
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
     if (user) {
       requestsConfig.agent().interceptors.response.use(
         (response: AxiosResponse) => Promise.resolve(response),
@@ -22,7 +26,7 @@ if (app) {
           const { config, status } = error?.response || {};
           const oldToken = store.getState().user.userInfo?.token;
           if (oldToken) {
-            const decoded = jwt.decode(oldToken) as { exp: number };
+            const decoded = decodeToken(oldToken) as { exp: number };
             const now = new Date().getTime();
             if (config && status === 401 && decoded.exp < now) {
               // 401 - Unauthorized eror was due to an expired token, renew it.
@@ -40,19 +44,23 @@ if (app) {
             return Promise.reject(error);
           }
           return Promise.reject(error);
-        }
+        },
       );
     }
   });
 }
 
+initGA();
+
 ReactDOM.render(
   <>
     <Provider store={store}>
-      <App />
+      <SnackbarProvider maxSnack={3}>
+        <App />
+      </SnackbarProvider>
     </Provider>
   </>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

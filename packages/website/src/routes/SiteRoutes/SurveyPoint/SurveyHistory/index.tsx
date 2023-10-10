@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Container,
   Box,
@@ -8,13 +8,13 @@ import {
   Typography,
   Grid,
   Theme,
-} from "@material-ui/core";
-import { useSelector } from "react-redux";
+} from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
-import TimeLine from "../../../../common/SiteDetails/Surveys/Timeline";
-import { Site } from "../../../../store/Sites/types";
-import { userInfoSelector } from "../../../../store/User/userSlice";
-import { isAdmin } from "../../../../helpers/user";
+import { Site } from 'store/Sites/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { isAdmin } from 'helpers/user';
+import TimeLine from 'common/SiteDetails/Surveys/Timeline';
 
 const SurveyHistory = ({
   site,
@@ -29,7 +29,7 @@ const SurveyHistory = ({
   return (
     <Box bgcolor={bgColor}>
       <Container>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Box className={classes.title}>
             <Typography variant="h4">{pointName} Survey History</Typography>
           </Box>
@@ -52,9 +52,9 @@ const styles = (theme: Theme) =>
   createStyles({
     title: {
       marginTop: 100,
-      maxWidth: "90%",
-      overflowWrap: "break-word",
-      [theme.breakpoints.down("xs")]: {
+      maxWidth: '90%',
+      overflowWrap: 'break-word',
+      [theme.breakpoints.down('xs')]: {
         marginTop: 50,
       },
     },

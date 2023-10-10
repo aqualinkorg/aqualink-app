@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import yargs from 'yargs';
-import { ConnectionOptions, createConnection } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { last } from 'lodash';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
@@ -11,6 +11,7 @@ import { Sources } from '../src/sites/sources.entity';
 import { uploadTimeSeriesData } from '../src/utils/uploads/upload-sheet-data';
 import { DataUploads } from '../src/data-uploads/data-uploads.entity';
 import { SourceType } from '../src/sites/schemas/source-type.enum';
+import { DataUploadsSites } from '../src/data-uploads/data-uploads-sites.entity';
 
 // Initialize command definition
 const { argv } = yargs
@@ -42,7 +43,7 @@ const { argv } = yargs
     alias: 'sonde_type',
     describe: 'The sonde type indicating how to process the file.',
     type: 'string',
-    demandOption: true,
+    demandOption: false,
   })
   // Extend definition to use the full-width of the terminal
   .wrap(yargs.terminalWidth());
@@ -58,25 +59,27 @@ async function run() {
   );
 
   // Initialize typeorm connection
-  const config = configService.getTypeOrmConfig() as ConnectionOptions;
-  const connection = await createConnection(config);
+  const config = configService.getTypeOrmConfig() as DataSourceOptions;
+  const dataSource = new DataSource(config);
+  const connection = await dataSource.initialize();
 
   logger.log('Uploading sonde data');
-  await uploadTimeSeriesData(
+  await uploadTimeSeriesData({
+    multiSiteUpload: false,
     filePath,
-    last(filePath.split('/')) || '',
-    siteId,
-    surveyPointId,
-    sourceType as SourceType,
-    // Fetch all needed repositories
-    {
+    fileName: last(filePath.split('/')) || '',
+    siteId: parseInt(siteId, 10),
+    surveyPointId: surveyPointId ? parseInt(surveyPointId, 10) : undefined,
+    sourceType: (sourceType || SourceType.SHEET_DATA) as SourceType,
+    repositories: {
       siteRepository: connection.getRepository(Site),
       surveyPointRepository: connection.getRepository(SiteSurveyPoint),
       timeSeriesRepository: connection.getRepository(TimeSeries),
       sourcesRepository: connection.getRepository(Sources),
       dataUploadsRepository: connection.getRepository(DataUploads),
+      dataUploadsSitesRepository: connection.getRepository(DataUploadsSites),
     },
-  );
+  });
 
   logger.log('Finished uploading sonde data');
 }

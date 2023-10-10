@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
-import { makeStyles, useTheme, useMediaQuery } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import { Skeleton, SkeletonProps } from "@material-ui/lab";
-import random from "lodash/random";
-import times from "lodash/times";
-import classNames from "classnames";
+import React, { FC, useEffect, useState } from 'react';
+import { makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
+import { Skeleton, SkeletonProps } from '@material-ui/lab';
+import random from 'lodash/random';
+import times from 'lodash/times';
+import classNames from 'classnames';
 
 const BACKGROUND_IMAGE_OPACITY = 0.3;
 
@@ -23,26 +23,26 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
 }) => {
   const classes = useStyles({ image, textHeight });
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [lineWidths, setLineWidths] = useState<
     { key: number; width: number }[]
   >([]);
   const rectSkeletonProps: SkeletonProps =
-    variant === "rect" &&
-    (typeof width !== "undefined" || typeof height !== "undefined")
+    variant === 'rect' &&
+    (typeof width !== 'undefined' || typeof height !== 'undefined')
       ? { width, height }
       : {};
 
   useEffect(() => {
-    if (typeof lines === "number") {
+    if (typeof lines === 'number') {
       setLineWidths(
         times(lines, (i) => ({
           key: i,
           width: random(
             longText || isMobile ? 50 : 20,
-            longText || isMobile ? 100 : 40
+            longText || isMobile ? 100 : 40,
           ),
-        }))
+        })),
       );
     }
   }, [isMobile, lines, longText]);
@@ -51,7 +51,7 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
     return <>{children}</>;
   }
 
-  if (variant === "text" && typeof lines === "number" && lineWidths.length) {
+  if (variant === 'text' && typeof lines === 'number' && lineWidths.length) {
     return (
       <>
         {lineWidths.map(({ key, width: lineWidth }) => (
@@ -86,10 +86,10 @@ const useStyles = makeStyles(() => ({
     borderRadius: 4,
   },
   dark: {
-    backgroundColor: fade("#000000", 0.11),
+    backgroundColor: alpha('#000000', 0.11),
   },
   textHeight: ({ textHeight }: LoadingSkeletonStyleProps) =>
-    typeof textHeight !== "undefined"
+    typeof textHeight !== 'undefined'
       ? {
           height: textHeight,
         }
@@ -104,29 +104,29 @@ const useStyles = makeStyles(() => ({
             ),
             url("${image}")
           `,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: "grayscale(1)",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'grayscale(1)',
         }
       : {},
 }));
 
 interface LoadingSkeletonProps {
   loading?: boolean;
-  variant?: SkeletonProps["variant"];
-  width?: SkeletonProps["width"];
-  height?: SkeletonProps["height"];
+  variant?: SkeletonProps['variant'];
+  width?: SkeletonProps['width'];
+  height?: SkeletonProps['height'];
   lines?: number;
   image?: string;
   dark?: boolean;
   className?: string;
   longText?: boolean;
-  textHeight?: SkeletonProps["height"];
+  textHeight?: SkeletonProps['height'];
 }
 
 type LoadingSkeletonStyleProps = Pick<
   LoadingSkeletonProps,
-  "textHeight" | "image"
+  'textHeight' | 'image'
 >;
 
 export default LoadingSkeleton;

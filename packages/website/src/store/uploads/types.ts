@@ -1,5 +1,5 @@
-import { UploadTimeSeriesResult } from "../../services/uploadServices";
-import { Sources } from "../Sites/types";
+import { UploadTimeSeriesResult } from 'services/uploadServices';
+import { Sources } from '../Sites/types';
 
 export interface UploadsSliceState {
   files: File[];

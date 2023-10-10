@@ -9,19 +9,20 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { ObjectLiteral, Repository } from 'typeorm';
 import { mapValues, some } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import { SofarLiveData, ValueWithTimestamp, SpotterData } from './sofar.types';
+import { ValueWithTimestamp, SpotterData } from './sofar.types';
 import { createPoint } from './coordinates';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
+import { getHistoricalMonthlyMeans, getMMM } from './temperature';
+import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Site Utils');
@@ -167,12 +168,29 @@ export const excludeSpotterData = (
   );
 };
 
+/**
+ * Returns all columns from a Entity, including "select: false"
+ * @param repository The repository of the Entity
+ */
+export function getAllColumns<T extends ObjectLiteral>(
+  repository: Repository<T>,
+): (keyof T)[] {
+  return repository.metadata.columns.map(
+    (col) => col.propertyName,
+  ) as (keyof T)[];
+}
+
 export const getSite = async (
   siteId: number,
   siteRepository: Repository<Site>,
   relations?: string[],
+  includeAll: boolean = false,
 ) => {
-  const site = await siteRepository.findOne(siteId, { relations });
+  const site = await siteRepository.findOne({
+    where: { id: siteId },
+    relations,
+    ...(includeAll ? { select: getAllColumns(siteRepository) } : {}),
+  });
 
   if (!site) {
     throw new NotFoundException(`Site with id ${siteId} does not exist`);
@@ -256,34 +274,61 @@ export const hasHoboDataSubQuery = async (
   return hasHoboDataSet;
 };
 
-export const getSSTFromLiveOrLatestData = async (
-  liveData: SofarLiveData,
-  site: Site,
-  latestDataRepository: Repository<LatestData>,
-): Promise<ValueWithTimestamp | undefined> => {
-  if (!liveData.satelliteTemperature) {
-    const sst = await latestDataRepository.findOne({
-      site,
-      source: SourceType.NOAA,
-      metric: Metric.SATELLITE_TEMPERATURE,
-    });
-
-    return (
-      sst && {
-        value: sst.value,
-        timestamp: sst.timestamp.toISOString(),
-      }
-    );
-  }
-
-  return liveData.satelliteTemperature;
-};
-
 export const getLatestData = async (
   site: Site,
   latestDataRepository: Repository<LatestData>,
 ): Promise<LatestData[]> => {
-  return latestDataRepository.find({
-    site,
+  return latestDataRepository.findBy({
+    site: { id: site.id },
   });
+};
+
+export const createSite = async (
+  name: string,
+  depth: number | undefined,
+  longitude: number,
+  latitude: number,
+  regionRepository: Repository<Region>,
+  sitesRepository: Repository<Site>,
+  historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
+) => {
+  const region = await getRegion(longitude, latitude, regionRepository);
+  const maxMonthlyMean = await getMMM(longitude, latitude);
+  const historicalMonthlyMeans = await getHistoricalMonthlyMeans(
+    longitude,
+    latitude,
+  );
+  const timezones = getTimezones(latitude, longitude) as string[];
+  const site = await sitesRepository
+    .save({
+      name,
+      region,
+      polygon: createPoint(longitude, latitude),
+      maxMonthlyMean,
+      timezone: timezones[0],
+      display: false,
+      depth,
+    })
+    .catch(handleDuplicateSite);
+
+  if (!maxMonthlyMean) {
+    logger.warn(
+      `Max Monthly Mean appears to be null for Site ${site.id} at (lat, lon): (${latitude}, ${longitude}) `,
+    );
+  }
+
+  await Promise.all(
+    historicalMonthlyMeans.map(async ({ month, temperature }) => {
+      return (
+        temperature &&
+        historicalMonthlyMeanRepository.insert({
+          site,
+          month,
+          temperature,
+        })
+      );
+    }),
+  );
+
+  return site;
 };

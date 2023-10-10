@@ -1,9 +1,9 @@
-import moment from 'moment-timezone';
+import { DateTime } from '../luxon-extensions';
 
 export function getStartEndDate(endDate: Date, hours: number = 24) {
-  const endMoment = moment(endDate);
-  const startMoment = endMoment.clone().subtract(hours, 'hours');
-  return [startMoment.format(), endMoment.format()];
+  const endMoment = DateTime.fromJSDate(endDate);
+  const startMoment = endMoment.minus({ hours });
+  return [startMoment.toString(), endMoment.toString()];
 }
 
 // Util function to get the [startDate, endDate] time interval for time series data.

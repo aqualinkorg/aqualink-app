@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useBodyLength() {
   const [bodyLength, setBodyLength] = useState<string>();
@@ -7,12 +7,12 @@ export function useBodyLength() {
     const onResize = () => {
       setBodyLength(`${document.documentElement.clientWidth}px`);
     };
-    window.addEventListener("resize", onResize);
+    window.addEventListener('resize', onResize);
     // delay first run to give time for GUI to load
     const timeout = setTimeout(onResize, 1000);
     return () => {
       clearTimeout(timeout);
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener('resize', onResize);
     };
   }, [setBodyLength]);
   return bodyLength;

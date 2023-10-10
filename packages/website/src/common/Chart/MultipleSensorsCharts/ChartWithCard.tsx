@@ -1,13 +1,13 @@
-import React from "react";
-import classnames from "classnames";
-import { Grid, GridProps, makeStyles, Theme } from "@material-ui/core";
+import React from 'react';
+import classnames from 'classnames';
+import { Grid, GridProps, makeStyles, Theme } from '@material-ui/core';
 
-import AnalysisCard from "./AnalysisCard";
-import Chart from "./Chart";
-import Header from "./Header";
-import { AvailableRange, RangeValue } from "./types";
-import type { Dataset } from "../index";
-import { Site, TimeSeriesSurveyPoint } from "../../../store/Sites/types";
+import { Site, Sources, TimeSeriesSurveyPoint } from 'store/Sites/types';
+import AnalysisCard from './AnalysisCard';
+import Chart from './Chart';
+import Header from './Header';
+import { AvailableRange, RangeValue } from './types';
+import type { Dataset } from '../index';
 
 const ChartWithCard = ({
   areSurveysFiltered,
@@ -31,6 +31,7 @@ const ChartWithCard = ({
   site,
   surveyPoint,
   timeZone,
+  source,
   onEndDateChange,
   onStartDateChange,
   onRangeChange,
@@ -38,9 +39,9 @@ const ChartWithCard = ({
   const classes = useStyles();
   const chartWidthClass = () => {
     switch (chartWidth) {
-      case "large":
+      case 'large':
         return classes.largeChart;
-      case "medium":
+      case 'medium':
         return classes.mediumChart;
       default:
         return classes.smallChart;
@@ -63,7 +64,7 @@ const ChartWithCard = ({
       <Grid
         className={classes.chartWrapper}
         container
-        justify="space-between"
+        justifyContent="space-between"
         item
         spacing={1}
       >
@@ -82,6 +83,7 @@ const ChartWithCard = ({
             surveysFiltered={areSurveysFiltered}
             hideYAxisUnits={hideYAxisUnits}
             showDatePickers={showDatePickers}
+            source={source}
           />
         </Grid>
         {!isPickerErrored && (
@@ -104,37 +106,37 @@ const ChartWithCard = ({
 const useStyles = makeStyles((theme: Theme) => ({
   chartWrapper: {
     marginBottom: 20,
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('xs')]: {
       marginBottom: 10,
     },
   },
   chart: {
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
     },
   },
   largeChart: {
-    [theme.breakpoints.up("md")]: {
-      width: "calc(100% - 230px)", // width of 100% minus the card with one column
+    [theme.breakpoints.up('md')]: {
+      width: 'calc(100% - 230px)', // width of 100% minus the card with one column
     },
   },
   mediumChart: {
-    [theme.breakpoints.up("md")]: {
-      width: "calc(100% - 240px)", // width of 100% minus the card with two columns
+    [theme.breakpoints.up('md')]: {
+      width: 'calc(100% - 240px)', // width of 100% minus the card with two columns
     },
   },
   smallChart: {
-    [theme.breakpoints.up("md")]: {
-      width: "calc(100% - 320px)", // width of 100% minus the card with three columns
+    [theme.breakpoints.up('md')]: {
+      width: 'calc(100% - 320px)', // width of 100% minus the card with three columns
     },
   },
   card: {
-    width: "fit-content",
+    width: 'fit-content',
     minWidth: 219,
-    [theme.breakpoints.down("sm")]: {
-      width: "inherit",
-      maxWidth: "fit-content",
-      margin: "0 auto",
+    [theme.breakpoints.down('sm')]: {
+      width: 'inherit',
+      maxWidth: 'fit-content',
+      margin: '0 auto',
     },
   },
 }));
@@ -142,11 +144,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ChartWithCardProps {
   areSurveysFiltered?: boolean;
   availableRanges?: AvailableRange[];
-  cardColumnJustification?: GridProps["justify"];
+  cardColumnJustification?: GridProps['justify'];
   chartEndDate: string;
   chartStartDate: string;
   chartTitle: string;
-  chartWidth: "small" | "medium" | "large";
+  chartWidth: 'small' | 'medium' | 'large';
   datasets: Dataset[];
   disableMaxRange: boolean;
   hideYAxisUnits?: boolean;
@@ -161,6 +163,7 @@ interface ChartWithCardProps {
   site: Site;
   surveyPoint?: TimeSeriesSurveyPoint;
   timeZone?: string | null;
+  source?: Sources;
   onEndDateChange: (date: Date | null) => void;
   onStartDateChange: (date: Date | null) => void;
   onRangeChange: (value: RangeValue) => void;
@@ -168,7 +171,7 @@ interface ChartWithCardProps {
 
 ChartWithCard.defaultProps = {
   areSurveysFiltered: undefined,
-  cardColumnJustification: "space-between",
+  cardColumnJustification: 'space-between',
   hideYAxisUnits: false,
   pointId: undefined,
   showDatePickers: true,

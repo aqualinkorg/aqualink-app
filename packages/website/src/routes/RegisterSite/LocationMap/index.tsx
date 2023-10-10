@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from "react";
-import { Map, TileLayer, Marker } from "react-leaflet";
-import L, { LeafletEvent } from "leaflet";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core";
+import React, { useCallback, useState } from 'react';
+import { Map, TileLayer, Marker } from 'react-leaflet';
+import L, { LeafletEvent } from 'leaflet';
+import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
 
-import marker from "../../../assets/marker.png";
-import { mapConstants } from "../../../constants/maps";
+import { mapConstants } from 'constants/maps';
+import marker from '../../../assets/marker.png';
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -26,7 +26,7 @@ const LocationMap = ({
   const onZoomEnd = useCallback(
     // eslint-disable-next-line no-underscore-dangle
     (event: LeafletEvent) => setZoom(event.target._zoom as number),
-    []
+    [],
   );
 
   function updateLatLng(event: L.LeafletMouseEvent) {
@@ -49,7 +49,7 @@ const LocationMap = ({
       center={markerPosition}
       zoom={zoom}
       className={classes.map}
-      onclick={updateLatLng}
+      onclick={(e) => updateLatLng(e)}
       onzoomend={onZoomEnd}
       maxBounds={mapConstants.MAX_BOUNDS}
       maxBoundsViscosity={1.0}
@@ -64,12 +64,12 @@ const LocationMap = ({
 const styles = (theme: Theme) => {
   return createStyles({
     map: {
-      height: "100%",
-      width: "100%",
+      height: '100%',
+      width: '100%',
       borderRadius: 4,
-      cursor: "pointer",
+      cursor: 'pointer',
 
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.down('md')]: {
         height: 400,
       },
     },

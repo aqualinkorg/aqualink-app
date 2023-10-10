@@ -1,13 +1,14 @@
-import React, { useRef, useLayoutEffect } from "react";
-import Sketchfab from "@sketchfab/viewer-api";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+/* eslint-disable react/no-unknown-property */
+import React, { useRef, useLayoutEffect } from 'react';
+import Sketchfab from '@sketchfab/viewer-api';
+import { withStyles, WithStyles, createStyles } from '@material-ui/core';
 
 const SketchFab = ({ classes, uuid }: SiteMapProps) => {
   const iFrameRef = useRef(null);
 
   useLayoutEffect(() => {
     const iframe = iFrameRef.current;
-    const version = "1.12.0";
+    const version = '1.12.0';
     const client = new Sketchfab(version, iframe);
 
     client.init(uuid, {
@@ -15,7 +16,7 @@ const SketchFab = ({ classes, uuid }: SiteMapProps) => {
         api.start();
       },
       error: () => {
-        console.error("Viewer error");
+        console.error('Viewer error');
       },
     });
   }, [uuid]);
@@ -38,8 +39,8 @@ const SketchFab = ({ classes, uuid }: SiteMapProps) => {
 const styles = () => {
   return createStyles({
     map: {
-      height: "100%",
-      width: "100%",
+      height: '100%',
+      width: '100%',
       borderRadius: 4,
     },
   });

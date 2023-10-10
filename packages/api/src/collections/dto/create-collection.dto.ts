@@ -22,7 +22,7 @@ export class CreateCollectionDto {
   isPublic?: boolean;
 
   @ApiProperty({ example: 1 })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @Validate(EntityExists, [User])
   userId: number;

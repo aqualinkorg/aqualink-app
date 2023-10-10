@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
-import { Map, fromJS } from "immutable";
-import { pick, isEmpty } from "lodash";
-import L from "leaflet";
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { Map, fromJS } from 'immutable';
+import { pick, isEmpty } from 'lodash';
+import L from 'leaflet';
 import {
   Typography,
   Grid,
@@ -17,18 +17,18 @@ import {
   createStyles,
   Theme,
   Tooltip,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { useSelector, useDispatch } from "react-redux";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { useSelector, useDispatch } from 'react-redux';
 
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
-import RegisterDialog from "../../common/RegisterDialog";
-import SignInDialog from "../../common/SignInDialog";
-import LocationMap from "./LocationMap";
-import { userInfoSelector, getSelf } from "../../store/User/userSlice";
-import siteServices from "../../services/siteServices";
-import validators from "../../helpers/validators";
+import { userInfoSelector, getSelf } from 'store/User/userSlice';
+import validators from 'helpers/validators';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import RegisterDialog from 'common/RegisterDialog';
+import SignInDialog from 'common/SignInDialog';
+import siteServices from 'services/siteServices';
+import LocationMap from './LocationMap';
 
 interface FormElement {
   id: string;
@@ -57,40 +57,40 @@ const Apply = ({ classes }: ApplyProps) => {
     if (user && user.fullName && user.email) {
       setFormModel(
         formModel
-          .set("name", user.fullName)
-          .set("org", user.organization || " ")
-          .set("email", user.email)
+          .set('name', user.fullName)
+          .set('org', user.organization || ' ')
+          .set('email', user.email),
       );
     } else {
-      setFormModel(formModel.set("name", "").set("org", "").set("email", ""));
+      setFormModel(formModel.set('name', '').set('org', '').set('email', ''));
     }
   }, [user, formModel]);
 
   const contactFormElements: FormElement[] = [
-    { id: "name", label: "Name" },
-    { id: "org", label: "Organization" },
+    { id: 'name', label: 'Name' },
+    { id: 'org', label: 'Organization' },
     {
-      id: "email",
-      label: "Email",
+      id: 'email',
+      label: 'Email',
       validator: validators.isEmail,
     },
   ];
 
   const locationFormElements: FormElement[] = [
     {
-      id: "lat",
-      label: "Latitude",
+      id: 'lat',
+      label: 'Latitude',
       validator: validators.isLat,
     },
     {
-      id: "lng",
-      label: "Longitude",
+      id: 'lng',
+      label: 'Longitude',
       validator: validators.isLong,
     },
-    { id: "siteName", label: "Site Name" },
+    { id: 'siteName', label: 'Site Name' },
     {
-      id: "depth",
-      label: "Depth (m)",
+      id: 'depth',
+      label: 'Depth (m)',
       validator: validators.isInt,
     },
   ];
@@ -104,7 +104,7 @@ const Apply = ({ classes }: ApplyProps) => {
   function updateMarkerPosition(position: L.LatLngTuple) {
     const [lat, lng] = position;
     setFormModel(
-      formModel.set("lat", lat.toString()).set("lng", lng.toString())
+      formModel.set('lat', lat.toString()).set('lng', lng.toString()),
     );
   }
 
@@ -124,7 +124,7 @@ const Apply = ({ classes }: ApplyProps) => {
 
         return acc;
       },
-      {}
+      {},
     );
 
     setFormErrors(fromJS(errors));
@@ -143,7 +143,7 @@ const Apply = ({ classes }: ApplyProps) => {
             parseFloat(lat),
             parseFloat(lng),
             parseInt(depth, 10),
-            user.token
+            user.token,
           )
           .then(({ data }) => {
             setNewSiteId(data.site.id);
@@ -165,9 +165,9 @@ const Apply = ({ classes }: ApplyProps) => {
 
   const textFieldProps = {
     fullWidth: true,
-    variant: "outlined" as "outlined",
-    size: "small" as "small",
-    InputProps: { classes: pick(classes, ["root", "notchedOutline"]) },
+    variant: 'outlined' as 'outlined',
+    size: 'small' as 'small',
+    InputProps: { classes: pick(classes, ['root', 'notchedOutline']) },
   };
 
   return (
@@ -197,9 +197,9 @@ const Apply = ({ classes }: ApplyProps) => {
             <Grid container spacing={6}>
               <Grid item xs={12} md={7}>
                 <LocationMap
-                  markerPositionLat={formModel.get("lat", "") as string}
-                  markerPositionLng={formModel.get("lng", "") as string}
-                  updateMarkerPosition={updateMarkerPosition}
+                  markerPositionLat={formModel.get('lat', '') as string}
+                  markerPositionLng={formModel.get('lng', '') as string}
+                  updateMarkerPosition={(p) => updateMarkerPosition(p)}
                 />
               </Grid>
 
@@ -237,9 +237,9 @@ const Apply = ({ classes }: ApplyProps) => {
                               id={id}
                               disabled
                               label={label}
-                              error={formErrors.get(id, "").length !== 0}
-                              helperText={formErrors.get(id, "")}
-                              value={formModel.get(id, "")}
+                              error={formErrors.get(id, '').length !== 0}
+                              helperText={formErrors.get(id, '')}
+                              value={formModel.get(id, '')}
                               onChange={(e) =>
                                 updateFormElement(id, e.target.value)
                               }
@@ -258,16 +258,16 @@ const Apply = ({ classes }: ApplyProps) => {
                             // eslint-disable-next-line no-nested-ternary
                             xs={
                               // eslint-disable-next-line no-nested-ternary
-                              id === "siteName" ? 8 : id === "depth" ? 4 : 6
+                              id === 'siteName' ? 8 : id === 'depth' ? 4 : 6
                             }
                             key={label}
                           >
                             <TextField
                               id={id}
                               label={label}
-                              error={formErrors.get(id, "").length !== 0}
-                              helperText={formErrors.get(id, "")}
-                              value={formModel.get(id, "")}
+                              error={formErrors.get(id, '').length !== 0}
+                              helperText={formErrors.get(id, '')}
+                              value={formModel.get(id, '')}
                               onChange={(e) =>
                                 updateFormElement(id, e.target.value)
                               }
@@ -287,9 +287,9 @@ const Apply = ({ classes }: ApplyProps) => {
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                onClick={handleFormSubmission}
+                                onClick={() => handleFormSubmission()}
                               >
-                                {submitLoading ? "Saving..." : "Submit"}
+                                {submitLoading ? 'Saving...' : 'Submit'}
                               </Button>
                             </div>
                           </Tooltip>
@@ -304,7 +304,7 @@ const Apply = ({ classes }: ApplyProps) => {
         </Box>
       </Box>
       <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         open={snackbarOpenFromCarto && snackbarOpenFromDatabase}
         autoHideDuration={4000}
         onClose={() => {
@@ -317,13 +317,13 @@ const Apply = ({ classes }: ApplyProps) => {
             setSnackbarOpenFromCarto(false);
             setSnackbarOpenFromDatabase(false);
           }}
-          severity={databaseSubmissionOk ? "success" : "error"}
+          severity={databaseSubmissionOk ? 'success' : 'error'}
           elevation={6}
           variant="filled"
         >
           {databaseSubmissionOk
-            ? "Application successfully submitted."
-            : "Something went wrong, please try again"}
+            ? 'Application successfully submitted.'
+            : 'Something went wrong, please try again'}
         </Alert>
       </Snackbar>
       <Footer />
@@ -344,7 +344,7 @@ const Apply = ({ classes }: ApplyProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     boxBar: {
-      overflowX: "hidden",
+      overflowX: 'hidden',
     },
     listItem: {
       marginTop: theme.spacing(1),
@@ -353,7 +353,7 @@ const styles = (theme: Theme) =>
     root: {
       color: theme.palette.text.secondary,
 
-      "&:hover $notchedOutline": {
+      '&:hover $notchedOutline': {
         borderColor: theme.palette.grey[300],
       },
     },

@@ -1,16 +1,16 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
-import SiteNavBar from ".";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import { mockSite } from "../../../../mocks/mockSite";
-import { mockUser } from "../../../../mocks/mockUser";
+import { mockSite } from 'mocks/mockSite';
+import { mockUser } from 'mocks/mockUser';
+import SiteNavBar from '.';
 
 const mockStore = configureStore([]);
 
-describe("SiteNavBar", () => {
+describe('SiteNavBar', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -33,11 +33,11 @@ describe("SiteNavBar", () => {
             lastSurvey="2020-09-10T10:27:00.000Z"
           />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

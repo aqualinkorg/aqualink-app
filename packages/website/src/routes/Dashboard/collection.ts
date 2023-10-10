@@ -1,12 +1,12 @@
-import { sampleSize } from "lodash";
+import { sampleSize } from 'lodash';
 
-import { Site } from "../../store/Sites/types";
+import { Site } from 'store/Sites/types';
 
 export const createCollection = (sites: Site[], nSites: number): Collection => {
   const sample = sampleSize(sites, nSites);
 
   return {
-    name: "My dashboard",
+    name: 'My dashboard',
     sites: sample,
   };
 };

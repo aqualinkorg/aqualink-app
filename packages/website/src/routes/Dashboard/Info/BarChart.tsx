@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -8,12 +8,12 @@ import {
   Typography,
   Theme,
   useTheme,
-} from "@material-ui/core";
-import { groupBy, maxBy, times, reverse } from "lodash";
+} from '@material-ui/core';
+import { groupBy, maxBy, times, reverse } from 'lodash';
 
-import { findIntervalByLevel } from "../../../helpers/bleachingAlertIntervals";
-import { formatNumber } from "../../../helpers/numberUtils";
-import { CollectionDetails } from "../../../store/Collection/types";
+import { CollectionDetails } from 'store/Collection/types';
+import { findIntervalByLevel } from 'helpers/bleachingAlertIntervals';
+import { formatNumber } from 'helpers/numberUtils';
 
 const percentageCalculator = (count: number, max?: number) => {
   // Max width should be 80%
@@ -26,10 +26,10 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
   const nLevels = 5;
   const groupedByAlert = groupBy(
     collection.sites,
-    (site) => site.collectionData?.tempWeeklyAlert
+    (site) => site.collectionData?.tempWeeklyAlert,
   );
 
-  const mostFrequentAlert = maxBy(Object.values(groupedByAlert), "length");
+  const mostFrequentAlert = maxBy(Object.values(groupedByAlert), 'length');
 
   return (
     <>
@@ -40,7 +40,7 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
         <Grid
           className={classes.alertsWrapper}
           container
-          justify="space-between"
+          justifyContent="space-between"
           direction="column"
         >
           {reverse(times(nLevels, Number)).map((level) => {
@@ -57,8 +57,8 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
                         className={classes.alertLabel}
                         color={
                           level === 3 || level === 4
-                            ? "textPrimary"
-                            : "textSecondary"
+                            ? 'textPrimary'
+                            : 'textSecondary'
                         }
                         variant="subtitle2"
                       >
@@ -71,7 +71,7 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
                       <Box
                         width={percentageCalculator(
                           groupedByAlert?.[level]?.length || 0,
-                          mostFrequentAlert?.length
+                          mostFrequentAlert?.length,
                         )}
                         height="28px"
                         bgcolor={interval.color}
@@ -97,9 +97,9 @@ const styles = (theme: Theme) =>
       width: 77,
       height: 22,
       borderRadius: 10,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       marginRight: 20,
     },
 
@@ -108,7 +108,7 @@ const styles = (theme: Theme) =>
     },
 
     alertsWrapper: {
-      height: "100%",
+      height: '100%',
     },
 
     barWrapper: {
@@ -121,7 +121,7 @@ const styles = (theme: Theme) =>
       fontWeight: 700,
       paddingLeft: 6,
       flexGrow: 1,
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         fontSize: 16,
         paddingLeft: 4,
       },

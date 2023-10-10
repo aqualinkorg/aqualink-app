@@ -1,13 +1,7 @@
-import React, { useEffect } from "react";
-import { LinearProgress } from "@material-ui/core";
-import { RouteComponentProps } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import NavBar from "../../../common/NavBar";
-import Footer from "../../../common/Footer";
-import BackButton from "./BackButton";
-import InfoCard from "./InfoCard";
-import MultipleSensorsCharts from "../../../common/Chart/MultipleSensorsCharts";
-import SurveyHistory from "./SurveyHistory";
+import React, { useEffect } from 'react';
+import { LinearProgress } from '@material-ui/core';
+import { RouteComponentProps } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
@@ -19,13 +13,19 @@ import {
   siteTimeSeriesDataRangeLoadingSelector,
   siteTimeSeriesDataRangeRequest,
   siteTimeSeriesDataRangeSelector,
-} from "../../../store/Sites/selectedSiteSlice";
+} from 'store/Sites/selectedSiteSlice';
 import {
   surveyListLoadingSelector,
   surveysRequest,
-} from "../../../store/Survey/surveyListSlice";
+} from 'store/Survey/surveyListSlice';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import MultipleSensorsCharts from 'common/Chart/MultipleSensorsCharts';
+import BackButton from './BackButton';
+import InfoCard from './InfoCard';
+import SurveyHistory from './SurveyHistory';
 
-const BG_COLOR = "rgb(245, 246, 246)";
+const BG_COLOR = 'rgb(245, 246, 246)';
 
 const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
@@ -38,7 +38,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const siteLoading = useSelector(siteLoadingSelector);
   const surveysLoading = useSelector(surveyListLoadingSelector);
   const timeSeriesRangeLoading = useSelector(
-    siteTimeSeriesDataRangeLoadingSelector
+    siteTimeSeriesDataRangeLoadingSelector,
   );
   const { hobo: hoboBottomTemperatureRange } =
     useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};

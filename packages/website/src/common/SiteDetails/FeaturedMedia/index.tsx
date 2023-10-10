@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -10,15 +10,15 @@ import {
   Typography,
   IconButton,
   Theme,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import reefImage from "../../../assets/reef-image.jpg";
-import uploadIcon from "../../../assets/icon_upload.svg";
-import { isAdmin } from "../../../helpers/user";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { convertOptionsToQueryParams } from "../../../helpers/video";
+import { userInfoSelector } from 'store/User/userSlice';
+import { isAdmin } from 'helpers/user';
+import { convertOptionsToQueryParams } from 'helpers/video';
+import reefImage from '../../../assets/reef-image.jpg';
+import uploadIcon from '../../../assets/icon_upload.svg';
 
 const playerOptions = {
   autoplay: 1,
@@ -38,13 +38,16 @@ const FeaturedMedia = ({
   const isSiteAdmin = isAdmin(user, siteId);
 
   if (url) {
+    const paramsPrefix = url.includes('?') ? '&' : '?';
     return (
       <Card className={classes.card}>
         <CardContent className={classes.content}>
           <iframe
             className={classes.fullHeightAndWidth}
             title="live-video-stream"
-            src={`${url}${convertOptionsToQueryParams(playerOptions)}`}
+            src={`${url}${paramsPrefix}${convertOptionsToQueryParams(
+              playerOptions,
+            )}`}
             allowFullScreen
           />
         </CardContent>
@@ -57,7 +60,7 @@ const FeaturedMedia = ({
       <Link to={`/sites/${siteId}/survey_details/${surveyId}`}>
         <CardMedia
           className={classes.card}
-          style={{ height: "100%" }}
+          style={{ height: '100%' }}
           image={featuredImage}
         />
       </Link>
@@ -70,7 +73,7 @@ const FeaturedMedia = ({
         <Grid container direction="column" alignItems="center" spacing={2}>
           <Grid item>
             <Typography className={classes.noVideoCardHeaderText} variant="h5">
-              {isSiteAdmin ? "ADD YOUR FIRST SURVEY" : "SURVEY TO BE UPLOADED"}
+              {isSiteAdmin ? 'ADD YOUR FIRST SURVEY' : 'SURVEY TO BE UPLOADED'}
             </Typography>
           </Grid>
           {isSiteAdmin && (
@@ -90,44 +93,44 @@ const FeaturedMedia = ({
 const styles = (theme: Theme) => {
   return createStyles({
     card: {
-      height: "100%",
-      width: "100%",
-      display: "flex",
+      height: '100%',
+      width: '100%',
+      display: 'flex',
       borderRadius: 4,
-      position: "relative",
+      position: 'relative',
     },
     content: {
-      height: "100%",
-      width: "100%",
-      padding: "0",
+      height: '100%',
+      width: '100%',
+      padding: '0',
     },
     noVideoCardHeader: {
-      backgroundColor: "#033042",
+      backgroundColor: '#033042',
       opacity: 0.75,
-      position: "absolute",
+      position: 'absolute',
       top: 0,
-      width: "100%",
-      padding: "2rem 0",
+      width: '100%',
+      padding: '2rem 0',
       zIndex: 1,
     },
     noVideoCardHeaderText: {
       opacity: 0.5,
-      [theme.breakpoints.between("md", 1350)]: {
+      [theme.breakpoints.between('md', 1350)]: {
         fontSize: 15,
       },
     },
     noVideoCardContent: {
-      width: "100%",
-      height: "100%",
+      width: '100%',
+      height: '100%',
       backgroundImage: `url(${reefImage})`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      filter: "blur(2px)",
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      filter: 'blur(2px)',
     },
 
     fullHeightAndWidth: {
-      height: "100%",
-      width: "100%",
+      height: '100%',
+      width: '100%',
     },
   });
 };

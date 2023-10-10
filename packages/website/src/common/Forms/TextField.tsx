@@ -1,13 +1,13 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   TextField,
   BaseTextFieldProps,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { FormField } from "../../hooks/useFormField";
+import { FormField } from 'hooks/useFormField';
 
 const CustomTextfield = ({
   formField,
@@ -18,16 +18,18 @@ const CustomTextfield = ({
   step,
   fullWidth,
   size,
+  disabled,
   onChange,
   classes,
 }: CustomTextfieldProps) => {
   return (
     <TextField
+      disabled={disabled}
       className={classes.textField}
       variant="outlined"
       inputProps={{ className: classes.textField, step: step || undefined }}
       fullWidth={fullWidth}
-      type={isNumeric ? "number" : "text"}
+      type={isNumeric ? 'number' : 'text'}
       value={formField.value}
       onChange={onChange}
       label={label}
@@ -43,8 +45,8 @@ const CustomTextfield = ({
 const styles = () =>
   createStyles({
     textField: {
-      color: "black",
-      alignItems: "center",
+      color: 'black',
+      alignItems: 'center',
     },
   });
 
@@ -56,9 +58,10 @@ interface CustomTextfieldIncomingProps {
   isNumeric?: boolean;
   step?: number;
   fullWidth?: boolean;
-  size?: BaseTextFieldProps["size"];
+  size?: BaseTextFieldProps['size'];
+  disabled?: boolean;
   onChange: (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
 }
 

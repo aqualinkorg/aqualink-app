@@ -1,5 +1,3 @@
-import type { LatestData } from '../time-series/latest-data.entity';
-
 export interface ValueWithTimestamp {
   timestamp: string;
   value: number;
@@ -10,42 +8,8 @@ export interface SofarDailyData {
   date: Date;
   dailyAlertLevel?: number;
   weeklyAlertLevel?: number;
-  minBottomTemperature?: number;
-  maxBottomTemperature?: number;
-  avgBottomTemperature?: number;
-  topTemperature?: number;
   satelliteTemperature?: number;
   degreeHeatingDays?: number;
-  minWaveHeight?: number;
-  maxWaveHeight?: number;
-  avgWaveHeight?: number;
-  waveMeanDirection?: number;
-  waveMeanPeriod?: number;
-  minWindSpeed?: number;
-  maxWindSpeed?: number;
-  avgWindSpeed?: number;
-  windDirection?: number;
-}
-
-export interface SofarLiveData {
-  site: { id: number };
-  latestData?: LatestData[];
-  dailyAlertLevel?: number;
-  weeklyAlertLevel?: number;
-  bottomTemperature?: ValueWithTimestamp;
-  topTemperature?: ValueWithTimestamp;
-  satelliteTemperature?: ValueWithTimestamp;
-  degreeHeatingDays?: ValueWithTimestamp;
-  waveHeight?: ValueWithTimestamp;
-  waveMeanDirection?: ValueWithTimestamp;
-  waveMeanPeriod?: ValueWithTimestamp;
-  windSpeed?: ValueWithTimestamp;
-  windDirection?: ValueWithTimestamp;
-  sstAnomaly?: number;
-  spotterPosition?: {
-    latitude: ValueWithTimestamp;
-    longitude: ValueWithTimestamp;
-  };
 }
 
 export interface SpotterData {
@@ -56,6 +20,10 @@ export interface SpotterData {
   waveMeanDirection: ValueWithTimestamp[];
   windSpeed: ValueWithTimestamp[];
   windDirection: ValueWithTimestamp[];
+  barometerTop: ValueWithTimestamp[];
+  barometerBottom: ValueWithTimestamp[];
+  barometricTopDiff: ValueWithTimestamp[];
+  surfaceTemperature: ValueWithTimestamp[];
   latitude?: ValueWithTimestamp[];
   longitude?: ValueWithTimestamp[];
 }
@@ -68,4 +36,61 @@ export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
   waveMeanDirection: [],
   windSpeed: [],
   windDirection: [],
+  barometerTop: [],
+  barometerBottom: [],
+  barometricTopDiff: [],
+  surfaceTemperature: [],
+};
+
+export interface HindcastResponse {
+  variableID: string;
+  variableName: string;
+  dataCategory: string;
+  physicalUnit: string;
+  values: ValueWithTimestamp[];
+}
+
+export interface SofarWaveDateResponse {
+  spotterId: string;
+  waves: {
+    significantWaveHeight: number;
+    peakPeriod: number;
+    meanPeriod: number;
+    peakDirection: number;
+    peakDirectionalSpread: number;
+    meanDirection: number;
+    meanDirectionalSpread: number;
+    timestamp: string;
+    latitude: number;
+    longitude: number;
+  }[];
+  wind: {
+    speed: number;
+    direction: number;
+    seasurfaceId: number;
+    latitude: number;
+    longitude: number;
+    timestamp: string;
+  }[];
+  surfaceTemp: {
+    degrees: number;
+    latitude: number;
+    longitude: number;
+    timestamp: string;
+  }[];
+  barometerData: {
+    latitude: number;
+    longitude: number;
+    timestamp: string;
+    units: string;
+    value: number;
+  }[];
+}
+
+export const EMPTY_SOFAR_WAVE_RESPONSE: SofarWaveDateResponse = {
+  spotterId: '',
+  waves: [],
+  wind: [],
+  surfaceTemp: [],
+  barometerData: [],
 };

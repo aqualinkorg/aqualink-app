@@ -1,14 +1,14 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import configureStore from "redux-mock-store";
-import { Provider } from "react-redux";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 
-import SelectedSiteCard from ".";
-import { mockSite } from "../../../../mocks/mockSite";
+import { mockSite } from 'mocks/mockSite';
+import SelectedSiteCard from '.';
 
-jest.mock("react-chartjs-2", () => ({
-  Line: () => "Mock-Line",
+jest.mock('react-chartjs-2', () => ({
+  Line: () => 'Mock-Line',
   Chart: {
     pluginService: {
       register: jest.fn(),
@@ -39,27 +39,27 @@ const store = mockStore({
 
 store.dispatch = jest.fn();
 
-test("renders as expected", () => {
-  process.env.REACT_APP_FEATURED_SITE_ID = "2";
+test('renders as expected', () => {
+  process.env.REACT_APP_FEATURED_SITE_ID = '2';
 
   const { container } = render(
     <Provider store={store}>
       <Router>
         <SelectedSiteCard />
       </Router>
-    </Provider>
+    </Provider>,
   );
   expect(container).toMatchSnapshot();
 });
 
-test("renders loading as expected", () => {
-  process.env.REACT_APP_FEATURED_SITE_ID = "4";
+test('renders loading as expected', () => {
+  process.env.REACT_APP_FEATURED_SITE_ID = '4';
   const { container } = render(
     <Provider store={store}>
       <Router>
         <SelectedSiteCard />
       </Router>
-    </Provider>
+    </Provider>,
   );
   expect(container).toMatchSnapshot();
 });

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 import {
   Box,
   Card,
@@ -10,18 +10,18 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import classNames from "classnames";
+} from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import classNames from 'classnames';
 
-import { siteTimeSeriesDataLoadingSelector } from "../../../store/Sites/selectedSiteSlice";
-import { calculateCardMetrics } from "./helpers";
-import { CardColumn } from "./types";
-import { formatNumber } from "../../../helpers/numberUtils";
-import type { Dataset } from "..";
+import { siteTimeSeriesDataLoadingSelector } from 'store/Sites/selectedSiteSlice';
+import { formatNumber } from 'helpers/numberUtils';
+import { DateTime } from 'luxon-extensions';
+import { calculateCardMetrics } from './helpers';
+import { CardColumn } from './types';
+import type { Dataset } from '..';
 
-const rows = ["MAX", "MEAN", "MIN"];
+const rows = ['MAX', 'MEAN', 'MIN'];
 
 /* eslint-disable react/prop-types */
 const AnalysisCard: FC<AnalysisCardProps> = ({
@@ -37,7 +37,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
   const hasData = datasets.some(({ displayData }) => displayData);
   const nColumns = datasets.filter(
-    ({ displayCardColumn }) => displayCardColumn
+    ({ displayCardColumn }) => displayCardColumn,
   ).length;
   const showCard = !loading && hasData;
   const isCardSmall = nColumns === 1;
@@ -63,11 +63,13 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       rows: calculateCardMetrics(chartStartDate, chartEndDate, data, label),
       unit,
       tooltip: cardColumnTooltip,
-    })
+    }),
   );
 
-  const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
-  const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
+  const formattedpickerStartDate =
+    DateTime.fromISO(pickerStartDate).toFormat('LL/dd/yyyy');
+  const formattedpickerEndDate =
+    DateTime.fromISO(pickerEndDate).toFormat('LL/dd/yyyy');
 
   return (
     <Box
@@ -84,7 +86,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
         <Grid
           className={classes.metricsWrapper}
           container
-          justify={columnJustification || "space-between"}
+          justifyContent={columnJustification || 'space-between'}
           alignItems="flex-end"
           spacing={isCardSmall ? 2 : 1}
         >
@@ -118,7 +120,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
                     alignItems="flex-start"
                   >
                     <Grid item>
-                      <Tooltip title={item.tooltip || ""}>
+                      <Tooltip title={item.tooltip || ''}>
                         <Typography
                           className={classes.values}
                           style={{
@@ -135,7 +137,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
                         <Typography
                           className={classNames(
                             classes.values,
-                            classes.lightFont
+                            classes.lightFont,
                           )}
                           variant="h5"
                           color="textSecondary"
@@ -146,7 +148,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
                     ))}
                   </Grid>
                 </Grid>
-              )
+              ),
           )}
         </Grid>
       </Card>
@@ -158,27 +160,27 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
 const styles = (theme: Theme) =>
   createStyles({
     autoWidth: {
-      width: "auto",
+      width: 'auto',
     },
     AnalysisCardCard: {
       padding: theme.spacing(2),
       minHeight: 240,
-      borderRadius: "0 4px 4px 0",
-      backgroundColor: "#f8f9f9",
-      margin: "14px 0",
+      borderRadius: '0 4px 4px 0',
+      backgroundColor: '#f8f9f9',
+      margin: '14px 0',
       // add horizontal scroll on mobile
-      overflowX: "auto",
+      overflowX: 'auto',
     },
     rotatedText: {
-      transform: "rotate(-90deg)",
+      transform: 'rotate(-90deg)',
     },
     // ensures wrapping never happens no matter the column amount.
-    metricsWrapper: { minWidth: "max-content" },
+    metricsWrapper: { minWidth: 'max-content' },
     metricsTitle: {
-      position: "relative",
+      position: 'relative',
       bottom: 7,
       left: -12,
-      width: "auto",
+      width: 'auto',
     },
     lightFont: {
       fontWeight: 200,
@@ -203,7 +205,7 @@ interface AnalysisCardIncomingProps {
   pickerEndDate: string;
   chartStartDate: string;
   chartEndDate: string;
-  columnJustification?: GridProps["justify"];
+  columnJustification?: GridProps['justify'];
 }
 
 export default withStyles(styles)(AnalysisCard);

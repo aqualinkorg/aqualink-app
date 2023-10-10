@@ -1,22 +1,22 @@
-import React from "react";
-import { Box, Card, Typography } from "@material-ui/core";
-import LaunchIcon from "@material-ui/icons/Launch";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Box, Card, Typography } from '@material-ui/core';
+import LaunchIcon from '@material-ui/icons/Launch';
+import { Link } from 'react-router-dom';
 
-import { useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 
 import {
   siteDetailsSelector,
   siteErrorSelector,
   siteLoadingSelector,
-} from "../../../../store/Sites/selectedSiteSlice";
-import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
-import { sortByDate } from "../../../../helpers/dates";
-import LoadingSkeleton from "../../../../common/LoadingSkeleton";
-import SelectedSiteCardContent from "./CardContent";
+} from 'store/Sites/selectedSiteSlice';
+import { surveyListSelector } from 'store/Survey/surveyListSlice';
+import { sortByDate } from 'helpers/dates';
+import LoadingSkeleton from 'common/LoadingSkeleton';
+import SelectedSiteCardContent from './CardContent';
 
-const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || "";
+const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
 
 const SelectedSiteCard = () => {
   const classes = useStyles();
@@ -25,19 +25,19 @@ const SelectedSiteCard = () => {
   const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
 
-  const isFeatured = (site?.id || "").toString() === featuredSiteId;
+  const isFeatured = (site?.id || '').toString() === featuredSiteId;
 
   const { featuredSurveyMedia } =
-    sortByDate(surveyList, "diveDate", "desc").find(
+    sortByDate(surveyList, 'diveDate', 'desc').find(
       (survey) =>
         survey.featuredSurveyMedia &&
-        survey.featuredSurveyMedia.type === "image"
+        survey.featuredSurveyMedia.type === 'image',
     ) || {};
 
   const hasMedia = Boolean(featuredSurveyMedia?.url);
 
   // If FEATURED_SITE is not setup, no card is displayed.
-  if (featuredSiteId === "" && isFeatured) {
+  if (featuredSiteId === '' && isFeatured) {
     return null;
   }
 
@@ -52,7 +52,7 @@ const SelectedSiteCard = () => {
         >
           {site && (
             <Typography variant="h5" color="textSecondary">
-              {isFeatured ? "Featured Site" : "Selected Site"}
+              {isFeatured ? 'Featured Site' : 'Selected Site'}
               {!hasMedia && (
                 <Link to={`sites/${site?.id}`}>
                   <LaunchIcon className={classes.launchIcon} />
@@ -79,17 +79,17 @@ const SelectedSiteCard = () => {
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       padding: 10,
     },
     padding: 20,
   },
   launchIcon: {
     fontSize: 20,
-    marginLeft: "0.5rem",
-    color: "#2f2f2f",
-    "&:hover": {
-      color: "#2f2f2f",
+    marginLeft: '0.5rem',
+    color: '#2f2f2f',
+    '&:hover': {
+      color: '#2f2f2f',
     },
   },
 }));

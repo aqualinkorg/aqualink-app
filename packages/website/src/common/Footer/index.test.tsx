@@ -1,13 +1,13 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import SiteFooter from ".";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import SiteFooter from '.';
 
-test("renders as expected", () => {
+test('renders as expected', () => {
   const { container } = render(
     <Router>
       <SiteFooter />
-    </Router>
+    </Router>,
   );
   expect(container).toMatchSnapshot();
 });

@@ -1,43 +1,18 @@
 /** Worker to process daily data for all sites. */
-import {
-  get,
-  isEmpty,
-  isNil,
-  isNumber,
-  isUndefined,
-  mapValues,
-  omit,
-  omitBy,
-} from 'lodash';
-import { Connection, In, Repository } from 'typeorm';
+import { get, isNil, isNumber, isUndefined, omit, omitBy } from 'lodash';
+import { DataSource, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
-import {
-  getMin,
-  getMax,
-  getAverage,
-  getWindSpeed,
-  getWindDirection,
-} from '../utils/math';
-import {
-  extractSofarValues,
-  getLatestData,
-  getSofarHindcastData,
-  getSpotterData,
-} from '../utils/sofar';
+import { getMax } from '../utils/math';
+import { getLatestData, getSofarHindcastData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
-import {
-  DEFAULT_SPOTTER_DATA_VALUE,
-  SofarDailyData,
-  ValueWithTimestamp,
-} from '../utils/sofar.types';
+import { SofarDailyData, ValueWithTimestamp } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
-import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import { filterMetricDataByDate, getExclusionDates } from '../utils/site.utils';
+import { getAllColumns } from '../utils/site.utils';
 
 export async function getDegreeHeatingDays(
   latitude: number,
@@ -77,156 +52,37 @@ export async function getDegreeHeatingDays(
 export async function getDailyData(
   site: Site,
   endOfDate: Date,
-  excludedDates: ExclusionDates[],
 ): Promise<SofarDailyData> {
-  const { polygon, sensorId, maxMonthlyMean } = site;
-  // TODO - Accept Polygon option
-  const [longitude, latitude] = (polygon as Point).coordinates;
+  const { polygon, maxMonthlyMean, nearestNOAALocation } = site;
+  const [NOAALongitude, NOAALatitude] = nearestNOAALocation
+    ? (nearestNOAALocation as Point).coordinates
+    : (polygon as Point).coordinates;
 
-  const [
-    spotterRawData,
-    degreeHeatingDays,
-    satelliteTemperatureData,
-    significantWaveHeightsRaw,
-    waveMeanDirectionRaw,
-    waveMeanPeriodRaw,
-    windVelocity10MeterEastward,
-    windVelocity10MeterNorthward,
-  ] = await Promise.all([
-    sensorId ? getSpotterData(sensorId, endOfDate) : DEFAULT_SPOTTER_DATA_VALUE,
+  const [degreeHeatingDays, satelliteTemperatureData] = await Promise.all([
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
-    getDegreeHeatingDays(latitude, longitude, endOfDate, maxMonthlyMean),
+    getDegreeHeatingDays(
+      NOAALatitude,
+      NOAALongitude,
+      endOfDate,
+      maxMonthlyMean,
+    ),
     getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch]
         .analysedSeaSurfaceTemperature,
-      latitude,
-      longitude,
+      NOAALatitude,
+      NOAALongitude,
       endOfDate,
       96,
     ),
-    getSofarHindcastData(
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-        .significantWaveHeight,
-      latitude,
-      longitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
-    getSofarHindcastData(
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
-      latitude,
-      longitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
-    getSofarHindcastData(
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
-      latitude,
-      longitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
-    // Get NOAA GFS wind data
-    getSofarHindcastData(
-      SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
-      latitude,
-      longitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
-    getSofarHindcastData(
-      SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
-      latitude,
-      longitude,
-      endOfDate,
-    ).then((data) => data.map(({ value }) => value)),
   ]);
-
-  const spotterData = spotterRawData
-    ? mapValues(spotterRawData, (v) =>
-        extractSofarValues(filterMetricDataByDate(excludedDates, v)),
-      )
-    : {
-        topTemperature: [],
-        bottomTemperature: [],
-        significantWaveHeight: [],
-        waveMeanPeriod: [],
-        waveMeanDirection: [],
-        windSpeed: [],
-        windDirection: [],
-      };
-
-  const minBottomTemperature = getMin(spotterData.bottomTemperature);
-  const maxBottomTemperature = getMax(spotterData.bottomTemperature);
-  const avgBottomTemperature = getAverage(spotterData.bottomTemperature);
-
-  const topTemperature = getAverage(spotterData.topTemperature);
 
   // Get satelliteTemperature
   const latestSatelliteTemperature =
     satelliteTemperatureData && getLatestData(satelliteTemperatureData);
   const satelliteTemperature =
     latestSatelliteTemperature && latestSatelliteTemperature.value;
-
-  // Get waves data if unavailable through a spotter
-  const significantWaveHeights =
-    spotterData.significantWaveHeight.length > 0
-      ? spotterData.significantWaveHeight
-      : significantWaveHeightsRaw;
-
-  const minWaveHeight =
-    significantWaveHeights && getMin(significantWaveHeights);
-  const maxWaveHeight =
-    significantWaveHeights && getMax(significantWaveHeights);
-  const avgWaveHeight =
-    significantWaveHeights && getAverage(significantWaveHeights);
-
-  const meanDirectionWaves =
-    spotterData.waveMeanDirection.length > 0
-      ? spotterData.waveMeanDirection
-      : waveMeanDirectionRaw;
-
-  const waveMeanDirection =
-    meanDirectionWaves && getAverage(meanDirectionWaves, true);
-
-  const meanPeriodWaves =
-    spotterData.waveMeanPeriod.length > 0
-      ? spotterData.waveMeanPeriod
-      : waveMeanPeriodRaw;
-
-  const waveMeanPeriod = meanPeriodWaves && getAverage(meanPeriodWaves, true);
-
-  // Make sure that windVelocity10MeterEastward and windVelocity10MeterNorthward have the same length.
-  const modelWindCheck =
-    windVelocity10MeterEastward.length === windVelocity10MeterNorthward.length;
-
-  const windSpeedsRaw = modelWindCheck
-    ? windVelocity10MeterEastward.map((eastValue, index) =>
-        getWindSpeed(eastValue, windVelocity10MeterNorthward[index]),
-      )
-    : [];
-  const windDirectionsRaw = modelWindCheck
-    ? windVelocity10MeterEastward.map((eastValue, index) =>
-        getWindDirection(eastValue, windVelocity10MeterNorthward[index]),
-      )
-    : [];
-
-  // Get wind data if unavailable through a spotter
-  const windSpeeds = isEmpty(spotterData.windSpeed)
-    ? windSpeedsRaw
-    : spotterData.windSpeed;
-  const windDirections = isEmpty(spotterData.windDirection)
-    ? windDirectionsRaw
-    : spotterData.windDirection;
-
-  const minWindSpeed = windSpeeds && getMin(windSpeeds);
-  const maxWindSpeed = windSpeeds && getMax(windSpeeds);
-  const avgWindSpeed = windSpeeds && getAverage(windSpeeds);
-
-  const windDirection = windDirections && getAverage(windDirections, true);
 
   const dailyAlertLevel = calculateAlertLevel(
     maxMonthlyMean,
@@ -238,21 +94,8 @@ export async function getDailyData(
     site: { id: site.id },
     date: endOfDate,
     dailyAlertLevel,
-    minBottomTemperature,
-    maxBottomTemperature,
-    avgBottomTemperature,
-    topTemperature,
     satelliteTemperature,
     degreeHeatingDays: degreeHeatingDays?.value,
-    minWaveHeight,
-    maxWaveHeight,
-    avgWaveHeight,
-    waveMeanDirection,
-    waveMeanPeriod,
-    minWindSpeed,
-    maxWindSpeed,
-    avgWindSpeed,
-    windDirection,
   };
 }
 
@@ -287,22 +130,22 @@ export function getMaxAlert(
 
 /* eslint-disable no-console */
 export async function getSitesDailyData(
-  connection: Connection,
+  dataSource: DataSource,
   endOfDate: Date,
   siteIds?: number[],
 ) {
-  const siteRepository = connection.getRepository(Site);
-  const dailyDataRepository = connection.getRepository(DailyData);
-  const exclusionDatesRepository = connection.getRepository(ExclusionDates);
-  const allSites = await siteRepository.find(
-    siteIds && siteIds.length > 0
+  const siteRepository = dataSource.getRepository(Site);
+  const dailyDataRepository = dataSource.getRepository(DailyData);
+  const allSites = await siteRepository.find({
+    ...(siteIds && siteIds.length > 0
       ? {
           where: {
             id: In(siteIds),
           },
         }
-      : {},
-  );
+      : {}),
+    select: getAllColumns(siteRepository),
+  });
   const start = new Date();
   console.log(
     `Updating ${allSites.length} sites for ${endOfDate.toDateString()}.`,
@@ -310,12 +153,7 @@ export async function getSitesDailyData(
   await Bluebird.map(
     allSites,
     async (site) => {
-      const excludedDates = await getExclusionDates(
-        exclusionDatesRepository,
-        site.sensorId,
-      );
-
-      const dailyDataInput = await getDailyData(site, endOfDate, excludedDates);
+      const dailyDataInput = await getDailyData(site, endOfDate);
 
       // If no data returned from the update function, skip
       if (hasNoData(dailyDataInput)) {
@@ -369,19 +207,13 @@ export async function getSitesDailyData(
   );
 }
 
-export async function runDailyUpdate(conn: Connection) {
-  const today = moment()
-    .utc()
-    .hours(23)
-    .minutes(59)
-    .seconds(59)
-    .milliseconds(999);
+export async function runDailyUpdate(dataSource: DataSource) {
+  const today = DateTime.utc().endOf('day');
 
-  const yesterday = moment(today);
-  yesterday.day(today.day() - 1);
-  console.log(`Daily Update for data ending on ${yesterday.date()}`);
+  const yesterday = today.set({ day: today.day - 1 });
+  console.log(`Daily Update for data ending on ${yesterday.day}`);
   try {
-    await getSitesDailyData(conn, yesterday.toDate());
+    await getSitesDailyData(dataSource, yesterday.toJSDate());
     console.log('Completed daily update.');
   } catch (error) {
     console.error(error);

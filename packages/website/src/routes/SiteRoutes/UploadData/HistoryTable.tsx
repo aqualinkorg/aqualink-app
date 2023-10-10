@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   makeStyles,
@@ -11,30 +11,31 @@ import {
   TableHead,
   TableRow,
   TypographyProps,
-} from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
-import { startCase } from "lodash";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import { Site, SiteUploadHistory } from "../../../store/Sites/types";
-import requests from "../../../helpers/requests";
-import { pluralize } from "../../../helpers/stringUtils";
-import DeleteButton from "../../../common/DeleteButton";
+} from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { startCase } from 'lodash';
+import { Link } from 'react-router-dom';
+import { Site, SiteUploadHistory } from 'store/Sites/types';
+import requests from 'helpers/requests';
+import { pluralize } from 'helpers/stringUtils';
+import DeleteButton from 'common/DeleteButton';
+import { DateTime } from 'luxon-extensions';
 
 const tableHeaderTitles = [
-  "NAME",
-  "TIMEZONE",
-  "SITE",
-  "SURVEY POINT",
-  "SENSOR TYPE",
-  "UPLOAD DATE",
-  "DATA RANGE",
-  "",
+  'NAME',
+  'TIMEZONE',
+  'SITE',
+  'SURVEY POINT',
+  'SENSOR TYPE',
+  'UPLOAD DATE',
+  'AFFECTED SITE IDS',
+  'DATA RANGE',
+  '',
 ];
 
 const tableCellTypographyProps: TypographyProps = {
-  color: "textSecondary",
-  variant: "subtitle2",
+  color: 'textSecondary',
+  variant: 'subtitle2',
 };
 
 const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
@@ -42,19 +43,19 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
   const classes = useStyles();
   const { timezone } = site;
   const timezoneAbbreviation = timezone
-    ? moment().tz(timezone).zoneAbbr()
+    ? DateTime.local().setZone(timezone).toFormat('zzz')
     : undefined;
-  const dateFormat = "MM/DD/YYYY";
+  const dateFormat = 'LL/dd/yyyy';
 
   const dataVisualizationButtonLink = (
     start: string,
     end: string,
-    surveyPoint: number
+    surveyPointId?: number,
   ) =>
     `/sites/${site.id}${requests.generateUrlQueryParams({
       start,
       end,
-      surveyPoint,
+      surveyPoint: surveyPointId,
     })}`;
 
   if (nUploads === 0) {
@@ -65,7 +66,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
     <div className={classes.root}>
       <div>
         <Typography variant="h6" gutterBottom>
-          {nUploads} {pluralize(nUploads, "file")} previously uploaded
+          {nUploads} {pluralize(nUploads, 'file')} previously uploaded
         </Typography>
       </div>
       <TableContainer>
@@ -81,25 +82,18 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
           </TableHead>
           <TableBody>
             {uploadHistory.map(
-              ({
-                id,
-                file,
-                surveyPoint,
-                sensorType,
-                minDate,
-                maxDate,
-                createdAt,
-              }) => {
+              ({ dataUpload, surveyPoint, sitesAffectedByDataUpload }) => {
                 const row = [
-                  file,
+                  dataUpload.file,
                   timezoneAbbreviation || timezone,
                   site.name,
-                  surveyPoint.name,
-                  startCase(sensorType),
-                  moment(createdAt).format(dateFormat),
+                  surveyPoint?.name,
+                  dataUpload.sensorTypes.map((x) => startCase(x)).join(', '),
+                  DateTime.fromISO(dataUpload.createdAt).toFormat(dateFormat),
+                  sitesAffectedByDataUpload?.join(', '),
                 ];
                 return (
-                  <TableRow key={id}>
+                  <TableRow key={dataUpload.id}>
                     {row.map((item) => (
                       <TableCell>
                         <Typography {...tableCellTypographyProps}>
@@ -111,34 +105,45 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                       <Button
                         component={Link}
                         to={dataVisualizationButtonLink(
-                          minDate,
-                          maxDate,
-                          surveyPoint.id
+                          dataUpload.minDate,
+                          dataUpload.maxDate,
+                          surveyPoint?.id,
                         )}
                         size="small"
                         variant="outlined"
                         color="primary"
                         className={classes.dateIntervalButton}
                       >
-                        {moment(minDate).format(dateFormat)} -{" "}
-                        {moment(maxDate).format(dateFormat)}
+                        {DateTime.fromISO(dataUpload.minDate).toFormat(
+                          dateFormat,
+                        )}{' '}
+                        -{' '}
+                        {DateTime.fromISO(dataUpload.maxDate).toFormat(
+                          dateFormat,
+                        )}
                       </Button>
                     </TableCell>
                     <TableCell>
                       <DeleteButton
-                        onConfirm={() => onDelete([id])}
+                        onConfirm={() => onDelete([dataUpload.id])}
                         content={
                           <Typography color="textSecondary">
                             Are you sure you want to delete file &quot;
-                            <span className={classes.bold}>{file}</span>&quot;?
-                            Data between dates{" "}
                             <span className={classes.bold}>
-                              {moment(minDate).format("MM/DD/YYYY HH:mm")}
-                            </span>{" "}
-                            and{" "}
+                              {dataUpload.file}
+                            </span>
+                            &quot;? Data between dates{' '}
                             <span className={classes.bold}>
-                              {moment(maxDate).format("MM/DD/YYYY HH:mm")}
-                            </span>{" "}
+                              {DateTime.fromISO(dataUpload.minDate).toFormat(
+                                'LL/dd/yyyy HH:mm',
+                              )}
+                            </span>{' '}
+                            and{' '}
+                            <span className={classes.bold}>
+                              {DateTime.fromISO(dataUpload.maxDate).toFormat(
+                                'LL/dd/yyyy HH:mm',
+                              )}
+                            </span>{' '}
                             will be lost.
                           </Typography>
                         }
@@ -146,7 +151,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                     </TableCell>
                   </TableRow>
                 );
-              }
+              },
             )}
           </TableBody>
         </Table>
@@ -170,7 +175,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 700,
   },
   dateIntervalButton: {
-    whiteSpace: "nowrap",
+    whiteSpace: 'nowrap',
   },
 }));
 

@@ -25,9 +25,8 @@ import {
 } from '../../test/mock/user.mock';
 import { TestService } from '../../test/test.service';
 import { mockExtractAndVerifyToken } from '../../test/utils';
-import { Metric } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { DEFAULT_COLLECTION_NAME } from '../utils/collections.utils';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 
@@ -40,7 +39,7 @@ const collectionDtoToEntity = (dto: CreateCollectionDto) => ({
 
 const getLatestData = (data: DeepPartial<TimeSeries>[]) =>
   _(data)
-    .groupBy((o) => o.metric)
+    .groupBy((o) => _.camelCase(o.metric))
     .mapValues((o) => maxBy(o, (obj) => obj.timestamp)?.value)
     .toJSON();
 
@@ -87,13 +86,9 @@ export const collectionTests = () => {
       const rsp = await request(app.getHttpServer()).get('/collections/');
 
       expect(rsp.status).toBe(200);
-      expect(rsp.body.length).toBe(2);
+      expect(rsp.body.length).toBe(1);
       const sortedRsp = sortBy(rsp.body, (o) => o.createdAt);
       expect(sortedRsp[0]).toMatchObject({
-        name: DEFAULT_COLLECTION_NAME,
-        isPublic: false,
-      });
-      expect(sortedRsp[1]).toMatchObject({
         name: createCollectionDto.name,
         isPublic: createCollectionDto.isPublic,
       });
@@ -120,7 +115,7 @@ export const collectionTests = () => {
         .query({ siteId: floridaSite.id });
 
       expect(rsp.status).toBe(200);
-      expect(rsp.body.length).toBe(2);
+      expect(rsp.body.length).toBe(1);
     });
 
     it('PUT /:id update the test collection', async () => {
@@ -176,10 +171,22 @@ export const collectionTests = () => {
       expect(rsp.body.sites.length).toBe(2);
       const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
       expect(sortedSites[0]).toMatchObject(
-        omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
+        omit(
+          californiaSite,
+          'applied',
+          'createdAt',
+          'updatedAt',
+          'spotterApiToken',
+        ),
       );
       expect(sortedSites[1]).toMatchObject(
-        omit(floridaSite, 'applied', 'createdAt', 'updatedAt'),
+        omit(
+          floridaSite,
+          'applied',
+          'createdAt',
+          'updatedAt',
+          'spotterApiToken',
+        ),
       );
 
       const floridaLatestData = getLatestData(floridaTimeSeries);
@@ -224,13 +231,19 @@ export const collectionTests = () => {
 
     const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
     expect(sortedSites[0]).toMatchObject(
-      omit(athensSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(athensSite, 'applied', 'createdAt', 'updatedAt', 'spotterApiToken'),
     );
     expect(sortedSites[1]).toMatchObject(
-      omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(
+        californiaSite,
+        'applied',
+        'createdAt',
+        'updatedAt',
+        'spotterApiToken',
+      ),
     );
     expect(sortedSites[2]).toMatchObject(
-      omit(floridaSite, 'applied', 'createdAt', 'updatedAt'),
+      omit(floridaSite, 'applied', 'createdAt', 'updatedAt', 'spotterApiToken'),
     );
 
     const athensLatestData = getLatestData(athensTimeSeries);
@@ -239,7 +252,11 @@ export const collectionTests = () => {
 
     expect(sortedSites[0].collectionData).toStrictEqual(
       // Omit top and bottom temperature since hobo data are not included in collection data
-      omit(athensLatestData, Metric.TOP_TEMPERATURE, Metric.BOTTOM_TEMPERATURE),
+      omit(
+        athensLatestData,
+        _.camelCase(Metric.TOP_TEMPERATURE),
+        _.camelCase(Metric.BOTTOM_TEMPERATURE),
+      ),
     );
     expect(sortedSites[1].collectionData).toStrictEqual(californiaLatestData);
     expect(sortedSites[2].collectionData).toStrictEqual(floridaLatestData);
@@ -276,5 +293,13 @@ export const collectionTests = () => {
     const rsp = await request(app.getHttpServer()).get(`/collections/public/0`);
 
     expect(rsp.status).toBe(404);
+  });
+
+  it('GET /heat-stress-tracker get heat stress collection', async () => {
+    const rsp = await request(app.getHttpServer()).get(
+      '/collections/heat-stress-tracker',
+    );
+
+    expect(rsp.status).toBe(200);
   });
 };

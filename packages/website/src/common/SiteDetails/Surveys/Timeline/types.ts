@@ -1,4 +1,4 @@
-import { SurveyListItem } from "../../../../store/Survey/types";
+import { SurveyListItem } from 'store/Survey/types';
 
 export interface TimelineProps {
   siteId?: number;

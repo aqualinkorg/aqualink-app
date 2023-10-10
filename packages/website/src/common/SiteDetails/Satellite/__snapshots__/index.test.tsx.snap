@@ -313,20 +313,20 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root makeStyles-updateInfo-11 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
-          class="MuiGrid-root makeStyles-dateInfoWrapper-15 makeStyles-dateInfoWrapper-17 MuiGrid-item"
+          class="MuiGrid-root makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-16 MuiGrid-item MuiGrid-grid-xs-8"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-updateIcon-13 MuiSvgIcon-fontSizeSmall"
+                class="MuiSvgIcon-root makeStyles-updateIcon-12 MuiSvgIcon-fontSizeSmall"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -336,7 +336,7 @@ exports[`renders as expected 1`] = `
               </svg>
             </div>
             <div
-              class="MuiGrid-root makeStyles-dateInfo-16 MuiGrid-item"
+              class="MuiGrid-root makeStyles-dateInfo-15 MuiGrid-item"
             >
               <mock-box
                 display="flex"
@@ -344,15 +344,13 @@ exports[`renders as expected 1`] = `
                 width="100%"
               >
                 <mock-typography
-                  classname="makeStyles-updateInfoText-14"
+                  classname="makeStyles-updateInfoText-13"
                   variant="caption"
                 >
-                  Last data received
-                   
-                  1 day ago
+                  Last data received 1 day ago
                 </mock-typography>
                 <mock-typography
-                  classname="makeStyles-updateInfoText-14"
+                  classname="makeStyles-updateInfoText-13"
                   variant="caption"
                 >
                   Updated daily
@@ -362,31 +360,37 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-chip-18 makeStyles-chip-24 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+          style="display: flex; justify-content: flex-end;"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+            class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-23 MuiGrid-item"
           >
-            <mock-button
-              classname="makeStyles-button-23"
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
             >
-              <a
-                class="makeStyles-link-21"
-                href="https://coralsitewatch.noaa.gov/"
-                target="_blank"
+              <mock-button
+                classname="makeStyles-button-22"
               >
-                <mock-typography
-                  classname="makeStyles-chipText-19"
+                <a
+                  class="makeStyles-link-20"
+                  href="https://coralreefwatch.noaa.gov/"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
-                  NOAA
-                </mock-typography>
-                <img
-                  alt="sensor-type"
-                  class="makeStyles-sensorImage-22"
-                  src="satellite.svg"
-                />
-              </a>
-            </mock-button>
+                  <mock-typography
+                    classname="makeStyles-chipText-18"
+                  >
+                    NOAA
+                  </mock-typography>
+                  <img
+                    alt="sensor-type"
+                    class="makeStyles-sensorImage-21"
+                    src="satellite.svg"
+                  />
+                </a>
+              </mock-button>
+            </div>
           </div>
         </div>
       </div>

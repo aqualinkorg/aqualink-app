@@ -6,37 +6,28 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
-import moment from 'moment';
 import Bluebird from 'bluebird';
+import { DateTime } from '../luxon-extensions';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
-import { getSstAnomaly, getLiveData } from '../utils/liveData';
-import { SofarLiveData } from '../utils/sofar.types';
-import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { AdminLevel, User } from '../users/users.entity';
 import { CreateSiteDto, CreateSiteApplicationDto } from './dto/create-site.dto';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { Region } from '../regions/regions.entity';
 import {
-  getRegion,
-  getTimezones,
   handleDuplicateSite,
   filterMetricDataByDate,
   getConflictingExclusionDates,
   hasHoboDataSubQuery,
   getLatestData,
-  getSSTFromLiveOrLatestData,
   getSite,
+  createSite,
 } from '../utils/site.utils';
-import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
-import {
-  getSpotterData,
-  getLatestData as getLatestDataSofar,
-} from '../utils/sofar';
+import { getSpotterData, sofarLatest } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
@@ -55,6 +46,7 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
+import { ScheduledUpdate } from './scheduled-updates.entity';
 
 @Injectable()
 export class SitesService {
@@ -89,6 +81,11 @@ export class SitesService {
 
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
+
+    @InjectRepository(ScheduledUpdate)
+    private scheduledUpdateRepository: Repository<ScheduledUpdate>,
+
+    private dataSource: DataSource,
   ) {}
 
   async create(
@@ -97,27 +94,15 @@ export class SitesService {
     user: User,
   ): Promise<SiteApplication> {
     const { name, latitude, longitude, depth } = siteParams;
-    const region = await getRegion(longitude, latitude, this.regionRepository);
-    const maxMonthlyMean = await getMMM(longitude, latitude);
-    const historicalMonthlyMeans = await getHistoricalMonthlyMeans(
+    const site = await createSite(
+      name,
+      depth,
       longitude,
       latitude,
+      this.regionRepository,
+      this.sitesRepository,
+      this.historicalMonthlyMeanRepository,
     );
-    const { SLACK_BOT_TOKEN, SLACK_BOT_CHANNEL } = process.env;
-
-    const timezones = getTimezones(latitude, longitude) as string[];
-
-    const site = await this.sitesRepository
-      .save({
-        name,
-        region,
-        polygon: createPoint(longitude, latitude),
-        maxMonthlyMean,
-        timezone: timezones[0],
-        display: false,
-        depth,
-      })
-      .catch(handleDuplicateSite);
 
     // Elevate user to SiteManager
     if (user.adminLevel === AdminLevel.Default) {
@@ -132,34 +117,24 @@ export class SitesService {
       .of(user)
       .add(site);
 
-    if (!maxMonthlyMean) {
-      this.logger.warn(
-        `Max Monthly Mean appears to be null for Site ${site.id} at (lat, lon): (${latitude}, ${longitude}) `,
-      );
-    }
-
-    backfillSiteData(site.id);
-
-    await Promise.all(
-      historicalMonthlyMeans.map(async ({ month, temperature }) => {
-        return (
-          temperature &&
-          this.historicalMonthlyMeanRepository.insert({
-            site,
-            month,
-            temperature,
-          })
-        );
-      }),
-    );
+    backfillSiteData({
+      dataSource: this.dataSource,
+      siteId: site.id,
+    });
 
     const messageTemplate: SlackMessage = {
-      channel: SLACK_BOT_CHANNEL as string,
+      channel: process.env.SLACK_BOT_CHANNEL as string,
       text: `New site ${site.name} created with id=${site.id}, by ${user.fullName}`,
       mrkdwn: true,
     };
 
-    await sendSlackMessage(messageTemplate, SLACK_BOT_TOKEN as string);
+    // Add site to scheduled noaa location updates
+    await this.scheduledUpdateRepository.save({ site: { id: site.id } });
+
+    await sendSlackMessage(
+      messageTemplate,
+      process.env.SLACK_BOT_TOKEN as string,
+    );
 
     return this.siteApplicationRepository.save({
       ...appParams,
@@ -241,12 +216,18 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
+    const mappedSiteData = await getCollectionData(
+      [site],
+      this.latestDataRepository,
+    );
+
     return {
       ...site,
       surveys,
       historicalMonthlyMean,
       videoStream,
       applied: site.applied,
+      collectionData: mappedSiteData[site.id],
     };
   }
 
@@ -276,6 +257,10 @@ export class SitesService {
       })
       .catch(handleDuplicateSite);
 
+    if (coordinates) {
+      this.scheduledUpdateRepository.save({ site: { id } });
+    }
+
     if (adminIds) {
       await this.updateAdmins(id, adminIds);
     }
@@ -284,7 +269,8 @@ export class SitesService {
       throw new NotFoundException(`Site with ID ${id} not found.`);
     }
 
-    const updated = await this.sitesRepository.findOne(id, {
+    const updated = await this.sitesRepository.findOne({
+      where: { id },
       relations: ['admins'],
     });
 
@@ -305,7 +291,10 @@ export class SitesService {
   ): Promise<DailyData[]> {
     await getSite(id, this.sitesRepository);
 
-    if (!moment(start).isValid() || !moment(end).isValid()) {
+    if (
+      (start && !DateTime.fromISO(start).isValid) ||
+      (end && !DateTime.fromISO(end).isValid)
+    ) {
       throw new BadRequestException('Start or end is not a valid date');
     }
 
@@ -323,41 +312,13 @@ export class SitesService {
       .getMany();
   }
 
-  async findLiveData(id: number): Promise<SofarLiveData> {
-    const site = await getSite(id, this.sitesRepository, [
-      'historicalMonthlyMean',
-    ]);
-
-    const now = new Date();
-
-    const weeklyAlertLevel = await getWeeklyAlertLevel(
-      this.dailyDataRepository,
-      now,
-      site,
-    );
-
-    const isDeployed = site.status === SiteStatus.Deployed;
-
-    const liveData = await getLiveData(site, isDeployed);
-
-    const sst = await getSSTFromLiveOrLatestData(
-      liveData,
-      site,
-      this.latestDataRepository,
-    );
-
-    return {
-      ...liveData,
-      sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst),
-      satelliteTemperature: sst,
-      weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
-    };
-  }
-
   async findSpotterPosition(id: number) {
-    const site = await getSite(id, this.sitesRepository, [
-      'historicalMonthlyMean',
-    ]);
+    const site = await getSite(
+      id,
+      this.sitesRepository,
+      ['historicalMonthlyMean'],
+      true,
+    );
     const isDeployed = site.status === SiteStatus.Deployed;
 
     const { sensorId } = site;
@@ -368,13 +329,24 @@ export class SitesService {
         position: undefined,
       };
 
-    const spotterRaw = await getSpotterData(sensorId);
-    const spotterData = spotterRaw
+    const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
+    const spotterLatest = await sofarLatest({ sensorId, token: sofarToken });
+
+    const lastTrack =
+      spotterLatest.track &&
+      spotterLatest.track.length &&
+      spotterLatest.track[spotterLatest.track.length - 1];
+
+    const spotterData = lastTrack
       ? {
-          longitude:
-            spotterRaw.longitude && getLatestDataSofar(spotterRaw.longitude),
-          latitude:
-            spotterRaw.latitude && getLatestDataSofar(spotterRaw.latitude),
+          longitude: {
+            value: lastTrack.longitude,
+            timestamp: lastTrack.timestamp,
+          },
+          latitude: {
+            value: lastTrack.latitude,
+            timestamp: lastTrack.timestamp,
+          },
         }
       : {};
 
@@ -400,7 +372,7 @@ export class SitesService {
   }
 
   async getSpotterData(id: number, start?: string, end?: string) {
-    const site = await getSite(id, this.sitesRepository);
+    const site = await getSite(id, this.sitesRepository, undefined, true);
     const { startDate, endDate } = getTimeSeriesDefaultDates(start, end);
 
     if (!site.sensorId) {
@@ -414,8 +386,10 @@ export class SitesService {
       endDate,
     );
 
+    const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
     const { topTemperature, bottomTemperature } = await getSpotterData(
       site.sensorId,
+      sofarToken,
       endDate,
       startDate,
     );
@@ -457,7 +431,7 @@ export class SitesService {
     id: number,
     excludeSpotterDatesDto: ExcludeSpotterDatesDto,
   ) {
-    const dateFormat = 'MM/DD/YYYY HH:mm';
+    const dateFormat = 'LL/dd/yyyy HH:mm';
     const { startDate, endDate } = excludeSpotterDatesDto;
 
     const site = await getSite(id, this.sitesRepository);
@@ -474,7 +448,7 @@ export class SitesService {
 
     const sources = await this.sourceRepository.find({
       where: {
-        site,
+        site: { id: site.id },
         type: SourceType.SPOTTER,
       },
     });
@@ -496,11 +470,11 @@ export class SitesService {
 
       if (alreadyExists) {
         throw new ConflictException(
-          `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
-            endDate,
-          ).format(dateFormat)}] already exists for spotter ${
-            source.sensorId
-          }.`,
+          `Exclusion period [${DateTime.fromJSDate(startDate).toFormat(
+            dateFormat,
+          )}, ${DateTime.fromJSDate(endDate).toFormat(
+            dateFormat,
+          )}] already exists for spotter ${source.sensorId}.`,
         );
       }
 
@@ -555,6 +529,7 @@ export class SitesService {
       return null;
     }
 
+    const isPlaylist = site.videoStream.includes('videoseries');
     const apiKey = process.env.FIREBASE_API_KEY;
 
     // Api key must be specified for the process to continue
@@ -564,21 +539,21 @@ export class SitesService {
       return null;
     }
 
-    const videoId = getYouTubeVideoId(site.videoStream);
+    const videoId = getYouTubeVideoId(site.videoStream, isPlaylist);
 
     // Video id could not be extracted, because the video stream url wan not in the correct format
     if (!videoId) {
       return null;
     }
 
-    const rsp = await fetchVideoDetails([videoId], apiKey);
+    const rsp = await fetchVideoDetails([videoId], apiKey, isPlaylist);
 
     // Video was not found.
     if (!rsp.data.items.length) {
       return null;
     }
 
-    const msg = getErrorMessage(rsp.data.items[0]);
+    const msg = getErrorMessage(rsp.data.items[0], isPlaylist);
 
     // An error was returned (Video is not live, it is not public etc).
     if (msg) {

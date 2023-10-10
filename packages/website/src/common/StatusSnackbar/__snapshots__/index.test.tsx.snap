@@ -5,6 +5,7 @@ exports[`renders as expected 1`] = `
   <mock-snackbar
     anchororigin="[object Object]"
     classname="makeStyles-snackbar-1"
+    open="true"
   >
     <div
       class="MuiPaper-root MuiAlert-root MuiAlert-filledSuccess makeStyles-alert-2 MuiPaper-elevation0"

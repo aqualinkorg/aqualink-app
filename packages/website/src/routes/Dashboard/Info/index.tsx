@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Box,
   Theme,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { CollectionDetails } from "../../../store/Collection/types";
-import Header from "./Header";
-import BarChart from "./BarChart";
+import { CollectionDetails } from 'store/Collection/types';
+import Header from './Header';
+import BarChart from './BarChart';
 
 const Info = ({ collection, classes }: InfoProps) => {
   return (
@@ -30,12 +30,12 @@ const styles = (theme: Theme) =>
       height: 480,
       padding: theme.spacing(3),
       marginTop: 46,
-      display: "flex",
-      flexDirection: "column",
-      [theme.breakpoints.only("md")]: {
+      display: 'flex',
+      flexDirection: 'column',
+      [theme.breakpoints.only('md')]: {
         height: 420,
       },
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         height: 440,
         padding: theme.spacing(2),
       },

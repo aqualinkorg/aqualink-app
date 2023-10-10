@@ -1,18 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Hidden,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
-import { filterSurveys } from "../../../../helpers/surveys";
-import { SurveyMedia } from "../../../../store/Survey/types";
-import TimelineDesktop from "./Desktop";
-import TimelineTablet from "./Tablet";
-import { TimelineProps } from "./types";
+import { surveyListSelector } from 'store/Survey/surveyListSlice';
+import { SurveyMedia } from 'store/Survey/types';
+import { filterSurveys } from 'helpers/surveys';
+import TimelineDesktop from './Desktop';
+import TimelineTablet from './Tablet';
+import { TimelineProps } from './types';
 
 const SurveyTimeline = ({
   loading,
@@ -29,7 +29,7 @@ const SurveyTimeline = ({
   const displayAddButton =
     isAdmin &&
     addNewButton &&
-    !(window && window.location.pathname.includes("new_survey"));
+    !(window && window.location.pathname.includes('new_survey'));
   // If the site is loading, then display two survey card skeletons,
   // else display the actual survey cards.
   const filteredSurveys = loading
@@ -61,8 +61,8 @@ const SurveyTimeline = ({
 const styles = () =>
   createStyles({
     root: {
-      marginTop: "3rem",
-      width: "100%",
+      marginTop: '3rem',
+      width: '100%',
     },
   });
 
@@ -72,7 +72,7 @@ interface SurveyTimelineIncomingProps {
   addNewButton: boolean;
   timeZone?: string | null;
   isAdmin: boolean;
-  observation: SurveyMedia["observations"] | "any";
+  observation: SurveyMedia['observations'] | 'any';
   pointName: string | null;
   pointId: number;
 }

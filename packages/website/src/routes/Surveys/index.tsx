@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -7,22 +7,22 @@ import {
   Grid,
   Typography,
   Container,
-} from "@material-ui/core";
-import { RouteComponentProps } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+} from '@material-ui/core';
+import { RouteComponentProps } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   siteDetailsSelector,
   siteLoadingSelector,
   siteErrorSelector,
   siteRequest,
-} from "../../store/Sites/selectedSiteSlice";
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
-import NewSurvey from "./New";
-import ViewSurvey from "./View";
+} from 'store/Sites/selectedSiteSlice';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import NewSurvey from './New';
+import SurveyViewPage from './View';
 
-const Surveys = ({ match, isView, classes }: SurveysProps) => {
+const Surveys = ({ match, classes }: SurveysProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
@@ -51,8 +51,8 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
       <>
         {/* eslint-disable-next-line no-nested-ternary */}
         {siteDetails && !error ? (
-          isView ? (
-            <ViewSurvey site={siteDetails} surveyId={surveyId} />
+          surveyId ? (
+            <SurveyViewPage site={siteDetails} surveyId={surveyId} />
           ) : (
             <NewSurvey site={siteDetails} />
           )
@@ -76,17 +76,16 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
 const styles = () =>
   createStyles({
     noData: {
-      display: "flex",
-      alignItems: "center",
-      height: "100%",
+      display: 'flex',
+      alignItems: 'center',
+      height: '100%',
     },
   });
 
-interface SurveysIncomingProps {
-  isView: boolean;
-}
+interface SurveysIncomingProps {}
 
-interface MatchProps extends RouteComponentProps<{ id: string; sid: string }> {}
+interface MatchProps
+  extends RouteComponentProps<{ id: string; sid?: string }> {}
 
 type SurveysProps = MatchProps &
   SurveysIncomingProps &

@@ -84,6 +84,8 @@ export class Survey {
 
   observations?: Observations[];
 
+  satelliteTemperature?: number;
+
   @ApiProperty(sensorDataSchema)
   sensorData?: SensorDataDto;
 }

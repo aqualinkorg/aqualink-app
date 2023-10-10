@@ -1,4 +1,4 @@
-import { ConnectionOptions, createConnection } from 'typeorm';
+import { DataSourceOptions, DataSource } from 'typeorm';
 import yargs from 'yargs';
 import { configService } from '../src/config/config.service';
 import { ExclusionDates } from '../src/sites/exclusion-dates.entity';
@@ -38,6 +38,12 @@ const { argv } = yargs
     describe: 'The sites that should be backfilled with spotter data',
     type: 'array',
   })
+  .option('nc', {
+    alias: 'no-check',
+    describe: 'Skip distance check for spotter data',
+    type: 'boolean',
+    default: false,
+  })
   .check((args) => {
     // Check if 't' argument's value exists in TaskType
     if (!Object.values(TaskType).includes(args.t as any)) {
@@ -68,14 +74,15 @@ function getTaskFn(task: string) {
 
 async function run() {
   // Extract command line arguments
-  const { d: days, s: siteIds, t: task } = argv;
+  const { d: days, s: siteIds, t: task, nc: check } = argv;
 
   // Cast siteIds into a number array. If none are given return empty array
   const parsedSiteIds = siteIds ? siteIds.map(Number) : [];
 
   // Initialize typeorm connection
-  const config = configService.getTypeOrmConfig() as ConnectionOptions;
-  const connection = await createConnection(config);
+  const config = configService.getTypeOrmConfig() as DataSourceOptions;
+  const dataSource = new DataSource(config);
+  const connection = await dataSource.initialize();
 
   // Fetch selected task fn
   const fn = getTaskFn(task);
@@ -84,7 +91,6 @@ async function run() {
   return fn(
     parsedSiteIds,
     days,
-    connection,
     // Fetch all needed repositories
     {
       siteRepository: connection.getRepository(Site),
@@ -92,6 +98,7 @@ async function run() {
       timeSeriesRepository: connection.getRepository(TimeSeries),
       exclusionDatesRepository: connection.getRepository(ExclusionDates),
     },
+    check,
   );
 }
 

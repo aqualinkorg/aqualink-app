@@ -1,15 +1,15 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
-import SurveyCard from ".";
-import { mockUser } from "../../../../mocks/mockUser";
-import { mockSurvey } from "../../../../mocks/mockSurvey";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { mockUser } from 'mocks/mockUser';
+import { mockSurveyList } from 'mocks/mockSurveyList';
+import SurveyCard from '.';
 
 const mockStore = configureStore([]);
 
-describe("Survey Card", () => {
+describe('Survey Card', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -28,14 +28,14 @@ describe("Survey Card", () => {
             pointId={1}
             isAdmin
             siteId={0}
-            survey={mockSurvey}
+            survey={mockSurveyList}
           />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

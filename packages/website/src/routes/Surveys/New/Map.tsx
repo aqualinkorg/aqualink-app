@@ -1,16 +1,16 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Map, TileLayer, Marker } from "react-leaflet";
-import { useDispatch, useSelector } from "react-redux";
-import L from "leaflet";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+import React, { useRef, useEffect, useState } from 'react';
+import { Map, TileLayer, Marker } from 'react-leaflet';
+import { useDispatch, useSelector } from 'react-redux';
+import L from 'leaflet';
+import { withStyles, WithStyles, createStyles } from '@material-ui/core';
 
-import { Site } from "../../../store/Sites/types";
+import { Site } from 'store/Sites/types';
 
-import marker from "../../../assets/marker.png";
 import {
   setDiveLocation,
   diveLocationSelector,
-} from "../../../store/Survey/surveySlice";
+} from 'store/Survey/surveySlice';
+import marker from '../../../assets/marker.png';
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -31,7 +31,7 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
     if (current && current.leafletElement) {
       const map = current.leafletElement;
       // Initialize map's position to fit the given polygon
-      if (polygon.type === "Polygon") {
+      if (polygon.type === 'Polygon') {
         map.fitBounds(L.polygon(polygon.coordinates).getBounds());
       } else {
         map.panTo(new L.LatLng(polygon.coordinates[1], polygon.coordinates[0]));
@@ -51,28 +51,28 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
     const { current } = mapRef;
     if (current && current.leafletElement) {
       const map = current.leafletElement;
-      map.on("click", (event: any) => {
+      map.on('click', (event: any) => {
         setMarkerLat(event.latlng.lat);
         setMarkerLng(event.latlng.lng);
         dispatch(
           setDiveLocation({
             lat: event.latlng.lat,
             lng: event.latlng.lng,
-          })
+          }),
         );
       });
     }
   }, [dispatch]);
 
   useEffect(() => {
-    if (polygon.type === "Point" && !diveLocation) {
+    if (polygon.type === 'Point' && !diveLocation) {
       setMarkerLat(polygon.coordinates[1]);
       setMarkerLng(polygon.coordinates[0]);
       dispatch(
         setDiveLocation({
           lat: polygon.coordinates[1],
           lng: polygon.coordinates[0],
-        })
+        }),
       );
     }
   }, [polygon, diveLocation, dispatch]);
@@ -97,15 +97,15 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
 const styles = () => {
   return createStyles({
     map: {
-      height: "100%",
-      width: "100%",
+      height: '100%',
+      width: '100%',
       borderRadius: 4,
     },
   });
 };
 
 interface SiteMapIncomingProps {
-  polygon: Site["polygon"];
+  polygon: Site['polygon'];
 }
 
 type SiteMapProps = WithStyles<typeof styles> & SiteMapIncomingProps;

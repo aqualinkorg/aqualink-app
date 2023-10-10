@@ -1,44 +1,65 @@
-/* eslint-disable camelcase */
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { Metric } from '../../time-series/metrics.entity';
+import { Metric } from '../../time-series/metrics.enum';
+import { KeysToCamelCase } from '../../utils/type-utils';
 
-export class CollectionDataDto {
+type MetricAsCamelcase = KeysToCamelCase<Record<Metric, number>>;
+
+type CollectionDataDtoType = Partial<
+  Pick<
+    MetricAsCamelcase,
+    | 'bottomTemperature'
+    | 'topTemperature'
+    | 'satelliteTemperature'
+    | 'dhw'
+    | 'tempAlert'
+    | 'tempWeeklyAlert'
+    | 'sstAnomaly'
+    | 'significantWaveHeight'
+    | 'waveMeanDirection'
+    | 'waveMeanPeriod'
+    | 'wavePeakPeriod'
+    | 'windDirection'
+    | 'windSpeed'
+  >
+>;
+
+export class CollectionDataDto implements CollectionDataDtoType {
   @ApiPropertyOptional({ example: 28.05 })
-  [Metric.BOTTOM_TEMPERATURE]?: number;
+  bottomTemperature?: number;
 
   @ApiPropertyOptional({ example: 29.05 })
-  [Metric.TOP_TEMPERATURE]?: number;
+  topTemperature?: number;
 
   @ApiPropertyOptional({ example: 29.13 })
-  [Metric.SATELLITE_TEMPERATURE]?: number;
+  satelliteTemperature?: number;
 
   @ApiPropertyOptional({ example: 0 })
-  [Metric.DHW]?: number;
+  dhw?: number;
 
   @ApiPropertyOptional({ example: 1 })
-  [Metric.ALERT]?: number;
+  tempAlert?: number;
 
   @ApiPropertyOptional({ example: 1 })
-  [Metric.WEEKLY_ALERT]?: number;
+  tempWeeklyAlert?: number;
 
   @ApiPropertyOptional({ example: -0.101 })
-  [Metric.SST_ANOMALY]?: number;
+  sstAnomaly?: number;
 
   @ApiPropertyOptional({ example: 1.32 })
-  [Metric.SIGNIFICANT_WAVE_HEIGHT]?: number;
+  significantWaveHeight?: number;
 
   @ApiPropertyOptional({ example: 2 })
-  [Metric.WAVE_MEAN_DIRECTION]?: number;
+  waveMeanDirection?: number;
 
   @ApiPropertyOptional({ example: 12 })
-  [Metric.WAVE_MEAN_PERIOD]?: number;
+  waveMeanPeriod?: number;
 
   @ApiPropertyOptional({ example: 12 })
-  [Metric.WAVE_PEAK_PERIOD]?: number;
+  wavePeakPeriod?: number;
 
   @ApiPropertyOptional({ example: 153 })
-  [Metric.WIND_DIRECTION]?: number;
+  windDirection?: number;
 
   @ApiPropertyOptional({ example: 10.4 })
-  [Metric.WIND_SPEED]?: number;
+  windSpeed?: number;
 }

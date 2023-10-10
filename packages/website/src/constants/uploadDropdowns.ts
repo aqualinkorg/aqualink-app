@@ -1,32 +1,32 @@
 const observationOptions = [
   {
-    key: "healthy",
-    value: "Appears healthy",
+    key: 'healthy',
+    value: 'Appears healthy',
   },
   {
-    key: "possible-disease",
-    value: "Showing possible signs of disease",
+    key: 'possible-disease',
+    value: 'Showing possible signs of disease',
   },
   {
-    key: "evident-disease",
-    value: "Signs of disease are evident",
+    key: 'evident-disease',
+    value: 'Signs of disease are evident',
   },
   {
-    key: "mortality",
-    value: "Signs of mortality are evident",
+    key: 'mortality',
+    value: 'Signs of mortality are evident',
   },
   {
-    key: "environmental",
-    value: "Signs of environmental disturbance are evident (e.g. storm damage)",
+    key: 'environmental',
+    value: 'Signs of environmental disturbance are evident (e.g. storm damage)',
   },
   {
-    key: "anthropogenic",
+    key: 'anthropogenic',
     value:
-      "Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)",
+      'Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)',
   },
   {
-    key: "invasive-species",
-    value: "Signs of damage from invasive species",
+    key: 'invasive-species',
+    value: 'Signs of damage from invasive species',
   },
 ];
 

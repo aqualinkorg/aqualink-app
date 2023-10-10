@@ -1,14 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Bluebird from 'bluebird';
-import { groupBy, keyBy, mapValues } from 'lodash';
+import { camelCase, groupBy, keyBy, mapKeys, mapValues } from 'lodash';
 import { GeoJSON, Point } from 'geojson';
 import { IsNull, Not, Repository } from 'typeorm';
 import { Site, SensorType } from '../sites/sites.entity';
 import { Survey } from '../surveys/surveys.entity';
-import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { getSiteFromSensorId } from '../utils/site.utils';
+import { getAllColumns, getSiteFromSensorId } from '../utils/site.utils';
 import { getSpotterData, getLatestData } from '../utils/sofar';
 import { createPoint } from '../utils/coordinates';
 import { SpotterData } from '../utils/sofar.types';
@@ -21,6 +20,7 @@ import { DailyData } from '../sites/daily-data.entity';
 import { Sources } from '../sites/sources.entity';
 import { SensorDataDto } from './dto/sensor-data.dto';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { Metric } from '../time-series/metrics.enum';
 
 @Injectable()
 export class SensorsService {
@@ -46,6 +46,7 @@ export class SensorsService {
   > {
     const sites = await this.siteRepository.find({
       where: { sensorId: Not(IsNull()) },
+      select: getAllColumns(this.siteRepository),
     });
 
     // Get spotter data and add site id to distinguish them
@@ -55,7 +56,8 @@ export class SensorsService {
         if (site.sensorId === null) {
           console.warn(`Spotter for site ${site.id} appears null.`);
         }
-        return getSpotterData(site.sensorId!).then((data) => {
+        const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
+        return getSpotterData(site.sensorId!, sofarToken).then((data) => {
           return {
             id: site.id,
             ...data,
@@ -76,9 +78,11 @@ export class SensorsService {
       const latitude = getLatestData(data.latitude)?.value;
       const sitePosition = site.polygon as Point;
 
+      const { spotterApiToken, ...rest } = site;
+
       // If no longitude or latitude is provided by the spotter fallback to the site coordinates
       return {
-        ...site,
+        ...rest,
         applied: site.applied,
         sensorPosition: createPoint(
           longitude || sitePosition.coordinates[0],
@@ -107,14 +111,14 @@ export class SensorsService {
 
     const site = await getSiteFromSensorId(sensorId, this.siteRepository);
 
-    const data = await getDataQuery(
-      this.timeSeriesRepository,
-      site.id,
-      metrics as Metric[],
-      startDate,
-      endDate,
-      false,
-    );
+    const data = await getDataQuery({
+      timeSeriesRepository: this.timeSeriesRepository,
+      siteId: site.id,
+      metrics: metrics as Metric[],
+      start: startDate,
+      end: endDate,
+      hourly: false,
+    });
 
     return groupByMetricAndSource(data);
   }
@@ -197,19 +201,21 @@ export class SensorsService {
       )
       .getOne();
 
-    if (!dailyData) {
+    if (!dailyData || !dailyData.satelliteTemperature) {
       return {};
     }
 
-    // Create a SensorData object that contains the data point
-    return {
+    // create object here to typecheck
+    const ret: SensorDataDto = {
       [SourceType.NOAA]: {
-        [Metric.SATELLITE_TEMPERATURE]: {
+        satelliteTemperature: {
           value: dailyData.satelliteTemperature,
           timestamp: dailyData.date,
         },
       },
     };
+
+    return ret;
   }
 
   private async getClosestTimeSeriesData(
@@ -271,7 +277,10 @@ export class SensorsService {
         // Keep only timestamps and value from the resulting objects
         [sourceMap[key].type]: mapValues(
           // Use key by to group the data by metric and keep only the last entry, i.e. the closest one
-          keyBy(groupedData[key], (grouped) => grouped.metric),
+          mapKeys(
+            keyBy(groupedData[key], (grouped) => grouped.metric),
+            (_v, k) => camelCase(k),
+          ),
           (v) => ({ timestamp: v.timestamp, value: v.value }),
         ),
       };

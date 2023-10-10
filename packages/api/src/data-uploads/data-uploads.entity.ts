@@ -2,35 +2,25 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Index,
-  ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { Site } from '../sites/sites.entity';
-import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
-import { Metric } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 @Entity()
+@Unique(['file', 'signature'])
 export class DataUploads {
   @ApiProperty({ example: 1 })
   @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
-  @Index()
-  site: Site;
-
-  @ManyToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE', nullable: false })
-  @Index()
-  surveyPoint: SiteSurveyPoint;
-
-  @Column({ type: 'enum', enum: SourceType })
-  sensorType: SourceType;
+  @Column('character varying', { array: true, nullable: true })
+  sensorTypes: SourceType[];
 
   @Column({ nullable: false })
   file: string;

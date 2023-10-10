@@ -1,5 +1,5 @@
-import React, { BaseSyntheticEvent, useEffect, useState } from "react";
-import isEmail from "validator/lib/isEmail";
+import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
+import isEmail from 'validator/lib/isEmail';
 import {
   withStyles,
   WithStyles,
@@ -15,11 +15,16 @@ import {
   Button,
   LinearProgress,
   Collapse,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import CloseIcon from "@material-ui/icons/Close";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
+import {
+  SubmitErrorHandler,
+  useForm,
+  Controller,
+  SubmitHandler,
+} from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   resetPassword,
@@ -28,10 +33,10 @@ import {
   userLoadingSelector,
   userErrorSelector,
   clearError,
-} from "../../store/User/userSlice";
-import { UserSignInParams } from "../../store/User/types";
-import dialogStyles from "../styles/dialogStyles";
-import { SignInFormFields } from "../types";
+} from 'store/User/userSlice';
+import { UserSignInParams } from 'store/User/types';
+import dialogStyles from '../styles/dialogStyles';
+import { SignInFormFields } from '../types';
 
 const SignInDialog = ({
   open,
@@ -44,9 +49,15 @@ const SignInDialog = ({
   const loading = useSelector(userLoadingSelector);
   const error = useSelector(userErrorSelector);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
-  const [passwordResetEmail, setPasswordResetEmail] = useState<string>("");
-  const { register, errors, handleSubmit } = useForm<SignInFormFields>({
-    reValidateMode: "onSubmit",
+  const [passwordResetEmail, setPasswordResetEmail] = useState<string>('');
+  const {
+    formState: { errors },
+    handleSubmit,
+    getValues,
+    clearErrors,
+    control,
+  } = useForm<SignInFormFields>({
+    reValidateMode: 'onChange',
   });
 
   useEffect(() => {
@@ -60,7 +71,7 @@ const SignInDialog = ({
 
   const onSubmit = (
     data: SignInFormFields,
-    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>,
   ) => {
     if (event) {
       event.preventDefault();
@@ -72,24 +83,44 @@ const SignInDialog = ({
     dispatch(signInUser(registerInfo));
   };
 
-  const onResetPassword = (
-    { emailAddress }: SignInFormFields,
-    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+  const onResetSubmitError: SubmitErrorHandler<SignInFormFields> = (
+    err,
+    event,
+  ) => {
+    if (err.emailAddress) return;
+    const values = getValues();
+    resetPasswordHelper(values.emailAddress, event);
+  };
+
+  const onResetSubmitHandler: SubmitHandler<SignInFormFields> = (
+    data,
+    event,
+  ) => {
+    resetPasswordHelper(data.emailAddress, event);
+  };
+
+  const resetPasswordHelper = (
+    email?: string,
+    event?: BaseSyntheticEvent<object, any, any>,
   ) => {
     if (event) {
       event.preventDefault();
     }
-    dispatch(resetPassword({ email: emailAddress.toLowerCase() }));
-    setPasswordResetEmail(emailAddress.toLowerCase());
+    if (!email) return;
+    dispatch(resetPassword({ email: email.toLowerCase() }));
+    setPasswordResetEmail(email.toLowerCase());
+    clearErrors('password');
   };
 
   const clearUserError = () => dispatch(clearError());
 
   return (
     <Dialog
-      onEnter={() => {
-        clearUserError();
-        setPasswordResetEmail("");
+      TransitionProps={{
+        onEnter: () => {
+          clearUserError();
+          setPasswordResetEmail('');
+        },
       }}
       open={open}
       maxWidth="xs"
@@ -98,7 +129,7 @@ const SignInDialog = ({
         <CardHeader
           className={classes.dialogHeader}
           title={
-            <Grid container alignItems="center" justify="space-between">
+            <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
                 <Grid container>
                   <Typography variant="h4">Aqua</Typography>
@@ -144,7 +175,7 @@ const SignInDialog = ({
             </Alert>
           </Collapse>
         )}
-        <Collapse in={passwordResetEmail !== ""}>
+        <Collapse in={passwordResetEmail !== ''}>
           <Alert
             severity="success"
             action={
@@ -153,7 +184,7 @@ const SignInDialog = ({
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setPasswordResetEmail("");
+                  setPasswordResetEmail('');
                 }}
               >
                 <CloseIcon fontSize="inherit" />
@@ -164,7 +195,7 @@ const SignInDialog = ({
           </Alert>
         </Collapse>
         <CardContent>
-          <Grid container justify="center" item xs={12}>
+          <Grid container justifyContent="center" item xs={12}>
             <Grid className={classes.dialogContentTitle} container item xs={10}>
               <Grid item>
                 <Typography variant="h5" color="textSecondary">
@@ -179,49 +210,68 @@ const SignInDialog = ({
                   {/* <Typography className={classes.formText} variant="subtitle2">
                     or login with email address
                   </Typography> */}
-                  <TextField
-                    id="emailAddress"
+                  <Controller
                     name="emailAddress"
-                    placeholder="Email Address"
-                    helperText={
-                      (errors.emailAddress &&
-                        (errors.emailAddress.type === "validate"
-                          ? "Invalid email address"
-                          : errors.emailAddress.message)) ||
-                      ""
-                    }
-                    label="Email Address"
-                    inputRef={register({
-                      required: "This is a required field",
+                    control={control}
+                    rules={{
+                      required: 'This is a required field',
                       validate: (value) => isEmail(value),
-                    })}
-                    error={!!errors.emailAddress}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="emailAddress"
+                        placeholder="Email Address"
+                        helperText={
+                          (errors.emailAddress &&
+                            (errors.emailAddress.type === 'validate'
+                              ? 'Invalid email address'
+                              : errors.emailAddress.message)) ||
+                          ''
+                        }
+                        label="Email Address"
+                        error={!!errors.emailAddress}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="password"
+                  <Controller
                     name="password"
-                    type="password"
-                    placeholder="Password"
-                    helperText={errors.password ? errors.password.message : ""}
-                    label="Password"
-                    inputRef={register({
-                      required: "This is a required field",
-                    })}
-                    error={!!errors.password}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: 'This is a required field' }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="password"
+                        type="password"
+                        placeholder="Password"
+                        helperText={
+                          passwordResetEmail !== '' && errors.password
+                            ? errors.password.message
+                            : ''
+                        }
+                        label="Password"
+                        error={passwordResetEmail !== '' && !!errors.password}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid container item xs={12}>
                   <Button
                     className={classes.forgotPasswordButton}
-                    onClick={handleSubmit(onResetPassword)}
+                    onClick={handleSubmit(
+                      onResetSubmitHandler,
+                      onResetSubmitError,
+                    )}
                   >
                     <Typography variant="subtitle2" color="textSecondary">
                       Forgot your password?
@@ -245,7 +295,7 @@ const SignInDialog = ({
                     variant="subtitle1"
                     color="textSecondary"
                   >
-                    Don&#39;t have an account?{" "}
+                    Don&#39;t have an account?{' '}
                     <Button
                       onClick={() => {
                         handleRegisterOpen(true);
@@ -270,8 +320,8 @@ const styles = () =>
   createStyles({
     ...dialogStyles,
     forgotPasswordButton: {
-      color: "inherit",
-      textDecoration: "none",
+      color: 'inherit',
+      textDecoration: 'none',
     },
   });
 

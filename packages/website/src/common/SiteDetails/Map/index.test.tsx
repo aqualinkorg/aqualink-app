@@ -1,17 +1,17 @@
 /* eslint-disable no-underscore-dangle */
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
 
-import Map from ".";
-import { mockUser } from "../../../mocks/mockUser";
+import { mockUser } from 'mocks/mockUser';
+import Map from '.';
 
-jest.mock("react-leaflet");
+jest.mock('react-leaflet');
 
 const mockStore = configureStore([]);
 
-describe("Site Map", () => {
+describe('Site Map', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -29,17 +29,17 @@ describe("Site Map", () => {
       <Provider store={store}>
         <Map
           polygon={{
-            type: "Polygon",
+            type: 'Polygon',
             coordinates: [[[0, 0]]],
           }}
           siteId={1}
           surveyPoints={[]}
         />
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

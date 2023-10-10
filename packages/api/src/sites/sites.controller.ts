@@ -40,7 +40,6 @@ import {
   ApiNestBadRequestResponse,
   ApiNestNotFoundResponse,
 } from '../docs/api-response';
-import { SofarLiveDataDto } from './dto/live-data.dto';
 import { SofarLatestDataDto } from './dto/latest-data.dto';
 
 @ApiTags('Sites')
@@ -92,17 +91,6 @@ export class SitesController {
     @Query('end') end?: string,
   ) {
     return this.sitesService.findDailyData(id, start, end);
-  }
-
-  @ApiNestNotFoundResponse('No site was found with the specified id')
-  @ApiOperation({ summary: 'Returns live data for the specified site' })
-  @ApiParam({ name: 'id', example: 1 })
-  @Public()
-  @Get(':id/live_data')
-  findLiveData(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<SofarLiveDataDto> {
-    return this.sitesService.findLiveData(id);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')

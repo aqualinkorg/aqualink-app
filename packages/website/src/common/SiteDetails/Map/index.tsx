@@ -1,32 +1,28 @@
-import React, { useRef, useEffect, useCallback, useState } from "react";
-import { Map, TileLayer, Polygon, Marker } from "react-leaflet";
-import { useDispatch, useSelector } from "react-redux";
-import L, { LatLngTuple } from "leaflet";
-import "./plugins/leaflet-tilelayer-subpixel-fix";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
-import { some } from "lodash";
+import React, { useRef, useEffect, useCallback, useState } from 'react';
+import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
+import { useDispatch, useSelector } from 'react-redux';
+import L, { LatLngTuple } from 'leaflet';
+import { withStyles, WithStyles, createStyles } from '@material-ui/core';
+import { some } from 'lodash';
 
-import SurveyPointPopup from "./SurveyPointPopup";
+import { mapConstants } from 'constants/maps';
 import {
   Site,
   Position,
   SpotterPosition,
   SurveyPoints,
   Point,
-} from "../../../store/Sites/types";
-import { samePosition } from "../../../helpers/map";
+} from 'store/Sites/types';
+import { siteDraftSelector, setSiteDraft } from 'store/Sites/selectedSiteSlice';
+import { userInfoSelector } from 'store/User/userSlice';
+import { samePosition } from 'helpers/map';
+import { isManager } from 'helpers/user';
+import SurveyPointPopup from './SurveyPointPopup';
 
-import marker from "../../../assets/marker.png";
-import buoy from "../../../assets/buoy-marker.svg";
-import {
-  siteDraftSelector,
-  setSiteDraft,
-} from "../../../store/Sites/selectedSiteSlice";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { isManager } from "../../../helpers/user";
-import pointIcon from "../../../assets/alerts/pin_nostress@2x.png";
-import selectedPointIcon from "../../../assets/alerts/pin_warning@2x.png";
-import { mapConstants } from "../../../constants/maps";
+import marker from '../../../assets/marker.png';
+import buoy from '../../../assets/buoy-marker.svg';
+import pointIcon from '../../../assets/alerts/pin_nostress@2x.png';
+import selectedPointIcon from '../../../assets/alerts/pin_warning@2x.png';
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -75,13 +71,13 @@ const SiteMap = ({
   };
 
   const selectedSurveyPoint = surveyPoints.find(
-    (item) => item.id === selectedPointId
+    (item) => item.id === selectedPointId,
   );
 
   const setCenter = (
     inputMap: L.Map,
     latLng: [number, number],
-    zoom: number
+    zoom: number,
   ) => {
     const maxZoom = Math.max(inputMap.getZoom() || 15, zoom);
     const pointBounds = L.latLngBounds(latLng, latLng);
@@ -99,22 +95,22 @@ const SiteMap = ({
         L.polygon([
           [siteCenter.coordinates[1], siteCenter.coordinates[0]],
           ...surveyPoints
-            .filter((item) => item.polygon?.type === "Point")
+            .filter((item) => item.polygon?.type === 'Point')
             .map((item) => {
               const coords = item.polygon?.coordinates as Position;
               // Reverse coordinates since they come as [lng, lat]
               return [coords[1], coords[0]] as LatLngTuple;
             }),
-        ]).getBounds()
+        ]).getBounds(),
       );
     },
-    [surveyPoints]
+    [surveyPoints],
   );
 
   useEffect(() => {
     if (
       mapRef?.current?.leafletElement &&
-      focusedPoint?.polygon?.type === "Point"
+      focusedPoint?.polygon?.type === 'Point'
     ) {
       const [lng, lat] = focusedPoint.polygon.coordinates;
       setCenter(mapRef.current.leafletElement, [lat, lng], 15);
@@ -126,16 +122,16 @@ const SiteMap = ({
     if (current?.leafletElement) {
       const map = current.leafletElement;
       // Initialize map's position to fit the given polygon
-      if (polygon.type === "Polygon") {
+      if (polygon.type === 'Polygon') {
         map.fitBounds(L.polygon(polygon.coordinates).getBounds());
       } else if (draftSite?.coordinates) {
         map.panTo(
           new L.LatLng(
             draftSite.coordinates.latitude || polygon.coordinates[1],
-            draftSite.coordinates.longitude || polygon.coordinates[0]
-          )
+            draftSite.coordinates.longitude || polygon.coordinates[0],
+          ),
         );
-      } else if (some(surveyPoints, (item) => item.polygon?.type === "Point")) {
+      } else if (some(surveyPoints, (item) => item.polygon?.type === 'Point')) {
         fitSurveyPointsPolygon(map, polygon);
       } else {
         map.panTo(new L.LatLng(polygon.coordinates[1], polygon.coordinates[0]));
@@ -154,7 +150,7 @@ const SiteMap = ({
             latitude: lat,
             longitude: lng,
           },
-        })
+        }),
       );
     }
   };
@@ -182,7 +178,7 @@ const SiteMap = ({
       maxBounds={mapConstants.MAX_BOUNDS}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
-      {polygon.type === "Polygon" ? (
+      {polygon.type === 'Polygon' ? (
         <Polygon positions={reverseCoords(...polygon.coordinates)} />
       ) : (
         <>
@@ -196,11 +192,11 @@ const SiteMap = ({
               zIndexOffset={100}
               position={[
                 editPointLatitude ||
-                  (selectedSurveyPoint?.polygon?.type === "Point" &&
+                  (selectedSurveyPoint?.polygon?.type === 'Point' &&
                     selectedSurveyPoint.polygon.coordinates[1]) ||
                   polygon.coordinates[1],
                 editPointLongitude ||
-                  (selectedSurveyPoint?.polygon?.type === "Point" &&
+                  (selectedSurveyPoint?.polygon?.type === 'Point' &&
                     selectedSurveyPoint.polygon.coordinates[0]) ||
                   polygon.coordinates[0],
               ]}
@@ -218,7 +214,7 @@ const SiteMap = ({
           />
           {surveyPoints.map(
             (point) =>
-              point?.polygon?.type === "Point" &&
+              point?.polygon?.type === 'Point' &&
               !samePosition(polygon, point.polygon) &&
               (point.id !== selectedPointId || !surveyPointEditModeEnabled) && ( // Hide selected survey point marker if it is in edit mode
                 <Marker
@@ -232,7 +228,7 @@ const SiteMap = ({
                 >
                   <SurveyPointPopup siteId={siteId} point={point} />
                 </Marker>
-              )
+              ),
           )}
         </>
       )}
@@ -249,8 +245,8 @@ const SiteMap = ({
 const styles = () => {
   return createStyles({
     map: {
-      height: "100%",
-      width: "100%",
+      height: '100%',
+      width: '100%',
       borderRadius: 4,
     },
   });
@@ -258,7 +254,7 @@ const styles = () => {
 
 interface SiteMapIncomingProps {
   siteId: number;
-  polygon: Site["polygon"];
+  polygon: Site['polygon'];
   spotterPosition?: SpotterPosition | null;
   surveyPoints: SurveyPoints[];
   selectedPointId?: number;

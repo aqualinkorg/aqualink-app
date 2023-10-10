@@ -1,8 +1,8 @@
-import React from "react";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+import React from 'react';
+import { withStyles, WithStyles, createStyles } from '@material-ui/core';
 
 const Legend = ({ unit, colorCode, classes }: LegendProps) => {
-  const gradientColors = colorCode.map((item) => item.color).join(", ");
+  const gradientColors = colorCode.map((item) => item.color).join(', ');
 
   return (
     <div className={classes.root}>
@@ -34,28 +34,28 @@ const Legend = ({ unit, colorCode, classes }: LegendProps) => {
 const styles = () =>
   createStyles({
     root: {
-      display: "flex",
+      display: 'flex',
     },
     legendWrapper: {
-      display: "flex",
-      borderRadius: "0 4px 4px 0",
+      display: 'flex',
+      borderRadius: '0 4px 4px 0',
     },
     codeItem: {
       height: 17,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     unit: {
-      borderRadius: "4px 0 0 4px",
-      width: "2rem",
+      borderRadius: '4px 0 0 4px',
+      width: '2rem',
     },
     value: {
-      width: "1.3rem",
+      width: '1.3rem',
     },
     text: {
       fontSize: 9,
-      color: "white",
+      color: 'white',
     },
   });
 

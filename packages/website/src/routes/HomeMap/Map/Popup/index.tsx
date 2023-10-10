@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 import {
   Button,
   Card,
@@ -11,24 +11,20 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { Popup as LeafletPopup, useLeaflet } from "react-leaflet";
-import { useSelector } from "react-redux";
+} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Popup as LeafletPopup, useLeaflet } from 'react-leaflet';
+import { useSelector } from 'react-redux';
 
-import type { LatLngTuple } from "leaflet";
-import type { Site } from "../../../../store/Sites/types";
-import { getSiteNameAndRegion } from "../../../../store/Sites/helpers";
-import { colors } from "../../../../layout/App/theme";
-import { formatNumber } from "../../../../helpers/numberUtils";
-import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
-import { siteOnMapSelector } from "../../../../store/Homepage/homepageSlice";
-import { maxLengths } from "../../../../constants/names";
-import {
-  GaCategory,
-  GaAction,
-  trackButtonClick,
-} from "../../../../utils/google-analytics";
+import type { LatLngTuple } from 'leaflet';
+import type { Site } from 'store/Sites/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import { maxLengths } from 'constants/names';
+import { formatNumber } from 'helpers/numberUtils';
+import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
+import { colors } from 'layout/App/theme';
+import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
 const Popup = ({ site, classes, autoOpen }: PopupProps) => {
   const { map } = useLeaflet();
@@ -43,7 +39,7 @@ const Popup = ({ site, classes, autoOpen }: PopupProps) => {
     trackButtonClick(
       GaCategory.BUTTON_CLICK,
       GaAction.MAP_PAGE_BUTTON_CLICK,
-      "Explore"
+      'Explore',
     );
   };
 
@@ -52,7 +48,7 @@ const Popup = ({ site, classes, autoOpen }: PopupProps) => {
       map &&
       popupRef?.current &&
       siteOnMap?.id === site.id &&
-      siteOnMap?.polygon.type === "Point" &&
+      siteOnMap?.polygon.type === 'Point' &&
       autoOpen
     ) {
       const { leafletElement: popup } = popupRef.current;
@@ -125,7 +121,7 @@ const Popup = ({ site, classes, autoOpen }: PopupProps) => {
                   <Typography
                     style={{
                       color: `${dhwColorFinder(dhw)}`,
-                      position: "relative",
+                      position: 'relative',
                       bottom: 0,
                     }}
                     variant="h6"
@@ -137,10 +133,10 @@ const Popup = ({ site, classes, autoOpen }: PopupProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid style={{ margin: "1rem 0 1rem 0" }} container item xs={12}>
+          <Grid style={{ margin: '1rem 0 1rem 0' }} container item xs={12}>
             <Grid item>
               <Link
-                style={{ color: "inherit", textDecoration: "none" }}
+                style={{ color: 'inherit', textDecoration: 'none' }}
                 to={`/sites/${site.id}`}
               >
                 <Button
@@ -167,12 +163,12 @@ const styles = (theme: Theme) =>
     },
 
     popupHeaderContent: {
-      width: "100%",
-      overflowWrap: "break-word",
+      width: '100%',
+      overflowWrap: 'break-word',
     },
 
     subheader: {
-      color: "white",
+      color: 'white',
     },
 
     popup: {

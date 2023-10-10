@@ -1,155 +1,111 @@
-import React, { useState } from "react";
-import downloadCsv from "download-csv";
-import { Button } from "@material-ui/core";
-import moment from "moment";
-import { useSelector } from "react-redux";
-import { ValueWithTimestamp } from "../../../store/Sites/types";
-import DownloadCSVDialog from "./DownloadCSVDialog";
-import { spotterPositionSelector } from "../../../store/Sites/selectedSiteSlice";
+import React, { useState } from 'react';
+import { Button } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { siteTimeSeriesDataRangeSelector } from 'store/Sites/selectedSiteSlice';
+import { useSnackbar } from 'notistack';
+import { MetricsKeys } from 'store/Sites/types';
+import { downloadBlob } from 'utils/utils';
+import { constructTimeSeriesDataCsvRequestUrl } from 'helpers/siteUtils';
+import DownloadCSVDialog from './DownloadCSVDialog';
+import { CSVColumnData } from './types';
 
-type CSVDataColumn =
-  | "spotterBottomTemp"
-  | "spotterTopTemp"
-  | "hoboTemp"
-  | "oceanSensePH"
-  | "oceanSenseEC"
-  | "oceanSensePRESS"
-  | "oceanSenseDO"
-  | "oceanSenseORP"
-  | "dailySST";
-
-interface CSVRow extends Partial<Record<CSVDataColumn, number>> {
-  timestamp: string;
-}
-
-const DATE_FORMAT = "YYYY_MM_DD";
-
-/**
- * Construct CSV data to pass into download-csv.
- * This function is designed with the 'builder' pattern, where a chain function and result function is returned.
- * Call the chained() function to add a new column to the CSV, or the result() function to return the final csv object.
- * @param columnName - The name of the new column. 'timestamp' is reserved.
- * @param data - The data corresponding to the new column. Obj array of timestamp and value.
- * @param existingData - Should only used by chained() and never directly. Stores the in-progress CSV object.
- */
-function constructCSVData(
-  columnName: CSVDataColumn,
-  data: ValueWithTimestamp[] = [],
-  existingData: Record<CSVRow["timestamp"], CSVRow> = {}
-) {
-  // writing this in an immutable fashion will be detrimental to performance.
-  /* eslint-disable no-param-reassign,fp/no-mutation,fp/no-mutating-methods */
-  const result = data.reduce((obj, item) => {
-    // we are basically ensuring there's always a timestamp column in the final result.
-    if (obj[item.timestamp]) {
-      obj[item.timestamp][columnName] = item.value;
-    } else {
-      obj[item.timestamp] = {
-        timestamp: item.timestamp,
-        [columnName]: item.value,
-      };
-    }
-    return obj;
-  }, existingData);
-  return {
-    result: () =>
-      Object.values(result).sort(
-        (a, b) =>
-          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-      ),
-    chained: (
-      chainedFinalKey: CSVDataColumn,
-      chainedData: ValueWithTimestamp[] = []
-    ) => constructCSVData(chainedFinalKey, chainedData, result),
-  };
-  /* eslint-enable no-param-reassign,fp/no-mutation */
+interface DownloadCSVButtonParams {
+  data: CSVColumnData[];
+  startDate?: string;
+  endDate?: string;
+  siteId?: number | string;
+  defaultMetrics?: MetricsKeys[];
 }
 
 function DownloadCSVButton({
   data,
   startDate,
   endDate,
-  className,
-  pointId,
   siteId,
-}: {
-  data: { name: string; values: ValueWithTimestamp[] }[];
-  startDate?: string;
-  endDate?: string;
-  className?: string;
-  siteId?: number | string;
-  pointId?: number | string;
-}) {
+  defaultMetrics,
+}: DownloadCSVButtonParams) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const spotterData = useSelector(spotterPositionSelector);
+  const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const onClose = (shouldDownload: boolean) => {
+  const onClose = async (
+    shouldDownload: boolean,
+    additionalData: boolean,
+    allDates: boolean,
+    hourly: boolean,
+  ) => {
     if (!shouldDownload) {
       setOpen(false);
       return;
     }
+
     setLoading(true);
-    // give time for the loading state to be rendered by react.
-    setTimeout(() => {
-      downloadCsv(getCSVData(data), undefined, fileName);
-      setLoading(false);
-      setOpen(false);
-    }, 5);
+    try {
+      const resp = await fetch(
+        `${
+          process.env.REACT_APP_API_BASE_URL
+        }/${constructTimeSeriesDataCsvRequestUrl({
+          hourly,
+          start: allDates ? undefined : startDate,
+          end: allDates ? undefined : endDate,
+          metrics: additionalData ? undefined : defaultMetrics,
+          siteId: String(siteId),
+        })}`,
+      );
+      if (!(resp.status >= 200 && resp.status <= 299)) {
+        throw new Error(await resp.text());
+      }
+      const header = resp.headers.get('Content-Disposition');
+      const parts = header?.split(';');
+      const filename = parts?.[1]?.split('=')[1] || 'data.csv';
+      const blob = await resp.blob();
+      downloadBlob(blob, filename);
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar('There was an error downloading csv data', {
+        variant: 'error',
+      });
+    }
+
+    setLoading(false);
+    setOpen(false);
   };
-
-  const getCSVData = (
-    selectedData: { name: string; values: ValueWithTimestamp[] }[]
-  ) => {
-    const [head, ...tail] = selectedData;
-
-    // TODO: Change either CSVDataColumn names type or make it generic string
-    const start = constructCSVData(head.name as CSVDataColumn, head.values);
-    const result = tail.reduce(
-      (prev, curr) => prev.chained(curr.name as CSVDataColumn, curr.values),
-      start
-    );
-    return result.result();
-  };
-
-  const fileName = `data_site_${siteId}${
-    pointId ? `_survey_point_${pointId}` : ""
-  }_${moment(startDate).format(DATE_FORMAT)}_${moment(endDate).format(
-    DATE_FORMAT
-  )}.csv`;
 
   return (
-    <>
+    <div>
       <Button
         disabled={loading}
         variant="outlined"
         color="primary"
-        className={className}
         onClick={() => {
           setOpen(true);
         }}
-        style={{ marginBottom: spotterData?.isDeployed ? 0 : "2em" }}
+        style={{
+          marginBottom: timeSeriesDataRanges?.bottomTemperature?.spotter?.data
+            ? 0
+            : '2em',
+        }}
       >
         {/* TODO update this component with LoadingButton from MUILab when newest version is released. */}
-        {loading ? "Loading..." : "Download CSV"}
+        {loading ? 'Loading...' : 'Download CSV'}
       </Button>
       <DownloadCSVDialog
         open={open}
         onClose={onClose}
         data={data}
-        startDate={startDate || ""}
-        endDate={endDate || ""}
+        startDate={startDate || ''}
+        endDate={endDate || ''}
+        loading={loading}
       />
-    </>
+    </div>
   );
 }
 
 DownloadCSVButton.defaultProps = {
   startDate: undefined,
   endDate: undefined,
-  pointId: undefined,
   siteId: undefined,
-  className: undefined,
 };
 
 export default DownloadCSVButton;

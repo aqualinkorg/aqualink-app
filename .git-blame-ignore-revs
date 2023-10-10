@@ -1,0 +1,5 @@
+# Add singleQuote: true and trailingComma to web
+8a264fd6bf9e6099c245e612ae3826c4441f803d
+
+# Update import paths to use "baseUrl": "./src"
+4abb9848ea8ecd0b5f3c60e7af811483b7175b53

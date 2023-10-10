@@ -1,6 +1,6 @@
-import React, { BaseSyntheticEvent, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import isEmail from "validator/lib/isEmail";
+import React, { BaseSyntheticEvent, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import isEmail from 'validator/lib/isEmail';
 import {
   withStyles,
   WithStyles,
@@ -18,11 +18,11 @@ import {
   LinearProgress,
   Collapse,
   Box,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import CloseIcon from "@material-ui/icons/Close";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
+import { useForm, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   createUser,
@@ -30,10 +30,10 @@ import {
   userLoadingSelector,
   userErrorSelector,
   clearError,
-} from "../../store/User/userSlice";
-import { UserRegisterParams } from "../../store/User/types";
-import dialogStyles from "../styles/dialogStyles";
-import { RegisterFormFields } from "../types";
+} from 'store/User/userSlice';
+import { UserRegisterParams } from 'store/User/types';
+import dialogStyles from '../styles/dialogStyles';
+import { RegisterFormFields } from '../types';
 
 const RegisterDialog = ({
   open,
@@ -48,13 +48,17 @@ const RegisterDialog = ({
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
-  const { register, errors, handleSubmit } = useForm<RegisterFormFields>({
-    reValidateMode: "onSubmit",
+  const {
+    formState: { errors },
+    handleSubmit,
+    control,
+  } = useForm<RegisterFormFields>({
+    reValidateMode: 'onSubmit',
   });
 
   const onSubmit = (
     data: RegisterFormFields,
-    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>,
   ) => {
     if (event) {
       event.preventDefault();
@@ -81,9 +85,11 @@ const RegisterDialog = ({
 
   return (
     <Dialog
-      onEnter={() => {
-        clearUserError();
-        setReadTerms(false);
+      TransitionProps={{
+        onEnter: () => {
+          clearUserError();
+          setReadTerms(false);
+        },
       }}
       scroll="body"
       open={open}
@@ -93,7 +99,7 @@ const RegisterDialog = ({
         <CardHeader
           className={classes.dialogHeader}
           title={
-            <Grid container alignItems="center" justify="space-between">
+            <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
                 <Grid container>
                   <Typography variant="h4">Aqua</Typography>
@@ -142,7 +148,7 @@ const RegisterDialog = ({
           </Collapse>
         )}
         <CardContent>
-          <Grid container justify="center" item xs={12}>
+          <Grid container justifyContent="center" item xs={12}>
             <Grid className={classes.dialogContentTitle} container item xs={10}>
               <Grid item>
                 <Typography variant="h5" color="textSecondary">
@@ -153,104 +159,138 @@ const RegisterDialog = ({
             <Grid container item xs={10}>
               <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="firstName"
+                  <Controller
                     name="firstName"
-                    placeholder="First Name"
-                    helperText={
-                      errors.firstName ? errors.firstName.message : ""
-                    }
-                    label="First Name"
-                    inputRef={register({
-                      required: "This is a required field",
-                    })}
-                    error={!!errors.firstName}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    control={control}
+                    rules={{
+                      required: 'This is a required field',
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="firstName"
+                        placeholder="First Name"
+                        helperText={
+                          errors.firstName ? errors.firstName.message : ''
+                        }
+                        label="First Name"
+                        error={!!errors.firstName}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="lastName"
+                  <Controller
                     name="lastName"
-                    placeholder="Last Name"
-                    helperText={errors.lastName ? errors.lastName.message : ""}
-                    label="Last Name"
-                    inputRef={register({
-                      required: "This is a required field",
-                    })}
-                    error={!!errors.lastName}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    control={control}
+                    rules={{
+                      required: 'This is a required field',
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="lastName"
+                        placeholder="Last Name"
+                        helperText={
+                          errors.lastName ? errors.lastName.message : ''
+                        }
+                        label="Last Name"
+                        error={!!errors.lastName}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="organization"
+                  <Controller
                     name="organization"
-                    placeholder="Organization"
-                    helperText={
-                      errors.organization ? errors.organization.message : ""
-                    }
-                    label="Organization"
-                    inputRef={register({
-                      required: "This is a required field",
-                    })}
-                    error={!!errors.organization}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    control={control}
+                    rules={{
+                      required: 'This is a required field',
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="organization"
+                        placeholder="Organization"
+                        helperText={
+                          errors.organization ? errors.organization.message : ''
+                        }
+                        label="Organization"
+                        error={!!errors.organization}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="emailAddress"
+                  <Controller
                     name="emailAddress"
-                    placeholder="Email Address"
-                    helperText={
-                      (errors.emailAddress &&
-                        (errors.emailAddress.type === "validate"
-                          ? "Invalid email address"
-                          : errors.emailAddress.message)) ||
-                      ""
-                    }
-                    label="Email Address"
-                    inputRef={register({
-                      required: "This is a required field",
+                    control={control}
+                    rules={{
+                      required: 'This is a required field',
                       validate: (value) => isEmail(value),
-                    })}
-                    error={!!errors.emailAddress}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="emailAddress"
+                        placeholder="Email Address"
+                        helperText={
+                          (errors.emailAddress &&
+                            (errors.emailAddress.type === 'validate'
+                              ? 'Invalid email address'
+                              : errors.emailAddress.message)) ||
+                          ''
+                        }
+                        label="Email Address"
+                        error={!!errors.emailAddress}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <TextField
-                    id="password"
+                  <Controller
                     name="password"
-                    type="password"
-                    placeholder="Password"
-                    helperText={errors.password ? errors.password.message : ""}
-                    label="Password"
-                    inputRef={register({
-                      required: "This is a required field",
+                    control={control}
+                    rules={{
+                      required: 'This is a required field',
                       minLength: {
                         value: 8,
-                        message: "Password must be at least 8 characters",
+                        message: 'Password must be at least 8 characters',
                       },
-                    })}
-                    error={!!errors.password}
-                    inputProps={{ className: classes.textField }}
-                    fullWidth
-                    variant="outlined"
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        id="password"
+                        type="password"
+                        placeholder="Password"
+                        helperText={
+                          errors.password ? errors.password.message : ''
+                        }
+                        label="Password"
+                        error={!!errors.password}
+                        inputProps={{ className: classes.textField }}
+                        fullWidth
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid
                   container
-                  justify="space-between"
+                  justifyContent="space-between"
                   alignItems="center"
                   item
                   xs={12}
@@ -270,7 +310,7 @@ const RegisterDialog = ({
                         variant="subtitle1"
                         color="textSecondary"
                       >
-                        I have read the{" "}
+                        I have read the{' '}
                         <Link className={classes.termsLink} to="/terms">
                           Terms and Conditions
                         </Link>
@@ -296,7 +336,7 @@ const RegisterDialog = ({
                     variant="subtitle1"
                     color="textSecondary"
                   >
-                    Have an account?{" "}
+                    Have an account?{' '}
                     <Button
                       onClick={() => {
                         handleRegisterOpen(false);
@@ -322,10 +362,10 @@ const styles = () =>
     ...dialogStyles,
     termsCheckbox: {
       padding: 0,
-      margin: "0 0 1rem 0",
+      margin: '0 0 1rem 0',
     },
     termsLink: {
-      color: "black",
+      color: 'black',
     },
   });
 

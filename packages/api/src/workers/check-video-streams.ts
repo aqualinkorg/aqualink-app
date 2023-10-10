@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import axios, { AxiosPromise } from 'axios';
 import { Dictionary } from 'lodash';
-import { Connection, IsNull, Not } from 'typeorm';
+import { DataSource, IsNull, Not } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { getYouTubeVideoId } from '../utils/urls';
@@ -43,58 +43,138 @@ const getSiteFrontEndURL = (siteId: number, frontUrl: string) =>
 export const fetchVideoDetails = (
   youTubeIds: string[],
   apiKey: string,
+  playlist = false,
 ): AxiosPromise<YouTubeApiResponse> => {
   return axios({
-    url: 'https://www.googleapis.com/youtube/v3/videos',
+    url: `https://www.googleapis.com/youtube/v3/${
+      playlist ? 'playlists' : 'videos'
+    }`,
     method: 'get',
     params: {
       key: apiKey,
       id: youTubeIds.join(),
-      part: 'status,liveStreamingDetails',
+      part: `status${playlist ? '' : ',liveStreamingDetails'}`,
     },
   });
 };
 
-export const getErrorMessage = (item: YouTubeVideoItem) => {
+export const getErrorMessage = (
+  item: YouTubeVideoItem,
+  isPlaylist: boolean,
+) => {
   const { uploadStatus, privacyStatus, embeddable } = item.status;
 
   if (privacyStatus === 'private') {
     return 'Video is not public';
   }
 
-  if (uploadStatus !== 'uploaded' && uploadStatus !== 'processed') {
+  if (
+    !isPlaylist &&
+    uploadStatus !== 'uploaded' &&
+    uploadStatus !== 'processed'
+  ) {
     return 'Video is no longer available';
   }
 
-  if (!embeddable) {
+  if (!isPlaylist && !embeddable) {
     return 'Video is not embeddable';
   }
 
-  if (!item.liveStreamingDetails) {
-    return 'Video is not a live stream';
-  }
+  if (item.liveStreamingDetails) {
+    if (item.liveStreamingDetails.actualEndTime) {
+      return 'The live stream has ended';
+    }
 
-  if (item.liveStreamingDetails.actualEndTime) {
-    return 'The live stream has ended';
-  }
-
-  if (!item.liveStreamingDetails.actualStartTime) {
-    return 'The live stream has not started yet';
+    if (!item.liveStreamingDetails.actualStartTime) {
+      return 'The live stream has not started yet';
+    }
   }
 
   return '';
 };
 
-const checkVideoOptions = (youTubeVideoItems: YouTubeVideoItem[]) =>
+const getYTErrors = async (
+  sites: Site[],
+  isPlaylist: boolean,
+  apiKey: string,
+  frontUrl: string,
+) => {
+  // Extract the youTube id from the URLs
+  const siteIdToVideoStreamDetails = sites.reduce<siteIdToVideoStreamDetails>(
+    (mapping, site) => {
+      const id = getYouTubeVideoId(site.videoStream!, isPlaylist);
+
+      return {
+        ...mapping,
+        [site.id]: {
+          id,
+          name: site.name,
+          siteId: site.id,
+          url: site.videoStream!,
+          // If no id exists, then url is invalid
+          error: id ? '' : 'Video stream URL is invalid',
+        },
+      };
+    },
+    {},
+  );
+
+  const youTubeIds = Object.values(siteIdToVideoStreamDetails)
+    .map((videoStreamDetails) => videoStreamDetails.id)
+    .filter((id) => id) as string[];
+
+  // Fetch the youTube video information for each id
+  const axiosResponse = await fetchVideoDetails(youTubeIds, apiKey, isPlaylist);
+
+  // Validate that the streams are valid
+  // For ids with no errors an empty string is returned
+  const youTubeIdToError = checkVideoOptions(
+    axiosResponse.data.items,
+    isPlaylist,
+  );
+
+  const blocks = Object.values(siteIdToVideoStreamDetails).reduce<
+    Exclude<SlackMessage['blocks'], undefined>
+  >((msgs, { id, siteId, url, name, error }) => {
+    const reportedError =
+      error ||
+      (!(id! in youTubeIdToError) && 'Video does not exist') ||
+      youTubeIdToError[id!];
+
+    if (!reportedError) {
+      return msgs;
+    }
+
+    const template = {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          `*Site*: ${name} - ${getSiteFrontEndURL(siteId, frontUrl)}\n` +
+          `*Video*: ${url}\n` +
+          `*Error*: ${reportedError}`,
+      },
+    };
+
+    return [...msgs, template];
+  }, []);
+
+  return blocks;
+};
+
+const checkVideoOptions = (
+  youTubeVideoItems: YouTubeVideoItem[],
+  isPlaylist: boolean,
+) =>
   youTubeVideoItems.reduce<Dictionary<string>>((mapping, item) => {
     return {
       ...mapping,
-      [item.id]: getErrorMessage(item),
+      [item.id]: getErrorMessage(item, isPlaylist),
     };
   }, {});
 
 export const checkVideoStreams = async (
-  connection: Connection,
+  dataSource: DataSource,
   projectId: string,
 ) => {
   const apiKey = process.env.FIREBASE_API_KEY;
@@ -124,64 +204,23 @@ export const checkVideoStreams = async (
   }
 
   // Fetch sites with streams
-  const sitesWithStream = await connection.getRepository(Site).find({
+  const sitesWithStream = await dataSource.getRepository(Site).find({
     where: { videoStream: Not(IsNull()) },
   });
 
-  // Extract the youTube id from the URLs
-  const siteIdToVideoStreamDetails =
-    sitesWithStream.reduce<siteIdToVideoStreamDetails>((mapping, site) => {
-      const id = getYouTubeVideoId(site.videoStream!);
+  const playlists = sitesWithStream.filter((x) =>
+    x.videoStream?.includes('videoseries'),
+  );
+  const videos = sitesWithStream.filter(
+    (x) => !x.videoStream?.includes('videoseries'),
+  );
 
-      return {
-        ...mapping,
-        [site.id]: {
-          id,
-          name: site.name,
-          siteId: site.id,
-          url: site.videoStream!,
-          // If no id exists, then url is invalid
-          error: id ? '' : 'Video stream URL is invalid',
-        },
-      };
-    }, {});
+  const [playlistsBlock, videoBlocks] = await Promise.all([
+    getYTErrors(playlists, true, apiKey, frontUrl),
+    getYTErrors(videos, false, apiKey, frontUrl),
+  ]);
 
-  const youTubeIds = Object.values(siteIdToVideoStreamDetails)
-    .map((videoStreamDetails) => videoStreamDetails.id)
-    .filter((id) => id) as string[];
-
-  // Fetch the youTube video information for each id
-  const axiosResponse = await fetchVideoDetails(youTubeIds, apiKey);
-
-  // Validate that the streams are valid
-  // For ids with no errors an empty string is returned
-  const youTubeIdToError = checkVideoOptions(axiosResponse.data.items);
-
-  const blocks = Object.values(siteIdToVideoStreamDetails).reduce<
-    Exclude<SlackMessage['blocks'], undefined>
-  >((msgs, { id, siteId, url, name, error }) => {
-    const reportedError =
-      error ||
-      (!(id! in youTubeIdToError) && 'Video does not exist') ||
-      youTubeIdToError[id!];
-
-    if (!reportedError) {
-      return msgs;
-    }
-
-    const template = {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text:
-          `*Site*: ${name} - ${getSiteFrontEndURL(siteId, frontUrl)}\n` +
-          `*Video*: ${url}\n` +
-          `*Error*: ${reportedError}`,
-      },
-    };
-
-    return [...msgs, template];
-  }, []);
+  const blocks = [...playlistsBlock, ...videoBlocks];
 
   // No irregular video streams were found
   // So skip sending an alert on slack

@@ -1,18 +1,18 @@
-import React from "react";
-import { Box } from "@material-ui/core";
+import React from 'react';
+import { Box } from '@material-ui/core';
 
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
 
-import ghbttn from "../../assets/img/ghbttn.png";
-import f4 from "../../assets/img/f4.png";
-import fVeh from "../../assets/img/f_veh.png";
-import fCad from "../../assets/img/f_cad.png";
-import fBom from "../../assets/img/f_bom.png";
+import ghbttn from '../../assets/img/ghbttn.png';
+import f4 from '../../assets/img/f4.png';
+import fVeh from '../../assets/img/f_veh.png';
+import fCad from '../../assets/img/f_cad.png';
+import fBom from '../../assets/img/f_bom.png';
 
-import dronepersp from "../../assets/img/dronepersp.jpg";
-import dronetrio from "../../assets/img/dronetrio.jpg";
-import dronebottom from "../../assets/img/dronebottom.jpg";
+import dronepersp from '../../assets/img/dronepersp.jpg';
+import dronetrio from '../../assets/img/dronetrio.jpg';
+import dronebottom from '../../assets/img/dronebottom.jpg';
 
 const Drones = () => (
   <>

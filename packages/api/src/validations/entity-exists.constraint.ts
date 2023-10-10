@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { ValidatorConstraint, ValidationArguments } from 'class-validator';
 
 @ValidatorConstraint({ name: 'entityExists', async: true })
 @Injectable()
 export class EntityExists {
-  constructor(private connection: Connection) {}
+  constructor(private dataSource: DataSource) {}
 
   async validate(id: number, args: ValidationArguments) {
-    const found = await this.connection
+    const found = await this.dataSource
       .getRepository(args.constraints[0])
-      .findOne(id);
+      .findOneBy({ id });
     if (!found) return false;
     return true;
   }

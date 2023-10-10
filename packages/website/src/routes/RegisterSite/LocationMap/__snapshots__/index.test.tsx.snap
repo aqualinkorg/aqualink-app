@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="LocationMap-map-1 leaflet-container leaflet-grab leaflet-touch-drag"
+    class="LocationMap-map-1 leaflet-container leaflet-touch leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
     style="position: relative;"
     tabindex="0"
   >
@@ -25,7 +25,6 @@ exports[`renders as expected 1`] = `
             <img
               alt=""
               class="leaflet-tile"
-              role="presentation"
               src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/15/16"
               style="width: 256px; height: 256px; left: -23px; top: -233px;"
             />
@@ -33,17 +32,18 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="leaflet-pane leaflet-shadow-pane"
+        class="leaflet-pane leaflet-overlay-pane"
       />
       <div
-        class="leaflet-pane leaflet-overlay-pane"
+        class="leaflet-pane leaflet-shadow-pane"
       />
       <div
         class="leaflet-pane leaflet-marker-pane"
       >
         <img
-          alt=""
+          alt="Marker"
           class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
+          role="button"
           src="marker.png"
           style="margin-left: -10px; margin-top: -30px; width: 20px; height: 30px; left: 0px; top: 0px; z-index: 0;"
           tabindex="0"
@@ -66,22 +66,32 @@ exports[`renders as expected 1`] = `
           class="leaflet-control-zoom leaflet-bar leaflet-control"
         >
           <a
+            aria-disabled="false"
             aria-label="Zoom in"
             class="leaflet-control-zoom-in"
             href="#"
             role="button"
             title="Zoom in"
           >
-            +
+            <span
+              aria-hidden="true"
+            >
+              +
+            </span>
           </a>
           <a
+            aria-disabled="false"
             aria-label="Zoom out"
             class="leaflet-control-zoom-out"
             href="#"
             role="button"
             title="Zoom out"
           >
-            −
+            <span
+              aria-hidden="true"
+            >
+              −
+            </span>
           </a>
         </div>
       </div>
@@ -99,7 +109,7 @@ exports[`renders as expected 1`] = `
         >
           <a
             href="https://leafletjs.com"
-            title="A JS library for interactive maps"
+            title="A JavaScript library for interactive maps"
           >
             Leaflet
           </a>

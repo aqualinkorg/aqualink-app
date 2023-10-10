@@ -1,11 +1,11 @@
-import { sortBy } from "lodash";
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { sortBy } from 'lodash';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { SurveyListState } from "./types";
+import { getAxiosErrorMessage } from 'helpers/errors';
+import surveyServices from 'services/surveyServices';
+import { SurveyListState } from './types';
 
-import type { RootState, CreateAsyncThunkTypes } from "../configure";
-import surveyServices from "../../services/surveyServices";
-import { getAxiosErrorMessage } from "../../helpers/errors";
+import type { RootState, CreateAsyncThunkTypes } from '../configure';
 
 const surveyListInitialState: SurveyListState = {
   list: [],
@@ -16,25 +16,25 @@ const surveyListInitialState: SurveyListState = {
 const getSurveys = async (siteId: string) => {
   try {
     const { data } = await surveyServices.getSurveys(siteId);
-    return sortBy(data, "diveDate");
+    return sortBy(data, 'diveDate');
   } catch (err) {
     return Promise.reject(getAxiosErrorMessage(err));
   }
 };
 
 export const surveysRequest = createAsyncThunk<
-  SurveyListState["list"],
+  SurveyListState['list'],
   string,
   CreateAsyncThunkTypes
->("surveysList/request", (siteId: string) => getSurveys(siteId));
+>('surveysList/request', (siteId: string) => getSurveys(siteId));
 
 const surveyListSlice = createSlice({
-  name: "surveyList",
+  name: 'surveyList',
   initialState: surveyListInitialState,
   reducers: {
     updateSurveyPointName: (
       state,
-      action: PayloadAction<{ id: number; name: string }>
+      action: PayloadAction<{ id: number; name: string }>,
     ) => {
       return {
         ...state,
@@ -59,13 +59,13 @@ const surveyListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       surveysRequest.fulfilled,
-      (state, action: PayloadAction<SurveyListState["list"]>) => {
+      (state, action: PayloadAction<SurveyListState['list']>) => {
         return {
           ...state,
           list: action.payload.filter((survey) => survey.featuredSurveyMedia),
           loading: false,
         };
-      }
+      },
     );
 
     builder.addCase(surveysRequest.rejected, (state, action) => {
@@ -88,16 +88,16 @@ const surveyListSlice = createSlice({
   },
 });
 
-export const surveyListSelector = (state: RootState): SurveyListState["list"] =>
+export const surveyListSelector = (state: RootState): SurveyListState['list'] =>
   state.surveyList.list;
 
 export const surveyListLoadingSelector = (
-  state: RootState
-): SurveyListState["loading"] => state.surveyList.loading;
+  state: RootState,
+): SurveyListState['loading'] => state.surveyList.loading;
 
 export const surveyListErrorSelector = (
-  state: RootState
-): SurveyListState["error"] => state.surveyList.error;
+  state: RootState,
+): SurveyListState['error'] => state.surveyList.error;
 
 export const { updateSurveyPointName } = surveyListSlice.actions;
 

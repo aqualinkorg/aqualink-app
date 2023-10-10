@@ -9,15 +9,15 @@ interface publicUser {
 }
 
 export type Observations =
-  | "healthy"
-  | "possible-disease"
-  | "evident-disease"
-  | "mortality"
-  | "environmental"
-  | "anthropogenic"
-  | "invasive-species";
+  | 'healthy'
+  | 'possible-disease'
+  | 'evident-disease'
+  | 'mortality'
+  | 'environmental'
+  | 'anthropogenic'
+  | 'invasive-species';
 
-type WeatherConditions = "calm" | "waves" | "storm";
+type WeatherConditions = 'calm' | 'waves' | 'storm';
 
 export interface SurveyMedia {
   id: number;
@@ -26,7 +26,7 @@ export interface SurveyMedia {
   featured: boolean;
   observations: Observations;
   comments: string | null;
-  type: "image" | "video";
+  type: 'image' | 'video';
   surveyPoint?: SurveyPoint;
 }
 
@@ -35,12 +35,11 @@ export interface SurveyMediaUpdateRequestData {
   hidden?: boolean;
   observations?: Observations;
   comments?: string;
-  surveyPoint?: SurveyPoint;
+  surveyPoint?: Partial<SurveyPoint>;
 }
 export interface SurveyPoint {
   id?: number;
   name: string;
-  surveyMedia: SurveyMedia[];
 }
 
 export interface SurveyPointUpdateParams {
@@ -49,33 +48,29 @@ export interface SurveyPointUpdateParams {
   latitude?: number;
 }
 
-export interface SurveyState {
+export interface SurveyBase {
   id?: number;
   diveLocation?: DiveLocation | null;
   diveDate?: string | null;
   weatherConditions?: WeatherConditions;
   comments?: string;
   temperature?: number;
+  satelliteTemperature?: number;
   user?: publicUser;
-  surveyMedia?: SurveyMedia[];
   featuredSurveyMedia?: SurveyMedia;
 }
 
-export interface SurveyListItem {
-  id?: number;
-  diveLocation?: DiveLocation | null;
-  diveDate?: string | null;
-  weatherConditions?: WeatherConditions;
+export type SurveyState = SurveyBase & {
+  surveyMedia?: SurveyMedia[];
+};
+
+export type SurveyListItem = SurveyBase & {
   observations: Observations[];
-  comments?: string;
-  temperature?: number;
-  user?: publicUser;
   surveyPoints?: number[];
-  featuredSurveyMedia?: SurveyMedia;
   surveyPointImage?: {
     [surveyPointId: number]: { url: string; thumbnailUrl?: string }[];
   };
-}
+};
 
 export interface SurveyData {
   site: number;
@@ -108,5 +103,6 @@ export interface SelectedSurveyState {
   selectedPoi?: string;
   details?: SurveyState | null;
   loading: boolean;
+  loadingSurveyMediaEdit: boolean;
   error?: string | null;
 }

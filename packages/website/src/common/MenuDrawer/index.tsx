@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -12,62 +12,49 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import { Clear, GitHub } from "@material-ui/icons";
-import ovioLogo from "../../assets/img/ovio_logo.png";
-import {
-  GaAction,
-  GaCategory,
-  trackButtonClick,
-} from "../../utils/google-analytics";
+} from '@material-ui/core';
+import { Clear, GitHub } from '@material-ui/icons';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
+import ovioLogo from '../../assets/img/ovio_logo.png';
 
-const darkBlue = "#095877";
+const darkBlue = '#095877';
 
 const menuRoutes = [
   {
-    text: "HOME",
-    to: "/",
-    gaActionLabel: "Home",
+    text: 'Home',
+    to: '/',
   },
   {
-    text: "MAP",
-    to: "/map",
-    gaActionLabel: "Map",
+    text: 'Map',
+    to: '/map',
   },
   {
-    text: "BUOY",
-    to: "/buoy",
-    gaActionLabel: "Buoy",
+    text: 'Buoy',
+    to: '/buoy',
   },
   {
-    text: "DRONE",
-    to: "/drones",
-    gaActionLabel: "Drone",
+    text: 'Drone',
+    to: '/drones',
   },
   {
-    text: "ABOUT",
-    to: "/about",
-    gaActionLabel: "About",
+    text: 'About',
+    to: '/about',
   },
   {
-    text: "STORIES",
-    href: "https://stories.aqualink.org",
-    gaActionLabel: "Stories",
+    text: 'Highlighted Sites',
+    href: 'https://highlights.aqualink.org',
   },
   {
-    text: "FAQ",
-    to: "/faq",
-    gaActionLabel: "Faq",
+    text: 'Faq',
+    to: '/faq',
   },
   {
-    text: "TRACK A HEATWAVE",
-    to: "/tracker",
-    gaActionLabel: "Track a heatwave",
+    text: 'Track a heatwave',
+    to: '/tracker',
   },
   {
-    text: "REGISTER A SITE",
-    to: "/register",
-    gaActionLabel: "Register a site",
+    text: 'Register a site',
+    to: '/register',
   },
 ];
 
@@ -82,31 +69,33 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       <IconButton
         onClick={onClose}
         style={{
-          alignSelf: "flex-end",
+          alignSelf: 'flex-end',
           marginRight: 5,
           marginTop: 5,
-          color: "white",
+          color: 'white',
         }}
       >
         <Clear />
       </IconButton>
-      {menuRoutes.map(({ text, to, href, gaActionLabel }) => (
+      {menuRoutes.map(({ text, to, href }) => (
         <Button
           className={classes.menuDrawerButton}
           key={text}
           component={href ? ExternalLink : Link}
-          target={href ? "_blank" : undefined}
+          target={href ? '_blank' : undefined}
           href={href || undefined}
-          to={to || ""}
+          to={to || ''}
           onClick={() =>
             trackButtonClick(
               GaCategory.BUTTON_CLICK,
               GaAction.SIDE_MENU_BUTTON_CLICK,
-              gaActionLabel
+              text,
             )
           }
         >
-          <Typography variant="h6">{text}</Typography>
+          <Typography variant="h6" style={{ textTransform: 'uppercase' }}>
+            {text}
+          </Typography>
         </Button>
       ))}
       <Box marginTop="auto" padding="25px">
@@ -140,24 +129,24 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     paper: {
-      width: "16rem",
-      alignItems: "center",
+      width: '16rem',
+      alignItems: 'center',
       backgroundColor: darkBlue,
     },
     contributeButton: {
-      width: "50%",
-      textTransform: "none",
-      "& img": {
-        maxWidth: "100%",
+      width: '50%',
+      textTransform: 'none',
+      '& img': {
+        maxWidth: '100%',
       },
-      "&:hover": {
-        color: "black",
+      '&:hover': {
+        color: 'black',
       },
     },
     menuDrawerButton: {
       margin: theme.spacing(2, 2, 2),
-      "&:hover": {
-        color: "white",
+      '&:hover': {
+        color: 'white',
       },
     },
   });

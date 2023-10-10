@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -8,17 +8,20 @@ import {
   Typography,
   CardHeader,
   Grid,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import type { DailyData } from "../../../store/Sites/types";
-import UpdateInfo from "../../UpdateInfo";
+import type { LatestDataASSofarValue } from 'store/Sites/types';
+import { findIntervalByLevel } from 'helpers/bleachingAlertIntervals';
+import { toRelativeTime } from 'helpers/dates';
+import UpdateInfo from '../../UpdateInfo';
 
-import { findIntervalByLevel } from "../../../helpers/bleachingAlertIntervals";
-import { styles as incomingStyles } from "../styles";
-import { toRelativeTime } from "../../../helpers/dates";
+import { styles as incomingStyles } from '../styles';
 
-const Bleaching = ({ dailyData, classes }: BleachingProps) => {
-  const relativeTime = toRelativeTime(dailyData.date);
+const Bleaching = ({ data, classes }: BleachingProps) => {
+  const { timestamp, value: tempWeeklyAlertValue } = data.tempWeeklyAlert || {
+    value: 0,
+  };
+  const relativeTime = timestamp && toRelativeTime(timestamp);
 
   return (
     <Card className={classes.root}>
@@ -44,13 +47,13 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
           container
           alignItems="center"
           alignContent="space-between"
-          justify="center"
+          justifyContent="center"
           item
           xs={12}
         >
           <img
             className={classes.alertImage}
-            src={findIntervalByLevel(dailyData.weeklyAlertLevel).image}
+            src={findIntervalByLevel(tempWeeklyAlertValue).image}
             alt="alert-level"
           />
           <UpdateInfo
@@ -59,7 +62,7 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
             imageText="NOAA CRW"
             live={false}
             frequency="daily"
-            href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
+            href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa-max-7d.php"
             withMargin
           />
         </Grid>
@@ -72,22 +75,22 @@ const styles = () =>
   createStyles({
     ...incomingStyles,
     root: {
-      height: "100%",
-      width: "100%",
-      backgroundColor: "#eff0f0",
-      display: "flex",
-      flexDirection: "column",
+      height: '100%',
+      width: '100%',
+      backgroundColor: '#eff0f0',
+      display: 'flex',
+      flexDirection: 'column',
     },
     header: {
-      flex: "0 1 auto",
-      padding: "0.5rem 1rem 1.5rem 1rem",
+      flex: '0 1 auto',
+      padding: '0.5rem 1rem 1.5rem 1rem',
     },
     contentWrapper: {
       padding: 0,
-      height: "100%",
+      height: '100%',
     },
     content: {
-      height: "100%",
+      height: '100%',
     },
     alertImage: {
       height: 160,
@@ -96,7 +99,7 @@ const styles = () =>
   });
 
 interface BleachingIncomingProps {
-  dailyData: DailyData;
+  data: LatestDataASSofarValue;
 }
 
 type BleachingProps = WithStyles<typeof styles> & BleachingIncomingProps;

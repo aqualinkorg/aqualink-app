@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Timeline,
   TimelineContent,
@@ -6,17 +6,17 @@ import {
   TimelineItem,
   TimelineOppositeContent,
   TimelineSeparator,
-} from "@material-ui/lab";
-import { makeStyles, Theme, Typography } from "@material-ui/core";
-import classNames from "classnames";
-import grey from "@material-ui/core/colors/grey";
+} from '@material-ui/lab';
+import { makeStyles, Theme, Typography } from '@material-ui/core';
+import classNames from 'classnames';
+import grey from '@material-ui/core/colors/grey';
 
-import AddButton from "../AddButton";
-import SurveyCard from "../SurveyCard";
-import LoadingSkeleton from "../../../LoadingSkeleton";
-import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
-import incomingStyles from "../styles";
-import { TimelineProps } from "./types";
+import { displayTimeInLocalTimezone } from 'helpers/dates';
+import AddButton from '../AddButton';
+import SurveyCard from '../SurveyCard';
+import LoadingSkeleton from '../../../LoadingSkeleton';
+import incomingStyles from '../styles';
+import { TimelineProps } from './types';
 
 const CONNECTOR_COLOR = grey[500];
 
@@ -31,7 +31,7 @@ const TimelineDesktop = ({
   timeZone,
 }: TimelineProps) => {
   const classes = useStyles();
-  const isSiteIdValid = typeof siteId === "number";
+  const isSiteIdValid = typeof siteId === 'number';
 
   return (
     <Timeline>
@@ -40,7 +40,7 @@ const TimelineDesktop = ({
           <TimelineOppositeContent
             className={classNames(
               classes.timelineOppositeContent,
-              classes.addNewButtonOpposite
+              classes.addNewButtonOpposite,
             )}
           />
           <TimelineContent className={classes.addNewButtonWrapper}>
@@ -65,7 +65,7 @@ const TimelineDesktop = ({
                 <Typography variant="h6" className={classes.dates}>
                   {displayTimeInLocalTimezone({
                     isoDate: survey.diveDate,
-                    format: "MM/DD/YYYY",
+                    format: 'LL/dd/yyyy',
                     displayTimezone: false,
                     timeZone,
                   })}
@@ -97,7 +97,7 @@ const TimelineDesktop = ({
 const useStyles = makeStyles((theme: Theme) => ({
   ...incomingStyles,
   timelineItem: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   timelineOppositeContent: {
     flex: 0.5,
@@ -117,13 +117,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   dot: {
     border: `1px solid ${CONNECTOR_COLOR}`,
     backgroundColor: theme.palette.primary.light,
-    height: "1rem",
-    width: "1rem",
+    height: '1rem',
+    width: '1rem',
     padding: 0,
     margin: 0,
   },
   dateSkeleton: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
   },
 }));
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -9,18 +9,18 @@ import {
   Grid,
   Typography,
   Button,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
-import styled from "@material-ui/core/styles/styled";
-import { isNumber } from "lodash";
+} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import styled from '@material-ui/core/styles/styled';
+import { isNumber } from 'lodash';
 
-import { formatNumber } from "../../../helpers/numberUtils";
-import { displayTimeInLocalTimezone } from "../../../helpers/dates";
-import { Dataset } from "..";
+import { formatNumber } from 'helpers/numberUtils';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { Dataset } from '..';
 
 export const TOOLTIP_WIDTH = 190;
 
-const Circle = styled("div")<{}, { color: string; size?: number }>(
+const Circle = styled('div')<{}, { color: string; size?: number }>(
   ({ size = 10, color: backgroundColor }) => ({
     marginRight: 5,
     marginTop: 3,
@@ -28,8 +28,8 @@ const Circle = styled("div")<{}, { color: string; size?: number }>(
     height: size,
     borderRadius: size / 2,
     backgroundColor,
-    display: "inline-block",
-  })
+    display: 'inline-block',
+  }),
 );
 
 const TemperatureMetric = ({
@@ -65,7 +65,7 @@ const Tooltip = ({
   const hasHourlyData = datasets.some(({ isDailyUpdated }) => !isDailyUpdated);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
-    format: `MM/DD/YY${hasHourlyData ? " hh:mm A" : ""}`,
+    format: `MM/dd/yy${hasHourlyData ? ' HH:mm a' : ''}`,
     displayTimezone: hasHourlyData,
     timeZone: userTimeZone,
     timeZoneToDisplay: siteTimeZone,
@@ -89,21 +89,25 @@ const Tooltip = ({
         <CardHeader
           className={classes.tooltipHeader}
           title={
-            <Typography color="textPrimary" variant="caption">
+            <Typography
+              color="textPrimary"
+              variant="caption"
+              style={{ whiteSpace: 'nowrap' }}
+            >
               {dateString}
             </Typography>
           }
         />
         <CardContent className={classes.tooltipContent}>
           <Grid
-            style={{ height: "100%" }}
+            style={{ height: '100%' }}
             item
             container
-            justify="space-between"
+            justifyContent="space-between"
           >
             <Grid
               container
-              justify="space-between"
+              justifyContent="space-between"
               alignItems="center"
               item
               xs={12}
@@ -117,7 +121,7 @@ const Tooltip = ({
                       gridClassName={classes.tooltipContentItem}
                       unit={item.unit}
                     />
-                  )
+                  ),
               )}
             </Grid>
             {surveyId && (
@@ -138,7 +142,7 @@ const Tooltip = ({
       <div
         className={classes.tooltipArrow}
         style={{
-          borderColor: "#095877 transparent transparent transparent",
+          borderColor: '#095877 transparent transparent transparent',
         }}
       />
     </div>
@@ -148,46 +152,46 @@ const Tooltip = ({
 const styles = () =>
   createStyles({
     tooltip: {
-      display: "flex",
-      justifyContent: "center",
+      display: 'flex',
+      justifyContent: 'center',
       width: TOOLTIP_WIDTH,
       minHeight: 60,
     },
     tooltipCard: {
-      display: "flex",
-      flexFlow: "column",
-      backgroundColor: "#095877",
+      display: 'flex',
+      flexFlow: 'column',
+      backgroundColor: '#095877',
       borderRadius: 8,
-      paddingBottom: "0.5rem",
+      paddingBottom: '0.5rem',
     },
     tooltipHeader: {
-      flex: "0 1 auto",
-      padding: "0.5rem 1rem 1rem",
+      flex: '0 1 auto',
+      padding: '0.5rem 1rem 1rem',
       height: 30,
     },
     tooltipContent: {
-      flex: "1 1 auto",
-      padding: "0rem 1rem 0rem 1rem",
+      flex: '1 1 auto',
+      padding: '0rem 1rem 0rem 1rem',
     },
     tooltipContentItem: {
-      width: "150px",
+      width: '150px',
       height: 20,
-      margin: "0",
+      margin: '0',
     },
     tooltipArrow: {
-      content: " ",
-      position: "absolute",
-      top: "100%" /* At the bottom of the tooltip */,
-      left: "50%",
-      marginLeft: "-10px",
-      borderWidth: "10px",
-      borderStyle: "solid",
-      borderColor: "#095877 transparent transparent transparent",
+      content: ' ',
+      position: 'absolute',
+      top: '100%' /* At the bottom of the tooltip */,
+      left: '50%',
+      marginLeft: '-10px',
+      borderWidth: '10px',
+      borderStyle: 'solid',
+      borderColor: '#095877 transparent transparent transparent',
     },
     surveyLink: {
-      textDecoration: "none",
-      "&:hover": {
-        textDecoration: "none",
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'none',
       },
     },
   });

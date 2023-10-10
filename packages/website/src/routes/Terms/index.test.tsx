@@ -1,16 +1,16 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
 
-import Terms from ".";
-import { mockUser } from "../../mocks/mockUser";
-import { mockCollection } from "../../mocks/mockCollection";
+import { mockUser } from 'mocks/mockUser';
+import { mockCollection } from 'mocks/mockCollection';
+import Terms from '.';
 
 const mockStore = configureStore([]);
 
-describe("Terms page", () => {
+describe('Terms page', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -29,11 +29,11 @@ describe("Terms page", () => {
         <Router>
           <Terms />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

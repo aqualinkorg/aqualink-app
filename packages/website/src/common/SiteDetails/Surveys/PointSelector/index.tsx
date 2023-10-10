@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
   createStyles,
   Theme,
@@ -12,14 +12,14 @@ import {
   TextField,
   Hidden,
   makeStyles,
-} from "@material-ui/core";
-import { Create, DeleteOutline } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+} from '@material-ui/core';
+import { Create, DeleteOutline } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
-import { SurveyPoints } from "../../../../store/Sites/types";
-import EditDialog, { Action } from "../../../Dialog";
-import CustomLink from "../../../Link";
-import { maxLengths } from "../../../../constants/names";
+import { SurveyPoints } from 'store/Sites/types';
+import { maxLengths } from 'constants/names';
+import EditDialog, { Action } from '../../../Dialog';
+import CustomLink from '../../../Link';
 
 const PointSelector = ({
   siteId,
@@ -58,12 +58,12 @@ const PointSelector = ({
   const getHelperText = () => {
     switch (true) {
       case !editSurveyPointNameDraft:
-        return "Cannot be empty";
+        return 'Cannot be empty';
       case editSurveyPointNameDraft &&
         editSurveyPointNameDraft.length > maxLengths.SURVEY_POINT_NAME:
         return `Must not exceed ${maxLengths.SURVEY_POINT_NAME} characters`;
       default:
-        return "";
+        return '';
     }
   };
 
@@ -76,17 +76,17 @@ const PointSelector = ({
 
   const editDialogActions: Action[] = [
     {
-      size: "small",
-      variant: "contained",
-      color: "secondary",
-      text: "Close",
+      size: 'small',
+      variant: 'contained',
+      color: 'secondary',
+      text: 'Close',
       action: onEditDialogClose,
     },
     {
-      size: "small",
-      variant: "contained",
-      color: "primary",
-      text: editSurveyPointNameLoading ? "Updating..." : "Save",
+      size: 'small',
+      variant: 'contained',
+      color: 'primary',
+      text: editSurveyPointNameLoading ? 'Updating...' : 'Save',
       action: onEditSurveyPointSubmit,
       disabled: editSurveyPointNameLoading || (editSurveyPoint && errored),
     },
@@ -98,7 +98,7 @@ const PointSelector = ({
         <EditDialog
           actions={editDialogActions}
           open={editDialogOpen}
-          header={editSurveyPoint.name || ""}
+          header={editSurveyPoint.name || ''}
           onClose={onEditDialogClose}
           content={
             <TextField
@@ -131,7 +131,7 @@ const PointSelector = ({
                 value={
                   pointOptions.some((item) => item.name === point)
                     ? point
-                    : "All"
+                    : 'All'
                 }
                 onChange={handlePointChange}
                 onClose={() => disableeditSurveyPointName()}
@@ -153,7 +153,7 @@ const PointSelector = ({
                         <Grid
                           container
                           alignItems="center"
-                          justify="space-between"
+                          justifyContent="space-between"
                           spacing={1}
                         >
                           <Grid className={classes.itemName} item>
@@ -212,7 +212,7 @@ const PointSelector = ({
                           </Grid>
                         </Grid>
                       </MenuItem>
-                    )
+                    ),
                 )}
               </Select>
             </Grid>
@@ -249,35 +249,35 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     subTitle: {
       lineHeight: 1,
-      color: "#474747",
-      marginRight: "1rem",
+      color: '#474747',
+      marginRight: '1rem',
     },
     selectorWrapper: {
-      [theme.breakpoints.down("xs")]: {
-        width: "100%",
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
       },
     },
     selector: {
       minWidth: 120,
       maxWidth: 190,
       color: theme.palette.primary.main,
-      marginRight: "1rem",
+      marginRight: '1rem',
     },
     itemName: {
       maxWidth: 140,
-      whiteSpace: "normal",
-      overflowWrap: "break-word",
-      wordWrap: "break-word",
-      wordBreak: "break-word",
-      hyphens: "auto",
+      whiteSpace: 'normal',
+      overflowWrap: 'break-word',
+      wordWrap: 'break-word',
+      wordBreak: 'break-word',
+      hyphens: 'auto',
     },
     menuItem: {
       minWidth: 240,
       color: theme.palette.primary.main,
     },
     editSurveyPointTextField: {
-      color: "black",
-      alignItems: "center",
+      color: 'black',
+      alignItems: 'center',
       padding: 8,
     },
     menuButton: {
@@ -289,7 +289,7 @@ const useStyles = makeStyles((theme: Theme) =>
     closeIcon: {
       color: theme.palette.error.main,
     },
-  })
+  }),
 );
 
 interface PointSelectorProps {
@@ -301,7 +301,7 @@ interface PointSelectorProps {
   isSiteAdmin: boolean;
   editSurveyPointNameLoading: boolean;
   onChangeSurveyPointName: (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   handlePointChange: (event: ChangeEvent<{ value: unknown }>) => void;
   enableeditSurveyPointName: (id: number) => void;

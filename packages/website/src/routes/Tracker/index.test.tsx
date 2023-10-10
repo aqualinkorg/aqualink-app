@@ -1,17 +1,17 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
-import { mockUser } from "../../mocks/mockUser";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { mockUser } from 'mocks/mockUser';
 
-import Tracker from ".";
+import Tracker from '.';
 
-jest.mock("../../common/NavBar", () => "Mock-NavBar");
-jest.mock("../../common/Footer", () => "Mock-Footer");
+jest.mock('common/NavBar', () => 'Mock-NavBar');
+jest.mock('common/Footer', () => 'Mock-Footer');
 
 const mockStore = configureStore([]);
-describe("Tracker", () => {
+describe('Tracker', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -29,11 +29,11 @@ describe("Tracker", () => {
         <Router>
           <Tracker />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

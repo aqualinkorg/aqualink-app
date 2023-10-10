@@ -1,19 +1,19 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
-import { mockUser } from "../../mocks/mockUser";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { mockUser } from 'mocks/mockUser';
 
-import Homepage from ".";
-import { mockSite } from "../../mocks/mockSite";
+import { mockSite } from 'mocks/mockSite';
+import Homepage from '.';
 
-jest.mock("../../common/NavBar", () => "Mock-NavBar");
-jest.mock("./Map", () => "Mock-Map");
-jest.mock("./SiteTable", () => "Mock-SiteTable");
+jest.mock('common/NavBar', () => 'Mock-NavBar');
+jest.mock('./Map', () => 'Mock-Map');
+jest.mock('./SiteTable', () => 'Mock-SiteTable');
 
 const mockStore = configureStore([]);
-describe("Homepage", () => {
+describe('Homepage', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -42,11 +42,11 @@ describe("Homepage", () => {
         <Router>
           <Homepage />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

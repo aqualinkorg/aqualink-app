@@ -15,6 +15,7 @@ enum SiteColumn {
   VIDEO_STREAM = 'video_stream',
   MAX_MONTHLY_MEAN = 'max_monthly_mean',
   DISPLAY = 'display',
+  SOFAR_API_TOKEN = 'spotter_api_token',
 }
 
 @Entity()
@@ -23,11 +24,11 @@ export class SiteAudit {
   id: number;
 
   @Index()
-  @Column()
+  @Column({ nullable: true })
   oldValue: string;
 
   @Index()
-  @Column()
+  @Column({ nullable: true })
   newValue: string;
 
   @Column({ type: 'enum', enum: SiteColumn })

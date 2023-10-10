@@ -7,7 +7,6 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { isNil, omit } from 'lodash';
-import { SchedulerRegistry } from '@nestjs/schedule';
 import { Survey } from './surveys.entity';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { User } from '../users/users.entity';
@@ -17,7 +16,10 @@ import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Site } from '../sites/sites.entity';
-import { getFileFromURL } from '../utils/google-cloud.utils';
+import {
+  getSurveyMediaFileFromURL,
+  GoogleCloudDir,
+} from '../utils/google-cloud.utils';
 import { getSite } from '../utils/site.utils';
 import { getImageData, resize } from '../../scripts/utils/image';
 import { validateMimetype } from '../uploads/mimetypes';
@@ -44,8 +46,6 @@ export class SurveysService {
     private siteRepository: Repository<Site>,
 
     public googleCloudService: GoogleCloudService,
-
-    private scheduleRegistry: SchedulerRegistry,
   ) {}
 
   // Create a survey
@@ -79,7 +79,7 @@ export class SurveysService {
       file.buffer,
       file.originalname,
       'image',
-      'surveys',
+      GoogleCloudDir.SURVEYS,
       'site',
     );
 
@@ -105,7 +105,7 @@ export class SurveysService {
     createSurveyMediaDto: CreateSurveyMediaDto,
     surveyId: number,
   ): Promise<SurveyMedia> {
-    const survey = await this.surveyRepository.findOne(surveyId);
+    const survey = await this.surveyRepository.findOneBy({ id: surveyId });
     if (!survey) {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
@@ -114,7 +114,7 @@ export class SurveysService {
     const featuredMedia = await this.surveyMediaRepository.findOne({
       where: {
         featured: true,
-        surveyId: survey,
+        surveyId: { id: survey.id },
       },
     });
 
@@ -217,30 +217,24 @@ export class SurveysService {
       'survey_point_id',
     );
 
-    return surveyHistoryQuery.map((survey) => {
-      const surveyDailyData = survey.latestDailyData;
-      return {
-        id: survey.id,
-        diveDate: survey.diveDate,
-        comments: survey.comments,
-        weatherConditions: survey.weatherConditions,
-        user: survey.user,
-        site: survey.site,
-        siteId: survey.siteId,
-        // If no logged temperature exists grab the latest daily temperature of the survey's date
-        temperature:
-          survey.temperature ||
-          (surveyDailyData &&
-            (surveyDailyData.avgBottomTemperature ||
-              surveyDailyData.satelliteTemperature)),
-        featuredSurveyMedia: survey.featuredSurveyMedia,
-        observations: observationsGroupedBySurveyId[survey.id] || [],
-        surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
-        surveyPointImage: surveyImageGroupedBySurveyPointId[survey.id] || [],
-        createdAt: survey.createdAt,
-        updatedAt: survey.updatedAt,
-      };
-    });
+    return surveyHistoryQuery.map((survey) => ({
+      id: survey.id,
+      diveDate: survey.diveDate,
+      comments: survey.comments,
+      weatherConditions: survey.weatherConditions,
+      user: survey.user,
+      site: survey.site,
+      siteId: survey.siteId,
+      temperature: survey.temperature,
+      satelliteTemperature:
+        survey.latestDailyData?.satelliteTemperature || undefined,
+      featuredSurveyMedia: survey.featuredSurveyMedia,
+      observations: observationsGroupedBySurveyId[survey.id] || [],
+      surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
+      surveyPointImage: surveyImageGroupedBySurveyPointId[survey.id] || [],
+      createdAt: survey.createdAt,
+      updatedAt: survey.updatedAt,
+    }));
   }
 
   // Find one survey provided its id
@@ -250,6 +244,12 @@ export class SurveysService {
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
       .leftJoinAndSelect('surveyMedia.surveyPoint', 'surveyPoints')
+      .leftJoinAndMapOne(
+        'survey.latestDailyData',
+        'daily_data',
+        'data',
+        'data.site_id = survey.site_id AND DATE(data.date) = DATE(survey.diveDate)',
+      )
       .where('survey.id = :surveyId', { surveyId })
       .andWhere('surveyMedia.hidden = False')
       .getOne();
@@ -258,7 +258,12 @@ export class SurveysService {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
 
-    return surveyDetails;
+    return {
+      ...surveyDetails,
+      satelliteTemperature:
+        surveyDetails.latestDailyData?.satelliteTemperature || undefined,
+      latestDailyData: undefined,
+    };
   }
 
   async findMedia(surveyId: number): Promise<SurveyMedia[]> {
@@ -281,7 +286,7 @@ export class SurveysService {
     if (!result.affected) {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
-    const updated = await this.surveyRepository.findOne(surveyId);
+    const updated = await this.surveyRepository.findOneBy({ id: surveyId });
 
     return updated!;
   }
@@ -299,7 +304,9 @@ export class SurveysService {
       );
     }
 
-    const surveyMedia = await this.surveyMediaRepository.findOne(mediaId);
+    const surveyMedia = await this.surveyMediaRepository.findOneBy({
+      id: mediaId,
+    });
 
     if (!surveyMedia) {
       throw new NotFoundException(
@@ -323,7 +330,7 @@ export class SurveysService {
     ) {
       await this.surveyMediaRepository.update(
         {
-          surveyId: surveyMedia.surveyId,
+          surveyId: { id: surveyMedia.surveyId.id },
           featured: true,
         },
         { featured: false },
@@ -340,19 +347,28 @@ export class SurveysService {
       ...(trimmedComments ? { comments: trimmedComments } : {}),
     });
 
-    const updated = await this.surveyMediaRepository.findOne(mediaId);
+    const updated = await this.surveyMediaRepository
+      .createQueryBuilder('survey_media')
+      .leftJoinAndMapOne(
+        'survey_media.surveyPoint',
+        'site_survey_point',
+        'point',
+        'point.id = survey_media.survey_point_id',
+      )
+      .where('survey_media.id = :mediaId', { mediaId })
+      .getOne();
 
     return updated!;
   }
 
   async delete(surveyId: number): Promise<void> {
     const surveyMedia = await this.surveyMediaRepository.find({
-      where: { surveyId },
+      where: { surveyId: { id: surveyId } },
     });
 
     await Promise.all(
       surveyMedia.map((media) => {
-        const file = getFileFromURL(media.url);
+        const file = getSurveyMediaFileFromURL(media.url);
         // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
         return this.googleCloudService.deleteFile(file).catch(() => {
           this.logger.error(
@@ -370,7 +386,9 @@ export class SurveysService {
   }
 
   async deleteMedia(mediaId: number): Promise<void> {
-    const surveyMedia = await this.surveyMediaRepository.findOne(mediaId);
+    const surveyMedia = await this.surveyMediaRepository.findOneBy({
+      id: mediaId,
+    });
 
     if (!surveyMedia) {
       throw new NotFoundException(
@@ -385,7 +403,7 @@ export class SurveysService {
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
     await this.googleCloudService
-      .deleteFile(getFileFromURL(surveyMedia.url))
+      .deleteFile(getSurveyMediaFileFromURL(surveyMedia.url))
       .catch((error) => {
         this.logger.error(
           `Could not delete media ${surveyMedia.url} of survey media ${mediaId}.`,

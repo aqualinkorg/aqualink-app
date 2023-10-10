@@ -1,5 +1,5 @@
 /* eslint-disable fp/no-mutation */
-import { useState } from "react";
+import { useState } from 'react';
 
 export const useImageAspectRatio = (src: string): number | undefined => {
   const [aspectRatio, setAspectRatio] = useState<number>();

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 import {
   Typography,
   Grid,
@@ -6,41 +6,41 @@ import {
   makeStyles,
   createStyles,
   Button,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { grey, green } from "@material-ui/core/colors";
+} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { grey, green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: ({ width }: { width: number }) => ({
+    chip: ({ width }: { width?: number }) => ({
       backgroundColor: grey[300],
       borderRadius: 8,
       height: 24,
       width,
-      display: "flex",
+      display: 'flex',
     }),
     chipText: {
       fontSize: 8,
       color: grey[600],
-      [theme.breakpoints.between("md", "md")]: {
+      [theme.breakpoints.between('md', 'md')]: {
         fontSize: 7,
       },
     },
     circle: {
       backgroundColor: green[300],
-      borderRadius: "50%",
+      borderRadius: '50%',
       height: 8.4,
       width: 8.4,
       marginRight: 5,
     },
     link: {
-      display: "flex",
-      alignItems: "center",
-      textDecoration: "none",
-      color: "inherit",
-      "&:hover": {
-        textDecoration: "none",
-        color: "inherit",
+      display: 'flex',
+      alignItems: 'center',
+      textDecoration: 'none',
+      color: 'inherit',
+      '&:hover': {
+        textDecoration: 'none',
+        color: 'inherit',
       },
     },
     sensorImage: {
@@ -49,9 +49,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       padding: 0,
-      height: "100%",
+      height: '100%',
     },
-  })
+  }),
 );
 
 interface ChipProps {
@@ -61,19 +61,20 @@ interface ChipProps {
   liveText?: string;
   imageText?: string | null;
   image?: string | null;
-  width: number;
+  width?: number;
   onClick?: () => void;
 }
 
 const LinkWrapper: FC<
-  Pick<ChipProps, "to" | "href"> & { className?: string }
+  Pick<ChipProps, 'to' | 'href'> & { className?: string }
   // eslint-disable-next-line react/prop-types
 > = ({ to, href, className, children }) =>
   to || href ? (
     <Link
       to={to || { pathname: href }}
-      target={href ? "_blank" : undefined}
+      target={href ? '_blank' : undefined}
       className={className}
+      rel="noopener noreferrer"
     >
       {children}
     </Link>
@@ -94,7 +95,7 @@ const Chip = ({
   const classes = useStyles({ width });
   return (
     <Grid className={classes.chip} item>
-      <Grid container alignItems="center" justify="center">
+      <Grid container alignItems="center" justifyContent="center">
         <Button className={classes.button} onClick={onClick}>
           <LinkWrapper to={to} href={href} className={classes.link}>
             {live ? (
@@ -129,7 +130,7 @@ Chip.defaultProps = {
   to: undefined,
   imageText: undefined,
   image: undefined,
-  liveText: "LIVE",
+  liveText: 'LIVE',
   onClick: undefined,
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -13,39 +13,35 @@ import {
   Theme,
   Fab,
   ButtonProps,
-} from "@material-ui/core";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import { Link } from "react-router-dom";
+} from '@material-ui/core';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import { Link } from 'react-router-dom';
 
-import classNames from "classnames";
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
-import Card from "./Card";
-import landingPageImage from "../../assets/img/landing-page/header.jpg";
-import { cardTitles } from "./titles";
-import {
-  GaAction,
-  GaCategory,
-  trackButtonClick,
-} from "../../utils/google-analytics";
+import classNames from 'classnames';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
+import Card from './Card';
+import landingPageImage from '../../assets/img/landing-page/header.jpg';
+import { cardTitles } from './titles';
 
 interface LandingPageButton {
   label: string;
   to: string;
-  variant: ButtonProps["variant"];
+  variant: ButtonProps['variant'];
   hasWhiteColor?: boolean;
 }
 
 const landingPageButtons: LandingPageButton[] = [
   {
-    label: "View The Map",
-    to: "/map",
-    variant: "contained",
+    label: 'View The Map',
+    to: '/map',
+    variant: 'contained',
   },
   {
-    label: "Register Your Site",
-    to: "/register",
-    variant: "outlined",
+    label: 'Register Your Site',
+    to: '/register',
+    variant: 'outlined',
     hasWhiteColor: true,
   },
 ];
@@ -53,13 +49,13 @@ const landingPageButtons: LandingPageButton[] = [
 const LandingPage = ({ classes }: LandingPageProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const firstCard = useRef<HTMLDivElement>(null);
 
   const seeMore = () => {
     firstCard.current?.scrollIntoView({
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -68,10 +64,10 @@ const LandingPage = ({ classes }: LandingPageProps) => {
       setScrollPosition(window.pageYOffset);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -141,14 +137,14 @@ const LandingPage = ({ classes }: LandingPageProps) => {
                             trackButtonClick(
                               GaCategory.BUTTON_CLICK,
                               GaAction.LANDING_PAGE_BUTTON_CLICK,
-                              label
+                              label,
                             )
                           }
                         >
                           <Typography variant="h5">{label}</Typography>
                         </Button>
                       </Grid>
-                    )
+                    ),
                   )}
                 </Grid>
               </Box>
@@ -179,16 +175,16 @@ const styles = (theme: Theme) =>
   createStyles({
     landingImage: {
       backgroundImage: `url("${landingPageImage}")`,
-      backgroundSize: "cover",
+      backgroundSize: 'cover',
       left: 160,
       minHeight: 864,
-      height: "calc(100vh - 64px)", // subtract height of the navbar
-      [theme.breakpoints.down("xs")]: {
+      height: 'calc(100vh - 64px)', // subtract height of the navbar
+      [theme.breakpoints.down('xs')]: {
         minHeight: 576,
       },
     },
     container: {
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up('sm')]: {
         paddingLeft: 60,
         paddingRight: 40,
       },
@@ -198,25 +194,25 @@ const styles = (theme: Theme) =>
       opacity: 0.5,
     },
     cardContainer: {
-      marginBottom: "1rem",
+      marginBottom: '1rem',
     },
     buttons: {
       height: 48,
       width: 208,
-      textTransform: "none",
-      "&:hover": {
-        color: "white",
+      textTransform: 'none',
+      '&:hover': {
+        color: 'white',
       },
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         height: 40,
       },
     },
     whiteColorButton: {
-      color: "white",
-      border: "2px solid white",
-      "&:hover": {
-        color: "white",
-        border: "2px solid white",
+      color: 'white',
+      border: '2px solid white',
+      '&:hover': {
+        color: 'white',
+        border: '2px solid white',
       },
     },
   });

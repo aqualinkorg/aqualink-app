@@ -1,7 +1,7 @@
-import React from "react";
-import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core";
+import React from 'react';
+import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
 
-import { alertLevelColorCode } from "../../../assets/colorCode";
+import { alertLevelColorCode } from '../../../assets/colorCode';
 
 const AlertLevelLegend = ({ classes }: AlertLevelLegendProps) => {
   return (
@@ -27,29 +27,29 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       zIndex: 401,
-      color: "white",
-      position: "absolute",
+      color: 'white',
+      position: 'absolute',
       bottom: 40,
       right: 10,
-      display: "flex",
-      [theme.breakpoints.down("md")]: {
+      display: 'flex',
+      [theme.breakpoints.down('md')]: {
         left: 10,
       },
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         bottom: 80,
       },
     },
     legendItem: {
       fontWeight: 600,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       borderRadius: 10,
-      minWidth: "4rem",
-      marginRight: "0.5rem",
-      [theme.breakpoints.down("xs")]: {
+      minWidth: '4rem',
+      marginRight: '0.5rem',
+      [theme.breakpoints.down('xs')]: {
         fontWeight: 400,
-        minWidth: "3rem",
+        minWidth: '3rem',
       },
     },
     lastChild: {

@@ -5,24 +5,32 @@ try {
 } catch {
   // Pass
 }
+export const envName = process.env.NODE_ENV || 'development';
+export const isTestEnv = envName === 'test';
 
-// Sofar API urls and token
-export const { SOFAR_API_TOKEN } = process.env;
+// Environment variables (especially those used by cloud-functions)
+// should NOT be exported from here (eg. "export const { SOFAR_API_TOKEN } = process.env"),
+// since it will interfere with the way they are set in cloud-functions,
+// causing them to be undefined.
+
+// Sofar API urls
 export const SOFAR_MARINE_URL =
   'https://api.sofarocean.com/marine-weather/v1/models/';
 export const SOFAR_WAVE_DATA_URL = 'https://api.sofarocean.com/api/wave-data';
 export const SOFAR_SENSOR_DATA_URL =
   'https://api.sofarocean.com/api/sensor-data';
+export const SOFAR_LATEST_DATA_URL =
+  'https://api.sofarocean.com/api/latest-data';
 
 export enum SofarModels {
-  SofarOperationalWaveModel = 'SofarOperationalWaveModel',
   NOAACoralReefWatch = 'NOAACoralReefWatch',
-  GFS = 'GFS',
+  Wave = 'Wave',
+  Atmosphere = 'Atmosphere',
 }
 
 // Sofar variables
 export const sofarVariableIDs = {
-  [SofarModels.SofarOperationalWaveModel]: {
+  [SofarModels.Wave]: {
     significantWaveHeight: 'significantWaveHeight',
     meanDirection: 'meanDirection',
     meanDirectionalSpread: 'meanDirectionalSpread',
@@ -46,11 +54,9 @@ export const sofarVariableIDs = {
     degreeHeatingWeek: 'degreeHeatingWeek',
     analysedSeaSurfaceTemperature: 'analysedSeaSurfaceTemperature',
   },
-  [SofarModels.GFS]: {
+  [SofarModels.Atmosphere]: {
     windVelocity10MeterEastward: 'windVelocity10MeterEastward',
     windVelocity10MeterNorthward: 'windVelocity10MeterNorthward',
-    significantWaveHeight: 'significantWaveHeight',
-    significantWaveHeightWindWaves: 'significantWaveHeightWindWaves',
   },
 };
 

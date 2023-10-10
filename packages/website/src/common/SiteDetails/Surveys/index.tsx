@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
   createStyles,
   useTheme,
@@ -11,34 +11,34 @@ import {
   MenuItem,
   Box,
   makeStyles,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Timeline from "./Timeline";
-import PointSelector from "./PointSelector";
-import { setSiteSurveyPoints } from "../../../store/Sites/selectedSiteSlice";
-import { userInfoSelector } from "../../../store/User/userSlice";
+import observationOptions from 'constants/uploadDropdowns';
+import { setSiteSurveyPoints } from 'store/Sites/selectedSiteSlice';
+import { userInfoSelector } from 'store/User/userSlice';
 import {
   surveysRequest,
   updateSurveyPointName,
-} from "../../../store/Survey/surveyListSlice";
-import { setSelectedPoi } from "../../../store/Survey/surveySlice";
-import observationOptions from "../../../constants/uploadDropdowns";
-import { SurveyMedia } from "../../../store/Survey/types";
-import siteServices from "../../../services/siteServices";
-import { Site } from "../../../store/Sites/types";
-import { isAdmin } from "../../../helpers/user";
-import DeleteSurveyPointDialog, { Action } from "../../Dialog";
-import { useBodyLength } from "../../../hooks/useBodyLength";
-import surveyServices from "../../../services/surveyServices";
-import { getAxiosErrorMessage } from "../../../helpers/errors";
+} from 'store/Survey/surveyListSlice';
+import { setSelectedPoi } from 'store/Survey/surveySlice';
+import { SurveyMedia } from 'store/Survey/types';
+import { Site } from 'store/Sites/types';
+import { useBodyLength } from 'hooks/useBodyLength';
+import { isAdmin } from 'helpers/user';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import siteServices from 'services/siteServices';
+import surveyServices from 'services/surveyServices';
+import PointSelector from './PointSelector';
+import Timeline from './Timeline';
+import DeleteSurveyPointDialog, { Action } from '../../Dialog';
 
 const Surveys = ({ site }: SurveysProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const isLoading = !site;
-  const [point, setPoint] = useState<string>("All");
+  const [point, setPoint] = useState<string>('All');
   const pointOptions = site?.surveyPoints || [];
   const [deleteSurveyPointDialogOpen, setDeleteSurveyPointDialogOpen] =
     useState<boolean>(false);
@@ -48,13 +48,13 @@ const Surveys = ({ site }: SurveysProps) => {
   const [editSurveyPointNameLoading, seteditSurveyPointNameLoading] =
     useState<boolean>(false);
   const [surveyPointToDelete, setSurveyPointToDelete] = useState<number | null>(
-    null
+    null,
   );
   const [isDeletePointLoading, setIsDeletePointLoading] = useState(false);
   const [deletePointError, setDeletePointError] = useState<string>();
   const [observation, setObservation] = useState<
-    SurveyMedia["observations"] | "any"
-  >("any");
+    SurveyMedia['observations'] | 'any'
+  >('any');
   const user = useSelector(userInfoSelector);
   const isSiteAdmin = site ? isAdmin(user, site.id) : false;
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const Surveys = ({ site }: SurveysProps) => {
   const bodyLength = useBodyLength();
 
   const surveyPointToDeleteName = pointOptions.find(
-    ({ id }) => id === surveyPointToDelete
+    ({ id }) => id === surveyPointToDelete,
   )?.name;
 
   useEffect(() => {
@@ -79,9 +79,9 @@ const Surveys = ({ site }: SurveysProps) => {
   };
 
   const handleObservationChange = (
-    event: React.ChangeEvent<{ value: unknown }>
+    event: React.ChangeEvent<{ value: unknown }>,
   ) => {
-    setObservation(event.target.value as SurveyMedia["observations"] | "any");
+    setObservation(event.target.value as SurveyMedia['observations'] | 'any');
   };
 
   const pointIdFinder = (name: string) => {
@@ -96,18 +96,18 @@ const Surveys = ({ site }: SurveysProps) => {
   };
 
   const handleSurveyPointDelete = async () => {
-    if (site && typeof surveyPointToDelete === "number") {
+    if (site && typeof surveyPointToDelete === 'number') {
       setIsDeletePointLoading(true);
       try {
         await siteServices.deleteSiteSurveyPoint(
           surveyPointToDelete,
-          user?.token
+          user?.token,
         );
 
         dispatch(
           setSiteSurveyPoints(
-            pointOptions.filter((option) => option.id !== surveyPointToDelete)
-          )
+            pointOptions.filter((option) => option.id !== surveyPointToDelete),
+          ),
         );
         dispatch(surveysRequest(`${site.id}`));
         setDeleteSurveyPointDialogOpen(false);
@@ -129,7 +129,7 @@ const Surveys = ({ site }: SurveysProps) => {
     seteditSurveyPointNameDraft(undefined);
 
   const onChangeSurveyPointName = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => seteditSurveyPointNameDraft(event.target.value);
 
   const submitSurveyPointNameUpdate = (key: number) => {
@@ -159,8 +159,8 @@ const Surveys = ({ site }: SurveysProps) => {
                   };
                 }
                 return item;
-              })
-            )
+              }),
+            ),
           );
           seteditSurveyPointNameDraft(undefined);
         })
@@ -171,18 +171,18 @@ const Surveys = ({ site }: SurveysProps) => {
 
   const deleteSurveyPointDialogActions: Action[] = [
     {
-      size: "small",
-      variant: "contained",
-      color: "secondary",
-      text: "No",
+      size: 'small',
+      variant: 'contained',
+      color: 'secondary',
+      text: 'No',
       disabled: isDeletePointLoading,
       action: handleDeleteSurveyPointDialogClose,
     },
     {
-      size: "small",
-      variant: "contained",
-      color: "primary",
-      text: "Yes",
+      size: 'small',
+      variant: 'contained',
+      color: 'primary',
+      text: 'Yes',
       loading: isDeletePointLoading,
       disabled: isDeletePointLoading,
       action: handleSurveyPointDelete,
@@ -204,7 +204,12 @@ const Surveys = ({ site }: SurveysProps) => {
         }
         actions={deleteSurveyPointDialogActions}
       />
-      <Grid className={classes.root} container justify="center" spacing={2}>
+      <Grid
+        className={classes.root}
+        container
+        justifyContent="center"
+        spacing={2}
+      >
         <Box
           bgcolor="#f5f6f6"
           position="absolute"
@@ -216,7 +221,7 @@ const Surveys = ({ site }: SurveysProps) => {
           <Grid
             className={classes.surveyWrapper}
             container
-            justify="space-between"
+            justifyContent="space-between"
             item
             lg={12}
             xs={11}
@@ -225,7 +230,7 @@ const Surveys = ({ site }: SurveysProps) => {
           >
             <Grid
               container
-              justify={isTablet ? "flex-start" : "center"}
+              justifyContent={isTablet ? 'flex-start' : 'center'}
               item
               md={12}
               lg={3}
@@ -250,7 +255,7 @@ const Surveys = ({ site }: SurveysProps) => {
             <Grid
               container
               alignItems="center"
-              justify={isTablet ? "flex-start" : "center"}
+              justifyContent={isTablet ? 'flex-start' : 'center'}
               item
               md={12}
               lg={4}
@@ -294,7 +299,7 @@ const Surveys = ({ site }: SurveysProps) => {
             </Grid>
           </Grid>
         )}
-        <Grid container justify="center" item xs={11} lg={12}>
+        <Grid container justifyContent="center" item xs={11} lg={12}>
           <Timeline
             isAdmin={isSiteAdmin}
             loading={isLoading}
@@ -314,26 +319,26 @@ const Surveys = ({ site }: SurveysProps) => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: "5rem",
-      position: "relative",
+      marginTop: '5rem',
+      position: 'relative',
     },
     surveyWrapper: {
-      marginTop: "5rem",
+      marginTop: '5rem',
     },
     title: {
       fontSize: 22,
       lineHeight: 1.45,
-      color: "#2a2a2a",
-      marginBottom: "1rem",
+      color: '#2a2a2a',
+      marginBottom: '1rem',
     },
     subTitle: {
       lineHeight: 1,
-      color: "#474747",
-      marginRight: "1rem",
+      color: '#474747',
+      marginRight: '1rem',
     },
     selectorWrapper: {
-      [theme.breakpoints.down("xs")]: {
-        width: "100%",
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
       },
     },
     formControl: {
@@ -345,18 +350,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuItem: {
       color: theme.palette.primary.main,
-      width: "100%",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      display: "block",
+      width: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      display: 'block',
     },
     textField: {
-      width: "100%",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      display: "block",
+      width: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      display: 'block',
     },
-  })
+  }),
 );
 
 interface SurveysProps {

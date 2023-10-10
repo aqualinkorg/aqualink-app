@@ -1,15 +1,15 @@
-import { isManager } from "../../helpers/user";
-import userServices from "../../services/userServices";
-import { User } from "./types";
-import { CollectionSummary } from "../Collection/types";
+import { isManager } from 'helpers/user';
+import userServices from 'services/userServices';
+import { User } from './types';
+import { CollectionSummary } from '../Collection/types';
 
 export const constructUserObject = async (
   user: User,
   collections: CollectionSummary[],
-  token?: string
+  token?: string,
 ): Promise<User> => {
   const { data: administeredSites } = await userServices.getAdministeredSites(
-    token
+    token,
   );
 
   return {

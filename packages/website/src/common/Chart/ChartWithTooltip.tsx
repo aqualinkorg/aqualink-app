@@ -3,18 +3,17 @@ import React, {
   PropsWithChildren,
   useRef,
   useState,
-} from "react";
-import { Line } from "react-chartjs-2";
-import type { ChartTooltipModel } from "chart.js";
-import { head, isNumber, maxBy, minBy } from "lodash";
-import moment from "moment";
-import Chart, { ChartProps } from ".";
-import Tooltip, { TooltipData, TOOLTIP_WIDTH } from "./Tooltip";
+} from 'react';
+import { Line } from 'react-chartjs-2';
+import type { ChartTooltipModel } from 'chart.js';
+import { head, isNumber, maxBy, minBy } from 'lodash';
+import Chart, { ChartProps } from '.';
+import Tooltip, { TooltipData, TOOLTIP_WIDTH } from './Tooltip';
 import {
   findSurveyFromDate,
   getDatasetsTimestamps,
   getTooltipClosestData,
-} from "./utils";
+} from './utils';
 
 export interface ChartWithTooltipProps extends ChartProps {
   className?: string;
@@ -34,7 +33,7 @@ function ChartWithTooltip({
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     siteId,
-    date: "",
+    date: '',
     datasets: [],
     surveyId: null,
   });
@@ -48,7 +47,7 @@ function ChartWithTooltip({
       }
 
       const date = tooltipModel.dataPoints?.[0]?.xLabel;
-      if (typeof date !== "string") return;
+      if (typeof date !== 'string') return;
 
       const dateObject = new Date(date);
 
@@ -82,15 +81,10 @@ function ChartWithTooltip({
 
       // We display the tooltip only if there are data to display at this point and it lands
       // between the chart's X axis limits.
-      if (
-        nValues > 0 &&
-        moment(date).isBetween(
-          moment(startDate || minDataDate),
-          moment(endDate || maxDataDate),
-          undefined,
-          "[]"
-        )
-      ) {
+      const start = startDate || minDataDate || '';
+      const end = endDate || maxDataDate || '';
+      const isBetween = date >= start && date <= end;
+      if (nValues > 0 && isBetween) {
         setTooltipPosition({ top, left });
         setTooltipData({
           ...tooltipData,
@@ -108,7 +102,7 @@ function ChartWithTooltip({
 
   // Hide tooltip on scroll to avoid dragging it on the page.
   if (showTooltip) {
-    window.addEventListener("scroll", hideTooltip);
+    window.addEventListener('scroll', hideTooltip);
   }
 
   return (
@@ -135,7 +129,7 @@ function ChartWithTooltip({
           className="chart-tooltip"
           id="chart-tooltip"
           style={{
-            position: "fixed",
+            position: 'fixed',
             top: tooltipPosition.top,
             left: tooltipPosition.left,
           }}

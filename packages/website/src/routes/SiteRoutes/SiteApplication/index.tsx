@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -10,33 +10,33 @@ import {
   Container,
   Button,
   CircularProgress,
-} from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, RouteComponentProps } from "react-router-dom";
-import { AxiosError } from "axios";
+} from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
-import { AgreementsChecked } from "./types";
-import Obligations from "./Obligations";
-import Agreements from "./Agreements";
-import SignInDialog from "../../../common/SignInDialog";
-import RegisterDialog from "../../../common/RegisterDialog";
-import Form from "./Form";
-import NavBar from "../../../common/NavBar";
-import Footer from "../../../common/Footer";
-import { getSiteNameAndRegion } from "../../../store/Sites/helpers";
-import siteServices from "../../../services/siteServices";
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import {
   userInfoSelector,
   getSelf,
   userLoadingSelector,
-} from "../../../store/User/userSlice";
+} from 'store/User/userSlice';
 import {
   siteDetailsSelector,
   siteLoadingSelector,
   siteRequest,
-} from "../../../store/Sites/selectedSiteSlice";
-import { SiteApplication, SiteApplyParams } from "../../../store/Sites/types";
-import { isAdmin } from "../../../helpers/user";
+} from 'store/Sites/selectedSiteSlice';
+import { SiteApplication, SiteApplyParams } from 'store/Sites/types';
+import { isAdmin } from 'helpers/user';
+import SignInDialog from 'common/SignInDialog';
+import RegisterDialog from 'common/RegisterDialog';
+import NavBar from 'common/NavBar';
+import Footer from 'common/Footer';
+import siteServices from 'services/siteServices';
+import { AgreementsChecked } from './types';
+import Obligations from './Obligations';
+import Agreements from './Agreements';
+import Form from './Form';
 
 const Apply = ({ match, classes }: ApplyProps) => {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
       shipping: false,
       buoy: false,
       survey: false,
-    }
+    },
   );
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -65,13 +65,13 @@ const Apply = ({ match, classes }: ApplyProps) => {
 
   useEffect(() => {
     if (!user) {
-      setMessage("You need to sign up to access this page");
+      setMessage('You need to sign up to access this page');
       setUnauthorized(false);
       return;
     }
     if (!isAdmin(user, siteId)) {
       setMessage(
-        "You are not authorized to access this page. If this is an error, contact"
+        'You are not authorized to access this page. If this is an error, contact',
       );
       setUnauthorized(true);
     }
@@ -89,11 +89,11 @@ const Apply = ({ match, classes }: ApplyProps) => {
         .catch(({ response }: AxiosError) => {
           if (response?.data.statusCode === 403) {
             setMessage(
-              "You are not authorized to access this page. If this is an error, contact"
+              'You are not authorized to access this page. If this is an error, contact',
             );
             setUnauthorized(true);
           } else {
-            setMessage("There was an error getting the application");
+            setMessage('There was an error getting the application');
             setUnauthorized(false);
           }
         })
@@ -111,7 +111,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
         [label]: !agreementsChecked[label],
       });
     },
-    [agreementsChecked]
+    [agreementsChecked],
   );
 
   const agreed = (): boolean => {
@@ -131,20 +131,20 @@ const Apply = ({ match, classes }: ApplyProps) => {
               return siteServices.updateSite(
                 siteId,
                 { name: siteName },
-                user.token
+                user.token,
               );
             }
           })
-          .then(() => setMessage("Thank you for applying"))
-          .catch(() => setMessage("Something went wrong"))
+          .then(() => setMessage('Thank you for applying'))
+          .catch(() => setMessage('Something went wrong'))
           .finally(() => setLoading(false));
       }
     },
-    [user, site, siteApplication, siteId]
+    [user, site, siteApplication, siteId],
   );
 
   const { name } = (site && getSiteNameAndRegion(site)) || {};
-  const siteName = name || "Edit Site Name on Site Details Page.";
+  const siteName = name || 'Edit Site Name on Site Details Page.';
 
   return (
     <>
@@ -165,7 +165,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             className={classes.thankYouMessage}
             container
             alignItems="center"
-            justify="center"
+            justifyContent="center"
           >
             <CircularProgress size="4rem" thickness={2} />
           </Grid>
@@ -176,7 +176,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             className={classes.thankYouMessage}
             container
             alignItems="center"
-            justify="center"
+            justifyContent="center"
             direction="column"
           >
             <Grid item>
@@ -185,7 +185,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
                 gutterBottom
                 variant="h3"
               >
-                {message}{" "}
+                {message}{' '}
                 {unauthorized && (
                   <a
                     className={`${classes.mail} ${classes.link}`}
@@ -244,7 +244,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             </Grid>
           </Container>
           <Container>
-            <Grid container justify="space-between">
+            <Grid container justifyContent="space-between">
               <Grid item xs={11} md={6}>
                 <Obligations />
                 <Agreements
@@ -272,24 +272,24 @@ const Apply = ({ match, classes }: ApplyProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     welcomeMessage: {
-      marginTop: "3rem",
-      marginBottom: "5rem",
+      marginTop: '3rem',
+      marginBottom: '5rem',
     },
     thankYouMessage: {
-      height: "100%",
+      height: '100%',
     },
     coloredMessage: {
       color: theme.palette.primary.main,
-      textAlign: "center",
+      textAlign: 'center',
     },
     mail: {
-      marginLeft: "0.2rem",
+      marginLeft: '0.2rem',
     },
     link: {
-      color: "inherit",
-      textDecoration: "none",
-      "&:hover": {
-        textDecoration: "none",
+      color: 'inherit',
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'none',
       },
     },
   });

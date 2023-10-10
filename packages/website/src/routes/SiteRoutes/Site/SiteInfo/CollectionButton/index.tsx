@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Tooltip,
   IconButton,
@@ -7,18 +7,20 @@ import {
   WithStyles,
   withStyles,
   Theme,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  createCollectionRequest,
   setCollectionSites,
+  userCollectionLoadingSelector,
+  userErrorSelector,
   userInfoSelector,
-} from "../../../../../store/User/userSlice";
-import { belongsToCollection } from "../../../../../helpers/siteUtils";
-import { hasCollection } from "../../../../../helpers/user";
-import { ReactComponent as WatchIcon } from "../../../../../assets/watch.svg";
-import { ReactComponent as UnWatchIcon } from "../../../../../assets/unwatch.svg";
-import collectionServices from "../../../../../services/collectionServices";
+} from 'store/User/userSlice';
+import { belongsToCollection } from 'helpers/siteUtils';
+import collectionServices from 'services/collectionServices';
+import { ReactComponent as WatchIcon } from '../../../../../assets/watch.svg';
+import { ReactComponent as UnWatchIcon } from '../../../../../assets/unwatch.svg';
 
 const CollectionButton = ({
   siteId,
@@ -28,14 +30,35 @@ const CollectionButton = ({
   const theme = useTheme();
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
+  const userCollectionLoading = useSelector(userCollectionLoadingSelector);
+  const userError = useSelector(userErrorSelector);
   const [collectionActionLoading, setCollectionActionLoading] = useState(false);
   const siteBelongsToCollection = belongsToCollection(
     siteId,
-    user?.collection?.siteIds
+    user?.collection?.siteIds,
   );
 
+  useEffect(() => {
+    if (userError) errorCallback();
+  }, [errorCallback, userError]);
+
+  useEffect(() => {
+    if (!userCollectionLoading) {
+      setCollectionActionLoading(false);
+    }
+  }, [userCollectionLoading]);
+
   const onAddSiteToCollection = () => {
-    if (user?.token && user?.collection && !siteBelongsToCollection) {
+    if (user?.token && !user.collection) {
+      setCollectionActionLoading(true);
+      dispatch(
+        createCollectionRequest({
+          name: `${user.fullName}'s collection`,
+          siteIds: [siteId],
+          token: user.token,
+        }),
+      );
+    } else if (user?.token && user?.collection && !siteBelongsToCollection) {
       setCollectionActionLoading(true);
       collectionServices
         .updateCollection(
@@ -43,7 +66,7 @@ const CollectionButton = ({
             id: user.collection.id,
             addSiteIds: [siteId],
           },
-          user.token
+          user.token,
         )
         .then(() => {
           if (user?.collection) {
@@ -64,14 +87,14 @@ const CollectionButton = ({
             id: user.collection.id,
             removeSiteIds: [siteId],
           },
-          user.token
+          user.token,
         )
         .then(() => {
           if (user?.collection) {
             dispatch(
               setCollectionSites(
-                user.collection.siteIds.filter((item) => item !== siteId)
-              )
+                user.collection.siteIds.filter((item) => item !== siteId),
+              ),
             );
           }
         })
@@ -80,16 +103,12 @@ const CollectionButton = ({
     }
   };
 
-  if (!hasCollection(user)) {
-    return null;
-  }
-
   return (
     <Tooltip
       title={
         siteBelongsToCollection
-          ? "Remove from your dashboard"
-          : "Add to your dashboard"
+          ? 'Remove from your dashboard'
+          : 'Add to your dashboard'
       }
       arrow
       placement="top"

@@ -1,6 +1,6 @@
-import React from "react";
-import { LayersControl, TileLayer } from "react-leaflet";
-import { MapLayerName } from "../../../store/Homepage/types";
+import React from 'react';
+import { LayersControl, TileLayer, WMSTileLayer } from 'react-leaflet';
+import { MapLayerName } from 'store/Homepage/types';
 
 type SofarLayerDefinition = {
   name: MapLayerName;
@@ -9,18 +9,32 @@ type SofarLayerDefinition = {
   cmap: string;
 };
 
+type WMSLayerDefinition = {
+  name: MapLayerName;
+  layer: string;
+  url: string;
+};
+
 const SOFAR_LAYERS: SofarLayerDefinition[] = [
   {
-    name: "Sea Surface Temperature",
-    model: "NOAACoralReefWatch",
-    variableId: "analysedSeaSurfaceTemperature",
-    cmap: "turbo",
+    name: 'Sea Surface Temperature',
+    model: 'NOAACoralReefWatch',
+    variableId: 'analysedSeaSurfaceTemperature',
+    cmap: 'turbo',
   },
   {
-    name: "Heat Stress",
-    model: "NOAACoralReefWatch",
-    variableId: "degreeHeatingWeek",
-    cmap: "noaacoral",
+    name: 'Heat Stress',
+    model: 'NOAACoralReefWatch',
+    variableId: 'degreeHeatingWeek',
+    cmap: 'noaacoral',
+  },
+];
+
+const WMS_LAYERS: WMSLayerDefinition[] = [
+  {
+    name: 'SST Anomaly',
+    url: 'https://www.ncei.noaa.gov/thredds/wms/ncFC/fc-oisst-daily-avhrr-only-dly-prelim/OISST_Preliminary_Daily_AVHRR-only_Feature_Collection_best.ncd?COLORSCALERANGE=-5,5',
+    layer: 'anom',
   },
 ];
 
@@ -51,6 +65,22 @@ export const SofarLayers = ({ defaultLayerName }: SofarLayersProps) => {
             url={sofarUrlFromDef(def)}
             key={def.variableId}
             opacity={0.5}
+          />
+        </LayersControl.BaseLayer>
+      ))}
+      {WMS_LAYERS.map((def) => (
+        <LayersControl.BaseLayer
+          checked={def.name === defaultLayerName}
+          name={def.name}
+          key={def.name}
+        >
+          <WMSTileLayer
+            layers={def.layer}
+            styles="boxfill/x-sst"
+            transparent
+            format="image/png"
+            opacity={0.7}
+            url={def.url}
           />
         </LayersControl.BaseLayer>
       ))}

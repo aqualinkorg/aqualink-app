@@ -1,33 +1,32 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Theme,
   Grid,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-import { SurveyMedia } from "../../../../store/Survey/types";
+import { SurveyMediaUpdateRequestData } from 'store/Survey/types';
+import {
+  selectedSurveyPointSelector,
+  surveyMediaEditRequest,
+} from 'store/Survey/surveySlice';
+import { userInfoSelector } from 'store/User/userSlice';
 import {
   getNumberOfImages,
   getNumberOfVideos,
   getSurveyPointsByName,
-} from "../../../../helpers/surveyMedia";
-import {
-  surveyLoadingSelector,
-  selectedSurveyPointSelector,
-  setFeaturedImage,
-} from "../../../../store/Survey/surveySlice";
-import { userInfoSelector } from "../../../../store/User/userSlice";
-import surveyServices from "../../../../services/surveyServices";
-import { isAdmin } from "../../../../helpers/user";
-import SliderCard from "./SliderCard";
-import MediaCount from "./MediaCount";
-import MediaPointName from "./MediaPointName";
+} from 'helpers/surveyMedia';
+import { isAdmin } from 'helpers/user';
+import { ArrayElement } from 'utils/types';
+import SliderCard from './SliderCard';
+import MediaCount from './MediaCount';
+import MediaPointName from './MediaPointName';
 
 const carouselSettings = {
   dots: true,
@@ -45,65 +44,65 @@ const carouselSettings = {
   ],
 };
 
-const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
+const MediaDetails = ({ siteId, point, classes }: MediaDetailsProps) => {
+  const [editing, setEditing] = React.useState(false);
+  const [editSurveyPointId, setEditSurveyPointId] = React.useState<
+    number | undefined
+  >(point.pointId);
   const user = useSelector(userInfoSelector);
-  const loading = useSelector(surveyLoadingSelector);
   const selectedPoi = useSelector(selectedSurveyPointSelector);
   const dispatch = useDispatch();
 
-  const onSurveyMediaUpdate = (mediaId: number) => {
+  const onSurveyMediaUpdate = (
+    mediaId: number,
+    data: Partial<SurveyMediaUpdateRequestData>,
+  ) => {
     if (user && user.token) {
-      surveyServices
-        .editSurveyMedia(siteId, mediaId, { featured: true }, user.token)
-        .then(() => {
-          dispatch(setFeaturedImage(mediaId));
-        })
-        .catch(console.error);
+      dispatch(
+        surveyMediaEditRequest({ siteId, mediaId, data, token: user.token }),
+      );
     }
   };
 
-  return (
-    <>
-      {surveyMedia &&
-        getSurveyPointsByName(surveyMedia).map((point) => {
-          const images = getNumberOfImages(point.surveyMedia);
-          const videos = getNumberOfVideos(point.surveyMedia);
+  const images = getNumberOfImages(point.surveyMedia);
+  const videos = getNumberOfVideos(point.surveyMedia);
 
-          return (
-            <div key={point.name}>
-              <Grid
-                className={classes.title}
-                container
-                spacing={1}
-                alignItems="center"
-              >
-                <Grid className={classes.surveyPointNameWrapper} item>
-                  <MediaPointName
-                    siteId={siteId}
-                    pointName={point.name}
-                    pointId={point.pointId}
-                    selectedPoint={selectedPoi}
-                  />
-                </Grid>
-                <Grid item>
-                  <MediaCount images={images} videos={videos} />
-                </Grid>
-              </Grid>
-              <Slider className={classes.carousel} {...carouselSettings}>
-                {point.surveyMedia.map((media) => (
-                  <SliderCard
-                    key={media.url}
-                    media={media}
-                    loading={loading}
-                    isSiteAdmin={isAdmin(user, siteId)}
-                    onSurveyMediaUpdate={onSurveyMediaUpdate}
-                  />
-                ))}
-              </Slider>
-            </div>
-          );
-        })}
-    </>
+  return (
+    <div key={point.name}>
+      <Grid className={classes.title} container spacing={1} alignItems="center">
+        <Grid className={classes.surveyPointNameWrapper} item>
+          <MediaPointName
+            siteId={siteId}
+            pointName={point.name}
+            pointId={point.pointId}
+            selectedPoint={selectedPoi}
+            editing={editing}
+            editSurveyPointId={editSurveyPointId}
+            setEditSurveyPointId={setEditSurveyPointId}
+          />
+        </Grid>
+        <Grid item>
+          <MediaCount images={images} videos={videos} />
+        </Grid>
+      </Grid>
+      <Slider
+        className={classes.carousel}
+        {...carouselSettings}
+        beforeChange={() => setEditing(false)}
+      >
+        {point.surveyMedia.map((media) => (
+          <SliderCard
+            key={media.url}
+            media={media}
+            editing={editing}
+            editSurveyPointId={editSurveyPointId}
+            setEditing={setEditing}
+            isSiteAdmin={isAdmin(user, siteId)}
+            onSurveyMediaUpdate={onSurveyMediaUpdate}
+          />
+        ))}
+      </Slider>
+    </div>
   );
 };
 
@@ -113,24 +112,20 @@ const styles = (theme: Theme) =>
       margin: theme.spacing(0, 1),
     },
     surveyPointNameWrapper: {
-      width: "70%",
-      [theme.breakpoints.down("sm")]: {
-        width: "90%",
+      width: '70%',
+      [theme.breakpoints.down('sm')]: {
+        width: '90%',
       },
     },
     carousel: {
-      marginBottom: "2rem",
+      marginBottom: '2rem',
     },
   });
 
 interface MediaDetailsIncomingProps {
   siteId: number;
-  surveyMedia?: SurveyMedia[] | null;
+  point: ArrayElement<ReturnType<typeof getSurveyPointsByName>>;
 }
-
-MediaDetails.defaultProps = {
-  surveyMedia: null,
-};
 
 type MediaDetailsProps = MediaDetailsIncomingProps & WithStyles<typeof styles>;
 

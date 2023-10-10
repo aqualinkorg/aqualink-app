@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Box,
@@ -8,9 +8,9 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-} from "@material-ui/core";
-import { ArrowBack } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+} from '@material-ui/core';
+import { ArrowBack } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const BackButton = ({ siteId, bgColor, classes }: BackButtonProps) => {
   return (
@@ -36,11 +36,11 @@ const BackButton = ({ siteId, bgColor, classes }: BackButtonProps) => {
 const styles = () =>
   createStyles({
     backButtonWrapper: {
-      margin: "48px 0 16px 0",
+      margin: '48px 0 16px 0',
     },
 
     backButtonText: {
-      textTransform: "none",
+      textTransform: 'none',
     },
   });
 

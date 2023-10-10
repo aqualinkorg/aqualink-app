@@ -1,17 +1,17 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
-import { mockUser } from "../../mocks/mockUser";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { mockUser } from 'mocks/mockUser';
 
-import Buoy from ".";
+import Buoy from '.';
 
-jest.mock("../../common/NavBar", () => "Mock-NavBar");
-jest.mock("../../common/Footer", () => "Mock-Footer");
+jest.mock('common/NavBar', () => 'Mock-NavBar');
+jest.mock('common/Footer', () => 'Mock-Footer');
 
 const mockStore = configureStore([]);
-describe("Buoy", () => {
+describe('Buoy', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -29,11 +29,11 @@ describe("Buoy", () => {
         <Router>
           <Buoy />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

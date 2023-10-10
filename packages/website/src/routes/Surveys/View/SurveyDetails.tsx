@@ -1,38 +1,35 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
   createStyles,
   Grid,
   Typography,
-} from "@material-ui/core";
-import { useSelector } from "react-redux";
+} from '@material-ui/core';
 
+import type { Site } from 'store/Sites/types';
+import type { SurveyState } from 'store/Survey/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
 import {
   getNumberOfImages,
   getNumberOfSurveyPoints,
-} from "../../../helpers/surveyMedia";
-import { displayTimeInLocalTimezone } from "../../../helpers/dates";
-import type { Site } from "../../../store/Sites/types";
-import type { SurveyState } from "../../../store/Survey/types";
-import { getSiteNameAndRegion } from "../../../store/Sites/helpers";
-import ObservationBox from "./ObservationBox";
-import { siteGranularDailyDataSelector } from "../../../store/Sites/selectedSiteSlice";
+} from 'helpers/surveyMedia';
+import ObservationBox from './ObservationBox';
 
 const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
-  const dailyData = useSelector(siteGranularDailyDataSelector);
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getSiteNameAndRegion(site);
   return (
-    <Grid container item xs={12} justify="space-between" spacing={2}>
+    <Grid container item xs={12} justifyContent="space-between" spacing={2}>
       {survey && (
         <Grid container item direction="column" spacing={3} xs={12} lg={8}>
           <Grid item>
             <Typography variant="subtitle1">
               {displayTimeInLocalTimezone({
                 isoDate: survey.diveDate,
-                format: "MM/DD/YYYY [at] h:mm A",
+                format: "LL/dd/yyyy 'at' h:mm a",
                 displayTimezone: false,
                 timeZone: site.timezone,
               })}
@@ -60,7 +57,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
                 variant="h6"
                 className={classes.inlineText}
               >
-                SURVEY POINT{nSurveyPoints === 1 ? "" : "S"}
+                SURVEY POINT{nSurveyPoints === 1 ? '' : 'S'}
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -76,7 +73,7 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
                 variant="h6"
                 className={classes.inlineText}
               >
-                IMAGE{nImages === 1 ? "" : "S"}
+                IMAGE{nImages === 1 ? '' : 'S'}
               </Typography>
             </Grid>
           </Grid>
@@ -88,12 +85,11 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
           )}
         </Grid>
       )}
-
       <Grid item xs={12} md={6} lg={3}>
         <ObservationBox
           depth={site.depth}
           date={survey?.diveDate}
-          dailyData={dailyData || []}
+          satelliteTemperature={survey?.satelliteTemperature}
         />
       </Grid>
     </Grid>
@@ -106,13 +102,13 @@ const styles = () =>
       fontSize: 18,
     },
     siteName: {
-      maxWidth: "95%",
-      overflowWrap: "break-word",
+      maxWidth: '95%',
+      overflowWrap: 'break-word',
     },
     inlineText: {
-      display: "inline",
-      fontWeight: "normal",
-      marginLeft: "0.5rem",
+      display: 'inline',
+      fontWeight: 'normal',
+      marginLeft: '0.5rem',
     },
   });
 

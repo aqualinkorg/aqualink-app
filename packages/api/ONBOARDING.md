@@ -46,7 +46,8 @@ The project uses an ORM, **TypeORM**. Changes on entities (a different name for 
 #### Existing issues with the migrations
 
 - In order for typeORM to understand that a view exists it needs to add it to a metadata table. However this caused some issues, so we didn't add it and it keeps trying to create the existing view `latest_data`.
-- Also if you need to change the schema of the view or perform changes on its dependent tables (`time_series`, `sources`), drop and recreate it based on the latest migration (`1623058289647-AddWeeklyAlertMetric.ts`)
+- Also if you need to change the schema of the view or perform changes on its dependent tables (`time_series`, `sources`), drop and recreate it based on the latest migration (`1669109147094-FixTypeorm.ts`).
+- In some cases automatically generated migrations may try to drop `IDX_time_series_metric_source_timestamp_DESC`.
 
 ### Firebase
 
@@ -58,7 +59,7 @@ The project uses **Google Storage** for storing files in buckets.
 
 ### Cloud Functions
 
-You can access those either through `firebase -> functions` or through `google cloud -> cloud functions`. Their main purpose is to perform periodical updates of the data. Their definitions exist in `cloud-functions/index.ts`, in the root folder of the api package. The package used to create the functions is `firebase-functions`
+You can access those either through `firebase -> functions` or through `google cloud -> cloud functions`. Their main purpose is to perform periodical updates of the data. Their definitions exist in `cloud-functions/index.ts`, in the root folder of the api package. The package used to create the functions is `firebase-functions`. When creating new file or folders that don't need to be sent to firebase, add them to the `"ignore"` field in `firebase.json`.
 
 #### pingService
 
@@ -114,8 +115,13 @@ Spotter data are discarded if the date-sensorId exists in ExclusionDates
 #### scheduledVideoStreamsCheck
 
 - **Description**: A function that checks all sites' video stream and reports any irregularities (stream is not live, stream does not exist etc)
-- **Period**: Runs every day at midnight PST
+- **Period**: Runs every day at midnight PT
 - **Implementation**: Video Streams are currently YouTube streams so a Google API key (Firebase key is used) is needed in order to fetch the details of each video.
+
+#### scheduledBuoysStatusCheck
+- **Description**: A function that checks if spotter buoys have received data recently and notifies slack accordingly 
+- **Period**: Runs every day at midnight PT
+- **Implementation**: Uses the `latest_data` materialized view to check if data from the spotter where received recently 
 
 All errors are reported on the stdout and on the slack bot `Video Stream Alerter`. To report the error on slack a bot api key and a target channel are needed. For more details about message formating in Slack visit https://api.slack.com/reference/surfaces/formatting
 
@@ -127,11 +133,11 @@ All previously mentioned functions (except scheduledVideoStreamsCheck and pingSe
 
 - scheduledDailyUpdate: (2 options)
   - `yarn daily-worker` (no backfill functionality)
-  - `yarn backfill-daily-data -d days-to-backfill [-r siteId1 siteId2 ...]`
+  - `yarn backfill-daily-data -d days-to-backfill [-s siteId1 siteId2 ...]`
 - scheduledSSTTimeSeriesUpdate
-  - `yarn backfill-sofar-time-series -t sst_backfill -d days-to-backfill [-r siteId1 siteId2 ...]`
+  - `yarn backfill-sofar-time-series -t sst_backfill -d days-to-backfill [-s siteId1 siteId2 ...]`
 - scheduledSpotterTimeSeriesUpdate
-  - `yarn backfill-sofar-time-series -t spotter_backfill -d days-to-backfill [-r siteId1 siteId2 ...]`
+  - `yarn backfill-sofar-time-series -t spotter_backfill -d days-to-backfill [-s siteId1 siteId2 ...]`
 
 The rest of the scripts are used to either augment the models with missing data or perform backfills further back in the past than what Sofar is capable of:
 
@@ -145,6 +151,7 @@ The rest of the scripts are used to either augment the models with missing data 
   - Make sure that the `sitesToProcess` array is populated with the desired siteIds to process, before running the script
 - Wind-wave data: Update hindcast data in `forecast_data` table
   - `yarn update-wind-wave-date [-s siteId1 siteId2 ...]`
+- `fill-noaa-nearest-point` requires optional dependency `netcdf4` to run. You may have trouble installing it with python versions at or above `3.11`. `Python 3.10.6` is tested to build the package successfully.
 
 ### Swagger API docs
 
@@ -172,7 +179,7 @@ Since this is a materialized view, we need to reload any time we make any update
 For example at the end of `utils/spotter-time-series.ts` script we run the following:
 
 ```ts
-connection.query('REFRESH MATERIALIZED VIEW latest_data');
+refreshMaterializedView(repository)
 ```
 
 **\*** TypeORM does not allow complex syntax on indices, so we edited the generated migration (`1622124846208-RefactorTimeSeries.ts`) to include the descending order on timestamps.

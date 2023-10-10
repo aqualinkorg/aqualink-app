@@ -10,24 +10,24 @@ import {
   useTheme,
   WithStyles,
   withStyles,
-} from "@material-ui/core";
-import ErrorIcon from "@material-ui/icons/Error";
-import React, { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { TableRow as Row } from "../../../store/Homepage/types";
-import { constructTableData } from "../../../store/Sites/helpers";
-import { colors } from "../../../layout/App/theme";
-import { dhwColorFinder } from "../../../helpers/degreeHeatingWeeks";
-import { formatNumber } from "../../../helpers/numberUtils";
-import { sitesToDisplayListSelector } from "../../../store/Sites/sitesListSlice";
+} from '@material-ui/core';
+import ErrorIcon from '@material-ui/icons/Error';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { TableRow as Row } from 'store/Homepage/types';
+import { constructTableData } from 'store/Sites/helpers';
+import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
 import {
   siteOnMapSelector,
   setSiteOnMap,
   setSearchResult,
-} from "../../../store/Homepage/homepageSlice";
-import { getComparator, Order, OrderKeys, stableSort } from "./utils";
-import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
-import { Collection } from "../../Dashboard/collection";
+} from 'store/Homepage/homepageSlice';
+import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
+import { formatNumber } from 'helpers/numberUtils';
+import { alertColorFinder } from 'helpers/bleachingAlertIntervals';
+import { colors } from 'layout/App/theme';
+import { getComparator, Order, OrderKeys, stableSort } from './utils';
+import { Collection } from '../../Dashboard/collection';
 
 const SCROLLT_TIMEOUT = 500;
 
@@ -36,7 +36,7 @@ const RowNameCell = ({
   classes,
 }: {
   site: Row;
-  classes: SiteTableBodyProps["classes"];
+  classes: SiteTableBodyProps['classes'];
 }) => {
   return (
     <TableCell className={classes.nameCells}>
@@ -65,7 +65,7 @@ const RowNumberCell = ({
   unit?: string;
   value: number | null;
   decimalPlaces?: number;
-  classes: SiteTableBodyProps["classes"];
+  classes: SiteTableBodyProps['classes'];
   isExtended?: boolean;
 }) => {
   return (
@@ -96,7 +96,7 @@ const RowAlertCell = ({
   classes,
 }: {
   site: Row;
-  classes: SiteTableBodyProps["classes"];
+  classes: SiteTableBodyProps['classes'];
 }) => {
   return (
     <TableCell className={classes.cellTextAlign}>
@@ -110,7 +110,7 @@ const RowAlertCell = ({
 };
 
 RowNumberCell.defaultProps = {
-  unit: "",
+  unit: '',
   color: colors.black,
   decimalPlaces: 1,
   isExtended: false,
@@ -129,22 +129,22 @@ const SiteTableBody = ({
   const storedSites = useSelector(sitesToDisplayListSelector);
   const sitesList = useMemo(
     () => collection?.sites || storedSites || [],
-    [collection, storedSites]
+    [collection, storedSites],
   );
   const siteOnMap = useSelector(siteOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const mapElement = document.getElementById("sites-map");
+  const mapElement = document.getElementById('sites-map');
 
   const handleClick = (event: unknown, site: Row) => {
     setSelectedRow(site.tableData.id);
     dispatch(setSearchResult());
     dispatch(setSiteOnMap(sitesList[site.tableData.id]));
     if (scrollPageOnSelection && mapElement) {
-      mapElement.scrollIntoView({ block: "center", behavior: "smooth" });
+      mapElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
   };
 
@@ -159,8 +159,8 @@ const SiteTableBody = ({
     // only scroll if not on mobile (info at the top is more useful than the site row)
     if (child && !isTablet && scrollTableOnSelection) {
       setTimeout(
-        () => child.scrollIntoView({ block: "center", behavior: "smooth" }),
-        SCROLLT_TIMEOUT
+        () => child.scrollIntoView({ block: 'center', behavior: 'smooth' }),
+        SCROLLT_TIMEOUT,
       );
     }
   }, [isTablet, scrollTableOnSelection, selectedRow]);
@@ -169,7 +169,7 @@ const SiteTableBody = ({
     <TableBody>
       {stableSort<Row>(
         constructTableData(sitesList),
-        getComparator(order, orderBy)
+        getComparator(order, orderBy),
       ).map((site) => {
         return (
           <TableRow
@@ -180,7 +180,7 @@ const SiteTableBody = ({
               backgroundColor:
                 site.tableData.id === selectedRow
                   ? colors.lighterBlue
-                  : "white",
+                  : 'white',
             }}
             onClick={(event) => handleClick(event, site)}
             role="button"
@@ -259,37 +259,37 @@ const styles = (theme: Theme) =>
     nameCells: {
       paddingLeft: 10,
       maxWidth: 120,
-      overflowWrap: "break-word",
-      [theme.breakpoints.down("xs")]: { width: "35%", paddingRight: 0 },
+      overflowWrap: 'break-word',
+      [theme.breakpoints.down('xs')]: { width: '35%', paddingRight: 0 },
     },
     extendedTableNameCells: {
       paddingLeft: 10,
       maxWidth: 200,
-      overflowWrap: "break-word",
-      [theme.breakpoints.down("xs")]: { width: "10%", paddingRight: 0 },
+      overflowWrap: 'break-word',
+      [theme.breakpoints.down('xs')]: { width: '10%', paddingRight: 0 },
     },
     regionName: {
-      color: "gray",
+      color: 'gray',
     },
     numberCellsTitle: {
-      [theme.breakpoints.down("xs")]: { fontWeight: 600 },
+      [theme.breakpoints.down('xs')]: { fontWeight: 600 },
     },
     cellTextAlign: {
-      textAlign: "left",
-      [theme.breakpoints.down("xs")]: {
-        textAlign: "right",
+      textAlign: 'left',
+      [theme.breakpoints.down('xs')]: {
+        textAlign: 'right',
       },
     },
     cellTextAlignExtended: {
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         paddingLeft: 10,
         paddingRight: 0,
-        textAlign: "left",
+        textAlign: 'left',
       },
     },
     tableRow: {
-      cursor: "pointer",
-      borderTop: `1px solid ${theme.palette.grey["300"]}`,
+      cursor: 'pointer',
+      borderTop: `1px solid ${theme.palette.grey['300']}`,
     },
   });
 

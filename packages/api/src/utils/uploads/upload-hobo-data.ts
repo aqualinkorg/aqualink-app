@@ -1,5 +1,5 @@
 import { chunk, Dictionary, groupBy, isNaN, keyBy, minBy } from 'lodash';
-import { Repository } from 'typeorm';
+import { DataSource, ObjectLiteral, Repository } from 'typeorm';
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -9,14 +9,13 @@ import fs from 'fs';
 import path from 'path';
 import { CastingContext, CastingFunction } from 'csv-parse';
 import { Point, GeoJSON } from 'geojson';
-import moment from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
 import parse from 'csv-parse/lib/sync';
 
+import { DateTime } from '../../luxon-extensions';
 import { Site, SiteStatus } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
-import { Metric } from '../../time-series/metrics.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
 import { User } from '../../users/users.entity';
 import { Survey, WeatherConditions } from '../../surveys/surveys.entity';
@@ -35,6 +34,8 @@ import { HistoricalMonthlyMean } from '../../sites/historical-monthly-mean.entit
 import { createPoint } from '../coordinates';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
+import { refreshMaterializedView } from '../time-series.utils';
+import { Metric } from '../../time-series/metrics.enum';
 
 /**
  * Parse csv data
@@ -148,12 +149,12 @@ const castCsvValues =
  * @param repository The repository for the entity
  * @param polygon The polygon value
  */
-const handleEntityDuplicate = <T>(
+const handleEntityDuplicate = <T extends ObjectLiteral>(
   repository: Repository<T>,
   query: (
     repository: Repository<T>,
     polygon?: GeoJSON | null,
-  ) => Promise<T | undefined>,
+  ) => Promise<T | null>,
   polygon?: GeoJSON | null,
 ) => {
   return (err) => {
@@ -286,7 +287,9 @@ const createSites = async (
 
       return Promise.all([
         getHistoricalMonthlyMeans(longitude, latitude),
-        historicalMonthlyMeanRepository.findOne({ where: { site } }),
+        historicalMonthlyMeanRepository.findOne({
+          where: { site: { id: site.id } },
+        }),
       ]).then(([historicalMonthlyMean, found]) => {
         if (found || !historicalMonthlyMean) {
           logger.warn(`Site ${site.id} has already monthly max data`);
@@ -410,8 +413,8 @@ const createSources = async (
         .findOne({
           relations: ['surveyPoint', 'site'],
           where: {
-            site: source.site,
-            surveyPoint: source.poi,
+            site: { id: source.site.id },
+            surveyPoint: { id: source.poi.id },
             type: source.type,
           },
         })
@@ -486,9 +489,9 @@ const parseHoboData = async (
         return [parseInt(siteId, 10), 0];
       }
 
-      const start = moment(startDate.timestamp);
-      const end = moment();
-      const diff = Math.min(end.diff(start, 'd'), 200);
+      const start = DateTime.fromJSDate(startDate.timestamp);
+      const end = DateTime.now();
+      const diff = Math.min(end.diff(start, 'days').days, 200);
 
       return [startDate.source.site.id, diff];
     },
@@ -557,8 +560,8 @@ const uploadSitePhotos = async (
         ).parse();
         const createdDate =
           data.tags && data.tags.CreateDate
-            ? moment.unix(data.tags.CreateDate).toDate()
-            : moment().toDate();
+            ? DateTime.fromSeconds(data.tags.CreateDate).toJSDate()
+            : DateTime.now().toJSDate();
         return {
           imagePath: path.join(colonyFolderPath, image),
           site: poi.site,
@@ -607,10 +610,17 @@ const uploadSitePhotos = async (
   await surveyMediaRepository.save(surveyMedia);
 };
 
-export const performBackfill = (siteDiffDays: [number, number][]) => {
+export const performBackfill = (
+  siteDiffDays: [number, number][],
+  dataSource: DataSource,
+) => {
   siteDiffDays.forEach(([siteId, diff]) => {
     logger.log(`Performing backfill for site ${siteId} for ${diff} days`);
-    backfillSiteData(siteId, diff);
+    backfillSiteData({
+      siteId,
+      days: diff,
+      dataSource,
+    });
   });
 };
 
@@ -621,6 +631,7 @@ export const uploadHoboData = async (
   email: string,
   googleCloudService: GoogleCloudService,
   repositories: Repositories,
+  dataSource: DataSource,
 ): Promise<Record<string, number>> => {
   // Grab user and check if they exist
   const user = await repositories.userRepository.findOne({
@@ -705,13 +716,10 @@ export const uploadHoboData = async (
     { concurrency: 1 },
   );
 
-  performBackfill(siteDiffArray.flat());
+  performBackfill(siteDiffArray.flat(), dataSource);
 
   // Update materialized view
-  logger.log('Refreshing materialized view latest_data');
-  repositories.dataUploadsRepository.query(
-    'REFRESH MATERIALIZED VIEW latest_data',
-  );
+  refreshMaterializedView(repositories.dataUploadsRepository);
 
   return dbIdToCSVId;
 };

@@ -1,6 +1,6 @@
-import { DataRange, ValueWithTimestamp } from "../../../store/Sites/types";
+import { DataRange, ValueWithTimestamp } from 'store/Sites/types';
 
-export type RangeValue = "one_month" | "one_year" | "max" | "custom";
+export type RangeValue = 'one_month' | 'one_year' | 'max' | 'custom';
 
 export interface RangeButton {
   id: RangeValue;
@@ -29,4 +29,9 @@ export interface OceanSenseDataset {
 export interface AvailableRange {
   name: string;
   data?: DataRange[];
+}
+
+export interface CSVColumnData {
+  name: string;
+  values: ValueWithTimestamp[];
 }

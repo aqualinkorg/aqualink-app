@@ -1,5 +1,5 @@
-import React, { ChangeEvent, ReactNode, useState } from "react";
-import { times } from "lodash";
+import React, { ChangeEvent, ReactNode, useState } from 'react';
+import { times } from 'lodash';
 import {
   Box,
   CircularProgress,
@@ -15,26 +15,26 @@ import {
   Typography,
   withStyles,
   WithStyles,
-} from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import classNames from "classnames";
-import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
-import SelectedSiteCard from "./SelectedSiteCard";
-import SiteTableBody from "./body";
-import { getOrderKeysFriendlyString, Order, OrderKeys } from "./utils";
+} from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames';
+import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import {
   filterSitesWithSpotter,
   sitesListLoadingSelector,
-} from "../../../store/Sites/sitesListSlice";
-import EnhancedTableHead from "./tableHead";
-import { useWindowSize } from "../../../hooks/useWindowSize";
+} from 'store/Sites/sitesListSlice';
 import {
   siteOnMapSelector,
   setWithSpotterOnly,
   withSpotterOnlySelector,
-} from "../../../store/Homepage/homepageSlice";
-import { getSiteNameAndRegion } from "../../../store/Sites/helpers";
-import { Collection } from "../../Dashboard/collection";
+} from 'store/Homepage/homepageSlice';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { useWindowSize } from 'hooks/useWindowSize';
+import SelectedSiteCard from './SelectedSiteCard';
+import SiteTableBody from './body';
+import { getOrderKeysFriendlyString, Order, OrderKeys } from './utils';
+import EnhancedTableHead from './tableHead';
+import { Collection } from '../../Dashboard/collection';
 
 const SMALL_HEIGHT = 720;
 
@@ -51,13 +51,13 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
     (elements, val) => [
       ...elements,
       ...times(2, (i) => {
-        const itemOrder: Order = i % 2 === 0 ? "asc" : "desc";
+        const itemOrder: Order = i % 2 === 0 ? 'asc' : 'desc';
         return (
           <MenuItem value={`${val}-${itemOrder}`} key={val + i}>
             <Typography color="primary" variant="h4">
               {getOrderKeysFriendlyString(val)}
-              {"  "}
-              {itemOrder === "asc" ? (
+              {'  '}
+              {itemOrder === 'asc' ? (
                 <ArrowDownward fontSize="small" />
               ) : (
                 <ArrowUpward fontSize="small" />
@@ -67,7 +67,7 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
         );
       }),
     ],
-    []
+    [],
   );
 
 const SiteTable = ({
@@ -86,12 +86,12 @@ const SiteTable = ({
   const dispatch = useDispatch();
   const { height } = useWindowSize() || {};
 
-  const [order, setOrder] = useState<Order>("desc");
+  const [order, setOrder] = useState<Order>('desc');
   const [orderBy, setOrderBy] = useState<OrderKeys>(OrderKeys.ALERT);
 
   const handleRequestSort = (event: unknown, property: OrderKeys) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
@@ -105,14 +105,14 @@ const SiteTable = ({
 
   // This function is used to prevent the drawer onClick close effect on mobile
   const onInteractiveClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.stopPropagation();
   };
 
-  const onMobileSelectChange: SelectProps["onChange"] = (newValue) => {
+  const onMobileSelectChange: SelectProps['onChange'] = (newValue) => {
     const value = newValue.target.value as string;
-    const [newOrderBy, newOrder] = value.split("-") as [OrderKeys, Order];
+    const [newOrderBy, newOrder] = value.split('-') as [OrderKeys, Order];
     setOrder(newOrder);
     setOrderBy(newOrderBy);
   };
@@ -139,7 +139,7 @@ const SiteTable = ({
                 variant="h5"
                 color="textSecondary"
               >
-                {siteOnMap ? getSiteNameAndRegion(siteOnMap).name : "All Sites"}
+                {siteOnMap ? getSiteNameAndRegion(siteOnMap).name : 'All Sites'}
               </Typography>
             )}
           </Box>
@@ -231,54 +231,54 @@ const styles = (theme: Theme) =>
   createStyles({
     tableHolder: {
       paddingLeft: 10,
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         paddingLeft: 0,
-        height: "auto",
+        height: 'auto',
       },
     },
     scrollable: {
-      overflowY: "auto",
+      overflowY: 'auto',
     },
     table: {
-      [theme.breakpoints.down("xs")]: {
-        tableLayout: "fixed",
+      [theme.breakpoints.down('xs')]: {
+        tableLayout: 'fixed',
       },
-      borderCollapse: "collapse",
+      borderCollapse: 'collapse',
     },
     extendedTable: {
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         minWidth: 1220,
       },
-      borderCollapse: "collapse",
+      borderCollapse: 'collapse',
     },
     switchWrapper: {
-      padding: "0 16px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-end",
+      padding: '0 16px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
     },
     topHandle: {
       width: 50,
       height: 10,
-      backgroundColor: theme.palette.grey["400"],
-      borderRadius: "20px",
+      backgroundColor: theme.palette.grey['400'],
+      borderRadius: '20px',
     },
     mobileSortSelect: {
       marginLeft: theme.spacing(2),
     },
     allSitesText: {
-      position: "absolute",
+      position: 'absolute',
       left: 25,
       top: 25,
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      maxWidth: "90vw",
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      maxWidth: '90vw',
     },
-    bounce: { animation: "$bounce 1s infinite alternate" },
-    "@keyframes bounce": {
-      "0%": { transform: "translateY(0px)" },
-      "100%": { transform: "translateY(-5px)" },
+    bounce: { animation: '$bounce 1s infinite alternate' },
+    '@keyframes bounce': {
+      '0%': { transform: 'translateY(0px)' },
+      '100%': { transform: 'translateY(-5px)' },
     },
   });
 

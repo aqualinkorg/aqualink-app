@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Grid,
   Typography,
@@ -6,10 +6,10 @@ import {
   WithStyles,
   createStyles,
   Theme,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { SurveyListItem } from "../../../../store/Survey/types";
-import { findImagesAtSurveyPoint } from "../../../../helpers/surveys";
+import { SurveyListItem } from 'store/Survey/types';
+import { findImagesAtSurveyPoint } from 'helpers/surveys';
 
 const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
   const nSurveys = surveys.length;
@@ -20,7 +20,7 @@ const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
       <Grid
         className={classes.autoWidth}
         container
-        justify="space-between"
+        justifyContent="space-between"
         spacing={4}
       >
         <Grid item>
@@ -37,7 +37,7 @@ const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
             </Grid>
             <Grid item>
               <Typography variant="subtitle1" color="textSecondary">
-                SURVEY{nSurveys > 1 ? "S" : ""}
+                SURVEY{nSurveys > 1 ? 'S' : ''}
               </Typography>
             </Grid>
           </Grid>
@@ -56,7 +56,7 @@ const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
             </Grid>
             <Grid item>
               <Typography variant="subtitle1" color="textSecondary">
-                IMAGE{nImages > 1 ? "S" : ""}
+                IMAGE{nImages > 1 ? 'S' : ''}
               </Typography>
             </Grid>
           </Grid>
@@ -69,7 +69,7 @@ const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     autoWidth: {
-      width: "auto",
+      width: 'auto',
     },
 
     coloredText: {

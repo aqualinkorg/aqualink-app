@@ -1,34 +1,34 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 
-import { mockSite } from "../../../mocks/mockSite";
-import { mockUser } from "../../../mocks/mockUser";
+import { mockSite } from 'mocks/mockSite';
+import { mockUser } from 'mocks/mockUser';
 
-import SurveyPoint from ".";
-import { mockSurvey } from "../../../mocks/mockSurvey";
-import { mockDataRange } from "../../../mocks/mockDataRange";
-import { mockCollection } from "../../../mocks/mockCollection";
+import { mockSurveyList } from 'mocks/mockSurveyList';
+import { mockDataRange } from 'mocks/mockDataRange';
+import { mockCollection } from 'mocks/mockCollection';
+import SurveyPoint from '.';
 
-jest.mock("./InfoCard/Map", () => "Mock-Map");
+jest.mock('./InfoCard/Map', () => 'Mock-Map');
 
 window.scrollTo = jest.fn();
 
 const mockMatch = {
   isExact: true,
   params: {
-    id: "1",
-    pointId: "1",
+    id: '1',
+    pointId: '1',
   },
-  path: "/sites/:id/points/:pointId",
-  url: "/sites/1/points/1",
+  path: '/sites/:id/points/:pointId',
+  url: '/sites/1/points/1',
 };
 
 const mockStore = configureStore([]);
 
-describe("Survey Point Detail Page", () => {
+describe('Survey Point Detail Page', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -49,7 +49,7 @@ describe("Survey Point Detail Page", () => {
         loading: false,
       },
       surveyList: {
-        list: [mockSurvey],
+        list: [mockSurveyList],
       },
       collection: {
         details: mockCollection,
@@ -69,11 +69,11 @@ describe("Survey Point Detail Page", () => {
             history={{} as any}
           />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
-    expect(element).toMatchSnapshot("snapshot");
+  it('should render with given state from Redux store', () => {
+    expect(element).toMatchSnapshot('snapshot');
   });
 });

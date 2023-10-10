@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Box, Container, makeStyles, Theme } from "@material-ui/core";
-import { Link, RouteComponentProps, useHistory } from "react-router-dom";
-import { DropzoneProps } from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
-import { Alert } from "@material-ui/lab";
-import NavBar from "../../../common/NavBar";
-import Header from "./Header";
-import Selectors from "./Selectors";
-import DropZone from "./DropZone";
-import FileList from "./FileList";
-import HistoryTable from "./HistoryTable";
-import UploadButton from "./UploadButton";
-import { useSiteRequest } from "../../../hooks/useSiteRequest";
-import { SiteUploadHistory, Sources } from "../../../store/Sites/types";
-import uploadServices from "../../../services/uploadServices";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import siteServices from "../../../services/siteServices";
-import { setSelectedSite } from "../../../store/Sites/selectedSiteSlice";
-import { getAxiosErrorMessage } from "../../../helpers/errors";
-import StatusSnackbar from "../../../common/StatusSnackbar";
+import React, { useState, useEffect } from 'react';
+import { Box, Container, makeStyles, Theme } from '@material-ui/core';
+import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
+import { DropzoneProps } from 'react-dropzone';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alert } from '@material-ui/lab';
+import { SiteUploadHistory, Sources } from 'store/Sites/types';
+import { userInfoSelector } from 'store/User/userSlice';
+import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
 import {
   addUploadsFiles,
   clearUploadsError,
@@ -31,8 +19,20 @@ import {
   uploadsFilesSelector,
   uploadsInProgressSelector,
   uploadsTargetSelector,
-} from "../../../store/uploads/uploadsSlice";
-import InfoWithAction from "../../../common/InfoWithAction";
+} from 'store/uploads/uploadsSlice';
+import { useSiteRequest } from 'hooks/useSiteRequest';
+import { getAxiosErrorMessage } from 'helpers/errors';
+import NavBar from 'common/NavBar';
+import StatusSnackbar from 'common/StatusSnackbar';
+import InfoWithAction from 'common/InfoWithAction';
+import uploadServices from 'services/uploadServices';
+import siteServices from 'services/siteServices';
+import DropZone from 'common/FileUploads/Dropzone';
+import FileList from 'common/FileUploads/FileList';
+import UploadButton from 'common/FileUploads/UploadButton';
+import Header from './Header';
+import Selectors from './Selectors';
+import HistoryTable from './HistoryTable';
 
 const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const classes = useStyles();
@@ -57,7 +57,7 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const onCompletedSelection = () => {
     if (site?.id && selectedPoint && selectedSensor) {
       dispatch(
-        setUploadsTarget({ siteId: site?.id, selectedSensor, selectedPoint })
+        setUploadsTarget({ siteId: site?.id, selectedSensor, selectedPoint }),
       );
     }
   };
@@ -67,8 +67,8 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
     // setFiles(files.filter((file) => file.name !== name));
   };
 
-  const onFilesDrop: DropzoneProps["onDropAccepted"] = (
-    acceptedFiles: File[]
+  const onFilesDrop: DropzoneProps['onDropAccepted'] = (
+    acceptedFiles: File[],
   ) => {
     dispatch(addUploadsFiles(acceptedFiles));
     // const newFiles = uniqBy([...files, ...acceptedFiles], "name");
@@ -90,14 +90,14 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
         // Clear redux selected site before we land on the site page,
         // so that we fetch the updated data.
         dispatch(setSelectedSite());
-        if (typeof site?.id === "number") {
+        if (typeof site?.id === 'number') {
           // eslint-disable-next-line fp/no-mutating-methods
           history.push(`/sites/${site.id}`);
         }
       }
     } catch (err) {
       const errorMessage = getAxiosErrorMessage(err);
-      setDeleteError(errorMessage || "Something went wrong");
+      setDeleteError(errorMessage || 'Something went wrong');
     }
   };
 
@@ -182,10 +182,10 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
               </>
             )}
             {uploadLoading && (
-              <Box mb="20px" style={{ paddingTop: "1em" }}>
+              <Box mb="20px" style={{ paddingTop: '1em' }}>
                 <Alert severity="info">
                   Upload in progress. please DO NOT reload the page, it may take
-                  a while. You can still{" "}
+                  a while. You can still{' '}
                   <Link to={`/sites/${site?.id}`}>have a look around</Link>
                 </Alert>
               </Box>

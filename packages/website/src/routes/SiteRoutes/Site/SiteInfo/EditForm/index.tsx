@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from "react";
+import React, { ChangeEvent, FormEvent } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -6,19 +6,18 @@ import {
   Button,
   Grid,
   Typography,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { useDispatch, useSelector } from "react-redux";
-import { find } from "lodash";
+  Checkbox,
+  FormControlLabel,
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { find } from 'lodash';
 
-import TextField from "../../../../../common/Forms/TextField";
-import { Site, SiteUpdateParams } from "../../../../../store/Sites/types";
-import { getSiteNameAndRegion } from "../../../../../store/Sites/helpers";
-import {
-  siteDraftSelector,
-  setSiteDraft,
-} from "../../../../../store/Sites/selectedSiteSlice";
-import { useFormField } from "../../../../../hooks/useFormField";
+import { Site, SiteUpdateParams } from 'store/Sites/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { siteDraftSelector, setSiteDraft } from 'store/Sites/selectedSiteSlice';
+import { useFormField } from 'hooks/useFormField';
+import TextField from 'common/Forms/TextField';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
@@ -31,12 +30,15 @@ const EditForm = ({
 }: EditFormProps) => {
   const dispatch = useDispatch();
   const draftSite = useSelector(siteDraftSelector);
-  const location = site.polygon.type === "Point" ? site.polygon : null;
+  const location = site.polygon.type === 'Point' ? site.polygon : null;
   const { latitude: draftLatitude, longitude: draftLongitude } =
     draftSite?.coordinates || {};
 
+  const [editToken, setEditToken] = React.useState(false);
+  const [useDefaultToken, setUseDefaultToken] = React.useState(false);
+
   const setDraftSiteCoordinates =
-    (field: "longitude" | "latitude") => (value: string) => {
+    (field: 'longitude' | 'latitude') => (value: string) => {
       dispatch(
         setSiteDraft({
           ...draftSite,
@@ -44,34 +46,42 @@ const EditForm = ({
             ...draftSite.coordinates,
             [field]: parseFloat(value),
           },
-        })
+        }),
       );
     };
 
   // Form Fields
   const [siteName, setSiteName] = useFormField(
     getSiteNameAndRegion(site).name,
-    ["required", "maxLength"]
+    ['required', 'maxLength'],
   );
 
   const [siteDepth, setSiteDepth] = useFormField(site.depth?.toString(), [
-    "required",
-    "isInt",
+    'required',
+    'isInt',
   ]);
 
   const [siteLatitude, setSiteLatitude] = useFormField(
     location?.coordinates[1].toString(),
-    ["required", "isNumeric", "isLat"],
+    ['required', 'isNumeric', 'isLat'],
     draftLatitude?.toString(),
-    setDraftSiteCoordinates("latitude")
+    setDraftSiteCoordinates('latitude'),
   );
 
   const [siteLongitude, setSiteLongitude] = useFormField(
     location?.coordinates[0].toString(),
-    ["required", "isNumeric", "isLong"],
+    ['required', 'isNumeric', 'isLong'],
     draftLongitude?.toString(),
-    setDraftSiteCoordinates("longitude")
+    setDraftSiteCoordinates('longitude'),
   );
+
+  const [siteSensorId, setSensorId] = useFormField(site.sensorId, [
+    'maxLength',
+  ]);
+
+  const [siteSpotterApiToken, setSiteSpotterApiToken] = useFormField(null, [
+    'maxLength',
+  ]);
 
   const formSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (
@@ -80,6 +90,14 @@ const EditForm = ({
       siteLatitude.value &&
       siteLongitude.value
     ) {
+      const insertedTokenValue = siteSpotterApiToken.value
+        ? siteSpotterApiToken.value
+        : undefined;
+      const tokenValue = useDefaultToken ? null : insertedTokenValue;
+      const spotterApiToken = editToken ? tokenValue : undefined;
+      // fields need to be undefined in order not be affected by the update.
+      // siteSensorId.value here can be <empty string> which our api does not accept
+      const sensorId = siteSensorId.value || undefined;
       const updateParams: SiteUpdateParams = {
         coordinates: {
           latitude: parseFloat(siteLatitude.value),
@@ -87,6 +105,8 @@ const EditForm = ({
         },
         name: siteName.value,
         depth: parseInt(siteDepth.value, 10),
+        sensorId,
+        spotterApiToken,
       };
       onSubmit(updateParams);
     }
@@ -94,21 +114,27 @@ const EditForm = ({
   };
 
   const onFieldChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name: field, value: newValue } = event.target;
     switch (field) {
-      case "siteName":
+      case 'siteName':
         setSiteName(newValue);
         break;
-      case "depth":
+      case 'depth':
         setSiteDepth(newValue);
         break;
-      case "latitude":
+      case 'latitude':
         setSiteLatitude(newValue, true);
         break;
-      case "longitude":
+      case 'longitude':
         setSiteLongitude(newValue, true);
+        break;
+      case 'spotterId':
+        setSensorId(newValue);
+        break;
+      case 'spotterApiToken':
+        setSiteSpotterApiToken(newValue);
         break;
       default:
         break;
@@ -142,6 +168,79 @@ const EditForm = ({
           <Grid item xs={12}>
             <Alert className={classes.infoAlert} icon={false} severity="info">
               <Typography variant="subtitle2">
+                Only Sofar Ocean spotters are supported for now. Please contact
+                us if you would like to connect other live buoys at{' '}
+                <a
+                  href="mailto:admin@aqualink.org?subject=Connect%20a%20buoy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  admin@aqualink.org
+                </a>
+                .
+              </Typography>
+            </Alert>
+          </Grid>
+          <Grid item sm={8} xs={8}>
+            <TextField
+              formField={siteSensorId}
+              label="Spotter ID"
+              placeholder="Spotter ID"
+              name="spotterId"
+              onChange={onFieldChange}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            style={{ display: 'flex', justifyContent: 'flex-end' }}
+          >
+            <FormControlLabel
+              labelPlacement="start"
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={editToken}
+                  onChange={() => setEditToken(!editToken)}
+                />
+              }
+              label="Add a custom API token"
+            />
+          </Grid>
+          {editToken && (
+            <>
+              <Grid item sm={8} xs={8}>
+                <TextField
+                  disabled={useDefaultToken}
+                  formField={siteSpotterApiToken}
+                  label="Spotter API token"
+                  placeholder="Spotter API token"
+                  name="spotterApiToken"
+                  onChange={onFieldChange}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={4}
+                style={{ display: 'flex', justifyContent: 'flex-end' }}
+              >
+                <FormControlLabel
+                  labelPlacement="start"
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={useDefaultToken}
+                      onChange={() => setUseDefaultToken(!useDefaultToken)}
+                    />
+                  }
+                  label="Use default token"
+                />
+              </Grid>
+            </>
+          )}
+          <Grid item xs={12}>
+            <Alert className={classes.infoAlert} icon={false} severity="info">
+              <Typography variant="subtitle2">
                 You can also change your site position by dragging the pin on
                 the map.
               </Typography>
@@ -170,7 +269,14 @@ const EditForm = ({
             />
           </Grid>
         </Grid>
-        <Grid container justify="flex-end" item sm={12} md={4} spacing={3}>
+        <Grid
+          container
+          justifyContent="flex-end"
+          item
+          sm={12}
+          md={4}
+          spacing={3}
+        >
           <Grid item>
             <Button
               onClick={onClose}
@@ -188,14 +294,14 @@ const EditForm = ({
                 loading ||
                 !!find(
                   [siteName, siteDepth, siteLongitude, siteLatitude],
-                  (field) => field.error
+                  (field) => field.error,
                 )
               }
               variant="outlined"
               size="medium"
               color="primary"
             >
-              {loading ? "Saving..." : "Save"}
+              {loading ? 'Saving...' : 'Save'}
             </Button>
           </Grid>
         </Grid>
@@ -207,11 +313,11 @@ const EditForm = ({
 const styles = () =>
   createStyles({
     textField: {
-      color: "black",
-      alignItems: "center",
+      color: 'black',
+      alignItems: 'center',
     },
     infoAlert: {
-      marginTop: "0.5rem",
+      marginTop: '0.5rem',
     },
   });
 

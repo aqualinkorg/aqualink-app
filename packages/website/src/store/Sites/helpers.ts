@@ -8,12 +8,12 @@ import {
   pick,
   union,
   isString,
-} from "lodash";
-import { isBefore } from "../../helpers/dates";
-import { longDHW } from "../../helpers/siteUtils";
-import siteServices from "../../services/siteServices";
+} from 'lodash';
+import { isBefore } from 'helpers/dates';
+import { longDHW } from 'helpers/siteUtils';
+import siteServices from 'services/siteServices';
 
-import type { TableRow } from "../Homepage/types";
+import type { TableRow } from '../Homepage/types';
 import {
   DailyData,
   LatestDataASSofarValue,
@@ -32,7 +32,7 @@ import {
   TimeSeriesDataRangeResponse,
   TimeSeriesDataRequestParams,
   TimeSeriesDataResponse,
-} from "./types";
+} from './types';
 
 export function getSiteNameAndRegion(site: Site) {
   const name = site.name || site.region?.name || null;
@@ -52,7 +52,7 @@ export const constructTableData = (list: Site[]): TableRow[] => {
     } = value.collectionData || {};
 
     const { maxMonthlyMean } = value;
-    const { name: locationName = "", region = "" } =
+    const { name: locationName = '', region = '' } =
       getSiteNameAndRegion(value);
 
     return {
@@ -76,23 +76,23 @@ export const constructTableData = (list: Site[]): TableRow[] => {
 };
 
 const mapMetrics = <T>(
-  data: Partial<Record<MetricsKeys, T>>
+  data: Partial<Record<MetricsKeys, T>>,
 ): Partial<Record<Metrics, T>> =>
   mapKeys(pick(data, metricsKeysList), (_, key) => camelCase(key)) as Partial<
     Record<Metrics, T>
   >;
 
 export const mapTimeSeriesData = (
-  timeSeriesData: TimeSeriesDataResponse
+  timeSeriesData: TimeSeriesDataResponse,
 ): TimeSeriesData => mapMetrics(timeSeriesData);
 
 export const mapTimeSeriesDataRanges = (
-  ranges: TimeSeriesDataRangeResponse
+  ranges: TimeSeriesDataRangeResponse,
 ): TimeSeriesDataRange => mapMetrics(ranges);
 
 const mapOceanSenseMetric = (
   response: OceanSenseDataResponse,
-  key: OceanSenseKeys
+  key: OceanSenseKeys,
 ): ValueWithTimestamp[] =>
   response.data[key].map((value, index) => ({
     value,
@@ -100,7 +100,7 @@ const mapOceanSenseMetric = (
   }));
 
 export const mapOceanSenseData = (
-  response: OceanSenseDataResponse
+  response: OceanSenseDataResponse,
 ): OceanSenseData =>
   mapValues(
     keyBy(
@@ -108,24 +108,24 @@ export const mapOceanSenseData = (
         key: oceanSenseKey,
         value: mapOceanSenseMetric(response, oceanSenseKey),
       })),
-      "key"
+      'key',
     ),
-    "value"
+    'value',
   ) as OceanSenseData;
 
 const attachData = <T>(
-  direction: "left" | "right",
+  direction: 'left' | 'right',
   newData: T[],
-  previousData?: T[]
+  previousData?: T[],
 ) =>
-  direction === "left"
+  direction === 'left'
     ? [...newData, ...(previousData || [])]
     : [...(previousData || []), ...newData];
 
 const attachTimeSeries = (
-  direction: "left" | "right",
+  direction: 'left' | 'right',
   newData: TimeSeriesData,
-  previousData?: TimeSeriesData
+  previousData?: TimeSeriesData,
 ): TimeSeriesData => {
   const previousMetrics = Object.keys(previousData || {});
   const newMetrics = Object.keys(newData);
@@ -149,11 +149,11 @@ const attachTimeSeries = (
             data: attachData(
               direction,
               newMetricData?.[source]?.data || [],
-              previousMetricData?.[source]?.data || []
+              previousMetricData?.[source]?.data || [],
             ),
           },
         }),
-        {}
+        {},
       ),
     };
   }, {});
@@ -163,15 +163,15 @@ const findRequestTimePeriod = (
   prevStart?: string,
   prevEnd?: string,
   newStart?: string,
-  newEnd?: string
-): "past" | "future" | "between" | undefined => {
+  newEnd?: string,
+): 'past' | 'future' | 'between' | undefined => {
   if (
     prevEnd === newEnd &&
     isString(prevStart) &&
     isString(newStart) &&
     isBefore(newStart, prevStart, true)
   ) {
-    return "past";
+    return 'past';
   }
 
   if (
@@ -180,7 +180,7 @@ const findRequestTimePeriod = (
     isString(newEnd) &&
     isBefore(prevEnd, newEnd, true)
   ) {
-    return "future";
+    return 'future';
   }
 
   if (
@@ -191,7 +191,7 @@ const findRequestTimePeriod = (
     isBefore(prevStart, newStart) &&
     isBefore(newEnd, prevEnd)
   ) {
-    return "between";
+    return 'between';
   }
 
   return undefined;
@@ -201,36 +201,36 @@ const calculateRequestParams = (
   prevStart?: string,
   prevEnd?: string,
   newStart?: string,
-  newEnd?: string
+  newEnd?: string,
 ): {
   start?: string;
   end?: string;
-  attachDirection?: "right" | "left";
+  attachDirection?: 'right' | 'left';
   returnStored?: boolean;
 } => {
   const timePeriod = findRequestTimePeriod(
     prevStart,
     prevEnd,
     newStart,
-    newEnd
+    newEnd,
   );
 
   switch (timePeriod) {
-    case "past":
+    case 'past':
       return {
         start: newStart,
         end: prevStart,
-        attachDirection: "left",
+        attachDirection: 'left',
       };
 
-    case "future":
+    case 'future':
       return {
         start: prevEnd,
         end: newEnd,
-        attachDirection: "right",
+        attachDirection: 'right',
       };
 
-    case "between":
+    case 'between':
       return { returnStored: true };
 
     default:
@@ -255,13 +255,13 @@ export const timeSeriesRequest = async (
   storedTimeSeries?: TimeSeriesData,
   storedDailyData?: DailyData[],
   storedStart?: string,
-  storedEnd?: string
+  storedEnd?: string,
 ): Promise<
   [
     updatedTimeSeriesData?: TimeSeriesData,
     updatedDailyData?: DailyData[],
     updatedStoredStart?: string,
-    updatedStoredEnd?: string
+    updatedStoredEnd?: string,
   ]
 > => {
   const { siteId, start: inputStart, end: inputEnd } = inputParams;
@@ -277,7 +277,7 @@ export const timeSeriesRequest = async (
     storedStart,
     storedEnd,
     inputStart,
-    inputEnd
+    inputEnd,
   );
 
   if (returnStored) {
@@ -304,7 +304,7 @@ export const timeSeriesRequest = async (
     ? attachTimeSeries(
         attachDirection,
         mapTimeSeriesData(timeSeriesData),
-        storedTimeSeries
+        storedTimeSeries,
       )
     : mapTimeSeriesData(timeSeriesData);
 
@@ -326,7 +326,7 @@ export const parseLatestData = (
     value: number;
     source: Sources;
     metric: MetricsKeys;
-  }[]
+  }[],
 ): LatestDataASSofarValue => {
   if (!data || data.length === 0) return {};
 
@@ -337,26 +337,28 @@ export const parseLatestData = (
 
   // only keep spotter top/bottom temp for now and check for validity date
   const spotterTempWhitelist = new Set([
-    "bottom_temperature",
-    "top_temperature",
+    'bottom_temperature',
+    'top_temperature',
+    'barometric_pressure_top',
+    'barometric_pressure_top_diff',
   ]);
 
   const filtered = copy.filter(
     (value) =>
-      (value.source === "spotter" &&
+      (value.source === 'spotter' &&
         new Date(value.timestamp).getTime() > validityDate) ||
-      !spotterTempWhitelist.has(value.metric)
+      !spotterTempWhitelist.has(value.metric),
   );
 
   // sort data by timestamp ASCENDING but prioritize spotter data
   // eslint-disable-next-line fp/no-mutating-methods
   const sorted = filtered.sort((x, y) => {
     // if spotter data is available and, use it.
-    if (x.source === "spotter" && y.source !== "spotter") {
+    if (x.source === 'spotter' && y.source !== 'spotter') {
       return +1;
     }
 
-    if (y.source === "spotter" && x.source !== "spotter") {
+    if (y.source === 'spotter' && x.source !== 'spotter') {
       return -1;
     }
 
@@ -373,6 +375,6 @@ export const parseLatestData = (
       ...a,
       [camelCase(c.metric)]: { timestamp: c.timestamp, value: c.value },
     }),
-    {}
+    {},
   );
 };

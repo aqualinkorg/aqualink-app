@@ -1,13 +1,12 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { omit, sortBy } from 'lodash';
-import { Connection } from 'typeorm';
-import moment from 'moment';
+import { DataSource } from 'typeorm';
+import { DateTime } from '../luxon-extensions';
 import { TestService } from '../../test/test.service';
 import {
   mockBackfillSiteData,
   mockExtractAndVerifyToken,
-  mockGetLiveData,
   mockGetMMM,
   mockGetSpotterData,
 } from '../../test/utils';
@@ -30,15 +29,15 @@ import { californiaDailyData } from '../../test/mock/daily-data.mock';
 export const siteTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
-  let connection: Connection;
+  let dataSource: DataSource;
   let siteId: number;
   const firstExclusionPeriod = {
     startDate: null,
-    endDate: moment().subtract(8, 'days').endOf('day').toISOString(),
+    endDate: DateTime.now().minus({ days: 8 }).endOf('day').toISOString(),
   };
   const secondExclusionPeriod = {
-    startDate: moment().subtract(6, 'days').startOf('day').toISOString(),
-    endDate: moment().subtract(4, 'days').endOf('day').toISOString(),
+    startDate: DateTime.now().minus({ days: 6 }).startOf('day').toISOString(),
+    endDate: DateTime.now().minus({ days: 4 }).endOf('day').toISOString(),
   };
   const siteDto = {
     site: {
@@ -52,7 +51,7 @@ export const siteTests = () => {
 
   beforeAll(async () => {
     app = await testService.getApp();
-    connection = await testService.getConnection();
+    dataSource = await testService.getDataSource();
   });
 
   it('POST / create a site', async () => {
@@ -78,7 +77,7 @@ export const siteTests = () => {
     expect(rsp2.body.adminLevel).toBe(AdminLevel.SiteManager);
 
     // Approve new site
-    await connection
+    await dataSource
       .getRepository(Site)
       .update({ name: siteDto.site.name }, { display: true });
   });
@@ -117,8 +116,8 @@ export const siteTests = () => {
     const rsp = await request(app.getHttpServer())
       .get(`/sites/${californiaSite.id}/daily_data`)
       .query({
-        start: moment().subtract(5, 'days').startOf('day').toISOString(),
-        end: moment().endOf('day').toISOString(),
+        start: DateTime.now().minus({ days: 5 }).startOf('day').toISOString(),
+        end: DateTime.now().endOf('day').toISOString(),
       });
 
     expect(rsp.status).toBe(200);
@@ -127,15 +126,6 @@ export const siteTests = () => {
       .slice(0, 6)
       .map((entry) => omit(entry, 'site', 'updatedAt', 'createdAt'));
     expect(rsp.body).toMatchObject(data);
-  });
-
-  it('GET /:id/live_data', async () => {
-    mockGetLiveData();
-    const rsp = await request(app.getHttpServer()).get(
-      `/sites/${siteId}/live_data`,
-    );
-
-    expect(rsp.status).toBe(200);
   });
 
   it('PUT /:id update a site', async () => {
@@ -208,8 +198,11 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .get(`/sites/${athensSite.id}/spotter_data`)
         .query({
-          startDate: moment().subtract(9, 'days').startOf('day').toISOString(),
-          endDate: moment().endOf('day').toISOString(),
+          startDate: DateTime.now()
+            .minus({ days: 9 })
+            .startOf('day')
+            .toISOString(),
+          endDate: DateTime.now().endOf('day').toISOString(),
         });
 
       expect(rsp.status).toBe(200);
@@ -229,7 +222,7 @@ export const siteTests = () => {
       expect(rsp.body.length).toBe(1);
 
       expect(rsp.body[0]).toMatchObject(
-        omit(floridaSite, 'createdAt', 'updatedAt'),
+        omit(floridaSite, 'createdAt', 'updatedAt', 'spotterApiToken'),
       );
     });
 
@@ -243,7 +236,13 @@ export const siteTests = () => {
 
       const sortedSites = sortBy(rsp.body, 'id');
       expect(sortedSites[0]).toMatchObject(
-        omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
+        omit(
+          californiaSite,
+          'applied',
+          'createdAt',
+          'updatedAt',
+          'spotterApiToken',
+        ),
       );
     });
 
@@ -293,8 +292,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .get('/sites/0/daily_data')
         .query({
-          start: moment().subtract(1, 'days').toISOString(),
-          end: moment().toISOString(),
+          start: DateTime.now().minus({ days: 1 }).toISOString(),
+          end: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(404);
@@ -309,12 +308,6 @@ export const siteTests = () => {
         });
 
       expect(rsp.status).toBe(400);
-    });
-
-    it('GET /:id/live_data retrieve live data from non-existing site', async () => {
-      const rsp = await request(app.getHttpServer()).get('/sites/0/live_data');
-
-      expect(rsp.status).toBe(404);
     });
 
     it('GET /:id/spotter_data retrieve spotter data from non-existing site', async () => {
@@ -374,8 +367,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .post('/sites/0/exclusion_dates')
         .send({
-          startDate: moment().subtract(1, 'days').toISOString(),
-          endDate: moment().toISOString(),
+          startDate: DateTime.now().minus({ days: 1 }).toISOString(),
+          endDate: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(404);
@@ -386,8 +379,8 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer())
         .post(`/sites/${floridaSite.id}/exclusion_dates`)
         .send({
-          startDate: moment().subtract(1, 'days').toISOString(),
-          endDate: moment().toISOString(),
+          startDate: DateTime.now().minus({ days: 1 }).toISOString(),
+          endDate: DateTime.now().toISOString(),
         });
 
       expect(rsp.status).toBe(400);

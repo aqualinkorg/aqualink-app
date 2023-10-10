@@ -6,7 +6,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
     class="MuiPaper-root makeStyles-surveyCard-5 MuiPaper-elevation0 MuiPaper-rounded"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+      class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-space-between"
       style="height: 100%;"
     >
       <div
@@ -80,7 +80,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
@@ -99,7 +99,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
               </a>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-2"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-2"
             >
               <mock-iconbutton>
                 <svg
@@ -126,7 +126,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                     Are you sure you would like to delete the survey for 09/10/2020? It will delete all media associated with this survey.
                   </mock-typography>
                   <div
-                    class="MuiCollapse-container DeleteButton-alert-24 MuiCollapse-hidden"
+                    class="MuiCollapse-root DeleteButton-alert-24 MuiCollapse-hidden"
                     style="min-height: 0px;"
                   >
                     <div

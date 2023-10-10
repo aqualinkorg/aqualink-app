@@ -1,20 +1,25 @@
 import { Logger } from '@nestjs/common';
 import Bluebird from 'bluebird';
-import { Connection, In, Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Point } from 'geojson';
-import { isNil, times } from 'lodash';
-import moment from 'moment';
-
+import { flatten, groupBy, isNil, omit, sortBy, times } from 'lodash';
+import { HistoricalMonthlyMean } from 'sites/historical-monthly-mean.entity';
+import { DateTime } from '../luxon-extensions';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { filterSofarResponse, getLatestData, sofarHindcast } from './sofar';
-import { getNOAASource, insertSiteDataToTimeSeries } from './time-series.utils';
-import { Metric } from '../time-series/metrics.entity';
+import {
+  getNOAASource,
+  insertSiteDataToTimeSeries,
+  refreshMaterializedView,
+} from './time-series.utils';
 import { calculateAlertLevel } from './bleachingAlert';
-import { getSstAnomaly } from './liveData';
 import { ValueWithTimestamp } from './sofar.types';
+import { Metric } from '../time-series/metrics.enum';
+
+const MAX_SOFAR_DATE_DIFF_DAYS = 7;
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -24,6 +29,53 @@ interface Repositories {
 
 // Initialize Nest logger
 const logger = new Logger('SSTTimeSeries');
+
+/**
+ * The daily global 5km SSTA product requires a daily climatology to calculate the daily SST anomalies.
+ * Daily climatologies (DC) are derived from the monthly mean (MM) climatology via linear interpolation.
+ * To achieve this, we assigned the MM value to the 15th day of each corresponding month, with the individual
+ * days between these dates being derived using linear interpolation. We then calculate the SSTA product using:
+ *
+ * ST_anomaly = SST - DC
+ *
+ * where the SST is the value for the day in question, and DC is the corresponding daily climatology for that
+ * day of the year.
+ * */
+const getSstAnomaly = (
+  historicalMonthlyMean: HistoricalMonthlyMean[],
+  satelliteTemperature?: ValueWithTimestamp,
+) => {
+  if (historicalMonthlyMean.length < 12 || !satelliteTemperature?.value) {
+    return undefined;
+  }
+
+  const orderedMontlyMax = sortBy(historicalMonthlyMean, 'month');
+  const now = DateTime.now().startOf('day');
+
+  // The date of the previous value. Subtract 15 days from the current date
+  // and see in which month the result falls. The date we are looking for is
+  // the 15th day of this month.
+  const previousDate = now.minus({ days: 15 }).set({ day: 15 }).startOf('day');
+
+  // The date of the next value. It must fall on the next month of the previous
+  // value.
+  const nextDate = previousDate.plus({ months: 1 });
+
+  // We can index `orderedMontlyMax` with `DateTime.get('month')` since it returns
+  // a value between 1 and 12
+  const previousValue =
+    orderedMontlyMax[previousDate.get('month') - 1].temperature;
+  const previousDistance = now.diff(previousDate, 'days').days;
+  const nextValue = orderedMontlyMax[nextDate.get('month') - 1].temperature;
+  const nextDistance = nextDate.diff(now, 'days').days;
+  const deltaDays = previousDistance + nextDistance;
+
+  const interpolated =
+    previousValue * (1 - previousDistance / deltaDays) +
+    nextValue * (1 - nextDistance / deltaDays);
+
+  return satelliteTemperature.value - interpolated;
+};
 
 /**
  * Get sites entities based on the given siteIds array.
@@ -45,13 +97,11 @@ const getSites = (siteIds: number[], siteRepository: Repository<Site>) => {
  * and save all above metrics to time_series table
  * @param siteIds The siteIds for which to perform the update
  * @param days How many days will this script need to backfill (1 = daily update)
- * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
 export const updateSST = async (
   siteIds: number[],
   days: number,
-  connection: Connection,
   repositories: Repositories,
 ) => {
   const { siteRepository, timeSeriesRepository, sourceRepository } =
@@ -68,37 +118,48 @@ export const updateSST = async (
     }),
   );
 
+  logger.log(`Back-filling ${sources.length} sites`);
+
   await Bluebird.map(
     sources,
     async (source) => {
       const { site } = source;
-      const point = site.polygon as Point;
+      const { polygon, nearestNOAALocation } = site;
       // Extract site coordinates
-      const [longitude, latitude] = point.coordinates;
+      const [NOAALongitude, NOAALatitude] = nearestNOAALocation
+        ? (nearestNOAALocation as Point).coordinates
+        : (polygon as Point).coordinates;
 
-      logger.log(`Back-filling site with id ${site.id}.`);
+      const div = Math.floor(days / MAX_SOFAR_DATE_DIFF_DAYS);
+      const mod = days % MAX_SOFAR_DATE_DIFF_DAYS;
+      const intervals = [
+        ...Array<number>(div).fill(MAX_SOFAR_DATE_DIFF_DAYS),
+        mod,
+        // remove possible zero at the end due to mod (%) operation
+      ].filter((x) => x !== 0);
 
       const data = await Bluebird.map(
-        times(days),
-        // A non-async function is used on purpose.
-        // We need for as many http request to be performed simultaneously without one blocking the other
-        // This way we get a much greater speed up due to the concurrency.
-        (i) => {
+        intervals,
+        async (interval, index) => {
           const endDate =
-            i === 0
-              ? moment().format()
-              : moment().subtract(i, 'd').endOf('day').format();
-          const startDate = moment().subtract(i, 'd').startOf('day').format();
+            index !== 0
+              ? // subtract 1 minute to be within the api date diff limit
+                DateTime.now()
+                  .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS, minutes: 1 })
+                  .toString()
+              : DateTime.now().minus({ minutes: 1 }).toString();
+          const startDate = DateTime.now()
+            .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS + interval })
+            .toString();
 
-          // use Promise/then to increase concurrency since await halts the event loop
-          return Promise.all([
+          const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] = await Promise.all([
             // Fetch satellite surface temperature data
             sofarHindcast(
               SofarModels.NOAACoralReefWatch,
               sofarVariableIDs[SofarModels.NOAACoralReefWatch]
                 .analysedSeaSurfaceTemperature,
-              latitude,
-              longitude,
+              NOAALatitude,
+              NOAALongitude,
               startDate,
               endDate,
             ),
@@ -107,52 +168,100 @@ export const updateSST = async (
               SofarModels.NOAACoralReefWatch,
               sofarVariableIDs[SofarModels.NOAACoralReefWatch]
                 .degreeHeatingWeek,
-              latitude,
-              longitude,
+              NOAALatitude,
+              NOAALongitude,
               startDate,
               endDate,
             ),
-          ]).then(([SofarSSTRaw, sofarDegreeHeatingWeekRaw]) => {
-            // Filter out null values
-            const sstFiltered = filterSofarResponse(SofarSSTRaw);
-            const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
-            // Get latest dhw
-            const latestDhw = getLatestData(dhwFiltered);
-            // Get alert level
-            const alertLevel = calculateAlertLevel(
-              site.maxMonthlyMean,
-              getLatestData(sstFiltered)?.value,
-              // Calculate degree heating days
-              latestDhw && latestDhw.value * 7,
+          ]);
+
+          // Filter out null values
+          const sstFiltered = filterSofarResponse(SofarSSTRaw);
+          const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
+
+          const getDateNoTime = (x?: string) =>
+            new Date(x || '').toDateString();
+
+          const invalidDateKey = getDateNoTime(undefined);
+
+          // Get latest dhw
+          // There should be only one value for each date from sofar api
+          const groupedDHWFiltered = omit(
+            groupBy(dhwFiltered, (x) => getDateNoTime(x.timestamp)),
+            // remove invalid date entries if any
+            invalidDateKey,
+          );
+          const latestDhw = Object.keys(groupedDHWFiltered).map((x) =>
+            getLatestData(groupedDHWFiltered[x]),
+          );
+
+          // Get alert level
+          const groupedSSTFiltered = omit(
+            groupBy(sstFiltered, (x) => getDateNoTime(x.timestamp)),
+            // remove invalid date entries if any
+            invalidDateKey,
+          );
+          const alertLevel = Object.keys(groupedSSTFiltered)
+            .map((x) => {
+              const latest = getLatestData(groupedSSTFiltered[x]);
+              const dhw = latestDhw.find(
+                (y) =>
+                  getDateNoTime(y?.timestamp) ===
+                  getDateNoTime(latest?.timestamp),
+              );
+              const alert = calculateAlertLevel(
+                site.maxMonthlyMean,
+                latest?.value,
+                // Calculate degree heating days
+                dhw && dhw.value * 7,
+              );
+              if (!alert) return undefined;
+              if (!latest) return undefined;
+              return {
+                value: alert,
+                timestamp: latest.timestamp,
+              };
+            })
+            .filter((x): x is ValueWithTimestamp => x !== undefined);
+
+          // Calculate the sstAnomaly
+          const anomalyPerDateArray = Object.keys(groupedSSTFiltered).map(
+            (x) => {
+              const filtered = groupedSSTFiltered[x];
+              return (
+                filtered
+                  .map((sst) => ({
+                    value: getSstAnomaly(site.historicalMonthlyMean, sst),
+                    timestamp: sst.timestamp,
+                  }))
+                  // Filter out null values
+                  .filter(
+                    (
+                      sstAnomalyValue,
+                    ): sstAnomalyValue is ValueWithTimestamp => {
+                      return !isNil(sstAnomalyValue.value);
+                    },
+                  )
+              );
+            },
+          );
+
+          const anomaly = flatten(anomalyPerDateArray);
+
+          const result = {
+            sst: sstFiltered,
+            dhw: dhwFiltered,
+            sstAnomaly: anomaly,
+            alert: alertLevel,
+          };
+
+          if (!result.sst.length) {
+            console.error(
+              `No Hindcast data available for site '${site.id}' for dates ${startDate} ${endDate}`,
             );
+          }
 
-            // Calculate the sstAnomaly
-            const sstAnomaly = sstFiltered
-              .map((sst) => ({
-                value: getSstAnomaly(site.historicalMonthlyMean, sst),
-                timestamp: sst.timestamp,
-              }))
-              // Filter out null values
-              .filter((sstAnomalyValue) => {
-                return !isNil(sstAnomalyValue.value);
-              }) as ValueWithTimestamp[];
-
-            // return calculated metrics (sst, dhw, sstAnomaly alert)
-            return {
-              sst: sstFiltered,
-              dhw: dhwFiltered,
-              sstAnomaly,
-              alert:
-                alertLevel !== undefined
-                  ? [
-                      {
-                        value: alertLevel,
-                        timestamp: moment().subtract(i, 'd').hour(12).format(),
-                      },
-                    ]
-                  : [],
-            };
-          });
+          return result;
         },
         { concurrency: 100 },
       );
@@ -202,8 +311,8 @@ export const updateSST = async (
     async (i) => {
       const endDate =
         i === 0
-          ? moment().format()
-          : moment().subtract(i, 'd').endOf('day').format();
+          ? DateTime.now().toString()
+          : DateTime.now().minus({ days: i }).endOf('day').toString();
 
       logger.log(`Back-filling weekly alert for ${endDate}`);
       // Calculate max alert by fetching the max alert in the last 7 days
@@ -241,6 +350,5 @@ export const updateSST = async (
   );
 
   // Update materialized view
-  logger.log('Refreshing materialized view latest_data');
-  connection.query('REFRESH MATERIALIZED VIEW latest_data');
+  await refreshMaterializedView(repositories.siteRepository);
 };

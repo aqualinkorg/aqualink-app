@@ -1,13 +1,13 @@
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { render } from "@testing-library/react";
-import Component from ".";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import Component from '.';
 
-test("renders as expected", () => {
+test('renders as expected', () => {
   const { container } = render(
     <Router>
       <Component />
-    </Router>
+    </Router>,
   );
   expect(container).toMatchSnapshot();
 });

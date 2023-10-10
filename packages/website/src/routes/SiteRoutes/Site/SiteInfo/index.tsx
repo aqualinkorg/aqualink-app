@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Grid,
   Typography,
@@ -10,33 +10,30 @@ import {
   Collapse,
   useMediaQuery,
   useTheme,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import CloseIcon from "@material-ui/icons/Close";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import ArrowBack from "@material-ui/icons/ArrowBack";
+} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import CloseIcon from '@material-ui/icons/Close';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
-import EditForm from "./EditForm";
-import ExclusionDatesDialog from "./ExclusionDatesDialog";
 import {
   setSelectedSite,
   setSiteData,
   setSiteDraft,
-} from "../../../../store/Sites/selectedSiteSlice";
-import { Site, SiteUpdateParams } from "../../../../store/Sites/types";
-import { getSiteNameAndRegion } from "../../../../store/Sites/helpers";
-import siteServices from "../../../../services/siteServices";
+} from 'store/Sites/selectedSiteSlice';
+import { Site, SiteUpdateParams } from 'store/Sites/types';
+import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import {
   setAdministeredSiteName,
   userInfoSelector,
-} from "../../../../store/User/userSlice";
-import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
-import CollectionButton from "./CollectionButton";
-import {
-  sitesListSelector,
-  setSiteName,
-} from "../../../../store/Sites/sitesListSlice";
+} from 'store/User/userSlice';
+import { sitesListSelector, setSiteName } from 'store/Sites/sitesListSlice';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
+import siteServices from 'services/siteServices';
+import EditForm from './EditForm';
+import ExclusionDatesDialog from './ExclusionDatesDialog';
+import CollectionButton from './CollectionButton';
 
 const SiteNavBar = ({
   hasDailyData,
@@ -51,11 +48,11 @@ const SiteNavBar = ({
   const sitesList = useSelector(sitesListSelector);
   const [editEnabled, setEditEnabled] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
-  const [alertSeverity, setAlertSeverity] = useState<"success" | "error">();
+  const [alertSeverity, setAlertSeverity] = useState<'success' | 'error'>();
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
   const { name: siteName, region: siteRegion } = getSiteNameAndRegion(site);
   const organizationName = site.admins[0]?.organization;
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
   const [exclusionDatesDialogOpen, setExclusionDatesDeployDialogOpen] =
     useState(false);
 
@@ -71,16 +68,16 @@ const SiteNavBar = ({
   };
 
   const onOpenForm = () => {
-    if (site.depth && site.polygon.type === "Point") {
+    if (site.depth && site.polygon.type === 'Point') {
       dispatch(
         setSiteDraft({
-          name: siteName || "",
+          name: siteName || '',
           depth: site.depth,
           coordinates: {
             longitude: site.polygon.coordinates[0],
             latitude: site.polygon.coordinates[1],
           },
-        })
+        }),
       );
     }
     setEditEnabled(true);
@@ -98,18 +95,18 @@ const SiteNavBar = ({
               id: site.id,
               list: user?.administeredSites,
               name: data.name,
-            })
+            }),
           );
           dispatch(
             setSiteName({
               id: site.id,
               list: sitesList,
               name: data.name,
-            })
+            }),
           );
         })
-        .then(() => setAlertSeverity("success"))
-        .catch(() => setAlertSeverity("error"))
+        .then(() => setAlertSeverity('success'))
+        .catch(() => setAlertSeverity('error'))
         .finally(() => {
           dispatch(setSiteDraft(null));
           setEditEnabled(false);
@@ -123,9 +120,9 @@ const SiteNavBar = ({
     <>
       {user?.token &&
         isAdmin &&
-        (site.status === "shipped" || site.status === "deployed") && (
+        (site.status === 'shipped' || site.status === 'deployed') && (
           <ExclusionDatesDialog
-            dialogType={site.status === "shipped" ? "deploy" : "maintain"}
+            dialogType={site.status === 'shipped' ? 'deploy' : 'maintain'}
             open={exclusionDatesDialogOpen}
             onClose={() => setExclusionDatesDeployDialogOpen(false)}
             token={user.token}
@@ -148,12 +145,12 @@ const SiteNavBar = ({
             </IconButton>
           }
         >
-          {alertSeverity === "success"
-            ? "Successfully updated site information"
-            : "Something went wrong"}
+          {alertSeverity === 'success'
+            ? 'Successfully updated site information'
+            : 'Something went wrong'}
         </Alert>
       </Collapse>
-      <Grid container justify="space-between" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center">
         <Grid item xs={12}>
           <Grid alignItems="center" container spacing={1}>
             {!editEnabled ? (
@@ -202,7 +199,7 @@ const SiteNavBar = ({
                           siteId={site.id}
                           errorCallback={() => {
                             setAlertOpen(true);
-                            setAlertSeverity("error");
+                            setAlertSeverity('error');
                           }}
                         />
                       </Grid>
@@ -218,10 +215,10 @@ const SiteNavBar = ({
                       <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
                         {
                           isoDate: lastSurvey,
-                          format: "MMM DD[,] YYYY",
+                          format: 'MMM dd, yyyy',
                           displayTimezone: false,
                           timeZone: site.timezone,
-                        }
+                        },
                       )}`}</Typography>
                     </Grid>
                   )}
@@ -229,7 +226,7 @@ const SiteNavBar = ({
                 {isAdmin && (
                   <Grid
                     container
-                    direction={matches ? "row" : "column"}
+                    direction={matches ? 'row' : 'column'}
                     item
                     xs={12}
                     md={4}
@@ -247,8 +244,8 @@ const SiteNavBar = ({
                       </Button>
                     </Grid>
                     {site.sensorId &&
-                      (site.status === "shipped" ||
-                        site.status === "deployed") && (
+                      (site.status === 'shipped' ||
+                        site.status === 'deployed') && (
                         <Grid item>
                           <Button
                             className={classes.button}
@@ -259,9 +256,9 @@ const SiteNavBar = ({
                             color="primary"
                             variant="outlined"
                           >
-                            {site.status === "shipped"
-                              ? "MARK AS DEPLOYED"
-                              : "ADD EXCLUSION DATES"}
+                            {site.status === 'shipped'
+                              ? 'MARK AS DEPLOYED'
+                              : 'ADD EXCLUSION DATES'}
                           </Button>
                         </Grid>
                       )}
@@ -291,7 +288,7 @@ const SiteNavBar = ({
 const styles = () =>
   createStyles({
     managerInfo: {
-      marginRight: "0.5rem",
+      marginRight: '0.5rem',
     },
     button: {
       minWidth: 180,
@@ -300,11 +297,11 @@ const styles = () =>
       width: 48,
     },
     headerWrapper: {
-      maxWidth: "calc(100% - 48px)", // maximum width of 100% minus the width of the back button
+      maxWidth: 'calc(100% - 48px)', // maximum width of 100% minus the width of the back button
     },
     siteNameWrapper: {
-      maxWidth: "calc(100% - 56px)", // maximum width of 100% minus the width of the collection button and its padding
-      overflowWrap: "break-word",
+      maxWidth: 'calc(100% - 56px)', // maximum width of 100% minus the width of the collection button and its padding
+      overflowWrap: 'break-word',
     },
   });
 

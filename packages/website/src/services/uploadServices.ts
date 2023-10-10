@@ -1,4 +1,5 @@
-import requests from "../helpers/requests";
+import requests from 'helpers/requests';
+import { Sources } from 'store/Sites/types';
 
 export interface UploadTimeSeriesResult {
   file: string;
@@ -9,47 +10,72 @@ export interface UploadTimeSeriesResult {
 const uploadMedia = (
   formData: FormData,
   siteId: string,
-  token?: string | null
+  token?: string | null,
 ) =>
   requests.send<{
     url: string;
     thumbnailUrl?: string | undefined;
   }>({
-    method: "POST",
+    method: 'POST',
     url: `sites/${siteId}/surveys/upload`,
     data: formData,
     token,
-    contentType: "multipart/form-data",
-    responseType: "text",
+    contentType: 'multipart/form-data',
+    responseType: 'text',
   });
 
+const uploadMultiSiteTimeSeriesData = (
+  files: File[],
+  source: Sources,
+  token?: string | null,
+  failOnWarning?: boolean,
+) => {
+  const data = new FormData();
+  files.forEach((file) => data.append('files', file));
+  data.append('sensor', source);
+  if (failOnWarning !== undefined)
+    data.append('failOnWarning', String(failOnWarning));
+  return requests.send<UploadTimeSeriesResult[]>({
+    method: 'POST',
+    url: `time-series/upload`,
+    data,
+    token,
+    contentType: 'multipart/form-data',
+  });
+};
+
 const uploadTimeSeriesData = (
-  formdData: FormData,
+  formData: FormData,
   siteId: number,
   pointId: number,
   token?: string | null,
-  failOnWarning?: boolean
+  failOnWarning?: boolean,
 ) =>
   requests.send<UploadTimeSeriesResult[]>({
-    method: "POST",
+    method: 'POST',
     url: `time-series/sites/${siteId}/site-survey-points/${pointId}/upload${requests.generateUrlQueryParams(
-      { failOnWarning }
+      { failOnWarning },
     )}`,
-    data: formdData,
+    data: formData,
     token,
-    contentType: "multipart/form-data",
+    contentType: 'multipart/form-data',
   });
 
 const deleteFileTimeSeriesData = (
   data: { ids: number[] },
-  token?: string | null
+  token?: string | null,
 ) =>
   requests.send<void>({
-    method: "POST",
-    url: "/data-uploads/delete-uploads",
+    method: 'POST',
+    url: '/data-uploads/delete-uploads',
     data,
     token,
-    contentType: "application/json",
+    contentType: 'application/json',
   });
 
-export default { uploadMedia, uploadTimeSeriesData, deleteFileTimeSeriesData };
+export default {
+  uploadMedia,
+  uploadTimeSeriesData,
+  deleteFileTimeSeriesData,
+  uploadMultiSiteTimeSeriesData,
+};

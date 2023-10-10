@@ -1,20 +1,20 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
-import configureStore from "redux-mock-store";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Timeline from ".";
-import { mockSurvey } from "../../../../mocks/mockSurvey";
+import { mockSurveyList } from 'mocks/mockSurveyList';
+import Timeline from '.';
 
 const mockStore = configureStore([]);
 
-describe("SiteRoutes Surveys", () => {
+describe('SiteRoutes Surveys', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
       surveyList: {
-        list: [mockSurvey],
+        list: [mockSurveyList],
         loading: false,
         error: null,
       },
@@ -34,11 +34,11 @@ describe("SiteRoutes Surveys", () => {
             addNewButton
           />
         </Router>
-      </Provider>
+      </Provider>,
     ).container;
   });
 
-  it("should render with given state from Redux store", () => {
+  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

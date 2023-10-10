@@ -1,14 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Typography,
   withStyles,
   WithStyles,
   createStyles,
-} from "@material-ui/core";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import { grey } from "@material-ui/core/colors";
+} from '@material-ui/core';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { grey } from '@material-ui/core/colors';
 
 const AddButton = ({ siteId, classes }: AddButtonProps) => {
   return (
@@ -30,12 +30,12 @@ const styles = () =>
   createStyles({
     addSurveyButton: {
       color: grey[500],
-      "&:hover": {
+      '&:hover': {
         color: grey[500],
       },
     },
     addSurveyButtonIcon: {
-      "& > *:first-child": {
+      '& > *:first-child': {
         fontSize: 32,
       },
     },

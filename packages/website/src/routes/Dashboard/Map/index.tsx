@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -7,16 +7,16 @@ import {
   Theme,
   useTheme,
   useMediaQuery,
-} from "@material-ui/core";
-import { LatLng } from "leaflet";
+} from '@material-ui/core';
+import { LatLng } from 'leaflet';
 
-import Map from "../../HomeMap/Map";
-import { getCollectionCenterAndBounds } from "../../../helpers/map";
-import { CollectionDetails } from "../../../store/Collection/types";
+import { CollectionDetails } from 'store/Collection/types';
+import { getCollectionCenterAndBounds } from 'helpers/map';
+import Map from '../../HomeMap/Map';
 
 const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [collectionCenter, collectionBounds] =
     getCollectionCenterAndBounds(collection);
 
@@ -45,16 +45,16 @@ const styles = (theme: Theme) =>
       borderRadius: 5,
       height: 480,
       marginTop: 46,
-      [theme.breakpoints.only("md")]: {
+      [theme.breakpoints.only('md')]: {
         height: 420,
       },
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('xs')]: {
         height: 450,
       },
     },
     map: {
-      height: "100%",
-      width: "100%",
+      height: '100%',
+      width: '100%',
       borderRadius: 5,
     },
   });

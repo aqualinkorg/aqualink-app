@@ -1,6 +1,6 @@
 import { isNil, omitBy } from 'lodash';
 import Bluebird from 'bluebird';
-import { Connection, createConnection, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
 import { Site } from '../src/sites/sites.entity';
@@ -9,8 +9,7 @@ import { Region } from '../src/regions/regions.entity';
 import { getMMM, getHistoricalMonthlyMeans } from '../src/utils/temperature';
 import { getGoogleRegion } from '../src/utils/site.utils';
 import { createPoint } from '../src/utils/coordinates';
-
-const dbConfig = require('../ormconfig');
+import AqualinkDataSource from '../ormconfig';
 
 async function getRegion(
   longitude: number,
@@ -61,7 +60,7 @@ async function getAugmentedData(
   );
 }
 
-async function augmentSites(connection: Connection) {
+async function augmentSites(connection: DataSource) {
   const siteRepository = connection.getRepository(Site);
   const regionRepository = connection.getRepository(Region);
   const HistoricalMonthlyMeanRepository = connection.getRepository(
@@ -109,9 +108,8 @@ async function augmentSites(connection: Connection) {
 }
 
 async function run() {
-  createConnection(dbConfig).then(async (connection) => {
-    await augmentSites(connection);
-  });
+  const connection = await AqualinkDataSource.initialize();
+  await augmentSites(connection);
 }
 
 run();

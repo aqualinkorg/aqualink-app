@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from 'react';
 import {
   createStyles,
   Grid,
@@ -8,18 +8,18 @@ import {
   Tooltip,
   useTheme,
   useMediaQuery,
-} from "@material-ui/core";
-import red from "@material-ui/core/colors/red";
-import green from "@material-ui/core/colors/green";
-import CheckIcon from "@material-ui/icons/Check";
-import ClearIcon from "@material-ui/icons/Clear";
-import { useDispatch } from "react-redux";
+} from '@material-ui/core';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
+import { useDispatch } from 'react-redux';
 
-import TextField from "../../../common/Forms/TextField";
-import { useFormField } from "../../../hooks/useFormField";
-import { User } from "../../../store/User/types";
-import collectionServices from "../../../services/collectionServices";
-import { setName } from "../../../store/Collection/collectionSlice";
+import { User } from 'store/User/types';
+import { setName } from 'store/Collection/collectionSlice';
+import { useFormField } from 'hooks/useFormField';
+import TextField from 'common/Forms/TextField';
+import collectionServices from 'services/collectionServices';
 
 const EditNameForm = ({
   collectionId,
@@ -30,14 +30,14 @@ const EditNameForm = ({
 }: EditNameFormProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [collectionName, setCollectionName] = useFormField(initialName, [
-    "required",
-    "maxLength",
+    'required',
+    'maxLength',
   ]);
 
   const onChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setCollectionName(event.target.value);
   };
@@ -47,7 +47,7 @@ const EditNameForm = ({
       collectionServices
         .updateCollection(
           { id: collectionId, name: collectionName.value },
-          signedInUser.token
+          signedInUser.token,
         )
         .then(() => dispatch(setName(collectionName.value)))
         .catch(console.error)
@@ -72,7 +72,7 @@ const EditNameForm = ({
         <Grid item xs={12} sm={5}>
           <Grid
             container
-            justify={isMobile ? "flex-end" : "flex-start"}
+            justifyContent={isMobile ? 'flex-end' : 'flex-start'}
             spacing={1}
           >
             <Grid item>

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   withStyles,
   WithStyles,
@@ -7,13 +7,13 @@ import {
   Checkbox,
   FormGroup,
   FormControlLabel,
-} from "@material-ui/core";
-import { AgreementsChecked } from "../types";
+} from '@material-ui/core';
+import { AgreementsChecked } from '../types';
 
 const agreements: { id: keyof AgreementsChecked; label: string }[] = [
-  { id: "shipping", label: "Handle any shipping and permitting charges" },
-  { id: "buoy", label: "Provide mooring and deploy buoy" },
-  { id: "survey", label: "Conduct initial survey" },
+  { id: 'shipping', label: 'Handle any shipping and permitting charges' },
+  { id: 'buoy', label: 'Provide mooring and deploy buoy' },
+  { id: 'survey', label: 'Conduct initial survey' },
 ];
 
 const Agreements = ({
@@ -47,8 +47,8 @@ const Agreements = ({
 const styles = () =>
   createStyles({
     agreements: {
-      marginTop: "3rem",
-      padding: "1rem",
+      marginTop: '3rem',
+      padding: '1rem',
     },
     formControlLabel: {
       marginBottom: 0,
