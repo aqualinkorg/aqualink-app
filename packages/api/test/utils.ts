@@ -3,11 +3,9 @@ import admin from 'firebase-admin';
 import * as firebaseAuthStrategy from '../src/auth/firebase-auth.utils';
 import * as backfillSiteData from '../src/workers/backfill-site-data';
 import * as sofarUtils from '../src/utils/sofar';
-import * as liveData from '../src/utils/liveData';
 import * as temperatureUtils from '../src/utils/temperature';
 import { SurveysService } from '../src/surveys/surveys.service';
-import { getMockLiveData, getMockSpotterData } from './mock/daily-data.mock';
-import { Site } from '../src/sites/sites.entity';
+import { getMockSpotterData } from './mock/daily-data.mock';
 
 export const mockExtractAndVerifyToken = (
   firebaseUser: admin.auth.DecodedIdToken | undefined,
@@ -65,14 +63,6 @@ export const mockGetSpotterData = () => {
     .mockImplementationOnce(
       (sensorId: string, token?: string, endDate?: Date, startDate?: Date) =>
         Promise.resolve(getMockSpotterData(startDate!, endDate!)),
-    );
-};
-
-export const mockGetLiveData = () => {
-  jest
-    .spyOn(liveData, 'getLiveData')
-    .mockImplementationOnce((site: Site, props: boolean) =>
-      Promise.resolve(getMockLiveData(site.id)),
     );
 };
 

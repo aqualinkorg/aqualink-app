@@ -7,7 +7,7 @@ import { ForecastData } from '../src/wind-wave-data/forecast-data.entity';
 
 // Initialize command definition
 const { argv } = yargs
-  .scriptName('backfill-sofar-time-series')
+  .scriptName('update-wind-wave-data')
   .usage('$0 <cmd> [args]')
   .option('s', {
     alias: 'sites',

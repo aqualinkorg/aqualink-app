@@ -14,7 +14,7 @@ import { mapValues, some } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import { SofarLiveData, ValueWithTimestamp, SpotterData } from './sofar.types';
+import { ValueWithTimestamp, SpotterData } from './sofar.types';
 import { createPoint } from './coordinates';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
@@ -23,7 +23,6 @@ import { LatestData } from '../time-series/latest-data.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { getHistoricalMonthlyMeans, getMMM } from './temperature';
 import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
-import { Metric } from '../time-series/metrics.enum';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Site Utils');
@@ -273,29 +272,6 @@ export const hasHoboDataSubQuery = async (
   });
 
   return hasHoboDataSet;
-};
-
-export const getSSTFromLiveOrLatestData = async (
-  liveData: SofarLiveData,
-  site: Site,
-  latestDataRepository: Repository<LatestData>,
-): Promise<ValueWithTimestamp | null> => {
-  if (!liveData.satelliteTemperature) {
-    const sst = await latestDataRepository.findOneBy({
-      site: { id: site.id },
-      source: SourceType.NOAA,
-      metric: Metric.SATELLITE_TEMPERATURE,
-    });
-
-    return (
-      sst && {
-        value: sst.value,
-        timestamp: sst.timestamp.toISOString(),
-      }
-    );
-  }
-
-  return liveData.satelliteTemperature;
 };
 
 export const getLatestData = async (

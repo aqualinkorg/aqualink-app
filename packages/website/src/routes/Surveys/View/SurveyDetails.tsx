@@ -90,7 +90,6 @@ const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
           depth={site.depth}
           date={survey?.diveDate}
           satelliteTemperature={survey?.satelliteTemperature}
-          dailyData={site.dailyData || []}
         />
       </Grid>
     </Grid>

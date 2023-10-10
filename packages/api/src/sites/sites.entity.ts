@@ -24,7 +24,6 @@ import { User } from '../users/users.entity';
 import { SiteApplication } from '../site-applications/site-applications.entity';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { ApiPointProperty } from '../docs/api-properties';
-import { SofarLiveDataDto } from './dto/live-data.dto';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 
 export enum SiteStatus {
@@ -143,8 +142,6 @@ export class Site {
   spotterApiToken?: string | null;
 
   hasHobo: boolean;
-
-  liveData?: SofarLiveDataDto[];
 
   collectionData?: CollectionDataDto;
 
