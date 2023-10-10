@@ -1,5 +1,4 @@
 /* eslint-disable no-plusplus, fp/no-mutation */
-import { createConnection } from 'typeorm';
 import { Point } from 'geojson';
 import fs from 'fs';
 import { Site } from '../src/sites/sites.entity';
@@ -10,8 +9,7 @@ import {
   StormGlassParamsType,
   StormGlassSourceType,
 } from '../src/utils/storm-glass.types';
-
-const dbConfig = require('../ormconfig');
+import AqualinkDataSource from '../ormconfig';
 
 interface SGSources {
   sg?: number;
@@ -44,7 +42,7 @@ const stormGlassParams: StormGlassParamsType[] = [
 ];
 
 async function getSitesInfo() {
-  const conn = await createConnection(dbConfig);
+  const conn = await AqualinkDataSource.initialize();
 
   const sites = await conn
     .getRepository(Site)
@@ -52,7 +50,7 @@ async function getSitesInfo() {
     .leftJoinAndSelect('site.region', 'region')
     .getMany();
 
-  conn.close();
+  conn.destroy();
 
   return sites;
 }
