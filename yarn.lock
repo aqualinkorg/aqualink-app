@@ -2610,7 +2610,7 @@
     rifm "^0.7.0"
     tslib "^1.9.3"
 
-"@material-ui/pickers@3.3.11":
+"@material-ui/pickers@^3.3.11":
   version "3.3.11"
   resolved "https://registry.yarnpkg.com/@material-ui/pickers/-/pickers-3.3.11.tgz#dfaaf49955f7bbe3b1c3720293f69dcddeab3ca4"
   integrity sha512-pDYjbjUeabapijS2FpSwK/ruJdk7IGeAshpLbKDa3PRRKRy7Nv6sXxAvUg2F+lID/NwUKgBmCYS5bzrl7Xxqzw==
