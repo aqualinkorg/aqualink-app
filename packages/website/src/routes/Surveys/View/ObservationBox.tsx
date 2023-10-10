@@ -10,8 +10,6 @@ import {
 } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { some } from 'lodash';
-
-import { DailyData } from 'store/Sites/types';
 import {
   siteTimeSeriesDataLoadingSelector,
   siteTimeSeriesDataSelector,
@@ -21,7 +19,6 @@ import { getCardTemperatureValues } from './utils';
 
 const ObservationBox = ({
   depth,
-  dailyData,
   date,
   classes,
   satelliteTemperature,
@@ -31,12 +28,7 @@ const ObservationBox = ({
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
 
   const { hoboBottom, hoboSurface, spotterBottom, spotterTop } =
-    getCardTemperatureValues(
-      dailyData,
-      bottomTemperature,
-      topTemperature,
-      date,
-    );
+    getCardTemperatureValues(bottomTemperature, topTemperature, date);
 
   return (
     <div className={classes.outerDiv}>
@@ -123,7 +115,6 @@ const styles = () =>
 
 interface ObservationBoxIncomingProps {
   depth: number | null;
-  dailyData: DailyData[];
   satelliteTemperature?: number;
   date?: string | null;
 }

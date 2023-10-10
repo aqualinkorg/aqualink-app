@@ -14,9 +14,6 @@ import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
-import { getSstAnomaly, getLiveData } from '../utils/liveData';
-import { SofarLiveData } from '../utils/sofar.types';
-import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { AdminLevel, User } from '../users/users.entity';
 import { CreateSiteDto, CreateSiteApplicationDto } from './dto/create-site.dto';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
@@ -27,7 +24,6 @@ import {
   getConflictingExclusionDates,
   hasHoboDataSubQuery,
   getLatestData,
-  getSSTFromLiveOrLatestData,
   getSite,
   createSite,
 } from '../utils/site.utils';
@@ -314,40 +310,6 @@ export class SitesService {
       })
       .limit(start && end ? undefined : 90)
       .getMany();
-  }
-
-  async findLiveData(id: number): Promise<SofarLiveData> {
-    const site = await getSite(
-      id,
-      this.sitesRepository,
-      ['historicalMonthlyMean'],
-      true,
-    );
-
-    const now = new Date();
-
-    const weeklyAlertLevel = await getWeeklyAlertLevel(
-      this.dailyDataRepository,
-      now,
-      site,
-    );
-
-    const isDeployed = site.status === SiteStatus.Deployed;
-
-    const liveData = await getLiveData(site, isDeployed);
-
-    const sst = await getSSTFromLiveOrLatestData(
-      liveData,
-      site,
-      this.latestDataRepository,
-    );
-
-    return {
-      ...liveData,
-      sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst ?? undefined),
-      satelliteTemperature: sst ?? undefined,
-      weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
-    };
   }
 
   async findSpotterPosition(id: number) {

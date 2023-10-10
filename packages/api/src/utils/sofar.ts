@@ -33,13 +33,6 @@ export const getLatestData = (
   );
 };
 
-export const extractSofarValues = (
-  sofarValues?: ValueWithTimestamp[],
-): number[] =>
-  sofarValues
-    ?.filter((data) => !isNil(data?.value))
-    .map(({ value }) => value) || [];
-
 export const filterSofarResponse = (responseData: any) => {
   return (
     responseData
