@@ -93,78 +93,212 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="firstName"
-                  inputprops="[object Object]"
-                  label="First Name"
-                  name="firstName"
-                  placeholder="First Name"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="firstName"
+                    id="firstName-label"
+                  >
+                    First Name
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-7"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="First Name"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-14"
+                      >
+                        <span>
+                          First Name
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="lastName"
-                  inputprops="[object Object]"
-                  label="Last Name"
-                  name="lastName"
-                  placeholder="Last Name"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="lastName"
+                    id="lastName-label"
+                  >
+                    Last Name
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-7"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Last Name"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-14"
+                      >
+                        <span>
+                          Last Name
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="organization"
-                  inputprops="[object Object]"
-                  label="Organization"
-                  name="organization"
-                  placeholder="Organization"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="organization"
+                    id="organization-label"
+                  >
+                    Organization
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-7"
+                      id="organization"
+                      name="organization"
+                      placeholder="Organization"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-14"
+                      >
+                        <span>
+                          Organization
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="emailAddress"
-                  inputprops="[object Object]"
-                  label="Email Address"
-                  name="emailAddress"
-                  placeholder="Email Address"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="emailAddress"
+                    id="emailAddress-label"
+                  >
+                    Email Address
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-7"
+                      id="emailAddress"
+                      name="emailAddress"
+                      placeholder="Email Address"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-14"
+                      >
+                        <span>
+                          Email Address
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="password"
-                  inputprops="[object Object]"
-                  label="Password"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="password"
+                    id="password-label"
+                  >
+                    Password
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-7"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-12 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-14"
+                      >
+                        <span>
+                          Password
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
@@ -202,16 +336,18 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
               <div
                 class="MuiGrid-root RegisterDialog-button-9 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  color="primary"
-                  disabled="true"
-                  fullwidth="true"
-                  size="large"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge Mui-disabled MuiButton-fullWidth Mui-disabled"
+                  disabled=""
+                  tabindex="-1"
                   type="submit"
-                  variant="contained"
                 >
-                  CREATE ACCOUNT
-                </mock-button>
+                  <span
+                    class="MuiButton-label"
+                  >
+                    CREATE ACCOUNT
+                  </span>
+                </button>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -223,11 +359,20 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
                 >
                   Have an account?
                    
-                  <mock-button
-                    color="primary"
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    tabindex="0"
+                    type="button"
                   >
-                    SIGN IN
-                  </mock-button>
+                    <span
+                      class="MuiButton-label"
+                    >
+                      SIGN IN
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
                 </mock-typography>
               </div>
             </form>

@@ -29,12 +29,20 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         class="MuiAlert-message makeStyles-alertMessage-8 makeStyles-alertMessage-10"
       >
         Successfully uploaded files
-        <mock-button
-          classname="makeStyles-button-9"
-          size="small"
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-button-9 MuiButton-textSizeSmall MuiButton-sizeSmall"
+          tabindex="0"
+          type="button"
         >
-          Go to map
-        </mock-button>
+          <span
+            class="MuiButton-label"
+          >
+            Go to map
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
       </div>
       <div
         class="MuiAlert-action"
@@ -86,12 +94,20 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         class="MuiAlert-message makeStyles-alertMessage-8 makeStyles-alertMessage-11"
       >
         Something went wrong with the upload
-        <mock-button
-          classname="makeStyles-button-9"
-          size="small"
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-button-9 MuiButton-textSizeSmall MuiButton-sizeSmall"
+          tabindex="0"
+          type="button"
         >
-          View details
-        </mock-button>
+          <span
+            class="MuiButton-label"
+          >
+            View details
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
       </div>
       <div
         class="MuiAlert-action"
@@ -167,116 +183,197 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         >
           <clear />
         </mock-iconbutton>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="[object Object]"
-          to="/"
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Home
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="[object Object]"
-          to="/map"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Home
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/map"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Map
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="[object Object]"
-          to="/buoy"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Map
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/buoy"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Buoy
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="[object Object]"
-          to="/drones"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Buoy
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/drones"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Drone
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="[object Object]"
-          to="/about"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Drone
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/about"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            About
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="mock-Link"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              About
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <mock-link
+          aria-disabled="false"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
           href="https://highlights.aqualink.org"
+          role="button"
+          tabindex="0"
           target="_blank"
           to=""
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Highlighted Sites
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="[object Object]"
-          to="/faq"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Highlighted Sites
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </mock-link>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/faq"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Faq
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="[object Object]"
-          to="/tracker"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Faq
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/tracker"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Track a heatwave
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-29"
-          component="[object Object]"
-          to="/register"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Track a heatwave
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/register"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Register a site
-          </mock-typography>
-        </mock-button>
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Register a site
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
         <mock-box
           margintop="auto"
           padding="25px"
@@ -290,40 +387,46 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             class="MuiButtonGroup-root MuiButtonGroup-contained"
             role="group"
           >
-            <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-28"
-              color="default"
-              disabled="false"
-              disableelevation="false"
-              disablefocusripple="false"
-              disableripple="false"
-              fullwidth="false"
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-28"
               href="https://github.com/aqualinkorg/aqualink-app"
-              size="medium"
-              starticon="[object Object]"
+              tabindex="0"
               target="_blank"
-              variant="contained"
             >
-              GitHub
-            </mock-button>
-            <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-28"
-              color="default"
-              disabled="false"
-              disableelevation="false"
-              disablefocusripple="false"
-              disableripple="false"
-              fullwidth="false"
-              href="https://ovio.org/project/aqualinkorg/aqualink-app"
-              size="medium"
-              target="_blank"
-              variant="contained"
-            >
-              <img
-                alt="Ovio Logo"
-                src="ovio_logo.png"
+              <span
+                class="MuiButton-label"
+              >
+                <span
+                  class="MuiButton-startIcon MuiButton-iconSizeMedium"
+                >
+                  <github />
+                </span>
+                GitHub
+              </span>
+              <span
+                class="MuiTouchRipple-root"
               />
-            </mock-button>
+            </a>
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-28"
+              href="https://ovio.org/project/aqualinkorg/aqualink-app"
+              tabindex="0"
+              target="_blank"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                <img
+                  alt="Ovio Logo"
+                  src="ovio_logo.png"
+                />
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </a>
           </div>
         </mock-box>
       </mock-drawer>
@@ -596,78 +699,212 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="firstName"
-                  inputprops="[object Object]"
-                  label="First Name"
-                  name="firstName"
-                  placeholder="First Name"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="firstName"
+                    id="firstName-label"
+                  >
+                    First Name
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="First Name"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-43"
+                      >
+                        <span>
+                          First Name
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="lastName"
-                  inputprops="[object Object]"
-                  label="Last Name"
-                  name="lastName"
-                  placeholder="Last Name"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="lastName"
+                    id="lastName-label"
+                  >
+                    Last Name
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Last Name"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-43"
+                      >
+                        <span>
+                          Last Name
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="organization"
-                  inputprops="[object Object]"
-                  label="Organization"
-                  name="organization"
-                  placeholder="Organization"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="organization"
+                    id="organization-label"
+                  >
+                    Organization
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      id="organization"
+                      name="organization"
+                      placeholder="Organization"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-43"
+                      >
+                        <span>
+                          Organization
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="emailAddress"
-                  inputprops="[object Object]"
-                  label="Email Address"
-                  name="emailAddress"
-                  placeholder="Email Address"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="emailAddress"
+                    id="emailAddress-label"
+                  >
+                    Email Address
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      id="emailAddress"
+                      name="emailAddress"
+                      placeholder="Email Address"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-43"
+                      >
+                        <span>
+                          Email Address
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="password"
-                  inputprops="[object Object]"
-                  label="Password"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="password"
+                    id="password-label"
+                  >
+                    Password
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-43"
+                      >
+                        <span>
+                          Password
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
@@ -705,16 +942,18 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               <div
                 class="MuiGrid-root RegisterDialog-button-38 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  color="primary"
-                  disabled="true"
-                  fullwidth="true"
-                  size="large"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge Mui-disabled MuiButton-fullWidth Mui-disabled"
+                  disabled=""
+                  tabindex="-1"
                   type="submit"
-                  variant="contained"
                 >
-                  CREATE ACCOUNT
-                </mock-button>
+                  <span
+                    class="MuiButton-label"
+                  >
+                    CREATE ACCOUNT
+                  </span>
+                </button>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -726,11 +965,20 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 >
                   Have an account?
                    
-                  <mock-button
-                    color="primary"
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    tabindex="0"
+                    type="button"
                   >
-                    SIGN IN
-                  </mock-button>
+                    <span
+                      class="MuiButton-label"
+                    >
+                      SIGN IN
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
                 </mock-typography>
               </div>
             </form>
@@ -748,7 +996,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-42"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-46"
       >
         <div
           class="MuiCardHeader-content"
@@ -774,7 +1022,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-43"
+                    classname="SignInDialog-dialogHeaderSecondPart-47"
                     variant="h4"
                   >
                     link
@@ -785,7 +1033,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-41"
+                  classname="SignInDialog-closeButton-45"
                   size="small"
                 >
                   <svg
@@ -866,7 +1114,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-44 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-48 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -883,83 +1131,157 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-45"
+              class="SignInDialog-form-49"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-46 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-50 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="emailAddress"
-                  inputprops="[object Object]"
-                  label="Email Address"
-                  name="emailAddress"
-                  placeholder="Email Address"
-                  value=""
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="emailAddress"
+                    id="emailAddress-label"
+                  >
+                    Email Address
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-51"
+                      id="emailAddress"
+                      name="emailAddress"
+                      placeholder="Email Address"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-43"
+                      >
+                        <span>
+                          Email Address
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-46 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-50 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="password"
-                  inputprops="[object Object]"
-                  label="Password"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  value=""
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="password"
+                    id="password-label"
+                  >
+                    Password
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-51"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-43"
+                      >
+                        <span>
+                          Password
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  classname="SignInDialog-forgotPasswordButton-50"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text SignInDialog-forgotPasswordButton-54"
+                  tabindex="0"
+                  type="button"
                 >
-                  <mock-typography
-                    color="textSecondary"
-                    variant="subtitle2"
+                  <span
+                    class="MuiButton-label"
                   >
-                    Forgot your password?
-                  </mock-typography>
-                </mock-button>
+                    <mock-typography
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      Forgot your password?
+                    </mock-typography>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-49 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-53 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  color="primary"
-                  fullwidth="true"
-                  size="large"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge MuiButton-fullWidth"
+                  tabindex="0"
                   type="submit"
-                  variant="contained"
                 >
-                  SIGN IN
-                </mock-button>
+                  <span
+                    class="MuiButton-label"
+                  >
+                    SIGN IN
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-48"
+                  classname="SignInDialog-formText-52"
                   color="textSecondary"
                   variant="subtitle1"
                 >
                   Don't have an account?
                    
-                  <mock-button
-                    color="primary"
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    tabindex="0"
+                    type="button"
                   >
-                    SIGN UP
-                  </mock-button>
+                    <span
+                      class="MuiButton-label"
+                    >
+                      SIGN UP
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
                 </mock-typography>
               </div>
             </form>
@@ -1026,96 +1348,166 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       <div
         class="MuiGrid-root MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
       >
-        <mock-textfield
-          fullwidth="true"
-          label="Sensor type"
-          select="true"
-          selectprops="[object Object]"
-          value="0"
-          variant="outlined"
+        <div
+          class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
         >
-          <mock-menuitem
-            classname="makeStyles-menuItem-2"
-            value="0"
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
+            data-shrink="true"
           >
-            <mock-typography
-              classname="makeStyles-itemName-3"
-              color="textSecondary"
-              title="Default"
-            >
-              Default
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            classname="makeStyles-menuItem-2"
-            value="1"
+            Sensor type
+          </label>
+          <div
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
           >
-            <mock-typography
-              classname="makeStyles-itemName-3"
-              color="textSecondary"
-              title="Sonde data"
+            <div
+              aria-haspopup="listbox"
+              class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
+              role="button"
+              tabindex="0"
             >
-              Sonde data
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            classname="makeStyles-menuItem-2"
-            value="2"
-          >
-            <mock-typography
-              classname="makeStyles-itemName-3"
-              color="textSecondary"
-              title="Meteorological data"
-            >
-              Meteorological data
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            classname="makeStyles-menuItem-2"
-            value="3"
-          >
-            <mock-typography
-              classname="makeStyles-itemName-3"
-              color="textSecondary"
-              title="HOBO data"
-            >
-              HOBO data
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            classname="makeStyles-menuItem-2"
-            value="4"
-          >
-            <mock-typography
-              classname="makeStyles-itemName-3"
-              color="textSecondary"
-              title="HUI data"
-            >
-              HUI data
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            classname="makeStyles-menuItem-2"
-            disabled="true"
-            value="5"
-          >
-            <mock-typography
-              classname="makeStyles-itemName-3"
-              color="textSecondary"
-              title="Spotter data"
-            >
-              Spotter data
-            </mock-typography>
-            <mock-chip
-              classname="makeStyles-comingSoonChip-4"
-              label="[object Object]"
+              <mock-typography
+                classname="makeStyles-itemName-3"
+                color="textSecondary"
+                title="Default"
+              >
+                Default
+              </mock-typography>
+            </div>
+            <input
+              aria-hidden="true"
+              class="MuiSelect-nativeInput"
+              tabindex="-1"
+              value="0"
             />
-          </mock-menuitem>
-        </mock-textfield>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
+            <mock-menu
+              anchorel="[object HTMLDivElement]"
+              anchororigin="[object Object]"
+              id="menu-"
+              menulistprops="[object Object]"
+              open="false"
+              paperprops="[object Object]"
+              transformorigin="[object Object]"
+            >
+              <mock-menuitem
+                aria-selected="true"
+                classname="makeStyles-menuItem-2"
+                data-value="0"
+                role="option"
+                selected="true"
+              >
+                <mock-typography
+                  classname="makeStyles-itemName-3"
+                  color="textSecondary"
+                  title="Default"
+                >
+                  Default
+                </mock-typography>
+              </mock-menuitem>
+              <mock-menuitem
+                classname="makeStyles-menuItem-2"
+                data-value="1"
+                role="option"
+                selected="false"
+              >
+                <mock-typography
+                  classname="makeStyles-itemName-3"
+                  color="textSecondary"
+                  title="Sonde data"
+                >
+                  Sonde data
+                </mock-typography>
+              </mock-menuitem>
+              <mock-menuitem
+                classname="makeStyles-menuItem-2"
+                data-value="2"
+                role="option"
+                selected="false"
+              >
+                <mock-typography
+                  classname="makeStyles-itemName-3"
+                  color="textSecondary"
+                  title="Meteorological data"
+                >
+                  Meteorological data
+                </mock-typography>
+              </mock-menuitem>
+              <mock-menuitem
+                classname="makeStyles-menuItem-2"
+                data-value="3"
+                role="option"
+                selected="false"
+              >
+                <mock-typography
+                  classname="makeStyles-itemName-3"
+                  color="textSecondary"
+                  title="HOBO data"
+                >
+                  HOBO data
+                </mock-typography>
+              </mock-menuitem>
+              <mock-menuitem
+                classname="makeStyles-menuItem-2"
+                data-value="4"
+                role="option"
+                selected="false"
+              >
+                <mock-typography
+                  classname="makeStyles-itemName-3"
+                  color="textSecondary"
+                  title="HUI data"
+                >
+                  HUI data
+                </mock-typography>
+              </mock-menuitem>
+              <mock-menuitem
+                classname="makeStyles-menuItem-2"
+                data-value="5"
+                disabled="true"
+                role="option"
+                selected="false"
+              >
+                <mock-typography
+                  classname="makeStyles-itemName-3"
+                  color="textSecondary"
+                  title="Spotter data"
+                >
+                  Spotter data
+                </mock-typography>
+                <mock-chip
+                  classname="makeStyles-comingSoonChip-4"
+                  label="[object Object]"
+                />
+              </mock-menuitem>
+            </mock-menu>
+            <fieldset
+              aria-hidden="true"
+              class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+            >
+              <legend
+                class="PrivateNotchedOutline-legendLabelled-43 PrivateNotchedOutline-legendNotched-44"
+              >
+                <span>
+                  Sensor type
+                </span>
+              </legend>
+            </fieldset>
+          </div>
+        </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root makeStyles-root-51 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+      class="MuiGrid-root makeStyles-root-55 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
       role="button"
       tabindex="0"
     >
@@ -1132,7 +1524,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       >
         <mock-typography
           align="center"
-          classname="makeStyles-bold-53"
+          classname="makeStyles-bold-57"
           display="block"
           gutterbottom="true"
           variant="subtitle2"
@@ -1149,7 +1541,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
         <mock-typography
           align="center"
-          classname="makeStyles-bold-53"
+          classname="makeStyles-bold-57"
           display="block"
           gutterbottom="true"
           variant="subtitle2"
@@ -1160,22 +1552,27 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       <div
         class="MuiGrid-root MuiGrid-item"
       >
-        <mock-button
-          classname="makeStyles-button-55"
-          color="primary"
-          disabled="false"
-          size="small"
-          variant="outlined"
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-59 MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+          tabindex="0"
+          type="button"
         >
-          Select Files
-        </mock-button>
+          <span
+            class="MuiButton-label"
+          >
+            Select Files
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
       </div>
       <div
         class="MuiGrid-root MuiGrid-item"
       >
         <mock-typography
           align="center"
-          classname="makeStyles-bold-53 makeStyles-grey-54"
+          classname="makeStyles-bold-57 makeStyles-grey-58"
           display="block"
           variant="caption"
         >
@@ -1185,7 +1582,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
         <mock-typography
           align="center"
-          classname="makeStyles-bold-53 makeStyles-grey-54"
+          classname="makeStyles-bold-57 makeStyles-grey-58"
           display="block"
           variant="caption"
         >
@@ -1196,11 +1593,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       </div>
     </div>
     <mock-tablecontainer
-      classname="makeStyles-container-56"
+      classname="makeStyles-container-60"
       component="[object Object]"
     >
       <mock-table
-        classname="makeStyles-table-57"
+        classname="makeStyles-table-61"
         size="small"
       >
         <mock-tablehead>
@@ -1238,7 +1635,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-tablehead>
         <mock-tablebody>
           <mock-tablerow
-            classname="makeStyles-root-58"
+            classname="makeStyles-root-62"
           >
             <mock-tablecell>
               <mock-iconbutton
@@ -1285,7 +1682,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-tablerow>
           <mock-tablerow>
             <mock-tablecell
-              classname="makeStyles-collapseWrap-59"
+              classname="makeStyles-collapseWrap-63"
               colspan="6"
             />
           </mock-tablerow>

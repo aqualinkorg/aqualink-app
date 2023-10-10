@@ -103,22 +103,31 @@ exports[`renders as expected 1`] = `
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
               >
-                <mock-button
-                  classname="makeStyles-button-24"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-button-24"
+                  tabindex="0"
+                  type="button"
                 >
-                  <a
-                    class="makeStyles-link-22"
-                    href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa-max-7d.php"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                  <span
+                    class="MuiButton-label"
                   >
-                    <mock-typography
-                      classname="makeStyles-chipText-20"
+                    <a
+                      class="makeStyles-link-22"
+                      href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa-max-7d.php"
+                      rel="noopener noreferrer"
+                      target="_blank"
                     >
-                      NOAA CRW
-                    </mock-typography>
-                  </a>
-                </mock-button>
+                      <mock-typography
+                        classname="makeStyles-chipText-20"
+                      >
+                        NOAA CRW
+                      </mock-typography>
+                    </a>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </div>
             </div>
           </div>

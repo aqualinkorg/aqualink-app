@@ -36,32 +36,67 @@ exports[`NewSurveyPointDialog should render with given state from Redux store 1`
       <mock-dialogcontent
         classname="makeStyles-dialogContent-2"
       >
-        <mock-textfield
-          error="false"
-          fullwidth="true"
-          helpertext=""
-          label="Survey Point Name"
-          variant="outlined"
-        />
+        <div
+          class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined Mui-focused Mui-focused"
+            data-shrink="true"
+          >
+            Survey Point Name
+          </label>
+          <div
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth Mui-focused Mui-focused MuiInputBase-formControl"
+          >
+            <input
+              aria-invalid="false"
+              class="MuiInputBase-input MuiOutlinedInput-input"
+              type="text"
+              value=""
+            />
+            <fieldset
+              aria-hidden="true"
+              class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline"
+            >
+              <legend
+                class="PrivateNotchedOutline-legendLabelled-5 PrivateNotchedOutline-legendNotched-6"
+              >
+                <span>
+                  Survey Point Name
+                </span>
+              </legend>
+            </fieldset>
+          </div>
+          
+        </div>
       </mock-dialogcontent>
       <mock-dialogactions>
-        <mock-button
-          color="primary"
-          disabled="false"
-          size="small"
-          variant="outlined"
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+          tabindex="0"
+          type="button"
         >
-          Cancel
-        </mock-button>
-        <mock-button
-          color="primary"
-          disabled="true"
-          size="small"
+          <span
+            class="MuiButton-label"
+          >
+            Cancel
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall Mui-disabled Mui-disabled"
+          disabled=""
+          tabindex="-1"
           type="submit"
-          variant="outlined"
         >
-          Save
-        </mock-button>
+          <span
+            class="MuiButton-label"
+          >
+            Save
+          </span>
+        </button>
       </mock-dialogactions>
     </form>
   </mock-dialog>

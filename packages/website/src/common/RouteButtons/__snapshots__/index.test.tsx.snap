@@ -8,64 +8,109 @@ exports[`renders as expected 1`] = `
     <div
       class="MuiGrid-root MuiGrid-item"
     >
-      <mock-button
-        component="[object Object]"
+      <a
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text"
         href="/map"
+        role="button"
         style="color: white;"
-        to="/map"
+        tabindex="0"
       >
-        Map
-      </mock-button>
+        <span
+          class="MuiButton-label"
+        >
+          Map
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
     >
-      <mock-button
-        component="[object Object]"
+      <a
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text"
         href="/register"
+        role="button"
         style="color: white;"
-        to="/register"
+        tabindex="0"
       >
-        Register your Site
-      </mock-button>
+        <span
+          class="MuiButton-label"
+        >
+          Register your Site
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
     >
-      <mock-button
-        component="a"
+      <a
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text"
         href="https://highlights.aqualink.org/"
         rel="noopener"
         style="color: white;"
+        tabindex="0"
         target="_blank"
         to=""
       >
-        Highlighted Sites
-      </mock-button>
+        <span
+          class="MuiButton-label"
+        >
+          Highlighted Sites
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
     >
-      <mock-button
-        component="[object Object]"
+      <a
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text"
         href="/tracker"
+        role="button"
         style="color: white;"
-        to="/tracker"
+        tabindex="0"
       >
-        Track a Heatwave
-      </mock-button>
+        <span
+          class="MuiButton-label"
+        >
+          Track a Heatwave
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
     >
-      <mock-button
-        component="[object Object]"
+      <a
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text"
         href="/faq"
+        role="button"
         style="color: white;"
-        to="/faq"
+        tabindex="0"
       >
-        FAQ
-      </mock-button>
+        <span
+          class="MuiButton-label"
+        >
+          FAQ
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
     </div>
   </div>
 </div>

@@ -9,14 +9,21 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
       class="makeStyles-buttonWrapper-2"
     >
       <div>
-        <mock-button
-          color="primary"
-          disabled="false"
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
           style="margin-bottom: 2em;"
-          variant="outlined"
+          tabindex="0"
+          type="button"
         >
-          Download CSV
-        </mock-button>
+          <span
+            class="MuiButton-label"
+          >
+            Download CSV
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
         <mock-dialog
           open="false"
           scroll="paper"
@@ -129,16 +136,43 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             </mock-dialogcontenttext>
           </mock-dialogcontent>
           <mock-dialogactions>
-            <mock-button
-              color="secondary"
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSecondary"
+              tabindex="0"
+              type="button"
             >
-              Cancel
-            </mock-button>
-            <mock-button
-              color="primary"
+              <span
+                class="MuiButton-label"
+              >
+                Cancel
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary Mui-focusVisible Mui-focusVisible"
+              tabindex="0"
+              type="button"
             >
-              Download
-            </mock-button>
+              <span
+                class="MuiButton-label"
+              >
+                Download
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              >
+                <span
+                  class="MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+                >
+                  <span
+                    class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
+                  />
+                </span>
+              </span>
+            </button>
           </mock-dialogactions>
         </mock-dialog>
       </div>
@@ -229,18 +263,24 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="1 month from maximum date"
                 >
                   <div>
-                    <mock-button
-                      color="primary"
-                      fullwidth="true"
-                      size="small"
-                      variant="outlined"
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall MuiButton-fullWidth"
+                      tabindex="0"
+                      type="button"
                     >
-                      <mock-typography
-                        variant="subtitle1"
+                      <span
+                        class="MuiButton-label"
                       >
-                        1 Month
-                      </mock-typography>
-                    </mock-button>
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          1 Month
+                        </mock-typography>
+                      </span>
+                      <span
+                        class="MuiTouchRipple-root"
+                      />
+                    </button>
                   </div>
                 </mock-tooltip>
               </div>
@@ -253,18 +293,24 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Range of 1 year from maximum date"
                 >
                   <div>
-                    <mock-button
-                      color="primary"
-                      fullwidth="true"
-                      size="small"
-                      variant="outlined"
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall MuiButton-fullWidth"
+                      tabindex="0"
+                      type="button"
                     >
-                      <mock-typography
-                        variant="subtitle1"
+                      <span
+                        class="MuiButton-label"
                       >
-                        1 Year
-                      </mock-typography>
-                    </mock-button>
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          1 Year
+                        </mock-typography>
+                      </span>
+                      <span
+                        class="MuiTouchRipple-root"
+                      />
+                    </button>
                   </div>
                 </mock-tooltip>
               </div>
@@ -277,19 +323,24 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Maximun range"
                 >
                   <div>
-                    <mock-button
-                      color="primary"
-                      disabled="false"
-                      fullwidth="true"
-                      size="small"
-                      variant="outlined"
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall MuiButton-fullWidth"
+                      tabindex="0"
+                      type="button"
                     >
-                      <mock-typography
-                        variant="subtitle1"
+                      <span
+                        class="MuiButton-label"
                       >
-                        Max
-                      </mock-typography>
-                    </mock-button>
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          Max
+                        </mock-typography>
+                      </span>
+                      <span
+                        class="MuiTouchRipple-root"
+                      />
+                    </button>
                   </div>
                 </mock-tooltip>
               </div>
@@ -302,18 +353,24 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Custom range"
                 >
                   <div>
-                    <mock-button
-                      color="primary"
-                      fullwidth="true"
-                      size="small"
-                      variant="contained"
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall MuiButton-fullWidth"
+                      tabindex="0"
+                      type="button"
                     >
-                      <mock-typography
-                        variant="subtitle1"
+                      <span
+                        class="MuiButton-label"
                       >
-                        Custom
-                      </mock-typography>
-                    </mock-button>
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          Custom
+                        </mock-typography>
+                      </span>
+                      <span
+                        class="MuiTouchRipple-root"
+                      />
+                    </button>
                   </div>
                 </mock-tooltip>
               </div>

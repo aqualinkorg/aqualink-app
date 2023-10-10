@@ -26,22 +26,34 @@ exports[`Surveys should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-dialogcontent>
     <mock-dialogactions>
-      <mock-button
-        color="secondary"
-        disabled="false"
-        size="small"
-        variant="contained"
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-containedSizeSmall MuiButton-sizeSmall"
+        tabindex="0"
+        type="button"
       >
-        No
-      </mock-button>
-      <mock-button
-        color="primary"
-        disabled="false"
-        size="small"
-        variant="contained"
+        <span
+          class="MuiButton-label"
+        >
+          No
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall"
+        tabindex="0"
+        type="button"
       >
-        Yes
-      </mock-button>
+        <span
+          class="MuiButton-label"
+        >
+          Yes
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
     </mock-dialogactions>
   </mock-dialog>
   <div
@@ -414,13 +426,20 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                               href="/sites/1/survey_details/46"
                               style="text-decoration: none;"
                             >
-                              <mock-button
-                                color="primary"
-                                size="small"
-                                variant="outlined"
+                              <button
+                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                                tabindex="0"
+                                type="button"
                               >
-                                VIEW DETAILS
-                              </mock-button>
+                                <span
+                                  class="MuiButton-label"
+                                >
+                                  VIEW DETAILS
+                                </span>
+                                <span
+                                  class="MuiTouchRipple-root"
+                                />
+                              </button>
                             </a>
                           </div>
                         </div>
@@ -541,13 +560,20 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                               href="/sites/1/survey_details/46"
                               style="text-decoration: none;"
                             >
-                              <mock-button
-                                color="primary"
-                                size="small"
-                                variant="outlined"
+                              <button
+                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                                tabindex="0"
+                                type="button"
                               >
-                                VIEW DETAILS
-                              </mock-button>
+                                <span
+                                  class="MuiButton-label"
+                                >
+                                  VIEW DETAILS
+                                </span>
+                                <span
+                                  class="MuiTouchRipple-root"
+                                />
+                              </button>
                             </a>
                           </div>
                         </div>

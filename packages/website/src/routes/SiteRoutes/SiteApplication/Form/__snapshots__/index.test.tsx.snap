@@ -11,17 +11,37 @@ exports[`renders as expected 1`] = `
     >
       Your Site
     </mock-typography>
-    <mock-textfield
-      classname="Form-formField-3 Form-textField-6"
-      disabled="true"
-      error="false"
-      fullwidth="true"
-      helpertext=""
-      inputprops="[object Object]"
-      placeholder="Site Name e.g. 'Sombrero Site'"
-      value="Mock Site"
-      variant="outlined"
-    />
+    <div
+      class="MuiFormControl-root MuiTextField-root Form-formField-3 Form-textField-6 MuiFormControl-fullWidth"
+    >
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl"
+      >
+        <input
+          aria-invalid="false"
+          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 Mui-disabled Mui-disabled"
+          disabled=""
+          placeholder="Site Name e.g. 'Sombrero Site'"
+          type="text"
+          value="Mock Site"
+        />
+        <fieldset
+          aria-hidden="true"
+          class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+          style="padding-left: 8px;"
+        >
+          <legend
+            class="PrivateNotchedOutline-legend-8"
+            style="width: 0.01px;"
+          >
+            <span>
+              ​
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+      
+    </div>
     <mock-typography
       classname="Form-additionalInfo-4"
     >
@@ -30,33 +50,69 @@ exports[`renders as expected 1`] = `
     <mock-typography>
       Permitting
     </mock-typography>
-    <mock-textfield
-      classname="Form-formField-3 Form-textField-6"
-      error="false"
-      fullwidth="true"
-      helpertext=""
-      inputprops="[object Object]"
-      multiline="true"
-      name="permitRequirements"
-      placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
-      rows="2"
-      variant="outlined"
-    />
+    <div
+      class="MuiFormControl-root MuiTextField-root Form-formField-3 Form-textField-6 MuiFormControl-fullWidth"
+    >
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+      >
+        <textarea
+          aria-invalid="false"
+          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          name="permitRequirements"
+          placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
+          rows="2"
+        />
+        <fieldset
+          aria-hidden="true"
+          class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+          style="padding-left: 8px;"
+        >
+          <legend
+            class="PrivateNotchedOutline-legend-8"
+            style="width: 0.01px;"
+          >
+            <span>
+              ​
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+      
+    </div>
     <mock-typography>
       Funding Source
     </mock-typography>
-    <mock-textfield
-      classname="Form-formField-3 Form-textField-6"
-      error="false"
-      fullwidth="true"
-      helpertext=""
-      inputprops="[object Object]"
-      multiline="true"
-      name="fundingSource"
-      placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
-      rows="2"
-      variant="outlined"
-    />
+    <div
+      class="MuiFormControl-root MuiTextField-root Form-formField-3 Form-textField-6 MuiFormControl-fullWidth"
+    >
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+      >
+        <textarea
+          aria-invalid="false"
+          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          name="fundingSource"
+          placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
+          rows="2"
+        />
+        <fieldset
+          aria-hidden="true"
+          class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+          style="padding-left: 8px;"
+        >
+          <legend
+            class="PrivateNotchedOutline-legend-8"
+            style="width: 0.01px;"
+          >
+            <span>
+              ​
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+      
+    </div>
     <mock-typography>
       Schedule for installation
     </mock-typography>
@@ -69,26 +125,50 @@ exports[`renders as expected 1`] = `
     <mock-typography>
       Installation, survey and maintenance personnel and equipment
     </mock-typography>
-    <mock-textfield
-      classname="Form-formField-3 Form-textField-6"
-      error="false"
-      fullwidth="true"
-      helpertext=""
-      inputprops="[object Object]"
-      multiline="true"
-      name="installationResources"
-      placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
-      rows="4"
-      variant="outlined"
-    />
-    <mock-button
-      color="primary"
-      disabled="false"
-      type="submit"
-      variant="contained"
+    <div
+      class="MuiFormControl-root MuiTextField-root Form-formField-3 Form-textField-6 MuiFormControl-fullWidth"
     >
-      Submit
-    </mock-button>
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+      >
+        <textarea
+          aria-invalid="false"
+          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          name="installationResources"
+          placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
+          rows="4"
+        />
+        <fieldset
+          aria-hidden="true"
+          class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+          style="padding-left: 8px;"
+        >
+          <legend
+            class="PrivateNotchedOutline-legend-8"
+            style="width: 0.01px;"
+          >
+            <span>
+              ​
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+      
+    </div>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+      tabindex="0"
+      type="submit"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Submit
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
   </form>
 </div>
 `;

@@ -20,116 +20,197 @@ exports[`Error Page should render with given state from Redux store 1`] = `
         >
           <clear />
         </mock-iconbutton>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="[object Object]"
-          to="/"
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          href="/"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Home
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="[object Object]"
-          to="/map"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Home
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          href="/map"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Map
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="[object Object]"
-          to="/buoy"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Map
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          href="/buoy"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Buoy
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="[object Object]"
-          to="/drones"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Buoy
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          href="/drones"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Drone
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="[object Object]"
-          to="/about"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Drone
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          href="/about"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            About
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="mock-Link"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              About
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <mock-link
+          aria-disabled="false"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
           href="https://highlights.aqualink.org"
+          role="button"
+          tabindex="0"
           target="_blank"
           to=""
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Highlighted Sites
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="[object Object]"
-          to="/faq"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Highlighted Sites
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </mock-link>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          href="/faq"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Faq
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="[object Object]"
-          to="/tracker"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Faq
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          href="/tracker"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Track a heatwave
-          </mock-typography>
-        </mock-button>
-        <mock-button
-          classname="MenuDrawer-menuDrawerButton-15"
-          component="[object Object]"
-          to="/register"
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Track a heatwave
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          href="/register"
+          role="button"
+          tabindex="0"
         >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
+          <span
+            class="MuiButton-label"
           >
-            Register a site
-          </mock-typography>
-        </mock-button>
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Register a site
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
         <mock-box
           margintop="auto"
           padding="25px"
@@ -143,40 +224,46 @@ exports[`Error Page should render with given state from Redux store 1`] = `
             class="MuiButtonGroup-root MuiButtonGroup-contained"
             role="group"
           >
-            <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-14"
-              color="default"
-              disabled="false"
-              disableelevation="false"
-              disablefocusripple="false"
-              disableripple="false"
-              fullwidth="false"
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-14"
               href="https://github.com/aqualinkorg/aqualink-app"
-              size="medium"
-              starticon="[object Object]"
+              tabindex="0"
               target="_blank"
-              variant="contained"
             >
-              GitHub
-            </mock-button>
-            <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-14"
-              color="default"
-              disabled="false"
-              disableelevation="false"
-              disablefocusripple="false"
-              disableripple="false"
-              fullwidth="false"
-              href="https://ovio.org/project/aqualinkorg/aqualink-app"
-              size="medium"
-              target="_blank"
-              variant="contained"
-            >
-              <img
-                alt="Ovio Logo"
-                src="ovio_logo.png"
+              <span
+                class="MuiButton-label"
+              >
+                <span
+                  class="MuiButton-startIcon MuiButton-iconSizeMedium"
+                >
+                  <github />
+                </span>
+                GitHub
+              </span>
+              <span
+                class="MuiTouchRipple-root"
               />
-            </mock-button>
+            </a>
+            <a
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-14"
+              href="https://ovio.org/project/aqualinkorg/aqualink-app"
+              tabindex="0"
+              target="_blank"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                <img
+                  alt="Ovio Logo"
+                  src="ovio_logo.png"
+                />
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </a>
           </div>
         </mock-box>
       </mock-drawer>
@@ -439,78 +526,212 @@ exports[`Error Page should render with given state from Redux store 1`] = `
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-21 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="firstName"
-                  inputprops="[object Object]"
-                  label="First Name"
-                  name="firstName"
-                  placeholder="First Name"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="firstName"
+                    id="firstName-label"
+                  >
+                    First Name
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-22"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="First Name"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-27 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-29"
+                      >
+                        <span>
+                          First Name
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-21 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="lastName"
-                  inputprops="[object Object]"
-                  label="Last Name"
-                  name="lastName"
-                  placeholder="Last Name"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="lastName"
+                    id="lastName-label"
+                  >
+                    Last Name
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-22"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Last Name"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-27 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-29"
+                      >
+                        <span>
+                          Last Name
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-21 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="organization"
-                  inputprops="[object Object]"
-                  label="Organization"
-                  name="organization"
-                  placeholder="Organization"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="organization"
+                    id="organization-label"
+                  >
+                    Organization
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-22"
+                      id="organization"
+                      name="organization"
+                      placeholder="Organization"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-27 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-29"
+                      >
+                        <span>
+                          Organization
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-21 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="emailAddress"
-                  inputprops="[object Object]"
-                  label="Email Address"
-                  name="emailAddress"
-                  placeholder="Email Address"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="emailAddress"
+                    id="emailAddress-label"
+                  >
+                    Email Address
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-22"
+                      id="emailAddress"
+                      name="emailAddress"
+                      placeholder="Email Address"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-27 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-29"
+                      >
+                        <span>
+                          Email Address
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root RegisterDialog-textFieldWrapper-21 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="password"
-                  inputprops="[object Object]"
-                  label="Password"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="password"
+                    id="password-label"
+                  >
+                    Password
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-22"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-27 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-29"
+                      >
+                        <span>
+                          Password
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
@@ -548,16 +769,18 @@ exports[`Error Page should render with given state from Redux store 1`] = `
               <div
                 class="MuiGrid-root RegisterDialog-button-24 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  color="primary"
-                  disabled="true"
-                  fullwidth="true"
-                  size="large"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge Mui-disabled MuiButton-fullWidth Mui-disabled"
+                  disabled=""
+                  tabindex="-1"
                   type="submit"
-                  variant="contained"
                 >
-                  CREATE ACCOUNT
-                </mock-button>
+                  <span
+                    class="MuiButton-label"
+                  >
+                    CREATE ACCOUNT
+                  </span>
+                </button>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -569,11 +792,20 @@ exports[`Error Page should render with given state from Redux store 1`] = `
                 >
                   Have an account?
                    
-                  <mock-button
-                    color="primary"
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    tabindex="0"
+                    type="button"
                   >
-                    SIGN IN
-                  </mock-button>
+                    <span
+                      class="MuiButton-label"
+                    >
+                      SIGN IN
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
                 </mock-typography>
               </div>
             </form>
@@ -591,7 +823,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-28"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-32"
       >
         <div
           class="MuiCardHeader-content"
@@ -617,7 +849,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-29"
+                    classname="SignInDialog-dialogHeaderSecondPart-33"
                     variant="h4"
                   >
                     link
@@ -628,7 +860,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-27"
+                  classname="SignInDialog-closeButton-31"
                   size="small"
                 >
                   <svg
@@ -709,7 +941,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-30 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-34 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -726,83 +958,157 @@ exports[`Error Page should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-31"
+              class="SignInDialog-form-35"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-32 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-36 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="emailAddress"
-                  inputprops="[object Object]"
-                  label="Email Address"
-                  name="emailAddress"
-                  placeholder="Email Address"
-                  value=""
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="emailAddress"
+                    id="emailAddress-label"
+                  >
+                    Email Address
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-37"
+                      id="emailAddress"
+                      name="emailAddress"
+                      placeholder="Email Address"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-27 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-29"
+                      >
+                        <span>
+                          Email Address
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-32 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-36 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="password"
-                  inputprops="[object Object]"
-                  label="Password"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  value=""
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="password"
+                    id="password-label"
+                  >
+                    Password
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-37"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-27 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-29"
+                      >
+                        <span>
+                          Password
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  classname="SignInDialog-forgotPasswordButton-36"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text SignInDialog-forgotPasswordButton-40"
+                  tabindex="0"
+                  type="button"
                 >
-                  <mock-typography
-                    color="textSecondary"
-                    variant="subtitle2"
+                  <span
+                    class="MuiButton-label"
                   >
-                    Forgot your password?
-                  </mock-typography>
-                </mock-button>
+                    <mock-typography
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      Forgot your password?
+                    </mock-typography>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-35 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-39 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  color="primary"
-                  fullwidth="true"
-                  size="large"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge MuiButton-fullWidth"
+                  tabindex="0"
                   type="submit"
-                  variant="contained"
                 >
-                  SIGN IN
-                </mock-button>
+                  <span
+                    class="MuiButton-label"
+                  >
+                    SIGN IN
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-34"
+                  classname="SignInDialog-formText-38"
                   color="textSecondary"
                   variant="subtitle1"
                 >
                   Don't have an account?
                    
-                  <mock-button
-                    color="primary"
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    tabindex="0"
+                    type="button"
                   >
-                    SIGN UP
-                  </mock-button>
+                    <span
+                      class="MuiButton-label"
+                    >
+                      SIGN UP
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
                 </mock-typography>
               </div>
             </form>
@@ -833,26 +1139,42 @@ exports[`Error Page should render with given state from Redux store 1`] = `
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
     >
-      <mock-button
-        color="primary"
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
         style="margin: 1rem;"
-        variant="contained"
+        tabindex="0"
+        type="button"
       >
-        Refresh
-      </mock-button>
-      <mock-button
-        color="primary"
-        component="[object Object]"
+        <span
+          class="MuiButton-label"
+        >
+          Refresh
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+      <a
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+        href="/map"
+        role="button"
         style="margin: 1rem; color: white;"
-        to="/map"
-        variant="contained"
+        tabindex="0"
       >
-        Back to Map
-      </mock-button>
+        <span
+          class="MuiButton-label"
+        >
+          Back to Map
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </a>
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-37"
+    classname="Footer-appBar-41"
     position="static"
   >
     <mock-toolbar>
@@ -863,7 +1185,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-38"
+            classname="Footer-navBarLink-42"
             href="/map"
           >
             <mock-typography

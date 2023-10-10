@@ -138,7 +138,6 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                   disableToolbar
                   format="MM/dd/yyyy"
                   fullWidth
-                  data-testid="dive-date"
                   autoOk
                   showTodayButton
                   size={itemsSize}
@@ -165,6 +164,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                   }}
                   inputProps={{
                     className: classes.textField,
+                    'data-testid': 'dive-date',
                   }}
                   inputVariant="outlined"
                   keyboardIcon={<EventIcon fontSize={iconSize} />}
@@ -192,7 +192,6 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                 <KeyboardTimePicker
                   className={classes.textField}
                   id="time-picker"
-                  data-testid="dive-time"
                   fullWidth
                   autoOk
                   size={itemsSize}
@@ -210,6 +209,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                   }}
                   inputProps={{
                     className: classes.textField,
+                    'data-testid': 'dive-time',
                   }}
                   keyboardIcon={<AccessTimeIcon fontSize={iconSize} />}
                   inputVariant="outlined"
@@ -259,7 +259,6 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
           className={classes.textField}
           select
           id="weather"
-          data-testid="weather"
           name="weather"
           value={weather}
           onChange={handleWeatherChange}
@@ -269,6 +268,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
           size={itemsSize}
           inputProps={{
             className: classes.textField,
+            'data-testid': 'weather',
           }}
         >
           <MenuItem className={classes.textField} value="calm">
@@ -295,7 +295,6 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
             <TextField
               {...field}
               className={classes.textField}
-              data-testid="comments"
               variant="outlined"
               multiline
               placeholder="Did anything stand out during this survey?"
@@ -303,6 +302,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
               size={itemsSize}
               inputProps={{
                 className: classes.textField,
+                'data-testid': 'comments',
               }}
             />
           )}

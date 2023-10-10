@@ -104,13 +104,20 @@ exports[`Popup should render with given state from Redux store 1`] = `
               href="/sites/1"
               style="text-decoration: none;"
             >
-              <mock-button
-                color="primary"
-                size="small"
-                variant="outlined"
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                tabindex="0"
+                type="button"
               >
-                EXPLORE
-              </mock-button>
+                <span
+                  class="MuiButton-label"
+                >
+                  EXPLORE
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </button>
             </a>
           </div>
         </div>

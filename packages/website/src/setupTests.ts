@@ -67,12 +67,13 @@ global.matchMedia =
 process.env.REACT_APP_API_BASE_URL =
   'https://programize-dot-ocean-systems.uc.r.appspot.com/api/';
 
+// TODO: find a way to un-mock (or mock) these per test
 stubMuiComponent('Typography');
-stubMuiComponent('Button', {
-  styles: jest.requireActual('@material-ui/core/Button/Button').styles,
-});
+// stubMuiComponent('Button', {
+//   styles: jest.requireActual('@material-ui/core/Button/Button').styles,
+// });
 stubMuiComponent('IconButton');
-stubMuiComponent('TextField');
+// stubMuiComponent('TextField');
 stubMuiComponent('Avatar');
 stubMuiComponent('Box');
 stubMuiComponent('Tabs');

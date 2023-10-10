@@ -2,6 +2,8 @@ import React from 'react';
 import { render, fireEvent, screen, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { BrowserRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 import SurveyForm from '.';
 
 const mockStore = configureStore([]);
@@ -27,36 +29,40 @@ describe('SurveyForm', () => {
 
   it('calls onSubmit with the form data on submit', async () => {
     const { getByTestId } = render(
-      <Provider store={store}>
-        <SurveyForm siteId={1} onSubmit={mockFunction} />
-      </Provider>,
+      <BrowserRouter>
+        <Provider store={store}>
+          <SurveyForm siteId={1} onSubmit={mockFunction} />
+        </Provider>
+      </BrowserRouter>,
     );
 
-    fireEvent.change(getByTestId('dive-date'), {
-      value: '01/01/2022',
-    });
-    fireEvent.change(getByTestId('dive-time'), {
-      value: '12:00',
-    });
+    const diveDate = getByTestId('dive-date');
+    userEvent.type(diveDate, '01/01/2022');
+
+    // TODO: figure out how to update the time also
+
     fireEvent.change(getByTestId('weather'), {
-      value: 'calm',
+      target: {
+        value: 'calm',
+      },
     });
     fireEvent.change(getByTestId('comments'), {
-      value: 'Test comment',
+      target: {
+        value: 'Test comment',
+      },
     });
 
     await act(async () => {
       fireEvent.click(screen.getByText('Next'));
     });
 
-    // TODO - fix this test by unmocking the Button component
-    // expect(mockFunction).toHaveBeenCalled();
+    expect(mockFunction).toHaveBeenCalled();
 
-    // expect(mockFunction).toHaveBeenCalledWith(
-    //   '2022-01-01T12:00:00.000Z',
-    //   null,
-    //   'calm',
-    //   'Test comment',
-    // );
+    expect(mockFunction).toHaveBeenCalledWith(
+      '2022-01-01T00:00:00.000Z',
+      { lat: 17.42, lng: 42.17 },
+      'calm',
+      'Test comment',
+    );
   });
 });
