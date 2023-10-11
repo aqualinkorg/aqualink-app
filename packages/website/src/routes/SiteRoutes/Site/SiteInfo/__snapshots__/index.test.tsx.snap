@@ -157,28 +157,40 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item"
             >
-              <mock-button
-                classname="SiteNavBar-button-2"
-                color="primary"
-                size="small"
-                variant="outlined"
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined SiteNavBar-button-2 MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                tabindex="0"
+                type="button"
               >
-                EDIT SITE DETAILS
-              </mock-button>
+                <span
+                  class="MuiButton-label"
+                >
+                  EDIT SITE DETAILS
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </button>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item"
             >
-              <mock-button
-                classname="SiteNavBar-button-2"
-                color="primary"
-                component="[object Object]"
-                size="small"
-                to="/sites/1/upload_data"
-                variant="outlined"
+              <a
+                aria-disabled="false"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined SiteNavBar-button-2 MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                href="/sites/1/upload_data"
+                role="button"
+                tabindex="0"
               >
-                UPLOAD DATA
-              </mock-button>
+                <span
+                  class="MuiButton-label"
+                >
+                  UPLOAD DATA
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </a>
             </div>
           </div>
         </div>

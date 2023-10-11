@@ -151,62 +151,127 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
               <div
                 class="MuiGrid-root SignInDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="emailAddress"
-                  inputprops="[object Object]"
-                  label="Email Address"
-                  name="emailAddress"
-                  placeholder="Email Address"
-                  value=""
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="emailAddress"
+                    id="emailAddress-label"
+                  >
+                    Email Address
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-7"
+                      id="emailAddress"
+                      name="emailAddress"
+                      placeholder="Email Address"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-13"
+                      >
+                        <span>
+                          Email Address
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root SignInDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-textfield
-                  error="false"
-                  fullwidth="true"
-                  helpertext=""
-                  id="password"
-                  inputprops="[object Object]"
-                  label="Password"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  value=""
-                  variant="outlined"
-                />
+                <div
+                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                >
+                  <label
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    data-shrink="false"
+                    for="password"
+                    id="password-label"
+                  >
+                    Password
+                  </label>
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-7"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-11 MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legendLabelled-13"
+                      >
+                        <span>
+                          Password
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  
+                </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  classname="SignInDialog-forgotPasswordButton-10"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text SignInDialog-forgotPasswordButton-10"
+                  tabindex="0"
+                  type="button"
                 >
-                  <mock-typography
-                    color="textSecondary"
-                    variant="subtitle2"
+                  <span
+                    class="MuiButton-label"
                   >
-                    Forgot your password?
-                  </mock-typography>
-                </mock-button>
+                    <mock-typography
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      Forgot your password?
+                    </mock-typography>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </div>
               <div
                 class="MuiGrid-root SignInDialog-button-9 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-button
-                  color="primary"
-                  fullwidth="true"
-                  size="large"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge MuiButton-fullWidth"
+                  tabindex="0"
                   type="submit"
-                  variant="contained"
                 >
-                  SIGN IN
-                </mock-button>
+                  <span
+                    class="MuiButton-label"
+                  >
+                    SIGN IN
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -218,11 +283,20 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
                 >
                   Don't have an account?
                    
-                  <mock-button
-                    color="primary"
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    tabindex="0"
+                    type="button"
                   >
-                    SIGN UP
-                  </mock-button>
+                    <span
+                      class="MuiButton-label"
+                    >
+                      SIGN UP
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
                 </mock-typography>
               </div>
             </form>

@@ -89,13 +89,20 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                 href="/sites/0/survey_details/46"
                 style="text-decoration: none;"
               >
-                <mock-button
-                  color="primary"
-                  size="small"
-                  variant="outlined"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                  tabindex="0"
+                  type="button"
                 >
-                  VIEW DETAILS
-                </mock-button>
+                  <span
+                    class="MuiButton-label"
+                  >
+                    VIEW DETAILS
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </a>
             </div>
             <div
@@ -181,20 +188,34 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                   </div>
                 </mock-dialogcontent>
                 <mock-dialogactions>
-                  <mock-button
-                    color="secondary"
-                    size="small"
-                    variant="outlined"
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                    tabindex="0"
+                    type="button"
                   >
-                    Cancel
-                  </mock-button>
-                  <mock-button
-                    color="primary"
-                    size="small"
-                    variant="outlined"
+                    <span
+                      class="MuiButton-label"
+                    >
+                      Cancel
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                    tabindex="0"
+                    type="button"
                   >
-                    Yes
-                  </mock-button>
+                    <span
+                      class="MuiButton-label"
+                    >
+                      Yes
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
                 </mock-dialogactions>
               </mock-dialog>
             </div>

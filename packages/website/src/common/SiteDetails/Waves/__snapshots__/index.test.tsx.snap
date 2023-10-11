@@ -247,22 +247,31 @@ exports[`renders as expected 1`] = `
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
               >
-                <mock-button
-                  classname="makeStyles-button-31"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-button-31"
+                  tabindex="0"
+                  type="button"
                 >
-                  <a
-                    class="makeStyles-link-29"
-                    href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                  <span
+                    class="MuiButton-label"
                   >
-                    <mock-typography
-                      classname="makeStyles-chipText-27"
+                    <a
+                      class="makeStyles-link-29"
+                      href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
+                      rel="noopener noreferrer"
+                      target="_blank"
                     >
-                      SOFAR MODEL
-                    </mock-typography>
-                  </a>
-                </mock-button>
+                      <mock-typography
+                        classname="makeStyles-chipText-27"
+                      >
+                        SOFAR MODEL
+                      </mock-typography>
+                    </a>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
               </div>
             </div>
           </div>
