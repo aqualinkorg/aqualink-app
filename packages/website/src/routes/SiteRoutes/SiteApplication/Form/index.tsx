@@ -107,7 +107,7 @@ const Form = ({
             inputProps={{ className: classes.textField }}
             fullWidth
             multiline
-            rows={2}
+            minRows={2}
             defaultValue={application?.permitRequirements || null}
             placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
             error={!!errors.permitRequirements}
@@ -131,7 +131,7 @@ const Form = ({
             inputProps={{ className: classes.textField }}
             fullWidth
             multiline
-            rows={2}
+            minRows={2}
             defaultValue={application?.fundingSource || null}
             placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
             error={!!errors.fundingSource}
@@ -208,7 +208,7 @@ const Form = ({
             inputProps={{ className: classes.textField }}
             fullWidth
             multiline
-            rows={4}
+            minRows={4}
             defaultValue={application?.installationResources || null}
             placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
             error={!!errors.installationResources}

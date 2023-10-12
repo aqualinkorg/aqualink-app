@@ -62,6 +62,14 @@ exports[`renders as expected 1`] = `
           name="permitRequirements"
           placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
           rows="2"
+          style="height: 0px; overflow: hidden;"
+        />
+        <textarea
+          aria-hidden="true"
+          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          readonly=""
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
@@ -95,6 +103,14 @@ exports[`renders as expected 1`] = `
           name="fundingSource"
           placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
           rows="2"
+          style="height: 0px; overflow: hidden;"
+        />
+        <textarea
+          aria-hidden="true"
+          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          readonly=""
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
@@ -137,6 +153,14 @@ exports[`renders as expected 1`] = `
           name="installationResources"
           placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
           rows="4"
+          style="height: 0px; overflow: hidden;"
+        />
+        <textarea
+          aria-hidden="true"
+          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          readonly=""
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          tabindex="-1"
         />
         <fieldset
           aria-hidden="true"

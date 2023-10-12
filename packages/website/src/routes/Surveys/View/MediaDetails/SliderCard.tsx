@@ -153,7 +153,7 @@ const SliderCard = ({
                     placeholder="Comments"
                     onChange={(e) => setEditComments(e.target.value)}
                     value={editComments}
-                    rows={isMobile ? 1 : 7}
+                    minRows={isMobile ? 1 : 7}
                     inputProps={{
                       className: classes.textField,
                     }}
