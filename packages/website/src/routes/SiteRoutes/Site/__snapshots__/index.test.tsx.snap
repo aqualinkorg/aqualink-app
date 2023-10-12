@@ -18,7 +18,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         <mock-iconbutton
           style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
         >
-          <clear />
+          <mock-clear />
         </mock-iconbutton>
         <a
           aria-disabled="false"
@@ -237,7 +237,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 <span
                   class="MuiButton-startIcon MuiButton-iconSizeMedium"
                 >
-                  <github />
+                  <mock-github />
                 </span>
                 GitHub
               </span>
@@ -3166,7 +3166,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         <mock-iconbutton
           style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
         >
-          <clear />
+          <mock-clear />
         </mock-iconbutton>
         <a
           aria-disabled="false"
@@ -3385,7 +3385,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 <span
                   class="MuiButton-startIcon MuiButton-iconSizeMedium"
                 >
-                  <github />
+                  <mock-github />
                 </span>
                 GitHub
               </span>

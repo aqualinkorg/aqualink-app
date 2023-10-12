@@ -12,7 +12,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
     <mock-iconbutton
       style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
     >
-      <clear />
+      <mock-clear />
     </mock-iconbutton>
     <a
       aria-disabled="false"
@@ -231,7 +231,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
             <span
               class="MuiButton-startIcon MuiButton-iconSizeMedium"
             >
-              <github />
+              <mock-github />
             </span>
             GitHub
           </span>
