@@ -78,6 +78,7 @@ function SitesTable() {
             );
             return (
               <CollapsibleTableRow
+                key={row.id}
                 row={{
                   siteId: row.id,
                   siteName: row.name,
