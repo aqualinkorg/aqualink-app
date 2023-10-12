@@ -156,7 +156,7 @@ function Uploads() {
               .
             </Typography>
           </Grid>
-          <Grid md={4} xs={12}>
+          <Grid item md={4} xs={12}>
             <TextField
               label="Sensor type"
               value={SENSOR_TYPES.findIndex((x) => x.name === selectedSource)}

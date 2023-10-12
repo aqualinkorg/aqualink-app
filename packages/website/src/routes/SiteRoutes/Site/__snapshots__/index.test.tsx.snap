@@ -1571,7 +1571,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               class="makeStyles-container-345"
             >
               <mock-featuredmedia
-                featuredimage=""
+                featuredimage="image-url"
                 siteid="1"
                 surveyid="46"
               />
@@ -2876,6 +2876,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             >
                               <div
                                 class="MuiCardMedia-root makeStyles-cardImage-523"
+                                style="background-image: url(image-url);"
                               />
                             </a>
                           </div>
@@ -3010,6 +3011,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             >
                               <div
                                 class="MuiCardMedia-root makeStyles-cardImage-523"
+                                style="background-image: url(image-url);"
                               />
                             </a>
                           </div>

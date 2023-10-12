@@ -61,7 +61,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
   const [weather, setWeather] =
     useState<SurveyData['weatherConditions']>('calm');
   const itemsSize = isMobile ? 'small' : 'medium';
-  const iconSize = isMobile ? 'small' : 'default';
+  const iconSize = isMobile ? 'small' : 'medium';
 
   const {
     formState: { errors },

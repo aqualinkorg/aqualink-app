@@ -107,6 +107,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                   >
                     <div
                       class="MuiCardMedia-root SliderCard-cardImage-14"
+                      style="background-image: url(image-url);"
                     />
                   </div>
                   <div
