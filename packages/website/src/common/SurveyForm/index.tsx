@@ -61,7 +61,6 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
   const [weather, setWeather] =
     useState<SurveyData['weatherConditions']>('calm');
   const itemsSize = isMobile ? 'small' : 'medium';
-  const iconSize = isMobile ? 'small' : 'medium';
 
   const {
     formState: { errors },
@@ -167,7 +166,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                     'data-testid': 'dive-date',
                   }}
                   inputVariant="outlined"
-                  keyboardIcon={<EventIcon fontSize={iconSize} />}
+                  keyboardIcon={<EventIcon fontSize={itemsSize} />}
                 />
               )}
             />
@@ -211,7 +210,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                     className: classes.textField,
                     'data-testid': 'dive-time',
                   }}
-                  keyboardIcon={<AccessTimeIcon fontSize={iconSize} />}
+                  keyboardIcon={<AccessTimeIcon fontSize={itemsSize} />}
                   inputVariant="outlined"
                 />
               )}
