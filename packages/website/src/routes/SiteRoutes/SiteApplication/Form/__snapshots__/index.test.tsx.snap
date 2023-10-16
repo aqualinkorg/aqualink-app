@@ -137,7 +137,21 @@ exports[`renders as expected 1`] = `
     >
       What is the soonest date you could install the Smart Buoy and conduct a survey?
     </mock-typography>
-    Mock-MuiPickersUtilsProvider
+    <mock-muipickersutilsprovider>
+      <mock-keyboarddatepicker
+        autook="true"
+        classname="Form-formField-3"
+        disabletoolbar="true"
+        error="false"
+        format="MM/dd/yyyy"
+        helpertext=""
+        id="installationSchedule"
+        inputprops="[object Object]"
+        inputvariant="outlined"
+        keyboardbuttonprops="[object Object]"
+        showtodaybutton="true"
+      />
+    </mock-muipickersutilsprovider>
     <mock-typography>
       Installation, survey and maintenance personnel and equipment
     </mock-typography>

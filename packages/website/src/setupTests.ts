@@ -33,13 +33,6 @@ jest.mock('@material-ui/icons', () => ({
   ZoomOutMap: 'mock-ZoomOutMap',
 }));
 
-jest.mock('@material-ui/pickers', () => ({
-  __esModule: true,
-  KeyboardDatePicker: 'mock-KeyboardDatePicker',
-  KeyboardDatePickerProps: 'mock-KeyboardDatePickerProps',
-  MuiPickersUtilsProvider: 'mock-MuiPickersUtilsProvider',
-}));
-
 jest.mock('react-chartjs-2', () => ({
   Line: 'mock-Line',
   Chart: {
