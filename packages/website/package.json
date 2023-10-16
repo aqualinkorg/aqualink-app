@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env EXTEND_ESLINT=true GENERATE_SOURCEMAP=false react-scripts start",
     "build": "cross-env EXTEND_ESLINT=true GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "react-scripts --expose-gc test --logHeapUsage --maxWorkers=2",
+    "test": "react-scripts --expose-gc test --logHeapUsage --maxWorkers=4",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore --max-warnings 0",
     "precommit": "lint-staged",
@@ -23,7 +23,6 @@
     "@sketchfab/viewer-api": "^1.12.0",
     "@testing-library/dom": "^7.8.0",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
     "chart.js": "^2.9.3",
@@ -39,7 +38,6 @@
     "leaflet": "^1.7.1",
     "lodash": "^4.17.15",
     "luxon": "^3.3.0",
-    "material-table": "^1.65.0",
     "mutationobserver-shim": "^0.3.7",
     "notistack": "^1.0.10",
     "react": "^16.13.1",
@@ -85,7 +83,7 @@
     "node": "18.x"
   },
   "devDependencies": {
-    "@testing-library/react": "9.5.0",
+    "@testing-library/react": "^9.5.0",
     "@types/chart.js": "^2.9.27",
     "@types/classnames": "^2.2.10",
     "@types/immutable": "^3.8.7",

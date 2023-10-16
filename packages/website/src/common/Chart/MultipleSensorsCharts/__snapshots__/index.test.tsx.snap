@@ -388,11 +388,9 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         <div
           class="Chart-chart-18"
         >
-          <canvas
-            class="chartjs-render-monitor"
-            height="0"
-            style="display: block;"
-            width="0"
+          <mock-line
+            data="[object Object]"
+            options="[object Object]"
           />
         </div>
         <div
@@ -420,9 +418,11 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   <div
                     class="DatePicker-datePicker-20"
                   >
-                    <muipickersutilsprovider>
-                      <keyboarddatepicker
-                        class="DatePicker-textField-23"
+                    <mock-muipickersutilsprovider>
+                      <mock-keyboarddatepicker
+                        autook="false"
+                        classname="DatePicker-textField-23"
+                        disabletoolbar="true"
                         format="MM/dd/yyyy"
                         helpertext=""
                         inputprops="[object Object]"
@@ -432,9 +432,11 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         maxdate="2023/06/28"
                         mindate="1970/01/01"
                         name="datePicker"
+                        showtodaybutton="true"
+                        size="small"
                         value="2022-05-28T00:00:00.000Z"
                       />
-                    </muipickersutilsprovider>
+                    </mock-muipickersutilsprovider>
                   </div>
                 </mock-box>
               </div>
@@ -458,9 +460,11 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   <div
                     class="DatePicker-datePicker-20"
                   >
-                    <muipickersutilsprovider>
-                      <keyboarddatepicker
-                        class="DatePicker-textField-23"
+                    <mock-muipickersutilsprovider>
+                      <mock-keyboarddatepicker
+                        autook="false"
+                        classname="DatePicker-textField-23"
+                        disabletoolbar="true"
                         format="MM/dd/yyyy"
                         helpertext=""
                         inputprops="[object Object]"
@@ -470,9 +474,11 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         maxdate="2023/06/28"
                         mindate="1970/01/01"
                         name="datePicker"
+                        showtodaybutton="true"
+                        size="small"
                         value="2022-06-28T00:00:00.000Z"
                       />
-                    </muipickersutilsprovider>
+                    </mock-muipickersutilsprovider>
                   </div>
                 </mock-box>
               </div>

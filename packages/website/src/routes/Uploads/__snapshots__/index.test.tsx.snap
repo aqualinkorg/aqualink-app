@@ -181,7 +181,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         <mock-iconbutton
           style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
         >
-          <clear />
+          <mock-clear />
         </mock-iconbutton>
         <a
           aria-disabled="false"
@@ -400,7 +400,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 <span
                   class="MuiButton-startIcon MuiButton-iconSizeMedium"
                 >
-                  <github />
+                  <mock-github />
                 </span>
                 GitHub
               </span>
@@ -1346,7 +1346,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
       >
         <div
           class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
