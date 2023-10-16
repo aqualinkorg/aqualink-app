@@ -65,6 +65,5 @@ describe('SurveyForm', () => {
       'calm',
       'Test comment',
     );
-
   });
 });
