@@ -23,7 +23,6 @@
     "@sketchfab/viewer-api": "^1.12.0",
     "@testing-library/dom": "^7.8.0",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
     "chart.js": "^2.9.3",
@@ -84,7 +83,7 @@
     "node": "18.x"
   },
   "devDependencies": {
-    "@testing-library/react": "9.5.0",
+    "@testing-library/react": "^9.5.0",
     "@types/chart.js": "^2.9.27",
     "@types/classnames": "^2.2.10",
     "@types/immutable": "^3.8.7",
