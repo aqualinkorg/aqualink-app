@@ -40,7 +40,6 @@ describe('SurveyForm', () => {
     userEvent.type(diveDate, '01/01/2022');
 
     // TODO: figure out how to update the time also
-
     fireEvent.change(getByTestId('weather'), {
       target: {
         value: 'calm',
@@ -51,6 +50,8 @@ describe('SurveyForm', () => {
         value: 'Test comment',
       },
     });
+
+    expect(container).toMatchSnapshot();
 
     await act(async () => {
       fireEvent.click(screen.getByText('Next'));
@@ -65,6 +66,5 @@ describe('SurveyForm', () => {
       'Test comment',
     );
 
-    expect(container).toMatchSnapshot();
   });
 });
