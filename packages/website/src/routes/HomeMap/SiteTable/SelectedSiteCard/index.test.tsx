@@ -7,15 +7,6 @@ import { Provider } from 'react-redux';
 import { mockSite } from 'mocks/mockSite';
 import SelectedSiteCard from '.';
 
-jest.mock('react-chartjs-2', () => ({
-  Line: () => 'Mock-Line',
-  Chart: {
-    pluginService: {
-      register: jest.fn(),
-    },
-  },
-}));
-
 const site = {
   details: mockSite,
 };

@@ -388,11 +388,9 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         <div
           class="Chart-chart-18"
         >
-          <canvas
-            class="chartjs-render-monitor"
-            height="0"
-            style="display: block;"
-            width="0"
+          <mock-line
+            data="[object Object]"
+            options="[object Object]"
           />
         </div>
         <div

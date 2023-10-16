@@ -24,15 +24,6 @@ jest.mock(
   () => 'Mock-MultipleSensorsCharts',
 );
 
-jest.mock('react-chartjs-2', () => ({
-  Line: () => 'Mock-Line',
-  Chart: {
-    pluginService: {
-      register: jest.fn(),
-    },
-  },
-}));
-
 describe('Site Detail Page', () => {
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;

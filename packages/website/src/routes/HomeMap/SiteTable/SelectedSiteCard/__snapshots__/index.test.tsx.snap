@@ -85,13 +85,19 @@ exports[`renders as expected 1`] = `
             smdown="true"
           >
             <div>
-              Mock-Line
+              <mock-line
+                data="[object Object]"
+                options="[object Object]"
+              />
             </div>
           </mock-hidden>
           <mock-hidden
             mdup="true"
           >
-            Mock-Line
+            <mock-line
+              data="[object Object]"
+              options="[object Object]"
+            />
           </mock-hidden>
         </div>
         <div
@@ -262,13 +268,19 @@ exports[`renders loading as expected 1`] = `
             smdown="true"
           >
             <div>
-              Mock-Line
+              <mock-line
+                data="[object Object]"
+                options="[object Object]"
+              />
             </div>
           </mock-hidden>
           <mock-hidden
             mdup="true"
           >
-            Mock-Line
+            <mock-line
+              data="[object Object]"
+              options="[object Object]"
+            />
           </mock-hidden>
         </div>
         <div

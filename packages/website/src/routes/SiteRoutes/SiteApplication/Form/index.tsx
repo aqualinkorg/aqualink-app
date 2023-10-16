@@ -82,7 +82,6 @@ const Form = ({
         fullWidth
         placeholder="Site Name e.g. 'Sombrero Site'"
         disabled
-        defaultValue={siteName}
         value={siteName}
         error={!!errors.siteName}
         helperText={errors?.siteName?.message || ''}

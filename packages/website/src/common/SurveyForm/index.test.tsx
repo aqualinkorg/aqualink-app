@@ -28,7 +28,7 @@ describe('SurveyForm', () => {
   );
 
   it('calls onSubmit with the form data on submit', async () => {
-    const { getByTestId } = render(
+    const { getByTestId, container } = render(
       <BrowserRouter>
         <Provider store={store}>
           <SurveyForm siteId={1} onSubmit={mockFunction} />
@@ -64,5 +64,7 @@ describe('SurveyForm', () => {
       'calm',
       'Test comment',
     );
+
+    expect(container).toMatchSnapshot();
   });
 });

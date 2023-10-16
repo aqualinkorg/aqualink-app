@@ -2516,7 +2516,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           <div
             class="makeStyles-chart-433"
           >
-            Mock-Line
+            <mock-line
+              data="[object Object]"
+              options="[object Object]"
+            />
           </div>
           <mock-multiplesensorscharts
             disablegutters="true"
@@ -5683,7 +5686,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           <div
             class="makeStyles-chart-162"
           >
-            Mock-Line
+            <mock-line
+              data="[object Object]"
+              options="[object Object]"
+            />
           </div>
           <mock-multiplesensorscharts
             disablegutters="true"

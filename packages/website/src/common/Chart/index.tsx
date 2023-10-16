@@ -142,7 +142,7 @@ function Chart({
 
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
-    if (current) {
+    if (current && current.chartInstance) {
       // not sure why 'scales' doesn't have a type. Possibly from a plugin?
       const xScale = (current.chartInstance as any).scales['x-axis-0'];
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>

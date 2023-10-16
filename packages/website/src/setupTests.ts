@@ -40,6 +40,15 @@ jest.mock('@material-ui/pickers', () => ({
   MuiPickersUtilsProvider: 'mock-MuiPickersUtilsProvider',
 }));
 
+jest.mock('react-chartjs-2', () => ({
+  Line: 'mock-Line',
+  Chart: {
+    pluginService: {
+      register: jest.fn(),
+    },
+  },
+}));
+
 function stubMuiComponent(componentName: string, namedExports: any = {}) {
   jest.doMock(`@material-ui/core/${componentName}/${componentName}`, () => ({
     __esModule: true,
