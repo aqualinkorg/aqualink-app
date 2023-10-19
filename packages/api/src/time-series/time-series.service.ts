@@ -20,6 +20,8 @@ import { join } from 'path';
 // https://github.com/adaltas/node-csv/issues/372
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/sync';
+import { Monitoring } from 'monitoring/monitoring.entity';
+import { MonitoringMetric } from 'monitoring/schemas/monitoring-metric.enum';
 import { DateTime } from '../luxon-extensions';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
@@ -73,6 +75,9 @@ export class TimeSeriesService {
 
     @InjectRepository(DataUploadsSites)
     private dataUploadsSitesRepository: Repository<DataUploadsSites>,
+
+    @InjectRepository(Monitoring)
+    private monitoringRepository: Repository<Monitoring>,
   ) {}
 
   async findSurveyPointData(
@@ -106,6 +111,11 @@ export class TimeSeriesService {
   ) {
     const { siteId } = siteDataDto;
 
+    this.monitoringRepository.save({
+      site: { id: siteId },
+      metric: MonitoringMetric.TimeSeriesRequest,
+    });
+
     const data: TimeSeriesData[] = await getDataQuery({
       timeSeriesRepository: this.timeSeriesRepository,
       siteId,
@@ -127,6 +137,11 @@ export class TimeSeriesService {
     hourly?: boolean,
   ) {
     const { siteId } = siteDataDto;
+
+    this.monitoringRepository.save({
+      site: { id: siteId },
+      metric: MonitoringMetric.CSVDownload,
+    });
 
     const uniqueMetrics = await getAvailableMetricsQuery({
       timeSeriesRepository: this.timeSeriesRepository,

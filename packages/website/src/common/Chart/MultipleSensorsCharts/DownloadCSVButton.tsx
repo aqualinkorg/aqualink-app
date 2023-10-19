@@ -6,8 +6,11 @@ import { useSnackbar } from 'notistack';
 import { MetricsKeys } from 'store/Sites/types';
 import { downloadBlob } from 'utils/utils';
 import { constructTimeSeriesDataCsvRequestUrl } from 'helpers/siteUtils';
-import DownloadCSVDialog from './DownloadCSVDialog';
+import monitoringServices from 'services/monitoringServices';
+import { userInfoSelector } from 'store/User/userSlice';
+import { MonitoringMetric } from 'utils/types';
 import { CSVColumnData } from './types';
+import DownloadCSVDialog from './DownloadCSVDialog';
 
 interface DownloadCSVButtonParams {
   data: CSVColumnData[];
@@ -27,6 +30,7 @@ function DownloadCSVButton({
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
+  const user = useSelector(userInfoSelector);
   const { enqueueSnackbar } = useSnackbar();
 
   const onClose = async (
@@ -67,6 +71,13 @@ function DownloadCSVButton({
         variant: 'error',
       });
     }
+
+    if (user?.token)
+      monitoringServices.postMonitoringMetric({
+        token: user.token,
+        siteId: Number(siteId),
+        metric: MonitoringMetric.CSVDownload,
+      });
 
     setLoading(false);
     setOpen(false);
