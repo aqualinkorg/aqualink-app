@@ -28,7 +28,7 @@ describe('SurveyForm', () => {
   );
 
   it('calls onSubmit with the form data on submit', async () => {
-    const { getByTestId } = render(
+    const { getByTestId, container } = render(
       <BrowserRouter>
         <Provider store={store}>
           <SurveyForm siteId={1} onSubmit={mockFunction} />
@@ -40,7 +40,6 @@ describe('SurveyForm', () => {
     userEvent.type(diveDate, '01/01/2022');
 
     // TODO: figure out how to update the time also
-
     fireEvent.change(getByTestId('weather'), {
       target: {
         value: 'calm',
@@ -51,6 +50,8 @@ describe('SurveyForm', () => {
         value: 'Test comment',
       },
     });
+
+    expect(container).toMatchSnapshot();
 
     await act(async () => {
       fireEvent.click(screen.getByText('Next'));

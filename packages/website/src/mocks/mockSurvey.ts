@@ -21,7 +21,7 @@ export const mockSurvey: SurveyState = {
   },
   surveyMedia: [
     {
-      url: '',
+      url: 'image-url',
       comments: 'comment 2222',
       featured: false,
       id: 18,

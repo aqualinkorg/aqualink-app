@@ -67,8 +67,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
           >
             Alert
               
-            <arrowupward
-              font-size="small"
+            <mock-arrowupward
+              fontsize="small"
             />
           </mock-typography>
         </div>
@@ -106,8 +106,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               Alert
                 
-              <arrowdownward
-                font-size="small"
+              <mock-arrowdownward
+                fontsize="small"
               />
             </mock-typography>
           </mock-menuitem>
@@ -123,8 +123,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               Alert
                 
-              <arrowupward
-                font-size="small"
+              <mock-arrowupward
+                fontsize="small"
               />
             </mock-typography>
           </mock-menuitem>
@@ -139,8 +139,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               DHW
                 
-              <arrowdownward
-                font-size="small"
+              <mock-arrowdownward
+                fontsize="small"
               />
             </mock-typography>
           </mock-menuitem>
@@ -155,8 +155,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               DHW
                 
-              <arrowupward
-                font-size="small"
+              <mock-arrowupward
+                fontsize="small"
               />
             </mock-typography>
           </mock-menuitem>
@@ -171,8 +171,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               Location Name
                 
-              <arrowdownward
-                font-size="small"
+              <mock-arrowdownward
+                fontsize="small"
               />
             </mock-typography>
           </mock-menuitem>
@@ -187,8 +187,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               Location Name
                 
-              <arrowupward
-                font-size="small"
+              <mock-arrowupward
+                fontsize="small"
               />
             </mock-typography>
           </mock-menuitem>
@@ -203,8 +203,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               Sst
                 
-              <arrowdownward
-                font-size="small"
+              <mock-arrowdownward
+                fontsize="small"
               />
             </mock-typography>
           </mock-menuitem>
@@ -219,8 +219,8 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               Sst
                 
-              <arrowupward
-                font-size="small"
+              <mock-arrowupward
+                fontsize="small"
               />
             </mock-typography>
           </mock-menuitem>

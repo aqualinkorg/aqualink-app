@@ -18,7 +18,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         <mock-iconbutton
           style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
         >
-          <clear />
+          <mock-clear />
         </mock-iconbutton>
         <a
           aria-disabled="false"
@@ -237,7 +237,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 <span
                   class="MuiButton-startIcon MuiButton-iconSizeMedium"
                 >
-                  <github />
+                  <mock-github />
                 </span>
                 GitHub
               </span>
@@ -1366,7 +1366,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             <span
               class="MuiButton-startIcon MuiButton-iconSizeMedium"
             >
-              <arrowback />
+              <mock-arrowback />
             </span>
             <mock-typography
               classname="BackButton-backButtonText-48"

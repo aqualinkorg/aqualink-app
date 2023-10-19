@@ -18,7 +18,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         <mock-iconbutton
           style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
         >
-          <clear />
+          <mock-clear />
         </mock-iconbutton>
         <a
           aria-disabled="false"
@@ -237,7 +237,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 <span
                   class="MuiButton-startIcon MuiButton-iconSizeMedium"
                 >
-                  <github />
+                  <mock-github />
                 </span>
                 GitHub
               </span>
@@ -1571,7 +1571,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               class="makeStyles-container-345"
             >
               <mock-featuredmedia
-                featuredimage=""
+                featuredimage="image-url"
                 siteid="1"
                 surveyid="46"
               />
@@ -2516,7 +2516,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           <div
             class="makeStyles-chart-433"
           >
-            Mock-Line
+            <mock-line
+              data="[object Object]"
+              options="[object Object]"
+            />
           </div>
           <mock-multiplesensorscharts
             disablegutters="true"
@@ -2876,6 +2879,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             >
                               <div
                                 class="MuiCardMedia-root makeStyles-cardImage-523"
+                                style="background-image: url(image-url);"
                               />
                             </a>
                           </div>
@@ -3010,6 +3014,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             >
                               <div
                                 class="MuiCardMedia-root makeStyles-cardImage-523"
+                                style="background-image: url(image-url);"
                               />
                             </a>
                           </div>
@@ -3166,7 +3171,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         <mock-iconbutton
           style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
         >
-          <clear />
+          <mock-clear />
         </mock-iconbutton>
         <a
           aria-disabled="false"
@@ -3385,7 +3390,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 <span
                   class="MuiButton-startIcon MuiButton-iconSizeMedium"
                 >
-                  <github />
+                  <mock-github />
                 </span>
                 GitHub
               </span>
@@ -5681,7 +5686,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           <div
             class="makeStyles-chart-162"
           >
-            Mock-Line
+            <mock-line
+              data="[object Object]"
+              options="[object Object]"
+            />
           </div>
           <mock-multiplesensorscharts
             disablegutters="true"

@@ -354,6 +354,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                       >
                         <div
                           class="MuiCardMedia-root makeStyles-cardImage-48"
+                          style="background-image: url(image-url);"
                         />
                       </a>
                     </div>
@@ -488,6 +489,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                       >
                         <div
                           class="MuiCardMedia-root makeStyles-cardImage-48"
+                          style="background-image: url(image-url);"
                         />
                       </a>
                     </div>

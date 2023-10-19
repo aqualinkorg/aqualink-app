@@ -4,7 +4,10 @@ import { render } from '@testing-library/react';
 import Form from '.';
 
 jest.mock('@material-ui/pickers', () => ({
-  MuiPickersUtilsProvider: () => 'Mock-MuiPickersUtilsProvider',
+  __esModule: true,
+  KeyboardDatePicker: 'mock-KeyboardDatePicker',
+  KeyboardDatePickerProps: 'mock-KeyboardDatePickerProps',
+  MuiPickersUtilsProvider: 'mock-MuiPickersUtilsProvider',
 }));
 
 test('renders as expected', () => {
