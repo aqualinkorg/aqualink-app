@@ -69,7 +69,7 @@ export const monitoringTests = () => {
     const rsp1 = await request(app.getHttpServer()).get('/monitoring').send();
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const rsp2 = await request(app.getHttpServer())
-      .get(`/monitoring?userId=${userId}`)
+      .get(`/monitoring?${new URLSearchParams({ userId: String(userId) })}`)
       .send();
 
     expect(rsp1.status).toBe(200);
