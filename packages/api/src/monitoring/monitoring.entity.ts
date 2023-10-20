@@ -35,5 +35,5 @@ export class Monitoring {
 
   @CreateDateColumn({ name: 'timestamp' })
   @Index()
-  createdAt: Date;
+  timestamp: Date;
 }
