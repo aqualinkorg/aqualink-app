@@ -295,7 +295,7 @@ export const createSite = async (
   regionRepository: Repository<Region>,
   sitesRepository: Repository<Site>,
   historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
-) => {
+): Promise<Site> => {
   const region = await getRegion(longitude, latitude, regionRepository);
   const maxMonthlyMean = await getMMM(longitude, latitude);
   const historicalMonthlyMeans = await getHistoricalMonthlyMeans(
