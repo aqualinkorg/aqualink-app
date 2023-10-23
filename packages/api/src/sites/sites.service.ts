@@ -123,7 +123,7 @@ export class SitesService {
     });
 
     const regionWarningMessage = site.region
-      ? '\nWarning: No region was found for this site, please ask devs to enter one manually.'
+      ? '\n:warning: *Warning*: No region was found for this site, please ask devs to enter one manually.'
       : '';
 
     const messageTemplate: SlackMessage = {
