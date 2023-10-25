@@ -80,6 +80,7 @@ const nonMetric = [
   'timestamp',
   'aqualink_site_id',
   'aqualink_survey_point_id',
+  'depth',
 ] as const;
 
 type NonMetric = typeof nonMetric[number];
@@ -104,6 +105,7 @@ const rules: Rule[] = [
     token: 'aqualink_survey_point_id',
     expression: /^aqualink_survey_point_id$/,
   },
+  { token: 'depth', expression: /^depth$/ },
   // Default Metrics
   // should match 'Temp, °C'
   { token: Metric.AIR_TEMPERATURE, expression: /^Temp, .*C$/ },
@@ -276,24 +278,35 @@ export const trimWorkSheetData = (
     })
     .filter((item): item is string[] => item !== undefined);
 
-const groupBySiteAndPoint = (
-  trimmedWorkSheetData: string[][],
-  headerToTokenMap: (Token | undefined)[],
-): { [key: string]: string[][] } => {
+interface GroupBySitePointDepthProps {
+  trimmedWorkSheetData: string[][];
+  headerToTokenMap: (Token | undefined)[];
+  siteId: number | undefined;
+  surveyPointId: number | undefined;
+}
+
+const groupBySitePointDepth = ({
+  trimmedWorkSheetData,
+  headerToTokenMap,
+  siteId,
+  surveyPointId,
+}: GroupBySitePointDepthProps): { [key: string]: string[][] } => {
   const siteIdIndex = headerToTokenMap.findIndex(
     (x) => x === 'aqualink_site_id',
   );
   const surveyPointIdIndex = headerToTokenMap.findIndex(
     (x) => x === 'aqualink_survey_point_id',
   );
+  const depthIndex = headerToTokenMap.findIndex((x) => x === 'depth');
 
   const groupedByMap = new Map<string, string[][]>();
 
   trimmedWorkSheetData.forEach((val) => {
-    const siteId = val[siteIdIndex] || '';
-    const surveyPointId = val[surveyPointIdIndex] || '';
+    const rowSiteId = siteId || val[siteIdIndex] || '';
+    const rowSurveyPointId = surveyPointId || val[surveyPointIdIndex] || '';
+    const rowDepth = val[depthIndex] || '';
 
-    const key = `${siteId}_${surveyPointId}`;
+    const key = `${rowSiteId}_${rowSurveyPointId}_${rowDepth}`;
     const item = groupedByMap.get(key);
     if (item !== undefined) {
       groupedByMap.set(key, [...item, val]);
@@ -413,18 +426,28 @@ export const uploadFileToGCloud = async (
   return dataUploadsFile;
 };
 
-export const findOrCreateSourceEntity = async (
-  site: Site,
-  sourceType: SourceType,
-  surveyPoint: SiteSurveyPoint | null,
-  sourcesRepository: Repository<Sources>,
-) => {
+interface FindOrCreateSourceEntityProps {
+  site: Site;
+  sourceType: SourceType;
+  surveyPoint: SiteSurveyPoint | null;
+  depth?: number;
+  sourcesRepository: Repository<Sources>;
+}
+
+export const findOrCreateSourceEntity = async ({
+  site,
+  sourceType,
+  surveyPoint,
+  depth,
+  sourcesRepository,
+}: FindOrCreateSourceEntityProps) => {
   const existingSourceEntity = await sourcesRepository.findOne({
     relations: ['surveyPoint', 'site'],
     where: {
       site: { id: site.id },
       surveyPoint: { id: surveyPoint?.id },
       type: sourceType,
+      depth,
     },
   });
   const sourceEntity =
@@ -433,6 +456,7 @@ export const findOrCreateSourceEntity = async (
       type: sourceType,
       site,
       surveyPoint,
+      depth,
     }));
   return sourceEntity;
 };
@@ -470,6 +494,20 @@ export const saveBatchToTimeSeries = (
   });
 };
 
+interface CreateEntitiesAndConvertProps {
+  workSheetData: string[][];
+  siteId: number;
+  surveyPointId?: number;
+  headers: string[];
+  headerIndex: number;
+  fileName: string;
+  headerToTokenMap: (Token | undefined)[];
+  sourceType: SourceType;
+  repositories: Repositories;
+  depth?: number;
+  mimetype?: Mimetype;
+}
+
 const createEntitiesAndConvert = async ({
   workSheetData,
   siteId,
@@ -480,19 +518,9 @@ const createEntitiesAndConvert = async ({
   headerToTokenMap,
   sourceType,
   repositories,
+  depth,
   mimetype,
-}: {
-  workSheetData: string[][];
-  siteId: number;
-  surveyPointId?: number;
-  headers: string[];
-  headerIndex: number;
-  fileName: string;
-  headerToTokenMap: (Token | undefined)[];
-  sourceType: SourceType;
-  repositories: Repositories;
-  mimetype?: Mimetype;
-}) => {
+}: CreateEntitiesAndConvertProps) => {
   const [site, surveyPoint] = await Promise.all([
     getSite(siteId, repositories.siteRepository),
     surveyPointId
@@ -510,12 +538,13 @@ const createEntitiesAndConvert = async ({
     );
   }
 
-  const sourceEntity = await findOrCreateSourceEntity(
+  const sourceEntity = await findOrCreateSourceEntity({
     site,
     sourceType,
-    surveyPoint || null,
-    repositories.sourcesRepository,
-  );
+    surveyPoint: surveyPoint || null,
+    depth,
+    sourcesRepository: repositories.sourcesRepository,
+  });
 
   const data = convertData(
     workSheetData,
@@ -530,19 +559,21 @@ const createEntitiesAndConvert = async ({
   return { data, sourceEntity, site, surveyPoint };
 };
 
+interface UploadPerSiteAndPointProps {
+  data: Data[];
+  site: Site;
+  surveyPoint?: SiteSurveyPoint;
+  repositories: Repositories;
+  dataUploadsFileEntity: DataUploads;
+}
+
 const uploadPerSiteAndPoint = async ({
   data,
   site,
   surveyPoint,
   repositories,
   dataUploadsFileEntity,
-}: {
-  data: Data[];
-  site: Site;
-  surveyPoint?: SiteSurveyPoint;
-  repositories: Repositories;
-  dataUploadsFileEntity: DataUploads;
-}) => {
+}: UploadPerSiteAndPointProps) => {
   const dataAsTimeSeriesNoDiffs = data.map((x) => {
     return {
       timestamp: x.timestamp,
@@ -620,6 +651,19 @@ const uploadPerSiteAndPoint = async ({
   logger.log('loading complete');
 };
 
+interface UploadTimeSeriesDataProps {
+  user?: Express.User & User;
+  filePath: string;
+  fileName: string;
+  siteId: number | undefined;
+  surveyPointId: number | undefined;
+  sourceType: SourceType;
+  repositories: Repositories;
+  multiSiteUpload: boolean;
+  failOnWarning?: boolean;
+  mimetype?: Mimetype;
+}
+
 export const uploadTimeSeriesData = async ({
   user,
   filePath,
@@ -631,18 +675,7 @@ export const uploadTimeSeriesData = async ({
   multiSiteUpload,
   failOnWarning,
   mimetype,
-}: {
-  user?: Express.User & User;
-  filePath: string;
-  fileName: string;
-  siteId: number | undefined;
-  surveyPointId: number | undefined;
-  sourceType: SourceType;
-  repositories: Repositories;
-  multiSiteUpload: boolean;
-  failOnWarning?: boolean;
-  mimetype?: Mimetype;
-}) => {
+}: UploadTimeSeriesDataProps) => {
   console.time(`Upload data file ${fileName}`);
 
   if (!multiSiteUpload && !siteId) {
@@ -712,24 +745,19 @@ export const uploadTimeSeriesData = async ({
 
   const trimmed = trimWorkSheetData(workSheetData, headers, headerIndex);
 
-  const uploadData = multiSiteUpload
-    ? Object.entries(groupBySiteAndPoint(trimmed, headerToTokenMap)).map(
-        ([key, data]) => ({
-          data,
-          siteId: parseInt(key.split('_')[0], 10),
-          surveyPointId: parseInt(key.split('_')[1], 10) || undefined,
-        }),
-      )
-    : [
-        {
-          data: trimmed,
-          // at this point siteId should be a number,
-          // since we explicitly check that in case multiSiteUpload is false
-          siteId: siteId as number,
-          surveyPointId:
-            surveyPointId !== undefined ? surveyPointId : undefined,
-        },
-      ];
+  const uploadData = Object.entries(
+    groupBySitePointDepth({
+      trimmedWorkSheetData: trimmed,
+      headerToTokenMap,
+      siteId,
+      surveyPointId,
+    }),
+  ).map(([key, data]) => ({
+    data,
+    siteId: parseInt(key.split('_')[0], 10),
+    surveyPointId: parseInt(key.split('_')[1], 10) || undefined,
+    depth: parseInt(key.split('_')[2], 10) || undefined,
+  }));
 
   const converted = await Promise.all(
     uploadData.map((x) => {
@@ -737,6 +765,7 @@ export const uploadTimeSeriesData = async ({
         workSheetData: x.data,
         siteId: x.siteId,
         surveyPointId: x.surveyPointId,
+        depth: x.depth,
         headers,
         headerIndex,
         fileName,

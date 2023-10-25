@@ -82,7 +82,9 @@ function DownloadCSVButton({
           setOpen(true);
         }}
         style={{
-          marginBottom: timeSeriesDataRanges?.bottomTemperature?.spotter?.data
+          marginBottom: timeSeriesDataRanges?.bottomTemperature?.find(
+            (x) => x.type === 'spotter',
+          )?.data
             ? 0
             : '2em',
         }}

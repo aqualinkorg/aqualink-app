@@ -62,9 +62,10 @@ export const timeSeriesTests = () => {
       expect(rsp.body).toHaveProperty(metric);
     });
     hoboMetrics.forEach((metric) => {
-      expect(rsp.body[metric]).toHaveProperty(SourceType.HOBO);
-      expect(rsp.body[metric][SourceType.HOBO].data.length).toBe(1);
-      const { minDate, maxDate } = rsp.body[metric][SourceType.HOBO].data[0];
+      const hoboRsp = rsp.body[metric].find((x) => x.type === SourceType.HOBO);
+      expect(hoboRsp).toBeDefined();
+      expect(hoboRsp.data.length).toBe(1);
+      const { minDate, maxDate } = hoboRsp.data[0];
       const [startDate, endDate] = surveyPointDataRange;
       surveyPointDataRange = [
         min([minDate, startDate]),
@@ -72,9 +73,10 @@ export const timeSeriesTests = () => {
       ];
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
-      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(1);
-      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA].data[0];
+      const noaaRsp = rsp.body[metric].find((x) => x.type === SourceType.NOAA);
+      expect(noaaRsp).toBeDefined();
+      expect(noaaRsp.data.length).toBe(1);
+      const { minDate, maxDate } = noaaRsp.data[0];
       const [startDate, endDate] = surveyPointDataRange;
       surveyPointDataRange = [
         min([minDate, startDate]),
@@ -94,16 +96,20 @@ export const timeSeriesTests = () => {
       expect(rsp.body).toHaveProperty(metric);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
-      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(1);
-      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA].data[0];
+      const noaaRsp = rsp.body[metric].find((x) => x.type === SourceType.NOAA);
+      expect(noaaRsp).toBeDefined();
+      expect(noaaRsp.data.length).toBe(1);
+      const { minDate, maxDate } = noaaRsp.data[0];
       const [startDate, endDate] = siteDataRange;
       siteDataRange = [min([minDate, startDate]), max([maxDate, endDate])];
     });
     spotterMetrics.forEach((metric) => {
-      expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
-      expect(rsp.body[metric][SourceType.SPOTTER].data.length).toBe(1);
-      const { minDate, maxDate } = rsp.body[metric][SourceType.SPOTTER].data[0];
+      const spotterRsp = rsp.body[metric].find(
+        (x) => x.type === SourceType.SPOTTER,
+      );
+      expect(spotterRsp).toBeDefined();
+      expect(spotterRsp.data.length).toBe(1);
+      const { minDate, maxDate } = spotterRsp.data[0];
       const [startDate, endDate] = siteDataRange;
       siteDataRange = [min([minDate, startDate]), max([maxDate, endDate])];
     });
@@ -129,12 +135,14 @@ export const timeSeriesTests = () => {
       expect(rsp.body).toHaveProperty(metric);
     });
     hoboMetrics.forEach((metric) => {
-      expect(rsp.body[metric]).toHaveProperty(SourceType.HOBO);
-      expect(rsp.body[metric][SourceType.HOBO].data.length).toBe(10);
+      const hoboRsp = rsp.body[metric].find((x) => x.type === SourceType.HOBO);
+      expect(hoboRsp).toBeDefined();
+      expect(hoboRsp.data.length).toBe(10);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
-      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(10);
+      const noaaRsp = rsp.body[metric].find((x) => x.type === SourceType.NOAA);
+      expect(noaaRsp).toBeDefined();
+      expect(noaaRsp.data.length).toBe(10);
     });
   });
 
@@ -156,12 +164,16 @@ export const timeSeriesTests = () => {
       expect(rsp.body).toHaveProperty(metric);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
-      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(10);
+      const noaaRsp = rsp.body[metric].find((x) => x.type === SourceType.NOAA);
+      expect(noaaRsp).toBeDefined();
+      expect(noaaRsp.data.length).toBe(10);
     });
     spotterMetrics.forEach((metric) => {
-      expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
-      expect(rsp.body[metric][SourceType.SPOTTER].data.length).toBe(10);
+      const spotterRsp = rsp.body[metric].find(
+        (x) => x.type === SourceType.SPOTTER,
+      );
+      expect(spotterRsp).toBeDefined();
+      expect(spotterRsp.data.length).toBe(10);
     });
   });
 

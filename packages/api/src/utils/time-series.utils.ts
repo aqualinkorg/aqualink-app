@@ -1,4 +1,3 @@
-import _, { last, omit, isNull, merge } from 'lodash';
 import { IsNull, Repository } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
@@ -11,6 +10,7 @@ import { Metric } from '../time-series/metrics.enum';
 interface TimeSeriesGroupable {
   metric: Metric;
   source: SourceType;
+  depth: number | null;
   surveyPointId?: number;
   surveyPointName?: string;
 }
@@ -33,7 +33,7 @@ interface SurveyPoint {
 type TimeSeriesResponse<T> = Partial<
   Record<
     Metric,
-    Partial<Record<SourceType, { surveyPoint?: SurveyPoint; data: T[] }>>
+    { type: SourceType; depth: number; surveyPoint?: SurveyPoint; data: T[] }[]
   >
 >;
 
@@ -41,41 +41,64 @@ type TimeSeriesResponse<T> = Partial<
 export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
   data: T[],
 ): TimeSeriesResponse<
-  Omit<T, 'metric' | 'source' | 'surveyPointId' | 'surveyPointName'>
+  Omit<T, 'metric' | 'source' | 'surveyPointId' | 'surveyPointName' | 'depth'>
 > => {
-  return _(data)
-    .groupBy('metric')
-    .mapValues((grouped) => {
-      return _(grouped)
-        .groupBy('source')
-        .mapValues((groupedData) => {
-          const { surveyPointId, surveyPointName } = last(groupedData) || {};
-          return merge(
-            !isNull(surveyPointId)
-              ? { surveyPoint: { id: surveyPointId, name: surveyPointName } }
-              : {},
-            {
-              data: groupedData
-                .filter((o) =>
-                  typeof surveyPointId === 'number'
-                    ? surveyPointId === o.surveyPointId
-                    : true,
-                )
-                .map((o) =>
-                  omit(
-                    o,
-                    'metric',
-                    'source',
-                    'surveyPointId',
-                    'surveyPointName',
-                  ),
-                ),
-            },
-          );
-        })
-        .toJSON();
-    })
-    .toJSON();
+  const groupedByMetricMap = new Map<Metric, T[]>();
+  data.forEach((x) => {
+    const item = groupedByMetricMap.get(x.metric);
+    if (item !== undefined) {
+      groupedByMetricMap.set(x.metric, [...item, x]);
+    } else {
+      groupedByMetricMap.set(x.metric, [x]);
+    }
+  });
+
+  const entries = Array.from(groupedByMetricMap.entries());
+
+  const groupedByPointTypeDepth = entries.map(([key, val]) => {
+    const groupByMap = new Map<string, T[]>();
+    val.forEach((x) => {
+      const groupByKey = `${x.surveyPointId}_${x.source}_${x.depth}`;
+      const item = groupByMap.get(groupByKey);
+      if (item !== undefined) {
+        groupByMap.set(groupByKey, [...item, x]);
+      } else {
+        groupByMap.set(groupByKey, [x]);
+      }
+    });
+
+    const values = Array.from(groupByMap.values());
+    const formatted = values.map((raw) => {
+      const omittedBy = raw.map((x) => {
+        const {
+          metric,
+          source,
+          surveyPointId,
+          surveyPointName,
+          depth,
+          ...rest
+        } = x;
+        return rest;
+      });
+
+      // all items should have the same source, pointId and depth, since we grouped them
+      const item = raw[0];
+
+      // this should never happen
+      if (!item) throw new Error('Empty set of (source, pointId, depth)');
+
+      return {
+        type: item.source,
+        depth: item.depth,
+        surveyPoint: { id: item.surveyPointId, name: item.surveyPointName },
+        data: omittedBy,
+      };
+    });
+
+    return [key, formatted];
+  });
+
+  return Object.fromEntries(groupedByPointTypeDepth);
 };
 
 export const getAvailableMetricsQuery = ({
@@ -215,6 +238,7 @@ export const getDataQuery = ({
       hourly ? "date_trunc('hour', timestamp)" : 'timestamp',
       'timestamp',
     )
+    .addSelect('source.depth', 'depth')
     .innerJoin(
       'time_series.source',
       'source',
@@ -241,7 +265,7 @@ export const getDataQuery = ({
   return hourly
     ? withMetrics
         .groupBy(
-          "date_trunc('hour', timestamp), metric, source.type, surveyPoint.id",
+          "date_trunc('hour', timestamp), metric, source.type, surveyPoint.id, source.depth",
         )
         .orderBy("date_trunc('hour', timestamp)", order)
         .getRawMany()
@@ -261,6 +285,7 @@ export const getDataRangeQuery = (
     .createQueryBuilder('time_series')
     .select('metric')
     .addSelect('source.type', 'source')
+    .addSelect('source.depth', 'depth')
     .addSelect('MIN(timestamp)', 'minDate')
     .addSelect('MAX(timestamp)', 'maxDate')
     .innerJoin(
@@ -272,7 +297,7 @@ export const getDataRangeQuery = (
     .leftJoin('source.surveyPoint', 'surveyPoint')
     .addSelect('surveyPoint.id', 'surveyPointId')
     .addSelect('surveyPoint.name', 'surveyPointName')
-    .groupBy('metric, source.type, surveyPoint.id')
+    .groupBy('metric, source.type, surveyPoint.id, source.depth')
     .orderBy('MAX(timestamp)', 'ASC')
     .getRawMany();
 };

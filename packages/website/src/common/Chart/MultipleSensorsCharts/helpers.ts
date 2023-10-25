@@ -118,9 +118,9 @@ export const findDataLimits = (
   const hasData = Boolean(
     filteredHistoricalMonthlyMeanData?.[0] ||
       dailyData?.[0] ||
-      bottomTemperature?.spotter?.data?.[0] ||
-      topTemperature?.spotter?.data?.[0] ||
-      bottomTemperature?.hobo?.data?.[0],
+      bottomTemperature?.find((x) => x.type === 'spotter')?.data?.[0] ||
+      topTemperature?.find((x) => x.type === 'spotter')?.data?.[0] ||
+      bottomTemperature?.find((x) => x.type === 'hobo')?.data?.[0],
   );
 
   return [
@@ -129,9 +129,9 @@ export const findDataLimits = (
           findMarginalDate(
             filteredHistoricalMonthlyMeanData,
             dailyData || [],
-            bottomTemperature?.spotter?.data,
-            topTemperature?.spotter?.data,
-            bottomTemperature?.hobo?.data,
+            bottomTemperature?.find((x) => x.type === 'spotter')?.data,
+            topTemperature?.find((x) => x.type === 'spotter')?.data,
+            bottomTemperature?.find((x) => x.type === 'hobo')?.data,
             'min',
           ),
         ).toISOString()
@@ -141,9 +141,9 @@ export const findDataLimits = (
           findMarginalDate(
             filteredHistoricalMonthlyMeanData,
             dailyData || [],
-            bottomTemperature?.spotter?.data,
-            topTemperature?.spotter?.data,
-            bottomTemperature?.hobo?.data,
+            bottomTemperature?.find((x) => x.type === 'spotter')?.data,
+            topTemperature?.find((x) => x.type === 'spotter')?.data,
+            bottomTemperature?.find((x) => x.type === 'hobo')?.data,
           ),
         ).toISOString()
       : undefined,

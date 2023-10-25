@@ -47,10 +47,14 @@ const Chart = ({
   const theme = useTheme();
   const dataRanges = useSelector(siteTimeSeriesDataRangeSelector) || {};
   const someMetricRangeWithCurrentSource =
-    source && Object.values(dataRanges).find((x) => x[source] !== undefined);
+    source &&
+    Object.values(dataRanges).find(
+      (x) => x.find((y) => y.type === source) !== undefined,
+    );
   const { minDate, maxDate } =
     (someMetricRangeWithCurrentSource &&
-      someMetricRangeWithCurrentSource[source]?.data?.[0]) ||
+      someMetricRangeWithCurrentSource.find((x) => x.type === source)
+        ?.data?.[0]) ||
     {};
 
   const isTimeSeriesDataRangeLoading = useSelector(
