@@ -82,7 +82,11 @@ export const getRegion = async (
   regionRepository: Repository<Region>,
 ) => {
   const country = await getGoogleRegion(longitude, latitude);
-  const region = await regionRepository.findOne({ where: { name: country } });
+  // undefined values would result in the first database item
+  // https://github.com/typeorm/typeorm/issues/2500
+  const region = country
+    ? await regionRepository.findOne({ where: { name: country } })
+    : null;
 
   if (region) {
     return region;
@@ -291,7 +295,7 @@ export const createSite = async (
   regionRepository: Repository<Region>,
   sitesRepository: Repository<Site>,
   historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
-) => {
+): Promise<Site> => {
   const region = await getRegion(longitude, latitude, regionRepository);
   const maxMonthlyMean = await getMMM(longitude, latitude);
   const historicalMonthlyMeans = await getHistoricalMonthlyMeans(
