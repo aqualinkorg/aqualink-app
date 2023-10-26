@@ -122,9 +122,13 @@ export class SitesService {
       siteId: site.id,
     });
 
+    const regionWarningMessage = site.region
+      ? '\n:warning: *Warning*: No region was found for this site, please ask devs to enter one manually.'
+      : '';
+
     const messageTemplate: SlackMessage = {
       channel: process.env.SLACK_BOT_CHANNEL as string,
-      text: `New site ${site.name} created with id=${site.id}, by ${user.fullName}`,
+      text: `New site ${site.name} created with id=${site.id}, by ${user.fullName}${regionWarningMessage}`,
       mrkdwn: true,
     };
 
