@@ -27,8 +27,14 @@ export class MonitoringController {
 
   @Get()
   @ApiOperation({ summary: 'Get usage metrics' })
-  @Auth(AdminLevel.SuperAdmin)
-  getMonitoringStats(@Query() getMonitoringStatsDto: GetMonitoringStatsDto) {
-    return this.monitoringService.getMonitoringStats(getMonitoringStatsDto);
+  @Auth(AdminLevel.SuperAdmin, AdminLevel.SiteManager)
+  getMonitoringStats(
+    @Query() getMonitoringStatsDto: GetMonitoringStatsDto,
+    @Req() req: AuthRequest,
+  ) {
+    return this.monitoringService.getMonitoringStats(
+      getMonitoringStatsDto,
+      req.user,
+    );
   }
 }
