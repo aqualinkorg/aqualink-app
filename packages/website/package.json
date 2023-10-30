@@ -65,6 +65,9 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    },
     "globalSetup": "./src/global-setup.js"
   },
   "browserslist": {
