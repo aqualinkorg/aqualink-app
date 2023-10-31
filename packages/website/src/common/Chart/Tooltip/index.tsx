@@ -108,6 +108,7 @@ const Tooltip = ({
             <Grid
               container
               justifyContent="space-between"
+              direction="column"
               alignItems="center"
               item
               xs={12}
@@ -154,7 +155,6 @@ const styles = () =>
     tooltip: {
       display: 'flex',
       justifyContent: 'center',
-      width: TOOLTIP_WIDTH,
       minHeight: 60,
     },
     tooltipCard: {
@@ -174,7 +174,6 @@ const styles = () =>
       padding: '0rem 1rem 0rem 1rem',
     },
     tooltipContentItem: {
-      width: '150px',
       height: 20,
       margin: '0',
     },
