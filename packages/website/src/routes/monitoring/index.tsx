@@ -28,9 +28,9 @@ import monitoringServices, {
   GetMonitoringMetricsResponse,
 } from 'services/monitoringServices';
 import { Dataset } from 'common/Chart';
-// import { findChartPeriod } from 'common/Chart/MultipleSensorsCharts/helpers';
 import { ValueWithTimestamp } from 'store/Sites/types';
 import ChartWithTooltip from 'common/Chart/ChartWithTooltip';
+import { ArrayElement } from 'utils/types';
 
 type SearchMethod = 'siteId' | 'spotterId';
 
@@ -51,15 +51,15 @@ const CustomSwitch = withStyles((theme) => ({
   track: {},
 }))(Switch);
 
-function transformToDatasets(data: GetMonitoringMetricsResponse): Dataset[] {
-  const totalRequests: ValueWithTimestamp[] = data
-    .filter((x) => x.siteId === 2)
-    .map((x) => {
-      return {
-        value: x.totalRequests,
-        timestamp: x.date,
-      };
-    });
+function transformToDatasets(
+  siteInfo: ArrayElement<GetMonitoringMetricsResponse>,
+): Dataset[] {
+  const totalRequests: ValueWithTimestamp[] = siteInfo.data.map((x) => {
+    return {
+      value: x.totalRequests,
+      timestamp: x.date,
+    };
+  });
 
   const totalRequestsDataset: Dataset = {
     label: 'total requests',
@@ -116,7 +116,7 @@ function Monitoring({ classes }: MonitoringProps) {
       const { data } = await monitoringServices.getMonitoringStats({
         token,
         ...(searchMethod === 'siteId'
-          ? { siteId: siteId || undefined }
+          ? { siteIds: [siteId] || undefined }
           : { spotterId: spotterId || undefined }),
         monthly,
         start: startDate?.toISOString(),
@@ -235,27 +235,29 @@ function Monitoring({ classes }: MonitoringProps) {
           spacing={1}
         >
           <Grid className={classes.chartContainer} item>
-            <ChartWithTooltip
-              className={classes.chart}
-              siteId={0}
-              surveys={[]}
-              datasets={transformToDatasets(result)}
-              temperatureThreshold={null}
-              maxMonthlyMean={null}
-              background
-              chartSettings={{
-                tooltips: {
-                  enabled: false,
-                  intersect: false,
-                },
-                legend: {
-                  display: false,
-                },
-              }}
-              fill={false}
-              hideYAxisUnits={false}
-              showYearInTicks={false}
-            />
+            {result?.[0] && (
+              <ChartWithTooltip
+                className={classes.chart}
+                siteId={0}
+                surveys={[]}
+                datasets={transformToDatasets(result[0])}
+                temperatureThreshold={null}
+                maxMonthlyMean={null}
+                background
+                chartSettings={{
+                  tooltips: {
+                    enabled: false,
+                    intersect: false,
+                  },
+                  legend: {
+                    display: false,
+                  },
+                }}
+                fill={false}
+                hideYAxisUnits={false}
+                showYearInTicks={false}
+              />
+            )}
           </Grid>
         </Grid>
       </div>

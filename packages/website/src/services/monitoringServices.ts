@@ -23,7 +23,7 @@ const postMonitoringMetric = ({
 interface GetMonitoringMetricsRequestProps {
   token: string;
   spotterId?: string;
-  siteId?: string;
+  siteIds?: string[];
   monthly?: boolean;
   start?: string;
   end?: string;
@@ -32,12 +32,14 @@ interface GetMonitoringMetricsRequestProps {
 export type GetMonitoringMetricsResponse = {
   siteName: string;
   siteId: number;
-  date: string;
-  totalRequests: number;
-  registeredUserRequests: number;
-  siteAdminRequests: number;
-  timeSeriesRequests: number;
-  CSVDownloadRequests: number;
+  data: {
+    date: string;
+    totalRequests: number;
+    registeredUserRequests: number;
+    siteAdminRequests: number;
+    timeSeriesRequests: number;
+    CSVDownloadRequests: number;
+  }[];
 }[];
 
 const getMonitoringStats = ({

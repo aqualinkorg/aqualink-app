@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import { IsDate, IsNumber, IsOptional, Validate } from 'class-validator';
@@ -5,12 +6,19 @@ import { Site } from 'sites/sites.entity';
 import { EntityExists } from 'validations/entity-exists.constraint';
 
 export class GetMonitoringStatsDto {
-  @ApiProperty({ example: 1 })
-  @Type(() => Number)
-  @IsNumber()
+  @ApiProperty({ example: [1, 3, 5] })
   @IsOptional()
-  @Validate(EntityExists, [Site])
-  siteId?: number;
+  @Transform(({ value }) => {
+    try {
+      const splitted = value.split(',');
+      return splitted.map((x) => parseInt(x, 10));
+    } catch (error) {
+      throw new BadRequestException('siteIds: invalid format');
+    }
+  })
+  @IsNumber({}, { each: true })
+  @Validate(EntityExists, [Site], { each: true })
+  siteIds?: number[];
 
   @ApiProperty({ example: 'SPOT-2742' })
   @Type(() => String)
