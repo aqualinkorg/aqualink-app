@@ -31,7 +31,7 @@ exports[`renders as expected 1`] = `
           style="height: 100%;"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
           >
             <div
               class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
