@@ -9,7 +9,6 @@ import {
   Grid,
   Switch,
   TextField,
-  Theme,
   Typography,
   WithStyles,
   withStyles,
@@ -26,6 +25,7 @@ import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import monitoringServices, {
   GetMonitoringMetricsResponse,
+  MonitoringData,
 } from 'services/monitoringServices';
 import { Dataset } from 'common/Chart';
 import { ValueWithTimestamp } from 'store/Sites/types';
@@ -51,15 +51,53 @@ const CustomSwitch = withStyles((theme) => ({
   track: {},
 }))(Switch);
 
+const ONE_DAY = 24 * 60 * 60 * 1000; // One day in milliseconds
+
+function getChartPeriod(siteInfo: ArrayElement<GetMonitoringMetricsResponse>) {
+  const { data } = siteInfo;
+  const maxDate = data.reduce(
+    (max, curr) => (max > curr.date ? max : curr.date),
+    new Date(0).toISOString(),
+  );
+  const minDate = data.reduce(
+    (min, curr) => (min < curr.date ? min : curr.date),
+    new Date().toISOString(),
+  );
+  const milliseconds = +new Date(maxDate) - +new Date(minDate);
+
+  const dataDuration = milliseconds / ONE_DAY;
+
+  if (dataDuration <= 30) {
+    return 'day';
+  }
+  return undefined;
+}
+
 function transformToDatasets(
   siteInfo: ArrayElement<GetMonitoringMetricsResponse>,
 ): Dataset[] {
-  const totalRequests: ValueWithTimestamp[] = siteInfo.data.map((x) => {
-    return {
-      value: x.totalRequests,
-      timestamp: x.date,
-    };
-  });
+  const monitoringDataKeys: (keyof MonitoringData)[] = [
+    'totalRequests',
+    'registeredUserRequests',
+    'siteAdminRequests',
+    'timeSeriesRequests',
+    'CSVDownloadRequests',
+  ];
+
+  const [
+    totalRequests,
+    registeredUserRequests,
+    siteAdminRequests,
+    timeSeriesRequests,
+    CSVDownloadRequests,
+  ]: ValueWithTimestamp[][] = monitoringDataKeys.map((key) =>
+    siteInfo.data.map((x) => {
+      return {
+        value: Number(x[key]),
+        timestamp: x.date,
+      };
+    }),
+  );
 
   const totalRequestsDataset: Dataset = {
     label: 'total requests',
@@ -71,7 +109,53 @@ function transformToDatasets(
     considerForXAxisLimits: true,
   };
 
-  return [totalRequestsDataset];
+  const registeredUserRequestsDataset: Dataset = {
+    label: 'registered users requests',
+    data: registeredUserRequests,
+    type: 'line',
+    unit: 'requests',
+    curveColor: 'red',
+    displayData: true,
+    considerForXAxisLimits: true,
+  };
+
+  const siteAdminRequestsDataset: Dataset = {
+    label: 'site admin requests',
+    data: siteAdminRequests,
+    type: 'line',
+    unit: 'requests',
+    curveColor: 'green',
+    displayData: true,
+    considerForXAxisLimits: true,
+  };
+
+  const timeSeriesRequestsDataset: Dataset = {
+    label: 'time series requests',
+    data: timeSeriesRequests,
+    type: 'line',
+    unit: 'requests',
+    curveColor: 'blue',
+    displayData: true,
+    considerForXAxisLimits: true,
+  };
+
+  const CSVDownloadRequestsDataset: Dataset = {
+    label: 'CSV downloads requests',
+    data: CSVDownloadRequests,
+    type: 'line',
+    unit: 'requests',
+    curveColor: 'black',
+    displayData: true,
+    considerForXAxisLimits: true,
+  };
+
+  return [
+    totalRequestsDataset,
+    registeredUserRequestsDataset,
+    siteAdminRequestsDataset,
+    timeSeriesRequestsDataset,
+    CSVDownloadRequestsDataset,
+  ];
 }
 
 function Monitoring({ classes }: MonitoringProps) {
@@ -227,61 +311,40 @@ function Monitoring({ classes }: MonitoringProps) {
             get metrics
           </Button>
         </div>
-        <Grid
-          className={classes.chartWrapper}
-          container
-          justifyContent="space-between"
-          item
-          spacing={1}
-        >
-          <Grid className={classes.chartContainer} item>
-            {result?.[0] && (
-              <ChartWithTooltip
-                className={classes.chart}
-                siteId={0}
-                surveys={[]}
-                datasets={transformToDatasets(result[0])}
-                temperatureThreshold={null}
-                maxMonthlyMean={null}
-                background
-                chartSettings={{
-                  tooltips: {
-                    enabled: false,
-                    intersect: false,
-                  },
-                  legend: {
-                    display: false,
-                  },
-                }}
-                fill={false}
-                hideYAxisUnits={false}
-                showYearInTicks={false}
-              />
-            )}
-          </Grid>
-        </Grid>
+        <div className={classes.chartContainer}>
+          {result?.[0] && (
+            <ChartWithTooltip
+              className={classes.chart}
+              siteId={Number(siteId)}
+              surveys={[]}
+              datasets={transformToDatasets(result[0])}
+              temperatureThreshold={null}
+              maxMonthlyMean={null}
+              background
+              hideYAxisUnits
+              chartPeriod={getChartPeriod(result[0])}
+            />
+          )}
+        </div>
       </div>
       <Footer />
     </>
   );
 }
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     chart: {
-      height: 279,
-      margin: `${theme.spacing(1)}px 0`,
-    },
-    chartWrapper: {
-      marginBottom: 20,
-      [theme.breakpoints.down('xs')]: {
-        marginBottom: 10,
-      },
+      width: '80%',
+      height: '16rem',
+      marginBottom: '3rem',
+      marginTop: '1rem',
     },
     chartContainer: {
-      [theme.breakpoints.down('sm')]: {
-        width: '100%',
-      },
+      display: 'flex',
+      justifyContent: 'center',
+      marginTop: '4rem',
+      width: '100%',
     },
   });
 

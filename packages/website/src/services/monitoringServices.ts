@@ -29,17 +29,19 @@ interface GetMonitoringMetricsRequestProps {
   end?: string;
 }
 
+export interface MonitoringData {
+  date: string;
+  totalRequests: number;
+  registeredUserRequests: number;
+  siteAdminRequests: number;
+  timeSeriesRequests: number;
+  CSVDownloadRequests: number;
+}
+
 export type GetMonitoringMetricsResponse = {
   siteName: string;
   siteId: number;
-  data: {
-    date: string;
-    totalRequests: number;
-    registeredUserRequests: number;
-    siteAdminRequests: number;
-    timeSeriesRequests: number;
-    CSVDownloadRequests: number;
-  }[];
+  data: MonitoringData[];
 }[];
 
 const getMonitoringStats = ({

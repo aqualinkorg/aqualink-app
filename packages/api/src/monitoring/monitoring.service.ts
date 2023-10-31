@@ -90,8 +90,6 @@ export class MonitoringService {
 
         const query = this.monitoringRepository
           .createQueryBuilder('monitoring')
-          // .select('monitoring.site_id', 'siteId')
-          // .addSelect('s.name', 'siteName')
           .select(
             `date_trunc('${aggregationPeriod}', monitoring."timestamp")`,
             'date',
