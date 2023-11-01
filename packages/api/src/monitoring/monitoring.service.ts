@@ -94,15 +94,18 @@ export class MonitoringService {
             `date_trunc('${aggregationPeriod}', monitoring."timestamp")`,
             'date',
           )
-          .addSelect('COUNT(*)::int', 'totalRequests')
+          .addSelect(
+            'SUM(CASE WHEN user_id IS NULL THEN 1 ELSE 0 END)::int',
+            'totalRequests',
+          )
           .addSelect('COUNT(monitoring.user_id)::int', 'registeredUserRequests')
           .addSelect('COUNT(uass.users_id)::int', 'siteAdminRequests')
           .addSelect(
-            `SUM(CASE WHEN monitoring.metric = 'time_series_request' THEN 1 ELSE 0 END)::int`,
+            `SUM(CASE WHEN monitoring.metric = 'time_series_request' AND user_id IS NULL THEN 1 ELSE 0 END)::int`,
             'timeSeriesRequests',
           )
           .addSelect(
-            `SUM(CASE WHEN monitoring.metric = 'csv_download' THEN 1 ELSE 0 END)::int`,
+            `SUM(CASE WHEN monitoring.metric = 'csv_download' AND user_id IS NULL THEN 1 ELSE 0 END)::int`,
             'CSVDownloadRequests',
           )
           .innerJoin('site', 's', 'monitoring.site_id = s.id')
