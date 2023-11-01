@@ -72,7 +72,7 @@ const MultipleSensorsCharts = ({
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
   const { bottomTemperature } = timeSeriesData || {};
-  const hoboBottomTemperature = bottomTemperature?.find(
+  const hoboBottomTemperatureSensors = bottomTemperature?.filter(
     (x) => x.type === 'hobo',
   );
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
@@ -118,7 +118,7 @@ const MultipleSensorsCharts = ({
     granularDailyData,
     timeSeriesData?.bottomTemperature?.find((x) => x.type === 'spotter')?.data,
     timeSeriesData?.topTemperature?.find((x) => x.type === 'spotter')?.data,
-    hoboBottomTemperature?.data,
+    hoboBottomTemperatureSensors,
     site.historicalMonthlyMean,
     startDate,
     endDate,
