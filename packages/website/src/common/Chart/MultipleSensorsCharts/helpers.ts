@@ -384,6 +384,9 @@ export const generateTempAnalysisDatasets = (
     },
     ...(hoboBottom?.map((item, index) => {
       const label = item.depth !== undefined ? `HOBO at ${item.depth}` : 'HOBO';
+      const tooltipLabel =
+        item.depth !== undefined ? `HOBO ${item.depth}m` : 'HOBO';
+
       const dataset: Dataset = {
         label,
         data: localHoboBottomData[index],
@@ -392,7 +395,7 @@ export const generateTempAnalysisDatasets = (
         unit: '°C',
         maxHoursGap: 24,
         tooltipMaxHoursGap: 6,
-        tooltipLabel: 'HOBO LOGGER',
+        tooltipLabel,
         displayData: hasEnoughHoboBottomData.find((x) => x),
         displayCardColumn:
           !hasEnoughSpotterBottomData &&
