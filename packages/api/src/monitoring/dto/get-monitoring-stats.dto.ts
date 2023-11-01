@@ -16,7 +16,7 @@ export class GetMonitoringStatsDto {
 
       if (splitted.length > maxAllowedIds) {
         throw new BadRequestException(
-          `siteIds: Too many IDs. Maximum allowed: ${maxAllowedIds}`,
+          `siteIds: Too many IDs. Maximum allowed: ${maxAllowedIds}.`,
         );
       }
 
