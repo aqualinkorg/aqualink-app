@@ -123,7 +123,6 @@
     "@types/sharp": "^0.30.4",
     "@types/supertest": "2.0.12",
     "@types/ungap__structured-clone": "^0.3.0",
-    "@ungap/structured-clone": "^1.2.0",
     "faker": "^4.1.0",
     "firebase-admin": "^11.9.0",
     "firebase-functions": "^3.8.0",
