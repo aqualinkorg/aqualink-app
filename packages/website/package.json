@@ -103,6 +103,7 @@
     "canvas": "^2.11.2",
     "cross-env": "^7.0.2",
     "dotenv-cli": "^4.0.0",
+    "jest-date-mock": "^1.0.8",
     "react-scripts": "5.0.1",
     "surge": "^0.23.1"
   }

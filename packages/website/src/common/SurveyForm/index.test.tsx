@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { advanceTo, clear } from 'jest-date-mock';
 import SurveyForm from '.';
 
 const mockStore = configureStore([]);
@@ -27,6 +28,14 @@ describe('SurveyForm', () => {
     (diveDateTime, diveLocation, weatherConditions, comments) => {},
   );
 
+  beforeAll(() => {
+    advanceTo(new Date('2023-10-20T12:00:00'));
+  });
+
+  afterAll(() => {
+    clear();
+  });
+
   it('calls onSubmit with the form data on submit', async () => {
     const { getByTestId, container } = render(
       <BrowserRouter>
@@ -35,6 +44,8 @@ describe('SurveyForm', () => {
         </Provider>
       </BrowserRouter>,
     );
+
+    expect(container).toMatchSnapshot();
 
     const diveDate = getByTestId('dive-date');
     userEvent.type(diveDate, '01/01/2022');
@@ -50,8 +61,6 @@ describe('SurveyForm', () => {
         value: 'Test comment',
       },
     });
-
-    expect(container).toMatchSnapshot();
 
     await act(async () => {
       fireEvent.click(screen.getByText('Next'));
