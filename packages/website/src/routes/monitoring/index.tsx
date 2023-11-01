@@ -343,7 +343,7 @@ const styles = () =>
     chartContainer: {
       display: 'flex',
       justifyContent: 'center',
-      marginTop: '4rem',
+      marginTop: '8rem',
       width: '100%',
     },
   });
