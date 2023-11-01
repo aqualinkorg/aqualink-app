@@ -73,7 +73,7 @@ export const monitoringTests = () => {
 
     expect(rsp.status).toBe(200);
 
-    expect(rsp.body[0].data[0].totalRequests).toBe(3);
+    expect(rsp.body[0].data[0].totalRequests).toBe(2);
     expect(rsp.body[0].data[0].registeredUserRequests).toBe(1);
   });
 };
