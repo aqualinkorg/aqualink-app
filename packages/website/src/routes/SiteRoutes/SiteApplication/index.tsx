@@ -87,7 +87,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
           setMessage(null);
         })
         .catch(({ response }: AxiosError) => {
-          if (response?.data.statusCode === 403) {
+          if (response?.status === 403) {
             setMessage(
               'You are not authorized to access this page. If this is an error, contact',
             );
