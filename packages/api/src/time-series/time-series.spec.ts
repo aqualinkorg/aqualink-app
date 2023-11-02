@@ -4,7 +4,6 @@ import { INestApplication } from '@nestjs/common';
 import { max, min, union } from 'lodash';
 import { join } from 'path';
 import { readFileSync } from 'fs';
-import * as structuredClone from '@ungap/structured-clone';
 import { DataSource } from 'typeorm';
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/sync';
@@ -27,9 +26,6 @@ import {
 import { User } from '../users/users.entity';
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
-
-// https://github.com/jsdom/jsdom/issues/3363
-global.structuredClone = structuredClone.default as any;
 
 type StringDateRange = [string, string];
 
