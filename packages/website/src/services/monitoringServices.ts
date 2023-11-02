@@ -54,7 +54,19 @@ const getMonitoringStats = ({
     token,
   });
 
+interface GetMonitoringLastMonthProps {
+  token: string;
+}
+
+const getMonitoringLastMonth = ({ token }: GetMonitoringLastMonthProps) =>
+  requests.send<GetMonitoringMetricsResponse>({
+    method: 'GET',
+    url: 'monitoring/last-month',
+    token,
+  });
+
 export default {
   postMonitoringMetric,
   getMonitoringStats,
+  getMonitoringLastMonth,
 };

@@ -42,6 +42,7 @@ import {
   unsetSelectedSite,
 } from 'store/Sites/selectedSiteSlice';
 import { useGoogleTranslation } from 'utils/google-translate';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import RegisterDialog from '../RegisterDialog';
 import SignInDialog from '../SignInDialog';
 import Search from '../Search';
@@ -253,6 +254,29 @@ const NavBar = ({
                                     <PublishIcon fontSize="small" />
                                   </Grid>
                                   <Grid item>Uploads</Grid>
+                                </Grid>
+                              </MenuItem>
+                            </Link>
+                          </div>
+                        )}
+                      {user &&
+                        (user.adminLevel === 'site_manager' ||
+                          user.adminLevel === 'super_admin') && (
+                          <div>
+                            <Divider className={classes.userMenuDivider} />
+                            <Link
+                              to="/monitoring"
+                              className={classes.menuItemLink}
+                            >
+                              <MenuItem
+                                key="user-menu-monitoring"
+                                className={classes.menuItem}
+                              >
+                                <Grid container spacing={1}>
+                                  <Grid item>
+                                    <EqualizerIcon fontSize="small" />
+                                  </Grid>
+                                  <Grid item>Monitoring</Grid>
                                 </Grid>
                               </MenuItem>
                             </Link>

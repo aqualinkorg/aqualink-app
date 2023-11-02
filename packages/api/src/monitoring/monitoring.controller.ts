@@ -37,4 +37,14 @@ export class MonitoringController {
       req.user,
     );
   }
+
+  @Get('last-month')
+  @ApiOperation({
+    summary:
+      'Get monitoring metrics for last month for each site with a spotter',
+  })
+  @Auth(AdminLevel.SuperAdmin)
+  getMonitoringLastMonth() {
+    return this.monitoringService.getMonitoringLastMonth();
+  }
 }

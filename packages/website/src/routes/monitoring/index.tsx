@@ -8,6 +8,12 @@ import {
   createStyles,
   Grid,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   TextField,
   Typography,
   WithStyles,
@@ -162,6 +168,8 @@ function Monitoring({ classes }: MonitoringProps) {
   const { enqueueSnackbar } = useSnackbar();
   const user = useSelector(userInfoSelector);
 
+  const [monthlyReportRequest, setMonthlyReportRequest] =
+    React.useState<boolean>(false);
   const [searchMethod, setSearchMethod] =
     React.useState<SearchMethod>('siteId');
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -175,6 +183,10 @@ function Monitoring({ classes }: MonitoringProps) {
     DateTime.now().toJSDate(),
   );
   const [result, setResult] = React.useState<GetMonitoringMetricsResponse>([]);
+
+  React.useEffect(() => {
+    setResult([]);
+  }, [monthlyReportRequest]);
 
   function handleSearchMethod(
     event: React.MouseEvent<HTMLElement>,
@@ -197,15 +209,17 @@ function Monitoring({ classes }: MonitoringProps) {
 
     setLoading(true);
     try {
-      const { data } = await monitoringServices.getMonitoringStats({
-        token,
-        ...(searchMethod === 'siteId'
-          ? { siteIds: [siteId] || undefined }
-          : { spotterId: spotterId || undefined }),
-        monthly,
-        start: startDate?.toISOString(),
-        end: endDate?.toISOString(),
-      });
+      const { data } = monthlyReportRequest
+        ? await monitoringServices.getMonitoringLastMonth({ token })
+        : await monitoringServices.getMonitoringStats({
+            token,
+            ...(searchMethod === 'siteId'
+              ? { siteIds: [siteId] || undefined }
+              : { spotterId: spotterId || undefined }),
+            monthly,
+            start: startDate?.toISOString(),
+            end: endDate?.toISOString(),
+          });
 
       setResult(data);
     } catch (error: any) {
@@ -230,100 +244,185 @@ function Monitoring({ classes }: MonitoringProps) {
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
-            width: '17rem',
+            width: '30rem',
           }}
         >
-          <div>
-            <Typography>Search with:</Typography>
-            <ToggleButtonGroup
-              exclusive
-              value={searchMethod}
-              onChange={(e, v) => handleSearchMethod(e, v)}
-            >
-              <ToggleButton value="siteId">Site ID</ToggleButton>
-              <ToggleButton value="spotterId">Spotter ID</ToggleButton>
-            </ToggleButtonGroup>
-          </div>
-
-          <div>
-            {searchMethod === 'siteId' ? (
-              <TextField
-                variant="outlined"
-                label="Site ID"
-                value={siteId}
-                onChange={(e) => setSiteId(e.target.value)}
-              />
-            ) : (
-              <TextField
-                variant="outlined"
-                label="Spotter ID"
-                value={spotterId}
-                onChange={(e) => setSpotterId(e.target.value)}
-              />
-            )}
-          </div>
-
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              disableToolbar
-              format="MM/dd/yyyy"
-              autoOk
-              size="small"
-              fullWidth
-              showTodayButton
-              value={startDate}
-              onChange={(e) => setStartDate(e)}
-              label="start date"
-              inputVariant="outlined"
-            />
-          </MuiPickersUtilsProvider>
-
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              disableToolbar
-              format="MM/dd/yyyy"
-              autoOk
-              size="small"
-              fullWidth
-              showTodayButton
-              value={endDate}
-              onChange={(e) => setEndDate(e)}
-              label="end date"
-              inputVariant="outlined"
-            />
-          </MuiPickersUtilsProvider>
-
-          <Grid component="label" container alignItems="center" spacing={1}>
-            <Grid item>weekly</Grid>
-            <Grid item>
-              <CustomSwitch
-                checked={monthly}
-                onChange={(e) => {
-                  setMonthly(e.target.checked);
-                }}
-                name="checkedC"
-              />
+          {user && user.adminLevel === 'super_admin' && (
+            <Grid component="label" container alignItems="center" spacing={1}>
+              <Grid item xs={12}>
+                <Typography variant="h5">Select Request Type</Typography>
+              </Grid>
+              <Grid item>Site Specific</Grid>
+              <Grid item>
+                <CustomSwitch
+                  checked={monthlyReportRequest}
+                  onChange={(e) => {
+                    setMonthlyReportRequest(e.target.checked);
+                  }}
+                  name="checkedC"
+                />
+              </Grid>
+              <Grid item>Monthly Report</Grid>
             </Grid>
-            <Grid item>monthly</Grid>
-          </Grid>
+          )}
+          {monthlyReportRequest === false && (
+            <>
+              <div>
+                <Typography>Search with:</Typography>
+                <ToggleButtonGroup
+                  exclusive
+                  value={searchMethod}
+                  onChange={(e, v) => handleSearchMethod(e, v)}
+                >
+                  <ToggleButton value="siteId">Site ID</ToggleButton>
+                  <ToggleButton value="spotterId">Spotter ID</ToggleButton>
+                </ToggleButtonGroup>
+              </div>
+
+              <div>
+                {searchMethod === 'siteId' ? (
+                  <TextField
+                    variant="outlined"
+                    label="Site ID"
+                    value={siteId}
+                    onChange={(e) => setSiteId(e.target.value)}
+                  />
+                ) : (
+                  <TextField
+                    variant="outlined"
+                    label="Spotter ID"
+                    value={spotterId}
+                    onChange={(e) => setSpotterId(e.target.value)}
+                  />
+                )}
+              </div>
+
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  format="MM/dd/yyyy"
+                  autoOk
+                  size="small"
+                  fullWidth
+                  showTodayButton
+                  value={startDate}
+                  onChange={(e) => setStartDate(e)}
+                  label="start date"
+                  inputVariant="outlined"
+                />
+              </MuiPickersUtilsProvider>
+
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  format="MM/dd/yyyy"
+                  autoOk
+                  size="small"
+                  fullWidth
+                  showTodayButton
+                  value={endDate}
+                  onChange={(e) => setEndDate(e)}
+                  label="end date"
+                  inputVariant="outlined"
+                />
+              </MuiPickersUtilsProvider>
+
+              <Grid component="label" container alignItems="center" spacing={1}>
+                <Grid item>weekly</Grid>
+                <Grid item>
+                  <CustomSwitch
+                    checked={monthly}
+                    onChange={(e) => {
+                      setMonthly(e.target.checked);
+                    }}
+                    name="checkedC"
+                  />
+                </Grid>
+                <Grid item>monthly</Grid>
+              </Grid>
+            </>
+          )}
 
           <Button color="primary" variant="outlined" onClick={() => search()}>
             get metrics
           </Button>
         </div>
-        <div className={classes.chartContainer}>
-          {result?.[0] && (
-            <ChartWithTooltip
-              className={classes.chart}
-              siteId={Number(siteId)}
-              surveys={[]}
-              datasets={transformToDatasets(result[0])}
-              temperatureThreshold={null}
-              maxMonthlyMean={null}
-              background
-              hideYAxisUnits
-              chartPeriod={getChartPeriod(result[0])}
-            />
+        <div className={classes.resultsContainer}>
+          {monthlyReportRequest ? (
+            <TableContainer style={{ width: '80%' }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.headCell}>Site ID</TableCell>
+                    <TableCell className={classes.headCell} align="right">
+                      Site Name
+                    </TableCell>
+                    <TableCell className={classes.headCell} align="right">
+                      Total Requests
+                    </TableCell>
+                    <TableCell className={classes.headCell} align="right">
+                      Registered Users Requests
+                    </TableCell>
+                    <TableCell className={classes.headCell} align="right">
+                      Site Admins Requests
+                    </TableCell>
+                    <TableCell className={classes.headCell} align="right">
+                      Time Series Requests
+                    </TableCell>
+                    <TableCell className={classes.headCell} align="right">
+                      CSV Download Requests
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {result.map((row) => (
+                    <TableRow key={row.siteId}>
+                      <TableCell
+                        className={classes.cell}
+                        component="th"
+                        scope="row"
+                      >
+                        {row.siteId}
+                      </TableCell>
+                      <TableCell className={classes.cell} align="right">
+                        {row.siteName}
+                      </TableCell>
+                      <TableCell className={classes.cell} align="right">
+                        {row.data[0].totalRequests}
+                      </TableCell>
+                      <TableCell className={classes.cell} align="right">
+                        {row.data[0].registeredUserRequests}
+                      </TableCell>
+                      <TableCell className={classes.cell} align="right">
+                        {row.data[0].siteAdminRequests}
+                      </TableCell>
+                      <TableCell className={classes.cell} align="right">
+                        {row.data[0].timeSeriesRequests}
+                      </TableCell>
+                      <TableCell className={classes.cell} align="right">
+                        {row.data[0].CSVDownloadRequests}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <>
+              {result?.[0] && (
+                <ChartWithTooltip
+                  className={classes.chart}
+                  siteId={Number(siteId)}
+                  surveys={[]}
+                  datasets={transformToDatasets(result[0])}
+                  temperatureThreshold={null}
+                  maxMonthlyMean={null}
+                  background
+                  hideYAxisUnits
+                  chartPeriod={getChartPeriod(result[0])}
+                />
+              )}
+            </>
           )}
         </div>
       </div>
@@ -340,11 +439,18 @@ const styles = () =>
       marginBottom: '3rem',
       marginTop: '1rem',
     },
-    chartContainer: {
+    resultsContainer: {
       display: 'flex',
       justifyContent: 'center',
       marginTop: '8rem',
       width: '100%',
+    },
+    headCell: {
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    cell: {
+      color: 'black',
     },
   });
 
