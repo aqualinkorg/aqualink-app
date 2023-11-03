@@ -42,7 +42,7 @@ import {
   fetchVideoDetails,
   getErrorMessage,
 } from '../workers/check-video-streams';
-import { getTimeSeriesDefaultDates } from '../utils/dates';
+import { getDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
@@ -377,7 +377,7 @@ export class SitesService {
 
   async getSpotterData(id: number, start?: string, end?: string) {
     const site = await getSite(id, this.sitesRepository, undefined, true);
-    const { startDate, endDate } = getTimeSeriesDefaultDates(start, end);
+    const { startDate, endDate } = getDefaultDates(start, end);
 
     if (!site.sensorId) {
       throw new NotFoundException(`Site with ${id} has no spotter.`);

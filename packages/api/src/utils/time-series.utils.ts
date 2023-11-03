@@ -5,7 +5,7 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { Sources } from '../sites/sources.entity';
 import { TimeSeriesValueDto } from '../time-series/dto/time-series-value.dto';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { getTimeSeriesDefaultDates } from './dates';
+import { getDefaultDates } from './dates';
 import { Metric } from '../time-series/metrics.enum';
 
 interface TimeSeriesGroupable {
@@ -196,7 +196,7 @@ export const getDataQuery = ({
 }: GetDataQueryParams): Promise<TimeSeriesData[]> => {
   const { endDate, startDate } = csv
     ? { startDate: start, endDate: end }
-    : getTimeSeriesDefaultDates(start, end);
+    : getDefaultDates(start, end);
 
   const { sql: surveyPointConditionSql, params: surveyPointConditionParams } =
     surveyPointId

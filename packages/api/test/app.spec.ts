@@ -10,6 +10,7 @@ import { siteApplicationTests } from '../src/site-applications/site-application.
 import { surveyTests } from '../src/surveys/surveys.spec';
 import { siteTests } from '../src/sites/sites.spec';
 import { sensorTests } from '../src/sensors/sensors.spec';
+import { monitoringTests } from '../src/monitoring/monitoring.spec';
 
 describe('AppController (e2e)', () => {
   const testService = TestService.getInstance();
@@ -47,6 +48,8 @@ describe('AppController (e2e)', () => {
   describe('Sites (e2e) /sites', siteTests);
 
   describe('Sensors (e2e) /sensors', sensorTests);
+
+  describe('Monitoring (e2e) /monitoring', monitoringTests);
 
   afterAll(async () => {
     await testService.cleanUpApp();
