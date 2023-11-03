@@ -364,13 +364,13 @@ function Monitoring({ classes }: MonitoringProps) {
                       Registered Users Requests
                     </TableCell>
                     <TableCell className={classes.headCell} align="right">
-                      Site Admins Requests
+                      Site Admin Requests
                     </TableCell>
                     <TableCell className={classes.headCell} align="right">
-                      Time Series Requests
+                      Site Visits
                     </TableCell>
                     <TableCell className={classes.headCell} align="right">
-                      CSV Download Requests
+                      CSV Downloads
                     </TableCell>
                   </TableRow>
                 </TableHead>
