@@ -128,6 +128,7 @@ export const getAvailableMetricsQuery = ({
     .createQueryBuilder('time_series')
     .select('metric')
     .addSelect('source.type', 'source')
+    .addSelect('source.depth', 'depth')
     .distinct(true)
     .innerJoin(
       'time_series.source',

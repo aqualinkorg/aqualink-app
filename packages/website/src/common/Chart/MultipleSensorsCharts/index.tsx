@@ -416,12 +416,16 @@ const MultipleSensorsCharts = ({
   }, [pickerEndDate, pickerStartDate]);
 
   const dataForCsv = [
-    ...tempAnalysisDatasets.map((dataset) => ({
-      name: `${snakeCase(dataset.metric) || 'unknown_Metric'}_${
-        dataset.source || 'unknown_source'
-      }`,
-      values: dataset.data,
-    })),
+    ...tempAnalysisDatasets.map((dataset) => {
+      const source =
+        (dataset.source === 'hobo'
+          ? dataset.tooltipLabel?.split(' ').join('_').toLocaleLowerCase()
+          : dataset.source) || 'unknown_source';
+      return {
+        name: `${snakeCase(dataset.metric) || 'unknown_Metric'}_${source}`,
+        values: dataset.data,
+      };
+    }),
     ...spotterDatasets().map(({ title, dataset }) => ({
       name: snakeCase(`${title}_${dataset.label}`),
       values: dataset.data,

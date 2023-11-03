@@ -3,7 +3,6 @@ import { minBy, maxBy, meanBy, isNumber } from 'lodash';
 import {
   DAILY_DATA_CURVE_COLOR,
   HISTORICAL_MONTHLY_MEAN_COLOR,
-  HOBO_BOTTOM_DATA_CURVE_COLOR,
   CHART_MIN_NUMBER_OF_POINTS,
   SPOTTER_BOTTOM_DATA_CURVE_COLOR,
   SPOTTER_TOP_DATA_CURVE_COLOR,
@@ -27,6 +26,7 @@ import {
   generateHistoricalMonthlyMeanTimestamps,
 } from 'helpers/dates';
 import { DateTime } from 'luxon-extensions';
+import { randomColors } from 'layout/App/theme';
 import { CardColumn, OceanSenseDataset } from './types';
 import type { Dataset } from '../index';
 import {
@@ -390,7 +390,7 @@ export const generateTempAnalysisDatasets = (
       const dataset: Dataset = {
         label,
         data: localHoboBottomData[index],
-        curveColor: HOBO_BOTTOM_DATA_CURVE_COLOR,
+        curveColor: randomColors[index],
         type: 'line',
         unit: '°C',
         maxHoursGap: 24,
@@ -400,7 +400,7 @@ export const generateTempAnalysisDatasets = (
         displayCardColumn:
           !hasEnoughSpotterBottomData &&
           !hasEnoughSpotterTopData &&
-          hasEnoughHoboBottomData.find((x) => x),
+          hasEnoughHoboBottomData.find((x) => x && index === 1),
         metric: 'bottomTemperature',
         source: 'hobo',
       };
