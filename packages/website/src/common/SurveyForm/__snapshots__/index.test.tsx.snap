@@ -115,7 +115,7 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                         class="MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
                         variant="body1"
                       >
-                        October 2023
+                        November 2023
                       </mock-typography>
                     </div>
                     <mock-iconbutton
@@ -856,7 +856,52 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                         role="presentation"
                       >
                         <mock-iconbutton
-                          classname="MuiPickersDay-day"
+                          classname="MuiPickersDay-day MuiPickersDay-hidden"
+                          tabindex="-1"
+                        >
+                          <mock-typography
+                            color="inherit"
+                            variant="body2"
+                          >
+                            29
+                          </mock-typography>
+                        </mock-iconbutton>
+                      </div>
+                      <div
+                        role="presentation"
+                      >
+                        <mock-iconbutton
+                          classname="MuiPickersDay-day MuiPickersDay-hidden"
+                          tabindex="-1"
+                        >
+                          <mock-typography
+                            color="inherit"
+                            variant="body2"
+                          >
+                            30
+                          </mock-typography>
+                        </mock-iconbutton>
+                      </div>
+                      <div
+                        role="presentation"
+                      >
+                        <mock-iconbutton
+                          classname="MuiPickersDay-day MuiPickersDay-hidden"
+                          tabindex="-1"
+                        >
+                          <mock-typography
+                            color="inherit"
+                            variant="body2"
+                          >
+                            31
+                          </mock-typography>
+                        </mock-iconbutton>
+                      </div>
+                      <div
+                        role="presentation"
+                      >
+                        <mock-iconbutton
+                          classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
                           tabindex="0"
                         >
                           <mock-typography
@@ -912,6 +957,10 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
+                    </div>
+                    <div
+                      class="MuiPickersCalendar-week"
+                    >
                       <div
                         role="presentation"
                       >
@@ -957,10 +1006,6 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
-                    </div>
-                    <div
-                      class="MuiPickersCalendar-week"
-                    >
                       <div
                         role="presentation"
                       >
@@ -1021,6 +1066,10 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
+                    </div>
+                    <div
+                      class="MuiPickersCalendar-week"
+                    >
                       <div
                         role="presentation"
                       >
@@ -1066,10 +1115,6 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
-                    </div>
-                    <div
-                      class="MuiPickersCalendar-week"
-                    >
                       <div
                         role="presentation"
                       >
@@ -1089,7 +1134,7 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                         role="presentation"
                       >
                         <mock-iconbutton
-                          classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                          classname="MuiPickersDay-day"
                           tabindex="0"
                         >
                           <mock-typography
@@ -1130,6 +1175,10 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
+                    </div>
+                    <div
+                      class="MuiPickersCalendar-week"
+                    >
                       <div
                         role="presentation"
                       >
@@ -1175,10 +1224,6 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
-                    </div>
-                    <div
-                      class="MuiPickersCalendar-week"
-                    >
                       <div
                         role="presentation"
                       >
@@ -1239,6 +1284,10 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
+                    </div>
+                    <div
+                      class="MuiPickersCalendar-week"
+                    >
                       <div
                         role="presentation"
                       >
@@ -1284,10 +1333,6 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
-                    </div>
-                    <div
-                      class="MuiPickersCalendar-week"
-                    >
                       <div
                         role="presentation"
                       >
@@ -1322,21 +1367,6 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                         role="presentation"
                       >
                         <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            31
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
                           classname="MuiPickersDay-day MuiPickersDay-hidden"
                           tabindex="-1"
                         >
@@ -1360,36 +1390,6 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
                             variant="body2"
                           >
                             2
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day MuiPickersDay-hidden"
-                          tabindex="-1"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            3
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day MuiPickersDay-hidden"
-                          tabindex="-1"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            4
                           </mock-typography>
                         </mock-iconbutton>
                       </div>
