@@ -35,11 +35,10 @@ const storeUser = (
     token,
   });
 
-const resetPassword = (email: string) => {
-  if (app) {
-    const auth = getAuth(app);
-    sendPasswordResetEmail(auth, email, { url: window.location.origin });
-  }
+const resetPassword = (email: string): Promise<void> => {
+  if (!app) Promise.resolve();
+  const auth = getAuth(app);
+  return sendPasswordResetEmail(auth, email, { url: window.location.origin });
 };
 
 const getSelf = (token?: string) =>

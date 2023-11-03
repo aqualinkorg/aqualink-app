@@ -25,7 +25,7 @@ import { Metrics, MetricsKeys, Site, Sources } from 'store/Sites/types';
 import { useQueryParam } from 'hooks/useQueryParams';
 import { rangeOverlapWithRange, isBefore, setTimeZone } from 'helpers/dates';
 import { getSourceRanges } from 'helpers/siteUtils';
-import { BaseSourceConfig } from 'utils/types';
+import { BaseSourceConfig, MonitoringMetric } from 'utils/types';
 import {
   DEFAULT_METRICS,
   getPublicSpotterMetrics,
@@ -40,6 +40,8 @@ import {
   getPublicMetlogMetrics,
 } from 'constants/chartConfigs/metlogConfig';
 import { DateTime } from 'luxon-extensions';
+import { userInfoSelector } from 'store/User/userSlice';
+import monitoringServices from 'services/monitoringServices';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -71,6 +73,7 @@ const MultipleSensorsCharts = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
+  const user = useSelector(userInfoSelector);
   const { bottomTemperature } = timeSeriesData || {};
   const hoboBottomTemperatureSensors = bottomTemperature?.filter(
     (x) => x.type === 'hobo',
@@ -218,6 +221,17 @@ const MultipleSensorsCharts = ({
       getPublicHuiMetrics,
       getHuiConfig,
     );
+
+  // post monitoring metric
+  useEffect(() => {
+    if (user?.token) {
+      monitoringServices.postMonitoringMetric({
+        token: user.token,
+        siteId: site.id,
+        metric: MonitoringMetric.TimeSeriesRequest,
+      });
+    }
+  }, [site.id, user?.token]);
 
   // Scroll to the chart defined by the chartParam query param.
   useEffect(() => {

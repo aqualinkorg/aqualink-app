@@ -51,6 +51,12 @@ describe('MultipleSensorsCharts', () => {
           details: mockSurvey,
         },
       },
+      user: {
+        userInfo: null,
+        loading: false,
+        loadingCollection: false,
+        error: null,
+      },
     });
 
     store.dispatch = jest.fn();

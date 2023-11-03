@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
+import { MonitoringModule } from 'monitoring/monitoring.module';
 import { configService } from './config/config.service';
 import { SiteApplicationsModule } from './site-applications/site-applications.module';
 import { SitesModule } from './sites/sites.module';
@@ -44,6 +45,7 @@ import { SensorDataModule } from './sensor-data/sensor-data.module';
     SiteSketchFabModule,
     WindWaveModule,
     SensorDataModule,
+    MonitoringModule,
   ],
   controllers: [AppController],
 })
