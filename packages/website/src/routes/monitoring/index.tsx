@@ -388,19 +388,19 @@ function Monitoring({ classes }: MonitoringProps) {
                         {row.siteName}
                       </TableCell>
                       <TableCell className={classes.cell} align="right">
-                        {row.data?.[0].totalRequests ?? 0}
+                        {row.data[0]?.totalRequests || 0}
                       </TableCell>
                       <TableCell className={classes.cell} align="right">
-                        {row.data?.[0].registeredUserRequests ?? 0}
+                        {row.data[0]?.registeredUserRequests || 0}
                       </TableCell>
                       <TableCell className={classes.cell} align="right">
-                        {row.data?.[0].siteAdminRequests ?? 0}
+                        {row.data[0]?.siteAdminRequests || 0}
                       </TableCell>
                       <TableCell className={classes.cell} align="right">
-                        {row.data?.[0].timeSeriesRequests ?? 0}
+                        {row.data[0]?.timeSeriesRequests || 0}
                       </TableCell>
                       <TableCell className={classes.cell} align="right">
-                        {row.data?.[0].CSVDownloadRequests ?? 0}
+                        {row.data[0]?.CSVDownloadRequests || 0}
                       </TableCell>
                     </TableRow>
                   ))}
