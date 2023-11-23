@@ -228,6 +228,136 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         <a
           aria-disabled="false"
           class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/register"
+          role="button"
+          tabindex="0"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Register a site
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <mock-link
+          aria-disabled="false"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="https://highlights.aqualink.org"
+          role="button"
+          tabindex="0"
+          target="_blank"
+          to=""
+        >
+          <span
+            class="MuiButton-label"
+          >
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Highlighted Sites
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </mock-link>
+        <mock-link
+          aria-disabled="false"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="https://bristlemouth.aqualink.org"
+          role="button"
+          tabindex="0"
+          target="_blank"
+          to=""
+        >
+          <span
+            class="MuiButton-label"
+          >
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Bristlemouth Explorer
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </mock-link>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/tracker"
+          role="button"
+          tabindex="0"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Track a heatwave
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/about"
+          role="button"
+          tabindex="0"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              About
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          href="/faq"
+          role="button"
+          tabindex="0"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            <mock-typography
+              style="text-transform: uppercase;"
+              variant="h6"
+            >
+              Faq
+            </mock-typography>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </a>
+        <a
+          aria-disabled="false"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
           href="/buoy"
           role="button"
           tabindex="0"
@@ -267,113 +397,6 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             class="MuiTouchRipple-root"
           />
         </a>
-        <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
-          href="/about"
-          role="button"
-          tabindex="0"
-        >
-          <span
-            class="MuiButton-label"
-          >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              About
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </a>
-        <mock-link
-          aria-disabled="false"
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
-          href="https://highlights.aqualink.org"
-          role="button"
-          tabindex="0"
-          target="_blank"
-          to=""
-        >
-          <span
-            class="MuiButton-label"
-          >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Highlighted Sites
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </mock-link>
-        <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
-          href="/faq"
-          role="button"
-          tabindex="0"
-        >
-          <span
-            class="MuiButton-label"
-          >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Faq
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </a>
-        <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
-          href="/tracker"
-          role="button"
-          tabindex="0"
-        >
-          <span
-            class="MuiButton-label"
-          >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Track a heatwave
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </a>
-        <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
-          href="/register"
-          role="button"
-          tabindex="0"
-        >
-          <span
-            class="MuiButton-label"
-          >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Register a site
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </a>
         <mock-box
           margintop="auto"
           padding="25px"
@@ -381,7 +404,9 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           <mock-typography
             variant="subtitle1"
           >
-            Aqualink is open-source (MIT). Join us and contribute!
+            Aqualink is open-source (MIT)
+            <br />
+            Join us and contribute!
           </mock-typography>
           <div
             class="MuiButtonGroup-root MuiButtonGroup-contained"

@@ -7,7 +7,10 @@ const links = [
   { title: 'Register your Site', to: '/register' },
   { title: 'Highlighted Sites', href: 'https://highlights.aqualink.org/' },
   { title: 'Track a Heatwave', to: '/tracker' },
-  { title: 'FAQ', to: '/faq' },
+  {
+    title: 'Bristlemouth Explorer',
+    href: 'https://bristlemouth.aqualink.org',
+  },
 ];
 
 const RouteButtons = () => {

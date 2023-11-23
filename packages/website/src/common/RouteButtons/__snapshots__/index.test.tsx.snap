@@ -97,15 +97,17 @@ exports[`renders as expected 1`] = `
       <a
         aria-disabled="false"
         class="MuiButtonBase-root MuiButton-root MuiButton-text"
-        href="/faq"
-        role="button"
+        href="https://bristlemouth.aqualink.org"
+        rel="noopener"
         style="color: white;"
         tabindex="0"
+        target="_blank"
+        to=""
       >
         <span
           class="MuiButton-label"
         >
-          FAQ
+          Bristlemouth Explorer
         </span>
         <span
           class="MuiTouchRipple-root"
