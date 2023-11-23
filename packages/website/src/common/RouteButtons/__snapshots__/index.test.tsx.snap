@@ -84,7 +84,7 @@ exports[`renders as expected 1`] = `
         <span
           class="MuiButton-label"
         >
-          Track a Heatwave
+          Heatwave
         </span>
         <span
           class="MuiTouchRipple-root"
@@ -107,7 +107,7 @@ exports[`renders as expected 1`] = `
         <span
           class="MuiButton-label"
         >
-          Bristlemouth Explorer
+          Bristlemouth
         </span>
         <span
           class="MuiTouchRipple-root"
