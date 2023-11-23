@@ -29,32 +29,37 @@ const menuRoutes = [
     to: '/map',
   },
   {
-    text: 'Buoy',
-    to: '/buoy',
+    text: 'Register a site',
+    to: '/register',
   },
-  {
-    text: 'Drone',
-    to: '/drones',
-  },
-  {
-    text: 'About',
-    to: '/about',
-  },
+
   {
     text: 'Highlighted Sites',
     href: 'https://highlights.aqualink.org',
   },
   {
-    text: 'Faq',
-    to: '/faq',
+    text: 'Bristlemouth Explorer',
+    href: 'https://bristlemouth.aqualink.org',
   },
   {
     text: 'Track a heatwave',
     to: '/tracker',
   },
   {
-    text: 'Register a site',
-    to: '/register',
+    text: 'About',
+    to: '/about',
+  },
+  {
+    text: 'Faq',
+    to: '/faq',
+  },
+  {
+    text: 'Buoy',
+    to: '/buoy',
+  },
+  {
+    text: 'Drone',
+    to: '/drones',
   },
 ];
 
@@ -101,7 +106,9 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       <Box marginTop="auto" padding="25px">
         <Typography variant="subtitle1">
           {/* eslint-disable-next-line react/no-unescaped-entities */}
-          Aqualink is open-source (MIT). Join us and contribute!
+          Aqualink is open-source (MIT)
+          <br />
+          Join us and contribute!
         </Typography>
         <ButtonGroup variant="contained" color="default">
           <Button
@@ -129,7 +136,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     paper: {
-      width: '16rem',
+      width: '18rem',
       alignItems: 'center',
       backgroundColor: darkBlue,
     },
