@@ -33,7 +33,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.4",
     "firebase": "^10.2.0",
-    "firebase-tools": "^11.29.1",
+    "firebase-tools": "^12.4.5",
     "immutable": "^4.0.0-rc.12",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.15",
