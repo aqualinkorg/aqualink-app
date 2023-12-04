@@ -21,7 +21,7 @@ const uploadMedia = (
     data: formData,
     token,
     contentType: 'multipart/form-data',
-    responseType: 'text',
+    responseType: 'json',
   });
 
 const uploadMultiSiteTimeSeriesData = (

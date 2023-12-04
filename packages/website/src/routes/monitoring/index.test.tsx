@@ -6,11 +6,20 @@ import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
 import { SnackbarProvider } from 'notistack';
 import { mockCollection } from 'mocks/mockCollection';
+import { advanceTo, clear } from 'jest-date-mock';
 import MonitoringPage from '.';
 
 const mockStore = configureStore([]);
 
 describe('Landing Page', () => {
+  beforeAll(() => {
+    advanceTo(new Date('2023-11-23T12:00:00'));
+  });
+
+  afterAll(() => {
+    clear();
+  });
+
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
