@@ -7,11 +7,11 @@ import { mockUser } from 'mocks/mockUser';
 import { SnackbarProvider } from 'notistack';
 import { mockCollection } from 'mocks/mockCollection';
 import { advanceTo, clear } from 'jest-date-mock';
-import MonitoringPage from '.';
+import MonthlyReport from '.';
 
 const mockStore = configureStore([]);
 
-describe('Landing Page', () => {
+describe('Monitoring MonthlyReport Page', () => {
   beforeAll(() => {
     advanceTo(new Date('2023-11-23T12:00:00'));
   });
@@ -41,7 +41,7 @@ describe('Landing Page', () => {
       <SnackbarProvider>
         <ReduxProvider store={store}>
           <BrowserRouter>
-            <MonitoringPage />
+            <MonthlyReport />
           </BrowserRouter>
         </ReduxProvider>
       </SnackbarProvider>,
