@@ -19,6 +19,14 @@ jest.mock('@material-ui/pickers', () => ({
 }));
 
 describe('Landing Page', () => {
+  beforeAll(() => {
+    advanceTo(new Date('2023-11-23T12:00:00'));
+  });
+
+  afterAll(() => {
+    clear();
+  });
+
   let element: HTMLElement;
 
   beforeAll(() => {
