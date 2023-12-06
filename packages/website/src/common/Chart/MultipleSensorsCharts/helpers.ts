@@ -3,7 +3,6 @@ import { minBy, maxBy, meanBy, isNumber } from 'lodash';
 import {
   DAILY_DATA_CURVE_COLOR,
   HISTORICAL_MONTHLY_MEAN_COLOR,
-  HOBO_BOTTOM_DATA_CURVE_COLOR,
   CHART_MIN_NUMBER_OF_POINTS,
   SPOTTER_BOTTOM_DATA_CURVE_COLOR,
   SPOTTER_TOP_DATA_CURVE_COLOR,
@@ -19,6 +18,7 @@ import {
   ValueWithTimestamp,
   TimeSeriesData,
   Metrics,
+  TimeSeries,
 } from 'store/Sites/types';
 import {
   convertSofarDataToLocalTime,
@@ -26,6 +26,7 @@ import {
   generateHistoricalMonthlyMeanTimestamps,
 } from 'helpers/dates';
 import { DateTime } from 'luxon-extensions';
+import { randomColors } from 'layout/App/theme';
 import { CardColumn, OceanSenseDataset } from './types';
 import type { Dataset } from '../index';
 import {
@@ -118,9 +119,9 @@ export const findDataLimits = (
   const hasData = Boolean(
     filteredHistoricalMonthlyMeanData?.[0] ||
       dailyData?.[0] ||
-      bottomTemperature?.spotter?.data?.[0] ||
-      topTemperature?.spotter?.data?.[0] ||
-      bottomTemperature?.hobo?.data?.[0],
+      bottomTemperature?.find((x) => x.type === 'spotter')?.data?.[0] ||
+      topTemperature?.find((x) => x.type === 'spotter')?.data?.[0] ||
+      bottomTemperature?.find((x) => x.type === 'hobo')?.data?.[0],
   );
 
   return [
@@ -129,9 +130,9 @@ export const findDataLimits = (
           findMarginalDate(
             filteredHistoricalMonthlyMeanData,
             dailyData || [],
-            bottomTemperature?.spotter?.data,
-            topTemperature?.spotter?.data,
-            bottomTemperature?.hobo?.data,
+            bottomTemperature?.find((x) => x.type === 'spotter')?.data,
+            topTemperature?.find((x) => x.type === 'spotter')?.data,
+            bottomTemperature?.find((x) => x.type === 'hobo')?.data,
             'min',
           ),
         ).toISOString()
@@ -141,9 +142,9 @@ export const findDataLimits = (
           findMarginalDate(
             filteredHistoricalMonthlyMeanData,
             dailyData || [],
-            bottomTemperature?.spotter?.data,
-            topTemperature?.spotter?.data,
-            bottomTemperature?.hobo?.data,
+            bottomTemperature?.find((x) => x.type === 'spotter')?.data,
+            topTemperature?.find((x) => x.type === 'spotter')?.data,
+            bottomTemperature?.find((x) => x.type === 'hobo')?.data,
           ),
         ).toISOString()
       : undefined,
@@ -267,7 +268,7 @@ export const generateTempAnalysisDatasets = (
   dailyData?: DailyData[],
   spotterBottom?: ValueWithTimestamp[],
   spotterTop?: ValueWithTimestamp[],
-  hoboBottom?: ValueWithTimestamp[],
+  hoboBottom?: TimeSeries,
   historicalMonthlyMean?: HistoricalMonthlyMean[],
   startDate?: string,
   endDate?: string,
@@ -296,21 +297,24 @@ export const generateTempAnalysisDatasets = (
     localDailyData,
     localSpotterBottomData,
     localSpotterTopData,
-    localHoboBottomData,
-  ] = [processedDailyData, spotterBottom, spotterTop, hoboBottom].map(
-    convertSofarDataToLocalTime(timezone),
-  );
+    ...localHoboBottomData
+  ] = [
+    processedDailyData,
+    spotterBottom,
+    spotterTop,
+    ...(hoboBottom?.map((x) => x.data) || []),
+  ].map(convertSofarDataToLocalTime(timezone));
 
   const [
     hasEnoughSpotterBottomData,
     hasEnoughSpotterTopData,
-    hasEnoughHoboBottomData,
     hasEnoughDailyData,
+    ...hasEnoughHoboBottomData
   ] = [
     localSpotterBottomData,
     localSpotterTopData,
-    localHoboBottomData,
     localDailyData,
+    ...localHoboBottomData,
   ]
     .map(filterSofarData(chartStartDate, chartEndDate))
     .map(hasAtLeastNData(CHART_MIN_NUMBER_OF_POINTS));
@@ -347,7 +351,7 @@ export const generateTempAnalysisDatasets = (
       displayCardColumn:
         !hasEnoughSpotterBottomData &&
         !hasEnoughSpotterTopData &&
-        !hasEnoughHoboBottomData &&
+        !hasEnoughHoboBottomData.find((x) => x) &&
         hasEnoughDailyData,
       metric: 'sstAnomaly',
       source: 'noaa',
@@ -378,23 +382,30 @@ export const generateTempAnalysisDatasets = (
       metric: 'bottomTemperature',
       source: 'spotter',
     },
-    {
-      label: 'HOBO',
-      data: localHoboBottomData,
-      curveColor: HOBO_BOTTOM_DATA_CURVE_COLOR,
-      type: 'line',
-      unit: '°C',
-      maxHoursGap: 24,
-      tooltipMaxHoursGap: 6,
-      tooltipLabel: 'HOBO LOGGER',
-      displayData: hasEnoughHoboBottomData,
-      displayCardColumn:
-        !hasEnoughSpotterBottomData &&
-        !hasEnoughSpotterTopData &&
-        hasEnoughHoboBottomData,
-      metric: 'bottomTemperature',
-      source: 'hobo',
-    },
+    ...(hoboBottom?.map((item, index) => {
+      const label = item.depth !== undefined ? `HOBO at ${item.depth}` : 'HOBO';
+      const tooltipLabel =
+        item.depth !== undefined ? `HOBO ${item.depth}m` : 'HOBO';
+
+      const dataset: Dataset = {
+        label,
+        data: localHoboBottomData[index],
+        curveColor: randomColors[index],
+        type: 'line',
+        unit: '°C',
+        maxHoursGap: 24,
+        tooltipMaxHoursGap: 6,
+        tooltipLabel,
+        displayData: hasEnoughHoboBottomData.find((x) => x),
+        displayCardColumn:
+          !hasEnoughSpotterBottomData &&
+          !hasEnoughSpotterTopData &&
+          hasEnoughHoboBottomData.find((x) => x && index === 1),
+        metric: 'bottomTemperature',
+        source: 'hobo',
+      };
+      return dataset;
+    }) || []),
   ];
 };
 

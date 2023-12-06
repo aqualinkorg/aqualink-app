@@ -78,7 +78,9 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     const newMeans = Object.fromEntries(
       Object.entries(timeSeriesData || {})
         .map(([key, val]) => {
-          const values = val[source]?.data.map((x) => x.value);
+          const values = val
+            .find((x) => x.type === source)
+            ?.data.map((x) => x.value);
           if (!values) return [undefined, undefined];
           return [key, getMeanCalculationFunction(source)(values)];
         })

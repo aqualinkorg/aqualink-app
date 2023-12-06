@@ -1,9 +1,11 @@
 import { TimeSeriesData } from 'store/Sites/types';
 
 export const mockTimeSeries: TimeSeriesData = {
-  ph: {
-    hui: {
+  ph: [
+    {
+      type: 'hui',
       surveyPoint: { id: 184, name: 'point1' },
+      depth: null,
       data: [
         { value: 8.19, timestamp: '2022-06-11T00:00:00.000Z' },
         { value: 8.1425, timestamp: '2022-06-11T01:00:00.000Z' },
@@ -31,9 +33,11 @@ export const mockTimeSeries: TimeSeriesData = {
         { value: 8.27, timestamp: '2022-06-14T23:00:00.000Z' },
       ],
     },
-  },
-  salinity: {
-    hui: {
+  ],
+  salinity: [
+    {
+      type: 'hui',
+      depth: null,
       surveyPoint: { id: 184, name: 'point1' },
       data: [
         { value: 34.574999999999996, timestamp: '2022-06-11T00:00:00.000Z' },
@@ -62,10 +66,12 @@ export const mockTimeSeries: TimeSeriesData = {
         { value: 35.275, timestamp: '2022-06-11T23:00:00.000Z' },
       ],
     },
-  },
-  turbidity: {
-    hui: {
+  ],
+  turbidity: [
+    {
+      type: 'hui',
       surveyPoint: { id: 184, name: 'point1' },
+      depth: null,
       data: [
         { value: 5.8425, timestamp: '2022-06-11T00:00:00.000Z' },
         { value: 8.7225, timestamp: '2022-06-11T01:00:00.000Z' },
@@ -93,5 +99,5 @@ export const mockTimeSeries: TimeSeriesData = {
         { value: 1.1925, timestamp: '2022-06-11T23:00:00.000Z' },
       ],
     },
-  },
+  ],
 };

@@ -51,7 +51,7 @@ import { Metric } from './metrics.enum';
 import { User } from '../users/users.entity';
 import { DataUploadsSites } from '../data-uploads/data-uploads-sites.entity';
 
-const DATE_FORMAT = 'YYYY_MM_DD';
+const DATE_FORMAT = 'yyyy_MM_dd';
 
 @Injectable()
 export class TimeSeriesService {
@@ -153,7 +153,10 @@ export class TimeSeriesService {
 
     const headerKeys = [
       'timestamp',
-      ...uniqueMetrics.map((x) => `${x.metric}_${x.source}`),
+      ...uniqueMetrics.map((x) => {
+        const depth = x.depth ? `_${x.depth}` : '';
+        return `${x.metric}_${x.source}${depth}`;
+      }),
     ];
 
     const emptyRow = Object.fromEntries(
@@ -220,11 +223,14 @@ export class TimeSeriesService {
           order: 'DESC',
         });
 
-        const metricSourceAsKey = data.map((x) => ({
-          key: `${x.metric}_${x.source}`,
-          value: x.value,
-          timestamp: x.timestamp,
-        }));
+        const metricSourceAsKey = data.map((x) => {
+          const depth = x.depth ? `_${x.depth}` : '';
+          return {
+            key: `${x.metric}_${x.source}${depth}`,
+            value: x.value,
+            timestamp: x.timestamp,
+          };
+        });
 
         const groupedByTimestamp = metricSourceAsKey.reduce(
           (acc, curr) => {

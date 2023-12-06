@@ -6,13 +6,13 @@ import {
   map,
   keyBy,
   pick,
-  union,
   isString,
 } from 'lodash';
 import { isBefore } from 'helpers/dates';
 import { longDHW } from 'helpers/siteUtils';
 import siteServices from 'services/siteServices';
 
+import { ArrayElement } from 'utils/types';
 import type { TableRow } from '../Homepage/types';
 import {
   DailyData,
@@ -32,6 +32,7 @@ import {
   TimeSeriesDataRangeResponse,
   TimeSeriesDataRequestParams,
   TimeSeriesDataResponse,
+  TimeSeries,
 } from './types';
 
 export function getSiteNameAndRegion(site: Site) {
@@ -129,32 +130,32 @@ const attachTimeSeries = (
 ): TimeSeriesData => {
   const previousMetrics = Object.keys(previousData || {});
   const newMetrics = Object.keys(newData);
-  const metrics = union(previousMetrics, newMetrics) as Metrics[];
+  const metrics = [
+    ...new Map([...previousMetrics, ...newMetrics].map((x) => [x, x])).values(),
+  ] as Metrics[];
 
   return metrics.reduce((ret, currMetric) => {
-    const previousMetricData = previousData?.[currMetric] || {};
-    const newMetricData = newData?.[currMetric] || {};
-    const previousMetricSources = Object.keys(previousMetricData);
-    const newMetricSources = Object.keys(newMetricData);
-    const sources = union(previousMetricSources, newMetricSources) as Sources[];
+    const previousMetricData = previousData?.[currMetric] || [];
+    const newMetricData = newData?.[currMetric] || [];
+
+    const combineMap = new Map<string, ArrayElement<TimeSeries>>();
+    [...previousMetricData, ...newMetricData].forEach((x) => {
+      const pointId = x?.surveyPoint?.id;
+      const key = `${x.type}_${pointId}_${x.depth}`;
+
+      const item = combineMap.get(key);
+      if (item !== undefined) {
+        const data = attachData(direction, x.data, item.data || []);
+        combineMap.set(key, { ...item, data });
+      } else {
+        combineMap.set(key, x);
+      }
+    });
+    const newTimeSeries = Array.from(combineMap.values());
 
     return {
       ...ret,
-      [currMetric]: sources.reduce(
-        (acc, source) => ({
-          ...acc,
-          [source]: {
-            surveyPoint: (newMetricData || previousMetricData)?.[source]
-              ?.surveyPoint,
-            data: attachData(
-              direction,
-              newMetricData?.[source]?.data || [],
-              previousMetricData?.[source]?.data || [],
-            ),
-          },
-        }),
-        {},
-      ),
+      [currMetric]: newTimeSeries,
     };
   }, {});
 };

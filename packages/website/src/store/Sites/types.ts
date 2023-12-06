@@ -194,16 +194,19 @@ export interface DataRangeWithMetric extends DataRange {
 
 export type TimeSeriesSurveyPoint = Pick<SurveyPoints, 'id' | 'name'>;
 
-export type TimeSeries = Partial<
-  Record<
-    Sources,
-    { surveyPoint?: TimeSeriesSurveyPoint; data: ValueWithTimestamp[] }
-  >
->;
+export type TimeSeries = {
+  type: Sources;
+  depth: number | null;
+  surveyPoint?: TimeSeriesSurveyPoint;
+  data: ValueWithTimestamp[];
+}[];
 
-export type TimeSeriesRange = Partial<
-  Record<Sources, { surveyPoint?: TimeSeriesSurveyPoint; data: DataRange[] }>
->;
+export type TimeSeriesRange = {
+  type: Sources;
+  depth: number | null;
+  surveyPoint?: TimeSeriesSurveyPoint;
+  data: DataRange[];
+}[];
 
 export type TimeSeriesDataResponse = Partial<Record<MetricsKeys, TimeSeries>>;
 

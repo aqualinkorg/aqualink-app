@@ -111,12 +111,12 @@ function createSourceAndInsertTimeSeries(
       siteSurveyPointsCreated.push(targetSiteSurveyPoint);
     }
 
-    const sourceEntity = await findOrCreateSourceEntity(
-      targetSite,
-      SourceType.HUI,
-      targetSiteSurveyPoint,
+    const sourceEntity = await findOrCreateSourceEntity({
+      site: targetSite,
+      sourceType: SourceType.HUI,
+      surveyPoint: targetSiteSurveyPoint,
       sourcesRepository,
-    );
+    });
     const dataAsTimeSeries = point.data.map((x) => {
       return {
         timestamp: x.timestamp,

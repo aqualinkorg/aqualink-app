@@ -117,7 +117,7 @@ const Tooltip = ({
                 (item) =>
                   isNumber(item.value) && (
                     <TemperatureMetric
-                      key={item.color}
+                      key={`${item.color}_${item.value}`}
                       {...item}
                       gridClassName={classes.tooltipContentItem}
                       unit={item.unit}
