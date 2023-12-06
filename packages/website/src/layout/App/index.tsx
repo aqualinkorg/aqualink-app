@@ -12,7 +12,7 @@ import { getSelf } from 'store/User/userSlice';
 import { useGATagManager } from 'utils/google-analytics';
 import Uploads from 'routes/Uploads';
 import SpotterInfo from 'routes/SpotterInfo';
-import Monitoring from 'routes/monitoring';
+import Monitoring from 'routes/Monitoring';
 import NotFound from '../../routes/NotFound';
 import ErrorBoundary from './ErrorBoundary';
 import LandingPage from '../../routes/Landing';
