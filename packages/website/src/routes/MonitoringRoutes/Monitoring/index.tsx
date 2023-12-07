@@ -1,4 +1,5 @@
 import { Card, CardContent, makeStyles, Typography } from '@material-ui/core';
+import { colors } from 'layout/App/theme';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -37,7 +38,7 @@ const useStyles = makeStyles(() => ({
     height: '10rem',
     boxShadow: '10rem',
     '&:hover': {
-      backgroundColor: '#f5f5f5',
+      backgroundColor: colors.backgroundGray,
     },
   },
   title: {
