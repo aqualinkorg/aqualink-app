@@ -75,10 +75,12 @@ const MultipleSensorsCharts = ({
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
   const user = useSelector(userInfoSelector);
   const { bottomTemperature } = timeSeriesData || {};
-  const { hobo: hoboBottomTemperature } = bottomTemperature || {};
+  const hoboBottomTemperatureSensors = bottomTemperature?.filter(
+    (x) => x.type === 'hobo',
+  );
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
-  const { hobo: hoboBottomTemperatureRange } =
-    timeSeriesDataRanges?.bottomTemperature || {};
+  const hoboBottomTemperatureRange =
+    timeSeriesDataRanges?.bottomTemperature?.find((x) => x.type === 'hobo');
   const rangesLoading = useSelector(siteTimeSeriesDataRangeLoadingSelector);
   const [availableSources, setAvailableSources] = useState<Sources[]>([]);
   const [pickerEndDate, setPickerEndDate] = useState<string>();
@@ -117,9 +119,9 @@ const MultipleSensorsCharts = ({
 
   const tempAnalysisDatasets = generateTempAnalysisDatasets(
     granularDailyData,
-    timeSeriesData?.bottomTemperature?.spotter?.data,
-    timeSeriesData?.topTemperature?.spotter?.data,
-    hoboBottomTemperature?.data,
+    timeSeriesData?.bottomTemperature?.find((x) => x.type === 'spotter')?.data,
+    timeSeriesData?.topTemperature?.find((x) => x.type === 'spotter')?.data,
+    hoboBottomTemperatureSensors,
     site.historicalMonthlyMean,
     startDate,
     endDate,
@@ -142,12 +144,15 @@ const MultipleSensorsCharts = ({
       ? sortBy(getMetrics(), (key) => getConfig(key).order)
           .filter(
             (key) =>
-              timeSeriesData?.[camelCase(key) as Metrics]?.[source]?.data
-                ?.length,
+              timeSeriesData?.[camelCase(key) as Metrics]?.find(
+                (x) => x.type === source,
+              )?.data?.length,
           )
           .map((key) => {
             const { data, surveyPoint } =
-              timeSeriesData?.[camelCase(key) as Metrics]?.[source] || {};
+              timeSeriesData?.[camelCase(key) as Metrics]?.find(
+                (x) => x.type === source,
+              ) || {};
             const { title, units, convert } = getConfig(key);
 
             return {
@@ -425,12 +430,16 @@ const MultipleSensorsCharts = ({
   }, [pickerEndDate, pickerStartDate]);
 
   const dataForCsv = [
-    ...tempAnalysisDatasets.map((dataset) => ({
-      name: `${snakeCase(dataset.metric) || 'unknown_Metric'}_${
-        dataset.source || 'unknown_source'
-      }`,
-      values: dataset.data,
-    })),
+    ...tempAnalysisDatasets.map((dataset) => {
+      const source =
+        (dataset.source === 'hobo'
+          ? dataset.tooltipLabel?.split(' ').join('_').toLocaleLowerCase()
+          : dataset.source) || 'unknown_source';
+      return {
+        name: `${snakeCase(dataset.metric) || 'unknown_Metric'}_${source}`,
+        values: dataset.data,
+      };
+    }),
     ...spotterDatasets().map(({ title, dataset }) => ({
       name: snakeCase(`${title}_${dataset.label}`),
       values: dataset.data,
@@ -563,11 +572,15 @@ const MultipleSensorsCharts = ({
         availableRanges={[
           {
             name: 'Spotter',
-            data: timeSeriesDataRanges?.bottomTemperature?.spotter?.data,
+            data: timeSeriesDataRanges?.bottomTemperature?.find(
+              (x) => x.type === 'spotter',
+            )?.data,
           },
           {
             name: 'HOBO',
-            data: timeSeriesDataRanges?.bottomTemperature?.hobo?.data,
+            data: timeSeriesDataRanges?.bottomTemperature?.find(
+              (x) => x.type === 'hobo',
+            )?.data,
           },
         ]}
         timeZone={site.timezone}
@@ -605,9 +618,9 @@ const MultipleSensorsCharts = ({
             availableRanges={[
               {
                 name: rangeLabel,
-                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.[
-                  source
-                ]?.data,
+                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.find(
+                  (x) => x.type === source,
+                )?.data,
               },
             ]}
             timeZone={site.timezone}

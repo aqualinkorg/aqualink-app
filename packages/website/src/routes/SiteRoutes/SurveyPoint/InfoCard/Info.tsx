@@ -28,8 +28,9 @@ const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
     pointId,
   );
   const user = useSelector(userInfoSelector);
-  const { hobo: hoboBottomTemperature } =
-    useSelector(siteTimeSeriesDataSelector)?.bottomTemperature || {};
+  const hoboBottomTemperature = useSelector(
+    siteTimeSeriesDataSelector,
+  )?.bottomTemperature?.find((x) => x.type === 'hobo');
   const { name: pointName, polygon: pointPolygon } =
     site.surveyPoints.filter((point) => point.id === pointId)[0] || {};
   const { name: siteName, region: siteRegion } = getSiteNameAndRegion(site);

@@ -11,6 +11,13 @@ import SiteMetrics from '.';
 
 const mockStore = configureStore([]);
 
+jest.mock('@material-ui/pickers', () => ({
+  __esModule: true,
+  KeyboardDatePicker: 'mock-KeyboardDatePicker',
+  KeyboardDatePickerProps: 'mock-KeyboardDatePickerProps',
+  MuiPickersUtilsProvider: 'mock-MuiPickersUtilsProvider',
+}));
+
 describe('Monitoring SiteMetrics Page', () => {
   beforeAll(() => {
     advanceTo(new Date('2023-11-23T12:00:00'));
@@ -21,6 +28,15 @@ describe('Monitoring SiteMetrics Page', () => {
   });
 
   let element: HTMLElement;
+
+  beforeAll(() => {
+    advanceTo(new Date('2023-10-20T12:00:00'));
+  });
+
+  afterAll(() => {
+    clear();
+  });
+
   beforeEach(() => {
     const store = mockStore({
       user: {

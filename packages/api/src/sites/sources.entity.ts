@@ -13,7 +13,7 @@ import { SourceType } from './schemas/source-type.enum';
 @Entity()
 // Typeorm does not allow to add raw SQL on column declaration
 // So we will edit the query on the migration
-// CREATE UNIQUE INDEX "no_duplicate_sources" ON "sources" ("site_id", COALESCE("survey_point_id", 0), "type", COALESCE("sensor_id", 'SPOT-IMPOSSIBLE'))
+// CREATE UNIQUE INDEX "no_duplicate_sources" ON "sources" ("site_id", COALESCE("survey_point_id", 0), "type", COALESCE("sensor_id", 'SPOT-IMPOSSIBLE'), COALESCE("depth", 0))
 @Index('no_duplicate_sources', { synchronize: false })
 export class Sources {
   @ApiProperty({ example: 1 })

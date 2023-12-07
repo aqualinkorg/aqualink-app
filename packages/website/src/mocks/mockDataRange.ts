@@ -1,8 +1,10 @@
 import { TimeSeriesDataRange } from 'store/Sites/types';
 
 export const mockDataRange: TimeSeriesDataRange = {
-  bottomTemperature: {
-    hobo: {
+  bottomTemperature: [
+    {
+      type: 'hobo',
+      depth: null,
       data: [
         {
           minDate: '2017-11-02T15:00:00.000Z',
@@ -10,9 +12,11 @@ export const mockDataRange: TimeSeriesDataRange = {
         },
       ],
     },
-  },
-  cholorophyllConcentration: {
-    sonde: {
+  ],
+  cholorophyllConcentration: [
+    {
+      type: 'sonde',
+      depth: null,
       data: [
         {
           minDate: '2017-11-02T15:00:00.000Z',
@@ -20,9 +24,11 @@ export const mockDataRange: TimeSeriesDataRange = {
         },
       ],
     },
-  },
-  odoConcentration: {
-    sonde: {
+  ],
+  odoConcentration: [
+    {
+      type: 'sonde',
+      depth: null,
       data: [
         {
           minDate: '2017-11-02T15:00:00.000Z',
@@ -30,9 +36,11 @@ export const mockDataRange: TimeSeriesDataRange = {
         },
       ],
     },
-  },
-  ph: {
-    sonde: {
+  ],
+  ph: [
+    {
+      type: 'sonde',
+      depth: null,
       data: [
         {
           minDate: '2017-11-02T15:00:00.000Z',
@@ -40,9 +48,11 @@ export const mockDataRange: TimeSeriesDataRange = {
         },
       ],
     },
-  },
-  salinity: {
-    sonde: {
+  ],
+  salinity: [
+    {
+      type: 'sonde',
+      depth: null,
       data: [
         {
           minDate: '2017-11-02T15:00:00.000Z',
@@ -50,7 +60,9 @@ export const mockDataRange: TimeSeriesDataRange = {
         },
       ],
     },
-    hui: {
+    {
+      type: 'hui',
+      depth: null,
       data: [
         {
           minDate: '2022-06-11T00:00:00.000Z',
@@ -58,9 +70,11 @@ export const mockDataRange: TimeSeriesDataRange = {
         },
       ],
     },
-  },
-  turbidity: {
-    sonde: {
+  ],
+  turbidity: [
+    {
+      type: 'sonde',
+      depth: null,
       data: [
         {
           minDate: '2017-11-02T15:00:00.000Z',
@@ -68,5 +82,5 @@ export const mockDataRange: TimeSeriesDataRange = {
         },
       ],
     },
-  },
+  ],
 };

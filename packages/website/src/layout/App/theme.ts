@@ -23,6 +23,19 @@ const greenCardColor = '#37a692';
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
 
+export const randomColors = [
+  '#25CCF7',
+  '#FD7272',
+  '#54a0ff',
+  '#00d2d3',
+  '#1abc9c',
+  '#2ecc71',
+  '#3498db',
+  '#9b59b6',
+  '#34495e',
+  '#16a085',
+];
+
 export const colors = {
   skyBlue,
   lightBlue,

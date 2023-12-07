@@ -121,11 +121,13 @@ export const getSourceRanges = (
 ): DataRangeWithMetric[] => {
   const result = Object.entries(dataRanges).map(([metric, sources]) => {
     return (
-      sources[source]?.data.map((range) => ({
-        metric: snakeCase(metric) as MetricsKeys,
-        minDate: range.minDate,
-        maxDate: range.maxDate,
-      })) || []
+      sources
+        .find((x) => x.type === source)
+        ?.data.map((range) => ({
+          metric: snakeCase(metric) as MetricsKeys,
+          minDate: range.minDate,
+          maxDate: range.maxDate,
+        })) || []
     );
   });
 
