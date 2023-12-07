@@ -126,6 +126,11 @@ function getChartPeriod(siteInfo: ArrayElement<GetMonitoringMetricsResponse>) {
     (min, curr) => (min < curr.date ? min : curr.date),
     new Date().toISOString(),
   );
+
+  if (minDate === undefined || maxDate === undefined) {
+    return undefined;
+  }
+
   const milliseconds = +new Date(maxDate) - +new Date(minDate);
 
   const dataDuration = milliseconds / ONE_DAY;
