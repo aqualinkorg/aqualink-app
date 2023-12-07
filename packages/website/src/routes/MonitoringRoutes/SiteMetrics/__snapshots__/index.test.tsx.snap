@@ -169,7 +169,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
       <span
         class="MuiButton-label"
       >
-        get metrics
+        Get metrics
       </span>
       <span
         class="MuiTouchRipple-root"

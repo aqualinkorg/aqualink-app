@@ -66,7 +66,7 @@ function MonthlyReport() {
         onClick={() => onGetMetrics()}
         className={classes.button}
       >
-        get metrics
+        Get metrics
       </Button>
       <>
         <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>

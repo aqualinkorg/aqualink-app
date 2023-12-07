@@ -261,7 +261,7 @@ function SiteMetrics() {
         onClick={() => onGetMetrics()}
         className={classes.button}
       >
-        get metrics
+        Get metrics
       </Button>
       <div className={classes.resultsContainer}>
         {result?.[0] && (
