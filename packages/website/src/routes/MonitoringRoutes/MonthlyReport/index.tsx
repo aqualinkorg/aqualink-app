@@ -19,7 +19,42 @@ import monitoringServices, {
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import { useSnackbar } from 'notistack';
+import MonitoringTable, { BodyCell, HeadCell } from 'common/MonitoringTable';
 import { fetchData } from '../utils';
+
+interface TableData {
+  column1: string;
+  column2: string;
+  column3: string;
+}
+
+const data: TableData[] = [
+  { column1: 'Value11', column2: 'Value12', column3: 'Value13' },
+  { column1: 'Value21', column2: 'Value22', column3: 'Value23' },
+  { column1: 'Value31', column2: 'Value32', column3: 'Value33' },
+  { column1: 'Value41', column2: 'Value42', column3: 'Value43' },
+  { column1: 'Value51', column2: 'Value52', column3: 'Value53' },
+  { column1: 'Value61', column2: 'Value62', column3: 'Value63' },
+];
+
+const headCells: HeadCell<TableData>[] = [
+  { id: 'column1', label: 'Column 1', tooltipText: 'This is column 1' },
+  { id: 'column2', label: 'Column 2', tooltipText: 'This is column 2' },
+  { id: 'column3', label: 'Column 3', tooltipText: 'This is column 3' },
+];
+
+const bodyCells: BodyCell<TableData>[] = [
+  {
+    id: 'column1',
+    linkTo: 'google.com',
+  },
+  {
+    id: 'column2',
+  },
+  {
+    id: 'column3',
+  },
+];
 
 function MonthlyReport() {
   const user = useSelector(userInfoSelector);
@@ -69,6 +104,12 @@ function MonthlyReport() {
         Get metrics
       </Button>
       <>
+        <MonitoringTable
+          defaultSortColumn="column2"
+          headCells={headCells}
+          data={data}
+          bodyCells={bodyCells}
+        />
         <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
           <div className={classes.resultsContainer}>
             <TableContainer style={{ width: '80%' }}>
