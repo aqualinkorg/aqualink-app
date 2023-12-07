@@ -98,35 +98,49 @@ function MonthlyReport() {
                 </TableHead>
                 <TableBody>
                   {result !== null &&
-                    result.map((row) => (
-                      <TableRow key={row.siteId}>
-                        <TableCell
-                          className={classes.cell}
-                          component="th"
-                          scope="row"
-                        >
-                          {row.siteId}
-                        </TableCell>
-                        <TableCell className={classes.cell} align="right">
-                          {row.siteName}
-                        </TableCell>
-                        <TableCell className={classes.cell} align="right">
-                          {row.data[0]?.totalRequests || 0}
-                        </TableCell>
-                        <TableCell className={classes.cell} align="right">
-                          {row.data[0]?.registeredUserRequests || 0}
-                        </TableCell>
-                        <TableCell className={classes.cell} align="right">
-                          {row.data[0]?.siteAdminRequests || 0}
-                        </TableCell>
-                        <TableCell className={classes.cell} align="right">
-                          {row.data[0]?.timeSeriesRequests || 0}
-                        </TableCell>
-                        <TableCell className={classes.cell} align="right">
-                          {row.data[0]?.CSVDownloadRequests || 0}
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    result.map(
+                      ({
+                        data: [
+                          {
+                            CSVDownloadRequests = 0,
+                            registeredUserRequests = 0,
+                            siteAdminRequests = 0,
+                            timeSeriesRequests = 0,
+                            totalRequests = 0,
+                          } = {},
+                        ] = [],
+                        siteId,
+                        siteName,
+                      }) => (
+                        <TableRow key={siteId}>
+                          <TableCell
+                            className={classes.cell}
+                            component="th"
+                            scope="row"
+                          >
+                            {siteId}
+                          </TableCell>
+                          <TableCell className={classes.cell} align="right">
+                            {siteName}
+                          </TableCell>
+                          <TableCell className={classes.cell} align="right">
+                            {totalRequests}
+                          </TableCell>
+                          <TableCell className={classes.cell} align="right">
+                            {registeredUserRequests}
+                          </TableCell>
+                          <TableCell className={classes.cell} align="right">
+                            {siteAdminRequests}
+                          </TableCell>
+                          <TableCell className={classes.cell} align="right">
+                            {timeSeriesRequests}
+                          </TableCell>
+                          <TableCell className={classes.cell} align="right">
+                            {CSVDownloadRequests}
+                          </TableCell>
+                        </TableRow>
+                      ),
+                    )}
                 </TableBody>
               </Table>
             </TableContainer>
