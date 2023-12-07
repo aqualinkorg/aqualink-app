@@ -27,6 +27,7 @@ import { ValueWithTimestamp } from 'store/Sites/types';
 import OneColorSwitch from 'common/OneColorSwitch';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from 'react-router-dom';
+import { fetchData } from '../utils';
 
 function transformToDatasets(
   siteInfo: ArrayElement<GetMonitoringMetricsResponse>,
@@ -149,39 +150,28 @@ function SiteMetrics() {
   const [endDate, setEndDate] = React.useState<Date | null>(
     DateTime.now().toJSDate(),
   );
-  const [result, setResult] = React.useState<GetMonitoringMetricsResponse>([]);
+  const [result, setResult] =
+    React.useState<GetMonitoringMetricsResponse | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  async function search() {
-    const { token } = user || {};
-    if (!token) {
-      enqueueSnackbar('User is not authenticated!', {
-        variant: 'error',
-      });
-      return;
-    }
-
-    setResult([]);
-
-    setLoading(true);
-    try {
-      const { data } = await monitoringServices.getMonitoringStats({
-        token,
-        ...(siteId && { siteIds: [siteId] }),
-        ...(spotterId && { spotterId }),
-        monthly,
-        start: startDate?.toISOString(),
-        end: endDate?.toISOString(),
-      });
-
-      setResult(data);
-    } catch (error: any) {
-      enqueueSnackbar(error?.response?.data?.message || 'Request failed', {
-        variant: 'error',
-      });
-    } finally {
-      setLoading(false);
-    }
+  function onGetMetrics() {
+    fetchData({
+      user,
+      enqueueSnackbar,
+      setLoading,
+      setResult,
+      getResult: async (token) =>
+        (
+          await monitoringServices.getMonitoringStats({
+            token,
+            ...(siteId && { siteIds: [siteId] }),
+            ...(spotterId && { spotterId }),
+            monthly,
+            start: startDate?.toISOString(),
+            end: endDate?.toISOString(),
+          })
+        ).data,
+    });
   }
 
   return (
@@ -268,7 +258,7 @@ function SiteMetrics() {
       <Button
         color="primary"
         variant="outlined"
-        onClick={() => search()}
+        onClick={() => onGetMetrics()}
         className={classes.button}
       >
         get metrics

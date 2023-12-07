@@ -19,40 +19,30 @@ import monitoringServices, {
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import { useSnackbar } from 'notistack';
+import { fetchData } from '../utils';
 
 function MonthlyReport() {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [result, setResult] = React.useState<GetMonitoringMetricsResponse>([]);
+  const [result, setResult] =
+    React.useState<GetMonitoringMetricsResponse | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  async function search() {
-    const { token } = user || {};
-    if (!token) {
-      enqueueSnackbar('User is not authenticated!', {
-        variant: 'error',
-      });
-      return;
-    }
-
-    setResult([]);
-
-    setLoading(true);
-    try {
-      const { data } = await monitoringServices.getMonitoringLastMonth({
-        token,
-      });
-
-      setResult(data);
-    } catch (error: any) {
-      enqueueSnackbar(error?.response?.data?.message || 'Request failed', {
-        variant: 'error',
-      });
-    } finally {
-      setLoading(false);
-    }
+  function onGetMetrics() {
+    fetchData({
+      user,
+      enqueueSnackbar,
+      setLoading,
+      setResult,
+      getResult: async (token) =>
+        (
+          await monitoringServices.getMonitoringLastMonth({
+            token,
+          })
+        ).data,
+    });
   }
 
   return (
@@ -73,7 +63,7 @@ function MonthlyReport() {
       <Button
         color="primary"
         variant="outlined"
-        onClick={() => search()}
+        onClick={() => onGetMetrics()}
         className={classes.button}
       >
         get metrics
@@ -107,35 +97,36 @@ function MonthlyReport() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {result.map((row) => (
-                    <TableRow key={row.siteId}>
-                      <TableCell
-                        className={classes.cell}
-                        component="th"
-                        scope="row"
-                      >
-                        {row.siteId}
-                      </TableCell>
-                      <TableCell className={classes.cell} align="right">
-                        {row.siteName}
-                      </TableCell>
-                      <TableCell className={classes.cell} align="right">
-                        {row.data[0]?.totalRequests || 0}
-                      </TableCell>
-                      <TableCell className={classes.cell} align="right">
-                        {row.data[0]?.registeredUserRequests || 0}
-                      </TableCell>
-                      <TableCell className={classes.cell} align="right">
-                        {row.data[0]?.siteAdminRequests || 0}
-                      </TableCell>
-                      <TableCell className={classes.cell} align="right">
-                        {row.data[0]?.timeSeriesRequests || 0}
-                      </TableCell>
-                      <TableCell className={classes.cell} align="right">
-                        {row.data[0]?.CSVDownloadRequests || 0}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {result !== null &&
+                    result.map((row) => (
+                      <TableRow key={row.siteId}>
+                        <TableCell
+                          className={classes.cell}
+                          component="th"
+                          scope="row"
+                        >
+                          {row.siteId}
+                        </TableCell>
+                        <TableCell className={classes.cell} align="right">
+                          {row.siteName}
+                        </TableCell>
+                        <TableCell className={classes.cell} align="right">
+                          {row.data[0]?.totalRequests || 0}
+                        </TableCell>
+                        <TableCell className={classes.cell} align="right">
+                          {row.data[0]?.registeredUserRequests || 0}
+                        </TableCell>
+                        <TableCell className={classes.cell} align="right">
+                          {row.data[0]?.siteAdminRequests || 0}
+                        </TableCell>
+                        <TableCell className={classes.cell} align="right">
+                          {row.data[0]?.timeSeriesRequests || 0}
+                        </TableCell>
+                        <TableCell className={classes.cell} align="right">
+                          {row.data[0]?.CSVDownloadRequests || 0}
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>
