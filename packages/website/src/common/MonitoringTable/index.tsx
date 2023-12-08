@@ -181,7 +181,7 @@ function MonitoringTable<
                           <Link
                             href={bodyCell.linkTo(row)}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noreferrer noopener"
                           >
                             {formatted}
                           </Link>
