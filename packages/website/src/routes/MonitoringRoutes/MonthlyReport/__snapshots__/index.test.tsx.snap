@@ -6,7 +6,7 @@ exports[`Monitoring MonthlyReport Page should render with given state from Redux
     <div
       aria-hidden="true"
       class="MuiBackdrop-root"
-      style="opacity: 0; visibility: hidden;"
+      style="opacity: 0; visibility: hidden; z-index: 42;"
     >
       <mock-circularprogress
         color="inherit"
@@ -59,65 +59,8 @@ exports[`Monitoring MonthlyReport Page should render with given state from Redux
       />
     </button>
     <div
-      style="height: 100%; display: flex; flex-direction: row;"
-    >
-      <div
-        class="makeStyles-resultsContainer-2"
-      >
-        <mock-tablecontainer
-          style="width: 80%;"
-        >
-          <mock-table>
-            <mock-tablehead>
-              <mock-tablerow>
-                <mock-tablecell
-                  classname="makeStyles-headCell-3"
-                >
-                  Site ID
-                </mock-tablecell>
-                <mock-tablecell
-                  align="right"
-                  classname="makeStyles-headCell-3"
-                >
-                  Site Name
-                </mock-tablecell>
-                <mock-tablecell
-                  align="right"
-                  classname="makeStyles-headCell-3"
-                >
-                  Total Requests
-                </mock-tablecell>
-                <mock-tablecell
-                  align="right"
-                  classname="makeStyles-headCell-3"
-                >
-                  Registered Users Requests
-                </mock-tablecell>
-                <mock-tablecell
-                  align="right"
-                  classname="makeStyles-headCell-3"
-                >
-                  Site Admin Requests
-                </mock-tablecell>
-                <mock-tablecell
-                  align="right"
-                  classname="makeStyles-headCell-3"
-                >
-                  Site Visits
-                </mock-tablecell>
-                <mock-tablecell
-                  align="right"
-                  classname="makeStyles-headCell-3"
-                >
-                  CSV Downloads
-                </mock-tablecell>
-              </mock-tablerow>
-            </mock-tablehead>
-            <mock-tablebody />
-          </mock-table>
-        </mock-tablecontainer>
-      </div>
-    </div>
+      class="makeStyles-resultsContainer-2"
+    />
   </div>
 </div>
 `;

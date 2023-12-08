@@ -6,7 +6,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
     <div
       aria-hidden="true"
       class="MuiBackdrop-root"
-      style="opacity: 0; visibility: hidden;"
+      style="opacity: 0; visibility: hidden; z-index: 42;"
     >
       <mock-circularprogress
         color="inherit"

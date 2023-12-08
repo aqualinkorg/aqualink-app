@@ -210,6 +210,34 @@ const theme: Theme = createTheme({
         },
       },
     },
+    MuiTableCell: {
+      root: {
+        color: black,
+      },
+      head: {
+        color: black,
+      },
+      body: {
+        color: black,
+      },
+    },
+    MuiTableSortLabel: {
+      root: {
+        color: black,
+      },
+      active: {
+        color: `${black} !important`,
+      },
+    },
+    MuiTablePagination: {
+      root: {
+        color: black,
+        backgroundColor: backgroundGray,
+      },
+      menuItem: {
+        color: black,
+      },
+    },
   },
 });
 

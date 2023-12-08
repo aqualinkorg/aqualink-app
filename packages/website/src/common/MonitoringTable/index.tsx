@@ -14,6 +14,7 @@ import {
   TableSortLabel,
   Tooltip,
 } from '@material-ui/core';
+import { colors } from 'layout/App/theme';
 import React from 'react';
 
 type Order = 'asc' | 'desc';
@@ -30,7 +31,7 @@ export interface HeadCell<T> {
 export interface BodyCell<T> {
   id: keyof T;
   align?: 'left' | 'right' | 'inherit' | 'center' | 'justify';
-  linkTo?: string;
+  linkTo?: (row: T) => string;
 }
 
 interface MonitoringTableProps<T> {
@@ -39,6 +40,7 @@ interface MonitoringTableProps<T> {
   headCells: HeadCell<T>[];
   data: T[];
   bodyCells: BodyCell<T>[];
+  showPagination?: boolean;
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -89,6 +91,7 @@ function MonitoringTable<
   headCells,
   data,
   bodyCells,
+  showPagination = false,
 }: MonitoringTableProps<T>) {
   const classes = useStyles();
 
@@ -123,11 +126,15 @@ function MonitoringTable<
       <TableContainer>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow style={{ backgroundColor: colors.backgroundGray }}>
               {headCells.map((cell) => (
                 <TableCell
                   key={cell.id as React.Key}
-                  style={{ width: cell.width, whiteSpace: 'nowrap' }}
+                  style={{
+                    width: cell.width,
+                    whiteSpace: 'nowrap',
+                    fontWeight: 'bold',
+                  }}
                   align={cell.align}
                   padding={cell.padding}
                   sortDirection={orderBy === cell.id ? order : false}
@@ -159,12 +166,15 @@ function MonitoringTable<
             )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow hover>
+                <TableRow hover key={JSON.stringify(row)}>
                   {bodyCells.map((bodyCell) => (
-                    <TableCell align={bodyCell.align}>
+                    <TableCell
+                      key={bodyCell.id as React.Key}
+                      align={bodyCell.align}
+                    >
                       {bodyCell.linkTo ? (
                         <Link
-                          href={bodyCell.linkTo}
+                          href={bodyCell.linkTo(row)}
                           target="_blank"
                           rel="noreferrer"
                         >
@@ -180,15 +190,17 @@ function MonitoringTable<
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        onPageChange={handleChangePage}
-        rowsPerPageOptions={rowsPerPageOptions}
-        count={data.length}
-        page={page}
-        rowsPerPage={rowsPerPage}
-      />
+      {showPagination && (
+        <TablePagination
+          component="div"
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          rowsPerPageOptions={rowsPerPageOptions}
+          count={data.length}
+          page={page}
+          rowsPerPage={rowsPerPage}
+        />
+      )}
     </Paper>
   );
 }
