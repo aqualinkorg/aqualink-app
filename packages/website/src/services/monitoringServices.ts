@@ -1,6 +1,10 @@
 import requests from 'helpers/requests';
 import { MonitoringMetric } from 'utils/types';
 
+interface BasicProps {
+  token: string;
+}
+
 interface PostMonitoringMetricRequestProps {
   token?: string;
   metric: MonitoringMetric;
@@ -20,14 +24,13 @@ const postMonitoringMetric = ({
     token,
   });
 
-interface GetMonitoringMetricsRequestProps {
-  token: string;
+type GetMonitoringMetricsRequestProps = BasicProps & {
   spotterId?: string;
   siteIds?: string[];
   monthly?: boolean;
   start?: string;
   end?: string;
-}
+};
 
 export interface MonitoringData {
   date: string;
@@ -54,9 +57,7 @@ const getMonitoringStats = ({
     token,
   });
 
-interface GetMonitoringLastMonthProps {
-  token: string;
-}
+type GetMonitoringLastMonthProps = BasicProps;
 
 const getMonitoringLastMonth = ({ token }: GetMonitoringLastMonthProps) =>
   requests.send<GetMonitoringMetricsResponse>({
@@ -65,8 +66,29 @@ const getMonitoringLastMonth = ({ token }: GetMonitoringLastMonthProps) =>
     token,
   });
 
+type GetSurveysReportProps = BasicProps;
+
+export type GetSurveysReportResponse = {
+  diveDate: string;
+  siteId: number;
+  siteName: string;
+  surveyId: number;
+  surveyMediaNum: number;
+  updatedAt: string;
+  userEmail: string;
+  userFullName: string;
+}[];
+
+const getSurveysReport = ({ token }: GetSurveysReportProps) =>
+  requests.send<GetSurveysReportResponse>({
+    method: 'GET',
+    url: 'monitoring/surveys-report',
+    token,
+  });
+
 export default {
   postMonitoringMetric,
   getMonitoringStats,
   getMonitoringLastMonth,
+  getSurveysReport,
 };

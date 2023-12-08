@@ -47,4 +47,11 @@ export class MonitoringController {
   getMonitoringLastMonth() {
     return this.monitoringService.getMonitoringLastMonth();
   }
+
+  @Get('surveys-report')
+  @ApiOperation({ summary: 'Get surveys report' })
+  @Auth(AdminLevel.SuperAdmin)
+  getSurveysReport() {
+    return this.monitoringService.surveysReport();
+  }
 }
