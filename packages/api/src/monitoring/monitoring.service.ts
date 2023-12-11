@@ -218,7 +218,6 @@ export class MonitoringService {
       .addSelect('survey.id', 'surveyId')
       .addSelect('survey.dive_date', 'diveDate')
       .addSelect('survey.updated_at', 'updatedAt')
-      .addSelect('s.id', 'siteId')
       .addSelect('s.name', 'siteName')
       .addSelect('u.email', 'userEmail')
       .addSelect('u.full_name', 'userFullName')

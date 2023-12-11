@@ -85,5 +85,14 @@ export const monitoringTests = () => {
 
     expect(rsp.status).toBe(200);
     expect(rsp.body.length).toBe(2);
+
+    expect(rsp.body[0].siteId).toBeDefined();
+    expect(rsp.body[0].surveyId).toBeDefined();
+    expect(rsp.body[0].diveDate).toBeDefined();
+    expect(rsp.body[0].updatedAt).toBeDefined();
+    expect(rsp.body[0].siteName).toBeDefined();
+    expect(rsp.body[0].userEmail).toBeDefined();
+    expect(rsp.body[0].userFullName).toBeDefined();
+    expect(rsp.body[0].surveyMediaNum).toBeDefined();
   });
 };
