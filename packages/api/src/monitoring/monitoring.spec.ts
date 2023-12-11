@@ -76,4 +76,14 @@ export const monitoringTests = () => {
     expect(rsp.body[0].data[0].totalRequests).toBe(2);
     expect(rsp.body[0].data[0].registeredUserRequests).toBe(1);
   });
+
+  it('GET /surveys-report get surveys report', async () => {
+    mockExtractAndVerifyToken(adminFirebaseUserMock);
+    const rsp = await request(app.getHttpServer())
+      .get('/monitoring/surveys-report')
+      .send();
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.length).toBe(2);
+  });
 };
