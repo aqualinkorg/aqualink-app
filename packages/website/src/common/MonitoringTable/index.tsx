@@ -66,6 +66,7 @@ function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+// Sorts an array without mutating it. Uses a list of comparators to achieve multi-column sorting.
 function stableSort<T>(array: T[], ...comparators: ((a: T, b: T) => number)[]) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   // eslint-disable-next-line fp/no-mutating-methods
@@ -165,7 +166,10 @@ function MonitoringTable<
               ? stableSort<T>(data, getComparator(order, orderBy))
               : data
             )
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .slice(
+                showPagination ? page * rowsPerPage : undefined,
+                showPagination ? page * rowsPerPage + rowsPerPage : undefined,
+              )
               .map((row) => (
                 <TableRow hover key={JSON.stringify(row)}>
                   {bodyCells.map((bodyCell) => {
