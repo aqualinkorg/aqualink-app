@@ -1,4 +1,5 @@
 import requests from 'helpers/requests';
+import { Status } from 'store/Sites/types';
 import { MonitoringMetric } from 'utils/types';
 
 interface BasicProps {
@@ -86,9 +87,47 @@ const getSurveysReport = ({ token }: GetSurveysReportProps) =>
     token,
   });
 
+type GetApplicationOverviewProps = BasicProps &
+  Partial<{
+    siteId: number;
+    siteName: string;
+    spotterId: string;
+    adminEmail: string;
+    adminUsername: string;
+    organization: string;
+    status: Status;
+  }>;
+
+export type GetApplicationOverviewResponse = {
+  siteId: number;
+  siteName: string;
+  depth: number;
+  status: Status;
+  organizations: string[];
+  adminNames: string[];
+  adminEmails: string[];
+  spotterId: string;
+  videoSteam: string;
+  updatedAt: string;
+  lastDateReceived: string | null;
+}[];
+
+const getApplicationOverview = ({
+  token,
+  ...rest
+}: GetApplicationOverviewProps) =>
+  requests.send<GetApplicationOverviewResponse>({
+    method: 'GET',
+    url: `monitoring/application-overview${requests.generateUrlQueryParams(
+      rest,
+    )}`,
+    token,
+  });
+
 export default {
   postMonitoringMetric,
   getMonitoringStats,
   getMonitoringLastMonth,
   getSurveysReport,
+  getApplicationOverview,
 };

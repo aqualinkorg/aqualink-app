@@ -5,6 +5,7 @@ import SiteMetrics from './SiteMetrics';
 import MonthlyReport from './MonthlyReport';
 import Monitoring from './Monitoring';
 import SurveysReport from './SurveysReport';
+import ApplicationOverview from './ApplicationOverview';
 
 function MonitoringRoutes() {
   return (
@@ -22,6 +23,11 @@ function MonitoringRoutes() {
           exact
           path="/monitoring/surveys-report"
           component={SurveysReport}
+        />
+        <Route
+          exact
+          path="/monitoring/application-overview"
+          component={ApplicationOverview}
         />
       </Switch>
     </>

@@ -54,4 +54,15 @@ export class MonitoringController {
   getSurveysReport() {
     return this.monitoringService.surveysReport();
   }
+
+  @Get('application-overview')
+  @ApiOperation({ summary: 'Get Aqualink overview' })
+  @Auth(AdminLevel.SuperAdmin)
+  getApplicationOverview(
+    @Query() getApplicationOverviewDto: GetMonitoringStatsDto,
+  ) {
+    return this.monitoringService.applicationOverview(
+      getApplicationOverviewDto,
+    );
+  }
 }

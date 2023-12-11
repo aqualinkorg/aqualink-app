@@ -46,7 +46,7 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'CSVDownloadRequests' },
 ];
 
-async function getResult(token: string) {
+async function getResult(token: string): Promise<TableData[]> {
   const { data } = await monitoringServices.getMonitoringLastMonth({
     token,
   });
