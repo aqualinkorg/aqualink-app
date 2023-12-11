@@ -1,25 +1,83 @@
-import {
-  Backdrop,
-  Button,
-  CircularProgress,
-  makeStyles,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import monitoringServices, {
   GetMonitoringMetricsResponse,
+  MonitoringData,
 } from 'services/monitoringServices';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import { useSnackbar } from 'notistack';
+import MonitoringTable, { BodyCell, HeadCell } from 'common/MonitoringTable';
+import LoadingBackdrop from 'common/LoadingBackdrop';
+import { ArrayElement } from 'utils/types';
 import { fetchData } from '../utils';
+
+type TableData = Omit<ArrayElement<GetMonitoringMetricsResponse>, 'data'> &
+  Omit<MonitoringData, 'date'>;
+
+const headCells: HeadCell<TableData>[] = [
+  { id: 'siteId', label: 'Site ID', tooltipText: '' },
+  { id: 'siteName', label: 'Site Name', tooltipText: '' },
+  { id: 'totalRequests', label: 'Total Requests', tooltipText: '' },
+  {
+    id: 'registeredUserRequests',
+    label: 'Registered Users Requests',
+    tooltipText: '',
+  },
+  {
+    id: 'siteAdminRequests',
+    label: 'Site Admin Requests',
+    tooltipText: '',
+  },
+  {
+    id: 'timeSeriesRequests',
+    label: 'Site Visits',
+    tooltipText: '',
+  },
+  {
+    id: 'CSVDownloadRequests',
+    label: 'CSV Downloads',
+    tooltipText: '',
+  },
+];
+
+const bodyCells: BodyCell<TableData>[] = [
+  { id: 'siteId', linkTo: (row) => `/sites/${row.siteId}` },
+  { id: 'siteName' },
+  { id: 'totalRequests' },
+  { id: 'registeredUserRequests' },
+  { id: 'siteAdminRequests' },
+  { id: 'timeSeriesRequests' },
+  { id: 'CSVDownloadRequests' },
+];
+
+function transformData(data: GetMonitoringMetricsResponse): TableData[] {
+  return data.map(
+    ({
+      data: [
+        {
+          CSVDownloadRequests = 0,
+          registeredUserRequests = 0,
+          siteAdminRequests = 0,
+          timeSeriesRequests = 0,
+          totalRequests = 0,
+        } = {},
+      ] = [],
+      siteId,
+      siteName,
+    }) => ({
+      siteId,
+      siteName,
+      CSVDownloadRequests,
+      registeredUserRequests,
+      siteAdminRequests,
+      timeSeriesRequests,
+      totalRequests,
+    }),
+  );
+}
 
 function MonthlyReport() {
   const user = useSelector(userInfoSelector);
@@ -47,9 +105,7 @@ function MonthlyReport() {
 
   return (
     <div>
-      <Backdrop open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop loading={loading} />
       <Link to="/monitoring">
         <Button
           variant="outlined"
@@ -68,85 +124,15 @@ function MonthlyReport() {
       >
         Get metrics
       </Button>
-      <>
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
-          <div className={classes.resultsContainer}>
-            <TableContainer style={{ width: '80%' }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.headCell}>Site ID</TableCell>
-                    <TableCell className={classes.headCell} align="right">
-                      Site Name
-                    </TableCell>
-                    <TableCell className={classes.headCell} align="right">
-                      Total Requests
-                    </TableCell>
-                    <TableCell className={classes.headCell} align="right">
-                      Registered Users Requests
-                    </TableCell>
-                    <TableCell className={classes.headCell} align="right">
-                      Site Admin Requests
-                    </TableCell>
-                    <TableCell className={classes.headCell} align="right">
-                      Site Visits
-                    </TableCell>
-                    <TableCell className={classes.headCell} align="right">
-                      CSV Downloads
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {result !== null &&
-                    result.map(
-                      ({
-                        data: [
-                          {
-                            CSVDownloadRequests = 0,
-                            registeredUserRequests = 0,
-                            siteAdminRequests = 0,
-                            timeSeriesRequests = 0,
-                            totalRequests = 0,
-                          } = {},
-                        ] = [],
-                        siteId,
-                        siteName,
-                      }) => (
-                        <TableRow key={siteId}>
-                          <TableCell
-                            className={classes.cell}
-                            component="th"
-                            scope="row"
-                          >
-                            {siteId}
-                          </TableCell>
-                          <TableCell className={classes.cell} align="right">
-                            {siteName}
-                          </TableCell>
-                          <TableCell className={classes.cell} align="right">
-                            {totalRequests}
-                          </TableCell>
-                          <TableCell className={classes.cell} align="right">
-                            {registeredUserRequests}
-                          </TableCell>
-                          <TableCell className={classes.cell} align="right">
-                            {siteAdminRequests}
-                          </TableCell>
-                          <TableCell className={classes.cell} align="right">
-                            {timeSeriesRequests}
-                          </TableCell>
-                          <TableCell className={classes.cell} align="right">
-                            {CSVDownloadRequests}
-                          </TableCell>
-                        </TableRow>
-                      ),
-                    )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </div>
-      </>
+      <div className={classes.resultsContainer}>
+        {result && (
+          <MonitoringTable
+            headCells={headCells}
+            data={transformData(result)}
+            bodyCells={bodyCells}
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -156,17 +142,7 @@ const useStyles = makeStyles(() => ({
     margin: '1rem',
   },
   resultsContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '8rem',
-    width: '100%',
-  },
-  headCell: {
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  cell: {
-    color: 'black',
+    margin: '2rem',
   },
 }));
 

@@ -1,11 +1,4 @@
-import {
-  Backdrop,
-  Button,
-  CircularProgress,
-  Grid,
-  makeStyles,
-  TextField,
-} from '@material-ui/core';
+import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -27,6 +20,7 @@ import { ValueWithTimestamp } from 'store/Sites/types';
 import OneColorSwitch from 'common/OneColorSwitch';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from 'react-router-dom';
+import LoadingBackdrop from 'common/LoadingBackdrop';
 import { fetchData } from '../utils';
 
 function transformToDatasets(
@@ -182,9 +176,7 @@ function SiteMetrics() {
 
   return (
     <div>
-      <Backdrop open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop loading={loading} />
       <Link to="/monitoring">
         <Button
           variant="outlined"

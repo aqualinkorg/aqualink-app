@@ -152,7 +152,7 @@ export class MonitoringService {
 
     if (!siteIds?.length && !spotterId) {
       throw new BadRequestException(
-        'Invalid parameters: One siteIds or spotterId must be provided',
+        'Invalid parameters: One of siteIds or spotterId must be provided',
       );
     }
 

@@ -1,10 +1,4 @@
-import {
-  Backdrop,
-  Button,
-  CircularProgress,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Button, TextField, Typography } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import Footer from 'common/Footer';
 import NavBar from 'common/NavBar';
@@ -14,6 +8,7 @@ import { userInfoSelector } from 'store/User/userSlice';
 import requests from 'helpers/requests';
 import siteServices from 'services/siteServices';
 import { useSnackbar } from 'notistack';
+import LoadingBackdrop from 'common/LoadingBackdrop';
 
 type SearchMethod = 'siteId' | 'spotterId';
 
@@ -75,9 +70,7 @@ function SpotterInfo() {
 
   return (
     <>
-      <Backdrop open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingBackdrop loading={loading} />
       <NavBar searchLocation={false} />
       <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
         <div
