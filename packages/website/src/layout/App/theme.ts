@@ -19,6 +19,7 @@ const white = '#ffffff';
 const lightGray = '#939393';
 const specialSensorColor = '#f78c21';
 const greenCardColor = '#37a692';
+const backgroundGray = '#f5f5f5';
 
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
@@ -44,6 +45,7 @@ export const colors = {
   black,
   specialSensorColor,
   greenCardColor,
+  backgroundGray,
 };
 
 export const mapIconSize = '2rem';
@@ -180,7 +182,7 @@ const theme: Theme = createTheme({
       root: {
         height: '100%',
         '& $disabled': {
-          backgroundColor: '#f5f5f5',
+          backgroundColor: backgroundGray,
         },
       },
     },
@@ -206,6 +208,34 @@ const theme: Theme = createTheme({
         '&$focused': {
           borderColor: lightBlue,
         },
+      },
+    },
+    MuiTableCell: {
+      root: {
+        color: black,
+      },
+      head: {
+        color: black,
+      },
+      body: {
+        color: black,
+      },
+    },
+    MuiTableSortLabel: {
+      root: {
+        color: black,
+      },
+      active: {
+        color: `${black} !important`,
+      },
+    },
+    MuiTablePagination: {
+      root: {
+        color: black,
+        backgroundColor: backgroundGray,
+      },
+      menuItem: {
+        color: black,
       },
     },
   },

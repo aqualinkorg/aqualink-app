@@ -7,7 +7,7 @@ import { mockUser } from 'mocks/mockUser';
 import { SnackbarProvider } from 'notistack';
 import { mockCollection } from 'mocks/mockCollection';
 import { advanceTo, clear } from 'jest-date-mock';
-import MonitoringPage from '.';
+import SiteMetrics from '.';
 
 const mockStore = configureStore([]);
 
@@ -18,7 +18,7 @@ jest.mock('@material-ui/pickers', () => ({
   MuiPickersUtilsProvider: 'mock-MuiPickersUtilsProvider',
 }));
 
-describe('Landing Page', () => {
+describe('Monitoring SiteMetrics Page', () => {
   beforeAll(() => {
     advanceTo(new Date('2023-11-23T12:00:00'));
   });
@@ -57,7 +57,7 @@ describe('Landing Page', () => {
       <SnackbarProvider>
         <ReduxProvider store={store}>
           <BrowserRouter>
-            <MonitoringPage />
+            <SiteMetrics />
           </BrowserRouter>
         </ReduxProvider>
       </SnackbarProvider>,
