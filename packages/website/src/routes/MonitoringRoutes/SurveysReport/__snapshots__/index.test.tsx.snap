@@ -58,6 +58,12 @@ exports[`Monitoring SurveysReport Page should render with given state from Redux
         class="MuiTouchRipple-root"
       />
     </button>
+    <mock-typography
+      classname="makeStyles-pageTitle-3"
+      variant="h3"
+    >
+      Surveys Report
+    </mock-typography>
     <div
       class="makeStyles-resultsContainer-2"
     />

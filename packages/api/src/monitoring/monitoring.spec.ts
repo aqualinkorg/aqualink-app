@@ -93,6 +93,6 @@ export const monitoringTests = () => {
     expect(rsp.body[0].siteName).toBeDefined();
     expect(rsp.body[0].userEmail).toBeDefined();
     expect(rsp.body[0].userFullName).toBeDefined();
-    expect(rsp.body[0].surveyMediaNum).toBeDefined();
+    expect(rsp.body[0].surveyMediaCount).toBeDefined();
   });
 };

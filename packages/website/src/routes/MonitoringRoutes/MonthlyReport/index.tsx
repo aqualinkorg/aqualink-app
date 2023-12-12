@@ -79,6 +79,7 @@ async function getResult(token: string): Promise<TableData[]> {
 function MonthlyReport() {
   return (
     <MonitoringTableWrapper
+      pageTitle="Monthly Report"
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}
