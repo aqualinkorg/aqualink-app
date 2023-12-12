@@ -12,7 +12,7 @@ import { getSelf } from 'store/User/userSlice';
 import { useGATagManager } from 'utils/google-analytics';
 import Uploads from 'routes/Uploads';
 import SpotterInfo from 'routes/SpotterInfo';
-import Monitoring from 'routes/monitoring';
+import MonitoringRoutes from 'routes/MonitoringRoutes';
 import NotFound from '../../routes/NotFound';
 import ErrorBoundary from './ErrorBoundary';
 import LandingPage from '../../routes/Landing';
@@ -81,7 +81,7 @@ function App() {
                   component={Dashboard}
                 />
                 <Route exact path="/spotter-info" component={SpotterInfo} />
-                <Route exact path="/monitoring" component={Monitoring} />
+                <Route path="/monitoring" component={MonitoringRoutes} />
                 <Route path="*" component={NotFound} />
               </Switch>
             )}

@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Monitoring SiteMetrics Page should render with given state from Redux store 1`] = `
+<div>
+  <div>
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root"
+      style="opacity: 0; visibility: hidden; z-index: 42;"
+    >
+      <mock-circularprogress
+        color="inherit"
+      />
+    </div>
+    <a
+      href="/monitoring"
+    >
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-4 MuiButton-outlinedPrimary"
+        tabindex="0"
+        type="button"
+      >
+        <span
+          class="MuiButton-label"
+        >
+          <span
+            class="MuiButton-startIcon MuiButton-iconSizeMedium"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+          </span>
+          Go back
+        </span>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </button>
+    </a>
+    <div
+      class="makeStyles-filtersWrapper-5"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-7"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Site ID
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-10"
+            >
+              <span>
+                Site ID
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-7"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Spotter ID
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-10"
+            >
+              <span>
+                Spotter ID
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <mock-muipickersutilsprovider>
+        <mock-keyboarddatepicker
+          autook="true"
+          classname="makeStyles-filterItem-7"
+          disabletoolbar="true"
+          format="MM/dd/yyyy"
+          inputvariant="outlined"
+          label="start date"
+          showtodaybutton="true"
+          size="small"
+          value="Thu Jul 20 2023 12:00:00 GMT+0000 (Coordinated Universal Time)"
+        />
+      </mock-muipickersutilsprovider>
+      <mock-muipickersutilsprovider>
+        <mock-keyboarddatepicker
+          autook="true"
+          classname="makeStyles-filterItem-7"
+          disabletoolbar="true"
+          format="MM/dd/yyyy"
+          inputvariant="outlined"
+          label="end date"
+          showtodaybutton="true"
+          size="small"
+          value="Fri Oct 20 2023 12:00:00 GMT+0000 (Coordinated Universal Time)"
+        />
+      </mock-muipickersutilsprovider>
+      <div
+        class="MuiGrid-root makeStyles-switchContainer-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          weekly
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <mock-switch
+            checked="false"
+            classes="[object Object]"
+            name="checkedC"
+          />
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          monthly
+        </div>
+      </div>
+    </div>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-4 MuiButton-outlinedPrimary"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Get metrics
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <div
+      class="makeStyles-resultsContainer-2"
+    />
+  </div>
+</div>
+`;
