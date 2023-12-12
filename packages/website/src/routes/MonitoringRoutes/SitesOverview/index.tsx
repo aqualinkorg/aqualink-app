@@ -2,6 +2,7 @@ import React from 'react';
 import monitoringServices from 'services/monitoringServices';
 import { BodyCell, HeadCell } from 'common/MonitoringTable';
 import { Status } from 'store/Sites/types';
+import { makeStyles, TextField } from '@material-ui/core';
 import MonitoringTableWrapper from '../MonitoringTableWrapper';
 
 type TableData = {
@@ -49,26 +50,89 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'surveysCount' },
 ];
 
-async function getResult(token: string): Promise<TableData[]> {
-  const { data } = await monitoringServices.getSitesOverview({ token });
-
-  return data.map((x) => ({
-    ...x,
-    organizations: x.organizations.join(', '),
-    adminNames: x.adminNames.join(', '),
-    adminEmails: x.adminEmails.join(', '),
-  }));
-}
-
 function SitesOverview() {
+  const classes = useStyles();
+
+  const [siteId, setSiteId] = React.useState<string>('');
+  const [siteName, setSiteName] = React.useState<string>('');
+  const [spotterId, setSpotterId] = React.useState<string>('');
+  const [organization, setOrganization] = React.useState<string>('');
+  const [adminEmail, setAdminEmail] = React.useState<string>('');
+  const [adminUserName, setAdminUserName] = React.useState<string>('');
+
+  const textFilters = [
+    { label: 'Site ID', value: siteId, setValue: setSiteId },
+    { label: 'Site Name', value: siteName, setValue: setSiteName },
+    { label: 'Spotter ID', value: spotterId, setValue: setSpotterId },
+    { label: 'Organization', value: organization, setValue: setOrganization },
+    { label: 'Admin Email', value: adminEmail, setValue: setAdminEmail },
+    {
+      label: 'Admin Username',
+      value: adminUserName,
+      setValue: setAdminUserName,
+    },
+  ];
+
+  const filters = (
+    <div className={classes.filtersWrapper}>
+      {textFilters.map((elem) => (
+        <TextField
+          className={classes.filterItem}
+          variant="outlined"
+          label={elem.label}
+          value={elem.value}
+          onChange={(e) => elem.setValue(e.target.value)}
+        />
+      ))}
+    </div>
+  );
+
+  const getResult = React.useCallback(
+    async (token: string) => {
+      const { data } = await monitoringServices.getSitesOverview({
+        token,
+        ...(siteId ? { siteId: Number(siteId) } : {}),
+        ...(spotterId ? { spotterId } : {}),
+        ...(siteName ? { siteName } : {}),
+        ...(organization ? { organization } : {}),
+        ...(adminEmail ? { adminEmail } : {}),
+        ...(adminUserName ? { adminUserName } : {}),
+      });
+
+      return data.map((x) => ({
+        ...x,
+        organizations: x.organizations.join(', '),
+        adminNames: x.adminNames.join(', '),
+        adminEmails: x.adminEmails.join(', '),
+      }));
+    },
+    [adminEmail, adminUserName, organization, siteId, siteName, spotterId],
+  );
+
   return (
     <MonitoringTableWrapper
       pageTitle="Sites Overview"
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}
+      filters={filters}
     />
   );
 }
+
+const useStyles = makeStyles(() => ({
+  filtersWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: '2rem',
+    padding: '2rem',
+    flexBasis: '5rem',
+  },
+  filterItem: {
+    height: '3rem',
+  },
+}));
 
 export default SitesOverview;

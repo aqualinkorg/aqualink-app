@@ -128,7 +128,7 @@ function MonitoringTable<
 
   return (
     <Paper>
-      <TableContainer>
+      <TableContainer style={{ maxHeight: '80vh' }}>
         <Table>
           <TableHead>
             <TableRow style={{ backgroundColor: colors.backgroundGray }}>

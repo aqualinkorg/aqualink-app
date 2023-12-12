@@ -16,7 +16,7 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
       href="/monitoring"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-1 MuiButton-outlinedPrimary"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-3 MuiButton-outlinedPrimary"
         tabindex="0"
         type="button"
       >
@@ -45,7 +45,7 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
       </button>
     </a>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-1 MuiButton-outlinedPrimary"
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-3 MuiButton-outlinedPrimary"
       tabindex="0"
       type="button"
     >
@@ -59,13 +59,209 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
       />
     </button>
     <mock-typography
-      classname="makeStyles-pageTitle-3"
+      classname="makeStyles-pageTitle-5"
       variant="h3"
     >
       Sites Overview
     </mock-typography>
     <div
-      class="makeStyles-resultsContainer-2"
+      class="makeStyles-filtersWrapper-1"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Site ID
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-8"
+            >
+              <span>
+                Site ID
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Site Name
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-8"
+            >
+              <span>
+                Site Name
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Spotter ID
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-8"
+            >
+              <span>
+                Spotter ID
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Organization
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-8"
+            >
+              <span>
+                Organization
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Admin Email
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-8"
+            >
+              <span>
+                Admin Email
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Admin Username
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-8"
+            >
+              <span>
+                Admin Username
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div
+      class="makeStyles-resultsContainer-4"
     />
   </div>
 </div>

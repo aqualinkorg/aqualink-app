@@ -14,6 +14,7 @@ interface MonitoringTableWrapperProps<T> {
   headCells: HeadCell<T>[];
   bodyCells: BodyCell<T>[];
   pageTitle: string;
+  filters?: React.JSX.Element;
 }
 
 function MonitoringTableWrapper<
@@ -23,6 +24,7 @@ function MonitoringTableWrapper<
   headCells,
   bodyCells,
   pageTitle,
+  filters,
 }: MonitoringTableWrapperProps<T>) {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
@@ -70,6 +72,7 @@ function MonitoringTableWrapper<
       <Typography className={classes.pageTitle} variant="h3">
         {pageTitle}
       </Typography>
+      {filters && filters}
       <div className={classes.resultsContainer}>
         {result && (
           <MonitoringTable
