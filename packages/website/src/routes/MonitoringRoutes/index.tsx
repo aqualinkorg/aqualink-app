@@ -26,7 +26,7 @@ function MonitoringRoutes() {
         />
         <Route
           exact
-          path="/monitoring/application-overview"
+          path="/monitoring/sites-overview"
           component={SitesOverview}
         />
       </Switch>

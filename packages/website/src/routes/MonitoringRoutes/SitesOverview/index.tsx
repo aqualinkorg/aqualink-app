@@ -11,10 +11,12 @@ type TableData = {
   status: Status;
   organizations: string;
   adminNames: string;
+  adminEmails: string;
   spotterId: string;
-  videoSteam: string;
+  videoStream: string;
   updatedAt: string;
-  lastDateReceived: string | null;
+  lastDataReceived: string | null;
+  surveysCount: number;
 };
 
 const headCells: HeadCell<TableData>[] = [
@@ -24,10 +26,12 @@ const headCells: HeadCell<TableData>[] = [
   { id: 'status', label: 'Status', tooltipText: '' },
   { id: 'organizations', label: 'Organizations', tooltipText: '' },
   { id: 'adminNames', label: 'Admin Names', tooltipText: '' },
+  { id: 'adminEmails', label: 'Admin Names', tooltipText: '' },
   { id: 'spotterId', label: 'Spotter ID', tooltipText: '' },
-  { id: 'videoSteam', label: 'Video Steam', tooltipText: '' },
+  { id: 'videoStream', label: 'Video Steam', tooltipText: '' },
   { id: 'updatedAt', label: 'Updated At', tooltipText: '' },
-  { id: 'lastDateReceived', label: 'Last Date Received', tooltipText: '' },
+  { id: 'lastDataReceived', label: 'Last Date Received', tooltipText: '' },
+  { id: 'surveysCount', label: 'Number of Surveys', tooltipText: '' },
 ];
 
 const bodyCells: BodyCell<TableData>[] = [
@@ -37,10 +41,12 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'status' },
   { id: 'organizations' },
   { id: 'adminNames' },
+  { id: 'adminEmails' },
   { id: 'spotterId' },
-  { id: 'videoSteam' },
+  { id: 'videoStream' },
   { id: 'updatedAt' },
-  { id: 'lastDateReceived' },
+  { id: 'lastDataReceived' },
+  { id: 'surveysCount' },
 ];
 
 async function getResult(token: string): Promise<TableData[]> {

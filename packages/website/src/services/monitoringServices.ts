@@ -107,17 +107,16 @@ export type GetSitesOverviewResponse = {
   adminNames: string[];
   adminEmails: string[];
   spotterId: string;
-  videoSteam: string;
+  videoStream: string;
   updatedAt: string;
-  lastDateReceived: string | null;
+  lastDataReceived: string | null;
+  surveysCount: number;
 }[];
 
 const getSitesOverview = ({ token, ...rest }: GetSitesOverviewProps) =>
   requests.send<GetSitesOverviewResponse>({
     method: 'GET',
-    url: `monitoring/application-overview${requests.generateUrlQueryParams(
-      rest,
-    )}`,
+    url: `monitoring/sites-overview${requests.generateUrlQueryParams(rest)}`,
     token,
   });
 
