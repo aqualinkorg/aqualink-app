@@ -73,7 +73,7 @@ export type GetSurveysReportResponse = {
   siteId: number;
   siteName: string;
   surveyId: number;
-  surveyMediaNum: number;
+  surveyMediaCount: number;
   updatedAt: string;
   userEmail: string;
   userFullName: string;

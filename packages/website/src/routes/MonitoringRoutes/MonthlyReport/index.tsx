@@ -79,6 +79,7 @@ async function getResult(token: string) {
 function MonthlyReport() {
   return (
     <MonitoringTableWrapper
+      pageTitle="Monthly Report"
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}

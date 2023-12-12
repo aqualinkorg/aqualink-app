@@ -1,4 +1,4 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -13,11 +13,17 @@ interface MonitoringTableWrapperProps<T> {
   getResult: (token: string) => Promise<T[]>;
   headCells: HeadCell<T>[];
   bodyCells: BodyCell<T>[];
+  pageTitle: string;
 }
 
 function MonitoringTableWrapper<
   T extends { [key in keyof T]: string | number | null },
->({ getResult, headCells, bodyCells }: MonitoringTableWrapperProps<T>) {
+>({
+  getResult,
+  headCells,
+  bodyCells,
+  pageTitle,
+}: MonitoringTableWrapperProps<T>) {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
@@ -61,6 +67,9 @@ function MonitoringTableWrapper<
       >
         Refresh
       </Button>
+      <Typography className={classes.pageTitle} variant="h3">
+        {pageTitle}
+      </Typography>
       <div className={classes.resultsContainer}>
         {result && (
           <MonitoringTable
@@ -76,10 +85,13 @@ function MonitoringTableWrapper<
 
 const useStyles = makeStyles(() => ({
   button: {
-    margin: '1rem',
+    margin: '1rem 1rem 1rem 2rem',
   },
   resultsContainer: {
     margin: '2rem',
+  },
+  pageTitle: {
+    marginLeft: '2rem',
   },
 }));
 

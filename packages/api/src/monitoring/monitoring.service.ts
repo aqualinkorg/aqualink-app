@@ -221,7 +221,7 @@ export class MonitoringService {
       .addSelect('s.name', 'siteName')
       .addSelect('u.email', 'userEmail')
       .addSelect('u.full_name', 'userFullName')
-      .addSelect('COUNT(sm.id)::int', 'surveyMediaNum')
+      .addSelect('COUNT(sm.id)::int', 'surveyMediaCount')
       .leftJoin('site', 's', 'survey.site_id = s.id')
       .leftJoin('users', 'u', 'survey.user_id = u.id')
       .leftJoin('survey_media', 'sm', 'sm.survey_id = survey.id')

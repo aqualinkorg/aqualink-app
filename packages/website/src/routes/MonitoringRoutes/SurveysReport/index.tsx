@@ -15,7 +15,7 @@ const headCells: HeadCell<TableData>[] = [
   { id: 'diveDate', label: 'Dive Date', tooltipText: '' },
   { id: 'surveyId', label: 'Survey ID', tooltipText: '' },
   { id: 'updatedAt', label: 'Updated At', tooltipText: '' },
-  { id: 'surveyMediaNum', label: 'Number of Survey Media', tooltipText: '' },
+  { id: 'surveyMediaCount', label: 'Number of Survey Media', tooltipText: '' },
   { id: 'userEmail', label: 'User Email', tooltipText: '' },
   { id: 'userFullName', label: 'User Name', tooltipText: '' },
 ];
@@ -33,7 +33,7 @@ const bodyCells: BodyCell<TableData>[] = [
     linkTo: (row) => `/sites/${row.siteId}/survey_details/${row.surveyId}`,
   },
   { id: 'updatedAt' },
-  { id: 'surveyMediaNum' },
+  { id: 'surveyMediaCount' },
   { id: 'userEmail' },
   { id: 'userFullName' },
 ];
@@ -48,6 +48,7 @@ async function getResult(token: string) {
 function SurveysReport() {
   return (
     <MonitoringTableWrapper
+      pageTitle="Surveys Report"
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}
