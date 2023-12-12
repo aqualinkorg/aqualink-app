@@ -12,7 +12,7 @@ import { LatestData } from 'time-series/latest-data.entity';
 import { IsNull, Not, Repository } from 'typeorm';
 import { AdminLevel, User } from 'users/users.entity';
 import { getDefaultDates } from 'utils/dates';
-import { GetApplicationOverview } from './dto/get-application-overview.dto';
+import { GetSitesOverview } from './dto/get-application-overview.dto';
 import { GetMonitoringStatsDto } from './dto/get-monitoring-stats.dto';
 import { PostMonitoringMetricDto } from './dto/post-monitoring-metric.dto';
 import { Monitoring } from './monitoring.entity';
@@ -236,7 +236,7 @@ export class MonitoringService {
       .getRawMany();
   }
 
-  applicationOverview({
+  SitesOverview({
     siteId,
     siteName,
     spotterId,
@@ -244,7 +244,7 @@ export class MonitoringService {
     adminUsername,
     organization,
     status,
-  }: GetApplicationOverview) {
+  }: GetSitesOverview) {
     const subQuery = this.latestDataRepository
       .createQueryBuilder('latest_data')
       .select(

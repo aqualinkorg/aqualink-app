@@ -5,7 +5,7 @@ import SiteMetrics from './SiteMetrics';
 import MonthlyReport from './MonthlyReport';
 import Monitoring from './Monitoring';
 import SurveysReport from './SurveysReport';
-import ApplicationOverview from './ApplicationOverview';
+import SitesOverview from './SitesOverview';
 
 function MonitoringRoutes() {
   return (
@@ -27,7 +27,7 @@ function MonitoringRoutes() {
         <Route
           exact
           path="/monitoring/application-overview"
-          component={ApplicationOverview}
+          component={SitesOverview}
         />
       </Switch>
     </>

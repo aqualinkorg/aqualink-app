@@ -58,11 +58,7 @@ export class MonitoringController {
   @Get('application-overview')
   @ApiOperation({ summary: 'Get Aqualink overview' })
   @Auth(AdminLevel.SuperAdmin)
-  getApplicationOverview(
-    @Query() getApplicationOverviewDto: GetMonitoringStatsDto,
-  ) {
-    return this.monitoringService.applicationOverview(
-      getApplicationOverviewDto,
-    );
+  getSitesOverview(@Query() getSitesOverviewDto: GetMonitoringStatsDto) {
+    return this.monitoringService.SitesOverview(getSitesOverviewDto);
   }
 }

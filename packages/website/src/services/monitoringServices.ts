@@ -87,7 +87,7 @@ const getSurveysReport = ({ token }: GetSurveysReportProps) =>
     token,
   });
 
-type GetApplicationOverviewProps = BasicProps &
+type GetSitesOverviewProps = BasicProps &
   Partial<{
     siteId: number;
     siteName: string;
@@ -98,7 +98,7 @@ type GetApplicationOverviewProps = BasicProps &
     status: Status;
   }>;
 
-export type GetApplicationOverviewResponse = {
+export type GetSitesOverviewResponse = {
   siteId: number;
   siteName: string;
   depth: number;
@@ -112,11 +112,8 @@ export type GetApplicationOverviewResponse = {
   lastDateReceived: string | null;
 }[];
 
-const getApplicationOverview = ({
-  token,
-  ...rest
-}: GetApplicationOverviewProps) =>
-  requests.send<GetApplicationOverviewResponse>({
+const getSitesOverview = ({ token, ...rest }: GetSitesOverviewProps) =>
+  requests.send<GetSitesOverviewResponse>({
     method: 'GET',
     url: `monitoring/application-overview${requests.generateUrlQueryParams(
       rest,
@@ -129,5 +126,5 @@ export default {
   getMonitoringStats,
   getMonitoringLastMonth,
   getSurveysReport,
-  getApplicationOverview,
+  getSitesOverview,
 };

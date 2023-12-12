@@ -4,7 +4,7 @@ import { IsEnum, IsNumber, IsOptional, Validate } from 'class-validator';
 import { Site, SiteStatus } from 'sites/sites.entity';
 import { EntityExists } from 'validations/entity-exists.constraint';
 
-export class GetApplicationOverview {
+export class GetSitesOverview {
   @ApiProperty({ example: 42 })
   @IsOptional()
   @IsNumber()

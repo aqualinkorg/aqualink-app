@@ -44,7 +44,7 @@ const bodyCells: BodyCell<TableData>[] = [
 ];
 
 async function getResult(token: string): Promise<TableData[]> {
-  const { data } = await monitoringServices.getApplicationOverview({ token });
+  const { data } = await monitoringServices.getSitesOverview({ token });
 
   return data.map((x) => ({
     ...x,
@@ -54,9 +54,10 @@ async function getResult(token: string): Promise<TableData[]> {
   }));
 }
 
-function ApplicationOverview() {
+function SitesOverview() {
   return (
     <MonitoringTableWrapper
+      pageTitle="Sites Overview"
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}
@@ -64,4 +65,4 @@ function ApplicationOverview() {
   );
 }
 
-export default ApplicationOverview;
+export default SitesOverview;
