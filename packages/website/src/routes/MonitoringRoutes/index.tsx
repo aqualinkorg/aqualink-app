@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import SiteMetrics from './SiteMetrics';
 import MonthlyReport from './MonthlyReport';
 import Monitoring from './Monitoring';
+import SurveysReport from './SurveysReport';
 
 function MonitoringRoutes() {
   return (
@@ -16,6 +17,11 @@ function MonitoringRoutes() {
           exact
           path="/monitoring/monthly-report"
           component={MonthlyReport}
+        />
+        <Route
+          exact
+          path="/monitoring/surveys-report"
+          component={SurveysReport}
         />
       </Switch>
     </>

@@ -1,18 +1,11 @@
-import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import monitoringServices, {
   GetMonitoringMetricsResponse,
   MonitoringData,
 } from 'services/monitoringServices';
-import { useSelector } from 'react-redux';
-import { userInfoSelector } from 'store/User/userSlice';
-import { useSnackbar } from 'notistack';
-import MonitoringTable, { BodyCell, HeadCell } from 'common/MonitoringTable';
-import LoadingBackdrop from 'common/LoadingBackdrop';
+import { BodyCell, HeadCell } from 'common/MonitoringTable';
 import { ArrayElement } from 'utils/types';
-import { fetchData } from '../utils';
+import MonitoringTableWrapper from '../MonitoringTableWrapper';
 
 type TableData = Omit<ArrayElement<GetMonitoringMetricsResponse>, 'data'> &
   Omit<MonitoringData, 'date'>;
@@ -53,7 +46,11 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'CSVDownloadRequests' },
 ];
 
-function transformData(data: GetMonitoringMetricsResponse): TableData[] {
+async function getResult(token: string) {
+  const { data } = await monitoringServices.getMonitoringLastMonth({
+    token,
+  });
+
   return data.map(
     ({
       data: [
@@ -80,70 +77,13 @@ function transformData(data: GetMonitoringMetricsResponse): TableData[] {
 }
 
 function MonthlyReport() {
-  const user = useSelector(userInfoSelector);
-  const classes = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
-
-  const [result, setResult] =
-    React.useState<GetMonitoringMetricsResponse | null>(null);
-  const [loading, setLoading] = React.useState<boolean>(false);
-
-  function onGetMetrics() {
-    fetchData({
-      user,
-      enqueueSnackbar,
-      setLoading,
-      setResult,
-      getResult: async (token) =>
-        (
-          await monitoringServices.getMonitoringLastMonth({
-            token,
-          })
-        ).data,
-    });
-  }
-
   return (
-    <div>
-      <LoadingBackdrop loading={loading} />
-      <Link to="/monitoring">
-        <Button
-          variant="outlined"
-          color="primary"
-          className={classes.button}
-          startIcon={<ArrowBackIcon />}
-        >
-          Go back
-        </Button>
-      </Link>
-      <Button
-        color="primary"
-        variant="outlined"
-        onClick={() => onGetMetrics()}
-        className={classes.button}
-      >
-        Get metrics
-      </Button>
-      <div className={classes.resultsContainer}>
-        {result && (
-          <MonitoringTable
-            headCells={headCells}
-            data={transformData(result)}
-            bodyCells={bodyCells}
-          />
-        )}
-      </div>
-    </div>
+    <MonitoringTableWrapper
+      getResult={getResult}
+      headCells={headCells}
+      bodyCells={bodyCells}
+    />
   );
 }
-
-const useStyles = makeStyles(() => ({
-  button: {
-    margin: '1rem',
-  },
-  resultsContainer: {
-    margin: '2rem',
-  },
-}));
 
 export default MonthlyReport;

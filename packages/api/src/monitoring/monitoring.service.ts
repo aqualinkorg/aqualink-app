@@ -7,6 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { DateTime } from 'luxon';
 import { Site } from 'sites/sites.entity';
+import { Survey } from 'surveys/surveys.entity';
 import { IsNull, Not, Repository } from 'typeorm';
 import { AdminLevel, User } from 'users/users.entity';
 import { getDefaultDates } from 'utils/dates';
@@ -31,6 +32,9 @@ export class MonitoringService {
 
     @InjectRepository(Site)
     private siteRepository: Repository<Site>,
+
+    @InjectRepository(Survey)
+    private surveyRepository: Repository<Survey>,
   ) {}
 
   private async getMetricsForSites({
@@ -205,5 +209,25 @@ export class MonitoringService {
       startDate: prevMonth,
       endDate: undefined,
     });
+  }
+
+  surveysReport() {
+    return this.surveyRepository
+      .createQueryBuilder('survey')
+      .select('survey.site_id', 'siteId')
+      .addSelect('survey.id', 'surveyId')
+      .addSelect('survey.dive_date', 'diveDate')
+      .addSelect('survey.updated_at', 'updatedAt')
+      .addSelect('s.name', 'siteName')
+      .addSelect('u.email', 'userEmail')
+      .addSelect('u.full_name', 'userFullName')
+      .addSelect('COUNT(sm.id)::int', 'surveyMediaNum')
+      .leftJoin('site', 's', 'survey.site_id = s.id')
+      .leftJoin('users', 'u', 'survey.user_id = u.id')
+      .leftJoin('survey_media', 'sm', 'sm.survey_id = survey.id')
+      .groupBy(
+        'survey.site_id, survey.id, survey.dive_date, survey.updated_at, s.id, s.name, u.email, u.full_name',
+      )
+      .getRawMany();
   }
 }

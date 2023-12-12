@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const tiles = [
   { title: 'Site Metrics', link: '/monitoring/site-metrics' },
   { title: 'Monthly Report', link: '/monitoring/monthly-report' },
+  { title: 'Surveys Report', link: '/monitoring/surveys-report' },
 ];
 
 function Monitoring() {

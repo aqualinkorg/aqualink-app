@@ -32,6 +32,7 @@ export interface BodyCell<T> {
   id: keyof T;
   align?: 'left' | 'right' | 'inherit' | 'center' | 'justify';
   linkTo?: (row: T) => string;
+  format?: (row: T) => string;
 }
 
 interface MonitoringTableProps<T> {
@@ -171,24 +172,29 @@ function MonitoringTable<
               )
               .map((row) => (
                 <TableRow hover key={JSON.stringify(row)}>
-                  {bodyCells.map((bodyCell) => (
-                    <TableCell
-                      key={bodyCell.id as React.Key}
-                      align={bodyCell.align}
-                    >
-                      {bodyCell.linkTo ? (
-                        <Link
-                          href={bodyCell.linkTo(row)}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          {row[bodyCell.id]}
-                        </Link>
-                      ) : (
-                        row[bodyCell.id]
-                      )}
-                    </TableCell>
-                  ))}
+                  {bodyCells.map((bodyCell) => {
+                    const formatted = bodyCell.format
+                      ? bodyCell.format(row)
+                      : row[bodyCell.id];
+                    return (
+                      <TableCell
+                        key={bodyCell.id as React.Key}
+                        align={bodyCell.align}
+                      >
+                        {bodyCell.linkTo ? (
+                          <Link
+                            href={bodyCell.linkTo(row)}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                          >
+                            {formatted}
+                          </Link>
+                        ) : (
+                          formatted
+                        )}
+                      </TableCell>
+                    );
+                  })}
                 </TableRow>
               ))}
           </TableBody>
