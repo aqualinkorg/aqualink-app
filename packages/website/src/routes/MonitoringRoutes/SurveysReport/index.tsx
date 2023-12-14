@@ -1,5 +1,4 @@
 import { BodyCell, HeadCell } from 'common/MonitoringTable';
-import { DateTime } from 'luxon';
 import React from 'react';
 import monitoringServices, {
   GetSurveysReportResponse,
@@ -23,11 +22,7 @@ const headCells: HeadCell<TableData>[] = [
 const bodyCells: BodyCell<TableData>[] = [
   { id: 'siteId', linkTo: (row) => `/sites/${encodeURIComponent(row.siteId)}` },
   { id: 'siteName' },
-  {
-    id: 'diveDate',
-    format: (row) =>
-      DateTime.fromISO(row.diveDate).toFormat('yyyy-MM-dd HH:mm:ss'),
-  },
+  { id: 'diveDate' },
   {
     id: 'surveyId',
     linkTo: (row) =>
