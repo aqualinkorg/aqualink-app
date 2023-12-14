@@ -117,5 +117,6 @@ export const monitoringTests = () => {
     expect(rsp.body[0].updatedAt).toBeDefined();
     expect(rsp.body[0].lastDataReceived).toBeDefined();
     expect(rsp.body[0].surveysCount).toBeDefined();
+    expect(rsp.body[0].contactInformation).toBeDefined();
   });
 };

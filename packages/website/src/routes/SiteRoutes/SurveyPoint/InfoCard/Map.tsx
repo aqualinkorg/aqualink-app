@@ -51,8 +51,8 @@ interface SurveyPointMapIncomingProps {
   site: Site;
   selectedPointId: number;
   editModeEnabled: boolean;
-  editPointLatitude: FormField;
-  editPointLongitude: FormField;
+  editPointLatitude: FormField<string>;
+  editPointLongitude: FormField<string>;
   onEditPointCoordinatesChange: (lat: string, lng: string) => void;
 }
 

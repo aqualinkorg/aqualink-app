@@ -19,6 +19,7 @@ type TableData = {
   updatedAt: string;
   lastDataReceived: string | null;
   surveysCount: number;
+  contactInformation: string;
 };
 
 const headCells: HeadCell<TableData>[] = [
@@ -34,6 +35,7 @@ const headCells: HeadCell<TableData>[] = [
   { id: 'updatedAt', label: 'Updated At', tooltipText: '' },
   { id: 'lastDataReceived', label: 'Last Date Received', tooltipText: '' },
   { id: 'surveysCount', label: 'Number of Surveys', tooltipText: '' },
+  { id: 'contactInformation', label: 'Contact Information', tooltipText: '' },
 ];
 
 const bodyCells: BodyCell<TableData>[] = [
@@ -49,6 +51,7 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'updatedAt' },
   { id: 'lastDataReceived' },
   { id: 'surveysCount' },
+  { id: 'contactInformation' },
 ];
 
 function SitesOverview() {
@@ -89,7 +92,7 @@ function SitesOverview() {
       ))}
       <StatusSelector
         status={status}
-        setStatus={setStatus}
+        onChange={(e) => setStatus(e.target.value as Status | '')}
         textFieldStyle={classes.filterItem}
       />
     </div>

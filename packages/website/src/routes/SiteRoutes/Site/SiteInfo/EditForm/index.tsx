@@ -13,11 +13,13 @@ import Alert from '@material-ui/lab/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { find } from 'lodash';
 
-import { Site, SiteUpdateParams } from 'store/Sites/types';
+import { Site, SiteUpdateParams, Status } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { siteDraftSelector, setSiteDraft } from 'store/Sites/selectedSiteSlice';
 import { useFormField } from 'hooks/useFormField';
 import TextField from 'common/Forms/TextField';
+import StatusSelector from 'common/StatusSelector';
+import { userInfoSelector } from 'store/User/userSlice';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
@@ -29,6 +31,8 @@ const EditForm = ({
   classes,
 }: EditFormProps) => {
   const dispatch = useDispatch();
+  const user = useSelector(userInfoSelector);
+
   const draftSite = useSelector(siteDraftSelector);
   const location = site.polygon.type === 'Point' ? site.polygon : null;
   const { latitude: draftLatitude, longitude: draftLongitude } =
@@ -36,6 +40,8 @@ const EditForm = ({
 
   const [editToken, setEditToken] = React.useState(false);
   const [useDefaultToken, setUseDefaultToken] = React.useState(false);
+
+  const [editContactInfo, setEditContactInfo] = React.useState(false);
 
   const setDraftSiteCoordinates =
     (field: 'longitude' | 'latitude') => (value: string) => {
@@ -51,35 +57,50 @@ const EditForm = ({
     };
 
   // Form Fields
-  const [siteName, setSiteName] = useFormField(
-    getSiteNameAndRegion(site).name,
+  const [siteName, setSiteName] = useFormField<string>(
+    getSiteNameAndRegion(site).name ?? '',
     ['required', 'maxLength'],
   );
 
-  const [siteDepth, setSiteDepth] = useFormField(site.depth?.toString(), [
-    'required',
-    'isInt',
-  ]);
+  const [siteDepth, setSiteDepth] = useFormField<string>(
+    site.depth?.toString() ?? '',
+    ['required', 'isInt'],
+  );
 
-  const [siteLatitude, setSiteLatitude] = useFormField(
-    location?.coordinates[1].toString(),
+  const [siteLatitude, setSiteLatitude] = useFormField<string>(
+    location?.coordinates[1].toString() ?? '',
     ['required', 'isNumeric', 'isLat'],
     draftLatitude?.toString(),
     setDraftSiteCoordinates('latitude'),
   );
 
-  const [siteLongitude, setSiteLongitude] = useFormField(
-    location?.coordinates[0].toString(),
+  const [siteLongitude, setSiteLongitude] = useFormField<string>(
+    location?.coordinates[0].toString() ?? '',
     ['required', 'isNumeric', 'isLong'],
     draftLongitude?.toString(),
     setDraftSiteCoordinates('longitude'),
   );
 
-  const [siteSensorId, setSensorId] = useFormField(site.sensorId, [
-    'maxLength',
-  ]);
+  const [siteSensorId, setSensorId] = useFormField<string>(
+    site.sensorId ?? '',
+    ['maxLength'],
+  );
 
-  const [siteSpotterApiToken, setSiteSpotterApiToken] = useFormField(null, [
+  const [siteSpotterApiToken, setSiteSpotterApiToken] = useFormField<string>(
+    '',
+    ['maxLength'],
+  );
+
+  const [status, setStatus] = useFormField<string>('', []);
+
+  const [display, setDisplay] = useFormField<boolean>(site.display, []);
+
+  const [videoStream, setVideoStream] = useFormField<string>(
+    site.videoStream || '',
+    [],
+  );
+
+  const [contactInformation, setContactInformation] = useFormField<string>('', [
     'maxLength',
   ]);
 
@@ -98,6 +119,10 @@ const EditForm = ({
       // fields need to be undefined in order not be affected by the update.
       // siteSensorId.value here can be <empty string> which our api does not accept
       const sensorId = siteSensorId.value || undefined;
+      const statusVal = status.value;
+      const displayVal = display.value;
+      const videoStreamVal = videoStream.value || null;
+      const contactInformationVal = contactInformation.value || null;
       const updateParams: SiteUpdateParams = {
         coordinates: {
           latitude: parseFloat(siteLatitude.value),
@@ -107,6 +132,16 @@ const EditForm = ({
         depth: parseInt(siteDepth.value, 10),
         sensorId,
         spotterApiToken,
+        ...(user?.adminLevel === 'super_admin' && statusVal
+          ? { status: statusVal as Status }
+          : {}),
+        ...(user?.adminLevel === 'super_admin' ? { display: displayVal } : {}),
+        ...(user?.adminLevel === 'super_admin'
+          ? { videoStream: videoStreamVal }
+          : {}),
+        ...(user?.adminLevel === 'super_admin' && editContactInfo
+          ? { contactInformation: contactInformationVal }
+          : {}),
       };
       onSubmit(updateParams);
     }
@@ -115,6 +150,7 @@ const EditForm = ({
 
   const onFieldChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    checked?: boolean,
   ) => {
     const { name: field, value: newValue } = event.target;
     switch (field) {
@@ -135,6 +171,18 @@ const EditForm = ({
         break;
       case 'spotterApiToken':
         setSiteSpotterApiToken(newValue);
+        break;
+      case 'status':
+        setStatus(newValue);
+        break;
+      case 'display':
+        setDisplay(!!checked);
+        break;
+      case 'videoStream':
+        setVideoStream(newValue);
+        break;
+      case 'contactInformation':
+        setContactInformation(newValue);
         break;
       default:
         break;
@@ -268,6 +316,77 @@ const EditForm = ({
               onChange={onFieldChange}
             />
           </Grid>
+          {user?.adminLevel === 'super_admin' && (
+            <Grid item xs={4}>
+              <StatusSelector
+                status={status.value as Status | ''}
+                onChange={onFieldChange}
+                name="status"
+              />
+            </Grid>
+          )}
+          {user?.adminLevel === 'super_admin' && (
+            <Grid
+              item
+              xs={2}
+              style={{ display: 'flex', justifyContent: 'flex-end' }}
+            >
+              <FormControlLabel
+                labelPlacement="start"
+                control={
+                  <Checkbox
+                    color="primary"
+                    name="display"
+                    checked={display.value}
+                    onChange={onFieldChange}
+                  />
+                }
+                label="display"
+              />
+            </Grid>
+          )}
+          {user?.adminLevel === 'super_admin' && (
+            <Grid item xs={6}>
+              <TextField
+                formField={videoStream}
+                label="Video Stream"
+                placeholder="Video Stream"
+                name="videoStream"
+                onChange={onFieldChange}
+              />
+            </Grid>
+          )}
+          {user?.adminLevel === 'super_admin' && (
+            <Grid
+              item
+              xs={4}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
+            >
+              <FormControlLabel
+                labelPlacement="start"
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={editContactInfo}
+                    onChange={() => setEditContactInfo(!editContactInfo)}
+                  />
+                }
+                label="Edit Contact Info"
+              />
+            </Grid>
+          )}
+          {user?.adminLevel === 'super_admin' && (
+            <Grid item xs={8}>
+              <TextField
+                disabled={!editContactInfo}
+                formField={contactInformation}
+                label="Contact Information"
+                placeholder="Contact Information"
+                name="contactInformation"
+                onChange={onFieldChange}
+              />
+            </Grid>
+          )}
         </Grid>
         <Grid
           container

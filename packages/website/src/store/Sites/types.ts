@@ -280,6 +280,7 @@ export interface Site {
   hasHobo: boolean;
   collectionData?: CollectionData;
   sketchFab?: SiteSketchFab;
+  display: boolean;
 }
 
 export interface SiteSketchFab {
@@ -337,6 +338,10 @@ export interface SiteUpdateParams {
   depth?: number;
   sensorId?: string;
   spotterApiToken?: string | null;
+  status?: Status;
+  display?: boolean;
+  videoStream?: string | null;
+  contactInformation?: string | null;
 }
 
 export interface SiteApplication {

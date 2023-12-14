@@ -138,8 +138,9 @@ export class SitesController {
   update(
     @Param('siteId', ParseIntPipe) id: number,
     @Body() updateSiteDto: UpdateSiteDto,
+    @Req() request: AuthRequest,
   ): Promise<Site> {
-    return this.sitesService.update(id, updateSiteDto);
+    return this.sitesService.update(id, updateSiteDto, request.user);
   }
 
   @ApiBearerAuth()

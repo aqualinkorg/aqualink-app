@@ -5,7 +5,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import { useSnackbar } from 'notistack';
-import MonitoringTable, { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  Order,
+} from 'common/MonitoringTable';
 import LoadingBackdrop from 'common/LoadingBackdrop';
 import { fetchData } from './utils';
 
@@ -15,6 +19,8 @@ interface MonitoringTableWrapperProps<T> {
   bodyCells: BodyCell<T>[];
   pageTitle: string;
   filters?: React.JSX.Element;
+  defaultSortColumn?: keyof T;
+  defaultOrder?: Order;
 }
 
 function MonitoringTableWrapper<
@@ -25,6 +31,8 @@ function MonitoringTableWrapper<
   bodyCells,
   pageTitle,
   filters,
+  defaultSortColumn,
+  defaultOrder,
 }: MonitoringTableWrapperProps<T>) {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
@@ -79,6 +87,8 @@ function MonitoringTableWrapper<
             headCells={headCells}
             data={result}
             bodyCells={bodyCells}
+            defaultSortColumn={defaultSortColumn}
+            defaultOrder={defaultOrder}
           />
         )}
       </div>

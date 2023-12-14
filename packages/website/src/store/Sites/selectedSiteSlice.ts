@@ -263,6 +263,15 @@ const selectedSiteSlice = createSlice({
                     ],
                   }
                 : { ...state.details.polygon },
+            status: action.payload.status || state.details.status,
+            display:
+              action.payload.display !== undefined
+                ? action.payload.display
+                : state.details.display,
+            videoStream:
+              action.payload.videoStream !== undefined
+                ? action.payload.videoStream
+                : state.details.videoStream,
           },
         };
       }

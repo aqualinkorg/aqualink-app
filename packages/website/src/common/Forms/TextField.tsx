@@ -21,6 +21,7 @@ const CustomTextfield = ({
   disabled,
   onChange,
   classes,
+  select = false,
 }: CustomTextfieldProps) => {
   return (
     <TextField
@@ -38,6 +39,7 @@ const CustomTextfield = ({
       error={Boolean(formField.error)}
       helperText={formField.error}
       size={size}
+      select={select}
     />
   );
 };
@@ -51,7 +53,7 @@ const styles = () =>
   });
 
 interface CustomTextfieldIncomingProps {
-  formField: FormField;
+  formField: FormField<string>;
   label: string;
   placeholder: string;
   name: string;
@@ -63,6 +65,7 @@ interface CustomTextfieldIncomingProps {
   onChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
+  select?: boolean;
 }
 
 CustomTextfield.defaultProps = {

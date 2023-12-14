@@ -125,9 +125,9 @@ const styles = () =>
 
 interface EditFormIncomingProps {
   editLoading: boolean;
-  editPointName: FormField;
-  editPointLatitude: FormField;
-  editPointLongitude: FormField;
+  editPointName: FormField<string>;
+  editPointLatitude: FormField<string>;
+  editPointLongitude: FormField<string>;
   onCancelButtonClick: () => void;
   onSaveButtonClick: () => void;
   onFieldChange: (

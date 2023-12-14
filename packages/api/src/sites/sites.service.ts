@@ -4,6 +4,7 @@ import {
   Logger,
   BadRequestException,
   ConflictException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
@@ -235,7 +236,21 @@ export class SitesService {
     };
   }
 
-  async update(id: number, updateSiteDto: UpdateSiteDto): Promise<Site> {
+  async update(
+    id: number,
+    updateSiteDto: UpdateSiteDto,
+    user: User,
+  ): Promise<Site> {
+    if (
+      (updateSiteDto.display ||
+        updateSiteDto.status ||
+        updateSiteDto.videoStream ||
+        updateSiteDto.contactInformation) &&
+      user.adminLevel !== AdminLevel.SuperAdmin
+    ) {
+      throw new ForbiddenException();
+    }
+
     const { coordinates, adminIds, regionId, streamId } = updateSiteDto;
     const updateRegion =
       regionId !== undefined ? { region: { id: regionId } } : {};

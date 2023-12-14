@@ -13,14 +13,16 @@ const options: Status[] = [
 
 interface StatusSelectorProps {
   status: Status | '';
-  setStatus: React.Dispatch<React.SetStateAction<'' | Status>>;
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   textFieldStyle?: string;
+  name?: string;
 }
 
 function StatusSelector({
   status,
-  setStatus,
+  onChange,
   textFieldStyle,
+  name,
 }: StatusSelectorProps) {
   const classes = useStyles();
 
@@ -30,9 +32,10 @@ function StatusSelector({
       select
       label="Status"
       value={status}
-      onChange={(e) => setStatus(e.target.value as Status | '')}
+      onChange={onChange}
       variant="outlined"
       style={{ minWidth: '10rem' }}
+      name={name}
     >
       <MenuItem className={classes.menuItem} value="" />
       {options.map((x) => (

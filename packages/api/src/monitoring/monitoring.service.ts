@@ -12,7 +12,7 @@ import { LatestData } from 'time-series/latest-data.entity';
 import { IsNull, Not, Repository } from 'typeorm';
 import { AdminLevel, User } from 'users/users.entity';
 import { getDefaultDates } from 'utils/dates';
-import { GetSitesOverview } from './dto/get-sites-overview.dto';
+import { GetSitesOverviewDto } from './dto/get-sites-overview.dto';
 import { GetMonitoringStatsDto } from './dto/get-monitoring-stats.dto';
 import { PostMonitoringMetricDto } from './dto/post-monitoring-metric.dto';
 import { Monitoring } from './monitoring.entity';
@@ -244,7 +244,7 @@ export class MonitoringService {
     adminUsername,
     organization,
     status,
-  }: GetSitesOverview) {
+  }: GetSitesOverviewDto) {
     const latestDataSubQuery = this.latestDataRepository
       .createQueryBuilder('latest_data')
       .select(
@@ -274,6 +274,7 @@ export class MonitoringService {
       .addSelect('site.updated_at', 'updatedAt')
       .addSelect('latest_data.timestamp', 'lastDataReceived')
       .addSelect('COALESCE("surveys_count"."surveysCount", 0)', 'surveysCount')
+      .addSelect('site.contact_information', 'contactInformation')
       .leftJoin(
         'users_administered_sites_site',
         'uass',
@@ -332,7 +333,8 @@ export class MonitoringService {
       .addGroupBy('site.video_stream')
       .addGroupBy('site.updated_at')
       .addGroupBy('latest_data.timestamp')
-      .addGroupBy('"surveys_count"."surveysCount"');
+      .addGroupBy('"surveys_count"."surveysCount"')
+      .addGroupBy('site.contact_information');
 
     return ret.getRawMany();
   }

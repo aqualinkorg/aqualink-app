@@ -50,6 +50,8 @@ function SurveysReport() {
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}
+      defaultOrder="desc"
+      defaultSortColumn="diveDate"
     />
   );
 }

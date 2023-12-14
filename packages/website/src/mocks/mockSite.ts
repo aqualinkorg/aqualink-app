@@ -25,6 +25,7 @@ export const mockSite: Site = {
   surveyPoints: [],
   stream: null,
   historicalMonthlyMean: [],
+  display: true,
   dailyData: [
     {
       id: 171,
