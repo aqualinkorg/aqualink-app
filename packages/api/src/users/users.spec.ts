@@ -130,10 +130,22 @@ export const userTests = () => {
       expect(rsp.status).toBe(200);
       expect(rsp.body.length).toBe(2);
       expect(rsp.body[0]).toMatchObject({
-        ...omit(californiaSite, 'updatedAt', 'createdAt', 'spotterApiToken'),
+        ...omit(
+          californiaSite,
+          'updatedAt',
+          'createdAt',
+          'spotterApiToken',
+          'contactInformation',
+        ),
       });
       expect(rsp.body[1]).toMatchObject({
-        ...omit(floridaSite, 'updatedAt', 'createdAt', 'spotterApiToken'),
+        ...omit(
+          floridaSite,
+          'updatedAt',
+          'createdAt',
+          'spotterApiToken',
+          'contactInformation',
+        ),
       });
     });
   });
