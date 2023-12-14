@@ -259,6 +259,114 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           </fieldset>
         </div>
       </div>
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+        style="min-width: 10rem;"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+        >
+          Status
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <div
+            aria-haspopup="listbox"
+            class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
+            role="button"
+            tabindex="0"
+          >
+            <span>
+              ​
+            </span>
+          </div>
+          <input
+            aria-hidden="true"
+            class="MuiSelect-nativeInput"
+            tabindex="-1"
+            value=""
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7 10l5 5 5-5z"
+            />
+          </svg>
+          <mock-menu
+            anchorel="[object HTMLDivElement]"
+            id="menu-"
+            menulistprops="[object Object]"
+            open="false"
+            paperprops="[object Object]"
+          >
+            <mock-menuitem
+              aria-selected="true"
+              classname="makeStyles-menuItem-10"
+              data-value=""
+              role="option"
+              selected="true"
+            />
+            <mock-menuitem
+              classname="makeStyles-menuItem-10"
+              data-value="in_review"
+              role="option"
+              selected="false"
+            >
+              in_review
+            </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-10"
+              data-value="rejected"
+              role="option"
+              selected="false"
+            >
+              rejected
+            </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-10"
+              data-value="approved"
+              role="option"
+              selected="false"
+            >
+              approved
+            </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-10"
+              data-value="shipped"
+              role="option"
+              selected="false"
+            >
+              shipped
+            </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-10"
+              data-value="deployed"
+              role="option"
+              selected="false"
+            >
+              deployed
+            </mock-menuitem>
+          </mock-menu>
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-8"
+            >
+              <span>
+                Status
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
     </div>
     <div
       class="makeStyles-resultsContainer-4"

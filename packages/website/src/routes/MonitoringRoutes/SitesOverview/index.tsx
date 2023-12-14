@@ -3,6 +3,7 @@ import monitoringServices from 'services/monitoringServices';
 import { BodyCell, HeadCell } from 'common/MonitoringTable';
 import { Status } from 'store/Sites/types';
 import { makeStyles, TextField } from '@material-ui/core';
+import StatusSelector from 'common/StatusSelector';
 import MonitoringTableWrapper from '../MonitoringTableWrapper';
 
 type TableData = {
@@ -36,7 +37,7 @@ const headCells: HeadCell<TableData>[] = [
 ];
 
 const bodyCells: BodyCell<TableData>[] = [
-  { id: 'siteId', linkTo: (row) => `/sites/${row.siteId}` },
+  { id: 'siteId', linkTo: (row) => `/sites/${encodeURIComponent(row.siteId)}` },
   { id: 'siteName' },
   { id: 'depth' },
   { id: 'status' },
@@ -59,6 +60,7 @@ function SitesOverview() {
   const [organization, setOrganization] = React.useState<string>('');
   const [adminEmail, setAdminEmail] = React.useState<string>('');
   const [adminUserName, setAdminUserName] = React.useState<string>('');
+  const [status, setStatus] = React.useState<Status | ''>('');
 
   const textFilters = [
     { label: 'Site ID', value: siteId, setValue: setSiteId },
@@ -77,6 +79,7 @@ function SitesOverview() {
     <div className={classes.filtersWrapper}>
       {textFilters.map((elem) => (
         <TextField
+          key={elem.label}
           className={classes.filterItem}
           variant="outlined"
           label={elem.label}
@@ -84,6 +87,11 @@ function SitesOverview() {
           onChange={(e) => elem.setValue(e.target.value)}
         />
       ))}
+      <StatusSelector
+        status={status}
+        setStatus={setStatus}
+        textFieldStyle={classes.filterItem}
+      />
     </div>
   );
 
@@ -97,6 +105,7 @@ function SitesOverview() {
         ...(organization ? { organization } : {}),
         ...(adminEmail ? { adminEmail } : {}),
         ...(adminUserName ? { adminUserName } : {}),
+        ...(status ? { status } : {}),
       });
 
       return data.map((x) => ({
@@ -106,7 +115,15 @@ function SitesOverview() {
         adminEmails: x.adminEmails.join(', '),
       }));
     },
-    [adminEmail, adminUserName, organization, siteId, siteName, spotterId],
+    [
+      adminEmail,
+      adminUserName,
+      organization,
+      siteId,
+      siteName,
+      spotterId,
+      status,
+    ],
   );
 
   return (

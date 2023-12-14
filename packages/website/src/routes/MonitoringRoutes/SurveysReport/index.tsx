@@ -21,7 +21,7 @@ const headCells: HeadCell<TableData>[] = [
 ];
 
 const bodyCells: BodyCell<TableData>[] = [
-  { id: 'siteId', linkTo: (row) => `/sites/${row.siteId}` },
+  { id: 'siteId', linkTo: (row) => `/sites/${encodeURIComponent(row.siteId)}` },
   { id: 'siteName' },
   {
     id: 'diveDate',
@@ -30,7 +30,10 @@ const bodyCells: BodyCell<TableData>[] = [
   },
   {
     id: 'surveyId',
-    linkTo: (row) => `/sites/${row.siteId}/survey_details/${row.surveyId}`,
+    linkTo: (row) =>
+      `/sites/${encodeURIComponent(
+        row.siteId,
+      )}/survey_details/${encodeURIComponent(row.surveyId)}`,
   },
   { id: 'updatedAt' },
   { id: 'surveyMediaCount' },

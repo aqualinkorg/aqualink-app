@@ -37,7 +37,7 @@ const headCells: HeadCell<TableData>[] = [
 ];
 
 const bodyCells: BodyCell<TableData>[] = [
-  { id: 'siteId', linkTo: (row) => `/sites/${row.siteId}` },
+  { id: 'siteId', linkTo: (row) => `/sites/${encodeURIComponent(row.siteId)}` },
   { id: 'siteName' },
   { id: 'totalRequests' },
   { id: 'registeredUserRequests' },
