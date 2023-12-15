@@ -10,6 +10,7 @@ import {
   Collapse,
   useMediaQuery,
   useTheme,
+  CircularProgress,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
@@ -21,6 +22,8 @@ import {
   setSelectedSite,
   setSiteData,
   setSiteDraft,
+  siteContactInfoLoadingSelector,
+  siteContactInfoRequest,
 } from 'store/Sites/selectedSiteSlice';
 import { Site, SiteUpdateParams } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
@@ -46,6 +49,7 @@ const SiteNavBar = ({
   const theme = useTheme();
   const user = useSelector(userInfoSelector);
   const sitesList = useSelector(sitesListSelector);
+  const siteContactInfoLoading = useSelector(siteContactInfoLoadingSelector);
   const [editEnabled, setEditEnabled] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertSeverity, setAlertSeverity] = useState<'success' | 'error'>();
@@ -67,7 +71,7 @@ const SiteNavBar = ({
     setEditEnabled(false);
   };
 
-  const onOpenForm = () => {
+  const onOpenForm = async () => {
     if (site.depth && site.polygon.type === 'Point') {
       dispatch(
         setSiteDraft({
@@ -80,7 +84,17 @@ const SiteNavBar = ({
         }),
       );
     }
-    setEditEnabled(true);
+    try {
+      if (user?.adminLevel === 'super_admin' && user.token) {
+        await dispatch(
+          siteContactInfoRequest({ siteId: site.id, token: user.token }),
+        );
+      }
+    } catch {
+      // do nothing
+    } finally {
+      setEditEnabled(true);
+    }
   };
 
   const handleFormSubmit = (data: SiteUpdateParams) => {
@@ -240,7 +254,11 @@ const SiteNavBar = ({
                         color="primary"
                         variant="outlined"
                       >
-                        EDIT SITE DETAILS
+                        {siteContactInfoLoading ? (
+                          <CircularProgress size="1.5rem" />
+                        ) : (
+                          'EDIT SITE DETAILS'
+                        )}
                       </Button>
                     </Grid>
                     {site.sensorId &&

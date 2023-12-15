@@ -172,7 +172,7 @@ export class MonitoringService {
       : null;
 
     if (spotterSite === null && spotterId) {
-      throw new BadRequestException('Invalid parameter: spotterId');
+      throw new BadRequestException('Invalid value for parameter: spotterId');
     }
 
     const querySiteIds = siteIds || [spotterSite!.id];
@@ -257,7 +257,7 @@ export class MonitoringService {
     const surveysCountSubQuery = this.surveyRepository
       .createQueryBuilder('survey')
       .select('survey.site_id', 'site_id')
-      .addSelect('COUNT(*)', 'surveysCount')
+      .addSelect('COUNT(*)', 'count')
       .groupBy('survey.site_id');
 
     const baseQuery = this.siteRepository
@@ -273,7 +273,7 @@ export class MonitoringService {
       .addSelect('site.video_stream', 'videoStream')
       .addSelect('site.updated_at', 'updatedAt')
       .addSelect('latest_data.timestamp', 'lastDataReceived')
-      .addSelect('COALESCE("surveys_count"."surveysCount", 0)', 'surveysCount')
+      .addSelect('COALESCE(surveys_count.count, 0)', 'surveysCount')
       .addSelect('site.contact_information', 'contactInformation')
       .leftJoin(
         'users_administered_sites_site',
@@ -333,9 +333,28 @@ export class MonitoringService {
       .addGroupBy('site.video_stream')
       .addGroupBy('site.updated_at')
       .addGroupBy('latest_data.timestamp')
-      .addGroupBy('"surveys_count"."surveysCount"')
+      .addGroupBy('surveys_count.count')
       .addGroupBy('site.contact_information');
 
     return ret.getRawMany();
+  }
+
+  getSitesStatus() {
+    return this.siteRepository
+      .createQueryBuilder('site')
+      .select('COUNT(*)', 'totalSites')
+      .addSelect("COUNT(*) FILTER (WHERE site.status = 'deployed')", 'deployed')
+      .addSelect('COUNT(*) FILTER (WHERE site.display)', 'displayed')
+      .addSelect(
+        "COUNT(*) FILTER (WHERE site.status = 'maintenance')",
+        'maintenance',
+      )
+      .addSelect("COUNT(*) FILTER (WHERE site.status = 'shipped')", 'shipped')
+      .addSelect(
+        "COUNT(*) FILTER (WHERE site.status = 'end_of_life')",
+        'endOfLife',
+      )
+      .addSelect("COUNT(*) FILTER (WHERE site.status = 'lost')", 'lost')
+      .getRawOne();
   }
 }

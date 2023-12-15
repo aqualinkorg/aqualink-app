@@ -197,4 +197,15 @@ export class SitesController {
   ): Promise<ExclusionDates[]> {
     return this.sitesService.getExclusionDates(id);
   }
+
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Returns sites contact information notes',
+  })
+  @ApiParam({ name: 'siteId', example: 1 })
+  @Auth(AdminLevel.SuperAdmin)
+  @Get(':siteId/contact_info')
+  getContactInformation(@Param('siteId', ParseIntPipe) id: number) {
+    return this.sitesService.getContactInformation(id);
+  }
 }

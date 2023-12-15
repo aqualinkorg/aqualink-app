@@ -11,6 +11,7 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
     >
       <mock-card
         classname="makeStyles-root-1"
+        raised="true"
       >
         <mock-cardcontent>
           <mock-typography
@@ -29,6 +30,7 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
     >
       <mock-card
         classname="makeStyles-root-1"
+        raised="true"
       >
         <mock-cardcontent>
           <mock-typography
@@ -47,6 +49,7 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
     >
       <mock-card
         classname="makeStyles-root-1"
+        raised="true"
       >
         <mock-cardcontent>
           <mock-typography
@@ -65,6 +68,7 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
     >
       <mock-card
         classname="makeStyles-root-1"
+        raised="true"
       >
         <mock-cardcontent>
           <mock-typography
@@ -73,6 +77,25 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
             variant="h5"
           >
             Sites Overview
+          </mock-typography>
+        </mock-cardcontent>
+      </mock-card>
+    </a>
+    <a
+      class="makeStyles-link-3"
+      href="/monitoring/sites-status"
+    >
+      <mock-card
+        classname="makeStyles-root-1"
+        raised="true"
+      >
+        <mock-cardcontent>
+          <mock-typography
+            classname="makeStyles-title-2"
+            color="textSecondary"
+            variant="h5"
+          >
+            Sites Status
           </mock-typography>
         </mock-cardcontent>
       </mock-card>

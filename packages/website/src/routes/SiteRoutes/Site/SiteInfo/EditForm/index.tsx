@@ -100,9 +100,10 @@ const EditForm = ({
     [],
   );
 
-  const [contactInformation, setContactInformation] = useFormField<string>('', [
-    'maxLength',
-  ]);
+  const [contactInformation, setContactInformation] = useFormField<string>(
+    site.contactInformation || '',
+    ['maxLength'],
+  );
 
   const formSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (

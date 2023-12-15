@@ -8,6 +8,7 @@ const tiles = [
   { title: 'Monthly Report', link: '/monitoring/monthly-report' },
   { title: 'Surveys Report', link: '/monitoring/surveys-report' },
   { title: 'Sites Overview', link: '/monitoring/sites-overview' },
+  { title: 'Sites Status', link: '/monitoring/sites-status' },
 ];
 
 function Monitoring() {
@@ -17,7 +18,7 @@ function Monitoring() {
     <div className={classes.wrapper}>
       {tiles.map((tile) => (
         <Link key={tile.link} to={tile.link} className={classes.link}>
-          <Card className={classes.root}>
+          <Card className={classes.root} raised>
             <CardContent>
               <Typography
                 variant="h5"

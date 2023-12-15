@@ -20,6 +20,11 @@ describe('SiteNavBar', () => {
       sitesList: {
         list: [mockSite],
       },
+      selectedSite: {
+        contactInfoLoading: false,
+        loading: false,
+        error: null,
+      },
     });
     store.dispatch = jest.fn();
 

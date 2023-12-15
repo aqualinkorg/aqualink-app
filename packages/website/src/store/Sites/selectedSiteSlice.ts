@@ -10,6 +10,8 @@ import type {
   SelectedSiteState,
   TimeSeriesDataRangeRequestParams,
   TimeSeriesDataRequestParams,
+  GetSiteContactInfoProps,
+  Site,
 } from './types';
 import type { RootState, CreateAsyncThunkTypes } from '../configure';
 import {
@@ -25,6 +27,7 @@ const selectedSiteInitialState: SelectedSiteState = {
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
   latestOceanSenseDataLoading: false,
+  contactInfoLoading: false,
   latestOceanSenseDataError: null,
   oceanSenseDataLoading: false,
   oceanSenseDataError: null,
@@ -208,6 +211,22 @@ export const siteTimeSeriesDataRangeRequest = createAsyncThunk<
   },
 );
 
+export const siteContactInfoRequest = createAsyncThunk<
+  Site['contactInformation'],
+  GetSiteContactInfoProps,
+  CreateAsyncThunkTypes
+>(
+  'selectedSite/siteContactInfoRequest',
+  async (params: GetSiteContactInfoProps, { rejectWithValue }) => {
+    try {
+      const { data } = await siteServices.getSiteContactInfo(params);
+      return data.contactInformation;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
+  },
+);
+
 const selectedSiteSlice = createSlice({
   name: 'selectedSite',
   initialState: selectedSiteInitialState,
@@ -272,6 +291,10 @@ const selectedSiteSlice = createSlice({
               action.payload.videoStream !== undefined
                 ? action.payload.videoStream
                 : state.details.videoStream,
+            contactInformation:
+              action.payload.contactInformation !== null
+                ? action.payload.contactInformation
+                : state.details.contactInformation,
           },
         };
       }
@@ -549,6 +572,42 @@ const selectedSiteSlice = createSlice({
         error: null,
       };
     });
+
+    builder.addCase(
+      siteContactInfoRequest.fulfilled,
+      (state, action: PayloadAction<Site['contactInformation']>) => {
+        const { details } = state;
+        const newDetails: Site | undefined | null = details && {
+          ...details,
+          contactInformation: action.payload,
+        };
+
+        if (newDetails)
+          return {
+            ...state,
+            details: newDetails,
+            contactInfoLoading: false,
+          };
+        return { ...state, contactInfoLoading: false };
+      },
+    );
+
+    builder.addCase(
+      siteContactInfoRequest.rejected,
+      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+        ...state,
+        error: action.payload,
+        contactInfoLoading: false,
+      }),
+    );
+
+    builder.addCase(siteContactInfoRequest.pending, (state) => {
+      return {
+        ...state,
+        contactInfoLoading: true,
+        error: null,
+      };
+    });
   },
 });
 
@@ -632,6 +691,11 @@ export const siteOceanSenseDataErrorSelector = (
   state: RootState,
 ): SelectedSiteState['oceanSenseDataError'] =>
   state.selectedSite.oceanSenseDataError;
+
+export const siteContactInfoLoadingSelector = (
+  state: RootState,
+): SelectedSiteState['contactInfoLoading'] =>
+  state.selectedSite.contactInfoLoading;
 
 export const {
   setSiteDraft,

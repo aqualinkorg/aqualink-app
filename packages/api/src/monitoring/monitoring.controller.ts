@@ -62,4 +62,11 @@ export class MonitoringController {
   getSitesOverview(@Query() getSitesOverviewDto: GetSitesOverviewDto) {
     return this.monitoringService.SitesOverview(getSitesOverviewDto);
   }
+
+  @Get('sites-status')
+  @ApiOperation({ summary: "Get sites' status" })
+  @Auth(AdminLevel.SuperAdmin)
+  getSitesStatus() {
+    return this.monitoringService.getSitesStatus();
+  }
 }

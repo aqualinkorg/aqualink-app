@@ -136,6 +136,7 @@ function SitesOverview() {
       headCells={headCells}
       bodyCells={bodyCells}
       filters={filters}
+      fetchOnEnter
     />
   );
 }

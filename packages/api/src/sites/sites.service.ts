@@ -582,4 +582,15 @@ export class SitesService {
     // All checks passed, return video stream url.
     return site.videoStream;
   }
+
+  async getContactInformation(siteId: number) {
+    const { contactInformation } = await getSite(
+      siteId,
+      this.sitesRepository,
+      undefined,
+      true,
+    );
+
+    return { contactInformation };
+  }
 }

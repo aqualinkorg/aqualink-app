@@ -21,6 +21,7 @@ interface MonitoringTableWrapperProps<T> {
   filters?: React.JSX.Element;
   defaultSortColumn?: keyof T;
   defaultOrder?: Order;
+  fetchOnEnter?: boolean;
 }
 
 function MonitoringTableWrapper<
@@ -33,6 +34,7 @@ function MonitoringTableWrapper<
   filters,
   defaultSortColumn,
   defaultOrder,
+  fetchOnEnter = false,
 }: MonitoringTableWrapperProps<T>) {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
@@ -46,7 +48,7 @@ function MonitoringTableWrapper<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  function onGetMetrics() {
+  const onGetMetrics = React.useCallback(() => {
     fetchData({
       user,
       enqueueSnackbar,
@@ -54,7 +56,20 @@ function MonitoringTableWrapper<
       setResult,
       getResult,
     });
-  }
+  }, [enqueueSnackbar, getResult, user]);
+
+  React.useEffect(() => {
+    const keyDownHandler = (event: any) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        onGetMetrics();
+      }
+    };
+    if (fetchOnEnter) document.addEventListener('keydown', keyDownHandler);
+    return () => {
+      if (fetchOnEnter) document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, [fetchOnEnter, onGetMetrics]);
 
   return (
     <div>

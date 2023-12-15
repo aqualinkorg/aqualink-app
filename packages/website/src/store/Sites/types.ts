@@ -281,6 +281,7 @@ export interface Site {
   collectionData?: CollectionData;
   sketchFab?: SiteSketchFab;
   display: boolean;
+  contactInformation?: string;
 }
 
 export interface SiteSketchFab {
@@ -400,6 +401,7 @@ export interface SelectedSiteState {
   forecastData?: ForecastData[] | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
+  contactInfoLoading: boolean;
   latestOceanSenseDataError?: string | null;
   oceanSenseData?: OceanSenseData;
   oceanSenseDataLoading: boolean;
@@ -429,4 +431,13 @@ export interface SpotterInfoResponse {
     longitude: number;
     timestamp: string;
   }>;
+}
+
+export interface GetSiteContactInfoProps {
+  siteId: number;
+  token: string;
+}
+
+export interface GetSiteContactInfoResponse {
+  contactInformation: string;
 }
