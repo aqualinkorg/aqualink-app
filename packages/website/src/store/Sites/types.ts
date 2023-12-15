@@ -93,7 +93,12 @@ export const metricsKeysList = [
 
 export type MetricsKeys = typeof metricsKeysList[number];
 
-type Status = 'in_review' | 'rejected' | 'approved' | 'shipped' | 'deployed';
+export type Status =
+  | 'in_review'
+  | 'rejected'
+  | 'approved'
+  | 'shipped'
+  | 'deployed';
 
 // This recursive type converts string literals from snake_case to camelCase.
 // It splits the input string into three parts: P1, P2 and P3.

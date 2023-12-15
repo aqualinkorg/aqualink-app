@@ -7,6 +7,7 @@ const tiles = [
   { title: 'Site Metrics', link: '/monitoring/site-metrics' },
   { title: 'Monthly Report', link: '/monitoring/monthly-report' },
   { title: 'Surveys Report', link: '/monitoring/surveys-report' },
+  { title: 'Sites Overview', link: '/monitoring/sites-overview' },
 ];
 
 function Monitoring() {

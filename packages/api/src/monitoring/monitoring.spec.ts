@@ -93,6 +93,29 @@ export const monitoringTests = () => {
     expect(rsp.body[0].siteName).toBeDefined();
     expect(rsp.body[0].userEmail).toBeDefined();
     expect(rsp.body[0].userFullName).toBeDefined();
-    expect(rsp.body[0].surveyMediaNum).toBeDefined();
+    expect(rsp.body[0].surveyMediaCount).toBeDefined();
+  });
+
+  it('GET /sites-overview get sites overview', async () => {
+    mockExtractAndVerifyToken(adminFirebaseUserMock);
+    const rsp = await request(app.getHttpServer())
+      .get('/monitoring/sites-overview')
+      .send();
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.length).toBe(3);
+
+    expect(rsp.body[0].siteId).toBeDefined();
+    expect(rsp.body[0].siteName).toBeDefined();
+    expect(rsp.body[0].organizations).toBeDefined();
+    expect(rsp.body[0].adminNames).toBeDefined();
+    expect(rsp.body[0].adminEmails).toBeDefined();
+    expect(rsp.body[0].status).toBeDefined();
+    expect(rsp.body[0].depth).toBeDefined();
+    expect(rsp.body[0].spotterId).toBeDefined();
+    expect(rsp.body[0].videoStream).toBeDefined();
+    expect(rsp.body[0].updatedAt).toBeDefined();
+    expect(rsp.body[0].lastDataReceived).toBeDefined();
+    expect(rsp.body[0].surveysCount).toBeDefined();
   });
 };

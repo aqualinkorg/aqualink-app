@@ -45,12 +45,15 @@ interface MonitoringTableProps<T> {
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
+  // sort a before b
+  if (b[orderBy] == null || b[orderBy] < a[orderBy]) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  // sort a after b
+  if (a[orderBy] == null || b[orderBy] > a[orderBy]) {
     return 1;
   }
+  // keep original order of a and b
   return 0;
 }
 
@@ -125,7 +128,7 @@ function MonitoringTable<
 
   return (
     <Paper>
-      <TableContainer>
+      <TableContainer style={{ maxHeight: '80vh' }}>
         <Table>
           <TableHead>
             <TableRow style={{ backgroundColor: colors.backgroundGray }}>

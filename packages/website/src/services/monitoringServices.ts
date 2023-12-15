@@ -1,4 +1,5 @@
 import requests from 'helpers/requests';
+import { Status } from 'store/Sites/types';
 import { MonitoringMetric } from 'utils/types';
 
 interface BasicProps {
@@ -73,7 +74,7 @@ export type GetSurveysReportResponse = {
   siteId: number;
   siteName: string;
   surveyId: number;
-  surveyMediaNum: number;
+  surveyMediaCount: number;
   updatedAt: string;
   userEmail: string;
   userFullName: string;
@@ -86,9 +87,43 @@ const getSurveysReport = ({ token }: GetSurveysReportProps) =>
     token,
   });
 
+type GetSitesOverviewProps = BasicProps &
+  Partial<{
+    siteId: number;
+    siteName: string;
+    spotterId: string;
+    adminEmail: string;
+    adminUsername: string;
+    organization: string;
+    status: Status;
+  }>;
+
+export type GetSitesOverviewResponse = {
+  siteId: number;
+  siteName: string;
+  depth: number;
+  status: Status;
+  organizations: string[];
+  adminNames: string[];
+  adminEmails: string[];
+  spotterId: string;
+  videoStream: string;
+  updatedAt: string;
+  lastDataReceived: string | null;
+  surveysCount: number;
+}[];
+
+const getSitesOverview = ({ token, ...rest }: GetSitesOverviewProps) =>
+  requests.send<GetSitesOverviewResponse>({
+    method: 'GET',
+    url: `monitoring/sites-overview${requests.generateUrlQueryParams(rest)}`,
+    token,
+  });
+
 export default {
   postMonitoringMetric,
   getMonitoringStats,
   getMonitoringLastMonth,
   getSurveysReport,
+  getSitesOverview,
 };

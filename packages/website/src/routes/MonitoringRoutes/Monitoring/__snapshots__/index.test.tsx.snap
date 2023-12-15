@@ -59,6 +59,24 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
         </mock-cardcontent>
       </mock-card>
     </a>
+    <a
+      class="makeStyles-link-3"
+      href="/monitoring/sites-overview"
+    >
+      <mock-card
+        classname="makeStyles-root-1"
+      >
+        <mock-cardcontent>
+          <mock-typography
+            classname="makeStyles-title-2"
+            color="textSecondary"
+            variant="h5"
+          >
+            Sites Overview
+          </mock-typography>
+        </mock-cardcontent>
+      </mock-card>
+    </a>
   </div>
 </div>
 `;

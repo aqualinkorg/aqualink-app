@@ -8,9 +8,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DateTime } from 'luxon';
 import { Site } from 'sites/sites.entity';
 import { Survey } from 'surveys/surveys.entity';
+import { LatestData } from 'time-series/latest-data.entity';
 import { IsNull, Not, Repository } from 'typeorm';
 import { AdminLevel, User } from 'users/users.entity';
 import { getDefaultDates } from 'utils/dates';
+import { GetSitesOverview } from './dto/get-sites-overview.dto';
 import { GetMonitoringStatsDto } from './dto/get-monitoring-stats.dto';
 import { PostMonitoringMetricDto } from './dto/post-monitoring-metric.dto';
 import { Monitoring } from './monitoring.entity';
@@ -35,6 +37,9 @@ export class MonitoringService {
 
     @InjectRepository(Survey)
     private surveyRepository: Repository<Survey>,
+
+    @InjectRepository(LatestData)
+    private latestDataRepository: Repository<LatestData>,
   ) {}
 
   private async getMetricsForSites({
@@ -221,7 +226,7 @@ export class MonitoringService {
       .addSelect('s.name', 'siteName')
       .addSelect('u.email', 'userEmail')
       .addSelect('u.full_name', 'userFullName')
-      .addSelect('COUNT(sm.id)::int', 'surveyMediaNum')
+      .addSelect('COUNT(sm.id)::int', 'surveyMediaCount')
       .leftJoin('site', 's', 'survey.site_id = s.id')
       .leftJoin('users', 'u', 'survey.user_id = u.id')
       .leftJoin('survey_media', 'sm', 'sm.survey_id = survey.id')
@@ -229,5 +234,106 @@ export class MonitoringService {
         'survey.site_id, survey.id, survey.dive_date, survey.updated_at, s.id, s.name, u.email, u.full_name',
       )
       .getRawMany();
+  }
+
+  SitesOverview({
+    siteId,
+    siteName,
+    spotterId,
+    adminEmail,
+    adminUsername,
+    organization,
+    status,
+  }: GetSitesOverview) {
+    const latestDataSubQuery = this.latestDataRepository
+      .createQueryBuilder('latest_data')
+      .select(
+        'DISTINCT ON (latest_data.site_id) latest_data.site_id, latest_data.timestamp',
+      )
+      .where(`latest_data.source = 'spotter'`)
+      .orderBy('latest_data.site_id')
+      .addOrderBy('latest_data.timestamp', 'DESC');
+
+    const surveysCountSubQuery = this.surveyRepository
+      .createQueryBuilder('survey')
+      .select('survey.site_id', 'site_id')
+      .addSelect('COUNT(*)', 'surveysCount')
+      .groupBy('survey.site_id');
+
+    const baseQuery = this.siteRepository
+      .createQueryBuilder('site')
+      .select('site.id', 'siteId')
+      .addSelect('site.name', 'siteName')
+      .addSelect('ARRAY_AGG(u.organization)', 'organizations')
+      .addSelect('ARRAY_AGG(u.full_name)', 'adminNames')
+      .addSelect('ARRAY_AGG(u.email)', 'adminEmails')
+      .addSelect('site.status', 'status')
+      .addSelect('site.depth', 'depth')
+      .addSelect('site.sensor_id', 'spotterId')
+      .addSelect('site.video_stream', 'videoStream')
+      .addSelect('site.updated_at', 'updatedAt')
+      .addSelect('latest_data.timestamp', 'lastDataReceived')
+      .addSelect('COALESCE("surveys_count"."surveysCount", 0)', 'surveysCount')
+      .leftJoin(
+        'users_administered_sites_site',
+        'uass',
+        'uass.site_id = site.id',
+      )
+      .leftJoin('users', 'u', 'uass.users_id = u.id')
+      .leftJoin(
+        `(${latestDataSubQuery.getQuery()})`,
+        'latest_data',
+        'latest_data.site_id = site.id',
+      )
+      .leftJoin(
+        `(${surveysCountSubQuery.getQuery()})`,
+        'surveys_count',
+        'surveys_count.site_id = site.id',
+      );
+
+    const withSiteId = siteId
+      ? baseQuery.andWhere('site.id = :siteId', { siteId })
+      : baseQuery;
+
+    const withSiteName = siteName
+      ? withSiteId.andWhere('site.name = :siteName', { siteName })
+      : withSiteId;
+
+    const withSpotterId = spotterId
+      ? withSiteName.andWhere('site.sensor_id = :spotterId', { spotterId })
+      : withSiteName;
+
+    const withAdminEmail = adminEmail
+      ? withSpotterId.andWhere('u.email = :adminEmail', { adminEmail })
+      : withSpotterId;
+
+    const withAdminUserName = adminUsername
+      ? withAdminEmail.andWhere('u.full_name = :adminUsername', {
+          adminUsername,
+        })
+      : withAdminEmail;
+
+    const withOrganization = organization
+      ? withAdminUserName.andWhere('u.organization = :organization', {
+          organization,
+        })
+      : withAdminUserName;
+
+    const withStatus = status
+      ? withOrganization.andWhere('site.status = :status', { status })
+      : withOrganization;
+
+    const ret = withStatus
+      .groupBy('site.id')
+      .addGroupBy('site.name')
+      .addGroupBy('site.status')
+      .addGroupBy('site.depth')
+      .addGroupBy('site.sensor_id')
+      .addGroupBy('site.video_stream')
+      .addGroupBy('site.updated_at')
+      .addGroupBy('latest_data.timestamp')
+      .addGroupBy('"surveys_count"."surveysCount"');
+
+    return ret.getRawMany();
   }
 }

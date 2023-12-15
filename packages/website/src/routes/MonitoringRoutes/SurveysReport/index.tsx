@@ -1,5 +1,4 @@
 import { BodyCell, HeadCell } from 'common/MonitoringTable';
-import { DateTime } from 'luxon';
 import React from 'react';
 import monitoringServices, {
   GetSurveysReportResponse,
@@ -15,30 +14,29 @@ const headCells: HeadCell<TableData>[] = [
   { id: 'diveDate', label: 'Dive Date', tooltipText: '' },
   { id: 'surveyId', label: 'Survey ID', tooltipText: '' },
   { id: 'updatedAt', label: 'Updated At', tooltipText: '' },
-  { id: 'surveyMediaNum', label: 'Number of Survey Media', tooltipText: '' },
+  { id: 'surveyMediaCount', label: 'Number of Survey Media', tooltipText: '' },
   { id: 'userEmail', label: 'User Email', tooltipText: '' },
   { id: 'userFullName', label: 'User Name', tooltipText: '' },
 ];
 
 const bodyCells: BodyCell<TableData>[] = [
-  { id: 'siteId', linkTo: (row) => `/sites/${row.siteId}` },
+  { id: 'siteId', linkTo: (row) => `/sites/${encodeURIComponent(row.siteId)}` },
   { id: 'siteName' },
-  {
-    id: 'diveDate',
-    format: (row) =>
-      DateTime.fromISO(row.diveDate).toFormat('yyyy-MM-dd HH:mm:ss'),
-  },
+  { id: 'diveDate' },
   {
     id: 'surveyId',
-    linkTo: (row) => `/sites/${row.siteId}/survey_details/${row.surveyId}`,
+    linkTo: (row) =>
+      `/sites/${encodeURIComponent(
+        row.siteId,
+      )}/survey_details/${encodeURIComponent(row.surveyId)}`,
   },
   { id: 'updatedAt' },
-  { id: 'surveyMediaNum' },
+  { id: 'surveyMediaCount' },
   { id: 'userEmail' },
   { id: 'userFullName' },
 ];
 
-async function getResult(token: string) {
+async function getResult(token: string): Promise<TableData[]> {
   const { data } = await monitoringServices.getSurveysReport({
     token,
   });
@@ -48,6 +46,7 @@ async function getResult(token: string) {
 function SurveysReport() {
   return (
     <MonitoringTableWrapper
+      pageTitle="Surveys Report"
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}

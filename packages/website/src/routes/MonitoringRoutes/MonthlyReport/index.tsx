@@ -37,7 +37,7 @@ const headCells: HeadCell<TableData>[] = [
 ];
 
 const bodyCells: BodyCell<TableData>[] = [
-  { id: 'siteId', linkTo: (row) => `/sites/${row.siteId}` },
+  { id: 'siteId', linkTo: (row) => `/sites/${encodeURIComponent(row.siteId)}` },
   { id: 'siteName' },
   { id: 'totalRequests' },
   { id: 'registeredUserRequests' },
@@ -46,7 +46,7 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'CSVDownloadRequests' },
 ];
 
-async function getResult(token: string) {
+async function getResult(token: string): Promise<TableData[]> {
   const { data } = await monitoringServices.getMonitoringLastMonth({
     token,
   });
@@ -79,6 +79,7 @@ async function getResult(token: string) {
 function MonthlyReport() {
   return (
     <MonitoringTableWrapper
+      pageTitle="Monthly Report"
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}

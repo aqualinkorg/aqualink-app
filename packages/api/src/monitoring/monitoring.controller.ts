@@ -54,4 +54,11 @@ export class MonitoringController {
   getSurveysReport() {
     return this.monitoringService.surveysReport();
   }
+
+  @Get('sites-overview')
+  @ApiOperation({ summary: 'Get Aqualink overview' })
+  @Auth(AdminLevel.SuperAdmin)
+  getSitesOverview(@Query() getSitesOverviewDto: GetMonitoringStatsDto) {
+    return this.monitoringService.SitesOverview(getSitesOverviewDto);
+  }
 }
