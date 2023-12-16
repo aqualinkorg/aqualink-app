@@ -234,7 +234,7 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
           data-shrink="false"
         >
-          Admin Username
+          Admin Name
         </label>
         <div
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
@@ -253,7 +253,7 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
               class="PrivateNotchedOutline-legendLabelled-8"
             >
               <span>
-                Admin Username
+                Admin Name
               </span>
             </legend>
           </fieldset>
