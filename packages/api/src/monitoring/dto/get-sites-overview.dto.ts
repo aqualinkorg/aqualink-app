@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEmail, IsEnum, IsOptional, Validate } from 'class-validator';
+import { IsEnum, IsOptional, Validate } from 'class-validator';
 import { Site, SiteStatus } from 'sites/sites.entity';
 import { EntityExists } from 'validations/entity-exists.constraint';
 
