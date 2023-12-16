@@ -260,7 +260,7 @@ export class MonitoringService {
       .addSelect('COUNT(*)', 'count')
       .groupBy('survey.site_id');
 
-    const baseQuery = this.siteRepository
+    return this.siteRepository
       .createQueryBuilder('site')
       .select('site.id', 'siteId')
       .addSelect('site.name', 'siteName')
@@ -290,9 +290,7 @@ export class MonitoringService {
         `(${surveysCountSubQuery.getQuery()})`,
         'surveys_count',
         'surveys_count.site_id = site.id',
-      );
-
-    return baseQuery
+      )
       .andWhere((qb) => {
         if (siteId) {
           qb.andWhere('site.id = :siteId', { siteId });
