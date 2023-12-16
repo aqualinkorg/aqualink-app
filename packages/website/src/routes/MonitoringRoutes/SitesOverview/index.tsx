@@ -72,7 +72,7 @@ function SitesOverview() {
     { label: 'Organization', value: organization, setValue: setOrganization },
     { label: 'Admin Email', value: adminEmail, setValue: setAdminEmail },
     {
-      label: 'Admin Username',
+      label: 'Admin Name',
       value: adminUserName,
       setValue: setAdminUserName,
     },
