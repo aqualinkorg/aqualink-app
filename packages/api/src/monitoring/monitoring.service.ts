@@ -260,7 +260,7 @@ export class MonitoringService {
       .addSelect('COUNT(*)', 'count')
       .groupBy('survey.site_id');
 
-    return this.siteRepository
+    const baseQuery = this.siteRepository
       .createQueryBuilder('site')
       .select('site.id', 'siteId')
       .addSelect('site.name', 'siteName')
@@ -290,38 +290,45 @@ export class MonitoringService {
         `(${surveysCountSubQuery.getQuery()})`,
         'surveys_count',
         'surveys_count.site_id = site.id',
-      )
-      .andWhere((qb) => {
-        if (siteId) {
-          qb.andWhere('site.id = :siteId', { siteId });
-        }
-        if (siteName) {
-          qb.andWhere('LOWER(site.name) LIKE :siteName', {
-            siteName: `%${siteName.toLowerCase()}%`,
-          });
-        }
-        if (spotterId) {
-          qb.andWhere('site.sensor_id = :spotterId', { spotterId });
-        }
-        if (adminEmail) {
-          qb.andWhere('LOWER(u.email) LIKE :adminEmail', {
-            adminEmail: `%${adminEmail.toLowerCase()}%`,
-          });
-        }
-        if (adminUsername) {
-          qb.andWhere('LOWER(u.full_name) LIKE :adminUsername', {
-            adminUsername: `%${adminUsername.toLowerCase()}%`,
-          });
-        }
-        if (organization) {
-          qb.andWhere('LOWER(u.organization) LIKE :organization', {
-            organization: `%${organization.toLowerCase()}%`,
-          });
-        }
-        if (status) {
-          qb.andWhere('site.status = :status', { status });
-        }
-      })
+      );
+
+    const withSiteId = siteId
+      ? baseQuery.andWhere('site.id = :siteId', { siteId })
+      : baseQuery;
+
+    const withSiteName = siteName
+      ? withSiteId.andWhere('site.name ILIKE :siteName', {
+          siteName: `%${siteName}%`,
+        })
+      : withSiteId;
+
+    const withSpotterId = spotterId
+      ? withSiteName.andWhere('site.sensor_id = :spotterId', { spotterId })
+      : withSiteName;
+
+    const withAdminEmail = adminEmail
+      ? withSpotterId.andWhere('u.email ILIKE :adminEmail', {
+          adminEmail: `%${adminEmail}%`,
+        })
+      : withSpotterId;
+
+    const withAdminUserName = adminUsername
+      ? withAdminEmail.andWhere('u.full_name ILIKE :adminUsername', {
+          adminUsername: `%${adminUsername}%`,
+        })
+      : withAdminEmail;
+
+    const withOrganization = organization
+      ? withAdminUserName.andWhere('u.organization ILIKE :organization', {
+          organization: `%${organization}%`,
+        })
+      : withAdminUserName;
+
+    const withStatus = status
+      ? withOrganization.andWhere('site.status = :status', { status })
+      : withOrganization;
+
+    const ret = withStatus
       .groupBy('site.id')
       .addGroupBy('site.name')
       .addGroupBy('site.status')
@@ -331,8 +338,9 @@ export class MonitoringService {
       .addGroupBy('site.updated_at')
       .addGroupBy('latest_data.timestamp')
       .addGroupBy('surveys_count.count')
-      .addGroupBy('site.contact_information')
-      .getRawMany();
+      .addGroupBy('site.contact_information');
+
+    return ret.getRawMany();
   }
 
   getSitesStatus() {
