@@ -23,7 +23,6 @@ export class GetSitesOverviewDto {
   @ApiProperty({ example: 'admin@example.com' })
   @Type(() => String)
   @IsOptional()
-  @IsEmail()
   adminEmail?: string;
 
   @ApiProperty({ example: 'John Smith' })
