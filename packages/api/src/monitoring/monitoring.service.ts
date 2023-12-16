@@ -292,39 +292,38 @@ export class MonitoringService {
         'surveys_count.site_id = site.id',
       );
 
-    const withSiteId = siteId
-      ? baseQuery.andWhere('site.id = :siteId', { siteId })
-      : baseQuery;
-
-    const withSiteName = siteName
-      ? withSiteId.andWhere('site.name = :siteName', { siteName })
-      : withSiteId;
-
-    const withSpotterId = spotterId
-      ? withSiteName.andWhere('site.sensor_id = :spotterId', { spotterId })
-      : withSiteName;
-
-    const withAdminEmail = adminEmail
-      ? withSpotterId.andWhere('u.email = :adminEmail', { adminEmail })
-      : withSpotterId;
-
-    const withAdminUserName = adminUsername
-      ? withAdminEmail.andWhere('u.full_name = :adminUsername', {
-          adminUsername,
-        })
-      : withAdminEmail;
-
-    const withOrganization = organization
-      ? withAdminUserName.andWhere('u.organization = :organization', {
-          organization,
-        })
-      : withAdminUserName;
-
-    const withStatus = status
-      ? withOrganization.andWhere('site.status = :status', { status })
-      : withOrganization;
-
-    const ret = withStatus
+    return baseQuery
+      .andWhere((qb) => {
+        if (siteId) {
+          qb.andWhere('site.id = :siteId', { siteId });
+        }
+        if (siteName) {
+          qb.andWhere('LOWER(site.name) LIKE :siteName', {
+            siteName: `%${siteName.toLowerCase()}%`,
+          });
+        }
+        if (spotterId) {
+          qb.andWhere('site.sensor_id = :spotterId', { spotterId });
+        }
+        if (adminEmail) {
+          qb.andWhere('LOWER(u.email) LIKE :adminEmail', {
+            adminEmail: `%${adminEmail.toLowerCase()}%`,
+          });
+        }
+        if (adminUsername) {
+          qb.andWhere('LOWER(u.full_name) LIKE :adminUsername', {
+            adminUsername: `%${adminUsername.toLowerCase()}%`,
+          });
+        }
+        if (organization) {
+          qb.andWhere('LOWER(u.organization) LIKE :organization', {
+            organization: `%${organization.toLowerCase()}%`,
+          });
+        }
+        if (status) {
+          qb.andWhere('site.status = :status', { status });
+        }
+      })
       .groupBy('site.id')
       .addGroupBy('site.name')
       .addGroupBy('site.status')
@@ -334,9 +333,8 @@ export class MonitoringService {
       .addGroupBy('site.updated_at')
       .addGroupBy('latest_data.timestamp')
       .addGroupBy('surveys_count.count')
-      .addGroupBy('site.contact_information');
-
-    return ret.getRawMany();
+      .addGroupBy('site.contact_information')
+      .getRawMany();
   }
 
   getSitesStatus() {
