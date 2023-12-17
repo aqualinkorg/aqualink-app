@@ -9,7 +9,7 @@ import { DateTime } from 'luxon';
 import { Site } from 'sites/sites.entity';
 import { Survey } from 'surveys/surveys.entity';
 import { LatestData } from 'time-series/latest-data.entity';
-import { escape, IsNull, Not, Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { AdminLevel, User } from 'users/users.entity';
 import { getDefaultDates } from 'utils/dates';
 import { GetSitesOverviewDto } from './dto/get-sites-overview.dto';
@@ -24,6 +24,10 @@ interface GetMetricsForSitesProps {
   aggregationPeriod?: 'week' | 'month';
   startDate?: Date;
   endDate?: Date;
+}
+
+function escapeLikeString(raw: string): string {
+  return raw.replace(/[\\%_]/g, '\\$&');
 }
 
 @Injectable()
@@ -298,7 +302,7 @@ export class MonitoringService {
 
     const withSiteName = siteName
       ? withSiteId.andWhere('site.name ILIKE :siteName', {
-          siteName: `%${escape(siteName)}%`,
+          siteName: `%${escapeLikeString(siteName)}%`,
         })
       : withSiteId;
 
@@ -308,19 +312,19 @@ export class MonitoringService {
 
     const withAdminEmail = adminEmail
       ? withSpotterId.andWhere('u.email ILIKE :adminEmail', {
-          adminEmail: `%${escape(adminEmail)}%`,
+          adminEmail: `%${escapeLikeString(adminEmail)}%`,
         })
       : withSpotterId;
 
     const withAdminUserName = adminUsername
       ? withAdminEmail.andWhere('u.full_name ILIKE :adminUsername', {
-          adminUsername: `%${escape(adminUsername)}%`,
+          adminUsername: `%${escapeLikeString(adminUsername)}%`,
         })
       : withAdminEmail;
 
     const withOrganization = organization
       ? withAdminUserName.andWhere('u.organization ILIKE :organization', {
-          organization: `%${escape(organization)}%`,
+          organization: `%${escapeLikeString(organization)}%`,
         })
       : withAdminUserName;
 
