@@ -9,7 +9,7 @@ import { DateTime } from 'luxon';
 import { Site } from 'sites/sites.entity';
 import { Survey } from 'surveys/surveys.entity';
 import { LatestData } from 'time-series/latest-data.entity';
-import { IsNull, Not, Repository } from 'typeorm';
+import { escape, IsNull, Not, Repository } from 'typeorm';
 import { AdminLevel, User } from 'users/users.entity';
 import { getDefaultDates } from 'utils/dates';
 import { GetSitesOverviewDto } from './dto/get-sites-overview.dto';
@@ -298,7 +298,7 @@ export class MonitoringService {
 
     const withSiteName = siteName
       ? withSiteId.andWhere('site.name ILIKE :siteName', {
-          siteName: `%${siteName}%`,
+          siteName: `%${escape(siteName)}%`,
         })
       : withSiteId;
 
@@ -308,19 +308,19 @@ export class MonitoringService {
 
     const withAdminEmail = adminEmail
       ? withSpotterId.andWhere('u.email ILIKE :adminEmail', {
-          adminEmail: `%${adminEmail}%`,
+          adminEmail: `%${escape(adminEmail)}%`,
         })
       : withSpotterId;
 
     const withAdminUserName = adminUsername
       ? withAdminEmail.andWhere('u.full_name ILIKE :adminUsername', {
-          adminUsername: `%${adminUsername}%`,
+          adminUsername: `%${escape(adminUsername)}%`,
         })
       : withAdminEmail;
 
     const withOrganization = organization
       ? withAdminUserName.andWhere('u.organization ILIKE :organization', {
-          organization: `%${organization}%`,
+          organization: `%${escape(organization)}%`,
         })
       : withAdminUserName;
 

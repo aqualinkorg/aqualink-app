@@ -62,7 +62,7 @@ function SitesOverview() {
   const [spotterId, setSpotterId] = React.useState<string>('');
   const [organization, setOrganization] = React.useState<string>('');
   const [adminEmail, setAdminEmail] = React.useState<string>('');
-  const [adminUserName, setAdminUserName] = React.useState<string>('');
+  const [adminUsername, setAdminUsername] = React.useState<string>('');
   const [status, setStatus] = React.useState<Status | ''>('');
 
   const textFilters = [
@@ -73,8 +73,8 @@ function SitesOverview() {
     { label: 'Admin Email', value: adminEmail, setValue: setAdminEmail },
     {
       label: 'Admin Name',
-      value: adminUserName,
-      setValue: setAdminUserName,
+      value: adminUsername,
+      setValue: setAdminUsername,
     },
   ];
 
@@ -107,7 +107,7 @@ function SitesOverview() {
         ...(siteName ? { siteName } : {}),
         ...(organization ? { organization } : {}),
         ...(adminEmail ? { adminEmail } : {}),
-        ...(adminUserName ? { adminUserName } : {}),
+        ...(adminUsername ? { adminUsername } : {}),
         ...(status ? { status } : {}),
       });
 
@@ -120,7 +120,7 @@ function SitesOverview() {
     },
     [
       adminEmail,
-      adminUserName,
+      adminUsername,
       organization,
       siteId,
       siteName,
