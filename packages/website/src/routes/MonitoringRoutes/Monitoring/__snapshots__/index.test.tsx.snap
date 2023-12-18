@@ -35,6 +35,34 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
     </a>
     <a
       class="makeStyles-link-3"
+      href="/monitoring/sites-status"
+    >
+      <mock-card
+        classname="makeStyles-root-1"
+        raised="true"
+      >
+        <mock-cardcontent
+          classname="makeStyles-cardContent-5"
+        >
+          <mock-typography
+            classname="makeStyles-title-2"
+            color="textSecondary"
+            variant="h5"
+          >
+            Sites Status
+          </mock-typography>
+          <mock-typography
+            component="p"
+            style="color: black; padding-bottom: 1rem;"
+            variant="body2"
+          >
+            Summary of status data accross all sites
+          </mock-typography>
+        </mock-cardcontent>
+      </mock-card>
+    </a>
+    <a
+      class="makeStyles-link-3"
       href="/monitoring/site-metrics"
     >
       <mock-card
@@ -105,7 +133,7 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
             color="textSecondary"
             variant="h5"
           >
-            Surveys Report
+            Surveys
           </mock-typography>
           <mock-typography
             component="p"
@@ -113,34 +141,6 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
             variant="body2"
           >
             List all recent surveys
-          </mock-typography>
-        </mock-cardcontent>
-      </mock-card>
-    </a>
-    <a
-      class="makeStyles-link-3"
-      href="/monitoring/sites-status"
-    >
-      <mock-card
-        classname="makeStyles-root-1"
-        raised="true"
-      >
-        <mock-cardcontent
-          classname="makeStyles-cardContent-5"
-        >
-          <mock-typography
-            classname="makeStyles-title-2"
-            color="textSecondary"
-            variant="h5"
-          >
-            Sites Status
-          </mock-typography>
-          <mock-typography
-            component="p"
-            style="color: black; padding-bottom: 1rem;"
-            variant="body2"
-          >
-            Summary of status data accross all sites
           </mock-typography>
         </mock-cardcontent>
       </mock-card>

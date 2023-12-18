@@ -16,6 +16,11 @@ const tiles: Tile[] = [
     description: 'Contact info and status data for all sites',
   },
   {
+    title: 'Sites Status',
+    link: '/monitoring/sites-status',
+    description: 'Summary of status data accross all sites',
+  },
+  {
     title: 'Site Usage Metrics',
     link: '/monitoring/site-metrics',
     description: 'Detailed usage metrics for one site',
@@ -26,14 +31,9 @@ const tiles: Tile[] = [
     description: 'Detailed usage metrics for all sites over the past month',
   },
   {
-    title: 'Surveys Report',
+    title: 'Surveys',
     link: '/monitoring/surveys-report',
     description: 'List all recent surveys',
-  },
-  {
-    title: 'Sites Status',
-    link: '/monitoring/sites-status',
-    description: 'Summary of status data accross all sites',
   },
 ];
 
@@ -73,8 +73,8 @@ function Monitoring() {
 const useStyles = makeStyles(() => ({
   root: {
     width: '17rem',
-    height: '10rem',
-    boxShadow: '10rem',
+    height: '7rem',
+    boxShadow: '7rem',
     '&:hover': {
       backgroundColor: colors.backgroundGray,
     },
