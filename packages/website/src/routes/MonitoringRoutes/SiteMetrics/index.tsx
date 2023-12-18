@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
+import { Grid, makeStyles, TextField } from '@material-ui/core';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -6,22 +6,18 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import React from 'react';
 import { DateTime } from 'luxon';
-import { useSelector } from 'react-redux';
-import { userInfoSelector } from 'store/User/userSlice';
-import { useSnackbar } from 'notistack';
 import monitoringServices, {
   GetMonitoringMetricsResponse,
   MonitoringData,
 } from 'services/monitoringServices';
-import ChartWithTooltip from 'common/Chart/ChartWithTooltip';
+import ChartWithTooltip, {
+  ChartWithTooltipProps,
+} from 'common/Chart/ChartWithTooltip';
 import { Dataset } from 'common/Chart';
 import { ArrayElement } from 'utils/types';
 import { ValueWithTimestamp } from 'store/Sites/types';
 import OneColorSwitch from 'common/OneColorSwitch';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Link } from 'react-router-dom';
-import LoadingBackdrop from 'common/LoadingBackdrop';
-import { fetchData } from '../utils';
+import MonitoringTableWrapper from '../MonitoringTableWrapper';
 
 function transformToDatasets(
   siteInfo: ArrayElement<GetMonitoringMetricsResponse>,
@@ -137,9 +133,7 @@ function getChartPeriod(siteInfo: ArrayElement<GetMonitoringMetricsResponse>) {
 }
 
 function SiteMetrics() {
-  const user = useSelector(userInfoSelector);
   const classes = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
 
   const [siteId, setSiteId] = React.useState<string>('');
   const [spotterId, setSpotterId] = React.useState<string>('');
@@ -150,133 +144,120 @@ function SiteMetrics() {
   const [endDate, setEndDate] = React.useState<Date | null>(
     DateTime.now().toJSDate(),
   );
-  const [result, setResult] =
-    React.useState<GetMonitoringMetricsResponse | null>(null);
-  const [loading, setLoading] = React.useState<boolean>(false);
 
-  function onGetMetrics() {
-    fetchData({
-      user,
-      enqueueSnackbar,
-      setLoading,
-      setResult,
-      getResult: async (token) =>
-        (
-          await monitoringServices.getMonitoringStats({
-            token,
-            ...(siteId && { siteIds: [siteId] }),
-            ...(spotterId && { spotterId }),
-            monthly,
-            start: startDate?.toISOString(),
-            end: endDate?.toISOString(),
-          })
-        ).data,
-    });
-  }
+  React.useEffect(() => {
+    setSpotterId('');
+  }, [siteId]);
+
+  React.useEffect(() => {
+    setSiteId('');
+  }, [spotterId]);
+
+  const getResult = React.useCallback(
+    async (token) =>
+      (
+        await monitoringServices.getMonitoringStats({
+          token,
+          ...(siteId && { siteIds: [siteId] }),
+          ...(spotterId && { spotterId }),
+          monthly,
+          start: startDate?.toISOString(),
+          end: endDate?.toISOString(),
+        })
+      ).data,
+    [endDate, monthly, siteId, spotterId, startDate],
+  );
+
+  const filters = (
+    <div className={classes.filtersWrapper}>
+      <TextField
+        className={classes.filterItem}
+        variant="outlined"
+        label="Site ID"
+        value={siteId}
+        onChange={(e) => setSiteId(e.target.value)}
+      />
+      <TextField
+        className={classes.filterItem}
+        variant="outlined"
+        label="Spotter ID"
+        value={spotterId}
+        onChange={(e) => setSpotterId(e.target.value)}
+      />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          className={classes.filterItem}
+          disableToolbar
+          format="MM/dd/yyyy"
+          autoOk
+          size="small"
+          showTodayButton
+          value={startDate}
+          onChange={(e) => setStartDate(e)}
+          label="start date"
+          inputVariant="outlined"
+        />
+      </MuiPickersUtilsProvider>
+
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          className={classes.filterItem}
+          disableToolbar
+          format="MM/dd/yyyy"
+          autoOk
+          size="small"
+          showTodayButton
+          value={endDate}
+          onChange={(e) => setEndDate(e)}
+          label="end date"
+          inputVariant="outlined"
+        />
+      </MuiPickersUtilsProvider>
+
+      <Grid
+        container
+        alignItems="center"
+        spacing={1}
+        className={classes.switchContainer}
+      >
+        <Grid item>weekly</Grid>
+        <Grid item>
+          <OneColorSwitch
+            checked={monthly}
+            onChange={(e: any) => {
+              setMonthly(e.target.checked);
+            }}
+            name="checkedC"
+          />
+        </Grid>
+        <Grid item>monthly</Grid>
+      </Grid>
+    </div>
+  );
 
   return (
-    <div>
-      <LoadingBackdrop loading={loading} />
-      <Link to="/monitoring">
-        <Button
-          variant="outlined"
-          color="primary"
-          className={classes.button}
-          startIcon={<ArrowBackIcon />}
-        >
-          Go back
-        </Button>
-      </Link>
-
-      <div className={classes.filtersWrapper}>
-        <TextField
-          className={classes.filterItem}
-          variant="outlined"
-          label="Site ID"
-          value={siteId}
-          onChange={(e) => setSiteId(e.target.value)}
-        />
-        <TextField
-          className={classes.filterItem}
-          variant="outlined"
-          label="Spotter ID"
-          value={spotterId}
-          onChange={(e) => setSpotterId(e.target.value)}
-        />
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            className={classes.filterItem}
-            disableToolbar
-            format="MM/dd/yyyy"
-            autoOk
-            size="small"
-            showTodayButton
-            value={startDate}
-            onChange={(e) => setStartDate(e)}
-            label="start date"
-            inputVariant="outlined"
-          />
-        </MuiPickersUtilsProvider>
-
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            className={classes.filterItem}
-            disableToolbar
-            format="MM/dd/yyyy"
-            autoOk
-            size="small"
-            showTodayButton
-            value={endDate}
-            onChange={(e) => setEndDate(e)}
-            label="end date"
-            inputVariant="outlined"
-          />
-        </MuiPickersUtilsProvider>
-
-        <Grid
-          container
-          alignItems="center"
-          spacing={1}
-          className={classes.switchContainer}
-        >
-          <Grid item>weekly</Grid>
-          <Grid item>
-            <OneColorSwitch
-              checked={monthly}
-              onChange={(e) => {
-                setMonthly(e.target.checked);
-              }}
-              name="checkedC"
-            />
-          </Grid>
-          <Grid item>monthly</Grid>
-        </Grid>
-      </div>
-
-      <Button
-        color="primary"
-        variant="outlined"
-        onClick={() => onGetMetrics()}
-        className={classes.button}
-      >
-        Get metrics
-      </Button>
-      <div className={classes.resultsContainer}>
-        {result?.[0] && (
-          <ChartWithTooltip
-            className={classes.chart}
-            siteId={Number(siteId)}
-            surveys={[]}
-            datasets={transformToDatasets(result[0])}
-            temperatureThreshold={null}
-            maxMonthlyMean={null}
-            background
-            hideYAxisUnits
-            chartPeriod={getChartPeriod(result[0])}
-          />
-        )}
-      </div>
-    </div>
+    <MonitoringTableWrapper<
+      GetMonitoringMetricsResponse,
+      React.PropsWithChildren<ChartWithTooltipProps>
+    >
+      pageTitle="Sites Overview"
+      pageDescription="Use only one of Site ID or Spotter ID!"
+      ResultsComponent={ChartWithTooltip}
+      resultsComponentProps={(res) => ({
+        className: classes.chart,
+        siteId: Number(siteId),
+        surveys: [],
+        datasets: transformToDatasets(res[0]),
+        temperatureThreshold: null,
+        maxMonthlyMean: null,
+        background: true,
+        hideYAxisUnits: true,
+        chartPeriod: getChartPeriod(res[0]),
+      })}
+      getResult={getResult}
+      filters={filters}
+      fetchOnEnter
+    />
   );
 }
 
@@ -287,22 +268,6 @@ const useStyles = makeStyles(() => ({
     height: '16rem',
     marginBottom: '3rem',
     marginTop: '1rem',
-  },
-  resultsContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '8rem',
-    width: '100%',
-  },
-  optionsContainer: {
-    padding: '1rem',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-    width: '30rem',
-  },
-  button: {
-    margin: '1rem',
   },
   filtersWrapper: {
     display: 'flex',

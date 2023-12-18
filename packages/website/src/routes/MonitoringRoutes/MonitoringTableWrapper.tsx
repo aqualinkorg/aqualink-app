@@ -5,48 +5,39 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import { useSnackbar } from 'notistack';
-import MonitoringTable, {
-  BodyCell,
-  HeadCell,
-  Order,
-} from 'common/MonitoringTable';
 import LoadingBackdrop from 'common/LoadingBackdrop';
 import { fetchData } from './utils';
 
-interface MonitoringTableWrapperProps<T> {
-  getResult: (token: string) => Promise<T[]>;
-  headCells: HeadCell<T>[];
-  bodyCells: BodyCell<T>[];
+interface MonitoringTableWrapperProps<T, A> {
+  getResult: (token: string) => Promise<T>;
+  ResultsComponent: React.FC<A>;
+  resultsComponentProps: (results: T) => A;
   pageTitle: string;
   pageDescription?: string | React.JSX.Element;
   filters?: React.JSX.Element;
-  defaultSortColumn?: keyof T;
-  defaultOrder?: Order;
   fetchOnEnter?: boolean;
+  fetchOnPageLoad?: boolean;
 }
 
-function MonitoringTableWrapper<
-  T extends { [key in keyof T]: string | number | null },
->({
+function MonitoringTableWrapper<T, A>({
   getResult,
-  headCells,
-  bodyCells,
+  ResultsComponent,
+  resultsComponentProps,
   pageTitle,
   pageDescription,
   filters,
-  defaultSortColumn,
-  defaultOrder,
   fetchOnEnter = false,
-}: MonitoringTableWrapperProps<T>) {
+  fetchOnPageLoad = false,
+}: MonitoringTableWrapperProps<T, A>) {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [result, setResult] = React.useState<T[] | null>(null);
+  const [result, setResult] = React.useState<T | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    onGetMetrics();
+    if (fetchOnPageLoad) onGetMetrics();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
@@ -72,6 +63,8 @@ function MonitoringTableWrapper<
       if (fetchOnEnter) document.removeEventListener('keydown', keyDownHandler);
     };
   }, [fetchOnEnter, onGetMetrics]);
+
+  const props = result !== null && resultsComponentProps(result);
 
   return (
     <div>
@@ -104,15 +97,7 @@ function MonitoringTableWrapper<
       )}
       {filters && filters}
       <div className={classes.resultsContainer}>
-        {result && (
-          <MonitoringTable
-            headCells={headCells}
-            data={result}
-            bodyCells={bodyCells}
-            defaultSortColumn={defaultSortColumn}
-            defaultOrder={defaultOrder}
-          />
-        )}
+        {props && <ResultsComponent {...props} />}
       </div>
     </div>
   );

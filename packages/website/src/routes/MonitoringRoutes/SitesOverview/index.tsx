@@ -1,6 +1,10 @@
 import React from 'react';
 import monitoringServices from 'services/monitoringServices';
-import { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  MonitoringTableProps,
+} from 'common/MonitoringTable';
 import { Status } from 'store/Sites/types';
 import { makeStyles, TextField } from '@material-ui/core';
 import StatusSelector from 'common/StatusSelector';
@@ -137,15 +141,20 @@ function SitesOverview() {
   );
 
   return (
-    <MonitoringTableWrapper
+    <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Sites Overview"
-      defaultSortColumn="createdAt"
-      defaultOrder="desc"
+      ResultsComponent={MonitoringTable}
+      resultsComponentProps={(result) => ({
+        headCells,
+        data: result,
+        bodyCells,
+        defaultSortColumn: 'createdAt',
+        defaultOrder: 'desc',
+      })}
       getResult={getResult}
-      headCells={headCells}
-      bodyCells={bodyCells}
       filters={filters}
       fetchOnEnter
+      fetchOnPageLoad
     />
   );
 }

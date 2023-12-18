@@ -1,4 +1,8 @@
-import { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  MonitoringTableProps,
+} from 'common/MonitoringTable';
 import React from 'react';
 import monitoringServices, {
   GetSitesStatusResponse,
@@ -36,11 +40,16 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function SitesStatus() {
   return (
-    <MonitoringTableWrapper
+    <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Sites Status"
       getResult={getResult}
-      headCells={headCells}
-      bodyCells={bodyCells}
+      ResultsComponent={MonitoringTable}
+      resultsComponentProps={(result) => ({
+        headCells,
+        data: result,
+        bodyCells,
+      })}
+      fetchOnPageLoad
     />
   );
 }

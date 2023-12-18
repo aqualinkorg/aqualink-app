@@ -3,7 +3,11 @@ import monitoringServices, {
   GetMonitoringMetricsResponse,
   MonitoringData,
 } from 'services/monitoringServices';
-import { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  MonitoringTableProps,
+} from 'common/MonitoringTable';
 import { ArrayElement } from 'utils/types';
 import MonitoringTableWrapper from '../MonitoringTableWrapper';
 
@@ -78,11 +82,16 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function MonthlyReport() {
   return (
-    <MonitoringTableWrapper
+    <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Monthly Report"
       getResult={getResult}
-      headCells={headCells}
-      bodyCells={bodyCells}
+      ResultsComponent={MonitoringTable}
+      resultsComponentProps={(result) => ({
+        headCells,
+        data: result,
+        bodyCells,
+      })}
+      fetchOnPageLoad
     />
   );
 }

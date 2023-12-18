@@ -1,4 +1,8 @@
-import { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  MonitoringTableProps,
+} from 'common/MonitoringTable';
 import React from 'react';
 import monitoringServices, {
   GetSurveysReportResponse,
@@ -45,13 +49,18 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function SurveysReport() {
   return (
-    <MonitoringTableWrapper
+    <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Surveys Report"
       getResult={getResult}
-      headCells={headCells}
-      bodyCells={bodyCells}
-      defaultOrder="desc"
-      defaultSortColumn="diveDate"
+      ResultsComponent={MonitoringTable}
+      resultsComponentProps={(result) => ({
+        headCells,
+        data: result,
+        bodyCells,
+        defaultOrder: 'desc',
+        defaultSortColumn: 'diveDate',
+      })}
+      fetchOnPageLoad
     />
   );
 }

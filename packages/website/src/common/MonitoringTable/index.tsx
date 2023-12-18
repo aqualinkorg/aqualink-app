@@ -35,7 +35,7 @@ export interface BodyCell<T> {
   format?: (row: T) => string;
 }
 
-interface MonitoringTableProps<T> {
+export interface MonitoringTableProps<T> {
   defaultSortColumn?: keyof T;
   defaultOrder?: Order;
   headCells: HeadCell<T>[];
