@@ -6,6 +6,7 @@ import MonthlyReport from './MonthlyReport';
 import Monitoring from './Monitoring';
 import SurveysReport from './SurveysReport';
 import SitesOverview from './SitesOverview';
+import SitesStatus from './SitesStatus';
 
 function MonitoringRoutes() {
   return (
@@ -29,6 +30,7 @@ function MonitoringRoutes() {
           path="/monitoring/sites-overview"
           component={SitesOverview}
         />
+        <Route exact path="/monitoring/sites-status" component={SitesStatus} />
       </Switch>
     </>
   );

@@ -17,7 +17,7 @@ import {
 import { colors } from 'layout/App/theme';
 import React from 'react';
 
-type Order = 'asc' | 'desc';
+export type Order = 'asc' | 'desc';
 
 export interface HeadCell<T> {
   id: keyof T;

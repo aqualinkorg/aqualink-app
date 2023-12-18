@@ -10,9 +10,11 @@ import {
   IsLongitude,
   IsObject,
   ValidateNested,
+  IsEnum,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { SiteStatus } from 'sites/sites.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Region } from '../../regions/regions.entity';
 import { User } from '../../users/users.entity';
@@ -49,7 +51,7 @@ export class UpdateSiteDto {
 
   @IsOptional()
   @IsUrl()
-  readonly videoStream?: string;
+  readonly videoStream?: string | null;
 
   @ApiProperty({ example: 1 })
   @IsOptional()
@@ -82,4 +84,22 @@ export class UpdateSiteDto {
   @IsNotEmpty()
   @MaxLength(100)
   readonly spotterApiToken?: string | null;
+
+  @ApiProperty({ example: 'deployed' })
+  @IsOptional()
+  @IsEnum(SiteStatus)
+  readonly status?: SiteStatus;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    return [true, 'true', 1, '1'].indexOf(value) > -1;
+  })
+  readonly display?: boolean;
+
+  @ApiProperty({ example: 'email: john@example.com' })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  readonly contactInformation?: string | null;
 }

@@ -2,8 +2,8 @@ import { useEffect, useReducer } from 'react';
 
 import validators from 'helpers/validators';
 
-export interface FormField {
-  value: string;
+export interface FormField<T extends string | boolean> {
+  value: T;
   error?: string;
 }
 
@@ -16,8 +16,8 @@ export interface FormField {
  * @param extraHandler - An action that might be executed after the textfield's
  *                     value is set
  */
-export const useFormField = (
-  initialValue: string | null | undefined,
+export const useFormField = <T extends string | boolean>(
+  initialValue: T,
   checks: (
     | 'required'
     | 'maxLength'
@@ -27,24 +27,26 @@ export const useFormField = (
     | 'isLat'
     | 'isEmail'
   )[],
-  draftValue?: string,
-  extraHandler?: (value: string) => void,
-): [FormField, (value: string, runExtraHandler?: boolean) => void] => {
-  const reducer = (_state: FormField, newValue: string): FormField => ({
+  draftValue?: T,
+  extraHandler?: (value: T) => void,
+): [FormField<T>, (value: T, runExtraHandler?: boolean) => void] => {
+  const reducer = (_state: FormField<T>, newValue: T): FormField<T> => ({
     value: newValue,
     error: checks
-      .map((check) => validators[check](newValue))
+      .map((check) =>
+        typeof newValue === 'boolean' ? undefined : validators[check](newValue),
+      )
       .filter((error) => error)[0],
   });
-  const [field, dispatch] = useReducer(reducer, { value: initialValue || '' });
+  const [field, dispatch] = useReducer(reducer, { value: initialValue });
 
   useEffect(() => {
-    if (draftValue) {
+    if (draftValue !== undefined) {
       dispatch(draftValue);
     }
   }, [draftValue]);
 
-  const handleFieldChange = (value: string, runExtraHandler = false) => {
+  const handleFieldChange = (value: T, runExtraHandler = false) => {
     dispatch(value);
     if (extraHandler && runExtraHandler) {
       extraHandler(value);

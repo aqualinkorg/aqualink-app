@@ -1,19 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsEmail,
-  IsEnum,
-  IsNumber,
-  IsOptional,
-  Validate,
-} from 'class-validator';
+import { IsEnum, IsOptional, Validate } from 'class-validator';
 import { Site, SiteStatus } from 'sites/sites.entity';
 import { EntityExists } from 'validations/entity-exists.constraint';
 
-export class GetSitesOverview {
+export class GetSitesOverviewDto {
   @ApiProperty({ example: 42 })
   @IsOptional()
-  @IsNumber()
   @Validate(EntityExists, [Site])
   siteId?: number;
 
@@ -30,7 +23,6 @@ export class GetSitesOverview {
   @ApiProperty({ example: 'admin@example.com' })
   @Type(() => String)
   @IsOptional()
-  @IsEmail()
   adminEmail?: string;
 
   @ApiProperty({ example: 'John Smith' })

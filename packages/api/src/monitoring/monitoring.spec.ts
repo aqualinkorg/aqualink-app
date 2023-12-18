@@ -117,5 +117,23 @@ export const monitoringTests = () => {
     expect(rsp.body[0].updatedAt).toBeDefined();
     expect(rsp.body[0].lastDataReceived).toBeDefined();
     expect(rsp.body[0].surveysCount).toBeDefined();
+    expect(rsp.body[0].contactInformation).toBeDefined();
+  });
+
+  it('GET /sites-status', async () => {
+    mockExtractAndVerifyToken(adminFirebaseUserMock);
+    const rsp = await request(app.getHttpServer())
+      .get('/monitoring/sites-status')
+      .send();
+
+    expect(rsp.status).toBe(200);
+
+    expect(rsp.body.totalSites).toBeDefined();
+    expect(rsp.body.deployed).toBeDefined();
+    expect(rsp.body.displayed).toBeDefined();
+    expect(rsp.body.maintenance).toBeDefined();
+    expect(rsp.body.shipped).toBeDefined();
+    expect(rsp.body.endOfLife).toBeDefined();
+    expect(rsp.body.lost).toBeDefined();
   });
 };

@@ -22,6 +22,8 @@ import {
   SiteSketchFab,
   ForecastData,
   SpotterInfoResponse,
+  GetSiteContactInfoProps,
+  GetSiteContactInfoResponse,
 } from 'store/Sites/types';
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
@@ -222,6 +224,13 @@ const getSpotterInfo = (query: string, token?: string) =>
     token,
   });
 
+const getSiteContactInfo = ({ siteId, token }: GetSiteContactInfoProps) =>
+  requests.send<GetSiteContactInfoResponse>({
+    url: `sites/${encodeURIComponent(siteId)}/contact_info`,
+    method: 'GET',
+    token,
+  });
+
 export default {
   getSite,
   getSites,
@@ -244,4 +253,5 @@ export default {
   maintainSpotter,
   getOceanSenseData,
   getSpotterInfo,
+  getSiteContactInfo,
 };

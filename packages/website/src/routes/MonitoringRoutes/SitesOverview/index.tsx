@@ -19,6 +19,7 @@ type TableData = {
   updatedAt: string;
   lastDataReceived: string | null;
   surveysCount: number;
+  contactInformation: string;
 };
 
 const headCells: HeadCell<TableData>[] = [
@@ -27,13 +28,14 @@ const headCells: HeadCell<TableData>[] = [
   { id: 'depth', label: 'Depth', tooltipText: '' },
   { id: 'status', label: 'Status', tooltipText: '' },
   { id: 'organizations', label: 'Organizations', tooltipText: '' },
-  { id: 'adminNames', label: 'Admin Names', tooltipText: '' },
-  { id: 'adminEmails', label: 'Admin Names', tooltipText: '' },
+  { id: 'adminNames', label: 'Admin', tooltipText: '' },
+  { id: 'adminEmails', label: 'Admin Emails', tooltipText: '' },
   { id: 'spotterId', label: 'Spotter ID', tooltipText: '' },
   { id: 'videoStream', label: 'Video Steam', tooltipText: '' },
   { id: 'updatedAt', label: 'Updated At', tooltipText: '' },
-  { id: 'lastDataReceived', label: 'Last Date Received', tooltipText: '' },
+  { id: 'lastDataReceived', label: 'Last Data Received', tooltipText: '' },
   { id: 'surveysCount', label: 'Number of Surveys', tooltipText: '' },
+  { id: 'contactInformation', label: 'Contact Information', tooltipText: '' },
 ];
 
 const bodyCells: BodyCell<TableData>[] = [
@@ -49,6 +51,7 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'updatedAt' },
   { id: 'lastDataReceived' },
   { id: 'surveysCount' },
+  { id: 'contactInformation' },
 ];
 
 function SitesOverview() {
@@ -59,7 +62,7 @@ function SitesOverview() {
   const [spotterId, setSpotterId] = React.useState<string>('');
   const [organization, setOrganization] = React.useState<string>('');
   const [adminEmail, setAdminEmail] = React.useState<string>('');
-  const [adminUserName, setAdminUserName] = React.useState<string>('');
+  const [adminUsername, setAdminUsername] = React.useState<string>('');
   const [status, setStatus] = React.useState<Status | ''>('');
 
   const textFilters = [
@@ -69,9 +72,9 @@ function SitesOverview() {
     { label: 'Organization', value: organization, setValue: setOrganization },
     { label: 'Admin Email', value: adminEmail, setValue: setAdminEmail },
     {
-      label: 'Admin Username',
-      value: adminUserName,
-      setValue: setAdminUserName,
+      label: 'Admin Name',
+      value: adminUsername,
+      setValue: setAdminUsername,
     },
   ];
 
@@ -89,7 +92,7 @@ function SitesOverview() {
       ))}
       <StatusSelector
         status={status}
-        setStatus={setStatus}
+        onChange={(e) => setStatus(e.target.value as Status | '')}
         textFieldStyle={classes.filterItem}
       />
     </div>
@@ -104,7 +107,7 @@ function SitesOverview() {
         ...(siteName ? { siteName } : {}),
         ...(organization ? { organization } : {}),
         ...(adminEmail ? { adminEmail } : {}),
-        ...(adminUserName ? { adminUserName } : {}),
+        ...(adminUsername ? { adminUsername } : {}),
         ...(status ? { status } : {}),
       });
 
@@ -117,7 +120,7 @@ function SitesOverview() {
     },
     [
       adminEmail,
-      adminUserName,
+      adminUsername,
       organization,
       siteId,
       siteName,
@@ -133,6 +136,7 @@ function SitesOverview() {
       headCells={headCells}
       bodyCells={bodyCells}
       filters={filters}
+      fetchOnEnter
     />
   );
 }

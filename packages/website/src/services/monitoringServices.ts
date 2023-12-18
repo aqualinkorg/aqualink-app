@@ -111,6 +111,7 @@ export type GetSitesOverviewResponse = {
   updatedAt: string;
   lastDataReceived: string | null;
   surveysCount: number;
+  contactInformation: string;
 }[];
 
 const getSitesOverview = ({ token, ...rest }: GetSitesOverviewProps) =>
@@ -120,10 +121,30 @@ const getSitesOverview = ({ token, ...rest }: GetSitesOverviewProps) =>
     token,
   });
 
+type GetSitesStatusProps = BasicProps;
+
+export interface GetSitesStatusResponse {
+  totalSites: number;
+  deployed: number;
+  displayed: number;
+  maintenance: number;
+  shipped: number;
+  endOfLife: number;
+  lost: number;
+}
+
+const getSitesStatus = ({ token }: GetSitesStatusProps) =>
+  requests.send<GetSitesStatusResponse>({
+    method: 'GET',
+    url: 'monitoring/sites-status',
+    token,
+  });
+
 export default {
   postMonitoringMetric,
   getMonitoringStats,
   getMonitoringLastMonth,
   getSurveysReport,
   getSitesOverview,
+  getSitesStatus,
 };

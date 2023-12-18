@@ -138,8 +138,9 @@ export class SitesController {
   update(
     @Param('siteId', ParseIntPipe) id: number,
     @Body() updateSiteDto: UpdateSiteDto,
+    @Req() request: AuthRequest,
   ): Promise<Site> {
-    return this.sitesService.update(id, updateSiteDto);
+    return this.sitesService.update(id, updateSiteDto, request.user);
   }
 
   @ApiBearerAuth()
@@ -195,5 +196,16 @@ export class SitesController {
     @Param('siteId', ParseIntPipe) id: number,
   ): Promise<ExclusionDates[]> {
     return this.sitesService.getExclusionDates(id);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Returns sites contact information notes',
+  })
+  @ApiParam({ name: 'siteId', example: 1 })
+  @Auth(AdminLevel.SuperAdmin)
+  @Get(':siteId/contact_info')
+  getContactInformation(@Param('siteId', ParseIntPipe) id: number) {
+    return this.sitesService.getContactInformation(id);
   }
 }

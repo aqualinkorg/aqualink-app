@@ -36,20 +36,20 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
     'success' | 'error'
   >();
 
-  const [editPointName, setEditPointName] = useFormField(surveyPoint?.name, [
-    'required',
-    'maxLength',
-  ]);
-  const [editPointLatitude, setEditPointLatitude] = useFormField(
+  const [editPointName, setEditPointName] = useFormField<string>(
+    surveyPoint?.name ?? '',
+    ['required', 'maxLength'],
+  );
+  const [editPointLatitude, setEditPointLatitude] = useFormField<string>(
     surveyPoint?.polygon?.type === 'Point'
       ? surveyPoint.polygon.coordinates[1].toString()
-      : undefined,
+      : '',
     ['required', 'isNumeric', 'isLat'],
   );
-  const [editPointLongitude, setEditPointLongitude] = useFormField(
+  const [editPointLongitude, setEditPointLongitude] = useFormField<string>(
     surveyPoint?.polygon?.type === 'Point'
       ? surveyPoint.polygon.coordinates[0].toString()
-      : undefined,
+      : '',
     ['required', 'isNumeric', 'isLong'],
   );
 

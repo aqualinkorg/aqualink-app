@@ -12,7 +12,7 @@ import { LatestData } from 'time-series/latest-data.entity';
 import { IsNull, Not, Repository } from 'typeorm';
 import { AdminLevel, User } from 'users/users.entity';
 import { getDefaultDates } from 'utils/dates';
-import { GetSitesOverview } from './dto/get-sites-overview.dto';
+import { GetSitesOverviewDto } from './dto/get-sites-overview.dto';
 import { GetMonitoringStatsDto } from './dto/get-monitoring-stats.dto';
 import { PostMonitoringMetricDto } from './dto/post-monitoring-metric.dto';
 import { Monitoring } from './monitoring.entity';
@@ -24,6 +24,10 @@ interface GetMetricsForSitesProps {
   aggregationPeriod?: 'week' | 'month';
   startDate?: Date;
   endDate?: Date;
+}
+
+function escapeLikeString(raw: string): string {
+  return raw.replace(/[\\%_]/g, '\\$&');
 }
 
 @Injectable()
@@ -172,7 +176,7 @@ export class MonitoringService {
       : null;
 
     if (spotterSite === null && spotterId) {
-      throw new BadRequestException('Invalid parameter: spotterId');
+      throw new BadRequestException('Invalid value for parameter: spotterId');
     }
 
     const querySiteIds = siteIds || [spotterSite!.id];
@@ -244,7 +248,7 @@ export class MonitoringService {
     adminUsername,
     organization,
     status,
-  }: GetSitesOverview) {
+  }: GetSitesOverviewDto) {
     const latestDataSubQuery = this.latestDataRepository
       .createQueryBuilder('latest_data')
       .select(
@@ -257,7 +261,7 @@ export class MonitoringService {
     const surveysCountSubQuery = this.surveyRepository
       .createQueryBuilder('survey')
       .select('survey.site_id', 'site_id')
-      .addSelect('COUNT(*)', 'surveysCount')
+      .addSelect('COUNT(*)', 'count')
       .groupBy('survey.site_id');
 
     const baseQuery = this.siteRepository
@@ -273,7 +277,8 @@ export class MonitoringService {
       .addSelect('site.video_stream', 'videoStream')
       .addSelect('site.updated_at', 'updatedAt')
       .addSelect('latest_data.timestamp', 'lastDataReceived')
-      .addSelect('COALESCE("surveys_count"."surveysCount", 0)', 'surveysCount')
+      .addSelect('COALESCE(surveys_count.count, 0)', 'surveysCount')
+      .addSelect('site.contact_information', 'contactInformation')
       .leftJoin(
         'users_administered_sites_site',
         'uass',
@@ -296,7 +301,9 @@ export class MonitoringService {
       : baseQuery;
 
     const withSiteName = siteName
-      ? withSiteId.andWhere('site.name = :siteName', { siteName })
+      ? withSiteId.andWhere('site.name ILIKE :siteName', {
+          siteName: `%${escapeLikeString(siteName)}%`,
+        })
       : withSiteId;
 
     const withSpotterId = spotterId
@@ -304,18 +311,20 @@ export class MonitoringService {
       : withSiteName;
 
     const withAdminEmail = adminEmail
-      ? withSpotterId.andWhere('u.email = :adminEmail', { adminEmail })
+      ? withSpotterId.andWhere('u.email ILIKE :adminEmail', {
+          adminEmail: `%${escapeLikeString(adminEmail)}%`,
+        })
       : withSpotterId;
 
     const withAdminUserName = adminUsername
-      ? withAdminEmail.andWhere('u.full_name = :adminUsername', {
-          adminUsername,
+      ? withAdminEmail.andWhere('u.full_name ILIKE :adminUsername', {
+          adminUsername: `%${escapeLikeString(adminUsername)}%`,
         })
       : withAdminEmail;
 
     const withOrganization = organization
-      ? withAdminUserName.andWhere('u.organization = :organization', {
-          organization,
+      ? withAdminUserName.andWhere('u.organization ILIKE :organization', {
+          organization: `%${escapeLikeString(organization)}%`,
         })
       : withAdminUserName;
 
@@ -332,8 +341,28 @@ export class MonitoringService {
       .addGroupBy('site.video_stream')
       .addGroupBy('site.updated_at')
       .addGroupBy('latest_data.timestamp')
-      .addGroupBy('"surveys_count"."surveysCount"');
+      .addGroupBy('surveys_count.count')
+      .addGroupBy('site.contact_information');
 
     return ret.getRawMany();
+  }
+
+  getSitesStatus() {
+    return this.siteRepository
+      .createQueryBuilder('site')
+      .select('COUNT(*)', 'totalSites')
+      .addSelect("COUNT(*) FILTER (WHERE site.status = 'deployed')", 'deployed')
+      .addSelect('COUNT(*) FILTER (WHERE site.display)', 'displayed')
+      .addSelect(
+        "COUNT(*) FILTER (WHERE site.status = 'maintenance')",
+        'maintenance',
+      )
+      .addSelect("COUNT(*) FILTER (WHERE site.status = 'shipped')", 'shipped')
+      .addSelect(
+        "COUNT(*) FILTER (WHERE site.status = 'end_of_life')",
+        'endOfLife',
+      )
+      .addSelect("COUNT(*) FILTER (WHERE site.status = 'lost')", 'lost')
+      .getRawOne();
   }
 }

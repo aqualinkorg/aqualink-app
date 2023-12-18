@@ -141,6 +141,11 @@ export class Site {
   @Column({ nullable: true, select: false, type: 'character varying' })
   spotterApiToken?: string | null;
 
+  @ApiHideProperty()
+  @Exclude()
+  @Column({ nullable: true, select: false, type: 'character varying' })
+  contactInformation?: string | null;
+
   hasHobo: boolean;
 
   collectionData?: CollectionDataDto;

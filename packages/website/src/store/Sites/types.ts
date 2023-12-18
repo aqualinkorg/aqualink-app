@@ -280,6 +280,8 @@ export interface Site {
   hasHobo: boolean;
   collectionData?: CollectionData;
   sketchFab?: SiteSketchFab;
+  display: boolean;
+  contactInformation?: string;
 }
 
 export interface SiteSketchFab {
@@ -337,6 +339,10 @@ export interface SiteUpdateParams {
   depth?: number;
   sensorId?: string;
   spotterApiToken?: string | null;
+  status?: Status;
+  display?: boolean;
+  videoStream?: string | null;
+  contactInformation?: string | null;
 }
 
 export interface SiteApplication {
@@ -395,6 +401,7 @@ export interface SelectedSiteState {
   forecastData?: ForecastData[] | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
+  contactInfoLoading: boolean;
   latestOceanSenseDataError?: string | null;
   oceanSenseData?: OceanSenseData;
   oceanSenseDataLoading: boolean;
@@ -424,4 +431,13 @@ export interface SpotterInfoResponse {
     longitude: number;
     timestamp: string;
   }>;
+}
+
+export interface GetSiteContactInfoProps {
+  siteId: number;
+  token: string;
+}
+
+export interface GetSiteContactInfoResponse {
+  contactInformation: string;
 }

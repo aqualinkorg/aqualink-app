@@ -4,6 +4,7 @@ import { Auth } from 'auth/auth.decorator';
 import { AuthRequest } from 'auth/auth.types';
 import { AdminLevel } from 'users/users.entity';
 import { GetMonitoringStatsDto } from './dto/get-monitoring-stats.dto';
+import { GetSitesOverviewDto } from './dto/get-sites-overview.dto';
 import { PostMonitoringMetricDto } from './dto/post-monitoring-metric.dto';
 import { MonitoringService } from './monitoring.service';
 
@@ -58,7 +59,14 @@ export class MonitoringController {
   @Get('sites-overview')
   @ApiOperation({ summary: 'Get Aqualink overview' })
   @Auth(AdminLevel.SuperAdmin)
-  getSitesOverview(@Query() getSitesOverviewDto: GetMonitoringStatsDto) {
+  getSitesOverview(@Query() getSitesOverviewDto: GetSitesOverviewDto) {
     return this.monitoringService.SitesOverview(getSitesOverviewDto);
+  }
+
+  @Get('sites-status')
+  @ApiOperation({ summary: "Get sites' status" })
+  @Auth(AdminLevel.SuperAdmin)
+  getSitesStatus() {
+    return this.monitoringService.getSitesStatus();
   }
 }

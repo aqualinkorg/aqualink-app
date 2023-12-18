@@ -5,7 +5,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import { useSnackbar } from 'notistack';
-import MonitoringTable, { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  Order,
+} from 'common/MonitoringTable';
 import LoadingBackdrop from 'common/LoadingBackdrop';
 import { fetchData } from './utils';
 
@@ -15,6 +19,9 @@ interface MonitoringTableWrapperProps<T> {
   bodyCells: BodyCell<T>[];
   pageTitle: string;
   filters?: React.JSX.Element;
+  defaultSortColumn?: keyof T;
+  defaultOrder?: Order;
+  fetchOnEnter?: boolean;
 }
 
 function MonitoringTableWrapper<
@@ -25,6 +32,9 @@ function MonitoringTableWrapper<
   bodyCells,
   pageTitle,
   filters,
+  defaultSortColumn,
+  defaultOrder,
+  fetchOnEnter = false,
 }: MonitoringTableWrapperProps<T>) {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
@@ -38,7 +48,7 @@ function MonitoringTableWrapper<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  function onGetMetrics() {
+  const onGetMetrics = React.useCallback(() => {
     fetchData({
       user,
       enqueueSnackbar,
@@ -46,7 +56,20 @@ function MonitoringTableWrapper<
       setResult,
       getResult,
     });
-  }
+  }, [enqueueSnackbar, getResult, user]);
+
+  React.useEffect(() => {
+    const keyDownHandler = (event: any) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        onGetMetrics();
+      }
+    };
+    if (fetchOnEnter) document.addEventListener('keydown', keyDownHandler);
+    return () => {
+      if (fetchOnEnter) document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, [fetchOnEnter, onGetMetrics]);
 
   return (
     <div>
@@ -79,6 +102,8 @@ function MonitoringTableWrapper<
             headCells={headCells}
             data={result}
             bodyCells={bodyCells}
+            defaultSortColumn={defaultSortColumn}
+            defaultOrder={defaultOrder}
           />
         )}
       </div>
