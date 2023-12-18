@@ -8,6 +8,9 @@ export class EntityExists {
   constructor(private dataSource: DataSource) {}
 
   async validate(id: number, args: ValidationArguments) {
+    if (typeof id !== 'number' || Number.isNaN(id) || !Number.isInteger(id))
+      return false;
+
     const found = await this.dataSource
       .getRepository(args.constraints[0])
       .findOneBy({ id });

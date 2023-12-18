@@ -36,7 +36,10 @@ export async function fetchData<T>({
 
     setResult(data);
   } catch (error: any) {
-    enqueueSnackbar(error?.response?.data?.message || 'Request failed', {
+    const message = error?.response?.data?.message;
+    const errorMessage =
+      typeof message === 'object' ? message?.join('. ') : message;
+    enqueueSnackbar(errorMessage || 'Request failed', {
       variant: 'error',
     });
   } finally {
