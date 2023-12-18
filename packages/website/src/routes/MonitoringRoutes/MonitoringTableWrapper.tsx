@@ -37,7 +37,9 @@ function MonitoringTableWrapper<T, A>({
   const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    if (fetchOnPageLoad) onGetMetrics();
+    if (fetchOnPageLoad) {
+      onGetMetrics();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
