@@ -10,21 +10,22 @@ import { makeStyles, TextField } from '@material-ui/core';
 import StatusSelector from 'common/StatusSelector';
 import { DateTime } from 'luxon';
 import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import { includes } from '../utils';
 
 type TableData = {
   siteId: number;
-  siteName: string;
-  depth: number;
+  siteName: string | null;
+  depth: number | null;
   status: Status;
   organizations: string;
   adminNames: string;
   adminEmails: string;
-  spotterId: string;
-  videoStream: string;
+  spotterId: string | null;
+  videoStream: string | null;
   updatedAt: string;
   lastDataReceived: string | null;
   surveysCount: number;
-  contactInformation: string;
+  contactInformation: string | null;
   createdAt: string;
 };
 
@@ -64,6 +65,17 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'surveysCount' },
   { id: 'contactInformation' },
 ];
+
+const getResult = async (token: string) => {
+  const { data } = await monitoringServices.getSitesOverview({ token });
+
+  return data.map((x) => ({
+    ...x,
+    organizations: x.organizations.join(', '),
+    adminNames: x.adminNames.join(', '),
+    adminEmails: x.adminEmails.join(', '),
+  }));
+};
 
 function SitesOverview() {
   const classes = useStyles();
@@ -109,51 +121,37 @@ function SitesOverview() {
     </div>
   );
 
-  const getResult = React.useCallback(
-    async (token: string) => {
-      const { data } = await monitoringServices.getSitesOverview({
-        token,
-        ...(siteId ? { siteId: Number(siteId) } : {}),
-        ...(spotterId ? { spotterId } : {}),
-        ...(siteName ? { siteName } : {}),
-        ...(organization ? { organization } : {}),
-        ...(adminEmail ? { adminEmail } : {}),
-        ...(adminUsername ? { adminUsername } : {}),
-        ...(status ? { status } : {}),
-      });
-
-      return data.map((x) => ({
-        ...x,
-        organizations: x.organizations.join(', '),
-        adminNames: x.adminNames.join(', '),
-        adminEmails: x.adminEmails.join(', '),
-      }));
-    },
-    [
-      adminEmail,
-      adminUsername,
-      organization,
-      siteId,
-      siteName,
-      spotterId,
-      status,
-    ],
-  );
-
   return (
     <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Sites Overview"
       ResultsComponent={MonitoringTable}
       resultsComponentProps={(result) => ({
         headCells,
-        data: result,
+        data: result.filter((x) => {
+          const siteFilter = siteId ? x.siteId === Number(siteId) : true;
+          const spotterIdFilter = includes(x.spotterId, spotterId);
+          const siteNameFilter = includes(x.siteName, siteName);
+          const organizationFilter = includes(x.organizations, organization);
+          const adminEmailFilter = includes(x.adminEmails, adminEmail);
+          const adminUsernameFilter = includes(x.adminNames, adminUsername);
+          const statusFilter = status ? x.status === status : true;
+
+          return (
+            siteFilter &&
+            spotterIdFilter &&
+            siteNameFilter &&
+            organizationFilter &&
+            adminEmailFilter &&
+            adminUsernameFilter &&
+            statusFilter
+          );
+        }),
         bodyCells,
         defaultSortColumn: 'createdAt',
         defaultOrder: 'desc',
       })}
       getResult={getResult}
       filters={filters}
-      fetchOnEnter
       fetchOnPageLoad
     />
   );

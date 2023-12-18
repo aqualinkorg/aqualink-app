@@ -46,3 +46,13 @@ export async function fetchData<T>({
     setLoading(false);
   }
 }
+
+export const includes = (
+  a: string | undefined | null,
+  b: string | undefined,
+) => {
+  if (!b?.trim()) return true;
+  if (!a) return false;
+
+  return a.toLocaleLowerCase().includes(b.toLocaleLowerCase());
+};
