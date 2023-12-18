@@ -4,6 +4,7 @@ import { BodyCell, HeadCell } from 'common/MonitoringTable';
 import { Status } from 'store/Sites/types';
 import { makeStyles, TextField } from '@material-ui/core';
 import StatusSelector from 'common/StatusSelector';
+import { DateTime } from 'luxon';
 import MonitoringTableWrapper from '../MonitoringTableWrapper';
 
 type TableData = {
@@ -20,10 +21,12 @@ type TableData = {
   lastDataReceived: string | null;
   surveysCount: number;
   contactInformation: string;
+  createdAt: string;
 };
 
 const headCells: HeadCell<TableData>[] = [
   { id: 'siteId', label: 'Site ID', tooltipText: '' },
+  { id: 'createdAt', label: 'Created At', tooltipText: '' },
   { id: 'siteName', label: 'Site Name', tooltipText: '' },
   { id: 'depth', label: 'Depth', tooltipText: '' },
   { id: 'status', label: 'Status', tooltipText: '' },
@@ -40,6 +43,10 @@ const headCells: HeadCell<TableData>[] = [
 
 const bodyCells: BodyCell<TableData>[] = [
   { id: 'siteId', linkTo: (row) => `/sites/${encodeURIComponent(row.siteId)}` },
+  {
+    id: 'createdAt',
+    format: (row) => DateTime.fromISO(row.createdAt).toFormat('yyyy-MM-dd'),
+  },
   { id: 'siteName' },
   { id: 'depth' },
   { id: 'status' },
@@ -132,6 +139,8 @@ function SitesOverview() {
   return (
     <MonitoringTableWrapper
       pageTitle="Sites Overview"
+      defaultSortColumn="createdAt"
+      defaultOrder="desc"
       getResult={getResult}
       headCells={headCells}
       bodyCells={bodyCells}

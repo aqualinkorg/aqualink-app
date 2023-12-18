@@ -112,6 +112,7 @@ export type GetSitesOverviewResponse = {
   lastDataReceived: string | null;
   surveysCount: number;
   contactInformation: string;
+  createdAt: string;
 }[];
 
 const getSitesOverview = ({ token, ...rest }: GetSitesOverviewProps) =>

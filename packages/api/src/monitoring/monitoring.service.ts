@@ -279,6 +279,7 @@ export class MonitoringService {
       .addSelect('latest_data.timestamp', 'lastDataReceived')
       .addSelect('COALESCE(surveys_count.count, 0)', 'surveysCount')
       .addSelect('site.contact_information', 'contactInformation')
+      .addSelect('site.created_at', 'createdAt')
       .leftJoin(
         'users_administered_sites_site',
         'uass',
