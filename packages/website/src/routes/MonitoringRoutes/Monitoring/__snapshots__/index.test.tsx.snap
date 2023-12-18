@@ -7,6 +7,34 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
   >
     <a
       class="makeStyles-link-3"
+      href="/monitoring/sites-overview"
+    >
+      <mock-card
+        classname="makeStyles-root-1"
+        raised="true"
+      >
+        <mock-cardcontent
+          classname="makeStyles-cardContent-5"
+        >
+          <mock-typography
+            classname="makeStyles-title-2"
+            color="textSecondary"
+            variant="h5"
+          >
+            Sites Overview
+          </mock-typography>
+          <mock-typography
+            component="p"
+            style="color: black; padding-bottom: 1rem;"
+            variant="body2"
+          >
+            Contact info and status data for all sites
+          </mock-typography>
+        </mock-cardcontent>
+      </mock-card>
+    </a>
+    <a
+      class="makeStyles-link-3"
       href="/monitoring/site-metrics"
     >
       <mock-card
@@ -21,7 +49,14 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
             color="textSecondary"
             variant="h5"
           >
-            Site Metrics
+            Site Usage Metrics
+          </mock-typography>
+          <mock-typography
+            component="p"
+            style="color: black; padding-bottom: 1rem;"
+            variant="body2"
+          >
+            Detailed usage metrics for one site
           </mock-typography>
         </mock-cardcontent>
       </mock-card>
@@ -42,7 +77,14 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
             color="textSecondary"
             variant="h5"
           >
-            Monthly Report
+            Monthly Usage Report
+          </mock-typography>
+          <mock-typography
+            component="p"
+            style="color: black; padding-bottom: 1rem;"
+            variant="body2"
+          >
+            Detailed usage metrics for all sites over the past month
           </mock-typography>
         </mock-cardcontent>
       </mock-card>
@@ -65,26 +107,12 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
           >
             Surveys Report
           </mock-typography>
-        </mock-cardcontent>
-      </mock-card>
-    </a>
-    <a
-      class="makeStyles-link-3"
-      href="/monitoring/sites-overview"
-    >
-      <mock-card
-        classname="makeStyles-root-1"
-        raised="true"
-      >
-        <mock-cardcontent
-          classname="makeStyles-cardContent-5"
-        >
           <mock-typography
-            classname="makeStyles-title-2"
-            color="textSecondary"
-            variant="h5"
+            component="p"
+            style="color: black; padding-bottom: 1rem;"
+            variant="body2"
           >
-            Sites Overview
+            List all recent surveys
           </mock-typography>
         </mock-cardcontent>
       </mock-card>
@@ -106,6 +134,13 @@ exports[`Monitoring Page should render with given state from Redux store 1`] = `
             variant="h5"
           >
             Sites Status
+          </mock-typography>
+          <mock-typography
+            component="p"
+            style="color: black; padding-bottom: 1rem;"
+            variant="body2"
+          >
+            Summary of status data accross all sites
           </mock-typography>
         </mock-cardcontent>
       </mock-card>

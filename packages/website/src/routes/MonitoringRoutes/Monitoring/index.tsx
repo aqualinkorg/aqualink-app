@@ -10,11 +10,31 @@ interface Tile {
 }
 
 const tiles: Tile[] = [
-  { title: 'Site Metrics', link: '/monitoring/site-metrics' },
-  { title: 'Monthly Report', link: '/monitoring/monthly-report' },
-  { title: 'Surveys Report', link: '/monitoring/surveys-report' },
-  { title: 'Sites Overview', link: '/monitoring/sites-overview' },
-  { title: 'Sites Status', link: '/monitoring/sites-status' },
+  {
+    title: 'Sites Overview',
+    link: '/monitoring/sites-overview',
+    description: 'Contact info and status data for all sites',
+  },
+  {
+    title: 'Site Usage Metrics',
+    link: '/monitoring/site-metrics',
+    description: 'Detailed usage metrics for one site',
+  },
+  {
+    title: 'Monthly Usage Report',
+    link: '/monitoring/monthly-report',
+    description: 'Detailed usage metrics for all sites over the past month',
+  },
+  {
+    title: 'Surveys Report',
+    link: '/monitoring/surveys-report',
+    description: 'List all recent surveys',
+  },
+  {
+    title: 'Sites Status',
+    link: '/monitoring/sites-status',
+    description: 'Summary of status data accross all sites',
+  },
 ];
 
 function Monitoring() {
