@@ -18,6 +18,7 @@ interface MonitoringTableWrapperProps<T> {
   headCells: HeadCell<T>[];
   bodyCells: BodyCell<T>[];
   pageTitle: string;
+  pageDescription?: string | React.JSX.Element;
   filters?: React.JSX.Element;
   defaultSortColumn?: keyof T;
   defaultOrder?: Order;
@@ -31,6 +32,7 @@ function MonitoringTableWrapper<
   headCells,
   bodyCells,
   pageTitle,
+  pageDescription,
   filters,
   defaultSortColumn,
   defaultOrder,
@@ -95,6 +97,11 @@ function MonitoringTableWrapper<
       <Typography className={classes.pageTitle} variant="h3">
         {pageTitle}
       </Typography>
+      {pageDescription && (
+        <Typography className={classes.pageDescription} variant="body2">
+          {pageDescription}
+        </Typography>
+      )}
       {filters && filters}
       <div className={classes.resultsContainer}>
         {result && (
@@ -120,6 +127,10 @@ const useStyles = makeStyles(() => ({
   },
   pageTitle: {
     marginLeft: '2rem',
+  },
+  pageDescription: {
+    marginLeft: '2rem',
+    marginTop: '0.5em',
   },
 }));
 

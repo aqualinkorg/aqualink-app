@@ -3,7 +3,13 @@ import { colors } from 'layout/App/theme';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const tiles = [
+interface Tile {
+  title: string;
+  link: string;
+  description?: string | React.JSX.Element;
+}
+
+const tiles: Tile[] = [
   { title: 'Site Metrics', link: '/monitoring/site-metrics' },
   { title: 'Monthly Report', link: '/monitoring/monthly-report' },
   { title: 'Surveys Report', link: '/monitoring/surveys-report' },
@@ -19,7 +25,7 @@ function Monitoring() {
       {tiles.map((tile) => (
         <Link key={tile.link} to={tile.link} className={classes.link}>
           <Card className={classes.root} raised>
-            <CardContent>
+            <CardContent className={classes.cardContent}>
               <Typography
                 variant="h5"
                 color="textSecondary"
@@ -27,6 +33,15 @@ function Monitoring() {
               >
                 {tile.title}
               </Typography>
+              {tile.description && (
+                <Typography
+                  variant="body2"
+                  component="p"
+                  style={{ color: 'black', paddingBottom: '1rem' }}
+                >
+                  {tile.description}
+                </Typography>
+              )}
             </CardContent>
           </Card>
         </Link>
@@ -59,6 +74,12 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'flex-start',
     gap: '2rem',
     padding: '2rem',
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'space-between',
   },
 }));
 
