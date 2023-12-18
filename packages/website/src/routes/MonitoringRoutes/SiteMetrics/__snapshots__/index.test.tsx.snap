@@ -62,7 +62,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
       classname="makeStyles-pageTitle-7"
       variant="h3"
     >
-      Sites Overview
+      Site Metrics
     </mock-typography>
     <mock-typography
       classname="makeStyles-pageDescription-8"

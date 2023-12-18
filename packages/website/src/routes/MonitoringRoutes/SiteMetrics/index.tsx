@@ -240,7 +240,7 @@ function SiteMetrics() {
       GetMonitoringMetricsResponse,
       React.PropsWithChildren<ChartWithTooltipProps>
     >
-      pageTitle="Sites Overview"
+      pageTitle="Site Metrics"
       pageDescription="Use only one of Site ID or Spotter ID!"
       ResultsComponent={ChartWithTooltip}
       resultsComponentProps={(res) => ({
