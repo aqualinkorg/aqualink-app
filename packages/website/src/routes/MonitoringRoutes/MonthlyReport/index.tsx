@@ -9,7 +9,7 @@ import MonitoringTable, {
   MonitoringTableProps,
 } from 'common/MonitoringTable';
 import { ArrayElement } from 'utils/types';
-import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import MonitoringPageWrapper from '../MonitoringPageWrapper';
 
 type TableData = Omit<ArrayElement<GetMonitoringMetricsResponse>, 'data'> &
   Omit<MonitoringData, 'date'>;
@@ -82,7 +82,7 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function MonthlyReport() {
   return (
-    <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
+    <MonitoringPageWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Monthly Report"
       getResult={getResult}
       ResultsComponent={MonitoringTable}
@@ -92,6 +92,11 @@ function MonthlyReport() {
         bodyCells,
       })}
       fetchOnPageLoad
+      csvDownload={(token) =>
+        monitoringServices.getMonitoringLastMonthCSV({
+          token,
+        })
+      }
     />
   );
 }

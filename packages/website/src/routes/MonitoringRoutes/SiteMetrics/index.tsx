@@ -17,7 +17,7 @@ import { Dataset } from 'common/Chart';
 import { ArrayElement } from 'utils/types';
 import { ValueWithTimestamp } from 'store/Sites/types';
 import OneColorSwitch from 'common/OneColorSwitch';
-import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import MonitoringPageWrapper from '../MonitoringPageWrapper';
 
 function transformToDatasets(
   siteInfo: ArrayElement<GetMonitoringMetricsResponse>,
@@ -76,7 +76,7 @@ function transformToDatasets(
   };
 
   const timeSeriesRequestsDataset: Dataset = {
-    label: 'time series requests',
+    label: 'dashboard visits',
     data: timeSeriesRequests,
     type: 'line',
     unit: '',
@@ -236,7 +236,7 @@ function SiteMetrics() {
   );
 
   return (
-    <MonitoringTableWrapper<
+    <MonitoringPageWrapper<
       GetMonitoringMetricsResponse,
       React.PropsWithChildren<ChartWithTooltipProps>
     >
@@ -257,13 +257,22 @@ function SiteMetrics() {
       getResult={getResult}
       filters={filters}
       fetchOnEnter
+      csvDownload={(token) =>
+        monitoringServices.getMonitoringStatsCSV({
+          token,
+          ...(siteId && { siteIds: [siteId] }),
+          ...(spotterId && { spotterId }),
+          monthly,
+          start: startDate?.toISOString(),
+          end: endDate?.toISOString(),
+        })
+      }
     />
   );
 }
 
 const useStyles = makeStyles(() => ({
   chart: {
-    margin: '0 2rem 0 2rem',
     width: '100%',
     height: '16rem',
     marginBottom: '3rem',

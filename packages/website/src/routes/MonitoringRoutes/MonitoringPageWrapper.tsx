@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import LoadingBackdrop from 'common/LoadingBackdrop';
 import { fetchData } from './utils';
 
-interface MonitoringTableWrapperProps<T, A> {
+interface MonitoringPageWrapperProps<T, A> {
   getResult: (token: string) => Promise<T>;
   ResultsComponent: React.FC<A>;
   resultsComponentProps: (results: T) => A;
@@ -17,9 +17,10 @@ interface MonitoringTableWrapperProps<T, A> {
   filters?: React.JSX.Element;
   fetchOnEnter?: boolean;
   fetchOnPageLoad?: boolean;
+  csvDownload?: (token: string) => Promise<void>;
 }
 
-function MonitoringTableWrapper<T, A>({
+function MonitoringPageWrapper<T, A>({
   getResult,
   ResultsComponent,
   resultsComponentProps,
@@ -28,10 +29,13 @@ function MonitoringTableWrapper<T, A>({
   filters,
   fetchOnEnter = false,
   fetchOnPageLoad = false,
-}: MonitoringTableWrapperProps<T, A>) {
+  csvDownload,
+}: MonitoringPageWrapperProps<T, A>) {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+
+  const { token } = user || {};
 
   const [result, setResult] = React.useState<T | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -89,6 +93,23 @@ function MonitoringTableWrapper<T, A>({
       >
         Refresh
       </Button>
+      {token && csvDownload && (
+        <Button
+          color="primary"
+          variant="outlined"
+          onClick={() =>
+            fetchData({
+              user,
+              enqueueSnackbar,
+              setLoading,
+              getResult: csvDownload,
+            })
+          }
+          className={classes.button}
+        >
+          Download CSV
+        </Button>
+      )}
       <Typography className={classes.pageTitle} variant="h3">
         {pageTitle}
       </Typography>
@@ -121,4 +142,4 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default MonitoringTableWrapper;
+export default MonitoringPageWrapper;

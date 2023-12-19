@@ -58,6 +58,20 @@ exports[`Monitoring MonthlyReport Page should render with given state from Redux
         class="MuiTouchRipple-root"
       />
     </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-1 MuiButton-outlinedPrimary"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Download CSV
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
     <mock-typography
       classname="makeStyles-pageTitle-3"
       variant="h3"

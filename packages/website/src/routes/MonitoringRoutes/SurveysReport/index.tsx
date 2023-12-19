@@ -8,7 +8,7 @@ import monitoringServices, {
   GetSurveysReportResponse,
 } from 'services/monitoringServices';
 import { ArrayElement } from 'utils/types';
-import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import MonitoringPageWrapper from '../MonitoringPageWrapper';
 
 type TableData = ArrayElement<GetSurveysReportResponse>;
 
@@ -49,7 +49,7 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function SurveysReport() {
   return (
-    <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
+    <MonitoringPageWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Surveys Report"
       getResult={getResult}
       ResultsComponent={MonitoringTable}

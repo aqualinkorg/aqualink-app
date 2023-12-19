@@ -9,7 +9,7 @@ import { Status } from 'store/Sites/types';
 import { makeStyles, TextField } from '@material-ui/core';
 import StatusSelector from 'common/StatusSelector';
 import { DateTime } from 'luxon';
-import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import MonitoringPageWrapper from '../MonitoringPageWrapper';
 import { includes } from '../utils';
 
 type TableData = {
@@ -69,12 +69,24 @@ const bodyCells: BodyCell<TableData>[] = [
 const getResult = async (token: string) => {
   const { data } = await monitoringServices.getSitesOverview({ token });
 
-  return data.map((x) => ({
-    ...x,
-    organizations: x.organizations.join(', '),
-    adminNames: x.adminNames.join(', '),
-    adminEmails: x.adminEmails.join(', '),
-  }));
+  return data.map((x) => {
+    const uniqueOrganizations = [
+      ...new Map(x.organizations.map((y) => [y, y])).keys(),
+    ];
+    const uniqueAdminNames = [
+      ...new Map(x.adminNames.map((y) => [y, y])).keys(),
+    ];
+    const uniqueAdminEmails = [
+      ...new Map(x.adminEmails.map((y) => [y, y])).keys(),
+    ];
+
+    return {
+      ...x,
+      organizations: uniqueOrganizations.join(', '),
+      adminNames: uniqueAdminNames.join(', '),
+      adminEmails: uniqueAdminEmails.join(', '),
+    };
+  });
 };
 
 function SitesOverview() {
@@ -122,7 +134,7 @@ function SitesOverview() {
   );
 
   return (
-    <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
+    <MonitoringPageWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Sites Overview"
       ResultsComponent={MonitoringTable}
       resultsComponentProps={(result) => ({

@@ -7,7 +7,7 @@ import React from 'react';
 import monitoringServices, {
   GetSitesStatusResponse,
 } from 'services/monitoringServices';
-import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import MonitoringPageWrapper from '../MonitoringPageWrapper';
 
 type TableData = GetSitesStatusResponse;
 
@@ -40,7 +40,7 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function SitesStatus() {
   return (
-    <MonitoringTableWrapper<TableData[], MonitoringTableProps<TableData>>
+    <MonitoringPageWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Sites Status"
       getResult={getResult}
       ResultsComponent={MonitoringTable}

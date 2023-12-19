@@ -49,4 +49,10 @@ export class GetMonitoringStatsDto {
   @Type(() => Date)
   @IsDate()
   end?: Date;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    return [true, 'true', 1, '1'].indexOf(value) > -1;
+  })
+  csv?: boolean;
 }
