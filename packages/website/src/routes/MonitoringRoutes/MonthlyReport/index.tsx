@@ -9,6 +9,7 @@ import MonitoringTable, {
   MonitoringTableProps,
 } from 'common/MonitoringTable';
 import { ArrayElement } from 'utils/types';
+import { DateTime } from 'luxon';
 import MonitoringPageWrapper from '../MonitoringPageWrapper';
 
 type TableData = Omit<ArrayElement<GetMonitoringMetricsResponse>, 'data'> &
@@ -90,13 +91,11 @@ function MonthlyReport() {
         headCells,
         data: result,
         bodyCells,
+        downloadCsvFilename: `monthly-report-${DateTime.now().toFormat(
+          'yyyy-MM-dd',
+        )}.csv`,
       })}
       fetchOnPageLoad
-      csvDownload={(token) =>
-        monitoringServices.getMonitoringLastMonthCSV({
-          token,
-        })
-      }
     />
   );
 }

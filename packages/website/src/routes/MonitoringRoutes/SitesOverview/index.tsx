@@ -161,6 +161,9 @@ function SitesOverview() {
         bodyCells,
         defaultSortColumn: 'createdAt',
         defaultOrder: 'desc',
+        downloadCsvFilename: `sites-overview-${DateTime.now().toFormat(
+          'yyyy-MM-dd',
+        )}.csv`,
       })}
       getResult={getResult}
       filters={filters}

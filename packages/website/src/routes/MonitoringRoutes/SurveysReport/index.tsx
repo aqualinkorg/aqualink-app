@@ -3,6 +3,7 @@ import MonitoringTable, {
   HeadCell,
   MonitoringTableProps,
 } from 'common/MonitoringTable';
+import { DateTime } from 'luxon';
 import React from 'react';
 import monitoringServices, {
   GetSurveysReportResponse,
@@ -59,6 +60,9 @@ function SurveysReport() {
         bodyCells,
         defaultOrder: 'desc',
         defaultSortColumn: 'diveDate',
+        downloadCsvFilename: `surveys-report-${DateTime.now().toFormat(
+          'yyyy-MM-dd',
+        )}.csv`,
       })}
       fetchOnPageLoad
     />

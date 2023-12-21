@@ -3,6 +3,7 @@ import MonitoringTable, {
   HeadCell,
   MonitoringTableProps,
 } from 'common/MonitoringTable';
+import { DateTime } from 'luxon';
 import React from 'react';
 import monitoringServices, {
   GetSitesStatusResponse,
@@ -48,6 +49,9 @@ function SitesStatus() {
         headCells,
         data: result,
         bodyCells,
+        downloadCsvFilename: `sites-status-${DateTime.now().toFormat(
+          'yyyy-MM-dd',
+        )}.csv`,
       })}
       fetchOnPageLoad
     />
