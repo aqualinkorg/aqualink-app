@@ -11,6 +11,7 @@ import {
 } from 'fs';
 import type { Response } from 'express';
 import { DateTime } from 'luxon';
+import { randomBytes } from 'crypto';
 
 interface ReturnCSVProps {
   res: Response;
@@ -27,6 +28,12 @@ export async function ReturnCSV({
   getRows,
   filename,
 }: ReturnCSVProps) {
+  // Make sure filename contains only valid ascii characters and not " or <
+  // for using in 'Content-Disposition' header
+  if (!/^(?!.*["<])[\x20-\x7F]*$/.test(filename)) {
+    throw new Error('Invalid filename');
+  }
+
   const minDate = DateTime.fromJSDate(startDate).startOf('hour');
   const maxDate = DateTime.fromJSDate(endDate).startOf('hour');
 
@@ -47,10 +54,7 @@ export async function ReturnCSV({
 
   const chunks = createChunks(maxDate, []);
 
-  const tempFileName = join(
-    process.cwd(),
-    Math.random().toString(36).substring(2, 15),
-  );
+  const tempFileName = join(process.cwd(), randomBytes(8).toString('hex'));
 
   const fd = openSync(tempFileName, 'w');
 
@@ -76,9 +80,7 @@ export async function ReturnCSV({
     const readStream = createReadStream(tempFileName);
 
     res.set({
-      'Content-Disposition': `attachment; filename=${encodeURIComponent(
-        filename,
-      )}`,
+      'Content-Disposition': `attachment; filename=${filename}`,
     });
 
     res.set({
