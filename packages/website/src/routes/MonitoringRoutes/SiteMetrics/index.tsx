@@ -138,12 +138,10 @@ function SiteMetrics() {
   const [siteId, setSiteId] = React.useState<string>('');
   const [spotterId, setSpotterId] = React.useState<string>('');
   const [monthly, setMonthly] = React.useState<boolean>(false);
-  const [startDate, setStartDate] = React.useState<Date | null>(
+  const [startDate, setStartDate] = React.useState<Date>(
     DateTime.now().minus({ months: 3 }).toJSDate(),
   );
-  const [endDate, setEndDate] = React.useState<Date | null>(
-    DateTime.now().toJSDate(),
-  );
+  const [endDate, setEndDate] = React.useState<Date>(DateTime.now().toJSDate());
 
   React.useEffect(() => {
     setSpotterId('');
@@ -161,8 +159,8 @@ function SiteMetrics() {
           ...(siteId && { siteIds: [siteId] }),
           ...(spotterId && { spotterId }),
           monthly,
-          start: startDate?.toISOString(),
-          end: endDate?.toISOString(),
+          start: startDate.toISOString(),
+          end: endDate.toISOString(),
         })
       ).data,
     [endDate, monthly, siteId, spotterId, startDate],
@@ -193,7 +191,7 @@ function SiteMetrics() {
           size="small"
           showTodayButton
           value={startDate}
-          onChange={(e) => setStartDate(e)}
+          onChange={(e) => e && setStartDate(e)}
           label="start date"
           inputVariant="outlined"
         />
@@ -208,7 +206,7 @@ function SiteMetrics() {
           size="small"
           showTodayButton
           value={endDate}
-          onChange={(e) => setEndDate(e)}
+          onChange={(e) => e && setEndDate(e)}
           label="end date"
           inputVariant="outlined"
         />
