@@ -66,25 +66,19 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'contactInformation' },
 ];
 
+const getUniqueValues = (arr: Array<string | null>) => {
+  return [...new Set(arr)].filter(Boolean).join(', ');
+};
+
 const getResult = async (token: string) => {
   const { data } = await monitoringServices.getSitesOverview({ token });
 
   return data.map((x) => {
-    const uniqueOrganizations = [
-      ...new Map(x.organizations.map((y) => [y, y])).keys(),
-    ];
-    const uniqueAdminNames = [
-      ...new Map(x.adminNames.map((y) => [y, y])).keys(),
-    ];
-    const uniqueAdminEmails = [
-      ...new Map(x.adminEmails.map((y) => [y, y])).keys(),
-    ];
-
     return {
       ...x,
-      organizations: uniqueOrganizations.join(', '),
-      adminNames: uniqueAdminNames.join(', '),
-      adminEmails: uniqueAdminEmails.join(', '),
+      organizations: getUniqueValues(x.organizations),
+      adminNames: getUniqueValues(x.adminNames),
+      adminEmails: getUniqueValues(x.adminEmails),
     };
   });
 };
