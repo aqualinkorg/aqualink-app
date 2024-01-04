@@ -98,7 +98,10 @@ export type Status =
   | 'rejected'
   | 'approved'
   | 'shipped'
-  | 'deployed';
+  | 'deployed'
+  | 'maintenance'
+  | 'lost'
+  | 'end_of_life';
 
 // This recursive type converts string literals from snake_case to camelCase.
 // It splits the input string into three parts: P1, P2 and P3.

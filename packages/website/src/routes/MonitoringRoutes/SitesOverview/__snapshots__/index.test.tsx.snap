@@ -352,6 +352,30 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
             >
               deployed
             </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-11"
+              data-value="maintenance"
+              role="option"
+              selected="false"
+            >
+              maintenance
+            </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-11"
+              data-value="lost"
+              role="option"
+              selected="false"
+            >
+              lost
+            </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-11"
+              data-value="end_of_life"
+              role="option"
+              selected="false"
+            >
+              end_of_life
+            </mock-menuitem>
           </mock-menu>
           <fieldset
             aria-hidden="true"
