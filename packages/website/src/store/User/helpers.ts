@@ -1,6 +1,6 @@
 import { isManager } from 'helpers/user';
 import userServices from 'services/userServices';
-import { User } from './types';
+import { AdminLevel, User } from './types';
 import { CollectionSummary } from '../Collection/types';
 
 export const constructUserObject = async (
@@ -20,4 +20,29 @@ export const constructUserObject = async (
       : undefined,
     token,
   };
+};
+
+const adminLevelOrderVal = (a: AdminLevel | undefined) => {
+  switch (a) {
+    case 'default':
+      return 0;
+    case 'site_manager':
+      return 1;
+    case 'super_admin':
+      return 2;
+    default:
+      return -1;
+  }
+};
+
+export const compereAdminLevel = (
+  a: AdminLevel | undefined,
+  b: AdminLevel | undefined,
+) => {
+  const aVal = adminLevelOrderVal(a);
+  const bVal = adminLevelOrderVal(b);
+
+  if (aVal > bVal) return 1;
+  if (aVal < bVal) return -1;
+  return 0;
 };

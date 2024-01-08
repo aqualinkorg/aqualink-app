@@ -12,10 +12,14 @@ import { LatestData } from 'time-series/latest-data.entity';
 import { IsNull, Not, Repository } from 'typeorm';
 import { AdminLevel, User } from 'users/users.entity';
 import { getDefaultDates } from 'utils/dates';
+import { SiteApplication } from 'site-applications/site-applications.entity';
+import type { Response } from 'express';
+import { ReturnCSV } from 'utils/csv-utils';
 import { GetSitesOverviewDto } from './dto/get-sites-overview.dto';
 import { GetMonitoringStatsDto } from './dto/get-monitoring-stats.dto';
 import { PostMonitoringMetricDto } from './dto/post-monitoring-metric.dto';
 import { Monitoring } from './monitoring.entity';
+import { GetMonitoringLastMonthDto } from './dto/get-monitoring-last-month.dto';
 
 interface GetMetricsForSitesProps {
   siteIds: number[];
@@ -24,6 +28,15 @@ interface GetMetricsForSitesProps {
   aggregationPeriod?: 'week' | 'month';
   startDate?: Date;
   endDate?: Date;
+}
+
+interface SiteMetrics {
+  date?: Date;
+  totalRequests: number;
+  registeredUserRequests: number;
+  siteAdminRequests: number;
+  timeSeriesRequests: number;
+  CSVDownloadRequests: number;
 }
 
 function escapeLikeString(raw: string): string {
@@ -44,6 +57,9 @@ export class MonitoringService {
 
     @InjectRepository(LatestData)
     private latestDataRepository: Repository<LatestData>,
+
+    @InjectRepository(SiteApplication)
+    private siteApplicationRepository: Repository<SiteApplication>,
   ) {}
 
   private async getMetricsForSites({
@@ -137,7 +153,11 @@ export class MonitoringService {
         // This should never happen since we validate siteIds
         if (!site) throw new InternalServerErrorException();
 
-        return { siteId: site.id, siteName: site.name, data: metrics };
+        return {
+          siteId: site.id,
+          siteName: site.name,
+          data: metrics as SiteMetrics[],
+        };
       }),
     );
   }
@@ -154,8 +174,9 @@ export class MonitoringService {
   }
 
   async getMonitoringStats(
-    { siteIds, spotterId, monthly, start, end }: GetMonitoringStatsDto,
+    { siteIds, spotterId, monthly, start, end, csv }: GetMonitoringStatsDto,
     user: User,
+    res: Response,
   ) {
     if (siteIds && spotterId) {
       throw new BadRequestException(
@@ -194,29 +215,103 @@ export class MonitoringService {
 
     const aggregationPeriod = monthly ? 'month' : 'week';
 
-    return this.getMetricsForSites({
-      siteIds: querySiteIds,
-      skipAdminCheck: false,
-      user,
-      aggregationPeriod,
-      startDate,
-      endDate,
-    });
+    if (!csv) {
+      res.send(
+        await this.getMetricsForSites({
+          siteIds: querySiteIds,
+          skipAdminCheck: false,
+          user,
+          aggregationPeriod,
+          startDate,
+          endDate,
+        }),
+      );
+      return;
+    }
+
+    const filename = 'site_metrics.csv';
+
+    const getRows = async (startDateRows: Date, endDateRows: Date) => {
+      const data = await this.getMetricsForSites({
+        siteIds: querySiteIds,
+        skipAdminCheck: false,
+        user,
+        aggregationPeriod,
+        startDate: startDateRows,
+        endDate: endDateRows,
+      });
+
+      return data
+        .map((x) => {
+          return x.data.map((y) => ({
+            siteId: x.siteId,
+            siteName: x.siteName,
+            ...y,
+            date: y.date && DateTime.fromJSDate(y.date).toISO(),
+          }));
+        })
+        .flat();
+    };
+
+    ReturnCSV({ startDate, endDate, res, filename, getRows });
   }
 
-  async getMonitoringLastMonth() {
+  async getMonitoringLastMonth(
+    getMonitoringLastMonthDto: GetMonitoringLastMonthDto,
+    res: Response,
+  ) {
+    const { csv } = getMonitoringLastMonthDto;
     const prevMonth = DateTime.now().minus({ month: 1 }).toJSDate();
     const sitesWithSpotter = await this.siteRepository.find({
       where: { sensorId: Not(IsNull()) },
       select: ['id'],
     });
-    return this.getMetricsForSites({
-      siteIds: sitesWithSpotter.map((x) => x.id),
-      skipAdminCheck: true,
-      user: undefined,
-      aggregationPeriod: undefined,
+
+    if (!csv) {
+      res.send(
+        await this.getMetricsForSites({
+          siteIds: sitesWithSpotter.map((x) => x.id),
+          skipAdminCheck: true,
+          user: undefined,
+          aggregationPeriod: undefined,
+          startDate: prevMonth,
+          endDate: undefined,
+        }),
+      );
+      return;
+    }
+
+    const filename = 'monthly_report.csv';
+
+    const getRows = async (startDateRows: Date, endDateRows: Date) => {
+      const data = await this.getMetricsForSites({
+        siteIds: sitesWithSpotter.map((x) => x.id),
+        skipAdminCheck: true,
+        user: undefined,
+        aggregationPeriod: undefined,
+        startDate: startDateRows,
+        endDate: endDateRows,
+      });
+
+      return data
+        .map((x) => {
+          if (x.data.length === 0)
+            return { siteId: x.siteId, siteName: x.siteName };
+          return x.data.map((y) => ({
+            siteId: x.siteId,
+            siteName: x.siteName,
+            ...y,
+          }));
+        })
+        .flat();
+    };
+
+    ReturnCSV({
       startDate: prevMonth,
-      endDate: undefined,
+      endDate: new Date(),
+      res,
+      filename,
+      getRows,
     });
   }
 
@@ -264,13 +359,30 @@ export class MonitoringService {
       .addSelect('COUNT(*)', 'count')
       .groupBy('survey.site_id');
 
+    const applicationSubQuery = this.siteApplicationRepository
+      .createQueryBuilder('application')
+      .select('application.site_id', 'site_id')
+      .addSelect('u.full_name', 'full_name')
+      .addSelect('u.organization', 'organization')
+      .addSelect('u.email', 'email')
+      .innerJoin('users', 'u', 'application.user_id = u.id');
+
     const baseQuery = this.siteRepository
       .createQueryBuilder('site')
       .select('site.id', 'siteId')
       .addSelect('site.name', 'siteName')
-      .addSelect('ARRAY_AGG(u.organization)', 'organizations')
-      .addSelect('ARRAY_AGG(u.full_name)', 'adminNames')
-      .addSelect('ARRAY_AGG(u.email)', 'adminEmails')
+      .addSelect(
+        'ARRAY_AGG(u.organization) || ARRAY_AGG(application.organization)',
+        'organizations',
+      )
+      .addSelect(
+        'ARRAY_AGG(u.full_name) || ARRAY_AGG(application.full_name)',
+        'adminNames',
+      )
+      .addSelect(
+        'ARRAY_AGG(u.email) || ARRAY_AGG(application.email)',
+        'adminEmails',
+      )
       .addSelect('site.status', 'status')
       .addSelect('site.depth', 'depth')
       .addSelect('site.sensor_id', 'spotterId')
@@ -279,6 +391,7 @@ export class MonitoringService {
       .addSelect('latest_data.timestamp', 'lastDataReceived')
       .addSelect('COALESCE(surveys_count.count, 0)', 'surveysCount')
       .addSelect('site.contact_information', 'contactInformation')
+      .addSelect('site.created_at', 'createdAt')
       .leftJoin(
         'users_administered_sites_site',
         'uass',
@@ -294,6 +407,11 @@ export class MonitoringService {
         `(${surveysCountSubQuery.getQuery()})`,
         'surveys_count',
         'surveys_count.site_id = site.id',
+      )
+      .leftJoin(
+        `(${applicationSubQuery.getQuery()})`,
+        'application',
+        'application.site_id = site.id',
       );
 
     const withSiteId = siteId

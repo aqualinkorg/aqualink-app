@@ -16,7 +16,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
       href="/monitoring"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-4 MuiButton-outlinedPrimary"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-5 MuiButton-outlinedPrimary"
         tabindex="0"
         type="button"
       >
@@ -44,11 +44,51 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
         />
       </button>
     </a>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-5 MuiButton-outlinedPrimary"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Refresh
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-5 MuiButton-outlinedPrimary"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Download CSV
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <mock-typography
+      classname="makeStyles-pageTitle-7"
+      variant="h3"
+    >
+      Site Metrics
+    </mock-typography>
+    <mock-typography
+      classname="makeStyles-pageDescription-8"
+      variant="body2"
+    >
+      Use only one of Site ID or Spotter ID!
+    </mock-typography>
     <div
-      class="makeStyles-filtersWrapper-5"
+      class="makeStyles-filtersWrapper-2"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-7"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-4"
       >
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
@@ -67,10 +107,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-9 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-10"
+              class="PrivateNotchedOutline-legendLabelled-11"
             >
               <span>
                 Site ID
@@ -80,7 +120,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
         </div>
       </div>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-7"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-4"
       >
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
@@ -99,10 +139,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-9 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-10"
+              class="PrivateNotchedOutline-legendLabelled-11"
             >
               <span>
                 Spotter ID
@@ -114,7 +154,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
       <mock-muipickersutilsprovider>
         <mock-keyboarddatepicker
           autook="true"
-          classname="makeStyles-filterItem-7"
+          classname="makeStyles-filterItem-4"
           disabletoolbar="true"
           format="MM/dd/yyyy"
           inputvariant="outlined"
@@ -127,7 +167,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
       <mock-muipickersutilsprovider>
         <mock-keyboarddatepicker
           autook="true"
-          classname="makeStyles-filterItem-7"
+          classname="makeStyles-filterItem-4"
           disabletoolbar="true"
           format="MM/dd/yyyy"
           inputvariant="outlined"
@@ -138,7 +178,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
         />
       </mock-muipickersutilsprovider>
       <div
-        class="MuiGrid-root makeStyles-switchContainer-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+        class="MuiGrid-root makeStyles-switchContainer-3 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
       >
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -161,22 +201,8 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
         </div>
       </div>
     </div>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-4 MuiButton-outlinedPrimary"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiButton-label"
-      >
-        Get metrics
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
-    </button>
     <div
-      class="makeStyles-resultsContainer-2"
+      class="makeStyles-resultsContainer-6"
     />
   </div>
 </div>

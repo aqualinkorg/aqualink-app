@@ -28,7 +28,9 @@
     "chart.js": "^2.9.3",
     "chartjs-plugin-annotation": "^0.5.7",
     "classnames": "^2.2.6",
-    "date-fns-tz": "^1.1.3",
+    "csv-stringify": "^6.4.5",
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.4",
@@ -65,7 +67,8 @@
       "enzyme-to-json/serializer"
     ],
     "moduleNameMapper": {
-      "axios": "axios/dist/node/axios.cjs"
+      "axios": "axios/dist/node/axios.cjs",
+      "^csv-stringify/browser/esm/sync": "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs"
     },
     "globalSetup": "./src/global-setup.js"
   },

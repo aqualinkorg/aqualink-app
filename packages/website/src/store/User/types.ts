@@ -1,9 +1,11 @@
 import type { Site } from '../Sites/types';
 
+export type AdminLevel = 'default' | 'site_manager' | 'super_admin';
+
 export interface User {
   email?: string | null;
   fullName?: string | null;
-  adminLevel?: 'default' | 'site_manager' | 'super_admin';
+  adminLevel?: AdminLevel;
   firebaseUid?: string | null;
   organization?: string | null;
   administeredSites?: Site[];

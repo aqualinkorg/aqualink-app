@@ -1,9 +1,14 @@
-import { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  MonitoringTableProps,
+} from 'common/MonitoringTable';
+import { DateTime } from 'luxon';
 import React from 'react';
 import monitoringServices, {
   GetSitesStatusResponse,
 } from 'services/monitoringServices';
-import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import MonitoringPageWrapper from '../MonitoringPageWrapper';
 
 type TableData = GetSitesStatusResponse;
 
@@ -36,11 +41,19 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function SitesStatus() {
   return (
-    <MonitoringTableWrapper
+    <MonitoringPageWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Sites Status"
       getResult={getResult}
-      headCells={headCells}
-      bodyCells={bodyCells}
+      ResultsComponent={MonitoringTable}
+      resultsComponentProps={(result) => ({
+        headCells,
+        data: result,
+        bodyCells,
+        downloadCsvFilename: `sites-status-${DateTime.now().toFormat(
+          'yyyy-MM-dd',
+        )}.csv`,
+      })}
+      fetchOnPageLoad
     />
   );
 }

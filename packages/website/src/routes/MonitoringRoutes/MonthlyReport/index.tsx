@@ -3,9 +3,14 @@ import monitoringServices, {
   GetMonitoringMetricsResponse,
   MonitoringData,
 } from 'services/monitoringServices';
-import { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  MonitoringTableProps,
+} from 'common/MonitoringTable';
 import { ArrayElement } from 'utils/types';
-import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import { DateTime } from 'luxon';
+import MonitoringPageWrapper from '../MonitoringPageWrapper';
 
 type TableData = Omit<ArrayElement<GetMonitoringMetricsResponse>, 'data'> &
   Omit<MonitoringData, 'date'>;
@@ -78,11 +83,19 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function MonthlyReport() {
   return (
-    <MonitoringTableWrapper
+    <MonitoringPageWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Monthly Report"
       getResult={getResult}
-      headCells={headCells}
-      bodyCells={bodyCells}
+      ResultsComponent={MonitoringTable}
+      resultsComponentProps={(result) => ({
+        headCells,
+        data: result,
+        bodyCells,
+        downloadCsvFilename: `monthly-report-${DateTime.now().toFormat(
+          'yyyy-MM-dd',
+        )}.csv`,
+      })}
+      fetchOnPageLoad
     />
   );
 }

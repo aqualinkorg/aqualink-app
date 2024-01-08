@@ -1,6 +1,7 @@
 import requests from 'helpers/requests';
 import { Status } from 'store/Sites/types';
 import { MonitoringMetric } from 'utils/types';
+import { downloadBlob } from 'utils/utils';
 
 interface BasicProps {
   token: string;
@@ -58,6 +59,28 @@ const getMonitoringStats = ({
     token,
   });
 
+const getMonitoringStatsCSV = async ({
+  token,
+  ...rest
+}: GetMonitoringMetricsRequestProps) => {
+  const resp = await fetch(
+    `${
+      process.env.REACT_APP_API_BASE_URL
+    }/monitoring${requests.generateUrlQueryParams({ ...rest, csv: true })}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+  if (!(resp.status >= 200 && resp.status <= 299)) {
+    throw new Error(await resp.text());
+  }
+  const header = resp.headers.get('Content-Disposition');
+  const parts = header?.split(';');
+  const filename = parts?.[1]?.split('=')[1] || 'data.csv';
+  const blob = await resp.blob();
+  downloadBlob(blob, filename);
+};
+
 type GetMonitoringLastMonthProps = BasicProps;
 
 const getMonitoringLastMonth = ({ token }: GetMonitoringLastMonthProps) =>
@@ -66,6 +89,29 @@ const getMonitoringLastMonth = ({ token }: GetMonitoringLastMonthProps) =>
     url: 'monitoring/last-month',
     token,
   });
+
+const getMonitoringLastMonthCSV = async ({
+  token,
+}: GetMonitoringLastMonthProps) => {
+  const resp = await fetch(
+    `${
+      process.env.REACT_APP_API_BASE_URL
+    }/monitoring/last-month${requests.generateUrlQueryParams({
+      csv: true,
+    })}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+  if (!(resp.status >= 200 && resp.status <= 299)) {
+    throw new Error(await resp.text());
+  }
+  const header = resp.headers.get('Content-Disposition');
+  const parts = header?.split(';');
+  const filename = parts?.[1]?.split('=')[1] || 'data.csv';
+  const blob = await resp.blob();
+  downloadBlob(blob, filename);
+};
 
 type GetSurveysReportProps = BasicProps;
 
@@ -112,6 +158,7 @@ export type GetSitesOverviewResponse = {
   lastDataReceived: string | null;
   surveysCount: number;
   contactInformation: string;
+  createdAt: string;
 }[];
 
 const getSitesOverview = ({ token, ...rest }: GetSitesOverviewProps) =>
@@ -143,7 +190,9 @@ const getSitesStatus = ({ token }: GetSitesStatusProps) =>
 export default {
   postMonitoringMetric,
   getMonitoringStats,
+  getMonitoringStatsCSV,
   getMonitoringLastMonth,
+  getMonitoringLastMonthCSV,
   getSurveysReport,
   getSitesOverview,
   getSitesStatus,
