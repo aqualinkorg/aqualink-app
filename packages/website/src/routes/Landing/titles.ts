@@ -8,7 +8,7 @@ import customers from '../../assets/img/landing-page/customers.jpg';
 export const cardTitles: CardIncomingProps[] = [
   {
     title: 'Centralized information',
-    text: 'Aqualink integrates data from sensors, models, satellite observations, surveys, images, and video to give you an instant view of your ecosystem.',
+    text: 'Aqualink integrates data from sensors, models, satellite observations, surveys, images, and video to give you an instant view of the ecosystem you care about.',
     backgroundColor: 'rgba(69, 76, 79, 0.05)',
     direction: 'row',
     image: metrics,
