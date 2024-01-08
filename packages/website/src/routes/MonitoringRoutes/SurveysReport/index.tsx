@@ -1,10 +1,15 @@
-import { BodyCell, HeadCell } from 'common/MonitoringTable';
+import MonitoringTable, {
+  BodyCell,
+  HeadCell,
+  MonitoringTableProps,
+} from 'common/MonitoringTable';
+import { DateTime } from 'luxon';
 import React from 'react';
 import monitoringServices, {
   GetSurveysReportResponse,
 } from 'services/monitoringServices';
 import { ArrayElement } from 'utils/types';
-import MonitoringTableWrapper from '../MonitoringTableWrapper';
+import MonitoringPageWrapper from '../MonitoringPageWrapper';
 
 type TableData = ArrayElement<GetSurveysReportResponse>;
 
@@ -45,13 +50,21 @@ async function getResult(token: string): Promise<TableData[]> {
 
 function SurveysReport() {
   return (
-    <MonitoringTableWrapper
+    <MonitoringPageWrapper<TableData[], MonitoringTableProps<TableData>>
       pageTitle="Surveys Report"
       getResult={getResult}
-      headCells={headCells}
-      bodyCells={bodyCells}
-      defaultOrder="desc"
-      defaultSortColumn="diveDate"
+      ResultsComponent={MonitoringTable}
+      resultsComponentProps={(result) => ({
+        headCells,
+        data: result,
+        bodyCells,
+        defaultOrder: 'desc',
+        defaultSortColumn: 'diveDate',
+        downloadCsvFilename: `surveys-report-${DateTime.now().toFormat(
+          'yyyy-MM-dd',
+        )}.csv`,
+      })}
+      fetchOnPageLoad
     />
   );
 }

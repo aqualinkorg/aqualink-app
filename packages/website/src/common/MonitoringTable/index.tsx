@@ -1,4 +1,5 @@
 import {
+  Button,
   createStyles,
   Link,
   makeStyles,
@@ -12,10 +13,14 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
+  Toolbar,
   Tooltip,
 } from '@material-ui/core';
 import { colors } from 'layout/App/theme';
+// eslint-disable-next-line import/no-unresolved
+import { stringify } from 'csv-stringify/browser/esm/sync';
 import React from 'react';
+import { downloadBlob } from 'utils/utils';
 
 export type Order = 'asc' | 'desc';
 
@@ -35,13 +40,14 @@ export interface BodyCell<T> {
   format?: (row: T) => string;
 }
 
-interface MonitoringTableProps<T> {
+export interface MonitoringTableProps<T> {
   defaultSortColumn?: keyof T;
   defaultOrder?: Order;
   headCells: HeadCell<T>[];
   data: T[];
   bodyCells: BodyCell<T>[];
   showPagination?: boolean;
+  downloadCsvFilename?: string;
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -97,6 +103,7 @@ function MonitoringTable<
   data,
   bodyCells,
   showPagination = false,
+  downloadCsvFilename,
 }: MonitoringTableProps<T>) {
   const classes = useStyles();
 
@@ -126,8 +133,29 @@ function MonitoringTable<
     setPage(newPage);
   };
 
+  const downloadCsv = () => {
+    if (!downloadCsvFilename) {
+      return;
+    }
+
+    const str = stringify(data, { header: true });
+    const blob = new Blob([str], { type: 'text/csv' });
+    downloadBlob(blob, downloadCsvFilename);
+  };
+
   return (
     <Paper>
+      {downloadCsvFilename && (
+        <Toolbar className={classes.toolbar}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => downloadCsv()}
+          >
+            Download CSV
+          </Button>
+        </Toolbar>
+      )}
       <TableContainer style={{ maxHeight: '80vh' }}>
         <Table>
           <TableHead>
@@ -230,6 +258,9 @@ const useStyles = makeStyles(() =>
       position: 'absolute',
       top: 20,
       width: 1,
+    },
+    toolbar: {
+      flexDirection: 'row-reverse',
     },
   }),
 );

@@ -1,12 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEnum, IsOptional, Validate } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, Max, Min, Validate } from 'class-validator';
 import { Site, SiteStatus } from 'sites/sites.entity';
 import { EntityExists } from 'validations/entity-exists.constraint';
 
 export class GetSitesOverviewDto {
   @ApiProperty({ example: 42 })
   @IsOptional()
+  @Type(() => Number)
+  @Min(1)
+  @Max(1000000)
+  @IsInt()
   @Validate(EntityExists, [Site])
   siteId?: number;
 

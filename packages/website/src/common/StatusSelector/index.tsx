@@ -9,6 +9,9 @@ const options: Status[] = [
   'approved',
   'shipped',
   'deployed',
+  'maintenance',
+  'lost',
+  'end_of_life',
 ];
 
 interface StatusSelectorProps {

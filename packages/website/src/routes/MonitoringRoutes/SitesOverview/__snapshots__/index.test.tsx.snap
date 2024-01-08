@@ -87,10 +87,10 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-8"
+              class="PrivateNotchedOutline-legendLabelled-9"
             >
               <span>
                 Site ID
@@ -119,10 +119,10 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-8"
+              class="PrivateNotchedOutline-legendLabelled-9"
             >
               <span>
                 Site Name
@@ -151,10 +151,10 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-8"
+              class="PrivateNotchedOutline-legendLabelled-9"
             >
               <span>
                 Spotter ID
@@ -183,10 +183,10 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-8"
+              class="PrivateNotchedOutline-legendLabelled-9"
             >
               <span>
                 Organization
@@ -215,10 +215,10 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-8"
+              class="PrivateNotchedOutline-legendLabelled-9"
             >
               <span>
                 Admin Email
@@ -247,10 +247,10 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-8"
+              class="PrivateNotchedOutline-legendLabelled-9"
             >
               <span>
                 Admin Name
@@ -307,13 +307,13 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
           >
             <mock-menuitem
               aria-selected="true"
-              classname="makeStyles-menuItem-10"
+              classname="makeStyles-menuItem-11"
               data-value=""
               role="option"
               selected="true"
             />
             <mock-menuitem
-              classname="makeStyles-menuItem-10"
+              classname="makeStyles-menuItem-11"
               data-value="in_review"
               role="option"
               selected="false"
@@ -321,7 +321,7 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
               in_review
             </mock-menuitem>
             <mock-menuitem
-              classname="makeStyles-menuItem-10"
+              classname="makeStyles-menuItem-11"
               data-value="rejected"
               role="option"
               selected="false"
@@ -329,7 +329,7 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
               rejected
             </mock-menuitem>
             <mock-menuitem
-              classname="makeStyles-menuItem-10"
+              classname="makeStyles-menuItem-11"
               data-value="approved"
               role="option"
               selected="false"
@@ -337,7 +337,7 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
               approved
             </mock-menuitem>
             <mock-menuitem
-              classname="makeStyles-menuItem-10"
+              classname="makeStyles-menuItem-11"
               data-value="shipped"
               role="option"
               selected="false"
@@ -345,20 +345,44 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
               shipped
             </mock-menuitem>
             <mock-menuitem
-              classname="makeStyles-menuItem-10"
+              classname="makeStyles-menuItem-11"
               data-value="deployed"
               role="option"
               selected="false"
             >
               deployed
             </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-11"
+              data-value="maintenance"
+              role="option"
+              selected="false"
+            >
+              maintenance
+            </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-11"
+              data-value="lost"
+              role="option"
+              selected="false"
+            >
+              lost
+            </mock-menuitem>
+            <mock-menuitem
+              classname="makeStyles-menuItem-11"
+              data-value="end_of_life"
+              role="option"
+              selected="false"
+            >
+              end_of_life
+            </mock-menuitem>
           </mock-menu>
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-8"
+              class="PrivateNotchedOutline-legendLabelled-9"
             >
               <span>
                 Status

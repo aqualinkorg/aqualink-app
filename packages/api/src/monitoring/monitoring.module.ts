@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SiteApplication } from 'site-applications/site-applications.entity';
 import { Site } from 'sites/sites.entity';
 import { Survey } from 'surveys/surveys.entity';
 import { LatestData } from 'time-series/latest-data.entity';
@@ -10,7 +11,14 @@ import { MonitoringService } from './monitoring.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Monitoring, User, Site, Survey, LatestData]),
+    TypeOrmModule.forFeature([
+      Monitoring,
+      User,
+      Site,
+      Survey,
+      LatestData,
+      SiteApplication,
+    ]),
   ],
   controllers: [MonitoringController],
   providers: [MonitoringService],

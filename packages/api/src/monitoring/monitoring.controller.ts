@@ -1,12 +1,14 @@
-import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'auth/auth.decorator';
 import { AuthRequest } from 'auth/auth.types';
 import { AdminLevel } from 'users/users.entity';
+import type { Response } from 'express';
 import { GetMonitoringStatsDto } from './dto/get-monitoring-stats.dto';
 import { GetSitesOverviewDto } from './dto/get-sites-overview.dto';
 import { PostMonitoringMetricDto } from './dto/post-monitoring-metric.dto';
 import { MonitoringService } from './monitoring.service';
+import { GetMonitoringLastMonthDto } from './dto/get-monitoring-last-month.dto';
 
 @ApiTags('Monitoring')
 @Controller('monitoring')
@@ -32,10 +34,12 @@ export class MonitoringController {
   getMonitoringStats(
     @Query() getMonitoringStatsDto: GetMonitoringStatsDto,
     @Req() req: AuthRequest,
+    @Res() res: Response,
   ) {
     return this.monitoringService.getMonitoringStats(
       getMonitoringStatsDto,
       req.user,
+      res,
     );
   }
 
@@ -45,8 +49,14 @@ export class MonitoringController {
       'Get monitoring metrics for last month for each site with a spotter',
   })
   @Auth(AdminLevel.SuperAdmin)
-  getMonitoringLastMonth() {
-    return this.monitoringService.getMonitoringLastMonth();
+  getMonitoringLastMonth(
+    @Query() getMonitoringLastMonthDto: GetMonitoringLastMonthDto,
+    @Res() res: Response,
+  ) {
+    return this.monitoringService.getMonitoringLastMonth(
+      getMonitoringLastMonthDto,
+      res,
+    );
   }
 
   @Get('surveys-report')

@@ -5,46 +5,45 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import { useSnackbar } from 'notistack';
-import MonitoringTable, {
-  BodyCell,
-  HeadCell,
-  Order,
-} from 'common/MonitoringTable';
 import LoadingBackdrop from 'common/LoadingBackdrop';
 import { fetchData } from './utils';
 
-interface MonitoringTableWrapperProps<T> {
-  getResult: (token: string) => Promise<T[]>;
-  headCells: HeadCell<T>[];
-  bodyCells: BodyCell<T>[];
+interface MonitoringPageWrapperProps<T, A> {
+  getResult: (token: string) => Promise<T>;
+  ResultsComponent: React.FC<A>;
+  resultsComponentProps: (results: T) => A;
   pageTitle: string;
+  pageDescription?: string | React.JSX.Element;
   filters?: React.JSX.Element;
-  defaultSortColumn?: keyof T;
-  defaultOrder?: Order;
   fetchOnEnter?: boolean;
+  fetchOnPageLoad?: boolean;
+  csvDownload?: (token: string) => Promise<void>;
 }
 
-function MonitoringTableWrapper<
-  T extends { [key in keyof T]: string | number | null },
->({
+function MonitoringPageWrapper<T, A>({
   getResult,
-  headCells,
-  bodyCells,
+  ResultsComponent,
+  resultsComponentProps,
   pageTitle,
+  pageDescription,
   filters,
-  defaultSortColumn,
-  defaultOrder,
   fetchOnEnter = false,
-}: MonitoringTableWrapperProps<T>) {
+  fetchOnPageLoad = false,
+  csvDownload,
+}: MonitoringPageWrapperProps<T, A>) {
   const user = useSelector(userInfoSelector);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [result, setResult] = React.useState<T[] | null>(null);
+  const { token } = user || {};
+
+  const [result, setResult] = React.useState<T | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    onGetMetrics();
+    if (fetchOnPageLoad) {
+      onGetMetrics();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
@@ -71,6 +70,8 @@ function MonitoringTableWrapper<
     };
   }, [fetchOnEnter, onGetMetrics]);
 
+  const props = result !== null && resultsComponentProps(result);
+
   return (
     <div>
       <LoadingBackdrop loading={loading} />
@@ -92,20 +93,34 @@ function MonitoringTableWrapper<
       >
         Refresh
       </Button>
+      {token && csvDownload && (
+        <Button
+          color="primary"
+          variant="outlined"
+          onClick={() =>
+            fetchData({
+              user,
+              enqueueSnackbar,
+              setLoading,
+              getResult: csvDownload,
+            })
+          }
+          className={classes.button}
+        >
+          Download CSV
+        </Button>
+      )}
       <Typography className={classes.pageTitle} variant="h3">
         {pageTitle}
       </Typography>
+      {pageDescription && (
+        <Typography className={classes.pageDescription} variant="body2">
+          {pageDescription}
+        </Typography>
+      )}
       {filters && filters}
       <div className={classes.resultsContainer}>
-        {result && (
-          <MonitoringTable
-            headCells={headCells}
-            data={result}
-            bodyCells={bodyCells}
-            defaultSortColumn={defaultSortColumn}
-            defaultOrder={defaultOrder}
-          />
-        )}
+        {props && <ResultsComponent {...props} />}
       </div>
     </div>
   );
@@ -121,6 +136,10 @@ const useStyles = makeStyles(() => ({
   pageTitle: {
     marginLeft: '2rem',
   },
+  pageDescription: {
+    marginLeft: '2rem',
+    marginTop: '0.5em',
+  },
 }));
 
-export default MonitoringTableWrapper;
+export default MonitoringPageWrapper;

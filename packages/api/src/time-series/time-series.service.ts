@@ -1,11 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  closeSync,
-  createReadStream,
-  openSync,
-  unlinkSync,
-  writeSync,
-} from 'fs';
+import { createReadStream, unlinkSync } from 'fs';
 import { Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import type { Response } from 'express';
@@ -17,11 +11,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { join } from 'path';
-// https://github.com/adaltas/node-csv/issues/372
-// eslint-disable-next-line import/no-unresolved
-import { stringify } from 'csv-stringify/sync';
 import { Monitoring } from 'monitoring/monitoring.entity';
 import { MonitoringMetric } from 'monitoring/schemas/monitoring-metric.enum';
+import { ReturnCSV } from 'utils/csv-utils';
 import { DateTime } from '../luxon-extensions';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
@@ -178,125 +170,71 @@ export class TimeSeriesService {
       'hour',
     );
 
-    const monthChunkSize = 6;
+    const filename = `data_site_${siteId}_${minDate.toFormat(
+      DATE_FORMAT,
+    )}_${maxDate.toFormat(DATE_FORMAT)}.csv`;
 
-    const createChunks = (
-      curr: DateTime,
-      acc: { start: DateTime; end: DateTime }[],
-    ): { start: DateTime; end: DateTime }[] => {
-      if (curr.diff(minDate, 'months').months < monthChunkSize)
-        return [
-          ...acc,
-          { end: curr.minus({ milliseconds: 1 }), start: minDate },
-        ];
+    const getRows = async (startDateRows: Date, endDateRows: Date) => {
+      const data: TimeSeriesData[] = await getDataQuery({
+        timeSeriesRepository: this.timeSeriesRepository,
+        siteId,
+        metrics,
+        start: startDateRows.toISOString(),
+        end: endDateRows.toISOString(),
+        hourly,
+        csv: true,
+        order: 'DESC',
+      });
 
-      const next = curr.minus({ months: monthChunkSize });
-      const item = { end: curr.minus({ milliseconds: 1 }), start: next };
+      const metricSourceAsKey = data.map((x) => {
+        const depth = x.depth ? `_${x.depth}` : '';
+        return {
+          key: `${x.metric}_${x.source}${depth}`,
+          value: x.value,
+          timestamp: x.timestamp,
+        };
+      });
 
-      return createChunks(next, [...acc, item]);
+      const groupedByTimestamp = metricSourceAsKey.reduce(
+        (acc, curr) => {
+          const key = curr.timestamp.toISOString();
+          const accValue = acc[key];
+          if (typeof accValue === 'object') {
+            // eslint-disable-next-line fp/no-mutating-methods
+            accValue.push(curr);
+          } else {
+            // eslint-disable-next-line fp/no-mutation
+            acc[key] = [curr];
+          }
+          return acc;
+        },
+        {} as {
+          [k: string]: {
+            key: string;
+            value: number;
+            timestamp: Date;
+          }[];
+        },
+      );
+
+      return Object.entries(groupedByTimestamp).map(([timestamp, values]) =>
+        values.reduce((acc, curr) => {
+          // eslint-disable-next-line fp/no-mutation
+          acc[curr.key] = curr.value;
+          // eslint-disable-next-line fp/no-mutation
+          acc.timestamp = timestamp;
+          return acc;
+        }, structuredClone(emptyRow)),
+      );
     };
 
-    const chunks = createChunks(maxDate, []);
-
-    const tempFileName = join(
-      process.cwd(),
-      Math.random().toString(36).substring(2, 15),
-    );
-
-    const fd = openSync(tempFileName, 'w');
-
-    try {
-      // eslint-disable-next-line fp/no-mutation, no-plusplus
-      for (let i = 0; i < chunks.length; i++) {
-        const first = i === 0;
-
-        // we want this not to run in parallel, that's why it is ok here to disable no-await-in-loop
-        // eslint-disable-next-line no-await-in-loop
-        const data: TimeSeriesData[] = await getDataQuery({
-          timeSeriesRepository: this.timeSeriesRepository,
-          siteId,
-          metrics,
-          start: chunks[i].start.toISOString(),
-          end: chunks[i].end.toISOString(),
-          hourly,
-          csv: true,
-          order: 'DESC',
-        });
-
-        const metricSourceAsKey = data.map((x) => {
-          const depth = x.depth ? `_${x.depth}` : '';
-          return {
-            key: `${x.metric}_${x.source}${depth}`,
-            value: x.value,
-            timestamp: x.timestamp,
-          };
-        });
-
-        const groupedByTimestamp = metricSourceAsKey.reduce(
-          (acc, curr) => {
-            const key = curr.timestamp.toISOString();
-            const accValue = acc[key];
-            if (typeof accValue === 'object') {
-              // eslint-disable-next-line fp/no-mutating-methods
-              accValue.push(curr);
-            } else {
-              // eslint-disable-next-line fp/no-mutation
-              acc[key] = [curr];
-            }
-            return acc;
-          },
-          {} as {
-            [k: string]: {
-              key: string;
-              value: number;
-              timestamp: Date;
-            }[];
-          },
-        );
-
-        const rows = Object.entries(groupedByTimestamp).map(
-          ([timestamp, values]) =>
-            values.reduce((acc, curr) => {
-              // eslint-disable-next-line fp/no-mutation
-              acc[curr.key] = curr.value;
-              // eslint-disable-next-line fp/no-mutation
-              acc.timestamp = timestamp;
-              return acc;
-            }, structuredClone(emptyRow)),
-        );
-
-        const csvLines = stringify(rows, { header: first });
-
-        writeSync(fd, csvLines);
-      }
-
-      closeSync(fd);
-
-      const fileName = `data_site_${siteId}_${minDate.toFormat(
-        DATE_FORMAT,
-      )}_${maxDate.toFormat(DATE_FORMAT)}.csv`;
-
-      const readStream = createReadStream(tempFileName);
-
-      res.set({
-        'Content-Disposition': `attachment; filename=${encodeURIComponent(
-          fileName,
-        )}`,
-      });
-
-      res.set({
-        'Access-Control-Expose-Headers': 'Content-Disposition',
-      });
-
-      readStream.pipe(res);
-
-      readStream.on('end', () => {
-        unlinkSync(tempFileName);
-      });
-    } catch (error) {
-      console.error(error);
-      unlinkSync(tempFileName);
-    }
+    ReturnCSV({
+      res,
+      startDate: minDate.toJSDate(),
+      endDate: maxDate.toJSDate(),
+      filename,
+      getRows,
+    });
   }
 
   async findSurveyPointDataRange(
