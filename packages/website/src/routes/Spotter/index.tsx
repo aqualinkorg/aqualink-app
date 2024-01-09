@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Button,
   Grid,
   MenuItem,
   Select,
@@ -72,6 +73,18 @@ const BuoySelector = ({
           </MenuItem>
         ))}
       </Select>
+      {selectedBuoy && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            handleBuoyClick(selectedBuoy?.id as string);
+          }}
+          style={{ marginLeft: '1em', width: 'auto' }}
+        >
+          Refresh
+        </Button>
+      )}
     </Grid>
   );
 };
