@@ -102,14 +102,14 @@ export function metricFields(
         {
           label: 'Turbidity',
           value: `${formatNumber(data?.turbidity, 1)}`,
-          unit: 'FNU',
+          unit: 'NTU',
           color: getAlertColor('turbidity', data?.turbidity),
           xs: 6,
         },
         {
           label: 'Nitrate Nitrite Nitrogen',
           value: `${formatNumber(data?.nitratePlusNitrite, 1)}`,
-          unit: 'mg/L',
+          unit: 'µg/L',
           color: getAlertColor('nitratePlusNitrite', data?.nitratePlusNitrite),
           xs: 6,
         },

@@ -33,13 +33,13 @@ import { Metric } from './metrics.enum';
         .where("timestamp >= current_date - INTERVAL '7 days'")
         // Look a bit further in the past for sonde data
         .orWhere(
-          "type IN ('sonde') AND (timestamp >= current_date - INTERVAL '180 days')",
+          "type IN ('sonde') AND (timestamp >= current_date - INTERVAL '2 years')",
         )
         .orWhere(
-          "type IN ('hui') AND (timestamp >= current_date - INTERVAL '180 days')",
+          "type IN ('hui') AND (timestamp >= current_date - INTERVAL '2 years')",
         )
         .orWhere(
-          "type IN ('sheet_data') AND (timestamp >= current_date - INTERVAL '180 days')",
+          "type IN ('sheet_data') AND (timestamp >= current_date - INTERVAL '2 years')",
         )
         .orderBy('metric, type, site_id, survey_point_id, timestamp', 'DESC')
     );
