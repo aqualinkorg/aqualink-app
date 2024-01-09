@@ -7,13 +7,10 @@ export default function LocateControl() {
   const { map } = useLeaflet();
 
   useEffect(() => {
-    // geo locate props
     const locateOptions = {
-      startDirectly: true,
       setView: false,
       flyTo: false,
       showCompass: true,
-      onActivate: () => {}, // callback before engine starts retrieving locations
     };
 
     // @ts-ignore

@@ -130,7 +130,7 @@ const BuoyContent = ({
           key={0}
           center={{ lat: lastPosition.latitude, lng: lastPosition.longitude }}
           zoom={13}
-          style={{ width: '100%', height: 'calc(100% - 6em)' }}
+          style={{ width: '100%', height: 'calc(100% - 8em)' }}
         >
           <LocateControl />
           <TileLayer
@@ -244,7 +244,7 @@ const BuoyPage = () => {
           handleBuoyClick={handleBuoyClick}
         />
       </Grid>
-      <Grid item xs={12} style={{ minHeight: 'calc(100% - 8em)' }}>
+      <Grid item xs={12} style={{ minHeight: 'calc(100% - 9em)' }}>
         <BuoyContent
           selectedBuoy={selectedBuoy}
           waveData={waveData}
