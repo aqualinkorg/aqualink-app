@@ -41,8 +41,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     Partial<Record<Metrics, number>>
   >({});
 
-  // disable showing color for now
-  const showAlertColors = source === 'hui' && false;
+  const showAlertColors = source === 'hui';
 
   const isPointNameLong = (point?.name?.length || 0) > 24;
   const surveyPointDisplayName = `${isPointNameLong ? '' : ' Survey point:'} ${
@@ -141,7 +140,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                     <Grid
                       item
                       xs={12}
-                      style={{ display: 'flex', alignItems: 'baseline' }}
+                      style={{ display: 'flex', alignItems: 'baseline', color }}
                     >
                       <Typography
                         className={classes.contentTextValues}

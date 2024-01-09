@@ -32,7 +32,7 @@ export const sondeConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
   },
   turbidity: {
     title: 'Turbidity',
-    units: 'FNU',
+    units: 'NTU',
     description: '',
     visibility: 'public',
     order: 2,
