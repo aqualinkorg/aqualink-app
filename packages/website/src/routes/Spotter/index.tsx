@@ -175,8 +175,13 @@ const BuoyContent = ({
 const BuoyPage = () => {
   // Get token from localStorage or use default
   const initialToken = localStorage.getItem('token') || undefined;
+  const initialSelectedBuoy = JSON.parse(
+    localStorage.getItem('selectedBuoy') || 'null',
+  );
   const [buoyData, setBuoyData] = useState<BuoyData | undefined>(undefined);
-  const [selectedBuoy, setSelectedBuoy] = useState<any>(undefined);
+  const [selectedBuoy, setSelectedBuoy] = useState<any>(
+    initialSelectedBuoy || undefined,
+  );
   const [waveData, setWaveData] = useState<WaveData[]>([]);
   const [userLocation, setUserLocation] = useState<any>(undefined);
   const [token, setToken] = useState<string | undefined>(initialToken);
@@ -232,9 +237,18 @@ const BuoyPage = () => {
           return waveTime >= twoHoursAgo;
         });
         setWaveData(filteredWaveData);
-        setSelectedBuoy(buoyData[buoyId]);
+        const newSelectedBuoy = buoyData[buoyId];
+        setSelectedBuoy(newSelectedBuoy);
+        localStorage.setItem('selectedBuoy', JSON.stringify(newSelectedBuoy));
       });
   };
+
+  useEffect(() => {
+    if (initialSelectedBuoy) {
+      handleBuoyClick(initialSelectedBuoy.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [buoyData]);
 
   return (
     <Grid container style={{ height: '100%' }}>
