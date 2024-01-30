@@ -48,11 +48,13 @@ function getAlertColor(metric: HUICardMetrics, value?: number) {
 }
 
 function calculateGeometricMean(data: number[]): number {
+  if (data.length === 0) return 0;
   const lnSum = data.reduce((acc, curr) => acc + Math.log(curr), 0);
   return Math.exp(lnSum / data.length);
 }
 
 function calculateMean(data: number[]): number {
+  if (data.length === 0) return 0;
   const sum = data.reduce((acc, curr) => acc + curr);
   return sum / data.length;
 }
