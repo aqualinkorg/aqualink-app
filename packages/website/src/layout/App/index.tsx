@@ -24,6 +24,7 @@ import Buoy from '../../routes/Buoy';
 import Drones from '../../routes/Drones';
 import Faq from '../../routes/Faq';
 import Dashboard from '../../routes/Dashboard';
+import Spotter from '../../routes/Spotter';
 import Tracker from '../../routes/Tracker';
 import theme from './theme';
 import 'leaflet/dist/leaflet.css';
@@ -74,6 +75,7 @@ function App() {
                 <Route path="/sites" component={SiteRoutes} />
                 <Route exact path="/uploads" component={Uploads} />
                 <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/spotter" component={Spotter} />
                 <Route exact path="/tracker" component={Tracker} />
                 <Route
                   exact
