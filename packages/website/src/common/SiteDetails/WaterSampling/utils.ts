@@ -47,19 +47,21 @@ function getAlertColor(metric: HUICardMetrics, value?: number) {
   }
 }
 
-function calculateGeometricMean(data: number[]): number {
-  const product = data.reduce((acc, curr) => acc * curr);
-  return product ** (1 / data.length);
+function calculateGeometricMean(data: number[]): number | undefined {
+  if (data.length === 0) return undefined;
+  const lnSum = data.reduce((acc, curr) => acc + Math.log(curr), 0);
+  return Math.exp(lnSum / data.length);
 }
 
-function calculateMean(data: number[]): number {
+function calculateMean(data: number[]): number | undefined {
+  if (data.length === 0) return undefined;
   const sum = data.reduce((acc, curr) => acc + curr);
   return sum / data.length;
 }
 
 export function getMeanCalculationFunction(
   source: Extract<Sources, 'hui' | 'sonde'>,
-): (a: number[]) => number {
+): (a: number[]) => number | undefined {
   switch (source) {
     case 'hui':
       return calculateGeometricMean;
