@@ -5323,6 +5323,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/leaflet.locatecontrol@^0.74.4":
+  version "0.74.4"
+  resolved "https://registry.yarnpkg.com/@types/leaflet.locatecontrol/-/leaflet.locatecontrol-0.74.4.tgz#15cb1f3a5c49956da9dadeea7e65b0e53193ff09"
+  integrity sha512-JNS2WYI80KrR980DXjQyHnzFoNEy0Vjtt6f8gJvit6RBgRqsQw83rH0ZTtLCwpFHIKrjF/jvIPv/3Fhv4F4SUg==
+  dependencies:
+    "@types/leaflet" "*"
+
 "@types/leaflet@*":
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.9.3.tgz#7aac302189eb3aa283f444316167995df42a5467"
@@ -10869,6 +10876,11 @@ geojson@^0.5.0:
   resolved "https://registry.yarnpkg.com/geojson/-/geojson-0.5.0.tgz#3cd6c96399be65b56ee55596116fe9191ce701c0"
   integrity sha512-/Bx5lEn+qRF4TfQ5aLu6NH+UKtvIv7Lhc487y/c8BdludrCTpiWf9wyI0RTyqg49MFefIAvFDuEi5Dfd/zgNxQ==
 
+geolib@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/geolib/-/geolib-3.3.4.tgz#09883ba2fdab84d2764cf3615dbafb9bce3c54d0"
+  integrity sha512-EicrlLLL3S42gE9/wde+11uiaYAaeSVDwCUIv2uMIoRBfNJCn8EsSI+6nS3r4TCKDO6+RQNM9ayLq2at+oZQWQ==
+
 geotiff@^1.0.4:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/geotiff/-/geotiff-1.0.9.tgz#a2037c1f672c0a11bfbac8b46bbc56f901e32198"
@@ -13816,6 +13828,11 @@ lazystream@^1.0.0:
   integrity sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==
   dependencies:
     readable-stream "^2.0.5"
+
+leaflet.locatecontrol@^0.79.0:
+  version "0.79.0"
+  resolved "https://registry.yarnpkg.com/leaflet.locatecontrol/-/leaflet.locatecontrol-0.79.0.tgz#0236b87c699a49f9ddb2f289941fbc0d3c3f8b62"
+  integrity sha512-h64QIHFkypYdr90lkSfjKvPvvk8/b8UnP3m9WuoWdp5p2AaCWC0T1NVwyuj4rd5U4fBW3tQt4ppmZ2LceHMIDg==
 
 leaflet.markercluster@^1.4.1:
   version "1.5.3"
