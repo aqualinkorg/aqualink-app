@@ -13,13 +13,18 @@ import times from 'lodash/times';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
-import type { Site, LatestDataASSofarValue } from 'store/Sites/types';
+import type {
+  Site,
+  LatestDataASSofarValue,
+  DataRange,
+} from 'store/Sites/types';
 import { SurveyListItem, SurveyPoint } from 'store/Survey/types';
 import {
   forecastDataRequest,
   forecastDataSelector,
   latestDataRequest,
   latestDataSelector,
+  siteTimeSeriesDataRangeSelector,
   spotterPositionRequest,
   spotterPositionSelector,
   unsetForecastData,
@@ -30,6 +35,7 @@ import { parseLatestData } from 'store/Sites/helpers';
 import { getMiddlePoint } from 'helpers/map';
 import { formatNumber } from 'helpers/numberUtils';
 import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { DateTime, Interval } from 'luxon';
 import Map from './Map';
 import SketchFab from './SketchFab';
 import FeaturedMedia from './FeaturedMedia';
@@ -46,6 +52,24 @@ import WaterSamplingCard from './WaterSampling';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
+
+const acceptHUIInterval = Interval.fromDateTimes(
+  DateTime.now().minus({ years: 2 }),
+  DateTime.now(),
+);
+
+function dateRangeWithinInterval(
+  interval: Interval,
+  dataRange: DataRange[],
+): boolean {
+  // eslint-disable-next-line fp/no-mutation
+  for (let index = 0; index < dataRange.length; index += 1) {
+    if (interval.contains(DateTime.fromISO(dataRange[index].maxDate))) {
+      return true;
+    }
+  }
+  return false;
+}
 
 const sondeMetrics: (keyof LatestDataASSofarValue)[] = [
   'odoConcentration',
@@ -76,6 +100,7 @@ const SiteDetails = ({
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
+  const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -108,14 +133,31 @@ const SiteDetails = ({
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
         MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
-      const hasHUI = latestData.some((x) => x.source === 'hui');
+      let hasHUI = latestData.some((x) => x.source === 'hui');
+
+      if (!hasHUI && timeSeriesRange) {
+        const ranges = Object.entries(timeSeriesRange);
+        // eslint-disable-next-line fp/no-mutation
+        for (let index = 0; index < ranges.length; index += 1) {
+          if (
+            ranges[index][1].find(
+              (x) =>
+                x.type === 'hui' &&
+                dateRangeWithinInterval(acceptHUIInterval, x.data),
+            )
+          ) {
+            // eslint-disable-next-line fp/no-mutation
+            hasHUI = true;
+          }
+        }
+      }
 
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
       setHasHUIData(hasHUI);
       setLatestDataAsSofarValues(parsedData);
     }
-  }, [forecastData, latestData]);
+  }, [forecastData, latestData, timeSeriesRange]);
 
   const { videoStream } = site || {};
 
