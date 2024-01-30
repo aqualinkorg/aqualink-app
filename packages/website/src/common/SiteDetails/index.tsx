@@ -17,6 +17,8 @@ import type {
   Site,
   LatestDataASSofarValue,
   DataRange,
+  Sources,
+  TimeSeriesDataRange,
 } from 'store/Sites/types';
 import { SurveyListItem, SurveyPoint } from 'store/Survey/types';
 import {
@@ -68,6 +70,28 @@ function dateRangeWithinInterval(
       return true;
     }
   }
+  return false;
+}
+
+function sourceWithinDataRangeInterval(
+  interval: Interval,
+  source: Sources,
+  dataRanges?: TimeSeriesDataRange,
+) {
+  if (!dataRanges) return false;
+
+  const ranges = Object.entries(dataRanges);
+  // eslint-disable-next-line fp/no-mutation
+  for (let index = 0; index < ranges.length; index += 1) {
+    if (
+      ranges[index][1].find(
+        (x) => x.type === source && dateRangeWithinInterval(interval, x.data),
+      )
+    ) {
+      return true;
+    }
+  }
+
   return false;
 }
 
@@ -133,24 +157,13 @@ const SiteDetails = ({
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
         MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
-      let hasHUI = latestData.some((x) => x.source === 'hui');
-
-      if (!hasHUI && timeSeriesRange) {
-        const ranges = Object.entries(timeSeriesRange);
-        // eslint-disable-next-line fp/no-mutation
-        for (let index = 0; index < ranges.length; index += 1) {
-          if (
-            ranges[index][1].find(
-              (x) =>
-                x.type === 'hui' &&
-                dateRangeWithinInterval(acceptHUIInterval, x.data),
-            )
-          ) {
-            // eslint-disable-next-line fp/no-mutation
-            hasHUI = true;
-          }
-        }
-      }
+      const hasHUI =
+        latestData.some((x) => x.source === 'hui') ||
+        sourceWithinDataRangeInterval(
+          acceptHUIInterval,
+          'hui',
+          timeSeriesRange,
+        );
 
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
