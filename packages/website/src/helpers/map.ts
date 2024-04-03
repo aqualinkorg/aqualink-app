@@ -70,6 +70,7 @@ export const getCollectionCenterAndBounds = (
   return [center, bounds];
 };
 
+// TODO - Use geolib to calculate distance and other things
 /**
  * Returns the distance between two points in radians
  */

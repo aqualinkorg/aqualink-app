@@ -16,14 +16,14 @@ export const huiConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
   },
   turbidity: {
     title: 'Turbidity',
-    units: 'FNU',
+    units: 'NTU',
     description: '',
     visibility: 'public',
     order: 2,
   },
   nitrate_plus_nitrite: {
     title: 'Nitrate Nitrite Nitrogen',
-    units: 'mg/L',
+    units: 'µg/L',
     description: '',
     visibility: 'public',
     order: 2,
