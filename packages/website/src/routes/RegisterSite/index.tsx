@@ -249,7 +249,7 @@ const Apply = ({ classes }: ApplyProps) => {
                         ))}
 
                         <Grid item xs={12}>
-                          <Typography>Location: Select point on map</Typography>
+                          <Typography>Location: Select a coastal point on the map in the ocean or sea. Land or lakes are not allowed.</Typography>
                         </Grid>
 
                         {locationFormElements.map(({ id, label }) => (
