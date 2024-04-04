@@ -196,7 +196,7 @@ exports[`Site registration page should render with given state from Redux store 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-typography>
-                      Location: Select point on map
+                      Location: Select a coastal point on the map in the ocean or sea. Land or lakes are not allowed.
                     </mock-typography>
                   </div>
                   <div
