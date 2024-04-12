@@ -7,7 +7,7 @@ const Table = ({ collection }: TableIncomingProps) => (
   <Box width="100%" mt="55px" mb="20px">
     <SiteTable
       showCard={false}
-      showSpottersOnlySwitch={false}
+      showSiteFiltersDropdown={false}
       isExtended
       collection={collection}
       scrollTableOnSelection={false}

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { times } from 'lodash';
 import {
   Box,
@@ -8,7 +8,6 @@ import {
   MenuItem,
   Select,
   SelectProps,
-  Switch,
   Table,
   TableContainer,
   Theme,
@@ -26,10 +25,11 @@ import {
 import {
   siteOnMapSelector,
   setWithSpotterOnly,
-  withSpotterOnlySelector,
+  siteFilterSelector,
 } from 'store/Homepage/homepageSlice';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { siteOptions } from 'store/Sites/types';
 import SelectedSiteCard from './SelectedSiteCard';
 import SiteTableBody from './body';
 import { getOrderKeysFriendlyString, Order, OrderKeys } from './utils';
@@ -73,7 +73,7 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
 const SiteTable = ({
   isDrawerOpen,
   showCard,
-  showSpottersOnlySwitch,
+  showSiteFiltersDropdown,
   isExtended,
   collection,
   scrollTableOnSelection,
@@ -82,7 +82,7 @@ const SiteTable = ({
 }: SiteTableProps) => {
   const loading = useSelector(sitesListLoadingSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
-  const withSpotterOnly = useSelector(withSpotterOnlySelector);
+  const siteFilter = useSelector(siteFilterSelector);
   const dispatch = useDispatch();
   const { height } = useWindowSize() || {};
 
@@ -95,12 +95,17 @@ const SiteTable = ({
     setOrderBy(property);
   };
 
-  const toggleSwitch = (event: ChangeEvent<HTMLInputElement>) => {
+  const filterOnChange = (
+    event: React.ChangeEvent<{
+      name?: string | undefined;
+      value: unknown;
+    }>,
+  ) => {
     const {
-      target: { checked },
+      target: { value },
     } = event;
-    dispatch(filterSitesWithSpotter(checked));
-    dispatch(setWithSpotterOnly(checked));
+    dispatch(filterSitesWithSpotter(value as any));
+    dispatch(setWithSpotterOnly(value as any));
   };
 
   // This function is used to prevent the drawer onClick close effect on mobile
@@ -146,17 +151,25 @@ const SiteTable = ({
         </Hidden>
       )}
       {showCard && <SelectedSiteCard />}
-      {showSpottersOnlySwitch && (
-        <Box className={classes.switchWrapper}>
-          <Switch
-            checked={withSpotterOnly}
-            onClick={onInteractiveClick}
-            onChange={toggleSwitch}
-            color="primary"
-          />
-          <Typography color="textSecondary" variant="h6">
-            deployed buoys only
-          </Typography>
+      {showSiteFiltersDropdown && (
+        <Box className={classes.dropdownWrapper}>
+          <Select
+            value={siteFilter}
+            onChange={(e) => filterOnChange(e)}
+            fullWidth
+            variant="standard"
+            disableUnderline
+            style={{ backgroundColor: '#469abb', borderRadius: '4px' }}
+            renderValue={(val) => (
+              <Typography style={{ marginLeft: '0.75rem' }}>{val}</Typography>
+            )}
+          >
+            {(siteOptions || []).map((x) => (
+              <MenuItem key={x} value={x}>
+                <Typography style={{ color: 'black' }}>{x}</Typography>
+              </MenuItem>
+            ))}
+          </Select>
         </Box>
       )}
       {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
@@ -251,8 +264,8 @@ const styles = (theme: Theme) =>
       },
       borderCollapse: 'collapse',
     },
-    switchWrapper: {
-      padding: '0 16px',
+    dropdownWrapper: {
+      padding: '0 16px 16px 0',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
@@ -290,7 +303,7 @@ interface SiteTableIncomingProps {
   // used on mobile to add descriptive elements if the drawer is closed.
   isDrawerOpen?: boolean;
   showCard?: boolean;
-  showSpottersOnlySwitch?: boolean;
+  showSiteFiltersDropdown?: boolean;
   isExtended?: boolean; // Determines whether an extended version of the table will be displayed or not
   collection?: Collection;
   scrollTableOnSelection?: boolean;
@@ -300,7 +313,7 @@ interface SiteTableIncomingProps {
 SiteTable.defaultProps = {
   isDrawerOpen: false,
   showCard: true,
-  showSpottersOnlySwitch: true,
+  showSiteFiltersDropdown: true,
   isExtended: false,
   collection: undefined,
   scrollTableOnSelection: true,

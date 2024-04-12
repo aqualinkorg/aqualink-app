@@ -25,7 +25,7 @@ describe('Search', () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Search siteOption="All sites" />
+          <Search />
         </Router>
       </Provider>,
     ).container;

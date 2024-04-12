@@ -59,7 +59,7 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-12 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-3 MuiGrid-grid-md-7"
+          class="MuiGrid-root NavBar-languageUserWrapper-12 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
         >
           <mock-tooltip
             title="Translate"
@@ -249,7 +249,7 @@ exports[`NavBar without routeButtons should render with given state from Redux s
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-24 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-3 MuiGrid-grid-md-7"
+          class="MuiGrid-root NavBar-languageUserWrapper-24 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
         >
           <mock-tooltip
             title="Translate"

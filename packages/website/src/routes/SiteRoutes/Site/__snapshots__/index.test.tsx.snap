@@ -341,7 +341,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           xsdown="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-3 MuiGrid-grid-md-3"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
           >
             <div
               class="Search-searchBar-289"
@@ -449,99 +449,9 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
           </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-2 MuiGrid-grid-md-1"
-          >
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInputBase-fullWidth MuiInput-fullWidth"
-              style="background-color: rgb(70, 154, 187); border-radius: 4px;"
-            >
-              <div
-                aria-haspopup="listbox"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                role="button"
-                tabindex="0"
-              >
-                <mock-typography
-                  style="margin-left: 0.75rem;"
-                >
-                  All sites
-                </mock-typography>
-              </div>
-              <input
-                aria-hidden="true"
-                class="MuiSelect-nativeInput"
-                tabindex="-1"
-                value="All sites"
-              />
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSelect-icon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7 10l5 5 5-5z"
-                />
-              </svg>
-              <mock-menu
-                anchorel="[object HTMLDivElement]"
-                id="menu-"
-                menulistprops="[object Object]"
-                open="false"
-                paperprops="[object Object]"
-              >
-                <mock-menuitem
-                  aria-selected="true"
-                  data-value="All sites"
-                  role="option"
-                  selected="true"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    All sites
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="Active buoys"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    Active buoys
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="Live streams"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    Live streams
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="3D Models"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    3D Models
-                  </mock-typography>
-                </mock-menuitem>
-              </mock-menu>
-            </div>
-          </div>
         </mock-hidden>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-285 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-3 MuiGrid-grid-md-2"
+          class="MuiGrid-root NavBar-languageUserWrapper-285 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
         >
           <mock-tooltip
             title="Translate"
@@ -664,7 +574,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           smup="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
             style="margin: 0px; padding-top: 0px;"
           >
             <div
@@ -771,97 +681,6 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
-            style="margin: 0px; padding-top: 0px;"
-          >
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInputBase-fullWidth MuiInput-fullWidth"
-              style="background-color: rgb(70, 154, 187); border-radius: 4px;"
-            >
-              <div
-                aria-haspopup="listbox"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                role="button"
-                tabindex="0"
-              >
-                <mock-typography
-                  style="margin-left: 0.75rem;"
-                >
-                  All sites
-                </mock-typography>
-              </div>
-              <input
-                aria-hidden="true"
-                class="MuiSelect-nativeInput"
-                tabindex="-1"
-                value="All sites"
-              />
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSelect-icon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7 10l5 5 5-5z"
-                />
-              </svg>
-              <mock-menu
-                anchorel="[object HTMLDivElement]"
-                id="menu-"
-                menulistprops="[object Object]"
-                open="false"
-                paperprops="[object Object]"
-              >
-                <mock-menuitem
-                  aria-selected="true"
-                  data-value="All sites"
-                  role="option"
-                  selected="true"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    All sites
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="Active buoys"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    Active buoys
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="Live streams"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    Live streams
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="3D Models"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    3D Models
-                  </mock-typography>
-                </mock-menuitem>
-              </mock-menu>
             </div>
           </div>
         </mock-hidden>
@@ -3700,7 +3519,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           xsdown="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-3 MuiGrid-grid-md-3"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
           >
             <div
               class="Search-searchBar-18"
@@ -3808,99 +3627,9 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
           </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-2 MuiGrid-grid-md-1"
-          >
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInputBase-fullWidth MuiInput-fullWidth"
-              style="background-color: rgb(70, 154, 187); border-radius: 4px;"
-            >
-              <div
-                aria-haspopup="listbox"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                role="button"
-                tabindex="0"
-              >
-                <mock-typography
-                  style="margin-left: 0.75rem;"
-                >
-                  All sites
-                </mock-typography>
-              </div>
-              <input
-                aria-hidden="true"
-                class="MuiSelect-nativeInput"
-                tabindex="-1"
-                value="All sites"
-              />
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSelect-icon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7 10l5 5 5-5z"
-                />
-              </svg>
-              <mock-menu
-                anchorel="[object HTMLDivElement]"
-                id="menu-"
-                menulistprops="[object Object]"
-                open="false"
-                paperprops="[object Object]"
-              >
-                <mock-menuitem
-                  aria-selected="true"
-                  data-value="All sites"
-                  role="option"
-                  selected="true"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    All sites
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="Active buoys"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    Active buoys
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="Live streams"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    Live streams
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="3D Models"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    3D Models
-                  </mock-typography>
-                </mock-menuitem>
-              </mock-menu>
-            </div>
-          </div>
         </mock-hidden>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-14 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-3 MuiGrid-grid-md-2"
+          class="MuiGrid-root NavBar-languageUserWrapper-14 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
         >
           <mock-tooltip
             title="Translate"
@@ -4023,7 +3752,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           smup="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
             style="margin: 0px; padding-top: 0px;"
           >
             <div
@@ -4130,97 +3859,6 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
-            style="margin: 0px; padding-top: 0px;"
-          >
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInputBase-fullWidth MuiInput-fullWidth"
-              style="background-color: rgb(70, 154, 187); border-radius: 4px;"
-            >
-              <div
-                aria-haspopup="listbox"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                role="button"
-                tabindex="0"
-              >
-                <mock-typography
-                  style="margin-left: 0.75rem;"
-                >
-                  All sites
-                </mock-typography>
-              </div>
-              <input
-                aria-hidden="true"
-                class="MuiSelect-nativeInput"
-                tabindex="-1"
-                value="All sites"
-              />
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSelect-icon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7 10l5 5 5-5z"
-                />
-              </svg>
-              <mock-menu
-                anchorel="[object HTMLDivElement]"
-                id="menu-"
-                menulistprops="[object Object]"
-                open="false"
-                paperprops="[object Object]"
-              >
-                <mock-menuitem
-                  aria-selected="true"
-                  data-value="All sites"
-                  role="option"
-                  selected="true"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    All sites
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="Active buoys"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    Active buoys
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="Live streams"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    Live streams
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  data-value="3D Models"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    style="color: black;"
-                  >
-                    3D Models
-                  </mock-typography>
-                </mock-menuitem>
-              </mock-menu>
             </div>
           </div>
         </mock-hidden>

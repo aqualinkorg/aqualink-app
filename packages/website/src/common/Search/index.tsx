@@ -31,14 +31,7 @@ const siteAugmentedName = (site: Site) => {
   return name || region || '';
 };
 
-export const siteOptions = [
-  'All sites',
-  'Active buoys',
-  'Live streams',
-  '3D Models',
-] as const;
-
-const Search = ({ geocodingEnabled, siteOption, classes }: SearchProps) => {
+const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   const browserHistory = useHistory();
   const { id } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
@@ -47,14 +40,6 @@ const Search = ({ geocodingEnabled, siteOption, classes }: SearchProps) => {
   const sites = useSelector(sitesListSelector);
   const filteredSites = (sites || [])
     .filter((site) => siteAugmentedName(site))
-    .filter((s) => {
-      if (siteOption === 'All sites') return true;
-      if (siteOption === 'Live streams') return !!s.videoStream;
-      if (siteOption === '3D Models') return !!s.sketchFab;
-      if (siteOption === 'Active buoys') return !!s.sensorId;
-      console.error(`Unhandled Option: ${siteOption}`);
-      return true;
-    })
     // Sort by formatted name
     .sort((a, b) => {
       const nameA = siteAugmentedName(a);
@@ -210,7 +195,6 @@ const styles = () =>
 
 interface SearchIncomingProps {
   geocodingEnabled?: boolean;
-  siteOption: typeof siteOptions[number];
 }
 
 Search.defaultProps = {
