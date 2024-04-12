@@ -338,7 +338,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-13 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
+          class="MuiGrid-root NavBar-languageUserWrapper-13 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-3 MuiGrid-grid-md-7"
         >
           <mock-tooltip
             title="Translate"

@@ -20,6 +20,7 @@ import {
   Divider,
   LinearProgress,
   Tooltip,
+  Select,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
@@ -45,7 +46,7 @@ import { useGoogleTranslation } from 'utils/google-translate';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import RegisterDialog from '../RegisterDialog';
 import SignInDialog from '../SignInDialog';
-import Search from '../Search';
+import Search, { siteOptions } from '../Search';
 import RouteButtons from '../RouteButtons';
 import MenuDrawer from '../MenuDrawer';
 import requests from '../../helpers/requests';
@@ -66,6 +67,8 @@ const NavBar = ({
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [menuDrawerOpen, setMenuDrawerOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [selectedSitesOption, setSelectedSiteOption] =
+    React.useState<typeof siteOptions[number]>('All sites');
   const [, setTranslationOpen] = useGoogleTranslation();
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
@@ -123,6 +126,29 @@ const NavBar = ({
     };
   }, [handleSignInDialog, onUserSignOut]);
 
+  const renderedSiteOptionsSelect = React.useMemo(
+    () => (
+      <Select
+        value={selectedSitesOption}
+        onChange={(e) => setSelectedSiteOption(e.target.value as any)}
+        fullWidth
+        variant="standard"
+        disableUnderline
+        style={{ backgroundColor: '#469abb', borderRadius: '4px' }}
+        renderValue={(val) => (
+          <Typography style={{ marginLeft: '0.75rem' }}>{val}</Typography>
+        )}
+      >
+        {(siteOptions || []).map((x) => (
+          <MenuItem key={x} value={x}>
+            <Typography style={{ color: 'black' }}>{x}</Typography>
+          </MenuItem>
+        ))}
+      </Select>
+    ),
+    [selectedSitesOption],
+  );
+
   return (
     <>
       <AppBar
@@ -172,8 +198,14 @@ const NavBar = ({
 
             {searchLocation && (
               <Hidden xsDown>
-                <Grid item sm={4} md={3}>
-                  <Search geocodingEnabled={geocodingEnabled} />
+                <Grid item sm={3} md={3}>
+                  <Search
+                    geocodingEnabled={geocodingEnabled}
+                    siteOption={selectedSitesOption}
+                  />
+                </Grid>
+                <Grid item sm={2} md={1}>
+                  {renderedSiteOptionsSelect}
                 </Grid>
               </Hidden>
             )}
@@ -185,8 +217,8 @@ const NavBar = ({
               justifyContent="flex-end"
               item
               xs={8}
-              sm={routeButtons && isTablet ? 3 : 4}
-              md={searchLocation || (routeButtons && isTablet) ? 3 : 8}
+              sm={routeButtons && isTablet ? 2 : 3}
+              md={searchLocation || (routeButtons && isTablet) ? 2 : 7}
               className={classes.languageUserWrapper}
             >
               <Tooltip title="Translate">
@@ -326,8 +358,14 @@ const NavBar = ({
 
             {searchLocation && (
               <Hidden smUp>
-                <Grid item xs={12} style={{ margin: 0, paddingTop: 0 }}>
-                  <Search geocodingEnabled={geocodingEnabled} />
+                <Grid item xs={8} style={{ margin: 0, paddingTop: 0 }}>
+                  <Search
+                    geocodingEnabled={geocodingEnabled}
+                    siteOption={selectedSitesOption}
+                  />
+                </Grid>
+                <Grid item xs={4} style={{ margin: 0, paddingTop: 0 }}>
+                  {renderedSiteOptionsSelect}
                 </Grid>
               </Hidden>
             )}

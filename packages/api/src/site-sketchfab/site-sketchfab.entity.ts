@@ -2,11 +2,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
   RelationId,
   Index,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Site } from '../sites/sites.entity';
@@ -17,7 +18,8 @@ export class SketchFab {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  @OneToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  @JoinColumn()
   @Index()
   site: Site;
 

@@ -185,8 +185,8 @@ export class SitesService {
 
     const res = await query
       .leftJoinAndSelect('site.region', 'region')
+      .leftJoinAndSelect('site.sketchFab', 'sketchFab')
       .leftJoinAndSelect('site.admins', 'admins')
-      .leftJoinAndSelect('site.stream', 'stream')
       .andWhere('display = true')
       .getMany();
 
@@ -209,9 +209,9 @@ export class SitesService {
     const site = await getSite(id, this.sitesRepository, [
       'region',
       'admins',
-      'stream',
       'historicalMonthlyMean',
       'siteApplication',
+      'sketchFab',
     ]);
 
     // Typeorm returns undefined instead of [] for
@@ -251,11 +251,9 @@ export class SitesService {
       throw new ForbiddenException();
     }
 
-    const { coordinates, adminIds, regionId, streamId } = updateSiteDto;
+    const { coordinates, adminIds, regionId } = updateSiteDto;
     const updateRegion =
       regionId !== undefined ? { region: { id: regionId } } : {};
-    const updateStream =
-      streamId !== undefined ? { region: { id: streamId } } : {};
     const updateCoordinates = coordinates
       ? {
           polygon: createPoint(coordinates.longitude, coordinates.latitude),
@@ -264,14 +262,8 @@ export class SitesService {
 
     const result = await this.sitesRepository
       .update(id, {
-        ...omit(updateSiteDto, [
-          'adminIds',
-          'coordinates',
-          'regionId',
-          'streamId',
-        ]),
+        ...omit(updateSiteDto, ['adminIds', 'coordinates', 'regionId']),
         ...updateRegion,
-        ...updateStream,
         ...updateCoordinates,
       })
       .catch(handleDuplicateSite);

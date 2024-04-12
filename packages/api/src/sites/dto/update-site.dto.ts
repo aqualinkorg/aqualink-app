@@ -18,7 +18,6 @@ import { SiteStatus } from 'sites/sites.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Region } from '../../regions/regions.entity';
 import { User } from '../../users/users.entity';
-import { VideoStream } from '../video-streams.entity';
 
 class Coordinates {
   @ApiProperty({ example: 15.5416 })
@@ -64,12 +63,6 @@ export class UpdateSiteDto {
   @IsInt({ each: true })
   @Validate(EntityExists, [User], { each: true })
   readonly adminIds?: number[];
-
-  @ApiProperty({ example: 1 })
-  @IsOptional()
-  @IsInt()
-  @Validate(EntityExists, [VideoStream])
-  readonly streamId?: number;
 
   @ApiProperty({ example: 'SPOT-1742' })
   @IsOptional()
