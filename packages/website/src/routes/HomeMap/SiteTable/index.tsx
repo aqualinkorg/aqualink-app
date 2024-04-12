@@ -156,7 +156,6 @@ const SiteTable = ({
           <Select
             value={siteFilter}
             onChange={(e) => filterOnChange(e)}
-            fullWidth
             variant="standard"
             disableUnderline
             style={{ backgroundColor: '#469abb', borderRadius: '4px' }}
@@ -265,10 +264,10 @@ const styles = (theme: Theme) =>
       borderCollapse: 'collapse',
     },
     dropdownWrapper: {
-      padding: '0 16px 16px 0',
+      padding: '0 0 10px 10px',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'flex-end',
+      justifyContent: 'flex-start',
     },
     topHandle: {
       width: 50,

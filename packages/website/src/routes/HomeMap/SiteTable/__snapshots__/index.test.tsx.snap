@@ -29,7 +29,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
     classname="SiteTable-dropdownWrapper-5"
   >
     <div
-      class="MuiInputBase-root MuiInput-root MuiInputBase-fullWidth MuiInput-fullWidth"
+      class="MuiInputBase-root MuiInput-root"
       style="background-color: rgb(70, 154, 187); border-radius: 4px;"
     >
       <div
