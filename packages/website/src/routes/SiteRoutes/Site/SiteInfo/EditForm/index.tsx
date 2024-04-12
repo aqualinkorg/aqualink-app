@@ -105,6 +105,10 @@ const EditForm = ({
     ['maxLength'],
   );
 
+  const [siteIframe, setSiteIframe] = useFormField<string>(site.iframe || '', [
+    'maxLength',
+  ]);
+
   const formSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (
       siteName.value &&
@@ -133,6 +137,7 @@ const EditForm = ({
         depth: parseInt(siteDepth.value, 10),
         sensorId,
         spotterApiToken,
+        iframe: siteIframe.value,
         ...(user?.adminLevel === 'super_admin' && statusVal
           ? { status: statusVal as Status }
           : {}),
@@ -184,6 +189,9 @@ const EditForm = ({
         break;
       case 'contactInformation':
         setContactInformation(newValue);
+        break;
+      case 'iframe':
+        setSiteIframe(newValue);
         break;
       default:
         break;
@@ -388,6 +396,13 @@ const EditForm = ({
               />
             </Grid>
           )}
+          <TextField
+            formField={siteIframe}
+            label="iframe"
+            placeholder="iframe"
+            name="iframe"
+            onChange={onFieldChange}
+          />
         </Grid>
         <Grid
           container

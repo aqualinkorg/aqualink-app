@@ -347,6 +347,13 @@ const SiteDetails = ({
           selectedSurveyPointId={selectedSurveyPointId}
           surveys={surveys}
         />
+        {site?.iframe && (
+          <iframe
+            style={{ width: '100%' }}
+            src={site.iframe}
+            title="external-content"
+          />
+        )}
         <Surveys site={site} />
       </Box>
     </Box>

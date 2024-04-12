@@ -79,6 +79,10 @@ export class Site {
   @Column({ nullable: true, type: 'integer' })
   depth: number | null;
 
+  @ApiProperty({ example: 'https://something@example.com' })
+  @Column({ nullable: true, type: 'character varying' })
+  iframe: string | null;
+
   // TODO:  This field should be transferred to site-application table
   //        The transition has to be in sync with changes in admin dashboards in internal.io
   @Column({

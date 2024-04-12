@@ -102,4 +102,9 @@ export class UpdateSiteDto {
   @IsNotEmpty()
   @MaxLength(100)
   readonly contactInformation?: string | null;
+
+  @ApiProperty({ example: 'example@example.com' })
+  @IsOptional()
+  @IsString()
+  readonly iframe?: string;
 }
