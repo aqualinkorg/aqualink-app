@@ -247,7 +247,8 @@ export class SitesService {
     try {
       const iframeAsURL = new URL(sanitizedIframeURL);
 
-      if (iframeAsURL.protocol !== 'https') throw new Error('Invalid protocol');
+      if (iframeAsURL.protocol !== 'https:')
+        throw new Error('Invalid protocol');
       if (iframeAsURL.port !== '') throw new Error('Invalid port');
       if (!trustedHosts.find((x) => x === iframeAsURL.hostname))
         throw new Error('Invalid hostname');

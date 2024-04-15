@@ -144,8 +144,8 @@ export const siteTests = () => {
   it.each([
     ['https://aqualink.org', 200],
     ['http:aqualink.org/protocol', 400],
-    ['http:aqualink.org:3000/port', 400],
-    ['http:domain.com', 400],
+    ['https:aqualink.org:3000/port', 400],
+    ['https:domain.com', 400],
   ])(`PUT /:id update a site's iframe`, async (iframe, status) => {
     mockExtractAndVerifyToken(defaultFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
