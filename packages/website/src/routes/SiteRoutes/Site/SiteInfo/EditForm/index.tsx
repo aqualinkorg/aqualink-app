@@ -397,13 +397,18 @@ const EditForm = ({
               />
             </Grid>
           )}
-          <TextField
-            formField={siteIframe}
-            label="iframe"
-            placeholder="iframe"
-            name="iframe"
-            onChange={onFieldChange}
-          />
+          {
+            // Temporally hide this option
+            false && (
+              <TextField
+                formField={siteIframe}
+                label="iframe"
+                placeholder="iframe"
+                name="iframe"
+                onChange={onFieldChange}
+              />
+            )
+          }
         </Grid>
         <Grid
           container
