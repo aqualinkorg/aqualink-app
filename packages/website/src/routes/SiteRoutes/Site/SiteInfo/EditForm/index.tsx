@@ -20,6 +20,7 @@ import { useFormField } from 'hooks/useFormField';
 import TextField from 'common/Forms/TextField';
 import StatusSelector from 'common/StatusSelector';
 import { userInfoSelector } from 'store/User/userSlice';
+import { sanitizeUrl } from '@braintree/sanitize-url';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
@@ -137,7 +138,7 @@ const EditForm = ({
         depth: parseInt(siteDepth.value, 10),
         sensorId,
         spotterApiToken,
-        iframe: siteIframe.value,
+        iframe: sanitizeUrl(siteIframe.value),
         ...(user?.adminLevel === 'super_admin' && statusVal
           ? { status: statusVal as Status }
           : {}),

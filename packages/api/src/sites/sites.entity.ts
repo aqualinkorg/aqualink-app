@@ -10,6 +10,7 @@ import {
   OneToOne,
   OneToMany,
   ManyToMany,
+  Check,
 } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
 import {
@@ -79,8 +80,9 @@ export class Site {
   @Column({ nullable: true, type: 'integer' })
   depth: number | null;
 
-  @ApiProperty({ example: 'https://something@example.com' })
+  @ApiProperty({ example: 'https://something.example.com' })
   @Column({ nullable: true, type: 'character varying' })
+  @Check('char_length(iframe) <= 200 AND char_length(iframe) > 10')
   iframe: string | null;
 
   // TODO:  This field should be transferred to site-application table

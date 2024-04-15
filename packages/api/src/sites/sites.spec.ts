@@ -141,6 +141,22 @@ export const siteTests = () => {
     expect(rsp.body).toMatchObject({ name: updatedSiteName });
   });
 
+  it.each([
+    ['https://aqualink.org', 200],
+    ['http:aqualink.org/protocol', 400],
+    ['http:aqualink.org:3000/port', 400],
+    ['http:domain.com', 400],
+  ])(`PUT /:id update a site's iframe`, async (iframe, status) => {
+    mockExtractAndVerifyToken(defaultFirebaseUserMock);
+    const rsp = await request(app.getHttpServer())
+      .put(`/sites/${siteId}`)
+      .send({
+        iframe,
+      });
+
+    expect(rsp.status).toBe(status);
+  });
+
   it('PUT /:id update the admins of a site', async () => {
     mockExtractAndVerifyToken(defaultFirebaseUserMock);
     const rsp = await request(app.getHttpServer())

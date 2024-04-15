@@ -352,6 +352,8 @@ const SiteDetails = ({
             style={{ width: '100%', height: '50vh' }}
             src={site.iframe}
             title="external-content"
+            // TODO: update constraints when we actually have the content that will appear here
+            sandbox=""
           />
         )}
         <Surveys site={site} />
