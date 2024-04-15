@@ -270,6 +270,7 @@ const selectedSiteSlice = createSlice({
             name: action.payload.name || state.details.name,
             depth: action.payload.depth || state.details.depth,
             sensorId: action.payload.sensorId || state.details.sensorId,
+            iframe: action.payload.iframe || state.details.iframe,
             polygon:
               state.details.polygon.type === 'Point'
                 ? {
