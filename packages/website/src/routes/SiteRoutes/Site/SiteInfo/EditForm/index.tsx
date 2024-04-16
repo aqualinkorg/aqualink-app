@@ -138,7 +138,7 @@ const EditForm = ({
         depth: parseInt(siteDepth.value, 10),
         sensorId,
         spotterApiToken,
-        iframe: sanitizeUrl(siteIframe.value),
+        ...(siteIframe.value ? { iframe: sanitizeUrl(siteIframe.value) } : {}),
         ...(user?.adminLevel === 'super_admin' && statusVal
           ? { status: statusVal as Status }
           : {}),
