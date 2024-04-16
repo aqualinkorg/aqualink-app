@@ -452,4 +452,5 @@ export const siteOptions = [
   'Active buoys',
   'Live streams',
   '3D Models',
+  'HOBO loggers',
 ] as const;

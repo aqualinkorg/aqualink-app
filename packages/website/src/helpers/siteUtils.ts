@@ -150,6 +150,8 @@ export const sitesFilterFn = (
       return !!s?.sketchFab;
     case 'Active buoys':
       return hasDeployedSpotter(s);
+    case 'HOBO loggers':
+      return s?.hasHobo;
     default:
       console.error(`Unhandled Option: ${filter}`);
       return true;
