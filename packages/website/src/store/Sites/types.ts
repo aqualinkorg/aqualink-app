@@ -285,6 +285,7 @@ export interface Site {
   sketchFab?: SiteSketchFab;
   display: boolean;
   contactInformation?: string;
+  iframe?: string | null;
 }
 
 export interface SiteSketchFab {
@@ -346,6 +347,7 @@ export interface SiteUpdateParams {
   display?: boolean;
   videoStream?: string | null;
   contactInformation?: string | null;
+  iframe?: string | null;
 }
 
 export interface SiteApplication {

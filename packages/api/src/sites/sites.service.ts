@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
 import Bluebird from 'bluebird';
+import { sanitizeUrl } from '@braintree/sanitize-url';
 import { DateTime } from '../luxon-extensions';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
@@ -236,6 +237,28 @@ export class SitesService {
     };
   }
 
+  private checkIframeURL(iframe: string | undefined): string | undefined {
+    if (!iframe) return undefined;
+
+    const sanitizedIframeURL = sanitizeUrl(iframe);
+
+    const trustedHosts = ['aqualink.org'];
+
+    try {
+      const iframeAsURL = new URL(sanitizedIframeURL);
+
+      if (iframeAsURL.protocol !== 'https:')
+        throw new Error('Invalid protocol');
+      if (iframeAsURL.port !== '') throw new Error('Invalid port');
+      if (!trustedHosts.find((x) => x === iframeAsURL.hostname))
+        throw new Error('Invalid hostname');
+    } catch (error: any) {
+      throw new BadRequestException(error.message);
+    }
+
+    return sanitizedIframeURL;
+  }
+
   async update(
     id: number,
     updateSiteDto: UpdateSiteDto,
@@ -251,7 +274,7 @@ export class SitesService {
       throw new ForbiddenException();
     }
 
-    const { coordinates, adminIds, regionId } = updateSiteDto;
+    const { coordinates, adminIds, regionId, iframe } = updateSiteDto;
     const updateRegion =
       regionId !== undefined ? { region: { id: regionId } } : {};
     const updateCoordinates = coordinates
@@ -260,11 +283,15 @@ export class SitesService {
         }
       : {};
 
+    const checkedIframe = this.checkIframeURL(iframe);
+    const updateIframe = checkedIframe ? { iframe: checkedIframe } : {};
+
     const result = await this.sitesRepository
       .update(id, {
         ...omit(updateSiteDto, ['adminIds', 'coordinates', 'regionId']),
         ...updateRegion,
         ...updateCoordinates,
+        ...updateIframe,
       })
       .catch(handleDuplicateSite);
 

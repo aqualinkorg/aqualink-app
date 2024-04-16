@@ -66,6 +66,7 @@
     "check-video-streams": "ts-node -r dotenv/config scripts/check-video-streams.ts"
   },
   "dependencies": {
+    "@braintree/sanitize-url": "^7.0.1",
     "@google-cloud/storage": "^6.11.0",
     "@googlemaps/google-maps-services-js": "^3.3.41",
     "@nestjs/common": "^9.3.9",

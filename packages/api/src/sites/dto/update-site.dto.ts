@@ -11,6 +11,7 @@ import {
   IsObject,
   ValidateNested,
   IsEnum,
+  MinLength,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -95,4 +96,11 @@ export class UpdateSiteDto {
   @IsNotEmpty()
   @MaxLength(100)
   readonly contactInformation?: string | null;
+
+  @ApiProperty({ example: 'https://something.example.com' })
+  @IsOptional()
+  @IsUrl()
+  @MinLength(10)
+  @MaxLength(200)
+  readonly iframe?: string;
 }
