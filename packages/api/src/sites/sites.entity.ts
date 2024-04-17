@@ -10,6 +10,7 @@ import {
   OneToOne,
   OneToMany,
   ManyToMany,
+  Check,
 } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
 import {
@@ -17,8 +18,8 @@ import {
   ApiProperty,
   ApiPropertyOptional,
 } from '@nestjs/swagger';
+import { SketchFab } from '../site-sketchfab/site-sketchfab.entity';
 import { Region } from '../regions/regions.entity';
-import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { User } from '../users/users.entity';
 import { SiteApplication } from '../site-applications/site-applications.entity';
@@ -79,6 +80,11 @@ export class Site {
   @Column({ nullable: true, type: 'integer' })
   depth: number | null;
 
+  @ApiProperty({ example: 'https://something.example.com' })
+  @Column({ nullable: true, type: 'character varying' })
+  @Check('char_length(iframe) <= 200 AND char_length(iframe) > 10')
+  iframe: string | null;
+
   // TODO:  This field should be transferred to site-application table
   //        The transition has to be in sync with changes in admin dashboards in internal.io
   @Column({
@@ -113,9 +119,8 @@ export class Site {
   @Index()
   region: Region | null;
 
-  @ManyToOne(() => VideoStream, { onDelete: 'SET NULL', nullable: true })
-  @Index()
-  stream: VideoStream | null;
+  @OneToOne(() => SketchFab, (sketchFab) => sketchFab.site)
+  sketchFab?: SketchFab | null;
 
   @ManyToMany(() => User, (user) => user.administeredSites, {
     onDelete: 'CASCADE',

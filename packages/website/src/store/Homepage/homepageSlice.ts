@@ -1,21 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { HomePageState } from './types';
-import { Site } from '../Sites/types';
+import { Site, siteOptions } from '../Sites/types';
 import type { RootState } from '../configure';
 
 const homepageInitialState: HomePageState = {
   siteOnMap: null,
-  withSpotterOnly: false,
+  siteFilter: 'All sites',
 };
 
 const homepageSlice = createSlice({
   name: 'homepage',
   initialState: homepageInitialState,
   reducers: {
-    setWithSpotterOnly: (state, action: PayloadAction<boolean>) => ({
+    setWithSpotterOnly: (
+      state,
+      action: PayloadAction<typeof siteOptions[number]>,
+    ) => ({
       ...state,
-      withSpotterOnly: action.payload,
+      siteFilter: action.payload,
     }),
     setSearchResult: (
       state,
@@ -43,9 +46,9 @@ export const searchResultSelector = (
   state: RootState,
 ): HomePageState['searchResult'] => state.homepage.searchResult;
 
-export const withSpotterOnlySelector = (
+export const siteFilterSelector = (
   state: RootState,
-): HomePageState['withSpotterOnly'] => state.homepage.withSpotterOnly;
+): HomePageState['siteFilter'] => state.homepage.siteFilter;
 
 export const {
   setSearchResult,

@@ -95,7 +95,6 @@ export const siteRequest = createAsyncThunk<
   async (id: string, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getSite(id);
-      const { data: sketchFab } = await siteServices.getSiteSketchFab(id);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
@@ -103,7 +102,6 @@ export const siteRequest = createAsyncThunk<
         ...data,
         collectionData: data.collectionData || {},
         dailyData,
-        sketchFab,
         historicalMonthlyMean: sortBy(
           data.historicalMonthlyMean,
           (item) => item.month,
@@ -270,6 +268,7 @@ const selectedSiteSlice = createSlice({
             name: action.payload.name || state.details.name,
             depth: action.payload.depth || state.details.depth,
             sensorId: action.payload.sensorId || state.details.sensorId,
+            iframe: action.payload.iframe || state.details.iframe,
             polygon:
               state.details.polygon.type === 'Point'
                 ? {

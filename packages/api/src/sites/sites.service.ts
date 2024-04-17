@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
 import Bluebird from 'bluebird';
+import { sanitizeUrl } from '@braintree/sanitize-url';
 import { DateTime } from '../luxon-extensions';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
@@ -185,8 +186,8 @@ export class SitesService {
 
     const res = await query
       .leftJoinAndSelect('site.region', 'region')
+      .leftJoinAndSelect('site.sketchFab', 'sketchFab')
       .leftJoinAndSelect('site.admins', 'admins')
-      .leftJoinAndSelect('site.stream', 'stream')
       .andWhere('display = true')
       .getMany();
 
@@ -209,9 +210,9 @@ export class SitesService {
     const site = await getSite(id, this.sitesRepository, [
       'region',
       'admins',
-      'stream',
       'historicalMonthlyMean',
       'siteApplication',
+      'sketchFab',
     ]);
 
     // Typeorm returns undefined instead of [] for
@@ -236,6 +237,28 @@ export class SitesService {
     };
   }
 
+  private checkIframeURL(iframe: string | undefined): string | undefined {
+    if (!iframe) return undefined;
+
+    const sanitizedIframeURL = sanitizeUrl(iframe);
+
+    const trustedHosts = ['aqualink.org'];
+
+    try {
+      const iframeAsURL = new URL(sanitizedIframeURL);
+
+      if (iframeAsURL.protocol !== 'https:')
+        throw new Error('Invalid protocol');
+      if (iframeAsURL.port !== '') throw new Error('Invalid port');
+      if (!trustedHosts.find((x) => x === iframeAsURL.hostname))
+        throw new Error('Invalid hostname');
+    } catch (error: any) {
+      throw new BadRequestException(error.message);
+    }
+
+    return sanitizedIframeURL;
+  }
+
   async update(
     id: number,
     updateSiteDto: UpdateSiteDto,
@@ -251,28 +274,24 @@ export class SitesService {
       throw new ForbiddenException();
     }
 
-    const { coordinates, adminIds, regionId, streamId } = updateSiteDto;
+    const { coordinates, adminIds, regionId, iframe } = updateSiteDto;
     const updateRegion =
       regionId !== undefined ? { region: { id: regionId } } : {};
-    const updateStream =
-      streamId !== undefined ? { region: { id: streamId } } : {};
     const updateCoordinates = coordinates
       ? {
           polygon: createPoint(coordinates.longitude, coordinates.latitude),
         }
       : {};
 
+    const checkedIframe = this.checkIframeURL(iframe);
+    const updateIframe = checkedIframe ? { iframe: checkedIframe } : {};
+
     const result = await this.sitesRepository
       .update(id, {
-        ...omit(updateSiteDto, [
-          'adminIds',
-          'coordinates',
-          'regionId',
-          'streamId',
-        ]),
+        ...omit(updateSiteDto, ['adminIds', 'coordinates', 'regionId']),
         ...updateRegion,
-        ...updateStream,
         ...updateCoordinates,
+        ...updateIframe,
       })
       .catch(handleDuplicateSite);
 

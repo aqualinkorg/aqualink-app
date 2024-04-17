@@ -285,6 +285,7 @@ export interface Site {
   sketchFab?: SiteSketchFab;
   display: boolean;
   contactInformation?: string;
+  iframe?: string | null;
 }
 
 export interface SiteSketchFab {
@@ -346,6 +347,7 @@ export interface SiteUpdateParams {
   display?: boolean;
   videoStream?: string | null;
   contactInformation?: string | null;
+  iframe?: string | null;
 }
 
 export interface SiteApplication {
@@ -444,3 +446,11 @@ export interface GetSiteContactInfoProps {
 export interface GetSiteContactInfoResponse {
   contactInformation: string;
 }
+
+export const siteOptions = [
+  'All sites',
+  'Active buoys',
+  'Live streams',
+  '3D Models',
+  'HOBO loggers',
+] as const;
