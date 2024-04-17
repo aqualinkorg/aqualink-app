@@ -1,4 +1,4 @@
-import { Site } from '../Sites/types';
+import { Site, siteOptions } from '../Sites/types';
 
 export interface MapboxGeolocationData {
   bbox: {
@@ -16,7 +16,7 @@ export type MapLayerName =
 export interface HomePageState {
   siteOnMap: Site | null;
   searchResult?: MapboxGeolocationData;
-  withSpotterOnly: boolean;
+  siteFilter: typeof siteOptions[number];
 }
 
 export interface TableRow {
