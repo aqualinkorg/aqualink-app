@@ -16,13 +16,11 @@ import {
   OceanSenseData,
   OceanSenseKeys,
   ValueWithTimestamp,
-  TimeSeriesData,
   Metrics,
   TimeSeries,
 } from 'store/Sites/types';
 import {
   convertSofarDataToLocalTime,
-  findMarginalDate,
   generateHistoricalMonthlyMeanTimestamps,
 } from 'helpers/dates';
 import { DateTime } from 'luxon-extensions';
@@ -95,60 +93,6 @@ export const findChartPeriod = (startDate: string, endDate: string) => {
     default:
       return 'month';
   }
-};
-
-export const findDataLimits = (
-  historicalMonthlyMean: HistoricalMonthlyMean[],
-  dailyData: DailyData[] | undefined,
-  timeSeriesData: TimeSeriesData | undefined,
-  startDate: string | undefined,
-  endDate: string | undefined,
-): [string | undefined, string | undefined] => {
-  const { bottomTemperature, topTemperature } = timeSeriesData || {};
-  const historicalMonthlyMeanData = generateHistoricalMonthlyMeanTimestamps(
-    historicalMonthlyMean,
-    startDate,
-    endDate,
-  );
-  const filteredHistoricalMonthlyMeanData = filterHistoricalMonthlyMeanData(
-    historicalMonthlyMeanData,
-    startDate,
-    endDate,
-  );
-
-  const hasData = Boolean(
-    filteredHistoricalMonthlyMeanData?.[0] ||
-      dailyData?.[0] ||
-      bottomTemperature?.find((x) => x.type === 'spotter')?.data?.[0] ||
-      topTemperature?.find((x) => x.type === 'spotter')?.data?.[0] ||
-      bottomTemperature?.find((x) => x.type === 'hobo')?.data?.[0],
-  );
-
-  return [
-    hasData
-      ? new Date(
-          findMarginalDate(
-            filteredHistoricalMonthlyMeanData,
-            dailyData || [],
-            bottomTemperature?.find((x) => x.type === 'spotter')?.data,
-            topTemperature?.find((x) => x.type === 'spotter')?.data,
-            bottomTemperature?.find((x) => x.type === 'hobo')?.data,
-            'min',
-          ),
-        ).toISOString()
-      : undefined,
-    hasData
-      ? new Date(
-          findMarginalDate(
-            filteredHistoricalMonthlyMeanData,
-            dailyData || [],
-            bottomTemperature?.find((x) => x.type === 'spotter')?.data,
-            topTemperature?.find((x) => x.type === 'spotter')?.data,
-            bottomTemperature?.find((x) => x.type === 'hobo')?.data,
-          ),
-        ).toISOString()
-      : undefined,
-  ];
 };
 
 export const findChartWidth = (
@@ -409,6 +353,17 @@ export const generateTempAnalysisDatasets = (
   ];
 };
 
+function getMedian(arr: number[]) {
+  // eslint-disable-next-line fp/no-mutating-methods
+  arr.sort((a, b) => a - b);
+  const middleIndex = Math.floor(arr.length / 2);
+
+  if (arr.length % 2 === 0) {
+    return (arr[middleIndex - 1] + arr[middleIndex]) / 2;
+  }
+  return arr[middleIndex];
+}
+
 /**
  * A util function to generate a dataset for a specific metric
  * @param label The label of the dataset
@@ -433,14 +388,23 @@ export const generateMetricDataset = (
   const display = hasAtLeastNData(CHART_MIN_NUMBER_OF_POINTS)(
     filterSofarData(chartStartDate, chartEndDate)(data),
   );
+  const convertedData = convertSofarDataToLocalTime(timezone)(data);
+  const diffs = convertedData.map((currentValue, index, array) => {
+    const previousValue =
+      index === 0 ? 0 : new Date(array[index - 1].timestamp).valueOf();
+    return new Date(currentValue.timestamp).valueOf() - previousValue;
+  });
+
+  const median = getMedian(diffs);
+  const maxHoursGap = median / 3600000 > 24 ? undefined : 24;
 
   return {
     label,
-    data: convertSofarDataToLocalTime(timezone)(data),
+    data: convertedData,
     unit,
     curveColor: color,
     type: 'line',
-    maxHoursGap: 24,
+    maxHoursGap,
     tooltipMaxHoursGap: 6,
     displayData: display,
     displayCardColumn: display,

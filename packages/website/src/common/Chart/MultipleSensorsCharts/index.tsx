@@ -45,7 +45,6 @@ import monitoringServices from 'services/monitoringServices';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
-  findDataLimits,
   generateMetricDataset,
   generateTempAnalysisDatasets,
   localizedEndOfDay,
@@ -64,6 +63,7 @@ const MultipleSensorsCharts = ({
   surveysFiltered,
   disableGutters,
   displayOceanSenseCharts,
+  hasAdditionalSensorData,
 }: MultipleSensorsChartsProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -381,32 +381,10 @@ const MultipleSensorsCharts = ({
       ),
     ).toISOString();
 
-    const [minDataDate, maxDataDate] = findDataLimits(
-      site.historicalMonthlyMean,
-      granularDailyData,
-      timeSeriesData,
-      pickerLocalStartDate,
-      localizedEndOfDay(pickerLocalEndDate, site.timezone),
-    );
+    setStartDate(pickerLocalStartDate);
 
-    setStartDate(
-      minDataDate
-        ? DateTime.max(
-            DateTime.fromISO(minDataDate),
-            DateTime.fromISO(pickerLocalStartDate),
-          ).toISOString()
-        : pickerLocalStartDate,
-    );
-
-    setEndDate(
-      maxDataDate
-        ? DateTime.min(
-            DateTime.fromISO(maxDataDate),
-            DateTime.fromISO(pickerLocalEndDate).endOf('day'),
-          ).toISOString()
-        : DateTime.fromISO(pickerLocalEndDate).endOf('day').toISOString(),
-    );
-  }, [granularDailyData, pickerEndDate, pickerStartDate, site, timeSeriesData]);
+    setEndDate(DateTime.fromISO(pickerLocalEndDate).endOf('day').toISOString());
+  }, [pickerEndDate, pickerStartDate, site?.timezone]);
 
   useEffect(() => {
     if (pickerStartDate && pickerEndDate && range === 'custom') {
@@ -514,6 +492,13 @@ const MultipleSensorsCharts = ({
         break;
     }
   };
+
+  React.useEffect(() => {
+    if (hasAdditionalSensorData && !hasHuiData && !hasSondeData) {
+      onRangeChange('one_year');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasAdditionalSensorData]);
 
   const onPickerDateChange = (type: 'start' | 'end') => (date: Date | null) => {
     const time = date?.getTime();
@@ -708,6 +693,7 @@ interface MultipleSensorsChartsProps {
   surveysFiltered: boolean;
   disableGutters: boolean;
   displayOceanSenseCharts?: boolean;
+  hasAdditionalSensorData: boolean;
 }
 
 MultipleSensorsCharts.defaultProps = {

@@ -89,6 +89,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
               pointId={pointId}
               surveysFiltered
               displayOceanSenseCharts={false}
+              hasAdditionalSensorData={false}
             />
           )}
           <SurveyHistory

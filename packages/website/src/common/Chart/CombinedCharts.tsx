@@ -14,6 +14,7 @@ const CombinedCharts = ({
   site,
   selectedSurveyPointId,
   surveys,
+  hasAdditionalSensorData,
 }: CombinedChartsProps) => {
   const classes = useStyles();
   const isLoading = !site;
@@ -63,6 +64,7 @@ const CombinedCharts = ({
               pointId={selectedSurveyPointId}
               surveysFiltered={false}
               disableGutters
+              hasAdditionalSensorData={hasAdditionalSensorData}
             />
           </>
         )}
@@ -91,6 +93,7 @@ interface CombinedChartsProps {
   site?: Site;
   selectedSurveyPointId: string | undefined;
   surveys: SurveyListItem[];
+  hasAdditionalSensorData: boolean;
 }
 
 export default CombinedCharts;
