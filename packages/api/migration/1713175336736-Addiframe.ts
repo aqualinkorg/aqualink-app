@@ -5,7 +5,7 @@ export class Addiframe1713175336736 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "site" ADD "iframe" character varying`,
+      `ALTER TABLE "site" ADD COLUMN IF NOT EXISTS "iframe" character varying`,
     );
     await queryRunner.query(
       `ALTER TABLE "site" ADD CONSTRAINT "CHK_317e682d4de8cd07bf9ee3dc57" CHECK (char_length(iframe) <= 200 AND char_length(iframe) > 10)`,
