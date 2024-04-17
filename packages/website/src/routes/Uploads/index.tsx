@@ -1,4 +1,12 @@
-import { Box, Container, Grid, TextField, Typography } from '@material-ui/core';
+import {
+  Box,
+  Checkbox,
+  Container,
+  FormControlLabel,
+  Grid,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import DropZone from 'common/FileUploads/Dropzone';
 import NavBar from 'common/NavBar';
@@ -39,6 +47,7 @@ function Uploads() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedSource, setSelectedSource] =
     React.useState<Sources>('sheet_data');
+  const [siteTimezone, setSiteTimezone] = React.useState(false);
 
   const user = useSelector(userInfoSelector);
   const uploadLoading = useSelector(uploadsInProgressSelector);
@@ -91,6 +100,7 @@ function Uploads() {
         files,
         token: user?.token,
         source: selectedSource,
+        siteTimezone,
       }),
     );
   };
@@ -172,6 +182,18 @@ function Uploads() {
             >
               {OptionsList(SENSOR_TYPES)}
             </TextField>
+          </Grid>
+          <Grid item md={12} xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={siteTimezone}
+                  onChange={(e) => setSiteTimezone(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label="Use Site Timezone"
+            />
           </Grid>
         </Grid>
 

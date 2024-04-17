@@ -74,16 +74,22 @@ export const uploadFiles = createAsyncThunk<
 
 export const uploadMultiSiteFiles = createAsyncThunk<
   UploadsSliceState['uploadResponse'],
-  { token: string | null | undefined; files: File[]; source: Sources },
+  {
+    token: string | null | undefined;
+    files: File[];
+    source: Sources;
+    siteTimezone: boolean;
+  },
   CreateAsyncThunkTypes
 >(
   'uploads/uploadMultiSiteFiles',
-  async ({ token, files, source }, { rejectWithValue }) => {
+  async ({ token, files, source, siteTimezone }, { rejectWithValue }) => {
     try {
       const { data: uploadResponse } =
         await uploadServices.uploadMultiSiteTimeSeriesData(
           files,
           source,
+          siteTimezone,
           token,
           false,
         );

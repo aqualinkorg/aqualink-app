@@ -192,6 +192,7 @@ export class TimeSeriesController {
       files,
       multiSiteUpload: true,
       failOnWarning: uploadTimeSeriesDataDto.failOnWarning,
+      siteTimezone: uploadTimeSeriesDataDto.siteTimezone,
     });
   }
 

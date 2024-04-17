@@ -711,6 +711,7 @@ describe('CheckConvertingWork', () => {
       fileName,
       {} as Sources,
       headerToTokenMap,
+      0,
       'text/csv',
     );
 

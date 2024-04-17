@@ -325,6 +325,7 @@ export const convertData = (
   fileName: string,
   sourceEntity: Sources,
   headerToTokenMap: (Token | undefined)[],
+  timestampOffset: number,
   mimetype?: Mimetype,
 ) => {
   const timestampIndex = findTimeStampIndex(headerToTokenMap);
@@ -336,12 +337,15 @@ export const convertData = (
         ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
         : undefined;
 
-    const timestamp = getTimeStamp(
-      timestampIndex,
-      row,
-      mimetype,
-      timezone,
+    const timestampDate = getTimeStamp(timestampIndex, row, mimetype, timezone);
+
+    const timestamp = new Date(
+      timestampDate.valueOf() + timestampOffset,
     ).toISOString();
+
+    console.log({ timestampOffset });
+    console.log('before Offset:', timestampDate.toISOString());
+    console.log('After Offset:', timestamp);
 
     const rowValues = row.map<Data | undefined>((cell, i) => {
       const metric = headerToTokenMap[i];
@@ -506,6 +510,20 @@ interface CreateEntitiesAndConvertProps {
   repositories: Repositories;
   depth?: number;
   mimetype?: Mimetype;
+  siteTimezone?: boolean;
+}
+
+function getTimezoneOffset(timezone: string) {
+  try {
+    const date = new Date();
+    const timezoneDate = new Date(
+      date.toLocaleString('en-US', { timeZone: timezone }),
+    );
+    console.log({ date, timezoneDate, timezone });
+    return timezoneDate.valueOf() - date.valueOf();
+  } catch {
+    return 0;
+  }
 }
 
 const createEntitiesAndConvert = async ({
@@ -520,6 +538,7 @@ const createEntitiesAndConvert = async ({
   repositories,
   depth,
   mimetype,
+  siteTimezone,
 }: CreateEntitiesAndConvertProps) => {
   const [site, surveyPoint] = await Promise.all([
     getSite(siteId, repositories.siteRepository),
@@ -546,6 +565,9 @@ const createEntitiesAndConvert = async ({
     sourcesRepository: repositories.sourcesRepository,
   });
 
+  const offsetInMil =
+    siteTimezone && site.timezone ? getTimezoneOffset(site.timezone) : 0;
+
   const data = convertData(
     workSheetData,
     headers,
@@ -553,6 +575,7 @@ const createEntitiesAndConvert = async ({
     fileName,
     sourceEntity,
     headerToTokenMap,
+    offsetInMil,
     mimetype,
   );
 
@@ -662,6 +685,7 @@ interface UploadTimeSeriesDataProps {
   multiSiteUpload: boolean;
   failOnWarning?: boolean;
   mimetype?: Mimetype;
+  siteTimezone?: boolean;
 }
 
 export const uploadTimeSeriesData = async ({
@@ -675,6 +699,7 @@ export const uploadTimeSeriesData = async ({
   multiSiteUpload,
   failOnWarning,
   mimetype,
+  siteTimezone,
 }: UploadTimeSeriesDataProps) => {
   console.time(`Upload data file ${fileName}`);
 
@@ -773,6 +798,7 @@ export const uploadTimeSeriesData = async ({
         sourceType,
         repositories,
         mimetype,
+        siteTimezone,
       });
     }),
   );

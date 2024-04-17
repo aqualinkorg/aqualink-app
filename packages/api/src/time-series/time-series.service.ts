@@ -272,6 +272,7 @@ export class TimeSeriesService {
     multiSiteUpload,
     surveyPointDataRangeDto,
     failOnWarning,
+    siteTimezone,
   }: {
     user?: Express.User & User;
     sensor: SourceType;
@@ -279,6 +280,7 @@ export class TimeSeriesService {
     multiSiteUpload: boolean;
     surveyPointDataRangeDto?: SurveyPointDataRangeDto;
     failOnWarning?: boolean;
+    siteTimezone?: boolean;
   }) {
     if (sensor && !Object.values(SourceType).includes(sensor)) {
       throw new BadRequestException(
@@ -318,6 +320,7 @@ export class TimeSeriesService {
             },
             failOnWarning,
             mimetype: mimetype as Mimetype,
+            siteTimezone,
           });
           return { file: originalname, ignoredHeaders, error: null };
         } catch (err: unknown) {

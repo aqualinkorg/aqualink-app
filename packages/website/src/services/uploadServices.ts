@@ -27,6 +27,7 @@ const uploadMedia = (
 const uploadMultiSiteTimeSeriesData = (
   files: File[],
   source: Sources,
+  siteTimezone: boolean,
   token?: string | null,
   failOnWarning?: boolean,
 ) => {
@@ -35,6 +36,8 @@ const uploadMultiSiteTimeSeriesData = (
   data.append('sensor', source);
   if (failOnWarning !== undefined)
     data.append('failOnWarning', String(failOnWarning));
+  if (siteTimezone !== undefined)
+    data.append('siteTimezone', String(siteTimezone));
   return requests.send<UploadTimeSeriesResult[]>({
     method: 'POST',
     url: `time-series/upload`,
