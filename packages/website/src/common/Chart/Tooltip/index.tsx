@@ -16,6 +16,7 @@ import { isNumber } from 'lodash';
 
 import { formatNumber } from 'helpers/numberUtils';
 import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { Sources } from 'store/Sites/types';
 import { Dataset } from '..';
 
 export const TOOLTIP_WIDTH = 190;
@@ -38,17 +39,20 @@ const TemperatureMetric = ({
   color,
   unit,
   gridClassName,
+  source,
 }: {
   value: number | null;
   title: string;
   color: string;
   unit: string;
   gridClassName: string | undefined;
+  source?: Sources;
 }) => (
   <Grid container item className={gridClassName}>
     <Circle color={color} />
     <Typography variant="caption">
-      {title} {`${formatNumber(value, 1)} ${unit}`}
+      {title} {`${formatNumber(value, 1)} ${unit}`}{' '}
+      {source !== undefined && `(${source.toUpperCase()})`}
     </Typography>
   </Grid>
 );
@@ -76,12 +80,16 @@ const Tooltip = ({
     color: string;
     title: string;
     unit: string;
-  }[] = datasets.map(({ data, curveColor, label, unit, tooltipLabel }) => ({
-    value: data[0]?.value,
-    color: curveColor,
-    title: tooltipLabel || label,
-    unit,
-  }));
+    source?: Sources;
+  }[] = datasets.map(
+    ({ data, curveColor, label, unit, tooltipLabel, source }) => ({
+      value: data[0]?.value,
+      color: curveColor,
+      title: tooltipLabel || label,
+      unit,
+      source,
+    }),
+  );
 
   return (
     <div className={classes.tooltip}>

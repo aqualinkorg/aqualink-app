@@ -464,6 +464,7 @@ export const standardDailyDataDataset = (
   timezone?: string | null,
 ): Dataset => ({
   label: 'SURFACE',
+  source: 'noaa',
   data: convertSofarDataToLocalTime(timezone)(
     convertDailyToSofar(data, ['satelliteTemperature'])?.satelliteTemperature,
   ),
