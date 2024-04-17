@@ -2548,6 +2548,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </div>
           <mock-multiplesensorscharts
             disablegutters="true"
+            hasadditionalsensordata="false"
             site="[object Object]"
             surveysfiltered="false"
           />
@@ -5743,6 +5744,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </div>
           <mock-multiplesensorscharts
             disablegutters="true"
+            hasadditionalsensordata="false"
             site="[object Object]"
             surveysfiltered="false"
           />
