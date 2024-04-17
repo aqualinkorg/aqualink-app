@@ -1,9 +1,10 @@
 import { sortBy } from 'lodash';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { hasDeployedSpotter, setSiteNameFromList } from 'helpers/siteUtils';
+import { setSiteNameFromList, sitesFilterFn } from 'helpers/siteUtils';
 import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import type {
+  siteOptions,
   SitesListState,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
@@ -25,7 +26,7 @@ export const sitesRequest = createAsyncThunk<
     try {
       const { data } = await siteServices.getSites();
       const {
-        homepage: { withSpotterOnly },
+        homepage: { siteFilter },
       } = getState();
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
@@ -34,9 +35,9 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
-        sitesToDisplay: withSpotterOnly
-          ? transformedData.filter(hasDeployedSpotter)
-          : transformedData,
+        sitesToDisplay: transformedData.filter((s) =>
+          sitesFilterFn(siteFilter, s),
+        ),
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
@@ -56,11 +57,14 @@ const sitesListSlice = createSlice({
   name: 'sitesList',
   initialState: sitesListInitialState,
   reducers: {
-    filterSitesWithSpotter: (state, action: PayloadAction<boolean>) => ({
+    filterSitesWithSpotter: (
+      state,
+      action: PayloadAction<typeof siteOptions[number]>,
+    ) => ({
       ...state,
-      sitesToDisplay: action.payload
-        ? state.list?.filter(hasDeployedSpotter)
-        : state.list,
+      sitesToDisplay: state.list?.filter((s) =>
+        sitesFilterFn(action.payload, s),
+      ),
     }),
     setSiteName: (
       state,

@@ -3,6 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { SiteSketchFabService } from './site-sketchfab.service';
 import { FindSketchFabDto } from './dto/find-sketchfab.dto';
 
+// NOTE: no longer used in webapp
 @ApiTags('site-sketchfab')
 @Controller('site-sketchfab')
 export class SiteSketchFabController {

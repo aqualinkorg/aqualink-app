@@ -446,3 +446,11 @@ export interface GetSiteContactInfoProps {
 export interface GetSiteContactInfoResponse {
   contactInformation: string;
 }
+
+export const siteOptions = [
+  'All sites',
+  'Active buoys',
+  'Live streams',
+  '3D Models',
+  'HOBO loggers',
+] as const;

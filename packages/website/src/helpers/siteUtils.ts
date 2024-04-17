@@ -10,7 +10,10 @@ import {
   TimeSeriesDataRange,
   UpdateSiteNameFromListArgs,
 } from 'store/Sites/types';
-import type { TimeSeriesDataRequestParams } from 'store/Sites/types';
+import type {
+  TimeSeriesDataRequestParams,
+  siteOptions,
+} from 'store/Sites/types';
 import requests from './requests';
 
 export const longDHW = (dhw: number | null): string =>
@@ -132,4 +135,25 @@ export const getSourceRanges = (
   });
 
   return result.flat();
+};
+
+export const sitesFilterFn = (
+  filter: typeof siteOptions[number],
+  s?: Site | null,
+) => {
+  switch (filter) {
+    case 'All sites':
+      return true;
+    case 'Live streams':
+      return !!s?.videoStream;
+    case '3D Models':
+      return !!s?.sketchFab;
+    case 'Active buoys':
+      return hasDeployedSpotter(s);
+    case 'HOBO loggers':
+      return s?.hasHobo;
+    default:
+      console.error(`Unhandled Option: ${filter}`);
+      return true;
+  }
 };

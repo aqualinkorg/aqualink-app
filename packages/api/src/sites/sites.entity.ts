@@ -18,8 +18,8 @@ import {
   ApiProperty,
   ApiPropertyOptional,
 } from '@nestjs/swagger';
+import { SketchFab } from '../site-sketchfab/site-sketchfab.entity';
 import { Region } from '../regions/regions.entity';
-import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { User } from '../users/users.entity';
 import { SiteApplication } from '../site-applications/site-applications.entity';
@@ -119,9 +119,8 @@ export class Site {
   @Index()
   region: Region | null;
 
-  @ManyToOne(() => VideoStream, { onDelete: 'SET NULL', nullable: true })
-  @Index()
-  stream: VideoStream | null;
+  @OneToOne(() => SketchFab, (sketchFab) => sketchFab.site)
+  sketchFab?: SketchFab | null;
 
   @ManyToMany(() => User, (user) => user.administeredSites, {
     onDelete: 'CASCADE',

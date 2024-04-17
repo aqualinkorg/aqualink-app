@@ -355,7 +355,7 @@ const SiteDetails = ({
             src={site.iframe}
             title="external-content"
             // TODO: update constraints when we actually have the content that will appear here
-            sandbox=""
+            // sandbox=""
           />
         )}
         <Surveys site={site} />
