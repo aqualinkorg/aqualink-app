@@ -343,10 +343,6 @@ export const convertData = (
       timestampDate.valueOf() + timestampOffset,
     ).toISOString();
 
-    console.log({ timestampOffset });
-    console.log('before Offset:', timestampDate.toISOString());
-    console.log('After Offset:', timestamp);
-
     const rowValues = row.map<Data | undefined>((cell, i) => {
       const metric = headerToTokenMap[i];
       if (metric === undefined || nonMetric.includes(metric as NonMetric)) {
