@@ -321,11 +321,10 @@ const groupBySitePointDepth = ({
 export const convertData = (
   workSheetData: string[][],
   headers: string[],
-  headerIndex: number,
   fileName: string,
   sourceEntity: Sources,
   headerToTokenMap: (Token | undefined)[],
-  timestampOffset: number,
+  siteTimezone: string | null,
   mimetype?: Mimetype,
 ) => {
   const timestampIndex = findTimeStampIndex(headerToTokenMap);
@@ -339,8 +338,15 @@ export const convertData = (
 
     const timestampDate = getTimeStamp(timestampIndex, row, mimetype, timezone);
 
+    // This need to be done for each row to take into account daylight savings
+    // and other things that may affect timezone offset in that exact date
+    const offsetInMil =
+      siteTimezone !== null
+        ? getTimezoneOffset(siteTimezone, timestampDate)
+        : 0;
+
     const timestamp = new Date(
-      timestampDate.valueOf() - timestampOffset,
+      timestampDate.valueOf() - offsetInMil,
     ).toISOString();
 
     const rowValues = row.map<Data | undefined>((cell, i) => {
@@ -499,7 +505,6 @@ interface CreateEntitiesAndConvertProps {
   siteId: number;
   surveyPointId?: number;
   headers: string[];
-  headerIndex: number;
   fileName: string;
   headerToTokenMap: (Token | undefined)[];
   sourceType: SourceType;
@@ -509,9 +514,8 @@ interface CreateEntitiesAndConvertProps {
   siteTimezone?: boolean;
 }
 
-function getTimezoneOffset(timezone: string) {
+function getTimezoneOffset(timezone: string, date: Date) {
   try {
-    const date = new Date();
     const timezoneDate = new Date(
       date.toLocaleString('en-US', { timeZone: timezone }),
     );
@@ -526,7 +530,6 @@ const createEntitiesAndConvert = async ({
   siteId,
   surveyPointId,
   headers,
-  headerIndex,
   fileName,
   headerToTokenMap,
   sourceType,
@@ -560,17 +563,13 @@ const createEntitiesAndConvert = async ({
     sourcesRepository: repositories.sourcesRepository,
   });
 
-  const offsetInMil =
-    siteTimezone && site.timezone ? getTimezoneOffset(site.timezone) : 0;
-
   const data = convertData(
     workSheetData,
     headers,
-    headerIndex,
     fileName,
     sourceEntity,
     headerToTokenMap,
-    offsetInMil,
+    siteTimezone ? site.timezone : null,
     mimetype,
   );
 
@@ -787,7 +786,6 @@ export const uploadTimeSeriesData = async ({
         surveyPointId: x.surveyPointId,
         depth: x.depth,
         headers,
-        headerIndex,
         fileName,
         headerToTokenMap,
         sourceType,

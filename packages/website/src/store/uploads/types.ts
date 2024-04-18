@@ -6,6 +6,7 @@ export interface UploadsSliceState {
   target?: {
     selectedSensor: Sources;
     selectedPoint: number;
+    useSiteTimezone: boolean;
     siteId: number;
   };
   uploadInProgress: boolean;

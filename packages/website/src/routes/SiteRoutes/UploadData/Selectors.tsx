@@ -7,6 +7,8 @@ import {
   MenuItem,
   Button,
   ButtonProps,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
@@ -19,6 +21,8 @@ import { OptionsList, selectProps, SENSOR_TYPES } from 'routes/Uploads/utils';
 
 const Selectors = ({
   site,
+  siteTimezone,
+  setSiteTimezone,
   onCompletedSelection,
   onSensorChange,
   onPointChange,
@@ -41,8 +45,8 @@ const Selectors = ({
   const isContinueDisabled = !hasSelectedPoint || !hasSelectedSensor;
 
   const handleChange =
-    (type: 'point' | 'sensor') =>
-    (event: React.ChangeEvent<{ value: unknown }>) => {
+    (type: 'point' | 'sensor' | 'timezone') =>
+    (event: React.ChangeEvent<{ value: unknown; checked?: unknown }>) => {
       const value = event.target.value as number;
 
       switch (type) {
@@ -53,6 +57,9 @@ const Selectors = ({
         case 'sensor':
           setSelectedSensorIndex(value);
           onSensorChange(SENSOR_TYPES[value].name as Sources);
+          break;
+        case 'timezone':
+          setSiteTimezone(event.target.checked as boolean);
           break;
         default:
           break;
@@ -141,6 +148,18 @@ const Selectors = ({
             {OptionsList(SENSOR_TYPES)}
           </TextField>
         </Grid>
+        <Grid item md={12} xs={12}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={siteTimezone}
+                onChange={handleChange('timezone')}
+                color="primary"
+              />
+            }
+            label="Use Site Timezone"
+          />
+        </Grid>
       </Grid>
       <Grid container spacing={2}>
         <Grid item>
@@ -190,6 +209,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface SelectorsProps {
   site: Site;
+  siteTimezone: boolean;
+  setSiteTimezone: (v: boolean) => void;
   onCompletedSelection: () => void;
   onSensorChange: (sensor: Sources) => void;
   onPointChange: (point: number) => void;

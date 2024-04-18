@@ -51,13 +51,14 @@ const uploadTimeSeriesData = (
   formData: FormData,
   siteId: number,
   pointId: number,
-  token?: string | null,
   failOnWarning?: boolean,
+  siteTimezone?: boolean,
+  token?: string | null,
 ) =>
   requests.send<UploadTimeSeriesResult[]>({
     method: 'POST',
     url: `time-series/sites/${siteId}/site-survey-points/${pointId}/upload${requests.generateUrlQueryParams(
-      { failOnWarning },
+      { failOnWarning, siteTimezone },
     )}`,
     data: formData,
     token,

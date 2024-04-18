@@ -159,6 +159,7 @@ export class TimeSeriesController {
     @UploadedFiles() files: Express.Multer.File[],
     @Body('sensor') sensor?: SourceType,
     @Query('failOnWarning', ParseBoolPipe) failOnWarning?: boolean,
+    @Query('siteTimezone', ParseBoolPipe) siteTimezone?: boolean,
   ) {
     return this.timeSeriesService.uploadData({
       sensor: sensor || SourceType.SHEET_DATA,
@@ -166,6 +167,7 @@ export class TimeSeriesController {
       multiSiteUpload: false,
       surveyPointDataRangeDto,
       failOnWarning,
+      siteTimezone,
     });
   }
 

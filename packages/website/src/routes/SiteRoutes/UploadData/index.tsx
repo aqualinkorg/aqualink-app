@@ -40,10 +40,9 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const history = useHistory();
   const { token } = useSelector(userInfoSelector) || {};
   const { site, siteLoading } = useSiteRequest(match.params.id);
-  // const [isSelectionCompleted, setIsSelectionCompleted] = useState(false);
   const [selectedSensor, setSelectedSensor] = useState<Sources>();
   const [selectedPoint, setSelectedPoint] = useState<number>();
-  // const [files, setFiles] = useState<File[]>([]);
+  const [useSiteTimezone, setUseSiteTimezone] = useState(false);
   const files = useSelector(uploadsFilesSelector);
   const uploadTarget = useSelector(uploadsTargetSelector);
   const uploadLoading = useSelector(uploadsInProgressSelector);
@@ -57,10 +56,28 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const onCompletedSelection = () => {
     if (site?.id && selectedPoint && selectedSensor) {
       dispatch(
-        setUploadsTarget({ siteId: site?.id, selectedSensor, selectedPoint }),
+        setUploadsTarget({
+          siteId: site?.id,
+          selectedSensor,
+          selectedPoint,
+          useSiteTimezone,
+        }),
       );
     }
   };
+
+  useEffect(() => {
+    if (uploadTarget && selectedPoint && selectedSensor)
+      dispatch(
+        setUploadsTarget({
+          ...uploadTarget,
+          selectedSensor,
+          selectedPoint,
+          useSiteTimezone,
+        }),
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, selectedPoint, selectedSensor, useSiteTimezone]);
 
   const onFileDelete = (name: string) => {
     dispatch(removeUploadsFiles(name));
@@ -171,6 +188,8 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
               onCompletedSelection={onCompletedSelection}
               onSensorChange={setSelectedSensor}
               onPointChange={setSelectedPoint}
+              siteTimezone={useSiteTimezone}
+              setSiteTimezone={setUseSiteTimezone}
             />
             {!!uploadTarget && (
               <DropZone disabled={uploadLoading} onFilesDrop={onFilesDrop} />

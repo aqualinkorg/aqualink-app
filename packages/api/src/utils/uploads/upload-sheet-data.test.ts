@@ -707,11 +707,10 @@ describe('CheckConvertingWork', () => {
     const result = convertData(
       trimmed,
       headers,
-      headerIndex,
       fileName,
       {} as Sources,
       headerToTokenMap,
-      0,
+      null,
       'text/csv',
     );
 

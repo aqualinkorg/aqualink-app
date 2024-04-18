@@ -45,6 +45,8 @@ export const uploadFiles = createAsyncThunk<
     const selectedSensor = state.uploads.target?.selectedSensor;
     const selectedPoint = state.uploads.target?.selectedPoint;
     const siteId = state.uploads.target?.siteId;
+    const siteTimezone = state.uploads.target?.useSiteTimezone;
+
     try {
       if (
         typeof siteId === 'number' &&
@@ -59,8 +61,9 @@ export const uploadFiles = createAsyncThunk<
             data,
             siteId,
             selectedPoint,
-            token,
             false,
+            siteTimezone,
+            token,
           );
         return uploadResponse;
       }
