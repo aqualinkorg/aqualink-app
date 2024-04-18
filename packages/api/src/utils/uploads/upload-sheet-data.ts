@@ -340,7 +340,7 @@ export const convertData = (
     const timestampDate = getTimeStamp(timestampIndex, row, mimetype, timezone);
 
     const timestamp = new Date(
-      timestampDate.valueOf() + timestampOffset,
+      timestampDate.valueOf() - timestampOffset,
     ).toISOString();
 
     const rowValues = row.map<Data | undefined>((cell, i) => {
@@ -515,7 +515,6 @@ function getTimezoneOffset(timezone: string) {
     const timezoneDate = new Date(
       date.toLocaleString('en-US', { timeZone: timezone }),
     );
-    console.log({ date, timezoneDate, timezone });
     return timezoneDate.valueOf() - date.valueOf();
   } catch {
     return 0;
