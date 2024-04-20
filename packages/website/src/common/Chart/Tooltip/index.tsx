@@ -33,6 +33,14 @@ const Circle = styled('div')<{}, { color: string; size?: number }>(
   }),
 );
 
+// small helper to specify tha NOAA surface data is from satellite
+const sourceTitle = (title: string, source: Sources | undefined) => {
+  if (source === 'noaa' && title === 'SURFACE') {
+    return ' (NOAA - SAT)';
+  }
+  return source ? ` (${source.toUpperCase()})` : '';
+};
+
 const TemperatureMetric = ({
   value,
   title,
@@ -51,8 +59,8 @@ const TemperatureMetric = ({
   <Grid container item className={gridClassName}>
     <Circle color={color} />
     <Typography variant="caption">
-      {title} {`${formatNumber(value, 1)} ${unit}`}{' '}
-      {source !== undefined && `(${source.toUpperCase()})`}
+      {title} {`${formatNumber(value, 1)} ${unit}`}
+      {sourceTitle(title, source)}
     </Typography>
   </Grid>
 );
