@@ -19,7 +19,7 @@ import { displayTimeInLocalTimezone } from 'helpers/dates';
 import { Sources } from 'store/Sites/types';
 import { Dataset } from '..';
 
-export const TOOLTIP_WIDTH = 210;
+export const TOOLTIP_WIDTH = 220;
 
 const Circle = styled('div')<{}, { color: string; size?: number }>(
   ({ size = 10, color: backgroundColor }) => ({
@@ -193,6 +193,8 @@ const styles = () =>
     tooltipContentItem: {
       height: 20,
       margin: '0',
+      display: 'flex',
+      flexWrap: 'nowrap',
     },
     tooltipArrow: {
       content: ' ',
