@@ -654,12 +654,27 @@ const uploadPerSiteAndPoint = async ({
     `Loading into DB site: ${site.id}, surveyPoint: ${surveyPoint?.id}`,
   );
 
+  const minDate = get(
+    minBy(dataAsTimeSeries, (item) =>
+      new Date(get(item, 'timestamp')).getTime(),
+    ),
+    'timestamp',
+  );
+  const maxDate = get(
+    maxBy(dataAsTimeSeries, (item) =>
+      new Date(get(item, 'timestamp')).getTime(),
+    ),
+    'timestamp',
+  );
+
   try {
     // This will fail on file re upload
     await repositories.dataUploadsSitesRepository.save({
       dataUpload: dataUploadsFileEntity,
       site,
       surveyPoint,
+      minDate,
+      maxDate,
     });
   } catch (error: any) {
     logger.warn(error?.message || error);

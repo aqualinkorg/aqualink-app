@@ -375,6 +375,8 @@ export interface DataUploadsSites {
   dataUpload: DataUploads;
   surveyPoint: SurveyPoints | null;
   sitesAffectedByDataUpload?: number[];
+  minDate?: string;
+  maxDate?: string;
 }
 
 export type SiteUploadHistory = DataUploadsSites[];
