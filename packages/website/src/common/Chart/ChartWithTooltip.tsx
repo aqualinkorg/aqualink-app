@@ -114,8 +114,13 @@ function ChartWithTooltip({
         chartSettings={{
           tooltips: {
             enabled: false,
+            mode: 'index',
             intersect: false,
             custom: customTooltip(chartDataRef),
+          },
+          hover: {
+            mode: 'index',
+            intersect: false
           },
           legend: {
             display: false,
