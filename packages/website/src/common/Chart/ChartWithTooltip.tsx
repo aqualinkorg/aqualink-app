@@ -120,7 +120,7 @@ function ChartWithTooltip({
           },
           hover: {
             mode: 'index',
-            intersect: false
+            intersect: false,
           },
           legend: {
             display: false,
