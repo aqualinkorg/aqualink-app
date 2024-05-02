@@ -21,7 +21,7 @@ const { argv } = yargs
   .help();
 
 async function run() {
-  const { d: days, s: sites } = argv;
+  const { d: days, s: sites } = argv as any;
   const backlogArray = Array.from(Array(days).keys());
   const siteIds = sites && sites.map((site) => parseInt(`${site}`, 10));
   const today = DateTime.utc().endOf('day');

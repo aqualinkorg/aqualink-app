@@ -204,7 +204,7 @@ const styles = (theme: Theme) =>
 
 interface HeaderIncomingProps {
   id?: string;
-  range: RangeValue;
+  range: RangeValue | undefined;
   disableMaxRange: boolean;
   title?: string;
   availableRanges?: AvailableRange[];

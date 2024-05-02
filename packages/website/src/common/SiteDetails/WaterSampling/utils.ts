@@ -191,17 +191,15 @@ export async function getCardData(
             new Date(maxDate) > new Date(lastYear),
         );
 
-        const minDate = inLastYear.reduce(
-          (min, curr) =>
-            curr.dataUpload.minDate < min ? curr.dataUpload.minDate : min,
-          new Date().toISOString(),
-        );
+        const minDate = inLastYear.reduce((min, curr) => {
+          const currMin = curr.minDate || curr.dataUpload.minDate;
+          return currMin < min ? currMin : min;
+        }, new Date().toISOString());
 
-        const maxDate = inLastYear.reduce(
-          (max, curr) =>
-            curr.dataUpload.maxDate > max ? curr.dataUpload.maxDate : max,
-          new Date(0).toISOString(),
-        );
+        const maxDate = inLastYear.reduce((max, curr) => {
+          const currMax = curr.maxDate || curr.dataUpload.maxDate;
+          return currMax > max ? currMax : max;
+        }, new Date(0).toISOString());
 
         const [data] = await timeSeriesRequest({
           siteId,

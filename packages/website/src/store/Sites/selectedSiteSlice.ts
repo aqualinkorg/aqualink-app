@@ -12,6 +12,8 @@ import type {
   TimeSeriesDataRequestParams,
   GetSiteContactInfoProps,
   Site,
+  Metrics,
+  TimeSeries,
 } from './types';
 import type { RootState, CreateAsyncThunkTypes } from '../configure';
 import {
@@ -516,14 +518,43 @@ const selectedSiteSlice = createSlice({
           timeSeriesMinRequestDate: SelectedSiteState['timeSeriesMinRequestDate'];
           timeSeriesMaxRequestDate: SelectedSiteState['timeSeriesMaxRequestDate'];
         }>,
-      ) => ({
-        ...state,
-        granularDailyData: action.payload.granularDailyData,
-        timeSeriesData: action.payload.timeSeriesData,
-        timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
-        timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
-        timeSeriesDataLoading: false,
-      }),
+      ) => {
+        const oldTimeSeries = state.timeSeriesData || {};
+        const newTimeSeries = action.payload.timeSeriesData || {};
+        const keys = [
+          ...new Set([
+            ...Object.keys(oldTimeSeries),
+            ...Object.keys(newTimeSeries),
+          ]),
+        ] as Metrics[];
+        const merged = {} as Partial<Record<Metrics, TimeSeries>>;
+        keys.forEach((key) => {
+          // If key exists in both objects, merge arrays
+          if (key in oldTimeSeries && key in newTimeSeries) {
+            const newTypes = newTimeSeries[key]?.map((x) => x.type);
+            const oldValues = oldTimeSeries[key]?.filter(
+              (x) => !newTypes?.includes(x.type),
+            );
+            // eslint-disable-next-line fp/no-mutation
+            merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
+          } else if (key in oldTimeSeries) {
+            // eslint-disable-next-line fp/no-mutation
+            merged[key] = oldTimeSeries[key];
+          } else {
+            // eslint-disable-next-line fp/no-mutation
+            merged[key] = newTimeSeries[key];
+          }
+        });
+
+        return {
+          ...state,
+          granularDailyData: action.payload.granularDailyData,
+          timeSeriesData: merged,
+          timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
+          timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
+          timeSeriesDataLoading: false,
+        };
+      },
     );
 
     builder.addCase(

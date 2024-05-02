@@ -157,7 +157,7 @@ interface ChartWithCardProps {
   pickerEndDate: string;
   pickerStartDate: string;
   pointId?: number;
-  range: RangeValue;
+  range: RangeValue | undefined;
   showDatePickers?: boolean;
   showRangeButtons?: boolean;
   site: Site;

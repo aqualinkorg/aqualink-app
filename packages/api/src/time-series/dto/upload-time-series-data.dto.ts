@@ -11,4 +11,8 @@ export class UploadTimeSeriesDataDto {
   @ApiProperty({ example: 'sonde' })
   @IsEnum(SourceType)
   sensor: SourceType;
+
+  @IsOptional()
+  @Transform(({ value }) => value === 'true')
+  siteTimezone?: boolean;
 }

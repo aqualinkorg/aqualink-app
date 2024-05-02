@@ -1,4 +1,5 @@
 import {
+  Column,
   Entity,
   Index,
   JoinColumn,
@@ -37,6 +38,12 @@ export class DataUploadsSites {
     (dataUploadsSite: DataUploadsSites) => dataUploadsSite.surveyPoint,
   )
   surveyPointId?: number;
+
+  @Column({ nullable: true })
+  minDate: Date;
+
+  @Column({ nullable: true })
+  maxDate: Date;
 
   sitesAffectedByDataUpload?: number[];
 }

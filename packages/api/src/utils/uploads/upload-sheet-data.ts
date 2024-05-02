@@ -321,10 +321,10 @@ const groupBySitePointDepth = ({
 export const convertData = (
   workSheetData: string[][],
   headers: string[],
-  headerIndex: number,
   fileName: string,
   sourceEntity: Sources,
   headerToTokenMap: (Token | undefined)[],
+  siteTimezone: string | null,
   mimetype?: Mimetype,
 ) => {
   const timestampIndex = findTimeStampIndex(headerToTokenMap);
@@ -336,11 +336,17 @@ export const convertData = (
         ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
         : undefined;
 
-    const timestamp = getTimeStamp(
-      timestampIndex,
-      row,
-      mimetype,
-      timezone,
+    const timestampDate = getTimeStamp(timestampIndex, row, mimetype, timezone);
+
+    // This need to be done for each row to take into account daylight savings
+    // and other things that may affect timezone offset in that exact date
+    const offsetInMil =
+      siteTimezone !== null
+        ? getTimezoneOffset(siteTimezone, timestampDate)
+        : 0;
+
+    const timestamp = new Date(
+      timestampDate.valueOf() - offsetInMil,
     ).toISOString();
 
     const rowValues = row.map<Data | undefined>((cell, i) => {
@@ -499,13 +505,24 @@ interface CreateEntitiesAndConvertProps {
   siteId: number;
   surveyPointId?: number;
   headers: string[];
-  headerIndex: number;
   fileName: string;
   headerToTokenMap: (Token | undefined)[];
   sourceType: SourceType;
   repositories: Repositories;
   depth?: number;
   mimetype?: Mimetype;
+  siteTimezone?: boolean;
+}
+
+function getTimezoneOffset(timezone: string, date: Date) {
+  try {
+    const timezoneDate = new Date(
+      date.toLocaleString('en-US', { timeZone: timezone }),
+    );
+    return timezoneDate.valueOf() - date.valueOf();
+  } catch {
+    return 0;
+  }
 }
 
 const createEntitiesAndConvert = async ({
@@ -513,13 +530,13 @@ const createEntitiesAndConvert = async ({
   siteId,
   surveyPointId,
   headers,
-  headerIndex,
   fileName,
   headerToTokenMap,
   sourceType,
   repositories,
   depth,
   mimetype,
+  siteTimezone,
 }: CreateEntitiesAndConvertProps) => {
   const [site, surveyPoint] = await Promise.all([
     getSite(siteId, repositories.siteRepository),
@@ -549,10 +566,10 @@ const createEntitiesAndConvert = async ({
   const data = convertData(
     workSheetData,
     headers,
-    headerIndex,
     fileName,
     sourceEntity,
     headerToTokenMap,
+    siteTimezone ? site.timezone : null,
     mimetype,
   );
 
@@ -637,12 +654,27 @@ const uploadPerSiteAndPoint = async ({
     `Loading into DB site: ${site.id}, surveyPoint: ${surveyPoint?.id}`,
   );
 
+  const minDate = get(
+    minBy(dataAsTimeSeries, (item) =>
+      new Date(get(item, 'timestamp')).getTime(),
+    ),
+    'timestamp',
+  );
+  const maxDate = get(
+    maxBy(dataAsTimeSeries, (item) =>
+      new Date(get(item, 'timestamp')).getTime(),
+    ),
+    'timestamp',
+  );
+
   try {
     // This will fail on file re upload
     await repositories.dataUploadsSitesRepository.save({
       dataUpload: dataUploadsFileEntity,
       site,
       surveyPoint,
+      minDate,
+      maxDate,
     });
   } catch (error: any) {
     logger.warn(error?.message || error);
@@ -662,6 +694,7 @@ interface UploadTimeSeriesDataProps {
   multiSiteUpload: boolean;
   failOnWarning?: boolean;
   mimetype?: Mimetype;
+  siteTimezone?: boolean;
 }
 
 export const uploadTimeSeriesData = async ({
@@ -675,6 +708,7 @@ export const uploadTimeSeriesData = async ({
   multiSiteUpload,
   failOnWarning,
   mimetype,
+  siteTimezone,
 }: UploadTimeSeriesDataProps) => {
   console.time(`Upload data file ${fileName}`);
 
@@ -767,12 +801,12 @@ export const uploadTimeSeriesData = async ({
         surveyPointId: x.surveyPointId,
         depth: x.depth,
         headers,
-        headerIndex,
         fileName,
         headerToTokenMap,
         sourceType,
         repositories,
         mimetype,
+        siteTimezone,
       });
     }),
   );

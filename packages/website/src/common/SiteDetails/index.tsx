@@ -157,6 +157,7 @@ const SiteDetails = ({
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
         MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
+
       const hasHUI =
         latestData.some((x) => x.source === 'hui') ||
         sourceWithinDataRangeInterval(
@@ -346,6 +347,7 @@ const SiteDetails = ({
           site={site}
           selectedSurveyPointId={selectedSurveyPointId}
           surveys={surveys}
+          hasAdditionalSensorData={hasHUIData || hasSondeData}
         />
         {site?.iframe && (
           <iframe

@@ -45,6 +45,8 @@ export const uploadFiles = createAsyncThunk<
     const selectedSensor = state.uploads.target?.selectedSensor;
     const selectedPoint = state.uploads.target?.selectedPoint;
     const siteId = state.uploads.target?.siteId;
+    const siteTimezone = state.uploads.target?.useSiteTimezone;
+
     try {
       if (
         typeof siteId === 'number' &&
@@ -59,8 +61,9 @@ export const uploadFiles = createAsyncThunk<
             data,
             siteId,
             selectedPoint,
-            token,
             false,
+            siteTimezone,
+            token,
           );
         return uploadResponse;
       }
@@ -74,16 +77,22 @@ export const uploadFiles = createAsyncThunk<
 
 export const uploadMultiSiteFiles = createAsyncThunk<
   UploadsSliceState['uploadResponse'],
-  { token: string | null | undefined; files: File[]; source: Sources },
+  {
+    token: string | null | undefined;
+    files: File[];
+    source: Sources;
+    siteTimezone: boolean;
+  },
   CreateAsyncThunkTypes
 >(
   'uploads/uploadMultiSiteFiles',
-  async ({ token, files, source }, { rejectWithValue }) => {
+  async ({ token, files, source, siteTimezone }, { rejectWithValue }) => {
     try {
       const { data: uploadResponse } =
         await uploadServices.uploadMultiSiteTimeSeriesData(
           files,
           source,
+          siteTimezone,
           token,
           false,
         );

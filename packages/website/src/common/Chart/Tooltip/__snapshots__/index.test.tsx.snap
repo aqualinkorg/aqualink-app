@@ -46,6 +46,7 @@ exports[`renders as expected 1`] = `
                 MOCK LOGGER
                  
                 10.0 °C
+                
               </mock-typography>
             </div>
           </div>

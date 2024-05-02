@@ -78,6 +78,7 @@ describe('MultipleSensorsCharts', () => {
               disableGutters
               displayOceanSenseCharts
               surveysFiltered={false}
+              hasAdditionalSensorData={false}
             />
           </Provider>
         </SnackbarProvider>

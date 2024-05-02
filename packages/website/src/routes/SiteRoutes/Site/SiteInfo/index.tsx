@@ -242,6 +242,7 @@ const SiteNavBar = ({
                     container
                     direction={matches ? 'row' : 'column'}
                     item
+                    alignContent="flex-end"
                     xs={12}
                     md={4}
                     spacing={1}

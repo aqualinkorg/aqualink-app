@@ -187,7 +187,6 @@ async function run() {
     workSheetData,
     signature,
     headers,
-    headerIndex,
     importedMetrics,
     headerToTokenMap,
   } = await getFilePathData(filePath);
@@ -207,10 +206,10 @@ async function run() {
       const data = convertData(
         groupedBySite[key] as any,
         headers,
-        headerIndex,
         '',
         {} as Sources,
         headerToTokenMap,
+        null,
       );
       return {
         name: key,

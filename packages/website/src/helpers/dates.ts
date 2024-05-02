@@ -1,8 +1,6 @@
 import { range as createRange, orderBy } from 'lodash';
 import { zonedTimeToUtc } from 'date-fns-tz';
-
 import {
-  DailyData,
   HistoricalMonthlyMean,
   HistoricalMonthlyMeanData,
   Range,
@@ -70,48 +68,6 @@ export const sortByDate = <T>(
   order?: 'asc' | 'desc',
 ) =>
   orderBy(list, (item) => new Date(item[dateKey] as unknown as string), order);
-
-/**
- * Depending on the type param, it calculates the maximum or minimun date
- * for the combined temperature data
- * @param dailyData - Array of daily data
- * @param spotterData - Object of spotterData (optional)
- * @param hoboBottomTemperature - Array of HOBO data (optional)
- * @param type - Type of date we seek (defaults to "max")
- */
-export const findMarginalDate = (
-  historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
-  dailyData: DailyData[],
-  spotterBottomTemperature?: ValueWithTimestamp[],
-  spotterTopTemperature?: ValueWithTimestamp[],
-  hoboBottomTemperature?: ValueWithTimestamp[],
-  type: 'min' | 'max' = 'max',
-): string => {
-  const combinedData = [
-    ...historicalMonthlyMeanData,
-    ...dailyData,
-    ...(spotterTopTemperature?.map((item) => ({
-      date: item.timestamp,
-      value: item.value,
-    })) || []),
-    ...(spotterBottomTemperature?.map((item) => ({
-      date: item.timestamp,
-      value: item.value,
-    })) || []),
-    ...(hoboBottomTemperature?.map((item) => ({
-      date: item.timestamp,
-      value: item.value,
-    })) || []),
-  ];
-
-  const sortedData = sortByDate(
-    combinedData,
-    'date',
-    type === 'max' ? 'desc' : 'asc',
-  );
-
-  return sortedData[0].date;
-};
 
 export const findChartPeriod = (range: Range) => {
   switch (range) {

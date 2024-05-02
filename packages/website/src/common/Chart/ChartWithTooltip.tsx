@@ -77,7 +77,7 @@ function ChartWithTooltip({
       const top =
         position.top +
         tooltipModel.caretY -
-        ((surveyId ? 30 : 0) + nValues * 20 + 50);
+        ((surveyId ? 30 : 0) + nValues * 20 + 60);
 
       // We display the tooltip only if there are data to display at this point and it lands
       // between the chart's X axis limits.
@@ -114,8 +114,13 @@ function ChartWithTooltip({
         chartSettings={{
           tooltips: {
             enabled: false,
+            mode: 'index',
             intersect: false,
             custom: customTooltip(chartDataRef),
+          },
+          hover: {
+            mode: 'index',
+            intersect: false,
           },
           legend: {
             display: false,

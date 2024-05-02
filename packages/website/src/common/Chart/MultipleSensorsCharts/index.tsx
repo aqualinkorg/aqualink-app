@@ -45,7 +45,6 @@ import monitoringServices from 'services/monitoringServices';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
-  findDataLimits,
   generateMetricDataset,
   generateTempAnalysisDatasets,
   localizedEndOfDay,
@@ -64,6 +63,7 @@ const MultipleSensorsCharts = ({
   surveysFiltered,
   disableGutters,
   displayOceanSenseCharts,
+  hasAdditionalSensorData,
 }: MultipleSensorsChartsProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -88,6 +88,7 @@ const MultipleSensorsCharts = ({
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
+  const [initialPageLoad, setInitialPageLoad] = useState(true);
   const [range, setRange] = useState<RangeValue>(
     startParam || endParam ? 'custom' : 'one_month',
   );
@@ -301,8 +302,8 @@ const MultipleSensorsCharts = ({
         ...DEFAULT_METRICS,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
-        ...huiRanges.map((x) => x.metric),
       ];
+      const huiMetrics = huiRanges.map((x) => x.metric);
 
       const uniqueMetrics = [...new Map(allMetrics.map((x) => [x, x])).keys()];
 
@@ -339,6 +340,18 @@ const MultipleSensorsCharts = ({
             ).days > 2,
         }),
       );
+
+      if (huiMetrics.length > 0)
+        dispatch(
+          siteTimeSeriesDataRequest({
+            siteId: `${site.id}`,
+            pointId,
+            start: siteLocalStartDate,
+            end: siteLocalEndDate,
+            metrics: huiMetrics,
+            hourly: false,
+          }),
+        );
 
       if (hasOceanSenseId) {
         dispatch(
@@ -381,32 +394,10 @@ const MultipleSensorsCharts = ({
       ),
     ).toISOString();
 
-    const [minDataDate, maxDataDate] = findDataLimits(
-      site.historicalMonthlyMean,
-      granularDailyData,
-      timeSeriesData,
-      pickerLocalStartDate,
-      localizedEndOfDay(pickerLocalEndDate, site.timezone),
-    );
+    setStartDate(pickerLocalStartDate);
 
-    setStartDate(
-      minDataDate
-        ? DateTime.max(
-            DateTime.fromISO(minDataDate),
-            DateTime.fromISO(pickerLocalStartDate),
-          ).toISOString()
-        : pickerLocalStartDate,
-    );
-
-    setEndDate(
-      maxDataDate
-        ? DateTime.min(
-            DateTime.fromISO(maxDataDate),
-            DateTime.fromISO(pickerLocalEndDate).endOf('day'),
-          ).toISOString()
-        : DateTime.fromISO(pickerLocalEndDate).endOf('day').toISOString(),
-    );
-  }, [granularDailyData, pickerEndDate, pickerStartDate, site, timeSeriesData]);
+    setEndDate(DateTime.fromISO(pickerLocalEndDate).endOf('day').toISOString());
+  }, [pickerEndDate, pickerStartDate, site?.timezone]);
 
   useEffect(() => {
     if (pickerStartDate && pickerEndDate && range === 'custom') {
@@ -514,6 +505,29 @@ const MultipleSensorsCharts = ({
         break;
     }
   };
+
+  React.useEffect(() => {
+    if (
+      initialPageLoad &&
+      availableSources &&
+      hasAdditionalSensorData &&
+      !hasHuiData &&
+      !hasSondeData &&
+      !(startParam || endParam)
+    ) {
+      onRangeChange('one_year');
+      setInitialPageLoad(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    availableSources,
+    hasAdditionalSensorData,
+    hasHuiData,
+    hasSondeData,
+    initialPageLoad,
+    startParam,
+    endParam,
+  ]);
 
   const onPickerDateChange = (type: 'start' | 'end') => (date: Date | null) => {
     const time = date?.getTime();
@@ -708,6 +722,7 @@ interface MultipleSensorsChartsProps {
   surveysFiltered: boolean;
   disableGutters: boolean;
   displayOceanSenseCharts?: boolean;
+  hasAdditionalSensorData: boolean;
 }
 
 MultipleSensorsCharts.defaultProps = {

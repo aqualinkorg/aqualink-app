@@ -74,7 +74,7 @@ function getTaskFn(task: string) {
 
 async function run() {
   // Extract command line arguments
-  const { d: days, s: siteIds, t: task, nc: check } = argv;
+  const { d: days, s: siteIds, t: task, nc: check } = argv as any;
 
   // Cast siteIds into a number array. If none are given return empty array
   const parsedSiteIds = siteIds ? siteIds.map(Number) : [];

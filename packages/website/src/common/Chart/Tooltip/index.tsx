@@ -16,9 +16,10 @@ import { isNumber } from 'lodash';
 
 import { formatNumber } from 'helpers/numberUtils';
 import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { Sources } from 'store/Sites/types';
 import { Dataset } from '..';
 
-export const TOOLTIP_WIDTH = 190;
+export const TOOLTIP_WIDTH = 220;
 
 const Circle = styled('div')<{}, { color: string; size?: number }>(
   ({ size = 10, color: backgroundColor }) => ({
@@ -32,23 +33,34 @@ const Circle = styled('div')<{}, { color: string; size?: number }>(
   }),
 );
 
+// small helper to specify tha NOAA surface data is from satellite
+const sourceTitle = (title: string, source: Sources | undefined) => {
+  if (source === 'noaa' && title === 'SURFACE') {
+    return ' (NOAA - SAT)';
+  }
+  return source ? ` (${source.toUpperCase()})` : '';
+};
+
 const TemperatureMetric = ({
   value,
   title,
   color,
   unit,
   gridClassName,
+  source,
 }: {
   value: number | null;
   title: string;
   color: string;
   unit: string;
   gridClassName: string | undefined;
+  source?: Sources;
 }) => (
   <Grid container item className={gridClassName}>
     <Circle color={color} />
     <Typography variant="caption">
       {title} {`${formatNumber(value, 1)} ${unit}`}
+      {sourceTitle(title, source)}
     </Typography>
   </Grid>
 );
@@ -76,12 +88,16 @@ const Tooltip = ({
     color: string;
     title: string;
     unit: string;
-  }[] = datasets.map(({ data, curveColor, label, unit, tooltipLabel }) => ({
-    value: data[0]?.value,
-    color: curveColor,
-    title: tooltipLabel || label,
-    unit,
-  }));
+    source?: Sources;
+  }[] = datasets.map(
+    ({ data, curveColor, label, unit, tooltipLabel, source }) => ({
+      value: data[0]?.value,
+      color: curveColor,
+      title: tooltipLabel || label,
+      unit,
+      source,
+    }),
+  );
 
   return (
     <div className={classes.tooltip}>
@@ -156,6 +172,7 @@ const styles = () =>
       display: 'flex',
       justifyContent: 'center',
       minHeight: 60,
+      width: TOOLTIP_WIDTH,
     },
     tooltipCard: {
       display: 'flex',
@@ -176,6 +193,8 @@ const styles = () =>
     tooltipContentItem: {
       height: 20,
       margin: '0',
+      display: 'flex',
+      flexWrap: 'nowrap',
     },
     tooltipArrow: {
       content: ' ',
