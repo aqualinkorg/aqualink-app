@@ -114,7 +114,7 @@ function ChartWithTooltip({
         chartSettings={{
           tooltips: {
             enabled: false,
-            mode: 'index',
+            mode: 'x',
             intersect: false,
             custom: customTooltip(chartDataRef),
           },
