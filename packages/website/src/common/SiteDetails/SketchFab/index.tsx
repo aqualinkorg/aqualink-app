@@ -26,11 +26,7 @@ const SketchFab = ({ classes, uuid }: SiteMapProps) => {
       ref={iFrameRef}
       title="Sketchfab"
       allowFullScreen
-      allow="autoplay; fullscreen; xr-spatial-tracking"
-      xr-spatial-tracking
-      execution-while-out-of-viewport
-      execution-while-not-rendered
-      web-share
+      allow="autoplay; fullscreen; xr-spatial-tracking; web-share; execution-while-not-rendered; execution-while-out-of-viewport"
       className={classes.map}
     />
   );

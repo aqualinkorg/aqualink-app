@@ -21,7 +21,7 @@ export class DataUploadsController {
   @ApiOperation({ summary: 'Delete selected data uploads' })
   @UseGuards(IsSiteAdminGuard)
   @Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
-  @Post('delete-uploads')
+  @Post('sites/:siteId/delete-uploads')
   DeleteDataUploads(@Body() dataUploadsDeleteDto: DataUploadsDeleteDto) {
     return this.dataUploadsService.deleteDataUploads(dataUploadsDeleteDto);
   }

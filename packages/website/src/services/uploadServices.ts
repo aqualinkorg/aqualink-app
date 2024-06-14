@@ -66,12 +66,13 @@ const uploadTimeSeriesData = (
   });
 
 const deleteFileTimeSeriesData = (
+  siteId: string | number,
   data: { ids: number[] },
   token?: string | null,
 ) =>
   requests.send<void>({
     method: 'POST',
-    url: '/data-uploads/delete-uploads',
+    url: `/data-uploads/sites/${encodeURIComponent(siteId)}/delete-uploads`,
     data,
     token,
     contentType: 'application/json',

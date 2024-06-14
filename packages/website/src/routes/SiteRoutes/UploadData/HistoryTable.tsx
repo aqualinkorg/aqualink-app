@@ -95,7 +95,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                 return (
                   <TableRow key={dataUpload.id}>
                     {row.map((item) => (
-                      <TableCell>
+                      <TableCell key={`${dataUpload.id}_${item}`}>
                         <Typography {...tableCellTypographyProps}>
                           {item}
                         </Typography>
