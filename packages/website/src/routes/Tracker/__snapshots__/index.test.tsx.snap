@@ -34,6 +34,77 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         classname="makeStyles-title-6"
         variant="h2"
       >
+        Brazil Heatwave Tracking
+      </mock-typography>
+    </mock-box>
+    <div
+      class="MuiGrid-root makeStyles-globalStressWrapper-13 MuiGrid-container MuiGrid-spacing-xs-3"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+      >
+        <mock-typography
+          variant="h6"
+        >
+          A large part of the Brazilian coastline is currently experiencing an extreme heatwave, which has as bleached up to 100% of the corals in some reefs. The heatwave has brought consistent temperatures above the bleaching threshold since February 2024, which is a very long time for corals. Temperature increases above the bleaching threshold for corals can result in bleaching, which will eventually kill the coral completely.
+          <br />
+          <br />
+          You can view an interactive collection of all the Brazilian sites 
+          <a
+          href="https://aqualink.org/collections/787"
+          rel="noopener noreferrer"
+          target="_blank"
+          >
+          here
+          </a>
+          .
+          <br />
+          <br />
+          The image displays three surveys conducted at the 
+          <a
+          href="https://aqualink.org/sites/3331"
+          rel="noopener noreferrer"
+          target="_blank"
+          >
+          Tamandaré
+          </a>
+           site, all taken at the same location and position. The first survey, conducted on February 22nd at the beginning of the heatwave, shows healthy coral. The second survey, conducted on March 26th in the middle of the heatwave, shows bleached corals. The final survey, conducted on May 25th, just after the heatwave, shows dead corals.
+          <br />
+          <br />
+          <a
+          href="https://highlights.aqualink.org/brazil-heatwave-tracking-live"
+          rel="noopener noreferrer"
+          target="_blank"
+          >
+          Track the Brazilian heatwave here
+          </a>
+        </mock-typography>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+      >
+        <mock-card
+          classname="makeStyles-card3-9 makeStyles-card3-17"
+          variant="outlined"
+        >
+          <a
+            href="https://highlights.aqualink.org/brazil-heatwave-tracking-live"
+          >
+            <div
+              class="MuiCardMedia-root makeStyles-image-10"
+              style="background-image: url(Brazil.jpg);"
+            />
+          </a>
+        </mock-card>
+      </div>
+    </div>
+    <mock-box
+      margin="72px 0 48px 0"
+    >
+      <mock-typography
+        classname="makeStyles-title-6"
+        variant="h2"
+      >
         Florida Heatwave Tracking
       </mock-typography>
     </mock-box>
