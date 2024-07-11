@@ -102,8 +102,8 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const onDelete = async (ids: number[]) => {
     setDeleteError(undefined);
     try {
-      if (ids.length > 0) {
-        await uploadServices.deleteFileTimeSeriesData({ ids }, token);
+      if (ids.length > 0 && site?.id) {
+        await uploadServices.deleteFileTimeSeriesData(site.id, { ids }, token);
         // Clear redux selected site before we land on the site page,
         // so that we fetch the updated data.
         dispatch(setSelectedSite());
