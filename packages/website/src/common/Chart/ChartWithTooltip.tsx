@@ -119,7 +119,7 @@ function ChartWithTooltip({
             custom: customTooltip(chartDataRef),
           },
           hover: {
-            mode: 'x',
+            mode: 'index',
             intersect: false,
           },
           legend: {
