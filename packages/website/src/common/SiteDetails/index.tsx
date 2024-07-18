@@ -182,11 +182,19 @@ const SiteDetails = ({
             data={latestDataAsSofarValues}
             maxMonthlyMean={site.maxMonthlyMean}
           />,
-          <Sensor
-            depth={site.depth}
-            id={site.id}
-            data={latestDataAsSofarValues}
-          />,
+          (() => {
+            if ((hasHUIData || hasSondeData) && !hasSpotterData) {
+              return <CoralBleaching data={latestDataAsSofarValues} />;
+            }
+
+            return (
+              <Sensor
+                depth={site.depth}
+                id={site.id}
+                data={latestDataAsSofarValues}
+              />
+            );
+          })(),
           (() => {
             if (hasHUIData) {
               return (
