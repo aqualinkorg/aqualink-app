@@ -183,10 +183,8 @@ const SiteDetails = ({
             maxMonthlyMean={site.maxMonthlyMean}
           />,
           (() => {
-            if (hasHUIData) {
-              return (
-                <WaterSamplingCard siteId={site.id.toString()} source="hui" />
-              );
+            if ((hasHUIData || hasSondeData) && !hasSpotterData) {
+              return <CoralBleaching data={latestDataAsSofarValues} />;
             }
 
             return (
@@ -198,7 +196,12 @@ const SiteDetails = ({
             );
           })(),
           (() => {
-            if (hasSondeData && !hasHUIData) {
+            if (hasHUIData) {
+              return (
+                <WaterSamplingCard siteId={site.id.toString()} source="hui" />
+              );
+            }
+            if (hasSondeData) {
               return (
                 <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
               );
