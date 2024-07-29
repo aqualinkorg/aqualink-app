@@ -58,7 +58,21 @@ const getAlertMessage = (
 
   switch (true) {
     case !hasDailyData:
-      return 'Welcome to your virtual site, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.';
+      return (
+        <div>
+          Welcome to your virtual site, data is loading, please come back in a
+          few hours. This site will be visible publicly as soon as it has been
+          approved by the Aqualink team. If your site is not located in the
+          ocean or sea, please click on "EDIT SITE DETAILS" to place it
+          correctly. For any questions, contact{' '}
+          <a href="mailto:info@aqualink.org">info@aqualink.org</a>. To learn
+          more, watch this{' '}
+          <a href="https://www.youtube.com/watch?v=EQZ3HiPevTY">
+            5-minute video
+          </a>{' '}
+          to see what you can do with Aqualink.
+        </div>
+      );
 
     case !isSiteAdmin:
       return defaultMessage;
