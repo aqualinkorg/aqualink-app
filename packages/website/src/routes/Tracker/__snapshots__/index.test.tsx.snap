@@ -91,6 +91,9 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           variant="outlined"
         >
           <a
+            className={classes.link}
+            rel="noopener noreferrer"
+            target="_blank"
             href="/https://highlights.aqualink.org/brazil-heatwave-tracking-live"
           >
             <div
