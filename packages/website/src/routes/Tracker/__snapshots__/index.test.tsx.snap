@@ -91,10 +91,10 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           variant="outlined"
         >
           <a
-            className={classes.link}
+            class="makeStyles-link-11"
+            href="https://highlights.aqualink.org/brazil-heatwave-tracking-live"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://highlights.aqualink.org/brazil-heatwave-tracking-live"
           >
             <div
               class="MuiCardMedia-root makeStyles-image-10"
