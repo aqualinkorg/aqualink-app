@@ -23,6 +23,7 @@ import image1 from '../../assets/img/tracker-page/image1.png';
 import image2 from '../../assets/img/tracker-page/image2.png';
 import image3 from '../../assets/img/tracker-page/image3.png';
 import image4 from '../../assets/img/tracker-page/image4.png';
+import Brazil from '../../assets/img/tracker-page/Brazil.jpg';
 
 interface StyleProps {
   heroAspectRatio?: number;
@@ -158,6 +159,66 @@ const Tracker = ({
         </Container>
       </Box>
       <Container className={classes.root}>
+        <Box margin="72px 0 48px 0">
+          <Typography className={classes.title} variant="h2">
+            Brazil Heatwave Tracking
+          </Typography>
+        </Box>
+        <Grid className={classes.globalStressWrapper} container spacing={3}>
+          <Grid item xs={12} md={5} lg={4}>
+            <Typography variant="h6">
+              A large part of the Brazilian coastline is currently experiencing
+              an extreme heatwave, which has as bleached up to 100% of the
+              corals in some reefs. The heatwave has brought consistent
+              temperatures above the bleaching threshold since February 2024,
+              which is a very long time for corals. Temperature increases above
+              the bleaching threshold for corals can result in bleaching, which
+              will eventually kill the coral completely.
+              <br />
+              <br />
+              You can view an interactive collection of all the Brazilian sites{' '}
+              <a
+                href="https://aqualink.org/collections/787"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                here
+              </a>
+              .
+              <br />
+              <br /> The image displays three surveys conducted at the{' '}
+              <a
+                href="https://aqualink.org/sites/3331"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Tamandaré
+              </a>{' '}
+              site, all taken at the same location and position. The first
+              survey, conducted on February 22nd at the beginning of the
+              heatwave, shows healthy coral. The second survey, conducted on
+              March 26th in the middle of the heatwave, shows bleached corals.
+              The final survey, conducted on May 25th, just after the heatwave,
+              shows dead corals.
+              <br />
+              <br />
+              <a
+                href="https://highlights.aqualink.org/brazil-heatwave-tracking-live"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Track the Brazilian heatwave here
+              </a>
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={7} lg={8}>
+            <Card className={classes.card3} variant="outlined">
+              <Link to="https://highlights.aqualink.org/brazil-heatwave-tracking-live">
+                <CardMedia className={classes.image} image={Brazil} />
+              </Link>
+            </Card>
+          </Grid>
+        </Grid>
         <Box margin="72px 0 48px 0">
           <Typography className={classes.title} variant="h2">
             Florida Heatwave Tracking

@@ -238,14 +238,16 @@ const Site = ({ match, classes }: SiteProps) => {
               </Alert>
             </Box>
           )}
-          <SiteDetails
-            site={siteWithFeaturedImage}
-            selectedSurveyPointId={selectedSurveyPointId}
-            featuredSurveyId={featuredSurveyId}
-            surveys={surveyList}
-            featuredSurveyPoint={featuredSurveyPoint}
-            surveyDiveDate={diveDate}
-          />
+          <div key={siteDetails?.id}>
+            <SiteDetails
+              site={siteWithFeaturedImage}
+              selectedSurveyPointId={selectedSurveyPointId}
+              featuredSurveyId={featuredSurveyId}
+              surveys={surveyList}
+              featuredSurveyPoint={featuredSurveyPoint}
+              surveyDiveDate={diveDate}
+            />
+          </div>
         </Container>
       )}
       <SiteFooter />
