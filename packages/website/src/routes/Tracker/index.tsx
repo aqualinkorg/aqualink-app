@@ -213,9 +213,14 @@ const Tracker = ({
           </Grid>
           <Grid item xs={12} md={7} lg={8}>
             <Card className={classes.card3} variant="outlined">
-              <Link to="https://highlights.aqualink.org/brazil-heatwave-tracking-live">
+              <a
+                className={classes.link}
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://highlights.aqualink.org/brazil-heatwave-tracking-live"
+              >
                 <CardMedia className={classes.image} image={Brazil} />
-              </Link>
+              </a>
             </Card>
           </Grid>
         </Grid>
