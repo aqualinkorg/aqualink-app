@@ -63,8 +63,8 @@ const getAlertMessage = (
           Welcome to your virtual site, data is loading, please come back in a
           few hours. This site will be visible publicly as soon as it has been
           approved by the Aqualink team. If your site is not located in the
-          ocean or sea, please click on "EDIT SITE DETAILS" to place it
-          correctly. For any questions, contact{' '}
+          ocean or sea, please click on &quot;EDIT SITE DETAILS&quot; to place
+          it correctly. For any questions, contact{' '}
           <a href="mailto:info@aqualink.org">info@aqualink.org</a>. To learn
           more, watch this{' '}
           <a href="https://www.youtube.com/watch?v=EQZ3HiPevTY">
