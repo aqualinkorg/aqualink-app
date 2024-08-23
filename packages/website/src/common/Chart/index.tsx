@@ -6,17 +6,41 @@ import React, {
   useState,
   memo,
 } from 'react';
-import { Line } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
+import { Line } from 'react-chartjs-2';
+// import {
+//   Chart as ChartJS,
+//   LineController,
+//   LineElement,
+//   PointElement,
+//   CategoryScale,
+//   LinearScale,
+//   TimeScale,
+//   Title,
+// } from 'chart.js';
+import 'chart.js/auto';
+import 'chartjs-adapter-date-fns';
+import { enUS } from 'date-fns/locale';
+import 'chartjs-plugin-annotation';
 import { mergeWith, isEqual } from 'lodash';
 import type { Metrics, ValueWithTimestamp, Sources } from 'store/Sites/types';
 import './plugins/backgroundPlugin';
-import 'chartjs-plugin-annotation';
 import { SurveyListItem } from 'store/Survey/types';
 import { surveyDetailsSelector } from 'store/Survey/surveySlice';
 import { Range } from 'store/Sites/types';
 import { convertToLocalTime } from 'helpers/dates';
 import { useProcessedChartData } from './utils';
+
+// ChartJS.register(
+//   LineController,
+//   LineElement,
+//   PointElement,
+//   CategoryScale,
+//   LinearScale,
+//   TimeScale,
+//   Title,
+//   Annotation,
+// );
 
 // An interface that describes all the possible options for displaying a dataset on a chart.
 export interface Dataset {
@@ -61,20 +85,20 @@ export interface ChartProps {
   hideYAxisUnits?: boolean;
 
   chartSettings?: {};
-  chartRef?: MutableRefObject<Line | null>;
+  chartRef?: MutableRefObject<any | null>;
 }
 
 const SMALL_WINDOW = 400;
 
 const makeAnnotation = (
   name: string,
-  value: number | null,
+  value: number,
   borderColor: string,
   backgroundColor = 'rgb(169,169,169, 0.7)',
 ) => ({
-  type: 'line',
+  type: 'line' as const,
   mode: 'horizontal',
-  scaleID: 'y-axis-0',
+  scaleID: 'y',
   value,
   borderColor,
   borderWidth: 2,
@@ -84,7 +108,7 @@ const makeAnnotation = (
     backgroundColor,
     yPadding: 3,
     xPadding: 3,
-    position: 'left',
+    position: 'start' as const,
     xAdjust: 10,
     content: name,
   },
@@ -108,7 +132,7 @@ function Chart({
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
-  const chartRef = useRef<Line>(null);
+  const chartRef = useRef<any>(null);
   const selectedSurvey = useSelector(surveyDetailsSelector);
   const selectedSurveyDate = selectedSurvey?.diveDate
     ? new Date(convertToLocalTime(selectedSurvey.diveDate, timeZone))
@@ -189,6 +213,8 @@ function Chart({
     changeXTickShiftAndPeriod();
   });
 
+  console.log(chartPeriod, showYearInTicks, xPeriod);
+
   const settings = mergeWith(
     {
       layout: {
@@ -199,81 +225,82 @@ function Chart({
         chartJsPluginBarchartBackground: {
           color: background ? 'rgb(158, 166, 170, 0.07)' : '#ffffff',
         },
-      },
-      tooltips: {
-        enabled: false,
-      },
-      legend: {
-        display: false,
-      },
-
-      annotation: {
-        annotations: [
-          makeAnnotation('Historical Max', maxMonthlyMean, 'rgb(75, 192, 192)'),
-          makeAnnotation(
-            'Bleaching Threshold',
-            temperatureThreshold,
-            '#ff8d00',
-          ),
-        ],
+        annotation: {
+          annotations: [
+            makeAnnotation(
+              'Historical Max',
+              maxMonthlyMean ?? 0,
+              'rgb(75, 192, 192)',
+            ),
+            makeAnnotation(
+              'Bleaching Threshold',
+              temperatureThreshold ?? 0,
+              '#ff8d00',
+            ),
+          ],
+        },
+        tooltip: {
+          enabled: false,
+        },
+        legend: {
+          display: false,
+        },
       },
       scales: {
-        xAxes: [
-          {
-            type: 'time',
-            time: {
-              displayFormats: {
-                week: `MMM D ${showYearInTicks ? 'YY' : ''}`,
-                month: `MMM ${showYearInTicks ? 'YY' : ''}`,
-              },
-              unit: chartPeriod || xPeriod,
-            },
-            display: true,
-            ticks: {
-              labelOffset: xTickShift,
-              min: xAxisMin,
-              max: xAxisMax,
-              padding: 10,
-              callback: (value: number, index: number, values: string[]) =>
-                index === values.length - 1 && hideLastTick ? undefined : value,
-            },
-            gridLines: {
-              display: false,
-              drawTicks: false,
+        x: {
+          type: 'time' as const,
+          time: {
+            unit: 'week',
+            displayFormats: {
+              week: 'day',
             },
           },
-        ],
-        yAxes: [
-          {
-            gridLines: {
-              drawTicks: false,
-            },
-            display: true,
-            ticks: {
-              min: yAxisMin,
-              stepSize: yStepSize,
-              max: yAxisMax,
-              callback: (value: number, index: number, values: number[]) => {
-                // Only show ticks when at least one of the following conditions holds:
-                //   1: step size is equal to one
-                //   2: it's not a marginal value (i.e. its index is between 1 and L - 2)
-                //   3: it's the first value (index is 0) and its difference from the next one exceeds 80% of the step size
-                //   4: it's the last value (index is L - 1) and its difference from the previous one exceeds 80% of the step size
-                if (
-                  yStepSize === 1 ||
-                  (index > 0 && index < values.length - 1) ||
-                  (index === 0 &&
-                    value - values[index + 1] > 0.8 * yStepSize) ||
-                  (index === values.length - 1 &&
-                    values[index - 1] - value > 0.8 * yStepSize)
-                ) {
-                  return `${value}${!hideYAxisUnits ? '°' : ''}  `;
-                }
-                return '';
-              },
+          adapters: {
+            date: {
+              locale: enUS,
             },
           },
-        ],
+          min: xAxisMin,
+          max: xAxisMax,
+          ticks: {
+            labelOffset: xTickShift,
+            padding: 10,
+            callback: (value: number, index: number, values: string[]) =>
+              index === values.length - 1 && hideLastTick ? undefined : value,
+          },
+          grid: {
+            display: false,
+            drawTicks: false,
+          },
+        },
+        y: {
+          grid: {
+            drawTicks: false,
+          },
+          ticks: {
+            min: yAxisMin,
+            stepSize: yStepSize,
+            max: yAxisMax,
+            callback: (value: number, index: number, values: number[]) => {
+              // Only show ticks when at least one of the following conditions holds:
+              //   1: step size is equal to one
+              //   2: it's not a marginal value (i.e. its index is between 1 and L - 2)
+              //   3: it's the first value (index is 0) and its difference from the next one exceeds 80% of the step size
+              //   4: it's the last value (index is L - 1) and its difference from the previous one exceeds 80% of the step size
+              if (
+                yStepSize === 1 ||
+                (index > 0 && index < values.length - 1) ||
+                (index === 0 &&
+                  value - values[index + 1] > 0.8 * yStepSize) ||
+                (index === values.length - 1 &&
+                  values[index - 1] - value > 0.8 * yStepSize)
+              ) {
+                return `${value}${!hideYAxisUnits ? '°' : ''}  `;
+              }
+              return '';
+            },
+          },
+        },
       },
     },
     chartSettings,
@@ -289,8 +316,8 @@ function Chart({
   return (
     <Line
       ref={chartRef}
-      options={settings}
-      data={{ datasets: processedDatasets }}
+      options={settings as any}
+      data={{ datasets: processedDatasets as any }}
     />
   );
 }
