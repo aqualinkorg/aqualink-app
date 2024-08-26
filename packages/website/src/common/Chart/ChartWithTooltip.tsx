@@ -42,7 +42,7 @@ function ChartWithTooltip({
   const customTooltip = (context: any) => {
     const { chart, tooltip } = context;
 
-    const date = tooltip.dataPoints?.[0]?.label;
+    const date = tooltip.dataPoints?.[0]?.raw.x;
     if (typeof date !== 'string') return;
 
     const dateObject = new Date(date);
