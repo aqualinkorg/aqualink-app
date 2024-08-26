@@ -21,10 +21,10 @@ import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
 import { enUS } from 'date-fns/locale';
-import 'chartjs-plugin-annotation';
 import { mergeWith, isEqual } from 'lodash';
 import type { Metrics, ValueWithTimestamp, Sources } from 'store/Sites/types';
 import './plugins/backgroundPlugin';
+import './plugins/annotationPlugin';
 import { SurveyListItem } from 'store/Survey/types';
 import { surveyDetailsSelector } from 'store/Survey/surveySlice';
 import { Range } from 'store/Sites/types';
@@ -97,14 +97,13 @@ const makeAnnotation = (
   backgroundColor = 'rgb(169,169,169, 0.7)',
 ) => ({
   type: 'line' as const,
-  mode: 'horizontal',
   scaleID: 'y',
   value,
   borderColor,
   borderWidth: 2,
   borderDash: [5, 5],
   label: {
-    enabled: true,
+    display: true,
     backgroundColor,
     yPadding: 3,
     xPadding: 3,
@@ -290,8 +289,7 @@ function Chart({
               if (
                 yStepSize === 1 ||
                 (index > 0 && index < values.length - 1) ||
-                (index === 0 &&
-                  value - values[index + 1] > 0.8 * yStepSize) ||
+                (index === 0 && value - values[index + 1] > 0.8 * yStepSize) ||
                 (index === values.length - 1 &&
                   values[index - 1] - value > 0.8 * yStepSize)
               ) {
