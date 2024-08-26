@@ -4,8 +4,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-// import { Line } from 'react-chartjs-2';
-// import type { TooltipModel } from 'chart.js';
+import type { Chart as ChartType, TooltipModel } from 'chart.js';
 import { head, isNumber, maxBy, minBy } from 'lodash';
 import Chart, { ChartProps } from '.';
 import Tooltip, { TooltipData, TOOLTIP_WIDTH } from './Tooltip';
@@ -39,10 +38,14 @@ function ChartWithTooltip({
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
-  const customTooltip = (context: any) => {
-    const { chart, tooltip } = context;
-
-    const date = tooltip.dataPoints?.[0]?.raw.x;
+  const customTooltip = ({
+    chart,
+    tooltip,
+  }: {
+    chart: ChartType;
+    tooltip: TooltipModel<'line'>;
+  }) => {
+    const date = (tooltip.dataPoints?.[0].raw as any).x;
     if (typeof date !== 'string') return;
 
     const dateObject = new Date(date);
@@ -71,9 +74,7 @@ function ChartWithTooltip({
     // which we increase varies based on how many values we display and if there is a survey at that point,
     // as we display a `VIEW SURVEY` button.
     const top =
-      position.top +
-      tooltip.caretY -
-      ((surveyId ? 30 : 0) + nValues * 20 + 60);
+      position.top + tooltip.caretY - ((surveyId ? 30 : 0) + nValues * 20 + 60);
 
     // We display the tooltip only if there are data to display at this point and it lands
     // between the chart's X axis limits.
@@ -81,7 +82,6 @@ function ChartWithTooltip({
     const end = endDate || maxDataDate || '';
     const isBetween = date >= start && date <= end;
     if (nValues > 0 && isBetween) {
-      console.log('?? showTooltip', showTooltip);
       setTooltipPosition({ top, left });
       setTooltipData({
         ...tooltipData,
@@ -127,22 +127,21 @@ function ChartWithTooltip({
       />
       {showTooltip ? (
         <>
-        <h1>tooptip</h1>
-        <div
-          className="chart-tooltip"
-          id="chart-tooltip"
-          style={{
-            position: 'fixed',
-            top: tooltipPosition.top,
-            left: tooltipPosition.left,
-          }}
-        >
-          <Tooltip
-            {...tooltipData}
-            siteTimeZone={timeZone}
-            userTimeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
-          />
-        </div>
+          <div
+            className="chart-tooltip"
+            id="chart-tooltip"
+            style={{
+              position: 'fixed',
+              top: tooltipPosition.top,
+              left: tooltipPosition.left,
+            }}
+          >
+            <Tooltip
+              {...tooltipData}
+              siteTimeZone={timeZone}
+              userTimeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
+            />
+          </div>
         </>
       ) : null}
     </div>
