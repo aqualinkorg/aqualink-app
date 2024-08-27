@@ -212,7 +212,7 @@ function Chart({
     changeXTickShiftAndPeriod();
   });
 
-  console.log(chartPeriod, showYearInTicks, xPeriod);
+  // console.log(chartPeriod, showYearInTicks, xPeriod);
 
   const settings = mergeWith(
     {
