@@ -202,7 +202,9 @@ const pointColor = (surveyDate?: Date) => (context: Context) => {
     context.dataset?.data &&
     typeof context.dataIndex === 'number'
   ) {
-    const chartPoint = context.dataset.data[context.dataIndex] as Chart.ChartPoint;
+    const chartPoint = context.dataset.data[
+      context.dataIndex
+    ] as Chart.ChartPoint;
     const chartDate = new Date(chartPoint.x as string);
     return sameDay(surveyDate, chartDate)
       ? SELECTED_SURVEY_CHART_POINT_COLOR
@@ -219,7 +221,10 @@ const pointColor = (surveyDate?: Date) => (context: Context) => {
  * @param maxHoursGap The maximum number of hours threshold
  * @returns The augmented data array with the invalid values
  */
-const createGaps = (data: Chart.ChartPoint[], maxHoursGap: number): Chart.ChartPoint[] => {
+const createGaps = (
+  data: Chart.ChartPoint[],
+  maxHoursGap: number,
+): Chart.ChartPoint[] => {
   const nPoints = data.length;
   if (nPoints > 0) {
     return data.reduce<Chart.ChartPoint[]>((acc, curr, currIndex) => {
