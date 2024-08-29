@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {
   MutableRefObject,
   useCallback,
@@ -10,6 +9,7 @@ import React, {
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { Tick } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { enUS } from 'date-fns/locale';
 import { mergeWith, isEqual } from 'lodash';
@@ -128,6 +128,7 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<'week' | 'month'>('week');
 
+  // eslint-disable-next-line
   const [hideLastTick, setHideLastTick] = useState<boolean>(false);
 
   const { processedDatasets, xAxisMax, xAxisMin, yAxisMax, yAxisMin } =
@@ -204,16 +205,24 @@ function Chart({
         },
         annotation: {
           annotations: [
-            makeAnnotation(
-              'Historical Max',
-              maxMonthlyMean ?? 0,
-              'rgb(75, 192, 192)',
-            ),
-            makeAnnotation(
-              'Bleaching Threshold',
-              temperatureThreshold ?? 0,
-              '#ff8d00',
-            ),
+            ...(maxMonthlyMean
+              ? [
+                  makeAnnotation(
+                    'Historical Max',
+                    maxMonthlyMean,
+                    'rgb(75, 192, 192)',
+                  ),
+                ]
+              : []),
+            ...(temperatureThreshold
+              ? [
+                  makeAnnotation(
+                    'Bleaching Threshold',
+                    temperatureThreshold,
+                    '#ff8d00',
+                  ),
+                ]
+              : []),
           ],
         },
         tooltip: {
@@ -246,18 +255,19 @@ function Chart({
           },
           grid: {
             display: false,
-            drawTicks: false,
           },
         },
         y: {
+          min: yAxisMin,
+          max: yAxisMax,
           grid: {
             drawTicks: false,
           },
           ticks: {
-            min: yAxisMin,
             stepSize: yStepSize,
-            max: yAxisMax,
-            callback: (value: number, index: number, values: number[]) => {
+            callback: (v: number | string, index: number, ticks: Tick[]) => {
+              const values = ticks.map((tick) => tick.value);
+              const value = Number(v);
               // Only show ticks when at least one of the following conditions holds:
               //   1: step size is equal to one
               //   2: it's not a marginal value (i.e. its index is between 1 and L - 2)
@@ -291,7 +301,7 @@ function Chart({
   return (
     <Line
       ref={chartRef}
-      options={settings as any}
+      options={settings}
       data={{ datasets: processedDatasets as any }}
     />
   );
