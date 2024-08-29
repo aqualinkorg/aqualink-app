@@ -1,5 +1,4 @@
 import { filter, flatten, isNil, isNumber, map, maxBy, minBy } from 'lodash';
-// import type { ChartDataSets, Chart.ChartPoint } from 'chart.js';
 import {
   DEFAULT_SURVEY_CHART_POINT_COLOR,
   SELECTED_SURVEY_CHART_POINT_COLOR,
@@ -418,8 +417,8 @@ export const calculateAxisLimits = (
     timestampsToConsiderForXAxis,
     (timestamp) => new Date(timestamp),
   );
-  const xAxisMin = Number((startDate || datasetsXMin) ?? 0);
-  const xAxisMax = Number((endDate || datasetsXMax) ?? 0);
+  const xAxisMin = startDate || datasetsXMin;
+  const xAxisMax = endDate || datasetsXMax;
 
   // y axis limits calculation
   const datasetsYMin = Math.min(...accumulatedYAxisData);
