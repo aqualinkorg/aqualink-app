@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {
   MutableRefObject,
   useCallback,
@@ -8,16 +9,6 @@ import React, {
 } from 'react';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
-// import {
-//   Chart as ChartJS,
-//   LineController,
-//   LineElement,
-//   PointElement,
-//   CategoryScale,
-//   LinearScale,
-//   TimeScale,
-//   Title,
-// } from 'chart.js';
 import 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
 import { enUS } from 'date-fns/locale';
@@ -30,17 +21,6 @@ import { surveyDetailsSelector } from 'store/Survey/surveySlice';
 import { Range } from 'store/Sites/types';
 import { convertToLocalTime } from 'helpers/dates';
 import { useProcessedChartData } from './utils';
-
-// ChartJS.register(
-//   LineController,
-//   LineElement,
-//   PointElement,
-//   CategoryScale,
-//   LinearScale,
-//   TimeScale,
-//   Title,
-//   Annotation,
-// );
 
 // An interface that describes all the possible options for displaying a dataset on a chart.
 export interface Dataset {
@@ -212,8 +192,6 @@ function Chart({
     changeXTickShiftAndPeriod();
   });
 
-  // console.log(chartPeriod, showYearInTicks, xPeriod);
-
   const settings = mergeWith(
     {
       layout: {
@@ -249,10 +227,11 @@ function Chart({
         x: {
           type: 'time' as const,
           time: {
-            unit: 'week',
             displayFormats: {
-              week: 'day',
+              week: `MMM d ${showYearInTicks ? 'YY' : ''}`,
+              month: `MMM ${showYearInTicks ? 'YY' : ''}`,
             },
+            unit: chartPeriod || xPeriod,
           },
           adapters: {
             date: {
@@ -264,8 +243,6 @@ function Chart({
           ticks: {
             labelOffset: xTickShift,
             padding: 10,
-            callback: (value: number, index: number, values: string[]) =>
-              index === values.length - 1 && hideLastTick ? undefined : value,
           },
           grid: {
             display: false,
