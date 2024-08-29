@@ -237,8 +237,8 @@ function Chart({
           type: 'time' as const,
           time: {
             displayFormats: {
-              week: `MMM d ${showYearInTicks ? 'YY' : ''}`,
-              month: `MMM ${showYearInTicks ? 'YY' : ''}`,
+              week: `MMM d ${showYearInTicks ? 'yy' : ''}`,
+              month: `MMM ${showYearInTicks ? 'yy' : ''}`,
             },
             unit: chartPeriod || xPeriod,
           },
