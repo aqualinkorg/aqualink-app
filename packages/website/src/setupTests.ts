@@ -42,6 +42,11 @@ jest.mock('react-chartjs-2', () => ({
   },
 }));
 
+jest.mock('chartjs-adapter-date-fns', () => ({
+  __esModule: true,
+  default: 'mock-chartjs-adapter-date-fns',
+}));
+
 function stubMuiComponent(componentName: string, namedExports: any = {}) {
   jest.doMock(`@material-ui/core/${componentName}/${componentName}`, () => ({
     __esModule: true,
