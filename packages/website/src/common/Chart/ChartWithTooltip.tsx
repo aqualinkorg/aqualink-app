@@ -112,13 +112,11 @@ function ChartWithTooltip({
           plugins: {
             tooltip: {
               enabled: false,
-              mode: 'x',
-              intersect: false,
               external: customTooltip,
             },
           },
-          hover: {
-            mode: 'index',
+          interaction: {
+            mode: 'x',
             intersect: false,
           },
           // we could use mergeWith here too, but currently nothing would use it.
