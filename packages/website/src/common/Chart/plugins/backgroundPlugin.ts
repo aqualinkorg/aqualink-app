@@ -1,11 +1,11 @@
-const { Chart } = require('react-chartjs-2');
+import { Chart } from 'chart.js';
 /**
  * Adds the subtle alternating rectangles in the background of the chart
  */
 const plugin = {
   id: 'chartJsPluginBarchartBackground',
   beforeDraw(chart: any, _easingValue: any, options: any) {
-    const xScale = chart.scales['x-axis-0'];
+    const xScale = chart.scales.x;
     const ticksPositions = xScale.ticks.map((_: any, index: number) =>
       xScale.getPixelForTick(index),
     );
@@ -47,4 +47,4 @@ const plugin = {
 };
 
 export default plugin;
-Chart.pluginService.register(plugin);
+Chart.register(plugin);
