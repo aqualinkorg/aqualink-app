@@ -61,6 +61,9 @@ const About = ({ classes }: AboutProps) => {
                       allow="fullscreen"
                     />
                   </div>
+                </div>
+                <br />
+                <div className="row">
                   <div className="centered order-lg-0 order-1 order-md-0 order-sm-0 col">
                     <p>
                       We have also created an animated field guide to give an

@@ -40,7 +40,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 classname="Faq-question-2"
                 variant="h5"
               >
-                Overview of the Aqualink system and Survey guide
+                What can you do with Aqualink?
               </mock-typography>
               <p>
                 We've put together a video to showcase the capabilities of the Aqualink platform. Designed to support your monitoring efforts, it provides an instant view of your reef with free, publicly available data. This opens up access to valuable information for everyone, from enthusiasts to scientists, anywhere in the world.

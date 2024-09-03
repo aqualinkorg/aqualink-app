@@ -30,7 +30,7 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    Overview of the Aqualink system and Survey guide
+                    What can you do with Aqualink?
                   </Typography>
                   <p>
                     We&apos;ve put together a video to showcase the capabilities

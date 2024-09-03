@@ -55,6 +55,9 @@ exports[`About should render with given state from Redux store 1`] = `
                   title="What can you do with Aqualink?"
                 />
               </div>
+            </div>
+            <br />
+            <div className="row">
               <div
                 class="centered order-lg-0 order-1 order-md-0 order-sm-0 col"
               >
