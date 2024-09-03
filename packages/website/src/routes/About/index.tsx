@@ -40,11 +40,12 @@ const About = ({ classes }: AboutProps) => {
                       </a>
                       <br />
                       <br />
-                      We&apos;ve put together a video to showcase the capabilities of the Aqualink 
-                      platform. Designed to support your monitoring efforts, it provides an 
-                      instant view of your reef with free, publicly available data. This opens 
-                      up access to valuable information for everyone, from enthusiasts to 
-                      scientists, anywhere in the world.
+                      We&apos;ve put together a video to showcase the
+                      capabilities of the Aqualink platform. Designed to support
+                      your monitoring efforts, it provides an instant view of
+                      your reef with free, publicly available data. This opens
+                      up access to valuable information for everyone, from
+                      enthusiasts to scientists, anywhere in the world.
                     </p>
                   </div>
                   <div

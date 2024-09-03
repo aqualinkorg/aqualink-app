@@ -33,10 +33,11 @@ const Faq = ({ classes }: FaqProps) => {
                     Overview of the Aqualink system and Survey guide
                   </Typography>
                   <p>
-                    We&apos;ve put together a video to showcase the capabilities of the Aqualink 
-                    platform. Designed to support your monitoring efforts, it provides an 
-                    instant view of your reef with free, publicly available data. This opens 
-                    up access to valuable information for everyone, from enthusiasts to 
+                    We&apos;ve put together a video to showcase the capabilities
+                    of the Aqualink platform. Designed to support your
+                    monitoring efforts, it provides an instant view of your reef
+                    with free, publicly available data. This opens up access to
+                    valuable information for everyone, from enthusiasts to
                     scientists, anywhere in the world.
                     <br />
                     <br />
@@ -102,11 +103,11 @@ const Faq = ({ classes }: FaqProps) => {
                     How do I connect my Sofar Spotter to Aqualink?
                   </Typography>
                   <p>
-                    You can easily connect your buoy by going to EDIT SITE DETAILS 
-                    on your Aqualink dashboard. Click on Add custom API token and 
-                    add the Spotter ID and the API. Then Click on Status and 
-                    select deployed. Then press save. You can visit your Sofar 
-                    Ocean account at&nbsp;
+                    You can easily connect your buoy by going to EDIT SITE
+                    DETAILS on your Aqualink dashboard. Click on Add custom API
+                    token and add the Spotter ID and the API. Then Click on
+                    Status and select deployed. Then press save. You can visit
+                    your Sofar Ocean account at&nbsp;
                     <a
                       href="https://spotter.sofarocean.com/"
                       target="_blank"
@@ -114,9 +115,9 @@ const Faq = ({ classes }: FaqProps) => {
                     >
                       https://spotter.sofarocean.com/
                     </a>
-                    &nbsp;to find your 
-                    Spotter ID and API. You can also find your Spotter ID on your 
-                    buoy. You can also view this tutorial video.&nbsp;
+                    &nbsp;to find your Spotter ID and API. You can also find
+                    your Spotter ID on your buoy. You can also view this
+                    tutorial video.&nbsp;
                     <a
                       href="https://www.youtube.com/watch?v=ytIOdhSzddY"
                       target="_blank"

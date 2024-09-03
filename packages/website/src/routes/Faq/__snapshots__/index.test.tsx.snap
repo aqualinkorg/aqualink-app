@@ -30,7 +30,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
               </mock-typography>
             </div>
           </div>
-                    <div
+          <div
             class="row faqq"
           >
             <div
@@ -43,7 +43,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 Overview of the Aqualink system and Survey guide
               </mock-typography>
               <p>
-                We&apos;ve put together a video to showcase the capabilities of the Aqualink platform. Designed to support your monitoring efforts, it provides an instant view of your reef with free, publicly available data. This opens up access to valuable information for everyone, from enthusiasts to scientists, anywhere in the world.
+                We've put together a video to showcase the capabilities of the Aqualink platform. Designed to support your monitoring efforts, it provides an instant view of your reef with free, publicly available data. This opens up access to valuable information for everyone, from enthusiasts to scientists, anywhere in the world.
                 <br />
                 <br />
               </p>
@@ -118,22 +118,22 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 How do I connect my Sofar Spotter to Aqualink?
               </mock-typography>
               <p>
-                You can easily connect your buoy by going to EDIT SITE DETAILS on your Aqualink dashboard. Click on Add custom API token and add the Spotter ID and the API. Then Click on Status and select deployed. Then press save. You can visit your Sofar Ocean account at&nbsp;
-                    <a
-                      href="https://spotter.sofarocean.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      https://spotter.sofarocean.com/
-                    </a>
-                    &nbsp;to find your Spotter ID and API. You can also find your Spotter ID on your buoy. You can also view this tutorial video.&nbsp;
-                    <a
-                      href="https://www.youtube.com/watch?v=ytIOdhSzddY"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      https://www.youtube.com/watch?v=ytIOdhSzddY
-                    </a>https://spotter.sofarocean.com/
+                You can easily connect your buoy by going to EDIT SITE DETAILS on your Aqualink dashboard. Click on Add custom API token and add the Spotter ID and the API. Then Click on Status and select deployed. Then press save. You can visit your Sofar Ocean account at 
+                <a
+                  href="https://spotter.sofarocean.com/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  https://spotter.sofarocean.com/
+                </a>
+                 to find your Spotter ID and API. You can also find your Spotter ID on your buoy. You can also view this tutorial video. 
+                <a
+                  href="https://www.youtube.com/watch?v=ytIOdhSzddY"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  https://www.youtube.com/watch?v=ytIOdhSzddY
+                </a>
               </p>
             </div>
           </div>
