@@ -40,6 +40,32 @@ const About = ({ classes }: AboutProps) => {
                       </a>
                       <br />
                       <br />
+                      We&apos;ve put together a video to showcase the
+                      capabilities of the Aqualink platform. Designed to support
+                      your monitoring efforts, it provides an instant view of
+                      your reef with free, publicly available data. This opens
+                      up access to valuable information for everyone, from
+                      enthusiasts to scientists, anywhere in the world.
+                    </p>
+                  </div>
+                  <div
+                    className={classNames('offset-lg-0 col-lg-12 order-lg-1', [
+                      classes.videoWrapper,
+                    ])}
+                  >
+                    <CardMedia
+                      className={classes.video}
+                      src="https://www.youtube.com/embed/EQZ3HiPevTY?si=dKTi4Mdv_Z9e9n-P"
+                      title="What can you do with Aqualink?"
+                      component="iframe"
+                      allow="fullscreen"
+                    />
+                  </div>
+                </div>
+                <br />
+                <div className="row">
+                  <div className="centered order-lg-0 order-1 order-md-0 order-sm-0 col">
+                    <p>
                       We have also created an animated field guide to give an
                       overview to the system and outline the best practices for
                       taking a survey and using the Aqualink system.
