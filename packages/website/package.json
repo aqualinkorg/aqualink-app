@@ -58,7 +58,7 @@
     "react-leaflet-markercluster": "^2.0.0",
     "react-material-ui-carousel": "^1.8.2",
     "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "^6.0.0",
     "react-slick": "^0.27.10",
     "react-swipeable-bottom-sheet": "^1.1.2",
     "react-swipeable-views": "^0.13.9",
