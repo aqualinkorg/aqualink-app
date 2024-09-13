@@ -40,6 +40,35 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 classname="Faq-question-2"
                 variant="h5"
               >
+                What can you do with Aqualink?
+              </mock-typography>
+              <p>
+                We've put together a video to showcase the capabilities of the Aqualink platform. Designed to support your monitoring efforts, it provides an instant view of your reef with free, publicly available data. This opens up access to valuable information for everyone, from enthusiasts to scientists, anywhere in the world.
+                <br />
+                <br />
+              </p>
+              <div
+                class="Faq-videoWrapper-6"
+              >
+                <iframe
+                  allow="fullscreen"
+                  class="MuiCardMedia-root Faq-video-7 MuiCardMedia-media"
+                  src="https://www.youtube.com/embed/EQZ3HiPevTY?si=dKTi4Mdv_Z9e9n-P"
+                  title="What can you do with Aqualink?"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <mock-typography
+                classname="Faq-question-2"
+                variant="h5"
+              >
                 Overview of the Aqualink system and Survey guide
               </mock-typography>
               <p>
@@ -73,6 +102,38 @@ exports[`Faq should render with given state from Redux store 1`] = `
               </mock-typography>
               <p>
                 We collect temperature through satellite observations or spotter (a Smart Buoy). Satellite measurements collect temperature information from the very top layer of the surface (skin temperature) based on a 5km grid. NOAA publishes observed temperatures on a daily basis and makes that available in their "Daily Global 5km Satellite Coral Bleaching Heat Stress Monitoring". Sofar Ocean imports this data into their servers and Aqualink uses their API to render the data in our web application. When a Smart Buoy is deployed we collect temperature information every hour from a depth of 1 meter as well as the moored depth which is at the sea floor.
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <mock-typography
+                classname="Faq-question-2"
+                variant="h5"
+              >
+                How do I connect my Sofar Spotter to Aqualink?
+              </mock-typography>
+              <p>
+                You can easily connect your buoy by going to EDIT SITE DETAILS on your Aqualink dashboard. Click on Add custom API token and add the Spotter ID and the API. Then Click on Status and select deployed. Then press save. You can visit your Sofar Ocean account at 
+                <a
+                  href="https://spotter.sofarocean.com/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  https://spotter.sofarocean.com/
+                </a>
+                 to find your Spotter ID and API. You can also find your Spotter ID on your buoy. You can also view this tutorial video. 
+                <a
+                  href="https://www.youtube.com/watch?v=ytIOdhSzddY"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  https://www.youtube.com/watch?v=ytIOdhSzddY
+                </a>
               </p>
             </div>
           </div>
