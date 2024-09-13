@@ -30,6 +30,32 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
+                    What can you do with Aqualink?
+                  </Typography>
+                  <p>
+                    We&apos;ve put together a video to showcase the capabilities
+                    of the Aqualink platform. Designed to support your
+                    monitoring efforts, it provides an instant view of your reef
+                    with free, publicly available data. This opens up access to
+                    valuable information for everyone, from enthusiasts to
+                    scientists, anywhere in the world.
+                    <br />
+                    <br />
+                  </p>
+                  <div className={classes.videoWrapper}>
+                    <CardMedia
+                      className={classes.video}
+                      src="https://www.youtube.com/embed/EQZ3HiPevTY?si=dKTi4Mdv_Z9e9n-P"
+                      title="What can you do with Aqualink?"
+                      component="iframe"
+                      allow="fullscreen"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
                     Overview of the Aqualink system and Survey guide
                   </Typography>
                   <p>
@@ -68,6 +94,37 @@ const Faq = ({ classes }: FaqProps) => {
                     Buoy is deployed we collect temperature information every
                     hour from a depth of 1 meter as well as the moored depth
                     which is at the sea floor.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    How do I connect my Sofar Spotter to Aqualink?
+                  </Typography>
+                  <p>
+                    You can easily connect your buoy by going to EDIT SITE
+                    DETAILS on your Aqualink dashboard. Click on Add custom API
+                    token and add the Spotter ID and the API. Then Click on
+                    Status and select deployed. Then press save. You can visit
+                    your Sofar Ocean account at&nbsp;
+                    <a
+                      href="https://spotter.sofarocean.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      https://spotter.sofarocean.com/
+                    </a>
+                    &nbsp;to find your Spotter ID and API. You can also find
+                    your Spotter ID on your buoy. You can also view this
+                    tutorial video.&nbsp;
+                    <a
+                      href="https://www.youtube.com/watch?v=ytIOdhSzddY"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      https://www.youtube.com/watch?v=ytIOdhSzddY
+                    </a>
                   </p>
                 </div>
               </div>
