@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
@@ -15,16 +15,6 @@ import SurveyPoint from '.';
 jest.mock('./InfoCard/Map', () => 'Mock-Map');
 
 window.scrollTo = jest.fn();
-
-const mockMatch = {
-  isExact: true,
-  params: {
-    id: '1',
-    pointId: '1',
-  },
-  path: '/sites/:id/points/:pointId',
-  url: '/sites/1/points/1',
-};
 
 const mockStore = configureStore([]);
 
@@ -62,12 +52,13 @@ describe('Survey Point Detail Page', () => {
 
     element = render(
       <Provider store={store}>
-        <Router>
-          <SurveyPoint
-            match={mockMatch}
-            location={{} as any}
-            history={{} as any}
-          />
+        <Router initialEntries={['/sites/1/points/1']}>
+          <Routes>
+            <Route
+              path="/sites/:id/points/:pointId"
+              element={<SurveyPoint />}
+            />
+          </Routes>
         </Router>
       </Provider>,
     ).container;

@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
 import type { Site } from 'store/Sites/types';
@@ -32,8 +32,8 @@ const siteAugmentedName = (site: Site) => {
 };
 
 const Search = ({ geocodingEnabled, classes }: SearchProps) => {
-  const browserHistory = useHistory();
-  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
@@ -80,7 +80,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       if (!geocodingEnabled) {
-        browserHistory.push(`/sites/${value.id}`);
+        navigate(`/sites/${value.id}`);
       }
     }
   };
@@ -88,7 +88,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   const onSearchSubmit = () => {
     if (searchedSite) {
       if (!geocodingEnabled) {
-        browserHistory.push(`/sites/${searchedSite.id}`);
+        navigate(`/sites/${searchedSite.id}`);
       }
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());

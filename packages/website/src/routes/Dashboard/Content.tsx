@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Grid, LinearProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import {
   collectionDetailsSelector,
   collectionErrorSelector,
@@ -54,10 +55,7 @@ const Content = () => {
       <Table collection={collection} />
     </Container>
   ) : (
-    <>
-      <Banner message={bannerMessage} />
-      <Tracker shouldShowNav={false} shouldShowFooter={false} />
-    </>
+    <Navigate to="https://highlights.aqualink.org/learn-more/get-started-with-aqualink#h.49zi97uifdjf" />
   );
 };
 
