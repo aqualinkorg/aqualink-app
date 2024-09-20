@@ -145,17 +145,6 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    Who is responsible for the satellite communication costs?
-                  </Typography>
-                  <p>
-                    Aqualink will be responsible for any satellite communication
-                    costs.
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
                     How do I upload surveys?
                   </Typography>
                   <p>
@@ -462,259 +451,33 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    How do I apply for an Aqualink Smart Buoy?
+                    Does Aqualink still give away Smart Buoys?
                   </Typography>
                   <p>
-                    Register the site(s) that you are monitoring on Aqualink and
-                    reach out to&nbsp;
+                    Aqualink is no longer giving away Smart Mooring buoys worldwide. 
+                    However, you can still create new Aqualink sites and get 
+                    dashboards just like before. If you&apos;re interested in purchasing 
+                    Smart Mooring Buoys, please visit&nbsp;
                     <a
-                      href="mailto:admin@aqualink.org?subject=Aqualink%20Application"
+                      href="https://www.sofarocean.com/products/spotter#s-subsurface"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                        Sofar Ocean
+                    </a>
+                    . If you have a particularly threatened reef 
+                    or interesting project around coral reefs, please email us and 
+                    we&apos;ll try to help you as best as we can. If you have purchased 
+                    your own Sofar Smart Mooring buoy, feel free to connect it to Aqualink. 
+                    Read more about that on this page or contact us at&nbsp;
+                    <a
+                      href="mailto:admin@aqualink.org"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       admin@aqualink.org
                     </a>
-                    &nbsp;and let us know that you are interested. You can apply
-                    for multiple, but the demand is high.
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    How many Smart Buoys are available?
-                  </Typography>
-                  <p>
-                    There is no set schedule for when we have Smart Buoys
-                    available or how big our batch is. Please register your
-                    site(s) and reach out to us, and we&apos;ll let you know if
-                    we have Smart Buoys available or when we might receive more.
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    What is the maximum depth a temperature sensor on the Smart
-                    Buoy can be deployed?
-                  </Typography>
-                  <p>100 meters.</p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    Are the Smart Buoys free?
-                  </Typography>
-                  <p>
-                    Yes, we cover the costs for the buoys, but you&apos;ll be
-                    responsible for shipping and customs fees. We&apos;re
-                    searching for people who can manage the buoys, perform
-                    surveys, and use the data for research and monitoring
-                    programs.
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    What are the shipping costs?
-                    <br />
-                  </Typography>
-                  <p>
-                    Shipping cost will vary greatly depending on your location.
-                    To get an idea of shipping costs you can visit&nbsp;
-                    <a
-                      href="https://onlineshippingcalculator.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      https://onlineshippingcalculator.com/
-                    </a>
-                    &nbsp;and enter the following:
-                    <br />
-                  </p>
-                  <ul>
-                    <li>
-                      <p>Set ship from location to San Francisco CA USA</p>
-                    </li>
-                    <li>
-                      <p>Set ship to location to your location</p>
-                    </li>
-                    <li>
-                      <p>Weight will be 22lbs</p>
-                    </li>
-                    <li>
-                      <p>
-                        Dimension will be 18 inches x 18 inches x 14 inches.
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        Because our shipment will arrive in two boxes and using
-                        our negotiated rates you will need to multiply this
-                        result by 1.5x.&nbsp;
-                        <br />
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        This should be a rough estimate.
-                        <br />
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        This does not include total landed costs for
-                        international shipping (see below).
-                        <br />
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    Am I responsible for customs / duties / taxes?
-                  </Typography>
-                  <p>
-                    Yes. As the recipient of the equipment you will need to
-                    determine if you need to pay these to receive your equipment
-                    at customs.
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    How big is the Aqualink Smart Buoy?
-                  </Typography>
-                  <p>
-                    The total Smart Buoy system is small enough for regular
-                    shipping such as UPS, DHL, FedEx, etc. The dimensions and
-                    weight of the buoy are:
-                    <br />
-                    <br />
-                    42cm diameter
-                    <br />
-                    31cm height
-                    <br />
-                    5.4 KG
-                    <br />
-                    <br />
-                    There is a ballast chain and smart mooring cable, the weight
-                    and dimensions are still TBD but depending on the length of
-                    cable needed for your target depth this should be around the
-                    same dimensions and less than 15kg.
-                    <br />
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    Can I see more specification for the spotter buoy?
-                  </Typography>
-                  <p>
-                    You can see some of the specifications&nbsp;
-                    <a
-                      href="https://content.sofarocean.com/hubfs/Spotter%20product%20documentation%20page/Sofar_Spotter_Specs_8_30_19.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      here
-                    </a>
                     .
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    How is the Smart Buoy moored? Does it come with a mooring
-                    anchor?
-                  </Typography>
-                  <p>
-                    The Smart Buoy does not come with an anchor. It terminates
-                    in a stainless steel shackle with a chain. This can be
-                    attached to an existing mooring. We will work with you to
-                    determine the best arrangement for mooring at your site as
-                    factors like depth, wind, current, wave action, and storms
-                    may determine the configuration of the mooring.
-                    <br />
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    Am I responsible for permitting and permissions to install?
-                  </Typography>
-                  <p>
-                    Yes. You will need to know the regulations for your
-                    installation site and ensure you have the proper permits and
-                    permissions.
-                    <br />
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    How do I receive data from the Smart Buoy?
-                  </Typography>
-                  <p>
-                    Data will be available in an open-source dashboard provided
-                    by aqualink.org.
-                    <br />
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    How often will I receive data?
-                  </Typography>
-                  <p>
-                    Data will be real time transmitted every 30-45 minutes.
-                    <br />
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    What data will I receive from the Smart Buoy?
-                  </Typography>
-                  <p>
-                    The planned data available will be:
-                    <br />
-                    <br />
-                    significant wave height
-                    <br />
-                    peak period
-                    <br />
-                    mean period
-                    <br />
-                    peak direction
-                    <br />
-                    mean direction
-                    <br />
-                    peak directional spread
-                    <br />
-                    mean directional spread
-                    <br />
-                    wind speed
-                    <br />
-                    wind direction
-                    <br />
-                    GPS coordinates
-                    <br />
-                    surface temperature (placement configurable)
-                    <br />
-                    subsurface temperature (placement configurable)
-                    <br />
                   </p>
                 </div>
               </div>
