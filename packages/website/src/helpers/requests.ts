@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { isUndefined, omitBy } from 'lodash';
+import { setupCache } from 'axios-cache-interceptor';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -9,11 +10,14 @@ const instance = axios.create({
   },
 });
 
+const cachedInstance = setupCache(instance);
+
 const agent = (contentType?: string) => {
   // eslint-disable-next-line fp/no-mutation
-  instance.defaults.headers['Content-Type'] = contentType || 'application/json';
+  cachedInstance.defaults.headers['Content-Type'] =
+    contentType || 'application/json';
 
-  return instance;
+  return cachedInstance;
 };
 
 function send<T>(request: Request): Promise<AxiosResponse<T>> {
@@ -51,7 +55,7 @@ interface Request {
 }
 
 export default {
-  axiosInstance: instance,
+  axiosInstance: cachedInstance,
   agent,
   send,
   generateUrlQueryParams,
