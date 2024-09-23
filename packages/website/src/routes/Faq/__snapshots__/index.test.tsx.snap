@@ -498,10 +498,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 Does Aqualink still give away Smart Buoys?
               </mock-typography>
               <p>
-                Aqualink is no longer giving away Smart Mooring buoys worldwide. 
-                However, you can still create new Aqualink sites and get 
-                dashboards just like before. If you&apos;re interested in purchasing 
-                Smart Mooring Buoys, please visit 
+                Aqualink is no longer giving away Smart Mooring buoys worldwide. However, you can still create new Aqualink sites and get dashboards just like before. If you're interested in purchasing Smart Mooring Buoys, please visit 
                 <a
                   href="https://www.sofarocean.com/products/spotter#s-subsurface"
                   rel="noopener noreferrer"
@@ -509,13 +506,9 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 >
                   Sofar Ocean
                 </a>
-                . If you have a particularly threatened reef 
-                or interesting project around coral reefs, please email us and 
-                we&apos;ll try to help you as best as we can. If you have purchased 
-                your own Sofar Smart Mooring buoy, feel free to connect it to Aqualink. 
-                Read more about that on this page or contact us at 
+                . If you have a particularly threatened reef or interesting project around coral reefs, please email us and we'll try to help you as best as we can. If you have purchased your own Sofar Smart Mooring buoy, feel free to connect it to Aqualink. Read more about that on this page or contact us at 
                 <a
-                  href="mailto:admin@aqualink.org?subject=Aqualink%20Application"
+                  href="mailto:admin@aqualink.org"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
