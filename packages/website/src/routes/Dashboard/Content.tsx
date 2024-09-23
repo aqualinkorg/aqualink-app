@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Grid, LinearProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import {
   collectionDetailsSelector,
   collectionErrorSelector,
@@ -32,6 +31,14 @@ const Content = () => {
     return <FullScreenMessage message="Collection not found" />;
   }
 
+  if (!collection) {
+    window.open(
+      'https://highlights.aqualink.org/learn-more/get-started-with-aqualink#h.49zi97uifdjf',
+      '_blank',
+    );
+    return null;
+  }
+
   if (collection?.sites.length === 0) {
     return (
       <>
@@ -41,7 +48,7 @@ const Content = () => {
     );
   }
 
-  return collection ? (
+  return (
     <Container>
       <Header collection={collection} />
       <Grid container justifyContent="center" spacing={2}>
@@ -54,8 +61,6 @@ const Content = () => {
       </Grid>
       <Table collection={collection} />
     </Container>
-  ) : (
-    <Navigate to="https://highlights.aqualink.org/learn-more/get-started-with-aqualink#h.49zi97uifdjf" />
   );
 };
 
