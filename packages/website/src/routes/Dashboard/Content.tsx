@@ -31,15 +31,12 @@ const Content = () => {
     return <FullScreenMessage message="Collection not found" />;
   }
 
-  if (!collection) {
+  if (collection?.sites.length === 0 || !collection) {
     window.open(
       'https://highlights.aqualink.org/learn-more/get-started-with-aqualink#h.49zi97uifdjf',
       '_blank',
     );
-    return null;
-  }
 
-  if (collection?.sites.length === 0) {
     return (
       <>
         <Banner message={bannerMessage} />

@@ -98,7 +98,11 @@ const Dashboard = ({ classes }: DashboardProps) => {
       case !atDashboard && publicNotFound:
         return <FullScreenMessage message="Collection not found" />;
       default:
-        return <DashboardContent />;
+        return (
+          <Delayed waitBeforeShow={100}>
+            <DashboardContent />
+          </Delayed>
+        );
     }
   };
 
