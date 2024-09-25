@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Map, fromJS } from 'immutable';
 import { pick, isEmpty } from 'lodash';
 import L from 'leaflet';
@@ -172,7 +172,7 @@ const Apply = ({ classes }: ApplyProps) => {
 
   return (
     <>
-      {newSiteId && <Redirect to={`/sites/${newSiteId}`} />}
+      {newSiteId && <Navigate to={`/sites/${newSiteId}`} replace />}
       <NavBar searchLocation={false} />
       <Box className={classes.boxBar} height="100%" pt={4}>
         <Container>
