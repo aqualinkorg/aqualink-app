@@ -454,22 +454,24 @@ const Faq = ({ classes }: FaqProps) => {
                     Does Aqualink still give away Smart Buoys?
                   </Typography>
                   <p>
-                    Aqualink is no longer giving away Smart Mooring buoys worldwide. 
-                    However, you can still create new Aqualink sites and get 
-                    dashboards just like before. If you&apos;re interested in purchasing 
-                    Smart Mooring Buoys, please visit&nbsp;
+                    Aqualink is no longer giving away Smart Mooring buoys
+                    worldwide. However, you can still create new Aqualink sites
+                    and get dashboards just like before. If you&apos;re
+                    interested in purchasing Smart Mooring Buoys, please
+                    visit&nbsp;
                     <a
                       href="https://www.sofarocean.com/products/spotter#s-subsurface"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                        Sofar Ocean
+                      Sofar Ocean
                     </a>
-                    . If you have a particularly threatened reef 
-                    or interesting project around coral reefs, please email us and 
-                    we&apos;ll try to help you as best as we can. If you have purchased 
-                    your own Sofar Smart Mooring buoy, feel free to connect it to Aqualink. 
-                    Read more about that on this page or contact us at&nbsp;
+                    . If you have a particularly threatened reef or interesting
+                    project around coral reefs, please email us and we&apos;ll
+                    try to help you as best as we can. If you have purchased
+                    your own Sofar Smart Mooring buoy, feel free to connect it
+                    to Aqualink. Read more about that on this page or contact us
+                    at&nbsp;
                     <a
                       href="mailto:admin@aqualink.org"
                       target="_blank"
