@@ -8,8 +8,8 @@ import {
   Typography,
   Container,
 } from '@material-ui/core';
-import { RouteComponentProps } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import {
   siteDetailsSelector,
@@ -22,13 +22,14 @@ import Footer from 'common/Footer';
 import NewSurvey from './New';
 import SurveyViewPage from './View';
 
-const Surveys = ({ match, classes }: SurveysProps) => {
+const Surveys = ({ classes }: SurveysProps) => {
+  const params = useParams<{ id: string; sid?: string }>();
   const siteDetails = useSelector(siteDetailsSelector);
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
   const dispatch = useDispatch();
-  const siteId = match.params.id;
-  const surveyId = match.params.sid;
+  const siteId = params.id ?? '';
+  const surveyId = params.sid;
 
   useEffect(() => {
     if (!siteDetails || `${siteDetails.id}` !== siteId) {
@@ -84,11 +85,6 @@ const styles = () =>
 
 interface SurveysIncomingProps {}
 
-interface MatchProps
-  extends RouteComponentProps<{ id: string; sid?: string }> {}
-
-type SurveysProps = MatchProps &
-  SurveysIncomingProps &
-  WithStyles<typeof styles>;
+type SurveysProps = SurveysIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Surveys);
