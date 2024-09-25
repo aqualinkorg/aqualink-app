@@ -67,11 +67,12 @@ interface ChipProps {
 
 const LinkWrapper: FC<
   Pick<ChipProps, 'to' | 'href'> & { className?: string }
-  // eslint-disable-next-line react/prop-types
-> = ({ to, href, className, children }) =>
-  to || href ? (
+> = ({ to, href, className, children }) => {
+  const url = to || href;
+
+  return url ? (
     <Link
-      to={to || { pathname: href }}
+      to={url}
       target={href ? '_blank' : undefined}
       className={className}
       rel="noopener noreferrer"
@@ -81,6 +82,7 @@ const LinkWrapper: FC<
   ) : (
     <>{children}</>
   );
+};
 
 const Chip = ({
   live,
