@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
 import {
@@ -24,7 +24,7 @@ import UploadData from './UploadData';
 
 const SiteRoutes = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
   const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
@@ -48,14 +48,12 @@ const SiteRoutes = () => {
   const [siteId, setSiteId] = useState<number | undefined>(undefined);
 
   const onHandleUploadError = () => {
-    // eslint-disable-next-line fp/no-mutating-methods
-    history.push(`/sites/${uploadTarget?.siteId}/upload_data`);
+    navigate(`/sites/${uploadTarget?.siteId}/upload_data`);
   };
 
   const handleRefreshOnSuccessUpload = () => {
     dispatch(setSelectedSite());
-    // eslint-disable-next-line fp/no-mutating-methods
-    history.push(`/sites/${siteId}?refresh=true`);
+    navigate({ pathname: `/sites/${siteId}`, search: 'refresh=true' });
     setIsUploadSnackbarOpen(false);
     dispatch(clearUploadsFiles());
     dispatch(clearUploadsTarget());
@@ -112,31 +110,15 @@ const SiteRoutes = () => {
         open={hasWarnings && isUploadDetailsDialogOpen}
         onClose={handleDetailsDialogClose}
       />
-      <Switch>
-        <Route exact path="/sites" component={SitesList} />
-        <Route exact path="/sites/:id" component={Site} />
-        <Route exact path="/sites/:id/apply" component={SiteApplication} />
-        <Route
-          exact
-          path="/sites/:id/points/:pointId"
-          component={SurveyPoint}
-        />
-        <Route
-          exact
-          path="/sites/:id/new_survey"
-          render={(props) => <Surveys {...props} />}
-        />
-        <Route
-          exact
-          path="/sites/:id/survey_details/:sid"
-          render={(props) => <Surveys {...props} />}
-        />
-        <Route
-          exact
-          path="/sites/:id/upload_data"
-          render={(props) => <UploadData {...props} />}
-        />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<SitesList />} />
+        <Route path="/:id" element={<Site />} />
+        <Route path="/:id/apply" element={<SiteApplication />} />
+        <Route path="/:id/points/:pointId" element={<SurveyPoint />} />
+        <Route path="/:id/new_survey" element={<Surveys />} />
+        <Route path="/:id/survey_details/:sid" element={<Surveys />} />
+        <Route path="/:id/upload_data" element={<UploadData />} />
+      </Routes>
     </>
   );
 };

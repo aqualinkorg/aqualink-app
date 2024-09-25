@@ -26,7 +26,7 @@ import { Alert } from '@material-ui/lab';
 import StatusSnackbar from 'common/StatusSnackbar';
 import { UploadTimeSeriesResult } from 'services/uploadServices';
 import UploadWarnings from 'common/FileUploads/UploadWarnings';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Sources } from 'store/Sites/types';
 import SitesTable from './SitesTable';
 import { OptionsList, selectProps, SENSOR_TYPES } from './utils';
@@ -34,7 +34,7 @@ import { OptionsList, selectProps, SENSOR_TYPES } from './utils';
 function Uploads() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = React.useState(false);
   const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = React.useState(false);
@@ -78,7 +78,7 @@ function Uploads() {
 
   const handleRefreshOnSuccessUpload = () => {
     // eslint-disable-next-line fp/no-mutating-methods
-    history.push(`/map`);
+    navigate(`/map`);
   };
 
   const onFilesDrop: DropzoneProps['onDropAccepted'] = (

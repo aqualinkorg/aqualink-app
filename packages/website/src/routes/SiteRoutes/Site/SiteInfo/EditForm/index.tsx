@@ -215,7 +215,7 @@ const EditForm = ({
           <Grid item sm={4} xs={12}>
             <TextField
               formField={siteDepth}
-              label="Depth"
+              label="Depth (m)"
               placeholder="Depth (m)"
               name="depth"
               isNumeric
