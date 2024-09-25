@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { LinearProgress } from '@material-ui/core';
-import { RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
@@ -27,8 +27,9 @@ import SurveyHistory from './SurveyHistory';
 
 const BG_COLOR = 'rgb(245, 246, 246)';
 
-const SurveyPoint = ({ match }: SurveyPointProps) => {
-  const { id, pointId } = match.params;
+const SurveyPoint = () => {
+  const { id = '', pointId = '' } =
+    useParams<{ id: string; pointId: string }>();
   const siteIdNumber = parseInt(id, 10);
   const pointIdNumber = parseInt(pointId, 10);
 
@@ -103,12 +104,5 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
     </>
   );
 };
-
-interface MatchProps
-  extends RouteComponentProps<{ id: string; pointId: string }> {}
-
-interface SurveyPointIncomingProps {}
-
-type SurveyPointProps = MatchProps & SurveyPointIncomingProps;
 
 export default SurveyPoint;
