@@ -17,7 +17,7 @@ import { ArrowBack, CloudUploadOutlined } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
 import Dropzone, { FileRejection } from 'react-dropzone';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userInfoSelector } from 'store/User/userSlice';
 import { surveyDetailsSelector } from 'store/Survey/surveySlice';
 import { SurveyMediaData } from 'store/Survey/types';
@@ -34,7 +34,7 @@ const UploadMedia = ({
   changeTab,
   classes,
 }: UploadMediaProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
@@ -139,7 +139,7 @@ const UploadMedia = ({
         setPreviews([]);
         setFeaturedFile(0);
         // eslint-disable-next-line fp/no-mutating-methods
-        history.push(`/sites/${siteId}/survey_details/${survey?.id}`);
+        navigate(`/sites/${siteId}/survey_details/${survey?.id}`);
       })
       .catch((err) => {
         setAlertMessage(err.message);

@@ -2,7 +2,7 @@
 /* eslint-disable fp/no-mutating-methods */
 /* eslint-disable fp/no-mutation */
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 let processing = false;
 const queue: { key: string; value?: string }[] = [];
@@ -20,7 +20,7 @@ export const useQueryParam = (
   valid: (value: string) => boolean = () => true,
 ) => {
   const { search } = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [value, setValue] = useState<string | undefined>(() => {
     // NOTE: IE does not support URLSearchParams
     const params = new URLSearchParams(search);
@@ -43,7 +43,7 @@ export const useQueryParam = (
       processStack();
       return;
     }
-    history.push({
+    navigate({
       search: newSearch,
     });
   };
