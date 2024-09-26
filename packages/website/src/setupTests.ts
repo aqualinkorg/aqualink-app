@@ -50,9 +50,8 @@ jest.mock('chartjs-adapter-date-fns', () => ({
 jest.mock('axios-cache-interceptor', () => ({
   __esModule: true,
   ...jest.requireActual('axios-cache-interceptor'),
-  setupCache: jest.fn(() => ({
-    interceptors: { response: { use: jest.fn() } },
-  })),
+  // do not intercept requests with cache in tests
+  setupCache: jest.fn((instance) => instance),
 }));
 
 function stubMuiComponent(componentName: string, namedExports: any = {}) {
