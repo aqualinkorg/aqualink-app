@@ -6621,7 +6621,7 @@ axe-core@^4.6.2:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.7.1.tgz#04392c9ccb3d7d7c5d2f8684f148d56d3442f33d"
   integrity sha512-sCXXUhA+cljomZ3ZAwb8i1p3oOlkABzPy08ZDAoGcYuvtBPlQ1Ytde129ArXyHWDhfeewq7rlx9F+cUx2SSlkg==
 
-axios-cache-interceptor@^1:
+axios-cache-interceptor@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/axios-cache-interceptor/-/axios-cache-interceptor-1.6.0.tgz#6be79520138dce08a4a301a9163eb8f875f78d25"
   integrity sha512-xuo4mZckPQmNV50bJpsMmGfpFV8SXsUWWUVKf1DXQy7t9p+6Pan9zrD3icAlCIdoYFw/ZJFKV6nUVqy8j0XCLQ==

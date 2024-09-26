@@ -1,6 +1,6 @@
+import { setupCache } from 'axios-cache-interceptor';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { isUndefined, omitBy } from 'lodash';
-import { setupCache } from 'axios-cache-interceptor';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
