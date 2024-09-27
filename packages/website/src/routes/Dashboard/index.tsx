@@ -6,7 +6,7 @@ import {
   LinearProgress,
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps, useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { userInfoSelector, userLoadingSelector } from 'store/User/userSlice';
 import {
@@ -25,8 +25,10 @@ const collections: Record<string, number> = {
   minderoo: 1,
 };
 
-const Dashboard = ({ match, classes }: DashboardProps) => {
+const Dashboard = ({ classes }: DashboardProps) => {
   const dispatch = useDispatch();
+  const { collectionName: urlCollectionName } =
+    useParams<{ collectionName?: string }>();
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
   const { id: storedCollectionId } =
@@ -59,7 +61,6 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
   // the user that this public collection does not exist.
   useEffect(() => {
     if (!atDashboard) {
-      const { collectionName: urlCollectionName } = match.params;
       const isHeatStress = urlCollectionName === 'heat-stress';
       const isId = !Number.isNaN(Number(urlCollectionName));
       const urlCollectionId = isId
@@ -82,7 +83,7 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
         setPublicNotFound(true);
       }
     }
-  }, [atDashboard, dispatch, match.params, storedCollectionId]);
+  }, [atDashboard, dispatch, urlCollectionName, storedCollectionId]);
 
   const DashboardComponent = () => {
     switch (true) {
@@ -97,7 +98,11 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
       case !atDashboard && publicNotFound:
         return <FullScreenMessage message="Collection not found" />;
       default:
-        return <DashboardContent />;
+        return (
+          <Delayed waitBeforeShow={100}>
+            <DashboardContent />
+          </Delayed>
+        );
     }
   };
 
@@ -117,8 +122,6 @@ const styles = () =>
     },
   });
 
-interface MatchProps extends RouteComponentProps<{ collectionName?: string }> {}
-
-type DashboardProps = MatchProps & WithStyles<typeof styles>;
+type DashboardProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(Dashboard);

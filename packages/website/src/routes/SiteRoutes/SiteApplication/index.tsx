@@ -12,7 +12,7 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
@@ -38,12 +38,13 @@ import Obligations from './Obligations';
 import Agreements from './Agreements';
 import Form from './Form';
 
-const Apply = ({ match, classes }: ApplyProps) => {
+const Apply = ({ classes }: ApplyProps) => {
   const dispatch = useDispatch();
   const site = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const userLoading = useSelector(userLoadingSelector);
-  const siteId = parseInt(match.params.id, 10);
+  const params = useParams<{ id: string }>();
+  const siteId = parseInt(params.id ?? '', 10);
   const user = useSelector(userInfoSelector);
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
@@ -294,8 +295,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface MatchProps extends RouteComponentProps<{ id: string }> {}
-
-type ApplyProps = WithStyles<typeof styles> & MatchProps;
+type ApplyProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(Apply);
