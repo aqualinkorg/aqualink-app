@@ -358,7 +358,6 @@ export const convertData = (
   );
   let resultsIndex = 0;
 
-  logger.log('Converting data');
   console.time(`Get data from sheet ${fileName}`);
 
   workSheetData.forEach((row) => {
@@ -864,7 +863,6 @@ export const uploadTimeSeriesData = async ({
     }),
   );
 
-  logger.log('Refresh materialized view');
   refreshMaterializedView(repositories.dataUploadsRepository);
 
   console.timeEnd(`Upload data file ${fileName}`);
