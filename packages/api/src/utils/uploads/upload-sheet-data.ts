@@ -290,7 +290,13 @@ const groupBySitePointDepth = ({
   headerToTokenMap,
   siteId,
   surveyPointId,
-}: GroupBySitePointDepthProps): { [key: string]: string[][] } => {
+}: GroupBySitePointDepthProps): {
+  data: string[][];
+  siteId: number;
+  surveyPointId?: number;
+  depth?: number;
+}[] => {
+  logger.log('Grouping data');
   const siteIdIndex = headerToTokenMap.findIndex(
     (x) => x === 'aqualink_site_id',
   );
@@ -309,13 +315,22 @@ const groupBySitePointDepth = ({
     const key = `${rowSiteId}_${rowSurveyPointId}_${rowDepth}`;
     const item = groupedByMap.get(key);
     if (item !== undefined) {
-      groupedByMap.set(key, [...item, val]);
+      // eslint-disable-next-line fp/no-mutating-methods -- mutating for performance, instead of spreading
+      item.push(val);
     } else {
       groupedByMap.set(key, [val]);
     }
   });
 
-  return Object.fromEntries(Array.from(groupedByMap));
+  return Array.from(groupedByMap).map(([key, data]) => {
+    const [rowSiteId, rowSurveyPointId, depth] = key.split('_');
+    return {
+      data,
+      siteId: parseInt(rowSiteId, 10),
+      surveyPointId: parseInt(rowSurveyPointId, 10) || undefined,
+      depth: parseInt(depth, 10) || undefined,
+    };
+  });
 };
 
 export const convertData = (
@@ -328,14 +343,24 @@ export const convertData = (
   mimetype?: Mimetype,
 ) => {
   const timestampIndex = findTimeStampIndex(headerToTokenMap);
+  const timezone =
+    typeof timestampIndex === 'number'
+      ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
+      : undefined;
+  const metricHeadersMap = headerToTokenMap.reduce((acc, token, i) => {
+    if (token === undefined || nonMetric.includes(token as NonMetric)) {
+      return acc;
+    }
+    return { ...acc, [i]: token };
+  }, {});
+  const results = Array(
+    workSheetData.length * Object.keys(metricHeadersMap).length,
+  );
+  let resultsIndex = 0;
 
   console.time(`Get data from sheet ${fileName}`);
-  const results = workSheetData.reduce<Data[]>((acc, row) => {
-    const timezone =
-      typeof timestampIndex === 'number'
-        ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
-        : undefined;
 
+  workSheetData.forEach((row) => {
     const timestampDate = getTimeStamp(timestampIndex, row, mimetype, timezone);
 
     // This need to be done for each row to take into account daylight savings
@@ -349,22 +374,18 @@ export const convertData = (
       timestampDate.valueOf() - offsetInMil,
     ).toISOString();
 
-    const rowValues = row.map<Data | undefined>((cell, i) => {
-      const metric = headerToTokenMap[i];
-      if (metric === undefined || nonMetric.includes(metric as NonMetric)) {
-        return undefined;
+    row.forEach((cell, i) => {
+      const metric = metricHeadersMap[i];
+      if (metric) {
+        // eslint-disable-next-line fp/no-mutation -- mutating for performance
+        results[resultsIndex++] = {
+          timestamp,
+          value: parseFloat(cell),
+          metric: metric as Metric,
+          source: sourceEntity,
+        };
       }
-
-      return {
-        timestamp,
-        value: parseFloat(cell),
-        metric: metric as Metric,
-        source: sourceEntity,
-      };
     });
-
-    const filtered = rowValues.filter((x): x is Data => x !== undefined);
-    return [...acc, ...filtered];
   }, []);
   console.timeEnd(`Get data from sheet ${fileName}`);
 
@@ -779,22 +800,15 @@ export const uploadTimeSeriesData = async ({
 
   const trimmed = trimWorkSheetData(workSheetData, headers, headerIndex);
 
-  const uploadData = Object.entries(
-    groupBySitePointDepth({
-      trimmedWorkSheetData: trimmed,
-      headerToTokenMap,
-      siteId,
-      surveyPointId,
-    }),
-  ).map(([key, data]) => ({
-    data,
-    siteId: parseInt(key.split('_')[0], 10),
-    surveyPointId: parseInt(key.split('_')[1], 10) || undefined,
-    depth: parseInt(key.split('_')[2], 10) || undefined,
-  }));
+  const groupedData = groupBySitePointDepth({
+    trimmedWorkSheetData: trimmed,
+    headerToTokenMap,
+    siteId,
+    surveyPointId,
+  });
 
   const converted = await Promise.all(
-    uploadData.map((x) => {
+    groupedData.map((x) => {
       return createEntitiesAndConvert({
         workSheetData: x.data,
         siteId: x.siteId,
