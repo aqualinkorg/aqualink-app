@@ -719,15 +719,18 @@ interface UploadTimeSeriesDataProps {
   siteTimezone?: boolean;
 }
 
+const MEMORY_LIMIT = 2048; // 2GB
 const MAX_MEMORY_USAGE_PERCENT = 80; // Adjust this threshold as needed
 
 function checkMemoryUsage() {
   const used = memoryUsage().heapUsed / 1024 / 1024;
   const total = memoryUsage().heapTotal / 1024 / 1024;
-  const usagePercent = (used / total) * 100;
+  const usagePercent = (used / MEMORY_LIMIT) * 100;
 
   if (usagePercent > MAX_MEMORY_USAGE_PERCENT) {
-    throw new Error(`Memory usage too high: ${usagePercent.toFixed(2)}%`);
+    console.warn(`Memory usage too high: ${usagePercent.toFixed(2)}%`);
+    console.warn(`Used: ${used.toFixed(2)}MB, Total: ${total.toFixed(2)}MB`);
+    // throw new Error(`Memory usage too high: ${usagePercent.toFixed(2)}%`);
   }
 }
 
