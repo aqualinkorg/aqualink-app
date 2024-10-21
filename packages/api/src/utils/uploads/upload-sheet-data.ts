@@ -21,6 +21,7 @@ import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import { memoryUsage } from 'process';
 import { Site } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
@@ -290,7 +291,13 @@ const groupBySitePointDepth = ({
   headerToTokenMap,
   siteId,
   surveyPointId,
-}: GroupBySitePointDepthProps): { [key: string]: string[][] } => {
+}: GroupBySitePointDepthProps): {
+  data: string[][];
+  siteId: number;
+  surveyPointId?: number;
+  depth?: number;
+}[] => {
+  logger.log('Grouping data');
   const siteIdIndex = headerToTokenMap.findIndex(
     (x) => x === 'aqualink_site_id',
   );
@@ -309,13 +316,22 @@ const groupBySitePointDepth = ({
     const key = `${rowSiteId}_${rowSurveyPointId}_${rowDepth}`;
     const item = groupedByMap.get(key);
     if (item !== undefined) {
-      groupedByMap.set(key, [...item, val]);
+      // eslint-disable-next-line fp/no-mutating-methods -- mutating for performance, instead of spreading
+      item.push(val);
     } else {
       groupedByMap.set(key, [val]);
     }
   });
 
-  return Object.fromEntries(Array.from(groupedByMap));
+  return Array.from(groupedByMap).map(([key, data]) => {
+    const [rowSiteId, rowSurveyPointId, depth] = key.split('_');
+    return {
+      data,
+      siteId: parseInt(rowSiteId, 10),
+      surveyPointId: parseInt(rowSurveyPointId, 10) || undefined,
+      depth: parseInt(depth, 10) || undefined,
+    };
+  });
 };
 
 export const convertData = (
@@ -328,14 +344,24 @@ export const convertData = (
   mimetype?: Mimetype,
 ) => {
   const timestampIndex = findTimeStampIndex(headerToTokenMap);
+  const timezone =
+    typeof timestampIndex === 'number'
+      ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
+      : undefined;
+  const metricHeadersMap = headerToTokenMap.reduce((acc, token, i) => {
+    if (token === undefined || nonMetric.includes(token as NonMetric)) {
+      return acc;
+    }
+    return { ...acc, [i]: token };
+  }, {});
+  const results = Array(
+    workSheetData.length * Object.keys(metricHeadersMap).length,
+  );
+  let resultsIndex = 0;
 
   console.time(`Get data from sheet ${fileName}`);
-  const results = workSheetData.reduce<Data[]>((acc, row) => {
-    const timezone =
-      typeof timestampIndex === 'number'
-        ? first(headers[timestampIndex].match(TIMEZONE_REGEX))
-        : undefined;
 
+  workSheetData.forEach((row) => {
     const timestampDate = getTimeStamp(timestampIndex, row, mimetype, timezone);
 
     // This need to be done for each row to take into account daylight savings
@@ -349,22 +375,18 @@ export const convertData = (
       timestampDate.valueOf() - offsetInMil,
     ).toISOString();
 
-    const rowValues = row.map<Data | undefined>((cell, i) => {
-      const metric = headerToTokenMap[i];
-      if (metric === undefined || nonMetric.includes(metric as NonMetric)) {
-        return undefined;
+    row.forEach((cell, i) => {
+      const metric = metricHeadersMap[i];
+      if (metric) {
+        // eslint-disable-next-line fp/no-mutation -- mutating for performance
+        results[resultsIndex++] = {
+          timestamp,
+          value: parseFloat(cell),
+          metric: metric as Metric,
+          source: sourceEntity,
+        };
       }
-
-      return {
-        timestamp,
-        value: parseFloat(cell),
-        metric: metric as Metric,
-        source: sourceEntity,
-      };
     });
-
-    const filtered = rowValues.filter((x): x is Data => x !== undefined);
-    return [...acc, ...filtered];
   }, []);
   console.timeEnd(`Get data from sheet ${fileName}`);
 
@@ -697,6 +719,21 @@ interface UploadTimeSeriesDataProps {
   siteTimezone?: boolean;
 }
 
+const MEMORY_LIMIT = 2048; // 2GB
+const MAX_MEMORY_USAGE_PERCENT = 80; // Adjust this threshold as needed
+
+function checkMemoryUsage() {
+  const used = memoryUsage().heapUsed / 1024 / 1024;
+  const total = memoryUsage().heapTotal / 1024 / 1024;
+  const usagePercent = (used / MEMORY_LIMIT) * 100;
+
+  if (usagePercent > MAX_MEMORY_USAGE_PERCENT) {
+    console.warn(`Memory usage too high: ${usagePercent.toFixed(2)}%`);
+    console.warn(`Used: ${used.toFixed(2)}MB, Total: ${total.toFixed(2)}MB`);
+    // throw new Error(`Memory usage too high: ${usagePercent.toFixed(2)}%`);
+  }
+}
+
 export const uploadTimeSeriesData = async ({
   user,
   filePath,
@@ -716,6 +753,8 @@ export const uploadTimeSeriesData = async ({
     throw new BadRequestException('SiteId is undefined');
   }
 
+  checkMemoryUsage();
+
   const {
     workSheetData,
     signature,
@@ -725,6 +764,8 @@ export const uploadTimeSeriesData = async ({
     headerIndex,
     headerToTokenMap,
   } = await getFilePathData(filePath);
+
+  checkMemoryUsage();
 
   if (failOnWarning && ignoredHeaders.length > 0) {
     throw new BadRequestException(
@@ -777,24 +818,24 @@ export const uploadTimeSeriesData = async ({
     }
   }
 
+  checkMemoryUsage();
+
   const trimmed = trimWorkSheetData(workSheetData, headers, headerIndex);
 
-  const uploadData = Object.entries(
-    groupBySitePointDepth({
-      trimmedWorkSheetData: trimmed,
-      headerToTokenMap,
-      siteId,
-      surveyPointId,
-    }),
-  ).map(([key, data]) => ({
-    data,
-    siteId: parseInt(key.split('_')[0], 10),
-    surveyPointId: parseInt(key.split('_')[1], 10) || undefined,
-    depth: parseInt(key.split('_')[2], 10) || undefined,
-  }));
+  checkMemoryUsage();
+
+  const groupedData = groupBySitePointDepth({
+    trimmedWorkSheetData: trimmed,
+    headerToTokenMap,
+    siteId,
+    surveyPointId,
+  });
+
+  checkMemoryUsage();
 
   const converted = await Promise.all(
-    uploadData.map((x) => {
+    groupedData.map((x) => {
+      checkMemoryUsage();
       return createEntitiesAndConvert({
         workSheetData: x.data,
         siteId: x.siteId,
@@ -811,7 +852,11 @@ export const uploadTimeSeriesData = async ({
     }),
   );
 
+  checkMemoryUsage();
+
   const allDataCombined = converted.map((x) => x.data).flat();
+
+  checkMemoryUsage();
 
   const minDate = get(
     minBy(allDataCombined, (item) =>
@@ -850,6 +895,8 @@ export const uploadTimeSeriesData = async ({
   );
 
   refreshMaterializedView(repositories.dataUploadsRepository);
+
+  checkMemoryUsage();
 
   console.timeEnd(`Upload data file ${fileName}`);
   return ignoredHeaders;
