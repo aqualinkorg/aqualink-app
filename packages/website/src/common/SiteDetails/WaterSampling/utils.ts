@@ -226,6 +226,15 @@ export async function getCardData(
         };
       }
       case 'sonde': {
+        // eslint-disable-next-line fp/no-mutating-methods
+        uploads.sort((a, b) => {
+          if (a.maxDate && b.maxDate) {
+            const timeA = new Date(a.maxDate).getTime();
+            const timeB = new Date(b.maxDate).getTime();
+            return timeB - timeA;
+          }
+          return 0;
+        });
         const { minDate, maxDate } = uploads[0].dataUpload;
         const { surveyPoint } = uploads[0];
         const [data] = await timeSeriesRequest({

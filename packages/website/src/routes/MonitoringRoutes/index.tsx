@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from 'common/NavBar';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import SiteMetrics from './SiteMetrics';
 import MonthlyReport from './MonthlyReport';
 import Monitoring from './Monitoring';
@@ -12,26 +12,14 @@ function MonitoringRoutes() {
   return (
     <>
       <NavBar searchLocation={false} />
-      <Switch>
-        <Route exact path="/monitoring" component={Monitoring} />
-        <Route exact path="/monitoring/site-metrics" component={SiteMetrics} />
-        <Route
-          exact
-          path="/monitoring/monthly-report"
-          component={MonthlyReport}
-        />
-        <Route
-          exact
-          path="/monitoring/surveys-report"
-          component={SurveysReport}
-        />
-        <Route
-          exact
-          path="/monitoring/sites-overview"
-          component={SitesOverview}
-        />
-        <Route exact path="/monitoring/sites-status" component={SitesStatus} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Monitoring />} />
+        <Route path="/site-metrics" element={<SiteMetrics />} />
+        <Route path="/monthly-report" element={<MonthlyReport />} />
+        <Route path="/surveys-report" element={<SurveysReport />} />
+        <Route path="/sites-overview" element={<SitesOverview />} />
+        <Route path="/sites-status" element={<SitesStatus />} />
+      </Routes>
     </>
   );
 }

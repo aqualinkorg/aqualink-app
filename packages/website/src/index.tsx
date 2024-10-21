@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
+import { CacheAxiosResponse } from 'axios-cache-interceptor';
 import './index.css';
 import 'leaflet/dist/leaflet.css';
 import './assets/css/bootstrap.css';
@@ -21,7 +22,7 @@ if (app) {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       requestsConfig.agent().interceptors.response.use(
-        (response: AxiosResponse) => Promise.resolve(response),
+        (response: CacheAxiosResponse) => Promise.resolve(response),
         async (error: AxiosError) => {
           const { config, status } = error?.response || {};
           const oldToken = store.getState().user.userInfo?.token;

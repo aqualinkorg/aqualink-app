@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Container, makeStyles, Theme } from '@material-ui/core';
-import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DropzoneProps } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from '@material-ui/lab';
@@ -34,12 +34,13 @@ import Header from './Header';
 import Selectors from './Selectors';
 import HistoryTable from './HistoryTable';
 
-const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
+const UploadData = () => {
+  const params = useParams<{ id: string }>();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { token } = useSelector(userInfoSelector) || {};
-  const { site, siteLoading } = useSiteRequest(match.params.id);
+  const { site, siteLoading } = useSiteRequest(params.id ?? '');
   const [selectedSensor, setSelectedSensor] = useState<Sources>();
   const [selectedPoint, setSelectedPoint] = useState<number>();
   const [useSiteTimezone, setUseSiteTimezone] = useState(false);
@@ -109,7 +110,7 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
         dispatch(setSelectedSite());
         if (typeof site?.id === 'number') {
           // eslint-disable-next-line fp/no-mutating-methods
-          history.push(`/sites/${site.id}`);
+          navigate(`/sites/${site.id}`);
         }
       }
     } catch (err) {
@@ -139,10 +140,7 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
 
   // on component did mount
   useEffect(() => {
-    if (
-      uploadTarget?.siteId &&
-      uploadTarget.siteId !== Number(match.params.id)
-    ) {
+    if (uploadTarget?.siteId && uploadTarget.siteId !== Number(params.id)) {
       if (uploadLoading) {
         setShouldShowPage(false);
       } else {
@@ -160,7 +158,7 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
 
   const onGoBackClick = () => {
     // eslint-disable-next-line fp/no-mutating-methods
-    history.push(`/sites/${site?.id}`);
+    navigate(`/sites/${site?.id}`);
   };
 
   return (

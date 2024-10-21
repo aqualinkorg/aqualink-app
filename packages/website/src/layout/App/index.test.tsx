@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 jest.mock('../../routes/Landing', () => 'Mock-LandingPage');
 jest.mock('../../routes/HomeMap', () => 'Mock-HomeMap');
@@ -18,12 +18,12 @@ jest.mock('../../routes/NotFound', () => ({
 test('renders as expected', () => {
   const { container } = render(
     <Router>
-      <Switch>
-        <Route exact path="/" component={() => <div>LandingPage</div>} />
-        <Route exact path="/map" component={() => <div>HomeMap</div>} />
-        <Route path="/sites" component={() => <div>Sites</div>} />
-        <Route path="*" component={() => <div>Not Found</div>} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<div>LandingPage</div>} />
+        <Route path="/map" element={<div>HomeMap</div>} />
+        <Route path="/sites" element={<div>Sites</div>} />
+        <Route path="*" element={<div>Not Found</div>} />
+      </Routes>
     </Router>,
   );
   expect(container).toMatchSnapshot();

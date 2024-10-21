@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import {
   siteDetailsSelector,
@@ -113,14 +113,14 @@ const getAlertMessage = (
   }
 };
 
-const Site = ({ match, classes }: SiteProps) => {
+const Site = ({ classes }: SiteProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
   const spotterPosition = useSelector(spotterPositionSelector);
   const dispatch = useDispatch();
-  const siteId = match.params.id;
+  const { id: siteId = '' } = useParams<{ id: string }>();
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
@@ -149,9 +149,10 @@ const Site = ({ match, classes }: SiteProps) => {
 
   const today = localizedEndOfDay(undefined, timezone);
 
-  const siteWithFeaturedImage: SiteType | undefined = siteDetails
-    ? { ...siteDetails, featuredImage: thumbnailUrl || url }
-    : undefined;
+  const siteWithFeaturedImage: SiteType | undefined =
+    siteDetails && (siteId === siteDetails.id.toString() || !siteId)
+      ? { ...siteDetails, featuredImage: thumbnailUrl || url }
+      : undefined;
 
   const isLoading = !siteWithFeaturedImage;
 
@@ -238,7 +239,7 @@ const Site = ({ match, classes }: SiteProps) => {
               </Alert>
             </Box>
           )}
-          <div key={siteDetails?.id}>
+          <div key={siteId}>
             <SiteDetails
               site={siteWithFeaturedImage}
               selectedSurveyPointId={selectedSurveyPointId}
@@ -267,8 +268,6 @@ const styles = () =>
     },
   });
 
-interface MatchProps extends RouteComponentProps<{ id: string }> {}
-
-type SiteProps = WithStyles<typeof styles> & MatchProps;
+type SiteProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(Site);

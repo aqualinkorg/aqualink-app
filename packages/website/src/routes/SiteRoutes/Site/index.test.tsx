@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { mockSite } from 'mocks/mockSite';
 import { mockUser } from 'mocks/mockUser';
 import { mockSurveyList } from 'mocks/mockSurveyList';
@@ -105,27 +105,22 @@ describe('Site Detail Page', () => {
     emptyStore.dispatch = jest.fn();
     fullStore.dispatch = jest.fn();
 
-    const mockMatch = {
-      isExact: true,
-      params: {
-        id: '1',
-      },
-      path: '/sites/:id',
-      url: '/sites/1',
-    };
-
     elementEmpty = render(
       <Provider store={emptyStore}>
-        <Router>
-          <Site match={mockMatch} location={{} as any} history={{} as any} />
+        <Router initialEntries={['/sites/1']}>
+          <Routes>
+            <Route path="/sites/:id" element={<Site />} />
+          </Routes>
         </Router>
       </Provider>,
     ).container;
 
     elementFull = render(
       <Provider store={fullStore}>
-        <Router>
-          <Site match={mockMatch} location={{} as any} history={{} as any} />
+        <Router initialEntries={['/sites/1']}>
+          <Routes>
+            <Route path="/sites/:id" element={<Site />} />
+          </Routes>
         </Router>
       </Provider>,
     ).container;
