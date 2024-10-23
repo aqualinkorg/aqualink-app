@@ -285,6 +285,7 @@ export interface Site {
   sketchFab?: SiteSketchFab;
   display: boolean;
   contactInformation?: string;
+  maskedSpotterApiToken?: string;
   iframe?: string | null;
 }
 

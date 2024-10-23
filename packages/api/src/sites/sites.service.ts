@@ -207,13 +207,18 @@ export class SitesService {
   }
 
   async findOne(id: number): Promise<Site> {
-    const site = await getSite(id, this.sitesRepository, [
-      'region',
-      'admins',
-      'historicalMonthlyMean',
-      'siteApplication',
-      'sketchFab',
-    ]);
+    const site = await getSite(
+      id,
+      this.sitesRepository,
+      [
+        'region',
+        'admins',
+        'historicalMonthlyMean',
+        'siteApplication',
+        'sketchFab',
+      ],
+      true,
+    );
 
     // Typeorm returns undefined instead of [] for
     // OneToMany relations, so we fix it to match OpenAPI specs:
@@ -227,8 +232,29 @@ export class SitesService {
       this.latestDataRepository,
     );
 
+    const maskedSpotterApiToken = site.spotterApiToken
+      ? `****${site.spotterApiToken?.slice(-4)}`
+      : undefined;
+
     return {
-      ...site,
+      id: site.id,
+      name: site.name,
+      sensorId: site.sensorId,
+      polygon: site.polygon,
+      nearestNOAALocation: site.nearestNOAALocation,
+      depth: site.depth,
+      iframe: site.iframe,
+      status: site.status,
+      maxMonthlyMean: site.maxMonthlyMean,
+      timezone: site.timezone,
+      display: site.display,
+      createdAt: site.createdAt,
+      updatedAt: site.updatedAt,
+      region: site.region,
+      admins: site.admins,
+      siteApplication: site.siteApplication,
+      sketchFab: site.sketchFab,
+      maskedSpotterApiToken,
       surveys,
       historicalMonthlyMean,
       videoStream,

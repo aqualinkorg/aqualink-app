@@ -39,8 +39,9 @@ const EditForm = ({
   const { latitude: draftLatitude, longitude: draftLongitude } =
     draftSite?.coordinates || {};
 
-  const [editToken, setEditToken] = React.useState(false);
-  const [useDefaultToken, setUseDefaultToken] = React.useState(false);
+  const [editToken, setEditToken] = React.useState(
+    !!site.maskedSpotterApiToken,
+  );
 
   const [editContactInfo, setEditContactInfo] = React.useState(false);
 
@@ -88,11 +89,13 @@ const EditForm = ({
   );
 
   const [siteSpotterApiToken, setSiteSpotterApiToken] = useFormField<string>(
-    '',
+    site.maskedSpotterApiToken ?? '',
     ['maxLength'],
   );
 
-  const [status, setStatus] = useFormField<string>('', []);
+  const [apiTokenChanged, setApiTokenChanged] = React.useState(false);
+
+  const [status, setStatus] = useFormField<string>(site.status, []);
 
   const [display, setDisplay] = useFormField<boolean>(site.display, []);
 
@@ -110,6 +113,18 @@ const EditForm = ({
     'maxLength',
   ]);
 
+  const onApiTokenBlur = () => {
+    if (siteSpotterApiToken.value === '' && site.maskedSpotterApiToken) {
+      setSiteSpotterApiToken(site.maskedSpotterApiToken);
+      setApiTokenChanged(false);
+    }
+  };
+  const onApiTokenFocus = () => {
+    if (!apiTokenChanged) {
+      setSiteSpotterApiToken('');
+    }
+  };
+
   const formSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (
       siteName.value &&
@@ -117,11 +132,10 @@ const EditForm = ({
       siteLatitude.value &&
       siteLongitude.value
     ) {
-      const insertedTokenValue = siteSpotterApiToken.value
+      const insertedTokenValue = apiTokenChanged
         ? siteSpotterApiToken.value
         : undefined;
-      const tokenValue = useDefaultToken ? null : insertedTokenValue;
-      const spotterApiToken = editToken ? tokenValue : undefined;
+      const spotterApiToken = editToken ? insertedTokenValue : null;
       // fields need to be undefined in order not be affected by the update.
       // siteSensorId.value here can be <empty string> which our api does not accept
       const sensorId = siteSensorId.value || undefined;
@@ -178,6 +192,7 @@ const EditForm = ({
         break;
       case 'spotterApiToken':
         setSiteSpotterApiToken(newValue);
+        setApiTokenChanged(true);
         break;
       case 'status':
         setStatus(newValue);
@@ -266,35 +281,17 @@ const EditForm = ({
             />
           </Grid>
           {editToken && (
-            <>
-              <Grid item sm={8} xs={8}>
-                <TextField
-                  disabled={useDefaultToken}
-                  formField={siteSpotterApiToken}
-                  label="Spotter API token"
-                  placeholder="Spotter API token"
-                  name="spotterApiToken"
-                  onChange={onFieldChange}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={4}
-                style={{ display: 'flex', justifyContent: 'flex-end' }}
-              >
-                <FormControlLabel
-                  labelPlacement="start"
-                  control={
-                    <Checkbox
-                      color="primary"
-                      checked={useDefaultToken}
-                      onChange={() => setUseDefaultToken(!useDefaultToken)}
-                    />
-                  }
-                  label="Use default token"
-                />
-              </Grid>
-            </>
+            <Grid item xs={12}>
+              <TextField
+                formField={siteSpotterApiToken}
+                label="Spotter API token"
+                placeholder="Spotter API token"
+                name="spotterApiToken"
+                onChange={onFieldChange}
+                onBlur={onApiTokenBlur}
+                onFocus={onApiTokenFocus}
+              />
+            </Grid>
           )}
           <Grid item xs={12}>
             <Alert className={classes.infoAlert} icon={false} severity="info">
