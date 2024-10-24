@@ -161,7 +161,7 @@ For more details about the NestJS-swagger integration see https://docs.nestjs.co
 
 ### TimeSeries table
 
-THe time series table contains all data used by the app and is the successor of the daily data table. On each row only one value is stored, the type of which is specified by the metric column. This way we can avoid NULL values and backfill each metric separately allowing smaller and cleaner scripts.\
+The time series table contains all data used by the app and is the successor of the daily data table. On each row only one value is stored, the type of which is specified by the metric column. This way we can avoid NULL values and backfill each metric separately allowing smaller and cleaner scripts.\
 This approach however results in many performance issues since the size of the table is multiplied not only by the time range of data and different targets (sites) but also by the number of different types of data stored. So the following have been done to optimize the performance of the table:
 
 - Create an intermediate table (Source) to reduce FKs and repetition on TimeSeries table. So source_id is the only FK stored.
@@ -198,7 +198,7 @@ E2E tests have suffix `.spec.ts` and are used to test the entirety of the api en
 
 ##### Requirements
 
-- A new database (recommended name `test_aqualink`). No need to run any migrations, the initialization procedure on the test script will cover that for you.
+- A new database (recommended name `test_aqualink`). Check the [README](./README.md) for instructions to setup the test database.
 - Make sure that either the `TEST_POSTGRES_DATABASE` or the `TEST_DATABASE_URL` variable is set (no need to set both).
 
 ##### Developing

@@ -64,12 +64,26 @@ $ yarn migration:run
 
 ### Test
 
-```bash
-# unit tests
-$ yarn test
+#### Prerequisite
 
-# e2e tests
-$ yarn test:e2e
+You need to create a new database for the tests and make sure the name matches the `TEST_POSTGRES_DATABASE` env var. The recommended approach is to manually create a new DB within the same container that api db is running.
+
+```bash
+# Run the db container for the api
+docker compose up aqua-postgres -d
+
+# Create test_ovio db for tests. Replace any values to match your .env
+docker exec -it api-aqua-postgres-1 psql -h localhost -U postgres -W -c "CREATE DATABASE test_aqualink;"
+
+# Run migrations on test db
+NODE_ENV=test yarn migration:run
+```
+
+#### Run tests
+
+```bash
+# Run unit & e2e tests
+$ yarn test
 
 # test coverage
 $ yarn test:cov
