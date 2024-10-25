@@ -31,10 +31,14 @@ const TemperatureChangeComponent = ({
   const lastWeekData = dailyData.slice(0, 7);
   // Calculate the temperature change in the last 7 days - last day minus first day
   const temperatureChange =
-    lastWeekData[0].satelliteTemperature - lastWeekData[6].satelliteTemperature;
+    lastWeekData.length > 0
+      ? lastWeekData[0]?.satelliteTemperature ??
+        -lastWeekData.at(-1)!.satelliteTemperature
+      : 0;
   // Calculate the average temperature of the last 7 days
   const avgTemp =
-    lastWeekData.reduce((acc, curr) => acc + curr.satelliteTemperature, 0) / 7;
+    lastWeekData.reduce((acc, curr) => acc + curr.satelliteTemperature, 0) /
+    lastWeekData.length;
 
   const increased = temperatureChange >= 0;
   const relativeTime =
