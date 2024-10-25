@@ -18,6 +18,7 @@ import { colors } from 'layout/App/theme';
 import { DailyData, LatestDataASSofarValue } from 'store/Sites/types';
 import { toRelativeTime } from 'helpers/dates';
 import { ReactComponent as Caret } from 'assets/caret.svg';
+import satellite from 'assets/satellite.svg';
 import { styles as incomingStyles } from '../styles';
 
 const TemperatureChangeComponent = ({
@@ -95,8 +96,11 @@ const TemperatureChangeComponent = ({
         <UpdateInfo
           relativeTime={relativeTime}
           timeText="Last data received"
-          live
-          frequency="hourly"
+          image={satellite}
+          imageText="NOAA"
+          live={false}
+          frequency="daily"
+          href="https://coralreefwatch.noaa.gov/"
         />
       </CardContent>
     </Card>
