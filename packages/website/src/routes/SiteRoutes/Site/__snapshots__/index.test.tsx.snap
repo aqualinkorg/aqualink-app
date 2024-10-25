@@ -2139,7 +2139,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               classname="makeStyles-updateInfoText-378"
                               variant="caption"
                             >
-                              Updated hourly
+                              Updated daily
                             </mock-typography>
                           </mock-box>
                         </div>
@@ -2163,14 +2163,23 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             <span
                               class="MuiButton-label"
                             >
-                              <div
-                                class="makeStyles-circle-384"
-                              />
-                              <mock-typography
-                                classname="makeStyles-chipText-383"
+                              <a
+                                class="makeStyles-link-385"
+                                href="https://coralreefwatch.noaa.gov/"
+                                rel="noopener noreferrer"
+                                target="_blank"
                               >
-                                LIVE
-                              </mock-typography>
+                                <mock-typography
+                                  classname="makeStyles-chipText-383"
+                                >
+                                  NOAA
+                                </mock-typography>
+                                <img
+                                  alt="sensor-type"
+                                  class="makeStyles-sensorImage-386"
+                                  src="satellite.svg"
+                                />
+                              </a>
                             </span>
                             <span
                               class="MuiTouchRipple-root"
@@ -5409,7 +5418,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               classname="makeStyles-updateInfoText-99"
                               variant="caption"
                             >
-                              Updated hourly
+                              Updated daily
                             </mock-typography>
                           </mock-box>
                         </div>
@@ -5433,14 +5442,23 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             <span
                               class="MuiButton-label"
                             >
-                              <div
-                                class="makeStyles-circle-105"
-                              />
-                              <mock-typography
-                                classname="makeStyles-chipText-104"
+                              <a
+                                class="makeStyles-link-106"
+                                href="https://coralreefwatch.noaa.gov/"
+                                rel="noopener noreferrer"
+                                target="_blank"
                               >
-                                LIVE
-                              </mock-typography>
+                                <mock-typography
+                                  classname="makeStyles-chipText-104"
+                                >
+                                  NOAA
+                                </mock-typography>
+                                <img
+                                  alt="sensor-type"
+                                  class="makeStyles-sensorImage-107"
+                                  src="satellite.svg"
+                                />
+                              </a>
                             </span>
                             <span
                               class="MuiTouchRipple-root"
