@@ -2077,7 +2077,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         variant="h1"
                       >
                         +
-                        23.0
+                        0.0
                         °C
                       </mock-typography>
                     </mock-box>
