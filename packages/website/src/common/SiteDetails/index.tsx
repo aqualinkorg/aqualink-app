@@ -26,6 +26,7 @@ import {
   forecastDataSelector,
   latestDataRequest,
   latestDataSelector,
+  siteDetailsSelector,
   siteTimeSeriesDataRangeSelector,
   spotterPositionRequest,
   spotterPositionSelector,
@@ -42,7 +43,7 @@ import Map from './Map';
 import SketchFab from './SketchFab';
 import FeaturedMedia from './FeaturedMedia';
 import Satellite from './Satellite';
-import Sensor from './Sensor';
+// import Sensor from './Sensor';
 import CoralBleaching from './CoralBleaching';
 import Waves from './Waves';
 import OceanSenseMetrics from './OceanSenseMetrics';
@@ -54,6 +55,7 @@ import WaterSamplingCard from './WaterSampling';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
+import { TemperatureChange } from './TemperatureChange';
 
 const acceptHUIInterval = Interval.fromDateTimes(
   DateTime.now().minus({ years: 2 }),
@@ -125,6 +127,7 @@ const SiteDetails = ({
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
+  const siteDetails = useSelector(siteDetailsSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -183,17 +186,24 @@ const SiteDetails = ({
             maxMonthlyMean={site.maxMonthlyMean}
           />,
           (() => {
-            if ((hasHUIData || hasSondeData) && !hasSpotterData) {
-              return <CoralBleaching data={latestDataAsSofarValues} />;
-            }
-
+            // TODO: Conditionally render temperature change card
             return (
-              <Sensor
-                depth={site.depth}
-                id={site.id}
+              <TemperatureChange
                 data={latestDataAsSofarValues}
+                dailyData={siteDetails?.dailyData ?? []}
               />
             );
+            // if ((hasHUIData || hasSondeData) && !hasSpotterData) {
+            //   return <CoralBleaching data={latestDataAsSofarValues} />;
+            // }
+
+            // return (
+            //   <Sensor
+            //     depth={site.depth}
+            //     id={site.id}
+            //     data={latestDataAsSofarValues}
+            //   />
+            // );
           })(),
           (() => {
             if (hasHUIData) {
