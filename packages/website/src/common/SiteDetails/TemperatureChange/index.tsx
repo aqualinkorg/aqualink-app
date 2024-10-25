@@ -33,8 +33,8 @@ const TemperatureChangeComponent = ({
   // Calculate the temperature change in the last 7 days - last day minus first day
   const temperatureChange =
     lastWeekData.length > 0
-      ? lastWeekData[0]?.satelliteTemperature ??
-        -lastWeekData.at(-1)!.satelliteTemperature
+      ? lastWeekData[0]?.satelliteTemperature -
+        lastWeekData.at(-1)!.satelliteTemperature
       : 0;
   // Calculate the average temperature of the last 7 days
   const avgTemp =
