@@ -15,36 +15,31 @@ import cls from 'classnames';
 import red from '@material-ui/core/colors/red';
 import UpdateInfo from 'common/UpdateInfo';
 import { colors } from 'layout/App/theme';
-import { DailyData, LatestDataASSofarValue } from 'store/Sites/types';
+import { DailyData } from 'store/Sites/types';
 import { toRelativeTime } from 'helpers/dates';
 import { ReactComponent as Caret } from 'assets/caret.svg';
 import satellite from 'assets/satellite.svg';
 import { styles as incomingStyles } from '../styles';
 
+const getAvgTemp = (data: DailyData[]) =>
+  data.length
+    ? data.reduce((acc, curr) => acc + curr.satelliteTemperature, 0) /
+      data.length
+    : null;
+
 const TemperatureChangeComponent = ({
-  data,
   dailyData,
   classes,
 }: TemperatureChangeProps) => {
-  const { satelliteTemperature } = data;
-
-  // Get the last 7 days of data - might not be recent
-  const lastWeekData = dailyData.slice(0, 7);
-  // Calculate the temperature change in the last 7 days - last day minus first day
+  const lastWeekAvgTemp = getAvgTemp(dailyData.slice(0, 7));
+  const prevWeekAvgTemp = getAvgTemp(dailyData.slice(7, 14));
   const temperatureChange =
-    lastWeekData.length > 0
-      ? lastWeekData[0]?.satelliteTemperature -
-        lastWeekData.at(-1)!.satelliteTemperature
-      : 0;
-  // Calculate the average temperature of the last 7 days
-  const avgTemp =
-    lastWeekData.reduce((acc, curr) => acc + curr.satelliteTemperature, 0) /
-    lastWeekData.length;
+    lastWeekAvgTemp && prevWeekAvgTemp
+      ? lastWeekAvgTemp - prevWeekAvgTemp
+      : null;
 
-  const increased = temperatureChange >= 0;
-  const relativeTime =
-    satelliteTemperature?.timestamp &&
-    toRelativeTime(satelliteTemperature.timestamp);
+  const increased = temperatureChange ? temperatureChange >= 0 : true;
+  const relativeTime = dailyData[0]?.date && toRelativeTime(dailyData[0]?.date);
 
   return (
     <Card className={classes.root}>
@@ -77,7 +72,7 @@ const TemperatureChangeComponent = ({
             />
             <Typography variant="h1" className={classes.temperatureChange}>
               {increased ? '+' : ''}
-              {temperatureChange.toFixed(1)}°C
+              {temperatureChange?.toFixed(1) ?? '--'}°C
             </Typography>
           </Box>
           <Box>
@@ -86,7 +81,7 @@ const TemperatureChangeComponent = ({
               color="textSecondary"
               variant="h4"
             >
-              {avgTemp.toFixed(1)}°C
+              {lastWeekAvgTemp?.toFixed(1) ?? '--'}°C
             </Typography>
             <Typography color="textSecondary" variant="h6">
               AVERAGE 7-DAYS TEMP
@@ -154,7 +149,6 @@ const styles = (theme: Theme) =>
   });
 
 interface IncomingTemperatureChangeProps {
-  data: LatestDataASSofarValue;
   dailyData: DailyData[];
 }
 
