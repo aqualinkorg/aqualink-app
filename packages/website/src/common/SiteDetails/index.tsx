@@ -43,7 +43,7 @@ import Map from './Map';
 import SketchFab from './SketchFab';
 import FeaturedMedia from './FeaturedMedia';
 import Satellite from './Satellite';
-// import Sensor from './Sensor';
+import Sensor from './Sensor';
 import CoralBleaching from './CoralBleaching';
 import Waves from './Waves';
 import OceanSenseMetrics from './OceanSenseMetrics';
@@ -186,24 +186,23 @@ const SiteDetails = ({
             maxMonthlyMean={site.maxMonthlyMean}
           />,
           (() => {
-            // TODO: Conditionally render temperature change card
+            if ((hasHUIData || hasSondeData) && !hasSpotterData) {
+              return <CoralBleaching data={latestDataAsSofarValues} />;
+            }
+
+            if (!hasSpotterData) {
+              return (
+                <TemperatureChange dailyData={siteDetails?.dailyData ?? []} />
+              );
+            }
+
             return (
-              <TemperatureChange
+              <Sensor
+                depth={site.depth}
+                id={site.id}
                 data={latestDataAsSofarValues}
-                dailyData={siteDetails?.dailyData ?? []}
               />
             );
-            // if ((hasHUIData || hasSondeData) && !hasSpotterData) {
-            //   return <CoralBleaching data={latestDataAsSofarValues} />;
-            // }
-
-            // return (
-            //   <Sensor
-            //     depth={site.depth}
-            //     id={site.id}
-            //     data={latestDataAsSofarValues}
-            //   />
-            // );
           })(),
           (() => {
             if (hasHUIData) {
