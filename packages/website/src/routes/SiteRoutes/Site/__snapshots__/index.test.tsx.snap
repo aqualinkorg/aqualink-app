@@ -2077,7 +2077,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         variant="h1"
                       >
                         +
-                        0.0
+                        --
                         °C
                       </mock-typography>
                     </mock-box>
@@ -2133,7 +2133,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               classname="makeStyles-updateInfoText-378"
                               variant="caption"
                             >
-                              No data available
+                              Last data received 5 min. ago
                             </mock-typography>
                             <mock-typography
                               classname="makeStyles-updateInfoText-378"
@@ -5356,7 +5356,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         variant="h1"
                       >
                         +
-                        0.0
+                        --
                         °C
                       </mock-typography>
                     </mock-box>
@@ -5366,7 +5366,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h4"
                       >
-                        NaN
+                        --
                         °C
                       </mock-typography>
                       <mock-typography
