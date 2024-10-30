@@ -1928,7 +1928,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root makeStyles-updateInfo-375 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-512 MuiGrid-item MuiGrid-grid-xs-8"
+                      class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-512 MuiGrid-item"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -1972,7 +1972,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                      class="MuiGrid-root MuiGrid-item"
                       style="display: flex; justify-content: flex-end;"
                     >
                       <div
@@ -2102,7 +2102,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root makeStyles-updateInfo-375 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-516 MuiGrid-item MuiGrid-grid-xs-8"
+                      class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-516 MuiGrid-item"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -2146,7 +2146,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                      class="MuiGrid-root MuiGrid-item"
                       style="display: flex; justify-content: flex-end;"
                     >
                       <div
@@ -2247,7 +2247,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root makeStyles-updateInfo-375 makeStyles-withMargin-376 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                     >
                       <div
-                        class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-520 MuiGrid-item MuiGrid-grid-xs-8"
+                        class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-520 MuiGrid-item"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -2291,7 +2291,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         </div>
                       </div>
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                        class="MuiGrid-root MuiGrid-item"
                         style="display: flex; justify-content: flex-end;"
                       >
                         <div
@@ -2501,7 +2501,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root makeStyles-updateInfo-375 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                     >
                       <div
-                        class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-526 MuiGrid-item MuiGrid-grid-xs-8"
+                        class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-526 MuiGrid-item"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -2545,7 +2545,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         </div>
                       </div>
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                        class="MuiGrid-root MuiGrid-item"
                         style="display: flex; justify-content: flex-end;"
                       >
                         <div
@@ -5207,7 +5207,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root makeStyles-updateInfo-96 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-102 MuiGrid-item MuiGrid-grid-xs-8"
+                      class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-102 MuiGrid-item"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -5251,7 +5251,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                      class="MuiGrid-root MuiGrid-item"
                       style="display: flex; justify-content: flex-end;"
                     >
                       <div
@@ -5381,7 +5381,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root makeStyles-updateInfo-96 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-129 MuiGrid-item MuiGrid-grid-xs-8"
+                      class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-129 MuiGrid-item"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -5425,7 +5425,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                      class="MuiGrid-root MuiGrid-item"
                       style="display: flex; justify-content: flex-end;"
                     >
                       <div
@@ -5526,7 +5526,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root makeStyles-updateInfo-96 makeStyles-withMargin-97 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                     >
                       <div
-                        class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-144 MuiGrid-item MuiGrid-grid-xs-8"
+                        class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-144 MuiGrid-item"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -5570,7 +5570,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         </div>
                       </div>
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                        class="MuiGrid-root MuiGrid-item"
                         style="display: flex; justify-content: flex-end;"
                       >
                         <div
@@ -5780,7 +5780,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root makeStyles-updateInfo-96 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                     >
                       <div
-                        class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-166 MuiGrid-item MuiGrid-grid-xs-8"
+                        class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-166 MuiGrid-item"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -5824,7 +5824,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         </div>
                       </div>
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                        class="MuiGrid-root MuiGrid-item"
                         style="display: flex; justify-content: flex-end;"
                       >
                         <div

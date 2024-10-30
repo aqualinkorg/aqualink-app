@@ -79,7 +79,7 @@ exports[`TemperatureChange card should render with given state from Redux store 
         class="MuiGrid-root makeStyles-updateInfo-18 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
       >
         <div
-          class="MuiGrid-root makeStyles-dateInfoWrapper-22 makeStyles-dateInfoWrapper-24 MuiGrid-item MuiGrid-grid-xs-8"
+          class="MuiGrid-root makeStyles-dateInfoWrapper-22 makeStyles-dateInfoWrapper-24 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -123,7 +123,7 @@ exports[`TemperatureChange card should render with given state from Redux store 
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+          class="MuiGrid-root MuiGrid-item"
           style="display: flex; justify-content: flex-end;"
         >
           <div
