@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useCallback } from 'react';
+import Image from 'next/image';
 import {
   Theme,
   Grid,
@@ -17,7 +18,7 @@ import { DeleteOutlineOutlined } from '@mui/icons-material';
 import observationOptions from 'constants/uploadDropdowns';
 import { SurveyPoints } from 'store/Sites/types';
 import SurveyPointSelector from 'common/SurveyPointSelector';
-import { ReactComponent as StarIcon } from '../../../assets/starIcon.svg';
+import starIcon from '../../../assets/starIcon.svg';
 
 const MediaCard = ({
   preview,
@@ -168,9 +169,11 @@ const MediaCard = ({
                       : 'Set this image as featured'
                   }
                 >
-                  <StarIcon
-                    fill={index === featuredFile ? '#168dbd' : '#939393'}
+                  <Image
+                    src={starIcon}
+                    color={index === featuredFile ? '#168dbd' : '#939393'}
                     className={classes.starIcon}
+                    alt="star"
                   />
                 </Tooltip>
               </IconButton>

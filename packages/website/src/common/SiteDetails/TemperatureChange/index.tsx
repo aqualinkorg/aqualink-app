@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import {
   Box,
   Card,
@@ -17,7 +18,7 @@ import UpdateInfo from 'common/UpdateInfo';
 import { colors } from 'layout/App/theme';
 import { DailyData } from 'store/Sites/types';
 import { toRelativeTime } from 'helpers/dates';
-import { ReactComponent as Caret } from 'assets/caret.svg';
+import caret from 'assets/caret.svg';
 import satellite from 'assets/satellite.svg';
 import { styles as incomingStyles } from '../styles';
 
@@ -67,7 +68,9 @@ const TemperatureChangeComponent = ({
               increased ? classes.tempIncreased : classes.tempDecreased,
             )}
           >
-            <Caret
+            <Image
+              src={caret}
+              alt="caret"
               className={cls(classes.icon, { [classes.rotate]: !increased })}
             />
             <Typography variant="h1" className={classes.temperatureChange}>

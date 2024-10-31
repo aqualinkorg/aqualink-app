@@ -24,17 +24,17 @@ import { OceanSenseData, OceanSenseKeys } from 'store/Sites/types';
 import { formatNumber } from 'helpers/numberUtils';
 import { toRelativeTime } from 'helpers/dates';
 import UpdateInfo from '../../UpdateInfo';
-import { ReactComponent as AcidityIcon } from '../../../assets/acidity.svg';
-import { ReactComponent as ConductivityIcon } from '../../../assets/conductivuty.svg';
-import { ReactComponent as PressureIcon } from '../../../assets/pressure.svg';
-import { ReactComponent as DissolvedOxygenIcon } from '../../../assets/dissolved_oxygen.svg';
-import { ReactComponent as OrpIcon } from '../../../assets/orp.svg';
+import acidityIcon from '../../../assets/acidity.svg';
+import conductivityIcon from '../../../assets/conductivuty.svg';
+import pressureIcon from '../../../assets/pressure.svg';
+import dissolvedOxygenIcon from '../../../assets/dissolved_oxygen.svg';
+import orpIcon from '../../../assets/orp.svg';
 
 interface Metric {
   label: string;
   value: string;
   measure: string;
-  icon: JSX.Element;
+  icon: string;
 }
 
 const metrics = (data?: OceanSenseData): Record<OceanSenseKeys, Metric> => ({
@@ -42,31 +42,31 @@ const metrics = (data?: OceanSenseData): Record<OceanSenseKeys, Metric> => ({
     label: 'ACIDITY',
     value: formatNumber(last(data?.PH)?.value, 2),
     measure: 'pH',
-    icon: <AcidityIcon />,
+    icon: acidityIcon.src,
   },
   EC: {
     label: 'CONDUCTIVITY',
     value: formatNumber(last(data?.EC)?.value, 2),
     measure: '\u00B5S',
-    icon: <ConductivityIcon />,
+    icon: conductivityIcon.src,
   },
   PRESS: {
     label: 'PRESSURE',
     value: formatNumber(last(data?.PRESS)?.value, 2),
     measure: 'dbar',
-    icon: <PressureIcon />,
+    icon: pressureIcon.src,
   },
   DO: {
     label: 'DISSOLVED OXYGEN',
     value: formatNumber(last(data?.DO)?.value, 2),
     measure: 'mg/L',
-    icon: <DissolvedOxygenIcon />,
+    icon: dissolvedOxygenIcon.src,
   },
   ORP: {
     label: 'ORP',
     value: formatNumber(last(data?.ORP)?.value, 2),
     measure: 'mV',
-    icon: <OrpIcon />,
+    icon: orpIcon.src,
   },
 });
 
@@ -104,7 +104,9 @@ const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
                 alignItems="center"
                 spacing={2}
               >
-                <Grid item>{item.icon}</Grid>
+                <Grid item>
+                  <img src={item.icon} alt={item.label} />
+                </Grid>
                 <Grid item>
                   <Typography display="block" variant="caption">
                     {item.label}

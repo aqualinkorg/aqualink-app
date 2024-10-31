@@ -34,7 +34,7 @@ const FootPrintImage = ({ imageHeight }: FootPrintImageProps) => {
         >
           <img
             className={classes.footPrintImage}
-            src={footprint}
+            src={footprint.src}
             alt="footprint"
           />
         </a>

@@ -127,7 +127,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
             href="https://ovio.org/project/aqualinkorg/aqualink-app"
             className={classes.contributeButton}
           >
-            <img src={ovioLogo} alt="Ovio Logo" />
+            <img src={ovioLogo.src} alt="Ovio Logo" />
           </Button>
         </ButtonGroup>
       </Box>

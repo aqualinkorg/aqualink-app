@@ -48,7 +48,7 @@ const Drones = () => (
                         rel="noopener noreferrer"
                       >
                         <img
-                          src={ghbttn}
+                          src={ghbttn.src}
                           className="img-fluid mx-auto d-block img-ghbt-style lazyload"
                           alt="Start button"
                         />
@@ -63,7 +63,7 @@ const Drones = () => (
                         rel="noopener noreferrer"
                       >
                         <img
-                          src={fVeh}
+                          src={fVeh.src}
                           className="img-fluid mx-auto d-block lazyload"
                           alt="f1"
                         />
@@ -76,7 +76,7 @@ const Drones = () => (
                         rel="noopener noreferrer"
                       >
                         <img
-                          src={f4}
+                          src={f4.src}
                           className="img-fluid mx-auto d-block lazyload"
                           alt="f4"
                         />
@@ -89,7 +89,7 @@ const Drones = () => (
                         rel="noopener noreferrer"
                       >
                         <img
-                          src={fCad}
+                          src={fCad.src}
                           className="img-fluid mx-auto d-block lazyload"
                           alt="f3"
                         />
@@ -102,7 +102,7 @@ const Drones = () => (
                         rel="noopener noreferrer"
                       >
                         <img
-                          src={fBom}
+                          src={fBom.src}
                           className="img-fluid mx-auto d-block lazyload"
                           alt="f2"
                         />
@@ -177,7 +177,7 @@ const Drones = () => (
                   </div>
                   <div className="col-md-8 offset-md-2 order-md-1 offset-sm-1 col-sm-10 col-lg-6 offset-lg-0 ">
                     <img
-                      src={dronepersp}
+                      src={dronepersp.src}
                       className="img-fluid mx-auto d-block lazyload"
                       alt="dronepersp"
                     />
@@ -186,7 +186,7 @@ const Drones = () => (
                 <div className="row align-items-center voffset-lg">
                   <div className="col-sm-10 offset-sm-1 offset-lg-0 col-md-8 offset-md-2 col-lg-5">
                     <img
-                      src={dronetrio}
+                      src={dronetrio.src}
                       className="img-fluid mx-auto d-block mg-md lazyload"
                       alt="drone"
                     />
@@ -250,7 +250,7 @@ const Drones = () => (
                   </div>
                   <div className="col-sm-10 offset-sm-1 col-md-8 offset-md-2 order-sm-0 col-lg-5 offset-lg-1">
                     <img
-                      src={dronebottom}
+                      src={dronebottom.src}
                       className="img-fluid mx-auto d-block mg-md lazyload"
                       alt="drone"
                     />

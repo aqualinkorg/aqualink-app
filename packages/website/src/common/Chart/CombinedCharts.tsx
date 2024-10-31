@@ -44,7 +44,7 @@ const CombinedCharts = ({
         variant="rectangular"
         height={256}
         width="100%"
-        image={chartSkeletonImage}
+        image={chartSkeletonImage.src}
       >
         {site && heatStressDataset && (
           <>

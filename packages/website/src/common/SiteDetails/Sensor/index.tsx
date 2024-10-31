@@ -223,7 +223,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
             <img
               style={{ position: 'absolute', bottom: '0' }}
               alt="sensor"
-              src={sensor}
+              src={sensor.src}
               height={getImageHeight()}
               width="auto"
             />

@@ -83,7 +83,7 @@ const FeaturedMedia = ({
                 to={`/sites/${siteId}/new_survey`}
                 size="large"
               >
-                <img src={uploadIcon} alt="upload" />
+                <img src={uploadIcon.src} alt="upload" />
               </IconButton>
             </Grid>
           )}

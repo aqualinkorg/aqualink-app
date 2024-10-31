@@ -10,7 +10,7 @@ const NotFoundPage = ({ classes }: NotFoundPageProps) => {
   return (
     <div className={classes.background}>
       <Link to="/map">
-        <img src={NotFoundButton} alt="404 Not Found" />
+        <img src={NotFoundButton.src} alt="404 Not Found" />
       </Link>
     </div>
   );

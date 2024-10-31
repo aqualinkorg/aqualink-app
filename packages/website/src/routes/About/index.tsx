@@ -104,7 +104,7 @@ const About = ({ classes }: AboutProps) => {
                     <div className="card border-0">
                       <div className="card-body team-card">
                         <img
-                          src={peter}
+                          src={peter.src}
                           className="rounded-circle mx-auto d-block mt-5 img-style lazyload"
                           width={100}
                           alt="placeholder user"
@@ -122,7 +122,7 @@ const About = ({ classes }: AboutProps) => {
                     <div className="card border-0">
                       <div className="card-body team-card">
                         <img
-                          src={caesar}
+                          src={caesar.src}
                           className="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
                           width={100}
                           alt="placeholder user"
@@ -143,7 +143,7 @@ const About = ({ classes }: AboutProps) => {
                     <div className="card border-0">
                       <div className="card-body team-card">
                         <img
-                          src={eric}
+                          src={eric.src}
                           className="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
                           width={100}
                           alt="placeholder user"

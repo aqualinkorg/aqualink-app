@@ -4,6 +4,7 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import { useDispatch, useSelector } from 'react-redux';
+import Image from 'next/image';
 
 import {
   createCollectionRequest,
@@ -14,8 +15,8 @@ import {
 } from 'store/User/userSlice';
 import { belongsToCollection } from 'helpers/siteUtils';
 import collectionServices from 'services/collectionServices';
-import { ReactComponent as WatchIcon } from '../../../../../assets/watch.svg';
-import { ReactComponent as UnWatchIcon } from '../../../../../assets/unwatch.svg';
+import watchIcon from '../../../../../assets/watch.svg';
+import unWatchIcon from '../../../../../assets/unwatch.svg';
 
 const CollectionButton = ({
   siteId,
@@ -118,23 +119,15 @@ const CollectionButton = ({
         }
         size="large"
       >
-        {siteBelongsToCollection ? (
-          <UnWatchIcon
-            color={
-              collectionActionLoading
-                ? theme.palette.grey[500]
-                : theme.palette.error.main
-            }
-          />
-        ) : (
-          <WatchIcon
-            color={
-              collectionActionLoading
-                ? theme.palette.grey[500]
-                : theme.palette.primary.main
-            }
-          />
-        )}
+        <Image
+          src={siteBelongsToCollection ? unWatchIcon : watchIcon}
+          alt="watch"
+          color={
+            collectionActionLoading
+              ? theme.palette.grey[500]
+              : theme.palette.primary.main
+          }
+        />
       </IconButton>
     </Tooltip>
   );

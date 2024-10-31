@@ -41,7 +41,7 @@ const Buoy = ({ classes }: BuoyProps) => {
             </div>
             <div className="col-lg-12 offset-lg-0">
               <img
-                src={fullDiagramBuoy}
+                src={fullDiagramBuoy.src}
                 className="img-fluid mg-lg mx-auto d-block img-responsive diagram lazyload"
                 alt="bouydiagram2"
               />
@@ -63,7 +63,7 @@ const Buoy = ({ classes }: BuoyProps) => {
             </div>
             <div className="col-lg-12">
               <img
-                src={fullDiagramInfra}
+                src={fullDiagramInfra.src}
                 className="img-fluid mx-auto d-block img-responsive diagram lazyload"
                 alt="Asset%204"
               />

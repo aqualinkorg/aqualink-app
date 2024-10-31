@@ -27,14 +27,14 @@ import pointIcon from '../../../assets/alerts/pin_nostress@2x.png';
 import selectedPointIcon from '../../../assets/alerts/pin_warning@2x.png';
 
 const pinIcon = L.icon({
-  iconUrl: marker,
+  iconUrl: marker.src,
   iconSize: [20, 30],
   iconAnchor: [10, 30],
   popupAnchor: [0, -41],
 });
 
 const buoyIcon = L.icon({
-  iconUrl: buoy,
+  iconUrl: buoy.src,
   iconSize: [30, 40],
   iconAnchor: [10, 30],
   popupAnchor: [0, -41],
@@ -42,7 +42,7 @@ const buoyIcon = L.icon({
 
 const surveyPointIcon = (selected: boolean) =>
   L.icon({
-    iconUrl: selected ? selectedPointIcon : pointIcon,
+    iconUrl: selected ? selectedPointIcon.src : pointIcon.src,
     iconSize: [24, 27],
     iconAnchor: [12, 27],
     popupAnchor: [0, -27],
