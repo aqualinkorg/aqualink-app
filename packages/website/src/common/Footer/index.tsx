@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Grid,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Link,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Grid, Typography, Theme, Link } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 const Footer = ({ classes }: FooterProps) => {
   return (

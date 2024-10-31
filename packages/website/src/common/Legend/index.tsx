@@ -1,5 +1,7 @@
 import React from 'react';
-import { withStyles, WithStyles, createStyles } from '@material-ui/core';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 const Legend = ({ unit, colorCode, classes }: LegendProps) => {
   const gradientColors = colorCode.map((item) => item.color).join(', ');

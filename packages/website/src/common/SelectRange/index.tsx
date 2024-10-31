@@ -1,14 +1,9 @@
 import React, { ChangeEvent } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Grid,
-  Box,
-  Typography,
-  Select,
-  MenuItem,
-} from '@material-ui/core';
+import { Grid, Box, Typography, Select, MenuItem } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { Range } from 'store/Sites/types';
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  createStyles,
   TableCell,
   TableHead,
   TableRow,
   TableSortLabel,
   Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { Order, OrderKeys } from './utils';
 
 const ColumnTitle = ({

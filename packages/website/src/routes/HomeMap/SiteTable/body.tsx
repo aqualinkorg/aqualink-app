@@ -1,5 +1,4 @@
 import {
-  createStyles,
   Hidden,
   TableBody,
   TableCell,
@@ -8,10 +7,11 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
-import ErrorIcon from '@material-ui/icons/Error';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
+import ErrorIcon from '@mui/icons-material/Error';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TableRow as Row } from 'store/Homepage/types';
@@ -135,7 +135,7 @@ const SiteTableBody = ({
   const [selectedRow, setSelectedRow] = useState<number>();
 
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   const mapElement = document.getElementById('sites-map');
 
@@ -260,28 +260,28 @@ const styles = (theme: Theme) =>
       paddingLeft: 10,
       maxWidth: 120,
       overflowWrap: 'break-word',
-      [theme.breakpoints.down('xs')]: { width: '35%', paddingRight: 0 },
+      [theme.breakpoints.down('sm')]: { width: '35%', paddingRight: 0 },
     },
     extendedTableNameCells: {
       paddingLeft: 10,
       maxWidth: 200,
       overflowWrap: 'break-word',
-      [theme.breakpoints.down('xs')]: { width: '10%', paddingRight: 0 },
+      [theme.breakpoints.down('sm')]: { width: '10%', paddingRight: 0 },
     },
     regionName: {
       color: 'gray',
     },
     numberCellsTitle: {
-      [theme.breakpoints.down('xs')]: { fontWeight: 600 },
+      [theme.breakpoints.down('sm')]: { fontWeight: 600 },
     },
     cellTextAlign: {
       textAlign: 'left',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         textAlign: 'right',
       },
     },
     cellTextAlignExtended: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         paddingLeft: 10,
         paddingRight: 0,
         textAlign: 'left',

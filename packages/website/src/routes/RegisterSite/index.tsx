@@ -12,13 +12,13 @@ import {
   TextField,
   Button,
   Snackbar,
-  withStyles,
-  WithStyles,
-  createStyles,
   Theme,
   Tooltip,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Alert from '@mui/material/Alert';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { userInfoSelector, getSelf } from 'store/User/userSlice';

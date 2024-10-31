@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Box,
-  Typography,
-  Grid,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import { Alert, Theme, Box, Typography, Grid } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,

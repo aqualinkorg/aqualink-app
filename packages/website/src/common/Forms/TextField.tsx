@@ -1,11 +1,9 @@
 import React, { ChangeEvent, FocusEvent } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  TextField,
-  BaseTextFieldProps,
-} from '@material-ui/core';
+import { TextField, BaseTextFieldProps } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { FormField } from 'hooks/useFormField';
 

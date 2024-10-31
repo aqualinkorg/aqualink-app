@@ -3,9 +3,10 @@ import classNames from 'classnames';
 import DefaultDropzone, {
   DropzoneProps as DefaultDropzoneProps,
 } from 'react-dropzone';
-import { makeStyles, Theme, Grid, Typography, Button } from '@material-ui/core';
-import { alpha } from '@material-ui/core/styles/colorManipulator';
-import { grey } from '@material-ui/core/colors';
+import { Theme, Grid, Typography, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { alpha } from '@mui/material/styles';
+import { grey } from '@mui/material/colors';
 
 const GREY_COLOR = grey[500];
 const MAX_SIZE_MB = 10;

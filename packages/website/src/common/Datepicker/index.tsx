@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Grid,
-  Box,
-  Typography,
-  TypographyProps,
-} from '@material-ui/core';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { Theme, Grid, Box, Typography, TypographyProps } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import {
   KeyboardDatePicker,

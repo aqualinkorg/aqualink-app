@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Typography,
-  CardMedia,
-} from '@material-ui/core';
+import { Typography, CardMedia } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 
 import NavBar from 'common/NavBar';

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { Grid, Collapse, IconButton } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+import { Grid, Collapse, IconButton } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { useSelector, useDispatch } from 'react-redux';
 import { SurveyData, SurveyState } from 'store/Survey/types';
 import {

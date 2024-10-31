@@ -1,5 +1,8 @@
 import React from 'react';
-import { Box, createStyles, makeStyles, Typography } from '@material-ui/core';
+import { Box, Typography } from '@mui/material';
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 import { Site } from 'store/Sites/types';
 import { SurveyListItem } from 'store/Survey/types';

@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {
-  createStyles,
-  Grid,
-  makeStyles,
-  Theme,
-  Box,
-  useTheme,
-  useMediaQuery,
-} from '@material-ui/core';
+import { Grid, Theme, Box, useTheme, useMediaQuery } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
 import times from 'lodash/times';
 
@@ -125,7 +119,7 @@ const SiteDetails = ({
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
 
@@ -379,11 +373,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: '2rem',
     },
     forcedWidth: {
-      width: `calc(100% + ${theme.spacing(2)}px)`,
+      width: `calc(100% + ${theme.spacing(2)})`,
       margin: -theme.spacing(1),
     },
     mobileMargin: {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         margin: theme.spacing(1, 0),
       },
     },

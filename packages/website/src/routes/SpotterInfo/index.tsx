@@ -1,5 +1,10 @@
-import { Button, TextField, Typography } from '@material-ui/core';
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
+import {
+  Button,
+  TextField,
+  Typography,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
 import Footer from 'common/Footer';
 import NavBar from 'common/NavBar';
 import React from 'react';

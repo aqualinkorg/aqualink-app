@@ -1,7 +1,8 @@
 import React from 'react';
-import { Theme, Grid, Box, Typography, makeStyles } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
-import UpdateIcon from '@material-ui/icons/Update';
+import { Theme, Grid, Box, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { grey } from '@mui/material/colors';
+import UpdateIcon from '@mui/icons-material/Update';
 import Chip from '../Chip';
 
 const CHIP_SMALL_DEFAULT_WIDTH = 48;
@@ -87,7 +88,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    [theme.breakpoints.between('md', 'md')]: {
+    [theme.breakpoints.between('md', 'lg')]: {
       fontSize: 8.5,
     },
   },

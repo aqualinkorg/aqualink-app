@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
-  createStyles,
   Theme,
   Grid,
   Typography,
@@ -11,9 +10,10 @@ import {
   Tooltip,
   TextField,
   Hidden,
-  makeStyles,
-} from '@material-ui/core';
-import { Create, DeleteOutline } from '@material-ui/icons';
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import { Create, DeleteOutline } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 import { SurveyPoints } from 'store/Sites/types';
@@ -184,6 +184,7 @@ const PointSelector = ({
                                           seteditSurveyPoint(item);
                                           event.stopPropagation();
                                         }}
+                                        size="large"
                                       >
                                         <Create color="primary" />
                                       </IconButton>
@@ -201,6 +202,7 @@ const PointSelector = ({
                                           onDeleteButtonClick(item.id);
                                           event.stopPropagation();
                                         }}
+                                        size="large"
                                       >
                                         <DeleteOutline color="primary" />
                                       </IconButton>
@@ -225,7 +227,7 @@ const PointSelector = ({
                     tooltipTitle="View survey point"
                   />
                 </Hidden>
-                <Hidden xsDown>
+                <Hidden smDown>
                   <Button
                     variant="outlined"
                     color="primary"
@@ -253,7 +255,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: '1rem',
     },
     selectorWrapper: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
       },
     },

@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  createStyles,
   Theme,
   Grid,
   Typography,
@@ -10,10 +9,11 @@ import {
   Button,
   useTheme,
   useMediaQuery,
-  makeStyles,
-} from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import EventIcon from '@material-ui/icons/Event';
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import EventIcon from '@mui/icons-material/Event';
 import { Link } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller } from 'react-hook-form';
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
   const theme = useTheme();
   const classes = useStyles();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
   const [weather, setWeather] =

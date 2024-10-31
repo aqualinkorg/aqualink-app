@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
-  createStyles,
   useTheme,
   useMediaQuery,
   Theme,
@@ -10,8 +9,9 @@ import {
   FormControl,
   MenuItem,
   Box,
-  makeStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch, useSelector } from 'react-redux';
 
 import observationOptions from 'constants/uploadDropdowns';
@@ -36,7 +36,7 @@ import DeleteSurveyPointDialog, { Action } from '../../Dialog';
 const Surveys = ({ site }: SurveysProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const isLoading = !site;
   const [point, setPoint] = useState<string>('All');
   const pointOptions = site?.surveyPoints || [];
@@ -337,7 +337,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: '1rem',
     },
     selectorWrapper: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
       },
     },

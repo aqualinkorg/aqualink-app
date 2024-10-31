@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import isISODate from 'validator/lib/isISO8601';
-import { Box, Container, makeStyles, Theme } from '@material-ui/core';
+import { Box, Container, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { camelCase, isNaN, snakeCase, sortBy } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Snackbar, makeStyles, Theme } from '@material-ui/core';
-import { Alert, AlertProps } from '@material-ui/lab';
+import { Button, Snackbar, Theme, Alert } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { AlertProps } from '@mui/lab';
 
 const StatusSnackbar = ({
   open,
@@ -48,7 +49,7 @@ const useStyles = makeStyles<Theme, { hasMessage: boolean }>(
   (theme: Theme) => ({
     snackbar: {
       maxWidth: '50%',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         maxWidth: '90%',
       },
     },

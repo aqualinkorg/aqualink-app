@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Button,
-  makeStyles,
   Theme,
   Typography,
   Table,
@@ -11,8 +10,9 @@ import {
   TableHead,
   TableRow,
   TypographyProps,
-} from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { grey } from '@mui/material/colors';
 import { startCase } from 'lodash';
 import { Link } from 'react-router-dom';
 import { Site, SiteUploadHistory } from 'store/Sites/types';

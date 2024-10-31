@@ -1,12 +1,16 @@
-import { createTheme, Theme } from '@material-ui/core/styles';
-import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+import {
+  createTheme,
+  Theme,
+  adaptV4Theme,
+  createBreakpoints,
+} from '@mui/material/styles';
 import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
 
 type OverridesNameToClassKey = {
   [P in keyof Required<MuiPickersOverrides>]: keyof MuiPickersOverrides[P];
 };
 
-declare module '@material-ui/core/styles/overrides' {
+declare module '@mui/material/styles/overrides' {
   export interface ComponentNameToClassKey extends OverridesNameToClassKey {}
 }
 
@@ -52,193 +56,195 @@ export const mapIconSize = '2rem';
 
 const breakpoints = createBreakpoints({});
 
-const theme: Theme = createTheme({
-  palette: {
-    primary: {
-      main: lightBlue,
-      dark: darkGreyBlue,
-      light: white,
-    },
-    text: {
-      primary: white,
-      secondary: black,
-    },
-    grey: {
-      500: lightGray,
-    },
-  },
-  overrides: {
-    MuiAppBar: {
-      root: {
-        height: 122,
-        justifyContent: 'center',
-        backgroundColor: lightBlue,
+const theme: Theme = createTheme(
+  adaptV4Theme({
+    palette: {
+      primary: {
+        main: lightBlue,
+        dark: darkGreyBlue,
+        light: white,
+      },
+      text: {
+        primary: white,
+        secondary: black,
+      },
+      grey: {
+        500: lightGray,
       },
     },
-    MuiToolbar: {
-      root: {
-        justifyContent: 'space-between',
-      },
-      dense: {
-        minHeight: 40,
-      },
-    },
-    MuiTypography: {
-      h1: {
-        fontSize: 52,
-        fontFamily,
-        fontWeight: 300,
-        [breakpoints.down('xs')]: {
-          fontSize: 34,
+    overrides: {
+      MuiAppBar: {
+        root: {
+          height: 122,
+          justifyContent: 'center',
+          backgroundColor: lightBlue,
         },
       },
-      h2: {
-        fontSize: 48,
-        fontFamily,
-        fontWeight: 300,
-        [breakpoints.down('xs')]: {
-          fontSize: 30,
+      MuiToolbar: {
+        root: {
+          justifyContent: 'space-between',
+        },
+        dense: {
+          minHeight: 40,
         },
       },
-      h3: {
-        fontSize: 32,
-        fontFamily,
-      },
-      h4: {
-        fontSize: 26,
-        fontFamily,
-        fontWeight: 400,
-        [breakpoints.down('sm')]: {
-          fontSize: 22,
+      MuiTypography: {
+        h1: {
+          fontSize: 52,
+          fontFamily,
+          fontWeight: 300,
+          [breakpoints.down('xs')]: {
+            fontSize: 34,
+          },
+        },
+        h2: {
+          fontSize: 48,
+          fontFamily,
+          fontWeight: 300,
+          [breakpoints.down('xs')]: {
+            fontSize: 30,
+          },
+        },
+        h3: {
+          fontSize: 32,
+          fontFamily,
+        },
+        h4: {
+          fontSize: 26,
+          fontFamily,
+          fontWeight: 400,
+          [breakpoints.down('sm')]: {
+            fontSize: 22,
+          },
+        },
+        h5: {
+          fontSize: 20,
+          fontFamily,
+        },
+        h6: {
+          fontSize: 16,
+          fontFamily,
+          fontWeight: 400,
+        },
+        subtitle1: {
+          fontSize: 14,
+          fontFamily,
+        },
+        subtitle2: {
+          fontSize: 12,
+          fontFamily,
+        },
+        caption: {
+          fontSize: 10,
+          fontFamily,
+        },
+        overline: {
+          fontSize: 8.5,
+          fontFamily,
+          textTransform: 'none',
+        },
+        gutterBottom: {
+          marginBottom: '1rem',
         },
       },
-      h5: {
-        fontSize: 20,
-        fontFamily,
-      },
-      h6: {
-        fontSize: 16,
-        fontFamily,
-        fontWeight: 400,
-      },
-      subtitle1: {
-        fontSize: 14,
-        fontFamily,
-      },
-      subtitle2: {
-        fontSize: 12,
-        fontFamily,
-      },
-      caption: {
-        fontSize: 10,
-        fontFamily,
-      },
-      overline: {
-        fontSize: 8.5,
-        fontFamily,
-        textTransform: 'none',
-      },
-      gutterBottom: {
-        marginBottom: '1rem',
-      },
-    },
-    MuiGrid: {
-      'spacing-xs-10': {
-        width: '100%',
-        margin: '0',
-      },
-    },
-    MuiButton: {
-      root: {
-        borderRadius: 5,
-      },
-      containedPrimary: {
-        backgroundColor: lightBlue,
-      },
-      containedSecondary: {
-        backgroundColor: darkGreyBlue,
-      },
-    },
-    MuiButtonBase: {
-      root: {
-        '&:focus': {
-          outline: 'none',
+      MuiGrid: {
+        'spacing-xs-10': {
+          width: '100%',
+          margin: '0',
         },
       },
-    },
-    MuiCardContent: {
-      root: {
-        '&:last-child': {
-          paddingBottom: 0,
+      MuiButton: {
+        root: {
+          borderRadius: 5,
+        },
+        containedPrimary: {
+          backgroundColor: lightBlue,
+        },
+        containedSecondary: {
+          backgroundColor: darkGreyBlue,
         },
       },
-    },
-    MuiInputLabel: {
-      root: {
-        color: lightGray,
+      MuiButtonBase: {
+        root: {
+          '&:focus': {
+            outline: 'none',
+          },
+        },
       },
-    },
-    MuiInputBase: {
-      root: {
-        height: '100%',
-        '& $disabled': {
+      MuiCardContent: {
+        root: {
+          '&:last-child': {
+            paddingBottom: 0,
+          },
+        },
+      },
+      MuiInputLabel: {
+        root: {
+          color: lightGray,
+        },
+      },
+      MuiInputBase: {
+        root: {
+          height: '100%',
+          '& $disabled': {
+            backgroundColor: backgroundGray,
+          },
+        },
+      },
+      MuiPickersDay: {
+        day: {
+          color: 'black',
+        },
+      },
+      MuiPickersCalendarHeader: {
+        switchHeader: {
+          color: 'black',
+        },
+      },
+      MuiPickersClockNumber: {
+        clockNumber: {
+          color: 'black',
+        },
+      },
+      MuiOutlinedInput: {
+        root: {
+          padding: 0,
+          color: 'black',
+          '&$focused': {
+            borderColor: lightBlue,
+          },
+        },
+      },
+      MuiTableCell: {
+        root: {
+          color: black,
+        },
+        head: {
+          color: black,
+        },
+        body: {
+          color: black,
+        },
+      },
+      MuiTableSortLabel: {
+        root: {
+          color: black,
+        },
+        active: {
+          color: `${black} !important`,
+        },
+      },
+      MuiTablePagination: {
+        root: {
+          color: black,
           backgroundColor: backgroundGray,
         },
-      },
-    },
-    MuiPickersDay: {
-      day: {
-        color: 'black',
-      },
-    },
-    MuiPickersCalendarHeader: {
-      switchHeader: {
-        color: 'black',
-      },
-    },
-    MuiPickersClockNumber: {
-      clockNumber: {
-        color: 'black',
-      },
-    },
-    MuiOutlinedInput: {
-      root: {
-        padding: 0,
-        color: 'black',
-        '&$focused': {
-          borderColor: lightBlue,
+        menuItem: {
+          color: black,
         },
       },
     },
-    MuiTableCell: {
-      root: {
-        color: black,
-      },
-      head: {
-        color: black,
-      },
-      body: {
-        color: black,
-      },
-    },
-    MuiTableSortLabel: {
-      root: {
-        color: black,
-      },
-      active: {
-        color: `${black} !important`,
-      },
-    },
-    MuiTablePagination: {
-      root: {
-        color: black,
-        backgroundColor: backgroundGray,
-      },
-      menuItem: {
-        color: black,
-      },
-    },
-  },
-});
+  }),
+);
 
 export default theme;

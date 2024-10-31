@@ -1,15 +1,16 @@
 import React, { forwardRef } from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Box,
   Grid,
   Typography,
   GridProps,
   CardMedia,
   Theme,
-} from '@material-ui/core';
+} from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   (
@@ -56,13 +57,13 @@ const styles = (theme: Theme) =>
   createStyles({
     container: {
       marginTop: '5rem',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         marginTop: '2rem',
       },
     },
     textContainer: {
       padding: '4rem',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         padding: '1rem',
       },
     },

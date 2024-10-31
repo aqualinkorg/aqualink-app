@@ -3,7 +3,6 @@ import {
   Chip,
   Collapse,
   IconButton,
-  makeStyles,
   MenuItem,
   Table,
   TableBody,
@@ -14,10 +13,11 @@ import {
   TextFieldProps,
   Theme,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { SurveyPoints } from 'store/Sites/types';
 
 interface TableCellWrapProps extends TableCellProps {

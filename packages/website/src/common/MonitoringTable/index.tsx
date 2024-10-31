@@ -1,8 +1,6 @@
 import {
   Button,
-  createStyles,
   Link,
-  makeStyles,
   Padding,
   Paper,
   Table,
@@ -15,7 +13,9 @@ import {
   TableSortLabel,
   Toolbar,
   Tooltip,
-} from '@material-ui/core';
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { colors } from 'layout/App/theme';
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/browser/esm/sync';

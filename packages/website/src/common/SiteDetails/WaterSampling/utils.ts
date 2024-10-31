@@ -1,6 +1,6 @@
 import { formatNumber } from 'helpers/numberUtils';
 import { Metrics, MetricsKeys, Sources } from 'store/Sites/types';
-import { GridProps } from '@material-ui/core';
+import { GridProps } from '@mui/material';
 import siteServices from 'services/siteServices';
 import { timeSeriesRequest } from 'store/Sites/helpers';
 import { getSondeConfig } from 'constants/chartConfigs/sondeConfig';

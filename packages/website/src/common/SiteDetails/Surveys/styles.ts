@@ -28,10 +28,10 @@ const styles = {
     borderColor: '#dddddd',
     borderRadius: 2,
     height: 320,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 640,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%',
     },
   },

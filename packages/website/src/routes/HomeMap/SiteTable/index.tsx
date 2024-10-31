@@ -3,7 +3,6 @@ import { times } from 'lodash';
 import {
   Box,
   CircularProgress,
-  createStyles,
   Hidden,
   MenuItem,
   Select,
@@ -12,12 +11,13 @@ import {
   TableContainer,
   Theme,
   Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 import {
   filterSitesWithSpotter,
   sitesListLoadingSelector,
@@ -207,7 +207,7 @@ const SiteTable = ({
             stickyHeader
             className={isExtended ? classes.extendedTable : classes.table}
           >
-            <Hidden smDown={!isExtended}>
+            <Hidden mdDown={!isExtended}>
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}
@@ -243,7 +243,7 @@ const styles = (theme: Theme) =>
   createStyles({
     tableHolder: {
       paddingLeft: 10,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         paddingLeft: 0,
         height: 'auto',
       },
@@ -252,13 +252,13 @@ const styles = (theme: Theme) =>
       overflowY: 'auto',
     },
     table: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         tableLayout: 'fixed',
       },
       borderCollapse: 'collapse',
     },
     extendedTable: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         minWidth: 1220,
       },
       borderCollapse: 'collapse',

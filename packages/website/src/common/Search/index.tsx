@@ -1,15 +1,12 @@
 /* eslint-disable fp/no-mutating-methods */
 import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  IconButton,
-  TextField,
-} from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { IconButton, TextField } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import SearchIcon from '@mui/icons-material/Search';
+import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';

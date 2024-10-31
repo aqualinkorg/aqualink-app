@@ -2,15 +2,15 @@ import React, { FC } from 'react';
 import {
   Box,
   Card,
-  createStyles,
   Grid,
   GridProps,
   Theme,
   Tooltip,
   Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 

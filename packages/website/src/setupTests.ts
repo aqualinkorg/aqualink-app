@@ -5,7 +5,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import 'mutationobserver-shim';
 
-jest.mock('@material-ui/icons', () => ({
+jest.mock('@mui/icons-material', () => ({
   __esModule: true,
   ArrowBack: 'mock-ArrowBack',
   Build: 'mock-Build',
@@ -55,7 +55,7 @@ jest.mock('axios-cache-interceptor', () => ({
 }));
 
 function stubMuiComponent(componentName: string, namedExports: any = {}) {
-  jest.doMock(`@material-ui/core/${componentName}/${componentName}`, () => ({
+  jest.doMock(`@mui/material/${componentName}/${componentName}`, () => ({
     __esModule: true,
     default: `mock-${componentName}`,
     ...namedExports,
@@ -84,7 +84,7 @@ process.env.REACT_APP_API_BASE_URL =
 // TODO: find a way to un-mock (or mock) these per test
 stubMuiComponent('Typography');
 // stubMuiComponent('Button', {
-//   styles: jest.requireActual('@material-ui/core/Button/Button').styles,
+//   styles: jest.requireActual('@mui/material/Button/Button').styles,
 // });
 stubMuiComponent('IconButton');
 // stubMuiComponent('TextField');
@@ -109,9 +109,9 @@ stubMuiComponent('Modal');
 stubMuiComponent('Popover');
 stubMuiComponent('CircularProgress');
 stubMuiComponent('Hidden');
-stubMuiComponent('ExpansionPanel');
-stubMuiComponent('ExpansionPanelSummary');
-stubMuiComponent('ExpansionPanelDetails');
+stubMuiComponent('Accordion');
+stubMuiComponent('AccordionSummary');
+stubMuiComponent('AccordionDetails');
 stubMuiComponent('Checkbox');
 stubMuiComponent('Drawer');
 stubMuiComponent('Divider');

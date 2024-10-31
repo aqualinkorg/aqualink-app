@@ -1,11 +1,9 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Grid,
-  Typography,
-} from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import type { Site } from 'store/Sites/types';
 import type { SurveyState } from 'store/Survey/types';

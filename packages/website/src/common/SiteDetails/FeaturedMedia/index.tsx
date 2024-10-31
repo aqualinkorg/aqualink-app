@@ -1,8 +1,5 @@
 import React from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Card,
   CardMedia,
   CardContent,
@@ -10,7 +7,10 @@ import {
   Typography,
   IconButton,
   Theme,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -78,7 +78,11 @@ const FeaturedMedia = ({
           </Grid>
           {isSiteAdmin && (
             <Grid item>
-              <IconButton component={Link} to={`/sites/${siteId}/new_survey`}>
+              <IconButton
+                component={Link}
+                to={`/sites/${siteId}/new_survey`}
+                size="large"
+              >
                 <img src={uploadIcon} alt="upload" />
               </IconButton>
             </Grid>

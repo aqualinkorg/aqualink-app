@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  Grid,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-} from '@material-ui/core';
+import { Grid, Typography, Theme } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { SurveyListItem } from 'store/Survey/types';
 import { findImagesAtSurveyPoint } from 'helpers/surveys';

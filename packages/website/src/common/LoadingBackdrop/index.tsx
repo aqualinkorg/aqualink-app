@@ -1,4 +1,4 @@
-import { Backdrop, CircularProgress } from '@material-ui/core';
+import { Backdrop, CircularProgress } from '@mui/material';
 import React from 'react';
 
 interface LoadingBackdropProps {

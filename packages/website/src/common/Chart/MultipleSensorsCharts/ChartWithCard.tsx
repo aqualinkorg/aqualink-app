@@ -1,6 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Grid, GridProps, makeStyles, Theme } from '@material-ui/core';
+import { Grid, GridProps, Theme } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 import { Site, Sources, TimeSeriesSurveyPoint } from 'store/Sites/types';
 import AnalysisCard from './AnalysisCard';
@@ -106,12 +108,12 @@ const ChartWithCard = ({
 const useStyles = makeStyles((theme: Theme) => ({
   chartWrapper: {
     marginBottom: 20,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: 10,
     },
   },
   chart: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
@@ -133,7 +135,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   card: {
     width: 'fit-content',
     minWidth: 219,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 'inherit',
       maxWidth: 'fit-content',
       margin: '0 auto',
