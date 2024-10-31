@@ -159,9 +159,9 @@ const useMarkerStyles = makeStyles({
 export const buoyIcon = (iconUrl: string) =>
   new L.Icon({
     iconUrl,
-    iconSize: [24, 27],
-    iconAnchor: [12, 27],
-    popupAnchor: [0, -28],
+    iconSize: [12, 13],
+    iconAnchor: [6, 13],
+    popupAnchor: [0, -14],
   });
 
 export const useSensorIcon = (
@@ -170,8 +170,8 @@ export const useSensorIcon = (
   color: string,
 ) => {
   const classes = useMarkerStyles();
-  const iconWidth = sensor === 'spotter' ? 20 : 25;
-  const iconHeight = sensor === 'spotter' ? 20 : 25;
+  const iconWidth = sensor === 'spotter' ? 10 : 12;
+  const iconHeight = sensor === 'spotter' ? 10 : 12;
   return L.divIcon({
     iconSize: [iconWidth, iconHeight],
     iconAnchor: [iconWidth / 2, 0],
