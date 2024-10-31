@@ -1,5 +1,5 @@
 import { TypographyProps } from '@mui/material';
-import { CSSProperties } from '@mui/material/styles';
+import { CSSProperties } from '@mui/styles/withStyles';
 
 export interface Value {
   text: string;

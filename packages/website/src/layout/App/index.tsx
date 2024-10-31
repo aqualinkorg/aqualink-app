@@ -60,7 +60,6 @@ function App() {
 
   return (
     <StyledEngineProvider injectFirst>
-      (
       <ThemeProvider theme={theme}>
         <Router>
           <ErrorBoundary>
@@ -97,7 +96,6 @@ function App() {
           </ErrorBoundary>
         </Router>
       </ThemeProvider>
-      )
     </StyledEngineProvider>
   );
 }

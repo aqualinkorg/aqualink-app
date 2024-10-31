@@ -1,7 +1,13 @@
 import React from 'react';
-import { Button, Snackbar, Theme, Alert } from '@mui/material';
+import {
+  Button,
+  Snackbar,
+  Theme,
+  Alert,
+  SnackbarCloseReason,
+  AlertProps,
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { AlertProps } from '@mui/lab';
 
 const StatusSnackbar = ({
   open,
@@ -26,7 +32,7 @@ const StatusSnackbar = ({
       <Alert
         className={classes.alert}
         variant="filled"
-        onClose={handleClose}
+        onClose={(e) => handleClose(e)}
         severity={severity}
         classes={{ message: classes.alertMessage }}
       >
@@ -72,7 +78,10 @@ interface StatusSnackbarProps {
   message?: string;
   furtherActionLabel?: string;
   severity: AlertProps['severity'];
-  handleClose: AlertProps['onClose'];
+  handleClose: (
+    event: React.SyntheticEvent<any> | Event,
+    reason?: SnackbarCloseReason,
+  ) => void;
   onFurtherActionTake?: () => void;
 }
 

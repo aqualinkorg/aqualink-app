@@ -334,7 +334,11 @@ const SiteDetails = ({
         {cards.map((Component, index) => (
           <Grid key={`card-${index.toString()}`} item xs={12} sm={6} md={3}>
             <div className={classes.card}>
-              <LoadingSkeleton variant="rect" height="100%" loading={isLoading}>
+              <LoadingSkeleton
+                variant="rectangular"
+                height="100%"
+                loading={isLoading}
+              >
                 {Component}
               </LoadingSkeleton>
             </div>

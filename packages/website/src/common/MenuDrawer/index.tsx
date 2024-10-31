@@ -111,7 +111,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           <br />
           Join us and contribute!
         </Typography>
-        <ButtonGroup variant="contained" color="default">
+        <ButtonGroup variant="contained">
           <Button
             target="_blank"
             href="https://github.com/aqualinkorg/aqualink-app"

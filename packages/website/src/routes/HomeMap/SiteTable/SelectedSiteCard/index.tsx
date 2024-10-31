@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Card, Theme, Typography } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Link } from 'react-router-dom';
 
@@ -77,7 +77,7 @@ const SelectedSiteCard = () => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   card: {
     [theme.breakpoints.down('md')]: {
       padding: 10,

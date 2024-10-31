@@ -207,6 +207,5 @@ export const selectProps: TextFieldProps['SelectProps'] = {
       vertical: 'top',
       horizontal: 'center',
     },
-    getContentAnchorEl: null,
   },
 };

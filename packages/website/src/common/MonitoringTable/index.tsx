@@ -1,11 +1,11 @@
 import {
   Button,
   Link,
-  Padding,
   Paper,
   Table,
   TableBody,
   TableCell,
+  TableCellProps,
   TableContainer,
   TableHead,
   TablePagination,
@@ -28,7 +28,7 @@ export interface HeadCell<T> {
   id: keyof T;
   label: string;
   tooltipText: string;
-  padding?: Padding;
+  padding?: TableCellProps['padding'];
   width?: string | number;
   align?: 'left' | 'right' | 'inherit' | 'center' | 'justify';
 }

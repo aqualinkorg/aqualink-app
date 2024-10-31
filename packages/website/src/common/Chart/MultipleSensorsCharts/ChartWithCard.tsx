@@ -146,7 +146,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ChartWithCardProps {
   areSurveysFiltered?: boolean;
   availableRanges?: AvailableRange[];
-  cardColumnJustification?: GridProps['justify'];
+  cardColumnJustification?: GridProps['justifyContent'];
   chartEndDate: string;
   chartStartDate: string;
   chartTitle: string;

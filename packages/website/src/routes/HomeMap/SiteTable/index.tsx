@@ -6,6 +6,7 @@ import {
   Hidden,
   MenuItem,
   Select,
+  SelectChangeEvent,
   SelectProps,
   Table,
   TableContainer,
@@ -95,12 +96,7 @@ const SiteTable = ({
     setOrderBy(property);
   };
 
-  const filterOnChange = (
-    event: React.ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>,
-  ) => {
+  const filterOnChange = (event: SelectChangeEvent<unknown>) => {
     const {
       target: { value },
     } = event;
@@ -110,7 +106,7 @@ const SiteTable = ({
 
   // This function is used to prevent the drawer onClick close effect on mobile
   const onInteractiveClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     event.stopPropagation();
   };
@@ -155,7 +151,7 @@ const SiteTable = ({
         <Box className={classes.dropdownWrapper}>
           <Select
             value={siteFilter}
-            onChange={(e) => filterOnChange(e)}
+            onChange={filterOnChange}
             variant="standard"
             disableUnderline
             style={{ backgroundColor: '#469abb', borderRadius: '4px' }}

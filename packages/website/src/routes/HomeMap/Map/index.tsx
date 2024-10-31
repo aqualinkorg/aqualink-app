@@ -11,7 +11,10 @@ import {
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
-import withStyles from '@mui/styles/withStyles';
+import withStyles, {
+  CreateCSSProperties,
+  CSSProperties,
+} from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import { searchResultSelector } from 'store/Homepage/homepageSlice';
@@ -20,7 +23,6 @@ import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
-import { CreateCSSProperties, CSSProperties } from '@mui/material/styles';
 import { mapIconSize } from 'layout/App/theme';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';

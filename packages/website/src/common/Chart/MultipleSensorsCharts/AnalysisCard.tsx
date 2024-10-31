@@ -205,7 +205,7 @@ interface AnalysisCardIncomingProps {
   pickerEndDate: string;
   chartStartDate: string;
   chartEndDate: string;
-  columnJustification?: GridProps['justify'];
+  columnJustification?: GridProps['justifyContent'];
   children?: React.ReactNode;
 }
 

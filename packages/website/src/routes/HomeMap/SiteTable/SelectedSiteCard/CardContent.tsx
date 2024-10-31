@@ -121,7 +121,7 @@ const SelectedSiteCardContent = ({
               className={classes.imageBorderRadius}
               image={featuredImageLoading}
               loading={loading}
-              variant="rect"
+              variant="rectangular"
               height="100%"
             >
               {site && imageUrl && (
@@ -264,7 +264,7 @@ const SelectedSiteCardContent = ({
           <LoadingSkeleton
             image={chartLoading}
             loading={loading}
-            variant="rect"
+            variant="rectangular"
             width="98%"
             height={180}
           >
@@ -276,7 +276,7 @@ const SelectedSiteCardContent = ({
             className={classes.mobileChartLoading}
             image={chartLoading}
             loading={loading}
-            variant="rect"
+            variant="rectangular"
             width="98%"
             height={200}
           >
@@ -303,7 +303,7 @@ const SelectedSiteCardContent = ({
               </LoadingSkeleton>
               <LoadingSkeleton
                 loading={loading}
-                variant="rect"
+                variant="rectangular"
                 width={80}
                 height={32}
               >

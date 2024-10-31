@@ -57,7 +57,7 @@ const SurveyCard = ({
         <Grid className={classes.cardImageWrapper} item xs={12} md={5}>
           <LoadingSkeleton
             loading={loading}
-            variant="rect"
+            variant="rectangular"
             height="100%"
             width="100%"
             image={pointImageSkeleton}

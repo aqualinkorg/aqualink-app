@@ -51,7 +51,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
           <LoadingSkeleton
             image={loadingImage}
             loading={loading}
-            variant="rect"
+            variant="rectangular"
             height="100%"
           >
             {children}
@@ -103,6 +103,7 @@ interface CardWithTitleProps {
   className?: string;
   forcedAspectRatio?: boolean;
   loadingImage?: string;
+  children?: React.ReactNode;
 }
 
 export default CardWithTitle;

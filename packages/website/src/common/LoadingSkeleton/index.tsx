@@ -29,7 +29,7 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
     { key: number; width: number }[]
   >([]);
   const rectSkeletonProps: SkeletonProps =
-    variant === 'rect' &&
+    variant === 'rectangular' &&
     (typeof width !== 'undefined' || typeof height !== 'undefined')
       ? { width, height }
       : {};

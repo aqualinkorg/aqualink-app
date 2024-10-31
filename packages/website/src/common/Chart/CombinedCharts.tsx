@@ -41,7 +41,7 @@ const CombinedCharts = ({
       </LoadingSkeleton>
       <LoadingSkeleton
         loading={isLoading}
-        variant="rect"
+        variant="rectangular"
         height={256}
         width="100%"
         image={chartSkeletonImage}
