@@ -66,7 +66,10 @@ interface ChipProps {
 }
 
 const LinkWrapper: FC<
-  Pick<ChipProps, 'to' | 'href'> & { className?: string }
+  Pick<ChipProps, 'to' | 'href'> & {
+    className?: string;
+    children?: React.ReactNode;
+  }
 > = ({ to, href, className, children }) => {
   const url = to || href;
 

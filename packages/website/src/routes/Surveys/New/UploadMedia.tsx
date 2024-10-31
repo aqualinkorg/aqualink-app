@@ -48,7 +48,7 @@ const UploadMedia = ({
     metadata.findIndex((item) => item.observation === null) > -1;
 
   const handleFileDrop = useCallback(
-    (acceptedFiles: File[], fileRejections) => {
+    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       // TODO - add explicit error warnings.
       fileRejections.forEach((rejection: FileRejection) => {
         // eslint-disable-next-line no-console

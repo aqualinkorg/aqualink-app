@@ -206,6 +206,7 @@ interface AnalysisCardIncomingProps {
   chartStartDate: string;
   chartEndDate: string;
   columnJustification?: GridProps['justify'];
+  children?: React.ReactNode;
 }
 
 export default withStyles(styles)(AnalysisCard);

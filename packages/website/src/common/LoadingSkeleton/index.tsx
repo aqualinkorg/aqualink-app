@@ -122,6 +122,7 @@ interface LoadingSkeletonProps {
   className?: string;
   longText?: boolean;
   textHeight?: SkeletonProps['height'];
+  children?: React.ReactNode;
 }
 
 type LoadingSkeletonStyleProps = Pick<

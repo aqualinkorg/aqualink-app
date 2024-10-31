@@ -152,7 +152,7 @@ function SiteMetrics() {
   }, [spotterId]);
 
   const getResult = React.useCallback(
-    async (token) =>
+    async (token: string) =>
       (
         await monitoringServices.getMonitoringStats({
           token,
