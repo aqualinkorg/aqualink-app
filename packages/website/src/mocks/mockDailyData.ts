@@ -1,3 +1,4 @@
+import { times } from 'lodash';
 import { DailyData } from 'store/Sites/types';
 
 const now = new Date();
@@ -30,4 +31,15 @@ export const mockDailyData: DailyData = {
 export const mockTempWeeklyAlert = {
   timestamp: dailyDataDate.toString(),
   value: 3,
+};
+
+export const getMockDailyData = (days: number): DailyData[] => {
+  const data = times(days, (i) => ({
+    ...mockDailyData,
+    id: i + 1,
+    date: new Date(
+      now.getTime() - (minutesAgo + i * 24 * 60) * 60000,
+    ).toISOString(),
+  }));
+  return data;
 };
