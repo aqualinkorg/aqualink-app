@@ -182,7 +182,7 @@ const theme: Theme = createTheme(
       MuiInputBase: {
         root: {
           height: '100%',
-          '& $disabled': {
+          '& .MuiInputBase-disabled': {
             backgroundColor: backgroundGray,
           },
         },
@@ -206,7 +206,7 @@ const theme: Theme = createTheme(
         root: {
           padding: 0,
           color: 'black',
-          '&$focused': {
+          '&.Mui-focused': {
             borderColor: lightBlue,
           },
         },

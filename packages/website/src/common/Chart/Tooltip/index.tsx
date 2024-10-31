@@ -7,11 +7,10 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import { WithStyles } from '@mui/styles';
+import { WithStyles, styled } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { Link } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
 import { isNumber } from 'lodash';
 
 import { formatNumber } from 'helpers/numberUtils';

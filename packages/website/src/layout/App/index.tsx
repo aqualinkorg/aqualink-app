@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  ThemeProvider,
-  Theme,
-  StyledEngineProvider,
-} from '@mui/material/styles';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import {
   BrowserRouter as Router,
   Routes,
@@ -38,11 +34,6 @@ import theme from './theme';
 import 'leaflet/dist/leaflet.css';
 import './App.css';
 import '../../assets/css/bootstrap.css';
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
