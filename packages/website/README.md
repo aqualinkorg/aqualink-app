@@ -14,18 +14,18 @@ The app must be configured before you can run it. Configuration is sourced from 
 ### Required
 
 ```
-REACT_APP_API_BASE_URL="http://localhost:8080/"
+NEXT_PUBLIC_API_BASE_URL="http://localhost:8080/"
 ```
 
 ### Optional
 
 ```
 # Firebase for authentication and live stream check (enable Youtube Data API).
-REACT_APP_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_API_KEY=
 # SOFAR API for Sea Surface Temperature and Heat Stress map tiles.
-REACT_APP_SOFAR_API_TOKEN=
+NEXT_PUBLIC_SOFAR_API_TOKEN=
 # Featured site to be highlighted on start before users select one.
-REACT_APP_FEATURED_SITE_ID=1
+NEXT_PUBLIC_FEATURED_SITE_ID=1
 ```
 
 In development, we optionally use [dotenv](https://www.npmjs.com/package/dotenv) to automatically load environment

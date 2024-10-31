@@ -93,7 +93,7 @@ global.matchMedia =
   };
 
 // eslint-disable-next-line fp/no-mutation
-process.env.REACT_APP_API_BASE_URL =
+process.env.NEXT_PUBLIC_API_BASE_URL =
   'https://programize-dot-ocean-systems.uc.r.appspot.com/api/';
 
 // TODO: find a way to un-mock (or mock) these per test

@@ -48,7 +48,7 @@ function DownloadCSVButton({
     try {
       const resp = await fetch(
         `${
-          process.env.REACT_APP_API_BASE_URL
+          process.env.NEXT_PUBLIC_API_BASE_URL
         }/${constructTimeSeriesDataCsvRequestUrl({
           hourly,
           start: allDates ? undefined : startDate,

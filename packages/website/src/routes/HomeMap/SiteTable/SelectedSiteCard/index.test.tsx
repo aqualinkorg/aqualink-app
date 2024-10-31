@@ -29,14 +29,14 @@ const store = mockStore({
 store.dispatch = jest.fn();
 
 test('renders as expected', () => {
-  process.env.REACT_APP_FEATURED_SITE_ID = '2';
+  process.env.NEXT_PUBLIC_FEATURED_SITE_ID = '2';
 
   const { container } = renderWithProviders(<SelectedSiteCard />, { store });
   expect(container).toMatchSnapshot();
 });
 
 test('renders loading as expected', () => {
-  process.env.REACT_APP_FEATURED_SITE_ID = '4';
+  process.env.NEXT_PUBLIC_FEATURED_SITE_ID = '4';
   const { container } = renderWithProviders(<SelectedSiteCard />, { store });
   expect(container).toMatchSnapshot();
 });

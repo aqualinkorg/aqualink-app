@@ -1,13 +1,26 @@
 {
   "extends": "../../tsconfig.json",
   "include": [
-    "src"
+    "src",
+    "./build/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
   "files": [
-    "src/custom.d.ts"
+    "src/custom.d.ts",
+    "./next-env.d.ts"
   ],
   "compilerOptions": {
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./src"
-  }
+    "baseUrl": "./src",
+    "incremental": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

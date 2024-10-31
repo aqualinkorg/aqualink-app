@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import type { MapboxGeolocationData } from 'store/Homepage/types';
 
-const { REACT_APP_MAPBOX_ACCESS_TOKEN: mapboxToken } = process.env;
+const { NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: mapboxToken } = process.env;
 const mapboxBaseUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
 
 const getLocation = (location: string) =>

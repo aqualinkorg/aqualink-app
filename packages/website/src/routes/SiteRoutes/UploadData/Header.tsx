@@ -40,7 +40,7 @@ const Header = ({ site }: HeaderProps) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 href={`${
-                  process.env.REACT_APP_API_BASE_URL
+                  process.env.NEXT_PUBLIC_API_BASE_URL
                 }/time-series/sample-upload-files/${encodeURIComponent(file)}`}
                 className={classes.downloadButton}
               >

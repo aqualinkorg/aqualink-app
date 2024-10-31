@@ -29,7 +29,7 @@ import { SofarLayers } from './sofarLayers';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
 
-const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+const accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
 const tileURL = accessToken
   ? `https://api.mapbox.com/styles/v1/eric-ovio/ckesyzu658klw19s6zc0adlgp/tiles/{z}/{x}/{y}@2x?access_token=${accessToken}`

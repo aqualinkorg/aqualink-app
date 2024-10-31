@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga4';
 
-const GA_TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID || '';
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID || '';
 if (process.env.IS_PROD && !GA_TRACKING_ID) {
   throw new Error(
     'You appear to be trying to do a production build, but no Google Analytics' +
@@ -10,12 +10,12 @@ if (process.env.IS_PROD && !GA_TRACKING_ID) {
   );
 }
 
-const GA_TAG_MANAGER_ID = process.env.REACT_APP_GA_TAG_MANAGER_ID || '';
+const GA_TAG_MANAGER_ID = process.env.NEXT_PUBLIC_GA_TAG_MANAGER_ID || '';
 
 if (process.env.IS_PROD && !GA_TAG_MANAGER_ID) {
   throw new Error(
     'You appear to be trying to do a production build, but no Google Analytics' +
-      ' tag manager id was provided!\nEither set REACT_APP_GA_TAG_MANAGER_ID as an env variable, or set up a' +
+      ' tag manager id was provided!\nEither set NEXT_PUBLIC_GA_TAG_MANAGER_ID as an env variable, or set up a' +
       ' .env.prod file.',
   );
 }
