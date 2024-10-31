@@ -160,7 +160,11 @@ const NavBar = ({
                   <MenuIcon />
                 </IconButton>
 
-                <MuiLink className={classes.navBarLink} href="/map">
+                <MuiLink
+                  className={classes.navBarLink}
+                  href="/map"
+                  underline="hover"
+                >
                   <Typography color="textPrimary" variant="h4">
                     Aqua
                   </Typography>
@@ -222,7 +226,7 @@ const NavBar = ({
                     >
                       {sortBy(user.administeredSites, 'id').map(
                         ({ id, name, region }, index) => {
-                          const siteIdentifier = name || region;
+                          const siteIdentifier = name || region?.name;
                           return (
                             <Link
                               to={`/sites/${id}`}
