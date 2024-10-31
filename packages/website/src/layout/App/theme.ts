@@ -1,10 +1,6 @@
-import {
-  createTheme,
-  Theme,
-  adaptV4Theme,
-  createBreakpoints,
-} from '@mui/material/styles';
+import { createTheme, Theme, adaptV4Theme } from '@mui/material/styles';
 import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
 
 type OverridesNameToClassKey = {
   [P in keyof Required<MuiPickersOverrides>]: keyof MuiPickersOverrides[P];

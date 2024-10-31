@@ -10,6 +10,7 @@ import {
   Tooltip,
   TextField,
   Hidden,
+  SelectChangeEvent,
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
@@ -124,6 +125,7 @@ const PointSelector = ({
           <Grid container alignItems="center">
             <Grid item>
               <Select
+                variant="standard"
                 className={classes.selector}
                 labelId="survey-point"
                 id="survey-point"
@@ -305,7 +307,7 @@ interface PointSelectorProps {
   onChangeSurveyPointName: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
-  handlePointChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  handlePointChange: (event: SelectChangeEvent<unknown>) => void;
   enableeditSurveyPointName: (id: number) => void;
   disableeditSurveyPointName: () => void;
   submitSurveyPointNameUpdate: (key: number) => void;

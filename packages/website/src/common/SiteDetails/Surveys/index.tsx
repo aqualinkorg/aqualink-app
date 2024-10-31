@@ -9,6 +9,7 @@ import {
   FormControl,
   MenuItem,
   Box,
+  SelectChangeEvent,
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
@@ -74,13 +75,11 @@ const Surveys = ({ site }: SurveysProps) => {
     setSurveyPointToDelete(id);
   };
 
-  const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handlePointChange = (event: SelectChangeEvent<unknown>) => {
     setPoint(event.target.value as string);
   };
 
-  const handleObservationChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-  ) => {
+  const handleObservationChange = (event: SelectChangeEvent<unknown>) => {
     setObservation(event.target.value as SurveyMedia['observations'] | 'any');
   };
 
@@ -268,8 +267,9 @@ const Surveys = ({ site }: SurveysProps) => {
                 </Typography>
               </Grid>
               <Grid item className={classes.selectorWrapper}>
-                <FormControl className={classes.formControl}>
+                <FormControl variant="standard" className={classes.formControl}>
                   <Select
+                    variant="standard"
                     labelId="survey-observation"
                     id="survey-observation"
                     name="survey-observation"

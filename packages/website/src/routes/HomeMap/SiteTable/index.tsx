@@ -183,6 +183,7 @@ const SiteTable = ({
           >
             <Typography variant="h5">Sort By: </Typography>
             <Select
+              variant="standard"
               value={`${orderBy}-${order}`}
               className={classes.mobileSortSelect}
               onChange={onMobileSelectChange}

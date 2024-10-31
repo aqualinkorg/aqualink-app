@@ -63,6 +63,7 @@ const BuoySelector = ({
     <Grid item xs={12} md={6} style={{ height: '2em' }}>
       <Typography>Available spotters</Typography>
       <Select
+        variant="standard"
         value={selectedBuoy?.id || ''}
         onChange={(event) => handleBuoyClick(event.target.value as string)}
         style={{ color: 'black', width: '200px' }}
