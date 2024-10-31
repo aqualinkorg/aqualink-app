@@ -110,6 +110,7 @@ export const siteTests = () => {
     });
     expect(rsp.body.historicalMonthlyMean).toBeDefined();
     expect(rsp.body.historicalMonthlyMean.length).toBe(12);
+    expect(rsp.body.maskedSpotterApiToken).toBeUndefined();
   });
 
   it('GET /:id/daily_data', async () => {
@@ -135,10 +136,19 @@ export const siteTests = () => {
       .put(`/sites/${siteId}`)
       .send({
         name: updatedSiteName,
+        spotterApiToken: '123456789',
       });
 
     expect(rsp.status).toBe(200);
     expect(rsp.body).toMatchObject({ name: updatedSiteName });
+  });
+
+  it('GET /:id retrieve masked spotterApiToken', async () => {
+    const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.maskedSpotterApiToken).toBe('****6789');
+    expect(rsp.body.spotterApiToken).toBeUndefined();
   });
 
   it.each([

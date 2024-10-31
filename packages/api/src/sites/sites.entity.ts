@@ -151,9 +151,11 @@ export class Site {
   @Column({ nullable: true, select: false, type: 'character varying' })
   contactInformation?: string | null;
 
-  hasHobo: boolean;
+  hasHobo?: boolean;
 
   collectionData?: CollectionDataDto;
+
+  maskedSpotterApiToken?: string;
 
   @Expose()
   get applied(): boolean {

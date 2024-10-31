@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FocusEvent } from 'react';
 import {
   withStyles,
   WithStyles,
@@ -20,6 +20,8 @@ const CustomTextfield = ({
   size,
   disabled,
   onChange,
+  onBlur,
+  onFocus,
   classes,
   select = false,
 }: CustomTextfieldProps) => {
@@ -33,6 +35,8 @@ const CustomTextfield = ({
       type={isNumeric ? 'number' : 'text'}
       value={formField.value}
       onChange={onChange}
+      onBlur={onBlur}
+      onFocus={onFocus}
       label={label}
       placeholder={placeholder}
       name={name}
@@ -65,6 +69,8 @@ interface CustomTextfieldIncomingProps {
   onChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
+  onBlur?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   select?: boolean;
 }
 
