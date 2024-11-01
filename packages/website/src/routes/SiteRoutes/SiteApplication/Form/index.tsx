@@ -4,13 +4,10 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useForm, Controller } from 'react-hook-form';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 import { SiteApplication, SiteApplyParams } from 'store/Sites/types';
 import { DateTime } from 'luxon-extensions';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 interface SiteApplicationFormFields {
   siteName: string;
@@ -139,7 +136,7 @@ const Form = ({
         What is the soonest date you could install the Smart Buoy and conduct a
         survey?
       </Typography>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Controller
           name="installationSchedule"
           control={control}
@@ -152,17 +149,13 @@ const Form = ({
             },
           }}
           render={({ field }) => (
-            <KeyboardDatePicker
-              className={classes.formField}
-              disableToolbar
-              format="MM/dd/yyyy"
-              id="installationSchedule"
-              autoOk
-              showTodayButton
-              helperText={errors?.installationSchedule?.message || ''}
-              error={!!errors.installationSchedule}
-              value={installationSchedule}
+            <DatePicker<Date>
               ref={field.ref}
+              className={classes.formField}
+              showToolbar={false}
+              inputFormat="MM/dd/yyyy"
+              closeOnSelect
+              value={installationSchedule}
               onChange={(e) => {
                 field.onChange(e);
                 setValue(
@@ -173,17 +166,23 @@ const Form = ({
                 );
                 handleInstallationChange(e);
               }}
-              KeyboardButtonProps={{
+              OpenPickerButtonProps={{
                 'aria-label': 'change date',
               }}
-              inputProps={{
-                className: classes.textField,
-              }}
-              inputVariant="outlined"
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  inputProps={{ className: classes.textField }}
+                  fullWidth
+                  error={!!errors.installationSchedule}
+                  helperText={errors?.installationSchedule?.message || ''}
+                />
+              )}
             />
           )}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
 
       <Typography>
         Installation, survey and maintenance personnel and equipment

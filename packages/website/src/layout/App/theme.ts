@@ -1,14 +1,5 @@
 import { createTheme, Theme, adaptV4Theme } from '@mui/material/styles';
-import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
-
-type OverridesNameToClassKey = {
-  [P in keyof Required<MuiPickersOverrides>]: keyof MuiPickersOverrides[P];
-};
-
-declare module '@mui/material/styles/overrides' {
-  export interface ComponentNameToClassKey extends OverridesNameToClassKey {}
-}
 
 const skyBlue = '#009ee0';
 const lightBlue = '#168dbd';
@@ -187,21 +178,21 @@ const theme: Theme = createTheme(
           },
         },
       },
-      MuiPickersDay: {
-        day: {
-          color: 'black',
-        },
-      },
-      MuiPickersCalendarHeader: {
-        switchHeader: {
-          color: 'black',
-        },
-      },
-      MuiPickersClockNumber: {
-        clockNumber: {
-          color: 'black',
-        },
-      },
+      // MuiPickersDay: {
+      //   day: {
+      //     color: 'black',
+      //   },
+      // },
+      // MuiPickersCalendarHeader: {
+      //   switchHeader: {
+      //     color: 'black',
+      //   },
+      // },
+      // MuiPickersClockNumber: {
+      //   clockNumber: {
+      //     color: 'black',
+      //   },
+      // },
       MuiOutlinedInput: {
         root: {
           padding: 0,

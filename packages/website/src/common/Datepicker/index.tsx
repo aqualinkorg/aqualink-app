@@ -1,23 +1,24 @@
 import React from 'react';
-import { Theme, Grid, Box, Typography, TypographyProps } from '@mui/material';
+import {
+  Theme,
+  Grid,
+  Box,
+  Typography,
+  TypographyProps,
+  TextField,
+} from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import {
-  KeyboardDatePicker,
-  KeyboardDatePickerProps,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 import { DateTime } from 'luxon-extensions';
+import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const DatePicker = ({
   value,
   dateName,
   dateNameTextVariant,
-  pickerSize,
   autoOk,
   timeZone,
   onChange,
@@ -30,31 +31,29 @@ const DatePicker = ({
           {`${dateName || 'Date'}:`}
         </Typography>
         <div className={classes.datePicker}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              size={pickerSize}
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <MuiDatePicker
               className={classes.textField}
-              helperText=""
-              disableToolbar
-              format="MM/dd/yyyy"
-              name="datePicker"
+              showToolbar={false}
+              inputFormat="MM/dd/yyyy"
               maxDate={DateTime.now()
                 .setZone(timeZone || 'UTC')
                 .toFormat('yyyy/MM/dd')}
               minDate={DateTime.fromMillis(0).toFormat('yyyy/MM/dd')}
-              autoOk={autoOk}
-              showTodayButton
+              closeOnSelect={autoOk}
               value={value || null}
-              onChange={onChange}
+              onChange={(v) => onChange(new Date(v as string))}
+              renderInput={(params) => <TextField {...params} />}
               InputProps={{
                 className: classes.textField,
                 inputProps: { className: classes.smallPadding },
               }}
-              inputVariant="standard"
-              KeyboardButtonProps={{ className: classes.calendarButton }}
-              keyboardIcon={<CalendarTodayIcon fontSize="small" />}
+              // slots={{
+              //   openPickerButton: <CalendarTodayIcon fontSize="small" />,
+              // }}
+              OpenPickerButtonProps={{ className: classes.calendarButton }}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </div>
       </Box>
     </Grid>
@@ -88,16 +87,14 @@ interface DatePickerIncomingProps {
   value: string | null;
   dateName?: string;
   dateNameTextVariant?: TypographyProps['variant'];
-  pickerSize?: KeyboardDatePickerProps['size'];
   autoOk?: boolean;
   timeZone: string | null | undefined;
-  onChange: (date: MaterialUiPickersDate, value?: string | null) => void;
+  onChange: (date: Date | null, keyboardInput?: string) => void;
 }
 
 DatePicker.defaultProps = {
   dateName: undefined,
   dateNameTextVariant: undefined,
-  pickerSize: undefined,
   autoOk: true,
 };
 

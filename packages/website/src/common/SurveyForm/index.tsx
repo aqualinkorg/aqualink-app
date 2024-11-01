@@ -12,19 +12,19 @@ import {
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import EventIcon from '@mui/icons-material/Event';
 import { Link } from 'react-router-dom';
-import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller } from 'react-hook-form';
 
 import { diveLocationSelector } from 'store/Survey/surveySlice';
 import { SurveyData, SurveyState } from 'store/Survey/types';
 import { setTimeZone } from 'helpers/dates';
 import { DateTime } from 'luxon-extensions';
-import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
-import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
-import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
+import {
+  LocalizationProvider,
+  TimePicker,
+  DatePicker,
+} from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 interface SurveyFormFields {
   diveDate: string;
@@ -119,7 +119,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
           <Typography variant="h6" gutterBottom>
             Dive Date
           </Typography>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Controller
               name="diveDate"
               control={control}
@@ -132,16 +132,23 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                 },
               }}
               render={({ field }) => (
-                <KeyboardDatePicker
+                <DatePicker
                   className={classes.textField}
-                  disableToolbar
-                  format="MM/dd/yyyy"
-                  fullWidth
-                  autoOk
-                  showTodayButton
-                  size={itemsSize}
-                  helperText={errors?.diveDate?.message || ''}
-                  error={!!errors.diveDate}
+                  showToolbar={false}
+                  inputFormat="MM/dd/yyyy"
+                  closeOnSelect
+                  // size={itemsSize}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      helperText={errors?.diveDate?.message || ''}
+                      inputProps={{
+                        className: classes.textField,
+                        'data-testid': 'dive-date',
+                      }}
+                    />
+                  )}
                   value={diveDateTime}
                   ref={field.ref}
                   onChange={(e) => {
@@ -158,25 +165,20 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                     );
                     handleDiveDateTimeChange(e);
                   }}
-                  KeyboardButtonProps={{
+                  OpenPickerButtonProps={{
                     'aria-label': 'change date',
                   }}
-                  inputProps={{
-                    className: classes.textField,
-                    'data-testid': 'dive-date',
-                  }}
-                  inputVariant="outlined"
-                  keyboardIcon={<EventIcon fontSize={itemsSize} />}
+                  // keyboardIcon={<EventIcon fontSize={itemsSize} />}
                 />
               )}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom>
             Dive Local Time
           </Typography>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Controller
               name="diveTime"
               control={control}
@@ -188,34 +190,38 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                 },
               }}
               render={({ field }) => (
-                <KeyboardTimePicker
+                <TimePicker
                   className={classes.textField}
-                  id="time-picker"
-                  fullWidth
-                  autoOk
-                  size={itemsSize}
-                  helperText={errors?.diveTime?.message || ''}
-                  error={!!errors.diveTime}
-                  format="HH:mm"
+                  closeOnSelect
+                  // size={itemsSize}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      helperText={errors?.diveTime?.message || ''}
+                      error={!!errors.diveTime}
+                      variant="outlined"
+                      inputProps={{
+                        ...params.inputProps,
+                        className: classes.textField,
+                        'data-testid': 'dive-time',
+                      }}
+                    />
+                  )}
+                  inputFormat="HH:mm"
                   value={diveDateTime}
                   ref={field.ref}
                   onChange={(e) => {
                     field.onChange(e);
                     handleDiveDateTimeChange(e);
                   }}
-                  KeyboardButtonProps={{
+                  OpenPickerButtonProps={{
                     'aria-label': 'change time',
                   }}
-                  inputProps={{
-                    className: classes.textField,
-                    'data-testid': 'dive-time',
-                  }}
-                  keyboardIcon={<AccessTimeIcon fontSize={itemsSize} />}
-                  inputVariant="outlined"
+                  // keyboardIcon={<AccessTimeIcon fontSize={itemsSize} />}
                 />
               )}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Grid>
       </Grid>
       <Typography variant="h6" gutterBottom>

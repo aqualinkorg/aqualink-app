@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Theme, Box, Typography, Grid } from '@mui/material';
+import { Alert, Theme, Box, Typography, Grid, TextField } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -21,6 +14,8 @@ import {
 import { setTimeZone } from 'helpers/dates';
 import Dialog, { Action } from 'common/Dialog';
 import siteServices from 'services/siteServices';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ConfirmationDialog from './ConfirmationDialog';
 
 const ExclusionDatesDialog = ({
@@ -244,15 +239,15 @@ const ExclusionDatesDialog = ({
               spacing={1}
             >
               <Grid item xs={12} sm={6}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker<Date>
                     className={classes.textField}
-                    disableToolbar
-                    format="MM/dd/yyyy"
-                    autoOk
-                    size="small"
-                    fullWidth
-                    showTodayButton
+                    showToolbar={false}
+                    inputFormat="MM/dd/yyyy"
+                    closeOnSelect
+                    // size="small"
+                    // fullWidth
+                    // showTodayButton
                     value={
                       dialogType === 'deploy'
                         ? deployDateTime
@@ -263,34 +258,39 @@ const ExclusionDatesDialog = ({
                         ? setDeployDateTime
                         : setMaintainStartDateTime
                     }
-                    KeyboardButtonProps={{
+                    OpenPickerButtonProps={{
                       'aria-label': 'change date',
                     }}
-                    inputProps={{
-                      className: classes.textField,
-                    }}
-                    inputVariant="outlined"
-                    error={
-                      dialogType === 'deploy'
-                        ? pickerError !== ''
-                        : startPickerError !== ''
-                    }
-                    helperText={
-                      dialogType === 'deploy' ? pickerError : startPickerError
-                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        inputProps={{
+                          className: classes.textField,
+                        }}
+                        error={
+                          dialogType === 'deploy'
+                            ? pickerError !== ''
+                            : startPickerError !== ''
+                        }
+                        helperText={
+                          dialogType === 'deploy'
+                            ? pickerError
+                            : startPickerError
+                        }
+                      />
+                    )}
                   />
-                </MuiPickersUtilsProvider>
+                </LocalizationProvider>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardTimePicker
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker<Date>
                     className={classes.textField}
-                    id="time-picker"
-                    name="diveTime"
-                    size="small"
-                    autoOk
-                    fullWidth
-                    format="HH:mm"
+                    // size="small"
+                    closeOnSelect
+                    // fullWidth
+                    inputFormat="HH:mm"
                     value={
                       dialogType === 'deploy'
                         ? deployDateTime
@@ -301,24 +301,30 @@ const ExclusionDatesDialog = ({
                         ? setDeployDateTime
                         : setMaintainStartDateTime
                     }
-                    KeyboardButtonProps={{
+                    OpenPickerButtonProps={{
                       'aria-label': 'change time',
                     }}
-                    InputProps={{
-                      className: classes.textField,
-                    }}
-                    keyboardIcon={<AccessTimeIcon />}
-                    inputVariant="outlined"
-                    error={
-                      dialogType === 'deploy'
-                        ? pickerError !== ''
-                        : startPickerError !== ''
-                    }
-                    helperText={
-                      dialogType === 'deploy' ? pickerError : startPickerError
-                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        inputProps={{
+                          className: classes.textField,
+                        }}
+                        error={
+                          dialogType === 'deploy'
+                            ? pickerError !== ''
+                            : startPickerError !== ''
+                        }
+                        helperText={
+                          dialogType === 'deploy'
+                            ? pickerError
+                            : startPickerError
+                        }
+                      />
+                    )}
                   />
-                </MuiPickersUtilsProvider>
+                </LocalizationProvider>
               </Grid>
             </Grid>
             {dialogType === 'maintain' && (
@@ -332,53 +338,60 @@ const ExclusionDatesDialog = ({
                 </Typography>
                 <Grid container item spacing={1}>
                   <Grid item xs={12} sm={6}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker<Date>
                         className={classes.textField}
-                        disableToolbar
-                        format="MM/dd/yyyy"
-                        size="small"
-                        autoOk
-                        fullWidth
-                        showTodayButton
+                        showToolbar={false}
+                        inputFormat="MM/dd/yyyy"
+                        // size="small"
+                        closeOnSelect
+                        // fullWidth
+                        // showTodayButton
                         value={maintainEndDateTime}
                         onChange={setMaintainEndDateTime}
-                        KeyboardButtonProps={{
+                        OpenPickerButtonProps={{
                           'aria-label': 'change date',
                         }}
-                        inputProps={{
-                          className: classes.textField,
-                        }}
-                        inputVariant="outlined"
-                        error={endPickerError !== ''}
-                        helperText={endPickerError}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            inputProps={{
+                              className: classes.textField,
+                            }}
+                            error={endPickerError !== ''}
+                            helperText={endPickerError}
+                          />
+                        )}
                       />
-                    </MuiPickersUtilsProvider>
+                    </LocalizationProvider>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardTimePicker
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DatePicker<Date>
                         className={classes.textField}
-                        id="time-picker"
-                        name="diveTime"
-                        size="small"
-                        autoOk
-                        fullWidth
-                        format="HH:mm"
+                        closeOnSelect
+                        // size="small"
+                        // fullWidth
+                        inputFormat="HH:mm"
                         value={maintainEndDateTime}
                         onChange={setMaintainEndDateTime}
-                        KeyboardButtonProps={{
+                        OpenPickerButtonProps={{
                           'aria-label': 'change time',
                         }}
-                        InputProps={{
-                          className: classes.textField,
-                        }}
-                        keyboardIcon={<AccessTimeIcon />}
-                        inputVariant="outlined"
-                        error={endPickerError !== ''}
-                        helperText={endPickerError}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            inputProps={{
+                              className: classes.textField,
+                            }}
+                            error={endPickerError !== ''}
+                            helperText={endPickerError}
+                          />
+                        )}
                       />
-                    </MuiPickersUtilsProvider>
+                    </LocalizationProvider>
                   </Grid>
                 </Grid>
               </>

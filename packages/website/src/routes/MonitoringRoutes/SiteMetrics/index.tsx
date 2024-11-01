@@ -1,11 +1,8 @@
+import React from 'react';
 import { Grid, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import React from 'react';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DateTime } from 'luxon';
 import monitoringServices, {
   GetMonitoringMetricsResponse,
@@ -183,35 +180,35 @@ function SiteMetrics() {
         value={spotterId}
         onChange={(e) => setSpotterId(e.target.value)}
       />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DatePicker
           className={classes.filterItem}
-          disableToolbar
-          format="MM/dd/yyyy"
-          autoOk
-          size="small"
-          showTodayButton
+          showToolbar={false}
+          inputFormat="MM/dd/yyyy"
+          closeOnSelect
+          // size="small"
+          // showTodayButton
           value={startDate}
           onChange={(e) => e && setStartDate(e)}
           label="start date"
-          inputVariant="outlined"
+          renderInput={(params) => <TextField {...params} variant="outlined" />}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
 
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DatePicker
           className={classes.filterItem}
-          disableToolbar
-          format="MM/dd/yyyy"
-          autoOk
-          size="small"
-          showTodayButton
+          showToolbar={false}
+          inputFormat="MM/dd/yyyy"
+          closeOnSelect
+          // size="small"
+          // showTodayButton
           value={endDate}
           onChange={(e) => e && setEndDate(e)}
           label="end date"
-          inputVariant="outlined"
+          renderInput={(params) => <TextField {...params} variant="outlined" />}
         />
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
 
       <Grid
         container
