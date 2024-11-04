@@ -13,13 +13,6 @@ import { mockSurveyList } from 'mocks/mockSurveyList';
 import { mockSurvey } from 'mocks/mockSurvey';
 import MultipleSensorsCharts from '.';
 
-jest.mock('@material-ui/pickers', () => ({
-  __esModule: true,
-  KeyboardDatePicker: 'mock-KeyboardDatePicker',
-  KeyboardDatePickerProps: 'mock-KeyboardDatePickerProps',
-  MuiPickersUtilsProvider: 'mock-MuiPickersUtilsProvider',
-}));
-
 const mockStore = configureStore([]);
 
 describe('MultipleSensorsCharts', () => {
