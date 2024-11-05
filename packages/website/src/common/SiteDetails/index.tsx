@@ -26,6 +26,7 @@ import {
   forecastDataSelector,
   latestDataRequest,
   latestDataSelector,
+  siteDetailsSelector,
   siteTimeSeriesDataRangeSelector,
   spotterPositionRequest,
   spotterPositionSelector,
@@ -54,6 +55,7 @@ import WaterSamplingCard from './WaterSampling';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
+import { TemperatureChange } from './TemperatureChange';
 
 const acceptHUIInterval = Interval.fromDateTimes(
   DateTime.now().minus({ years: 2 }),
@@ -125,6 +127,7 @@ const SiteDetails = ({
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
+  const siteDetails = useSelector(siteDetailsSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -185,6 +188,12 @@ const SiteDetails = ({
           (() => {
             if ((hasHUIData || hasSondeData) && !hasSpotterData) {
               return <CoralBleaching data={latestDataAsSofarValues} />;
+            }
+
+            if (!hasSpotterData) {
+              return (
+                <TemperatureChange dailyData={siteDetails?.dailyData ?? []} />
+              );
             }
 
             return (
