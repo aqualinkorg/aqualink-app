@@ -21,7 +21,6 @@ import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-import { memoryUsage } from 'process';
 import { Site } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
@@ -719,18 +718,6 @@ interface UploadTimeSeriesDataProps {
   siteTimezone?: boolean;
 }
 
-const MAX_MEMORY_USAGE_PERCENT = 80; // Adjust this threshold as needed
-
-function checkMemoryUsage() {
-  const used = memoryUsage().heapUsed / 1024 / 1024;
-  const total = memoryUsage().heapTotal / 1024 / 1024;
-  const usagePercent = (used / total) * 100;
-
-  if (usagePercent > MAX_MEMORY_USAGE_PERCENT) {
-    throw new Error(`Memory usage too high: ${usagePercent.toFixed(2)}%`);
-  }
-}
-
 export const uploadTimeSeriesData = async ({
   user,
   filePath,
@@ -750,8 +737,6 @@ export const uploadTimeSeriesData = async ({
     throw new BadRequestException('SiteId is undefined');
   }
 
-  checkMemoryUsage();
-
   const {
     workSheetData,
     signature,
@@ -761,8 +746,6 @@ export const uploadTimeSeriesData = async ({
     headerIndex,
     headerToTokenMap,
   } = await getFilePathData(filePath);
-
-  checkMemoryUsage();
 
   if (failOnWarning && ignoredHeaders.length > 0) {
     throw new BadRequestException(
@@ -815,11 +798,7 @@ export const uploadTimeSeriesData = async ({
     }
   }
 
-  checkMemoryUsage();
-
   const trimmed = trimWorkSheetData(workSheetData, headers, headerIndex);
-
-  checkMemoryUsage();
 
   const groupedData = groupBySitePointDepth({
     trimmedWorkSheetData: trimmed,
@@ -828,11 +807,8 @@ export const uploadTimeSeriesData = async ({
     surveyPointId,
   });
 
-  checkMemoryUsage();
-
   const converted = await Promise.all(
     groupedData.map((x) => {
-      checkMemoryUsage();
       return createEntitiesAndConvert({
         workSheetData: x.data,
         siteId: x.siteId,
@@ -849,11 +825,7 @@ export const uploadTimeSeriesData = async ({
     }),
   );
 
-  checkMemoryUsage();
-
   const allDataCombined = converted.map((x) => x.data).flat();
-
-  checkMemoryUsage();
 
   const minDate = get(
     minBy(allDataCombined, (item) =>
@@ -892,8 +864,6 @@ export const uploadTimeSeriesData = async ({
   );
 
   refreshMaterializedView(repositories.dataUploadsRepository);
-
-  checkMemoryUsage();
 
   console.timeEnd(`Upload data file ${fileName}`);
   return ignoredHeaders;
