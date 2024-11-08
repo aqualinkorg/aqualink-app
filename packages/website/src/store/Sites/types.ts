@@ -287,6 +287,7 @@ export interface Site {
   contactInformation?: string;
   maskedSpotterApiToken?: string;
   iframe?: string | null;
+  waterQuality?: string[];
 }
 
 export interface SiteSketchFab {
@@ -456,4 +457,5 @@ export const siteOptions = [
   'Live streams',
   '3D Models',
   'HOBO loggers',
+  'Water quality',
 ] as const;
