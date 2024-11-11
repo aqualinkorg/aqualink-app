@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { LayerGroup, useLeaflet } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import L from 'leaflet';
 import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
 import { Site } from 'store/Sites/types';
@@ -37,6 +37,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
   const sitesList = collection?.sites || storedSites || [];
   const siteOnMap = useSelector(siteOnMapSelector);
   const { map } = useLeaflet();
+  const [visibleSites, setVisibleSites] = useState(sitesList);
 
   const setCenter = useCallback(
     (inputMap: L.Map, latLng: [number, number], zoom: number) => {
@@ -50,7 +51,31 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
     },
     [],
   );
-  // zoom in and center on site marker when it's clicked
+
+  const filterSitesByViewport = useCallback(() => {
+    if (!map) return;
+
+    const bounds = map.getBounds();
+    const filtered = sitesList.filter((site: Site) => {
+      if (!site.polygon || site.polygon.type !== 'Point') return false;
+      const [lng, lat] = site.polygon.coordinates;
+      return bounds.contains([lat, lng]);
+    });
+    setVisibleSites(filtered);
+  }, [map, sitesList]);
+
+  useEffect(() => {
+    if (!map) return undefined;
+
+    filterSitesByViewport();
+    map.on('moveend', filterSitesByViewport);
+
+    return () => {
+      map.off('moveend', filterSitesByViewport);
+      return undefined;
+    };
+  }, [map, filterSitesByViewport]);
+
   useEffect(() => {
     if (map && siteOnMap?.polygon.type === 'Point') {
       const [lng, lat] = siteOnMap.polygon.coordinates;
@@ -64,7 +89,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
         iconCreateFunction={clusterIcon}
         disableClusteringAtZoom={1}
       >
-        {sitesList.map((site: Site) => (
+        {visibleSites.map((site: Site) => (
           <SiteMarker key={site.id} site={site} setCenter={setCenter} />
         ))}
       </MarkerClusterGroup>
