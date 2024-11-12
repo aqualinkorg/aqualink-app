@@ -26,6 +26,7 @@ import {
   surveysRequest,
   surveyListSelector,
 } from 'store/Survey/surveyListSlice';
+import { Helmet } from 'react-helmet-async';
 import { userInfoSelector } from 'store/User/userSlice';
 import { User } from 'store/User/types';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
@@ -43,6 +44,8 @@ import LoadingSkeleton from 'common/LoadingSkeleton';
 import { DateTime } from 'luxon-extensions';
 import SiteInfo from './SiteInfo';
 import NotFoundPage from '../../NotFound/index';
+
+import Dashboard from '../../assets/img/Dashboard.jpg';
 
 const getAlertMessage = (
   user: User | null,
@@ -212,6 +215,17 @@ const Site = ({ classes }: SiteProps) => {
 
   return (
     <>
+      <Helmet>
+        <title>Monitoring ${siteDetails.name} | Aqualink Dashboard</title>
+        <meta name="description" content="View real-time data for 
+        ${siteDetails.name}, including reef health, water temperature, wind, 
+        and wave conditions. Monitor marine ecosystems with Aqualink." />
+        <meta property="og:image" src={Dashboard} />
+        <meta property="og:image:alt" content="The images display the Aqualink 
+        dashboard, which allows you to monitor your reef. It includes a map, 
+        survey feature, satellite data with wind, wave, and temperature data, 
+        heat stress alerts for coral bleaching, and graphs. " />
+      </Helmet>
       <SiteNavBar searchLocation />
       {!siteLoading && !siteDetails ? (
         <NotFoundPage />

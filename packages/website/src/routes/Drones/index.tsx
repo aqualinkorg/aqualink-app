@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
+import { Helmet } from 'react-helmet-async';
 
 import NavBar from 'common/NavBar';
 import Footer from 'common/Footer';
@@ -16,6 +17,15 @@ import dronebottom from '../../assets/img/dronebottom.jpg';
 
 const Drones = () => (
   <>
+    <Helmet>
+      <title>Aqualink Drone | An Autonomous Surface Vehicle</title>
+      <meta name="description" content="Explore Aqualink&apos;s underwater drone 
+      technology for ocean conservation, monitoring marine ecosystems to help 
+      protect and preserve our oceans." />
+      <meta property="og:image" src={dronepersp} />
+      <meta property="og:image:alt" content="This image display the Aqualink drone, 
+      which is an affordable Autonomous Surface Vehicle (ASV)" />
+    </Helmet>
     <NavBar searchLocation={false} />
     <Box py={6}>
       {/* Main container */}

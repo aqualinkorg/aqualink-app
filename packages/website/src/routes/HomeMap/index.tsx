@@ -9,6 +9,7 @@ import {
   withStyles,
   WithStyles,
 } from '@material-ui/core';
+import { Helmet } from 'react-helmet-async';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
@@ -19,6 +20,8 @@ import { findSiteById, findInitialSitePosition } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
+
+import Map from '../../assets/img/Map.jpg';
 
 enum QueryParamKeys {
   SITE_ID = 'site_id',
@@ -105,6 +108,19 @@ const Homepage = ({ classes }: HomepageProps) => {
 
   return (
     <>
+      <Helmet>
+        <title>Aqualink Map | Interactive Ocean Monitoring for Marine Ecosystems</title>
+        <meta name="description" content="Aqualink&apos;s interactive map displays live 
+        ocean data for reef health and ocean temperatures globally. View ocean Heat 
+        Stress, Heatwave, and SST Anomaly." />
+        <meta property="og:image" src={Map} />
+        <meta property="og:image:alt" content="This image displays the interactive Aqualink 
+        map where you can explore all of the Aqualink sites around the globe. Each site has 
+        a dashboard where site managers monitor their local reefs with in situ data and 
+        survey collections combined with satellite data. The map has four layers where you 
+        can toggle between standard view, heat stress, sea surface temperature, and SST 
+        Anomaly." />
+      </Helmet>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation geocodingEnabled />
       </div>
