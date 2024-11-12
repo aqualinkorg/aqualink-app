@@ -158,7 +158,7 @@ const Tracker = ({
         the Aqualink map where we're tracking marine heatwaves through the heat 
         stress layer on the map. The map indicate where heat stress is occurring 
         and how long the area has been exposed to warmer waters. This is the most 
-        accurate way to track heat waves and bleaching events on a global scale. " />
+        accurate way to track heat waves and bleaching events on a global scale." />
       </Helmet>
       <Box className={classes.hero}>
         <CardMedia className={classes.image} image={hero} />

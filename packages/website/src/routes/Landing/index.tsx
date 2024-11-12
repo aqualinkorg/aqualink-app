@@ -89,7 +89,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
         surface temperature, and SST Anomaly. Each site has a dashboard that allows 
         you to monitor your reef. It includes a map, survey feature, satellite data 
         with wind, wave, and temperature data, heat stress alerts for coral 
-        bleaching, and graphs. " />
+        bleaching, and graphs." />
       </Helmet>
       <NavBar routeButtons searchLocation={false} />
       {scrollPosition === 0 && isMobile && (

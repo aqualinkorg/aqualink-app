@@ -27,8 +27,8 @@ const Buoy = ({ classes }: BuoyProps) => {
         <meta property="og:image" src={buoy} />
         <meta property="og:image:alt" content="This image displays the 
         Aqualink Smart Buoy which is also known as Smart Mooring Spotter. This 
-        Smart buoy is powered by solar panels and transmit data in real-time over 
-        the air. It collects whind, wave, barometric pressure and temperature 
+        Smart buoy is powered by solar panels and transmits data in real-time over 
+        the air. It collects wind, wave, barometric pressure and temperature 
         from seafloor and sea surface." />
       </Helmet>
       <NavBar searchLocation={false} />
