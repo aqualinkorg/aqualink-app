@@ -6,13 +6,27 @@ import {
   Typography,
   CardMedia,
 } from '@material-ui/core';
+import { Helmet } from 'react-helmet-async';
 
 import NavBar from 'common/NavBar';
 import Footer from 'common/Footer';
 
+import Dashboard from '../../assets/img/Dashboard.jpg';
+
 const Faq = ({ classes }: FaqProps) => {
   return (
     <>
+      <Helmet>
+        <title>Aqualink FAQ | Common Questions About Our Ocean Monitoring Platform</title>
+        <meta name="description" content="Answers to frequently asked questions about 
+        Aqualink&apos;s real-time ocean monitoring system, reef data, how to use the 
+        platform, and how to monitor your reef." />
+        <meta property="og:image" src={Dashboard} />
+        <meta property="og:image:alt" content="The images display the Aqualink 
+        dashboard, which allows you to monitor your reef. It includes a map, 
+        survey feature, satellite data with wind, wave, and temperature data, 
+        heat stress alerts for coral bleaching, and graphs. " />
+      </Helmet>
       <NavBar searchLocation={false} />
       <div>
         {/* Main container */}

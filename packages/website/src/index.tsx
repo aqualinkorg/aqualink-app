@@ -9,6 +9,7 @@ import { decodeToken } from 'react-jwt';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './layout/App';
 import { store } from './store/configure';
 import * as serviceWorker from './serviceWorker';
@@ -57,7 +58,9 @@ ReactDOM.render(
   <>
     <Provider store={store}>
       <SnackbarProvider maxSnack={3}>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </SnackbarProvider>
     </Provider>
   </>,
