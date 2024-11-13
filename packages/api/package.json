@@ -62,7 +62,8 @@
     "resize-survey-images": "ts-node -r dotenv/config scripts/resize-survey-images.ts",
     "stormglass-csv": "ts-node -r dotenv/config scripts/generate-stormglass-csv.ts",
     "fill-noaa-nearest-point": "ts-node -r dotenv/config scripts/noaa-availability.ts",
-    "check-video-streams": "ts-node -r dotenv/config scripts/check-video-streams.ts"
+    "check-video-streams": "ts-node -r dotenv/config scripts/check-video-streams.ts",
+    "reef-check": "ts-node -r dotenv/config scripts/reef-check.ts"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.0.1",
@@ -77,7 +78,6 @@
     "@nestjs/typeorm": "^9.0.1",
     "@turf/turf": "^6.5.0",
     "@types/bluebird": "^3.5.32",
-    "@types/node-xlsx": "^0.15.3",
     "axios": "^1.7.4",
     "axios-retry": "^3.8.1",
     "bluebird": "^3.7.2",
@@ -95,7 +95,7 @@
     "luxon": "^3.3.0",
     "md5-file": "^5.0.0",
     "multer": "^1.4.2",
-    "node-xlsx": "^0.17.2",
+    "node-xlsx": "^0.24.0",
     "objects-to-csv": "^1.3.6",
     "passport": "^0.6.0",
     "passport-custom": "^1.1.1",
@@ -118,6 +118,7 @@
     "@types/luxon": "^3.3.1",
     "@types/multer": "^1.4.3",
     "@types/node": "^18.16.16",
+    "@types/node-xlsx": "^0.21.0",
     "@types/passport": "^1.0.4",
     "@types/passport-strategy": "^0.2.35",
     "@types/sharp": "^0.30.4",

@@ -18,6 +18,7 @@ import {
   ApiProperty,
   ApiPropertyOptional,
 } from '@nestjs/swagger';
+import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { SketchFab } from '../site-sketchfab/site-sketchfab.entity';
 import { Region } from '../regions/regions.entity';
 import { Survey } from '../surveys/surveys.entity';
@@ -130,6 +131,10 @@ export class Site {
   @ApiPropertyOptional()
   @OneToMany(() => Survey, (survey) => survey.site)
   surveys: Survey[];
+
+  @ApiPropertyOptional()
+  @OneToMany(() => ReefCheckSurvey, (reefCheckSurvey) => reefCheckSurvey.site)
+  reefCheckSurveys: ReefCheckSurvey[];
 
   @OneToOne(() => SiteApplication, (siteApplication) => siteApplication.site)
   siteApplication?: SiteApplication;

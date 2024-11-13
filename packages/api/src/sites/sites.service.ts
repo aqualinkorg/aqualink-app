@@ -240,6 +240,7 @@ export class SitesService {
       id: site.id,
       name: site.name,
       sensorId: site.sensorId,
+      reefCheckSurveys: site.reefCheckSurveys ?? [],
       polygon: site.polygon,
       nearestNOAALocation: site.nearestNOAALocation,
       depth: site.depth,
