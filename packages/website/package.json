@@ -53,6 +53,7 @@
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.3",
     "react-ga4": "^2.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.41.5",
     "react-jwt": "^1.1.8",
     "react-leaflet": "^2.7.0",

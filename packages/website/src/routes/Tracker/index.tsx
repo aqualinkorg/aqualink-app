@@ -19,7 +19,7 @@ import NavBar from 'common/NavBar';
 import Footer from 'common/Footer';
 import FootPrintImage from './FootPrintImage';
 
-import Tracker from '../../assets/img/tracker-page/Tracker.jpg';
+import TrackerImage from '../../assets/img/helmet/Tracker.jpg';
 import hero from '../../assets/img/tracker-page/hero.png';
 import image1 from '../../assets/img/tracker-page/image1.png';
 import image2 from '../../assets/img/tracker-page/image2.png';
@@ -124,7 +124,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface TrackerProps {
+interface ImageProps {
   shouldShowNav?: boolean;
   shouldShowFooter?: boolean;
 }
@@ -149,16 +149,24 @@ const Tracker = ({
     <>
       {shouldShowNav && <NavBar searchLocation={false} />}
       <Helmet>
-        <title>Tracking Ocean Heat Waves and Coral Bleaching Globally and Locally</title>
-        <meta name="description" content="Track ocean Heat Waves and Heat Stress 
+        <title>
+          Tracking Ocean Heat Waves and Coral Bleaching Globally and Locally
+        </title>
+        <meta
+          name="description"
+          content="Track ocean Heat Waves and Heat Stress 
         on Aqualink. Access global data and surveys for coral bleaching and coral 
-        reef health tracking." />
-        <meta property="og:image" src={Tracker} />
-        <meta property="og:image:alt" content="This image is a screenshot of 
+        reef health tracking."
+        />
+        <meta property="og:image" content={TrackerImage} />
+        <meta
+          property="og:image:alt"
+          content="This image is a screenshot of 
         the Aqualink map where we're tracking marine heatwaves through the heat 
         stress layer on the map. The map indicate where heat stress is occurring 
         and how long the area has been exposed to warmer waters. This is the most 
-        accurate way to track heat waves and bleaching events on a global scale." />
+        accurate way to track heat waves and bleaching events on a global scale."
+        />
       </Helmet>
       <Box className={classes.hero}>
         <CardMedia className={classes.image} image={hero} />

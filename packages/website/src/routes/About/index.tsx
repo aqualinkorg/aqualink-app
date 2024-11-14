@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import NavBar from 'common/NavBar';
 import Footer from 'common/Footer';
 
-import Startpage from '../../assets/img/Startpage.jpg';
+import Startpage from '../../assets/img/helmet/Startpage.jpg';
 import peter from '../../assets/img/peter.jpg';
 import caesar from '../../assets/img/caesar.jpg';
 import eric from '../../assets/img/eric.jpg';
@@ -22,10 +22,15 @@ const About = ({ classes }: AboutProps) => {
     <>
       <Helmet>
         <title>About Us - Aqualink</title>
-        <meta name="description" content="Learn about Aqualink&apos;s mission, our team,
-         and our efforts in ocean conservation technology." />
-        <meta property="og:image" src={Startpage} />
-        <meta property="og:image:alt" content="This image displays the interactive 
+        <meta
+          name="description"
+          content="Learn about Aqualink's mission, our team,
+         and our efforts in ocean conservation technology."
+        />
+        <meta property="og:image" content={Startpage} />
+        <meta
+          property="og:image:alt"
+          content="This image displays the interactive 
         Aqualink map and the Aqualink dashboard, which are the main two parts of 
         the Aqualink platform for coastal ocean monitoring. You can explore all of 
         the Aqualink sites around the globe in the interactive map. The map has four 
@@ -33,7 +38,8 @@ const About = ({ classes }: AboutProps) => {
         temperature, and SST Anomaly. Each site has a dashboard that allows you to 
         monitor your reef. It includes a map, survey feature, satellite data with 
         wind, wave, and temperature data, heat stress alerts for coral bleaching, 
-        and graphs. " />
+        and graphs. "
+        />
       </Helmet>
       <NavBar searchLocation={false} />
       <div>

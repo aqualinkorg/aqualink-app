@@ -13,23 +13,31 @@ import Footer from 'common/Footer';
 
 import fullDiagramBuoy from '../../assets/img/fulldiag3_1.svg';
 import fullDiagramInfra from '../../assets/img/fulldiag3.svg';
-import buoy from '../../assets/img/buoy.jpg';
+import buoy from '../../assets/img/landing-page/buoy.jpg';
 
 const Buoy = ({ classes }: BuoyProps) => {
   return (
     <>
       <Helmet>
-        <title>Aqualink Smart Buoy | Real-time seafloor &amp; sea surface 
-        temperature &amp; sea surface temperature</title>
-        <meta name="description" content="Aqualink&apos;s solar-powered smart 
+        <title>
+          Aqualink Smart Buoy | Real-time seafloor &amp; sea surface temperature
+          &amp; sea surface temperature
+        </title>
+        <meta
+          name="description"
+          content="Aqualink's solar-powered smart 
         buoys collect temperature, wind & wave. Measuring real-time data from 
-        seafloor and sea surface. Monitor marine ecosystems." />
-        <meta property="og:image" src={buoy} />
-        <meta property="og:image:alt" content="This image displays the 
+        seafloor and sea surface. Monitor marine ecosystems."
+        />
+        <meta property="og:image" content={buoy} />
+        <meta
+          property="og:image:alt"
+          content="This image displays the 
         Aqualink Smart Buoy which is also known as Smart Mooring Spotter. This 
         Smart buoy is powered by solar panels and transmits data in real-time over 
         the air. It collects wind, wave, barometric pressure and temperature 
-        from seafloor and sea surface." />
+        from seafloor and sea surface."
+        />
       </Helmet>
       <NavBar searchLocation={false} />
       <div className={classes.root} id="bloc-6">

@@ -31,7 +31,7 @@ import SignInDialog from 'common/SignInDialog';
 import siteServices from 'services/siteServices';
 import LocationMap from './LocationMap';
 
-import Dashboard from '../../assets/img/Dashboard.jpg';
+import Dashboard from '../../assets/img/helmet/Dashboard.jpg';
 
 interface FormElement {
   id: string;
@@ -177,16 +177,23 @@ const Apply = ({ classes }: ApplyProps) => {
     <>
       {newSiteId && <Navigate to={`/sites/${newSiteId}`} replace />}
       <Helmet>
-        <title>Register sites on Aqualink and receive dashboards with real-time 
-        data</title>
-        <meta name="description" content="Register the reef you want to monitor 
+        <title>
+          Register sites on Aqualink and receive dashboards with real-time data
+        </title>
+        <meta
+          name="description"
+          content="Register the reef you want to monitor 
         in 1 minute. Your dashboard will come with real-time temperature, wind, 
-        and wave data. Add surveys and data publicly." />
-        <meta property="og:image" src={Dashboard} />
-        <meta property="og:image:alt" content="The images display the Aqualink 
+        and wave data. Add surveys and data publicly."
+        />
+        <meta property="og:image" content={Dashboard} />
+        <meta
+          property="og:image:alt"
+          content="The images display the Aqualink 
         dashboard, which allows you to monitor your reef. It includes a map, 
         survey feature, satellite data with wind, wave, and temperature data, 
-        heat stress alerts for coral bleaching, and graphs. " />
+        heat stress alerts for coral bleaching, and graphs. "
+        />
       </Helmet>
       <NavBar searchLocation={false} />
       <Box className={classes.boxBar} height="100%" pt={4}>

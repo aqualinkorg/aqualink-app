@@ -19,12 +19,18 @@ const Drones = () => (
   <>
     <Helmet>
       <title>Aqualink Drone | An Autonomous Surface Vehicle</title>
-      <meta name="description" content="Explore Aqualink&apos;s underwater drone 
+      <meta
+        name="description"
+        content="Explore Aqualink's underwater drone 
       technology for ocean conservation, monitoring marine ecosystems to help 
-      protect and preserve our oceans." />
-      <meta property="og:image" src={dronepersp} />
-      <meta property="og:image:alt" content="This image display the Aqualink drone, 
-      which is an affordable Autonomous Surface Vehicle (ASV)" />
+      protect and preserve our oceans."
+      />
+      <meta property="og:image" content={dronepersp} />
+      <meta
+        property="og:image:alt"
+        content="This image display the Aqualink drone, 
+      which is an affordable Autonomous Surface Vehicle (ASV)"
+      />
     </Helmet>
     <NavBar searchLocation={false} />
     <Box py={6}>

@@ -26,7 +26,7 @@ import Card from './Card';
 import landingPageImage from '../../assets/img/landing-page/header.jpg';
 import { cardTitles } from './titles';
 
-import Startpage from '../../assets/img/Startpage.jpg';
+import Startpage from '../../assets/img/helmet/Startpage.jpg';
 
 interface LandingPageButton {
   label: string;
@@ -76,12 +76,20 @@ const LandingPage = ({ classes }: LandingPageProps) => {
 
   return (
     <>
-      <title>Aqualink Ocean Monitoring for Marine Ecosystems. Free &amp; open</title>
-        <meta name="description" content="Aqualink is a data management platform 
+      <Helmet>
+        <title>
+          Aqualink Ocean Monitoring for Marine Ecosystems. Free &amp; open
+        </title>
+        <meta
+          name="description"
+          content="Aqualink is a data management platform 
         for marine ecosystems. Integrate data from sensors and surveys to give 
-        you an instant view of your ecosystem. Free" />
-        <meta property="og:image" src={Startpage} />
-        <meta property="og:image:alt" content="This image displays the interactive 
+        you an instant view of your ecosystem. Free"
+        />
+        <meta property="og:image" content={Startpage} />
+        <meta
+          property="og:image:alt"
+          content="This image displays the interactive 
         Aqualink map and the Aqualink dashboard, which are the main two parts of 
         the Aqualink platform for coastal ocean monitoring. You can explore all of 
         the Aqualink sites around the globe in the interactive map. The map has 
@@ -89,7 +97,8 @@ const LandingPage = ({ classes }: LandingPageProps) => {
         surface temperature, and SST Anomaly. Each site has a dashboard that allows 
         you to monitor your reef. It includes a map, survey feature, satellite data 
         with wind, wave, and temperature data, heat stress alerts for coral 
-        bleaching, and graphs." />
+        bleaching, and graphs."
+        />
       </Helmet>
       <NavBar routeButtons searchLocation={false} />
       {scrollPosition === 0 && isMobile && (
