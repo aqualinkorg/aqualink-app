@@ -32,7 +32,7 @@ const Faq = ({ classes }: FaqProps) => {
           content="The images display the Aqualink 
         dashboard, which allows you to monitor your reef. It includes a map, 
         survey feature, satellite data with wind, wave, and temperature data, 
-        heat stress alerts for coral bleaching, and graphs. "
+        heat stress alerts for coral bleaching, and graphs."
         />
       </Helmet>
       <NavBar searchLocation={false} />
