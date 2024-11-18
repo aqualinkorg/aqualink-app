@@ -5,13 +5,13 @@ import configureStore from 'redux-mock-store';
 
 import { mockSite } from 'mocks/mockSite';
 import { mockUser } from 'mocks/mockUser';
-import SiteTable from '.';
+import SiteTableContainer from '.';
 
 jest.mock('./SelectedSiteCard', () => 'Mock-SelectedSiteCard');
 
 const mockStore = configureStore([]);
 
-describe('SiteTable', () => {
+describe('SiteTableContainer', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -39,7 +39,7 @@ describe('SiteTable', () => {
 
     element = render(
       <Provider store={store}>
-        <SiteTable isDrawerOpen={openDrawer} />
+        <SiteTableContainer isDrawerOpen={openDrawer} />
       </Provider>,
     ).container;
   });

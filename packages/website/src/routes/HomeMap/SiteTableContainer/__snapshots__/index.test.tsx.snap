@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SiteTable should render with given state from Redux store 1`] = `
+exports[`SiteTableContainer should render with given state from Redux store 1`] = `
 <div>
   <mock-hidden
     mdup="true"
@@ -13,10 +13,10 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
       width="100vw"
     >
       <mock-box
-        classname="SiteTable-topHandle-6"
+        classname="SiteTableContainer-topHandle-6"
       />
       <mock-typography
-        classname="SiteTable-allSitesText-8"
+        classname="SiteTableContainer-allSitesText-8"
         color="textSecondary"
         variant="h5"
       >
@@ -26,7 +26,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
   </mock-hidden>
   <mock-selectedsitecard />
   <mock-box
-    classname="SiteTable-dropdownWrapper-5"
+    classname="SiteTableContainer-dropdownWrapper-5"
   >
     <div
       class="MuiInputBase-root MuiInput-root"
@@ -138,7 +138,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         Sort By: 
       </mock-typography>
       <div
-        class="MuiInputBase-root MuiInput-root MuiInput-underline SiteTable-mobileSortSelect-7"
+        class="MuiInputBase-root MuiInput-root MuiInput-underline SiteTableContainer-mobileSortSelect-7"
       >
         <div
           aria-haspopup="listbox"
@@ -314,201 +314,206 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
     </mock-box>
   </mock-hidden>
   <mock-box
-    classname="SiteTable-tableHolder-1 SiteTable-scrollable-2"
-    display="flex"
+    classname="SiteTableContainer-tableHolder-1 SiteTableContainer-scrollable-2"
     flex="1"
-    flexdirection="column"
   >
-    <mock-tablecontainer>
-      <mock-table
-        classname="SiteTable-table-3"
-        stickyheader="true"
+    <div
+      style="position: relative; height: 0px; width: 100%; overflow: auto; will-change: transform; direction: ltr;"
+    >
+      <mock-tablecontainer
+        style="height: 80px; width: 100%;"
       >
-        <mock-hidden
-          smdown="true"
+        <mock-table
+          style="top: 0px; position: absolute; width: 100%;"
         >
-          <mock-tablehead
-            style="background-color: rgb(244, 244, 244);"
+          <mock-hidden
+            smdown="true"
           >
-            <mock-tablerow>
-              <mock-tablecell
-                align="left"
-                classname="EnhancedTableHead-headCells-11"
-                padding="normal"
-                sortdirection="false"
-                style="width: 40%;"
-              >
-                <mock-tablesortlabel
-                  active="false"
-                  direction="asc"
+            <mock-tablehead
+              style="background-color: rgb(244, 244, 244);"
+            >
+              <mock-tablerow>
+                <mock-tablecell
+                  align="left"
+                  classname="EnhancedTableHead-headCells-18"
+                  padding="normal"
+                  sortdirection="false"
+                  style="width: 40%;"
                 >
-                  <mock-typography
-                    nowrap="true"
-                    style="color: black;"
-                    variant="h6"
+                  <mock-tablesortlabel
+                    active="false"
+                    direction="asc"
                   >
-                    SITE
-                  </mock-typography>
-                </mock-tablesortlabel>
+                    <mock-typography
+                      nowrap="true"
+                      style="color: black;"
+                      variant="h6"
+                    >
+                      SITE
+                    </mock-typography>
+                  </mock-tablesortlabel>
+                </mock-tablecell>
+                <mock-tablecell
+                  align="left"
+                  classname="EnhancedTableHead-headCells-18"
+                  padding="normal"
+                  sortdirection="false"
+                >
+                  <mock-tablesortlabel
+                    active="false"
+                    direction="asc"
+                  >
+                    <mock-typography
+                      nowrap="true"
+                      style="color: black;"
+                      variant="h6"
+                    >
+                      SST
+                      <mock-typography
+                        component="span"
+                        style="color: black;"
+                        variant="subtitle2"
+                      >
+                         (°C)
+                      </mock-typography>
+                    </mock-typography>
+                  </mock-tablesortlabel>
+                </mock-tablecell>
+                <mock-tablecell
+                  align="left"
+                  classname="EnhancedTableHead-headCells-18"
+                  padding="normal"
+                  sortdirection="false"
+                >
+                  <mock-tablesortlabel
+                    active="false"
+                    direction="asc"
+                  >
+                    <mock-typography
+                      nowrap="true"
+                      style="color: black;"
+                      variant="h6"
+                    >
+                      STRESS
+                      <mock-typography
+                        component="span"
+                        style="color: black;"
+                        variant="subtitle2"
+                      >
+                         (DHW)
+                      </mock-typography>
+                    </mock-typography>
+                  </mock-tablesortlabel>
+                </mock-tablecell>
+                <mock-tablecell
+                  align="left"
+                  classname="EnhancedTableHead-headCells-18"
+                  padding="normal"
+                  sortdirection="desc"
+                  style="width: 5%;"
+                >
+                  <mock-tablesortlabel
+                    active="true"
+                    direction="desc"
+                  >
+                    <mock-typography
+                      nowrap="true"
+                      style="color: black;"
+                      variant="h6"
+                    >
+                      ALERT
+                    </mock-typography>
+                  </mock-tablesortlabel>
+                </mock-tablecell>
+              </mock-tablerow>
+            </mock-tablehead>
+          </mock-hidden>
+          <mock-tablebody
+            style="position: relative;"
+          >
+            <mock-tablerow
+              classname="SiteTable-tableRow-17"
+              hover="true"
+              id="homepage-table-row-0"
+              role="button"
+              style="position: absolute; left: 0px; top: 0px; height: 80px; width: 100%; background-color: white;"
+              tabindex="-1"
+            >
+              <mock-tablecell
+                classname="SiteTable-nameCells-11"
+              >
+                <mock-typography
+                  align="left"
+                  color="textSecondary"
+                  variant="h6"
+                >
+                  Hawaii
+                </mock-typography>
               </mock-tablecell>
               <mock-tablecell
-                align="left"
-                classname="EnhancedTableHead-headCells-11"
-                padding="normal"
-                sortdirection="false"
+                classname="SiteTable-cellTextAlign-15"
               >
-                <mock-tablesortlabel
-                  active="false"
-                  direction="asc"
+                <mock-typography
+                  classname="SiteTable-numberCellsTitle-14"
+                  style="color: rgb(22, 141, 189);"
+                  variant="h6"
                 >
-                  <mock-typography
-                    nowrap="true"
-                    style="color: black;"
-                    variant="h6"
+                  15.9
+                  <mock-hidden
+                    smup="true"
                   >
-                    SST
+                     
                     <mock-typography
                       component="span"
-                      style="color: black;"
-                      variant="subtitle2"
+                      variant="h6"
                     >
-                       (°C)
+                      °C
                     </mock-typography>
-                  </mock-typography>
-                </mock-tablesortlabel>
+                  </mock-hidden>
+                </mock-typography>
               </mock-tablecell>
               <mock-tablecell
-                align="left"
-                classname="EnhancedTableHead-headCells-11"
-                padding="normal"
-                sortdirection="false"
+                classname="SiteTable-cellTextAlign-15"
               >
-                <mock-tablesortlabel
-                  active="false"
-                  direction="asc"
+                <mock-typography
+                  classname="SiteTable-numberCellsTitle-14"
+                  style="color: rgb(8, 91, 163);"
+                  variant="h6"
                 >
-                  <mock-typography
-                    nowrap="true"
-                    style="color: black;"
-                    variant="h6"
+                  0.0
+                  <mock-hidden
+                    smup="true"
                   >
-                    STRESS
+                     
                     <mock-typography
                       component="span"
-                      style="color: black;"
-                      variant="subtitle2"
+                      variant="h6"
                     >
-                       (DHW)
+                      DHW
                     </mock-typography>
-                  </mock-typography>
-                </mock-tablesortlabel>
+                  </mock-hidden>
+                </mock-typography>
               </mock-tablecell>
               <mock-tablecell
-                align="left"
-                classname="EnhancedTableHead-headCells-11"
-                padding="normal"
-                sortdirection="desc"
-                style="width: 5%;"
+                classname="SiteTable-cellTextAlign-15"
               >
-                <mock-tablesortlabel
-                  active="true"
-                  direction="desc"
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  style="color: rgb(198, 229, 250);"
+                  viewBox="0 0 24 24"
                 >
-                  <mock-typography
-                    nowrap="true"
-                    style="color: black;"
-                    variant="h6"
-                  >
-                    ALERT
-                  </mock-typography>
-                </mock-tablesortlabel>
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                  />
+                </svg>
               </mock-tablecell>
             </mock-tablerow>
-          </mock-tablehead>
-        </mock-hidden>
-        <mock-tablebody>
-          <mock-tablerow
-            classname="SiteTableBody-tableRow-18"
-            hover="true"
-            id="homepage-table-row-0"
-            role="button"
-            style="background-color: white;"
-            tabindex="-1"
-          >
-            <mock-tablecell
-              classname="SiteTableBody-nameCells-12"
-            >
-              <mock-typography
-                align="left"
-                color="textSecondary"
-                variant="h6"
-              >
-                Hawaii
-              </mock-typography>
-            </mock-tablecell>
-            <mock-tablecell
-              classname="SiteTableBody-cellTextAlign-16"
-            >
-              <mock-typography
-                classname="SiteTableBody-numberCellsTitle-15"
-                style="color: rgb(22, 141, 189);"
-                variant="h6"
-              >
-                15.9
-                <mock-hidden
-                  smup="true"
-                >
-                   
-                  <mock-typography
-                    component="span"
-                    variant="h6"
-                  >
-                    °C
-                  </mock-typography>
-                </mock-hidden>
-              </mock-typography>
-            </mock-tablecell>
-            <mock-tablecell
-              classname="SiteTableBody-cellTextAlign-16"
-            >
-              <mock-typography
-                classname="SiteTableBody-numberCellsTitle-15"
-                style="color: rgb(8, 91, 163);"
-                variant="h6"
-              >
-                0.0
-                <mock-hidden
-                  smup="true"
-                >
-                   
-                  <mock-typography
-                    component="span"
-                    variant="h6"
-                  >
-                    DHW
-                  </mock-typography>
-                </mock-hidden>
-              </mock-typography>
-            </mock-tablecell>
-            <mock-tablecell
-              classname="SiteTableBody-cellTextAlign-16"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root"
-                focusable="false"
-                style="color: rgb(198, 229, 250);"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
-                />
-              </svg>
-            </mock-tablecell>
-          </mock-tablerow>
-        </mock-tablebody>
-      </mock-table>
-    </mock-tablecontainer>
+          </mock-tablebody>
+        </mock-table>
+      </mock-tablecontainer>
+    </div>
   </mock-box>
 </div>
 `;

@@ -8,8 +8,6 @@ import {
   MenuItem,
   Select,
   SelectProps,
-  Table,
-  TableContainer,
   Theme,
   Typography,
   withStyles,
@@ -31,7 +29,7 @@ import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { siteOptions } from 'store/Sites/types';
 import SelectedSiteCard from './SelectedSiteCard';
-import SiteTableBody from './body';
+import SiteTable from './table';
 import { getOrderKeysFriendlyString, Order, OrderKeys } from './utils';
 import EnhancedTableHead from './tableHead';
 import { Collection } from '../../Dashboard/collection';
@@ -70,7 +68,7 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
     [],
   );
 
-const SiteTable = ({
+const SiteTableContainer = ({
   isDrawerOpen,
   showCard,
   showSiteFiltersDropdown,
@@ -88,6 +86,7 @@ const SiteTable = ({
 
   const [order, setOrder] = useState<Order>('desc');
   const [orderBy, setOrderBy] = useState<OrderKeys>(OrderKeys.ALERT);
+  const [tableHeight, setTableHeight] = useState<number | undefined>(undefined);
 
   const handleRequestSort = (event: unknown, property: OrderKeys) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -198,15 +197,12 @@ const SiteTable = ({
             ? `${classes.tableHolder} ${classes.scrollable}`
             : `${classes.tableHolder}`
         }
-        display="flex"
-        flexDirection="column"
         flex={1}
+        // @ts-ignore -- property ref missing from types
+        ref={(el: HTMLElement) => setTableHeight(el?.clientHeight)}
       >
-        <TableContainer>
-          <Table
-            stickyHeader
-            className={isExtended ? classes.extendedTable : classes.table}
-          >
+        <SiteTable
+          header={
             <Hidden smDown={!isExtended}>
               <EnhancedTableHead
                 order={order}
@@ -215,16 +211,15 @@ const SiteTable = ({
                 isExtended={isExtended}
               />
             </Hidden>
-            <SiteTableBody
-              order={order}
-              orderBy={orderBy}
-              isExtended={isExtended}
-              collection={collection}
-              scrollTableOnSelection={scrollTableOnSelection}
-              scrollPageOnSelection={scrollPageOnSelection}
-            />
-          </Table>
-        </TableContainer>
+          }
+          height={tableHeight}
+          order={order}
+          orderBy={orderBy}
+          isExtended={isExtended}
+          collection={collection}
+          scrollTableOnSelection={scrollTableOnSelection}
+          scrollPageOnSelection={scrollPageOnSelection}
+        />
         {loading && (
           <Box
             display="flex"
@@ -295,10 +290,10 @@ const styles = (theme: Theme) =>
   });
 
 interface SiteTableProps
-  extends SiteTableIncomingProps,
+  extends SiteTableContainerIncomingProps,
     WithStyles<typeof styles> {}
 
-interface SiteTableIncomingProps {
+interface SiteTableContainerIncomingProps {
   // used on mobile to add descriptive elements if the drawer is closed.
   isDrawerOpen?: boolean;
   showCard?: boolean;
@@ -309,7 +304,7 @@ interface SiteTableIncomingProps {
   scrollPageOnSelection?: boolean;
 }
 
-SiteTable.defaultProps = {
+SiteTableContainer.defaultProps = {
   isDrawerOpen: false,
   showCard: true,
   showSiteFiltersDropdown: true,
@@ -319,4 +314,4 @@ SiteTable.defaultProps = {
   scrollPageOnSelection: undefined,
 };
 
-export default withStyles(styles)(SiteTable);
+export default withStyles(styles)(SiteTableContainer);

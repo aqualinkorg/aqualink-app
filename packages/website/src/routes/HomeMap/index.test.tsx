@@ -10,7 +10,7 @@ import Homepage from '.';
 
 jest.mock('common/NavBar', () => 'Mock-NavBar');
 jest.mock('./Map', () => 'Mock-Map');
-jest.mock('./SiteTable', () => 'Mock-SiteTable');
+jest.mock('./SiteTableContainer', () => 'Mock-SiteTableContainer');
 
 const mockStore = configureStore([]);
 describe('Homepage', () => {

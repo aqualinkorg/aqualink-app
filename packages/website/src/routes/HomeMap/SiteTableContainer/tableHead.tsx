@@ -105,7 +105,14 @@ const EnhancedTableHead = ({
   ];
 
   return (
-    <TableHead style={{ backgroundColor: 'rgb(244, 244, 244)' }}>
+    <TableHead
+      style={{
+        backgroundColor: 'rgb(244, 244, 244)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+      }}
+    >
       <TableRow>
         {headCells.map(
           (headCell) =>

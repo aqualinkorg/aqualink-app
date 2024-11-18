@@ -17,7 +17,7 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById, findInitialSitePosition } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
-import SiteTable from './SiteTable';
+import SiteTableContainer from './SiteTableContainer';
 import HomepageMap from './Map';
 
 enum QueryParamKeys {
@@ -126,7 +126,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           {showSiteTable && (
             <Hidden smDown>
               <Grid className={classes.siteTable} item md={6}>
-                <SiteTable />
+                <SiteTableContainer />
               </Grid>
             </Hidden>
           )}
@@ -142,7 +142,7 @@ const Homepage = ({ classes }: HomepageProps) => {
               open={isDrawerOpen}
             >
               <div role="presentation" onClick={toggleDrawer}>
-                <SiteTable isDrawerOpen={isDrawerOpen} />
+                <SiteTableContainer isDrawerOpen={isDrawerOpen} />
               </div>
             </SwipeableBottomSheet>
           </Hidden>
