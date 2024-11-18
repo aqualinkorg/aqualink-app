@@ -11,7 +11,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import { TableRow as Row } from 'store/Homepage/types';
@@ -232,20 +232,23 @@ const SiteTable = ({
   const listRef = React.useRef<List>(null);
 
   const siteOnMap = useSelector(siteOnMapSelector);
-  const [selectedRow, setSelectedRow] = useState<number>();
 
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleClick = (event: unknown, site: Row) => {
     const mapElement = document.getElementById('sites-map');
-    setSelectedRow(site.tableData.id);
     dispatch(setSearchResult());
     dispatch(setSiteOnMap(sitesList[site.tableData.id]));
     if (scrollPageOnSelection && mapElement) {
       mapElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
   };
+
+  const selectedRow = useMemo(
+    () => sitesList.findIndex((item) => item.id === siteOnMap?.id),
+    [siteOnMap, sitesList],
+  );
 
   const tableData = useMemo(
     () =>
@@ -266,19 +269,14 @@ const SiteTable = ({
     [tableData],
   );
 
-  useEffect(() => {
-    const index = sitesList.findIndex((item) => item.id === siteOnMap?.id);
-    setSelectedRow(index);
-  }, [siteOnMap, sitesList]);
-
   // scroll to the relevant site row when site is selected.
   useEffect(() => {
     if (selectedRow === undefined) return;
     const itemIndex = idToIndexMap[selectedRow];
     // only scroll if not on mobile (info at the top is more useful than the site row)
-    if (!isTablet && scrollTableOnSelection) {
+    if (itemIndex !== undefined && !isTablet && scrollTableOnSelection) {
       setTimeout(
-        () => listRef.current?.scrollToItem(itemIndex),
+        () => listRef.current?.scrollToItem(itemIndex, 'start'),
         SCROLLT_TIMEOUT,
       );
     }

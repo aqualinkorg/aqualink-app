@@ -201,25 +201,27 @@ const SiteTableContainer = ({
         // @ts-ignore -- property ref missing from types
         ref={(el: HTMLElement) => setTableHeight(el?.clientHeight)}
       >
-        <SiteTable
-          header={
-            <Hidden smDown={!isExtended}>
-              <EnhancedTableHead
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                isExtended={isExtended}
-              />
-            </Hidden>
-          }
-          height={tableHeight}
-          order={order}
-          orderBy={orderBy}
-          isExtended={isExtended}
-          collection={collection}
-          scrollTableOnSelection={scrollTableOnSelection}
-          scrollPageOnSelection={scrollPageOnSelection}
-        />
+        {!loading && (
+          <SiteTable
+            header={
+              <Hidden smDown={!isExtended}>
+                <EnhancedTableHead
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  isExtended={isExtended}
+                />
+              </Hidden>
+            }
+            height={tableHeight}
+            order={order}
+            orderBy={orderBy}
+            isExtended={isExtended}
+            collection={collection}
+            scrollTableOnSelection={scrollTableOnSelection}
+            scrollPageOnSelection={scrollPageOnSelection}
+          />
+        )}
         {loading && (
           <Box
             display="flex"

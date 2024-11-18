@@ -28,7 +28,6 @@ type VirtualTableProps = {
  * */
 export const VirtualTable = forwardRef<FixedSizeList, VirtualTableProps>(
   ({ row, header, footer, ...rest }, ref) => {
-    // const listRef = useRef<FixedSizeList | null>(null);
     const [top, setTop] = useState(0);
 
     return (
@@ -40,7 +39,7 @@ export const VirtualTable = forwardRef<FixedSizeList, VirtualTableProps>(
             // @ts-ignore
             // eslint-disable-next-line no-underscore-dangle
             const style = ref.current?._getItemStyle(props.overscanStartIndex);
-            setTop(style?.top || 0);
+            setTop(style?.top ?? 0);
 
             // Call the original callback
             rest.onItemsRendered?.(props);

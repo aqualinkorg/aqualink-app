@@ -321,7 +321,7 @@ exports[`SiteTableContainer should render with given state from Redux store 1`] 
       style="position: relative; height: 0px; width: 100%; overflow: auto; will-change: transform; direction: ltr;"
     >
       <mock-tablecontainer
-        style="height: 80px; width: 100%;"
+        style="height: 60px; width: 100%;"
       >
         <mock-table
           style="top: 0px; position: absolute; width: 100%;"
@@ -330,7 +330,7 @@ exports[`SiteTableContainer should render with given state from Redux store 1`] 
             smdown="true"
           >
             <mock-tablehead
-              style="background-color: rgb(244, 244, 244);"
+              style="background-color: rgb(244, 244, 244); position: sticky; top: 0px; z-index: 1;"
             >
               <mock-tablerow>
                 <mock-tablecell
@@ -436,7 +436,7 @@ exports[`SiteTableContainer should render with given state from Redux store 1`] 
               hover="true"
               id="homepage-table-row-0"
               role="button"
-              style="position: absolute; left: 0px; top: 0px; height: 80px; width: 100%; background-color: white;"
+              style="position: absolute; left: 0px; top: 0px; height: 60px; width: 100%; background-color: white;"
               tabindex="-1"
             >
               <mock-tablecell
