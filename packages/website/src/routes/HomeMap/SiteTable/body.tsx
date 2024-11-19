@@ -10,6 +10,7 @@ import {
   useTheme,
   WithStyles,
   withStyles,
+  TablePagination,
 } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -30,6 +31,7 @@ import { getComparator, Order, OrderKeys, stableSort } from './utils';
 import { Collection } from '../../Dashboard/collection';
 
 const SCROLLT_TIMEOUT = 500;
+const ROWS_PER_PAGE = 25;
 
 const RowNameCell = ({
   site: { locationName, region },
@@ -133,6 +135,7 @@ const SiteTableBody = ({
   );
   const siteOnMap = useSelector(siteOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
+  const [page, setPage] = useState(0);
 
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
@@ -165,92 +168,109 @@ const SiteTableBody = ({
     }
   }, [isTablet, scrollTableOnSelection, selectedRow]);
 
+  // Handle page change
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
   return (
-    <TableBody>
-      {stableSort<Row>(
-        constructTableData(sitesList),
-        getComparator(order, orderBy),
-      ).map((site) => {
-        return (
-          <TableRow
-            id={`homepage-table-row-${site.tableData.id}`}
-            hover
-            className={classes.tableRow}
-            style={{
-              backgroundColor:
-                site.tableData.id === selectedRow
-                  ? colors.lighterBlue
-                  : 'white',
-            }}
-            onClick={(event) => handleClick(event, site)}
-            role="button"
-            tabIndex={-1}
-            key={site.tableData.id}
-          >
-            <RowNameCell
-              site={site}
-              classes={{
-                ...classes,
-                nameCells: isExtended
-                  ? classes.extendedTableNameCells
-                  : classes.nameCells,
-              }}
-            />
-            <RowNumberCell
-              isExtended={isExtended}
-              classes={classes}
-              value={site.sst}
-              color={isExtended ? colors.black : colors.lightBlue}
-              unit="°C"
-            />
-            {isExtended && (
-              <RowNumberCell
-                isExtended={isExtended}
-                classes={classes}
-                value={site.historicMax}
-                color={colors.black}
-                unit="°C"
-              />
-            )}
-            {isExtended && (
-              <RowNumberCell
-                isExtended={isExtended}
-                classes={classes}
-                value={site.sstAnomaly}
-                color={colors.black}
-                unit="°C"
-              />
-            )}
-            <RowNumberCell
-              isExtended={isExtended}
-              classes={classes}
-              value={site.dhw}
-              color={dhwColorFinder(site.dhw)}
-              unit="DHW"
-            />
-            {isExtended && (
-              <RowNumberCell
-                isExtended={isExtended}
-                classes={classes}
-                value={site.buoyTop}
-                color={colors.black}
-                unit="°C"
-              />
-            )}
-            {isExtended && (
-              <RowNumberCell
-                isExtended={isExtended}
-                classes={classes}
-                value={site.buoyBottom}
-                color={colors.black}
-                unit="°C"
-              />
-            )}
-            <RowAlertCell site={site} classes={classes} />
-          </TableRow>
-        );
-      })}
-    </TableBody>
+    <>
+      <TableBody>
+        {stableSort<Row>(
+          constructTableData(sitesList),
+          getComparator(order, orderBy),
+        )
+          .slice(page * ROWS_PER_PAGE, page * ROWS_PER_PAGE + ROWS_PER_PAGE)
+          .map((site) => {
+            return (
+              <TableRow
+                id={`homepage-table-row-${site.tableData.id}`}
+                hover
+                className={classes.tableRow}
+                style={{
+                  backgroundColor:
+                    site.tableData.id === selectedRow
+                      ? colors.lighterBlue
+                      : 'white',
+                }}
+                onClick={(event) => handleClick(event, site)}
+                role="button"
+                tabIndex={-1}
+                key={site.tableData.id}
+              >
+                <RowNameCell
+                  site={site}
+                  classes={{
+                    ...classes,
+                    nameCells: isExtended
+                      ? classes.extendedTableNameCells
+                      : classes.nameCells,
+                  }}
+                />
+                <RowNumberCell
+                  isExtended={isExtended}
+                  classes={classes}
+                  value={site.sst}
+                  color={isExtended ? colors.black : colors.lightBlue}
+                  unit="°C"
+                />
+                {isExtended && (
+                  <RowNumberCell
+                    isExtended={isExtended}
+                    classes={classes}
+                    value={site.historicMax}
+                    color={colors.black}
+                    unit="°C"
+                  />
+                )}
+                {isExtended && (
+                  <RowNumberCell
+                    isExtended={isExtended}
+                    classes={classes}
+                    value={site.sstAnomaly}
+                    color={colors.black}
+                    unit="°C"
+                  />
+                )}
+                <RowNumberCell
+                  isExtended={isExtended}
+                  classes={classes}
+                  value={site.dhw}
+                  color={dhwColorFinder(site.dhw)}
+                  unit="DHW"
+                />
+                {isExtended && (
+                  <RowNumberCell
+                    isExtended={isExtended}
+                    classes={classes}
+                    value={site.buoyTop}
+                    color={colors.black}
+                    unit="°C"
+                  />
+                )}
+                {isExtended && (
+                  <RowNumberCell
+                    isExtended={isExtended}
+                    classes={classes}
+                    value={site.buoyBottom}
+                    color={colors.black}
+                    unit="°C"
+                  />
+                )}
+                <RowAlertCell site={site} classes={classes} />
+              </TableRow>
+            );
+          })}
+      </TableBody>
+      <TablePagination
+        component="div"
+        count={sitesList.length}
+        rowsPerPage={ROWS_PER_PAGE}
+        rowsPerPageOptions={[ROWS_PER_PAGE]}
+        page={page}
+        onPageChange={handleChangePage}
+      />
+    </>
   );
 };
 
