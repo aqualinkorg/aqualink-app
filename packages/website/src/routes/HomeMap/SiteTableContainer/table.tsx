@@ -342,7 +342,7 @@ const styles = (theme: Theme) =>
     },
   });
 
-type SiteTableBodyIncomingProps = {
+type SiteTableIncomingProps = {
   header: React.ReactNode;
   order: Order;
   orderBy: OrderKeys;
@@ -360,6 +360,6 @@ SiteTable.defaultProps = {
   scrollPageOnSelection: false,
 };
 
-type SiteTableProps = WithStyles<typeof styles> & SiteTableBodyIncomingProps;
+type SiteTableProps = WithStyles<typeof styles> & SiteTableIncomingProps;
 
 export default withStyles(styles)(SiteTable);
