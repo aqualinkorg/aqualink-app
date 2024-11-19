@@ -237,9 +237,9 @@ const SiteTable = ({
   const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleClick = (event: unknown, site: Row) => {
-    const mapElement = document.getElementById('sites-map');
     dispatch(setSearchResult());
     dispatch(setSiteOnMap(sitesList[site.tableData.id]));
+    const mapElement = document.getElementById('sites-map');
     if (scrollPageOnSelection && mapElement) {
       mapElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
