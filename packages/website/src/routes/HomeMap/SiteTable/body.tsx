@@ -192,7 +192,7 @@ const SiteTableBody = ({
   }, [idToIndexMap, isTablet, scrollTableOnSelection, selectedRow]);
 
   // Handle page change
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handlePageChange = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -285,14 +285,16 @@ const SiteTableBody = ({
             );
           })}
       </TableBody>
-      <TablePagination
-        component="div"
-        count={sitesList.length}
-        rowsPerPage={ROWS_PER_PAGE}
-        rowsPerPageOptions={[ROWS_PER_PAGE]}
-        page={page}
-        onPageChange={handleChangePage}
-      />
+      {sitesList.length > 0 && (
+        <TablePagination
+          className={classes.stickyFooter}
+          count={sitesList.length}
+          rowsPerPage={ROWS_PER_PAGE}
+          rowsPerPageOptions={[ROWS_PER_PAGE]}
+          page={page}
+          onPageChange={handlePageChange}
+        />
+      )}
     </>
   );
 };
@@ -333,6 +335,10 @@ const styles = (theme: Theme) =>
     tableRow: {
       cursor: 'pointer',
       borderTop: `1px solid ${theme.palette.grey['300']}`,
+    },
+    stickyFooter: {
+      position: 'sticky',
+      bottom: 0,
     },
   });
 
