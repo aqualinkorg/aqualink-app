@@ -285,7 +285,7 @@ const SiteTableBody = ({
             );
           })}
       </TableBody>
-      {sitesList.length > 0 && (
+      {sitesList.length > ROWS_PER_PAGE && (
         <TablePagination
           className={classes.stickyFooter}
           count={sitesList.length}
