@@ -507,13 +507,6 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             </mock-tablecell>
           </mock-tablerow>
         </mock-tablebody>
-        <mock-tablepagination
-          classname="SiteTableBody-stickyFooter-19"
-          count="1"
-          page="0"
-          rowsperpage="200"
-          rowsperpageoptions="200"
-        />
       </mock-table>
     </mock-tablecontainer>
   </mock-box>
