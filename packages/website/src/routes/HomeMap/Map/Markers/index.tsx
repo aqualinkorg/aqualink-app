@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { LayerGroup, useLeaflet } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import L from 'leaflet';
 import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
 import { Site } from 'store/Sites/types';
@@ -34,7 +34,10 @@ const clusterIcon = (cluster: any) => {
 
 export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
   const storedSites = useSelector(sitesToDisplayListSelector);
-  const sitesList = collection?.sites || storedSites || [];
+  const sitesList = useMemo(
+    () => collection?.sites || storedSites || [],
+    [collection?.sites, storedSites],
+  );
   const siteOnMap = useSelector(siteOnMapSelector);
   const { map } = useLeaflet();
   const [visibleSites, setVisibleSites] = useState(sitesList);
