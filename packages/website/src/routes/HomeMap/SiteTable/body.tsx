@@ -31,7 +31,7 @@ import { getComparator, Order, OrderKeys, stableSort } from './utils';
 import { Collection } from '../../Dashboard/collection';
 
 const SCROLLT_TIMEOUT = 500;
-const ROWS_PER_PAGE = 25;
+const ROWS_PER_PAGE = 200;
 
 const RowNameCell = ({
   site: { locationName, region },
