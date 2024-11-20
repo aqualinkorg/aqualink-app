@@ -54,7 +54,7 @@ const SelectedSiteCard = () => {
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
               {!hasMedia && (
-                <Link to={`sites/${site?.id}`}>
+                <Link to={`/sites/${site?.id}`}>
                   <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}
