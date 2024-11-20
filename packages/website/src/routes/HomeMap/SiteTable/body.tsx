@@ -140,12 +140,29 @@ const SiteTableBody = ({
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const mapElement = document.getElementById('sites-map');
+  const tableData = useMemo(
+    () =>
+      stableSort<Row>(
+        constructTableData(sitesList),
+        getComparator(order, orderBy),
+      ),
+    [order, orderBy, sitesList],
+  );
+  const idToIndexMap = useMemo(
+    () =>
+      tableData.reduce((acc, item, index) => {
+        // eslint-disable-next-line fp/no-mutation
+        acc[item.tableData.id] = index;
+        return acc;
+      }, {} as Record<number, number>),
+    [tableData],
+  );
 
   const handleClick = (event: unknown, site: Row) => {
     setSelectedRow(site.tableData.id);
     dispatch(setSearchResult());
     dispatch(setSiteOnMap(sitesList[site.tableData.id]));
+    const mapElement = document.getElementById('sites-map');
     if (scrollPageOnSelection && mapElement) {
       mapElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
@@ -158,15 +175,21 @@ const SiteTableBody = ({
 
   // scroll to the relevant site row when site is selected.
   useEffect(() => {
-    const child = document.getElementById(`homepage-table-row-${selectedRow}`);
+    if (selectedRow === undefined || idToIndexMap[selectedRow] === undefined)
+      return;
+    // Go to the page where the selected site is
+    setPage(Math.floor(idToIndexMap[selectedRow] / ROWS_PER_PAGE));
     // only scroll if not on mobile (info at the top is more useful than the site row)
-    if (child && !isTablet && scrollTableOnSelection) {
-      setTimeout(
-        () => child.scrollIntoView({ block: 'center', behavior: 'smooth' }),
-        SCROLLT_TIMEOUT,
-      );
+    if (!isTablet && scrollTableOnSelection) {
+      setTimeout(() => {
+        const child = document.getElementById(
+          `homepage-table-row-${selectedRow}`,
+        );
+
+        child?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }, SCROLLT_TIMEOUT);
     }
-  }, [isTablet, scrollTableOnSelection, selectedRow]);
+  }, [idToIndexMap, isTablet, scrollTableOnSelection, selectedRow]);
 
   // Handle page change
   const handleChangePage = (event: unknown, newPage: number) => {
