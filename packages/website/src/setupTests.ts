@@ -7,7 +7,8 @@ import 'mutationobserver-shim';
 import { TextEncoder, TextDecoder } from 'util';
 import { ReadableStream } from 'node:stream/web';
 
-// Polyfill to address Jest+jsdom issue
+// Polyfill to address Jest+jsdom issue: https://github.com/jsdom/jsdom/issues/2524
+// Define the globals that are missing
 // eslint-disable-next-line fp/no-mutating-methods
 Object.defineProperties(globalThis, {
   TextDecoder: { value: TextDecoder },
