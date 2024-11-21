@@ -4,6 +4,16 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 import 'mutationobserver-shim';
+import { TextEncoder, TextDecoder } from 'util';
+import { ReadableStream } from 'node:stream/web';
+
+// Polyfill to address Jest+jsdom issue
+// eslint-disable-next-line fp/no-mutating-methods
+Object.defineProperties(globalThis, {
+  TextDecoder: { value: TextDecoder },
+  TextEncoder: { value: TextEncoder },
+  ReadableStream: { value: ReadableStream },
+});
 
 jest.mock('@material-ui/icons', () => ({
   __esModule: true,
