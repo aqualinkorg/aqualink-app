@@ -1,6 +1,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { getAllColumns } from 'utils/site.utils';
 import { ReefCheckSurvey } from './reef-check-surveys.entity';
 
 @Injectable()
@@ -22,7 +23,9 @@ export class ReefCheckSurveysService {
   async findOne(id: string): Promise<ReefCheckSurvey> {
     const reefCheckSurvey = await this.reefCheckSurveyRepository.findOne({
       where: { id },
-      relations: ['organisms'],
+      relations: ['organisms', 'reefCheckSite'],
+      // Using getAllColumns to include VirtualColumns - they are not included by default
+      select: getAllColumns(this.reefCheckSurveyRepository),
     });
 
     if (!reefCheckSurvey) {

@@ -6,6 +6,7 @@ import {
   ManyToOne,
   PrimaryColumn,
   OneToMany,
+  VirtualColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Site } from '../sites/sites.entity';
@@ -285,4 +286,16 @@ export class ReefCheckSurvey {
   @ApiProperty()
   @Column({ nullable: true })
   submittedBy: string;
+
+  @ApiProperty()
+  @VirtualColumn({
+    query: (survey) => `
+      SELECT satellite_temperature
+      FROM daily_data
+      WHERE DATE(daily_data.date) = DATE(${survey}.date)
+      AND daily_data.site_id = ${survey}.site_id
+      LIMIT 1
+    `,
+  })
+  satelliteTemperature: string;
 }
