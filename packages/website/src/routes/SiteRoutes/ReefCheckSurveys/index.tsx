@@ -67,12 +67,14 @@ export const ReefCheckSurveyViewPage = () => {
             <ReefCheckSurveyTable
               category="Fish"
               description="Fish data is collected along four 5 meter wide by 20 meter long segments (100m²) of a 100 meter transect line for a total survey area of 400 square meters. Fish seen up to 5 meters above the line are included."
+              hideEmptyRows
             />
           </Grid>
           <Grid item>
             <ReefCheckSurveyTable
               category="Invertebrate"
               description="Invertebrate data is collected along four 5 meter wide by 20 meter long segments (100m²) of a 100 meter transect line for a total survey area of 400 square meters."
+              hideEmptyRows
             />
           </Grid>
           <Grid item>
@@ -83,7 +85,7 @@ export const ReefCheckSurveyViewPage = () => {
           </Grid>
           {/* Add Bleaching */}
           <Grid item>
-            <ReefCheckSurveyTable category="Rare Animal" />
+            <ReefCheckSurveyTable category="Rare Animal" hideEmptyRows />
           </Grid>
           {/* Add Reef Structure and composition */}
         </Grid>
