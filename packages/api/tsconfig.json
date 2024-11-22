@@ -7,6 +7,6 @@
     "noImplicitAny": false,
     "baseUrl": "./src"
   },
-  "include": ["src", "scripts"],
+  "include": ["src"],
   "files": ["src/custom.d.ts", "ormconfig.ts", "firebaseConfig.ts"]
 }

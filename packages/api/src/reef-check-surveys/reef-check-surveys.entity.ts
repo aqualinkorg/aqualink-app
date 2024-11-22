@@ -23,7 +23,7 @@ export class ReefCheckSurvey {
   siteId: number;
 
   @ApiProperty()
-  @ManyToOne(() => Site, { nullable: false })
+  @ManyToOne(() => Site, (site) => site.reefCheckSurveys)
   @JoinColumn({ name: 'site_id' })
   @Index()
   site: Site;
@@ -33,13 +33,13 @@ export class ReefCheckSurvey {
   reefCheckSiteId: string;
 
   @ApiProperty()
-  @ManyToOne(() => ReefCheckSite, { nullable: false })
+  @ManyToOne(() => ReefCheckSite, (reefCheckSite) => reefCheckSite.surveys)
   @JoinColumn({ name: 'reef_check_site_id' })
   @Index()
   reefCheckSite: ReefCheckSite;
 
   @ApiProperty()
-  @OneToMany(() => ReefCheckOrganism, (organism) => organism.surveyId)
+  @OneToMany(() => ReefCheckOrganism, (organism) => organism.survey)
   organisms: ReefCheckOrganism[];
 
   @ApiProperty()

@@ -5,8 +5,10 @@ import {
   JoinColumn,
   PrimaryColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { Site } from '../sites/sites.entity';
 
 @Entity()
@@ -60,4 +62,8 @@ export class ReefCheckSite {
   @ApiProperty()
   @Column('float', { nullable: true })
   distanceToNearestPopn: number;
+
+  @ApiPropertyOptional()
+  @OneToMany(() => ReefCheckSurvey, (survey) => survey.site)
+  surveys: ReefCheckSurvey[];
 }
