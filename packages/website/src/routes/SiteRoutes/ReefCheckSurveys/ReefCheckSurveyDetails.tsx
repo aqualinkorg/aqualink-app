@@ -63,6 +63,7 @@ const surveyFields = [
   { field: 'isSiteProtected', label: 'Is Site Protected?' },
   { field: 'isProtectionEnforced', label: 'Is Protection Enforced?' },
   { field: 'levelOfPoaching', label: 'Level of Poaching' },
+// eslint-disable-next-line prettier/prettier
 ] satisfies Array<NonNullable<SurveyFields[keyof SurveyFields]>>;
 
 const ReefCheckSurveyDetailsComponent = ({
