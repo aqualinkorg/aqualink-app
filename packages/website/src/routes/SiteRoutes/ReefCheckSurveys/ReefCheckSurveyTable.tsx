@@ -7,40 +7,40 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  TableCellProps,
+  createStyles,
+  Theme,
+  withStyles,
+  WithStyles,
 } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
+import { ReefCheckOrganism } from 'store/ReefCheckSurveys/types';
 
-type ReefCheckSurveyTableProps = {
-  category: string;
+export type ColumnDef<T> = {
+  field: keyof T | ((row: T) => string | number);
+  header: string;
+} & TableCellProps;
+
+type ReefCheckSurveyTableIncomingProps = {
+  columns: ColumnDef<ReefCheckOrganism>[];
+  title: string;
   description?: string;
-  // Filter out rows with 0 values
-  hideEmptyRows?: boolean;
+  filter?: (organism: ReefCheckOrganism) => boolean;
 };
 
-export const ReefCheckSurveyTable = ({
-  category,
+const ReefCheckSurveyTableComponent = ({
+  columns,
+  title,
   description = '',
-  hideEmptyRows,
+  filter = () => true,
+  classes,
 }: ReefCheckSurveyTableProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
-  const rows = survey?.organisms
-    .filter((organism) => organism.type === category)
-    .map((organism) => ({
-      id: organism.organism,
-      s1: organism.s1,
-      s2: organism.s2,
-      s3: organism.s3,
-      s4: organism.s4,
-      total: organism.s1 + organism.s2 + organism.s3 + organism.s4,
-    }));
+  const rows = survey?.organisms.filter(filter);
 
-  const filteredRows = hideEmptyRows
-    ? rows?.filter((row) => row.total > 0)
-    : rows;
-
-  if (error || !filteredRows) {
+  if (error || !rows) {
     return null;
   }
 
@@ -51,31 +51,33 @@ export const ReefCheckSurveyTable = ({
 
   return (
     <>
-      <TableContainer component={Paper} style={{ color: 'black', padding: 16 }}>
-        <Typography>{category} Count</Typography>
-        <Typography variant="body2">{description}</Typography>
+      <TableContainer component={Paper} className={classes.paper}>
+        <Typography className={classes.title}>{title}</Typography>
+        <Typography variant="body2" className={classes.description}>
+          {description}
+        </Typography>
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>{category}</TableCell>
-              <TableCell align="center">s1 (0-20m)</TableCell>
-              <TableCell align="center">s2 (25-45m)</TableCell>
-              <TableCell align="center">s3 (50-70m)</TableCell>
-              <TableCell align="center">s4 (75-95m)</TableCell>
-              <TableCell align="center">Total</TableCell>
-              <TableCell align="center">Per 100m2</TableCell>
+              {columns.map(({ header, field, ...props }) => (
+                <TableCell key={header} className={classes.header} {...props}>
+                  {header}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredRows.map((row) => (
+            {rows.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell align="center">{row.s1}</TableCell>
-                <TableCell align="center">{row.s2}</TableCell>
-                <TableCell align="center">{row.s3}</TableCell>
-                <TableCell align="center">{row.s4}</TableCell>
-                <TableCell align="center">{row.total}</TableCell>
-                <TableCell align="center">-</TableCell>
+                {columns.map(({ header, field, ...props }) => {
+                  const value =
+                    typeof field === 'function' ? field(row) : row[field];
+                  return (
+                    <TableCell key={header} {...props}>
+                      {value}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))}
           </TableBody>
@@ -84,3 +86,29 @@ export const ReefCheckSurveyTable = ({
     </>
   );
 };
+
+const styles = (theme: Theme) =>
+  createStyles({
+    paper: {
+      padding: 16,
+      color: theme.palette.text.secondary,
+    },
+    title: {
+      textTransform: 'uppercase',
+    },
+    description: {
+      margin: '8px 0',
+    },
+    header: {
+      backgroundColor: '#FAFAFA',
+      borderBottom: '1px solid black',
+      borderTop: '1px solid rgba(224, 224, 224, 1)',
+    },
+  });
+
+type ReefCheckSurveyTableProps = ReefCheckSurveyTableIncomingProps &
+  WithStyles<typeof styles>;
+
+export const ReefCheckSurveyTable = withStyles(styles)(
+  ReefCheckSurveyTableComponent,
+);
