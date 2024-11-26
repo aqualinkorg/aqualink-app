@@ -13,42 +13,35 @@ import {
   withStyles,
   WithStyles,
 } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
+import { times } from 'lodash';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
-import { ReefCheckOrganism } from 'store/ReefCheckSurveys/types';
 
 export type ColumnDef<T> = {
   field: keyof T | ((row: T) => string | number);
   header: string;
 } & TableCellProps;
 
-type ReefCheckSurveyTableIncomingProps = {
-  columns: ColumnDef<ReefCheckOrganism>[];
-  title: string;
-  description?: string;
-  filter?: (organism: ReefCheckOrganism) => boolean;
+type ObjectWithId = {
+  id: string;
 };
 
-const ReefCheckSurveyTableComponent = ({
+type ReefCheckSurveyTableIncomingProps<T extends ObjectWithId> = {
+  data: T[];
+  columns: ColumnDef<T>[];
+  title: string;
+  loading?: boolean | null;
+  description?: string;
+};
+
+const ReefCheckSurveyTableComponent = <T extends ObjectWithId>({
+  data,
   columns,
   title,
+  loading,
   description = '',
-  filter = () => true,
   classes,
-}: ReefCheckSurveyTableProps) => {
-  const { survey, loading, error } = useSelector(reefCheckSurveySelector);
-  const rows = survey?.organisms.filter(filter);
-
-  if (error || !rows) {
-    return null;
-  }
-
-  if (loading) {
-    // TODO: Add skeleton
-    return null;
-  }
-
+}: ReefCheckSurveyTableProps<T>) => {
   return (
     <>
       <TableContainer component={Paper} className={classes.paper}>
@@ -67,7 +60,17 @@ const ReefCheckSurveyTableComponent = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {loading &&
+              times(3).map((index) => (
+                <TableRow key={index}>
+                  {columns.map(({ header, field, ...props }) => (
+                    <TableCell key={header} {...props}>
+                      <Skeleton animation="wave" className={classes.skeleton} />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            {data.map((row) => (
               <TableRow key={row.id}>
                 {columns.map(({ header, field, ...props }) => {
                   const value =
@@ -93,6 +96,9 @@ const styles = (theme: Theme) =>
       padding: 16,
       color: theme.palette.text.secondary,
     },
+    skeleton: {
+      backgroundColor: '#E2E2E2',
+    },
     title: {
       textTransform: 'uppercase',
     },
@@ -106,9 +112,11 @@ const styles = (theme: Theme) =>
     },
   });
 
-type ReefCheckSurveyTableProps = ReefCheckSurveyTableIncomingProps &
-  WithStyles<typeof styles>;
+type ReefCheckSurveyTableProps<T extends ObjectWithId> =
+  ReefCheckSurveyTableIncomingProps<T> & WithStyles<typeof styles>;
 
 export const ReefCheckSurveyTable = withStyles(styles)(
   ReefCheckSurveyTableComponent,
-);
+) as <T extends ObjectWithId>(
+  props: ReefCheckSurveyTableIncomingProps<T>,
+) => React.ReactElement;

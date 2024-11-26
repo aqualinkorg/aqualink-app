@@ -9,11 +9,11 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import cls from 'classnames';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
-import { siteDetailsSelector } from 'store/Sites/selectedSiteSlice';
 import ObservationBox from 'routes/Surveys/View/ObservationBox';
 import reefCheckLogo from '../../../assets/img/reef-check.png';
 
@@ -21,22 +21,53 @@ export const ReefCheckSurveySummaryComponent = ({
   classes,
 }: ReefCheckSurveySummaryProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
-  const siteDetails = useSelector(siteDetailsSelector);
 
-  if (loading || error || !survey || !siteDetails) {
+  if (error) {
     return null;
   }
-
   return (
     <Paper className={classes.paper}>
       <Box className={cls(classes.surveySource, classes.columnSpaceBetween)}>
         <Typography>Reef check Survey Data</Typography>
-        <Typography>{formatDate(survey.date)}</Typography>
+        <Typography>
+          {loading ? (
+            <Skeleton
+              variant="text"
+              width="100%"
+              height={20}
+              className={classes.skeleton}
+            />
+          ) : (
+            formatDate(survey?.date ?? '')
+          )}
+        </Typography>
         <img src={reefCheckLogo} width={180} alt="Reef Check" />
       </Box>
       <Box className={classes.columnCenter} flexShrink={0}>
-        <Typography variant="h4">{survey.reefCheckSite?.reefName}</Typography>
-        <Typography>{survey.reefCheckSite?.region}</Typography>
+        <Typography variant="h4">
+          {loading ? (
+            <Skeleton
+              variant="text"
+              width={200}
+              height={40}
+              className={classes.skeleton}
+            />
+          ) : (
+            survey?.reefCheckSite?.reefName
+          )}
+        </Typography>
+        <Typography>
+          {loading ? (
+            <Skeleton
+              variant="text"
+              width={140}
+              height={20}
+              className={classes.skeleton}
+            />
+          ) : (
+            survey?.reefCheckSite?.region
+          )}
+        </Typography>
       </Box>
       <Box className={cls(classes.note, classes.columnSpaceBetween)}>
         <Typography>
@@ -52,11 +83,20 @@ export const ReefCheckSurveySummaryComponent = ({
         </Link>
       </Box>
       <Box className={cls(classes.observationBox, classes.columnSpaceBetween)}>
-        <ObservationBox
-          depth={survey.depth}
-          satelliteTemperature={survey.satelliteTemperature ?? undefined}
-        />
-        <Button variant="outlined" color="primary">
+        {loading ? (
+          <Skeleton
+            variant="rect"
+            width="100%"
+            height={150}
+            className={classes.skeleton}
+          />
+        ) : (
+          <ObservationBox
+            depth={survey?.depth ?? null}
+            satelliteTemperature={survey?.satelliteTemperature ?? undefined}
+          />
+        )}
+        <Button variant="outlined" color="primary" disabled={!!loading}>
           REQUEST TO DOWNLOAD REEF CHECK DATA
         </Button>
       </Box>
@@ -83,7 +123,9 @@ const styles = (theme: Theme) =>
       display: 'flex',
       gap: 32,
     },
-
+    skeleton: {
+      backgroundColor: '#E2E2E2',
+    },
     surveySource: {
       padding: 12,
       borderRadius: 8,

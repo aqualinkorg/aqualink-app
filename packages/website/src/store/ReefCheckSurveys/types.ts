@@ -30,6 +30,19 @@ export interface ReefCheckOrganism {
   errors: string | null;
 }
 
+export interface ReefCheckSubstrate {
+  id: string;
+  surveyId: string;
+  date: string;
+  substrateCode: string;
+  s1: number;
+  s2: number;
+  s3: number;
+  s4: number;
+  recordedBy: string | null;
+  errors: string | null;
+}
+
 export interface ReefCheckSurvey {
   id: string;
   siteId: number;
@@ -37,6 +50,7 @@ export interface ReefCheckSurvey {
   site?: Site;
   reefCheckSite?: ReefCheckSite;
   organisms: ReefCheckOrganism[];
+  substrates: ReefCheckSubstrate[];
   date: string;
   errors: string;
   depth: number;

@@ -9,6 +9,7 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import { useSelector } from 'react-redux';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import { ReefCheckSurvey } from 'store/ReefCheckSurveys/types';
@@ -63,7 +64,6 @@ const surveyFields = [
   { field: 'isSiteProtected', label: 'Is Site Protected?' },
   { field: 'isProtectionEnforced', label: 'Is Protection Enforced?' },
   { field: 'levelOfPoaching', label: 'Level of Poaching' },
-// eslint-disable-next-line prettier/prettier
 ] satisfies Array<NonNullable<SurveyFields[keyof SurveyFields]>>;
 
 const ReefCheckSurveyDetailsComponent = ({
@@ -71,7 +71,7 @@ const ReefCheckSurveyDetailsComponent = ({
 }: ReefCheckSurveyDetailsProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
 
-  if (loading || error || !survey) {
+  if (error) {
     return null;
   }
   return (
@@ -81,7 +81,15 @@ const ReefCheckSurveyDetailsComponent = ({
           <Grid key={field} container className={classes.item}>
             <Typography className={classes.label}>{label}</Typography>
             <Typography className={classes.value}>
-              {formatter?.(survey[field]) ?? survey[field] ?? ''}
+              {loading || !survey ? (
+                <Skeleton
+                  variant="text"
+                  width={100}
+                  className={classes.skeleton}
+                />
+              ) : (
+                formatter?.(survey[field]) ?? survey[field] ?? ''
+              )}
             </Typography>
           </Grid>
         ))}
@@ -95,6 +103,9 @@ const styles = (theme: Theme) =>
     paper: {
       padding: 16,
       color: theme.palette.text.secondary,
+    },
+    skeleton: {
+      backgroundColor: '#E2E2E2',
     },
     container: {
       display: 'inline-block',
