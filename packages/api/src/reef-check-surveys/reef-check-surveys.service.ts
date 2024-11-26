@@ -16,14 +16,14 @@ export class ReefCheckSurveysService {
   async find(reefCheckSiteId: string): Promise<ReefCheckSurvey[]> {
     return this.reefCheckSurveyRepository.find({
       where: { reefCheckSiteId },
-      relations: ['organisms'],
+      relations: ['organisms', 'substrates', 'reefCheckSite'],
     });
   }
 
   async findOne(id: string): Promise<ReefCheckSurvey> {
     const reefCheckSurvey = await this.reefCheckSurveyRepository.findOne({
       where: { id },
-      relations: ['organisms', 'reefCheckSite'],
+      relations: ['organisms', 'substrates', 'reefCheckSite'],
       // Using getAllColumns to include VirtualColumns - they are not included by default
       select: getAllColumns(this.reefCheckSurveyRepository),
     });

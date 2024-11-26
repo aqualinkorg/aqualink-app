@@ -12,6 +12,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Site } from '../sites/sites.entity';
 import { ReefCheckSite } from '../reef-check-sites/reef-check-sites.entity';
 import { ReefCheckOrganism } from '../reef-check-organisms/reef-check-organisms.entity';
+import { ReefCheckSubstrate } from '../reef-check-substrates/reef-check-substrates.entity';
 
 @Entity()
 export class ReefCheckSurvey {
@@ -42,6 +43,10 @@ export class ReefCheckSurvey {
   @ApiProperty()
   @OneToMany(() => ReefCheckOrganism, (organism) => organism.survey)
   organisms: ReefCheckOrganism[];
+
+  @ApiProperty()
+  @OneToMany(() => ReefCheckSubstrate, (substrate) => substrate.survey)
+  substrates: ReefCheckSubstrate[];
 
   @ApiProperty()
   @Column({ nullable: true })
