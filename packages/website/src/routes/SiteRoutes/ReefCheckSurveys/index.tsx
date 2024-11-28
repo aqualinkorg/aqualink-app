@@ -44,7 +44,7 @@ export const ReefCheckSurveyViewPage = () => {
       <NavBar searchLocation />
 
       <Box bgcolor="#F5F6F6" paddingX={4}>
-        <Box>
+        <Box marginY={2}>
           <Button
             color="primary"
             startIcon={<ArrowBack />}
@@ -57,13 +57,13 @@ export const ReefCheckSurveyViewPage = () => {
           </Button>
         </Box>
         <Grid container direction="column" spacing={2}>
-          <Grid item>
+          <Grid item xs={12}>
             <ReefCheckSurveySummary />
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <ReefCheckSurveyDetails />
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <ReefCheckSurveyOrganismsTable
               title="Fish"
               description="Fish data is collected along four 5 meter wide by 20 meter long segments (100m²) of a 100 meter transect line for a total survey area of 400 square meters. Fish seen up to 5 meters above the line are included."
@@ -71,7 +71,7 @@ export const ReefCheckSurveyViewPage = () => {
               filter={(row) => row.type === 'Fish'}
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <ReefCheckSurveyOrganismsTable
               title="Invertebrate"
               description="Invertebrate data is collected along four 5 meter wide by 20 meter long segments (100m²) of a 100 meter transect line for a total survey area of 400 square meters."
@@ -79,7 +79,7 @@ export const ReefCheckSurveyViewPage = () => {
               filter={(row) => row.type === 'Invertebrate'}
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <ReefCheckSurveyOrganismsTable
               title="Impact"
               description="0-3 scale. 0 = none, 1 = low (1 piece), 2 = medium (2-4 pieces) and 3 = high (5+ pieces)"
@@ -89,7 +89,7 @@ export const ReefCheckSurveyViewPage = () => {
               }
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <ReefCheckSurveyOrganismsTable
               title="Bleaching and Coral Diseases"
               description="Black band, white band, White Plague, and Aspergillosis are coral diseases."
@@ -99,14 +99,14 @@ export const ReefCheckSurveyViewPage = () => {
               }
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <ReefCheckSurveyOrganismsTable
               title="Rare Animal"
               columns={rareAnimalsColumns}
               filter={(row) => row.type === 'Rare Animal'}
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <ReefCheckSurveySubstrates
               title="Reef Structure and Composition"
               columns={reefStructureColumns}

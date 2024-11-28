@@ -71,12 +71,14 @@ const ReefCheckSurveyDetailsComponent = ({
   classes,
 }: ReefCheckSurveyDetailsProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
+  const date = survey?.date ? new Date(survey.date).toLocaleDateString() : '';
 
   if (error) {
     return null;
   }
   return (
     <Paper className={classes.paper}>
+      <Typography className={classes.title}>{date} REEF CHECK SURVEY DATA</Typography>
       <Box className={classes.container}>
         {surveyFields.map(({ field, label, formatter }) => (
           <Grid key={field} container className={classes.item}>
@@ -105,16 +107,25 @@ const styles = (theme: Theme) =>
       padding: 16,
       color: theme.palette.text.secondary,
     },
+    title: {
+      borderBottom: '1px solid black',
+    },
     skeleton: {
       backgroundColor: '#E2E2E2',
     },
     container: {
       display: 'inline-block',
-      columnCount: 3,
-      columnGap: 0,
       width: '100%',
       borderTop: '1px solid #E0E0E0',
       borderLeft: '1px solid #E0E0E0',
+      columnGap: 0,
+      columnCount: 3,
+      [theme.breakpoints.down('md')]: {
+        columnCount: 2,
+      },
+      [theme.breakpoints.down('sm')]: {
+        columnCount: 1,
+      },
     },
     item: {
       display: 'flex',

@@ -121,6 +121,7 @@ const styles = (theme: Theme) =>
       padding: 12,
       color: theme.palette.text.secondary,
       display: 'flex',
+      flexWrap: 'wrap',
       gap: 32,
     },
     skeleton: {
@@ -130,15 +131,18 @@ const styles = (theme: Theme) =>
       padding: 12,
       borderRadius: 8,
       border: '1px solid #E0E0E0',
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+      },
     },
     note: {
+      flex: '1 1 300px',
       padding: 12,
       borderRadius: 8,
       backgroundColor: '#F5F6F6',
     },
     observationBox: {
       gap: 32,
-      flexShrink: 0,
     },
     columnSpaceBetween: {
       display: 'flex',
