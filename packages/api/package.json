@@ -118,7 +118,6 @@
     "@types/luxon": "^3.3.1",
     "@types/multer": "^1.4.3",
     "@types/node": "^18.16.16",
-    "@types/node-xlsx": "^0.21.0",
     "@types/passport": "^1.0.4",
     "@types/passport-strategy": "^0.2.35",
     "@types/sharp": "^0.30.4",
