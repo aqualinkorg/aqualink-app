@@ -123,7 +123,7 @@ export function metricFields(
         {
           label: 'Salinity',
           value: `${formatNumber(data?.salinity, 1)}`,
-          unit: 'psu',
+          unit: source === 'hui' ? 'ppt' : 'psu',
           xs: 6,
         },
       ];
