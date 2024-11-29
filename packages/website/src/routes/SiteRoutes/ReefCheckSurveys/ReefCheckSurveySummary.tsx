@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   createStyles,
   Link,
   Paper,
@@ -96,9 +95,10 @@ export const ReefCheckSurveySummaryComponent = ({
             satelliteTemperature={survey?.satelliteTemperature ?? undefined}
           />
         )}
-        <Button variant="outlined" color="primary" disabled={!!loading}>
+        {/* TODO: Add back when functionality is finalized
+         <Button variant="outlined" color="primary" disabled={!!loading}>
           REQUEST TO DOWNLOAD REEF CHECK DATA
-        </Button>
+        </Button> */}
       </Box>
     </Paper>
   );
