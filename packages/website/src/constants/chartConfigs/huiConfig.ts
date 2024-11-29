@@ -9,7 +9,7 @@ export type SondeMetricsKeys = Extract<
 export const huiConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
   salinity: {
     title: 'Salinity',
-    units: 'psu',
+    units: 'ppt',
     description: '',
     visibility: 'public',
     order: 1,

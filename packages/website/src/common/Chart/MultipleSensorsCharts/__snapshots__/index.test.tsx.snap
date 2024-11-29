@@ -794,7 +794,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       >
                         36.1
                          
-                        psu
+                        ppt
                       </mock-typography>
                     </div>
                     <div
@@ -807,7 +807,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       >
                         34.9
                          
-                        psu
+                        ppt
                       </mock-typography>
                     </div>
                     <div
@@ -820,7 +820,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       >
                         33.8
                          
-                        psu
+                        ppt
                       </mock-typography>
                     </div>
                   </div>
