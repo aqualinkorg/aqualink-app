@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
-import { Box, Button, Grid, Typography } from '@material-ui/core';
-import { Link, useParams } from 'react-router-dom';
-import { reefCheckSurveyGetRequest } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
+import { ArrowBack } from '@material-ui/icons';
+import { reefCheckSurveyGetRequest } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import { siteErrorSelector, siteRequest } from 'store/Sites/selectedSiteSlice';
 import NavBar from 'common/NavBar';
-import { ArrowBack } from '@material-ui/icons';
-import { ReefCheckSurveyOrganismsTable } from './ReefCheckSurveyOrganismsTable';
-import { ReefCheckSurveySummary } from './ReefCheckSurveySummary';
-import { ReefCheckSurveyDetails } from './ReefCheckSurveyDetails';
+import NotFound from 'routes/NotFound';
 import { fishColumns } from './colDefs/fish.colDef';
 import { invertebratesColumns } from './colDefs/invertables.colDef';
 import { impactColumns } from './colDefs/impact.colDef';
 import { rareAnimalsColumns } from './colDefs/rareAnimals.colDef';
 import { bleachingColumns } from './colDefs/bleaching.colDef';
 import { reefStructureColumns } from './colDefs/reefStructure';
+import { ReefCheckSurveyOrganismsTable } from './ReefCheckSurveyOrganismsTable';
+import { ReefCheckSurveySummary } from './ReefCheckSurveySummary';
+import { ReefCheckSurveyDetails } from './ReefCheckSurveyDetails';
 import { ReefCheckSurveySubstrates } from './ReefCheckSurveySubstratesTable';
 
 const impactRows = [
@@ -37,7 +38,12 @@ export const ReefCheckSurveyViewPage = () => {
   }, [dispatch, siteId, surveyId]);
 
   if (error) {
-    return <Typography>Error loading site details</Typography>;
+    return (
+      <>
+        <NavBar searchLocation />
+        <NotFound />
+      </>
+    );
   }
   return (
     <>

@@ -76,7 +76,8 @@
       "axios": "axios/dist/node/axios.cjs",
       "^csv-stringify/browser/esm/sync": "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs"
     },
-    "globalSetup": "./src/global-setup.js"
+    "globalSetup": "./src/global-setup.js",
+    "resetMocks": false
   },
   "browserslist": {
     "production": [

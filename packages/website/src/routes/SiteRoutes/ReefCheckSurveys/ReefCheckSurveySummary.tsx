@@ -41,7 +41,7 @@ export const ReefCheckSurveySummaryComponent = ({
             formatDate(survey?.date ?? '')
           )}
         </Typography>
-        <img src={reefCheckLogo} width={180} alt="Reef Check" />
+        <img src={reefCheckLogo} width={180} alt="Reef Check Logo" />
       </Box>
       <Box className={classes.columnCenter} flexShrink={0}>
         <Typography variant="h4">
@@ -104,7 +104,7 @@ export const ReefCheckSurveySummaryComponent = ({
   );
 };
 
-const formatDate = (dateStr: string): string => {
+export const formatDate = (dateStr: string): string => {
   const date = new Date(dateStr);
   return date.toLocaleTimeString([], {
     year: 'numeric',

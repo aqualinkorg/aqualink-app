@@ -23,7 +23,7 @@ export type ColumnDef<T> = {
 } & TableCellProps;
 
 type ObjectWithId = {
-  id: string;
+  id: string | number;
 };
 
 type ReefCheckSurveyTableIncomingProps<T extends ObjectWithId> = {
