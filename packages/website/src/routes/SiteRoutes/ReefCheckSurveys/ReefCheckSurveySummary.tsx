@@ -77,6 +77,7 @@ export const ReefCheckSurveySummaryComponent = ({
         <Link
           href="https://www.reefcheck.org/tropical-program/tropical-monitoring-instruction/"
           target="_blank"
+          rel="noreferrer"
         >
           Learn more about the data and how it’s collected
         </Link>
