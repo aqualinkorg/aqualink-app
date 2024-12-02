@@ -170,8 +170,8 @@ export const useSensorIcon = (
   color: string,
 ) => {
   const classes = useMarkerStyles();
-  const iconWidth = sensor === 'spotter' ? 20 : 25;
-  const iconHeight = sensor === 'spotter' ? 20 : 25;
+  const iconWidth = sensor === 'spotter' ? 15 : 20;
+  const iconHeight = sensor === 'spotter' ? 15 : 20;
   return L.divIcon({
     iconSize: [iconWidth, iconHeight],
     iconAnchor: [iconWidth / 2, 0],
