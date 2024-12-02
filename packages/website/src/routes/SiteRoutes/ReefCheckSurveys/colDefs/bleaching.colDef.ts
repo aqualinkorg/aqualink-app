@@ -2,7 +2,6 @@ import { ReefCheckOrganism } from 'store/ReefCheckSurveys/types';
 import { mean } from 'lodash';
 import type { ColumnDef } from '../ReefCheckSurveyTable';
 
-// TODO: Finalize columns
 export const bleachingColumns: ColumnDef<ReefCheckOrganism>[] = [
   { field: 'organism', header: 'Bleaching and Coral Diseases Type' },
   { field: 's1', header: 's1 (0-20m)', align: 'center', width: 200 },

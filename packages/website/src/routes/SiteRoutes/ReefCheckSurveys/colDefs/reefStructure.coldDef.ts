@@ -18,7 +18,6 @@ const substrateCodesMap: Record<string, string> = {
   OT: 'Other',
 };
 
-// TODO: Finalize columns
 export const reefStructureColumns: ColumnDef<ReefCheckSubstrate>[] = [
   {
     field: ({ substrateCode }) => substrateCodesMap[substrateCode],
