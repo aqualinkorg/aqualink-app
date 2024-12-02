@@ -70,6 +70,12 @@ export const ReefCheckSurveyViewPage = () => {
             <ReefCheckSurveyDetails />
           </Grid>
           <Grid item xs={12}>
+            <ReefCheckSurveySubstrates
+              title="Reef Structure and Composition"
+              columns={reefStructureColumns}
+            />
+          </Grid>
+          <Grid item xs={12}>
             <ReefCheckSurveyOrganismsTable
               title="Fish"
               description="Fish data is collected along four 5 meter wide by 20 meter long segments (100m²) of a 100 meter transect line for a total survey area of 400 square meters. Fish seen up to 5 meters above the line are included."
@@ -110,12 +116,6 @@ export const ReefCheckSurveyViewPage = () => {
               title="Rare Animal"
               columns={rareAnimalsColumns}
               filter={(row) => row.type === 'Rare Animal'}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <ReefCheckSurveySubstrates
-              title="Reef Structure and Composition"
-              columns={reefStructureColumns}
             />
           </Grid>
         </Grid>
