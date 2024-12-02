@@ -18,7 +18,13 @@ export const ReefCheckSurveyOrganismsTable = ({
   filter = () => true,
 }: ReefCheckSurveyOrganismsTableProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
-  const rows = survey?.organisms.filter(filter) ?? [];
+  const rows =
+    // eslint-disable-next-line fp/no-mutating-methods
+    survey?.organisms
+      .filter(filter)
+      .sort(
+        (a, b) => b.s1 + b.s2 + b.s3 + b.s4 - (a.s1 + a.s2 + a.s3 + a.s4),
+      ) ?? [];
 
   if (error) {
     return null;
