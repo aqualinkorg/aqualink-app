@@ -1,4 +1,5 @@
 import { ReefCheckOrganism } from 'store/ReefCheckSurveys/types';
+import { mean } from 'lodash';
 import type { ColumnDef } from '../ReefCheckSurveyTable';
 
 export const rareAnimalsColumns: ColumnDef<ReefCheckOrganism>[] = [
@@ -13,6 +14,10 @@ export const rareAnimalsColumns: ColumnDef<ReefCheckOrganism>[] = [
     align: 'center',
     width: 200,
   },
-  // TODO: Determine how it's calculated
-  { field: () => '-', header: 'Per 100m2', align: 'center', width: 200 },
+  {
+    field: (row) => mean([row.s1, row.s2, row.s3, row.s4]),
+    header: 'Average per 100m²',
+    align: 'center',
+    width: 200,
+  },
 ];

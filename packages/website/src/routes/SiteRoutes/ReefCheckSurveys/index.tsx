@@ -12,7 +12,7 @@ import { invertebratesColumns } from './colDefs/invertables.colDef';
 import { impactColumns } from './colDefs/impact.colDef';
 import { rareAnimalsColumns } from './colDefs/rareAnimals.colDef';
 import { bleachingColumns } from './colDefs/bleaching.colDef';
-import { reefStructureColumns } from './colDefs/reefStructure';
+import { reefStructureColumns } from './colDefs/reefStructure.coldDef';
 import { ReefCheckSurveyOrganismsTable } from './ReefCheckSurveyOrganismsTable';
 import { ReefCheckSurveySummary } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyDetails } from './ReefCheckSurveyDetails';

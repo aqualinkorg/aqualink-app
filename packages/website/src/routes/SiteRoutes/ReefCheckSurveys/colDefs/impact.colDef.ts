@@ -9,8 +9,8 @@ export const impactColumns: ColumnDef<ReefCheckOrganism>[] = [
   { field: 's3', header: 's3 (50-70m)', align: 'center', width: 200 },
   { field: 's4', header: 's4 (75-95m)', align: 'center', width: 200 },
   {
-    field: ({ s1, s2, s3, s4 }) => mean([s1, s2, s3, s4]),
-    header: 'Average',
+    field: (row) => mean([row.s1, row.s2, row.s3, row.s4]),
+    header: 'Average per 100m²',
     align: 'center',
     width: 200,
   },
