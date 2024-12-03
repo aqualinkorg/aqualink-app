@@ -217,6 +217,7 @@ export const rangeOverlapWithRange = (
 ) => {
   return (
     (minDate2 <= minDate1 && minDate1 <= maxDate2) ||
-    (minDate2 <= maxDate1 && maxDate1 <= maxDate2)
+    (minDate2 <= maxDate1 && maxDate1 <= maxDate2) ||
+    (minDate1 <= maxDate2 && maxDate2 <= maxDate1)
   );
 };
