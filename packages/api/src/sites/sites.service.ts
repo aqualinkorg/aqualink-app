@@ -216,6 +216,7 @@ export class SitesService {
         'historicalMonthlyMean',
         'siteApplication',
         'sketchFab',
+        'reefCheckSurveys',
       ],
       true,
     );
