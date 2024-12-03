@@ -25,7 +25,7 @@ import {
   filterMetricDataByDate,
   getConflictingExclusionDates,
   hasHoboDataSubQuery,
-  hasWaterQualityDataSubQuery,
+  // hasWaterQualityDataSubQuery,
   getLatestData,
   getSite,
   createSite,
@@ -199,16 +199,16 @@ export class SitesService {
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
-    const waterQualityDataSet = await hasWaterQualityDataSubQuery(
-      this.latestDataRepository,
-    );
+    // const waterQualityDataSet = await hasWaterQualityDataSubQuery(
+    //   this.latestDataRepository,
+    // );
 
     return res.map((site) => ({
       ...site,
       applied: site.applied,
       collectionData: mappedSiteData[site.id],
       hasHobo: hasHoboDataSet.has(site.id),
-      waterQuality: waterQualityDataSet.get(site.id),
+      // waterQuality: waterQualityDataSet.get(site.id),
     }));
   }
 
