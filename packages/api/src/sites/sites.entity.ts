@@ -18,6 +18,7 @@ import {
   ApiProperty,
   ApiPropertyOptional,
 } from '@nestjs/swagger';
+import { ReefCheckSite } from 'reef-check-sites/reef-check-sites.entity';
 import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { SketchFab } from '../site-sketchfab/site-sketchfab.entity';
 import { Region } from '../regions/regions.entity';
@@ -127,6 +128,10 @@ export class Site {
     onDelete: 'CASCADE',
   })
   admins: User[];
+
+  @ApiProperty()
+  @OneToOne(() => ReefCheckSite, (reefCheckSite) => reefCheckSite.site)
+  reefCheckSite: ReefCheckSite;
 
   @ApiPropertyOptional()
   @OneToMany(() => Survey, (survey) => survey.site)

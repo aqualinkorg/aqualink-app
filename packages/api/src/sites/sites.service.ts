@@ -217,6 +217,7 @@ export class SitesService {
         'siteApplication',
         'sketchFab',
         'reefCheckSurveys',
+        'reefCheckSite',
       ],
       true,
     );
@@ -242,6 +243,7 @@ export class SitesService {
       name: site.name,
       sensorId: site.sensorId,
       reefCheckSurveys: site.reefCheckSurveys ?? [],
+      reefCheckSite: site.reefCheckSite,
       polygon: site.polygon,
       nearestNOAALocation: site.nearestNOAALocation,
       depth: site.depth,

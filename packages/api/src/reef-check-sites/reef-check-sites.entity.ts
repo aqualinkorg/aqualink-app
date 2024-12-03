@@ -21,8 +21,8 @@ export class ReefCheckSite {
   @Column()
   siteId: number;
 
-  @ApiProperty()
-  @OneToOne(() => Site, { nullable: false })
+  @ApiProperty({ type: () => Site })
+  @OneToOne(() => Site)
   @JoinColumn({ name: 'site_id' })
   @Index()
   site: Site;
