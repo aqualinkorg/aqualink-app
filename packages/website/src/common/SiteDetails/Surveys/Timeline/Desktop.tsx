@@ -12,11 +12,13 @@ import classNames from 'classnames';
 import grey from '@material-ui/core/colors/grey';
 
 import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { times } from 'lodash';
 import AddButton from '../AddButton';
 import SurveyCard from '../SurveyCard';
 import LoadingSkeleton from '../../../LoadingSkeleton';
 import incomingStyles from '../styles';
 import { TimelineProps } from './types';
+import { ReefCheckSurveyCard } from '../ReefCheckSurveyCard';
 
 const CONNECTOR_COLOR = grey[500];
 
@@ -48,7 +50,7 @@ const TimelineDesktop = ({
           </TimelineContent>
         </TimelineItem>
       )}
-      {surveys.map((survey, index) => (
+      {(loading ? times(2, () => null) : surveys).map((survey, index) => (
         <TimelineItem
           key={survey?.id || `loading-survey-${index}`}
           className={classes.timelineItem}
@@ -61,10 +63,10 @@ const TimelineDesktop = ({
               width="30%"
               lines={1}
             >
-              {survey?.diveDate && (
+              {survey?.date && (
                 <Typography variant="h6" className={classes.dates}>
                   {displayTimeInLocalTimezone({
-                    isoDate: survey.diveDate,
+                    isoDate: survey.date,
                     format: 'LL/dd/yyyy',
                     displayTimezone: false,
                     timeZone,
@@ -79,14 +81,19 @@ const TimelineDesktop = ({
             <hr className={classes.connector} />
           </TimelineSeparator>
           <TimelineContent className={classes.surveyCardWrapper}>
-            <SurveyCard
-              pointId={pointId}
-              pointName={pointName}
-              isAdmin={isAdmin}
-              siteId={siteId}
-              survey={survey}
-              loading={loading}
-            />
+            {survey?.type === 'survey' && (
+              <SurveyCard
+                pointId={pointId}
+                pointName={pointName}
+                isAdmin={isAdmin}
+                siteId={siteId}
+                survey={survey}
+                loading={loading}
+              />
+            )}
+            {survey?.type === 'reefCheckSurvey' && (
+              <ReefCheckSurveyCard survey={survey} />
+            )}
           </TimelineContent>
         </TimelineItem>
       ))}

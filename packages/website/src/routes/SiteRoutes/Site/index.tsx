@@ -41,6 +41,7 @@ import SiteDetails from 'common/SiteDetails';
 import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import { DateTime } from 'luxon-extensions';
+import { reefCheckSurveysRequest } from 'store/ReefCheckSurveys';
 import SiteInfo from './SiteInfo';
 import NotFoundPage from '../../NotFound/index';
 
@@ -183,6 +184,13 @@ const Site = ({ classes }: SiteProps) => {
       dispatch(clearOceanSenseData());
     };
   }, [dispatch, siteId]);
+
+  // Fetch reef check surveys
+  useEffect(() => {
+    if (siteDetails?.reefCheckSite?.id) {
+      dispatch(reefCheckSurveysRequest(siteDetails.reefCheckSite.id));
+    }
+  }, [dispatch, siteDetails?.reefCheckSite?.id]);
 
   // Fetch time series data range for the site's closest survey point
   // once the survey points are successfully fetched

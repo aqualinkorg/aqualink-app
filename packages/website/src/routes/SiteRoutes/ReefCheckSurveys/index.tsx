@@ -7,6 +7,7 @@ import { reefCheckSurveyGetRequest } from 'store/ReefCheckSurveys/reefCheckSurve
 import { siteErrorSelector, siteRequest } from 'store/Sites/selectedSiteSlice';
 import NavBar from 'common/NavBar';
 import NotFound from 'routes/NotFound';
+import { reefCheckImpactRows } from 'store/ReefCheckSurveys';
 import { fishColumns } from './colDefs/fish.colDef';
 import { invertebratesColumns } from './colDefs/invertables.colDef';
 import { impactColumns } from './colDefs/impact.colDef';
@@ -17,14 +18,6 @@ import { ReefCheckSurveyOrganismsTable } from './ReefCheckSurveyOrganismsTable';
 import { ReefCheckSurveySummary } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyDetails } from './ReefCheckSurveyDetails';
 import { ReefCheckSurveySubstrates } from './ReefCheckSurveySubstratesTable';
-
-const impactRows = [
-  'Coral Damage Anchor',
-  'Coral Damage Dynamite',
-  'Coral Damage Other',
-  'Trash Fish Nets',
-  'Trash General',
-];
 
 export const ReefCheckSurveyViewPage = () => {
   const { id: siteId = '', sid: surveyId = '' } =
@@ -97,7 +90,8 @@ export const ReefCheckSurveyViewPage = () => {
               description="0-3 scale. 0 = none, 1 = low (1 piece), 2 = medium (2-4 pieces) and 3 = high (5+ pieces)"
               columns={impactColumns}
               filter={(row) =>
-                row.type === 'Impact' && impactRows.includes(row.organism)
+                row.type === 'Impact' &&
+                reefCheckImpactRows.includes(row.organism)
               }
             />
           </Grid>
@@ -107,7 +101,8 @@ export const ReefCheckSurveyViewPage = () => {
               description="Black band, white band, White Plague, and Aspergillosis are coral diseases."
               columns={bleachingColumns}
               filter={(row) =>
-                row.type === 'Impact' && !impactRows.includes(row.organism)
+                row.type === 'Impact' &&
+                !reefCheckImpactRows.includes(row.organism)
               }
             />
           </Grid>
