@@ -28,9 +28,8 @@ const SurveyTimeline = ({
   classes,
 }: SurveyTimelineProps) => {
   const surveyList = useSelector(surveyListSelector);
-  const { list: reefCheckSurveyList } = useSelector(
-    reefCheckSurveyListSelector,
-  );
+  const { list: reefCheckSurveyList = [] } =
+    useSelector(reefCheckSurveyListSelector) ?? {};
 
   const displayAddButton =
     isAdmin &&
@@ -45,7 +44,7 @@ const SurveyTimeline = ({
         date: s.diveDate ?? '',
         type: 'survey' as const,
       })),
-      ...reefCheckSurveyList.map((s) => ({
+      ...reefCheckSurveyList?.map((s) => ({
         ...s,
         date: s.date ?? '',
         type: 'reefCheckSurvey' as const,
