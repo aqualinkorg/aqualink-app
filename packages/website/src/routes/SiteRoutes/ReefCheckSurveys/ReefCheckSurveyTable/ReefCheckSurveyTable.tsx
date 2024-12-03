@@ -70,19 +70,20 @@ const ReefCheckSurveyTableComponent = <T extends ObjectWithId>({
                   ))}
                 </TableRow>
               ))}
-            {data.map((row) => (
-              <TableRow key={row.id}>
-                {columns.map(({ header, field, ...props }) => {
-                  const value =
-                    typeof field === 'function' ? field(row) : row[field];
-                  return (
-                    <TableCell key={header} {...props}>
-                      {value}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))}
+            {!loading &&
+              data.map((row) => (
+                <TableRow key={row.id}>
+                  {columns.map(({ header, field, ...props }) => {
+                    const value =
+                      typeof field === 'function' ? field(row) : row[field];
+                    return (
+                      <TableCell key={header} {...props}>
+                        {value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
