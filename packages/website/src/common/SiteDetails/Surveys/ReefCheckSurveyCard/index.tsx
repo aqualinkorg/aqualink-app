@@ -77,21 +77,21 @@ const ReefCheckSurveyCardComponent = ({
             {times(3).map((i) => (
               <TableRow key={i}>
                 <TableCell className={classes.label}>
-                  {stats.Fish?.[i].organism ?? '-'}
+                  {stats.Fish?.[i]?.organism ?? '-'}
                 </TableCell>
-                <TableCell>{stats.Fish?.[i].count ?? '-'}</TableCell>
+                <TableCell>{stats.Fish?.[i]?.count ?? '-'}</TableCell>
                 <TableCell className={classes.label}>
-                  {stats.Invertebrate?.[i].organism ?? '-'}
+                  {stats.Invertebrate?.[i]?.organism ?? '-'}
                 </TableCell>
-                <TableCell>{stats.Invertebrate?.[i].count ?? '-'}</TableCell>
+                <TableCell>{stats.Invertebrate?.[i]?.count ?? '-'}</TableCell>
                 <TableCell className={classes.label}>
-                  {stats.Bleaching?.[i].organism ?? '-'}
+                  {stats.Bleaching?.[i]?.organism ?? '-'}
                 </TableCell>
-                <TableCell>{stats.Bleaching?.[i].count ?? '-'}</TableCell>
+                <TableCell>{stats.Bleaching?.[i]?.count ?? '-'}</TableCell>
                 <TableCell className={classes.label}>
-                  {stats.Impact?.[i].organism ?? '-'}
+                  {stats.Impact?.[i]?.organism ?? '-'}
                 </TableCell>
-                <TableCell>{stats.Impact?.[i].count ?? '-'}</TableCell>
+                <TableCell>{stats.Impact?.[i]?.count ?? '-'}</TableCell>
               </TableRow>
             ))}
           </TableBody>
