@@ -60,7 +60,6 @@ const TimelineDesktop = ({
               className={classes.dateSkeleton}
               loading={loading}
               variant="text"
-              width="30%"
               lines={1}
             >
               {survey?.date && (
@@ -107,7 +106,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
   },
   timelineOppositeContent: {
-    flex: 0.5,
+    flex: 0,
   },
   addNewButtonOpposite: {
     padding: theme.spacing(0, 1.25),
