@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
   },
   timelineOppositeContent: {
-    flex: 0,
+    flex: '0 0 130px',
   },
   addNewButtonOpposite: {
     padding: theme.spacing(0, 1.25),
