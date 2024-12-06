@@ -49,9 +49,9 @@ describe('ReefCheckSurveyCard', () => {
         'Count',
         'INVERTEBRATES (3)',
         'Count',
-        'BLEACHING AND CORAL DIDEASES (1)',
+        'BLEACHING AND CORAL DIDEASES',
         'YES/NO',
-        'IMPACT (1)',
+        'IMPACT',
         'YES/NO',
       ]),
     );
