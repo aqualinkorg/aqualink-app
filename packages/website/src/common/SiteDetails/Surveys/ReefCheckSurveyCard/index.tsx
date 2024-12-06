@@ -43,6 +43,13 @@ const ReefCheckSurveyCardComponent = ({
     },
   );
 
+  const rowCount = Math.max(
+    stats.Fish?.length ?? 0,
+    stats.Invertebrate?.length ?? 0,
+    stats.Bleaching?.length ?? 0,
+    stats.Impact?.length ?? 0,
+  );
+
   return (
     <Paper className={classes.paper}>
       <Box display="flex" justifyContent="space-between">
@@ -51,7 +58,7 @@ const ReefCheckSurveyCardComponent = ({
           <Typography>User: {survey.submittedBy}</Typography>
         )}
       </Box>
-      <TableContainer>
+      <TableContainer className={classes.tableRoot}>
         <Table size="small">
           <TableHead>
             <TableRow className={classes.header}>
@@ -64,34 +71,36 @@ const ReefCheckSurveyCardComponent = ({
               </TableCell>
               <TableCell>Count</TableCell>
               <TableCell className={classes.label}>
-                BLEACHING AND CORAL DIDEASES ({stats.Bleaching?.length ?? 0})
+                BLEACHING AND CORAL DIDEASES
               </TableCell>
               <TableCell>YES/NO</TableCell>
-              <TableCell className={classes.label}>
-                IMPACT ({stats.Impact?.length ?? 0})
-              </TableCell>
+              <TableCell className={classes.label}>IMPACT</TableCell>
               <TableCell>YES/NO</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {times(3).map((i) => (
+            {times(rowCount).map((i) => (
               <TableRow key={i}>
                 <TableCell className={classes.label}>
-                  {stats.Fish?.[i]?.organism ?? '-'}
+                  {stats.Fish?.[i]?.organism}
                 </TableCell>
-                <TableCell>{stats.Fish?.[i]?.count ?? '-'}</TableCell>
+                <TableCell>{stats.Fish?.[i]?.count}</TableCell>
                 <TableCell className={classes.label}>
-                  {stats.Invertebrate?.[i]?.organism ?? '-'}
+                  {stats.Invertebrate?.[i]?.organism}
                 </TableCell>
-                <TableCell>{stats.Invertebrate?.[i]?.count ?? '-'}</TableCell>
+                <TableCell>{stats.Invertebrate?.[i]?.count}</TableCell>
                 <TableCell className={classes.label}>
-                  {stats.Bleaching?.[i]?.organism ?? '-'}
+                  {stats.Bleaching?.[i]?.organism}
                 </TableCell>
-                <TableCell>{stats.Bleaching?.[i]?.count ?? '-'}</TableCell>
+                <TableCell>
+                  {formatImpactCount(stats.Bleaching?.[i]?.count)}
+                </TableCell>
                 <TableCell className={classes.label}>
-                  {stats.Impact?.[i]?.organism ?? '-'}
+                  {stats.Impact?.[i]?.organism}
                 </TableCell>
-                <TableCell>{stats.Impact?.[i]?.count ?? '-'}</TableCell>
+                <TableCell>
+                  {formatImpactCount(stats.Impact?.[i]?.count)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -109,6 +118,13 @@ const ReefCheckSurveyCardComponent = ({
   );
 };
 
+const formatImpactCount = (count?: number) => {
+  if (count === undefined) {
+    return '';
+  }
+  return count > 0 ? 'YES' : 'NO';
+};
+
 const styles = (theme: Theme) =>
   createStyles({
     paper: {
@@ -118,7 +134,9 @@ const styles = (theme: Theme) =>
     },
     label: {
       backgroundColor: '#FAFAFA',
-      minWidth: 200,
+    },
+    tableRoot: {
+      maxHeight: 200,
     },
     header: {
       '& th': {
