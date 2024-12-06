@@ -26,6 +26,7 @@ export const ReefCheckSurveyViewPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     dispatch(reefCheckSurveyGetRequest({ siteId, surveyId }));
     dispatch(siteRequest(siteId));
   }, [dispatch, siteId, surveyId]);
