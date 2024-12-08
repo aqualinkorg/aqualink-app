@@ -156,7 +156,9 @@ const SiteDetails = ({
     if (forecastData && latestData) {
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
-      const hasSpotter = Boolean(parsedData.bottomTemperature);
+      const hasSpotter = Boolean(
+        parsedData.bottomTemperature || parsedData.topTemperature,
+      );
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
         MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
