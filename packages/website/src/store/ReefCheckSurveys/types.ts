@@ -120,3 +120,9 @@ export interface ReefCheckSurveyState {
   loading: boolean | null;
   error?: string;
 }
+
+export interface ReefCheckSurveyListState {
+  list: ReefCheckSurvey[];
+  loading: boolean;
+  error?: string;
+}
