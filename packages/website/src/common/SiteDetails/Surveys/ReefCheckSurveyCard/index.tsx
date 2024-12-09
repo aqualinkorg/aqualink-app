@@ -34,6 +34,7 @@ const ReefCheckSurveyCardComponent = ({
         ...organism,
         count: organism.s1 + organism.s2 + organism.s3 + organism.s4,
       }))
+      .filter(({ count }) => count > 0)
       .sort((a, b) => b.count - a.count),
     ({ type, organism }) => {
       if (type === 'Impact') {

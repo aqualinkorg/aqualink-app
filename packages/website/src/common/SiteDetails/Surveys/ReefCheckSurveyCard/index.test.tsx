@@ -35,7 +35,7 @@ describe('ReefCheckSurveyCard', () => {
   it('should render table with correct number of rows', () => {
     const { container } = renderReefCheckSurveyCard();
 
-    expect(container.querySelectorAll('mock-tablerow').length).toBe(4);
+    expect(container.querySelectorAll('mock-tablerow').length).toBe(3);
   });
 
   it('should show correct counts in headers', () => {
@@ -47,7 +47,7 @@ describe('ReefCheckSurveyCard', () => {
       expect.arrayContaining([
         'FISH (2)',
         'Count',
-        'INVERTEBRATES (3)',
+        'INVERTEBRATES (2)',
         'Count',
         'BLEACHING AND CORAL DIDEASES',
         'YES/NO',
