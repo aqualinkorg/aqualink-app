@@ -157,7 +157,7 @@ const SiteDetails = ({
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
       const hasSpotter = Boolean(
-        parsedData.bottomTemperature || parsedData.surfaceTemperature,
+        parsedData.bottomTemperature || parsedData.topTemperature,
       );
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
