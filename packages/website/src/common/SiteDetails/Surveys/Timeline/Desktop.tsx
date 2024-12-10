@@ -13,6 +13,7 @@ import grey from '@material-ui/core/colors/grey';
 
 import { displayTimeInLocalTimezone } from 'helpers/dates';
 import { times } from 'lodash';
+import { SurveyListItem } from 'store/Survey/types';
 import AddButton from '../AddButton';
 import SurveyCard from '../SurveyCard';
 import LoadingSkeleton from '../../../LoadingSkeleton';
@@ -61,6 +62,7 @@ const TimelineDesktop = ({
               loading={loading}
               variant="text"
               lines={1}
+              width={80}
             >
               {survey?.date && (
                 <Typography variant="h6" className={classes.dates}>
@@ -80,13 +82,13 @@ const TimelineDesktop = ({
             <hr className={classes.connector} />
           </TimelineSeparator>
           <TimelineContent className={classes.surveyCardWrapper}>
-            {survey?.type === 'survey' && (
+            {(survey?.type === 'survey' || loading) && (
               <SurveyCard
                 pointId={pointId}
                 pointName={pointName}
                 isAdmin={isAdmin}
                 siteId={siteId}
-                survey={survey}
+                survey={survey as SurveyListItem}
                 loading={loading}
               />
             )}
