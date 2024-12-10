@@ -152,6 +152,8 @@ export const sitesFilterFn = (
       return hasDeployedSpotter(s);
     case 'HOBO loggers':
       return s?.hasHobo;
+    case 'Water quality':
+      return s?.waterQuality?.length;
     default:
       console.error(`Unhandled Option: ${filter}`);
       return true;
