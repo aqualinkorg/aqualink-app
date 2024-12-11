@@ -18,7 +18,7 @@ import Popup from '../Popup';
 // To make sure we can see all the sites all the time, and especially
 // around -180/+180, we create dummy copies of each site.
 // TODO: Add back the functionality
-const LNG_OFFSETS = [-360, 0, 360];
+// const LNG_OFFSETS = [-360, 0, 360];
 
 interface SiteMarkerProps {
   site: Site;
