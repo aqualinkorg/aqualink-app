@@ -28,14 +28,14 @@ interface SiteMarkerProps {
  * All in one site marker with icon, offset duplicates, and popup built in.
  */
 export default function SiteMarker({ site, setCenter }: SiteMarkerProps) {
-  const siteOnMap = useSelector(siteOnMapSelector);
+  const isSelected = useSelector(isSelectedOnMapSelector(site.id));
   const { map } = useLeaflet();
   const dispatch = useDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
   const markerIcon = useMarkerIcon(
     hasDeployedSpotter(site),
     site.hasHobo,
-    siteOnMap?.id === site.id,
+    isSelected,
     alertColorFinder(tempWeeklyAlert),
     alertIconFinder(tempWeeklyAlert),
   );
@@ -57,7 +57,7 @@ export default function SiteMarker({ site, setCenter }: SiteMarkerProps) {
             icon={markerIcon}
             position={[lat, lng + offset]}
           >
-            <Popup site={site} autoOpen={offset === 0} />
+            {isSelected && <Popup site={site} autoOpen={offset === 0} />}
           </Marker>
         );
       })}
