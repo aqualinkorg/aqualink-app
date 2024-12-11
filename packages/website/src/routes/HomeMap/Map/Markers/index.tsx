@@ -1,11 +1,10 @@
 import { useSelector } from 'react-redux';
-import { LayerGroup, useLeaflet } from 'react-leaflet';
+import { useLeaflet } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import L from 'leaflet';
 import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
 import { Site } from 'store/Sites/types';
-import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import { CollectionDetails } from 'store/Collection/types';
@@ -15,7 +14,7 @@ import {
   getColorByLevel,
   Interval,
 } from 'helpers/bleachingAlertIntervals';
-import SiteMarker from './SiteMarker';
+import { SiteMarker } from './SiteMarker';
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
@@ -38,65 +37,50 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
     () => collection?.sites || storedSites || [],
     [collection?.sites, storedSites],
   );
-  const siteOnMap = useSelector(siteOnMapSelector);
   const { map } = useLeaflet();
-  const [visibleSites, setVisibleSites] = useState(sitesList);
-
-  const setCenter = useCallback(
-    (inputMap: L.Map, latLng: [number, number], zoom: number) => {
-      const maxZoom = Math.max(inputMap.getZoom() || 6, zoom);
-      const pointBounds = L.latLngBounds(latLng, latLng);
-      inputMap.flyToBounds(pointBounds, {
-        duration: 2,
-        maxZoom,
-        paddingTopLeft: L.point(0, 200),
-      });
-    },
-    [],
-  );
-
-  const filterSitesByViewport = useCallback(() => {
-    if (!map) return;
-
-    const bounds = map.getBounds();
-    const filtered = sitesList.filter((site: Site) => {
-      if (!site.polygon || site.polygon.type !== 'Point') return false;
-      const [lng, lat] = site.polygon.coordinates;
-      return bounds.contains([lat, lng]);
-    });
-    setVisibleSites(filtered);
-  }, [map, sitesList]);
+  const [visibleSitesMap, setVisibleSitesMap] = useState<
+    Record<string, boolean>
+  >({});
 
   useEffect(() => {
-    if (!map) return undefined;
+    // Incrementally mount visible site markers on map
+    // Avoid mounting all sites at once, mount only the visible ones and don't umount them
 
-    filterSitesByViewport();
-    map.on('moveend', filterSitesByViewport);
+    if (!map) return undefined;
+    const mountSitesInViewport = () => {
+      if (!map) return;
+      const bounds = map.getBounds();
+      const filtered: Record<string, boolean> = {};
+      sitesList.forEach((site: Site) => {
+        if (!site.polygon || site.polygon.type !== 'Point') return;
+        const [lng, lat] = site.polygon.coordinates;
+        if (bounds.contains([lat, lng])) {
+          // eslint-disable-next-line fp/no-mutation
+          filtered[site.id] = true;
+        }
+      });
+      // Keep the previous markers and add the new visible sites
+      setVisibleSitesMap((prev) => ({ ...prev, ...filtered }));
+    };
+
+    mountSitesInViewport();
+    map.on('moveend', mountSitesInViewport);
 
     return () => {
-      map.off('moveend', filterSitesByViewport);
+      map.off('moveend', mountSitesInViewport);
       return undefined;
     };
-  }, [map, filterSitesByViewport]);
-
-  useEffect(() => {
-    if (map && siteOnMap?.polygon.type === 'Point') {
-      const [lng, lat] = siteOnMap.polygon.coordinates;
-      setCenter(map, [lat, lng], 6);
-    }
-  }, [map, siteOnMap, setCenter]);
+  }, [map, sitesList]);
 
   return (
-    <LayerGroup>
-      <MarkerClusterGroup
-        iconCreateFunction={clusterIcon}
-        disableClusteringAtZoom={1}
-      >
-        {visibleSites.map((site: Site) => (
-          <SiteMarker key={site.id} site={site} setCenter={setCenter} />
-        ))}
-      </MarkerClusterGroup>
-    </LayerGroup>
+    <MarkerClusterGroup iconCreateFunction={clusterIcon}>
+      {sitesList.map(
+        (site: Site) =>
+          visibleSitesMap[site.id] && (
+            <SiteMarker key={`${site.id}`} site={site} />
+          ),
+      )}
+    </MarkerClusterGroup>
   );
 };
 
