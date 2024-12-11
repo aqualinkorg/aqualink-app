@@ -15,9 +15,10 @@ import {
   WithStyles,
   withStyles,
 } from '@material-ui/core';
-import { reefCheckImpactRows, ReefCheckSurvey } from 'store/ReefCheckSurveys';
 import { groupBy, times } from 'lodash';
 import { Link } from 'react-router-dom';
+import cls from 'classnames';
+import { reefCheckImpactRows, ReefCheckSurvey } from 'store/ReefCheckSurveys';
 
 type ReefCheckSurveyCardIncomingProps = {
   survey: ReefCheckSurvey;
@@ -71,7 +72,7 @@ const ReefCheckSurveyCardComponent = ({
                 FISH ({stats.Fish?.length ?? 0})
               </TableCell>
               <TableCell>Count</TableCell>
-              <TableCell className={classes.label}>
+              <TableCell className={cls(classes.label, classes.noWrap)}>
                 INVERTEBRATES ({stats.Invertebrate?.length ?? 0})
               </TableCell>
               <TableCell>Count</TableCell>
@@ -147,6 +148,9 @@ const styles = (theme: Theme) =>
       '& th': {
         borderBottom: '1px solid black',
       },
+    },
+    noWrap: {
+      whiteSpace: 'nowrap',
     },
   });
 
