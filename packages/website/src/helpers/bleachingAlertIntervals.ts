@@ -84,11 +84,6 @@ export const findIntervalByLevel = (
   }
 };
 
-export const findMaxLevel = (intervals: Interval[]): number => {
-  const levels = intervals.map((item) => item.level);
-  return Math.max(...levels);
-};
-
 export const getColorByLevel = (level: number): string => {
   return findIntervalByLevel(level).color;
 };

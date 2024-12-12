@@ -53,6 +53,7 @@ export const SiteMarker = React.memo(({ site }: SiteMarkerProps) => {
           key={`${site.id}-${offset}`}
           icon={markerIcon}
           position={[lat, lng + offset]}
+          data-alert={tempWeeklyAlert}
         >
           {isSelected && <Popup site={site} autoOpen={offset === 0} />}
         </Marker>

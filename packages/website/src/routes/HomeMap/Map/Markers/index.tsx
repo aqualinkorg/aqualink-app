@@ -8,21 +8,15 @@ import { Site } from 'store/Sites/types';
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import { CollectionDetails } from 'store/Collection/types';
-import {
-  findIntervalByLevel,
-  findMaxLevel,
-  getColorByLevel,
-  Interval,
-} from 'helpers/bleachingAlertIntervals';
+import { getColorByLevel } from 'helpers/bleachingAlertIntervals';
 import { SiteMarker } from './SiteMarker';
 
 const clusterIcon = (cluster: any) => {
-  const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
-    const { site } = marker?.options?.children?.[0]?.props || {};
-    const { tempWeeklyAlert } = site?.collectionData || {};
-    return findIntervalByLevel(tempWeeklyAlert);
-  });
-  const color = getColorByLevel(findMaxLevel(alerts));
+  const alertLevels = cluster
+    .getAllChildMarkers()
+    .map((marker: any) => marker?.options?.['data-alert'] ?? 0);
+  const maxLevel = Math.max(...alertLevels);
+  const color = getColorByLevel(maxLevel);
   const count = cluster.getChildCount();
   return L.divIcon({
     html: `<div style="background-color: ${color}"><span>${count}</span></div>`,
