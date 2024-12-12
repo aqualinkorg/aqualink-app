@@ -17,8 +17,7 @@ import Popup from '../Popup';
 
 // To make sure we can see all the sites all the time, and especially
 // around -180/+180, we create dummy copies of each site.
-// TODO: Add back the functionality
-// const LNG_OFFSETS = [-360, 0, 360];
+const LNG_OFFSETS = [-360, 0, 360];
 
 interface SiteMarkerProps {
   site: Site;
@@ -44,16 +43,20 @@ export const SiteMarker = React.memo(({ site }: SiteMarkerProps) => {
   const [lng, lat] = site.polygon.coordinates;
 
   return (
-    <Marker
-      onClick={() => {
-        dispatch(setSearchResult());
-        dispatch(setSiteOnMap(site));
-      }}
-      key={`${site.id}`}
-      icon={markerIcon}
-      position={[lat, lng]}
-    >
-      {isSelected && <Popup site={site} />}
-    </Marker>
+    <>
+      {LNG_OFFSETS.map((offset) => (
+        <Marker
+          onClick={() => {
+            dispatch(setSearchResult());
+            dispatch(setSiteOnMap(site));
+          }}
+          key={`${site.id}-${offset}`}
+          icon={markerIcon}
+          position={[lat, lng + offset]}
+        >
+          {isSelected && <Popup site={site} autoOpen={offset === 0} />}
+        </Marker>
+      ))}
+    </>
   );
 });
