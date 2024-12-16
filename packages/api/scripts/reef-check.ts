@@ -82,7 +82,7 @@ yargs(hideBin(process.argv))
   )
   .command(
     'stats',
-    'Generate stats for the xlsx file',
+    'Generate stats (dublicate and close-distance sites) for the xlsx file',
     {
       filePath: {
         alias: 'f',
@@ -99,6 +99,9 @@ yargs(hideBin(process.argv))
   .demandCommand()
   .parse();
 
+/**
+ * The fields we need to extract from the Belt.xlsx file
+ */
 const beltFields = [
   'site_id',
   'survey_id',
@@ -116,6 +119,9 @@ const beltFields = [
   'what_errors',
 ] as const;
 
+/**
+ * The fields we need to extract from the Site_Description.xlsx file
+ */
 const siteDescriptionFields = [
   'site_id',
   'survey_id',
@@ -194,6 +200,9 @@ const siteDescriptionFields = [
   'submitted_by (archived field)',
 ] as const;
 
+/**
+ * The fields we need to extract from the Substrate.xlsx file
+ */
 const substratesFields = [
   'survey_id',
   'date',
@@ -267,6 +276,8 @@ async function uploadSites({ filePath, dryRun }: Args) {
       return;
     }
     try {
+      // Check if there is a site within 100m and attach the reef check site to it
+      // Otherwise create a new site
       const closeSiteWithin100m = await siteRepository
         .createQueryBuilder('site')
         .where(
@@ -363,6 +374,8 @@ async function uploadSurveys({ filePath, dryRun }: Args) {
         }`,
       );
       const siteId = reefCheckSiteIdToSiteIdMap.get(getField(row, 'site_id'));
+      // Skip surveys that don't match an existing site in the database
+      // Note: Make sure to run the upload-sites command first
       if (Number.isNaN(date.valueOf()) || !siteId) {
         return null;
       }
@@ -518,6 +531,8 @@ async function uploadOrganisms({ filePath }: Args) {
       recordedBy: getField(row, 'fish_recorded_by'),
       errors: getField(row, 'what_errors'),
     }))
+    // Skip rows that don't match an existing survey in the database
+    // Note: Make sure to run the upload-surveys command first
     .filter(({ surveyId }) => surveysMap[surveyId]);
 
   logger.log(`Inserting ${organisms.length} reef check organisms`);
@@ -589,6 +604,8 @@ async function uploadSubstrates({ filePath }: Args) {
         errors: getField(row, 'what_errors'),
       };
     })
+    // Skip rows that don't match an existing survey in the database
+    // Note: Make sure to run the upload-surveys command first
     .filter(({ surveyId }) => surveysMap[surveyId]);
 
   logger.log(`Inserting ${substrates.length} reef check substrates`);
