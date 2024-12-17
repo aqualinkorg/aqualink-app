@@ -152,6 +152,7 @@ The rest of the scripts are used to either augment the models with missing data 
 - Wind-wave data: Update hindcast data in `forecast_data` table
   - `yarn update-wind-wave-date [-s siteId1 siteId2 ...]`
 - `fill-noaa-nearest-point` requires optional dependency `netcdf4` to run. You may have trouble installing it with python versions at or above `3.11`. `Python 3.10.6` is tested to build the package successfully.
+- `reef-check`: Upload sites, surveys and data from Reef Check. This script is currently run manually when Reef Check sends us new data. Supports 4 commands: `upload-sites`, `upload-surveys`, `upload-organisms` & `upload-substrates`. Upload sites and surveys first. 
 
 ### Swagger API docs
 
@@ -183,6 +184,10 @@ refreshMaterializedView(repository)
 ```
 
 **\*** TypeORM does not allow complex syntax on indices, so we edited the generated migration (`1622124846208-RefactorTimeSeries.ts`) to include the descending order on timestamps.
+
+### Reef Check feature
+
+Reef Check is an organization dedicated to the conservation of reefs and we integrate their surveys into our app. We have separate tables for their sites and surveys (`reef_check_site` and `reef_check_surveys`) Each Reef Check Site is linked to one Site, we are either creating a new one or linking to an existing one within 100m.  We are also storing information about substrates, fish and diseases in `reef_check_organism` and `reef_check_substrates` related to each survey. Reef Check data is manually send to us in xlsx files and we upload them in database with the `reef-check.ts` script. Run `yarn reef-check --help` or check the script for more information.
 
 ### Jest
 

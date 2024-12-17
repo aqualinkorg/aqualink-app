@@ -222,6 +222,8 @@ export class SitesService {
         'historicalMonthlyMean',
         'siteApplication',
         'sketchFab',
+        'reefCheckSurveys',
+        'reefCheckSite',
       ],
       true,
     );
@@ -246,6 +248,8 @@ export class SitesService {
       id: site.id,
       name: site.name,
       sensorId: site.sensorId,
+      reefCheckSurveys: site.reefCheckSurveys ?? [],
+      reefCheckSite: site.reefCheckSite,
       polygon: site.polygon,
       nearestNOAALocation: site.nearestNOAALocation,
       depth: site.depth,
