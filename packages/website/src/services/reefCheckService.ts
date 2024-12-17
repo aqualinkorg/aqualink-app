@@ -8,3 +8,9 @@ export const getReefCheckSurvey = async (siteId: string, id: string) =>
     )}/surveys/${encodeURIComponent(id)}`,
     method: 'GET',
   });
+
+export const getReefCheckSurveys = async (siteId: string) =>
+  requests.send<ReefCheckSurvey[]>({
+    url: `reef-check-sites/${encodeURIComponent(siteId)}/surveys`,
+    method: 'GET',
+  });

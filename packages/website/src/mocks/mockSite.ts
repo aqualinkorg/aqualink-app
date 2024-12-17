@@ -55,6 +55,8 @@ export const mockSite: Site = {
     tempWeeklyAlert: 0,
     sstAnomaly: 1.2,
   },
+  reefCheckSurveys: [],
+  reefCheckSite: null,
 };
 
 export const generateMockSite = ({
