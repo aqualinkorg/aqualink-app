@@ -209,3 +209,89 @@ export const useMarkerIcon = (
   if (hasSpotter || hasHobo) return sensorIcon;
   return buoyIcon(iconUrl);
 };
+
+// Create a donut chart with the given counts and colors
+// Source: https://maplibre.org/maplibre-gl-js/docs/examples/cluster-html/
+export function createDonutChart(counts: number[], colors: string[]) {
+  const offsets: number[] = [];
+
+  let total = 0;
+  counts.forEach((count) => {
+    // eslint-disable-next-line fp/no-mutating-methods
+    offsets.push(total);
+    // eslint-disable-next-line fp/no-mutation
+    total += count;
+  });
+  const fontSize =
+    // eslint-disable-next-line no-nested-ternary
+    total >= 1000 ? 22 : total >= 100 ? 20 : total >= 10 ? 18 : 16;
+  // eslint-disable-next-line no-nested-ternary
+  const r = total >= 1000 ? 50 : total >= 100 ? 32 : total >= 10 ? 24 : 18;
+  const r0 = Math.round(r * 0.6);
+  const w = r * 2;
+
+  const segments = counts.map((count, i) =>
+    donutSegment(
+      offsets[i] / total,
+      (offsets[i] + count) / total,
+      r,
+      r0,
+      colors[i],
+    ),
+  );
+  const html = `
+    <svg width="${w}" height="${w}" viewbox="0 0 ${w} ${w}" text-anchor="middle"  style="font: ${fontSize}px sans-serif; display: block; transform: translate(-50%, -50%)">
+      ${segments.join('')}
+      <circle cx="${r}" cy="${r}" r="${r0}" fill="white" />
+      <text dominant-baseline="central" transform="translate(${r}, ${r})">${total.toLocaleString()}</text>
+    </svg>`;
+
+  return html;
+}
+
+function donutSegment(
+  start: number,
+  end: number,
+  r: number,
+  r0: number,
+  color: string,
+) {
+  // eslint-disable-next-line fp/no-mutation, no-param-reassign
+  if (end - start === 1) end -= 0.00001;
+  const a0 = 2 * Math.PI * (start - 0.25);
+  const a1 = 2 * Math.PI * (end - 0.25);
+  const x0 = Math.cos(a0);
+  const y0 = Math.sin(a0);
+  const x1 = Math.cos(a1);
+  const y1 = Math.sin(a1);
+  const largeArc = end - start > 0.5 ? 1 : 0;
+
+  return [
+    '<path d="M',
+    r + r0 * x0,
+    r + r0 * y0,
+    'L',
+    r + r * x0,
+    r + r * y0,
+    'A',
+    r,
+    r,
+    0,
+    largeArc,
+    1,
+    r + r * x1,
+    r + r * y1,
+    'L',
+    r + r0 * x1,
+    r + r0 * y1,
+    'A',
+    r0,
+    r0,
+    0,
+    largeArc,
+    0,
+    r + r0 * x0,
+    r + r0 * y0,
+    `" fill="${color}" />`,
+  ].join(' ');
+}

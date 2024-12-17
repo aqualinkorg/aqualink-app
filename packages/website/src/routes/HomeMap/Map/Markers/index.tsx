@@ -9,19 +9,21 @@ import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import { CollectionDetails } from 'store/Collection/types';
 import { getColorByLevel } from 'helpers/bleachingAlertIntervals';
+import { countBy } from 'lodash';
+import { createDonutChart } from 'helpers/map';
 import { SiteMarker } from './SiteMarker';
 
 const clusterIcon = (cluster: any) => {
-  const alertLevels = cluster
+  const alertLevels: number[] = cluster
     .getAllChildMarkers()
     .map((marker: any) => marker?.options?.['data-alert'] ?? 0);
-  const maxLevel = Math.max(...alertLevels);
-  const color = getColorByLevel(maxLevel);
-  const count = cluster.getChildCount();
+  const alertToCountMap = countBy(alertLevels);
+  const counts = Object.values(alertToCountMap);
+  const colors = Object.keys(alertToCountMap).map((level) =>
+    getColorByLevel(parseInt(level, 10)),
+  );
   return L.divIcon({
-    html: `<div style="background-color: ${color}"><span>${count}</span></div>`,
-    className: `leaflet-marker-icon marker-cluster custom-cluster-icon marker-cluster-small leaflet-zoom-animated leaflet-interactive`,
-    iconSize: L.point(40, 40, true),
+    html: createDonutChart(counts, colors),
   });
 };
 
