@@ -2,6 +2,7 @@ import { Injectable, ExecutionContext } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
 
+// todo: test api
 @Injectable()
 export class FirebaseAuthGuard extends AuthGuard('custom') {
   constructor(private reflector: Reflector) {
