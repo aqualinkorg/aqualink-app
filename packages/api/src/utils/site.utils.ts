@@ -10,7 +10,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ObjectLiteral, Repository } from 'typeorm';
-import { mapValues, some } from 'lodash';
+import { groupBy, mapValues, some, camelCase } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
@@ -276,6 +276,52 @@ export const hasHoboDataSubQuery = async (
   });
 
   return hasHoboDataSet;
+};
+
+export const hasWaterQualityDataSubQuery = async (
+  latestDataRepository: Repository<LatestData>,
+): Promise<Map<number, string[]>> => {
+  const latestData: LatestData[] = await latestDataRepository
+    .createQueryBuilder('water_quality_data')
+    .select('site_id', 'siteId')
+    .addSelect('metric')
+    .addSelect('source')
+    .where(`source != '${SourceType.HOBO}'`)
+    .getRawMany();
+
+  const sondeMetrics = [
+    'odoConcentration',
+    'cholorophyllConcentration',
+    'ph',
+    'salinity',
+    'turbidity',
+  ];
+
+  const waterQualityDataSet = new Map<number, string[]>();
+
+  Object.entries(groupBy(latestData, (o) => o.siteId)).forEach(
+    ([siteId, data]) => {
+      let sondeMetricsCount = 0;
+      const id = Number(siteId);
+      waterQualityDataSet.set(id, []);
+      data.forEach((siteData) => {
+        if (siteData.source === 'hui') {
+          // eslint-disable-next-line fp/no-mutating-methods
+          waterQualityDataSet.get(id)!.push('hui');
+        }
+        if (sondeMetrics.includes(camelCase(siteData.metric))) {
+          // eslint-disable-next-line fp/no-mutation
+          sondeMetricsCount += 1;
+          if (sondeMetricsCount >= 3) {
+            // eslint-disable-next-line fp/no-mutating-methods
+            waterQualityDataSet.get(id)!.push('sonde');
+          }
+        }
+      });
+    },
+  );
+
+  return waterQualityDataSet;
 };
 
 export const getLatestData = async (
