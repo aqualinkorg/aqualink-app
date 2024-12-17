@@ -87,6 +87,7 @@ export class Site {
   @Check('char_length(iframe) <= 200 AND char_length(iframe) > 10')
   iframe: string | null;
 
+  // ADDING A COMMENT
   // TODO:  This field should be transferred to site-application table
   //        The transition has to be in sync with changes in admin dashboards in internal.io
   @Column({
