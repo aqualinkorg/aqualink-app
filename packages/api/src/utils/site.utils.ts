@@ -1,5 +1,3 @@
-/* eslint-disable fp/no-mutating-methods */
-/* eslint-disable fp/no-mutation */
 import {
   Client,
   AddressType,
@@ -308,11 +306,14 @@ export const hasWaterQualityDataSubQuery = async (
       waterQualityDataSet.set(id, []);
       data.forEach((siteData) => {
         if (siteData.source === 'hui') {
+          // eslint-disable-next-line fp/no-mutating-methods
           waterQualityDataSet.get(id)!.push('hui');
         }
         if (sondeMetrics.includes(camelCase(siteData.metric))) {
+          // eslint-disable-next-line fp/no-mutation
           sondeMetricsCount += 1;
           if (sondeMetricsCount >= 3) {
+            // eslint-disable-next-line fp/no-mutating-methods
             waterQualityDataSet.get(id)!.push('sonde');
           }
         }
