@@ -38,6 +38,9 @@ const homepageSlice = createSlice({
   },
 });
 
+export const isSelectedOnMapSelector = (id: number) => (state: RootState) =>
+  state.homepage.siteOnMap?.id === id;
+
 export const siteOnMapSelector = (
   state: RootState,
 ): HomePageState['siteOnMap'] => state.homepage.siteOnMap;
