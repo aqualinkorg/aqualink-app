@@ -214,21 +214,36 @@ export const useMarkerIcon = (
 // Source: https://maplibre.org/maplibre-gl-js/docs/examples/cluster-html/
 export function createDonutChart(counts: number[], colors: string[]) {
   const offsets: number[] = [];
-
   let total = 0;
   counts.forEach((count) => {
-    // eslint-disable-next-line fp/no-mutating-methods
     offsets.push(total);
-    // eslint-disable-next-line fp/no-mutation
     total += count;
   });
-  const fontSize =
-    // eslint-disable-next-line no-nested-ternary
-    total >= 1000 ? 22 : total >= 100 ? 20 : total >= 10 ? 18 : 16;
-  // eslint-disable-next-line no-nested-ternary
-  const r = total >= 1000 ? 50 : total >= 100 ? 32 : total >= 10 ? 24 : 18;
+
+  let fontSize: number;
+  if (total >= 1000) {
+    fontSize = 20;
+  } else if (total >= 100) {
+    fontSize = 16;
+  } else if (total >= 10) {
+    fontSize = 14;
+  } else {
+    fontSize = 12;
+  }
+
+  let r: number;
+  if (total >= 1000) {
+    r = 50;
+  } else if (total >= 100) {
+    r = 32;
+  } else if (total >= 10) {
+    r = 24;
+  } else {
+    r = 18;
+  }
+
   const r0 = Math.round(r * 0.6);
-  const w = r * 2;
+  const w = r * 2 + 2;
 
   const segments = counts.map((count, i) =>
     donutSegment(
@@ -237,13 +252,26 @@ export function createDonutChart(counts: number[], colors: string[]) {
       r,
       r0,
       colors[i],
+      counts.length === 1,
     ),
   );
+
+  // Get the last color for the center fill
+  const centerColor = colors[colors.length - 1];
+
+  // Only add outer stroke if there are multiple segments
+  const outerStroke =
+    counts.length > 1
+      ? `<circle cx="${r}" cy="${r}" r="${r}" fill="none" stroke="white" stroke-width="1" />`
+      : '';
+
   const html = `
-    <svg width="${w}" height="${w}" viewbox="0 0 ${w} ${w}" text-anchor="middle"  style="font: ${fontSize}px sans-serif; display: block; transform: translate(-50%, -50%)">
+    <svg width="${w}" height="${w}" viewbox="0 0 ${w} ${w}" text-anchor="middle" style="font: ${fontSize}px sans-serif; display: block; transform: translate(-50%, -50%)">
       ${segments.join('')}
-      <circle cx="${r}" cy="${r}" r="${r0}" fill="white" />
-      <text dominant-baseline="central" transform="translate(${r}, ${r})">${total.toLocaleString()}</text>
+      <circle cx="${r}" cy="${r}" r="${r}" fill="none" stroke="white" stroke-width="1" />
+      ${outerStroke}
+      <circle cx="${r}" cy="${r}" r="${r0}" fill="${centerColor}" stroke="white" stroke-width="1" />
+      <text dominant-baseline="central" transform="translate(${r}, ${r})" fill="white">${total.toLocaleString()}</text>
     </svg>`;
 
   return html;
@@ -255,6 +283,7 @@ function donutSegment(
   r: number,
   r0: number,
   color: string,
+  noStroke: boolean,
 ) {
   // eslint-disable-next-line fp/no-mutation, no-param-reassign
   if (end - start === 1) end -= 0.00001;
@@ -265,6 +294,9 @@ function donutSegment(
   const x1 = Math.cos(a1);
   const y1 = Math.sin(a1);
   const largeArc = end - start > 0.5 ? 1 : 0;
+
+  // Only add stroke if there are multiple segments
+  const stroke = noStroke ? '' : 'stroke="white" stroke-width="1"';
 
   return [
     '<path d="M',
@@ -292,6 +324,6 @@ function donutSegment(
     0,
     r + r0 * x0,
     r + r0 * y0,
-    `" fill="${color}" />`,
+    `" fill="${color}" ${stroke} />`,
   ].join(' ');
 }
