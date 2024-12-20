@@ -9,11 +9,12 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     classname="makeStyles-hero-2 makeStyles-hero-14"
   >
     <div
-      class="MuiCardMedia-root makeStyles-image-10"
+      class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+      role="img"
       style="background-image: url(hero.png);"
     />
     <div
-      class="MuiContainer-root makeStyles-titleWrapper-5 MuiContainer-maxWidthLg"
+      class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-titleWrapper-5 css-1oqqzyl-MuiContainer-root"
     >
       <mock-typography
         classname="makeStyles-heroTitle-3"
@@ -25,7 +26,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     </div>
   </mock-box>
   <div
-    class="MuiContainer-root makeStyles-root-1 MuiContainer-maxWidthLg"
+    class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-root-1 css-1oqqzyl-MuiContainer-root"
   >
     <mock-box
       margin="72px 0 48px 0"
@@ -38,10 +39,10 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root makeStyles-globalStressWrapper-13 MuiGrid-container MuiGrid-spacing-xs-3"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 makeStyles-globalStressWrapper-13 css-mv1jm0-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4 css-14sngiz-MuiGrid-root"
       >
         <mock-typography
           variant="h6"
@@ -84,7 +85,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8 css-xeq51w-MuiGrid-root"
       >
         <mock-card
           classname="makeStyles-card3-9 makeStyles-card3-17"
@@ -97,7 +98,8 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root makeStyles-image-10"
+              class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+              role="img"
               style="background-image: url(Brazil.jpg);"
             />
           </a>
@@ -115,10 +117,10 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-mv1jm0-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8 css-xeq51w-MuiGrid-root"
       >
         <mock-card
           classname="makeStyles-card1-7 makeStyles-card1-15"
@@ -131,14 +133,15 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root makeStyles-image-10"
+              class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+              role="img"
               style="background-image: url(image4.png);"
             />
           </a>
         </mock-card>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4 css-14sngiz-MuiGrid-root"
       >
         <mock-typography
           variant="h6"
@@ -158,10 +161,10 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root makeStyles-header-4 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+      class="MuiGrid-root MuiGrid-container makeStyles-header-4 css-1lcgj00-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-9"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-9 css-tv0lng-MuiGrid-root"
       >
         <mock-typography
           classname="makeStyles-title-6"
@@ -170,13 +173,13 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root makeStyles-footPrintImageWrapper-12 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-md-3"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-md-3 makeStyles-footPrintImageWrapper-12 css-gkmjmc-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1fb6z83-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root makeStyles-footPrintImageText-18 MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item makeStyles-footPrintImageText-18 css-x7bhrq-MuiGrid-root"
           >
             <mock-typography
               align="right"
@@ -185,7 +188,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root makeStyles-footPrintImageLink-19 MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item makeStyles-footPrintImageLink-19 css-x7bhrq-MuiGrid-root"
           >
             <a
               href="https://www.footprintcoalition.com/"
@@ -203,10 +206,10 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-mv1jm0-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4 css-14sngiz-MuiGrid-root"
       >
         <mock-typography
           variant="h6"
@@ -256,7 +259,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8 css-xeq51w-MuiGrid-root"
       >
         <mock-card
           classname="makeStyles-card1-7 makeStyles-card1-15"
@@ -268,7 +271,8 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root makeStyles-image-10"
+              class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+              role="img"
               style="background-image: url(image1.png);"
             />
           </a>
@@ -286,23 +290,24 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-mv1jm0-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8 css-xeq51w-MuiGrid-root"
       >
         <mock-card
           classname="makeStyles-card2-8 makeStyles-card2-16"
           variant="outlined"
         >
           <div
-            class="MuiCardMedia-root makeStyles-image-10"
+            class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+            role="img"
             style="background-image: url(image2.png);"
           />
         </mock-card>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4 css-14sngiz-MuiGrid-root"
       >
         <mock-typography
           variant="h6"
@@ -315,10 +320,10 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       margin="48px 0 72px 0"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1nizt4p-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-9"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-9 css-12zv01i-MuiGrid-root"
         >
           <mock-typography
             variant="h6"
@@ -339,10 +344,10 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root makeStyles-globalStressWrapper-13 MuiGrid-container MuiGrid-spacing-xs-3"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 makeStyles-globalStressWrapper-13 css-mv1jm0-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4 css-14sngiz-MuiGrid-root"
       >
         <mock-typography
           variant="h6"
@@ -360,7 +365,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8 css-xeq51w-MuiGrid-root"
       >
         <mock-card
           classname="makeStyles-card3-9 makeStyles-card3-17"
@@ -370,7 +375,8 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             href="/collections/heat-stress"
           >
             <div
-              class="MuiCardMedia-root makeStyles-image-10"
+              class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+              role="img"
               style="background-image: url(image3.png);"
             />
           </a>

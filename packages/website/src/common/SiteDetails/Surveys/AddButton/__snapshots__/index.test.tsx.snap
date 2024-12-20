@@ -3,38 +3,33 @@
 exports[`renders as expected 1`] = `
 <div>
   <a
-    aria-disabled="false"
-    class="MuiButtonBase-root MuiButton-root MuiButton-text AddButton-addSurveyButton-1"
+    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary AddButton-addSurveyButton-1 css-1e6y48t-MuiButtonBase-root-MuiButton-root"
     href="/sites/1/new_survey"
-    role="button"
     tabindex="0"
   >
     <span
-      class="MuiButton-label"
+      class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium AddButton-addSurveyButtonIcon-2 css-1d6wzja-MuiButton-startIcon"
     >
-      <span
-        class="MuiButton-startIcon MuiButton-iconSizeMedium AddButton-addSurveyButtonIcon-2"
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+        data-testid="AddCircleOutlineIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
       >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-          />
-        </svg>
-      </span>
-      <mock-typography
-        color="inherit"
-        variant="h6"
-      >
-        ADD NEW SURVEY
-      </mock-typography>
+        <path
+          d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+        />
+      </svg>
     </span>
+    <mock-typography
+      color="inherit"
+      variant="h6"
+    >
+      ADD NEW SURVEY
+    </mock-typography>
     <span
-      class="MuiTouchRipple-root"
+      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
     />
   </a>
 </div>

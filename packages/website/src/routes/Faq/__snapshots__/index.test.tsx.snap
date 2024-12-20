@@ -52,7 +52,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
               >
                 <iframe
                   allow="fullscreen"
-                  class="MuiCardMedia-root Faq-video-7 MuiCardMedia-media"
+                  class="MuiCardMedia-root MuiCardMedia-media Faq-video-7 css-e6k82g-MuiCardMedia-root"
                   src="https://www.youtube.com/embed/EQZ3HiPevTY?si=dKTi4Mdv_Z9e9n-P"
                   title="What can you do with Aqualink?"
                 />
@@ -81,7 +81,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
               >
                 <iframe
                   allow="fullscreen"
-                  class="MuiCardMedia-root Faq-video-7 MuiCardMedia-media"
+                  class="MuiCardMedia-root MuiCardMedia-media Faq-video-7 css-e6k82g-MuiCardMedia-root"
                   src="https://www.youtube.com/embed/E_nXCl612lg"
                   title="field_guide"
                 />

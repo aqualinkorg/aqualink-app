@@ -9,10 +9,10 @@ exports[`renders as expected 1`] = `
       classname="makeStyles-contentWrapper-12"
     >
       <div
-        class="MuiGrid-root makeStyles-content-13 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-content-13 css-182mpp5-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-wcmnoq-MuiGrid-root"
         >
           <mock-typography
             classname="makeStyles-cardTitle-2 makeStyles-coloredText-9"
@@ -27,10 +27,10 @@ exports[`renders as expected 1`] = `
           />
         </div>
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-wcmnoq-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -40,7 +40,7 @@ exports[`renders as expected 1`] = `
               SPEED
             </mock-typography>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+              class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
               <mock-typography
                 classname="makeStyles-contentTextValues-5"
@@ -59,7 +59,7 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -69,7 +69,7 @@ exports[`renders as expected 1`] = `
               DIRECTION
             </mock-typography>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+              class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
               <img
                 alt="arrow"
@@ -87,7 +87,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-wcmnoq-MuiGrid-root"
         >
           <mock-typography
             classname="makeStyles-cardTitle-2 makeStyles-coloredText-9"
@@ -102,10 +102,10 @@ exports[`renders as expected 1`] = `
           />
         </div>
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-mi7qmn-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4 css-119abwu-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -115,7 +115,7 @@ exports[`renders as expected 1`] = `
               HEIGHT
             </mock-typography>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+              class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
               <mock-typography
                 classname="makeStyles-contentTextValues-5"
@@ -134,7 +134,7 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3 css-q8d82a-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -144,7 +144,7 @@ exports[`renders as expected 1`] = `
               PERIOD
             </mock-typography>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+              class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
               <mock-typography
                 classname="makeStyles-contentTextValues-5"
@@ -163,7 +163,7 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5 css-7v7ljq-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -173,7 +173,7 @@ exports[`renders as expected 1`] = `
               DIRECTION
             </mock-typography>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+              class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
               <img
                 alt="arrow"
@@ -191,30 +191,31 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-updateInfo-19 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-19 false css-1urtxze-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root makeStyles-dateInfoWrapper-23 makeStyles-dateInfoWrapper-25 MuiGrid-item MuiGrid-grid-xs-8"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 makeStyles-dateInfoWrapper-23 makeStyles-dateInfoWrapper-25 css-1hfuy39-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+              class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root makeStyles-updateIcon-21 MuiSvgIcon-fontSizeSmall"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall makeStyles-updateIcon-21 css-ptiqhd-MuiSvgIcon-root"
+                  data-testid="UpdateIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"
+                    d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8z"
                   />
                 </svg>
               </div>
               <div
-                class="MuiGrid-root makeStyles-dateInfo-24 MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-24 css-x7bhrq-MuiGrid-root"
               >
                 <mock-box
                   display="flex"
@@ -238,38 +239,34 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1kym65f-MuiGrid-root"
             style="display: flex; justify-content: flex-end;"
           >
             <div
-              class="MuiGrid-root makeStyles-chip-26 makeStyles-chip-32 MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item makeStyles-chip-26 makeStyles-chip-32 css-x7bhrq-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+                class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-button-31"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-31 css-1otw71y-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
-                  <span
-                    class="MuiButton-label"
+                  <a
+                    class="makeStyles-link-29"
+                    href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
-                    <a
-                      class="makeStyles-link-29"
-                      href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-                      rel="noopener noreferrer"
-                      target="_blank"
+                    <mock-typography
+                      classname="makeStyles-chipText-27"
                     >
-                      <mock-typography
-                        classname="makeStyles-chipText-27"
-                      >
-                        SOFAR MODEL
-                      </mock-typography>
-                    </a>
-                  </span>
+                      SOFAR MODEL
+                    </mock-typography>
+                  </a>
                   <span
-                    class="MuiTouchRipple-root"
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />
                 </button>
               </div>

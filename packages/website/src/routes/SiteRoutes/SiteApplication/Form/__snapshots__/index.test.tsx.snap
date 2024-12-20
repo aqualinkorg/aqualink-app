@@ -12,35 +12,35 @@ exports[`renders as expected 1`] = `
       Your Site
     </mock-typography>
     <div
-      class="MuiFormControl-root MuiTextField-root Form-formField-3 Form-textField-6 MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-wb57ya-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 Mui-disabled Mui-disabled"
+          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled Form-textField-6 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
           disabled=""
+          id=":r0:"
           placeholder="Site Name e.g. 'Sombrero Site'"
           type="text"
           value="Mock Site"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-8"
-            style="width: 0.01px;"
+            class="css-ihdtdm"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
         </fieldset>
       </div>
-      
     </div>
     <mock-typography
       classname="Form-additionalInfo-4"
@@ -51,83 +51,81 @@ exports[`renders as expected 1`] = `
       Permitting
     </mock-typography>
     <div
-      class="MuiFormControl-root MuiTextField-root Form-formField-3 Form-textField-6 MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-wb57ya-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-1ec6xec-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-175746a-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r1:"
           name="permitRequirements"
           placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
-          rows="2"
           style="height: 0px; overflow: hidden;"
         />
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-175746a-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding-top: 0px; padding-bottom: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-8"
-            style="width: 0.01px;"
+            class="css-ihdtdm"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
         </fieldset>
       </div>
-      
     </div>
     <mock-typography>
       Funding Source
     </mock-typography>
     <div
-      class="MuiFormControl-root MuiTextField-root Form-formField-3 Form-textField-6 MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-wb57ya-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-1ec6xec-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <textarea
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-175746a-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r2:"
           name="fundingSource"
           placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
-          rows="2"
           style="height: 0px; overflow: hidden;"
         />
         <textarea
           aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-175746a-MuiInputBase-input-MuiOutlinedInput-input"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding-top: 0px; padding-bottom: 0px; width: 100%;"
           tabindex="-1"
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-8"
-            style="width: 0.01px;"
+            class="css-ihdtdm"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
         </fieldset>
       </div>
-      
     </div>
     <mock-typography>
       Schedule for installation
@@ -137,74 +135,711 @@ exports[`renders as expected 1`] = `
     >
       What is the soonest date you could install the Smart Buoy and conduct a survey?
     </mock-typography>
-    <mock-muipickersutilsprovider>
-      <mock-keyboarddatepicker
-        autook="true"
-        classname="Form-formField-3"
-        disabletoolbar="true"
-        error="false"
-        format="MM/dd/yyyy"
-        helpertext=""
-        id="installationSchedule"
-        inputprops="[object Object]"
-        inputvariant="outlined"
-        keyboardbuttonprops="[object Object]"
-        showtodaybutton="true"
-      />
-    </mock-muipickersutilsprovider>
-    <mock-typography>
-      Installation, survey and maintenance personnel and equipment
-    </mock-typography>
     <div
-      class="MuiFormControl-root MuiTextField-root Form-formField-3 Form-textField-6 MuiFormControl-fullWidth"
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 css-wb57ya-MuiFormControl-root-MuiTextField-root"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl Mui-readOnly MuiInputBase-readOnly css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
       >
-        <textarea
+        <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
-          name="installationResources"
-          placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
-          rows="4"
-          style="height: 0px; overflow: hidden;"
-        />
-        <textarea
-          aria-hidden="true"
-          class="MuiInputBase-input MuiOutlinedInput-input Form-textField-6 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+          class="MuiInputBase-input MuiOutlinedInput-input Mui-readOnly Form-textField-6 MuiInputBase-readOnly css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r3:"
           readonly=""
-          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
-          tabindex="-1"
+          type="text"
+          value=""
         />
         <fieldset
           aria-hidden="true"
-          class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
-          style="padding-left: 8px;"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="PrivateNotchedOutline-legend-8"
-            style="width: 0.01px;"
+            class="css-ihdtdm"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </legend>
         </fieldset>
       </div>
-      
+    </div>
+    <mock-dialog
+      classname="css-1rqc0ef"
+      open="false"
+    >
+      <mock-dialogcontent
+        classname="css-1jqvr2x"
+      >
+        <div
+          class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
+        >
+          <div
+            class="css-epd502"
+          >
+            <div
+              class="MuiCalendarPicker-root css-169iwlq-MuiCalendarPicker-root"
+            >
+              <div
+                class="MuiPickersCalendarHeader-root css-ao2cp5-MuiPickersCalendarHeader-root"
+              >
+                <div
+                  aria-live="polite"
+                  class="MuiPickersCalendarHeader-labelContainer css-10fao8b-MuiPickersCalendarHeader-labelContainer"
+                  role="presentation"
+                >
+                  <div
+                    class="MuiPickersFadeTransitionGroup-root css-31ca4x-MuiPickersFadeTransitionGroup-root"
+                  >
+                    <div
+                      class="MuiPickersCalendarHeader-label css-dplwbx-MuiPickersCalendarHeader-label"
+                      id=":r4:-grid-label"
+                      style="opacity: 1;"
+                    >
+                      December 2024
+                    </div>
+                  </div>
+                  <mock-iconbutton
+                    aria-label="calendar view is open, switch to year view"
+                    classname="MuiPickersCalendarHeader-switchViewButton css-1wknyoa-MuiPickersCalendarHeader-switchViewButton"
+                    size="small"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPickersCalendarHeader-switchViewIcon css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                  </mock-iconbutton>
+                </div>
+                <div
+                  class="MuiPickersArrowSwitcher-root css-9reuh9-MuiPickersArrowSwitcher-root"
+                  style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                >
+                  <mock-iconbutton
+                    aria-label="Previous month"
+                    classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                    disabled="false"
+                    edge="end"
+                    size="small"
+                    title="Previous month"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="ArrowLeftIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
+                      />
+                    </svg>
+                  </mock-iconbutton>
+                  <div
+                    class="MuiPickersArrowSwitcher-spacer css-xb7uwb-MuiPickersArrowSwitcher-spacer"
+                  />
+                  <mock-iconbutton
+                    aria-label="Next month"
+                    classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                    disabled="false"
+                    edge="start"
+                    size="small"
+                    title="Next month"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="ArrowRightIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                      />
+                    </svg>
+                  </mock-iconbutton>
+                </div>
+              </div>
+              <div
+                class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-15dbmtb-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
+              >
+                <div
+                  style="opacity: 1;"
+                >
+                  <div
+                    aria-labelledby=":r4:-grid-label"
+                    role="grid"
+                  >
+                    <div
+                      class="MuiDayPicker-header css-qklzlb-MuiDayPicker-header"
+                      role="row"
+                    >
+                      <mock-typography
+                        aria-label="Sunday"
+                        classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                        role="columnheader"
+                        variant="caption"
+                      >
+                        S
+                      </mock-typography>
+                      <mock-typography
+                        aria-label="Monday"
+                        classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                        role="columnheader"
+                        variant="caption"
+                      >
+                        M
+                      </mock-typography>
+                      <mock-typography
+                        aria-label="Tuesday"
+                        classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                        role="columnheader"
+                        variant="caption"
+                      >
+                        T
+                      </mock-typography>
+                      <mock-typography
+                        aria-label="Wednesday"
+                        classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                        role="columnheader"
+                        variant="caption"
+                      >
+                        W
+                      </mock-typography>
+                      <mock-typography
+                        aria-label="Thursday"
+                        classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                        role="columnheader"
+                        variant="caption"
+                      >
+                        T
+                      </mock-typography>
+                      <mock-typography
+                        aria-label="Friday"
+                        classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                        role="columnheader"
+                        variant="caption"
+                      >
+                        F
+                      </mock-typography>
+                      <mock-typography
+                        aria-label="Saturday"
+                        classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                        role="columnheader"
+                        variant="caption"
+                      >
+                        S
+                      </mock-typography>
+                    </div>
+                    <div
+                      class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
+                      role="presentation"
+                    >
+                      <div
+                        class="MuiDayPicker-monthContainer css-6t5f1e-MuiDayPicker-monthContainer"
+                        role="rowgroup"
+                      >
+                        <div
+                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            1
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            2
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            3
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            4
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            5
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            6
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            7
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                        </div>
+                        <div
+                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            8
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            9
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            10
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            11
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            12
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            13
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            14
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                        </div>
+                        <div
+                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            15
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            16
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            17
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            18
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            19
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-current="date"
+                            aria-selected="false"
+                            class="MuiButtonBase-root Mui-focusVisible MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-1ilx2o9-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="0"
+                            type="button"
+                          >
+                            20
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            21
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                        </div>
+                        <div
+                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            22
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            23
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            24
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            25
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            26
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            27
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            28
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                        </div>
+                        <div
+                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            29
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            30
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <button
+                            aria-selected="false"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            role="gridcell"
+                            tabindex="-1"
+                            type="button"
+                          >
+                            31
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                          <div
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                            role="gridcell"
+                          />
+                          <div
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                            role="gridcell"
+                          />
+                          <div
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                            role="gridcell"
+                          />
+                          <div
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                            role="gridcell"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mock-dialogcontent>
+      <mock-dialogactions>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1otw71y-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          Cancel
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1otw71y-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          OK
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </mock-dialogactions>
+    </mock-dialog>
+    <mock-typography>
+      Installation, survey and maintenance personnel and equipment
+    </mock-typography>
+    <div
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-wb57ya-MuiFormControl-root-MuiTextField-root"
+    >
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-1ec6xec-MuiInputBase-root-MuiOutlinedInput-root"
+      >
+        <textarea
+          aria-invalid="false"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-175746a-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r5:"
+          name="installationResources"
+          placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
+          style="height: 0px; overflow: hidden;"
+        />
+        <textarea
+          aria-hidden="true"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-175746a-MuiInputBase-input-MuiOutlinedInput-input"
+          readonly=""
+          style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding-top: 0px; padding-bottom: 0px; width: 100%;"
+          tabindex="-1"
+        />
+        <fieldset
+          aria-hidden="true"
+          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+        >
+          <legend
+            class="css-ihdtdm"
+          >
+            <span
+              class="notranslate"
+            >
+              ​
+            </span>
+          </legend>
+        </fieldset>
+      </div>
     </div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-6ftirg-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="submit"
     >
+      Submit
       <span
-        class="MuiButton-label"
-      >
-        Submit
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
   </form>

@@ -8,15 +8,16 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
     open="false"
   >
     <div
-      class="MuiPaper-root MuiAlert-root MuiAlert-filledSuccess makeStyles-alert-7 MuiPaper-elevation0"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-filledSuccess MuiAlert-filled makeStyles-alert-7 css-13milay-MuiPaper-root-MuiAlert-root"
       role="alert"
     >
       <div
-        class="MuiAlert-icon"
+        class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+          data-testid="SuccessOutlinedIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
@@ -26,26 +27,22 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </svg>
       </div>
       <div
-        class="MuiAlert-message makeStyles-alertMessage-8 makeStyles-alertMessage-10"
+        class="MuiAlert-message makeStyles-alertMessage-8 makeStyles-alertMessage-10 css-1pxa9xg-MuiAlert-message"
       >
         Successfully uploaded files
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-button-9 MuiButton-textSizeSmall MuiButton-sizeSmall"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary makeStyles-button-9 css-1cm5b3o-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
+          Go to map
           <span
-            class="MuiButton-label"
-          >
-            Go to map
-          </span>
-          <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </button>
       </div>
       <div
-        class="MuiAlert-action"
+        class="MuiAlert-action css-ki1hdl-MuiAlert-action"
       >
         <mock-iconbutton
           aria-label="Close"
@@ -55,7 +52,8 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            data-testid="CloseIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -73,15 +71,16 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
     open="false"
   >
     <div
-      class="MuiPaper-root MuiAlert-root MuiAlert-filledError makeStyles-alert-7 MuiPaper-elevation0"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-filledError MuiAlert-filled makeStyles-alert-7 css-6ji6aj-MuiPaper-root-MuiAlert-root"
       role="alert"
     >
       <div
-        class="MuiAlert-icon"
+        class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+          data-testid="ErrorOutlineIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
@@ -91,26 +90,22 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </svg>
       </div>
       <div
-        class="MuiAlert-message makeStyles-alertMessage-8 makeStyles-alertMessage-11"
+        class="MuiAlert-message makeStyles-alertMessage-8 makeStyles-alertMessage-11 css-1pxa9xg-MuiAlert-message"
       >
         Something went wrong with the upload
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-button-9 MuiButton-textSizeSmall MuiButton-sizeSmall"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary makeStyles-button-9 css-1cm5b3o-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
+          View details
           <span
-            class="MuiButton-label"
-          >
-            View details
-          </span>
-          <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </button>
       </div>
       <div
-        class="MuiAlert-action"
+        class="MuiAlert-action css-ki1hdl-MuiAlert-action"
       >
         <mock-iconbutton
           aria-label="Close"
@@ -120,7 +115,8 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            data-testid="CloseIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -139,7 +135,6 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
   >
     <mock-dialogtitle
       classname="makeStyles-dialogTitle-12"
-      disabletypography="true"
     >
       <mock-typography
         variant="h4"
@@ -148,15 +143,17 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       </mock-typography>
       <mock-iconbutton
         classname="makeStyles-closeButton-13"
+        size="large"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="CloseIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
           <path
-            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
           />
         </svg>
       </mock-iconbutton>
@@ -179,222 +176,163 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         open="false"
       >
         <mock-iconbutton
+          size="large"
           style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
         >
           <mock-clear />
         </mock-iconbutton>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="/"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Home
-            </mock-typography>
-          </span>
+            Home
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="/map"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Map
-            </mock-typography>
-          </span>
+            Map
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="/register"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Register a site
-            </mock-typography>
-          </span>
+            Register a site
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
         <mock-link
-          aria-disabled="false"
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="https://highlights.aqualink.org"
-          role="button"
           tabindex="0"
           target="_blank"
           to=""
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Highlighted Sites
-            </mock-typography>
-          </span>
+            Highlighted Sites
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </mock-link>
         <mock-link
-          aria-disabled="false"
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="https://bristlemouth.aqualink.org"
-          role="button"
           tabindex="0"
           target="_blank"
           to=""
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Bristlemouth Explorer
-            </mock-typography>
-          </span>
+            Bristlemouth Explorer
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </mock-link>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="/tracker"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Track a heatwave
-            </mock-typography>
-          </span>
+            Track a heatwave
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="/about"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              About
-            </mock-typography>
-          </span>
+            About
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="/faq"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Faq
-            </mock-typography>
-          </span>
+            Faq
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="/buoy"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Buoy
-            </mock-typography>
-          </span>
+            Buoy
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-29"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-1ysff4r-MuiButtonBase-root-MuiButton-root"
           href="/drones"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Drone
-            </mock-typography>
-          </span>
+            Drone
+          </mock-typography>
           <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
         <mock-box
@@ -409,57 +347,47 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             Join us and contribute!
           </mock-typography>
           <div
-            class="MuiButtonGroup-root MuiButtonGroup-contained"
+            class="MuiButtonGroup-root MuiButtonGroup-contained css-1qlbpvy-MuiButtonGroup-root"
             role="group"
           >
             <a
-              aria-disabled="false"
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-28"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-28 MuiButtonGroup-firstButton css-6ftirg-MuiButtonBase-root-MuiButton-root"
               href="https://github.com/aqualinkorg/aqualink-app"
               tabindex="0"
               target="_blank"
             >
               <span
-                class="MuiButton-label"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-gcc2o7-MuiButton-startIcon"
               >
-                <span
-                  class="MuiButton-startIcon MuiButton-iconSizeMedium"
-                >
-                  <mock-github />
-                </span>
-                GitHub
+                <mock-github />
               </span>
+              GitHub
               <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </a>
             <a
-              aria-disabled="false"
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-28"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-28 MuiButtonGroup-lastButton css-6ftirg-MuiButtonBase-root-MuiButton-root"
               href="https://ovio.org/project/aqualinkorg/aqualink-app"
               tabindex="0"
               target="_blank"
             >
+              <img
+                alt="Ovio Logo"
+                src="ovio_logo.png"
+              />
               <span
-                class="MuiButton-label"
-              >
-                <img
-                  alt="Ovio Logo"
-                  src="ovio_logo.png"
-                />
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </a>
           </div>
         </mock-box>
       </mock-drawer>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ase6u9-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-150rfs1-MuiGrid-root"
         >
           <mock-box
             alignitems="center"
@@ -469,21 +397,24 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             <mock-iconbutton
               color="inherit"
               edge="start"
+              size="large"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="MenuIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
                 />
               </svg>
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-16"
               href="/map"
+              underline="hover"
             >
               <mock-typography
                 color="textPrimary"
@@ -501,22 +432,24 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-26 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-26 css-kdnu70-MuiGrid-root"
         >
           <mock-tooltip
             title="Translate"
           >
             <mock-iconbutton
+              size="large"
               style="color: white;"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="LanguageIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
                 />
               </svg>
             </mock-iconbutton>
@@ -529,15 +462,17 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             Mock User
             <mock-iconbutton
               classname="NavBar-button-25"
+              size="large"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-24"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-24 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
             </mock-iconbutton>
@@ -569,14 +504,15 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                   classname="NavBar-menuItem-22"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-wxat9z-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                        data-testid="DashboardTwoToneIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
@@ -585,12 +521,12 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                           opacity=".3"
                         />
                         <path
-                          d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"
+                          d="M3 13h8V3H3zm2-8h4v6H5zm8 16h8V11h-8zm2-8h4v6h-4zM13 3v6h8V3zm6 4h-4V5h4zM3 21h8v-6H3zm2-4h4v2H5z"
                         />
                       </svg>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       Dashboard
                     </div>
@@ -604,24 +540,25 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 classname="NavBar-menuItem-22"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-wxat9z-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                      data-testid="PowerSettingsNewIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
                       <path
-                        d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"
+                        d="M13 3h-2v10h2zm4.83 2.17-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83"
                       />
                     </svg>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     Logout
                   </div>
@@ -641,10 +578,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-31"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-31 css-185gdzj-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content"
+          class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
         >
           <mock-typography
             classname="MuiCardHeader-title"
@@ -653,13 +590,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container"
+                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
                 >
                   <mock-typography
                     variant="h4"
@@ -675,7 +612,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <mock-iconbutton
                   classname="RegisterDialog-closeButton-30"
@@ -683,12 +620,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -699,13 +637,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-33 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-33 css-9ve18c-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -716,19 +654,19 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
           >
             <form
               class="RegisterDialog-form-34"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-nstfsn-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="firstName"
                     id="firstName-label"
@@ -736,11 +674,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     First Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                       id="firstName"
                       name="firstName"
                       placeholder="First Name"
@@ -749,10 +687,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-43"
+                        class="css-yjsfm1"
                       >
                         <span>
                           First Name
@@ -760,17 +698,16 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-nstfsn-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="lastName"
                     id="lastName-label"
@@ -778,11 +715,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Last Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                       id="lastName"
                       name="lastName"
                       placeholder="Last Name"
@@ -791,10 +728,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-43"
+                        class="css-yjsfm1"
                       >
                         <span>
                           Last Name
@@ -802,17 +739,16 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-nstfsn-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="organization"
                     id="organization-label"
@@ -820,11 +756,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Organization
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                       id="organization"
                       name="organization"
                       placeholder="Organization"
@@ -833,10 +769,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-43"
+                        class="css-yjsfm1"
                       >
                         <span>
                           Organization
@@ -844,17 +780,16 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-nstfsn-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="emailAddress"
                     id="emailAddress-label"
@@ -862,11 +797,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                       id="emailAddress"
                       name="emailAddress"
                       placeholder="Email Address"
@@ -875,10 +810,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-43"
+                        class="css-yjsfm1"
                       >
                         <span>
                           Email Address
@@ -886,17 +821,16 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-35 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-nstfsn-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="password"
                     id="password-label"
@@ -904,11 +838,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-36 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -917,10 +851,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-43"
+                        class="css-yjsfm1"
                       >
                         <span>
                           Password
@@ -928,14 +862,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-16uec2a-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
                 >
                   <mock-checkbox
                     checked="false"
@@ -944,7 +877,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                   />
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-1ow5ctt-MuiGrid-root"
                 >
                   <mock-box>
                     <mock-typography
@@ -965,23 +898,19 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-38 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-38 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge Mui-disabled MuiButton-fullWidth Mui-disabled"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-oth373-MuiButtonBase-root-MuiButton-root"
                   disabled=""
                   tabindex="-1"
                   type="submit"
                 >
-                  <span
-                    class="MuiButton-label"
-                  >
-                    CREATE ACCOUNT
-                  </span>
+                  CREATE ACCOUNT
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <mock-typography
                   classname="RegisterDialog-formText-37"
@@ -991,17 +920,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                   Have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1otw71y-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
+                    SIGN IN
                     <span
-                      class="MuiButton-label"
-                    >
-                      SIGN IN
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                     />
                   </button>
                 </mock-typography>
@@ -1021,10 +946,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-46"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-42 css-185gdzj-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content"
+          class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
         >
           <mock-typography
             classname="MuiCardHeader-title"
@@ -1033,13 +958,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container"
+                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
                 >
                   <mock-typography
                     variant="h4"
@@ -1047,7 +972,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-47"
+                    classname="SignInDialog-dialogHeaderSecondPart-43"
                     variant="h4"
                   >
                     link
@@ -1055,20 +980,21 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-45"
+                  classname="SignInDialog-closeButton-41"
                   size="small"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -1078,25 +1004,26 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </div>
       </div>
       <div
-        class="MuiCollapse-root MuiCollapse-hidden"
+        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
         style="min-height: 0px;"
       >
         <div
-          class="MuiCollapse-wrapper"
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
         >
           <div
-            class="MuiCollapse-wrapperInner"
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess MuiPaper-elevation0"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-naw0w7-MuiPaper-root-MuiAlert-root"
               role="alert"
             >
               <div
-                class="MuiAlert-icon"
+                class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                  data-testid="SuccessOutlinedIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -1106,12 +1033,12 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </svg>
               </div>
               <div
-                class="MuiAlert-message"
+                class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
               >
                 Password reset email sent to .
               </div>
               <div
-                class="MuiAlert-action"
+                class="MuiAlert-action css-ki1hdl-MuiAlert-action"
               >
                 <mock-iconbutton
                   aria-label="close"
@@ -1120,12 +1047,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -1136,13 +1064,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-48 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-44 css-9ve18c-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -1153,19 +1081,19 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
           >
             <form
-              class="SignInDialog-form-49"
+              class="SignInDialog-form-45"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-50 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-46 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-nstfsn-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="emailAddress"
                     id="emailAddress-label"
@@ -1173,11 +1101,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-51"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-47 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                       id="emailAddress"
                       name="emailAddress"
                       placeholder="Email Address"
@@ -1186,10 +1114,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-43"
+                        class="css-yjsfm1"
                       >
                         <span>
                           Email Address
@@ -1197,17 +1125,16 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-50 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-46 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-nstfsn-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="password"
                     id="password-label"
@@ -1215,11 +1142,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-51"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-47 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -1228,10 +1155,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-43"
+                        class="css-yjsfm1"
                       >
                         <span>
                           Password
@@ -1239,72 +1166,59 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text SignInDialog-forgotPasswordButton-54"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-50 css-1otw71y-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
-                  <span
-                    class="MuiButton-label"
+                  <mock-typography
+                    color="textSecondary"
+                    variant="subtitle2"
                   >
-                    <mock-typography
-                      color="textSecondary"
-                      variant="subtitle2"
-                    >
-                      Forgot your password?
-                    </mock-typography>
-                  </span>
+                    Forgot your password?
+                  </mock-typography>
                   <span
-                    class="MuiTouchRipple-root"
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />
                 </button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-53 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-49 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge MuiButton-fullWidth"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-oth373-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="submit"
                 >
+                  SIGN IN
                   <span
-                    class="MuiButton-label"
-                  >
-                    SIGN IN
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-52"
+                  classname="SignInDialog-formText-48"
                   color="textSecondary"
                   variant="subtitle1"
                 >
                   Don't have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1otw71y-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
+                    SIGN UP
                     <span
-                      class="MuiButton-label"
-                    >
-                      SIGN UP
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                     />
                   </button>
                 </mock-typography>
@@ -1316,13 +1230,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiContainer-root makeStyles-root-1 MuiContainer-maxWidthLg"
+    class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-root-1 css-1oqqzyl-MuiContainer-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-n3dho1-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
       >
         <mock-typography
           variant="h5"
@@ -1331,7 +1245,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
       >
         <mock-typography
           variant="h6"
@@ -1371,24 +1285,30 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-1bf5qai-MuiGrid-root"
       >
         <div
-          class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
         >
           <label
-            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-6304h4-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
+            for=":r7:"
+            id=":r7:-label"
           >
             Sensor type
           </label>
           <div
-            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <div
+              aria-controls=":r8:"
+              aria-expanded="false"
               aria-haspopup="listbox"
-              class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
-              role="button"
+              aria-labelledby=":r7:-label :r7:"
+              class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-3e0jyh-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+              id=":r7:"
+              role="combobox"
               tabindex="0"
             >
               <mock-typography
@@ -1401,13 +1321,15 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             </div>
             <input
               aria-hidden="true"
-              class="MuiSelect-nativeInput"
+              aria-invalid="false"
+              class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
               tabindex="-1"
               value="0"
             />
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+              data-testid="ArrowDropDownIcon"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -1415,112 +1337,131 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 d="M7 10l5 5 5-5z"
               />
             </svg>
-            <mock-menu
+            <mock-popover
               anchorel="[object HTMLDivElement]"
               anchororigin="[object Object]"
+              classname="css-oouctw-MuiMenu-root"
               id="menu-"
-              menulistprops="[object Object]"
               open="false"
-              paperprops="[object Object]"
+              slotprops="[object Object]"
+              slots="[object Object]"
               transformorigin="[object Object]"
+              transitionduration="auto"
+              transitionprops="[object Object]"
             >
-              <mock-menuitem
-                aria-selected="true"
-                classname="makeStyles-menuItem-2"
-                data-value="0"
-                role="option"
-                selected="true"
+              <mock-menulist
+                actions="[object Object]"
+                aria-labelledby=":r7:-label"
+                autofocusitem="false"
+                classname="MuiMenu-list css-rpp6kk-MuiMenu-list"
+                disablelistwrap="true"
+                id=":r8:"
+                role="listbox"
+                variant="selectedMenu"
               >
-                <mock-typography
-                  classname="makeStyles-itemName-3"
-                  color="textSecondary"
-                  title="Default"
+                <mock-menuitem
+                  aria-selected="true"
+                  classname="makeStyles-menuItem-2"
+                  data-value="0"
+                  role="option"
+                  selected="true"
                 >
-                  Default
-                </mock-typography>
-              </mock-menuitem>
-              <mock-menuitem
-                classname="makeStyles-menuItem-2"
-                data-value="1"
-                role="option"
-                selected="false"
-              >
-                <mock-typography
-                  classname="makeStyles-itemName-3"
-                  color="textSecondary"
-                  title="Sonde data"
+                  <mock-typography
+                    classname="makeStyles-itemName-3"
+                    color="textSecondary"
+                    title="Default"
+                  >
+                    Default
+                  </mock-typography>
+                </mock-menuitem>
+                <mock-menuitem
+                  aria-selected="false"
+                  classname="makeStyles-menuItem-2"
+                  data-value="1"
+                  role="option"
+                  selected="false"
                 >
-                  Sonde data
-                </mock-typography>
-              </mock-menuitem>
-              <mock-menuitem
-                classname="makeStyles-menuItem-2"
-                data-value="2"
-                role="option"
-                selected="false"
-              >
-                <mock-typography
-                  classname="makeStyles-itemName-3"
-                  color="textSecondary"
-                  title="Meteorological data"
+                  <mock-typography
+                    classname="makeStyles-itemName-3"
+                    color="textSecondary"
+                    title="Sonde data"
+                  >
+                    Sonde data
+                  </mock-typography>
+                </mock-menuitem>
+                <mock-menuitem
+                  aria-selected="false"
+                  classname="makeStyles-menuItem-2"
+                  data-value="2"
+                  role="option"
+                  selected="false"
                 >
-                  Meteorological data
-                </mock-typography>
-              </mock-menuitem>
-              <mock-menuitem
-                classname="makeStyles-menuItem-2"
-                data-value="3"
-                role="option"
-                selected="false"
-              >
-                <mock-typography
-                  classname="makeStyles-itemName-3"
-                  color="textSecondary"
-                  title="HOBO data"
+                  <mock-typography
+                    classname="makeStyles-itemName-3"
+                    color="textSecondary"
+                    title="Meteorological data"
+                  >
+                    Meteorological data
+                  </mock-typography>
+                </mock-menuitem>
+                <mock-menuitem
+                  aria-selected="false"
+                  classname="makeStyles-menuItem-2"
+                  data-value="3"
+                  role="option"
+                  selected="false"
                 >
-                  HOBO data
-                </mock-typography>
-              </mock-menuitem>
-              <mock-menuitem
-                classname="makeStyles-menuItem-2"
-                data-value="4"
-                role="option"
-                selected="false"
-              >
-                <mock-typography
-                  classname="makeStyles-itemName-3"
-                  color="textSecondary"
-                  title="HUI data"
+                  <mock-typography
+                    classname="makeStyles-itemName-3"
+                    color="textSecondary"
+                    title="HOBO data"
+                  >
+                    HOBO data
+                  </mock-typography>
+                </mock-menuitem>
+                <mock-menuitem
+                  aria-selected="false"
+                  classname="makeStyles-menuItem-2"
+                  data-value="4"
+                  role="option"
+                  selected="false"
                 >
-                  HUI data
-                </mock-typography>
-              </mock-menuitem>
-              <mock-menuitem
-                classname="makeStyles-menuItem-2"
-                data-value="5"
-                disabled="true"
-                role="option"
-                selected="false"
-              >
-                <mock-typography
-                  classname="makeStyles-itemName-3"
-                  color="textSecondary"
-                  title="Spotter data"
+                  <mock-typography
+                    classname="makeStyles-itemName-3"
+                    color="textSecondary"
+                    title="HUI data"
+                  >
+                    HUI data
+                  </mock-typography>
+                </mock-menuitem>
+                <mock-menuitem
+                  aria-selected="false"
+                  classname="makeStyles-menuItem-2"
+                  data-value="5"
+                  disabled="true"
+                  role="option"
+                  selected="false"
                 >
-                  Spotter data
-                </mock-typography>
-                <mock-chip
-                  classname="makeStyles-comingSoonChip-4"
-                  label="[object Object]"
-                />
-              </mock-menuitem>
-            </mock-menu>
+                  <mock-typography
+                    classname="makeStyles-itemName-3"
+                    color="textSecondary"
+                    title="Spotter data"
+                  >
+                    Spotter data
+                  </mock-typography>
+                  <mock-chip
+                    classname="makeStyles-comingSoonChip-4"
+                    label="[object Object]"
+                  />
+                </mock-menuitem>
+              </mock-menulist>
+            </mock-popover>
             <fieldset
               aria-hidden="true"
-              class="PrivateNotchedOutline-root-41 MuiOutlinedInput-notchedOutline"
+              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="PrivateNotchedOutline-legendLabelled-43 PrivateNotchedOutline-legendNotched-44"
+                class="css-14lo706"
               >
                 <span>
                   Sensor type
@@ -1531,10 +1472,10 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 css-1deaqy1-MuiGrid-root"
       >
         <label
-          class="MuiFormControlLabel-root"
+          class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
         >
           <mock-checkbox
             checked="false"
@@ -1550,7 +1491,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       </div>
     </div>
     <div
-      class="MuiGrid-root makeStyles-root-55 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-root-51 css-1nx4u87-MuiGrid-root"
       role="button"
       tabindex="0"
     >
@@ -1563,11 +1504,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         type="file"
       />
       <div
-        class="MuiGrid-root MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
       >
         <mock-typography
           align="center"
-          classname="makeStyles-bold-57"
+          classname="makeStyles-bold-53"
           display="block"
           gutterbottom="true"
           variant="subtitle2"
@@ -1584,7 +1525,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
         <mock-typography
           align="center"
-          classname="makeStyles-bold-57"
+          classname="makeStyles-bold-53"
           display="block"
           gutterbottom="true"
           variant="subtitle2"
@@ -1593,29 +1534,25 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-59 MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary makeStyles-button-55 css-9bf18e-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
+          Select Files
           <span
-            class="MuiButton-label"
-          >
-            Select Files
-          </span>
-          <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </button>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
       >
         <mock-typography
           align="center"
-          classname="makeStyles-bold-57 makeStyles-grey-58"
+          classname="makeStyles-bold-53 makeStyles-grey-54"
           display="block"
           variant="caption"
         >
@@ -1625,7 +1562,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-typography>
         <mock-typography
           align="center"
-          classname="makeStyles-bold-57 makeStyles-grey-58"
+          classname="makeStyles-bold-53 makeStyles-grey-54"
           display="block"
           variant="caption"
         >
@@ -1636,11 +1573,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       </div>
     </div>
     <mock-tablecontainer
-      classname="makeStyles-container-60"
+      classname="makeStyles-container-56"
       component="[object Object]"
     >
       <mock-table
-        classname="makeStyles-table-61"
+        classname="makeStyles-table-57"
         size="small"
       >
         <mock-tablehead>
@@ -1678,7 +1615,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         </mock-tablehead>
         <mock-tablebody>
           <mock-tablerow
-            classname="makeStyles-root-62"
+            classname="makeStyles-root-58"
           >
             <mock-tablecell>
               <mock-iconbutton
@@ -1688,12 +1625,13 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="KeyboardArrowDownIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                    d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"
                   />
                 </svg>
               </mock-iconbutton>
@@ -1725,7 +1663,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
           </mock-tablerow>
           <mock-tablerow>
             <mock-tablecell
-              classname="makeStyles-collapseWrap-63"
+              classname="makeStyles-collapseWrap-59"
               colspan="6"
             />
           </mock-tablerow>
