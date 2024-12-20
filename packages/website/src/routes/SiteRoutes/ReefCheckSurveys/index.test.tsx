@@ -16,6 +16,9 @@ jest.mock('common/NavBar', () => 'Mock-NavBar');
 
 describe('ReefCheckSurveyViewPage', () => {
   const mockStore = configureStore([]);
+  const scrollToSpy = jest
+    .spyOn(window, 'scrollTo')
+    .mockImplementation(() => null);
   const reefCheckSurveyOrganismsTableSpy = jest.spyOn(
     organismsTableModule,
     'ReefCheckSurveyOrganismsTable',
@@ -60,6 +63,7 @@ describe('ReefCheckSurveyViewPage', () => {
   afterAll(() => {
     reefCheckSurveyOrganismsTableSpy.mockRestore();
     reefCheckSurveySubstratesTableSpy.mockRestore();
+    scrollToSpy.mockRestore();
   });
 
   it('should dispatch reefCheckSurveyGetRequest and siteRequest on mount', () => {
