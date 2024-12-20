@@ -5,6 +5,7 @@ import configureStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mockUser } from 'mocks/mockUser';
 
+import { renderWithProviders } from 'utils/test-utils';
 import Buoy from '.';
 
 jest.mock('common/NavBar', () => 'Mock-NavBar');
@@ -24,13 +25,7 @@ describe('Buoy', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
-      <Provider store={store}>
-        <Router>
-          <Buoy />
-        </Router>
-      </Provider>,
-    ).container;
+    element = renderWithProviders(<Buoy />).container;
   });
 
   it('should render with given state from Redux store', () => {

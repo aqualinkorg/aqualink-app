@@ -1,11 +1,9 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import { mockSite } from 'mocks/mockSite';
 import { mockUser } from 'mocks/mockUser';
+import { renderWithProviders } from 'utils/test-utils';
 import SiteNavBar from '.';
 
 const mockStore = configureStore([]);
@@ -28,17 +26,14 @@ describe('SiteNavBar', () => {
     });
     store.dispatch = jest.fn();
 
-    element = render(
-      <Provider store={store}>
-        <Router>
-          <SiteNavBar
-            hasDailyData
-            site={mockSite}
-            isAdmin
-            lastSurvey="2020-09-10T10:27:00.000Z"
-          />
-        </Router>
-      </Provider>,
+    element = renderWithProviders(
+      <SiteNavBar
+        hasDailyData
+        site={mockSite}
+        isAdmin
+        lastSurvey="2020-09-10T10:27:00.000Z"
+      />,
+      { store },
     ).container;
   });
 

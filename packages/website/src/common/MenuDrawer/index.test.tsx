@@ -1,15 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-
-import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from 'utils/test-utils';
 import MenuDrawer from '.';
 
 describe('MenuDrawer open', () => {
   const menuDrawerOpen = true;
-  const element = render(
-    <BrowserRouter>
-      <MenuDrawer open={menuDrawerOpen} onClose={() => {}} />
-    </BrowserRouter>,
+  const element = renderWithProviders(
+    <MenuDrawer open={menuDrawerOpen} onClose={() => {}} />,
   ).container;
 
   it('should render with given state from Redux store', () => {
@@ -19,10 +15,8 @@ describe('MenuDrawer open', () => {
 
 describe('MenuDrawer closed', () => {
   const menuDrawerOpen = false;
-  const element = render(
-    <BrowserRouter>
-      <MenuDrawer open={menuDrawerOpen} onClose={() => {}} />
-    </BrowserRouter>,
+  const element = renderWithProviders(
+    <MenuDrawer open={menuDrawerOpen} onClose={() => {}} />,
   ).container;
 
   it('should render with given state from Redux store', () => {

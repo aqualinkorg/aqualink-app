@@ -1,10 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { mockUser } from 'mocks/mockUser';
 
+import { renderWithProviders } from 'utils/test-utils';
 import Tracker from '.';
 
 jest.mock('common/NavBar', () => 'Mock-NavBar');
@@ -24,13 +22,7 @@ describe('Tracker', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
-      <Provider store={store}>
-        <Router>
-          <Tracker />
-        </Router>
-      </Provider>,
-    ).container;
+    element = renderWithProviders(<Tracker />, { store }).container;
   });
 
   it('should render with given state from Redux store', () => {

@@ -2,7 +2,7 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/';
 import 'mutationobserver-shim';
 
 jest.mock('@mui/icons-material', () => ({
@@ -55,7 +55,8 @@ jest.mock('axios-cache-interceptor', () => ({
 }));
 
 function stubMuiComponent(componentName: string, namedExports: any = {}) {
-  jest.doMock(`@mui/material/${componentName}/${componentName}`, () => ({
+  jest.doMock(`@mui/material/${componentName}`, () => ({
+    ...jest.requireActual(`@mui/material/${componentName}`),
     __esModule: true,
     default: `mock-${componentName}`,
     ...namedExports,
