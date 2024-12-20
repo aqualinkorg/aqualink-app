@@ -2,6 +2,7 @@ import {
   Hidden,
   TableBody,
   TableCell,
+  TablePagination,
   TableRow,
   Theme,
   Typography,

@@ -210,8 +210,10 @@ const theme: Theme = createTheme(
       },
       MuiOutlinedInput: {
         root: {
-          padding: 0,
           color: 'black',
+          '&:not(.MuiInputBase-multiline)': {
+            padding: 0,
+          },
           '&.Mui-focused': {
             borderColor: lightBlue,
           },
