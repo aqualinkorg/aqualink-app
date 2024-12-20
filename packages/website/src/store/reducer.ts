@@ -7,6 +7,8 @@ import survey from './Survey/surveySlice';
 import surveyList from './Survey/surveyListSlice';
 import collection from './Collection/collectionSlice';
 import uploads from './uploads/uploadsSlice';
+import reefCheckSurvey from './ReefCheckSurveys/reefCheckSurveySlice';
+import { reefCheckSurveyList } from './ReefCheckSurveys/reefCheckSurveyListSlice';
 
 const appReducer = combineReducers({
   selectedSite,
@@ -17,6 +19,8 @@ const appReducer = combineReducers({
   survey,
   surveyList,
   uploads,
+  reefCheckSurvey,
+  reefCheckSurveyList,
 });
 
 export default appReducer;
