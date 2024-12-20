@@ -1941,7 +1941,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             classname="Sensor-cardTitle-772"
                             variant="h6"
                           >
-                            BUOY OBSERVATION
+                            7-DAYS CHANGE
                           </mock-typography>
                         </div>
                       </div>
@@ -1951,11 +1951,48 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 <mock-cardcontent
                   classname="Sensor-content-780"
                 >
+                  <mock-box
+                    classname="TemperatureChangeComponent-cardContent-400"
+                  >
+                    <mock-box
+                      classname="TemperatureChangeComponent-tempContainer-402 TemperatureChangeComponent-tempIncreased-403"
+                    >
+                      <svg
+                        class="TemperatureChangeComponent-icon-405"
+                      >
+                        caret.svg
+                      </svg>
+                      <mock-typography
+                        classname="TemperatureChangeComponent-temperatureChange-401"
+                        variant="h1"
+                      >
+                        +
+                        --
+                        °C
+                      </mock-typography>
+                    </mock-box>
+                    <mock-box>
+                      <mock-typography
+                        classname="TemperatureChangeComponent-temperature-407"
+                        color="textSecondary"
+                        variant="h4"
+                      >
+                        23.0
+                        °C
+                      </mock-typography>
+                      <mock-typography
+                        color="textSecondary"
+                        variant="h6"
+                      >
+                        AVERAGE 7-DAYS TEMP
+                      </mock-typography>
+                    </mock-box>
+                  </mock-box>
                   <div
-                    style="display: grid; gap: 1rem; grid-template-areas: 'value0 image' 'spacer1 image' 'value1 image'; padding: 1rem;"
+                    class="MuiGrid-root makeStyles-updateInfo-375 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                   >
                     <div
-                      style="grid-area: value0;"
+                      class="MuiGrid-root makeStyles-dateInfoWrapper-379 makeStyles-dateInfoWrapper-516 MuiGrid-item"
                     >
                       <mock-typography
                         classname="Sensor-contentTextTitles-774"
@@ -1971,7 +2008,8 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </mock-typography>
                     </div>
                     <div
-                      style="grid-area: value1;"
+                      class="MuiGrid-root MuiGrid-item"
+                      style="display: flex; justify-content: flex-end;"
                     >
                       <mock-typography
                         classname="Sensor-contentTextTitles-774"
@@ -5077,7 +5115,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             classname="Sensor-cardTitle-109"
                             variant="h6"
                           >
-                            BUOY OBSERVATION
+                            7-DAYS CHANGE
                           </mock-typography>
                         </div>
                       </div>
@@ -5087,11 +5125,48 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 <mock-cardcontent
                   classname="Sensor-content-117"
                 >
+                  <mock-box
+                    classname="TemperatureChangeComponent-cardContent-121"
+                  >
+                    <mock-box
+                      classname="TemperatureChangeComponent-tempContainer-123 TemperatureChangeComponent-tempIncreased-124"
+                    >
+                      <svg
+                        class="TemperatureChangeComponent-icon-126"
+                      >
+                        caret.svg
+                      </svg>
+                      <mock-typography
+                        classname="TemperatureChangeComponent-temperatureChange-122"
+                        variant="h1"
+                      >
+                        +
+                        --
+                        °C
+                      </mock-typography>
+                    </mock-box>
+                    <mock-box>
+                      <mock-typography
+                        classname="TemperatureChangeComponent-temperature-128"
+                        color="textSecondary"
+                        variant="h4"
+                      >
+                        --
+                        °C
+                      </mock-typography>
+                      <mock-typography
+                        color="textSecondary"
+                        variant="h6"
+                      >
+                        AVERAGE 7-DAYS TEMP
+                      </mock-typography>
+                    </mock-box>
+                  </mock-box>
                   <div
-                    style="display: grid; gap: 1rem; grid-template-areas: 'value0 image' 'spacer1 image' 'value1 image'; padding: 1rem;"
+                    class="MuiGrid-root makeStyles-updateInfo-96 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
                   >
                     <div
-                      style="grid-area: value0;"
+                      class="MuiGrid-root makeStyles-dateInfoWrapper-100 makeStyles-dateInfoWrapper-129 MuiGrid-item"
                     >
                       <mock-typography
                         classname="Sensor-contentTextTitles-111"
@@ -5107,7 +5182,8 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </mock-typography>
                     </div>
                     <div
-                      style="grid-area: value1;"
+                      class="MuiGrid-root MuiGrid-item"
+                      style="display: flex; justify-content: flex-end;"
                     >
                       <mock-typography
                         classname="Sensor-contentTextTitles-111"

@@ -32,7 +32,7 @@ const UpdateInfo = ({
       alignItems="center"
       item
     >
-      <Grid item className={classes.dateInfoWrapper} xs={8}>
+      <Grid item className={classes.dateInfoWrapper}>
         <Grid container alignItems="center" justifyContent="center">
           <Grid item>
             <UpdateIcon className={classes.updateIcon} fontSize="small" />
@@ -55,7 +55,7 @@ const UpdateInfo = ({
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Grid item style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Chip
           live={live}
           href={live ? undefined : href}
@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: grey[700],
     padding: 4,
     minHeight: 40,
+    flexWrap: 'nowrap',
   },
   withMargin: {
     marginTop: 32,
