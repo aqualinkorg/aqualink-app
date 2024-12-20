@@ -49,7 +49,7 @@ exports[`NewSurveyPointDialog should render with given state from Redux store 1`
             Survey Point Name
           </label>
           <div
-            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth Mui-focused MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth Mui-focused MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <input
               aria-invalid="false"

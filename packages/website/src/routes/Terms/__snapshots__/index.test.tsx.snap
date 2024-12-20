@@ -504,7 +504,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     First Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -545,7 +545,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     Last Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -586,7 +586,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     Organization
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -627,7 +627,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -668,7 +668,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -931,7 +931,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -972,7 +972,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"

@@ -309,7 +309,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-bs7xzj-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-mj7sam-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <input
                         aria-autocomplete="list"
@@ -535,7 +535,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-bs7xzj-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-mj7sam-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <input
                         aria-autocomplete="list"
@@ -703,7 +703,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     First Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -744,7 +744,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Last Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -785,7 +785,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Organization
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -826,7 +826,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -867,7 +867,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -1130,7 +1130,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -1171,7 +1171,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1pmlrvs-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
