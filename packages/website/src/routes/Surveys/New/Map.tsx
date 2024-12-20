@@ -2,7 +2,9 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import L from 'leaflet';
-import { withStyles, WithStyles, createStyles } from '@material-ui/core';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { Site } from 'store/Sites/types';
 

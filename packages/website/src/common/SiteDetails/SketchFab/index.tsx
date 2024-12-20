@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useRef, useLayoutEffect } from 'react';
 import Sketchfab from '@sketchfab/viewer-api';
-import { withStyles, WithStyles, createStyles } from '@material-ui/core';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 const SketchFab = ({ classes, uuid }: SiteMapProps) => {
   const iFrameRef = useRef(null);

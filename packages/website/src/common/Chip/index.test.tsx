@@ -1,13 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { renderWithProviders } from 'utils/test-utils';
 import Chip from '.';
 
 test('renders as expected', () => {
-  const { container } = render(
-    <Router>
-      <Chip live />
-    </Router>,
-  );
+  const { container } = renderWithProviders(<Chip live />);
   expect(container).toMatchSnapshot();
 });

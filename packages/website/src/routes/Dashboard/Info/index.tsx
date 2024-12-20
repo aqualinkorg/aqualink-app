@@ -1,11 +1,9 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Box,
-  Theme,
-} from '@material-ui/core';
+import { Box, Theme } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { CollectionDetails } from 'store/Collection/types';
 import Header from './Header';
@@ -35,7 +33,7 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.only('md')]: {
         height: 420,
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         height: 440,
         padding: theme.spacing(2),
       },

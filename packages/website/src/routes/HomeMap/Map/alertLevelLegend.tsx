@@ -1,5 +1,9 @@
 import React from 'react';
-import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { alertLevelColorCode } from '../../../assets/colorCode';
 
@@ -32,10 +36,10 @@ const styles = (theme: Theme) =>
       bottom: 40,
       right: 10,
       display: 'flex',
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         left: 10,
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         bottom: 80,
       },
     },
@@ -47,7 +51,7 @@ const styles = (theme: Theme) =>
       borderRadius: 10,
       minWidth: '4rem',
       marginRight: '0.5rem',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         fontWeight: 400,
         minWidth: '3rem',
       },

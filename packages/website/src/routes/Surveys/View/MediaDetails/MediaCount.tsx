@@ -1,14 +1,10 @@
 import React from 'react';
-import {
-  Box,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-} from '@material-ui/core';
-import PermMediaIcon from '@material-ui/icons/PermMedia';
-import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import { Box, Typography, Theme } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 
 const MediaCount = ({ images, videos, classes }: MediaCountProps) => {
   return (

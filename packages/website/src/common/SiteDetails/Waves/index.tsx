@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  createStyles,
-  Theme,
-  Card,
-  CardContent,
-  Typography,
-  Grid,
-  makeStyles,
-} from '@material-ui/core';
+import { Theme, Card, CardContent, Typography, Grid } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
 import { isNil } from 'lodash';
 

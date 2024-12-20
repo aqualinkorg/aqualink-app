@@ -2,15 +2,18 @@
 
 exports[`Delete Button should render with given state from Redux store 1`] = `
 <div>
-  <mock-iconbutton>
+  <mock-iconbutton
+    size="large"
+  >
     <svg
       aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
+      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-smnxeu-MuiSvgIcon-root"
+      data-testid="DeleteOutlineIcon"
       focusable="false"
       viewBox="0 0 24 24"
     >
       <path
-        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"
+        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM8 9h8v10H8zm7.5-5-1-1h-5l-1 1H5v2h14V4z"
       />
     </svg>
   </mock-iconbutton>
@@ -20,7 +23,6 @@ exports[`Delete Button should render with given state from Redux store 1`] = `
   >
     <mock-dialogtitle
       classname="Dialog-dialogTitle-2"
-      disabletypography="true"
     >
       <mock-typography
         variant="h4"
@@ -32,25 +34,26 @@ exports[`Delete Button should render with given state from Redux store 1`] = `
       dividers="true"
     >
       <div
-        class="MuiCollapse-root DeleteButton-alert-1 MuiCollapse-hidden"
+        class="MuiCollapse-root MuiCollapse-vertical DeleteButton-alert-1 MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
         style="min-height: 0px;"
       >
         <div
-          class="MuiCollapse-wrapper"
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
         >
           <div
-            class="MuiCollapse-wrapperInner"
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiAlert-root MuiAlert-standardError MuiPaper-elevation0"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-wymtw5-MuiPaper-root-MuiAlert-root"
               role="alert"
             >
               <div
-                class="MuiAlert-icon"
+                class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                  data-testid="ErrorOutlineIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -60,10 +63,10 @@ exports[`Delete Button should render with given state from Redux store 1`] = `
                 </svg>
               </div>
               <div
-                class="MuiAlert-message"
+                class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
               />
               <div
-                class="MuiAlert-action"
+                class="MuiAlert-action css-ki1hdl-MuiAlert-action"
               >
                 <mock-iconbutton
                   color="inherit"
@@ -71,12 +74,13 @@ exports[`Delete Button should render with given state from Redux store 1`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -88,31 +92,23 @@ exports[`Delete Button should render with given state from Redux store 1`] = `
     </mock-dialogcontent>
     <mock-dialogactions>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorSecondary css-dgemk6-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
+        Cancel
         <span
-          class="MuiButton-label"
-        >
-          Cancel
-        </span>
-        <span
-          class="MuiTouchRipple-root"
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />
       </button>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-9bf18e-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
+        Yes
         <span
-          class="MuiButton-label"
-        >
-          Yes
-        </span>
-        <span
-          class="MuiTouchRipple-root"
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />
       </button>
     </mock-dialogactions>

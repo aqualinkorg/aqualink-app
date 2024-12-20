@@ -1,14 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
 
+import { renderWithProviders } from 'utils/test-utils';
 import WaterSamplingCard from '.';
 
 test('renders as expected', () => {
-  const { container } = render(
-    <Router>
-      <WaterSamplingCard siteId="1" source="sonde" />
-    </Router>,
+  const { container } = renderWithProviders(
+    <WaterSamplingCard siteId="1" source="sonde" />,
   );
   expect(container).toMatchSnapshot();
 });

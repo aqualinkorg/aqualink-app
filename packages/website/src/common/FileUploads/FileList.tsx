@@ -5,15 +5,15 @@ import {
   CircularProgress,
   Grid,
   IconButton,
-  makeStyles,
   Theme,
   Tooltip,
   Typography,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { grey } from '@material-ui/core/colors';
-import CloseIcon from '@material-ui/icons/HighlightOffOutlined';
-import FileIcon from '@material-ui/icons/InsertDriveFileOutlined';
+  Alert,
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { grey } from '@mui/material/colors';
+import CloseIcon from '@mui/icons-material/HighlightOffOutlined';
+import FileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import classNames from 'classnames';
 
 import { useSelector } from 'react-redux';
@@ -64,6 +64,7 @@ const FileList = ({ files, onFileDelete }: FileListProps) => {
                   <IconButton
                     disabled={loading}
                     onClick={() => onFileDelete(name)}
+                    size="large"
                   >
                     <CloseIcon />
                   </IconButton>

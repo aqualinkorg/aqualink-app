@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  Card,
-  Grid,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-} from '@material-ui/core';
+import { Card, Grid, Typography } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Popup } from 'react-leaflet';
 
 import { SurveyPoints } from 'store/Sites/types';

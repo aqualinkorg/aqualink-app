@@ -3,14 +3,14 @@ import {
   Box,
   Typography,
   Grid,
-  withStyles,
-  WithStyles,
-  createStyles,
   CircularProgress,
   useTheme,
   Theme,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+  Alert,
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useSelector } from 'react-redux';
 
 import { Site, Sources } from 'store/Sites/types';
@@ -174,7 +174,6 @@ const Chart = ({
                 value={pickerStartDate}
                 dateName="START DATE"
                 dateNameTextVariant="subtitle1"
-                pickerSize="small"
                 autoOk={false}
                 onChange={onStartDateChange}
                 timeZone={site.timezone}
@@ -185,7 +184,6 @@ const Chart = ({
                 value={pickerEndDate}
                 dateName="END DATE"
                 dateNameTextVariant="subtitle1"
-                pickerSize="small"
                 autoOk={false}
                 onChange={onEndDateChange}
                 timeZone={site.timezone}
@@ -202,7 +200,7 @@ const styles = (theme: Theme) =>
   createStyles({
     chart: {
       height: 279,
-      margin: `${theme.spacing(1)}px 0`,
+      margin: `${theme.spacing(1)} 0`,
     },
 
     datePickersWrapper: {

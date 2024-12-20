@@ -5,15 +5,15 @@ import {
   Button,
   Link as ExternalLink,
   ButtonGroup,
-  createStyles,
   Drawer,
   IconButton,
   Theme,
   Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
-import { Clear, GitHub } from '@material-ui/icons';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
+import { Clear, GitHub } from '@mui/icons-material';
 import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import ovioLogo from '../../assets/img/ovio_logo.png';
 
@@ -79,12 +79,14 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           marginTop: 5,
           color: 'white',
         }}
+        size="large"
       >
         <Clear />
       </IconButton>
       {menuRoutes.map(({ text, to, href }) => (
         <Button
           className={classes.menuDrawerButton}
+          color="inherit"
           key={text}
           component={href ? ExternalLink : Link}
           target={href ? '_blank' : undefined}
@@ -110,7 +112,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           <br />
           Join us and contribute!
         </Typography>
-        <ButtonGroup variant="contained" color="default">
+        <ButtonGroup variant="contained">
           <Button
             target="_blank"
             href="https://github.com/aqualinkorg/aqualink-app"

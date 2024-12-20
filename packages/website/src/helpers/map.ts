@@ -1,6 +1,6 @@
 import { isEqual, mean, meanBy, minBy } from 'lodash';
 import L, { LatLng, LatLngBounds, Polygon as LeafletPolygon } from 'leaflet';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 
 import type { Point, SurveyPoints, Polygon, Position } from 'store/Sites/types';
 import { CollectionDetails } from 'store/Collection/types';

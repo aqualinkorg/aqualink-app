@@ -5,7 +5,7 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
   <div>
     <div
       aria-hidden="true"
-      class="MuiBackdrop-root"
+      class="MuiBackdrop-root css-sox5kk-MuiBackdrop-root"
       style="opacity: 1; z-index: 42; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
     >
       <mock-circularprogress
@@ -16,46 +16,39 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
       href="/monitoring"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-3 MuiButton-outlinedPrimary"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-3 css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
         <span
-          class="MuiButton-label"
+          class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
         >
-          <span
-            class="MuiButton-startIcon MuiButton-iconSizeMedium"
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="ArrowBackIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-              />
-            </svg>
-          </span>
-          Go back
+            <path
+              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"
+            />
+          </svg>
         </span>
+        Go back
         <span
-          class="MuiTouchRipple-root"
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />
       </button>
     </a>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-3 MuiButton-outlinedPrimary"
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-3 css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >
+      Refresh
       <span
-        class="MuiButton-label"
-      >
-        Refresh
-      </span>
-      <span
-        class="MuiTouchRipple-root"
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
     <mock-typography
@@ -68,29 +61,32 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
       class="makeStyles-filtersWrapper-1"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
+          for=":r0:"
+          id=":r0:-label"
         >
           Site ID
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
-            class="MuiInputBase-input MuiOutlinedInput-input"
+            class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r0:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-9"
+              class="css-yjsfm1"
             >
               <span>
                 Site ID
@@ -100,29 +96,32 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
         </div>
       </div>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
+          for=":r1:"
+          id=":r1:-label"
         >
           Site Name
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
-            class="MuiInputBase-input MuiOutlinedInput-input"
+            class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r1:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-9"
+              class="css-yjsfm1"
             >
               <span>
                 Site Name
@@ -132,29 +131,32 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
         </div>
       </div>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
+          for=":r2:"
+          id=":r2:-label"
         >
           Spotter ID
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
-            class="MuiInputBase-input MuiOutlinedInput-input"
+            class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r2:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-9"
+              class="css-yjsfm1"
             >
               <span>
                 Spotter ID
@@ -164,29 +166,32 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
         </div>
       </div>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
+          for=":r3:"
+          id=":r3:-label"
         >
           Organization
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
-            class="MuiInputBase-input MuiOutlinedInput-input"
+            class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r3:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-9"
+              class="css-yjsfm1"
             >
               <span>
                 Organization
@@ -196,29 +201,32 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
         </div>
       </div>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
+          for=":r4:"
+          id=":r4:-label"
         >
           Admin Email
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
-            class="MuiInputBase-input MuiOutlinedInput-input"
+            class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r4:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-9"
+              class="css-yjsfm1"
             >
               <span>
                 Admin Email
@@ -228,29 +236,32 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
         </div>
       </div>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
+          for=":r5:"
+          id=":r5:-label"
         >
           Admin Name
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
-            class="MuiInputBase-input MuiOutlinedInput-input"
+            class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r5:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-9"
+              class="css-yjsfm1"
             >
               <span>
                 Admin Name
@@ -260,37 +271,47 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
         </div>
       </div>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-2 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
         style="min-width: 10rem;"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
+          for=":r6:"
+          id=":r6:-label"
         >
           Status
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <div
+            aria-controls=":r7:"
+            aria-expanded="false"
             aria-haspopup="listbox"
-            class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
-            role="button"
+            aria-labelledby=":r6:-label :r6:"
+            class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r6:"
+            role="combobox"
             tabindex="0"
           >
-            <span>
+            <span
+              class="notranslate"
+            >
               ​
             </span>
           </div>
           <input
             aria-hidden="true"
-            class="MuiSelect-nativeInput"
+            aria-invalid="false"
+            class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
             tabindex="-1"
             value=""
           />
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+            data-testid="ArrowDropDownIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -298,91 +319,115 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
               d="M7 10l5 5 5-5z"
             />
           </svg>
-          <mock-menu
+          <mock-popover
             anchorel="[object HTMLDivElement]"
+            anchororigin="[object Object]"
+            classname="css-oouctw-MuiMenu-root"
             id="menu-"
-            menulistprops="[object Object]"
             open="false"
-            paperprops="[object Object]"
+            slotprops="[object Object]"
+            slots="[object Object]"
+            transformorigin="[object Object]"
+            transitionduration="auto"
+            transitionprops="[object Object]"
           >
-            <mock-menuitem
-              aria-selected="true"
-              classname="makeStyles-menuItem-11"
-              data-value=""
-              role="option"
-              selected="true"
-            />
-            <mock-menuitem
-              classname="makeStyles-menuItem-11"
-              data-value="in_review"
-              role="option"
-              selected="false"
+            <mock-menulist
+              actions="[object Object]"
+              aria-labelledby=":r6:-label"
+              autofocusitem="false"
+              classname="MuiMenu-list css-rpp6kk-MuiMenu-list"
+              disablelistwrap="true"
+              id=":r7:"
+              role="listbox"
+              variant="selectedMenu"
             >
-              in_review
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-menuItem-11"
-              data-value="rejected"
-              role="option"
-              selected="false"
-            >
-              rejected
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-menuItem-11"
-              data-value="approved"
-              role="option"
-              selected="false"
-            >
-              approved
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-menuItem-11"
-              data-value="shipped"
-              role="option"
-              selected="false"
-            >
-              shipped
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-menuItem-11"
-              data-value="deployed"
-              role="option"
-              selected="false"
-            >
-              deployed
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-menuItem-11"
-              data-value="maintenance"
-              role="option"
-              selected="false"
-            >
-              maintenance
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-menuItem-11"
-              data-value="lost"
-              role="option"
-              selected="false"
-            >
-              lost
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-menuItem-11"
-              data-value="end_of_life"
-              role="option"
-              selected="false"
-            >
-              end_of_life
-            </mock-menuitem>
-          </mock-menu>
+              <mock-menuitem
+                aria-selected="true"
+                classname="makeStyles-menuItem-7"
+                data-value=""
+                role="option"
+                selected="true"
+              />
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-menuItem-7"
+                data-value="in_review"
+                role="option"
+                selected="false"
+              >
+                in_review
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-menuItem-7"
+                data-value="rejected"
+                role="option"
+                selected="false"
+              >
+                rejected
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-menuItem-7"
+                data-value="approved"
+                role="option"
+                selected="false"
+              >
+                approved
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-menuItem-7"
+                data-value="shipped"
+                role="option"
+                selected="false"
+              >
+                shipped
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-menuItem-7"
+                data-value="deployed"
+                role="option"
+                selected="false"
+              >
+                deployed
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-menuItem-7"
+                data-value="maintenance"
+                role="option"
+                selected="false"
+              >
+                maintenance
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-menuItem-7"
+                data-value="lost"
+                role="option"
+                selected="false"
+              >
+                lost
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-menuItem-7"
+                data-value="end_of_life"
+                role="option"
+                selected="false"
+              >
+                end_of_life
+              </mock-menuitem>
+            </mock-menulist>
+          </mock-popover>
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-7 MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legendLabelled-9"
+              class="css-yjsfm1"
             >
               <span>
                 Status

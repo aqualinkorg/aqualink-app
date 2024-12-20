@@ -1,9 +1,7 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
+import { renderWithProviders } from 'utils/test-utils';
 import Apply from '.';
 
 const mockStore = configureStore([]);
@@ -22,13 +20,7 @@ describe('Site registration page', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
-      <Provider store={store}>
-        <Router>
-          <Apply />
-        </Router>
-      </Provider>,
-    ).container;
+    element = renderWithProviders(<Apply />, { store }).container;
   });
 
   it('should render with given state from Redux store', () => {

@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Card,
-  CardContent,
-  Typography,
-  CardHeader,
-  Grid,
-} from '@material-ui/core';
+import { Card, CardContent, Typography, CardHeader, Grid } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import type { LatestDataASSofarValue } from 'store/Sites/types';
 import { findIntervalByLevel } from 'helpers/bleachingAlertIntervals';

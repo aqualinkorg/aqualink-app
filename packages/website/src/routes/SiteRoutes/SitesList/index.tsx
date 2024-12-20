@@ -1,14 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  List,
-  ListItem,
-  ListItemText,
-  createStyles,
-  withStyles,
-  WithStyles,
-  Theme,
-} from '@material-ui/core';
+import { List, ListItem, ListItemText, Theme } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { Link } from 'react-router-dom';
 
 import { sitesListSelector, sitesRequest } from 'store/Sites/sitesListSlice';

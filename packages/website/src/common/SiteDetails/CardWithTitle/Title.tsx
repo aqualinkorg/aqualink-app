@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Box,
-  Grid,
-  Typography,
-  Theme,
-} from '@material-ui/core';
+import { Box, Grid, Typography, Theme } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 
 import { Value } from './types';
@@ -48,7 +43,7 @@ const styles = (theme: Theme) =>
     },
     maxWidth: {
       maxWidth: '45%',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         maxWidth: '40%',
       },
     },

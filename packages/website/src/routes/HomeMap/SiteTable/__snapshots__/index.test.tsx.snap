@@ -29,28 +29,34 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
     classname="SiteTable-dropdownWrapper-5"
   >
     <div
-      class="MuiInputBase-root MuiInput-root"
+      class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1tvaggm-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       style="background-color: rgb(70, 154, 187); border-radius: 4px;"
     >
       <div
+        aria-controls=":r0:"
+        aria-expanded="false"
         aria-haspopup="listbox"
-        class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-        role="button"
+        class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1ucdrps-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+        role="combobox"
         tabindex="0"
       >
-        <span>
+        <span
+          class="notranslate"
+        >
           ​
         </span>
       </div>
       <input
         aria-hidden="true"
-        class="MuiSelect-nativeInput"
+        aria-invalid="false"
+        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
         tabindex="-1"
         value=""
       />
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSelect-icon"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+        data-testid="ArrowDropDownIcon"
         focusable="false"
         viewBox="0 0 24 24"
       >
@@ -58,69 +64,89 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
           d="M7 10l5 5 5-5z"
         />
       </svg>
-      <mock-menu
+      <mock-popover
         anchorel="[object HTMLDivElement]"
+        anchororigin="[object Object]"
+        classname="css-oouctw-MuiMenu-root"
         id="menu-"
-        menulistprops="[object Object]"
         open="false"
-        paperprops="[object Object]"
+        slotprops="[object Object]"
+        slots="[object Object]"
+        transformorigin="[object Object]"
+        transitionduration="auto"
+        transitionprops="[object Object]"
       >
-        <mock-menuitem
-          data-value="All sites"
-          role="option"
-          selected="false"
+        <mock-menulist
+          actions="[object Object]"
+          autofocusitem="false"
+          classname="MuiMenu-list css-rpp6kk-MuiMenu-list"
+          disablelistwrap="true"
+          id=":r0:"
+          role="listbox"
+          variant="selectedMenu"
         >
-          <mock-typography
-            style="color: black;"
+          <mock-menuitem
+            aria-selected="false"
+            data-value="All sites"
+            role="option"
+            selected="false"
           >
-            All sites
-          </mock-typography>
-        </mock-menuitem>
-        <mock-menuitem
-          data-value="Active buoys"
-          role="option"
-          selected="false"
-        >
-          <mock-typography
-            style="color: black;"
+            <mock-typography
+              style="color: black;"
+            >
+              All sites
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            aria-selected="false"
+            data-value="Active buoys"
+            role="option"
+            selected="false"
           >
-            Active buoys
-          </mock-typography>
-        </mock-menuitem>
-        <mock-menuitem
-          data-value="Live streams"
-          role="option"
-          selected="false"
-        >
-          <mock-typography
-            style="color: black;"
+            <mock-typography
+              style="color: black;"
+            >
+              Active buoys
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            aria-selected="false"
+            data-value="Live streams"
+            role="option"
+            selected="false"
           >
-            Live streams
-          </mock-typography>
-        </mock-menuitem>
-        <mock-menuitem
-          data-value="3D Models"
-          role="option"
-          selected="false"
-        >
-          <mock-typography
-            style="color: black;"
+            <mock-typography
+              style="color: black;"
+            >
+              Live streams
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            aria-selected="false"
+            data-value="3D Models"
+            role="option"
+            selected="false"
           >
-            3D Models
-          </mock-typography>
-        </mock-menuitem>
-        <mock-menuitem
-          data-value="HOBO loggers"
-          role="option"
-          selected="false"
-        >
-          <mock-typography
-            style="color: black;"
+            <mock-typography
+              style="color: black;"
+            >
+              3D Models
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            aria-selected="false"
+            data-value="HOBO loggers"
+            role="option"
+            selected="false"
           >
-            HOBO loggers
-          </mock-typography>
-        </mock-menuitem>
-      </mock-menu>
+            <mock-typography
+              style="color: black;"
+            >
+              HOBO loggers
+            </mock-typography>
+          </mock-menuitem>
+        </mock-menulist>
+      </mock-popover>
     </div>
   </mock-box>
   <mock-hidden
@@ -138,12 +164,14 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         Sort By: 
       </mock-typography>
       <div
-        class="MuiInputBase-root MuiInput-root MuiInput-underline SiteTable-mobileSortSelect-7"
+        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 css-xp0aj8-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       >
         <div
+          aria-controls=":r1:"
+          aria-expanded="false"
           aria-haspopup="listbox"
-          class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-          role="button"
+          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1ucdrps-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+          role="combobox"
           tabindex="0"
         >
           <mock-typography
@@ -159,13 +187,15 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         </div>
         <input
           aria-hidden="true"
-          class="MuiSelect-nativeInput"
+          aria-invalid="false"
+          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
           tabindex="-1"
           value="alert-desc"
         />
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSelect-icon"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+          data-testid="ArrowDropDownIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
@@ -173,143 +203,165 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             d="M7 10l5 5 5-5z"
           />
         </svg>
-        <mock-menu
+        <mock-popover
           anchorel="[object HTMLDivElement]"
+          anchororigin="[object Object]"
+          classname="css-oouctw-MuiMenu-root"
           id="menu-"
-          menulistprops="[object Object]"
           open="false"
-          paperprops="[object Object]"
+          slotprops="[object Object]"
+          slots="[object Object]"
+          transformorigin="[object Object]"
+          transitionduration="auto"
+          transitionprops="[object Object]"
         >
-          <mock-menuitem
-            data-value="alert-asc"
-            role="option"
-            selected="false"
+          <mock-menulist
+            actions="[object Object]"
+            autofocusitem="false"
+            classname="MuiMenu-list css-rpp6kk-MuiMenu-list"
+            disablelistwrap="true"
+            id=":r1:"
+            role="listbox"
+            variant="selectedMenu"
           >
-            <mock-typography
-              color="primary"
-              variant="h4"
+            <mock-menuitem
+              aria-selected="false"
+              data-value="alert-asc"
+              role="option"
+              selected="false"
             >
-              Alert
-                
-              <mock-arrowdownward
-                fontsize="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            aria-selected="true"
-            data-value="alert-desc"
-            role="option"
-            selected="true"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                Alert
+                  
+                <mock-arrowdownward
+                  fontsize="small"
+                />
+              </mock-typography>
+            </mock-menuitem>
+            <mock-menuitem
+              aria-selected="true"
+              data-value="alert-desc"
+              role="option"
+              selected="true"
             >
-              Alert
-                
-              <mock-arrowupward
-                fontsize="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="dhw-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                Alert
+                  
+                <mock-arrowupward
+                  fontsize="small"
+                />
+              </mock-typography>
+            </mock-menuitem>
+            <mock-menuitem
+              aria-selected="false"
+              data-value="dhw-asc"
+              role="option"
+              selected="false"
             >
-              DHW
-                
-              <mock-arrowdownward
-                fontsize="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="dhw-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                DHW
+                  
+                <mock-arrowdownward
+                  fontsize="small"
+                />
+              </mock-typography>
+            </mock-menuitem>
+            <mock-menuitem
+              aria-selected="false"
+              data-value="dhw-desc"
+              role="option"
+              selected="false"
             >
-              DHW
-                
-              <mock-arrowupward
-                fontsize="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="locationName-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                DHW
+                  
+                <mock-arrowupward
+                  fontsize="small"
+                />
+              </mock-typography>
+            </mock-menuitem>
+            <mock-menuitem
+              aria-selected="false"
+              data-value="locationName-asc"
+              role="option"
+              selected="false"
             >
-              Location Name
-                
-              <mock-arrowdownward
-                fontsize="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="locationName-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                Location Name
+                  
+                <mock-arrowdownward
+                  fontsize="small"
+                />
+              </mock-typography>
+            </mock-menuitem>
+            <mock-menuitem
+              aria-selected="false"
+              data-value="locationName-desc"
+              role="option"
+              selected="false"
             >
-              Location Name
-                
-              <mock-arrowupward
-                fontsize="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="sst-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                Location Name
+                  
+                <mock-arrowupward
+                  fontsize="small"
+                />
+              </mock-typography>
+            </mock-menuitem>
+            <mock-menuitem
+              aria-selected="false"
+              data-value="sst-asc"
+              role="option"
+              selected="false"
             >
-              Sst
-                
-              <mock-arrowdownward
-                fontsize="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="sst-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                Sst
+                  
+                <mock-arrowdownward
+                  fontsize="small"
+                />
+              </mock-typography>
+            </mock-menuitem>
+            <mock-menuitem
+              aria-selected="false"
+              data-value="sst-desc"
+              role="option"
+              selected="false"
             >
-              Sst
-                
-              <mock-arrowupward
-                fontsize="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-        </mock-menu>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                Sst
+                  
+                <mock-arrowupward
+                  fontsize="small"
+                />
+              </mock-typography>
+            </mock-menuitem>
+          </mock-menulist>
+        </mock-popover>
       </div>
     </mock-box>
   </mock-hidden>
@@ -325,7 +377,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         stickyheader="true"
       >
         <mock-hidden
-          smdown="true"
+          mddown="true"
         >
           <mock-tablehead
             style="background-color: rgb(244, 244, 244);"
@@ -495,13 +547,14 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="ErrorIcon"
                 focusable="false"
                 style="color: rgb(198, 229, 250);"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2zm0-4h-2V7h2z"
                 />
               </svg>
             </mock-tablecell>

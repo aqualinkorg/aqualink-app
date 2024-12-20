@@ -2,10 +2,8 @@ import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
 import { mockSite } from 'mocks/mockSite';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import { mockCollection } from 'mocks/mockCollection';
+import { renderWithProviders } from 'utils/test-utils';
 import Uploads from '.';
 
 const mockStore = configureStore([]);
@@ -30,13 +28,7 @@ describe('Multi Site Uploads', () => {
       },
     });
 
-    element = render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Uploads />
-        </BrowserRouter>
-      </Provider>,
-    ).container;
+    element = renderWithProviders(<Uploads />, { store }).container;
   });
 
   it('should render with given state from Redux store', () => {

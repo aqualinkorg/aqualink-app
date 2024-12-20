@@ -1,8 +1,5 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Theme,
   Grid,
   Paper,
@@ -12,8 +9,11 @@ import {
   MenuItem,
   TextField,
   Tooltip,
-} from '@material-ui/core';
-import { DeleteOutlineOutlined } from '@material-ui/icons';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import { DeleteOutlineOutlined } from '@mui/icons-material';
 import observationOptions from 'constants/uploadDropdowns';
 import { SurveyPoints } from 'store/Sites/types';
 import SurveyPointSelector from 'common/SurveyPointSelector';
@@ -156,7 +156,7 @@ const MediaCard = ({
               justifyContent="flex-end"
               xs={12}
             >
-              <IconButton onClick={onImageClick}>
+              <IconButton onClick={onImageClick} size="large">
                 <Tooltip
                   title={
                     index === featuredFile
@@ -170,7 +170,7 @@ const MediaCard = ({
                   />
                 </Tooltip>
               </IconButton>
-              <IconButton onClick={() => deleteCard(index)}>
+              <IconButton onClick={() => deleteCard(index)} size="large">
                 <DeleteOutlineOutlined />
               </IconButton>
             </Grid>

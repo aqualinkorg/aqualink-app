@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Theme,
-  makeStyles,
   useTheme,
   useMediaQuery,
   Grid,
@@ -10,12 +9,13 @@ import {
   Hidden,
   Typography,
   Button,
-} from '@material-ui/core';
+  Alert,
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { isNumber } from 'lodash';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { Alert } from '@material-ui/lab';
 import { Site } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { formatNumber } from 'helpers/numberUtils';
@@ -35,7 +35,7 @@ const SelectedSiteCardContent = ({
 }: SelectedSiteCardContentProps) => {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const {
     bottomTemperature,
     satelliteTemperature,
@@ -121,7 +121,7 @@ const SelectedSiteCardContent = ({
               className={classes.imageBorderRadius}
               image={featuredImageLoading}
               loading={loading}
-              variant="rect"
+              variant="rectangular"
               height="100%"
             >
               {site && imageUrl && (
@@ -194,7 +194,6 @@ const SelectedSiteCardContent = ({
           </Box>
         </Grid>
       )}
-
       <Grid
         item
         xs={12}
@@ -203,7 +202,7 @@ const SelectedSiteCardContent = ({
         className={classes.cardAnalyticsWrapper}
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
-          <Hidden smDown={useCardWithImageLayout}>
+          <Hidden mdDown={useCardWithImageLayout}>
             <LoadingSkeleton
               loading={loading}
               variant="text"
@@ -261,11 +260,11 @@ const SelectedSiteCardContent = ({
             </Typography>
           </LoadingSkeleton>
         </Box>
-        <Hidden smDown>
+        <Hidden mdDown>
           <LoadingSkeleton
             image={chartLoading}
             loading={loading}
-            variant="rect"
+            variant="rectangular"
             width="98%"
             height={180}
           >
@@ -277,7 +276,7 @@ const SelectedSiteCardContent = ({
             className={classes.mobileChartLoading}
             image={chartLoading}
             loading={loading}
-            variant="rect"
+            variant="rectangular"
             width="98%"
             height={200}
           >
@@ -285,7 +284,6 @@ const SelectedSiteCardContent = ({
           </LoadingSkeleton>
         </Hidden>
       </Grid>
-
       <Grid item xs={12} lg={2} container>
         <div className={classes.metricsContainer}>
           {metrics.map(({ label, value, unit, display }) => (
@@ -305,7 +303,7 @@ const SelectedSiteCardContent = ({
               </LoadingSkeleton>
               <LoadingSkeleton
                 loading={loading}
-                variant="rect"
+                variant="rectangular"
                 width={80}
                 height={32}
               >
@@ -330,26 +328,26 @@ const SelectedSiteCardContent = ({
 const useStyles = makeStyles((theme: Theme) => ({
   cardWrapper: ({ imageUrl, loading }: SelectedSiteCardContentStyleProps) => ({
     minHeight: '18rem',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       minHeight: '24rem',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: imageUrl || loading ? '42rem' : '27rem',
     },
   }),
   imageBorderRadius: {
     borderRadius: '4px 0 0 4px',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       borderRadius: '4px 0 0 0',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       borderRadius: '4px 4px 0 0',
     },
   },
   cardImage: {
     height: '100%',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 300,
     },
   },
@@ -384,7 +382,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
     flexDirection: 'row',
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(3),
     },

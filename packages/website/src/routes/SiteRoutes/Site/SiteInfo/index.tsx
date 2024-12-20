@@ -3,20 +3,20 @@ import {
   Grid,
   Typography,
   IconButton,
-  withStyles,
-  WithStyles,
-  createStyles,
   Button,
   Collapse,
   useMediaQuery,
   useTheme,
   CircularProgress,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Alert from '@mui/material/Alert';
+import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 
 import {
   setSelectedSite,
@@ -56,7 +56,7 @@ const SiteNavBar = ({
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
   const { name: siteName, region: siteRegion } = getSiteNameAndRegion(site);
   const organizationName = site.admins[0]?.organization;
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
   const [exclusionDatesDialogOpen, setExclusionDatesDeployDialogOpen] =
     useState(false);
 
@@ -176,6 +176,7 @@ const SiteNavBar = ({
                   aria-label="menu"
                   component={Link}
                   to="/map"
+                  size="large"
                 >
                   <ArrowBack />
                 </IconButton>

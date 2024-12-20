@@ -1,10 +1,9 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Typography,
-} from '@material-ui/core';
+import { Typography } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 const obligations = [
   'Pay for shipping and any applicable duties',

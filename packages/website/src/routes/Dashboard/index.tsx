@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  LinearProgress,
-} from '@material-ui/core';
+import { LinearProgress } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 

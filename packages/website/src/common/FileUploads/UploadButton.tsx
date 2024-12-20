@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core';
+import { Box, Button, CircularProgress } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const UploadButton = ({ loading, onUpload }: UploadButtonProps) => {
   const classes = useStyles();

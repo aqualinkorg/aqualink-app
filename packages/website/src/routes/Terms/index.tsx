@@ -1,10 +1,9 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Container,
-} from '@material-ui/core';
+import { Container } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import NavBar from 'common/NavBar';
 import Footer from 'common/Footer';

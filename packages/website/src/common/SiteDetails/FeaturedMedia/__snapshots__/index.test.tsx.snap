@@ -9,10 +9,10 @@ exports[`Featured Media Card should render with given state from Redux store 1`]
       class="FeaturedMedia-noVideoCardHeader-3"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-1u75xrc-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
         >
           <mock-typography
             classname="FeaturedMedia-noVideoCardHeaderText-4"

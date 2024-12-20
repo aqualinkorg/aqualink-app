@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Box,
-  Theme,
-  useTheme,
-  useMediaQuery,
-} from '@material-ui/core';
+import { Box, Theme, useTheme, useMediaQuery } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { LatLng } from 'leaflet';
 
 import { CollectionDetails } from 'store/Collection/types';
@@ -16,7 +11,7 @@ import Map from '../../HomeMap/Map';
 
 const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [collectionCenter, collectionBounds] =
     getCollectionCenterAndBounds(collection);
 
@@ -48,7 +43,7 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.only('md')]: {
         height: 420,
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         height: 450,
       },
     },

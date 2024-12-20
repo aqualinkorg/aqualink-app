@@ -5,14 +5,14 @@ import {
   Collapse,
   Card,
   IconButton,
-  withStyles,
-  WithStyles,
-  createStyles,
   Grid,
   Theme,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Alert from '@mui/material/Alert';
+import CloseIcon from '@mui/icons-material/Close';
 import { useSelector, useDispatch } from 'react-redux';
 import { every } from 'lodash';
 
@@ -183,7 +183,7 @@ const styles = (theme: Theme) =>
   createStyles({
     cardWrapper: {
       marginBottom: 100,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginBottom: 50,
       },
     },

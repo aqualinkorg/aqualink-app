@@ -6,7 +6,8 @@ import MonitoringTable, {
   MonitoringTableProps,
 } from 'common/MonitoringTable';
 import { Status } from 'store/Sites/types';
-import { makeStyles, TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import StatusSelector from 'common/StatusSelector';
 import { DateTime } from 'luxon';
 import MonitoringPageWrapper from '../MonitoringPageWrapper';

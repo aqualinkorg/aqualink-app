@@ -1,9 +1,6 @@
 import React from 'react';
 import {
   Grid,
-  withStyles,
-  WithStyles,
-  createStyles,
   Box,
   Theme,
   Typography,
@@ -11,8 +8,11 @@ import {
   useTheme,
   useMediaQuery,
   CircularProgress,
-} from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import { grey } from '@mui/material/colors';
 import { useSelector } from 'react-redux';
 import { last } from 'lodash';
 
@@ -72,7 +72,7 @@ const metrics = (data?: OceanSenseData): Record<OceanSenseKeys, Metric> => ({
 
 const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.up('md'));
   const data = useSelector(siteLatestOceanSenseDataSelector);
   const loading = useSelector(siteLatestOceanSenseDataLoadingSelector);

@@ -1,14 +1,10 @@
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
-import {
-  IconButton,
-  Tooltip,
-  withStyles,
-  WithStyles,
-  createStyles,
-  TooltipProps,
-} from '@material-ui/core';
-import { Launch } from '@material-ui/icons';
+import { IconButton, Tooltip, TooltipProps } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import { Launch } from '@mui/icons-material';
 
 const CustomLink = ({
   to,
@@ -21,7 +17,7 @@ const CustomLink = ({
     <Tooltip title={tooltipTitle} placement="top" arrow>
       <Link className={classes.link} to={to}>
         {isIcon ? (
-          <IconButton className={classes.button}>
+          <IconButton className={classes.button} size="large">
             <Launch color="primary" />
           </IconButton>
         ) : (

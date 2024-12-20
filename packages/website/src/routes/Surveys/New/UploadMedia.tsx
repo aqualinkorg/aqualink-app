@@ -1,8 +1,5 @@
 import React, { useState, useCallback, ChangeEvent } from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   IconButton,
   Grid,
   Typography,
@@ -11,10 +8,13 @@ import {
   LinearProgress,
   Tooltip,
   Theme,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import { ArrowBack, CloudUploadOutlined } from '@material-ui/icons';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Alert from '@mui/material/Alert';
+import { ArrowBack, CloudUploadOutlined } from '@mui/icons-material';
+import CloseIcon from '@mui/icons-material/Close';
 import Dropzone, { FileRejection } from 'react-dropzone';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +48,7 @@ const UploadMedia = ({
     metadata.findIndex((item) => item.observation === null) > -1;
 
   const handleFileDrop = useCallback(
-    (acceptedFiles: File[], fileRejections) => {
+    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       // TODO - add explicit error warnings.
       fileRejections.forEach((rejection: FileRejection) => {
         // eslint-disable-next-line no-console
@@ -256,6 +256,7 @@ const UploadMedia = ({
               color="primary"
               aria-label="menu"
               onClick={() => changeTab(0)}
+              size="large"
             >
               <ArrowBack />
             </IconButton>

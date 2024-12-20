@@ -1,5 +1,4 @@
 import {
-  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -8,7 +7,8 @@ import {
   TableRow,
   Theme,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';

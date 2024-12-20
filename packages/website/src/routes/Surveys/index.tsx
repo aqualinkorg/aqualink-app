@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  LinearProgress,
-  Grid,
-  Typography,
-  Container,
-} from '@material-ui/core';
+import { LinearProgress, Grid, Typography, Container } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 

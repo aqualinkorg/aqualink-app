@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
-import { makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
-import { alpha } from '@material-ui/core/styles/colorManipulator';
-import { Skeleton, SkeletonProps } from '@material-ui/lab';
+import { useTheme, useMediaQuery, Skeleton } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { alpha } from '@mui/material/styles';
+import { SkeletonProps } from '@mui/lab';
 import random from 'lodash/random';
 import times from 'lodash/times';
 import classNames from 'classnames';
@@ -23,12 +24,12 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
 }) => {
   const classes = useStyles({ image, textHeight });
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [lineWidths, setLineWidths] = useState<
     { key: number; width: number }[]
   >([]);
   const rectSkeletonProps: SkeletonProps =
-    variant === 'rect' &&
+    variant === 'rectangular' &&
     (typeof width !== 'undefined' || typeof height !== 'undefined')
       ? { width, height }
       : {};
@@ -122,6 +123,7 @@ interface LoadingSkeletonProps {
   className?: string;
   longText?: boolean;
   textHeight?: SkeletonProps['height'];
+  children?: React.ReactNode;
 }
 
 type LoadingSkeletonStyleProps = Pick<

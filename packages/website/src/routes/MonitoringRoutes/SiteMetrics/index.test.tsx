@@ -1,22 +1,13 @@
 import React from 'react';
-import { Provider as ReduxProvider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
 import { SnackbarProvider } from 'notistack';
 import { mockCollection } from 'mocks/mockCollection';
 import { advanceTo, clear } from 'jest-date-mock';
+import { renderWithProviders } from 'utils/test-utils';
 import SiteMetrics from '.';
 
 const mockStore = configureStore([]);
-
-jest.mock('@material-ui/pickers', () => ({
-  __esModule: true,
-  KeyboardDatePicker: 'mock-KeyboardDatePicker',
-  KeyboardDatePickerProps: 'mock-KeyboardDatePickerProps',
-  MuiPickersUtilsProvider: 'mock-MuiPickersUtilsProvider',
-}));
 
 describe('Monitoring SiteMetrics Page', () => {
   beforeAll(() => {
@@ -53,14 +44,11 @@ describe('Monitoring SiteMetrics Page', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
+    element = renderWithProviders(
       <SnackbarProvider>
-        <ReduxProvider store={store}>
-          <BrowserRouter>
-            <SiteMetrics />
-          </BrowserRouter>
-        </ReduxProvider>
+        <SiteMetrics />
       </SnackbarProvider>,
+      { store },
     ).container;
   });
 

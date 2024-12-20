@@ -1,12 +1,10 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import { mockUser } from 'mocks/mockUser';
 import { mockSurveyList } from 'mocks/mockSurveyList';
 import { mockSite } from 'mocks/mockSite';
+import { renderWithProviders } from 'utils/test-utils';
 import Surveys from '.';
 
 const mockStore = configureStore([]);
@@ -29,13 +27,9 @@ describe('Surveys', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
-      <Provider store={store}>
-        <Router>
-          <Surveys site={mockSite} />
-        </Router>
-      </Provider>,
-    ).container;
+    element = renderWithProviders(<Surveys site={mockSite} />, {
+      store,
+    }).container;
   });
 
   it('should render with given state from Redux store', () => {

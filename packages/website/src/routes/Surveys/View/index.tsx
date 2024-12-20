@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import {
   Box,
   Button,
   Container,
-  createStyles,
   Grid,
   LinearProgress,
   Paper,
   Theme,
   Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import {
@@ -254,7 +254,7 @@ const styles = (theme: Theme) =>
       marginTop: 32,
     },
     chartTitle: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         fontSize: 14,
       },
     },

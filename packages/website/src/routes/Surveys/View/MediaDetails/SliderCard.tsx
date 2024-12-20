@@ -5,9 +5,6 @@ import {
   CircularProgress,
   Grid,
   IconButton,
-  withStyles,
-  WithStyles,
-  createStyles,
   Typography,
   Theme,
   Tooltip,
@@ -15,12 +12,15 @@ import {
   MenuItem,
   useMediaQuery,
   useTheme,
-} from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
-import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import EditIcon from '@material-ui/icons/Edit';
-import CancelIcon from '@material-ui/icons/Cancel';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import SaveIcon from '@mui/icons-material/Save';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import EditIcon from '@mui/icons-material/Edit';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useSelector } from 'react-redux';
 import observationOptions, { findOption } from 'constants/uploadDropdowns';
 import {
@@ -61,7 +61,7 @@ const SliderCard = ({
   const loading = mediaLoading || surveyLoading;
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   function onClose() {
     setEditing(false);
@@ -177,7 +177,7 @@ const SliderCard = ({
                 <Grid item xs={editing ? 8 : 10}>
                   {featured ? (
                     <Tooltip title="Featured image">
-                      <IconButton className={classes.featuredIcon}>
+                      <IconButton className={classes.featuredIcon} size="large">
                         <StarIcon color="primary" />
                       </IconButton>
                     </Tooltip>
@@ -188,6 +188,7 @@ const SliderCard = ({
                           onSurveyMediaUpdate(id, { featured: true })
                         }
                         className={classes.featuredIcon}
+                        size="large"
                       >
                         <StarBorderIcon color="primary" />
                       </IconButton>
@@ -199,6 +200,7 @@ const SliderCard = ({
                     <IconButton
                       className={classes.featuredIcon}
                       onClick={() => onSave()}
+                      size="large"
                     >
                       <SaveIcon color="primary" />
                     </IconButton>
@@ -209,6 +211,7 @@ const SliderCard = ({
                     <IconButton
                       className={classes.featuredIcon}
                       onClick={() => onClose()}
+                      size="large"
                     >
                       <CancelIcon color="secondary" />
                     </IconButton>
@@ -216,6 +219,7 @@ const SliderCard = ({
                     <IconButton
                       className={classes.featuredIcon}
                       onClick={() => setEditing(true)}
+                      size="large"
                     >
                       <EditIcon color="primary" />
                     </IconButton>
@@ -237,7 +241,7 @@ const styles = (theme: Theme) =>
       color: theme.palette.text.secondary,
       marginBottom: '4rem',
       height: '28rem',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         height: '32rem',
       },
     },
@@ -252,7 +256,7 @@ const styles = (theme: Theme) =>
     },
     imageWrapper: {
       width: '100%',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         height: '50%',
       },
     },
@@ -264,7 +268,7 @@ const styles = (theme: Theme) =>
       height: '100%',
       overflowY: 'auto',
       padding: theme.spacing(2, 2, 2, 3),
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         height: '50%',
       },
     },

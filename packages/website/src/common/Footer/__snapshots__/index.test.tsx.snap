@@ -8,14 +8,15 @@ exports[`renders as expected 1`] = `
   >
     <mock-toolbar>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
+        class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
         >
           <mock-link
             classname="Footer-navBarLink-2"
             href="/map"
+            underline="hover"
           >
             <mock-typography
               color="textPrimary"

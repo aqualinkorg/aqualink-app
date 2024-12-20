@@ -1,6 +1,7 @@
 import React from 'react';
-import { Grid, IconButton, Typography, makeStyles } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Grid, IconButton, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link } from 'react-router-dom';
 import { Site } from 'store/Sites/types';
 
@@ -11,7 +12,12 @@ const Header = ({ site }: HeaderProps) => {
   return (
     <Grid container alignItems="center" spacing={1}>
       <Grid item>
-        <IconButton color="primary" component={Link} to={`/sites/${site.id}`}>
+        <IconButton
+          color="primary"
+          component={Link}
+          to={`/sites/${site.id}`}
+          size="large"
+        >
           <ArrowBackIcon />
         </IconButton>
       </Grid>

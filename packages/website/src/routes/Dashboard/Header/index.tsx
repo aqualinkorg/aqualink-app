@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Box,
-  Grid,
-  Typography,
-  Button,
-  IconButton,
-} from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import EditIcon from '@material-ui/icons/Edit';
+import { Box, Grid, Typography, Button, IconButton } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -47,7 +41,10 @@ const Header = ({ collection, classes }: HeaderProps) => {
             </Grid>
             {isCollectionOwner(signedInUser, collection) && (
               <Grid item>
-                <IconButton onClick={() => setEditNameEnabled(true)}>
+                <IconButton
+                  onClick={() => setEditNameEnabled(true)}
+                  size="large"
+                >
                   <EditIcon fontSize="small" color="primary" />
                 </IconButton>
               </Grid>

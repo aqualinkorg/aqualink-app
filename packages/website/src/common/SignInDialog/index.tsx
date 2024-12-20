@@ -1,9 +1,6 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 import isEmail from 'validator/lib/isEmail';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Dialog,
   Card,
   CardHeader,
@@ -15,9 +12,12 @@ import {
   Button,
   LinearProgress,
   Collapse,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import CloseIcon from '@material-ui/icons/Close';
+  Alert,
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   SubmitErrorHandler,
   useForm,

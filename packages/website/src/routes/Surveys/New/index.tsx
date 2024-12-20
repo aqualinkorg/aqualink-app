@@ -1,14 +1,8 @@
 import React, { useState, ReactNode, useEffect } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Grid,
-  Typography,
-  Container,
-  Box,
-  Theme,
-} from '@material-ui/core';
+import { Grid, Typography, Container, Box, Theme } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import SwipeableViews from 'react-swipeable-views';
 
 import type { Site } from 'store/Sites/types';
@@ -102,10 +96,10 @@ const styles = (theme: Theme) =>
     },
     mapContainer: {
       height: '30rem',
-      [theme.breakpoints.down('lg')]: {
+      [theme.breakpoints.down('xl')]: {
         marginBottom: '3rem',
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         height: '15rem',
       },
     },

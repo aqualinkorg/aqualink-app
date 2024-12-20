@@ -1,7 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import L, { LeafletEvent } from 'leaflet';
-import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { mapConstants } from 'constants/maps';
 import marker from '../../../assets/marker.png';
@@ -69,7 +73,7 @@ const styles = (theme: Theme) => {
       borderRadius: 4,
       cursor: 'pointer',
 
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         height: 400,
       },
     },

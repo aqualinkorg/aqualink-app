@@ -1,14 +1,16 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Grid,
   Box,
   Typography,
   Select,
   MenuItem,
-} from '@material-ui/core';
+  SelectChangeEvent,
+} from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { Range } from 'store/Sites/types';
 
@@ -26,6 +28,7 @@ const SelectRange = ({
           Time range:
         </Typography>
         <Select
+          variant="standard"
           className={classes.selector}
           open={open}
           onClose={() => setOpen(false)}
@@ -60,7 +63,7 @@ interface SelectRangeIncomingProps {
   open: boolean;
   value: Range;
   setOpen: (open: boolean) => void;
-  onRangeChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  onRangeChange: (event: SelectChangeEvent<unknown>) => void;
 }
 
 type SelectRangeProps = SelectRangeIncomingProps & WithStyles<typeof styles>;

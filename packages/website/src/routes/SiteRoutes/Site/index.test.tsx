@@ -10,6 +10,8 @@ import { mockSurveyList } from 'mocks/mockSurveyList';
 import { mockCollection } from 'mocks/mockCollection';
 import { mockDataRange } from 'mocks/mockDataRange';
 import { mockSurvey } from 'mocks/mockSurvey';
+import { ThemeProvider } from '@mui/material';
+import theme from 'layout/App/theme';
 import Site from '.';
 
 const mockStore = configureStore([]);
@@ -106,23 +108,27 @@ describe('Site Detail Page', () => {
     fullStore.dispatch = jest.fn();
 
     elementEmpty = render(
-      <Provider store={emptyStore}>
-        <Router initialEntries={['/sites/1']}>
-          <Routes>
-            <Route path="/sites/:id" element={<Site />} />
-          </Routes>
-        </Router>
-      </Provider>,
+      <ThemeProvider theme={theme}>
+        <Provider store={emptyStore}>
+          <Router initialEntries={['/sites/1']}>
+            <Routes>
+              <Route path="/sites/:id" element={<Site />} />
+            </Routes>
+          </Router>
+        </Provider>
+      </ThemeProvider>,
     ).container;
 
     elementFull = render(
-      <Provider store={fullStore}>
-        <Router initialEntries={['/sites/1']}>
-          <Routes>
-            <Route path="/sites/:id" element={<Site />} />
-          </Routes>
-        </Router>
-      </Provider>,
+      <ThemeProvider theme={theme}>
+        <Provider store={fullStore}>
+          <Router initialEntries={['/sites/1']}>
+            <Routes>
+              <Route path="/sites/:id" element={<Site />} />
+            </Routes>
+          </Router>
+        </Provider>
+      </ThemeProvider>,
     ).container;
   });
 

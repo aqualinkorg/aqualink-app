@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  Container,
-  Box,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Typography,
-  Grid,
-  Theme,
-} from '@material-ui/core';
+import { Container, Box, Typography, Grid, Theme } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useSelector } from 'react-redux';
 
 import { Site } from 'store/Sites/types';
@@ -54,7 +48,7 @@ const styles = (theme: Theme) =>
       marginTop: 100,
       maxWidth: '90%',
       overflowWrap: 'break-word',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginTop: 50,
       },
     },

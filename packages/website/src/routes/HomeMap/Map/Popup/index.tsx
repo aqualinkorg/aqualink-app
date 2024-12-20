@@ -4,14 +4,14 @@ import {
   Card,
   CardContent,
   CardHeader,
-  createStyles,
   Grid,
   Theme,
   Tooltip,
   Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { Link } from 'react-router-dom';
 import { Popup as LeafletPopup, useLeaflet } from 'react-leaflet';
 import { useSelector } from 'react-redux';

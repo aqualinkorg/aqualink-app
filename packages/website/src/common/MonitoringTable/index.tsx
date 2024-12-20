@@ -1,13 +1,11 @@
 import {
   Button,
-  createStyles,
   Link,
-  makeStyles,
-  Padding,
   Paper,
   Table,
   TableBody,
   TableCell,
+  TableCellProps,
   TableContainer,
   TableHead,
   TablePagination,
@@ -15,7 +13,9 @@ import {
   TableSortLabel,
   Toolbar,
   Tooltip,
-} from '@material-ui/core';
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { colors } from 'layout/App/theme';
 // eslint-disable-next-line import/no-unresolved
 import { stringify } from 'csv-stringify/browser/esm/sync';
@@ -28,7 +28,7 @@ export interface HeadCell<T> {
   id: keyof T;
   label: string;
   tooltipText: string;
-  padding?: Padding;
+  padding?: TableCellProps['padding'];
   width?: string | number;
   align?: 'left' | 'right' | 'inherit' | 'center' | 'justify';
 }
@@ -217,6 +217,7 @@ function MonitoringTable<
                             href={bodyCell.linkTo(row)}
                             target="_blank"
                             rel="noreferrer noopener"
+                            underline="hover"
                           >
                             {formatted}
                           </Link>
