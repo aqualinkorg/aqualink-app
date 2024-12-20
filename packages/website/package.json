@@ -49,7 +49,7 @@
     "lodash": "^4.17.15",
     "luxon": "^3.3.0",
     "mutationobserver-shim": "^0.3.7",
-    "notistack": "^1.0.10",
+    "notistack": "2.0.8",
     "react": "18.3.1",
     "react-chartjs-2": "^5.0.0",
     "react-dom": "18.3.1",

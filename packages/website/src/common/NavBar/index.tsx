@@ -321,10 +321,16 @@ const NavBar = ({
                 </>
               ) : (
                 <div style={{ display: 'flex' }}>
-                  <Button onClick={() => handleSignInDialog(true)}>
+                  <Button
+                    color="inherit"
+                    onClick={() => handleSignInDialog(true)}
+                  >
                     SIGN IN
                   </Button>
-                  <Button onClick={() => handleRegisterDialog(true)}>
+                  <Button
+                    color="inherit"
+                    onClick={() => handleRegisterDialog(true)}
+                  >
                     SIGN UP
                   </Button>
                 </div>
@@ -380,7 +386,7 @@ const styles = (theme: Theme) =>
       padding: theme.spacing(0, 1),
     },
     userMenuWrapper: {
-      marginTop: 36,
+      marginTop: 8,
       border: '1px solid rgba(0, 0, 0, 0.12)',
       maxWidth: 275,
     },

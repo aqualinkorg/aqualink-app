@@ -41,16 +41,19 @@ const DatePicker = ({
                 .toFormat('yyyy/MM/dd')}
               minDate={DateTime.fromMillis(0).toFormat('yyyy/MM/dd')}
               closeOnSelect={autoOk}
-              value={value || null}
+              value={value}
               onChange={(v) => onChange(new Date(v as string))}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => (
+                <TextField
+                  variant="standard"
+                  value={params.inputProps?.value}
+                  {...params}
+                />
+              )}
               InputProps={{
                 className: classes.textField,
                 inputProps: { className: classes.smallPadding },
               }}
-              // slots={{
-              //   openPickerButton: <CalendarTodayIcon fontSize="small" />,
-              // }}
               OpenPickerButtonProps={{ className: classes.calendarButton }}
             />
           </LocalizationProvider>

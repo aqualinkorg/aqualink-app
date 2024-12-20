@@ -1,5 +1,7 @@
 import { createTheme, Theme, adaptV4Theme } from '@mui/material/styles';
-import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import createBreakpoints from '@mui/system/createTheme/createBreakpoints';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 const skyBlue = '#009ee0';
 const lightBlue = '#168dbd';
@@ -173,26 +175,39 @@ const theme: Theme = createTheme(
       MuiInputBase: {
         root: {
           height: '100%',
-          '& .MuiInputBase-disabled': {
+          '& .Mui-disabled': {
             backgroundColor: backgroundGray,
           },
         },
       },
-      // MuiPickersDay: {
-      //   day: {
-      //     color: 'black',
-      //   },
-      // },
-      // MuiPickersCalendarHeader: {
-      //   switchHeader: {
-      //     color: 'black',
-      //   },
-      // },
-      // MuiPickersClockNumber: {
-      //   clockNumber: {
-      //     color: 'black',
-      //   },
-      // },
+      MuiDatePicker: {
+        root: {
+          color: black,
+        },
+        textFiled: {
+          color: black,
+        },
+      },
+      MuiPickersDay: {
+        root: {
+          color: 'black',
+        },
+      },
+      MuiPickersCalendarHeader: {
+        root: {
+          color: 'black',
+        },
+      },
+      MuiClockNumber: {
+        root: {
+          color: 'black',
+        },
+      },
+      MuiYearPicker: {
+        root: {
+          color: 'black',
+        },
+      },
       MuiOutlinedInput: {
         root: {
           padding: 0,
@@ -216,9 +231,9 @@ const theme: Theme = createTheme(
       MuiTableSortLabel: {
         root: {
           color: black,
-        },
-        active: {
-          color: `${black} !important`,
+          '&.Mui-active': {
+            color: `${black} !important`,
+          },
         },
       },
       MuiTablePagination: {

@@ -86,6 +86,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       {menuRoutes.map(({ text, to, href }) => (
         <Button
           className={classes.menuDrawerButton}
+          color="inherit"
           key={text}
           component={href ? ExternalLink : Link}
           target={href ? '_blank' : undefined}
