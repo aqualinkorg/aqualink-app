@@ -88,7 +88,7 @@ const Chip = ({
   to,
   image,
   imageText,
-  liveText,
+  liveText = 'LIVE',
   width,
   onClick,
 }: ChipProps) => {
@@ -122,16 +122,6 @@ const Chip = ({
       </Grid>
     </Grid>
   );
-};
-
-Chip.defaultProps = {
-  live: false,
-  href: undefined,
-  to: undefined,
-  imageText: undefined,
-  image: undefined,
-  liveText: 'LIVE',
-  onClick: undefined,
 };
 
 export default Chip;

@@ -13,8 +13,8 @@ import type { Dataset } from '../index';
 
 const ChartWithCard = ({
   areSurveysFiltered,
-  availableRanges,
-  cardColumnJustification,
+  availableRanges = [],
+  cardColumnJustification = 'space-between',
   chartEndDate,
   chartStartDate,
   chartTitle,
@@ -28,8 +28,8 @@ const ChartWithCard = ({
   pickerStartDate,
   pointId,
   range,
-  showDatePickers,
-  showRangeButtons,
+  showDatePickers = true,
+  showRangeButtons = true,
   site,
   surveyPoint,
   timeZone,
@@ -170,17 +170,5 @@ interface ChartWithCardProps {
   onStartDateChange: (date: Date | null) => void;
   onRangeChange: (value: RangeValue) => void;
 }
-
-ChartWithCard.defaultProps = {
-  areSurveysFiltered: undefined,
-  cardColumnJustification: 'space-between',
-  hideYAxisUnits: false,
-  pointId: undefined,
-  showDatePickers: true,
-  showRangeButtons: true,
-  surveyPoint: undefined,
-  availableRanges: [],
-  timeZone: undefined,
-};
 
 export default ChartWithCard;

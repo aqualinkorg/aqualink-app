@@ -41,7 +41,7 @@ import CollectionButton from './CollectionButton';
 const SiteNavBar = ({
   hasDailyData,
   site,
-  lastSurvey,
+  lastSurvey = null,
   isAdmin,
   classes,
 }: SiteNavBarProps) => {
@@ -331,10 +331,6 @@ interface SiteNavBarIncomingProps {
   lastSurvey?: string | null;
   isAdmin: boolean;
 }
-
-SiteNavBar.defaultProps = {
-  lastSurvey: null,
-};
 
 type SiteNavBarProps = SiteNavBarIncomingProps & WithStyles<typeof styles>;
 

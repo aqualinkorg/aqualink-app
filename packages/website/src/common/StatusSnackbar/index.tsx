@@ -15,7 +15,7 @@ const StatusSnackbar = ({
   furtherActionLabel,
   severity,
   handleClose,
-  onFurtherActionTake,
+  onFurtherActionTake = () => {},
 }: StatusSnackbarProps) => {
   const classes = useStyles({ hasMessage: !!message });
 
@@ -84,11 +84,5 @@ interface StatusSnackbarProps {
   ) => void;
   onFurtherActionTake?: () => void;
 }
-
-StatusSnackbar.defaultProps = {
-  furtherActionLabel: undefined,
-  message: undefined,
-  onFurtherActionTake: () => {},
-};
 
 export default StatusSnackbar;

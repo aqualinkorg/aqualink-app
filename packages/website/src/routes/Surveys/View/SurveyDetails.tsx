@@ -15,7 +15,11 @@ import {
 } from 'helpers/surveyMedia';
 import ObservationBox from './ObservationBox';
 
-const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
+const SurveyDetails = ({
+  site,
+  survey = null,
+  classes,
+}: SurveyDetailsProps) => {
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getSiteNameAndRegion(site);
@@ -114,10 +118,6 @@ interface SurveyDetailsIncomingProps {
   site: Site;
   survey?: SurveyState | null;
 }
-
-SurveyDetails.defaultProps = {
-  survey: null,
-};
 
 type SurveyDetailsProps = SurveyDetailsIncomingProps &
   WithStyles<typeof styles>;

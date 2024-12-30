@@ -22,7 +22,7 @@ const ExclusionDatesDialog = ({
   dialogType,
   open,
   token,
-  timeZone,
+  timeZone = null,
   siteId,
   onClose,
   classes,
@@ -433,10 +433,6 @@ interface ExclusionDatesDialogIncomingProps {
   siteId: number;
   onClose: () => void;
 }
-
-ExclusionDatesDialog.defaultProps = {
-  timeZone: null,
-};
 
 type ExclusionDatesDialogProps = ExclusionDatesDialogIncomingProps &
   WithStyles<typeof styles>;

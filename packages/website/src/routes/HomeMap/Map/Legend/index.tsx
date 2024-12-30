@@ -66,11 +66,6 @@ interface LegendIncomingProps {
   left?: number;
 }
 
-Legend.defaultProps = {
-  bottom: undefined,
-  left: undefined,
-};
-
 type LegendProps = LegendIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Legend);

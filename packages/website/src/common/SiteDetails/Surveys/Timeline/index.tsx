@@ -14,11 +14,11 @@ import TimelineTablet from './Tablet';
 import { TimelineProps } from './types';
 
 const SurveyTimeline = ({
-  loading,
+  loading = false,
   isAdmin,
   siteId,
   addNewButton,
-  timeZone,
+  timeZone = null,
   observation,
   pointName,
   pointId,
@@ -75,12 +75,6 @@ interface SurveyTimelineIncomingProps {
   pointName: string | null;
   pointId: number;
 }
-
-SurveyTimeline.defaultProps = {
-  timeZone: null,
-  siteId: undefined,
-  loading: false,
-};
 
 type SurveyTimelineProps = SurveyTimelineIncomingProps &
   WithStyles<typeof styles>;

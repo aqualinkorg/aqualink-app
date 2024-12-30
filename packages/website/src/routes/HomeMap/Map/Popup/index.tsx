@@ -26,7 +26,7 @@ import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
-const Popup = ({ site, classes, autoOpen }: PopupProps) => {
+const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
   const { map } = useLeaflet();
   const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
@@ -181,10 +181,6 @@ interface PopupIncomingProps {
   // Dictates whether the popup automatically opens when the site is selected (site on map is set)
   autoOpen?: boolean;
 }
-
-Popup.defaultProps = {
-  autoOpen: true,
-};
 
 type PopupProps = PopupIncomingProps & WithStyles<typeof styles>;
 

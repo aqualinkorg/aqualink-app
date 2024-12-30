@@ -19,7 +19,7 @@ const DatePicker = ({
   value,
   dateName,
   dateNameTextVariant,
-  autoOk,
+  autoOk = true,
   timeZone,
   onChange,
   classes,
@@ -94,12 +94,6 @@ interface DatePickerIncomingProps {
   timeZone: string | null | undefined;
   onChange: (date: Date | null, keyboardInput?: string) => void;
 }
-
-DatePicker.defaultProps = {
-  dateName: undefined,
-  dateNameTextVariant: undefined,
-  autoOk: true,
-};
 
 type DatePickerProps = DatePickerIncomingProps & WithStyles<typeof styles>;
 

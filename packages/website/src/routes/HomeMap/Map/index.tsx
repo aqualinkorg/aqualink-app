@@ -47,13 +47,13 @@ const currentLocationMarker = L.divIcon({
 const HomepageMap = ({
   initialCenter,
   initialZoom,
-  showSiteTable,
+  showSiteTable = true,
   setShowSiteTable,
   initialBounds,
   collection,
-  showAlertLevelLegend,
-  showWaterMark,
-  geolocationEnabled,
+  showAlertLevelLegend = true,
+  showWaterMark = true,
+  geolocationEnabled = true,
   defaultLayerName,
   legendBottom,
   legendLeft,
@@ -255,19 +255,6 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
 }
-
-HomepageMap.defaultProps = {
-  showSiteTable: true,
-  setShowSiteTable: undefined,
-  initialBounds: undefined,
-  collection: undefined,
-  showAlertLevelLegend: true,
-  showWaterMark: true,
-  geolocationEnabled: true,
-  defaultLayerName: undefined,
-  legendBottom: undefined,
-  legendLeft: undefined,
-};
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
 

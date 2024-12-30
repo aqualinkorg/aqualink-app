@@ -19,10 +19,10 @@ import Alert from '@mui/material/Alert';
 const Dialog = ({
   open,
   header,
-  content,
-  actions,
+  content = null,
+  actions = [],
   error,
-  onClose,
+  onClose = () => {},
   classes,
 }: DialogProps) => {
   const ActionButton = ({
@@ -111,14 +111,6 @@ interface DialogIncomingProps {
   error?: string;
   onClose?: (...args: any[]) => void;
 }
-
-Dialog.defaultProps = {
-  header: undefined,
-  content: null,
-  actions: [],
-  error: undefined,
-  onClose: () => {},
-};
 
 type DialogProps = DialogIncomingProps & WithStyles<typeof styles>;
 

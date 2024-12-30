@@ -15,10 +15,10 @@ const UpdateInfo = ({
   timeText,
   image,
   imageText,
-  live,
+  live = false,
   frequency,
   href,
-  withMargin,
+  withMargin = false,
   chipWidth,
   subtitle,
   onClick,
@@ -119,18 +119,5 @@ interface UpdateInfoProps {
   chipWidth?: number;
   onClick?: () => void;
 }
-
-UpdateInfo.defaultProps = {
-  relativeTime: undefined,
-  image: undefined,
-  imageText: undefined,
-  frequency: undefined,
-  subtitle: undefined,
-  href: undefined,
-  withMargin: false,
-  live: false,
-  chipWidth: undefined,
-  onClick: undefined,
-};
 
 export default UpdateInfo;

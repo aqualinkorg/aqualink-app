@@ -10,7 +10,7 @@ const CustomLink = ({
   to,
   tooltipTitle,
   isIcon,
-  content,
+  content = null,
   classes,
 }: CustomLinkProps) => {
   return (
@@ -49,10 +49,6 @@ interface CustomLinkIncomingProps {
   content?: string | null;
   tooltipTitle: TooltipProps['title'];
 }
-
-CustomLink.defaultProps = {
-  content: null,
-};
 
 type CustomLinkProps = CustomLinkIncomingProps & WithStyles<typeof styles>;
 

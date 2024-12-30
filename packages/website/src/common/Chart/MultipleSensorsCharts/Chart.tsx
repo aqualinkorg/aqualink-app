@@ -38,7 +38,7 @@ const Chart = ({
   endDate,
   surveysFiltered,
   pickerErrored,
-  showDatePickers,
+  showDatePickers = true,
   source,
   onStartDateChange,
   onEndDateChange,
@@ -224,13 +224,6 @@ interface ChartIncomingProps {
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
 }
-
-Chart.defaultProps = {
-  pointId: undefined,
-  hideYAxisUnits: false,
-  surveysFiltered: undefined,
-  showDatePickers: true,
-};
 
 type ChartProps = ChartIncomingProps & WithStyles<typeof styles>;
 

@@ -63,7 +63,7 @@ const MultipleSensorsCharts = ({
   pointId,
   surveysFiltered,
   disableGutters,
-  displayOceanSenseCharts,
+  displayOceanSenseCharts = true,
   hasAdditionalSensorData,
 }: MultipleSensorsChartsProps) => {
   const classes = useStyles();
@@ -725,10 +725,5 @@ interface MultipleSensorsChartsProps {
   displayOceanSenseCharts?: boolean;
   hasAdditionalSensorData: boolean;
 }
-
-MultipleSensorsCharts.defaultProps = {
-  pointId: undefined,
-  displayOceanSenseCharts: true,
-};
 
 export default MultipleSensorsCharts;

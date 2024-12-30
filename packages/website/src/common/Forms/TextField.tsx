@@ -12,9 +12,9 @@ const CustomTextfield = ({
   label,
   placeholder,
   name,
-  isNumeric,
-  step,
-  fullWidth,
+  isNumeric = false,
+  step = 0,
+  fullWidth = true,
   size,
   disabled,
   onChange,
@@ -71,13 +71,6 @@ interface CustomTextfieldIncomingProps {
   onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   select?: boolean;
 }
-
-CustomTextfield.defaultProps = {
-  isNumeric: false,
-  fullWidth: true,
-  size: undefined,
-  step: 0,
-};
 
 type CustomTextfieldProps = CustomTextfieldIncomingProps &
   WithStyles<typeof styles>;

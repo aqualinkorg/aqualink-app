@@ -118,11 +118,6 @@ interface MediaPointNameIncomingProps {
   >;
 }
 
-MediaPointName.defaultProps = {
-  pointId: undefined,
-  selectedPoint: undefined,
-};
-
 type MediaPointNameProps = MediaPointNameIncomingProps &
   WithStyles<typeof styles>;
 

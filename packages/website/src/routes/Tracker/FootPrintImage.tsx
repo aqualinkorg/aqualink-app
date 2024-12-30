@@ -47,8 +47,4 @@ interface FootPrintImageProps {
   imageHeight?: number;
 }
 
-FootPrintImage.defaultProps = {
-  imageHeight: undefined,
-};
-
 export default FootPrintImage;

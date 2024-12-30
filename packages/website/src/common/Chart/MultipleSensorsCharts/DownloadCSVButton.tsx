@@ -115,10 +115,4 @@ function DownloadCSVButton({
   );
 }
 
-DownloadCSVButton.defaultProps = {
-  startDate: undefined,
-  endDate: undefined,
-  siteId: undefined,
-};
-
 export default DownloadCSVButton;

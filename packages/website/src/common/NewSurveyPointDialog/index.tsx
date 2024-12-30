@@ -160,8 +160,4 @@ interface NewSurveyPointDialogProps {
   onSuccess?: (arg0: string, arg1: SurveyPoints[]) => void;
 }
 
-NewSurveyPointDialog.defaultProps = {
-  onSuccess: undefined,
-};
-
 export default NewSurveyPointDialog;

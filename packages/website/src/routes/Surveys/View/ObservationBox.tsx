@@ -14,7 +14,7 @@ import { getCardTemperatureValues } from './utils';
 
 const ObservationBox = ({
   depth,
-  date,
+  date = null,
   classes,
   satelliteTemperature,
 }: ObservationBoxProps) => {
@@ -113,10 +113,6 @@ interface ObservationBoxIncomingProps {
   satelliteTemperature?: number;
   date?: string | null;
 }
-
-ObservationBox.defaultProps = {
-  date: null,
-};
 
 type ObservationBoxProps = ObservationBoxIncomingProps &
   WithStyles<typeof styles>;

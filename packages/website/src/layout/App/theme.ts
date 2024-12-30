@@ -1,5 +1,4 @@
-import { createTheme, Theme, adaptV4Theme } from '@mui/material/styles';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { createTheme, Theme } from '@mui/material/styles';
 import createBreakpoints from '@mui/system/createTheme/createBreakpoints';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
@@ -45,31 +44,33 @@ export const mapIconSize = '2rem';
 
 const breakpoints = createBreakpoints({});
 
-const theme: Theme = createTheme(
-  adaptV4Theme({
-    palette: {
-      primary: {
-        main: lightBlue,
-        dark: darkGreyBlue,
-        light: white,
-      },
-      text: {
-        primary: white,
-        secondary: black,
-      },
-      grey: {
-        500: lightGray,
-      },
+const theme: Theme = createTheme({
+  palette: {
+    primary: {
+      main: lightBlue,
+      dark: darkGreyBlue,
+      light: white,
     },
-    overrides: {
-      MuiAppBar: {
+    text: {
+      primary: white,
+      secondary: black,
+    },
+    grey: {
+      500: lightGray,
+    },
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
         root: {
           height: 122,
           justifyContent: 'center',
           backgroundColor: lightBlue,
         },
       },
-      MuiToolbar: {
+    },
+    MuiToolbar: {
+      styleOverrides: {
         root: {
           justifyContent: 'space-between',
         },
@@ -77,7 +78,9 @@ const theme: Theme = createTheme(
           minHeight: 40,
         },
       },
-      MuiTypography: {
+    },
+    MuiTypography: {
+      styleOverrides: {
         h1: {
           fontSize: 52,
           fontFamily,
@@ -136,13 +139,17 @@ const theme: Theme = createTheme(
           marginBottom: '1rem',
         },
       },
-      MuiGrid: {
+    },
+    MuiGrid: {
+      styleOverrides: {
         'spacing-xs-10': {
           width: '100%',
           margin: '0',
         },
       },
-      MuiButton: {
+    },
+    MuiButton: {
+      styleOverrides: {
         root: {
           borderRadius: 5,
         },
@@ -153,26 +160,34 @@ const theme: Theme = createTheme(
           backgroundColor: darkGreyBlue,
         },
       },
-      MuiButtonBase: {
+    },
+    MuiButtonBase: {
+      styleOverrides: {
         root: {
           '&:focus': {
             outline: 'none',
           },
         },
       },
-      MuiCardContent: {
+    },
+    MuiCardContent: {
+      styleOverrides: {
         root: {
           '&:last-child': {
             paddingBottom: 0,
           },
         },
       },
-      MuiInputLabel: {
+    },
+    MuiInputLabel: {
+      styleOverrides: {
         root: {
           color: lightGray,
         },
       },
-      MuiInputBase: {
+    },
+    MuiInputBase: {
+      styleOverrides: {
         root: {
           height: '100%',
           '& .Mui-disabled': {
@@ -180,7 +195,9 @@ const theme: Theme = createTheme(
           },
         },
       },
-      MuiDatePicker: {
+    },
+    MuiDatePicker: {
+      styleOverrides: {
         root: {
           color: black,
         },
@@ -188,27 +205,38 @@ const theme: Theme = createTheme(
           color: black,
         },
       },
-      MuiPickersDay: {
+    },
+    MuiPickersDay: {
+      styleOverrides: {
         root: {
           color: 'black',
         },
       },
-      MuiPickersCalendarHeader: {
+    },
+    MuiPickersCalendarHeader: {
+      styleOverrides: {
         root: {
           color: 'black',
         },
       },
-      MuiClockNumber: {
+    },
+    MuiClockNumber: {
+      styleOverrides: {
         root: {
           color: 'black',
         },
       },
-      MuiYearPicker: {
+    },
+    MuiYearPicker: {
+      styleOverrides: {
         root: {
           color: 'black',
         },
       },
-      MuiOutlinedInput: {
+    },
+
+    MuiOutlinedInput: {
+      styleOverrides: {
         root: {
           color: 'black',
           '&:not(.MuiInputBase-multiline)': {
@@ -219,7 +247,9 @@ const theme: Theme = createTheme(
           },
         },
       },
-      MuiTableCell: {
+    },
+    MuiTableCell: {
+      styleOverrides: {
         root: {
           color: black,
         },
@@ -230,7 +260,9 @@ const theme: Theme = createTheme(
           color: black,
         },
       },
-      MuiTableSortLabel: {
+    },
+    MuiTableSortLabel: {
+      styleOverrides: {
         root: {
           color: black,
           '&.Mui-active': {
@@ -238,7 +270,9 @@ const theme: Theme = createTheme(
           },
         },
       },
-      MuiTablePagination: {
+    },
+    MuiTablePagination: {
+      styleOverrides: {
         root: {
           color: black,
           backgroundColor: backgroundGray,
@@ -248,7 +282,7 @@ const theme: Theme = createTheme(
         },
       },
     },
-  }),
-);
+  },
+});
 
 export default theme;

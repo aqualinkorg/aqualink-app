@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
+function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -369,9 +369,5 @@ interface SurveyFormProps {
     comments: string,
   ) => void;
 }
-
-SurveyForm.defaultProps = {
-  timeZone: null,
-};
 
 export default SurveyForm;

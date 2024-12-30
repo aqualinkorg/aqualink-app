@@ -50,14 +50,14 @@ const surveyPointIcon = (selected: boolean) =>
 
 const SiteMap = ({
   siteId,
-  spotterPosition,
+  spotterPosition = null,
   polygon,
   surveyPoints,
-  selectedPointId,
-  surveyPointEditModeEnabled,
-  editPointLatitude,
-  editPointLongitude,
-  onEditPointCoordinatesChange,
+  selectedPointId = 0,
+  surveyPointEditModeEnabled = false,
+  editPointLatitude = null,
+  editPointLongitude = null,
+  onEditPointCoordinatesChange = () => {},
   classes,
 }: SiteMapProps) => {
   const dispatch = useDispatch();
@@ -265,15 +265,6 @@ interface SiteMapIncomingProps {
   editPointLongitude?: number | null;
   onEditPointCoordinatesChange?: (lat: string, lng: string) => void;
 }
-
-SiteMap.defaultProps = {
-  spotterPosition: null,
-  selectedPointId: 0,
-  surveyPointEditModeEnabled: false,
-  editPointLatitude: null,
-  editPointLongitude: null,
-  onEditPointCoordinatesChange: () => {},
-};
 
 type SiteMapProps = WithStyles<typeof styles> & SiteMapIncomingProps;
 

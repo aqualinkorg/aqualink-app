@@ -56,12 +56,12 @@ const RowNameCell = ({
 };
 
 const RowNumberCell = ({
-  color,
-  unit,
-  decimalPlaces,
+  color = colors.black,
+  unit = '',
+  decimalPlaces = 1,
   value,
   classes,
-  isExtended,
+  isExtended = false,
 }: {
   color?: string;
   unit?: string;
@@ -111,20 +111,13 @@ const RowAlertCell = ({
   );
 };
 
-RowNumberCell.defaultProps = {
-  unit: '',
-  color: colors.black,
-  decimalPlaces: 1,
-  isExtended: false,
-};
-
 const SiteTableBody = ({
   order,
   orderBy,
-  isExtended,
+  isExtended = false,
   collection,
-  scrollTableOnSelection,
-  scrollPageOnSelection,
+  scrollTableOnSelection = true,
+  scrollPageOnSelection = false,
   classes,
 }: SiteTableBodyProps) => {
   const dispatch = useDispatch();
@@ -349,13 +342,6 @@ type SiteTableBodyIncomingProps = {
   collection?: Collection;
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
-};
-
-SiteTableBody.defaultProps = {
-  isExtended: false,
-  collection: undefined,
-  scrollTableOnSelection: true,
-  scrollPageOnSelection: false,
 };
 
 type SiteTableBodyProps = WithStyles<typeof styles> &

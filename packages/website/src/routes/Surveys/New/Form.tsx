@@ -10,7 +10,11 @@ import {
 import { userInfoSelector } from 'store/User/userSlice';
 import Form from 'common/SurveyForm';
 
-const SurveyForm = ({ siteId, timeZone, changeTab }: SurveyFormProps) => {
+const SurveyForm = ({
+  siteId,
+  timeZone = null,
+  changeTab,
+}: SurveyFormProps) => {
   const user = useSelector(userInfoSelector);
   const surveyError = useSelector(surveyErrorSelector);
 
@@ -66,9 +70,5 @@ interface SurveyFormProps {
   siteId: number;
   timeZone?: string | null;
 }
-
-SurveyForm.defaultProps = {
-  timeZone: null,
-};
 
 export default SurveyForm;

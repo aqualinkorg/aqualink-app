@@ -24,12 +24,12 @@ const Header = ({
   id,
   range,
   disableMaxRange,
-  title,
+  title = '',
   onRangeChange,
   classes,
-  availableRanges,
+  availableRanges = [],
   timeZone,
-  showRangeButtons,
+  showRangeButtons = true,
   surveyPoint,
 }: HeaderProps) => {
   const theme = useTheme();
@@ -213,15 +213,6 @@ interface HeaderIncomingProps {
   showRangeButtons?: boolean;
   surveyPoint?: TimeSeriesSurveyPoint;
 }
-
-Header.defaultProps = {
-  id: undefined,
-  title: '',
-  timeZone: null,
-  showRangeButtons: true,
-  surveyPoint: undefined,
-  availableRanges: [],
-};
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;
 

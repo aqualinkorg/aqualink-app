@@ -52,9 +52,9 @@ import requests from '../../helpers/requests';
 
 const NavBar = ({
   searchLocation,
-  geocodingEnabled,
-  routeButtons,
-  loading,
+  geocodingEnabled = false,
+  routeButtons = false,
+  loading = false,
   classes,
 }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
@@ -435,12 +435,6 @@ interface NavBarIncomingProps {
   routeButtons?: boolean;
   loading?: boolean;
 }
-
-NavBar.defaultProps = {
-  geocodingEnabled: false,
-  routeButtons: false,
-  loading: false,
-};
 
 type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;
 

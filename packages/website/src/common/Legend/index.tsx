@@ -3,7 +3,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 
-const Legend = ({ unit, colorCode, classes }: LegendProps) => {
+const Legend = ({ unit = null, colorCode, classes }: LegendProps) => {
   const gradientColors = colorCode.map((item) => item.color).join(', ');
 
   return (
@@ -70,10 +70,6 @@ interface LegendIncomingProps {
   unit?: string | null;
   colorCode: ColorItem[];
 }
-
-Legend.defaultProps = {
-  unit: null,
-};
 
 type LegendProps = LegendIncomingProps & WithStyles<typeof styles>;
 

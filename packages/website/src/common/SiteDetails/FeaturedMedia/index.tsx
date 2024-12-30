@@ -29,9 +29,9 @@ const playerOptions = {
 
 const FeaturedMedia = ({
   siteId,
-  url,
-  featuredImage,
-  surveyId,
+  url = null,
+  featuredImage = null,
+  surveyId = null,
   classes,
 }: FeaturedMediaProps) => {
   const user = useSelector(userInfoSelector);
@@ -145,12 +145,6 @@ interface FeaturedMediaIncomingProps {
   featuredImage?: string | null;
   surveyId?: number | null;
 }
-
-FeaturedMedia.defaultProps = {
-  url: null,
-  featuredImage: null,
-  surveyId: null,
-};
 
 type FeaturedMediaProps = WithStyles<typeof styles> &
   FeaturedMediaIncomingProps;

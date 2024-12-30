@@ -19,7 +19,7 @@ interface SiteApplicationFormFields {
 
 const Form = ({
   siteName,
-  application,
+  application = null,
   agreed,
   handleFormSubmit,
   classes,
@@ -257,10 +257,6 @@ interface FormIncomingProps {
   agreed: boolean;
   handleFormSubmit: (siteName: string, params: SiteApplyParams) => void;
 }
-
-Form.defaultProps = {
-  application: null,
-};
 
 type FormProps = FormIncomingProps & WithStyles<typeof styles>;
 

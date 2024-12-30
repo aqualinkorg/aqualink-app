@@ -72,12 +72,12 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
   );
 
 const SiteTable = ({
-  isDrawerOpen,
-  showCard,
-  showSiteFiltersDropdown,
-  isExtended,
+  isDrawerOpen = false,
+  showCard = true,
+  showSiteFiltersDropdown = true,
+  isExtended = false,
   collection,
-  scrollTableOnSelection,
+  scrollTableOnSelection = true,
   scrollPageOnSelection,
   classes,
 }: SiteTableProps) => {
@@ -305,15 +305,5 @@ interface SiteTableIncomingProps {
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
 }
-
-SiteTable.defaultProps = {
-  isDrawerOpen: false,
-  showCard: true,
-  showSiteFiltersDropdown: true,
-  isExtended: false,
-  collection: undefined,
-  scrollTableOnSelection: true,
-  scrollPageOnSelection: undefined,
-};
 
 export default withStyles(styles)(SiteTable);

@@ -10,10 +10,10 @@ import DeleteDialog, { Action } from '../Dialog';
 
 const DeleteButton = ({
   header,
-  content,
+  content = null,
   onConfirm,
-  onSuccess,
-  onError,
+  onSuccess = () => {},
+  onError = () => {},
   classes,
 }: DeleteButtonProps) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -114,13 +114,6 @@ interface DeleteButtonIncomingProps {
   onSuccess?: () => void;
   onError?: () => void;
 }
-
-DeleteButton.defaultProps = {
-  header: undefined,
-  content: null,
-  onSuccess: () => {},
-  onError: () => {},
-};
 
 type DeleteButtonProps = DeleteButtonIncomingProps & WithStyles<typeof styles>;
 

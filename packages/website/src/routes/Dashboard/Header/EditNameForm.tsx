@@ -122,10 +122,6 @@ interface EditNameFormIncomingProps {
   onClose: () => void;
 }
 
-EditNameForm.defaultProps = {
-  collectionId: undefined,
-};
-
 type EditNameFormProps = EditNameFormIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(EditNameForm);

@@ -14,7 +14,15 @@ import createStyles from '@mui/styles/createStyles';
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   (
-    { title, text, backgroundColor, direction, image, scaleDown, classes },
+    {
+      title,
+      text,
+      backgroundColor,
+      direction,
+      image,
+      scaleDown = false,
+      classes,
+    },
     ref,
   ) => {
     const titleOnly = !text;
@@ -87,8 +95,6 @@ export interface CardIncomingProps {
   image: string;
   scaleDown?: boolean;
 }
-
-Card.defaultProps = { scaleDown: false };
 
 type CardProps = CardIncomingProps & WithStyles<typeof styles>;
 
