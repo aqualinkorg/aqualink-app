@@ -49,17 +49,20 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={file}
-                  primaryTypographyProps={{
-                    color: 'textSecondary',
-                    variant: 'h5',
-                  }}
                   secondary={`
                       These columns are not configured for import yet and were
                       not uploaded: ${ignoredHeaders
                         .map((header) => `"${header}"`)
                         .join(', ')}.
                     `}
-                  secondaryTypographyProps={{ variant: 'subtitle1' }}
+                  slotProps={{
+                    primary: {
+                      color: 'textSecondary',
+                      variant: 'h5',
+                    },
+
+                    secondary: { variant: 'subtitle1' },
+                  }}
                 />
               </ListItem>
             ) : null,

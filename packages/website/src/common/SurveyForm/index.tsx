@@ -143,9 +143,11 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
                       {...params}
                       variant="outlined"
                       helperText={errors?.diveDate?.message || ''}
-                      inputProps={{
-                        className: classes.textField,
-                        'data-testid': 'dive-date',
+                      slotProps={{
+                        htmlInput: {
+                          className: classes.textField,
+                          'data-testid': 'dive-date',
+                        },
                       }}
                     />
                   )}
@@ -200,10 +202,12 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
                       helperText={errors?.diveTime?.message || ''}
                       error={!!errors.diveTime}
                       variant="outlined"
-                      inputProps={{
-                        ...params.inputProps,
-                        className: classes.textField,
-                        'data-testid': 'dive-time',
+                      slotProps={{
+                        htmlInput: {
+                          ...params.inputProps,
+                          className: classes.textField,
+                          'data-testid': 'dive-time',
+                        },
                       }}
                     />
                   )}
@@ -231,25 +235,29 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             placeholder="LAT"
             label="Latitude"
             value={diveLocation?.lat || ''}
             disabled
             size={itemsSize}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             placeholder="LONG"
             label="Longitude"
             value={diveLocation?.lng || ''}
             disabled
             size={itemsSize}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         </Grid>
       </Grid>
@@ -271,9 +279,11 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
           fullWidth
           variant="outlined"
           size={itemsSize}
-          inputProps={{
-            className: classes.textField,
-            'data-testid': 'weather',
+          slotProps={{
+            htmlInput: {
+              className: classes.textField,
+              'data-testid': 'weather',
+            },
           }}
         >
           <MenuItem className={classes.textField} value="calm">
@@ -305,9 +315,11 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
               placeholder="Did anything stand out during this survey?"
               fullWidth
               size={itemsSize}
-              inputProps={{
-                className: classes.textField,
-                'data-testid': 'comments',
+              slotProps={{
+                htmlInput: {
+                  className: classes.textField,
+                  'data-testid': 'comments',
+                },
               }}
             />
           )}

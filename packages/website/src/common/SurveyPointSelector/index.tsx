@@ -39,8 +39,10 @@ function SurveyPointSelector({
         value={value}
         fullWidth
         variant="outlined"
-        inputProps={{
-          className: classes.textField,
+        slotProps={{
+          htmlInput: {
+            className: classes.textField,
+          },
         }}
       >
         {surveyPointOptions.map((item) => (

@@ -118,7 +118,9 @@ const Selectors = ({
             variant="outlined"
             fullWidth
             select
-            SelectProps={selectProps}
+            slotProps={{
+              select: selectProps,
+            }}
           >
             {OptionsList(pointOptions)}
             <MenuItem className={classes.buttonMenuItem}>
@@ -143,7 +145,9 @@ const Selectors = ({
             variant="outlined"
             fullWidth
             select
-            SelectProps={selectProps}
+            slotProps={{
+              select: selectProps,
+            }}
           >
             {OptionsList(SENSOR_TYPES)}
           </TextField>

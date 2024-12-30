@@ -232,9 +232,11 @@ const SignInDialog = ({
                         }
                         label="Email Address"
                         error={!!errors.emailAddress}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -258,9 +260,11 @@ const SignInDialog = ({
                         }
                         label="Password"
                         error={passwordResetEmail !== '' && !!errors.password}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />

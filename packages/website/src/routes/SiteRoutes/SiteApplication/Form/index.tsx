@@ -70,19 +70,19 @@ const Form = ({
       <TextField
         className={`${classes.formField} ${classes.textField}`}
         variant="outlined"
-        inputProps={{ className: classes.textField }}
         fullWidth
         placeholder="Site Name e.g. 'Sombrero Site'"
         disabled
         value={siteName}
         error={!!errors.siteName}
         helperText={errors?.siteName?.message || ''}
+        slotProps={{
+          htmlInput: { className: classes.textField },
+        }}
       />
-
       <Typography className={classes.additionalInfo}>
         Please provide some additional information for each site:
       </Typography>
-
       <Typography>Permitting</Typography>
       <Controller
         name="permitRequirements"
@@ -95,7 +95,6 @@ const Form = ({
             {...field}
             className={`${classes.formField} ${classes.textField}`}
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             multiline
             minRows={2}
@@ -103,10 +102,12 @@ const Form = ({
             placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
             error={!!errors.permitRequirements}
             helperText={errors?.permitRequirements?.message || ''}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         )}
       />
-
       <Typography>Funding Source</Typography>
       <Controller
         name="fundingSource"
@@ -119,7 +120,6 @@ const Form = ({
             {...field}
             className={`${classes.formField} ${classes.textField}`}
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             multiline
             minRows={2}
@@ -127,10 +127,12 @@ const Form = ({
             placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
             error={!!errors.fundingSource}
             helperText={errors?.fundingSource?.message || ''}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         )}
       />
-
       <Typography>Schedule for installation</Typography>
       <Typography className={classes.scheduleDescription}>
         What is the soonest date you could install the Smart Buoy and conduct a
@@ -173,17 +175,18 @@ const Form = ({
                 <TextField
                   {...params}
                   variant="outlined"
-                  inputProps={{ className: classes.textField }}
                   fullWidth
                   error={!!errors.installationSchedule}
                   helperText={errors?.installationSchedule?.message || ''}
+                  slotProps={{
+                    htmlInput: { className: classes.textField },
+                  }}
                 />
               )}
             />
           )}
         />
       </LocalizationProvider>
-
       <Typography>
         Installation, survey and maintenance personnel and equipment
       </Typography>
@@ -198,7 +201,6 @@ const Form = ({
             {...field}
             className={`${classes.formField} ${classes.textField}`}
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             multiline
             minRows={4}
@@ -206,10 +208,12 @@ const Form = ({
             placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
             error={!!errors.installationResources}
             helperText={errors?.installationResources?.message || ''}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         )}
       />
-
       <Button
         disabled={!agreed}
         type="submit"

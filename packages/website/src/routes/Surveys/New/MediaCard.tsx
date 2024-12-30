@@ -109,8 +109,10 @@ const MediaCard = ({
                 placeholder="Select One"
                 fullWidth
                 variant="outlined"
-                inputProps={{
-                  className: classes.textField,
+                slotProps={{
+                  htmlInput: {
+                    className: classes.textField,
+                  },
                 }}
               >
                 {observationOptions.map((item) => (
@@ -142,8 +144,10 @@ const MediaCard = ({
                 value={comments}
                 rows="8"
                 fullWidth
-                inputProps={{
-                  className: classes.textField,
+                slotProps={{
+                  htmlInput: {
+                    className: classes.textField,
+                  },
                 }}
               />
             </Grid>

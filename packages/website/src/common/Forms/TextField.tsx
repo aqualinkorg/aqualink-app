@@ -28,7 +28,6 @@ const CustomTextfield = ({
       disabled={disabled}
       className={classes.textField}
       variant="outlined"
-      inputProps={{ className: classes.textField, step: step || undefined }}
       fullWidth={fullWidth}
       type={isNumeric ? 'number' : 'text'}
       value={formField.value}
@@ -42,6 +41,9 @@ const CustomTextfield = ({
       helperText={formField.error}
       size={size}
       select={select}
+      slotProps={{
+        htmlInput: { className: classes.textField, step: step || undefined },
+      }}
     />
   );
 };

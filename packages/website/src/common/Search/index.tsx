@@ -112,7 +112,6 @@ const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
           <SearchIcon />
         </IconButton>
       </div>
-
       <div className={classes.searchBarText}>
         <Autocomplete
           classes={{ listbox: classes.listbox, option: classes.option }}
@@ -138,8 +137,10 @@ const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
               onChange={onChangeSearchText}
               placeholder="Search"
               variant="outlined"
-              InputLabelProps={{
-                shrink: false,
+              slotProps={{
+                inputLabel: {
+                  shrink: false,
+                },
               }}
             />
           )}

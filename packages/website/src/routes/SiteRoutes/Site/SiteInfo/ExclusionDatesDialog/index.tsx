@@ -265,9 +265,6 @@ const ExclusionDatesDialog = ({
                       <TextField
                         {...params}
                         variant="outlined"
-                        inputProps={{
-                          className: classes.textField,
-                        }}
                         error={
                           dialogType === 'deploy'
                             ? pickerError !== ''
@@ -278,6 +275,11 @@ const ExclusionDatesDialog = ({
                             ? pickerError
                             : startPickerError
                         }
+                        slotProps={{
+                          htmlInput: {
+                            className: classes.textField,
+                          },
+                        }}
                       />
                     )}
                   />
@@ -308,9 +310,6 @@ const ExclusionDatesDialog = ({
                       <TextField
                         {...params}
                         variant="outlined"
-                        inputProps={{
-                          className: classes.textField,
-                        }}
                         error={
                           dialogType === 'deploy'
                             ? pickerError !== ''
@@ -321,6 +320,11 @@ const ExclusionDatesDialog = ({
                             ? pickerError
                             : startPickerError
                         }
+                        slotProps={{
+                          htmlInput: {
+                            className: classes.textField,
+                          },
+                        }}
                       />
                     )}
                   />
@@ -356,11 +360,13 @@ const ExclusionDatesDialog = ({
                           <TextField
                             {...params}
                             variant="outlined"
-                            inputProps={{
-                              className: classes.textField,
-                            }}
                             error={endPickerError !== ''}
                             helperText={endPickerError}
+                            slotProps={{
+                              htmlInput: {
+                                className: classes.textField,
+                              },
+                            }}
                           />
                         )}
                       />
@@ -383,11 +389,13 @@ const ExclusionDatesDialog = ({
                           <TextField
                             {...params}
                             variant="outlined"
-                            inputProps={{
-                              className: classes.textField,
-                            }}
                             error={endPickerError !== ''}
                             helperText={endPickerError}
+                            slotProps={{
+                              htmlInput: {
+                                className: classes.textField,
+                              },
+                            }}
                           />
                         )}
                       />

@@ -122,8 +122,10 @@ const SliderCard = ({
                     value={observation}
                     placeholder="Select One"
                     variant="outlined"
-                    inputProps={{
-                      className: classes.textField,
+                    slotProps={{
+                      htmlInput: {
+                        className: classes.textField,
+                      },
                     }}
                   >
                     {observationOptions.map((item) => (
@@ -154,8 +156,10 @@ const SliderCard = ({
                     onChange={(e) => setEditComments(e.target.value)}
                     value={editComments}
                     minRows={isMobile ? 1 : 7}
-                    inputProps={{
-                      className: classes.textField,
+                    slotProps={{
+                      htmlInput: {
+                        className: classes.textField,
+                      },
                     }}
                   />
                 ) : (

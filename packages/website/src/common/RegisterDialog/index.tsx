@@ -175,9 +175,11 @@ const RegisterDialog = ({
                         }
                         label="First Name"
                         error={!!errors.firstName}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -199,9 +201,11 @@ const RegisterDialog = ({
                         }
                         label="Last Name"
                         error={!!errors.lastName}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -223,9 +227,11 @@ const RegisterDialog = ({
                         }
                         label="Organization"
                         error={!!errors.organization}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -252,9 +258,11 @@ const RegisterDialog = ({
                         }
                         label="Email Address"
                         error={!!errors.emailAddress}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -281,9 +289,11 @@ const RegisterDialog = ({
                         }
                         label="Password"
                         error={!!errors.password}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />

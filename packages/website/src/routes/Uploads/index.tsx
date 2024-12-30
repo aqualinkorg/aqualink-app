@@ -179,7 +179,9 @@ function Uploads() {
               variant="outlined"
               fullWidth
               select
-              SelectProps={selectProps}
+              slotProps={{
+                select: selectProps,
+              }}
             >
               {OptionsList(SENSOR_TYPES)}
             </TextField>
