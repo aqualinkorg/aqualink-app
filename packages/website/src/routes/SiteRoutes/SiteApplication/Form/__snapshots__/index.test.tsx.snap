@@ -589,11 +589,10 @@ exports[`renders as expected 1`] = `
                             />
                           </button>
                           <button
-                            aria-current="date"
                             aria-selected="false"
-                            class="MuiButtonBase-root Mui-focusVisible MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-1ilx2o9-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
                             role="gridcell"
-                            tabindex="0"
+                            tabindex="-1"
                             type="button"
                           >
                             20
@@ -720,10 +719,11 @@ exports[`renders as expected 1`] = `
                             />
                           </button>
                           <button
+                            aria-current="date"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root Mui-focusVisible MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-1ilx2o9-MuiButtonBase-root-MuiPickersDay-root"
                             role="gridcell"
-                            tabindex="-1"
+                            tabindex="0"
                             type="button"
                           >
                             30
