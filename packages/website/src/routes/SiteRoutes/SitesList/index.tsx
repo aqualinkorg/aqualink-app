@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { List, ListItem, ListItemText, Theme } from '@mui/material';
+import { List, ListItemText, Theme } from '@mui/material';
+import ListItemButton from '@mui/material/ListItemButton';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -26,9 +27,9 @@ const SitesList = ({ classes }: SitesListProps) => {
               style={{ color: 'inherit', textDecoration: 'none' }}
               to={`/sites/${site.id}`}
             >
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText style={{ color: 'white' }} primary={site.name} />
-              </ListItem>
+              </ListItemButton>
             </Link>
           ))}
         </List>

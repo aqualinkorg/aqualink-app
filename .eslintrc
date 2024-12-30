@@ -91,6 +91,9 @@
             "property": "propTypes"
           },
           {
+            "property": "components"
+          },
+          {
             "property": "current"
           }
         ]

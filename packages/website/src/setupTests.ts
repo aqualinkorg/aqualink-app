@@ -86,7 +86,9 @@ global.matchMedia =
     return {
       matches: false,
       addListener() {},
+      addEventListener() {},
       removeListener() {},
+      removeEventListener() {},
     };
   };
 

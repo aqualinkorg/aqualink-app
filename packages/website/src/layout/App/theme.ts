@@ -1,5 +1,4 @@
 import { createTheme, Theme } from '@mui/material/styles';
-import createBreakpoints from '@mui/system/createTheme/createBreakpoints';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 const skyBlue = '#009ee0';
@@ -42,8 +41,6 @@ export const colors = {
 
 export const mapIconSize = '2rem';
 
-const breakpoints = createBreakpoints({});
-
 const theme: Theme = createTheme({
   palette: {
     primary: {
@@ -59,230 +56,231 @@ const theme: Theme = createTheme({
       500: lightGray,
     },
   },
-  components: {
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          height: 122,
-          justifyContent: 'center',
-          backgroundColor: lightBlue,
-        },
-      },
-    },
-    MuiToolbar: {
-      styleOverrides: {
-        root: {
-          justifyContent: 'space-between',
-        },
-        dense: {
-          minHeight: 40,
-        },
-      },
-    },
-    MuiTypography: {
-      styleOverrides: {
-        h1: {
-          fontSize: 52,
-          fontFamily,
-          fontWeight: 300,
-          [breakpoints.down('xs')]: {
-            fontSize: 34,
-          },
-        },
-        h2: {
-          fontSize: 48,
-          fontFamily,
-          fontWeight: 300,
-          [breakpoints.down('xs')]: {
-            fontSize: 30,
-          },
-        },
-        h3: {
-          fontSize: 32,
-          fontFamily,
-        },
-        h4: {
-          fontSize: 26,
-          fontFamily,
-          fontWeight: 400,
-          [breakpoints.down('sm')]: {
-            fontSize: 22,
-          },
-        },
-        h5: {
-          fontSize: 20,
-          fontFamily,
-        },
-        h6: {
-          fontSize: 16,
-          fontFamily,
-          fontWeight: 400,
-        },
-        subtitle1: {
-          fontSize: 14,
-          fontFamily,
-        },
-        subtitle2: {
-          fontSize: 12,
-          fontFamily,
-        },
-        caption: {
-          fontSize: 10,
-          fontFamily,
-        },
-        overline: {
-          fontSize: 8.5,
-          fontFamily,
-          textTransform: 'none',
-        },
-        gutterBottom: {
-          marginBottom: '1rem',
-        },
-      },
-    },
-    MuiGrid: {
-      styleOverrides: {
-        'spacing-xs-10': {
-          width: '100%',
-          margin: '0',
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 5,
-        },
-        containedPrimary: {
-          backgroundColor: lightBlue,
-        },
-        containedSecondary: {
-          backgroundColor: darkGreyBlue,
-        },
-      },
-    },
-    MuiButtonBase: {
-      styleOverrides: {
-        root: {
-          '&:focus': {
-            outline: 'none',
-          },
-        },
-      },
-    },
-    MuiCardContent: {
-      styleOverrides: {
-        root: {
-          '&:last-child': {
-            paddingBottom: 0,
-          },
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          color: lightGray,
-        },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          height: '100%',
-          '& .Mui-disabled': {
-            backgroundColor: backgroundGray,
-          },
-        },
-      },
-    },
-    MuiDatePicker: {
-      styleOverrides: {
-        root: {
-          color: black,
-        },
-        textFiled: {
-          color: black,
-        },
-      },
-    },
-    MuiPickersDay: {
-      styleOverrides: {
-        root: {
-          color: 'black',
-        },
-      },
-    },
-    MuiPickersCalendarHeader: {
-      styleOverrides: {
-        root: {
-          color: 'black',
-        },
-      },
-    },
-    MuiClockNumber: {
-      styleOverrides: {
-        root: {
-          color: 'black',
-        },
-      },
-    },
-    MuiYearPicker: {
-      styleOverrides: {
-        root: {
-          color: 'black',
-        },
-      },
-    },
+});
 
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          color: 'black',
-          '&:not(.MuiInputBase-multiline)': {
-            padding: 0,
-          },
-          '&.Mui-focused': {
-            borderColor: lightBlue,
-          },
-        },
+theme.components = {
+  MuiAppBar: {
+    styleOverrides: {
+      root: {
+        height: 122,
+        justifyContent: 'center',
+        backgroundColor: lightBlue,
       },
     },
-    MuiTableCell: {
-      styleOverrides: {
-        root: {
-          color: black,
-        },
-        head: {
-          color: black,
-        },
-        body: {
-          color: black,
-        },
+  },
+  MuiToolbar: {
+    styleOverrides: {
+      root: {
+        justifyContent: 'space-between',
+      },
+      dense: {
+        minHeight: 40,
       },
     },
-    MuiTableSortLabel: {
-      styleOverrides: {
-        root: {
-          color: black,
-          '&.Mui-active': {
-            color: `${black} !important`,
-          },
+  },
+  MuiTypography: {
+    styleOverrides: {
+      h1: {
+        fontSize: 52,
+        fontFamily,
+        fontWeight: 300,
+        [theme.breakpoints.down('xs')]: {
+          fontSize: 34,
         },
       },
-    },
-    MuiTablePagination: {
-      styleOverrides: {
-        root: {
-          color: black,
-          backgroundColor: backgroundGray,
+      h2: {
+        fontSize: 48,
+        fontFamily,
+        fontWeight: 300,
+        [theme.breakpoints.down('xs')]: {
+          fontSize: 30,
         },
-        menuItem: {
-          color: black,
+      },
+      h3: {
+        fontSize: 32,
+        fontFamily,
+      },
+      h4: {
+        fontSize: 26,
+        fontFamily,
+        fontWeight: 400,
+        [theme.breakpoints.down('sm')]: {
+          fontSize: 22,
+        },
+      },
+      h5: {
+        fontSize: 20,
+        fontFamily,
+      },
+      h6: {
+        fontSize: 16,
+        fontFamily,
+        fontWeight: 400,
+      },
+      subtitle1: {
+        fontSize: 14,
+        fontFamily,
+      },
+      subtitle2: {
+        fontSize: 12,
+        fontFamily,
+      },
+      caption: {
+        fontSize: 10,
+        fontFamily,
+      },
+      overline: {
+        fontSize: 8.5,
+        fontFamily,
+        textTransform: 'none',
+      },
+      gutterBottom: {
+        marginBottom: '1rem',
+      },
+    },
+  },
+  MuiGrid: {
+    styleOverrides: {
+      'spacing-xs-10': {
+        width: '100%',
+        margin: '0',
+      },
+    },
+  },
+  MuiButton: {
+    styleOverrides: {
+      root: {
+        borderRadius: 5,
+      },
+      containedPrimary: {
+        backgroundColor: lightBlue,
+      },
+      containedSecondary: {
+        backgroundColor: darkGreyBlue,
+      },
+    },
+  },
+  MuiButtonBase: {
+    styleOverrides: {
+      root: {
+        '&:focus': {
+          outline: 'none',
         },
       },
     },
   },
-});
+  MuiCardContent: {
+    styleOverrides: {
+      root: {
+        '&:last-child': {
+          paddingBottom: 0,
+        },
+      },
+    },
+  },
+  MuiInputLabel: {
+    styleOverrides: {
+      root: {
+        color: lightGray,
+      },
+    },
+  },
+  MuiInputBase: {
+    styleOverrides: {
+      root: {
+        height: '100%',
+        '& .Mui-disabled': {
+          backgroundColor: backgroundGray,
+        },
+      },
+    },
+  },
+  MuiDatePicker: {
+    styleOverrides: {
+      root: {
+        color: black,
+      },
+      textFiled: {
+        color: black,
+      },
+    },
+  },
+  MuiPickersDay: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+      },
+    },
+  },
+  MuiPickersCalendarHeader: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+      },
+    },
+  },
+  MuiClockNumber: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+      },
+    },
+  },
+  MuiYearPicker: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+      },
+    },
+  },
+
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+        '&:not(.MuiInputBase-multiline)': {
+          padding: 0,
+        },
+        '&.Mui-focused': {
+          borderColor: lightBlue,
+        },
+      },
+    },
+  },
+  MuiTableCell: {
+    styleOverrides: {
+      root: {
+        color: black,
+      },
+      head: {
+        color: black,
+      },
+      body: {
+        color: black,
+      },
+    },
+  },
+  MuiTableSortLabel: {
+    styleOverrides: {
+      root: {
+        color: black,
+        '&.Mui-active': {
+          color: `${black} !important`,
+        },
+      },
+    },
+  },
+  MuiTablePagination: {
+    styleOverrides: {
+      root: {
+        color: black,
+        backgroundColor: backgroundGray,
+      },
+      menuItem: {
+        color: black,
+      },
+    },
+  },
+};
 
 export default theme;
