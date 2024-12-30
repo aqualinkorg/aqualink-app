@@ -6,15 +6,14 @@ exports[`renders as expected 1`] = `
     classname="makeStyles-root-8"
   >
     <div
-      class="MuiCardHeader-root makeStyles-header-3 css-185gdzj-MuiCardHeader-root"
+      class="MuiCardHeader-root makeStyles-header-3 css-149tc0y-MuiCardHeader-root"
     >
       <div
-        class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+        class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
       >
         <mock-typography
           classname="MuiCardHeader-title"
           component="span"
-          display="block"
           variant="h5"
         >
           <div
@@ -43,7 +42,7 @@ exports[`renders as expected 1`] = `
         p="1rem"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-wxat9z-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
@@ -261,7 +260,7 @@ exports[`renders as expected 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall makeStyles-updateIcon-14 css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall makeStyles-updateIcon-14 css-120dh41-MuiSvgIcon-root"
                 data-testid="UpdateIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -304,7 +303,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-1otw71y-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-iorydh-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
@@ -320,9 +319,6 @@ exports[`renders as expected 1`] = `
                     VIEW UPLOAD
                   </mock-typography>
                 </a>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
             </div>
           </div>

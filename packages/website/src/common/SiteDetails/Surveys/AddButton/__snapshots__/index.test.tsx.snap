@@ -3,16 +3,16 @@
 exports[`renders as expected 1`] = `
 <div>
   <a
-    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary AddButton-addSurveyButton-1 css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary AddButton-addSurveyButton-1 css-1588512-MuiButtonBase-root-MuiButton-root"
     href="/sites/1/new_survey"
     tabindex="0"
   >
     <span
-      class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium AddButton-addSurveyButtonIcon-2 css-1d6wzja-MuiButton-startIcon"
+      class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium AddButton-addSurveyButtonIcon-2 css-1jsm74t-MuiButton-startIcon"
     >
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
         data-testid="AddCircleOutlineIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -28,9 +28,6 @@ exports[`renders as expected 1`] = `
     >
       ADD NEW SURVEY
     </mock-typography>
-    <span
-      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-    />
   </a>
 </div>
 `;

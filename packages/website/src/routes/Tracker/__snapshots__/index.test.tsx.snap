@@ -9,12 +9,12 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     classname="makeStyles-hero-2 makeStyles-hero-14"
   >
     <div
-      class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+      class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
       role="img"
       style="background-image: url(hero.png);"
     />
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-titleWrapper-5 css-1oqqzyl-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-titleWrapper-5 css-5c1adp-MuiContainer-root"
     >
       <mock-typography
         classname="makeStyles-heroTitle-3"
@@ -26,7 +26,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     </div>
   </mock-box>
   <div
-    class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-root-1 css-1oqqzyl-MuiContainer-root"
+    class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-root-1 css-5c1adp-MuiContainer-root"
   >
     <mock-box
       margin="72px 0 48px 0"
@@ -39,7 +39,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 makeStyles-globalStressWrapper-13 css-mv1jm0-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 makeStyles-globalStressWrapper-13 css-1oitsam-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4 css-14sngiz-MuiGrid-root"
@@ -98,7 +98,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+              class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
               role="img"
               style="background-image: url(Brazil.jpg);"
             />
@@ -117,7 +117,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-mv1jm0-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1oitsam-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8 css-xeq51w-MuiGrid-root"
@@ -133,7 +133,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+              class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
               role="img"
               style="background-image: url(image4.png);"
             />
@@ -206,7 +206,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-mv1jm0-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1oitsam-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4 css-14sngiz-MuiGrid-root"
@@ -271,7 +271,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+              class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
               role="img"
               style="background-image: url(image1.png);"
             />
@@ -290,7 +290,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-mv1jm0-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1oitsam-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8 css-xeq51w-MuiGrid-root"
@@ -300,7 +300,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           variant="outlined"
         >
           <div
-            class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+            class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
             role="img"
             style="background-image: url(image2.png);"
           />
@@ -320,7 +320,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       margin="48px 0 72px 0"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1nizt4p-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-b4ocr5-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-9 css-12zv01i-MuiGrid-root"
@@ -344,7 +344,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 makeStyles-globalStressWrapper-13 css-mv1jm0-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 makeStyles-globalStressWrapper-13 css-1oitsam-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4 css-14sngiz-MuiGrid-root"
@@ -375,7 +375,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             href="/collections/heat-stress"
           >
             <div
-              class="MuiCardMedia-root makeStyles-image-10 css-16cvb1l-MuiCardMedia-root"
+              class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
               role="img"
               style="background-image: url(image3.png);"
             />

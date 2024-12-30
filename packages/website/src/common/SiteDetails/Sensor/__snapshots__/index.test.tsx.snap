@@ -6,15 +6,14 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
     classname="Sensor-root-8"
   >
     <div
-      class="MuiCardHeader-root Sensor-header-3 css-185gdzj-MuiCardHeader-root"
+      class="MuiCardHeader-root Sensor-header-3 css-149tc0y-MuiCardHeader-root"
     >
       <div
-        class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+        class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
       >
         <mock-typography
           classname="MuiCardHeader-title"
           component="span"
-          display="block"
           variant="h5"
         >
           <div

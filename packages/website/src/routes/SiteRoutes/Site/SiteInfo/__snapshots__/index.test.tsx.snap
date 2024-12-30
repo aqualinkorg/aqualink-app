@@ -3,25 +3,26 @@
 exports[`SiteNavBar should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
     style="min-height: 0px;"
   >
     <div
-      class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+      class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
     >
       <div
-        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
       >
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-naw0w7-MuiPaper-root-MuiAlert-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
           role="alert"
+          style="--Paper-shadow: none;"
         >
           <div
-            class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+            class="MuiAlert-icon css-vab54s-MuiAlert-icon"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
               data-testid="SuccessOutlinedIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -32,12 +33,12 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
             </svg>
           </div>
           <div
-            class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+            class="MuiAlert-message css-zioonp-MuiAlert-message"
           >
             Something went wrong
           </div>
           <div
-            class="MuiAlert-action css-ki1hdl-MuiAlert-action"
+            class="MuiAlert-action css-rgppqo-MuiAlert-action"
           >
             <mock-iconbutton
               color="inherit"
@@ -45,7 +46,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
                 data-testid="CloseIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -67,7 +68,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-n3dho1-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-174grhv-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item SiteNavBar-headerButtonWrapper-3 css-x7bhrq-MuiGrid-root"
@@ -82,7 +83,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="ArrowBackIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -94,7 +95,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
           </mock-iconbutton>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteNavBar-headerWrapper-4 css-1cbjxkj-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteNavBar-headerWrapper-4 css-1accxqv-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 css-1f6br5b-MuiGrid-root"
@@ -157,34 +158,28 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-1a1giqp-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-3m2mgt-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteNavBar-button-2 css-9bf18e-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteNavBar-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
                 EDIT SITE DETAILS
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteNavBar-button-2 css-9bf18e-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteNavBar-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                 href="/sites/1/upload_data"
                 tabindex="0"
               >
                 UPLOAD DATA
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </a>
             </div>
           </div>

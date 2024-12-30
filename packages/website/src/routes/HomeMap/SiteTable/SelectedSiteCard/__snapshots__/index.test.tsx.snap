@@ -18,7 +18,7 @@ exports[`renders as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-2 css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-2 css-1umw9bq-MuiSvgIcon-root"
             data-testid="LaunchIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -32,7 +32,7 @@ exports[`renders as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-9 makeStyles-cardWrapper-21 css-19gt13f-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-9 makeStyles-cardWrapper-21 css-1h90obp-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-13 css-1nyv9pn-MuiGrid-root"
@@ -202,7 +202,7 @@ exports[`renders loading as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-45 css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-45 css-1umw9bq-MuiSvgIcon-root"
             data-testid="LaunchIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -216,7 +216,7 @@ exports[`renders loading as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 css-19gt13f-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 css-1h90obp-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-56 css-1nyv9pn-MuiGrid-root"

@@ -3,22 +3,19 @@
 exports[`MultipleSensorsCharts should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="MuiContainer-root MuiContainer-maxWidthLg MuiContainer-disableGutters makeStyles-chartWithRange-1 css-1p4tas-MuiContainer-root"
+    class="MuiContainer-root MuiContainer-maxWidthLg MuiContainer-disableGutters makeStyles-chartWithRange-1 css-ho17r4-MuiContainer-root"
   >
     <div
       class="makeStyles-buttonWrapper-2"
     >
       <div>
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1btmbba-MuiButtonBase-root-MuiButton-root"
           style="margin-bottom: 2em;"
           tabindex="0"
           type="button"
         >
           Download CSV
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
         </button>
         <mock-dialog
           open="false"
@@ -58,7 +55,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             </mock-dialogcontenttext>
             <mock-dialogcontenttext>
               <div
-                class="MuiFormGroup-root MuiFormGroup-row css-qfz70r-MuiFormGroup-root"
+                class="MuiFormGroup-root MuiFormGroup-row css-cis11t-MuiFormGroup-root"
               >
                 <mock-tooltip
                   arrow="true"
@@ -66,7 +63,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Download all additional data available from all sources for this site"
                 >
                   <label
-                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
                   >
                     <mock-checkbox
                       checked="false"
@@ -86,7 +83,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Download data for all available dates"
                 >
                   <label
-                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
                   >
                     <mock-checkbox
                       checked="false"
@@ -106,7 +103,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Average data per hour"
                 >
                   <label
-                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
                   >
                     <mock-checkbox
                       checked="false"
@@ -132,23 +129,20 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           </mock-dialogcontent>
           <mock-dialogactions>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSecondary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorSecondary MuiButton-root MuiButton-text MuiButton-textSecondary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorSecondary css-1d3f8j8-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSecondary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorSecondary MuiButton-root MuiButton-text MuiButton-textSecondary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorSecondary css-if69c8-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
               Cancel
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
               Download
               <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
               />
             </button>
           </mock-dialogactions>
@@ -159,7 +153,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
       id="temperature"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-9r7ahq-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-e7gmdo-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -175,21 +169,22 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
               TEMPERATURE ANALYSIS
             </mock-typography>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-ofrcno-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-1cth5tq-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root Header-rangeItem-14 MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-hu7tqv-MuiPaper-root-MuiAlert-root"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root Header-rangeItem-14 MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-k1p3sh-MuiPaper-root-MuiAlert-root"
                   role="alert"
+                  style="--Paper-shadow: none;"
                 >
                   <div
-                    class="MuiAlert-icon Header-rangeIcon-17 css-1ytlwq5-MuiAlert-icon"
+                    class="MuiAlert-icon Header-rangeIcon-17 css-vab54s-MuiAlert-icon"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
                       data-testid="InfoOutlinedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -200,7 +195,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </svg>
                   </div>
                   <div
-                    class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+                    class="MuiAlert-message css-zioonp-MuiAlert-message"
                   >
                     <mock-typography
                       variant="subtitle2"
@@ -220,7 +215,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             ml="4"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-c06c7r-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-64b0yj-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -243,7 +238,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 >
                   <div>
                     <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-1jb5gvc-MuiButtonBase-root-MuiButton-root"
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-xpnxu6-MuiButtonBase-root-MuiButton-root"
                       tabindex="0"
                       type="button"
                     >
@@ -252,9 +247,6 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       >
                         1 Month
                       </mock-typography>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </mock-tooltip>
@@ -269,7 +261,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 >
                   <div>
                     <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-1jb5gvc-MuiButtonBase-root-MuiButton-root"
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-xpnxu6-MuiButtonBase-root-MuiButton-root"
                       tabindex="0"
                       type="button"
                     >
@@ -278,9 +270,6 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       >
                         1 Year
                       </mock-typography>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </mock-tooltip>
@@ -295,7 +284,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 >
                   <div>
                     <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-1jb5gvc-MuiButtonBase-root-MuiButton-root"
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-xpnxu6-MuiButtonBase-root-MuiButton-root"
                       tabindex="0"
                       type="button"
                     >
@@ -304,9 +293,6 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       >
                         Max
                       </mock-typography>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </mock-tooltip>
@@ -321,7 +307,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 >
                   <div>
                     <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-1evprfk-MuiButtonBase-root-MuiButton-root"
+                      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-m0z6ex-MuiButtonBase-root-MuiButton-root"
                       tabindex="0"
                       type="button"
                     >
@@ -330,9 +316,6 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       >
                         Custom
                       </mock-typography>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </mock-tooltip>
@@ -343,7 +326,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-14j9m32-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-ovboin-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item makeStyles-chart-7 makeStyles-largeChart-8 css-13i4rnv-MuiGrid-root"
@@ -360,7 +343,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 Chart-datePickersWrapper-19 css-6tf4il-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 Chart-datePickersWrapper-19 css-bwav7-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -382,14 +365,14 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="DatePicker-datePicker-20"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-23 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-23 css-1xp5r68-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly DatePicker-textField-23 MuiInputBase-readOnly css-1eed5fa-MuiInputBase-root-MuiInput-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly DatePicker-textField-23 MuiInputBase-readOnly css-5h82ro-MuiInputBase-root-MuiInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiInput-input Mui-readOnly DatePicker-smallPadding-22 MuiInputBase-readOnly css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                          class="MuiInputBase-input MuiInput-input Mui-readOnly DatePicker-smallPadding-22 MuiInputBase-readOnly css-1yrc8ca-MuiInputBase-input-MuiInput-input"
                           id=":r0:"
                           readonly=""
                           type="text"
@@ -398,23 +381,23 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </div>
                     </div>
                     <mock-dialog
-                      classname="css-1rqc0ef"
+                      classname="css-viza91"
                       open="false"
                     >
                       <mock-dialogcontent
-                        classname="css-1jqvr2x"
+                        classname="css-154ra1s"
                       >
                         <div
                           class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
                         >
                           <div
-                            class="css-epd502"
+                            class="css-1cwxofe"
                           >
                             <div
-                              class="MuiCalendarPicker-root css-169iwlq-MuiCalendarPicker-root"
+                              class="MuiCalendarPicker-root css-dooxo9-MuiCalendarPicker-root"
                             >
                               <div
-                                class="MuiPickersCalendarHeader-root css-nk89i7-MuiPickersCalendarHeader-root"
+                                class="MuiPickersCalendarHeader-root css-1jp49e7-MuiPickersCalendarHeader-root"
                               >
                                 <div
                                   aria-live="polite"
@@ -422,17 +405,17 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   role="presentation"
                                 >
                                   <div
-                                    class="MuiPickersFadeTransitionGroup-root css-31ca4x-MuiPickersFadeTransitionGroup-root"
+                                    class="MuiPickersFadeTransitionGroup-root css-1etsrfk-MuiPickersFadeTransitionGroup-root"
                                   >
                                     <div
-                                      class="MuiPickersCalendarHeader-label css-dplwbx-MuiPickersCalendarHeader-label"
+                                      class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
                                       id=":r1:-grid-label"
                                       style="opacity: 1; webkit-transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                     >
                                       May 2022
                                     </div>
                                     <div
-                                      class="MuiPickersCalendarHeader-label css-dplwbx-MuiPickersCalendarHeader-label"
+                                      class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
                                       id=":r1:-grid-label"
                                       style="opacity: 0; webkit-transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                     >
@@ -441,12 +424,12 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   </div>
                                   <mock-iconbutton
                                     aria-label="calendar view is open, switch to year view"
-                                    classname="MuiPickersCalendarHeader-switchViewButton css-1wknyoa-MuiPickersCalendarHeader-switchViewButton"
+                                    classname="MuiPickersCalendarHeader-switchViewButton css-4e2l6-MuiPickersCalendarHeader-switchViewButton"
                                     size="small"
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPickersCalendarHeader-switchViewIcon css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPickersCalendarHeader-switchViewIcon css-14yom7c-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon"
                                       data-testid="ArrowDropDownIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -458,7 +441,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   </mock-iconbutton>
                                 </div>
                                 <div
-                                  class="MuiPickersArrowSwitcher-root css-9reuh9-MuiPickersArrowSwitcher-root"
+                                  class="MuiPickersArrowSwitcher-root css-15umtxl-MuiPickersArrowSwitcher-root"
                                   style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                 >
                                   <mock-iconbutton
@@ -471,7 +454,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                       data-testid="ArrowLeftIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -494,7 +477,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                       data-testid="ArrowRightIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -507,7 +490,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                 </div>
                               </div>
                               <div
-                                class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-15dbmtb-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
+                                class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-1t66xej-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
                               >
                                 <div
                                   style="opacity: 1;"
@@ -517,7 +500,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                     role="grid"
                                   >
                                     <div
-                                      class="MuiDayPicker-header css-qklzlb-MuiDayPicker-header"
+                                      class="MuiDayPicker-header css-1vi9hgp-MuiDayPicker-header"
                                       role="row"
                                     >
                                       <mock-typography
@@ -578,408 +561,315 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                     </div>
                                     <div
-                                      class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
+                                      class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-18bv5fz-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
                                       role="presentation"
                                     >
                                       <div
-                                        class="MuiDayPicker-monthContainer css-6t5f1e-MuiDayPicker-monthContainer PrivatePickersSlideTransition-slideEnter-right PrivatePickersSlideTransition-slideEnterActive"
+                                        class="MuiDayPicker-monthContainer css-1i7aeku-MuiDayPicker-monthContainer PrivatePickersSlideTransition-slideEnter-right PrivatePickersSlideTransition-slideEnterActive"
                                         role="rowgroup"
                                       >
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             1
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             2
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             3
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             4
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             5
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             6
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             7
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             8
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             9
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             10
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             11
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             12
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             13
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             14
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             15
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             16
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             17
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             18
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             19
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             20
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             21
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             22
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             23
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             24
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             25
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             26
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             27
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="true"
-                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             28
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             29
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             30
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="0"
                                             type="button"
                                           >
                                             31
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <div
                                             class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
@@ -1000,11 +890,11 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                         </div>
                                       </div>
                                       <div
-                                        class="MuiDayPicker-monthContainer css-6t5f1e-MuiDayPicker-monthContainer PrivatePickersSlideTransition-slideExit PrivatePickersSlideTransition-slideExitActiveLeft-right"
+                                        class="MuiDayPicker-monthContainer css-1i7aeku-MuiDayPicker-monthContainer PrivatePickersSlideTransition-slideExit PrivatePickersSlideTransition-slideExitActiveLeft-right"
                                         role="rowgroup"
                                       >
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <div
@@ -1025,364 +915,283 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           />
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             1
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             2
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             3
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             4
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             5
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             6
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             7
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             8
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             9
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             10
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             11
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             12
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             13
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             14
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             15
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             16
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             17
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             18
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             19
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             20
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="0"
                                             type="button"
                                           >
                                             21
                                             <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                              class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
                                             />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             22
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             23
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             24
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             25
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             26
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             27
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-current="date"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-195y93z-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-14lrf6x-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             28
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             disabled=""
                                             role="gridcell"
                                             tabindex="-1"
@@ -1392,7 +1201,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             disabled=""
                                             role="gridcell"
                                             tabindex="-1"
@@ -1416,24 +1225,18 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-dialogcontent>
                       <mock-dialogactions>
                         <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
                           tabindex="0"
                           type="button"
                         >
                           Cancel
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
                         </button>
                         <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
                           tabindex="0"
                           type="button"
                         >
                           OK
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
                         </button>
                       </mock-dialogactions>
                     </mock-dialog>
@@ -1461,14 +1264,14 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="DatePicker-datePicker-20"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-23 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-23 css-1xp5r68-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly DatePicker-textField-23 MuiInputBase-readOnly css-1eed5fa-MuiInputBase-root-MuiInput-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly DatePicker-textField-23 MuiInputBase-readOnly css-5h82ro-MuiInputBase-root-MuiInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiInput-input Mui-readOnly DatePicker-smallPadding-22 MuiInputBase-readOnly css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                          class="MuiInputBase-input MuiInput-input Mui-readOnly DatePicker-smallPadding-22 MuiInputBase-readOnly css-1yrc8ca-MuiInputBase-input-MuiInput-input"
                           id=":r2:"
                           readonly=""
                           type="text"
@@ -1477,23 +1280,23 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </div>
                     </div>
                     <mock-dialog
-                      classname="css-1rqc0ef"
+                      classname="css-viza91"
                       open="false"
                     >
                       <mock-dialogcontent
-                        classname="css-1jqvr2x"
+                        classname="css-154ra1s"
                       >
                         <div
                           class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
                         >
                           <div
-                            class="css-epd502"
+                            class="css-1cwxofe"
                           >
                             <div
-                              class="MuiCalendarPicker-root css-169iwlq-MuiCalendarPicker-root"
+                              class="MuiCalendarPicker-root css-dooxo9-MuiCalendarPicker-root"
                             >
                               <div
-                                class="MuiPickersCalendarHeader-root css-nk89i7-MuiPickersCalendarHeader-root"
+                                class="MuiPickersCalendarHeader-root css-1jp49e7-MuiPickersCalendarHeader-root"
                               >
                                 <div
                                   aria-live="polite"
@@ -1501,17 +1304,17 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   role="presentation"
                                 >
                                   <div
-                                    class="MuiPickersFadeTransitionGroup-root css-31ca4x-MuiPickersFadeTransitionGroup-root"
+                                    class="MuiPickersFadeTransitionGroup-root css-1etsrfk-MuiPickersFadeTransitionGroup-root"
                                   >
                                     <div
-                                      class="MuiPickersCalendarHeader-label css-dplwbx-MuiPickersCalendarHeader-label"
+                                      class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
                                       id=":r3:-grid-label"
                                       style="opacity: 1; webkit-transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                     >
                                       June 2022
                                     </div>
                                     <div
-                                      class="MuiPickersCalendarHeader-label css-dplwbx-MuiPickersCalendarHeader-label"
+                                      class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
                                       id=":r3:-grid-label"
                                       style="opacity: 0; webkit-transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                     >
@@ -1520,12 +1323,12 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   </div>
                                   <mock-iconbutton
                                     aria-label="calendar view is open, switch to year view"
-                                    classname="MuiPickersCalendarHeader-switchViewButton css-1wknyoa-MuiPickersCalendarHeader-switchViewButton"
+                                    classname="MuiPickersCalendarHeader-switchViewButton css-4e2l6-MuiPickersCalendarHeader-switchViewButton"
                                     size="small"
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPickersCalendarHeader-switchViewIcon css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPickersCalendarHeader-switchViewIcon css-14yom7c-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon"
                                       data-testid="ArrowDropDownIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -1537,7 +1340,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   </mock-iconbutton>
                                 </div>
                                 <div
-                                  class="MuiPickersArrowSwitcher-root css-9reuh9-MuiPickersArrowSwitcher-root"
+                                  class="MuiPickersArrowSwitcher-root css-15umtxl-MuiPickersArrowSwitcher-root"
                                   style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                 >
                                   <mock-iconbutton
@@ -1550,7 +1353,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                       data-testid="ArrowLeftIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -1573,7 +1376,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                       data-testid="ArrowRightIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -1586,7 +1389,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                 </div>
                               </div>
                               <div
-                                class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-15dbmtb-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
+                                class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-1t66xej-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
                               >
                                 <div
                                   style="opacity: 1;"
@@ -1596,7 +1399,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                     role="grid"
                                   >
                                     <div
-                                      class="MuiDayPicker-header css-qklzlb-MuiDayPicker-header"
+                                      class="MuiDayPicker-header css-1vi9hgp-MuiDayPicker-header"
                                       role="row"
                                     >
                                       <mock-typography
@@ -1657,15 +1460,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                     </div>
                                     <div
-                                      class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
+                                      class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-18bv5fz-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
                                       role="presentation"
                                     >
                                       <div
-                                        class="MuiDayPicker-monthContainer css-6t5f1e-MuiDayPicker-monthContainer"
+                                        class="MuiDayPicker-monthContainer css-1i7aeku-MuiDayPicker-monthContainer"
                                         role="rowgroup"
                                       >
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <div
@@ -1682,383 +1485,293 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           />
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             1
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             2
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             3
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             4
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             5
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             6
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             7
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             8
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             9
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             10
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             11
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             12
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             13
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             14
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             15
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             16
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             17
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             18
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             19
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             20
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             21
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             22
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             23
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             24
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             25
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                                           role="row"
                                         >
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             26
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             27
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="true"
-                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             28
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
                                           >
                                             29
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <button
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bkrceb-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
                                             role="gridcell"
                                             tabindex="0"
                                             type="button"
                                           >
                                             30
-                                            <span
-                                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                            />
                                           </button>
                                           <div
                                             class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
@@ -2080,24 +1793,18 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-dialogcontent>
                       <mock-dialogactions>
                         <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
                           tabindex="0"
                           type="button"
                         >
                           Cancel
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
                         </button>
                         <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
                           tabindex="0"
                           type="button"
                         >
                           OK
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
                         </button>
                       </mock-dialogactions>
                     </mock-dialog>
@@ -2131,13 +1838,13 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
               06/28/2022
             </mock-typography>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-iw5b3j-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-14rlipp-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-ttp6t5-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-1k20cze-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
@@ -2175,7 +1882,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1h38exx-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1pqcg35-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2245,7 +1952,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         id="salinity"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-9r7ahq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-e7gmdo-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2268,21 +1975,22 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 point1
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-ofrcno-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-1cth5tq-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root Header-rangeItem-14 MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-hu7tqv-MuiPaper-root-MuiAlert-root"
+                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root Header-rangeItem-14 MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-k1p3sh-MuiPaper-root-MuiAlert-root"
                     role="alert"
+                    style="--Paper-shadow: none;"
                   >
                     <div
-                      class="MuiAlert-icon Header-rangeIcon-17 css-1ytlwq5-MuiAlert-icon"
+                      class="MuiAlert-icon Header-rangeIcon-17 css-vab54s-MuiAlert-icon"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
                         data-testid="InfoOutlinedIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -2293,7 +2001,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </svg>
                     </div>
                     <div
-                      class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+                      class="MuiAlert-message css-zioonp-MuiAlert-message"
                     >
                       <mock-typography
                         variant="subtitle2"
@@ -2309,7 +2017,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-14j9m32-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-ovboin-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item makeStyles-chart-7 makeStyles-largeChart-8 css-13i4rnv-MuiGrid-root"
@@ -2346,13 +2054,13 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-10vv91l-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-qpkn11-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-ttp6t5-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-1k20cze-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
@@ -2390,7 +2098,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1h38exx-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1pqcg35-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2461,7 +2169,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         id="turbidity"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-9r7ahq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-e7gmdo-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2484,14 +2192,14 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 point1
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-ofrcno-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-1cth5tq-MuiGrid-root"
               />
             </mock-box>
           </div>
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-14j9m32-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-ovboin-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item makeStyles-chart-7 makeStyles-largeChart-8 css-13i4rnv-MuiGrid-root"
@@ -2528,13 +2236,13 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-10vv91l-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-qpkn11-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-ttp6t5-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-1k20cze-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
@@ -2572,7 +2280,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1h38exx-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1pqcg35-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2643,7 +2351,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         id="ph"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-9r7ahq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-e7gmdo-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2666,14 +2374,14 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 point1
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-ofrcno-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-1cth5tq-MuiGrid-root"
               />
             </mock-box>
           </div>
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-14j9m32-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-ovboin-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item makeStyles-chart-7 makeStyles-largeChart-8 css-13i4rnv-MuiGrid-root"
@@ -2710,13 +2418,13 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-10vv91l-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-qpkn11-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-ttp6t5-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-1k20cze-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
@@ -2754,7 +2462,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1h38exx-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1pqcg35-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"

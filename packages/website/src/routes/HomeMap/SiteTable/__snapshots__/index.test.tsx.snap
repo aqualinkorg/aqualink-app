@@ -29,18 +29,19 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
     classname="SiteTable-dropdownWrapper-5"
   >
     <div
-      class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1tvaggm-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+      class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1el2auf-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       style="background-color: rgb(70, 154, 187); border-radius: 4px;"
     >
       <div
         aria-controls=":r0:"
         aria-expanded="false"
         aria-haspopup="listbox"
-        class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1ucdrps-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+        class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
         role="combobox"
         tabindex="0"
       >
         <span
+          aria-hidden="true"
           class="notranslate"
         >
           ​
@@ -49,13 +50,13 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
       <input
         aria-hidden="true"
         aria-invalid="false"
-        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+        class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
         tabindex="-1"
         value=""
       />
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
         data-testid="ArrowDropDownIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -67,7 +68,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
       <mock-popover
         anchorel="[object HTMLDivElement]"
         anchororigin="[object Object]"
-        classname="css-oouctw-MuiMenu-root"
+        classname="css-s4soc1-MuiMenu-root"
         id="menu-"
         open="false"
         slotprops="[object Object]"
@@ -79,7 +80,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         <mock-menulist
           actions="[object Object]"
           autofocusitem="false"
-          classname="MuiMenu-list css-rpp6kk-MuiMenu-list"
+          classname="MuiMenu-list css-7drlel-MuiMenu-list"
           disablelistwrap="true"
           id=":r0:"
           role="listbox"
@@ -164,13 +165,13 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         Sort By: 
       </mock-typography>
       <div
-        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 css-xp0aj8-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 css-4rp9ef-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       >
         <div
           aria-controls=":r1:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1ucdrps-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
           role="combobox"
           tabindex="0"
         >
@@ -188,13 +189,13 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         <input
           aria-hidden="true"
           aria-invalid="false"
-          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+          class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
           tabindex="-1"
           value="alert-desc"
         />
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
           data-testid="ArrowDropDownIcon"
           focusable="false"
           viewBox="0 0 24 24"
@@ -206,7 +207,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         <mock-popover
           anchorel="[object HTMLDivElement]"
           anchororigin="[object Object]"
-          classname="css-oouctw-MuiMenu-root"
+          classname="css-s4soc1-MuiMenu-root"
           id="menu-"
           open="false"
           slotprops="[object Object]"
@@ -218,7 +219,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
           <mock-menulist
             actions="[object Object]"
             autofocusitem="false"
-            classname="MuiMenu-list css-rpp6kk-MuiMenu-list"
+            classname="MuiMenu-list css-7drlel-MuiMenu-list"
             disablelistwrap="true"
             id=":r1:"
             role="listbox"
@@ -547,7 +548,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                 data-testid="ErrorIcon"
                 focusable="false"
                 style="color: rgb(198, 229, 250);"

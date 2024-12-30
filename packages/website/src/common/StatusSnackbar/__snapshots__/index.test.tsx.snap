@@ -8,15 +8,16 @@ exports[`renders as expected 1`] = `
     open="true"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-filledSuccess MuiAlert-filled makeStyles-alert-2 css-13milay-MuiPaper-root-MuiAlert-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-filledSuccess MuiAlert-filled makeStyles-alert-2 css-19sgit9-MuiPaper-root-MuiAlert-root"
       role="alert"
+      style="--Paper-shadow: none;"
     >
       <div
-        class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+        class="MuiAlert-icon css-vab54s-MuiAlert-icon"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
           data-testid="SuccessOutlinedIcon"
           focusable="false"
           viewBox="0 0 24 24"
@@ -27,12 +28,12 @@ exports[`renders as expected 1`] = `
         </svg>
       </div>
       <div
-        class="MuiAlert-message makeStyles-alertMessage-3 makeStyles-alertMessage-5 css-1pxa9xg-MuiAlert-message"
+        class="MuiAlert-message makeStyles-alertMessage-3 makeStyles-alertMessage-5 css-zioonp-MuiAlert-message"
       >
         All good!!
       </div>
       <div
-        class="MuiAlert-action css-ki1hdl-MuiAlert-action"
+        class="MuiAlert-action css-rgppqo-MuiAlert-action"
       >
         <mock-iconbutton
           aria-label="Close"
@@ -42,7 +43,7 @@ exports[`renders as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="CloseIcon"
             focusable="false"
             viewBox="0 0 24 24"

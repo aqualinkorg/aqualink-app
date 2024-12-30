@@ -9,10 +9,10 @@ exports[`renders as expected 1`] = `
       classname="Tooltip-tooltipCard-2"
     >
       <div
-        class="MuiCardHeader-root Tooltip-tooltipHeader-3 css-185gdzj-MuiCardHeader-root"
+        class="MuiCardHeader-root Tooltip-tooltipHeader-3 css-149tc0y-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
           <mock-typography
             color="textPrimary"
