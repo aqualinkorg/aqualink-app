@@ -1,3 +1,5 @@
+'use-client';
+
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import {
@@ -9,7 +11,7 @@ import {
 import { Provider, useDispatch } from 'react-redux';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import { getSelf } from 'store/User/userSlice';
+import { getSelf, setToken } from 'store/User/userSlice';
 import { useGATagManager } from 'utils/google-analytics';
 import LandingPage from 'routes/Landing';
 import Terms from 'routes/Terms';
@@ -29,9 +31,13 @@ import Spotter from 'routes/Spotter';
 import Tracker from 'routes/Tracker';
 import { SnackbarProvider } from 'notistack';
 import { store } from 'store/configure';
+import { CacheAxiosResponse } from 'axios-cache-interceptor';
+import { AxiosError } from 'axios';
+import { decodeToken } from 'react-jwt';
 import app from '../../firebase';
 import ErrorBoundary from './ErrorBoundary';
 import theme from './theme';
+import requestsConfig from '../../helpers/requests';
 
 import 'leaflet/dist/leaflet.css';
 import './App.css';
@@ -54,6 +60,34 @@ function App() {
               dispatch(getSelf(token));
             })
             .catch(console.error);
+
+          // Set request interceptor to renew expired token on 401 errors
+          requestsConfig.agent().interceptors.response.use(
+            (response: CacheAxiosResponse) => Promise.resolve(response),
+            async (error: AxiosError) => {
+              const { config, status } = error?.response || {};
+              const oldToken = store.getState().user.userInfo?.token;
+              if (oldToken) {
+                const decoded = decodeToken(oldToken) as { exp: number };
+                const now = new Date().getTime();
+                if (config && status === 401 && decoded.exp < now) {
+                  // 401 - Unauthorized eror was due to an expired token, renew it.
+                  const newToken = await user.getIdToken();
+                  store.dispatch(setToken(newToken));
+                  const newConfig = {
+                    ...config,
+                    headers: {
+                      ...config.headers,
+                      Authorization: `Bearer ${newToken}`,
+                    },
+                  };
+                  return requestsConfig.agent().request(newConfig);
+                }
+                return Promise.reject(error);
+              }
+              return Promise.reject(error);
+            },
+          );
         }
       });
     }
