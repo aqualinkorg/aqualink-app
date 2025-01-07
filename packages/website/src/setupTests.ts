@@ -7,6 +7,7 @@ import '@testing-library/jest-dom/';
 import 'mutationobserver-shim';
 import { TextEncoder, TextDecoder } from 'util';
 import { ReadableStream } from 'node:stream/web';
+import { forwardRef } from 'react';
 
 // Polyfill to address Jest+jsdom issue: https://github.com/jsdom/jsdom/issues/2524
 // Define the globals that are missing
@@ -17,32 +18,56 @@ Object.defineProperties(globalThis, {
   ReadableStream: { value: ReadableStream },
 });
 
-jest.mock('@mui/icons-material', () => ({
-  __esModule: true,
-  ArrowBack: 'mock-ArrowBack',
-  Build: 'mock-Build',
-  Cancel: 'mock-Cancel',
-  Clear: 'mock-Clear',
-  Code: 'mock-Code',
-  Email: 'mock-Email',
-  ExpandMore: 'mock-ExpandMore',
-  Favorite: 'mock-Favorite',
-  FavoriteBorder: 'mock-FavoriteBorder',
-  FilterHdr: 'mock-FilterHdr',
-  Flag: 'mock-Flag',
-  GitHub: 'mock-GitHub',
-  KeyboardArrowDown: 'mock-KeyboardArrowDown',
-  KeyboardArrowUp: 'mock-KeyboardArrowUp',
-  ArrowDownward: 'mock-ArrowDownward',
-  ArrowUpward: 'mock-ArrowUpward',
-  LocalOffer: 'mock-LocalOffer',
-  Menu: 'mock-Menu',
-  MoreVert: 'mock-MoreVert',
-  Person: 'mock-Person',
-  Share: 'mock-Share',
-  Star: 'mock-Star',
-  StarBorder: 'mock-StarBorder',
-  ZoomOutMap: 'mock-ZoomOutMap',
+function mockIcon(iconName: string) {
+  jest.mock(`@mui/icons-material/${iconName}`, () => ({
+    __esModule: true,
+    default: `mock-${iconName}`,
+  }));
+}
+mockIcon('ArrowBack');
+mockIcon('Build');
+mockIcon('Cancel');
+mockIcon('Clear');
+mockIcon('Code');
+mockIcon('Email');
+mockIcon('ExpandMore');
+mockIcon('Favorite');
+mockIcon('FavoriteBorder');
+mockIcon('FilterHdr');
+mockIcon('Flag');
+mockIcon('GitHub');
+mockIcon('KeyboardArrowDown');
+mockIcon('KeyboardArrowUp');
+mockIcon('ArrowDownward');
+mockIcon('ArrowUpward');
+mockIcon('LocalOffer');
+mockIcon('Menu');
+mockIcon('MoreVert');
+mockIcon('Person');
+mockIcon('Share');
+mockIcon('Star');
+mockIcon('StarBorder');
+mockIcon('ZoomOutMap');
+
+jest.mock('@react-leaflet/core', () => ({
+  ...jest.requireActual('@react-leaflet/core'),
+  useLeafletContext: jest.fn(),
+}));
+
+jest.mock('react-leaflet', () => ({
+  ...jest.requireActual('react-leaflet'),
+  Popup: 'mock-LeafletPopup',
+  MapContainer: forwardRef((props, ref) => {
+    // eslint-disable-next-line fp/no-mutation, no-param-reassign, @typescript-eslint/no-unused-vars
+    ref = { current: { fitBounds: jest.fn() } };
+    return 'mock-MapContainer';
+  }),
+  TileLayer: 'mock-TileLayer',
+  Marker: 'mock-Marker',
+  Polygon: 'mock-Polygon',
+  useMap: jest.fn(),
+  useMapEvent: jest.fn(),
+  useMapEvents: jest.fn(),
 }));
 
 jest.mock('react-chartjs-2', () => ({

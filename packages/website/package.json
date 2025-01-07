@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cross-env EXTEND_ESLINT=true GENERATE_SOURCEMAP=false next dev",
-    "build": "cross-env EXTEND_ESLINT=true GENERATE_SOURCEMAP=false next build",
-    "test": "react-scripts --expose-gc test --logHeapUsage --maxWorkers=4",
-    "eject": "react-scripts eject",
+    "start": "cross-env next dev",
+    "build": "cross-env next build",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore --max-warnings 0",
     "scan": "yarn start & npx react-scan@latest localhost:3000",
     "precommit": "lint-staged",
@@ -69,16 +69,6 @@
     "slick-carousel": "^1.8.1",
     "validator": "^13.1.1"
   },
-  "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "moduleNameMapper": {
-      "axios": "axios/dist/node/axios.cjs",
-      "^csv-stringify/browser/esm/sync": "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs"
-    },
-    "globalSetup": "./src/global-setup.js"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -102,7 +92,7 @@
     "@types/chart.js": "^2.9.27",
     "@types/classnames": "^2.2.10",
     "@types/immutable": "^3.8.7",
-    "@types/jest": "^24.0.0",
+    "@types/jest": "^29.5.14",
     "@types/lodash": "^4.14.149",
     "@types/luxon": "^3.3.1",
     "@types/node": "^18.16.16",
@@ -120,6 +110,8 @@
     "dotenv-cli": "^4.0.0",
     "jest": "^29.7.0",
     "jest-date-mock": "^1.0.8",
-    "surge": "^0.23.1"
+    "jest-environment-jsdom": "^29.7.0",
+    "surge": "^0.23.1",
+    "ts-node": "^10.9.2"
   }
 }
