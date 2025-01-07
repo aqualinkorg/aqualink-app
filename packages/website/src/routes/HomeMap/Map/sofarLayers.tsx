@@ -38,7 +38,7 @@ const WMS_LAYERS: WMSLayerDefinition[] = [
   },
 ];
 
-const { NEXT_PUBLIC_SOFAR_API_TOKEN: API_TOKEN } = process.env;
+const API_TOKEN = process.env.NEXT_PUBLIC_SOFAR_API_TOKEN;
 
 const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
   `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;

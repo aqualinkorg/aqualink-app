@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 
-const { NEXT_PUBLIC_FIREBASE_API_KEY: apiKey } = process.env;
+const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
 if (!apiKey) {
   console.warn(
