@@ -262,7 +262,7 @@ const SelectedSiteCardContent = ({
         </Box>
         <Hidden mdDown>
           <LoadingSkeleton
-            image={chartLoading}
+            image={chartLoading.src}
             loading={loading}
             variant="rectangular"
             width="98%"
@@ -274,7 +274,7 @@ const SelectedSiteCardContent = ({
         <Hidden mdUp>
           <LoadingSkeleton
             className={classes.mobileChartLoading}
-            image={chartLoading}
+            image={chartLoading.src}
             loading={loading}
             variant="rectangular"
             width="98%"

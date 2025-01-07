@@ -11,14 +11,14 @@ export const cardTitles: CardIncomingProps[] = [
     text: 'Aqualink integrates data from sensors, models, satellite observations, surveys, images, and video to give you an instant view of your ecosystem.',
     backgroundColor: 'rgba(69, 76, 79, 0.05)',
     direction: 'row',
-    image: metrics,
+    image: metrics.src,
   },
   {
     title: 'Integrated sensors for automated data collection',
     text: 'Sofar spotter for real-time telemetry, Fathom for live underwater video, a multi-parameter sonde for water quality information, and hobo temperature logger. Additionally any data in csv format can be uploaded to Aqualink.',
     backgroundColor: '#ffffff',
     direction: 'row-reverse',
-    image: sensors,
+    image: sensors.src,
     scaleDown: true,
   },
   {
@@ -26,7 +26,7 @@ export const cardTitles: CardIncomingProps[] = [
     text: 'Collect data and conduct photographic surveys in a structured way based on best practices. Create a grid of survey points and upload data and imagery to each point.',
     backgroundColor: 'rgba(69, 76, 79, 0.05)',
     direction: 'row',
-    image: surveyImages,
+    image: surveyImages.src,
     scaleDown: true,
   },
   {
@@ -34,7 +34,7 @@ export const cardTitles: CardIncomingProps[] = [
     text: 'All of the aqualink code is open source. Let us know what we should build, or build extensions yourself. The system is provided for free by Aqualink, a philanthropic engineering organization.',
     backgroundColor: '#ffffff',
     direction: 'row-reverse',
-    image: map,
+    image: map.src,
     scaleDown: true,
   },
   {
@@ -42,7 +42,7 @@ export const cardTitles: CardIncomingProps[] = [
     text: '',
     backgroundColor: '#ffffff',
     direction: 'row-reverse',
-    image: customers,
+    image: customers.src,
     scaleDown: true,
   },
 ];

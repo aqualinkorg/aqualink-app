@@ -131,10 +131,10 @@ const Tracker = ({
   shouldShowNav = true,
   shouldShowFooter = true,
 }: TrackerProps) => {
-  const heroAspectRatio = useImageAspectRatio(hero);
-  const image1AspectRatio = useImageAspectRatio(image1);
-  const image2AspectRatio = useImageAspectRatio(image2);
-  const image3AspectRatio = useImageAspectRatio(image3);
+  const heroAspectRatio = useImageAspectRatio(hero.src);
+  const image1AspectRatio = useImageAspectRatio(image1.src);
+  const image2AspectRatio = useImageAspectRatio(image2.src);
+  const image3AspectRatio = useImageAspectRatio(image3.src);
 
   const classes = useStyles({
     heroAspectRatio,
@@ -147,7 +147,7 @@ const Tracker = ({
     <>
       {shouldShowNav && <NavBar searchLocation={false} />}
       <Box className={classes.hero}>
-        <CardMedia className={classes.image} image={hero} />
+        <CardMedia className={classes.image} image={hero.src} />
         <Container className={classes.titleWrapper}>
           <Typography
             className={classes.heroTitle}
@@ -219,7 +219,7 @@ const Tracker = ({
                 target="_blank"
                 href="https://highlights.aqualink.org/brazil-heatwave-tracking-live"
               >
-                <CardMedia className={classes.image} image={Brazil} />
+                <CardMedia className={classes.image} image={Brazil.src} />
               </a>
             </Card>
           </Grid>
@@ -238,7 +238,7 @@ const Tracker = ({
                 target="_blank"
                 href="https://highlights.aqualink.org/florida-heatwave-tracking"
               >
-                <CardMedia className={classes.image} image={image4} />
+                <CardMedia className={classes.image} image={image4.src} />
               </a>
             </Card>
           </Grid>
@@ -342,7 +342,7 @@ const Tracker = ({
                 target="_blank"
                 href="/collections/minderoo"
               >
-                <CardMedia className={classes.image} image={image1} />
+                <CardMedia className={classes.image} image={image1.src} />
               </a>
             </Card>
           </Grid>
@@ -355,7 +355,7 @@ const Tracker = ({
         <Grid container spacing={3}>
           <Grid item xs={12} md={7} lg={8}>
             <Card className={classes.card2} variant="outlined">
-              <CardMedia className={classes.image} image={image2} />
+              <CardMedia className={classes.image} image={image2.src} />
             </Card>
           </Grid>
           <Grid item xs={12} md={5} lg={4}>
@@ -406,7 +406,7 @@ const Tracker = ({
           <Grid item xs={12} md={7} lg={8}>
             <Card className={classes.card3} variant="outlined">
               <Link to="/collections/heat-stress">
-                <CardMedia className={classes.image} image={image3} />
+                <CardMedia className={classes.image} image={image3.src} />
               </Link>
             </Card>
           </Grid>

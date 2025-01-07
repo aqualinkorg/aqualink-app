@@ -11,7 +11,7 @@ import { mapConstants } from 'constants/maps';
 import marker from '../../../assets/marker.png';
 
 const pinIcon = L.icon({
-  iconUrl: marker,
+  iconUrl: marker.src,
   iconSize: [20, 30],
   iconAnchor: [10, 30],
   popupAnchor: [0, -41],
@@ -35,8 +35,8 @@ const LocationMap = ({
 
   useMapEvents({
     click(event) {
-    const { lat, lng } = event.latlng.wrap();
-    updateMarkerPosition([lat, lng]);
+      const { lat, lng } = event.latlng.wrap();
+      updateMarkerPosition([lat, lng]);
     },
     zoomend: onZoomEnd,
   });

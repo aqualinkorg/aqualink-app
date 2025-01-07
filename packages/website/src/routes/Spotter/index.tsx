@@ -32,7 +32,7 @@ type WaveData = {
 };
 
 const pinIcon = L.icon({
-  iconUrl: marker,
+  iconUrl: marker.src,
   iconSize: [20, 30],
   iconAnchor: [10, 30],
   popupAnchor: [0, -41],

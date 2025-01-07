@@ -126,7 +126,7 @@ const styles = (theme: Theme) => {
     noVideoCardContent: {
       width: '100%',
       height: '100%',
-      backgroundImage: `url(${reefImage})`,
+      backgroundImage: `url(${reefImage.src})`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       filter: 'blur(2px)',

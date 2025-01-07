@@ -174,7 +174,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     landingImage: {
-      backgroundImage: `url("${landingPageImage}")`,
+      backgroundImage: `url("${landingPageImage.src}")`,
       backgroundSize: 'cover',
       left: 160,
       minHeight: 864,
