@@ -2,6 +2,7 @@ import {
   Hidden,
   TableBody,
   TableCell,
+  TableFooter,
   TablePagination,
   TableRow,
   Theme,
@@ -279,14 +280,18 @@ const SiteTableBody = ({
           })}
       </TableBody>
       {sitesList.length > ROWS_PER_PAGE && (
-        <TablePagination
-          className={classes.stickyFooter}
-          count={sitesList.length}
-          rowsPerPage={ROWS_PER_PAGE}
-          rowsPerPageOptions={[ROWS_PER_PAGE]}
-          page={page}
-          onPageChange={handlePageChange}
-        />
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              className={classes.stickyFooter}
+              rowsPerPage={ROWS_PER_PAGE}
+              count={sitesList.length}
+              rowsPerPageOptions={[ROWS_PER_PAGE]}
+              page={page}
+              onPageChange={handlePageChange}
+            />
+          </TableRow>
+        </TableFooter>
       )}
     </>
   );
