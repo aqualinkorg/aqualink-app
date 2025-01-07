@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { TileLayer, Polygon, Marker, MapContainer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import L, { LatLngTuple, Map, Marker as LeafletMarker } from 'leaflet';
@@ -120,7 +120,6 @@ const SiteMap = ({
     const { current } = mapRef;
     if (current) {
       const map = current;
-      console.log({ map });
       // Initialize map's position to fit the given polygon
       if (polygon.type === 'Polygon') {
         map.fitBounds(L.polygon(polygon.coordinates).getBounds());

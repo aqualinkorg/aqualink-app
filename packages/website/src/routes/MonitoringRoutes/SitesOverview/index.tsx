@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import monitoringServices from 'services/monitoringServices';
 import MonitoringTable, {
   BodyCell,
@@ -87,13 +87,13 @@ const getResult = async (token: string) => {
 function SitesOverview() {
   const classes = useStyles();
 
-  const [siteId, setSiteId] = React.useState<string>('');
-  const [siteName, setSiteName] = React.useState<string>('');
-  const [spotterId, setSpotterId] = React.useState<string>('');
-  const [organization, setOrganization] = React.useState<string>('');
-  const [adminEmail, setAdminEmail] = React.useState<string>('');
-  const [adminUsername, setAdminUsername] = React.useState<string>('');
-  const [status, setStatus] = React.useState<Status | ''>('');
+  const [siteId, setSiteId] = useState<string>('');
+  const [siteName, setSiteName] = useState<string>('');
+  const [spotterId, setSpotterId] = useState<string>('');
+  const [organization, setOrganization] = useState<string>('');
+  const [adminEmail, setAdminEmail] = useState<string>('');
+  const [adminUsername, setAdminUsername] = useState<string>('');
+  const [status, setStatus] = useState<Status | ''>('');
 
   const textFilters = [
     { label: 'Site ID', value: siteId, setValue: setSiteId },

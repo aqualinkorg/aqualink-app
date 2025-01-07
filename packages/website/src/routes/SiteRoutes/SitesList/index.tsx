@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, ListItemText, Theme } from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';

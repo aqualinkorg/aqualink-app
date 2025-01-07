@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Theme, Grid } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -42,8 +42,8 @@ const carouselSettings = {
 };
 
 const MediaDetails = ({ siteId, point, classes }: MediaDetailsProps) => {
-  const [editing, setEditing] = React.useState(false);
-  const [editSurveyPointId, setEditSurveyPointId] = React.useState<
+  const [editing, setEditing] = useState(false);
+  const [editSurveyPointId, setEditSurveyPointId] = useState<
     number | undefined
   >(point.pointId);
   const user = useSelector(userInfoSelector);

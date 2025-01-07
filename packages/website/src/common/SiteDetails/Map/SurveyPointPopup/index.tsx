@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, Grid, Typography } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';

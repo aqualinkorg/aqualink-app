@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { MapContainer, TileLayer, Marker, Circle } from 'react-leaflet';
 import L, { LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';

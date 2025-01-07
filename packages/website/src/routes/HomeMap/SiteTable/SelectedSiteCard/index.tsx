@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Card, Theme, Typography } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Link } from 'react-router-dom';

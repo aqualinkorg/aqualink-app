@@ -1,4 +1,3 @@
-import React from 'react';
 import configureStore from 'redux-mock-store';
 import { SurveyMedia } from 'store/Survey/types';
 import { getSurveyPointsByName } from 'helpers/surveyMedia';

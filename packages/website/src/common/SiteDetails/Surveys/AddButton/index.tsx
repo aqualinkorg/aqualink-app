@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
 import { WithStyles } from '@mui/styles';

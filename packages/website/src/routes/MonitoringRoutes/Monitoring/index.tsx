@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { colors } from 'layout/App/theme';
-import React from 'react';
+import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { compereAdminLevel } from 'store/User/helpers';

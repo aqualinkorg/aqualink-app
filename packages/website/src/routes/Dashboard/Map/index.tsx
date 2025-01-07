@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Theme, useTheme, useMediaQuery } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';

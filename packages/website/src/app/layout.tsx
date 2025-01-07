@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import type { Metadata, Viewport } from 'next';
 import '../index.css';
 import 'leaflet/dist/leaflet.css';

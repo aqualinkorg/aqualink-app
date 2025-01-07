@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography, CardMedia } from '@mui/material';
 
 import { WithStyles } from '@mui/styles';

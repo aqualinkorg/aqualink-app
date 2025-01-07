@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { IconButton, Tooltip, TooltipProps } from '@mui/material';
 import { WithStyles } from '@mui/styles';

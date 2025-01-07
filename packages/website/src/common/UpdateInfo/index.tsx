@@ -1,4 +1,3 @@
-import React from 'react';
 import { Theme, Grid, Box, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { grey } from '@mui/material/colors';

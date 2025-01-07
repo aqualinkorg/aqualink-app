@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppBar, Toolbar, Grid, Typography, Theme, Link } from '@mui/material';
 
 import { WithStyles } from '@mui/styles';

@@ -1,5 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
+
+import * as React from 'react';
 
 import { render, RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';

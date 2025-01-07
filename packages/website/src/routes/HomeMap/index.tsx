@@ -1,5 +1,6 @@
 import { LatLng } from 'leaflet';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Grid, Hidden } from '@mui/material';

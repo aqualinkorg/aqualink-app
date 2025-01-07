@@ -12,7 +12,7 @@ import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import DropZone from 'common/FileUploads/Dropzone';
 import NavBar from 'common/NavBar';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { DropzoneProps } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
@@ -37,18 +37,17 @@ function Uploads() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = React.useState(false);
-  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = React.useState(false);
+  const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
-    React.useState(false);
-  const [files, setFiles] = React.useState<File[]>([]);
-  const [uploadDetails, setUploadDetails] = React.useState<
-    UploadTimeSeriesResult[]
-  >([]);
+    useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [uploadDetails, setUploadDetails] = useState<UploadTimeSeriesResult[]>(
+    [],
+  );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedSource, setSelectedSource] =
-    React.useState<Sources>('sheet_data');
-  const [siteTimezone, setSiteTimezone] = React.useState(false);
+  const [selectedSource, setSelectedSource] = useState<Sources>('sheet_data');
+  const [siteTimezone, setSiteTimezone] = useState(false);
 
   const user = useSelector(userInfoSelector);
   const uploadLoading = useSelector(uploadsInProgressSelector);
@@ -59,7 +58,7 @@ function Uploads() {
     (data) => (data.ignoredHeaders?.length ?? 0) > 0,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (uploadResult && !uploadLoading && !uploadError) {
       setUploadDetails(uploadResult);
       if (!uploadResult.some((x) => !!x.error)) {
@@ -68,7 +67,7 @@ function Uploads() {
     }
   }, [uploadResult, uploadLoading, uploadError]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsErrorSnackbarOpen(!!uploadError);
   }, [uploadError]);
 

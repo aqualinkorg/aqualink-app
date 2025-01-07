@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useCallback } from 'react';
+import { useState, ChangeEvent, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Theme,

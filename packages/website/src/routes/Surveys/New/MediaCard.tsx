@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import Image from 'next/image';
 import {
   Theme,

@@ -1,4 +1,3 @@
-import React from 'react';
 import NavBar from 'common/NavBar';
 import { Route, Routes } from 'react-router-dom';
 import SiteMetrics from './SiteMetrics';

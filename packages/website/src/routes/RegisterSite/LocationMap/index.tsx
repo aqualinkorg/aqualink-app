@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L, { LeafletEvent } from 'leaflet';
 import { Theme } from '@mui/material';

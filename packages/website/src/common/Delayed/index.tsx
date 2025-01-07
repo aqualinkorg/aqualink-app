@@ -1,4 +1,4 @@
-import React, { useState, useEffect, PropsWithChildren } from 'react';
+import { useState, useEffect, PropsWithChildren } from 'react';
 
 type DelayedProps = {
   waitBeforeShow?: number;

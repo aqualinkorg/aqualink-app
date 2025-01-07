@@ -1,6 +1,5 @@
 import { Marker, useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
 import { Site } from 'store/Sites/types';
 import {
   siteOnMapSelector,

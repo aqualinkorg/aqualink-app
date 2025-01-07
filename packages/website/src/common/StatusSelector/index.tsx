@@ -1,7 +1,7 @@
 import { MenuItem, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { colors } from 'layout/App/theme';
-import React from 'react';
+import * as React from 'react';
 import { Status } from 'store/Sites/types';
 
 const options: Status[] = [

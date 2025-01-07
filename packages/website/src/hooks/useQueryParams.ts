@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable fp/no-mutating-methods */
 /* eslint-disable fp/no-mutation */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import * as React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 let processing = false;

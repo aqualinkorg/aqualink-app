@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { LayerGroup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import L from 'leaflet';
 import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
 import { Site } from 'store/Sites/types';

@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useState, useEffect } from 'react';
+import { BaseSyntheticEvent, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
 import {

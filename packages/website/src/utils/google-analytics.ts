@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import ReactGA from 'react-ga4';
 
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID || '';
@@ -21,7 +21,7 @@ if (process.env.IS_PROD && !GA_TAG_MANAGER_ID) {
 }
 
 export const useGATagManager = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     const getScript = () => `
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { isNumber } from 'lodash';
 import { Grid, Typography, Tooltip, Theme } from '@mui/material';

@@ -1,9 +1,4 @@
-import React, {
-  CSSProperties,
-  PropsWithChildren,
-  useRef,
-  useState,
-} from 'react';
+import { CSSProperties, PropsWithChildren, useRef, useState } from 'react';
 import type { Chart as ChartType, TooltipModel } from 'chart.js';
 import { head, isNumber, maxBy, minBy } from 'lodash';
 import Chart, { ChartProps } from '.';

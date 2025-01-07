@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Grid, LinearProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import {

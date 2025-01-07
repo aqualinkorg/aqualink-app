@@ -4,7 +4,6 @@ import MonitoringTable, {
   MonitoringTableProps,
 } from 'common/MonitoringTable';
 import { DateTime } from 'luxon';
-import React from 'react';
 import monitoringServices, {
   GetSurveysReportResponse,
 } from 'services/monitoringServices';

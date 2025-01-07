@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { siteTimeSeriesDataRangeSelector } from 'store/Sites/selectedSiteSlice';

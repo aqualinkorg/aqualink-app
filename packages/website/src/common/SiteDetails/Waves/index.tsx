@@ -1,4 +1,3 @@
-import React from 'react';
 import { Theme, Card, CardContent, Typography, Grid } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
