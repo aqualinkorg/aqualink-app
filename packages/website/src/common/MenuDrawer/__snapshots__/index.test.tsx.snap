@@ -175,7 +175,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
         >
           <img
             alt="Ovio Logo"
-            src="ovio_logo.png"
+            src="/img.jpg"
           />
         </a>
       </div>

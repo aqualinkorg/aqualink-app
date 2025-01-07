@@ -43,11 +43,18 @@ exports[`TemperatureChange card should render with given state from Redux store 
         <mock-box
           classname="TemperatureChangeComponent-tempContainer-12 TemperatureChangeComponent-tempIncreased-13"
         >
-          <svg
+          <img
+            alt="caret"
             class="TemperatureChangeComponent-icon-15"
-          >
-            caret.svg
-          </svg>
+            data-nimg="1"
+            decoding="async"
+            height="40"
+            loading="lazy"
+            src="/_next/image?url=%2Fimg.jpg&w=96&q=75"
+            srcset="/_next/image?url=%2Fimg.jpg&w=48&q=75 1x, /_next/image?url=%2Fimg.jpg&w=96&q=75 2x"
+            style="color: transparent;"
+            width="40"
+          />
           <mock-typography
             classname="TemperatureChangeComponent-temperatureChange-11"
             variant="h1"
@@ -151,7 +158,7 @@ exports[`TemperatureChange card should render with given state from Redux store 
                   <img
                     alt="sensor-type"
                     class="makeStyles-sensorImage-29"
-                    src="satellite.svg"
+                    src="/img.jpg"
                   />
                 </a>
               </button>

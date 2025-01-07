@@ -181,7 +181,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             >
               <img
                 alt="Ovio Logo"
-                src="ovio_logo.png"
+                src="/img.jpg"
               />
             </a>
           </div>
@@ -203,17 +203,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
               edge="start"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="MenuIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
-                />
-              </svg>
+              <mock-menu />
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-8"
@@ -268,17 +258,9 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
               classname="NavBar-button-17"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-16 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                />
-              </svg>
+              <mock-expandmore
+                classname="NavBar-expandIcon-16"
+              />
             </mock-iconbutton>
             <mock-menu
               classname="NavBar-userMenu-13"
@@ -1155,7 +1137,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImage-46 css-1kuwa16-MuiCardMedia-root"
-              src="metrics.jpg"
+              src="/img.jpg"
             />
           </div>
         </div>
@@ -1198,7 +1180,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="sensors.png"
+              src="/img.jpg"
             />
           </div>
         </div>
@@ -1241,7 +1223,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="survey-images.jpg"
+              src="/img.jpg"
             />
           </div>
         </div>
@@ -1284,7 +1266,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="map.png"
+              src="/img.jpg"
             />
           </div>
         </div>
@@ -1325,7 +1307,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="customers.jpg"
+              src="/img.jpg"
             />
           </div>
         </div>

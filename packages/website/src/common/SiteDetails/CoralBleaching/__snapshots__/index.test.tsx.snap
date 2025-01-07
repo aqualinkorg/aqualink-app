@@ -43,7 +43,7 @@ exports[`renders as expected 1`] = `
         <img
           alt="alert-level"
           class="Bleaching-alertImage-11"
-          src="alert_lvl1.svg"
+          src="/img.jpg"
         />
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-12 makeStyles-withMargin-13 css-1urtxze-MuiGrid-root"

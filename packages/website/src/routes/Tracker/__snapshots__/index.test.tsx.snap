@@ -11,7 +11,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     <div
       class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
       role="img"
-      style="background-image: url(hero.png);"
+      style="background-image: url(/img.jpg);"
     />
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-titleWrapper-5 css-5c1adp-MuiContainer-root"
@@ -100,7 +100,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             <div
               class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
               role="img"
-              style="background-image: url(Brazil.jpg);"
+              style="background-image: url(/img.jpg);"
             />
           </a>
         </mock-card>
@@ -135,7 +135,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             <div
               class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
               role="img"
-              style="background-image: url(image4.png);"
+              style="background-image: url(/img.jpg);"
             />
           </a>
         </mock-card>
@@ -198,7 +198,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
               <img
                 alt="footprint"
                 class="makeStyles-footPrintImage-20 makeStyles-footPrintImage-21"
-                src="footprint.png"
+                src="/img.jpg"
               />
             </a>
           </div>
@@ -273,7 +273,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             <div
               class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
               role="img"
-              style="background-image: url(image1.png);"
+              style="background-image: url(/img.jpg);"
             />
           </a>
         </mock-card>
@@ -302,7 +302,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           <div
             class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
             role="img"
-            style="background-image: url(image2.png);"
+            style="background-image: url(/img.jpg);"
           />
         </mock-card>
       </div>
@@ -377,7 +377,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             <div
               class="MuiCardMedia-root makeStyles-image-10 css-utntyq-MuiCardMedia-root"
               role="img"
-              style="background-image: url(image3.png);"
+              style="background-image: url(/img.jpg);"
             />
           </a>
         </mock-card>

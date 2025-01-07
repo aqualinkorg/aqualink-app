@@ -388,7 +388,7 @@ exports[`renders as expected 1`] = `
                   <img
                     alt="sensor-type"
                     class="makeStyles-sensorImage-21"
-                    src="satellite.svg"
+                    src="/img.jpg"
                   />
                 </a>
               </button>

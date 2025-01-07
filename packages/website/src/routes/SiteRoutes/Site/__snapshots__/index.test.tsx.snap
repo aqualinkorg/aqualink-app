@@ -181,7 +181,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             >
               <img
                 alt="Ovio Logo"
-                src="ovio_logo.png"
+                src="/img.jpg"
               />
             </a>
           </div>
@@ -203,17 +203,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               edge="start"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="MenuIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
-                />
-              </svg>
+              <mock-menu />
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-685"
@@ -368,17 +358,9 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               classname="NavBar-button-694"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-693 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                />
-              </svg>
+              <mock-expandmore
+                classname="NavBar-expandIcon-693"
+              />
             </mock-iconbutton>
             <mock-menu
               classname="NavBar-userMenu-690"
@@ -1296,17 +1278,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 size="large"
                 to="/map"
               >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                  data-testid="ArrowBackIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"
-                  />
-                </svg>
+                <mock-arrowback />
               </mock-iconbutton>
             </div>
             <div
@@ -1343,11 +1315,18 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                           disabled="false"
                           size="large"
                         >
-                          <svg
+                          <img
+                            alt="watch"
                             color="#168dbd"
-                          >
-                            watch.svg
-                          </svg>
+                            data-nimg="1"
+                            decoding="async"
+                            height="40"
+                            loading="lazy"
+                            src="/_next/image?url=%2Fimg.jpg&w=96&q=75"
+                            srcset="/_next/image?url=%2Fimg.jpg&w=48&q=75 1x, /_next/image?url=%2Fimg.jpg&w=96&q=75 2x"
+                            style="color: transparent;"
+                            width="40"
+                          />
                         </mock-iconbutton>
                       </mock-tooltip>
                     </div>
@@ -1848,7 +1827,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               <img
                                 alt="sensor-type"
                                 class="makeStyles-sensorImage-784"
-                                src="satellite.svg"
+                                src="/img.jpg"
                               />
                             </a>
                           </button>
@@ -1907,11 +1886,18 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     <mock-box
                       classname="TemperatureChangeComponent-tempContainer-800 TemperatureChangeComponent-tempIncreased-801"
                     >
-                      <svg
+                      <img
+                        alt="caret"
                         class="TemperatureChangeComponent-icon-803"
-                      >
-                        caret.svg
-                      </svg>
+                        data-nimg="1"
+                        decoding="async"
+                        height="40"
+                        loading="lazy"
+                        src="/_next/image?url=%2Fimg.jpg&w=96&q=75"
+                        srcset="/_next/image?url=%2Fimg.jpg&w=48&q=75 1x, /_next/image?url=%2Fimg.jpg&w=96&q=75 2x"
+                        style="color: transparent;"
+                        width="40"
+                      />
                       <mock-typography
                         classname="TemperatureChangeComponent-temperatureChange-799"
                         variant="h1"
@@ -2015,7 +2001,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               <img
                                 alt="sensor-type"
                                 class="makeStyles-sensorImage-784"
-                                src="satellite.svg"
+                                src="/img.jpg"
                               />
                             </a>
                           </button>
@@ -2074,7 +2060,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     <img
                       alt="alert-level"
                       class="Bleaching-alertImage-820"
-                      src="alert_nostress.svg"
+                      src="/img.jpg"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-773 makeStyles-withMargin-774 css-1urtxze-MuiGrid-root"
@@ -2188,7 +2174,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       <img
                         alt="wind"
                         class="makeStyles-titleImages-834"
-                        src="wind.svg"
+                        src="/img.jpg"
                       />
                     </div>
                     <div
@@ -2251,7 +2237,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       <img
                         alt="waves"
                         class="makeStyles-titleImages-834"
-                        src="waves.svg"
+                        src="/img.jpg"
                       />
                     </div>
                     <div
@@ -3272,7 +3258,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             >
               <img
                 alt="Ovio Logo"
-                src="ovio_logo.png"
+                src="/img.jpg"
               />
             </a>
           </div>
@@ -3294,17 +3280,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               edge="start"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="MenuIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
-                />
-              </svg>
+              <mock-menu />
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-4"
@@ -3459,17 +3435,9 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               classname="NavBar-button-13"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-12 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                />
-              </svg>
+              <mock-expandmore
+                classname="NavBar-expandIcon-12"
+              />
             </mock-iconbutton>
             <mock-menu
               classname="NavBar-userMenu-9"
@@ -4387,17 +4355,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 size="large"
                 to="/map"
               >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                  data-testid="ArrowBackIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"
-                  />
-                </svg>
+                <mock-arrowback />
               </mock-iconbutton>
             </div>
             <div
@@ -4434,11 +4392,18 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                           disabled="false"
                           size="large"
                         >
-                          <svg
+                          <img
+                            alt="watch"
                             color="#168dbd"
-                          >
-                            watch.svg
-                          </svg>
+                            data-nimg="1"
+                            decoding="async"
+                            height="40"
+                            loading="lazy"
+                            src="/_next/image?url=%2Fimg.jpg&w=96&q=75"
+                            srcset="/_next/image?url=%2Fimg.jpg&w=48&q=75 1x, /_next/image?url=%2Fimg.jpg&w=96&q=75 2x"
+                            style="color: transparent;"
+                            width="40"
+                          />
                         </mock-iconbutton>
                       </mock-tooltip>
                     </div>
@@ -4975,7 +4940,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               <img
                                 alt="sensor-type"
                                 class="makeStyles-sensorImage-103"
-                                src="satellite.svg"
+                                src="/img.jpg"
                               />
                             </a>
                           </button>
@@ -5034,11 +4999,18 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     <mock-box
                       classname="TemperatureChangeComponent-tempContainer-119 TemperatureChangeComponent-tempIncreased-120"
                     >
-                      <svg
+                      <img
+                        alt="caret"
                         class="TemperatureChangeComponent-icon-122"
-                      >
-                        caret.svg
-                      </svg>
+                        data-nimg="1"
+                        decoding="async"
+                        height="40"
+                        loading="lazy"
+                        src="/_next/image?url=%2Fimg.jpg&w=96&q=75"
+                        srcset="/_next/image?url=%2Fimg.jpg&w=48&q=75 1x, /_next/image?url=%2Fimg.jpg&w=96&q=75 2x"
+                        style="color: transparent;"
+                        width="40"
+                      />
                       <mock-typography
                         classname="TemperatureChangeComponent-temperatureChange-118"
                         variant="h1"
@@ -5142,7 +5114,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               <img
                                 alt="sensor-type"
                                 class="makeStyles-sensorImage-103"
-                                src="satellite.svg"
+                                src="/img.jpg"
                               />
                             </a>
                           </button>
@@ -5201,7 +5173,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     <img
                       alt="alert-level"
                       class="Bleaching-alertImage-139"
-                      src="alert_nostress.svg"
+                      src="/img.jpg"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-92 makeStyles-withMargin-93 css-1urtxze-MuiGrid-root"
@@ -5315,7 +5287,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       <img
                         alt="wind"
                         class="makeStyles-titleImages-153"
-                        src="wind.svg"
+                        src="/img.jpg"
                       />
                     </div>
                     <div
@@ -5378,7 +5350,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       <img
                         alt="waves"
                         class="makeStyles-titleImages-153"
-                        src="waves.svg"
+                        src="/img.jpg"
                       />
                     </div>
                     <div

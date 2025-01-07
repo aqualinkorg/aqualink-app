@@ -37,7 +37,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
           <img
             alt="bouydiagram2"
             class="img-fluid mg-lg mx-auto d-block img-responsive diagram lazyload"
-            src="fulldiag3_1.svg"
+            src="/img.jpg"
           />
         </div>
       </div>
@@ -61,7 +61,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
           <img
             alt="Asset%204"
             class="img-fluid mx-auto d-block img-responsive diagram lazyload"
-            src="fulldiag3.svg"
+            src="/img.jpg"
           />
         </div>
       </div>

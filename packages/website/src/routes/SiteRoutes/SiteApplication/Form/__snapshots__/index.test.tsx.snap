@@ -201,7 +201,7 @@ exports[`renders as expected 1`] = `
                       id=":r4:-grid-label"
                       style="opacity: 1;"
                     >
-                      December 2024
+                      January 2025
                     </div>
                   </div>
                   <mock-iconbutton
@@ -354,6 +354,18 @@ exports[`renders as expected 1`] = `
                           class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
                           role="row"
                         >
+                          <div
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                            role="gridcell"
+                          />
+                          <div
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                            role="gridcell"
+                          />
+                          <div
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                            role="gridcell"
+                          />
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -390,6 +402,11 @@ exports[`renders as expected 1`] = `
                           >
                             4
                           </button>
+                        </div>
+                        <div
+                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -409,19 +426,15 @@ exports[`renders as expected 1`] = `
                             6
                           </button>
                           <button
+                            aria-current="date"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-1m0n6vx-MuiButtonBase-root-MuiPickersDay-root"
                             role="gridcell"
-                            tabindex="-1"
+                            tabindex="0"
                             type="button"
                           >
                             7
                           </button>
-                        </div>
-                        <div
-                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
-                          role="row"
-                        >
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -458,6 +471,11 @@ exports[`renders as expected 1`] = `
                           >
                             11
                           </button>
+                        </div>
+                        <div
+                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -485,11 +503,6 @@ exports[`renders as expected 1`] = `
                           >
                             14
                           </button>
-                        </div>
-                        <div
-                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
-                          role="row"
-                        >
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -526,6 +539,11 @@ exports[`renders as expected 1`] = `
                           >
                             18
                           </button>
+                        </div>
+                        <div
+                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -553,11 +571,6 @@ exports[`renders as expected 1`] = `
                           >
                             21
                           </button>
-                        </div>
-                        <div
-                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
-                          role="row"
-                        >
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -594,6 +607,11 @@ exports[`renders as expected 1`] = `
                           >
                             25
                           </button>
+                        </div>
+                        <div
+                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                          role="row"
+                        >
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -621,11 +639,6 @@ exports[`renders as expected 1`] = `
                           >
                             28
                           </button>
-                        </div>
-                        <div
-                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
-                          role="row"
-                        >
                           <button
                             aria-selected="false"
                             class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
@@ -636,11 +649,10 @@ exports[`renders as expected 1`] = `
                             29
                           </button>
                           <button
-                            aria-current="date"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-1m0n6vx-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
                             role="gridcell"
-                            tabindex="0"
+                            tabindex="-1"
                             type="button"
                           >
                             30
@@ -654,18 +666,6 @@ exports[`renders as expected 1`] = `
                           >
                             31
                           </button>
-                          <div
-                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
-                            role="gridcell"
-                          />
-                          <div
-                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
-                            role="gridcell"
-                          />
-                          <div
-                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
-                            role="gridcell"
-                          />
                           <div
                             class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
                             role="gridcell"
