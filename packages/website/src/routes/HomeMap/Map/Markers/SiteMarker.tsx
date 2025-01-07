@@ -1,4 +1,4 @@
-import { Marker, useLeaflet } from 'react-leaflet';
+import { Marker, useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import { Site } from 'store/Sites/types';
@@ -29,7 +29,7 @@ interface SiteMarkerProps {
  */
 export default function SiteMarker({ site, setCenter }: SiteMarkerProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
-  const { map } = useLeaflet();
+  const map = useMap();
   const dispatch = useDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
   const markerIcon = useMarkerIcon(
@@ -48,10 +48,12 @@ export default function SiteMarker({ site, setCenter }: SiteMarkerProps) {
       {LNG_OFFSETS.map((offset) => {
         return (
           <Marker
-            onClick={() => {
-              if (map) setCenter(map, [lat, lng], 6);
-              dispatch(setSearchResult());
-              dispatch(setSiteOnMap(site));
+            eventHandlers={{
+              click: () => {
+                if (map) setCenter(map, [lat, lng], 6);
+                dispatch(setSearchResult());
+                dispatch(setSiteOnMap(site));
+              },
             }}
             key={`${site.id}-${offset}`}
             icon={markerIcon}

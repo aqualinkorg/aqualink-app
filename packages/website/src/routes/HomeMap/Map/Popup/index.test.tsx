@@ -5,19 +5,8 @@ import { mockSite } from 'mocks/mockSite';
 import { renderWithProviders } from 'utils/test-utils';
 import Popup from '.';
 
-jest.mock('react-leaflet', () => ({
-  __esModule: true,
-  useLeaflet: () => {
-    return {
-      map: jest.requireActual('react').createElement('mock-LeafletPopup', {}),
-    };
-  },
-  Popup: (props: any) =>
-    jest.requireActual('react').createElement('mock-LeafletPopup', props),
-}));
-
-const mockStore = configureStore([]);
 describe('Popup', () => {
+  const mockStore = configureStore([]);
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({

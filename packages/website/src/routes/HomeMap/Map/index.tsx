@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Map, TileLayer, Marker, Circle } from 'react-leaflet';
-import L, { LatLng, LatLngBounds, LayersControlEvent } from 'leaflet';
+import { MapContainer, TileLayer, Marker, Circle } from 'react-leaflet';
+import L, { LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
 import {
   CircularProgress,
   IconButton,
@@ -59,7 +59,7 @@ const HomepageMap = ({
   legendLeft,
   classes,
 }: HomepageMapProps) => {
-  const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
+  const [legendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] =
     useState<number>();
@@ -67,7 +67,7 @@ const HomepageMap = ({
     useState<string>();
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
-  const ref = useRef<Map>(null);
+  const ref = useRef<LeafletMap>(null);
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -82,8 +82,8 @@ const HomepageMap = ({
 
           // zoom to user location
           const { current } = ref;
-          if (current && current.leafletElement) {
-            const map = current.leafletElement;
+          if (current) {
+            const map = current;
             const newZoom = Math.max(map.getZoom() || 6, 8);
             map.flyTo(latLng, newZoom, { duration: 2 });
           }
@@ -104,10 +104,9 @@ const HomepageMap = ({
 
   useEffect(() => {
     const { current } = ref;
-    if (current && current.leafletElement) {
-      const map = current.leafletElement;
+    if (current) {
       if (searchResult) {
-        map.fitBounds([
+        current.fitBounds([
           searchResult.bbox.southWest,
           searchResult.bbox.northEast,
         ]);
@@ -115,9 +114,10 @@ const HomepageMap = ({
     }
   }, [searchResult]);
 
-  const onBaseLayerChange = ({ name }: LayersControlEvent) => {
-    setLegendName(name);
-  };
+  // TODO: Add back
+  // const onBaseLayerChange = ({ name }: LayersControlEvent) => {
+  //   setLegendName(name);
+  // };
 
   const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
 
@@ -126,7 +126,7 @@ const HomepageMap = ({
       <CircularProgress size="4rem" thickness={1} />
     </div>
   ) : (
-    <Map
+    <MapContainer
       id="sites-map"
       ref={ref}
       preferCanvas
@@ -137,7 +137,7 @@ const HomepageMap = ({
       zoom={initialZoom}
       minZoom={collection ? 1 : 2} // If we're on dashboard page, the map's wrapping div is smaller, so we need to allow higher zoom
       worldCopyJump
-      onbaselayerchange={onBaseLayerChange}
+      // onbaselayerchange={onBaseLayerChange}
       bounds={initialBounds}
       maxBounds={mapConstants.MAX_BOUNDS}
     >
@@ -159,8 +159,8 @@ const HomepageMap = ({
                 setShowSiteTable((prev) => !prev);
               }
               setTimeout(() => {
-                if (ref.current && ref.current.leafletElement) {
-                  ref.current.leafletElement.invalidateSize();
+                if (ref.current) {
+                  ref.current.invalidateSize();
                 }
               });
             }}
@@ -192,7 +192,7 @@ const HomepageMap = ({
           </IconButton>
         </div>
       )}
-    </Map>
+    </MapContainer>
   );
 };
 

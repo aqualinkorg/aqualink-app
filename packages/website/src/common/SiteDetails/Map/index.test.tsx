@@ -1,31 +1,25 @@
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
 import { mockUser } from 'mocks/mockUser';
+import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
 import Map from '.';
-
-jest.mock('react-leaflet');
 
 const mockStore = configureStore([]);
 
 describe('Site Map', () => {
-  let element: HTMLElement;
-  beforeEach(() => {
-    const store = mockStore({
-      user: {
-        userInfo: mockUser,
-      },
-      selectedSite: {
-        draft: null,
-      },
-    });
+  const store = mockStore({
+    user: {
+      userInfo: mockUser,
+    },
+    selectedSite: {
+      draft: null,
+    },
+  });
 
-    store.dispatch = jest.fn();
-
-    element = render(
+  it('should render with given state from Redux store', () => {
+    const { container } = render(
       <Provider store={store}>
         <Map
           polygon={{
@@ -36,10 +30,7 @@ describe('Site Map', () => {
           surveyPoints={[]}
         />
       </Provider>,
-    ).container;
-  });
-
-  it('should render with given state from Redux store', () => {
-    expect(element).toMatchSnapshot();
+    );
+    expect(container).toMatchSnapshot();
   });
 });

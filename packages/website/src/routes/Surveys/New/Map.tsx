@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Map, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import L from 'leaflet';
+import L, { Map as LeafletMap } from 'leaflet';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -22,7 +22,7 @@ const pinIcon = L.icon({
 });
 
 const SiteMap = ({ polygon, classes }: SiteMapProps) => {
-  const mapRef = useRef<Map>(null);
+  const mapRef = useRef<LeafletMap>(null);
   const diveLocation = useSelector(diveLocationSelector);
   const [markerLat, setMarkerLat] = useState<number | null>(null);
   const [markerLng, setMarkerLng] = useState<number | null>(null);
@@ -30,8 +30,8 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
 
   useEffect(() => {
     const { current } = mapRef;
-    if (current && current.leafletElement) {
-      const map = current.leafletElement;
+    if (current) {
+      const map = current;
       // Initialize map's position to fit the given polygon
       if (polygon.type === 'Polygon') {
         map.fitBounds(L.polygon(polygon.coordinates).getBounds());
@@ -51,8 +51,8 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
 
   useEffect(() => {
     const { current } = mapRef;
-    if (current && current.leafletElement) {
-      const map = current.leafletElement;
+    if (current) {
+      const map = current;
       map.on('click', (event: any) => {
         setMarkerLat(event.latlng.lat);
         setMarkerLng(event.latlng.lng);
@@ -87,12 +87,12 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
   }, [diveLocation]);
 
   return (
-    <Map ref={mapRef} className={classes.map}>
+    <MapContainer ref={mapRef} className={classes.map}>
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {markerLat && markerLng && (
         <Marker icon={pinIcon} position={[markerLat, markerLng]} />
       )}
-    </Map>
+    </MapContainer>
   );
 };
 

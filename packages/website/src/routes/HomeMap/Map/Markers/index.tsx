@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { LayerGroup, useLeaflet } from 'react-leaflet';
+import { LayerGroup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import L from 'leaflet';
@@ -7,7 +7,6 @@ import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
 import { Site } from 'store/Sites/types';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import 'leaflet/dist/leaflet.css';
-import 'react-leaflet-markercluster/dist/styles.min.css';
 import { CollectionDetails } from 'store/Collection/types';
 import {
   findIntervalByLevel,
@@ -39,7 +38,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
     [collection?.sites, storedSites],
   );
   const siteOnMap = useSelector(siteOnMapSelector);
-  const { map } = useLeaflet();
+  const map = useMap();
   const [visibleSites, setVisibleSites] = useState(sitesList);
 
   const setCenter = useCallback(

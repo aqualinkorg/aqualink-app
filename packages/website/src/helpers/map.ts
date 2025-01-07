@@ -28,6 +28,10 @@ export const getMiddlePoint = (point: Point | Polygon): Position => {
   return [lngMean, latMean];
 };
 
+export const toLatLng = (point: Position): LatLng => {
+  return new LatLng(point[1], point[0]);
+};
+
 export const samePosition = (
   polygon1: Polygon | Point,
   polygon2: Polygon | Point,
