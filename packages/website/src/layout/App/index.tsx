@@ -6,7 +6,7 @@ import {
   Navigate,
   Route,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import { getSelf } from 'store/User/userSlice';
@@ -27,6 +27,8 @@ import Faq from 'routes/Faq';
 import Dashboard from 'routes/Dashboard';
 import Spotter from 'routes/Spotter';
 import Tracker from 'routes/Tracker';
+import { SnackbarProvider } from 'notistack';
+import { store } from 'store/configure';
 import app from '../../firebase';
 import ErrorBoundary from './ErrorBoundary';
 import theme from './theme';
@@ -100,4 +102,13 @@ function App() {
   );
 }
 
+export function AppProviders() {
+  return (
+    <Provider store={store}>
+      <SnackbarProvider maxSnack={3}>
+        <App />
+      </SnackbarProvider>
+    </Provider>
+  );
+}
 export default App;
