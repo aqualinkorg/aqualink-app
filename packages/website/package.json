@@ -23,7 +23,7 @@
     "@mui/material": "6.3.0",
     "@mui/styles": "6.3.0",
     "@mui/system": "6.3.0",
-    "@mui/x-date-pickers": "^6.0.0",
+    "@mui/x-date-pickers": "^7.23.6",
     "@reduxjs/toolkit": "^1.3",
     "@sketchfab/viewer-api": "^1.12.0",
     "@types/leaflet.locatecontrol": "^0.74.4",

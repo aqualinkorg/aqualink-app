@@ -181,16 +181,16 @@ exports[`renders as expected 1`] = `
         classname="css-154ra1s"
       >
         <div
-          class="MuiPickersLayout-root css-1lhictg-MuiPickersLayout-root"
+          class="MuiPickersLayout-root css-ch1f3q-MuiPickersLayout-root"
         >
           <div
             class="MuiPickersLayout-contentWrapper css-18jb465-MuiPickersLayout-contentWrapper"
           >
             <div
-              class="MuiDateCalendar-root css-7x41zm-MuiDateCalendar-root"
+              class="MuiDateCalendar-root css-hkyxid-MuiDateCalendar-root"
             >
               <div
-                class="MuiPickersCalendarHeader-root css-1mue8ia-MuiPickersCalendarHeader-root"
+                class="MuiPickersCalendarHeader-root css-fgwy5w-MuiPickersCalendarHeader-root"
               >
                 <div
                   aria-live="polite"
@@ -210,7 +210,7 @@ exports[`renders as expected 1`] = `
                   </div>
                   <mock-iconbutton
                     aria-label="calendar view is open, switch to year view"
-                    classname="MuiPickersCalendarHeader-switchViewButton css-1wknyoa-MuiPickersCalendarHeader-switchViewButton"
+                    classname="MuiPickersCalendarHeader-switchViewButton css-v6xlml-MuiPickersCalendarHeader-switchViewButton"
                     size="small"
                   >
                     <svg
@@ -232,7 +232,7 @@ exports[`renders as expected 1`] = `
                 >
                   <mock-iconbutton
                     aria-label="Previous month"
-                    classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                    classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-previousIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
                     disabled="false"
                     edge="end"
                     size="medium"
@@ -240,7 +240,7 @@ exports[`renders as expected 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-leftArrowIcon css-1ckov0h-MuiSvgIcon-root"
                       data-testid="ArrowLeftIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -255,7 +255,7 @@ exports[`renders as expected 1`] = `
                   />
                   <mock-iconbutton
                     aria-label="Next month"
-                    classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                    classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-nextIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
                     disabled="false"
                     edge="start"
                     size="medium"
@@ -263,7 +263,7 @@ exports[`renders as expected 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-rightArrowIcon css-1ckov0h-MuiSvgIcon-root"
                       data-testid="ArrowRightIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -361,21 +361,21 @@ exports[`renders as expected 1`] = `
                           role="row"
                         >
                           <div
-                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-16e25t4-MuiPickersDay-root"
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                             role="gridcell"
                           />
                           <div
-                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-16e25t4-MuiPickersDay-root"
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                             role="gridcell"
                           />
                           <div
-                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-16e25t4-MuiPickersDay-root"
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                             role="gridcell"
                           />
                           <button
                             aria-colindex="4"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1735689600000"
                             role="gridcell"
                             tabindex="-1"
@@ -386,7 +386,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="5"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1735776000000"
                             role="gridcell"
                             tabindex="-1"
@@ -397,7 +397,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="6"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1735862400000"
                             role="gridcell"
                             tabindex="-1"
@@ -408,7 +408,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="7"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1735948800000"
                             role="gridcell"
                             tabindex="-1"
@@ -425,7 +425,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="1"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736035200000"
                             role="gridcell"
                             tabindex="-1"
@@ -436,7 +436,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="2"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736121600000"
                             role="gridcell"
                             tabindex="-1"
@@ -447,7 +447,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="3"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736208000000"
                             role="gridcell"
                             tabindex="-1"
@@ -458,7 +458,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="4"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736294400000"
                             role="gridcell"
                             tabindex="-1"
@@ -470,7 +470,7 @@ exports[`renders as expected 1`] = `
                             aria-colindex="5"
                             aria-current="date"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-18ocy06-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-qt9k9u-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736380800000"
                             role="gridcell"
                             tabindex="0"
@@ -481,7 +481,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="6"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736467200000"
                             role="gridcell"
                             tabindex="-1"
@@ -492,7 +492,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="7"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736553600000"
                             role="gridcell"
                             tabindex="-1"
@@ -509,7 +509,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="1"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736640000000"
                             role="gridcell"
                             tabindex="-1"
@@ -520,7 +520,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="2"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736726400000"
                             role="gridcell"
                             tabindex="-1"
@@ -531,7 +531,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="3"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736812800000"
                             role="gridcell"
                             tabindex="-1"
@@ -542,7 +542,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="4"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736899200000"
                             role="gridcell"
                             tabindex="-1"
@@ -553,7 +553,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="5"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736985600000"
                             role="gridcell"
                             tabindex="-1"
@@ -564,7 +564,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="6"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737072000000"
                             role="gridcell"
                             tabindex="-1"
@@ -575,7 +575,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="7"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737158400000"
                             role="gridcell"
                             tabindex="-1"
@@ -592,7 +592,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="1"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737244800000"
                             role="gridcell"
                             tabindex="-1"
@@ -603,7 +603,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="2"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737331200000"
                             role="gridcell"
                             tabindex="-1"
@@ -614,7 +614,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="3"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737417600000"
                             role="gridcell"
                             tabindex="-1"
@@ -625,7 +625,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="4"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737504000000"
                             role="gridcell"
                             tabindex="-1"
@@ -636,7 +636,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="5"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737590400000"
                             role="gridcell"
                             tabindex="-1"
@@ -647,7 +647,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="6"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737676800000"
                             role="gridcell"
                             tabindex="-1"
@@ -658,7 +658,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="7"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737763200000"
                             role="gridcell"
                             tabindex="-1"
@@ -675,7 +675,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="1"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737849600000"
                             role="gridcell"
                             tabindex="-1"
@@ -686,7 +686,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="2"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737936000000"
                             role="gridcell"
                             tabindex="-1"
@@ -697,7 +697,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="3"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1738022400000"
                             role="gridcell"
                             tabindex="-1"
@@ -708,7 +708,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="4"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1738108800000"
                             role="gridcell"
                             tabindex="-1"
@@ -719,7 +719,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="5"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1738195200000"
                             role="gridcell"
                             tabindex="-1"
@@ -730,7 +730,7 @@ exports[`renders as expected 1`] = `
                           <button
                             aria-colindex="6"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1tdxaeh-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1738281600000"
                             role="gridcell"
                             tabindex="-1"
@@ -739,7 +739,7 @@ exports[`renders as expected 1`] = `
                             31
                           </button>
                           <div
-                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-16e25t4-MuiPickersDay-root"
+                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                             role="gridcell"
                           />
                         </div>
