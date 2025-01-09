@@ -183,30 +183,42 @@ function SiteMetrics() {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           className={classes.filterItem}
-          showToolbar={false}
-          inputFormat="MM/dd/yyyy"
+          format="MM/dd/yyyy"
           closeOnSelect
           // size="small"
           // showTodayButton
           value={startDate}
           onChange={(e) => e && setStartDate(e)}
           label="start date"
-          renderInput={(params) => <TextField {...params} variant="outlined" />}
+          slotProps={{
+            toolbar: {
+              hidden: true,
+            },
+            textField: {
+              variant: 'outlined',
+            },
+          }}
         />
       </LocalizationProvider>
 
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           className={classes.filterItem}
-          showToolbar={false}
-          inputFormat="MM/dd/yyyy"
+          format="MM/dd/yyyy"
           closeOnSelect
           // size="small"
           // showTodayButton
           value={endDate}
           onChange={(e) => e && setEndDate(e)}
           label="end date"
-          renderInput={(params) => <TextField {...params} variant="outlined" />}
+          slotProps={{
+            toolbar: {
+              hidden: true,
+            },
+            textField: {
+              variant: 'outlined',
+            },
+          }}
         />
       </LocalizationProvider>
 

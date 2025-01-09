@@ -365,15 +365,19 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="DatePicker-datePicker-20"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-23 css-1xp5r68-MuiFormControl-root-MuiTextField-root"
+                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-21 DatePicker-textField-21 css-1b1fjlj-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly DatePicker-textField-23 MuiInputBase-readOnly css-5h82ro-MuiInputBase-root-MuiInput-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-5h82ro-MuiInputBase-root-MuiInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiInput-input Mui-readOnly DatePicker-smallPadding-22 MuiInputBase-readOnly css-1yrc8ca-MuiInputBase-input-MuiInput-input"
+                          aria-label="Choose date, selected date is May 28, 2022"
+                          autocomplete="off"
+                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-1yrc8ca-MuiInputBase-input-MuiInput-input"
                           id=":r0:"
+                          inputmode="text"
+                          placeholder="MM/DD/YYYY"
                           readonly=""
                           type="text"
                           value="05/28/2022"
@@ -388,20 +392,20 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         classname="css-154ra1s"
                       >
                         <div
-                          class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
+                          class="MuiPickersLayout-root css-1g7nc1s-MuiPickersLayout-root"
                         >
                           <div
-                            class="css-1cwxofe"
+                            class="MuiPickersLayout-contentWrapper css-18jb465-MuiPickersLayout-contentWrapper"
                           >
                             <div
-                              class="MuiCalendarPicker-root css-dooxo9-MuiCalendarPicker-root"
+                              class="MuiDateCalendar-root css-ovjy72-MuiDateCalendar-root"
                             >
                               <div
                                 class="MuiPickersCalendarHeader-root css-1jp49e7-MuiPickersCalendarHeader-root"
                               >
                                 <div
                                   aria-live="polite"
-                                  class="MuiPickersCalendarHeader-labelContainer css-10fao8b-MuiPickersCalendarHeader-labelContainer"
+                                  class="MuiPickersCalendarHeader-labelContainer css-cyfsxc-MuiPickersCalendarHeader-labelContainer"
                                   role="presentation"
                                 >
                                   <div
@@ -409,14 +413,14 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   >
                                     <div
                                       class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
-                                      id=":r1:-grid-label"
-                                      style="opacity: 1; webkit-transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                                      id=":r2:-grid-label"
+                                      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                     >
                                       May 2022
                                     </div>
                                     <div
                                       class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
-                                      id=":r1:-grid-label"
+                                      id=":r2:-grid-label"
                                       style="opacity: 0; webkit-transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                     >
                                       June 2023
@@ -424,7 +428,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   </div>
                                   <mock-iconbutton
                                     aria-label="calendar view is open, switch to year view"
-                                    classname="MuiPickersCalendarHeader-switchViewButton css-4e2l6-MuiPickersCalendarHeader-switchViewButton"
+                                    classname="MuiPickersCalendarHeader-switchViewButton css-1wknyoa-MuiPickersCalendarHeader-switchViewButton"
                                     size="small"
                                   >
                                     <svg
@@ -449,12 +453,12 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                     classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
                                     disabled="false"
                                     edge="end"
-                                    size="small"
+                                    size="medium"
                                     title="Previous month"
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
                                       data-testid="ArrowLeftIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -472,12 +476,12 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                     classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
                                     disabled="false"
                                     edge="start"
-                                    size="small"
+                                    size="medium"
                                     title="Next month"
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
                                       data-testid="ArrowRightIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -490,22 +494,23 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                 </div>
                               </div>
                               <div
-                                class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-1t66xej-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
+                                class="MuiPickersFadeTransitionGroup-root MuiDateCalendar-viewTransitionContainer css-hwynws-MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer"
                               >
                                 <div
                                   style="opacity: 1;"
                                 >
                                   <div
-                                    aria-labelledby=":r1:-grid-label"
+                                    aria-labelledby=":r2:-grid-label"
+                                    class="MuiDayCalendar-root css-q5we01-MuiDayCalendar-root"
                                     role="grid"
                                   >
                                     <div
-                                      class="MuiDayPicker-header css-1vi9hgp-MuiDayPicker-header"
+                                      class="MuiDayCalendar-header css-1rl1vrc-MuiDayCalendar-header"
                                       role="row"
                                     >
                                       <mock-typography
                                         aria-label="Sunday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -513,7 +518,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Monday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -521,7 +526,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Tuesday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -529,7 +534,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Wednesday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -537,7 +542,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Thursday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -545,7 +550,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Friday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -553,7 +558,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Saturday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -561,20 +566,23 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                     </div>
                                     <div
-                                      class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-18bv5fz-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
+                                      class="MuiPickersSlideTransition-root MuiDayCalendar-slideTransition css-1n1xn3x-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition"
                                       role="presentation"
                                     >
                                       <div
-                                        class="MuiDayPicker-monthContainer css-1i7aeku-MuiDayPicker-monthContainer PrivatePickersSlideTransition-slideEnter-right PrivatePickersSlideTransition-slideEnterActive"
+                                        class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer MuiPickersSlideTransition-slideEnter-right MuiPickersSlideTransition-slideEnterActive"
                                         role="rowgroup"
                                       >
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="1"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651363200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -582,8 +590,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             1
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651449600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -591,8 +601,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             2
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651536000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -600,8 +612,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             3
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651622400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -609,8 +623,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             4
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651708800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -618,8 +634,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             5
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651795200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -627,8 +645,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             6
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651881600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -637,12 +657,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="2"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651968000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -650,8 +673,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             8
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652054400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -659,8 +684,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             9
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652140800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -668,8 +695,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             10
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652227200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -677,8 +706,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             11
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652313600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -686,8 +717,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             12
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652400000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -695,8 +728,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             13
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652486400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -705,12 +740,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="3"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652572800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -718,8 +756,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             15
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652659200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -727,8 +767,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             16
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652745600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -736,8 +778,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             17
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652832000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -745,8 +789,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             18
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652918400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -754,8 +800,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             19
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653004800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -763,8 +811,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             20
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653091200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -773,12 +823,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="4"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653177600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -786,8 +839,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             22
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653264000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -795,8 +850,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             23
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653350400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -804,8 +861,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             24
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653436800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -813,8 +872,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             25
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653523200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -822,8 +883,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             26
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653609600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -831,8 +894,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             27
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="true"
-                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653696000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -841,12 +906,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="5"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653782400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -854,8 +922,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             29
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653868800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -863,8 +933,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             30
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653955200000"
                                             role="gridcell"
                                             tabindex="0"
                                             type="button"
@@ -872,50 +944,53 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             31
                                           </button>
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                         </div>
                                       </div>
                                       <div
-                                        class="MuiDayPicker-monthContainer css-1i7aeku-MuiDayPicker-monthContainer PrivatePickersSlideTransition-slideExit PrivatePickersSlideTransition-slideExitActiveLeft-right"
+                                        class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
                                         role="rowgroup"
                                       >
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="1"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685577600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -923,8 +998,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             1
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685664000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -932,8 +1009,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             2
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685750400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -942,12 +1021,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="2"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685836800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -955,8 +1037,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             4
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685923200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -964,8 +1048,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             5
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686009600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -973,8 +1059,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             6
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686096000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -982,8 +1070,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             7
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686182400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -991,8 +1081,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             8
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686268800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1000,8 +1092,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             9
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686355200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1010,12 +1104,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="3"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686441600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1023,8 +1120,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             11
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686528000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1032,8 +1131,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             12
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686614400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1041,8 +1142,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             13
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686700800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1050,8 +1153,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             14
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686787200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1059,8 +1164,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             15
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686873600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1068,8 +1175,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             16
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686960000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1078,12 +1187,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="4"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687046400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1091,8 +1203,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             18
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687132800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1100,8 +1214,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             19
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687219200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1109,8 +1225,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             20
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687305600000"
                                             role="gridcell"
                                             tabindex="0"
                                             type="button"
@@ -1121,8 +1239,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             />
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687392000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1130,8 +1250,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             22
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687478400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1139,8 +1261,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             23
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687564800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1149,12 +1273,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="5"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687651200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1162,8 +1289,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             25
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687737600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1171,8 +1300,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             26
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687824000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1180,9 +1311,11 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             27
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-current="date"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-14lrf6x-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-hnb0qr-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687910400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1190,8 +1323,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             28
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687996800000"
                                             disabled=""
                                             role="gridcell"
                                             tabindex="-1"
@@ -1200,8 +1335,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             29
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1688083200000"
                                             disabled=""
                                             role="gridcell"
                                             tabindex="-1"
@@ -1210,7 +1347,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             30
                                           </button>
                                           <div
-                                            class="MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                         </div>
@@ -1221,24 +1358,27 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                               </div>
                             </div>
                           </div>
+                          <mock-dialogactions
+                            classname="MuiPickersLayout-actionBar"
+                            ownerstate="[object Object]"
+                          >
+                            <button
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              OK
+                            </button>
+                          </mock-dialogactions>
                         </div>
                       </mock-dialogcontent>
-                      <mock-dialogactions>
-                        <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          OK
-                        </button>
-                      </mock-dialogactions>
                     </mock-dialog>
                   </div>
                 </mock-box>
@@ -1264,15 +1404,19 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="DatePicker-datePicker-20"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-23 css-1xp5r68-MuiFormControl-root-MuiTextField-root"
+                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-21 DatePicker-textField-21 css-1b1fjlj-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly DatePicker-textField-23 MuiInputBase-readOnly css-5h82ro-MuiInputBase-root-MuiInput-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-5h82ro-MuiInputBase-root-MuiInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiInput-input Mui-readOnly DatePicker-smallPadding-22 MuiInputBase-readOnly css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                          id=":r2:"
+                          aria-label="Choose date, selected date is Jun 28, 2022"
+                          autocomplete="off"
+                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-1yrc8ca-MuiInputBase-input-MuiInput-input"
+                          id=":r3:"
+                          inputmode="text"
+                          placeholder="MM/DD/YYYY"
                           readonly=""
                           type="text"
                           value="06/28/2022"
@@ -1287,20 +1431,20 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         classname="css-154ra1s"
                       >
                         <div
-                          class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
+                          class="MuiPickersLayout-root css-1g7nc1s-MuiPickersLayout-root"
                         >
                           <div
-                            class="css-1cwxofe"
+                            class="MuiPickersLayout-contentWrapper css-18jb465-MuiPickersLayout-contentWrapper"
                           >
                             <div
-                              class="MuiCalendarPicker-root css-dooxo9-MuiCalendarPicker-root"
+                              class="MuiDateCalendar-root css-ovjy72-MuiDateCalendar-root"
                             >
                               <div
                                 class="MuiPickersCalendarHeader-root css-1jp49e7-MuiPickersCalendarHeader-root"
                               >
                                 <div
                                   aria-live="polite"
-                                  class="MuiPickersCalendarHeader-labelContainer css-10fao8b-MuiPickersCalendarHeader-labelContainer"
+                                  class="MuiPickersCalendarHeader-labelContainer css-cyfsxc-MuiPickersCalendarHeader-labelContainer"
                                   role="presentation"
                                 >
                                   <div
@@ -1308,14 +1452,14 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   >
                                     <div
                                       class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
-                                      id=":r3:-grid-label"
-                                      style="opacity: 1; webkit-transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                                      id=":r5:-grid-label"
+                                      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                     >
                                       June 2022
                                     </div>
                                     <div
                                       class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
-                                      id=":r3:-grid-label"
+                                      id=":r5:-grid-label"
                                       style="opacity: 0; webkit-transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                                     >
                                       June 2023
@@ -1323,7 +1467,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                   </div>
                                   <mock-iconbutton
                                     aria-label="calendar view is open, switch to year view"
-                                    classname="MuiPickersCalendarHeader-switchViewButton css-4e2l6-MuiPickersCalendarHeader-switchViewButton"
+                                    classname="MuiPickersCalendarHeader-switchViewButton css-1wknyoa-MuiPickersCalendarHeader-switchViewButton"
                                     size="small"
                                   >
                                     <svg
@@ -1348,12 +1492,12 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                     classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
                                     disabled="false"
                                     edge="end"
-                                    size="small"
+                                    size="medium"
                                     title="Previous month"
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
                                       data-testid="ArrowLeftIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -1371,12 +1515,12 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                     classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
                                     disabled="false"
                                     edge="start"
-                                    size="small"
+                                    size="medium"
                                     title="Next month"
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
                                       data-testid="ArrowRightIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
@@ -1389,22 +1533,23 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                 </div>
                               </div>
                               <div
-                                class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-1t66xej-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
+                                class="MuiPickersFadeTransitionGroup-root MuiDateCalendar-viewTransitionContainer css-hwynws-MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer"
                               >
                                 <div
                                   style="opacity: 1;"
                                 >
                                   <div
-                                    aria-labelledby=":r3:-grid-label"
+                                    aria-labelledby=":r5:-grid-label"
+                                    class="MuiDayCalendar-root css-q5we01-MuiDayCalendar-root"
                                     role="grid"
                                   >
                                     <div
-                                      class="MuiDayPicker-header css-1vi9hgp-MuiDayPicker-header"
+                                      class="MuiDayCalendar-header css-1rl1vrc-MuiDayCalendar-header"
                                       role="row"
                                     >
                                       <mock-typography
                                         aria-label="Sunday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -1412,7 +1557,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Monday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -1420,7 +1565,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Tuesday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -1428,7 +1573,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Wednesday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -1436,7 +1581,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Thursday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -1444,7 +1589,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Friday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -1452,7 +1597,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                       <mock-typography
                                         aria-label="Saturday"
-                                        classname="MuiDayPicker-weekDayLabel css-1ojsud1-MuiDayPicker-weekDayLabel"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
                                         role="columnheader"
                                         variant="caption"
                                       >
@@ -1460,32 +1605,35 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                       </mock-typography>
                                     </div>
                                     <div
-                                      class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-18bv5fz-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
+                                      class="MuiPickersSlideTransition-root MuiDayCalendar-slideTransition css-1n1xn3x-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition"
                                       role="presentation"
                                     >
                                       <div
-                                        class="MuiDayPicker-monthContainer css-1i7aeku-MuiDayPicker-monthContainer"
+                                        class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer"
                                         role="rowgroup"
                                       >
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="1"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654041600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1493,8 +1641,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             1
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654128000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1502,8 +1652,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             2
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654214400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1511,8 +1663,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             3
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654300800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1521,12 +1675,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="2"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654387200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1534,8 +1691,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             5
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654473600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1543,8 +1702,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             6
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654560000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1552,8 +1713,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             7
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654646400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1561,8 +1724,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             8
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654732800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1570,8 +1735,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             9
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654819200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1579,8 +1746,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             10
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654905600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1589,12 +1758,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="3"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654992000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1602,8 +1774,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             12
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655078400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1611,8 +1785,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             13
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655164800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1620,8 +1796,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             14
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655251200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1629,8 +1807,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             15
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655337600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1638,8 +1818,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             16
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655424000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1647,8 +1829,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             17
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655510400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1657,12 +1841,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="4"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655596800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1670,8 +1857,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             19
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655683200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1679,8 +1868,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             20
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655769600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1688,8 +1879,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             21
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655856000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1697,8 +1890,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             22
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655942400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1706,8 +1901,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             23
                                           </button>
                                           <button
+                                            aria-colindex="6"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656028800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1715,8 +1912,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             24
                                           </button>
                                           <button
+                                            aria-colindex="7"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656115200000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1725,12 +1924,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                           </button>
                                         </div>
                                         <div
-                                          class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                                          aria-rowindex="5"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                                           role="row"
                                         >
                                           <button
+                                            aria-colindex="1"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656201600000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1738,8 +1940,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             26
                                           </button>
                                           <button
+                                            aria-colindex="2"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656288000000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1747,8 +1951,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             27
                                           </button>
                                           <button
+                                            aria-colindex="3"
                                             aria-selected="true"
-                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656374400000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1756,8 +1962,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             28
                                           </button>
                                           <button
+                                            aria-colindex="4"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656460800000"
                                             role="gridcell"
                                             tabindex="-1"
                                             type="button"
@@ -1765,8 +1973,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             29
                                           </button>
                                           <button
+                                            aria-colindex="5"
                                             aria-selected="false"
-                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1o67yt3-MuiButtonBase-root-MuiPickersDay-root"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1gtmw5i-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656547200000"
                                             role="gridcell"
                                             tabindex="0"
                                             type="button"
@@ -1774,11 +1984,11 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                                             30
                                           </button>
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                           <div
-                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ggw2de-MuiPickersDay-root"
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-168nijn-MuiPickersDay-root"
                                             role="gridcell"
                                           />
                                         </div>
@@ -1789,24 +1999,27 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                               </div>
                             </div>
                           </div>
+                          <mock-dialogactions
+                            classname="MuiPickersLayout-actionBar"
+                            ownerstate="[object Object]"
+                          >
+                            <button
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              OK
+                            </button>
+                          </mock-dialogactions>
                         </div>
                       </mock-dialogcontent>
-                      <mock-dialogactions>
-                        <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          OK
-                        </button>
-                      </mock-dialogactions>
                     </mock-dialog>
                   </div>
                 </mock-box>
@@ -1826,7 +2039,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           minwidth="220"
         >
           <mock-card
-            classname="AnalysisCard-AnalysisCardCard-25"
+            classname="AnalysisCard-AnalysisCardCard-23"
           >
             <mock-typography
               color="textSecondary"
@@ -1838,16 +2051,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
               06/28/2022
             </mock-typography>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-14rlipp-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-25 css-14rlipp-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-1k20cze-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-26 css-1k20cze-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
                       color="textSecondary"
@@ -1857,7 +2070,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </mock-typography>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
                       color="textSecondary"
@@ -1867,7 +2080,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </mock-typography>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
                       color="textSecondary"
@@ -1882,7 +2095,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1pqcg35-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-22 css-1pqcg35-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -1891,7 +2104,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       title=""
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30"
+                        classname="AnalysisCard-values-28"
                         style="color: rgb(107, 193, 225);"
                         variant="subtitle2"
                       >
@@ -1903,7 +2116,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -1916,7 +2129,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -1929,7 +2142,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -2042,7 +2255,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -2054,16 +2267,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-qpkn11-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-25 css-qpkn11-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-1k20cze-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-26 css-1k20cze-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2073,7 +2286,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2083,7 +2296,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2098,7 +2311,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1pqcg35-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-22 css-1pqcg35-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2107,7 +2320,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -2119,7 +2332,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2132,7 +2345,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2145,7 +2358,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2224,7 +2437,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -2236,16 +2449,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-qpkn11-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-25 css-qpkn11-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-1k20cze-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-26 css-1k20cze-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2255,7 +2468,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2265,7 +2478,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2280,7 +2493,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1pqcg35-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-22 css-1pqcg35-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2289,7 +2502,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -2301,7 +2514,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2314,7 +2527,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2327,7 +2540,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2406,7 +2619,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -2418,16 +2631,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-27 css-qpkn11-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-25 css-qpkn11-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-28 css-1k20cze-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-26 css-1k20cze-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2437,7 +2650,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2447,7 +2660,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-26 css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -2462,7 +2675,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-24 css-1pqcg35-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-22 css-1pqcg35-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2471,7 +2684,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -2483,7 +2696,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2495,7 +2708,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2507,7 +2720,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >

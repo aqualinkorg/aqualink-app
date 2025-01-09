@@ -85,7 +85,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <div
-                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-14 css-4rp9ef-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-14 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
                   aria-controls=":r0:"
@@ -180,7 +180,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
             class="MuiFormControl-root makeStyles-formControl-6 css-1iw3t7y-MuiFormControl-root"
           >
             <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-7 css-18njxvi-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-7 css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
             >
               <div
                 aria-controls=":r1:"

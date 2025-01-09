@@ -134,23 +134,8 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
               render={({ field }) => (
                 <DatePicker
                   className={classes.textField}
-                  showToolbar={false}
-                  inputFormat="MM/dd/yyyy"
+                  format="MM/dd/yyyy"
                   closeOnSelect
-                  // size={itemsSize}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      helperText={errors?.diveDate?.message || ''}
-                      slotProps={{
-                        htmlInput: {
-                          className: classes.textField,
-                          'data-testid': 'dive-date',
-                        },
-                      }}
-                    />
-                  )}
                   value={diveDateTime}
                   ref={field.ref}
                   onChange={(e) => {
@@ -167,10 +152,20 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
                     );
                     handleDiveDateTimeChange(e);
                   }}
-                  OpenPickerButtonProps={{
-                    'aria-label': 'change date',
+                  slotProps={{
+                    toolbar: {
+                      hidden: true,
+                    },
+                    textField: {
+                      className: classes.textField,
+                      variant: 'outlined',
+                      helperText: errors?.diveDate?.message || '',
+                    },
+
+                    openPickerButton: {
+                      'aria-label': 'change date',
+                    },
                   }}
-                  // keyboardIcon={<EventIcon fontSize={itemsSize} />}
                 />
               )}
             />
@@ -195,33 +190,24 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
                 <TimePicker
                   className={classes.textField}
                   closeOnSelect
-                  // size={itemsSize}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      helperText={errors?.diveTime?.message || ''}
-                      error={!!errors.diveTime}
-                      variant="outlined"
-                      slotProps={{
-                        htmlInput: {
-                          ...params.inputProps,
-                          className: classes.textField,
-                          'data-testid': 'dive-time',
-                        },
-                      }}
-                    />
-                  )}
-                  inputFormat="HH:mm"
+                  format="HH:mm"
                   value={diveDateTime}
                   ref={field.ref}
                   onChange={(e) => {
                     field.onChange(e);
                     handleDiveDateTimeChange(e);
                   }}
-                  OpenPickerButtonProps={{
-                    'aria-label': 'change time',
+                  slotProps={{
+                    textField: {
+                      variant: 'outlined',
+                      helperText: errors?.diveTime?.message || '',
+                      error: !!errors.diveTime,
+                      className: classes.textField,
+                    },
+                    openPickerButton: {
+                      'aria-label': 'change time',
+                    },
                   }}
-                  // keyboardIcon={<AccessTimeIcon fontSize={itemsSize} />}
                 />
               )}
             />

@@ -189,18 +189,23 @@ theme.components = {
     styleOverrides: {
       root: {
         height: '100%',
+        color: black,
         '& .Mui-disabled': {
           backgroundColor: backgroundGray,
         },
       },
     },
   },
-  MuiDatePicker: {
+  MuiDateCalendar: {
     styleOverrides: {
       root: {
         color: black,
       },
-      textFiled: {
+    },
+  },
+  MuiPickersLayout: {
+    styleOverrides: {
+      root: {
         color: black,
       },
     },
@@ -226,7 +231,7 @@ theme.components = {
       },
     },
   },
-  MuiYearPicker: {
+  MuiYearCalendar: {
     styleOverrides: {
       root: {
         color: 'black',
@@ -238,7 +243,7 @@ theme.components = {
     styleOverrides: {
       root: {
         color: 'black',
-        '&:not(.MuiInputBase-multiline)': {
+        '&:not(.MuiInputBase-multiline):not(.MuiInputBase-adornedEnd)': {
           padding: 0,
         },
         '&.Mui-focused': {
