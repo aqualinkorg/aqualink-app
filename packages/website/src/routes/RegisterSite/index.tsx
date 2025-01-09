@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Map, fromJS } from 'immutable';
 import { pick, isEmpty } from 'lodash';
 import L from 'leaflet';
@@ -37,6 +37,7 @@ interface FormElement {
 }
 
 const Apply = ({ classes }: ApplyProps) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const [formModel, setFormModel] = useState(Map<string, string | boolean>());
@@ -48,7 +49,6 @@ const Apply = ({ classes }: ApplyProps) => {
   const [snackbarOpenFromCarto, setSnackbarOpenFromCarto] = useState(false);
   const [databaseSubmissionOk, setDatabaseSubmissionOk] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [newSiteId, setNewSiteId] = useState<number>();
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
   const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
@@ -146,12 +146,12 @@ const Apply = ({ classes }: ApplyProps) => {
             user.token,
           )
           .then(({ data }) => {
-            setNewSiteId(data.site.id);
             setDatabaseSubmissionOk(true);
             setSnackbarOpenFromDatabase(true);
             if (user?.token) {
               dispatch(getSelf(user.token));
             }
+            router.replace(`/sites/${data.site.id}`);
           })
           .catch((error) => {
             setDatabaseSubmissionOk(false);
@@ -172,7 +172,6 @@ const Apply = ({ classes }: ApplyProps) => {
 
   return (
     <>
-      {newSiteId && <Navigate to={`/sites/${newSiteId}`} replace />}
       <NavBar searchLocation={false} />
       <Box className={classes.boxBar} height="100%" pt={4}>
         <Container>

@@ -2,7 +2,6 @@ import { Box, Theme, useTheme, useMediaQuery } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { LatLng } from 'leaflet';
 
 import { CollectionDetails } from 'store/Collection/types';
 import { getCollectionCenterAndBounds } from 'helpers/map';
@@ -18,7 +17,7 @@ const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
     <Box className={classes.root}>
       <Map
         classes={{ map: classes.map }}
-        initialCenter={collectionCenter || new LatLng(0, 0)}
+        initialCenter={collectionCenter ?? [0, 0]}
         initialBounds={collectionBounds}
         initialZoom={3}
         collection={collection}

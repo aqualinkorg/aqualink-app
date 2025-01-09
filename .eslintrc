@@ -71,35 +71,6 @@
         "tsx": "never"
       }
     ],
-    // Warnings to enforce functional programming styles - e.g. no unintended mutations
-    "fp/no-delete": "warn",
-    "fp/no-mutating-assign": "warn",
-    "fp/no-mutating-methods": [
-      "warn",
-      {
-        "allowedObjects": [
-          "_"
-        ]
-      }
-    ],
-    "fp/no-mutation": [
-      "warn",
-      {
-        "commonjs": true,
-        "allowThis": true,
-        "exceptions": [
-          {
-            "property": "propTypes"
-          },
-          {
-            "property": "components"
-          },
-          {
-            "property": "current"
-          }
-        ]
-      }
-    ],
     "no-console": [
       "warn",
       {

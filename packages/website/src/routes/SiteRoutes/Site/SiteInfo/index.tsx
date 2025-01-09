@@ -15,7 +15,7 @@ import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 
 import {
@@ -175,7 +175,7 @@ const SiteNavBar = ({
                   color="primary"
                   aria-label="menu"
                   component={Link}
-                  to="/map"
+                  href="/map"
                   size="large"
                 >
                   <ArrowBack />
@@ -285,7 +285,7 @@ const SiteNavBar = ({
                     <Grid item>
                       <Button
                         component={Link}
-                        to={`/sites/${site.id}/upload_data`}
+                        href={`/sites/${site.id}/upload_data`}
                         className={classes.button}
                         color="primary"
                         variant="outlined"

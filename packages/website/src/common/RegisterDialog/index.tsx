@@ -1,5 +1,5 @@
 import { BaseSyntheticEvent, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import isEmail from 'validator/lib/isEmail';
 import {
   Dialog,
@@ -321,7 +321,7 @@ const RegisterDialog = ({
                         color="textSecondary"
                       >
                         I have read the{' '}
-                        <Link className={classes.termsLink} to="/terms">
+                        <Link className={classes.termsLink} href="/terms">
                           Terms and Conditions
                         </Link>
                       </Typography>

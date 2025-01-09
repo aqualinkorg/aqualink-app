@@ -1,9 +1,9 @@
-import { Link, LinkProps } from 'react-router-dom';
 import { IconButton, Tooltip, TooltipProps } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { Launch } from '@mui/icons-material';
+import Link, { LinkProps } from 'next/link';
 
 const CustomLink = ({
   to,
@@ -14,7 +14,7 @@ const CustomLink = ({
 }: CustomLinkProps) => {
   return (
     <Tooltip title={tooltipTitle} placement="top" arrow>
-      <Link className={classes.link} to={to}>
+      <Link className={classes.link} href={to}>
         {isIcon ? (
           <IconButton className={classes.button} size="large">
             <Launch color="primary" />
@@ -43,7 +43,7 @@ const styles = () =>
   });
 
 interface CustomLinkIncomingProps {
-  to: LinkProps['to'];
+  to: LinkProps['href'];
   isIcon: boolean;
   content?: string | null;
   tooltipTitle: TooltipProps['title'];

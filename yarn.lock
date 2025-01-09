@@ -710,7 +710,7 @@
     "@emotion/weak-memoize" "^0.4.0"
     stylis "4.2.0"
 
-"@emotion/cache@^11.13.5":
+"@emotion/cache@^11.13.5", "@emotion/cache@^11.14.0":
   version "11.14.0"
   resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-11.14.0.tgz#ee44b26986eeb93c8be82bb92f1f7a9b21b2ed76"
   integrity sha512-L/B1lc/TViYk4DcpGxtAVbx0ZyiKM5ktoIyafGkH6zg/tj+mA+NE//aPYKG0k8kCHSHVJrpLpcAlOBEXQ3SavA==
@@ -2211,6 +2211,13 @@
     clsx "^2.1.1"
     prop-types "^15.8.1"
 
+"@mui/material-nextjs@^6.3.1":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@mui/material-nextjs/-/material-nextjs-6.3.1.tgz#b9e033272b1c8af4664e0343cb790fc7027cde8d"
+  integrity sha512-14Y9wHdGsxI7u9XiMlpK5L6+MTsGo3Pod0EqwEde3jMx6dv63uqnMokhC1mzIJ3PjWtG8FwJkDsl57O9H6d+gQ==
+  dependencies:
+    "@babel/runtime" "^7.26.0"
+
 "@mui/material@6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-6.3.0.tgz#9c5a35617ad5ba8f0a738ec664a0c72dc59db093"
@@ -2507,6 +2514,13 @@
   version "15.1.3"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-15.1.3.tgz#bc747e041cd105170d4cae07cc802e20b4a0c153"
   integrity sha512-Q1tXwQCGWyA3ehMph3VO+E6xFPHDKdHFYosadt0F78EObYxPio0S09H9UGYznDe6Wc8eLKLG89GqcFJJDiK5xw==
+
+"@next/eslint-plugin-next@^15.1.4":
+  version "15.1.4"
+  resolved "https://registry.yarnpkg.com/@next/eslint-plugin-next/-/eslint-plugin-next-15.1.4.tgz#65421067692e3e5f988c3ae6099f5117f2c5d991"
+  integrity sha512-HwlEXwCK3sr6zmVGEvWBjW9tBFs1Oe6hTmTLoFQtpm4As5HCdu8jfSE0XJOp7uhfEGLniIx8yrGxEWwNnY0fmQ==
+  dependencies:
+    fast-glob "3.3.1"
 
 "@next/swc-darwin-arm64@15.1.3":
   version "15.1.3"
@@ -3057,7 +3071,12 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@react-leaflet/core@^2.0.0", "@react-leaflet/core@^3.0.0", "@react-leaflet/core@^3.0.0-rc.1":
+"@react-leaflet/core@^2.0.0", "@react-leaflet/core@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-2.1.0.tgz#383acd31259d7c9ae8fb1b02d5e18fe613c2a13d"
+  integrity sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==
+
+"@react-leaflet/core@^3.0.0-rc.1":
   version "3.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-3.0.0-rc.1.tgz#559615c212ea165f212c1d2d3019a2bc8b578017"
   integrity sha512-1Z9Cc49G8vN7q5uRZjUbE4p+voddW1ARrYiPOGphlcsODhKhfJLQSBN7YNxi/+IQrN5qALPVQQLiovgZKT/kyQ==
@@ -8527,6 +8546,17 @@ fast-glob@3.2.7:
   version "3.2.7"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.7.tgz#fd6cb7a2d7e9aa7a7846111e85a196d6b2f766a1"
   integrity sha512-rYGMRwip6lUMvYD3BTScMwT1HtAs2d71SMv66Vrxs0IekGZEjhM0pcMfjQPnknBt2zeCwQMEupiN02ZP4DiT1Q==
+  dependencies:
+    "@nodelib/fs.stat" "^2.0.2"
+    "@nodelib/fs.walk" "^1.2.3"
+    glob-parent "^5.1.2"
+    merge2 "^1.3.0"
+    micromatch "^4.0.4"
+
+fast-glob@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.1.tgz#784b4e897340f3dbbef17413b3f11acf03c874c4"
+  integrity sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==
   dependencies:
     "@nodelib/fs.stat" "^2.0.2"
     "@nodelib/fs.walk" "^1.2.3"
@@ -14536,12 +14566,19 @@ react-leaflet-markercluster@^4.2.1:
     leaflet.markercluster "^1.5.3"
     react-leaflet "^4.0.0"
 
-react-leaflet@5.0.0-rc.1, react-leaflet@^4.0.0, react-leaflet@^5.0.0-rc.1:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-5.0.0.tgz#945d40bad13b69e8606278b19446b00bab57376a"
-  integrity sha512-CWbTpr5vcHw5bt9i4zSlPEVQdTVcML390TjeDG0cK59z1ylexpqC6M1PJFjV8jD7CF+ACBFsLIDs6DRMoLEofw==
+react-leaflet@5.0.0-rc.1:
+  version "5.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-5.0.0-rc.1.tgz#a849cc0892236fd080c04f367fe785532d7e4e7d"
+  integrity sha512-pqxGH/rgUQAUuimnIt/6xLeNAcWymM/kxPpm6v1plXMNHd41Iy6i2sYbzsrRVmspXRT0HtuxQc7jWF+FRHyhYg==
   dependencies:
-    "@react-leaflet/core" "^3.0.0"
+    "@react-leaflet/core" "^3.0.0-rc.1"
+
+react-leaflet@^4.0.0:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-4.2.1.tgz#c300e9eccaf15cb40757552e181200aa10b94780"
+  integrity sha512-p9chkvhcKrWn/H/1FFeVSqLdReGwn2qmiobOQGO3BifX+/vV/39qhY8dGqbdcPh1e6jxh/QHriLXr7a4eLFK4Q==
+  dependencies:
+    "@react-leaflet/core" "^2.1.0"
 
 react-material-ui-carousel@3.4.2:
   version "3.4.2"

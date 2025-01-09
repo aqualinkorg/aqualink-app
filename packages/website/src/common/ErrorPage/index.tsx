@@ -1,12 +1,13 @@
 import { Grid, Typography, Box, Button, useTheme } from '@mui/material';
-import { useLocation, Link } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 import NavBar from '../NavBar';
 import Footer from '../Footer';
 
 const ErrorPage = () => {
   const theme = useTheme();
-  const { pathname } = useLocation();
+  const pathname = usePathname();
 
   return (
     <>
@@ -37,7 +38,7 @@ const ErrorPage = () => {
             <Button
               style={{ margin: '1rem', color: 'white' }}
               component={Link}
-              to="/map"
+              href="/map"
               color="primary"
               variant="contained"
             >

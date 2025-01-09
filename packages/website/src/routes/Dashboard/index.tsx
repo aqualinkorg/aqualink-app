@@ -4,7 +4,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams, usePathname } from 'next/navigation';
 
 import { userInfoSelector, userLoadingSelector } from 'store/User/userSlice';
 import {
@@ -32,7 +32,7 @@ const Dashboard = ({ classes }: DashboardProps) => {
   const { id: storedCollectionId } =
     useSelector(collectionDetailsSelector) || {};
   const [publicNotFound, setPublicNotFound] = useState(false);
-  const { pathname } = useLocation();
+  const pathname = usePathname();
   const atDashboard = pathname.endsWith('/dashboard');
 
   // If we are at `/dashboard`, make a request for

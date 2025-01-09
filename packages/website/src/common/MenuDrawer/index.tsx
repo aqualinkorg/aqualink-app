@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import {
   Box,
   Button,
@@ -89,8 +89,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           key={text}
           component={href ? ExternalLink : Link}
           target={href ? '_blank' : undefined}
-          href={href || undefined}
-          to={to || ''}
+          href={to || href || ''}
           onClick={() =>
             trackButtonClick(
               GaCategory.BUTTON_CLICK,

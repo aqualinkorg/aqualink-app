@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Alert, Box, Container, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import Link from 'next/link';
 import { DropzoneProps } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useRouter } from 'next/navigation';
 import { SiteUploadHistory, Sources } from 'store/Sites/types';
 import { userInfoSelector } from 'store/User/userSlice';
 import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
@@ -36,9 +37,9 @@ import HistoryTable from './HistoryTable';
 
 const UploadData = () => {
   const params = useParams<{ id: string }>();
+  const router = useRouter();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { token } = useSelector(userInfoSelector) || {};
   const { site, siteLoading } = useSiteRequest(params.id ?? '');
   const [selectedSensor, setSelectedSensor] = useState<Sources>();
@@ -109,8 +110,7 @@ const UploadData = () => {
         // so that we fetch the updated data.
         dispatch(setSelectedSite());
         if (typeof site?.id === 'number') {
-          // eslint-disable-next-line fp/no-mutating-methods
-          navigate(`/sites/${site.id}`);
+          router.push(`/sites/${site.id}`);
         }
       }
     } catch (err) {
@@ -157,8 +157,7 @@ const UploadData = () => {
   }, [site?.id]);
 
   const onGoBackClick = () => {
-    // eslint-disable-next-line fp/no-mutating-methods
-    navigate(`/sites/${site?.id}`);
+    router.push(`/sites/${site?.id}`);
   };
 
   return (
@@ -203,7 +202,7 @@ const UploadData = () => {
                 <Alert severity="info">
                   Upload in progress. please DO NOT reload the page, it may take
                   a while. You can still{' '}
-                  <Link to={`/sites/${site?.id}`}>have a look around</Link>
+                  <Link href={`/sites/${site?.id}`}>have a look around</Link>
                 </Alert>
               </Box>
             )}

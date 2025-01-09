@@ -1,4 +1,5 @@
 import { useState, useCallback, ChangeEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   IconButton,
   Grid,
@@ -17,7 +18,6 @@ import { ArrowBack, CloudUploadOutlined } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import Dropzone, { FileRejection } from 'react-dropzone';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { userInfoSelector } from 'store/User/userSlice';
 import { surveyDetailsSelector } from 'store/Survey/surveySlice';
 import { SurveyMediaData } from 'store/Survey/types';
@@ -34,7 +34,7 @@ const UploadMedia = ({
   changeTab,
   classes,
 }: UploadMediaProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
@@ -138,8 +138,7 @@ const UploadMedia = ({
         setMetadata([]);
         setPreviews([]);
         setFeaturedFile(0);
-        // eslint-disable-next-line fp/no-mutating-methods
-        navigate(`/sites/${siteId}/survey_details/${survey?.id}`);
+        router.push(`/sites/${siteId}/survey_details/${survey?.id}`);
       })
       .catch((err) => {
         setAlertMessage(err.message);

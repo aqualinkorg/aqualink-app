@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { MapContainer, TileLayer, Marker, Circle } from 'react-leaflet';
-import L, { LatLng, LatLngBounds, Map as LeafletMap } from 'leaflet';
+import L, { LatLngBounds, Map as LeafletMap } from 'leaflet';
 import {
   CircularProgress,
   IconButton,
@@ -243,7 +243,7 @@ const styles = () =>
   });
 
 interface HomepageMapIncomingProps {
-  initialCenter: LatLng;
+  initialCenter: [number, number];
   initialZoom: number;
   showSiteTable?: boolean;
   setShowSiteTable?: React.Dispatch<React.SetStateAction<boolean>>;

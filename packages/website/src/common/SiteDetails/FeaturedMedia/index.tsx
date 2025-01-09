@@ -10,7 +10,7 @@ import {
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 import { userInfoSelector } from 'store/User/userSlice';
@@ -56,7 +56,7 @@ const FeaturedMedia = ({
 
   if (featuredImage && surveyId) {
     return (
-      <Link to={`/sites/${siteId}/survey_details/${surveyId}`}>
+      <Link href={`/sites/${siteId}/survey_details/${surveyId}`}>
         <CardMedia
           className={classes.card}
           style={{ height: '100%' }}
@@ -79,7 +79,7 @@ const FeaturedMedia = ({
             <Grid item>
               <IconButton
                 component={Link}
-                to={`/sites/${siteId}/new_survey`}
+                href={`/sites/${siteId}/new_survey`}
                 size="large"
               >
                 <img src={uploadIcon.src} alt="upload" />

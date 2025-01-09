@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import AddIcon from '@mui/icons-material/Add';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { useSelector } from 'react-redux';
 import { Site, Sources } from 'store/Sites/types';
@@ -170,7 +170,7 @@ const Selectors = ({
         <Grid item>
           <Button
             component={Link}
-            to={`/sites/${site.id}`}
+            href={`/sites/${site.id}`}
             size="small"
             variant="outlined"
             color="primary"

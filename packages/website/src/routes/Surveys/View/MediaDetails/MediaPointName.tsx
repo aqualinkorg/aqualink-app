@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { isNumber } from 'lodash';
 import { Grid, Typography, Tooltip, Theme } from '@mui/material';
 import { WithStyles } from '@mui/styles';
@@ -45,7 +45,7 @@ const MediaPointName = ({
             <Tooltip title="View survey point" arrow placement="top">
               <Link
                 className={classes.link}
-                to={`/sites/${encodeURIComponent(
+                href={`/sites/${encodeURIComponent(
                   siteId,
                 )}/points/${encodeURIComponent(pointId)}`}
               >

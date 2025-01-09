@@ -15,7 +15,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import classNames from 'classnames';
 import NavBar from 'common/NavBar';
@@ -127,7 +127,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
                       <Grid key={label} item xs={isTablet ? 12 : undefined}>
                         <Button
                           component={Link}
-                          to={to}
+                          href={to}
                           className={classNames(classes.buttons, {
                             [classes.whiteColorButton]: hasWhiteColor,
                           })}

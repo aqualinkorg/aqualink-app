@@ -1,5 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import {
   Theme,
   Grid,
@@ -12,7 +14,6 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
@@ -200,7 +201,7 @@ const Apply = ({ classes }: ApplyProps) => {
             <Grid item>
               {site &&
                 (user ? (
-                  <Link to={`/sites/${siteId}`} className={classes.link}>
+                  <Link href={`/sites/${siteId}`} className={classes.link}>
                     <Button
                       onClick={() => {
                         if (user?.token) {

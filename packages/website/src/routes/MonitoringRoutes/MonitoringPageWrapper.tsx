@@ -1,7 +1,7 @@
 import { Button, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
@@ -76,7 +76,7 @@ function MonitoringPageWrapper<T, A>({
   return (
     <div>
       <LoadingBackdrop loading={loading} />
-      <Link to="/monitoring">
+      <Link href="/monitoring">
         <Button
           variant="outlined"
           color="primary"

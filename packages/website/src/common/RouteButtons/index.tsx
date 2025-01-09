@@ -1,5 +1,5 @@
 import { Grid, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const links = [
   { title: 'Map', to: '/map' },
@@ -20,7 +20,7 @@ const RouteButtons = () => {
           <Button
             style={{ color: 'white' }}
             component={to ? Link : 'a'}
-            to={to || ''}
+            // href={to || ''}
             href={href || to}
             target={href ? '_blank' : undefined}
             rel={href ? 'noopener' : undefined}

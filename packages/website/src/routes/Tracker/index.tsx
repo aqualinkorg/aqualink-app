@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { useImageAspectRatio } from 'hooks/useImageAspectRatio';
 import { isPositiveNumber } from 'helpers/numberUtils';
@@ -323,7 +323,7 @@ const Tracker = ({
               , was exptected to come through the area, potentially bringing
               devastating affects to the local ecosystems. They created a
               dashboard{' '}
-              <Link className={classes.link} to="/collections/minderoo">
+              <Link className={classes.link} href="/collections/minderoo">
                 here
               </Link>{' '}
               that aggregrates all the sensors involved in tracking this event
@@ -396,7 +396,7 @@ const Tracker = ({
             <Typography variant="h6">
               Aqualink has developed a tracker that highlights all the sites
               under the most stress, at a glance. Use{' '}
-              <Link className={classes.link} to="/collections/heat-stress">
+              <Link className={classes.link} href="/collections/heat-stress">
                 this page
               </Link>{' '}
               to see where the ocean is getting warmer and spot new heat waves.
@@ -404,7 +404,7 @@ const Tracker = ({
           </Grid>
           <Grid item xs={12} md={7} lg={8}>
             <Card className={classes.card3} variant="outlined">
-              <Link to="/collections/heat-stress">
+              <Link href="/collections/heat-stress">
                 <CardMedia className={classes.image} image={image3.src} />
               </Link>
             </Card>

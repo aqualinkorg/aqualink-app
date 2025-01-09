@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { isNumber } from 'lodash';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import classNames from 'classnames';
 
 import { Site } from 'store/Sites/types';
@@ -124,7 +124,7 @@ const SelectedSiteCardContent = ({
               height="100%"
             >
               {site && imageUrl && (
-                <Link to={`/sites/${site.id}`}>
+                <Link href={`/sites/${site.id}`}>
                   <CardMedia
                     className={classNames(
                       classes.cardImage,
@@ -169,7 +169,7 @@ const SelectedSiteCardContent = ({
                       <Chip
                         live
                         liveText="LIVE VIDEO"
-                        to={`/sites/${site.id}`}
+                        href={`/sites/${site.id}`}
                         width={80}
                       />
                     )}
@@ -177,7 +177,7 @@ const SelectedSiteCardContent = ({
                       <Button
                         className={classes.exporeButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        href={`/sites/${site.id}`}
                         onClick={onExploreButtonClick}
                         size="small"
                         variant="contained"
@@ -223,7 +223,7 @@ const SelectedSiteCardContent = ({
                   <Chip
                     live
                     liveText="LIVE VIDEO"
-                    to={`/sites/${site.id}`}
+                    href={`/sites/${site.id}`}
                     width={80}
                   />
                 )}

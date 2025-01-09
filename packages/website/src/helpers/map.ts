@@ -50,7 +50,7 @@ export const samePosition = (
 
 export const getCollectionCenterAndBounds = (
   collection?: CollectionDetails,
-): [LatLng | undefined, LatLngBounds | undefined] => {
+): [[number, number] | undefined, LatLngBounds | undefined] => {
   if (!collection) {
     return [undefined, undefined];
   }
@@ -59,10 +59,10 @@ export const getCollectionCenterAndBounds = (
     getMiddlePoint(item.polygon),
   );
 
-  const center = new LatLng(
+  const center: [number, number] = [
     meanBy(coordinates, (item) => item[1]),
     meanBy(coordinates, (item) => item[0]),
-  );
+  ];
 
   const bounds =
     coordinates.length > 1

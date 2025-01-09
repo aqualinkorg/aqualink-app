@@ -7,7 +7,6 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useNavigate, useParams } from 'react-router-dom';
 
 import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
 import type { Site } from 'store/Sites/types';
@@ -19,6 +18,7 @@ import {
   unsetSelectedSite,
 } from 'store/Sites/selectedSiteSlice';
 import mapServices from 'services/mapServices';
+import { useParams, useRouter } from 'next/navigation';
 
 const siteAugmentedName = (site: Site) => {
   const { name, region } = getSiteNameAndRegion(site);
@@ -29,7 +29,7 @@ const siteAugmentedName = (site: Site) => {
 };
 
 const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState('');
@@ -77,7 +77,7 @@ const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       if (!geocodingEnabled) {
-        navigate(`/sites/${value.id}`);
+        router.push(`/sites/${value.id}`);
       }
     }
   };
@@ -85,7 +85,7 @@ const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
   const onSearchSubmit = () => {
     if (searchedSite) {
       if (!geocodingEnabled) {
-        navigate(`/sites/${searchedSite.id}`);
+        router.push(`/sites/${searchedSite.id}`);
       }
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());

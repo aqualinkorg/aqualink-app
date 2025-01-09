@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import {
   Box,
@@ -145,7 +145,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
             color="primary"
             startIcon={<ArrowBack />}
             component={Link}
-            to={`/sites/${site.id}`}
+            href={`/sites/${site.id}`}
           >
             <Typography style={{ textTransform: 'none' }}>
               Back to site

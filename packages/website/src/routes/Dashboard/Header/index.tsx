@@ -5,7 +5,7 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 import { CollectionDetails } from 'store/Collection/types';
@@ -30,7 +30,7 @@ const Header = ({ collection, classes }: HeaderProps) => {
         ) : (
           <>
             <Grid item>
-              <Button component={Link} to="/map">
+              <Button component={Link} href="/map">
                 <ArrowBackIcon color="primary" />
               </Button>
             </Grid>

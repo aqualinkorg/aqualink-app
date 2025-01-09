@@ -1,3 +1,4 @@
+// eslint-disable @next/next/no-page-custom-font
 import { Typography, CardMedia } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';

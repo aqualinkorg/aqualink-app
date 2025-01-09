@@ -1,3 +1,5 @@
+'use client';
+
 import { createTheme, Theme } from '@mui/material/styles';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 

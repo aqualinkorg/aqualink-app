@@ -1,10 +1,12 @@
+'use client';
+
 import { useEffect } from 'react';
 import { Alert, Container, Box } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import Link from 'next/link';
 import classNames from 'classnames';
 import {
   siteDetailsSelector,
@@ -76,7 +78,7 @@ const getAlertMessage = (
       return (
         <div>
           {defaultMessage} Apply for an Aqualink Smart Buoy
-          <span> </span> <Link to={`/sites/${siteId}/apply`}>here</Link>.
+          <span> </span> <Link href={`/sites/${siteId}/apply`}>here</Link>.
         </div>
       );
 
@@ -85,7 +87,7 @@ const getAlertMessage = (
         <div>
           {defaultMessage} Your application for an Aqualink Smart Buoy is being
           reviewed. You can check your application<span> </span>
-          <Link to={`/sites/${siteId}/apply`}>here</Link>.
+          <Link href={`/sites/${siteId}/apply`}>here</Link>.
         </div>
       );
 
@@ -109,14 +111,13 @@ const getAlertMessage = (
   }
 };
 
-const Site = ({ classes }: SiteProps) => {
+const Site = ({ siteId = '', classes }: SiteProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
   const spotterPosition = useSelector(spotterPositionSelector);
   const dispatch = useDispatch();
-  const { id: siteId = '' } = useParams<{ id: string }>();
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
@@ -264,6 +265,6 @@ const styles = () =>
     },
   });
 
-type SiteProps = WithStyles<typeof styles>;
+type SiteProps = { siteId?: string } & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Site);

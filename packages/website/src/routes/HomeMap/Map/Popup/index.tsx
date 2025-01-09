@@ -12,7 +12,7 @@ import {
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Popup as LeafletPopup, useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
@@ -136,7 +136,7 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                href={`/sites/${site.id}`}
               >
                 <Button
                   onClick={onExploreButtonClick}

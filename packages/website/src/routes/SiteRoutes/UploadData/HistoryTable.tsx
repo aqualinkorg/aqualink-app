@@ -13,7 +13,7 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import { grey } from '@mui/material/colors';
 import { startCase } from 'lodash';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Site, SiteUploadHistory } from 'store/Sites/types';
 import requests from 'helpers/requests';
 import { pluralize } from 'helpers/stringUtils';
@@ -103,7 +103,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                     <TableCell>
                       <Button
                         component={Link}
-                        to={dataVisualizationButtonLink(
+                        href={dataVisualizationButtonLink(
                           dataUpload.minDate,
                           dataUpload.maxDate,
                           surveyPoint?.id,

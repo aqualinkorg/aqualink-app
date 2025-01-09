@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button, Typography } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -12,7 +12,7 @@ const AddButton = ({ siteId, classes }: AddButtonProps) => {
       className={classes.addSurveyButton}
       startIcon={<AddCircleOutlineIcon />}
       component={Link}
-      to={`/sites/${siteId}/new_survey`}
+      href={`/sites/${siteId}/new_survey`}
       classes={{ iconSizeMedium: classes.addSurveyButtonIcon }}
     >
       <Typography color="inherit" variant="h6">

@@ -1,7 +1,7 @@
 import { Grid, IconButton, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Site } from 'store/Sites/types';
 
 const exampleFiles = ['hobo', 'sonde', 'metlog', 'hui'];
@@ -14,7 +14,7 @@ const Header = ({ site }: HeaderProps) => {
         <IconButton
           color="primary"
           component={Link}
-          to={`/sites/${site.id}`}
+          href={`/sites/${site.id}`}
           size="large"
         >
           <ArrowBackIcon />

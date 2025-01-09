@@ -3,7 +3,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { ArrowBack } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const BackButton = ({ siteId, bgColor, classes }: BackButtonProps) => {
   return (
@@ -14,7 +14,7 @@ const BackButton = ({ siteId, bgColor, classes }: BackButtonProps) => {
             color="primary"
             startIcon={<ArrowBack />}
             component={Link}
-            to={`/sites/${siteId}`}
+            href={`/sites/${siteId}`}
           >
             <Typography className={classes.backButtonText}>
               Back to Site

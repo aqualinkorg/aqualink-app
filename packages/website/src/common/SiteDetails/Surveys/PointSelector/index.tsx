@@ -15,7 +15,7 @@ import {
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import { Create, DeleteOutline } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { SurveyPoints } from 'store/Sites/types';
 import { maxLengths } from 'constants/names';
@@ -235,7 +235,7 @@ const PointSelector = ({
                     color="primary"
                     size="small"
                     component={Link}
-                    to={`/sites/${siteId}/points/${pointId}`}
+                    href={`/sites/${siteId}/points/${pointId}`}
                   >
                     View Survey Point
                   </Button>

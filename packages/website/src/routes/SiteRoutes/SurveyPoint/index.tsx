@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { LinearProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'next/navigation';
 import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,

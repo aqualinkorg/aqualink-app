@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import {
   Alert,
   Box,
@@ -27,7 +28,6 @@ import {
 import StatusSnackbar from 'common/StatusSnackbar';
 import { UploadTimeSeriesResult } from 'services/uploadServices';
 import UploadWarnings from 'common/FileUploads/UploadWarnings';
-import { useNavigate } from 'react-router-dom';
 import { Sources } from 'store/Sites/types';
 import SitesTable from './SitesTable';
 import { OptionsList, selectProps, SENSOR_TYPES } from './utils';
@@ -35,7 +35,7 @@ import { OptionsList, selectProps, SENSOR_TYPES } from './utils';
 function Uploads() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
   const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
@@ -77,8 +77,7 @@ function Uploads() {
   const onStatusSnackbarClose = () => setIsErrorSnackbarOpen(false);
 
   const handleRefreshOnSuccessUpload = () => {
-    // eslint-disable-next-line fp/no-mutating-methods
-    navigate(`/map`);
+    router.push(`/map`);
   };
 
   const onFilesDrop: DropzoneProps['onDropAccepted'] = (
