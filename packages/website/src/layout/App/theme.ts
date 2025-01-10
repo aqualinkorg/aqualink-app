@@ -1,3 +1,4 @@
+import { pink } from '@mui/material/colors';
 import { createTheme, Theme } from '@mui/material/styles';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
@@ -47,6 +48,9 @@ const theme: Theme = createTheme({
       main: lightBlue,
       dark: darkGreyBlue,
       light: white,
+    },
+    secondary: {
+      main: pink[500],
     },
     text: {
       primary: white,
