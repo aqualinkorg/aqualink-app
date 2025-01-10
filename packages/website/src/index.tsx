@@ -17,8 +17,6 @@ import app from './firebase';
 import { setToken } from './store/User/userSlice';
 import { initGA } from './utils/google-analytics';
 
-// Comment to trigger GH action
-
 if (app) {
   const auth = getAuth(app);
   onAuthStateChanged(auth, (user) => {
