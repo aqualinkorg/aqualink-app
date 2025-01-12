@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { Box, Button, Grid, Typography } from '@material-ui/core';
-import { ArrowBack } from '@material-ui/icons';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 import { reefCheckSurveyGetRequest } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import { siteErrorSelector, siteRequest } from 'store/Sites/selectedSiteSlice';
 import NavBar from 'common/NavBar';

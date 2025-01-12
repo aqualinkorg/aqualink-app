@@ -5,10 +5,11 @@ import {
   Paper,
   Theme,
   Typography,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+  Skeleton,
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+
 import React from 'react';
 import { useSelector } from 'react-redux';
 import cls from 'classnames';
@@ -85,7 +86,7 @@ export const ReefCheckSurveySummaryComponent = ({
       <Box className={cls(classes.observationBox, classes.columnSpaceBetween)}>
         {loading ? (
           <Skeleton
-            variant="rect"
+            variant="rectangular"
             width="100%"
             height={150}
             className={classes.skeleton}

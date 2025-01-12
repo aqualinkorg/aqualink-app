@@ -60,11 +60,9 @@ describe('ReefCheckSurveyCard', () => {
   it('should display link to survey details', () => {
     const { getByRole } = renderReefCheckSurveyCard();
 
-    expect(
-      getByRole(
-        (role, element) =>
-          role === 'link' && element?.textContent === 'VIEW DETAILS',
-      ),
-    ).toHaveAttribute('href', `/reef_check_survey/${mockReefCheckSurvey.id}`);
+    expect(getByRole('link', { name: 'VIEW DETAILS' })).toHaveAttribute(
+      'href',
+      `/reef_check_survey/${mockReefCheckSurvey.id}`,
+    );
   });
 });

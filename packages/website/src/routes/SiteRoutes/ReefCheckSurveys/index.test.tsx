@@ -87,12 +87,10 @@ describe('ReefCheckSurveyViewPage', () => {
   it('should render a Button component with a link to the site page', () => {
     const { getByRole } = renderReefCheckSurveyViewPage();
 
-    expect(
-      getByRole(
-        (role, element) =>
-          role === 'button' && element?.textContent === 'Back to site',
-      ),
-    ).toHaveAttribute('href', `/sites/${mockSite.id}`);
+    expect(getByRole('button', { name: 'Back to site' })).toHaveAttribute(
+      'href',
+      `/sites/${mockSite.id}`,
+    );
   });
 
   describe('ReefCheckSurveySummary', () => {

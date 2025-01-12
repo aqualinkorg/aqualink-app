@@ -10,10 +10,10 @@ import {
   TableCellProps,
   createStyles,
   Theme,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+  Skeleton,
+} from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import { WithStyles } from '@mui/styles';
 import { times } from 'lodash';
 import React from 'react';
 
@@ -78,7 +78,7 @@ const ReefCheckSurveyTableComponent = <T extends ObjectWithId>({
                       typeof field === 'function' ? field(row) : row[field];
                     return (
                       <TableCell key={header} {...props}>
-                        {value}
+                        {value as React.ReactNode}
                       </TableCell>
                     );
                   })}

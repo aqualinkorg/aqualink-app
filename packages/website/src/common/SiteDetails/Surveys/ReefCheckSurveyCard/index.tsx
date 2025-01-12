@@ -12,9 +12,9 @@ import {
   TableRow,
   Theme,
   Typography,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import { groupBy, times } from 'lodash';
 import { Link } from 'react-router-dom';
 import cls from 'classnames';

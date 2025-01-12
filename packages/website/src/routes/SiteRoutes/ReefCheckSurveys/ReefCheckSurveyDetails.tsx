@@ -6,10 +6,10 @@ import {
   Paper,
   Theme,
   Typography,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+  Skeleton
+} from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
+import { WithStyles } from '@mui/styles';
 import { useSelector } from 'react-redux';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import { ReefCheckSurvey } from 'store/ReefCheckSurveys/types';
