@@ -1,19 +1,14 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 
-import { BrowserRouter as Router } from 'react-router-dom';
 import { getMockDailyData } from 'mocks/mockDailyData';
+import { renderWithProviders } from 'utils/test-utils';
 import { TemperatureChange } from '.';
 
 describe('TemperatureChange card', () => {
   const mockDailyData = getMockDailyData(14);
 
   function renderTemperatureChange(dailyData = mockDailyData) {
-    return render(
-      <Router>
-        <TemperatureChange dailyData={dailyData} />,
-      </Router>,
-    );
+    return renderWithProviders(<TemperatureChange dailyData={dailyData} />);
   }
 
   it('should render with given state from Redux store', () => {

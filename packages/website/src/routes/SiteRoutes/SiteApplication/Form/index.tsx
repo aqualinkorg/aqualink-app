@@ -1,21 +1,13 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Typography,
-  TextField,
-  Button,
-} from '@material-ui/core';
+import { Theme, Typography, TextField, Button } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useForm, Controller } from 'react-hook-form';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 import { SiteApplication, SiteApplyParams } from 'store/Sites/types';
 import { DateTime } from 'luxon-extensions';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 interface SiteApplicationFormFields {
   siteName: string;
@@ -27,7 +19,7 @@ interface SiteApplicationFormFields {
 
 const Form = ({
   siteName,
-  application,
+  application = null,
   agreed,
   handleFormSubmit,
   classes,
@@ -78,19 +70,19 @@ const Form = ({
       <TextField
         className={`${classes.formField} ${classes.textField}`}
         variant="outlined"
-        inputProps={{ className: classes.textField }}
         fullWidth
         placeholder="Site Name e.g. 'Sombrero Site'"
         disabled
         value={siteName}
         error={!!errors.siteName}
         helperText={errors?.siteName?.message || ''}
+        slotProps={{
+          htmlInput: { className: classes.textField },
+        }}
       />
-
       <Typography className={classes.additionalInfo}>
         Please provide some additional information for each site:
       </Typography>
-
       <Typography>Permitting</Typography>
       <Controller
         name="permitRequirements"
@@ -103,7 +95,6 @@ const Form = ({
             {...field}
             className={`${classes.formField} ${classes.textField}`}
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             multiline
             minRows={2}
@@ -111,10 +102,12 @@ const Form = ({
             placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
             error={!!errors.permitRequirements}
             helperText={errors?.permitRequirements?.message || ''}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         )}
       />
-
       <Typography>Funding Source</Typography>
       <Controller
         name="fundingSource"
@@ -127,7 +120,6 @@ const Form = ({
             {...field}
             className={`${classes.formField} ${classes.textField}`}
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             multiline
             minRows={2}
@@ -135,16 +127,18 @@ const Form = ({
             placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
             error={!!errors.fundingSource}
             helperText={errors?.fundingSource?.message || ''}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         )}
       />
-
       <Typography>Schedule for installation</Typography>
       <Typography className={classes.scheduleDescription}>
         What is the soonest date you could install the Smart Buoy and conduct a
         survey?
       </Typography>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Controller
           name="installationSchedule"
           control={control}
@@ -157,17 +151,12 @@ const Form = ({
             },
           }}
           render={({ field }) => (
-            <KeyboardDatePicker
-              className={classes.formField}
-              disableToolbar
-              format="MM/dd/yyyy"
-              id="installationSchedule"
-              autoOk
-              showTodayButton
-              helperText={errors?.installationSchedule?.message || ''}
-              error={!!errors.installationSchedule}
-              value={installationSchedule}
+            <DatePicker
               ref={field.ref}
+              className={classes.formField}
+              format="MM/dd/yyyy"
+              closeOnSelect
+              value={installationSchedule}
               onChange={(e) => {
                 field.onChange(e);
                 setValue(
@@ -178,18 +167,27 @@ const Form = ({
                 );
                 handleInstallationChange(e);
               }}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
+              slotProps={{
+                toolbar: {
+                  hidden: true,
+                },
+
+                textField: {
+                  variant: 'outlined',
+                  fullWidth: true,
+                  error: !!errors.installationSchedule,
+                  helperText: errors?.installationSchedule?.message || '',
+                  className: classes.textField,
+                },
+
+                openPickerButton: {
+                  'aria-label': 'change date',
+                },
               }}
-              inputProps={{
-                className: classes.textField,
-              }}
-              inputVariant="outlined"
             />
           )}
         />
-      </MuiPickersUtilsProvider>
-
+      </LocalizationProvider>
       <Typography>
         Installation, survey and maintenance personnel and equipment
       </Typography>
@@ -204,7 +202,6 @@ const Form = ({
             {...field}
             className={`${classes.formField} ${classes.textField}`}
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             multiline
             minRows={4}
@@ -212,10 +209,12 @@ const Form = ({
             placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
             error={!!errors.installationResources}
             helperText={errors?.installationResources?.message || ''}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         )}
       />
-
       <Button
         disabled={!agreed}
         type="submit"
@@ -263,10 +262,6 @@ interface FormIncomingProps {
   agreed: boolean;
   handleFormSubmit: (siteName: string, params: SiteApplyParams) => void;
 }
-
-Form.defaultProps = {
-  application: null,
-};
 
 type FormProps = FormIncomingProps & WithStyles<typeof styles>;
 

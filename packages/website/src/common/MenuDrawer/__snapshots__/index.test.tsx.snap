@@ -10,223 +10,134 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
     open="true"
   >
     <mock-iconbutton
+      size="large"
       style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
     >
       <mock-clear />
     </mock-iconbutton>
     <a
-      aria-disabled="false"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="/"
-      role="button"
       tabindex="0"
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Home
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Home
+      </mock-typography>
     </a>
     <a
-      aria-disabled="false"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="/map"
-      role="button"
       tabindex="0"
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Map
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Map
+      </mock-typography>
     </a>
     <a
-      aria-disabled="false"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="/register"
-      role="button"
       tabindex="0"
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Register a site
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Register a site
+      </mock-typography>
     </a>
     <mock-link
-      aria-disabled="false"
-      classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="https://highlights.aqualink.org"
-      role="button"
       tabindex="0"
       target="_blank"
       to=""
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Highlighted Sites
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Highlighted Sites
+      </mock-typography>
     </mock-link>
     <mock-link
-      aria-disabled="false"
-      classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="https://bristlemouth.aqualink.org"
-      role="button"
       tabindex="0"
       target="_blank"
       to=""
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Bristlemouth Explorer
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Bristlemouth Explorer
+      </mock-typography>
     </mock-link>
     <a
-      aria-disabled="false"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="/tracker"
-      role="button"
       tabindex="0"
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Track a heatwave
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Track a heatwave
+      </mock-typography>
     </a>
     <a
-      aria-disabled="false"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="/about"
-      role="button"
       tabindex="0"
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          About
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        About
+      </mock-typography>
     </a>
     <a
-      aria-disabled="false"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="/faq"
-      role="button"
       tabindex="0"
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Faq
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Faq
+      </mock-typography>
     </a>
     <a
-      aria-disabled="false"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="/buoy"
-      role="button"
       tabindex="0"
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Buoy
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Buoy
+      </mock-typography>
     </a>
     <a
-      aria-disabled="false"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-3"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-3 css-121gmvr-MuiButtonBase-root-MuiButton-root"
       href="/drones"
-      role="button"
       tabindex="0"
     >
-      <span
-        class="MuiButton-label"
+      <mock-typography
+        style="text-transform: uppercase;"
+        variant="h6"
       >
-        <mock-typography
-          style="text-transform: uppercase;"
-          variant="h6"
-        >
-          Drone
-        </mock-typography>
-      </span>
-      <span
-        class="MuiTouchRipple-root"
-      />
+        Drone
+      </mock-typography>
     </a>
     <mock-box
       margintop="auto"
@@ -240,47 +151,31 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
         Join us and contribute!
       </mock-typography>
       <div
-        class="MuiButtonGroup-root MuiButtonGroup-contained"
+        class="MuiButtonGroup-root MuiButtonGroup-contained MuiButtonGroup-horizontal MuiButtonGroup-colorPrimary css-tlut1a-MuiButtonGroup-root"
         role="group"
       >
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-2"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-2 MuiButtonGroup-firstButton css-kigga0-MuiButtonBase-root-MuiButton-root"
           href="https://github.com/aqualinkorg/aqualink-app"
           tabindex="0"
           target="_blank"
         >
           <span
-            class="MuiButton-label"
+            class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
           >
-            <span
-              class="MuiButton-startIcon MuiButton-iconSizeMedium"
-            >
-              <mock-github />
-            </span>
-            GitHub
+            <mock-github />
           </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+          GitHub
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-2"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-2 MuiButtonGroup-lastButton css-kigga0-MuiButtonBase-root-MuiButton-root"
           href="https://ovio.org/project/aqualinkorg/aqualink-app"
           tabindex="0"
           target="_blank"
         >
-          <span
-            class="MuiButton-label"
-          >
-            <img
-              alt="Ovio Logo"
-              src="ovio_logo.png"
-            />
-          </span>
-          <span
-            class="MuiTouchRipple-root"
+          <img
+            alt="Ovio Logo"
+            src="ovio_logo.png"
           />
         </a>
       </div>

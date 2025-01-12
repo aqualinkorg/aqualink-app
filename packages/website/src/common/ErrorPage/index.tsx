@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography, Box, Button, useTheme } from '@material-ui/core';
+import { Grid, Typography, Box, Button, useTheme } from '@mui/material';
 import { useLocation, Link } from 'react-router-dom';
 
 import NavBar from '../NavBar';

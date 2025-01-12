@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  createStyles,
   Theme,
   Grid,
   Typography,
@@ -10,21 +9,22 @@ import {
   Button,
   useTheme,
   useMediaQuery,
-  makeStyles,
-} from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import EventIcon from '@material-ui/icons/Event';
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
-import DateFnsUtils from '@date-io/date-fns';
 import { useForm, Controller } from 'react-hook-form';
 
 import { diveLocationSelector } from 'store/Survey/surveySlice';
 import { SurveyData, SurveyState } from 'store/Survey/types';
 import { setTimeZone } from 'helpers/dates';
 import { DateTime } from 'luxon-extensions';
-import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
-import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
-import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
+import {
+  LocalizationProvider,
+  TimePicker,
+  DatePicker,
+} from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 interface SurveyFormFields {
   diveDate: string;
@@ -52,10 +52,10 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
+function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
   const theme = useTheme();
   const classes = useStyles();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
   const [weather, setWeather] =
@@ -119,7 +119,7 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
           <Typography variant="h6" gutterBottom>
             Dive Date
           </Typography>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Controller
               name="diveDate"
               control={control}
@@ -132,16 +132,10 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                 },
               }}
               render={({ field }) => (
-                <KeyboardDatePicker
+                <DatePicker
                   className={classes.textField}
-                  disableToolbar
                   format="MM/dd/yyyy"
-                  fullWidth
-                  autoOk
-                  showTodayButton
-                  size={itemsSize}
-                  helperText={errors?.diveDate?.message || ''}
-                  error={!!errors.diveDate}
+                  closeOnSelect
                   value={diveDateTime}
                   ref={field.ref}
                   onChange={(e) => {
@@ -158,25 +152,30 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                     );
                     handleDiveDateTimeChange(e);
                   }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
+                  slotProps={{
+                    toolbar: {
+                      hidden: true,
+                    },
+                    textField: {
+                      className: classes.textField,
+                      variant: 'outlined',
+                      helperText: errors?.diveDate?.message || '',
+                    },
+
+                    openPickerButton: {
+                      'aria-label': 'change date',
+                    },
                   }}
-                  inputProps={{
-                    className: classes.textField,
-                    'data-testid': 'dive-date',
-                  }}
-                  inputVariant="outlined"
-                  keyboardIcon={<EventIcon fontSize={itemsSize} />}
                 />
               )}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom>
             Dive Local Time
           </Typography>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Controller
               name="diveTime"
               control={control}
@@ -188,14 +187,9 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                 },
               }}
               render={({ field }) => (
-                <KeyboardTimePicker
+                <TimePicker
                   className={classes.textField}
-                  id="time-picker"
-                  fullWidth
-                  autoOk
-                  size={itemsSize}
-                  helperText={errors?.diveTime?.message || ''}
-                  error={!!errors.diveTime}
+                  closeOnSelect
                   format="HH:mm"
                   value={diveDateTime}
                   ref={field.ref}
@@ -203,19 +197,21 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
                     field.onChange(e);
                     handleDiveDateTimeChange(e);
                   }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change time',
+                  slotProps={{
+                    textField: {
+                      variant: 'outlined',
+                      helperText: errors?.diveTime?.message || '',
+                      error: !!errors.diveTime,
+                      className: classes.textField,
+                    },
+                    openPickerButton: {
+                      'aria-label': 'change time',
+                    },
                   }}
-                  inputProps={{
-                    className: classes.textField,
-                    'data-testid': 'dive-time',
-                  }}
-                  keyboardIcon={<AccessTimeIcon fontSize={itemsSize} />}
-                  inputVariant="outlined"
                 />
               )}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Grid>
       </Grid>
       <Typography variant="h6" gutterBottom>
@@ -225,25 +221,29 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             placeholder="LAT"
             label="Latitude"
             value={diveLocation?.lat || ''}
             disabled
             size={itemsSize}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
-            inputProps={{ className: classes.textField }}
             fullWidth
             placeholder="LONG"
             label="Longitude"
             value={diveLocation?.lng || ''}
             disabled
             size={itemsSize}
+            slotProps={{
+              htmlInput: { className: classes.textField },
+            }}
           />
         </Grid>
       </Grid>
@@ -265,9 +265,11 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
           fullWidth
           variant="outlined"
           size={itemsSize}
-          inputProps={{
-            className: classes.textField,
-            'data-testid': 'weather',
+          slotProps={{
+            htmlInput: {
+              className: classes.textField,
+              'data-testid': 'weather',
+            },
           }}
         >
           <MenuItem className={classes.textField} value="calm">
@@ -299,9 +301,11 @@ function SurveyForm({ siteId, timeZone, onSubmit }: SurveyFormProps) {
               placeholder="Did anything stand out during this survey?"
               fullWidth
               size={itemsSize}
-              inputProps={{
-                className: classes.textField,
-                'data-testid': 'comments',
+              slotProps={{
+                htmlInput: {
+                  className: classes.textField,
+                  'data-testid': 'comments',
+                },
               }}
             />
           )}
@@ -363,9 +367,5 @@ interface SurveyFormProps {
     comments: string,
   ) => void;
 }
-
-SurveyForm.defaultProps = {
-  timeZone: null,
-};
 
 export default SurveyForm;

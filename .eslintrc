@@ -91,7 +91,7 @@
             "property": "propTypes"
           },
           {
-            "property": "defaultProps"
+            "property": "components"
           },
           {
             "property": "current"

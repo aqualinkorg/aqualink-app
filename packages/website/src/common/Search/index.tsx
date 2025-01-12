@@ -1,15 +1,12 @@
 /* eslint-disable fp/no-mutating-methods */
 import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  IconButton,
-  TextField,
-} from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { IconButton, TextField } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import SearchIcon from '@mui/icons-material/Search';
+import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
@@ -31,7 +28,7 @@ const siteAugmentedName = (site: Site) => {
   return name || region || '';
 };
 
-const Search = ({ geocodingEnabled, classes }: SearchProps) => {
+const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
   const navigate = useNavigate();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
@@ -115,7 +112,6 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
           <SearchIcon />
         </IconButton>
       </div>
-
       <div className={classes.searchBarText}>
         <Autocomplete
           classes={{ listbox: classes.listbox, option: classes.option }}
@@ -141,8 +137,10 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
               onChange={onChangeSearchText}
               placeholder="Search"
               variant="outlined"
-              InputLabelProps={{
-                shrink: false,
+              slotProps={{
+                inputLabel: {
+                  shrink: false,
+                },
               }}
             />
           )}
@@ -196,10 +194,6 @@ const styles = () =>
 interface SearchIncomingProps {
   geocodingEnabled?: boolean;
 }
-
-Search.defaultProps = {
-  geocodingEnabled: false,
-};
 
 type SearchProps = SearchIncomingProps & WithStyles<typeof styles>;
 

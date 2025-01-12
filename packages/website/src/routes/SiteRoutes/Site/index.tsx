@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Container,
-  Box,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Alert, Container, Box } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import classNames from 'classnames';

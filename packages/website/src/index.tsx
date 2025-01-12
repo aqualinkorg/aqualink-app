@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { AxiosError } from 'axios';
 import { CacheAxiosResponse } from 'axios-cache-interceptor';
 import './index.css';
@@ -52,16 +52,13 @@ if (app) {
 }
 
 initGA();
-
-ReactDOM.render(
-  <>
-    <Provider store={store}>
-      <SnackbarProvider maxSnack={3}>
-        <App />
-      </SnackbarProvider>
-    </Provider>
-  </>,
-  document.getElementById('root'),
+const root = createRoot(document.getElementById('root')!);
+root.render(
+  <Provider store={store}>
+    <SnackbarProvider maxSnack={3}>
+      <App />
+    </SnackbarProvider>
+  </Provider>,
 );
 
 // If you want your app to work offline and load faster, you can change

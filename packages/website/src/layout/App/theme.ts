@@ -1,14 +1,6 @@
-import { createTheme, Theme } from '@material-ui/core/styles';
-import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
-import { MuiPickersOverrides } from '@material-ui/pickers/typings/overrides';
-
-type OverridesNameToClassKey = {
-  [P in keyof Required<MuiPickersOverrides>]: keyof MuiPickersOverrides[P];
-};
-
-declare module '@material-ui/core/styles/overrides' {
-  export interface ComponentNameToClassKey extends OverridesNameToClassKey {}
-}
+import { pink } from '@mui/material/colors';
+import { createTheme, Theme } from '@mui/material/styles';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 const skyBlue = '#009ee0';
 const lightBlue = '#168dbd';
@@ -50,14 +42,15 @@ export const colors = {
 
 export const mapIconSize = '2rem';
 
-const breakpoints = createBreakpoints({});
-
 const theme: Theme = createTheme({
   palette: {
     primary: {
       main: lightBlue,
       dark: darkGreyBlue,
       light: white,
+    },
+    secondary: {
+      main: pink[500],
     },
     text: {
       primary: white,
@@ -67,15 +60,20 @@ const theme: Theme = createTheme({
       500: lightGray,
     },
   },
-  overrides: {
-    MuiAppBar: {
+});
+
+theme.components = {
+  MuiAppBar: {
+    styleOverrides: {
       root: {
         height: 122,
         justifyContent: 'center',
         backgroundColor: lightBlue,
       },
     },
-    MuiToolbar: {
+  },
+  MuiToolbar: {
+    styleOverrides: {
       root: {
         justifyContent: 'space-between',
       },
@@ -83,12 +81,14 @@ const theme: Theme = createTheme({
         minHeight: 40,
       },
     },
-    MuiTypography: {
+  },
+  MuiTypography: {
+    styleOverrides: {
       h1: {
         fontSize: 52,
         fontFamily,
         fontWeight: 300,
-        [breakpoints.down('xs')]: {
+        [theme.breakpoints.down('xs')]: {
           fontSize: 34,
         },
       },
@@ -96,7 +96,7 @@ const theme: Theme = createTheme({
         fontSize: 48,
         fontFamily,
         fontWeight: 300,
-        [breakpoints.down('xs')]: {
+        [theme.breakpoints.down('xs')]: {
           fontSize: 30,
         },
       },
@@ -108,7 +108,7 @@ const theme: Theme = createTheme({
         fontSize: 26,
         fontFamily,
         fontWeight: 400,
-        [breakpoints.down('sm')]: {
+        [theme.breakpoints.down('sm')]: {
           fontSize: 22,
         },
       },
@@ -142,13 +142,17 @@ const theme: Theme = createTheme({
         marginBottom: '1rem',
       },
     },
-    MuiGrid: {
+  },
+  MuiGrid: {
+    styleOverrides: {
       'spacing-xs-10': {
         width: '100%',
         margin: '0',
       },
     },
-    MuiButton: {
+  },
+  MuiButton: {
+    styleOverrides: {
       root: {
         borderRadius: 5,
       },
@@ -159,58 +163,101 @@ const theme: Theme = createTheme({
         backgroundColor: darkGreyBlue,
       },
     },
-    MuiButtonBase: {
+  },
+  MuiButtonBase: {
+    styleOverrides: {
       root: {
         '&:focus': {
           outline: 'none',
         },
       },
     },
-    MuiCardContent: {
+  },
+  MuiCardContent: {
+    styleOverrides: {
       root: {
         '&:last-child': {
           paddingBottom: 0,
         },
       },
     },
-    MuiInputLabel: {
+  },
+  MuiInputLabel: {
+    styleOverrides: {
       root: {
         color: lightGray,
       },
     },
-    MuiInputBase: {
+  },
+  MuiInputBase: {
+    styleOverrides: {
       root: {
         height: '100%',
-        '& $disabled': {
+        color: black,
+        '& .Mui-disabled': {
           backgroundColor: backgroundGray,
         },
       },
     },
-    MuiPickersDay: {
-      day: {
-        color: 'black',
-      },
-    },
-    MuiPickersCalendarHeader: {
-      switchHeader: {
-        color: 'black',
-      },
-    },
-    MuiPickersClockNumber: {
-      clockNumber: {
-        color: 'black',
-      },
-    },
-    MuiOutlinedInput: {
+  },
+  MuiDateCalendar: {
+    styleOverrides: {
       root: {
-        padding: 0,
+        color: black,
+      },
+    },
+  },
+  MuiPickersLayout: {
+    styleOverrides: {
+      root: {
+        color: black,
+      },
+    },
+  },
+  MuiPickersDay: {
+    styleOverrides: {
+      root: {
         color: 'black',
-        '&$focused': {
+      },
+    },
+  },
+  MuiPickersCalendarHeader: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+      },
+    },
+  },
+  MuiClockNumber: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+      },
+    },
+  },
+  MuiYearCalendar: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+      },
+    },
+  },
+
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: {
+        color: 'black',
+        '&:not(.MuiInputBase-multiline):not(.MuiInputBase-adornedEnd)': {
+          padding: 0,
+        },
+        '&.Mui-focused': {
           borderColor: lightBlue,
         },
       },
     },
-    MuiTableCell: {
+  },
+  MuiTableCell: {
+    styleOverrides: {
       root: {
         color: black,
       },
@@ -221,15 +268,19 @@ const theme: Theme = createTheme({
         color: black,
       },
     },
-    MuiTableSortLabel: {
+  },
+  MuiTableSortLabel: {
+    styleOverrides: {
       root: {
         color: black,
-      },
-      active: {
-        color: `${black} !important`,
+        '&.Mui-active': {
+          color: `${black} !important`,
+        },
       },
     },
-    MuiTablePagination: {
+  },
+  MuiTablePagination: {
+    styleOverrides: {
       root: {
         color: black,
         backgroundColor: backgroundGray,
@@ -239,6 +290,6 @@ const theme: Theme = createTheme({
       },
     },
   },
-});
+};
 
 export default theme;

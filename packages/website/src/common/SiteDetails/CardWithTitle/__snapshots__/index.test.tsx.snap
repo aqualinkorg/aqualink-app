@@ -3,19 +3,19 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root makeStyles-row-2 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-row-2 css-1d4pq44-MuiGrid-root"
     >
       <mock-box
         classname="Title-root-11"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+          class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             style="margin-right: 1rem;"
           >
             <mock-typography
@@ -29,7 +29,7 @@ exports[`renders as expected 1`] = `
       </mock-box>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
     >
       <div
         class="makeStyles-container-3"

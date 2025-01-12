@@ -3,21 +3,22 @@ import { times } from 'lodash';
 import {
   Box,
   CircularProgress,
-  createStyles,
   Hidden,
   MenuItem,
   Select,
+  SelectChangeEvent,
   SelectProps,
   Table,
   TableContainer,
   Theme,
   Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 import {
   filterSitesWithSpotter,
   sitesListLoadingSelector,
@@ -71,12 +72,12 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
   );
 
 const SiteTable = ({
-  isDrawerOpen,
-  showCard,
-  showSiteFiltersDropdown,
-  isExtended,
+  isDrawerOpen = false,
+  showCard = true,
+  showSiteFiltersDropdown = true,
+  isExtended = false,
   collection,
-  scrollTableOnSelection,
+  scrollTableOnSelection = true,
   scrollPageOnSelection,
   classes,
 }: SiteTableProps) => {
@@ -95,12 +96,7 @@ const SiteTable = ({
     setOrderBy(property);
   };
 
-  const filterOnChange = (
-    event: React.ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>,
-  ) => {
+  const filterOnChange = (event: SelectChangeEvent<unknown>) => {
     const {
       target: { value },
     } = event;
@@ -110,7 +106,7 @@ const SiteTable = ({
 
   // This function is used to prevent the drawer onClick close effect on mobile
   const onInteractiveClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     event.stopPropagation();
   };
@@ -155,7 +151,7 @@ const SiteTable = ({
         <Box className={classes.dropdownWrapper}>
           <Select
             value={siteFilter}
-            onChange={(e) => filterOnChange(e)}
+            onChange={filterOnChange}
             variant="standard"
             disableUnderline
             style={{ backgroundColor: '#469abb', borderRadius: '4px' }}
@@ -183,6 +179,7 @@ const SiteTable = ({
           >
             <Typography variant="h5">Sort By: </Typography>
             <Select
+              variant="standard"
               value={`${orderBy}-${order}`}
               className={classes.mobileSortSelect}
               onChange={onMobileSelectChange}
@@ -207,7 +204,7 @@ const SiteTable = ({
             stickyHeader
             className={isExtended ? classes.extendedTable : classes.table}
           >
-            <Hidden smDown={!isExtended}>
+            <Hidden mdDown={!isExtended}>
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}
@@ -243,7 +240,7 @@ const styles = (theme: Theme) =>
   createStyles({
     tableHolder: {
       paddingLeft: 10,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         paddingLeft: 0,
         height: 'auto',
       },
@@ -252,13 +249,13 @@ const styles = (theme: Theme) =>
       overflowY: 'auto',
     },
     table: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         tableLayout: 'fixed',
       },
       borderCollapse: 'collapse',
     },
     extendedTable: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         minWidth: 1220,
       },
       borderCollapse: 'collapse',
@@ -308,15 +305,5 @@ interface SiteTableIncomingProps {
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
 }
-
-SiteTable.defaultProps = {
-  isDrawerOpen: false,
-  showCard: true,
-  showSiteFiltersDropdown: true,
-  isExtended: false,
-  collection: undefined,
-  scrollTableOnSelection: true,
-  scrollPageOnSelection: undefined,
-};
 
 export default withStyles(styles)(SiteTable);

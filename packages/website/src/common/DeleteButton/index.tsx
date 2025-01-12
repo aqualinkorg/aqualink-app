@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  IconButton,
-  Collapse,
-  LinearProgress,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import CloseIcon from '@material-ui/icons/Close';
+import { IconButton, Collapse, LinearProgress } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Alert from '@mui/material/Alert';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import CloseIcon from '@mui/icons-material/Close';
 import DeleteDialog, { Action } from '../Dialog';
 
 const DeleteButton = ({
   header,
-  content,
+  content = null,
   onConfirm,
-  onSuccess,
-  onError,
+  onSuccess = () => {},
+  onError = () => {},
   classes,
 }: DeleteButtonProps) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -67,7 +63,7 @@ const DeleteButton = ({
 
   return (
     <>
-      <IconButton onClick={handleClickOpen}>
+      <IconButton onClick={handleClickOpen} size="large">
         <DeleteOutlineIcon color="primary" />
       </IconButton>
       <DeleteDialog
@@ -118,13 +114,6 @@ interface DeleteButtonIncomingProps {
   onSuccess?: () => void;
   onError?: () => void;
 }
-
-DeleteButton.defaultProps = {
-  header: undefined,
-  content: null,
-  onSuccess: () => {},
-  onError: () => {},
-};
 
 type DeleteButtonProps = DeleteButtonIncomingProps & WithStyles<typeof styles>;
 

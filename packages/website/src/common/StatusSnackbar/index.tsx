@@ -1,6 +1,13 @@
 import React from 'react';
-import { Button, Snackbar, makeStyles, Theme } from '@material-ui/core';
-import { Alert, AlertProps } from '@material-ui/lab';
+import {
+  Button,
+  Snackbar,
+  Theme,
+  Alert,
+  SnackbarCloseReason,
+  AlertProps,
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 
 const StatusSnackbar = ({
   open,
@@ -8,7 +15,7 @@ const StatusSnackbar = ({
   furtherActionLabel,
   severity,
   handleClose,
-  onFurtherActionTake,
+  onFurtherActionTake = () => {},
 }: StatusSnackbarProps) => {
   const classes = useStyles({ hasMessage: !!message });
 
@@ -25,7 +32,7 @@ const StatusSnackbar = ({
       <Alert
         className={classes.alert}
         variant="filled"
-        onClose={handleClose}
+        onClose={(e) => handleClose(e)}
         severity={severity}
         classes={{ message: classes.alertMessage }}
       >
@@ -48,7 +55,7 @@ const useStyles = makeStyles<Theme, { hasMessage: boolean }>(
   (theme: Theme) => ({
     snackbar: {
       maxWidth: '50%',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         maxWidth: '90%',
       },
     },
@@ -71,14 +78,11 @@ interface StatusSnackbarProps {
   message?: string;
   furtherActionLabel?: string;
   severity: AlertProps['severity'];
-  handleClose: AlertProps['onClose'];
+  handleClose: (
+    event: React.SyntheticEvent<any> | Event,
+    reason?: SnackbarCloseReason,
+  ) => void;
   onFurtherActionTake?: () => void;
 }
-
-StatusSnackbar.defaultProps = {
-  furtherActionLabel: undefined,
-  message: undefined,
-  onFurtherActionTake: () => {},
-};
 
 export default StatusSnackbar;

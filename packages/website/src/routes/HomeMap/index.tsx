@@ -2,13 +2,10 @@ import { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import {
-  createStyles,
-  Grid,
-  Hidden,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+import { Grid, Hidden } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
@@ -124,7 +121,7 @@ const Homepage = ({ classes }: HomepageProps) => {
             />
           </Grid>
           {showSiteTable && (
-            <Hidden smDown>
+            <Hidden mdDown>
               <Grid className={classes.siteTable} item md={6}>
                 <SiteTable />
               </Grid>

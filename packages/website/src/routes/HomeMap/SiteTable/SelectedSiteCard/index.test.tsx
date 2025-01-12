@@ -1,10 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { MemoryRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
 
 import { mockSite } from 'mocks/mockSite';
+import { renderWithProviders } from 'utils/test-utils';
 import SelectedSiteCard from '.';
 
 const site = {
@@ -33,24 +31,12 @@ store.dispatch = jest.fn();
 test('renders as expected', () => {
   process.env.REACT_APP_FEATURED_SITE_ID = '2';
 
-  const { container } = render(
-    <Provider store={store}>
-      <Router>
-        <SelectedSiteCard />
-      </Router>
-    </Provider>,
-  );
+  const { container } = renderWithProviders(<SelectedSiteCard />, { store });
   expect(container).toMatchSnapshot();
 });
 
 test('renders loading as expected', () => {
   process.env.REACT_APP_FEATURED_SITE_ID = '4';
-  const { container } = render(
-    <Provider store={store}>
-      <Router>
-        <SelectedSiteCard />
-      </Router>
-    </Provider>,
-  );
+  const { container } = renderWithProviders(<SelectedSiteCard />, { store });
   expect(container).toMatchSnapshot();
 });

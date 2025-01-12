@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  createStyles,
   TableCell,
   TableHead,
   TableRow,
   TableSortLabel,
   Typography,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { Order, OrderKeys } from './utils';
 
 const ColumnTitle = ({
@@ -36,17 +36,12 @@ const ColumnTitle = ({
   </Typography>
 );
 
-ColumnTitle.defaultProps = {
-  unit: undefined,
-  bigText: undefined,
-};
-
 const EnhancedTableHead = ({
   classes,
   onRequestSort,
   order,
   orderBy,
-  isExtended,
+  isExtended = false,
 }: EnhancedTableProps) => {
   const createSortHandler =
     (property: OrderKeys) => (event: React.MouseEvent<unknown>) => {
@@ -162,10 +157,6 @@ const styles = () =>
       paddingLeft: 10,
     },
   });
-
-EnhancedTableHead.defaultProps = {
-  isExtended: false,
-};
 
 type EnhancedTableProps = WithStyles<typeof styles> &
   EnhancedTableIncomingProps;

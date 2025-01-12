@@ -11,14 +11,9 @@ import { MemoryRouter } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import { mockSurveyList } from 'mocks/mockSurveyList';
 import { mockSurvey } from 'mocks/mockSurvey';
+import ThemeProvider from '@mui/styles/ThemeProvider';
+import theme from 'layout/App/theme';
 import MultipleSensorsCharts from '.';
-
-jest.mock('@material-ui/pickers', () => ({
-  __esModule: true,
-  KeyboardDatePicker: 'mock-KeyboardDatePicker',
-  KeyboardDatePickerProps: 'mock-KeyboardDatePickerProps',
-  MuiPickersUtilsProvider: 'mock-MuiPickersUtilsProvider',
-}));
 
 const mockStore = configureStore([]);
 
@@ -71,17 +66,19 @@ describe('MultipleSensorsCharts', () => {
           { pathname: '/sites/1', search: '?start=2022-05-28&end=2022-06-28' },
         ]}
       >
-        <SnackbarProvider>
-          <Provider store={store}>
-            <MultipleSensorsCharts
-              site={mockSite}
-              disableGutters
-              displayOceanSenseCharts
-              surveysFiltered={false}
-              hasAdditionalSensorData={false}
-            />
-          </Provider>
-        </SnackbarProvider>
+        <ThemeProvider theme={theme}>
+          <SnackbarProvider>
+            <Provider store={store}>
+              <MultipleSensorsCharts
+                site={mockSite}
+                disableGutters
+                displayOceanSenseCharts
+                surveysFiltered={false}
+                hasAdditionalSensorData={false}
+              />
+            </Provider>
+          </SnackbarProvider>
+        </ThemeProvider>
       </MemoryRouter>,
     ).container;
 

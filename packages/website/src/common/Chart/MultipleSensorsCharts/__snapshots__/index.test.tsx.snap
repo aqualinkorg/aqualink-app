@@ -3,26 +3,19 @@
 exports[`MultipleSensorsCharts should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="MuiContainer-root makeStyles-chartWithRange-1 MuiContainer-disableGutters MuiContainer-maxWidthLg"
+    class="MuiContainer-root MuiContainer-maxWidthLg MuiContainer-disableGutters makeStyles-chartWithRange-1 css-ho17r4-MuiContainer-root"
   >
     <div
       class="makeStyles-buttonWrapper-2"
     >
       <div>
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1btmbba-MuiButtonBase-root-MuiButton-root"
           style="margin-bottom: 2em;"
           tabindex="0"
           type="button"
         >
-          <span
-            class="MuiButton-label"
-          >
-            Download CSV
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+          Download CSV
         </button>
         <mock-dialog
           open="false"
@@ -30,7 +23,6 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         >
           <mock-dialogtitle
             classname="makeStyles-dialogTitle-3"
-            disabletypography="true"
           >
             <mock-typography
               variant="h4"
@@ -63,7 +55,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             </mock-dialogcontenttext>
             <mock-dialogcontenttext>
               <div
-                class="MuiFormGroup-root MuiFormGroup-row"
+                class="MuiFormGroup-root MuiFormGroup-row css-cis11t-MuiFormGroup-root"
               >
                 <mock-tooltip
                   arrow="true"
@@ -71,7 +63,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Download all additional data available from all sources for this site"
                 >
                   <label
-                    class="MuiFormControlLabel-root"
+                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
                   >
                     <mock-checkbox
                       checked="false"
@@ -91,7 +83,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Download data for all available dates"
                 >
                   <label
-                    class="MuiFormControlLabel-root"
+                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
                   >
                     <mock-checkbox
                       checked="false"
@@ -111,7 +103,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   title="Average data per hour"
                 >
                   <label
-                    class="MuiFormControlLabel-root"
+                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
                   >
                     <mock-checkbox
                       checked="false"
@@ -137,41 +129,21 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           </mock-dialogcontent>
           <mock-dialogactions>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSecondary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textSecondary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorSecondary MuiButton-root MuiButton-text MuiButton-textSecondary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorSecondary css-if69c8-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
-              <span
-                class="MuiButton-label"
-              >
-                Cancel
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
+              Cancel
             </button>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary Mui-focusVisible Mui-focusVisible"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
+              Download
               <span
-                class="MuiButton-label"
-              >
-                Download
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              >
-                <span
-                  class="MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                >
-                  <span
-                    class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
-                  />
-                </span>
-              </span>
+                class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
+              />
             </button>
           </mock-dialogactions>
         </mock-dialog>
@@ -181,10 +153,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
       id="temperature"
     >
       <div
-        class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-e7gmdo-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
         >
           <mock-box
             ml="4"
@@ -197,21 +169,23 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
               TEMPERATURE ANALYSIS
             </mock-typography>
             <div
-              class="MuiGrid-root Header-rangesWrapper-13 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-1cth5tq-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiPaper-root MuiAlert-root Header-rangeItem-14 MuiAlert-standardInfo MuiPaper-elevation0"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root Header-rangeItem-14 MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-k1p3sh-MuiPaper-root-MuiAlert-root"
                   role="alert"
+                  style="--Paper-shadow: none;"
                 >
                   <div
-                    class="MuiAlert-icon Header-rangeIcon-17"
+                    class="MuiAlert-icon Header-rangeIcon-17 css-vab54s-MuiAlert-icon"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                      data-testid="InfoOutlinedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
@@ -221,7 +195,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </svg>
                   </div>
                   <div
-                    class="MuiAlert-message"
+                    class="MuiAlert-message css-zioonp-MuiAlert-message"
                   >
                     <mock-typography
                       variant="subtitle2"
@@ -235,16 +209,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
         >
           <mock-box
             ml="4"
           >
             <div
-              class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-64b0yj-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <mock-typography
                   classname="Header-rangeTitle-16"
@@ -255,7 +229,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <mock-tooltip
                   arrow="true"
@@ -264,28 +238,21 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 >
                   <div>
                     <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall MuiButton-fullWidth"
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-xpnxu6-MuiButtonBase-root-MuiButton-root"
                       tabindex="0"
                       type="button"
                     >
-                      <span
-                        class="MuiButton-label"
+                      <mock-typography
+                        variant="subtitle1"
                       >
-                        <mock-typography
-                          variant="subtitle1"
-                        >
-                          1 Month
-                        </mock-typography>
-                      </span>
-                      <span
-                        class="MuiTouchRipple-root"
-                      />
+                        1 Month
+                      </mock-typography>
                     </button>
                   </div>
                 </mock-tooltip>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <mock-tooltip
                   arrow="true"
@@ -294,28 +261,21 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 >
                   <div>
                     <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall MuiButton-fullWidth"
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-xpnxu6-MuiButtonBase-root-MuiButton-root"
                       tabindex="0"
                       type="button"
                     >
-                      <span
-                        class="MuiButton-label"
+                      <mock-typography
+                        variant="subtitle1"
                       >
-                        <mock-typography
-                          variant="subtitle1"
-                        >
-                          1 Year
-                        </mock-typography>
-                      </span>
-                      <span
-                        class="MuiTouchRipple-root"
-                      />
+                        1 Year
+                      </mock-typography>
                     </button>
                   </div>
                 </mock-tooltip>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <mock-tooltip
                   arrow="true"
@@ -324,28 +284,21 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 >
                   <div>
                     <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall MuiButton-fullWidth"
+                      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-xpnxu6-MuiButtonBase-root-MuiButton-root"
                       tabindex="0"
                       type="button"
                     >
-                      <span
-                        class="MuiButton-label"
+                      <mock-typography
+                        variant="subtitle1"
                       >
-                        <mock-typography
-                          variant="subtitle1"
-                        >
-                          Max
-                        </mock-typography>
-                      </span>
-                      <span
-                        class="MuiTouchRipple-root"
-                      />
+                        Max
+                      </mock-typography>
                     </button>
                   </div>
                 </mock-tooltip>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <mock-tooltip
                   arrow="true"
@@ -354,22 +307,15 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 >
                   <div>
                     <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall MuiButton-fullWidth"
+                      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-fullWidth css-m0z6ex-MuiButtonBase-root-MuiButton-root"
                       tabindex="0"
                       type="button"
                     >
-                      <span
-                        class="MuiButton-label"
+                      <mock-typography
+                        variant="subtitle1"
                       >
-                        <mock-typography
-                          variant="subtitle1"
-                        >
-                          Custom
-                        </mock-typography>
-                      </span>
-                      <span
-                        class="MuiTouchRipple-root"
-                      />
+                        Custom
+                      </mock-typography>
                     </button>
                   </div>
                 </mock-tooltip>
@@ -380,10 +326,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
       </div>
     </div>
     <div
-      class="MuiGrid-root makeStyles-chartWrapper-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-ovboin-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root makeStyles-chart-7 makeStyles-largeChart-8 MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item makeStyles-chart-7 makeStyles-largeChart-8 css-13i4rnv-MuiGrid-root"
       >
         <div
           class="Chart-chart-18"
@@ -394,16 +340,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           />
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
+          class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root Chart-datePickersWrapper-19 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 Chart-datePickersWrapper-19 css-bwav7-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <mock-box
                   alignitems="flex-end"
@@ -418,34 +364,1031 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   <div
                     class="DatePicker-datePicker-20"
                   >
-                    <mock-muipickersutilsprovider>
-                      <mock-keyboarddatepicker
-                        autook="false"
-                        classname="DatePicker-textField-23"
-                        disabletoolbar="true"
-                        format="MM/dd/yyyy"
-                        helpertext=""
-                        inputprops="[object Object]"
-                        inputvariant="standard"
-                        keyboardbuttonprops="[object Object]"
-                        keyboardicon="[object Object]"
-                        maxdate="2023/06/28"
-                        mindate="1970/01/01"
-                        name="datePicker"
-                        showtodaybutton="true"
-                        size="small"
-                        value="2022-05-28T00:00:00.000Z"
-                      />
-                    </mock-muipickersutilsprovider>
+                    <div
+                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-21 DatePicker-textField-21 css-1b1fjlj-MuiFormControl-root-MuiTextField-root"
+                    >
+                      <div
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-5h82ro-MuiInputBase-root-MuiInput-root"
+                      >
+                        <input
+                          aria-invalid="false"
+                          aria-label="Choose date, selected date is May 28, 2022"
+                          autocomplete="off"
+                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-1yrc8ca-MuiInputBase-input-MuiInput-input"
+                          id=":r0:"
+                          inputmode="text"
+                          placeholder="MM/DD/YYYY"
+                          readonly=""
+                          type="text"
+                          value="05/28/2022"
+                        />
+                      </div>
+                    </div>
+                    <mock-dialog
+                      classname="css-viza91"
+                      open="false"
+                    >
+                      <mock-dialogcontent
+                        classname="css-154ra1s"
+                      >
+                        <div
+                          class="MuiPickersLayout-root css-1y6l765-MuiPickersLayout-root"
+                        >
+                          <div
+                            class="MuiPickersLayout-contentWrapper css-18jb465-MuiPickersLayout-contentWrapper"
+                          >
+                            <div
+                              class="MuiDateCalendar-root css-5wchs2-MuiDateCalendar-root"
+                            >
+                              <div
+                                class="MuiPickersCalendarHeader-root css-1nxbkmn-MuiPickersCalendarHeader-root"
+                              >
+                                <div
+                                  aria-live="polite"
+                                  class="MuiPickersCalendarHeader-labelContainer css-cyfsxc-MuiPickersCalendarHeader-labelContainer"
+                                  role="presentation"
+                                >
+                                  <div
+                                    class="MuiPickersFadeTransitionGroup-root css-1etsrfk-MuiPickersFadeTransitionGroup-root"
+                                  >
+                                    <div
+                                      class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
+                                      id=":r2:-grid-label"
+                                      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                                    >
+                                      May 2022
+                                    </div>
+                                    <div
+                                      class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
+                                      id=":r2:-grid-label"
+                                      style="opacity: 0; webkit-transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                                    >
+                                      June 2023
+                                    </div>
+                                  </div>
+                                  <mock-iconbutton
+                                    aria-label="calendar view is open, switch to year view"
+                                    classname="MuiPickersCalendarHeader-switchViewButton css-v6xlml-MuiPickersCalendarHeader-switchViewButton"
+                                    size="small"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPickersCalendarHeader-switchViewIcon css-14yom7c-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon"
+                                      data-testid="ArrowDropDownIcon"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M7 10l5 5 5-5z"
+                                      />
+                                    </svg>
+                                  </mock-iconbutton>
+                                </div>
+                                <div
+                                  class="MuiPickersArrowSwitcher-root css-15umtxl-MuiPickersArrowSwitcher-root"
+                                  style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                                >
+                                  <mock-iconbutton
+                                    aria-label="Previous month"
+                                    classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-previousIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
+                                    disabled="false"
+                                    edge="end"
+                                    size="medium"
+                                    title="Previous month"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-leftArrowIcon css-1ckov0h-MuiSvgIcon-root"
+                                      data-testid="ArrowLeftIcon"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
+                                      />
+                                    </svg>
+                                  </mock-iconbutton>
+                                  <div
+                                    class="MuiPickersArrowSwitcher-spacer css-xb7uwb-MuiPickersArrowSwitcher-spacer"
+                                  />
+                                  <mock-iconbutton
+                                    aria-label="Next month"
+                                    classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-nextIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
+                                    disabled="false"
+                                    edge="start"
+                                    size="medium"
+                                    title="Next month"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-rightArrowIcon css-1ckov0h-MuiSvgIcon-root"
+                                      data-testid="ArrowRightIcon"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                                      />
+                                    </svg>
+                                  </mock-iconbutton>
+                                </div>
+                              </div>
+                              <div
+                                class="MuiPickersFadeTransitionGroup-root MuiDateCalendar-viewTransitionContainer css-hwynws-MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer"
+                              >
+                                <div
+                                  style="opacity: 1;"
+                                >
+                                  <div
+                                    aria-labelledby=":r2:-grid-label"
+                                    class="MuiDayCalendar-root css-q5we01-MuiDayCalendar-root"
+                                    role="grid"
+                                  >
+                                    <div
+                                      class="MuiDayCalendar-header css-1rl1vrc-MuiDayCalendar-header"
+                                      role="row"
+                                    >
+                                      <mock-typography
+                                        aria-label="Sunday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        S
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Monday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        M
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Tuesday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        T
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Wednesday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        W
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Thursday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        T
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Friday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        F
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Saturday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        S
+                                      </mock-typography>
+                                    </div>
+                                    <div
+                                      class="MuiPickersSlideTransition-root MuiDayCalendar-slideTransition css-1n1xn3x-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition"
+                                      role="presentation"
+                                    >
+                                      <div
+                                        class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer MuiPickersSlideTransition-slideEnter-right MuiPickersSlideTransition-slideEnterActive"
+                                        role="rowgroup"
+                                      >
+                                        <div
+                                          aria-rowindex="1"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651363200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            1
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651449600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            2
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651536000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            3
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651622400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            4
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651708800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            5
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651795200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            6
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651881600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            7
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="2"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1651968000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            8
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652054400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            9
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652140800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            10
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652227200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            11
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652313600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            12
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652400000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            13
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652486400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            14
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="3"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652572800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            15
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652659200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            16
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652745600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            17
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652832000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            18
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1652918400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            19
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653004800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            20
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653091200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            21
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="4"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653177600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            22
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653264000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            23
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653350400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            24
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653436800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            25
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653523200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            26
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653609600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            27
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="true"
+                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653696000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            28
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="5"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653782400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            29
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653868800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            30
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1653955200000"
+                                            role="gridcell"
+                                            tabindex="0"
+                                            type="button"
+                                          >
+                                            31
+                                          </button>
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
+                                        role="rowgroup"
+                                      >
+                                        <div
+                                          aria-rowindex="1"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685577600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            1
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685664000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            2
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685750400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            3
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="2"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685836800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            4
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685923200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            5
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686009600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            6
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686096000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            7
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686182400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            8
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686268800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            9
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686355200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            10
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="3"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686441600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            11
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686528000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            12
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686614400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            13
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686700800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            14
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686787200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            15
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686873600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            16
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686960000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            17
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="4"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687046400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            18
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687132800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            19
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687219200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            20
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687305600000"
+                                            role="gridcell"
+                                            tabindex="0"
+                                            type="button"
+                                          >
+                                            21
+                                            <span
+                                              class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
+                                            />
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687392000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            22
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687478400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            23
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687564800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            24
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="5"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687651200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            25
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687737600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            26
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687824000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            27
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-current="date"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-qct7wd-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687910400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            28
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687996800000"
+                                            disabled=""
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            29
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1688083200000"
+                                            disabled=""
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            30
+                                          </button>
+                                          <div
+                                            class="MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <mock-dialogactions
+                            classname="MuiPickersLayout-actionBar"
+                            ownerstate="[object Object]"
+                          >
+                            <button
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              OK
+                            </button>
+                          </mock-dialogactions>
+                        </div>
+                      </mock-dialogcontent>
+                    </mock-dialog>
                   </div>
                 </mock-box>
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <mock-box
                   alignitems="flex-end"
@@ -460,25 +1403,1012 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   <div
                     class="DatePicker-datePicker-20"
                   >
-                    <mock-muipickersutilsprovider>
-                      <mock-keyboarddatepicker
-                        autook="false"
-                        classname="DatePicker-textField-23"
-                        disabletoolbar="true"
-                        format="MM/dd/yyyy"
-                        helpertext=""
-                        inputprops="[object Object]"
-                        inputvariant="standard"
-                        keyboardbuttonprops="[object Object]"
-                        keyboardicon="[object Object]"
-                        maxdate="2023/06/28"
-                        mindate="1970/01/01"
-                        name="datePicker"
-                        showtodaybutton="true"
-                        size="small"
-                        value="2022-06-28T00:00:00.000Z"
-                      />
-                    </mock-muipickersutilsprovider>
+                    <div
+                      class="MuiFormControl-root MuiTextField-root DatePicker-textField-21 DatePicker-textField-21 css-1b1fjlj-MuiFormControl-root-MuiTextField-root"
+                    >
+                      <div
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-5h82ro-MuiInputBase-root-MuiInput-root"
+                      >
+                        <input
+                          aria-invalid="false"
+                          aria-label="Choose date, selected date is Jun 28, 2022"
+                          autocomplete="off"
+                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-1yrc8ca-MuiInputBase-input-MuiInput-input"
+                          id=":r3:"
+                          inputmode="text"
+                          placeholder="MM/DD/YYYY"
+                          readonly=""
+                          type="text"
+                          value="06/28/2022"
+                        />
+                      </div>
+                    </div>
+                    <mock-dialog
+                      classname="css-viza91"
+                      open="false"
+                    >
+                      <mock-dialogcontent
+                        classname="css-154ra1s"
+                      >
+                        <div
+                          class="MuiPickersLayout-root css-1y6l765-MuiPickersLayout-root"
+                        >
+                          <div
+                            class="MuiPickersLayout-contentWrapper css-18jb465-MuiPickersLayout-contentWrapper"
+                          >
+                            <div
+                              class="MuiDateCalendar-root css-5wchs2-MuiDateCalendar-root"
+                            >
+                              <div
+                                class="MuiPickersCalendarHeader-root css-1nxbkmn-MuiPickersCalendarHeader-root"
+                              >
+                                <div
+                                  aria-live="polite"
+                                  class="MuiPickersCalendarHeader-labelContainer css-cyfsxc-MuiPickersCalendarHeader-labelContainer"
+                                  role="presentation"
+                                >
+                                  <div
+                                    class="MuiPickersFadeTransitionGroup-root css-1etsrfk-MuiPickersFadeTransitionGroup-root"
+                                  >
+                                    <div
+                                      class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
+                                      id=":r5:-grid-label"
+                                      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                                    >
+                                      June 2022
+                                    </div>
+                                    <div
+                                      class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
+                                      id=":r5:-grid-label"
+                                      style="opacity: 0; webkit-transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                                    >
+                                      June 2023
+                                    </div>
+                                  </div>
+                                  <mock-iconbutton
+                                    aria-label="calendar view is open, switch to year view"
+                                    classname="MuiPickersCalendarHeader-switchViewButton css-v6xlml-MuiPickersCalendarHeader-switchViewButton"
+                                    size="small"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPickersCalendarHeader-switchViewIcon css-14yom7c-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon"
+                                      data-testid="ArrowDropDownIcon"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M7 10l5 5 5-5z"
+                                      />
+                                    </svg>
+                                  </mock-iconbutton>
+                                </div>
+                                <div
+                                  class="MuiPickersArrowSwitcher-root css-15umtxl-MuiPickersArrowSwitcher-root"
+                                  style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+                                >
+                                  <mock-iconbutton
+                                    aria-label="Previous month"
+                                    classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-previousIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
+                                    disabled="false"
+                                    edge="end"
+                                    size="medium"
+                                    title="Previous month"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-leftArrowIcon css-1ckov0h-MuiSvgIcon-root"
+                                      data-testid="ArrowLeftIcon"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
+                                      />
+                                    </svg>
+                                  </mock-iconbutton>
+                                  <div
+                                    class="MuiPickersArrowSwitcher-spacer css-xb7uwb-MuiPickersArrowSwitcher-spacer"
+                                  />
+                                  <mock-iconbutton
+                                    aria-label="Next month"
+                                    classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-nextIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
+                                    disabled="false"
+                                    edge="start"
+                                    size="medium"
+                                    title="Next month"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-rightArrowIcon css-1ckov0h-MuiSvgIcon-root"
+                                      data-testid="ArrowRightIcon"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                                      />
+                                    </svg>
+                                  </mock-iconbutton>
+                                </div>
+                              </div>
+                              <div
+                                class="MuiPickersFadeTransitionGroup-root MuiDateCalendar-viewTransitionContainer css-hwynws-MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer"
+                              >
+                                <div
+                                  style="opacity: 1;"
+                                >
+                                  <div
+                                    aria-labelledby=":r5:-grid-label"
+                                    class="MuiDayCalendar-root css-q5we01-MuiDayCalendar-root"
+                                    role="grid"
+                                  >
+                                    <div
+                                      class="MuiDayCalendar-header css-1rl1vrc-MuiDayCalendar-header"
+                                      role="row"
+                                    >
+                                      <mock-typography
+                                        aria-label="Sunday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        S
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Monday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        M
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Tuesday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        T
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Wednesday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        W
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Thursday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        T
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Friday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        F
+                                      </mock-typography>
+                                      <mock-typography
+                                        aria-label="Saturday"
+                                        classname="MuiDayCalendar-weekDayLabel css-n2rc3-MuiDayCalendar-weekDayLabel"
+                                        role="columnheader"
+                                        variant="caption"
+                                      >
+                                        S
+                                      </mock-typography>
+                                    </div>
+                                    <div
+                                      class="MuiPickersSlideTransition-root MuiDayCalendar-slideTransition css-1n1xn3x-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition"
+                                      role="presentation"
+                                    >
+                                      <div
+                                        class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer MuiPickersSlideTransition-slideEnter-right MuiPickersSlideTransition-slideEnterActive"
+                                        role="rowgroup"
+                                      >
+                                        <div
+                                          aria-rowindex="1"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654041600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            1
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654128000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            2
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654214400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            3
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654300800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            4
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="2"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654387200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            5
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654473600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            6
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654560000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            7
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654646400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            8
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654732800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            9
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654819200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            10
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654905600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            11
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="3"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1654992000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            12
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655078400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            13
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655164800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            14
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655251200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            15
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655337600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            16
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655424000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            17
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655510400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            18
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="4"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655596800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            19
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655683200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            20
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655769600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            21
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655856000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            22
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1655942400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            23
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656028800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            24
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656115200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            25
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="5"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656201600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            26
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656288000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            27
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="true"
+                                            class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656374400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            28
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656460800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            29
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1656547200000"
+                                            role="gridcell"
+                                            tabindex="0"
+                                            type="button"
+                                          >
+                                            30
+                                          </button>
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
+                                        role="rowgroup"
+                                      >
+                                        <div
+                                          aria-rowindex="1"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <div
+                                            class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685577600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            1
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685664000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            2
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685750400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            3
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="2"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685836800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            4
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1685923200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            5
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686009600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            6
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686096000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            7
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686182400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            8
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686268800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            9
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686355200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            10
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="3"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686441600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            11
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686528000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            12
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686614400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            13
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686700800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            14
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686787200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            15
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686873600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            16
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1686960000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            17
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="4"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687046400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            18
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687132800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            19
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687219200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            20
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687305600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            21
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687392000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            22
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687478400000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            23
+                                          </button>
+                                          <button
+                                            aria-colindex="7"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687564800000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            24
+                                          </button>
+                                        </div>
+                                        <div
+                                          aria-rowindex="5"
+                                          class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
+                                          role="row"
+                                        >
+                                          <button
+                                            aria-colindex="1"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687651200000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            25
+                                          </button>
+                                          <button
+                                            aria-colindex="2"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687737600000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            26
+                                          </button>
+                                          <button
+                                            aria-colindex="3"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687824000000"
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            27
+                                          </button>
+                                          <button
+                                            aria-colindex="4"
+                                            aria-current="date"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-qct7wd-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687910400000"
+                                            role="gridcell"
+                                            tabindex="0"
+                                            type="button"
+                                          >
+                                            28
+                                          </button>
+                                          <button
+                                            aria-colindex="5"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1687996800000"
+                                            disabled=""
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            29
+                                          </button>
+                                          <button
+                                            aria-colindex="6"
+                                            aria-selected="false"
+                                            class="MuiButtonBase-root Mui-disabled MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root"
+                                            data-timestamp="1688083200000"
+                                            disabled=""
+                                            role="gridcell"
+                                            tabindex="-1"
+                                            type="button"
+                                          >
+                                            30
+                                          </button>
+                                          <div
+                                            class="MuiPickersDay-root Mui-disabled MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1ayjnp4-MuiPickersDay-root"
+                                            role="gridcell"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <mock-dialogactions
+                            classname="MuiPickersLayout-actionBar"
+                            ownerstate="[object Object]"
+                          >
+                            <button
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              OK
+                            </button>
+                          </mock-dialogactions>
+                        </div>
+                      </mock-dialogcontent>
+                    </mock-dialog>
                   </div>
                 </mock-box>
               </div>
@@ -487,7 +2417,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         </div>
       </div>
       <div
-        class="MuiGrid-root makeStyles-card-11 MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item makeStyles-card-11 css-13i4rnv-MuiGrid-root"
       >
         <mock-box
           display="flex"
@@ -497,7 +2427,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           minwidth="220"
         >
           <mock-card
-            classname="AnalysisCard-AnalysisCardCard-25"
+            classname="AnalysisCard-AnalysisCardCard-23"
           >
             <mock-typography
               color="textSecondary"
@@ -509,16 +2439,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
               06/28/2022
             </mock-typography>
             <div
-              class="MuiGrid-root AnalysisCard-metricsWrapper-27 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-25 css-14rlipp-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root AnalysisCard-metricsTitle-28 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-26 css-1k20cze-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
                       color="textSecondary"
@@ -528,7 +2458,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </mock-typography>
                   </div>
                   <div
-                    class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
                       color="textSecondary"
@@ -538,7 +2468,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </mock-typography>
                   </div>
                   <div
-                    class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
                       color="textSecondary"
@@ -550,19 +2480,19 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root AnalysisCard-autoWidth-24 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-22 css-1pqcg35-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-tooltip
                       title=""
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30"
+                        classname="AnalysisCard-values-28"
                         style="color: rgb(107, 193, 225);"
                         variant="subtitle2"
                       >
@@ -571,10 +2501,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </mock-tooltip>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -584,10 +2514,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </mock-typography>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -597,10 +2527,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     </mock-typography>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -623,10 +2553,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         id="salinity"
       >
         <div
-          class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-e7gmdo-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
           >
             <mock-box
               ml="4"
@@ -646,21 +2576,23 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 point1
               </mock-typography>
               <div
-                class="MuiGrid-root Header-rangesWrapper-13 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-1cth5tq-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiPaper-root MuiAlert-root Header-rangeItem-14 MuiAlert-standardInfo MuiPaper-elevation0"
+                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root Header-rangeItem-14 MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-k1p3sh-MuiPaper-root-MuiAlert-root"
                     role="alert"
+                    style="--Paper-shadow: none;"
                   >
                     <div
-                      class="MuiAlert-icon Header-rangeIcon-17"
+                      class="MuiAlert-icon Header-rangeIcon-17 css-vab54s-MuiAlert-icon"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                        data-testid="InfoOutlinedIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
@@ -670,7 +2602,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </svg>
                     </div>
                     <div
-                      class="MuiAlert-message"
+                      class="MuiAlert-message css-zioonp-MuiAlert-message"
                     >
                       <mock-typography
                         variant="subtitle2"
@@ -686,10 +2618,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         </div>
       </div>
       <div
-        class="MuiGrid-root makeStyles-chartWrapper-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-ovboin-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-chart-7 makeStyles-largeChart-8 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item makeStyles-chart-7 makeStyles-largeChart-8 css-13i4rnv-MuiGrid-root"
         >
           <div
             class="Chart-chart-18"
@@ -701,7 +2633,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-card-11 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item makeStyles-card-11 css-13i4rnv-MuiGrid-root"
         >
           <mock-box
             display="flex"
@@ -711,7 +2643,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -723,16 +2655,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root AnalysisCard-metricsWrapper-27 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-25 css-qpkn11-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root AnalysisCard-metricsTitle-28 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-26 css-1k20cze-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -742,7 +2674,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -752,7 +2684,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -764,19 +2696,19 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root AnalysisCard-autoWidth-24 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-22 css-1pqcg35-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-tooltip
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -785,10 +2717,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-tooltip>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -798,10 +2730,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -811,10 +2743,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -838,10 +2770,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         id="turbidity"
       >
         <div
-          class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-e7gmdo-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
           >
             <mock-box
               ml="4"
@@ -861,17 +2793,17 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 point1
               </mock-typography>
               <div
-                class="MuiGrid-root Header-rangesWrapper-13 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-1cth5tq-MuiGrid-root"
               />
             </mock-box>
           </div>
         </div>
       </div>
       <div
-        class="MuiGrid-root makeStyles-chartWrapper-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-ovboin-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-chart-7 makeStyles-largeChart-8 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item makeStyles-chart-7 makeStyles-largeChart-8 css-13i4rnv-MuiGrid-root"
         >
           <div
             class="Chart-chart-18"
@@ -883,7 +2815,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-card-11 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item makeStyles-card-11 css-13i4rnv-MuiGrid-root"
         >
           <mock-box
             display="flex"
@@ -893,7 +2825,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -905,16 +2837,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root AnalysisCard-metricsWrapper-27 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-25 css-qpkn11-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root AnalysisCard-metricsTitle-28 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-26 css-1k20cze-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -924,7 +2856,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -934,7 +2866,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -946,19 +2878,19 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root AnalysisCard-autoWidth-24 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-22 css-1pqcg35-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-tooltip
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -967,10 +2899,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-tooltip>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -980,10 +2912,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -993,10 +2925,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -1020,10 +2952,10 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
         id="ph"
       >
         <div
-          class="MuiGrid-root Header-autoWidth-12 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-content-xs-space-between"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-autoWidth-12 css-e7gmdo-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
           >
             <mock-box
               ml="4"
@@ -1043,17 +2975,17 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 point1
               </mock-typography>
               <div
-                class="MuiGrid-root Header-rangesWrapper-13 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Header-rangesWrapper-13 css-1cth5tq-MuiGrid-root"
               />
             </mock-box>
           </div>
         </div>
       </div>
       <div
-        class="MuiGrid-root makeStyles-chartWrapper-6 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 makeStyles-chartWrapper-6 css-ovboin-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-chart-7 makeStyles-largeChart-8 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item makeStyles-chart-7 makeStyles-largeChart-8 css-13i4rnv-MuiGrid-root"
         >
           <div
             class="Chart-chart-18"
@@ -1065,7 +2997,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-card-11 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item makeStyles-card-11 css-13i4rnv-MuiGrid-root"
         >
           <mock-box
             display="flex"
@@ -1075,7 +3007,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -1087,16 +3019,16 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                 06/28/2022
               </mock-typography>
               <div
-                class="MuiGrid-root AnalysisCard-metricsWrapper-27 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 AnalysisCard-metricsWrapper-25 css-qpkn11-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root AnalysisCard-metricsTitle-28 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-metricsTitle-26 css-1k20cze-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -1106,7 +3038,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -1116,7 +3048,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root AnalysisCard-rotatedText-26 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item AnalysisCard-rotatedText-24 css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
                         color="textSecondary"
@@ -1128,19 +3060,19 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root AnalysisCard-autoWidth-24 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column AnalysisCard-autoWidth-22 css-1pqcg35-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-tooltip
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -1149,42 +3081,39 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       </mock-tooltip>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
                         8.3
                          
-                        
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
                         8.2
                          
-                        
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
                         8.1
                          
-                        
                       </mock-typography>
                     </div>
                   </div>

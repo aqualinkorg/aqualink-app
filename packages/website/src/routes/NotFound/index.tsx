@@ -1,5 +1,7 @@
 import React from 'react';
-import { withStyles, WithStyles, createStyles } from '@material-ui/core';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Link } from 'react-router-dom';
 import NotFoundButton from '../../assets/img/404_click.png';
 import NotFoundBG from '../../assets/img/404_background.jpg';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, LinearProgress } from '@material-ui/core';
+import { Container, Grid, LinearProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import {
   collectionDetailsSelector,

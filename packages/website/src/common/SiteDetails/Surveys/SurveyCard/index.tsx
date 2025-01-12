@@ -6,8 +6,8 @@ import {
   CardMedia,
   Typography,
   Button,
-  makeStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { SurveyListItem } from 'store/Survey/types';
@@ -57,7 +57,7 @@ const SurveyCard = ({
         <Grid className={classes.cardImageWrapper} item xs={12} md={5}>
           <LoadingSkeleton
             loading={loading}
-            variant="rect"
+            variant="rectangular"
             height="100%"
             width="100%"
             image={pointImageSkeleton}
@@ -216,13 +216,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   ...incomingStyles,
   cardImageWrapper: {
     height: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: '50%',
     },
   },
   infoWrapper: {
     height: '100%',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: '50%',
     },
   },
