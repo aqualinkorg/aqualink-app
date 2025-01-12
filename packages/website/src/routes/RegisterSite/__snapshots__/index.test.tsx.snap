@@ -11,13 +11,13 @@ exports[`Site registration page should render with given state from Redux store 
     pt="4"
   >
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-5c1adp-MuiContainer-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6 css-1jufsce-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
         >
           <mock-typography
             gutterbottom="true"
@@ -37,13 +37,13 @@ exports[`Site registration page should render with given state from Redux store 
       p="[object Object]"
     >
       <div
-        class="MuiContainer-root MuiContainer-maxWidthLg"
+        class="MuiContainer-root MuiContainer-maxWidthLg css-5c1adp-MuiContainer-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6 css-1jufsce-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 css-1uvk4jt-MuiGrid-root"
           >
             <mock-locationmap
               markerpositionlat=""
@@ -51,10 +51,11 @@ exports[`Site registration page should render with given state from Redux store 
             />
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 css-1ej0ikx-MuiGrid-root"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation2 MuiPaper-rounded"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1bvccj3-MuiPaper-root"
+              style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
             >
               <mock-box
                 color="text.secondary"
@@ -67,16 +68,16 @@ exports[`Site registration page should render with given state from Redux store 
                   Site Information
                 </mock-typography>
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-8po1oh-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                     >
                       <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-marginDense MuiInputLabel-outlined Mui-disabled Mui-disabled MuiFormLabel-filled"
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-wgcuqq-MuiFormLabel-root-MuiInputLabel-root"
                         data-shrink="true"
                         for="name"
                         id="name-label"
@@ -84,11 +85,11 @@ exports[`Site registration page should render with given state from Redux store 
                         Name
                       </label>
                       <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled Mui-disabled MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
                           disabled=""
                           id="name"
                           type="text"
@@ -96,10 +97,10 @@ exports[`Site registration page should render with given state from Redux store 
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline Apply-notchedOutline-4"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legendLabelled-8 PrivateNotchedOutline-legendNotched-9"
+                            class="css-w1u3ce"
                           >
                             <span>
                               Name
@@ -107,17 +108,16 @@ exports[`Site registration page should render with given state from Redux store 
                           </legend>
                         </fieldset>
                       </div>
-                      
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                     >
                       <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-marginDense MuiInputLabel-outlined Mui-disabled Mui-disabled MuiFormLabel-filled"
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-wgcuqq-MuiFormLabel-root-MuiInputLabel-root"
                         data-shrink="true"
                         for="org"
                         id="org-label"
@@ -125,11 +125,11 @@ exports[`Site registration page should render with given state from Redux store 
                         Organization
                       </label>
                       <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled Mui-disabled MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
                           disabled=""
                           id="org"
                           type="text"
@@ -137,10 +137,10 @@ exports[`Site registration page should render with given state from Redux store 
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline Apply-notchedOutline-4"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legendLabelled-8 PrivateNotchedOutline-legendNotched-9"
+                            class="css-w1u3ce"
                           >
                             <span>
                               Organization
@@ -148,17 +148,16 @@ exports[`Site registration page should render with given state from Redux store 
                           </legend>
                         </fieldset>
                       </div>
-                      
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                     >
                       <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-marginDense MuiInputLabel-outlined Mui-disabled Mui-disabled MuiFormLabel-filled"
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-wgcuqq-MuiFormLabel-root-MuiInputLabel-root"
                         data-shrink="true"
                         for="email"
                         id="email-label"
@@ -166,11 +165,11 @@ exports[`Site registration page should render with given state from Redux store 
                         Email
                       </label>
                       <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled Mui-disabled MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
                           disabled=""
                           id="email"
                           type="text"
@@ -178,10 +177,10 @@ exports[`Site registration page should render with given state from Redux store 
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline Apply-notchedOutline-4"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legendLabelled-8 PrivateNotchedOutline-legendNotched-9"
+                            class="css-w1u3ce"
                           >
                             <span>
                               Email
@@ -189,24 +188,23 @@ exports[`Site registration page should render with given state from Redux store 
                           </legend>
                         </fieldset>
                       </div>
-                      
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                   >
                     <mock-typography>
                       Location: Select a coastal point on the map in the ocean or sea. Land or lakes are not allowed.
                     </mock-typography>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                     >
                       <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-2n41p5-MuiFormLabel-root-MuiInputLabel-root"
                         data-shrink="false"
                         for="lat"
                         id="lat-label"
@@ -214,21 +212,21 @@ exports[`Site registration page should render with given state from Redux store 
                         Latitude
                       </label>
                       <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
                           id="lat"
                           type="text"
                           value=""
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline Apply-notchedOutline-4"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legendLabelled-8"
+                            class="css-81qg8w"
                           >
                             <span>
                               Latitude
@@ -236,17 +234,16 @@ exports[`Site registration page should render with given state from Redux store 
                           </legend>
                         </fieldset>
                       </div>
-                      
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                     >
                       <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-2n41p5-MuiFormLabel-root-MuiInputLabel-root"
                         data-shrink="false"
                         for="lng"
                         id="lng-label"
@@ -254,21 +251,21 @@ exports[`Site registration page should render with given state from Redux store 
                         Longitude
                       </label>
                       <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
                           id="lng"
                           type="text"
                           value=""
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline Apply-notchedOutline-4"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legendLabelled-8"
+                            class="css-81qg8w"
                           >
                             <span>
                               Longitude
@@ -276,17 +273,16 @@ exports[`Site registration page should render with given state from Redux store 
                           </legend>
                         </fieldset>
                       </div>
-                      
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-1hfuy39-MuiGrid-root"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                     >
                       <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-2n41p5-MuiFormLabel-root-MuiInputLabel-root"
                         data-shrink="false"
                         for="siteName"
                         id="siteName-label"
@@ -294,21 +290,21 @@ exports[`Site registration page should render with given state from Redux store 
                         Site Name
                       </label>
                       <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
                           id="siteName"
                           type="text"
                           value=""
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline Apply-notchedOutline-4"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legendLabelled-8"
+                            class="css-81qg8w"
                           >
                             <span>
                               Site Name
@@ -316,17 +312,16 @@ exports[`Site registration page should render with given state from Redux store 
                           </legend>
                         </fieldset>
                       </div>
-                      
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-1kym65f-MuiGrid-root"
                   >
                     <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                     >
                       <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-2n41p5-MuiFormLabel-root-MuiInputLabel-root"
                         data-shrink="false"
                         for="depth"
                         id="depth-label"
@@ -334,21 +329,21 @@ exports[`Site registration page should render with given state from Redux store 
                         Depth (m)
                       </label>
                       <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-3 MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
                           aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
                           id="depth"
                           type="text"
                           value=""
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline Apply-notchedOutline-4"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legendLabelled-8"
+                            class="css-81qg8w"
                           >
                             <span>
                               Depth (m)
@@ -356,11 +351,10 @@ exports[`Site registration page should render with given state from Redux store 
                           </legend>
                         </fieldset>
                       </div>
-                      
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                   >
                     <mock-tooltip
                       disablehoverlistener="true"
@@ -368,18 +362,11 @@ exports[`Site registration page should render with given state from Redux store 
                     >
                       <div>
                         <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-fullWidth"
+                          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-vo55b5-MuiButtonBase-root-MuiButton-root"
                           tabindex="0"
                           type="button"
                         >
-                          <span
-                            class="MuiButton-label"
-                          >
-                            Submit
-                          </span>
-                          <span
-                            class="MuiTouchRipple-root"
-                          />
+                          Submit
                         </button>
                       </div>
                     </mock-tooltip>
@@ -398,15 +385,17 @@ exports[`Site registration page should render with given state from Redux store 
     open="false"
   >
     <div
-      class="MuiPaper-root MuiAlert-root MuiAlert-filledError MuiPaper-elevation6"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-colorError MuiAlert-filledError MuiAlert-filled css-el7crv-MuiPaper-root-MuiAlert-root"
       role="alert"
+      style="--Paper-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);"
     >
       <div
-        class="MuiAlert-icon"
+        class="MuiAlert-icon css-vab54s-MuiAlert-icon"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+          data-testid="ErrorOutlineIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
@@ -416,12 +405,12 @@ exports[`Site registration page should render with given state from Redux store 
         </svg>
       </div>
       <div
-        class="MuiAlert-message"
+        class="MuiAlert-message css-zioonp-MuiAlert-message"
       >
         Something went wrong, please try again
       </div>
       <div
-        class="MuiAlert-action"
+        class="MuiAlert-action css-rgppqo-MuiAlert-action"
       >
         <mock-iconbutton
           aria-label="Close"
@@ -431,7 +420,8 @@ exports[`Site registration page should render with given state from Redux store 
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+            data-testid="CloseIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -444,19 +434,20 @@ exports[`Site registration page should render with given state from Redux store 
     </div>
   </mock-snackbar>
   <mock-appbar
-    classname="Footer-appBar-10"
+    classname="Footer-appBar-6"
     position="static"
   >
     <mock-toolbar>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
+        class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
         >
           <mock-link
-            classname="Footer-navBarLink-11"
+            classname="Footer-navBarLink-7"
             href="/map"
+            underline="hover"
           >
             <mock-typography
               color="textPrimary"
@@ -483,25 +474,24 @@ exports[`Site registration page should render with given state from Redux store 
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-13"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-9 css-149tc0y-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content"
+          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
           <mock-typography
             classname="MuiCardHeader-title"
             component="span"
-            display="block"
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container"
+                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
                 >
                   <mock-typography
                     variant="h4"
@@ -509,7 +499,7 @@ exports[`Site registration page should render with given state from Redux store 
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-14"
+                    classname="RegisterDialog-dialogHeaderSecondPart-10"
                     variant="h4"
                   >
                     link
@@ -517,20 +507,21 @@ exports[`Site registration page should render with given state from Redux store 
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <mock-iconbutton
-                  classname="RegisterDialog-closeButton-12"
+                  classname="RegisterDialog-closeButton-8"
                   size="small"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -541,13 +532,13 @@ exports[`Site registration page should render with given state from Redux store 
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-15 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-11 css-9ve18c-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -558,19 +549,19 @@ exports[`Site registration page should render with given state from Redux store 
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
           >
             <form
-              class="RegisterDialog-form-16"
+              class="RegisterDialog-form-12"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="firstName"
                     id="firstName-label"
@@ -578,11 +569,11 @@ exports[`Site registration page should render with given state from Redux store 
                     First Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-18"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="firstName"
                       name="firstName"
                       placeholder="First Name"
@@ -591,10 +582,10 @@ exports[`Site registration page should render with given state from Redux store 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-8"
+                        class="css-81qg8w"
                       >
                         <span>
                           First Name
@@ -602,17 +593,16 @@ exports[`Site registration page should render with given state from Redux store 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="lastName"
                     id="lastName-label"
@@ -620,11 +610,11 @@ exports[`Site registration page should render with given state from Redux store 
                     Last Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-18"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="lastName"
                       name="lastName"
                       placeholder="Last Name"
@@ -633,10 +623,10 @@ exports[`Site registration page should render with given state from Redux store 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-8"
+                        class="css-81qg8w"
                       >
                         <span>
                           Last Name
@@ -644,17 +634,16 @@ exports[`Site registration page should render with given state from Redux store 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="organization"
                     id="organization-label"
@@ -662,11 +651,11 @@ exports[`Site registration page should render with given state from Redux store 
                     Organization
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-18"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="organization"
                       name="organization"
                       placeholder="Organization"
@@ -675,10 +664,10 @@ exports[`Site registration page should render with given state from Redux store 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-8"
+                        class="css-81qg8w"
                       >
                         <span>
                           Organization
@@ -686,17 +675,16 @@ exports[`Site registration page should render with given state from Redux store 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="emailAddress"
                     id="emailAddress-label"
@@ -704,11 +692,11 @@ exports[`Site registration page should render with given state from Redux store 
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-18"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="emailAddress"
                       name="emailAddress"
                       placeholder="Email Address"
@@ -717,10 +705,10 @@ exports[`Site registration page should render with given state from Redux store 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-8"
+                        class="css-81qg8w"
                       >
                         <span>
                           Email Address
@@ -728,17 +716,16 @@ exports[`Site registration page should render with given state from Redux store 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="password"
                     id="password-label"
@@ -746,11 +733,11 @@ exports[`Site registration page should render with given state from Redux store 
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-18"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -759,10 +746,10 @@ exports[`Site registration page should render with given state from Redux store 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-8"
+                        class="css-81qg8w"
                       >
                         <span>
                           Password
@@ -770,34 +757,33 @@ exports[`Site registration page should render with given state from Redux store 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-16uec2a-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-21"
+                    classname="RegisterDialog-termsCheckbox-17"
                     color="primary"
                   />
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-1ow5ctt-MuiGrid-root"
                 >
                   <mock-box>
                     <mock-typography
-                      classname="RegisterDialog-formText-19"
+                      classname="RegisterDialog-formText-15"
                       color="textSecondary"
                       variant="subtitle1"
                     >
                       I have read the
                        
                       <a
-                        class="RegisterDialog-termsLink-22"
+                        class="RegisterDialog-termsLink-18"
                         href="/terms"
                       >
                         Terms and Conditions
@@ -807,44 +793,33 @@ exports[`Site registration page should render with given state from Redux store 
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-20 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-16 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge Mui-disabled MuiButton-fullWidth Mui-disabled"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1vruhd9-MuiButtonBase-root-MuiButton-root"
                   disabled=""
                   tabindex="-1"
                   type="submit"
                 >
-                  <span
-                    class="MuiButton-label"
-                  >
-                    CREATE ACCOUNT
-                  </span>
+                  CREATE ACCOUNT
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-19"
+                  classname="RegisterDialog-formText-15"
                   color="textSecondary"
                   variant="subtitle1"
                 >
                   Have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
-                    <span
-                      class="MuiButton-label"
-                    >
-                      SIGN IN
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
-                    />
+                    SIGN IN
                   </button>
                 </mock-typography>
               </div>
@@ -863,25 +838,24 @@ exports[`Site registration page should render with given state from Redux store 
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-24"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-20 css-149tc0y-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content"
+          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
           <mock-typography
             classname="MuiCardHeader-title"
             component="span"
-            display="block"
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container"
+                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
                 >
                   <mock-typography
                     variant="h4"
@@ -889,7 +863,7 @@ exports[`Site registration page should render with given state from Redux store 
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-25"
+                    classname="SignInDialog-dialogHeaderSecondPart-21"
                     variant="h4"
                   >
                     link
@@ -897,20 +871,21 @@ exports[`Site registration page should render with given state from Redux store 
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-23"
+                  classname="SignInDialog-closeButton-19"
                   size="small"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -920,25 +895,27 @@ exports[`Site registration page should render with given state from Redux store 
         </div>
       </div>
       <div
-        class="MuiCollapse-root MuiCollapse-hidden"
+        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
         style="min-height: 0px;"
       >
         <div
-          class="MuiCollapse-wrapper"
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
         >
           <div
-            class="MuiCollapse-wrapperInner"
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess MuiPaper-elevation0"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
               role="alert"
+              style="--Paper-shadow: none;"
             >
               <div
-                class="MuiAlert-icon"
+                class="MuiAlert-icon css-vab54s-MuiAlert-icon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                  data-testid="SuccessOutlinedIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -948,12 +925,12 @@ exports[`Site registration page should render with given state from Redux store 
                 </svg>
               </div>
               <div
-                class="MuiAlert-message"
+                class="MuiAlert-message css-zioonp-MuiAlert-message"
               >
                 Password reset email sent to .
               </div>
               <div
-                class="MuiAlert-action"
+                class="MuiAlert-action css-rgppqo-MuiAlert-action"
               >
                 <mock-iconbutton
                   aria-label="close"
@@ -962,12 +939,13 @@ exports[`Site registration page should render with given state from Redux store 
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -978,13 +956,13 @@ exports[`Site registration page should render with given state from Redux store 
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-26 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-22 css-9ve18c-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -995,19 +973,19 @@ exports[`Site registration page should render with given state from Redux store 
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
           >
             <form
-              class="SignInDialog-form-27"
+              class="SignInDialog-form-23"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-28 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-24 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="emailAddress"
                     id="emailAddress-label"
@@ -1015,11 +993,11 @@ exports[`Site registration page should render with given state from Redux store 
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-29"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-25 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="emailAddress"
                       name="emailAddress"
                       placeholder="Email Address"
@@ -1028,10 +1006,10 @@ exports[`Site registration page should render with given state from Redux store 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-8"
+                        class="css-81qg8w"
                       >
                         <span>
                           Email Address
@@ -1039,17 +1017,16 @@ exports[`Site registration page should render with given state from Redux store 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-28 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-24 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="password"
                     id="password-label"
@@ -1057,11 +1034,11 @@ exports[`Site registration page should render with given state from Redux store 
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-29"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-25 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -1070,10 +1047,10 @@ exports[`Site registration page should render with given state from Redux store 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-6 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-8"
+                        class="css-81qg8w"
                       >
                         <span>
                           Password
@@ -1081,73 +1058,51 @@ exports[`Site registration page should render with given state from Redux store 
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text SignInDialog-forgotPasswordButton-32"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-28 css-iorydh-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
-                  <span
-                    class="MuiButton-label"
+                  <mock-typography
+                    color="textSecondary"
+                    variant="subtitle2"
                   >
-                    <mock-typography
-                      color="textSecondary"
-                      variant="subtitle2"
-                    >
-                      Forgot your password?
-                    </mock-typography>
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
+                    Forgot your password?
+                  </mock-typography>
                 </button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-27 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge MuiButton-fullWidth"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1vruhd9-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="submit"
                 >
-                  <span
-                    class="MuiButton-label"
-                  >
-                    SIGN IN
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
+                  SIGN IN
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-30"
+                  classname="SignInDialog-formText-26"
                   color="textSecondary"
                   variant="subtitle1"
                 >
                   Don't have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
-                    <span
-                      class="MuiButton-label"
-                    >
-                      SIGN UP
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
-                    />
+                    SIGN UP
                   </button>
                 </mock-typography>
               </div>

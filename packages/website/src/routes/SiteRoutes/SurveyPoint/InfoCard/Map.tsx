@@ -1,11 +1,9 @@
 import React from 'react';
-import {
-  Grid,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-} from '@material-ui/core';
+import { Grid, Theme } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { Site } from 'store/Sites/types';
 import { FormField } from 'hooks/useFormField';
@@ -41,7 +39,7 @@ const styles = (theme: Theme) =>
     mapWrapper: {
       padding: 16,
       height: 280,
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         height: 300,
       },
     },

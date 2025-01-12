@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 import { displayTimeInLocalTimezone } from 'helpers/dates';
 import { times } from 'lodash';

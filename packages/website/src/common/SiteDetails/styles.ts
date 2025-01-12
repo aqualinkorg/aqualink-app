@@ -11,7 +11,7 @@ export const styles = {
   },
   cardTitle: {
     lineHeight: 1.5,
-    [theme.breakpoints.between('md', 'md')]: {
+    [theme.breakpoints.between('md', 'lg')]: {
       fontSize: 14,
     },
   },
@@ -21,7 +21,7 @@ export const styles = {
   contentTextTitles: {
     lineHeight: 1.33,
     fontSize: 10,
-    [theme.breakpoints.between(MD_MID_POINT, 'md')]: {
+    [theme.breakpoints.between(MD_MID_POINT, 'lg')]: {
       fontSize: 8,
     },
     [theme.breakpoints.between('md', MD_MID_POINT)]: {
@@ -36,7 +36,7 @@ export const styles = {
   },
   contentTextValues: {
     fontWeight: 300,
-    [theme.breakpoints.between(MD_MID_POINT, 'md')]: {
+    [theme.breakpoints.between(MD_MID_POINT, 'lg')]: {
       fontSize: 28,
     },
     [theme.breakpoints.between('md', MD_MID_POINT)]: {
@@ -50,7 +50,7 @@ export const styles = {
     },
   },
   contentUnits: {
-    [theme.breakpoints.between(MD_MID_POINT, 'md')]: {
+    [theme.breakpoints.between(MD_MID_POINT, 'lg')]: {
       fontSize: 14,
     },
     [theme.breakpoints.between('md', MD_MID_POINT)]: {

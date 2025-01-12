@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Container, makeStyles, Theme } from '@material-ui/core';
+import { Alert, Box, Container, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DropzoneProps } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert } from '@material-ui/lab';
 import { SiteUploadHistory, Sources } from 'store/Sites/types';
 import { userInfoSelector } from 'store/User/userSlice';
 import { setSelectedSite } from 'store/Sites/selectedSiteSlice';

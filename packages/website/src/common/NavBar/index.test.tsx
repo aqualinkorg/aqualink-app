@@ -1,11 +1,9 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import { mockUser } from 'mocks/mockUser';
 import { mockCollection } from 'mocks/mockCollection';
+import { renderWithProviders } from 'utils/test-utils';
 import HomePageNavBar from '.';
 
 jest.mock('../RegisterDialog', () => 'Mock-RegisterDialog');
@@ -33,12 +31,9 @@ describe('NavBar with routeButtons', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
-      <Router>
-        <Provider store={store}>
-          <HomePageNavBar routeButtons searchLocation={false} />
-        </Provider>
-      </Router>,
+    element = renderWithProviders(
+      <HomePageNavBar routeButtons searchLocation={false} />,
+      { store },
     ).container;
   });
 
@@ -65,13 +60,9 @@ describe('NavBar without routeButtons', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
-      <Router>
-        <Provider store={store}>
-          <HomePageNavBar searchLocation={false} />
-        </Provider>
-      </Router>,
-    ).container;
+    element = renderWithProviders(<HomePageNavBar searchLocation={false} />, {
+      store,
+    }).container;
   });
 
   it('should render with given state from Redux store', () => {

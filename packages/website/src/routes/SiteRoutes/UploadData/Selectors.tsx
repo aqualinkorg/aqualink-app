@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Grid,
-  makeStyles,
   TextField,
   Theme,
   MenuItem,
@@ -9,8 +8,9 @@ import {
   ButtonProps,
   FormControlLabel,
   Checkbox,
-} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
@@ -118,7 +118,9 @@ const Selectors = ({
             variant="outlined"
             fullWidth
             select
-            SelectProps={selectProps}
+            slotProps={{
+              select: selectProps,
+            }}
           >
             {OptionsList(pointOptions)}
             <MenuItem className={classes.buttonMenuItem}>
@@ -143,7 +145,9 @@ const Selectors = ({
             variant="outlined"
             fullWidth
             select
-            SelectProps={selectProps}
+            slotProps={{
+              select: selectProps,
+            }}
           >
             {OptionsList(SENSOR_TYPES)}
           </TextField>

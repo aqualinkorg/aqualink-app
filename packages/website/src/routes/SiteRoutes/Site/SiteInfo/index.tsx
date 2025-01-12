@@ -3,20 +3,20 @@ import {
   Grid,
   Typography,
   IconButton,
-  withStyles,
-  WithStyles,
-  createStyles,
   Button,
   Collapse,
   useMediaQuery,
   useTheme,
   CircularProgress,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Alert from '@mui/material/Alert';
+import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 
 import {
   setSelectedSite,
@@ -41,7 +41,7 @@ import CollectionButton from './CollectionButton';
 const SiteNavBar = ({
   hasDailyData,
   site,
-  lastSurvey,
+  lastSurvey = null,
   isAdmin,
   classes,
 }: SiteNavBarProps) => {
@@ -56,7 +56,7 @@ const SiteNavBar = ({
   const [formSubmitLoading, setFormSubmitLoading] = useState(false);
   const { name: siteName, region: siteRegion } = getSiteNameAndRegion(site);
   const organizationName = site.admins[0]?.organization;
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
   const [exclusionDatesDialogOpen, setExclusionDatesDeployDialogOpen] =
     useState(false);
 
@@ -176,6 +176,7 @@ const SiteNavBar = ({
                   aria-label="menu"
                   component={Link}
                   to="/map"
+                  size="large"
                 >
                   <ArrowBack />
                 </IconButton>
@@ -262,25 +263,24 @@ const SiteNavBar = ({
                         )}
                       </Button>
                     </Grid>
-                    {site.sensorId &&
-                      (site.status === 'shipped' ||
-                        site.status === 'deployed') && (
-                        <Grid item>
-                          <Button
-                            className={classes.button}
-                            onClick={() =>
-                              setExclusionDatesDeployDialogOpen(true)
-                            }
-                            size="small"
-                            color="primary"
-                            variant="outlined"
-                          >
-                            {site.status === 'shipped'
-                              ? 'MARK AS DEPLOYED'
-                              : 'ADD EXCLUSION DATES'}
-                          </Button>
-                        </Grid>
-                      )}
+                    {(site.status === 'shipped' ||
+                      site.status === 'deployed') && (
+                      <Grid item>
+                        <Button
+                          className={classes.button}
+                          onClick={() =>
+                            setExclusionDatesDeployDialogOpen(true)
+                          }
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        >
+                          {site.status === 'shipped'
+                            ? 'MARK AS DEPLOYED'
+                            : 'ADD EXCLUSION DATES'}
+                        </Button>
+                      </Grid>
+                    )}
                     <Grid item>
                       <Button
                         component={Link}
@@ -330,10 +330,6 @@ interface SiteNavBarIncomingProps {
   lastSurvey?: string | null;
   isAdmin: boolean;
 }
-
-SiteNavBar.defaultProps = {
-  lastSurvey: null,
-};
 
 type SiteNavBarProps = SiteNavBarIncomingProps & WithStyles<typeof styles>;
 

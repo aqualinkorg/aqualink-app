@@ -6,17 +6,17 @@ exports[`SiteRoutes Surveys should render with given state from Redux store 1`] 
     class="SurveyTimeline-root-1"
   >
     <mock-hidden
-      mddown="true"
+      lgdown="true"
     >
       <ul
-        class="MuiTimeline-root MuiTimeline-alignLeft"
+        class="MuiTimeline-root MuiTimeline-positionRight css-i6popu-MuiTimeline-root"
       />
     </mock-hidden>
     <mock-hidden
       lgup="true"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
       />
     </mock-hidden>
   </div>

@@ -1,11 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Hidden,
-} from '@material-ui/core';
+import { Hidden } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { surveyListSelector } from 'store/Survey/surveyListSlice';
 import { SurveyMedia } from 'store/Survey/types';
@@ -17,11 +16,11 @@ import TimelineTablet from './Tablet';
 import { TimelineProps } from './types';
 
 const SurveyTimeline = ({
-  loading,
+  loading = false,
   isAdmin,
   siteId,
   addNewButton,
-  timeZone,
+  timeZone = null,
   observation,
   pointName,
   pointId,
@@ -66,7 +65,7 @@ const SurveyTimeline = ({
 
   return (
     <div className={classes.root}>
-      <Hidden mdDown>
+      <Hidden lgDown>
         <TimelineDesktop {...timelineProps} />
       </Hidden>
       <Hidden lgUp>
@@ -94,12 +93,6 @@ interface SurveyTimelineIncomingProps {
   pointName: string | null;
   pointId: number;
 }
-
-SurveyTimeline.defaultProps = {
-  timeZone: null,
-  siteId: undefined,
-  loading: false,
-};
 
 type SurveyTimelineProps = SurveyTimelineIncomingProps &
   WithStyles<typeof styles>;

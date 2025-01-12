@@ -16,223 +16,134 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         open="false"
       >
         <mock-iconbutton
+          size="large"
           style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
         >
           <mock-clear />
         </mock-iconbutton>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="/"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Home
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Home
+          </mock-typography>
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="/map"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Map
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Map
+          </mock-typography>
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="/register"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Register a site
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Register a site
+          </mock-typography>
         </a>
         <mock-link
-          aria-disabled="false"
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="https://highlights.aqualink.org"
-          role="button"
           tabindex="0"
           target="_blank"
           to=""
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Highlighted Sites
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Highlighted Sites
+          </mock-typography>
         </mock-link>
         <mock-link
-          aria-disabled="false"
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="https://bristlemouth.aqualink.org"
-          role="button"
           tabindex="0"
           target="_blank"
           to=""
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Bristlemouth Explorer
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Bristlemouth Explorer
+          </mock-typography>
         </mock-link>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="/tracker"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Track a heatwave
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Track a heatwave
+          </mock-typography>
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="/about"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              About
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            About
+          </mock-typography>
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="/faq"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Faq
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Faq
+          </mock-typography>
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="/buoy"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Buoy
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Buoy
+          </mock-typography>
         </a>
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MenuDrawer-menuDrawerButton-15"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-15 css-121gmvr-MuiButtonBase-root-MuiButton-root"
           href="/drones"
-          role="button"
           tabindex="0"
         >
-          <span
-            class="MuiButton-label"
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
           >
-            <mock-typography
-              style="text-transform: uppercase;"
-              variant="h6"
-            >
-              Drone
-            </mock-typography>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+            Drone
+          </mock-typography>
         </a>
         <mock-box
           margintop="auto"
@@ -246,57 +157,41 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             Join us and contribute!
           </mock-typography>
           <div
-            class="MuiButtonGroup-root MuiButtonGroup-contained"
+            class="MuiButtonGroup-root MuiButtonGroup-contained MuiButtonGroup-horizontal MuiButtonGroup-colorPrimary css-tlut1a-MuiButtonGroup-root"
             role="group"
           >
             <a
-              aria-disabled="false"
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-14"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-14 MuiButtonGroup-firstButton css-kigga0-MuiButtonBase-root-MuiButton-root"
               href="https://github.com/aqualinkorg/aqualink-app"
               tabindex="0"
               target="_blank"
             >
               <span
-                class="MuiButton-label"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
               >
-                <span
-                  class="MuiButton-startIcon MuiButton-iconSizeMedium"
-                >
-                  <mock-github />
-                </span>
-                GitHub
+                <mock-github />
               </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
+              GitHub
             </a>
             <a
-              aria-disabled="false"
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-14"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-14 MuiButtonGroup-lastButton css-kigga0-MuiButtonBase-root-MuiButton-root"
               href="https://ovio.org/project/aqualinkorg/aqualink-app"
               tabindex="0"
               target="_blank"
             >
-              <span
-                class="MuiButton-label"
-              >
-                <img
-                  alt="Ovio Logo"
-                  src="ovio_logo.png"
-                />
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+              <img
+                alt="Ovio Logo"
+                src="ovio_logo.png"
               />
             </a>
           </div>
         </mock-box>
       </mock-drawer>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ytge4g-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-6 css-did8sm-MuiGrid-root"
         >
           <mock-box
             alignitems="center"
@@ -306,21 +201,24 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             <mock-iconbutton
               color="inherit"
               edge="start"
+              size="large"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="MenuIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
                 />
               </svg>
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-2"
               href="/map"
+              underline="hover"
             >
               <mock-typography
                 color="textPrimary"
@@ -338,10 +236,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           </mock-box>
         </div>
         <mock-hidden
-          xsdown="true"
+          smdown="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 MuiGrid-grid-md-3 css-x5eji4-MuiGrid-root"
           >
             <div
               class="Search-searchBar-16"
@@ -354,12 +252,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="SearchIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -368,58 +267,43 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 class="Search-searchBarText-18"
               >
                 <div
-                  aria-expanded="false"
-                  class="MuiAutocomplete-root Search-searchBarInput-19 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
-                  role="combobox"
+                  class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon Search-searchBarInput-19 css-1tlcqt-MuiAutocomplete-root"
                 >
                   <div
-                    class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiOutlinedInput-root MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-iawdt4-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <input
                         aria-autocomplete="list"
+                        aria-expanded="false"
                         aria-invalid="false"
                         autocapitalize="none"
                         autocomplete="off"
-                        class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
                         id="location"
                         placeholder="Search"
+                        role="combobox"
                         spellcheck="false"
                         type="text"
                         value=""
                       />
                       <div
-                        class="MuiAutocomplete-endAdornment"
+                        class="MuiAutocomplete-endAdornment css-1uhhrmm-MuiAutocomplete-endAdornment"
                       >
                         <mock-iconbutton
-                          aria-label="Clear"
-                          classname="MuiAutocomplete-clearIndicator"
-                          tabindex="-1"
-                          title="Clear"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                            />
-                          </svg>
-                        </mock-iconbutton>
-                        <mock-iconbutton
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator"
+                          classname="MuiAutocomplete-popupIndicator css-jhk8ta-MuiAutocomplete-popupIndicator"
                           disabled="false"
                           tabindex="-1"
                           title="Open"
+                          type="button"
                         >
                           <svg
                             aria-hidden="true"
-                            class="MuiSvgIcon-root"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                            data-testid="ArrowDropDownIcon"
                             focusable="false"
                             viewBox="0 0 24 24"
                           >
@@ -431,14 +315,15 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </div>
                       <fieldset
                         aria-hidden="true"
-                        class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
-                        style="padding-left: 8px;"
+                        class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="PrivateNotchedOutline-legend-23"
-                          style="width: 0.01px;"
+                          class="css-w4cd9x"
                         >
-                          <span>
+                          <span
+                            aria-hidden="true"
+                            class="notranslate"
+                          >
                             ​
                           </span>
                         </legend>
@@ -451,22 +336,24 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           </div>
         </mock-hidden>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-12 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-3 NavBar-languageUserWrapper-12 css-1odkxmp-MuiGrid-root"
         >
           <mock-tooltip
             title="Translate"
           >
             <mock-iconbutton
+              size="large"
               style="color: white;"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="LanguageIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
                 />
               </svg>
             </mock-iconbutton>
@@ -479,15 +366,17 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             Mock User
             <mock-iconbutton
               classname="NavBar-button-11"
+              size="large"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-10"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-10 css-1umw9bq-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
             </mock-iconbutton>
@@ -509,14 +398,15 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                   classname="NavBar-menuItem-8"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                        data-testid="DashboardTwoToneIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
@@ -525,12 +415,12 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                           opacity=".3"
                         />
                         <path
-                          d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"
+                          d="M3 13h8V3H3zm2-8h4v6H5zm8 16h8V11h-8zm2-8h4v6h-4zM13 3v6h8V3zm6 4h-4V5h4zM3 21h8v-6H3zm2-4h4v2H5z"
                         />
                       </svg>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       Dashboard
                     </div>
@@ -544,24 +434,25 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 classname="NavBar-menuItem-8"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="PowerSettingsNewIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
                       <path
-                        d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"
+                        d="M13 3h-2v10h2zm4.83 2.17-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83"
                       />
                     </svg>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     Logout
                   </div>
@@ -574,7 +465,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           smup="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
             style="margin: 0px; padding-top: 0px;"
           >
             <div
@@ -588,12 +479,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="SearchIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -602,58 +494,43 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 class="Search-searchBarText-18"
               >
                 <div
-                  aria-expanded="false"
-                  class="MuiAutocomplete-root Search-searchBarInput-19 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
-                  role="combobox"
+                  class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon Search-searchBarInput-19 css-1tlcqt-MuiAutocomplete-root"
                 >
                   <div
-                    class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiOutlinedInput-root MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-iawdt4-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <input
                         aria-autocomplete="list"
+                        aria-expanded="false"
                         aria-invalid="false"
                         autocapitalize="none"
                         autocomplete="off"
-                        class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
                         id="location"
                         placeholder="Search"
+                        role="combobox"
                         spellcheck="false"
                         type="text"
                         value=""
                       />
                       <div
-                        class="MuiAutocomplete-endAdornment"
+                        class="MuiAutocomplete-endAdornment css-1uhhrmm-MuiAutocomplete-endAdornment"
                       >
                         <mock-iconbutton
-                          aria-label="Clear"
-                          classname="MuiAutocomplete-clearIndicator"
-                          tabindex="-1"
-                          title="Clear"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                            />
-                          </svg>
-                        </mock-iconbutton>
-                        <mock-iconbutton
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator"
+                          classname="MuiAutocomplete-popupIndicator css-jhk8ta-MuiAutocomplete-popupIndicator"
                           disabled="false"
                           tabindex="-1"
                           title="Open"
+                          type="button"
                         >
                           <svg
                             aria-hidden="true"
-                            class="MuiSvgIcon-root"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                            data-testid="ArrowDropDownIcon"
                             focusable="false"
                             viewBox="0 0 24 24"
                           >
@@ -665,14 +542,15 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </div>
                       <fieldset
                         aria-hidden="true"
-                        class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
-                        style="padding-left: 8px;"
+                        class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="PrivateNotchedOutline-legend-23"
-                          style="width: 0.01px;"
+                          class="css-w4cd9x"
                         >
-                          <span>
+                          <span
+                            aria-hidden="true"
+                            class="notranslate"
+                          >
                             ​
                           </span>
                         </legend>
@@ -695,25 +573,24 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-27"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-23 css-149tc0y-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content"
+          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
           <mock-typography
             classname="MuiCardHeader-title"
             component="span"
-            display="block"
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container"
+                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
                 >
                   <mock-typography
                     variant="h4"
@@ -721,7 +598,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-28"
+                    classname="RegisterDialog-dialogHeaderSecondPart-24"
                     variant="h4"
                   >
                     link
@@ -729,20 +606,21 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <mock-iconbutton
-                  classname="RegisterDialog-closeButton-26"
+                  classname="RegisterDialog-closeButton-22"
                   size="small"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -753,13 +631,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-29 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-25 css-9ve18c-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -770,19 +648,19 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
           >
             <form
-              class="RegisterDialog-form-30"
+              class="RegisterDialog-form-26"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="firstName"
                     id="firstName-label"
@@ -790,11 +668,11 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     First Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-32"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="firstName"
                       name="firstName"
                       placeholder="First Name"
@@ -803,10 +681,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-24"
+                        class="css-81qg8w"
                       >
                         <span>
                           First Name
@@ -814,17 +692,16 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="lastName"
                     id="lastName-label"
@@ -832,11 +709,11 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Last Name
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-32"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="lastName"
                       name="lastName"
                       placeholder="Last Name"
@@ -845,10 +722,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-24"
+                        class="css-81qg8w"
                       >
                         <span>
                           Last Name
@@ -856,17 +733,16 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="organization"
                     id="organization-label"
@@ -874,11 +750,11 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Organization
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-32"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="organization"
                       name="organization"
                       placeholder="Organization"
@@ -887,10 +763,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-24"
+                        class="css-81qg8w"
                       >
                         <span>
                           Organization
@@ -898,17 +774,16 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="emailAddress"
                     id="emailAddress-label"
@@ -916,11 +791,11 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-32"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="emailAddress"
                       name="emailAddress"
                       placeholder="Email Address"
@@ -929,10 +804,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-24"
+                        class="css-81qg8w"
                       >
                         <span>
                           Email Address
@@ -940,17 +815,16 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="password"
                     id="password-label"
@@ -958,11 +832,11 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-32"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -971,10 +845,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-24"
+                        class="css-81qg8w"
                       >
                         <span>
                           Password
@@ -982,34 +856,33 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-16uec2a-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-35"
+                    classname="RegisterDialog-termsCheckbox-31"
                     color="primary"
                   />
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-1ow5ctt-MuiGrid-root"
                 >
                   <mock-box>
                     <mock-typography
-                      classname="RegisterDialog-formText-33"
+                      classname="RegisterDialog-formText-29"
                       color="textSecondary"
                       variant="subtitle1"
                     >
                       I have read the
                        
                       <a
-                        class="RegisterDialog-termsLink-36"
+                        class="RegisterDialog-termsLink-32"
                         href="/terms"
                       >
                         Terms and Conditions
@@ -1019,44 +892,33 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-34 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-30 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge Mui-disabled MuiButton-fullWidth Mui-disabled"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1vruhd9-MuiButtonBase-root-MuiButton-root"
                   disabled=""
                   tabindex="-1"
                   type="submit"
                 >
-                  <span
-                    class="MuiButton-label"
-                  >
-                    CREATE ACCOUNT
-                  </span>
+                  CREATE ACCOUNT
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-33"
+                  classname="RegisterDialog-formText-29"
                   color="textSecondary"
                   variant="subtitle1"
                 >
                   Have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
-                    <span
-                      class="MuiButton-label"
-                    >
-                      SIGN IN
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
-                    />
+                    SIGN IN
                   </button>
                 </mock-typography>
               </div>
@@ -1075,25 +937,24 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-38"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-34 css-149tc0y-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content"
+          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
           <mock-typography
             classname="MuiCardHeader-title"
             component="span"
-            display="block"
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container"
+                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
                 >
                   <mock-typography
                     variant="h4"
@@ -1101,7 +962,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-39"
+                    classname="SignInDialog-dialogHeaderSecondPart-35"
                     variant="h4"
                   >
                     link
@@ -1109,20 +970,21 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-37"
+                  classname="SignInDialog-closeButton-33"
                   size="small"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -1132,25 +994,27 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </div>
       </div>
       <div
-        class="MuiCollapse-root MuiCollapse-hidden"
+        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
         style="min-height: 0px;"
       >
         <div
-          class="MuiCollapse-wrapper"
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
         >
           <div
-            class="MuiCollapse-wrapperInner"
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess MuiPaper-elevation0"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
               role="alert"
+              style="--Paper-shadow: none;"
             >
               <div
-                class="MuiAlert-icon"
+                class="MuiAlert-icon css-vab54s-MuiAlert-icon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                  data-testid="SuccessOutlinedIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -1160,12 +1024,12 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 </svg>
               </div>
               <div
-                class="MuiAlert-message"
+                class="MuiAlert-message css-zioonp-MuiAlert-message"
               >
                 Password reset email sent to .
               </div>
               <div
-                class="MuiAlert-action"
+                class="MuiAlert-action css-rgppqo-MuiAlert-action"
               >
                 <mock-iconbutton
                   aria-label="close"
@@ -1174,12 +1038,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -1190,13 +1055,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-40 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-36 css-9ve18c-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -1207,19 +1072,19 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
           >
             <form
-              class="SignInDialog-form-41"
+              class="SignInDialog-form-37"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-42 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-38 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="emailAddress"
                     id="emailAddress-label"
@@ -1227,11 +1092,11 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Email Address
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-43"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-39 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="emailAddress"
                       name="emailAddress"
                       placeholder="Email Address"
@@ -1240,10 +1105,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-24"
+                        class="css-81qg8w"
                       >
                         <span>
                           Email Address
@@ -1251,17 +1116,16 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-42 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-38 css-z4k4cw-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
                     for="password"
                     id="password-label"
@@ -1269,11 +1133,11 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     Password
                   </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-43"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-39 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -1282,10 +1146,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="PrivateNotchedOutline-legendLabelled-24"
+                        class="css-81qg8w"
                       >
                         <span>
                           Password
@@ -1293,73 +1157,51 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       </legend>
                     </fieldset>
                   </div>
-                  
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text SignInDialog-forgotPasswordButton-46"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-42 css-iorydh-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
-                  <span
-                    class="MuiButton-label"
+                  <mock-typography
+                    color="textSecondary"
+                    variant="subtitle2"
                   >
-                    <mock-typography
-                      color="textSecondary"
-                      variant="subtitle2"
-                    >
-                      Forgot your password?
-                    </mock-typography>
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
+                    Forgot your password?
+                  </mock-typography>
                 </button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-45 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-41 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge MuiButton-fullWidth"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1vruhd9-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="submit"
                 >
-                  <span
-                    class="MuiButton-label"
-                  >
-                    SIGN IN
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
+                  SIGN IN
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-44"
+                  classname="SignInDialog-formText-40"
                   color="textSecondary"
                   variant="subtitle1"
                 >
                   Don't have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
-                    <span
-                      class="MuiButton-label"
-                    >
-                      SIGN UP
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
-                    />
+                    SIGN UP
                   </button>
                 </mock-typography>
               </div>
@@ -1373,35 +1215,26 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     bgcolor="rgb(245, 246, 246)"
   >
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-5c1adp-MuiContainer-root"
     >
       <div
-        class="MuiGrid-root BackButton-backButtonWrapper-47 MuiGrid-container"
+        class="MuiGrid-root MuiGrid-container BackButton-backButtonWrapper-43 css-1dphqhe-MuiGrid-root"
       >
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
           href="/sites/1"
-          role="button"
           tabindex="0"
         >
           <span
-            class="MuiButton-label"
+            class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
           >
-            <span
-              class="MuiButton-startIcon MuiButton-iconSizeMedium"
-            >
-              <mock-arrowback />
-            </span>
-            <mock-typography
-              classname="BackButton-backButtonText-48"
-            >
-              Back to Site
-            </mock-typography>
+            <mock-arrowback />
           </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
+          <mock-typography
+            classname="BackButton-backButtonText-44"
+          >
+            Back to Site
+          </mock-typography>
         </a>
       </div>
     </div>
@@ -1410,28 +1243,30 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     bgcolor="rgb(245, 246, 246)"
   >
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-5c1adp-MuiContainer-root"
     >
       <div
-        class="MuiCollapse-root MuiCollapse-hidden"
+        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
         style="min-height: 0px;"
       >
         <div
-          class="MuiCollapse-wrapper"
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
         >
           <div
-            class="MuiCollapse-wrapperInner"
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess MuiPaper-elevation0"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
               role="alert"
+              style="--Paper-shadow: none;"
             >
               <div
-                class="MuiAlert-icon"
+                class="MuiAlert-icon css-vab54s-MuiAlert-icon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                  data-testid="SuccessOutlinedIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -1441,12 +1276,12 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 </svg>
               </div>
               <div
-                class="MuiAlert-message"
+                class="MuiAlert-message css-zioonp-MuiAlert-message"
               >
                 Something went wrong
               </div>
               <div
-                class="MuiAlert-action"
+                class="MuiAlert-action css-rgppqo-MuiAlert-action"
               >
                 <mock-iconbutton
                   color="inherit"
@@ -1454,12 +1289,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
+                    data-testid="CloseIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                 </mock-iconbutton>
@@ -1469,22 +1305,22 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </div>
       </div>
       <div
-        class="MuiGrid-root InfoCard-cardWrapper-49 MuiGrid-container MuiGrid-justify-content-xs-center"
+        class="MuiGrid-root MuiGrid-container InfoCard-cardWrapper-45 css-1ry8ypg-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 css-1deaqy1-MuiGrid-root"
         >
           <mock-card
             elevation="3"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-space-between"
+              class="MuiGrid-root MuiGrid-container css-hgxf4k-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root Info-cardInfo-50 MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-6"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-6 Info-cardInfo-46 css-msbwok-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container"
+                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
                 >
                   <mock-box
                     mb="24px"
@@ -1498,16 +1334,16 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                   </mock-box>
                 </div>
                 <div
-                  class="MuiGrid-root Info-autoWidth-54 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-content-xs-space-between"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 Info-autoWidth-50 css-m4714y-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root Info-infoWrapper-51 MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item Info-infoWrapper-47 css-x7bhrq-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root Info-autoWidth-54 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column Info-autoWidth-50 css-1hs6rnj-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root Info-nameWrapper-52 MuiGrid-item"
+                        class="MuiGrid-root MuiGrid-item Info-nameWrapper-48 css-x7bhrq-MuiGrid-root"
                       >
                         <mock-typography
                           color="textSecondary"
@@ -1523,65 +1359,63 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root SurveyInfo-autoWidth-55 MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-justify-content-xs-space-between"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 SurveyInfo-autoWidth-51 css-1il9591-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-item"
+                        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                       >
                         <div
-                          class="MuiGrid-root SurveyInfo-autoWidth-55 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-baseline"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 SurveyInfo-autoWidth-51 css-jybdu5-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item"
+                            class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                           >
                             <mock-typography
-                              classname="SurveyInfo-coloredText-56"
+                              classname="SurveyInfo-coloredText-52"
                               variant="h5"
                             >
                               0
                             </mock-typography>
                           </div>
                           <div
-                            class="MuiGrid-root MuiGrid-item"
+                            class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                           >
                             <mock-typography
                               color="textSecondary"
                               variant="subtitle1"
                             >
                               SURVEY
-                              
                             </mock-typography>
                           </div>
                         </div>
                       </div>
                       <div
-                        class="MuiGrid-root MuiGrid-item"
+                        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                       >
                         <div
-                          class="MuiGrid-root SurveyInfo-autoWidth-55 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-baseline"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 SurveyInfo-autoWidth-51 css-jybdu5-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item"
+                            class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                           >
                             <mock-typography
-                              classname="SurveyInfo-coloredText-56"
+                              classname="SurveyInfo-coloredText-52"
                               variant="h5"
                             >
                               0
                             </mock-typography>
                           </div>
                           <div
-                            class="MuiGrid-root MuiGrid-item"
+                            class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                           >
                             <mock-typography
                               color="textSecondary"
                               variant="subtitle1"
                             >
                               IMAGE
-                              
                             </mock-typography>
                           </div>
                         </div>
@@ -1607,13 +1441,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     bgcolor="rgb(245, 246, 246)"
   >
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-5c1adp-MuiContainer-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
+        class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
       >
         <mock-box
-          classname="SurveyHistory-title-57"
+          classname="SurveyHistory-title-53"
         >
           <mock-typography
             variant="h4"
@@ -1623,39 +1457,40 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </div>
       <div
-        class="SurveyTimeline-root-58"
+        class="SurveyTimeline-root-54"
       >
         <mock-hidden
-          mddown="true"
+          lgdown="true"
         >
           <ul
-            class="MuiTimeline-root MuiTimeline-alignLeft"
+            class="MuiTimeline-root MuiTimeline-positionRight css-i6popu-MuiTimeline-root"
           />
         </mock-hidden>
         <mock-hidden
           lgup="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
           />
         </mock-hidden>
       </div>
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-84"
+    classname="Footer-appBar-80"
     position="static"
   >
     <mock-toolbar>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-center"
+        class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
         >
           <mock-link
-            classname="Footer-navBarLink-85"
+            classname="Footer-navBarLink-81"
             href="/map"
+            underline="hover"
           >
             <mock-typography
               color="textPrimary"

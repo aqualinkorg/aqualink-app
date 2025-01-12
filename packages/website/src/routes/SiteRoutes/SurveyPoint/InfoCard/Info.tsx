@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  Box,
-  Grid,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Button,
-} from '@material-ui/core';
+import { Box, Grid, Typography, Button } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useSelector } from 'react-redux';
 
 import { Site } from 'store/Sites/types';

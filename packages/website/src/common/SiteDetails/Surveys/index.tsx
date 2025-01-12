@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
-  createStyles,
   useTheme,
   useMediaQuery,
   Theme,
@@ -10,8 +9,10 @@ import {
   FormControl,
   MenuItem,
   Box,
-  makeStyles,
-} from '@material-ui/core';
+  SelectChangeEvent,
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch, useSelector } from 'react-redux';
 
 import observationOptions from 'constants/uploadDropdowns';
@@ -36,7 +37,7 @@ import DeleteSurveyPointDialog, { Action } from '../../Dialog';
 const Surveys = ({ site }: SurveysProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const isLoading = !site;
   const [point, setPoint] = useState<string>('All');
   const pointOptions = site?.surveyPoints || [];
@@ -74,13 +75,11 @@ const Surveys = ({ site }: SurveysProps) => {
     setSurveyPointToDelete(id);
   };
 
-  const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handlePointChange = (event: SelectChangeEvent<unknown>) => {
     setPoint(event.target.value as string);
   };
 
-  const handleObservationChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-  ) => {
+  const handleObservationChange = (event: SelectChangeEvent<unknown>) => {
     setObservation(event.target.value as SurveyMedia['observations'] | 'any');
   };
 
@@ -268,8 +267,9 @@ const Surveys = ({ site }: SurveysProps) => {
                 </Typography>
               </Grid>
               <Grid item className={classes.selectorWrapper}>
-                <FormControl className={classes.formControl}>
+                <FormControl variant="standard" className={classes.formControl}>
                   <Select
+                    variant="standard"
                     labelId="survey-observation"
                     id="survey-observation"
                     name="survey-observation"
@@ -337,7 +337,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: '1rem',
     },
     selectorWrapper: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
       },
     },

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { siteTimeSeriesDataRangeSelector } from 'store/Sites/selectedSiteSlice';
 import { useSnackbar } from 'notistack';
@@ -114,11 +114,5 @@ function DownloadCSVButton({
     </div>
   );
 }
-
-DownloadCSVButton.defaultProps = {
-  startDate: undefined,
-  endDate: undefined,
-  siteId: undefined,
-};
 
 export default DownloadCSVButton;

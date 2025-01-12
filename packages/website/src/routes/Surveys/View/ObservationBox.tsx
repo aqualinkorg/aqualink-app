@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  Box,
-  CircularProgress,
-  createStyles,
-  Grid,
-  withStyles,
-  WithStyles,
-  Typography,
-} from '@material-ui/core';
+import { Box, CircularProgress, Grid, Typography } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
 import { useSelector } from 'react-redux';
 import { some } from 'lodash';
 import {
@@ -19,7 +14,7 @@ import { getCardTemperatureValues } from './utils';
 
 const ObservationBox = ({
   depth,
-  date,
+  date = null,
   classes,
   satelliteTemperature,
 }: ObservationBoxProps) => {
@@ -118,10 +113,6 @@ interface ObservationBoxIncomingProps {
   satelliteTemperature?: number;
   date?: string | null;
 }
-
-ObservationBox.defaultProps = {
-  date: null,
-};
 
 type ObservationBoxProps = ObservationBoxIncomingProps &
   WithStyles<typeof styles>;

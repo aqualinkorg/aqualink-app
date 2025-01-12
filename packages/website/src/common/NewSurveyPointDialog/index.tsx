@@ -8,12 +8,12 @@ import {
   Typography,
   Button,
   TextFieldProps,
-  makeStyles,
   Theme,
   IconButton,
-} from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { grey } from '@mui/material/colors';
+import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { maxLengths } from 'constants/names';
@@ -91,11 +91,15 @@ const NewSurveyPointDialog = ({
 
   return (
     <Dialog maxWidth="sm" fullWidth onClose={onDialogClose} open={open}>
-      <DialogTitle disableTypography className={classes.dialogTitle}>
+      <DialogTitle className={classes.dialogTitle}>
         <Typography color="textSecondary" variant="h4">
           New Survey Point
         </Typography>
-        <IconButton disabled={newPointLoading} onClick={onDialogClose}>
+        <IconButton
+          disabled={newPointLoading}
+          onClick={onDialogClose}
+          size="large"
+        >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -155,9 +159,5 @@ interface NewSurveyPointDialogProps {
   onClose: () => void;
   onSuccess?: (arg0: string, arg1: SurveyPoints[]) => void;
 }
-
-NewSurveyPointDialog.defaultProps = {
-  onSuccess: undefined,
-};
 
 export default NewSurveyPointDialog;

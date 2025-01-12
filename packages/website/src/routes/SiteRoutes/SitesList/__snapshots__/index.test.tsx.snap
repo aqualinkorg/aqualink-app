@@ -12,14 +12,16 @@ exports[`Sites List should render with given state from Redux store 1`] = `
         href="/sites/1"
         style="text-decoration: none;"
       >
-        <mock-listitem
-          button="true"
+        <div
+          class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4afvok-MuiButtonBase-root-MuiListItemButton-root"
+          role="button"
+          tabindex="0"
         >
           <mock-listitemtext
             primary=""
             style="color: white;"
           />
-        </mock-listitem>
+        </div>
       </a>
     </mock-list>
   </div>

@@ -1,19 +1,16 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import { mockTempWeeklyAlert } from 'mocks/mockDailyData';
+import { renderWithProviders } from 'utils/test-utils';
 import Bleaching from '.';
 
 test('renders as expected', () => {
-  const { container } = render(
-    <Router>
-      <Bleaching
-        data={{
-          tempWeeklyAlert: mockTempWeeklyAlert,
-        }}
-      />
-    </Router>,
+  const { container } = renderWithProviders(
+    <Bleaching
+      data={{
+        tempWeeklyAlert: mockTempWeeklyAlert,
+      }}
+    />,
   );
   expect(container).toMatchSnapshot();
 });

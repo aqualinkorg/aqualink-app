@@ -1,19 +1,28 @@
 import React, { forwardRef } from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Box,
   Grid,
   Typography,
   GridProps,
   CardMedia,
   Theme,
-} from '@material-ui/core';
+} from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   (
-    { title, text, backgroundColor, direction, image, scaleDown, classes },
+    {
+      title,
+      text,
+      backgroundColor,
+      direction,
+      image,
+      scaleDown = false,
+      classes,
+    },
     ref,
   ) => {
     const titleOnly = !text;
@@ -56,13 +65,13 @@ const styles = (theme: Theme) =>
   createStyles({
     container: {
       marginTop: '5rem',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         marginTop: '2rem',
       },
     },
     textContainer: {
       padding: '4rem',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         padding: '1rem',
       },
     },
@@ -86,8 +95,6 @@ export interface CardIncomingProps {
   image: string;
   scaleDown?: boolean;
 }
-
-Card.defaultProps = { scaleDown: false };
 
 type CardProps = CardIncomingProps & WithStyles<typeof styles>;
 

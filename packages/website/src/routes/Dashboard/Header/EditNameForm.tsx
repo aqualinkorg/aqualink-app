@@ -1,18 +1,16 @@
 import React, { ChangeEvent } from 'react';
 import {
-  createStyles,
   Grid,
-  withStyles,
-  WithStyles,
   IconButton,
   Tooltip,
   useTheme,
   useMediaQuery,
-} from '@material-ui/core';
-import red from '@material-ui/core/colors/red';
-import green from '@material-ui/core/colors/green';
-import CheckIcon from '@material-ui/icons/Check';
-import ClearIcon from '@material-ui/icons/Clear';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 import { useDispatch } from 'react-redux';
 
 import { User } from 'store/User/types';
@@ -20,6 +18,8 @@ import { setName } from 'store/Collection/collectionSlice';
 import { useFormField } from 'hooks/useFormField';
 import TextField from 'common/Forms/TextField';
 import collectionServices from 'services/collectionServices';
+
+import { red, green } from '@mui/material/colors';
 
 const EditNameForm = ({
   collectionId,
@@ -30,7 +30,7 @@ const EditNameForm = ({
 }: EditNameFormProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [collectionName, setCollectionName] = useFormField(initialName, [
     'required',
     'maxLength',
@@ -81,6 +81,7 @@ const EditNameForm = ({
                   disabled={!!collectionName.error}
                   onClick={onSubmit}
                   className={classes.checkButton}
+                  size="large"
                 >
                   <CheckIcon />
                 </IconButton>
@@ -88,7 +89,11 @@ const EditNameForm = ({
             </Grid>
             <Grid item>
               <Tooltip title="Cancel" placement="top" arrow>
-                <IconButton onClick={onClose} className={classes.clearIcon}>
+                <IconButton
+                  onClick={onClose}
+                  className={classes.clearIcon}
+                  size="large"
+                >
                   <ClearIcon />
                 </IconButton>
               </Tooltip>
@@ -116,10 +121,6 @@ interface EditNameFormIncomingProps {
   signedInUser: User | null;
   onClose: () => void;
 }
-
-EditNameForm.defaultProps = {
-  collectionId: undefined,
-};
 
 type EditNameFormProps = EditNameFormIncomingProps & WithStyles<typeof styles>;
 

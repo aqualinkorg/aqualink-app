@@ -1,11 +1,7 @@
 import React, { FC, PropsWithChildren } from 'react';
-import {
-  makeStyles,
-  createStyles,
-  GridProps,
-  Grid,
-  Theme,
-} from '@material-ui/core';
+import { GridProps, Grid, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 
 import Title from './Title';
@@ -55,7 +51,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
           <LoadingSkeleton
             image={loadingImage}
             loading={loading}
-            variant="rect"
+            variant="rectangular"
             height="100%"
           >
             {children}
@@ -73,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) => {
     forcedAspectRatioWrapper: {
       paddingTop: `calc((100% - ${theme.spacing(
         2,
-      )}px) / (${aspectRatio}) + ${theme.spacing(2)}px)`,
+      )}) / (${aspectRatio}) + ${theme.spacing(2)})`,
       marginTop: -theme.spacing(1),
       position: 'relative',
     },
@@ -85,7 +81,7 @@ const useStyles = makeStyles((theme: Theme) => {
       [theme.breakpoints.only('md')]: {
         height: '25rem',
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         height: '20rem',
       },
     },
@@ -107,6 +103,7 @@ interface CardWithTitleProps {
   className?: string;
   forcedAspectRatio?: boolean;
   loadingImage?: string;
+  children?: React.ReactNode;
 }
 
 export default CardWithTitle;

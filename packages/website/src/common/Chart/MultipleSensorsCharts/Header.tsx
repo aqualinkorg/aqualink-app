@@ -3,20 +3,20 @@ import {
   Grid,
   Box,
   Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
   Button,
   useTheme,
   useMediaQuery,
   Tooltip,
   Theme,
-} from '@material-ui/core';
-import grey from '@material-ui/core/colors/grey';
-import { Alert } from '@material-ui/lab';
+  Alert,
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import isEmpty from 'lodash/isEmpty';
-
 import { TimeSeriesSurveyPoint } from 'store/Sites/types';
+
+import { grey } from '@mui/material/colors';
 import { AvailableRange, RangeButton, RangeValue } from './types';
 import { availableRangeString } from './helpers';
 
@@ -24,16 +24,16 @@ const Header = ({
   id,
   range,
   disableMaxRange,
-  title,
+  title = '',
   onRangeChange,
   classes,
-  availableRanges,
+  availableRanges = [],
   timeZone,
-  showRangeButtons,
+  showRangeButtons = true,
   surveyPoint,
 }: HeaderProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const buttons: RangeButton[] = [
     {
@@ -191,7 +191,7 @@ const styles = (theme: Theme) =>
       marginLeft: theme.spacing(1.5),
     },
     rangeTitle: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginLeft: theme.spacing(1.5),
       },
     },
@@ -213,15 +213,6 @@ interface HeaderIncomingProps {
   showRangeButtons?: boolean;
   surveyPoint?: TimeSeriesSurveyPoint;
 }
-
-Header.defaultProps = {
-  id: undefined,
-  title: '',
-  timeZone: null,
-  showRangeButtons: true,
-  surveyPoint: undefined,
-  availableRanges: [],
-};
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;
 

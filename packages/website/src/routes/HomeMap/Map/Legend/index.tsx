@@ -1,5 +1,8 @@
 import React from 'react';
-import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 
 import CustomLegend from 'common/Legend';
@@ -48,10 +51,10 @@ const styles = (theme: Theme) =>
     defaultPosition: {
       bottom: 40,
       left: 10,
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         bottom: 80,
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         bottom: 110,
       },
     },
@@ -62,11 +65,6 @@ interface LegendIncomingProps {
   bottom?: number;
   left?: number;
 }
-
-Legend.defaultProps = {
-  bottom: undefined,
-  left: undefined,
-};
 
 type LegendProps = LegendIncomingProps & WithStyles<typeof styles>;
 

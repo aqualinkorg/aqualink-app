@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   useMediaQuery,
   useTheme,
   Container,
@@ -13,8 +10,11 @@ import {
   Theme,
   Fab,
   ButtonProps,
-} from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { Link } from 'react-router-dom';
 
 import classNames from 'classnames';
@@ -49,8 +49,8 @@ const landingPageButtons: LandingPageButton[] = [
 const LandingPage = ({ classes }: LandingPageProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const firstCard = useRef<HTMLDivElement>(null);
 
   const seeMore = () => {
@@ -179,7 +179,7 @@ const styles = (theme: Theme) =>
       left: 160,
       minHeight: 864,
       height: 'calc(100vh - 64px)', // subtract height of the navbar
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         minHeight: 576,
       },
     },
@@ -203,7 +203,7 @@ const styles = (theme: Theme) =>
       '&:hover': {
         color: 'white',
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         height: 40,
       },
     },

@@ -1,17 +1,16 @@
 import React from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Card,
   CardHeader,
   CardContent,
   Grid,
   Typography,
   Button,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles, styled } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Link } from 'react-router-dom';
-import styled from '@material-ui/core/styles/styled';
 import { isNumber } from 'lodash';
 
 import { formatNumber } from 'helpers/numberUtils';

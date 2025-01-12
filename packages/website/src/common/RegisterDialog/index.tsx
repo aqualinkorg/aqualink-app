@@ -2,9 +2,6 @@ import React, { BaseSyntheticEvent, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Dialog,
   Card,
   CardHeader,
@@ -18,9 +15,12 @@ import {
   LinearProgress,
   Collapse,
   Box,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import CloseIcon from '@material-ui/icons/Close';
+  Alert,
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -175,9 +175,11 @@ const RegisterDialog = ({
                         }
                         label="First Name"
                         error={!!errors.firstName}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -199,9 +201,11 @@ const RegisterDialog = ({
                         }
                         label="Last Name"
                         error={!!errors.lastName}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -223,9 +227,11 @@ const RegisterDialog = ({
                         }
                         label="Organization"
                         error={!!errors.organization}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -252,9 +258,11 @@ const RegisterDialog = ({
                         }
                         label="Email Address"
                         error={!!errors.emailAddress}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />
@@ -281,9 +289,11 @@ const RegisterDialog = ({
                         }
                         label="Password"
                         error={!!errors.password}
-                        inputProps={{ className: classes.textField }}
                         fullWidth
                         variant="outlined"
+                        slotProps={{
+                          htmlInput: { className: classes.textField },
+                        }}
                       />
                     )}
                   />

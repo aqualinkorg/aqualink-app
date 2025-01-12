@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Card, Typography } from '@material-ui/core';
-import LaunchIcon from '@material-ui/icons/Launch';
+import { Box, Card, Theme, Typography } from '@mui/material';
+import LaunchIcon from '@mui/icons-material/Launch';
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 import {
   siteDetailsSelector,
@@ -77,9 +77,9 @@ const SelectedSiteCard = () => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   card: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: 10,
     },
     padding: 20,

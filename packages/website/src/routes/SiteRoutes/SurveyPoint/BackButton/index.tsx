@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  Button,
-  Box,
-  Container,
-  Grid,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-} from '@material-ui/core';
-import { ArrowBack } from '@material-ui/icons';
+import { Button, Box, Container, Grid, Typography } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import { ArrowBack } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 const BackButton = ({ siteId, bgColor, classes }: BackButtonProps) => {
