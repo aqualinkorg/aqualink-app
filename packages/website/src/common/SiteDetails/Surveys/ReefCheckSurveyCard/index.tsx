@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Box,
   Button,
-  createStyles,
   Paper,
   Table,
   TableBody,
@@ -13,7 +12,7 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
-import { WithStyles } from '@mui/styles';
+import { createStyles, WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import { groupBy, times } from 'lodash';
 import { Link } from 'react-router-dom';

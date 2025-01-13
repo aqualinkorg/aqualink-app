@@ -8,12 +8,11 @@ import {
   TableCell,
   TableBody,
   TableCellProps,
-  createStyles,
   Theme,
   Skeleton,
 } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
-import { WithStyles } from '@mui/styles';
+import { createStyles, WithStyles } from '@mui/styles';
 import { times } from 'lodash';
 import React from 'react';
 

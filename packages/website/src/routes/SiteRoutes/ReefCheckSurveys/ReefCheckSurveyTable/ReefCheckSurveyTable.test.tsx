@@ -1,9 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { ThemeProvider } from '@mui/material';
+import theme from 'layout/App/theme';
 import { ColumnDef, ReefCheckSurveyTable } from '.';
 
-jest.mock('@material-ui/lab', () => ({
+jest.mock('@mui/material/Skeleton', () => ({
+  ...jest.requireActual(`@mui/material/Skeleton`),
+  __esModule: true,
   Skeleton: 'mock-skeleton',
+  default: 'mock-skeleton',
 }));
 
 describe('ReefCheckSurveyTable', () => {
@@ -28,13 +33,15 @@ describe('ReefCheckSurveyTable', () => {
     data = mockData,
   }: { loading?: boolean; data?: MockDataItem[] } = {}) {
     return render(
-      <ReefCheckSurveyTable
-        title={mockTitle}
-        description={mockDescription}
-        columns={mockColumns}
-        data={data}
-        loading={loading}
-      />,
+      <ThemeProvider theme={theme}>
+        <ReefCheckSurveyTable
+          title={mockTitle}
+          description={mockDescription}
+          columns={mockColumns}
+          data={data}
+          loading={loading}
+        />
+      </ThemeProvider>,
     );
   }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { ThemeProvider } from '@mui/material/styles';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
@@ -7,6 +8,7 @@ import { RootState } from 'store/configure';
 import { mockSite } from 'mocks/mockSite';
 import { mockReefCheckSurvey } from 'mocks/mockReefCheckSurvey';
 import { SelectedSiteState } from 'store/Sites/types';
+import theme from 'layout/App/theme';
 import { formatDate } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyViewPage } from '.';
 import * as organismsTableModule from './ReefCheckSurveyOrganismsTable';
@@ -43,18 +45,20 @@ describe('ReefCheckSurveyViewPage', () => {
     store.dispatch = jest.fn();
     const renderResult = render(
       <Provider store={store}>
-        <MemoryRouter
-          initialEntries={[
-            `/sites/${mockSiteId}/reefCheckSurvey/${mockSurveyId}`,
-          ]}
-        >
-          <Routes>
-            <Route
-              path="/sites/:id/reefCheckSurvey/:surveyId"
-              element={<ReefCheckSurveyViewPage />}
-            />
-          </Routes>
-        </MemoryRouter>
+        <ThemeProvider theme={theme}>
+          <MemoryRouter
+            initialEntries={[
+              `/sites/${mockSiteId}/reefCheckSurvey/${mockSurveyId}`,
+            ]}
+          >
+            <Routes>
+              <Route
+                path="/sites/:id/reefCheckSurvey/:surveyId"
+                element={<ReefCheckSurveyViewPage />}
+              />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
       </Provider>,
     );
     return { ...renderResult, store };
@@ -87,7 +91,7 @@ describe('ReefCheckSurveyViewPage', () => {
   it('should render a Button component with a link to the site page', () => {
     const { getByRole } = renderReefCheckSurveyViewPage();
 
-    expect(getByRole('button', { name: 'Back to site' })).toHaveAttribute(
+    expect(getByRole('link', { name: 'Back to site' })).toHaveAttribute(
       'href',
       `/sites/${mockSite.id}`,
     );

@@ -1,13 +1,5 @@
-import {
-  Box,
-  createStyles,
-  Link,
-  Paper,
-  Theme,
-  Typography,
-  Skeleton,
-} from '@mui/material';
-import { WithStyles } from '@mui/styles';
+import { Box, Link, Paper, Theme, Typography, Skeleton } from '@mui/material';
+import { createStyles, WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 
 import React from 'react';
