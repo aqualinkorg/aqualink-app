@@ -146,6 +146,18 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               HOBO loggers
             </mock-typography>
           </mock-menuitem>
+          <mock-menuitem
+            aria-selected="false"
+            data-value="Reef Check"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              style="color: black;"
+            >
+              Reef Check
+            </mock-typography>
+          </mock-menuitem>
         </mock-menulist>
       </mock-popover>
     </div>

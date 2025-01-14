@@ -459,4 +459,5 @@ export const siteOptions = [
   'Live streams',
   '3D Models',
   'HOBO loggers',
+  'Reef Check',
 ] as const;
