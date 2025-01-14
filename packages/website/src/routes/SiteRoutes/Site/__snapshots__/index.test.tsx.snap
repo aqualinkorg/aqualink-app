@@ -2484,6 +2484,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             <mock-box
               bgcolor="#f5f6f6"
               height="100%"
+              id="surveys"
               position="absolute"
               zindex="-1"
             />
@@ -5611,6 +5612,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             <mock-box
               bgcolor="#f5f6f6"
               height="100%"
+              id="surveys"
               position="absolute"
               zindex="-1"
             />

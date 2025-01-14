@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import {
   Card,
@@ -11,12 +12,15 @@ import {
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
+import { KeyboardDoubleArrowDown } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { useSelector } from 'react-redux';
 
 import { userInfoSelector } from 'store/User/userSlice';
 import { isAdmin } from 'helpers/user';
 import { convertOptionsToQueryParams } from 'helpers/video';
+import { reefCheckSurveyListSelector } from 'store/ReefCheckSurveys';
 import reefImage from '../../../assets/reef-image.jpg';
 import uploadIcon from '../../../assets/icon_upload.svg';
 
@@ -35,6 +39,10 @@ const FeaturedMedia = ({
   classes,
 }: FeaturedMediaProps) => {
   const user = useSelector(userInfoSelector);
+  const { list: reefCheckSurveyList } = useSelector(
+    reefCheckSurveyListSelector,
+  );
+  const hasReefCheckSurveys = true || reefCheckSurveyList.length > 0;
   const isSiteAdmin = isAdmin(user, siteId);
 
   if (url) {
@@ -71,21 +79,48 @@ const FeaturedMedia = ({
     <Card className={classes.card}>
       <div className={classes.noVideoCardHeader}>
         <Grid container direction="column" alignItems="center" spacing={2}>
-          <Grid item>
-            <Typography className={classes.noVideoCardHeaderText} variant="h5">
-              {isSiteAdmin ? 'ADD YOUR FIRST SURVEY' : 'SURVEY TO BE UPLOADED'}
-            </Typography>
-          </Grid>
-          {isSiteAdmin && (
-            <Grid item>
+          {isSiteAdmin ? (
+            <>
+              <Grid item>
+                <Typography
+                  className={classes.noVideoCardHeaderText}
+                  variant="h5"
+                >
+                  ADD YOUR FIRST SURVEY
+                </Typography>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  component={Link}
+                  to={`/sites/${siteId}/new_survey`}
+                  size="large"
+                >
+                  <img src={uploadIcon} alt="upload" />
+                </IconButton>
+              </Grid>
+            </>
+          ) : hasReefCheckSurveys ? (
+            <>
+              <Typography
+                className={classes.noVideoCardHeaderText}
+                variant="h5"
+              >
+                REEF CHECK DATA AVAILABLE
+              </Typography>
               <IconButton
-                component={Link}
-                to={`/sites/${siteId}/new_survey`}
+                className={classes.noVideoCardHeaderText}
+                component={HashLink}
+                to={`/sites/${siteId}#surveys`}
+                smooth
                 size="large"
               >
-                <img src={uploadIcon} alt="upload" />
+                <KeyboardDoubleArrowDown />
               </IconButton>
-            </Grid>
+            </>
+          ) : (
+            <Typography className={classes.noVideoCardHeaderText} variant="h5">
+              SURVEY TO BE UPLOADED
+            </Typography>
           )}
         </Grid>
       </div>
@@ -119,6 +154,7 @@ const styles = (theme: Theme) => {
     },
     noVideoCardHeaderText: {
       opacity: 0.5,
+      color: 'white',
       [theme.breakpoints.between('md', 1350)]: {
         fontSize: 15,
       },
