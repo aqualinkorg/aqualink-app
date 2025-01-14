@@ -25,10 +25,10 @@ export const reefCheckSurveysRequest = createAsyncThunk<
   ReefCheckSurveyListState['list'],
   string,
   CreateAsyncThunkTypes
->('surveysList/request', (siteId: string) => getSurveys(siteId));
+>('reefCheckSurveyList/request', (siteId: string) => getSurveys(siteId));
 
 const reefCheckSurveyListSlice = createSlice({
-  name: 'surveyList',
+  name: 'reefCheckSurveyList',
   initialState: surveyListInitialState,
   reducers: {},
   extraReducers: (builder) => {
