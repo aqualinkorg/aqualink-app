@@ -8,6 +8,7 @@ import {
   Typography,
   IconButton,
   Theme,
+  Box,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -100,7 +101,7 @@ const FeaturedMedia = ({
               </Grid>
             </>
           ) : hasReefCheckSurveys ? (
-            <>
+            <Box display="flex" alignItems="center">
               <Typography
                 className={classes.noVideoCardHeaderText}
                 variant="h5"
@@ -116,7 +117,7 @@ const FeaturedMedia = ({
               >
                 <KeyboardDoubleArrowDown />
               </IconButton>
-            </>
+            </Box>
           ) : (
             <Typography className={classes.noVideoCardHeaderText} variant="h5">
               SURVEY TO BE UPLOADED
@@ -153,7 +154,6 @@ const styles = (theme: Theme) => {
       zIndex: 1,
     },
     noVideoCardHeaderText: {
-      opacity: 0.5,
       color: 'white',
       [theme.breakpoints.between('md', 1350)]: {
         fontSize: 15,
