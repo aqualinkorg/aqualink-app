@@ -1,8 +1,7 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
+import { renderWithProviders } from 'utils/test-utils';
 import DeleteButton from '.';
 
 const mockStore = configureStore([]);
@@ -20,10 +19,9 @@ describe('Delete Button', () => {
 
     const dummyFunc = () => new Promise<void>((resolve) => resolve());
 
-    element = render(
-      <Provider store={store}>
-        <DeleteButton onConfirm={dummyFunc} header="some text" />
-      </Provider>,
+    element = renderWithProviders(
+      <DeleteButton onConfirm={dummyFunc} header="some text" />,
+      { store },
     ).container;
   });
 

@@ -8,7 +8,6 @@ exports[`Surveys should render with given state from Redux store 1`] = `
   >
     <mock-dialogtitle
       classname="Dialog-dialogTitle-10"
-      disabletypography="true"
     >
       <mock-typography
         variant="h4"
@@ -27,37 +26,23 @@ exports[`Surveys should render with given state from Redux store 1`] = `
     </mock-dialogcontent>
     <mock-dialogactions>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-containedSizeSmall MuiButton-sizeSmall"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-jxzygd-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
-        <span
-          class="MuiButton-label"
-        >
-          No
-        </span>
-        <span
-          class="MuiTouchRipple-root"
-        />
+        No
       </button>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary css-38lwvj-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
-        <span
-          class="MuiButton-label"
-        >
-          Yes
-        </span>
-        <span
-          class="MuiTouchRipple-root"
-        />
+        Yes
       </button>
     </mock-dialogactions>
   </mock-dialog>
   <div
-    class="MuiGrid-root makeStyles-root-1 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-content-xs-center"
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 makeStyles-root-1 css-4rolpp-MuiGrid-root"
   >
     <mock-box
       bgcolor="#f5f6f6"
@@ -66,10 +51,10 @@ exports[`Surveys should render with given state from Redux store 1`] = `
       zindex="-1"
     />
     <div
-      class="MuiGrid-root makeStyles-surveyWrapper-2 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-11 MuiGrid-grid-lg-12 makeStyles-surveyWrapper-2 css-1gwh4pv-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-3"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-3 css-ku179n-MuiGrid-root"
       >
         <mock-typography
           classname="makeStyles-title-3"
@@ -78,10 +63,10 @@ exports[`Surveys should render with given state from Redux store 1`] = `
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-5"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-md-12 MuiGrid-grid-lg-5 css-n47sv5-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
         >
           <mock-typography
             classname="makeStyles-subTitle-12"
@@ -91,37 +76,41 @@ exports[`Surveys should render with given state from Redux store 1`] = `
           </mock-typography>
         </div>
         <div
-          class="MuiGrid-root makeStyles-selectorWrapper-13 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item makeStyles-selectorWrapper-13 css-x7bhrq-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
+            class="MuiGrid-root MuiGrid-container css-1rp4aer-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <div
-                class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selector-14"
+                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-14 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
+                  aria-controls=":r0:"
+                  aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-labelledby="survey-point survey-point"
-                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                  class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                   id="survey-point"
-                  role="button"
+                  role="combobox"
                   tabindex="0"
                 >
                   All
                 </div>
                 <input
                   aria-hidden="true"
-                  class="MuiSelect-nativeInput"
+                  aria-invalid="false"
+                  class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                   name="survey-point"
                   tabindex="-1"
                   value="All"
                 />
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSelect-icon"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
+                  data-testid="ArrowDropDownIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -129,37 +118,53 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                     d="M7 10l5 5 5-5z"
                   />
                 </svg>
-                <mock-menu
+                <mock-popover
                   anchorel="[object HTMLDivElement]"
+                  anchororigin="[object Object]"
+                  classname="css-s4soc1-MuiMenu-root"
                   id="menu-survey-point"
-                  menulistprops="[object Object]"
                   open="false"
-                  paperprops="[object Object]"
+                  slotprops="[object Object]"
+                  slots="[object Object]"
+                  transformorigin="[object Object]"
+                  transitionduration="auto"
+                  transitionprops="[object Object]"
                 >
-                  <mock-menuitem
-                    aria-selected="true"
-                    data-value="All"
-                    role="option"
-                    selected="true"
+                  <mock-menulist
+                    actions="[object Object]"
+                    aria-labelledby="survey-point"
+                    autofocusitem="false"
+                    classname="MuiMenu-list css-7drlel-MuiMenu-list"
+                    disablelistwrap="true"
+                    id=":r0:"
+                    role="listbox"
+                    variant="selectedMenu"
                   >
-                    <mock-typography
-                      classname="makeStyles-menuItem-16"
-                      variant="h6"
+                    <mock-menuitem
+                      aria-selected="true"
+                      data-value="All"
+                      role="option"
+                      selected="true"
                     >
-                      All
-                    </mock-typography>
-                  </mock-menuitem>
-                </mock-menu>
+                      <mock-typography
+                        classname="makeStyles-menuItem-16"
+                        variant="h6"
+                      >
+                        All
+                      </mock-typography>
+                    </mock-menuitem>
+                  </mock-menulist>
+                </mock-popover>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-md-12 MuiGrid-grid-lg-4 css-1a4r04v-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
         >
           <mock-typography
             classname="makeStyles-subTitle-4"
@@ -169,20 +174,22 @@ exports[`Surveys should render with given state from Redux store 1`] = `
           </mock-typography>
         </div>
         <div
-          class="MuiGrid-root makeStyles-selectorWrapper-5 MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item makeStyles-selectorWrapper-5 css-x7bhrq-MuiGrid-root"
         >
           <div
-            class="MuiFormControl-root makeStyles-formControl-6"
+            class="MuiFormControl-root makeStyles-formControl-6 css-1iw3t7y-MuiFormControl-root"
           >
             <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectedItem-7 MuiInputBase-formControl MuiInput-formControl"
+              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-7 css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
             >
               <div
+                aria-controls=":r1:"
+                aria-expanded="false"
                 aria-haspopup="listbox"
                 aria-labelledby="survey-observation survey-observation"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input makeStyles-textField-9"
+                class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-9 css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                 id="survey-observation"
-                role="button"
+                role="combobox"
                 tabindex="0"
               >
                 <mock-typography
@@ -194,14 +201,16 @@ exports[`Surveys should render with given state from Redux store 1`] = `
               </div>
               <input
                 aria-hidden="true"
-                class="MuiSelect-nativeInput"
+                aria-invalid="false"
+                class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                 name="survey-observation"
                 tabindex="-1"
                 value="any"
               />
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSelect-icon"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
+                data-testid="ArrowDropDownIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -209,112 +218,136 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   d="M7 10l5 5 5-5z"
                 />
               </svg>
-              <mock-menu
+              <mock-popover
                 anchorel="[object HTMLDivElement]"
+                anchororigin="[object Object]"
+                classname="css-s4soc1-MuiMenu-root"
                 id="menu-survey-observation"
-                menulistprops="[object Object]"
                 open="false"
-                paperprops="[object Object]"
+                slotprops="[object Object]"
+                slots="[object Object]"
+                transformorigin="[object Object]"
+                transitionduration="auto"
+                transitionprops="[object Object]"
               >
-                <mock-menuitem
-                  aria-selected="true"
-                  data-value="any"
-                  role="option"
-                  selected="true"
+                <mock-menulist
+                  actions="[object Object]"
+                  aria-labelledby="survey-observation"
+                  autofocusitem="false"
+                  classname="MuiMenu-list css-7drlel-MuiMenu-list"
+                  disablelistwrap="true"
+                  id=":r1:"
+                  role="listbox"
+                  variant="selectedMenu"
                 >
-                  <mock-typography
-                    classname="makeStyles-menuItem-8"
-                    variant="h6"
+                  <mock-menuitem
+                    aria-selected="true"
+                    data-value="any"
+                    role="option"
+                    selected="true"
                   >
-                    Any
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  classname="makeStyles-menuItem-8"
-                  data-value="healthy"
-                  role="option"
-                  selected="false"
-                  title="Appears healthy"
-                >
-                  Appears healthy
-                </mock-menuitem>
-                <mock-menuitem
-                  classname="makeStyles-menuItem-8"
-                  data-value="possible-disease"
-                  role="option"
-                  selected="false"
-                  title="Showing possible signs of disease"
-                >
-                  Showing possible signs of disease
-                </mock-menuitem>
-                <mock-menuitem
-                  classname="makeStyles-menuItem-8"
-                  data-value="evident-disease"
-                  role="option"
-                  selected="false"
-                  title="Signs of disease are evident"
-                >
-                  Signs of disease are evident
-                </mock-menuitem>
-                <mock-menuitem
-                  classname="makeStyles-menuItem-8"
-                  data-value="mortality"
-                  role="option"
-                  selected="false"
-                  title="Signs of mortality are evident"
-                >
-                  Signs of mortality are evident
-                </mock-menuitem>
-                <mock-menuitem
-                  classname="makeStyles-menuItem-8"
-                  data-value="environmental"
-                  role="option"
-                  selected="false"
-                  title="Signs of environmental disturbance are evident (e.g. storm damage)"
-                >
-                  Signs of environmental disturbance are evident (e.g. storm damage)
-                </mock-menuitem>
-                <mock-menuitem
-                  classname="makeStyles-menuItem-8"
-                  data-value="anthropogenic"
-                  role="option"
-                  selected="false"
-                  title="Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)"
-                >
-                  Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
-                </mock-menuitem>
-                <mock-menuitem
-                  classname="makeStyles-menuItem-8"
-                  data-value="invasive-species"
-                  role="option"
-                  selected="false"
-                  title="Signs of damage from invasive species"
-                >
-                  Signs of damage from invasive species
-                </mock-menuitem>
-              </mock-menu>
+                    <mock-typography
+                      classname="makeStyles-menuItem-8"
+                      variant="h6"
+                    >
+                      Any
+                    </mock-typography>
+                  </mock-menuitem>
+                  <mock-menuitem
+                    aria-selected="false"
+                    classname="makeStyles-menuItem-8"
+                    data-value="healthy"
+                    role="option"
+                    selected="false"
+                    title="Appears healthy"
+                  >
+                    Appears healthy
+                  </mock-menuitem>
+                  <mock-menuitem
+                    aria-selected="false"
+                    classname="makeStyles-menuItem-8"
+                    data-value="possible-disease"
+                    role="option"
+                    selected="false"
+                    title="Showing possible signs of disease"
+                  >
+                    Showing possible signs of disease
+                  </mock-menuitem>
+                  <mock-menuitem
+                    aria-selected="false"
+                    classname="makeStyles-menuItem-8"
+                    data-value="evident-disease"
+                    role="option"
+                    selected="false"
+                    title="Signs of disease are evident"
+                  >
+                    Signs of disease are evident
+                  </mock-menuitem>
+                  <mock-menuitem
+                    aria-selected="false"
+                    classname="makeStyles-menuItem-8"
+                    data-value="mortality"
+                    role="option"
+                    selected="false"
+                    title="Signs of mortality are evident"
+                  >
+                    Signs of mortality are evident
+                  </mock-menuitem>
+                  <mock-menuitem
+                    aria-selected="false"
+                    classname="makeStyles-menuItem-8"
+                    data-value="environmental"
+                    role="option"
+                    selected="false"
+                    title="Signs of environmental disturbance are evident (e.g. storm damage)"
+                  >
+                    Signs of environmental disturbance are evident (e.g. storm damage)
+                  </mock-menuitem>
+                  <mock-menuitem
+                    aria-selected="false"
+                    classname="makeStyles-menuItem-8"
+                    data-value="anthropogenic"
+                    role="option"
+                    selected="false"
+                    title="Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)"
+                  >
+                    Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
+                  </mock-menuitem>
+                  <mock-menuitem
+                    aria-selected="false"
+                    classname="makeStyles-menuItem-8"
+                    data-value="invasive-species"
+                    role="option"
+                    selected="false"
+                    title="Signs of damage from invasive species"
+                  >
+                    Signs of damage from invasive species
+                  </mock-menuitem>
+                </mock-menulist>
+              </mock-popover>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-lg-12 css-tb9a8j-MuiGrid-root"
     >
       <div
         class="SurveyTimeline-root-21"
       >
         <mock-hidden
-          mddown="true"
+          lgdown="true"
         >
           <ul
-            class="MuiTimeline-root MuiTimeline-alignLeft"
+            class="MuiTimeline-root MuiTimeline-positionRight css-i6popu-MuiTimeline-root"
           >
             <li
-              class="MuiTimelineItem-root MuiTimelineItem-alignLeft makeStyles-timelineItem-30"
+              class="MuiTimelineItem-root MuiTimelineItem-positionRight makeStyles-timelineItem-30 css-ny8qih-MuiTimelineItem-root"
             >
-              <div
-                class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent makeStyles-timelineOppositeContent-31"
+              <mock-typography
+                classname="MuiTimelineOppositeContent-root MuiTimelineOppositeContent-positionRight makeStyles-timelineOppositeContent-31 css-1ovglxb-MuiTimelineOppositeContent-root"
+                component="div"
               >
                 <mock-typography
                   classname="makeStyles-dates-23"
@@ -322,50 +355,53 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                 >
                   09/10/2020
                 </mock-typography>
-              </div>
+              </mock-typography>
               <div
-                class="MuiTimelineSeparator-root"
+                class="MuiTimelineSeparator-root css-1muvgbz-MuiTimelineSeparator-root"
               >
                 <hr
                   class="makeStyles-connector-34"
                 />
                 <span
-                  class="MuiTimelineDot-root makeStyles-dot-35 MuiTimelineDot-outlinedGrey"
+                  class="MuiTimelineDot-root MuiTimelineDot-outlined MuiTimelineDot-outlinedGrey makeStyles-dot-35 css-6xp33q-MuiTimelineDot-root"
                 />
                 <hr
                   class="makeStyles-connector-34"
                 />
               </div>
-              <div
-                class="MuiTimelineContent-root MuiTimelineItem-content makeStyles-surveyCardWrapper-25"
+              <mock-typography
+                classname="MuiTimelineContent-root MuiTimelineContent-positionRight makeStyles-surveyCardWrapper-25 css-15qjzwo-MuiTimelineContent-root"
+                component="div"
               >
                 <div
-                  class="MuiPaper-root makeStyles-surveyCard-47 MuiPaper-elevation0 MuiPaper-rounded"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-1bvccj3-MuiPaper-root"
+                  style="--Paper-shadow: none;"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-space-between"
+                    class="MuiGrid-root MuiGrid-container css-hgxf4k-MuiGrid-root"
                     style="height: 100%;"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-cardImageWrapper-51 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-51 css-1ej0ikx-MuiGrid-root"
                     >
                       <a
                         href="/sites/1/survey_details/46"
                       >
                         <div
-                          class="MuiCardMedia-root makeStyles-cardImage-48"
+                          class="MuiCardMedia-root makeStyles-cardImage-48 css-utntyq-MuiCardMedia-root"
+                          role="img"
                           style="background-image: url(image-url);"
                         />
                       </a>
                     </div>
                     <div
-                      class="MuiGrid-root makeStyles-infoWrapper-52 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-52 css-14c8q5g-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root makeStyles-info-57 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-57 css-aksm9b-MuiGrid-root"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
                         >
                           <mock-typography
                             classname="makeStyles-cardFields-49"
@@ -381,10 +417,10 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root makeStyles-commentsWrapper-53 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-53 css-otecwo-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                             style="height: 80%;"
                           >
                             <mock-typography
@@ -402,7 +438,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
                         >
                           <mock-typography
                             classname="makeStyles-cardFields-49"
@@ -418,28 +454,21 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
                           >
                             <a
                               href="/sites/1/survey_details/46"
                               style="text-decoration: none;"
                             >
                               <button
-                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                                 tabindex="0"
                                 type="button"
                               >
-                                <span
-                                  class="MuiButton-label"
-                                >
-                                  VIEW DETAILS
-                                </span>
-                                <span
-                                  class="MuiTouchRipple-root"
-                                />
+                                VIEW DETAILS
                               </button>
                             </a>
                           </div>
@@ -448,7 +477,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                     </div>
                   </div>
                 </div>
-              </div>
+              </mock-typography>
             </li>
           </ul>
         </mock-hidden>
@@ -456,13 +485,13 @@ exports[`Surveys should render with given state from Redux store 1`] = `
           lgup="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root makeStyles-surveyWrapper-71 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyWrapper-71 css-ldi2p4-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root makeStyles-dateWrapper-62 MuiGrid-item MuiGrid-grid-xs-11"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 makeStyles-dateWrapper-62 css-tideur-MuiGrid-root"
               >
                 <mock-typography
                   classname="makeStyles-dates-63"
@@ -472,35 +501,37 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root makeStyles-surveyCardWrapper-65 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyCardWrapper-65 css-wcmnoq-MuiGrid-root"
               >
                 <div
-                  class="MuiPaper-root makeStyles-surveyCard-47 MuiPaper-elevation0 MuiPaper-rounded"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-1bvccj3-MuiPaper-root"
+                  style="--Paper-shadow: none;"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-content-xs-space-between"
+                    class="MuiGrid-root MuiGrid-container css-hgxf4k-MuiGrid-root"
                     style="height: 100%;"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-cardImageWrapper-51 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-51 css-1ej0ikx-MuiGrid-root"
                     >
                       <a
                         href="/sites/1/survey_details/46"
                       >
                         <div
-                          class="MuiCardMedia-root makeStyles-cardImage-48"
+                          class="MuiCardMedia-root makeStyles-cardImage-48 css-utntyq-MuiCardMedia-root"
+                          role="img"
                           style="background-image: url(image-url);"
                         />
                       </a>
                     </div>
                     <div
-                      class="MuiGrid-root makeStyles-infoWrapper-52 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-52 css-14c8q5g-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root makeStyles-info-57 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-57 css-aksm9b-MuiGrid-root"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
                         >
                           <mock-typography
                             classname="makeStyles-cardFields-49"
@@ -516,10 +547,10 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root makeStyles-commentsWrapper-53 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-53 css-otecwo-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                             style="height: 80%;"
                           >
                             <mock-typography
@@ -537,7 +568,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
                         >
                           <mock-typography
                             classname="makeStyles-cardFields-49"
@@ -553,28 +584,21 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
                           >
                             <a
                               href="/sites/1/survey_details/46"
                               style="text-decoration: none;"
                             >
                               <button
-                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                                 tabindex="0"
                                 type="button"
                               >
-                                <span
-                                  class="MuiButton-label"
-                                >
-                                  VIEW DETAILS
-                                </span>
-                                <span
-                                  class="MuiTouchRipple-root"
-                                />
+                                VIEW DETAILS
                               </button>
                             </a>
                           </div>

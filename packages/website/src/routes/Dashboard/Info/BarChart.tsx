@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Box,
-  Grid,
-  Typography,
-  Theme,
-  useTheme,
-} from '@material-ui/core';
+import { Box, Grid, Typography, Theme, useTheme } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { groupBy, maxBy, times, reverse } from 'lodash';
 
 import { CollectionDetails } from 'store/Collection/types';
@@ -121,7 +115,7 @@ const styles = (theme: Theme) =>
       fontWeight: 700,
       paddingLeft: 6,
       flexGrow: 1,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         fontSize: 16,
         paddingLeft: 4,
       },

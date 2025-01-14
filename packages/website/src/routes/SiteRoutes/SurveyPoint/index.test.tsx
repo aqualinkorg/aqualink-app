@@ -10,6 +10,8 @@ import { mockUser } from 'mocks/mockUser';
 import { mockSurveyList } from 'mocks/mockSurveyList';
 import { mockDataRange } from 'mocks/mockDataRange';
 import { mockCollection } from 'mocks/mockCollection';
+import theme from 'layout/App/theme';
+import { ThemeProvider } from '@mui/material/styles';
 import SurveyPoint from '.';
 
 jest.mock('./InfoCard/Map', () => 'Mock-Map');
@@ -51,16 +53,18 @@ describe('Survey Point Detail Page', () => {
     store.dispatch = jest.fn();
 
     element = render(
-      <Provider store={store}>
-        <Router initialEntries={['/sites/1/points/1']}>
-          <Routes>
-            <Route
-              path="/sites/:id/points/:pointId"
-              element={<SurveyPoint />}
-            />
-          </Routes>
-        </Router>
-      </Provider>,
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <Router initialEntries={['/sites/1/points/1']}>
+            <Routes>
+              <Route
+                path="/sites/:id/points/:pointId"
+                element={<SurveyPoint />}
+              />
+            </Routes>
+          </Router>
+        </Provider>
+      </ThemeProvider>,
     ).container;
   });
 

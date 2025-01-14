@@ -2,7 +2,8 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom/extend-expect';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import '@testing-library/jest-dom/';
 import 'mutationobserver-shim';
 import { TextEncoder, TextDecoder } from 'util';
 import { ReadableStream } from 'node:stream/web';
@@ -16,7 +17,7 @@ Object.defineProperties(globalThis, {
   ReadableStream: { value: ReadableStream },
 });
 
-jest.mock('@material-ui/icons', () => ({
+jest.mock('@mui/icons-material', () => ({
   __esModule: true,
   ArrowBack: 'mock-ArrowBack',
   Build: 'mock-Build',
@@ -66,7 +67,8 @@ jest.mock('axios-cache-interceptor', () => ({
 }));
 
 function stubMuiComponent(componentName: string, namedExports: any = {}) {
-  jest.doMock(`@material-ui/core/${componentName}/${componentName}`, () => ({
+  jest.doMock(`@mui/material/${componentName}`, () => ({
+    ...jest.requireActual(`@mui/material/${componentName}`),
     __esModule: true,
     default: `mock-${componentName}`,
     ...namedExports,
@@ -84,7 +86,9 @@ global.matchMedia =
     return {
       matches: false,
       addListener() {},
+      addEventListener() {},
       removeListener() {},
+      removeEventListener() {},
     };
   };
 
@@ -95,7 +99,7 @@ process.env.REACT_APP_API_BASE_URL =
 // TODO: find a way to un-mock (or mock) these per test
 stubMuiComponent('Typography');
 // stubMuiComponent('Button', {
-//   styles: jest.requireActual('@material-ui/core/Button/Button').styles,
+//   styles: jest.requireActual('@mui/material/Button/Button').styles,
 // });
 stubMuiComponent('IconButton');
 // stubMuiComponent('TextField');
@@ -120,9 +124,9 @@ stubMuiComponent('Modal');
 stubMuiComponent('Popover');
 stubMuiComponent('CircularProgress');
 stubMuiComponent('Hidden');
-stubMuiComponent('ExpansionPanel');
-stubMuiComponent('ExpansionPanelSummary');
-stubMuiComponent('ExpansionPanelDetails');
+stubMuiComponent('Accordion');
+stubMuiComponent('AccordionSummary');
+stubMuiComponent('AccordionDetails');
 stubMuiComponent('Checkbox');
 stubMuiComponent('Drawer');
 stubMuiComponent('Divider');

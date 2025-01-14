@@ -1,15 +1,17 @@
-import { Switch, withStyles } from '@material-ui/core';
+import { Switch } from '@mui/material';
+
+import withStyles from '@mui/styles/withStyles';
 
 const OneColorSwitch = withStyles((theme) => ({
   switchBase: {
     color: theme.palette.primary.main,
-    '&$checked': {
+    '&.Mui-checked': {
       color: theme.palette.primary.main,
     },
-    '&$checked + $track': {
+    '&.Mui-checked + .MuiSwitch-track': {
       backgroundColor: theme.palette.primary.main,
     },
-    '& + $track': {
+    '& + .MuiSwitch-track': {
       backgroundColor: theme.palette.primary.main,
     },
   },

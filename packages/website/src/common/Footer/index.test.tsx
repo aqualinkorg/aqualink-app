@@ -1,13 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { renderWithProviders } from 'utils/test-utils';
 import SiteFooter from '.';
 
 test('renders as expected', () => {
-  const { container } = render(
-    <Router>
-      <SiteFooter />
-    </Router>,
-  );
+  const { container } = renderWithProviders(<SiteFooter />);
   expect(container).toMatchSnapshot();
 });

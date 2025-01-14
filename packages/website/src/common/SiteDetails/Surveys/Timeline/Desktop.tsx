@@ -6,12 +6,13 @@ import {
   TimelineItem,
   TimelineOppositeContent,
   TimelineSeparator,
-} from '@material-ui/lab';
-import { makeStyles, Theme, Typography } from '@material-ui/core';
+} from '@mui/lab';
+import { Theme, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
-import grey from '@material-ui/core/colors/grey';
-
 import { displayTimeInLocalTimezone } from 'helpers/dates';
+
+import { grey } from '@mui/material/colors';
 import AddButton from '../AddButton';
 import SurveyCard from '../SurveyCard';
 import LoadingSkeleton from '../../../LoadingSkeleton';

@@ -11,26 +11,26 @@ import {
   Link as MuiLink,
   Box,
   Hidden,
-  withStyles,
-  WithStyles,
-  createStyles,
   Theme,
   useTheme,
   useMediaQuery,
   Divider,
   LinearProgress,
   Tooltip,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Link } from 'react-router-dom';
-import DashboardTwoToneIcon from '@material-ui/icons/DashboardTwoTone';
-import PublishIcon from '@material-ui/icons/Publish';
-import MenuIcon from '@material-ui/icons/Menu';
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
+import PublishIcon from '@mui/icons-material/Publish';
+import MenuIcon from '@mui/icons-material/Menu';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { sortBy } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import LanguageIcon from '@material-ui/icons/Language';
+import LanguageIcon from '@mui/icons-material/Language';
 import { userInfoSelector, signOutUser } from 'store/User/userSlice';
 import {
   clearCollection,
@@ -42,7 +42,7 @@ import {
   unsetSelectedSite,
 } from 'store/Sites/selectedSiteSlice';
 import { useGoogleTranslation } from 'utils/google-translate';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 import RegisterDialog from '../RegisterDialog';
 import SignInDialog from '../SignInDialog';
 import Search from '../Search';
@@ -52,9 +52,9 @@ import requests from '../../helpers/requests';
 
 const NavBar = ({
   searchLocation,
-  geocodingEnabled,
-  routeButtons,
-  loading,
+  geocodingEnabled = false,
+  routeButtons = false,
+  loading = false,
   classes,
 }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
@@ -155,11 +155,16 @@ const NavBar = ({
                   edge="start"
                   color="inherit"
                   onClick={() => setMenuDrawerOpen(true)}
+                  size="large"
                 >
                   <MenuIcon />
                 </IconButton>
 
-                <MuiLink className={classes.navBarLink} href="/map">
+                <MuiLink
+                  className={classes.navBarLink}
+                  href="/map"
+                  underline="hover"
+                >
                   <Typography color="textPrimary" variant="h4">
                     Aqua
                   </Typography>
@@ -171,7 +176,7 @@ const NavBar = ({
             </Grid>
 
             {searchLocation && (
-              <Hidden xsDown>
+              <Hidden smDown>
                 <Grid item sm={4} md={3}>
                   <Search geocodingEnabled={geocodingEnabled} />
                 </Grid>
@@ -193,6 +198,7 @@ const NavBar = ({
                 <IconButton
                   style={{ color: 'white' }}
                   onClick={() => setTranslationOpen((prev) => !prev)}
+                  size="large"
                 >
                   <LanguageIcon />
                 </IconButton>
@@ -204,6 +210,7 @@ const NavBar = ({
                     <IconButton
                       className={classes.button}
                       onClick={handleClick}
+                      size="large"
                     >
                       <ExpandMoreIcon className={classes.expandIcon} />
                     </IconButton>
@@ -219,7 +226,7 @@ const NavBar = ({
                     >
                       {sortBy(user.administeredSites, 'id').map(
                         ({ id, name, region }, index) => {
-                          const siteIdentifier = name || region;
+                          const siteIdentifier = name || region?.name;
                           return (
                             <Link
                               to={`/sites/${id}`}
@@ -314,10 +321,16 @@ const NavBar = ({
                 </>
               ) : (
                 <div style={{ display: 'flex' }}>
-                  <Button onClick={() => handleSignInDialog(true)}>
+                  <Button
+                    color="inherit"
+                    onClick={() => handleSignInDialog(true)}
+                  >
                     SIGN IN
                   </Button>
-                  <Button onClick={() => handleRegisterDialog(true)}>
+                  <Button
+                    color="inherit"
+                    onClick={() => handleRegisterDialog(true)}
+                  >
                     SIGN UP
                   </Button>
                 </div>
@@ -373,7 +386,7 @@ const styles = (theme: Theme) =>
       padding: theme.spacing(0, 1),
     },
     userMenuWrapper: {
-      marginTop: 36,
+      marginTop: 8,
       border: '1px solid rgba(0, 0, 0, 0.12)',
       maxWidth: 275,
     },
@@ -422,12 +435,6 @@ interface NavBarIncomingProps {
   routeButtons?: boolean;
   loading?: boolean;
 }
-
-NavBar.defaultProps = {
-  geocodingEnabled: false,
-  routeButtons: false,
-  loading: false,
-};
 
 type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;
 

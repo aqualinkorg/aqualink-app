@@ -9,10 +9,10 @@ exports[`renders as expected 1`] = `
       classname="Tooltip-tooltipCard-2"
     >
       <div
-        class="MuiCardHeader-root Tooltip-tooltipHeader-3"
+        class="MuiCardHeader-root Tooltip-tooltipHeader-3 css-149tc0y-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content"
+          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
           <mock-typography
             color="textPrimary"
@@ -27,14 +27,14 @@ exports[`renders as expected 1`] = `
         classname="Tooltip-tooltipContent-4"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-space-between"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
           style="height: 100%;"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12 css-65pgqw-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item Tooltip-tooltipContentItem-5 css-1f064cs-MuiGrid-root"
             >
               <div
                 class="div-root-8 div-root-9"
@@ -46,7 +46,6 @@ exports[`renders as expected 1`] = `
                 MOCK LOGGER
                  
                 10.0 °C
-                
               </mock-typography>
             </div>
           </div>

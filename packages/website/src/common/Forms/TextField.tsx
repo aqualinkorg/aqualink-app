@@ -1,11 +1,9 @@
 import React, { ChangeEvent, FocusEvent } from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  TextField,
-  BaseTextFieldProps,
-} from '@material-ui/core';
+import { TextField, BaseTextFieldProps } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { FormField } from 'hooks/useFormField';
 
@@ -14,9 +12,9 @@ const CustomTextfield = ({
   label,
   placeholder,
   name,
-  isNumeric,
-  step,
-  fullWidth,
+  isNumeric = false,
+  step = 0,
+  fullWidth = true,
   size,
   disabled,
   onChange,
@@ -30,7 +28,6 @@ const CustomTextfield = ({
       disabled={disabled}
       className={classes.textField}
       variant="outlined"
-      inputProps={{ className: classes.textField, step: step || undefined }}
       fullWidth={fullWidth}
       type={isNumeric ? 'number' : 'text'}
       value={formField.value}
@@ -44,6 +41,9 @@ const CustomTextfield = ({
       helperText={formField.error}
       size={size}
       select={select}
+      slotProps={{
+        htmlInput: { className: classes.textField, step: step || undefined },
+      }}
     />
   );
 };
@@ -73,13 +73,6 @@ interface CustomTextfieldIncomingProps {
   onFocus?: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   select?: boolean;
 }
-
-CustomTextfield.defaultProps = {
-  isNumeric: false,
-  fullWidth: true,
-  size: undefined,
-  step: 0,
-};
 
 type CustomTextfieldProps = CustomTextfieldIncomingProps &
   WithStyles<typeof styles>;

@@ -1,10 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
-import { BrowserRouter as Router } from 'react-router-dom';
 import { mockSite } from 'mocks/mockSite';
+import { renderWithProviders } from 'utils/test-utils';
 import Popup from '.';
 
 jest.mock('react-leaflet', () => ({
@@ -30,13 +28,9 @@ describe('Popup', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
-      <Provider store={store}>
-        <Router>
-          <Popup site={mockSite} />
-        </Router>
-      </Provider>,
-    ).container;
+    element = renderWithProviders(<Popup site={mockSite} />, {
+      store,
+    }).container;
   });
 
   it('should render with given state from Redux store', () => {

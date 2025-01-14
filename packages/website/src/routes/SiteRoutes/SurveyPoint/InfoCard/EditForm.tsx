@@ -1,13 +1,9 @@
 import React, { ChangeEvent } from 'react';
-import {
-  Button,
-  Grid,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+import { Button, Grid, Typography } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import Alert from '@mui/material/Alert';
 import { find } from 'lodash';
 
 import { FormField } from 'hooks/useFormField';

@@ -1,14 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Button,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-} from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { grey } from '@material-ui/core/colors';
+import { Button, Typography } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { grey } from '@mui/material/colors';
 
 const AddButton = ({ siteId, classes }: AddButtonProps) => {
   return (

@@ -1,16 +1,16 @@
 /* eslint-disable no-nested-ternary */
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Theme,
   Grid,
   Typography,
   Container,
   Button,
   CircularProgress,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';

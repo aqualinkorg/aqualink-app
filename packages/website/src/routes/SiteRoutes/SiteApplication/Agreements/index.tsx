@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Typography,
   Checkbox,
   FormGroup,
   FormControlLabel,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { AgreementsChecked } from '../types';
 
 const agreements: { id: keyof AgreementsChecked; label: string }[] = [

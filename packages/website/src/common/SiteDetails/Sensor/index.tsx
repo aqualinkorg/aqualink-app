@@ -1,21 +1,21 @@
 import React from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Card,
   CardContent,
   Typography,
   CardHeader,
   Grid,
   Box,
-} from '@material-ui/core';
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import RemoveIcon from '@material-ui/icons/Remove';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { User } from 'store/User/types';
 import { userInfoSelector } from 'store/User/userSlice';
 import { LatestDataASSofarValue } from 'store/Sites/types';

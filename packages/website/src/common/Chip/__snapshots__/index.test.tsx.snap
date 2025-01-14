@@ -3,31 +3,24 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root makeStyles-chip-1 makeStyles-chip-7 MuiGrid-item"
+    class="MuiGrid-root MuiGrid-item makeStyles-chip-1 makeStyles-chip-7 css-x7bhrq-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+      class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text makeStyles-button-6"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-6 css-iorydh-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
-        <span
-          class="MuiButton-label"
-        >
-          <div
-            class="makeStyles-circle-3"
-          />
-          <mock-typography
-            classname="makeStyles-chipText-2"
-          >
-            LIVE
-          </mock-typography>
-        </span>
-        <span
-          class="MuiTouchRipple-root"
+        <div
+          class="makeStyles-circle-3"
         />
+        <mock-typography
+          classname="makeStyles-chipText-2"
+        >
+          LIVE
+        </mock-typography>
       </button>
     </div>
   </div>

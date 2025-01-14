@@ -14,10 +14,10 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
         open="false"
       />
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ytge4g-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-2"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-2 css-3nmqko-MuiGrid-root"
         >
           <mock-box
             alignitems="center"
@@ -27,21 +27,24 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
             <mock-iconbutton
               color="inherit"
               edge="start"
+              size="large"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="MenuIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
                 />
               </svg>
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-2"
               href="/map"
+              underline="hover"
             >
               <mock-typography
                 color="textPrimary"
@@ -59,22 +62,24 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-12 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-12 css-kdnu70-MuiGrid-root"
         >
           <mock-tooltip
             title="Translate"
           >
             <mock-iconbutton
+              size="large"
               style="color: white;"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="LanguageIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
                 />
               </svg>
             </mock-iconbutton>
@@ -87,15 +92,17 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
             Mock User
             <mock-iconbutton
               classname="NavBar-button-11"
+              size="large"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-10"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-10 css-1umw9bq-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
             </mock-iconbutton>
@@ -117,14 +124,15 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
                   classname="NavBar-menuItem-8"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                        data-testid="DashboardTwoToneIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
@@ -133,12 +141,12 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
                           opacity=".3"
                         />
                         <path
-                          d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"
+                          d="M3 13h8V3H3zm2-8h4v6H5zm8 16h8V11h-8zm2-8h4v6h-4zM13 3v6h8V3zm6 4h-4V5h4zM3 21h8v-6H3zm2-4h4v2H5z"
                         />
                       </svg>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       Dashboard
                     </div>
@@ -152,24 +160,25 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
                 classname="NavBar-menuItem-8"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="PowerSettingsNewIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
                       <path
-                        d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"
+                        d="M13 3h-2v10h2zm4.83 2.17-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83"
                       />
                     </svg>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     Logout
                   </div>
@@ -204,10 +213,10 @@ exports[`NavBar without routeButtons should render with given state from Redux s
         open="false"
       />
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ytge4g-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-150rfs1-MuiGrid-root"
         >
           <mock-box
             alignitems="center"
@@ -217,21 +226,24 @@ exports[`NavBar without routeButtons should render with given state from Redux s
             <mock-iconbutton
               color="inherit"
               edge="start"
+              size="large"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="MenuIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
                 />
               </svg>
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-14"
               href="/map"
+              underline="hover"
             >
               <mock-typography
                 color="textPrimary"
@@ -249,22 +261,24 @@ exports[`NavBar without routeButtons should render with given state from Redux s
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root NavBar-languageUserWrapper-24 MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-24 css-kdnu70-MuiGrid-root"
         >
           <mock-tooltip
             title="Translate"
           >
             <mock-iconbutton
+              size="large"
               style="color: white;"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="LanguageIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
                 />
               </svg>
             </mock-iconbutton>
@@ -277,15 +291,17 @@ exports[`NavBar without routeButtons should render with given state from Redux s
             Mock User
             <mock-iconbutton
               classname="NavBar-button-23"
+              size="large"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-22"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-22 css-1umw9bq-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
             </mock-iconbutton>
@@ -307,14 +323,15 @@ exports[`NavBar without routeButtons should render with given state from Redux s
                   classname="NavBar-menuItem-20"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                        data-testid="DashboardTwoToneIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
@@ -323,12 +340,12 @@ exports[`NavBar without routeButtons should render with given state from Redux s
                           opacity=".3"
                         />
                         <path
-                          d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"
+                          d="M3 13h8V3H3zm2-8h4v6H5zm8 16h8V11h-8zm2-8h4v6h-4zM13 3v6h8V3zm6 4h-4V5h4zM3 21h8v-6H3zm2-4h4v2H5z"
                         />
                       </svg>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       Dashboard
                     </div>
@@ -342,24 +359,25 @@ exports[`NavBar without routeButtons should render with given state from Redux s
                 classname="NavBar-menuItem-20"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="PowerSettingsNewIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
                     >
                       <path
-                        d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"
+                        d="M13 3h-2v10h2zm4.83 2.17-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83"
                       />
                     </svg>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                   >
                     Logout
                   </div>

@@ -1,14 +1,9 @@
 import React, { FC } from 'react';
-import {
-  Typography,
-  Grid,
-  Theme,
-  makeStyles,
-  createStyles,
-  Button,
-} from '@material-ui/core';
+import { Typography, Grid, Theme, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import { Link } from 'react-router-dom';
-import { grey, green } from '@material-ui/core/colors';
+import { grey, green } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     chipText: {
       fontSize: 8,
       color: grey[600],
-      [theme.breakpoints.between('md', 'md')]: {
+      [theme.breakpoints.between('md', 'lg')]: {
         fontSize: 7,
       },
     },
@@ -66,7 +61,10 @@ interface ChipProps {
 }
 
 const LinkWrapper: FC<
-  Pick<ChipProps, 'to' | 'href'> & { className?: string }
+  Pick<ChipProps, 'to' | 'href'> & {
+    className?: string;
+    children?: React.ReactNode;
+  }
 > = ({ to, href, className, children }) => {
   const url = to || href;
 
@@ -90,7 +88,7 @@ const Chip = ({
   to,
   image,
   imageText,
-  liveText,
+  liveText = 'LIVE',
   width,
   onClick,
 }: ChipProps) => {
@@ -124,16 +122,6 @@ const Chip = ({
       </Grid>
     </Grid>
   );
-};
-
-Chip.defaultProps = {
-  live: false,
-  href: undefined,
-  to: undefined,
-  imageText: undefined,
-  image: undefined,
-  liveText: 'LIVE',
-  onClick: undefined,
 };
 
 export default Chip;

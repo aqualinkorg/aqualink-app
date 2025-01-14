@@ -1,10 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import { mockSurveyList } from 'mocks/mockSurveyList';
+import { renderWithProviders } from 'utils/test-utils';
 import Timeline from '.';
 
 const mockStore = configureStore([]);
@@ -22,19 +20,16 @@ describe('SiteRoutes Surveys', () => {
 
     store.dispatch = jest.fn();
 
-    element = render(
-      <Provider store={store}>
-        <Router>
-          <Timeline
-            isAdmin={false}
-            siteId={0}
-            observation="any"
-            pointId={0}
-            pointName="Test Point"
-            addNewButton
-          />
-        </Router>
-      </Provider>,
+    element = renderWithProviders(
+      <Timeline
+        isAdmin={false}
+        siteId={0}
+        observation="any"
+        pointId={0}
+        pointName="Test Point"
+        addNewButton
+      />,
+      { store },
     ).container;
   });
 

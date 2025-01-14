@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Grid,
-} from '@material-ui/core';
+import { Theme, Grid } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -113,7 +110,7 @@ const styles = (theme: Theme) =>
     },
     surveyPointNameWrapper: {
       width: '70%',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         width: '90%',
       },
     },

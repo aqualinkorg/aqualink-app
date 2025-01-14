@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import {
   BrowserRouter as Router,
   Routes,
@@ -59,42 +59,44 @@ function App() {
   }, [dispatch]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <ErrorBoundary>
-          <div id="app">
-            {render && (
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/map" element={<HomeMap />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/register" element={<RegisterSite />} />
-                <Route path="/buoy" element={<Buoy />} />
-                <Route path="/drones" element={<Drones />} />
-                <Route path="/faq" element={<Faq />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route
-                  path="/reefs/:id"
-                  element={<Navigate to="/" replace />}
-                />
-                <Route path="/sites/*" element={<SiteRoutes />} />
-                <Route path="/uploads" element={<Uploads />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/spotter" element={<Spotter />} />
-                <Route path="/tracker" element={<Tracker />} />
-                <Route
-                  path="/collections/:collectionName"
-                  element={<Dashboard />}
-                />
-                <Route path="/spotter-info" element={<SpotterInfo />} />
-                <Route path="/monitoring/*" element={<MonitoringRoutes />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            )}
-          </div>
-        </ErrorBoundary>
-      </Router>
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <ErrorBoundary>
+            <div id="app">
+              {render && (
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/map" element={<HomeMap />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/register" element={<RegisterSite />} />
+                  <Route path="/buoy" element={<Buoy />} />
+                  <Route path="/drones" element={<Drones />} />
+                  <Route path="/faq" element={<Faq />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route
+                    path="/reefs/:id"
+                    element={<Navigate to="/" replace />}
+                  />
+                  <Route path="/sites/*" element={<SiteRoutes />} />
+                  <Route path="/uploads" element={<Uploads />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/spotter" element={<Spotter />} />
+                  <Route path="/tracker" element={<Tracker />} />
+                  <Route
+                    path="/collections/:collectionName"
+                    element={<Dashboard />}
+                  />
+                  <Route path="/spotter-info" element={<SpotterInfo />} />
+                  <Route path="/monitoring/*" element={<MonitoringRoutes />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              )}
+            </div>
+          </ErrorBoundary>
+        </Router>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 

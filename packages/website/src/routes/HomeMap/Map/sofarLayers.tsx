@@ -92,8 +92,4 @@ interface SofarLayersProps {
   defaultLayerName?: MapLayerName;
 }
 
-SofarLayers.defaultProps = {
-  defaultLayerName: undefined,
-};
-
 export default SofarLayers;

@@ -18,12 +18,13 @@ exports[`renders as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root makeStyles-launchIcon-2"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-2 css-1umw9bq-MuiSvgIcon-root"
+            data-testid="LaunchIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
             <path
-              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
             />
           </svg>
         </a>
@@ -31,10 +32,10 @@ exports[`renders as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-9 makeStyles-cardWrapper-21 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-9 makeStyles-cardWrapper-21 css-1h90obp-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-cardAnalyticsWrapper-13 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-13 css-1nyv9pn-MuiGrid-root"
         >
           <mock-box
             fontweight="400"
@@ -43,13 +44,13 @@ exports[`renders as expected 1`] = `
             pt="1.5rem"
           >
             <mock-hidden
-              smdown="false"
+              mddown="false"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
+                class="MuiGrid-root MuiGrid-container css-1rp4aer-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root makeStyles-cardTitleWrapper-14 MuiGrid-item"
+                  class="MuiGrid-root MuiGrid-item makeStyles-cardTitleWrapper-14 css-x7bhrq-MuiGrid-root"
                 >
                   <mock-typography
                     classname="makeStyles-cardTitle-15"
@@ -82,7 +83,7 @@ exports[`renders as expected 1`] = `
             </mock-typography>
           </mock-box>
           <mock-hidden
-            smdown="true"
+            mddown="true"
           >
             <div>
               <mock-line
@@ -101,7 +102,7 @@ exports[`renders as expected 1`] = `
           </mock-hidden>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2 css-15vsh4j-MuiGrid-root"
         >
           <div
             class="makeStyles-metricsContainer-17"
@@ -201,12 +202,13 @@ exports[`renders loading as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root makeStyles-launchIcon-45"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-45 css-1umw9bq-MuiSvgIcon-root"
+            data-testid="LaunchIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
             <path
-              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3z"
             />
           </svg>
         </a>
@@ -214,10 +216,10 @@ exports[`renders loading as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-content-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 css-1h90obp-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-cardAnalyticsWrapper-56 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-56 css-1nyv9pn-MuiGrid-root"
         >
           <mock-box
             fontweight="400"
@@ -226,13 +228,13 @@ exports[`renders loading as expected 1`] = `
             pt="1.5rem"
           >
             <mock-hidden
-              smdown="false"
+              mddown="false"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
+                class="MuiGrid-root MuiGrid-container css-1rp4aer-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root makeStyles-cardTitleWrapper-57 MuiGrid-item"
+                  class="MuiGrid-root MuiGrid-item makeStyles-cardTitleWrapper-57 css-x7bhrq-MuiGrid-root"
                 >
                   <mock-typography
                     classname="makeStyles-cardTitle-58"
@@ -265,7 +267,7 @@ exports[`renders loading as expected 1`] = `
             </mock-typography>
           </mock-box>
           <mock-hidden
-            smdown="true"
+            mddown="true"
           >
             <div>
               <mock-line
@@ -284,7 +286,7 @@ exports[`renders loading as expected 1`] = `
           </mock-hidden>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2 css-15vsh4j-MuiGrid-root"
         >
           <div
             class="makeStyles-metricsContainer-60"

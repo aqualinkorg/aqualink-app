@@ -1,11 +1,9 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Grid,
-  Typography,
-} from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import type { Site } from 'store/Sites/types';
 import type { SurveyState } from 'store/Survey/types';
@@ -17,7 +15,11 @@ import {
 } from 'helpers/surveyMedia';
 import ObservationBox from './ObservationBox';
 
-const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
+const SurveyDetails = ({
+  site,
+  survey = null,
+  classes,
+}: SurveyDetailsProps) => {
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getSiteNameAndRegion(site);
@@ -116,10 +118,6 @@ interface SurveyDetailsIncomingProps {
   site: Site;
   survey?: SurveyState | null;
 }
-
-SurveyDetails.defaultProps = {
-  survey: null,
-};
 
 type SurveyDetailsProps = SurveyDetailsIncomingProps &
   WithStyles<typeof styles>;
