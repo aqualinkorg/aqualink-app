@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import { ReefCheckOrganism } from 'store/ReefCheckSurveys/types';
 import { ColumnDef, ReefCheckSurveyTable } from './ReefCheckSurveyTable';
+import { segmentsTotalSortComparator } from './utils';
 
 type ReefCheckSurveyOrganismsTableProps = {
   columns: ColumnDef<ReefCheckOrganism>[];
@@ -20,11 +21,7 @@ export const ReefCheckSurveyOrganismsTable = ({
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
   const rows =
     // eslint-disable-next-line fp/no-mutating-methods
-    survey?.organisms
-      .filter(filter)
-      .sort(
-        (a, b) => b.s1 + b.s2 + b.s3 + b.s4 - (a.s1 + a.s2 + a.s3 + a.s4),
-      ) ?? [];
+    survey?.organisms.filter(filter).sort(segmentsTotalSortComparator) ?? [];
 
   if (error) {
     return null;
