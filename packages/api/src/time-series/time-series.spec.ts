@@ -43,6 +43,8 @@ export const timeSeriesTests = () => {
   ];
 
   beforeAll(async () => {
+    // Define missing global function in test environment
+    global.structuredClone = (val) => JSON.parse(JSON.stringify(val));
     app = await testService.getApp();
     dataSource = await testService.getDataSource();
   });
