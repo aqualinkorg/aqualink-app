@@ -13,23 +13,23 @@ exports[`Featured Media Card should render with given state from Redux store 1`]
       >
         <mock-box
           alignitems="center"
+          classname="FeaturedMedia-noVideoCardHeaderText-4"
+          component="[object Object]"
           display="flex"
+          gap="1"
+          to="/sites/1#surveys"
         >
+          <img
+            alt="Reef Check"
+            src="reef-check-logo.png"
+            width="50"
+          />
           <mock-typography
-            classname="FeaturedMedia-noVideoCardHeaderText-4"
             variant="h5"
           >
             REEF CHECK DATA AVAILABLE
           </mock-typography>
-          <mock-iconbutton
-            classname="FeaturedMedia-noVideoCardHeaderText-4"
-            component="[object Object]"
-            size="large"
-            smooth="true"
-            to="/sites/1#surveys"
-          >
-            <mock-keyboarddoublearrowdown />
-          </mock-iconbutton>
+          <mock-keyboarddoublearrowdown />
         </mock-box>
       </div>
     </div>

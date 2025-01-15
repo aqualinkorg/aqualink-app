@@ -24,6 +24,7 @@ import { convertOptionsToQueryParams } from 'helpers/video';
 import { reefCheckSurveyListSelector } from 'store/ReefCheckSurveys';
 import reefImage from '../../../assets/reef-image.jpg';
 import uploadIcon from '../../../assets/icon_upload.svg';
+import reefCheckLogo from '../../../assets/img/reef-check-logo.png';
 
 const playerOptions = {
   autoplay: 1,
@@ -101,22 +102,17 @@ const FeaturedMedia = ({
               </Grid>
             </>
           ) : hasReefCheckSurveys ? (
-            <Box display="flex" alignItems="center">
-              <Typography
-                className={classes.noVideoCardHeaderText}
-                variant="h5"
-              >
-                REEF CHECK DATA AVAILABLE
-              </Typography>
-              <IconButton
-                className={classes.noVideoCardHeaderText}
-                component={HashLink}
-                to={`/sites/${siteId}#surveys`}
-                smooth
-                size="large"
-              >
-                <KeyboardDoubleArrowDown />
-              </IconButton>
+            <Box
+              component={HashLink}
+              to={`/sites/${siteId}#surveys`}
+              display="flex"
+              alignItems="center"
+              gap={1}
+              className={classes.noVideoCardHeaderText}
+            >
+              <img src={reefCheckLogo} alt="Reef Check" width={50} />
+              <Typography variant="h5">REEF CHECK DATA AVAILABLE</Typography>
+              <KeyboardDoubleArrowDown />
             </Box>
           ) : (
             <Typography className={classes.noVideoCardHeaderText} variant="h5">
