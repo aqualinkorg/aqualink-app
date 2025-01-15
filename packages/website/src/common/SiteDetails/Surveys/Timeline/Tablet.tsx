@@ -4,11 +4,13 @@ import { Grid, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { times } from 'lodash';
 import AddButton from '../AddButton';
 import SurveyCard from '../SurveyCard';
 import incomingStyles from '../styles';
 import { TimelineProps } from './types';
 import LoadingSkeleton from '../../../LoadingSkeleton';
+import { ReefCheckSurveyCard } from '../ReefCheckSurveyCard';
 
 const TimelineTablet = ({
   siteId,
@@ -36,7 +38,7 @@ const TimelineTablet = ({
           {isSiteIdValid && <AddButton siteId={siteId} />}
         </Grid>
       )}
-      {surveys.map((survey, index) => (
+      {(loading ? times(2, () => null) : surveys).map((survey, index) => (
         <Grid
           key={survey?.id || `loading-survey-${index}`}
           className={classes.surveyWrapper}
@@ -52,10 +54,10 @@ const TimelineTablet = ({
               width="30%"
               lines={1}
             >
-              {survey?.diveDate && (
+              {survey?.date && (
                 <Typography variant="h6" className={classes.dates}>
                   {displayTimeInLocalTimezone({
-                    isoDate: survey.diveDate,
+                    isoDate: survey.date,
                     format: 'LL/dd/yyyy',
                     displayTimezone: false,
                     timeZone,
@@ -65,14 +67,19 @@ const TimelineTablet = ({
             </LoadingSkeleton>
           </Grid>
           <Grid className={classes.surveyCardWrapper} container item xs={12}>
-            <SurveyCard
-              pointId={pointId}
-              pointName={pointName}
-              isAdmin={isAdmin}
-              siteId={siteId}
-              survey={survey}
-              loading={loading}
-            />
+            {survey?.type === 'survey' && (
+              <SurveyCard
+                pointId={pointId}
+                pointName={pointName}
+                isAdmin={isAdmin}
+                siteId={siteId}
+                survey={survey}
+                loading={loading}
+              />
+            )}
+            {survey?.type === 'reefCheckSurvey' && (
+              <ReefCheckSurveyCard survey={survey} />
+            )}
           </Grid>
         </Grid>
       ))}

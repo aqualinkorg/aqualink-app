@@ -31,6 +31,7 @@ jest.mock('@mui/icons-material', () => ({
   FilterHdr: 'mock-FilterHdr',
   Flag: 'mock-Flag',
   GitHub: 'mock-GitHub',
+  KeyboardDoubleArrowDown: 'mock-KeyboardDoubleArrowDown',
   KeyboardArrowDown: 'mock-KeyboardArrowDown',
   KeyboardArrowUp: 'mock-KeyboardArrowUp',
   ArrowDownward: 'mock-ArrowDownward',

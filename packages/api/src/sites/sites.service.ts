@@ -189,6 +189,7 @@ export class SitesService {
       .leftJoinAndSelect('site.region', 'region')
       .leftJoinAndSelect('site.sketchFab', 'sketchFab')
       .leftJoinAndSelect('site.admins', 'admins')
+      .leftJoinAndSelect('site.reefCheckSite', 'reefCheckSite')
       .andWhere('display = true')
       .getMany();
 

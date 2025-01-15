@@ -154,8 +154,13 @@ export const sitesFilterFn = (
       return s?.hasHobo;
     case 'Water quality':
       return s?.waterQuality?.length;
+    case 'Reef Check':
+      return !!s?.reefCheckSite;
     default:
       console.error(`Unhandled Option: ${filter}`);
+      // This will cause a TS error if there is an unhandled option
+      // eslint-disable-next-line prettier/prettier
+      filter satisfies never;
       return true;
   }
 };

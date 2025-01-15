@@ -47,6 +47,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
     <mock-box
       bgcolor="#f5f6f6"
       height="100%"
+      id="surveys"
       position="absolute"
       zindex="-1"
     />
