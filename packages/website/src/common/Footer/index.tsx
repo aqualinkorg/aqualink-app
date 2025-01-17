@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Grid,
-  Typography,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Link,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Grid, Typography, Theme, Link } from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 const Footer = ({ classes }: FooterProps) => {
   return (
@@ -17,7 +11,7 @@ const Footer = ({ classes }: FooterProps) => {
       <Toolbar>
         <Grid container justifyContent="center">
           <Grid item xs={10} container>
-            <Link className={classes.navBarLink} href="/map">
+            <Link className={classes.navBarLink} href="/map" underline="hover">
               <Typography color="textPrimary" variant="h4">
                 Aqua
               </Typography>

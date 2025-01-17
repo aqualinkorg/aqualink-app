@@ -1,8 +1,5 @@
 import React from 'react';
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
   Card,
   CardContent,
   Typography,
@@ -10,7 +7,11 @@ import {
   Grid,
   Tooltip,
   Box,
-} from '@material-ui/core';
+} from '@mui/material';
+
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 
 import { LatestDataASSofarValue } from 'store/Sites/types';
 import { formatNumber } from 'helpers/numberUtils';

@@ -6,17 +6,21 @@ import {
   TimelineItem,
   TimelineOppositeContent,
   TimelineSeparator,
-} from '@material-ui/lab';
-import { makeStyles, Theme, Typography } from '@material-ui/core';
+} from '@mui/lab';
+import { Theme, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
-import grey from '@material-ui/core/colors/grey';
-
 import { displayTimeInLocalTimezone } from 'helpers/dates';
+import { times } from 'lodash';
+import { SurveyListItem } from 'store/Survey/types';
+
+import { grey } from '@mui/material/colors';
 import AddButton from '../AddButton';
 import SurveyCard from '../SurveyCard';
 import LoadingSkeleton from '../../../LoadingSkeleton';
 import incomingStyles from '../styles';
 import { TimelineProps } from './types';
+import { ReefCheckSurveyCard } from '../ReefCheckSurveyCard';
 
 const CONNECTOR_COLOR = grey[500];
 
@@ -48,7 +52,7 @@ const TimelineDesktop = ({
           </TimelineContent>
         </TimelineItem>
       )}
-      {surveys.map((survey, index) => (
+      {(loading ? times(2, () => null) : surveys).map((survey, index) => (
         <TimelineItem
           key={survey?.id || `loading-survey-${index}`}
           className={classes.timelineItem}
@@ -58,13 +62,13 @@ const TimelineDesktop = ({
               className={classes.dateSkeleton}
               loading={loading}
               variant="text"
-              width="30%"
               lines={1}
+              width={80}
             >
-              {survey?.diveDate && (
+              {survey?.date && (
                 <Typography variant="h6" className={classes.dates}>
                   {displayTimeInLocalTimezone({
-                    isoDate: survey.diveDate,
+                    isoDate: survey.date,
                     format: 'LL/dd/yyyy',
                     displayTimezone: false,
                     timeZone,
@@ -79,14 +83,19 @@ const TimelineDesktop = ({
             <hr className={classes.connector} />
           </TimelineSeparator>
           <TimelineContent className={classes.surveyCardWrapper}>
-            <SurveyCard
-              pointId={pointId}
-              pointName={pointName}
-              isAdmin={isAdmin}
-              siteId={siteId}
-              survey={survey}
-              loading={loading}
-            />
+            {(survey?.type === 'survey' || loading) && (
+              <SurveyCard
+                pointId={pointId}
+                pointName={pointName}
+                isAdmin={isAdmin}
+                siteId={siteId}
+                survey={survey as SurveyListItem}
+                loading={loading}
+              />
+            )}
+            {survey?.type === 'reefCheckSurvey' && (
+              <ReefCheckSurveyCard survey={survey} />
+            )}
           </TimelineContent>
         </TimelineItem>
       ))}
@@ -100,7 +109,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
   },
   timelineOppositeContent: {
-    flex: 0.5,
+    flex: '0 0 130px',
   },
   addNewButtonOpposite: {
     padding: theme.spacing(0, 1.25),

@@ -16,9 +16,7 @@ const styles = {
   },
   surveyCardWrapper: {
     marginBottom: '2rem',
-    [theme.breakpoints.up('lg')]: {
-      maxWidth: '65%',
-    },
+    minWidth: 0,
   },
   surveyCard: {
     width: '100%',
@@ -28,10 +26,10 @@ const styles = {
     borderColor: '#dddddd',
     borderRadius: 2,
     height: 320,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 640,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%',
     },
   },

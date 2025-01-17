@@ -29,6 +29,8 @@
   "globalSetup": "./test/global-setup.js",
   "moduleNameMapper": {
     "^csv-stringify/sync":
-      "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs"
+      "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs",
+      "^typeorm$": "<rootDir>/../../node_modules/typeorm",
+      "^uuid$": "uuid"
   }
 }

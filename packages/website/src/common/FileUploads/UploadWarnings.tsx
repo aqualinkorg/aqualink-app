@@ -4,7 +4,6 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  makeStyles,
   Theme,
   Typography,
   List,
@@ -12,10 +11,11 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import WarningIcon from '@material-ui/icons/Warning';
-import { yellow } from '@material-ui/core/colors';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import CloseIcon from '@mui/icons-material/Close';
+import WarningIcon from '@mui/icons-material/Warning';
+import { yellow } from '@mui/material/colors';
 
 import { UploadTimeSeriesResult } from 'services/uploadServices';
 
@@ -26,9 +26,13 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
 
   return (
     <Dialog maxWidth="md" fullWidth open={open} onClose={onClose}>
-      <DialogTitle disableTypography className={classes.dialogTitle}>
+      <DialogTitle className={classes.dialogTitle}>
         <Typography variant="h4">Upload Details</Typography>
-        <IconButton className={classes.closeButton} onClick={onClose}>
+        <IconButton
+          className={classes.closeButton}
+          onClick={onClose}
+          size="large"
+        >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -45,17 +49,20 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={file}
-                  primaryTypographyProps={{
-                    color: 'textSecondary',
-                    variant: 'h5',
-                  }}
                   secondary={`
                       These columns are not configured for import yet and were
                       not uploaded: ${ignoredHeaders
                         .map((header) => `"${header}"`)
                         .join(', ')}.
                     `}
-                  secondaryTypographyProps={{ variant: 'subtitle1' }}
+                  slotProps={{
+                    primary: {
+                      color: 'textSecondary',
+                      variant: 'h5',
+                    },
+
+                    secondary: { variant: 'subtitle1' },
+                  }}
                 />
               </ListItem>
             ) : null,

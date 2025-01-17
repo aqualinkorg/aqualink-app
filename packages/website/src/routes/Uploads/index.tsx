@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Checkbox,
   Container,
@@ -6,8 +7,9 @@ import {
   Grid,
   TextField,
   Typography,
-} from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+} from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import DropZone from 'common/FileUploads/Dropzone';
 import NavBar from 'common/NavBar';
 import React from 'react';
@@ -22,7 +24,6 @@ import {
   uploadsInProgressSelector,
   uploadsResponseSelector,
 } from 'store/uploads/uploadsSlice';
-import { Alert } from '@material-ui/lab';
 import StatusSnackbar from 'common/StatusSnackbar';
 import { UploadTimeSeriesResult } from 'services/uploadServices';
 import UploadWarnings from 'common/FileUploads/UploadWarnings';
@@ -178,7 +179,9 @@ function Uploads() {
               variant="outlined"
               fullWidth
               select
-              SelectProps={selectProps}
+              slotProps={{
+                select: selectProps,
+              }}
             >
               {OptionsList(SENSOR_TYPES)}
             </TextField>

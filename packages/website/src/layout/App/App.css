@@ -47,7 +47,7 @@ body {
   width: 12px;
 }
 
-.MuiInputBase-root.MuiOutlinedInput-root.MuiAutocomplete-inputRoot.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedEnd.MuiOutlinedInput-adornedEnd {
+.MuiAutocomplete-hasPopupIcon .MuiOutlinedInput-root {
   padding: 0;
 }
 

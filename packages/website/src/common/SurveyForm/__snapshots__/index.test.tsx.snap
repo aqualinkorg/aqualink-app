@@ -4,10 +4,10 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
 <div>
   <form>
     <div
-      class="MuiGrid-root makeStyles-section-2 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-content-xs-space-between"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 makeStyles-section-2 css-1vgq6v8-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-akr01a-MuiGrid-root"
       >
         <mock-typography
           gutterbottom="true"
@@ -16,714 +16,633 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
           Dive Date
         </mock-typography>
         <div
-          class="MuiFormControl-root MuiTextField-root makeStyles-textField-1 MuiFormControl-fullWidth"
+          class="MuiFormControl-root MuiTextField-root makeStyles-textField-1 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
         >
           <div
-            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly MuiInputBase-readOnly css-1px953p-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <input
               aria-invalid="false"
-              class="MuiInputBase-input MuiOutlinedInput-input makeStyles-textField-1 MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+              class="MuiInputBase-input MuiOutlinedInput-input Mui-readOnly makeStyles-textField-1 MuiInputBase-readOnly css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
               data-testid="dive-date"
+              id=":r0:"
+              readonly=""
               type="text"
               value=""
             />
-            <div
-              class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-            >
-              <mock-iconbutton
-                aria-label="change date"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
-                  />
-                </svg>
-              </mock-iconbutton>
-            </div>
             <fieldset
               aria-hidden="true"
-              class="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
-              style="padding-left: 8px;"
+              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="PrivateNotchedOutline-legend-5"
-                style="width: 0.01px;"
+                class="css-ihdtdm"
               >
-                <span>
+                <span
+                  class="notranslate"
+                >
                   ​
                 </span>
               </legend>
             </fieldset>
           </div>
-          
         </div>
         <mock-dialog
-          classes="[object Object]"
+          classname="css-1rqc0ef"
           open="false"
-          role="dialog"
         >
           <mock-dialogcontent
-            classname="MuiPickersModal-dialog"
+            classname="css-1jqvr2x"
           >
             <div
-              class="MuiPickersBasePicker-container"
+              class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
             >
               <div
-                class="MuiPickersBasePicker-pickerView"
+                class="css-epd502"
               >
-                <div>
-                  <div
-                    class="MuiPickersCalendarHeader-switchHeader"
-                  >
-                    <mock-iconbutton
-                      classname="MuiPickersCalendarHeader-iconButton"
-                      disabled="false"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
-                        />
-                        <path
-                          d="M0 0h24v24H0V0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </mock-iconbutton>
-                    <div
-                      class="MuiPickersSlideTransition-transitionContainer MuiPickersCalendarHeader-transitionContainer"
-                    >
-                      <mock-typography
-                        align="center"
-                        variant="body1"
-                      >
-                        October 2023
-                      </mock-typography>
-                    </div>
-                    <mock-iconbutton
-                      classname="MuiPickersCalendarHeader-iconButton"
-                      disabled="false"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
-                        />
-                        <path
-                          d="M0 0h24v24H0V0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </mock-iconbutton>
-                  </div>
-                  <div
-                    class="MuiPickersCalendarHeader-daysHeader"
-                  >
-                    <mock-typography
-                      classname="MuiPickersCalendarHeader-dayLabel"
-                      variant="caption"
-                    >
-                      Su
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersCalendarHeader-dayLabel"
-                      variant="caption"
-                    >
-                      Mo
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersCalendarHeader-dayLabel"
-                      variant="caption"
-                    >
-                      Tu
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersCalendarHeader-dayLabel"
-                      variant="caption"
-                    >
-                      We
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersCalendarHeader-dayLabel"
-                      variant="caption"
-                    >
-                      Th
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersCalendarHeader-dayLabel"
-                      variant="caption"
-                    >
-                      Fr
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersCalendarHeader-dayLabel"
-                      variant="caption"
-                    >
-                      Sa
-                    </mock-typography>
-                  </div>
-                </div>
                 <div
-                  class="MuiPickersSlideTransition-transitionContainer MuiPickersCalendar-transitionContainer"
+                  class="MuiCalendarPicker-root css-169iwlq-MuiCalendarPicker-root"
                 >
-                  <div>
+                  <div
+                    class="MuiPickersCalendarHeader-root css-ao2cp5-MuiPickersCalendarHeader-root"
+                  >
                     <div
-                      class="MuiPickersCalendar-week"
+                      aria-live="polite"
+                      class="MuiPickersCalendarHeader-labelContainer css-10fao8b-MuiPickersCalendarHeader-labelContainer"
+                      role="presentation"
                     >
                       <div
-                        role="presentation"
+                        class="MuiPickersFadeTransitionGroup-root css-31ca4x-MuiPickersFadeTransitionGroup-root"
                       >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
+                        <div
+                          class="MuiPickersCalendarHeader-label css-dplwbx-MuiPickersCalendarHeader-label"
+                          id=":r1:-grid-label"
+                          style="opacity: 1;"
                         >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            1
-                          </mock-typography>
-                        </mock-iconbutton>
+                          October 2023
+                        </div>
                       </div>
-                      <div
-                        role="presentation"
+                      <mock-iconbutton
+                        aria-label="calendar view is open, switch to year view"
+                        classname="MuiPickersCalendarHeader-switchViewButton css-1wknyoa-MuiPickersCalendarHeader-switchViewButton"
+                        size="small"
                       >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPickersCalendarHeader-switchViewIcon css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
                         >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            2
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            3
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            4
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            5
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            6
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            7
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                      </mock-iconbutton>
                     </div>
                     <div
-                      class="MuiPickersCalendar-week"
+                      class="MuiPickersArrowSwitcher-root css-9reuh9-MuiPickersArrowSwitcher-root"
+                      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
                     >
-                      <div
-                        role="presentation"
+                      <mock-iconbutton
+                        aria-label="Previous month"
+                        classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                        disabled="false"
+                        edge="end"
+                        size="small"
+                        title="Previous month"
                       >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="ArrowLeftIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
                         >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            8
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
+                          <path
+                            d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
+                          />
+                        </svg>
+                      </mock-iconbutton>
                       <div
-                        role="presentation"
+                        class="MuiPickersArrowSwitcher-spacer css-xb7uwb-MuiPickersArrowSwitcher-spacer"
+                      />
+                      <mock-iconbutton
+                        aria-label="Next month"
+                        classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                        disabled="false"
+                        edge="start"
+                        size="small"
+                        title="Next month"
                       >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="ArrowRightIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
                         >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            9
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            10
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            11
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            12
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            13
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            14
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
+                          <path
+                            d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                          />
+                        </svg>
+                      </mock-iconbutton>
                     </div>
+                  </div>
+                  <div
+                    class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-15dbmtb-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
+                  >
                     <div
-                      class="MuiPickersCalendar-week"
+                      style="opacity: 1;"
                     >
                       <div
-                        role="presentation"
+                        aria-labelledby=":r1:-grid-label"
+                        role="grid"
                       >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
+                        <div
+                          class="MuiDayPicker-header css-qklzlb-MuiDayPicker-header"
+                          role="row"
                         >
                           <mock-typography
-                            color="inherit"
-                            variant="body2"
+                            aria-label="Sunday"
+                            classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                            role="columnheader"
+                            variant="caption"
                           >
-                            15
+                            S
                           </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
                           <mock-typography
-                            color="inherit"
-                            variant="body2"
+                            aria-label="Monday"
+                            classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                            role="columnheader"
+                            variant="caption"
                           >
-                            16
+                            M
                           </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
                           <mock-typography
-                            color="inherit"
-                            variant="body2"
+                            aria-label="Tuesday"
+                            classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                            role="columnheader"
+                            variant="caption"
                           >
-                            17
+                            T
                           </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
                           <mock-typography
-                            color="inherit"
-                            variant="body2"
+                            aria-label="Wednesday"
+                            classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                            role="columnheader"
+                            variant="caption"
                           >
-                            18
+                            W
                           </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
                           <mock-typography
-                            color="inherit"
-                            variant="body2"
+                            aria-label="Thursday"
+                            classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                            role="columnheader"
+                            variant="caption"
                           >
-                            19
+                            T
                           </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
-                          tabindex="0"
-                        >
                           <mock-typography
-                            color="inherit"
-                            variant="body2"
+                            aria-label="Friday"
+                            classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                            role="columnheader"
+                            variant="caption"
                           >
-                            20
+                            F
                           </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
                           <mock-typography
-                            color="inherit"
-                            variant="body2"
+                            aria-label="Saturday"
+                            classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                            role="columnheader"
+                            variant="caption"
                           >
-                            21
+                            S
                           </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiPickersCalendar-week"
-                    >
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
+                        </div>
+                        <div
+                          class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
+                          role="presentation"
                         >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
+                          <div
+                            class="MuiDayPicker-monthContainer css-6t5f1e-MuiDayPicker-monthContainer"
+                            role="rowgroup"
                           >
-                            22
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            23
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            24
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            25
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            26
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            27
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            28
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiPickersCalendar-week"
-                    >
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            29
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            30
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            31
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day MuiPickersDay-hidden"
-                          tabindex="-1"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            1
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day MuiPickersDay-hidden"
-                          tabindex="-1"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            2
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day MuiPickersDay-hidden"
-                          tabindex="-1"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            3
-                          </mock-typography>
-                        </mock-iconbutton>
-                      </div>
-                      <div
-                        role="presentation"
-                      >
-                        <mock-iconbutton
-                          classname="MuiPickersDay-day MuiPickersDay-hidden"
-                          tabindex="-1"
-                        >
-                          <mock-typography
-                            color="inherit"
-                            variant="body2"
-                          >
-                            4
-                          </mock-typography>
-                        </mock-iconbutton>
+                            <div
+                              class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                              role="row"
+                            >
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                1
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                2
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                3
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                4
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                5
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                6
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                7
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </div>
+                            <div
+                              class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                              role="row"
+                            >
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                8
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                9
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                10
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                11
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                12
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                13
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                14
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </div>
+                            <div
+                              class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                              role="row"
+                            >
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                15
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                16
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                17
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                18
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                19
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-current="date"
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-1ilx2o9-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="0"
+                                type="button"
+                              >
+                                20
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                21
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </div>
+                            <div
+                              class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                              role="row"
+                            >
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                22
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                23
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                24
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                25
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                26
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                27
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                28
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </div>
+                            <div
+                              class="MuiDayPicker-weekContainer css-ghi3gg-MuiDayPicker-weekContainer"
+                              role="row"
+                            >
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                29
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                30
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <button
+                                aria-selected="false"
+                                class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-1jtcw0m-MuiButtonBase-root-MuiPickersDay-root"
+                                role="gridcell"
+                                tabindex="-1"
+                                type="button"
+                              >
+                                31
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                                role="gridcell"
+                              />
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                                role="gridcell"
+                              />
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                                role="gridcell"
+                              />
+                              <div
+                                class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                                role="gridcell"
+                              />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -731,56 +650,32 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
               </div>
             </div>
           </mock-dialogcontent>
-          <mock-dialogactions
-            classes="[object Object]"
-          >
+          <mock-dialogactions>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1otw71y-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
+              Cancel
               <span
-                class="MuiButton-label"
-              >
-                Today
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1otw71y-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
+              OK
               <span
-                class="MuiButton-label"
-              >
-                Cancel
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiButton-label"
-              >
-                OK
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
           </mock-dialogactions>
         </mock-dialog>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-akr01a-MuiGrid-root"
       >
         <mock-typography
           gutterbottom="true"
@@ -789,311 +684,300 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
           Dive Local Time
         </mock-typography>
         <div
-          class="MuiFormControl-root MuiTextField-root makeStyles-textField-1 MuiFormControl-fullWidth"
+          class="MuiFormControl-root MuiTextField-root makeStyles-textField-1 css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
         >
           <div
-            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly MuiInputBase-readOnly css-1px953p-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <input
               aria-invalid="false"
-              class="MuiInputBase-input MuiOutlinedInput-input makeStyles-textField-1 MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+              aria-label="Choose time"
+              aria-readonly="true"
+              class="MuiInputBase-input MuiOutlinedInput-input Mui-readOnly makeStyles-textField-1 MuiInputBase-readOnly css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
               data-testid="dive-time"
-              id="time-picker"
+              id=":r2:"
+              readonly=""
               type="text"
               value=""
             />
-            <div
-              class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
-            >
-              <mock-iconbutton
-                aria-label="change time"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                  />
-                  <path
-                    d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"
-                  />
-                </svg>
-              </mock-iconbutton>
-            </div>
             <fieldset
               aria-hidden="true"
-              class="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
-              style="padding-left: 8px;"
+              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="PrivateNotchedOutline-legend-5"
-                style="width: 0.01px;"
+                class="css-ihdtdm"
               >
-                <span>
+                <span
+                  class="notranslate"
+                >
                   ​
                 </span>
               </legend>
             </fieldset>
           </div>
-          
         </div>
         <mock-dialog
-          classes="[object Object]"
+          classname="css-1rqc0ef"
           open="false"
-          role="dialog"
         >
           <mock-dialogcontent
-            classname="MuiPickersModal-dialog"
+            classname="css-1jqvr2x"
           >
             <div
-              class="MuiPickersBasePicker-container"
+              class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
             >
-              <mock-toolbar
-                classname="MuiPickersToolbar-toolbar MuiPickersTimePickerToolbar-toolbarAmpmLeftPadding"
+              <div
+                class="MuiPickersToolbar-root MuiTimePickerToolbar-root css-88nwcr-MuiPickersToolbar-root-MuiTimePickerToolbar-root"
               >
-                <div
-                  class="MuiPickersTimePickerToolbar-hourMinuteLabel"
+                <mock-typography
+                  color="text.secondary"
+                  variant="overline"
                 >
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiPickersToolbarButton-toolbarBtn"
-                    tabindex="0"
-                    type="button"
-                  >
-                    <span
-                      class="MuiButton-label"
-                    >
-                      <mock-typography
-                        classname="MuiPickersToolbarText-toolbarTxt MuiPickersToolbarText-toolbarBtnSelected"
-                        variant="h2"
-                      >
-                        12
-                      </mock-typography>
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
-                    />
-                  </button>
-                  <mock-typography
-                    classname="MuiPickersToolbarText-toolbarTxt MuiPickersTimePickerToolbar-separator"
-                    variant="h2"
-                  >
-                    :
-                  </mock-typography>
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiPickersToolbarButton-toolbarBtn"
-                    tabindex="0"
-                    type="button"
-                  >
-                    <span
-                      class="MuiButton-label"
-                    >
-                      <mock-typography
-                        classname="MuiPickersToolbarText-toolbarTxt"
-                        variant="h2"
-                      >
-                        00
-                      </mock-typography>
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
-                    />
-                  </button>
-                </div>
+                  Select time
+                </mock-typography>
                 <div
-                  class="MuiPickersTimePickerToolbar-ampmSelection"
+                  class="MuiGrid-root MuiGrid-container MuiPickersToolbar-content css-1ur202t-MuiGrid-root-MuiPickersToolbar-content"
                 >
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiPickersToolbarButton-toolbarBtn"
-                    tabindex="0"
-                    type="button"
+                  <div
+                    class="MuiTimePickerToolbar-hourMinuteLabel css-trxt40-MuiTimePickerToolbar-hourMinuteLabel"
                   >
-                    <span
-                      class="MuiButton-label"
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiPickersToolbar-root css-1kbjnaa-MuiButtonBase-root-MuiButton-root-MuiPickersToolbarButton-root"
+                      tabindex="-1"
+                      type="button"
                     >
                       <mock-typography
-                        classname="MuiPickersToolbarText-toolbarTxt MuiPickersTimePickerToolbar-ampmLabel"
-                        variant="subtitle1"
+                        classname="PrivatePickersToolbarText-root Mui-selected css-1z0ikvo-PrivatePickersToolbarText-root"
+                        component="span"
+                        variant="h3"
+                      >
+                        --
+                      </mock-typography>
+                      <span
+                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                      />
+                    </button>
+                    <mock-typography
+                      classname="MuiTimePickerToolbar-separator PrivatePickersToolbarText-root css-1rhexmu-PrivatePickersToolbarText-root-MuiTimePickerToolbar-separator"
+                      component="span"
+                      tabindex="-1"
+                      variant="h3"
+                    >
+                      :
+                    </mock-typography>
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiPickersToolbar-root css-1kbjnaa-MuiButtonBase-root-MuiButton-root-MuiPickersToolbarButton-root"
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <mock-typography
+                        classname="PrivatePickersToolbarText-root css-1z0ikvo-PrivatePickersToolbarText-root"
+                        component="span"
+                        variant="h3"
+                      >
+                        --
+                      </mock-typography>
+                      <span
+                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                      />
+                    </button>
+                  </div>
+                  <div
+                    class="MuiTimePickerToolbar-ampmSelection css-ihhycx-MuiTimePickerToolbar-amPmSelection"
+                  >
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiPickersToolbar-root css-1kbjnaa-MuiButtonBase-root-MuiButton-root-MuiPickersToolbarButton-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <mock-typography
+                        classname="MuiTimePickerToolbar-ampmLabel PrivatePickersToolbarText-root css-1z0ikvo-PrivatePickersToolbarText-root"
+                        component="span"
+                        variant="subtitle2"
                       >
                         AM
                       </mock-typography>
-                    </span>
-                  </button>
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiPickersToolbarButton-toolbarBtn"
-                    tabindex="0"
-                    type="button"
-                  >
-                    <span
-                      class="MuiButton-label"
+                    </button>
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiPickersToolbar-root css-1kbjnaa-MuiButtonBase-root-MuiButton-root-MuiPickersToolbarButton-root"
+                      tabindex="0"
+                      type="button"
                     >
                       <mock-typography
-                        classname="MuiPickersToolbarText-toolbarTxt MuiPickersTimePickerToolbar-ampmLabel MuiPickersToolbarText-toolbarBtnSelected"
-                        variant="subtitle1"
+                        classname="MuiTimePickerToolbar-ampmLabel PrivatePickersToolbarText-root css-1z0ikvo-PrivatePickersToolbarText-root"
+                        component="span"
+                        variant="subtitle2"
                       >
                         PM
                       </mock-typography>
-                    </span>
-                  </button>
+                    </button>
+                  </div>
+                  <mock-iconbutton
+                    aria-label="clock view is open, go to text input view"
+                    classname="MuiPickersToolbar-penIconButton css-1ousgxe-MuiPickersToolbar-penIconButton"
+                    color="inherit"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="PenIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                  </mock-iconbutton>
                 </div>
-              </mock-toolbar>
+              </div>
               <div
-                class="MuiPickersBasePicker-pickerView"
+                class="css-epd502"
               >
                 <div
-                  class="MuiPickersClock-container"
+                  class="MuiClockPicker-root css-1jm66jt-MuiClockPicker-root"
                 >
                   <div
-                    class="MuiPickersClock-clock"
+                    class="MuiClock-root css-1j9v0by-MuiClock-root"
                   >
                     <div
-                      class="MuiPickersClock-squareMask"
-                      role="menu"
-                      tabindex="-1"
-                    />
-                    <div
-                      class="MuiPickersClock-pin"
-                    />
-                    <div
-                      class="MuiPickersClockPointer-pointer MuiPickersClockPointer-animateTransform"
-                      style="height: 40%; transform: rotateZ(360deg);"
+                      class="MuiClock-clock css-4f0ona-MuiClock-clock"
                     >
                       <div
-                        class="MuiPickersClockPointer-thumb MuiPickersClockPointer-noPoint"
+                        class="MuiClock-squareMask css-tfwo93-MuiClock-squareMask"
                       />
+                      <div
+                        class="MuiClock-pin css-1x56m2h-MuiClock-pin"
+                      />
+                      <div
+                        aria-activedescendant=":r3:"
+                        aria-label="Select hours. No time selected"
+                        class="MuiClock-wrapper css-1ys9rbi-MuiClock-wrapper"
+                        role="listbox"
+                        tabindex="0"
+                      >
+                        <span
+                          aria-label="1 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(45px, 13px;"
+                        >
+                          1
+                        </span>
+                        <span
+                          aria-label="2 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(79px, 47px;"
+                        >
+                          2
+                        </span>
+                        <span
+                          aria-label="3 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(91px, 92px;"
+                        >
+                          3
+                        </span>
+                        <span
+                          aria-label="4 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(79px, 137px;"
+                        >
+                          4
+                        </span>
+                        <span
+                          aria-label="5 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(45px, 171px;"
+                        >
+                          5
+                        </span>
+                        <span
+                          aria-label="6 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(0px, 183px;"
+                        >
+                          6
+                        </span>
+                        <span
+                          aria-label="7 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(-46px, 171px;"
+                        >
+                          7
+                        </span>
+                        <span
+                          aria-label="8 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(-79px, 138px;"
+                        >
+                          8
+                        </span>
+                        <span
+                          aria-label="9 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(-91px, 92px;"
+                        >
+                          9
+                        </span>
+                        <span
+                          aria-label="10 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(-79px, 46px;"
+                        >
+                          10
+                        </span>
+                        <span
+                          aria-label="11 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(-46px, 13px;"
+                        >
+                          11
+                        </span>
+                        <span
+                          aria-label="12 hours"
+                          class="MuiClockNumber-root css-1uo4xqk-MuiClockNumber-root"
+                          role="option"
+                          style="transform: translate(0px, 1px;"
+                        >
+                          12
+                        </span>
+                      </div>
                     </div>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(55px, 19.6px;"
-                      variant="body1"
-                    >
-                      1
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(94.4px, 59.5px;"
-                      variant="body1"
-                    >
-                      2
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(109px, 114px;"
-                      variant="body1"
-                    >
-                      3
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(94.4px, 168.5px;"
-                      variant="body1"
-                    >
-                      4
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(54.5px, 208.4px;"
-                      variant="body1"
-                    >
-                      5
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(0px, 223px;"
-                      variant="body1"
-                    >
-                      6
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(-54.5px, 208.4px;"
-                      variant="body1"
-                    >
-                      7
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(-94.4px, 168.5px;"
-                      variant="body1"
-                    >
-                      8
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(-109px, 114px;"
-                      variant="body1"
-                    >
-                      9
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(-94.4px, 59.5px;"
-                      variant="body1"
-                    >
-                      10
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber"
-                      component="span"
-                      style="transform: translate(-54.5px, 19.6px;"
-                      variant="body1"
-                    >
-                      11
-                    </mock-typography>
-                    <mock-typography
-                      classname="MuiPickersClockNumber-clockNumber MuiPickersClockNumber-clockNumberSelected"
-                      component="span"
-                      style="transform: translate(0px, 5px;"
-                      variant="body1"
-                    >
-                      12
-                    </mock-typography>
                   </div>
                 </div>
               </div>
             </div>
           </mock-dialogcontent>
-          <mock-dialogactions
-            classes="[object Object]"
-          >
+          <mock-dialogactions>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1otw71y-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
+              Cancel
               <span
-                class="MuiButton-label"
-              >
-                Cancel
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1otw71y-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
+              OK
               <span
-                class="MuiButton-label"
-              >
-                OK
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
           </mock-dialogactions>
@@ -1107,37 +991,40 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
       Dive Location
     </mock-typography>
     <div
-      class="MuiGrid-root makeStyles-section-2 MuiGrid-container MuiGrid-spacing-xs-2"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 makeStyles-section-2 css-1q6bog3-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-akr01a-MuiGrid-root"
       >
         <div
-          class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
         >
           <label
-            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined Mui-disabled Mui-disabled MuiFormLabel-filled"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-6304h4-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
+            for=":r4:"
+            id=":r4:-label"
           >
             Latitude
           </label>
           <div
-            class="MuiInputBase-root MuiOutlinedInput-root Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <input
               aria-invalid="false"
-              class="MuiInputBase-input MuiOutlinedInput-input makeStyles-textField-1 Mui-disabled Mui-disabled"
+              class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled makeStyles-textField-1 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
+              id=":r4:"
               placeholder="LAT"
               type="text"
               value="17.42"
             />
             <fieldset
               aria-hidden="true"
-              class="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
+              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="PrivateNotchedOutline-legendLabelled-6 PrivateNotchedOutline-legendNotched-7"
+                class="css-14lo706"
               >
                 <span>
                   Latitude
@@ -1148,34 +1035,37 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-akr01a-MuiGrid-root"
       >
         <div
-          class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
         >
           <label
-            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined Mui-disabled Mui-disabled MuiFormLabel-filled"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-6304h4-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
+            for=":r5:"
+            id=":r5:-label"
           >
             Longitude
           </label>
           <div
-            class="MuiInputBase-root MuiOutlinedInput-root Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <input
               aria-invalid="false"
-              class="MuiInputBase-input MuiOutlinedInput-input makeStyles-textField-1 Mui-disabled Mui-disabled"
+              class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled makeStyles-textField-1 css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
+              id=":r5:"
               placeholder="LONG"
               type="text"
               value="42.17"
             />
             <fieldset
               aria-hidden="true"
-              class="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
+              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="PrivateNotchedOutline-legendLabelled-6 PrivateNotchedOutline-legendNotched-7"
+                class="css-14lo706"
               >
                 <span>
                   Longitude
@@ -1187,7 +1077,7 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-r5meod-MuiGrid-root"
     >
       <mock-typography
         gutterbottom="true"
@@ -1197,27 +1087,30 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
       </mock-typography>
     </div>
     <div
-      class="MuiGrid-root makeStyles-extraMargin-3 MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-extraMargin-3 css-r5meod-MuiGrid-root"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-textField-1 MuiFormControl-fullWidth"
+        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-textField-1 css-wb57ya-MuiFormControl-root-MuiTextField-root"
       >
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-k66k8y-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <div
+            aria-controls=":r7:"
+            aria-expanded="false"
             aria-haspopup="listbox"
             aria-labelledby="weather"
-            class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input makeStyles-textField-1"
+            class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input makeStyles-textField-1 css-3e0jyh-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
             id="weather"
-            role="button"
+            role="combobox"
             tabindex="0"
           >
             Calm
           </div>
           <input
             aria-hidden="true"
-            class="MuiSelect-nativeInput"
+            aria-invalid="false"
+            class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
             data-testid="weather"
             name="weather"
             placeholder="Select One"
@@ -1226,7 +1119,8 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
           />
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+            data-testid="ArrowDropDownIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -1234,49 +1128,66 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
               d="M7 10l5 5 5-5z"
             />
           </svg>
-          <mock-menu
+          <mock-popover
             anchorel="[object HTMLDivElement]"
+            anchororigin="[object Object]"
+            classname="css-oouctw-MuiMenu-root"
             id="menu-weather"
-            menulistprops="[object Object]"
             open="false"
-            paperprops="[object Object]"
+            slotprops="[object Object]"
+            slots="[object Object]"
+            transformorigin="[object Object]"
+            transitionduration="auto"
+            transitionprops="[object Object]"
           >
-            <mock-menuitem
-              aria-selected="true"
-              classname="makeStyles-textField-1"
-              data-value="calm"
-              role="option"
-              selected="true"
+            <mock-menulist
+              actions="[object Object]"
+              autofocusitem="false"
+              classname="MuiMenu-list css-rpp6kk-MuiMenu-list"
+              disablelistwrap="true"
+              id=":r7:"
+              role="listbox"
+              variant="selectedMenu"
             >
-              Calm
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-textField-1"
-              data-value="waves"
-              role="option"
-              selected="false"
-            >
-              Waves
-            </mock-menuitem>
-            <mock-menuitem
-              classname="makeStyles-textField-1"
-              data-value="storm"
-              role="option"
-              selected="false"
-            >
-              Stormy
-            </mock-menuitem>
-          </mock-menu>
+              <mock-menuitem
+                aria-selected="true"
+                classname="makeStyles-textField-1"
+                data-value="calm"
+                role="option"
+                selected="true"
+              >
+                Calm
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-textField-1"
+                data-value="waves"
+                role="option"
+                selected="false"
+              >
+                Waves
+              </mock-menuitem>
+              <mock-menuitem
+                aria-selected="false"
+                classname="makeStyles-textField-1"
+                data-value="storm"
+                role="option"
+                selected="false"
+              >
+                Stormy
+              </mock-menuitem>
+            </mock-menulist>
+          </mock-popover>
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
-            style="padding-left: 8px;"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legend-5"
-              style="width: 0.01px;"
+              class="css-ihdtdm"
             >
-              <span>
+              <span
+                class="notranslate"
+              >
                 ​
               </span>
             </legend>
@@ -1285,7 +1196,7 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-r5meod-MuiGrid-root"
     >
       <mock-typography
         gutterbottom="true"
@@ -1295,40 +1206,40 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
       </mock-typography>
     </div>
     <div
-      class="MuiGrid-root makeStyles-extraMargin-3 MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-extraMargin-3 css-r5meod-MuiGrid-root"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-textField-1 MuiFormControl-fullWidth"
+        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-textField-1 css-wb57ya-MuiFormControl-root-MuiTextField-root"
       >
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline css-1ec6xec-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <textarea
             aria-invalid="false"
-            class="MuiInputBase-input MuiOutlinedInput-input makeStyles-textField-1 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline makeStyles-textField-1 css-175746a-MuiInputBase-input-MuiOutlinedInput-input"
             data-testid="comments"
+            id=":r8:"
             name="comments"
             placeholder="Did anything stand out during this survey?"
-            rows="1"
             style="height: 0px; overflow: hidden;"
           />
           <textarea
             aria-hidden="true"
-            class="MuiInputBase-input MuiOutlinedInput-input makeStyles-textField-1 MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline makeStyles-textField-1 css-175746a-MuiInputBase-input-MuiOutlinedInput-input"
             readonly=""
-            style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); width: 100%;"
+            style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding-top: 0px; padding-bottom: 0px; width: 100%;"
             tabindex="-1"
           />
           <fieldset
             aria-hidden="true"
-            class="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
-            style="padding-left: 8px;"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="PrivateNotchedOutline-legend-5"
-              style="width: 0.01px;"
+              class="css-ihdtdm"
             >
-              <span>
+              <span
+                class="notranslate"
+              >
                 ​
               </span>
             </legend>
@@ -1337,62 +1248,48 @@ exports[`SurveyForm calls onSubmit with the form data on submit 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root makeStyles-section-2 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item MuiGrid-justify-content-xs-flex-end"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 makeStyles-section-2 css-1cnlhxv-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
       >
         <a
-          aria-disabled="false"
-          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-4ind5w-MuiButtonBase-root-MuiButton-root"
           href="/sites/1"
-          role="button"
           tabindex="0"
         >
+          Cancel
           <span
-            class="MuiButton-label"
-          >
-            Cancel
-          </span>
-          <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </a>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary"
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-4ind5w-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
+          Clear
           <span
-            class="MuiButton-label"
-          >
-            Clear
-          </span>
-          <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </button>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item"
+        class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-6ftirg-MuiButtonBase-root-MuiButton-root"
           data-testid="submit"
           tabindex="0"
           type="submit"
         >
+          Next
           <span
-            class="MuiButton-label"
-          >
-            Next
-          </span>
-          <span
-            class="MuiTouchRipple-root"
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
         </button>
       </div>

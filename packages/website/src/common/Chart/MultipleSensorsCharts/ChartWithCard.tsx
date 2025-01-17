@@ -1,6 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Grid, GridProps, makeStyles, Theme } from '@material-ui/core';
+import { Grid, GridProps, Theme } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 import { Site, Sources, TimeSeriesSurveyPoint } from 'store/Sites/types';
 import AnalysisCard from './AnalysisCard';
@@ -11,8 +13,8 @@ import type { Dataset } from '../index';
 
 const ChartWithCard = ({
   areSurveysFiltered,
-  availableRanges,
-  cardColumnJustification,
+  availableRanges = [],
+  cardColumnJustification = 'space-between',
   chartEndDate,
   chartStartDate,
   chartTitle,
@@ -26,8 +28,8 @@ const ChartWithCard = ({
   pickerStartDate,
   pointId,
   range,
-  showDatePickers,
-  showRangeButtons,
+  showDatePickers = true,
+  showRangeButtons = true,
   site,
   surveyPoint,
   timeZone,
@@ -106,12 +108,12 @@ const ChartWithCard = ({
 const useStyles = makeStyles((theme: Theme) => ({
   chartWrapper: {
     marginBottom: 20,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: 10,
     },
   },
   chart: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
@@ -133,7 +135,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   card: {
     width: 'fit-content',
     minWidth: 219,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 'inherit',
       maxWidth: 'fit-content',
       margin: '0 auto',
@@ -144,7 +146,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ChartWithCardProps {
   areSurveysFiltered?: boolean;
   availableRanges?: AvailableRange[];
-  cardColumnJustification?: GridProps['justify'];
+  cardColumnJustification?: GridProps['justifyContent'];
   chartEndDate: string;
   chartStartDate: string;
   chartTitle: string;
@@ -168,17 +170,5 @@ interface ChartWithCardProps {
   onStartDateChange: (date: Date | null) => void;
   onRangeChange: (value: RangeValue) => void;
 }
-
-ChartWithCard.defaultProps = {
-  areSurveysFiltered: undefined,
-  cardColumnJustification: 'space-between',
-  hideYAxisUnits: false,
-  pointId: undefined,
-  showDatePickers: true,
-  showRangeButtons: true,
-  surveyPoint: undefined,
-  availableRanges: [],
-  timeZone: undefined,
-};
 
 export default ChartWithCard;

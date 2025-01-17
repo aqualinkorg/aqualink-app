@@ -9,15 +9,14 @@ exports[`Popup should render with given state from Redux store 1`] = `
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root Popup-popupHeader-1"
+        class="MuiCardHeader-root Popup-popupHeader-1 css-149tc0y-MuiCardHeader-root"
       >
         <div
-          class="MuiCardHeader-content Popup-popupHeaderContent-2"
+          class="MuiCardHeader-content Popup-popupHeaderContent-2 css-1jkp9bu-MuiCardHeader-content"
         >
           <mock-typography
             classname="MuiCardHeader-title"
             component="span"
-            display="block"
             variant="h5"
           >
             <span>
@@ -28,13 +27,13 @@ exports[`Popup should render with given state from Redux store 1`] = `
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -44,7 +43,7 @@ exports[`Popup should render with given state from Redux store 1`] = `
               </mock-typography>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -56,10 +55,10 @@ exports[`Popup should render with given state from Redux store 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -69,7 +68,7 @@ exports[`Popup should render with given state from Redux store 1`] = `
               </mock-typography>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1d4pq44-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -94,29 +93,22 @@ exports[`Popup should render with given state from Redux store 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
           style="margin: 1rem 0px 1rem 0px;"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
           >
             <a
               href="/sites/1"
               style="text-decoration: none;"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
-                <span
-                  class="MuiButton-label"
-                >
-                  EXPLORE
-                </span>
-                <span
-                  class="MuiTouchRipple-root"
-                />
+                EXPLORE
               </button>
             </a>
           </div>

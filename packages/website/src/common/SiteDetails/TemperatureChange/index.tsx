@@ -4,15 +4,14 @@ import {
   Card,
   CardContent,
   CardHeader,
-  createStyles,
   Grid,
   Theme,
   Typography,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import { red } from '@mui/material/colors';
+import { createStyles, WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
 import cls from 'classnames';
-import red from '@material-ui/core/colors/red';
 import UpdateInfo from 'common/UpdateInfo';
 import { colors } from 'layout/App/theme';
 import { DailyData } from 'store/Sites/types';

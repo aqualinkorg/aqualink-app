@@ -104,7 +104,7 @@
     "rxjs": "^7",
     "sharp": "^0.32.6",
     "ts-exif-parser": "^0.2.1",
-    "typeorm": "^0.3.18",
+    "typeorm": "^0.3.19",
     "typeorm-naming-strategies": "^1.1.0"
   },
   "devDependencies": {

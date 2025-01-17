@@ -6,10 +6,10 @@ import {
   Container,
   Grid,
   Typography,
-  createStyles,
   Theme,
-  makeStyles,
-} from '@material-ui/core';
+} from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 
 import { useImageAspectRatio } from 'hooks/useImageAspectRatio';
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
       margin: theme.spacing(7, 0, 5),
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         margin: theme.spacing(4, 0, 2),
       },
     },
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
       left: 0,
       right: 0,
       top: 48,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         top: 0,
         bottom: 0,
         display: 'flex',
@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     footPrintImageWrapper: {
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         marginTop: theme.spacing(2),
       },
     },

@@ -4,9 +4,9 @@ import {
   CardContent,
   CardHeader,
   Grid,
-  makeStyles,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { colors } from 'layout/App/theme';
 import {
@@ -16,7 +16,7 @@ import {
   TimeSeriesData,
 } from 'store/Sites/types';
 import requests from 'helpers/requests';
-import WarningIcon from '@material-ui/icons/Warning';
+import WarningIcon from '@mui/icons-material/Warning';
 import { DateTime } from 'luxon-extensions';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';

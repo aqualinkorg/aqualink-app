@@ -1,30 +1,19 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Grid,
-  Box,
-  Typography,
-  TypographyProps,
-} from '@material-ui/core';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import {
-  KeyboardDatePicker,
-  KeyboardDatePickerProps,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { Theme, Grid, Box, Typography, TypographyProps } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
 import { DateTime } from 'luxon-extensions';
+import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { parseISO } from 'date-fns';
 
 const DatePicker = ({
   value,
   dateName,
   dateNameTextVariant,
-  pickerSize,
-  autoOk,
+  autoOk = true,
   timeZone,
   onChange,
   classes,
@@ -36,31 +25,26 @@ const DatePicker = ({
           {`${dateName || 'Date'}:`}
         </Typography>
         <div className={classes.datePicker}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              size={pickerSize}
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <MuiDatePicker
               className={classes.textField}
-              helperText=""
-              disableToolbar
               format="MM/dd/yyyy"
-              name="datePicker"
               maxDate={DateTime.now()
                 .setZone(timeZone || 'UTC')
-                .toFormat('yyyy/MM/dd')}
-              minDate={DateTime.fromMillis(0).toFormat('yyyy/MM/dd')}
-              autoOk={autoOk}
-              showTodayButton
-              value={value || null}
-              onChange={onChange}
-              InputProps={{
-                className: classes.textField,
-                inputProps: { className: classes.smallPadding },
+                .toJSDate()}
+              minDate={DateTime.fromMillis(0).toJSDate()}
+              closeOnSelect={autoOk}
+              value={parseISO(value ?? '')}
+              onChange={(v) => onChange(v)}
+              slotProps={{
+                textField: {
+                  variant: 'standard',
+                  className: classes.textField,
+                },
+                toolbar: { hidden: true },
               }}
-              inputVariant="standard"
-              KeyboardButtonProps={{ className: classes.calendarButton }}
-              keyboardIcon={<CalendarTodayIcon fontSize="small" />}
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </div>
       </Box>
     </Grid>
@@ -72,20 +56,18 @@ const styles = (theme: Theme) =>
     datePicker: {
       marginLeft: '0.5rem',
     },
-    calendarButton: {
-      padding: '0 0 2px 0',
-    },
-    smallPadding: {
-      paddingBottom: 2,
-    },
     textField: {
-      width: 115,
+      width: 120,
       color: 'black',
       '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
         borderColor: 'rgba(0, 0, 0, 0.23)',
       },
       '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
+      },
+      '& input': {
+        paddingTop: 0,
+        paddingBottom: 0,
       },
     },
   });
@@ -94,18 +76,10 @@ interface DatePickerIncomingProps {
   value: string | null;
   dateName?: string;
   dateNameTextVariant?: TypographyProps['variant'];
-  pickerSize?: KeyboardDatePickerProps['size'];
   autoOk?: boolean;
   timeZone: string | null | undefined;
-  onChange: (date: MaterialUiPickersDate, value?: string | null) => void;
+  onChange: (date: Date | null, keyboardInput?: string) => void;
 }
-
-DatePicker.defaultProps = {
-  dateName: undefined,
-  dateNameTextVariant: undefined,
-  pickerSize: undefined,
-  autoOk: true,
-};
 
 type DatePickerProps = DatePickerIncomingProps & WithStyles<typeof styles>;
 

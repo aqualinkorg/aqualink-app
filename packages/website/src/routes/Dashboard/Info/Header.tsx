@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Grid,
-  Typography,
-  Theme,
-  Divider,
-} from '@material-ui/core';
-import EmailIcon from '@material-ui/icons/Email';
+import { Grid, Typography, Theme, Divider } from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import withStyles from '@mui/styles/withStyles';
+import createStyles from '@mui/styles/createStyles';
+import EmailIcon from '@mui/icons-material/Email';
 import classNames from 'classnames';
 
 import { User } from 'store/User/types';

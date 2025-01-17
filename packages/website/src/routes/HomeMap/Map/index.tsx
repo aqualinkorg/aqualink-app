@@ -3,16 +3,19 @@ import { useSelector } from 'react-redux';
 import { Map, TileLayer, Marker, Circle } from 'react-leaflet';
 import L, { LatLng, LatLngBounds, LayersControlEvent } from 'leaflet';
 import {
-  createStyles,
-  withStyles,
-  WithStyles,
   CircularProgress,
   IconButton,
   Snackbar,
   Hidden,
-} from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import MyLocationIcon from '@material-ui/icons/MyLocation';
+  Alert,
+} from '@mui/material';
+import { WithStyles } from '@mui/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles, {
+  CreateCSSProperties,
+  CSSProperties,
+} from '@mui/styles/withStyles';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
@@ -21,12 +24,8 @@ import {
 import { CollectionDetails } from 'store/Collection/types';
 import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
-import FullscreenIcon from '@material-ui/icons/Fullscreen';
-import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
-import {
-  CreateCSSProperties,
-  CSSProperties,
-} from '@material-ui/core/styles/withStyles';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import { mapIconSize } from 'layout/App/theme';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
@@ -51,13 +50,13 @@ const currentLocationMarker = L.divIcon({
 const HomepageMap = ({
   initialCenter,
   initialZoom,
-  showSiteTable,
+  showSiteTable = true,
   setShowSiteTable,
   initialBounds,
   collection,
-  showAlertLevelLegend,
-  showWaterMark,
-  geolocationEnabled,
+  showAlertLevelLegend = true,
+  showWaterMark = true,
+  geolocationEnabled = true,
   defaultLayerName,
   legendBottom,
   legendLeft,
@@ -171,7 +170,7 @@ const HomepageMap = ({
           {currentLocationErrorMessage}
         </Alert>
       </Snackbar>
-      <Hidden smDown>
+      <Hidden mdDown>
         <div className={classes.expandIconButton}>
           <IconButton
             onClick={() => {
@@ -184,6 +183,7 @@ const HomepageMap = ({
                 }
               });
             }}
+            size="large"
           >
             <ExpandIcon color="primary" className={classes.expandIcon} />
           </IconButton>
@@ -206,7 +206,7 @@ const HomepageMap = ({
       {showWaterMark && <div className="mapbox-wordmark" />}
       {geolocationEnabled && (
         <div className={classes.locationIconButton}>
-          <IconButton onClick={onLocationSearch}>
+          <IconButton onClick={onLocationSearch} size="large">
             <MyLocationIcon color="primary" />
           </IconButton>
         </div>
@@ -274,19 +274,6 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
 }
-
-HomepageMap.defaultProps = {
-  showSiteTable: true,
-  setShowSiteTable: undefined,
-  initialBounds: undefined,
-  collection: undefined,
-  showAlertLevelLegend: true,
-  showWaterMark: true,
-  geolocationEnabled: true,
-  defaultLayerName: undefined,
-  legendBottom: undefined,
-  legendLeft: undefined,
-};
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
 

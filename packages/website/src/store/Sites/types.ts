@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import type { ReefCheckSite, ReefCheckSurvey } from 'store/ReefCheckSurveys';
 import { User } from '../User/types';
 
 export type Position = [number, number];
@@ -287,6 +288,8 @@ export interface Site {
   contactInformation?: string;
   maskedSpotterApiToken?: string;
   iframe?: string | null;
+  reefCheckSurveys: ReefCheckSurvey[];
+  reefCheckSite: ReefCheckSite | null;
 }
 
 export interface SiteSketchFab {
@@ -456,4 +459,5 @@ export const siteOptions = [
   'Live streams',
   '3D Models',
   'HOBO loggers',
+  'Reef Check',
 ] as const;

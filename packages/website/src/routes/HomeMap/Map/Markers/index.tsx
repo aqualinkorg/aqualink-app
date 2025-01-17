@@ -84,8 +84,4 @@ interface SiteMarkersProps {
   collection?: CollectionDetails;
 }
 
-SiteMarkers.defaultProps = {
-  collection: undefined,
-};
-
 export default SiteMarkers;

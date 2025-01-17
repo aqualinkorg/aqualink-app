@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  Grid,
-  Typography,
-  createStyles,
-  Theme,
-  makeStyles,
-} from '@material-ui/core';
+import { Grid, Typography, Theme } from '@mui/material';
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 import footprint from '../../assets/img/tracker-page/footprint.png';
 
@@ -49,9 +46,5 @@ const FootPrintImage = ({ imageHeight }: FootPrintImageProps) => {
 interface FootPrintImageProps {
   imageHeight?: number;
 }
-
-FootPrintImage.defaultProps = {
-  imageHeight: undefined,
-};
 
 export default FootPrintImage;

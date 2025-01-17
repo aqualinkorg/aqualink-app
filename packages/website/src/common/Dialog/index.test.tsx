@@ -1,9 +1,9 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { renderWithProviders } from 'utils/test-utils';
 import Dialog from '.';
 
 test('renders as expected', () => {
-  const { container } = render(
+  const { container } = renderWithProviders(
     <Dialog
       open
       onClose={() => {}}
