@@ -14334,6 +14334,11 @@ lazystream@^1.0.0:
   dependencies:
     readable-stream "^2.0.5"
 
+leaflet-markers-canvas@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/leaflet-markers-canvas/-/leaflet-markers-canvas-0.2.2.tgz#fde165d4531c326d9120494aea52b0e753cc48fd"
+  integrity sha512-UU/98qrmljhU6Xl3lrsUAUke4Qb/p8BCfmhiw7L1hHtkVMxdRYgwk7RwUW9QNoPbhnmuyxsc90whKjWVVP5cNw==
+
 leaflet.locatecontrol@^0.79.0:
   version "0.79.0"
   resolved "https://registry.yarnpkg.com/leaflet.locatecontrol/-/leaflet.locatecontrol-0.79.0.tgz#0236b87c699a49f9ddb2f289941fbc0d3c3f8b62"

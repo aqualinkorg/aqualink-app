@@ -7,6 +7,7 @@ import 'react-leaflet-markercluster/dist/styles.min.css';
 import { CollectionDetails } from 'store/Collection/types';
 import { hasDeployedSpotter } from 'helpers/siteUtils';
 import { CircleSiteMarker, SensorSiteMarker } from './SiteMarker';
+import { CanvasMarkersLayer } from './CanvasMarkersLayer';
 
 const hasSpotter = (site: Site) => site.hasHobo || hasDeployedSpotter(site);
 
@@ -18,7 +19,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
   );
 
   return (
-    <>
+    <CanvasMarkersLayer>
       {sitesList.map((site: Site) =>
         sitesList[site.id] && hasSpotter(site) ? (
           <SensorSiteMarker key={`${site.id}`} site={site} />
@@ -26,7 +27,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
           <CircleSiteMarker key={`${site.id}`} site={site} />
         ),
       )}
-    </>
+    </CanvasMarkersLayer>
   );
 };
 
