@@ -45,9 +45,9 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
           }}
           key={`${site.id}-${offset}`}
           color={alertColorFinder(tempWeeklyAlert)}
-          // icon={markerIcon}
+          fillOpacity={1}
           center={[lat, lng + offset]}
-          radius={8}
+          radius={5}
           data-alert={tempWeeklyAlert}
         >
           {isSelected && <Popup site={site} autoOpen={offset === 0} />}
