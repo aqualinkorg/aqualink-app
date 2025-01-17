@@ -540,12 +540,11 @@ exports[`renders as expected 1`] = `
                           </button>
                           <button
                             aria-colindex="4"
-                            aria-current="date"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-qt9k9u-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1736899200000"
                             role="gridcell"
-                            tabindex="0"
+                            tabindex="-1"
                             type="button"
                           >
                             15
@@ -563,11 +562,12 @@ exports[`renders as expected 1`] = `
                           </button>
                           <button
                             aria-colindex="6"
+                            aria-current="date"
                             aria-selected="false"
-                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                            class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-today css-qt9k9u-MuiButtonBase-root-MuiPickersDay-root"
                             data-timestamp="1737072000000"
                             role="gridcell"
-                            tabindex="-1"
+                            tabindex="0"
                             type="button"
                           >
                             17

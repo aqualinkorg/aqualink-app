@@ -1,18 +1,18 @@
-import { Marker } from 'react-leaflet';
+import { CircleMarker, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import { Site } from 'store/Sites/types';
 import {
-  setSiteOnMap,
-  setSearchResult,
   isSelectedOnMapSelector,
+  setSearchResult,
+  setSiteOnMap,
 } from 'store/Homepage/homepageSlice';
-import { useMarkerIcon } from 'helpers/map';
-import { hasDeployedSpotter } from 'helpers/siteUtils';
 import {
   alertColorFinder,
   alertIconFinder,
 } from 'helpers/bleachingAlertIntervals';
+import { useMarkerIcon } from 'helpers/map';
+import { hasDeployedSpotter } from 'helpers/siteUtils';
 import Popup from '../Popup';
 
 // To make sure we can see all the sites all the time, and especially
@@ -26,7 +26,38 @@ interface SiteMarkerProps {
 /**
  * All in one site marker with icon, offset duplicates, and popup built in.
  */
-export const SiteMarker = React.memo(({ site }: SiteMarkerProps) => {
+export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
+  const isSelected = useSelector(isSelectedOnMapSelector(site.id));
+  const dispatch = useDispatch();
+  const { tempWeeklyAlert } = site.collectionData || {};
+
+  if (site.polygon.type !== 'Point') return null;
+
+  const [lng, lat] = site.polygon.coordinates;
+
+  return (
+    <>
+      {LNG_OFFSETS.map((offset) => (
+        <CircleMarker
+          onclick={() => {
+            dispatch(setSearchResult());
+            dispatch(setSiteOnMap(site));
+          }}
+          key={`${site.id}-${offset}`}
+          color={alertColorFinder(tempWeeklyAlert)}
+          // icon={markerIcon}
+          center={[lat, lng + offset]}
+          radius={8}
+          data-alert={tempWeeklyAlert}
+        >
+          {isSelected && <Popup site={site} autoOpen={offset === 0} />}
+        </CircleMarker>
+      ))}
+    </>
+  );
+});
+
+export const SensorSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
   const isSelected = useSelector(isSelectedOnMapSelector(site.id));
   const dispatch = useDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
