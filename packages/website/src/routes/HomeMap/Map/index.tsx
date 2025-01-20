@@ -127,7 +127,7 @@ const HomepageMap = ({
       const pointBounds = L.latLngBounds(latLng, latLng);
       const maxZoom = Math.max(map.getZoom() || 6);
       map.flyToBounds(pointBounds, {
-        duration: 2,
+        animate: false,
         maxZoom,
         paddingTopLeft: L.point(0, 200),
       });
