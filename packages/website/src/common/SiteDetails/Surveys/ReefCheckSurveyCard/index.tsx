@@ -76,7 +76,7 @@ const ReefCheckSurveyCardComponent = ({
               </TableCell>
               <TableCell>Count</TableCell>
               <TableCell className={classes.label}>
-                BLEACHING AND CORAL DIDEASES
+                BLEACHING AND CORAL DISEASES
               </TableCell>
               <TableCell>YES/NO</TableCell>
               <TableCell className={classes.label}>IMPACT</TableCell>
