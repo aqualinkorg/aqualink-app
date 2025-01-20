@@ -90,7 +90,7 @@ const ReefCheckSurveyDetailsComponent = ({
                   className={classes.skeleton}
                 />
               ) : (
-                formatter?.(survey[field]) ?? survey[field] ?? ''
+                survey[field] !== null && (formatter?.(survey[field]) ?? survey[field] ?? '')
               )}
             </Typography>
           </Grid>
