@@ -20,11 +20,14 @@ describe('ReefCheckSurveyCard', () => {
     );
   }
 
-  it('should render date', () => {
+  it('should render date & depth', () => {
     const { getByText } = renderReefCheckSurveyCard();
 
     expect(
       getByText(`Date: ${new Date(mockReefCheckSurvey.date).toLocaleString()}`),
+    ).toBeInTheDocument();
+    expect(
+      getByText(`Depth: ${mockReefCheckSurvey.depth}m`),
     ).toBeInTheDocument();
   });
 
