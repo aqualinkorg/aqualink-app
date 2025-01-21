@@ -64,9 +64,7 @@ const ReefCheckSurveyCardComponent = ({
           </Typography>
           <Typography>Depth: {survey.depth}m</Typography>
         </Box>
-        {survey.submittedBy && (
-          <Typography>User: {survey.submittedBy}</Typography>
-        )}
+        <Typography>User: {survey.submittedBy ?? 'Reef Check'}</Typography>
       </Box>
       <TableContainer className={classes.tableRoot}>
         <Table size="small">
