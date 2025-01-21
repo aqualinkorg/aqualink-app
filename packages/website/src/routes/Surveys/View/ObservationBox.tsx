@@ -25,6 +25,16 @@ const ObservationBox = ({
   const { hoboBottom, hoboSurface, spotterBottom, spotterTop } =
     getCardTemperatureValues(bottomTemperature, topTemperature, date);
 
+  const hasSensorData = some([
+    hoboBottom,
+    hoboSurface,
+    spotterBottom,
+    spotterTop,
+  ]);
+
+  if (!loading && !hasSensorData && !satelliteTemperature) {
+    return null;
+  }
   return (
     <div className={classes.outerDiv}>
       {loading ? (
