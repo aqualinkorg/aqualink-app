@@ -1,5 +1,6 @@
 'use client';
 
+import { pink } from '@mui/material/colors';
 import { createTheme, Theme } from '@mui/material/styles';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
@@ -49,6 +50,9 @@ const theme: Theme = createTheme({
       main: lightBlue,
       dark: darkGreyBlue,
       light: white,
+    },
+    secondary: {
+      main: pink[500],
     },
     text: {
       primary: white,
@@ -191,6 +195,7 @@ theme.components = {
     styleOverrides: {
       root: {
         height: '100%',
+        color: black,
         '& .Mui-disabled': {
           backgroundColor: backgroundGray,
         },
@@ -240,7 +245,7 @@ theme.components = {
     styleOverrides: {
       root: {
         color: 'black',
-        '&:not(.MuiInputBase-multiline)': {
+        '&:not(.MuiInputBase-multiline):not(.MuiInputBase-adornedEnd)': {
           padding: 0,
         },
         '&.Mui-focused': {

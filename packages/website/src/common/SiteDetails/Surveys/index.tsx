@@ -210,6 +210,7 @@ const Surveys = ({ site }: SurveysProps) => {
         spacing={2}
       >
         <Box
+          id="surveys"
           bgcolor="#f5f6f6"
           position="absolute"
           height="100%"

@@ -78,8 +78,8 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
             color="primary"
             component="[object Object]"
             edge="start"
+            href="/map"
             size="large"
-            to="/map"
           >
             <mock-arrowback />
           </mock-iconbutton>

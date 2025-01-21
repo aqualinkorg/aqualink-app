@@ -151,11 +151,10 @@ const Form = ({
             },
           }}
           render={({ field }) => (
-            <DatePicker<Date>
+            <DatePicker
               ref={field.ref}
               className={classes.formField}
-              showToolbar={false}
-              inputFormat="MM/dd/yyyy"
+              format="MM/dd/yyyy"
               closeOnSelect
               value={installationSchedule}
               onChange={(e) => {
@@ -168,21 +167,23 @@ const Form = ({
                 );
                 handleInstallationChange(e);
               }}
-              OpenPickerButtonProps={{
-                'aria-label': 'change date',
+              slotProps={{
+                toolbar: {
+                  hidden: true,
+                },
+
+                textField: {
+                  variant: 'outlined',
+                  fullWidth: true,
+                  error: !!errors.installationSchedule,
+                  helperText: errors?.installationSchedule?.message || '',
+                  className: classes.textField,
+                },
+
+                openPickerButton: {
+                  'aria-label': 'change date',
+                },
               }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  fullWidth
-                  error={!!errors.installationSchedule}
-                  helperText={errors?.installationSchedule?.message || ''}
-                  slotProps={{
-                    htmlInput: { className: classes.textField },
-                  }}
-                />
-              )}
             />
           )}
         />

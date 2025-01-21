@@ -56,7 +56,6 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       href="https://highlights.aqualink.org"
       tabindex="0"
       target="_blank"
-      to=""
     >
       <mock-typography
         style="text-transform: uppercase;"
@@ -70,7 +69,6 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       href="https://bristlemouth.aqualink.org"
       tabindex="0"
       target="_blank"
-      to=""
     >
       <mock-typography
         style="text-transform: uppercase;"

@@ -21,6 +21,7 @@ import SitesList from './SitesList';
 import Surveys from '../Surveys';
 import SurveyPoint from './SurveyPoint';
 import UploadData from './UploadData';
+import { ReefCheckSurveyViewPage } from './ReefCheckSurveys';
 
 const SiteRoutes = () => {
   const dispatch = useDispatch();
@@ -117,6 +118,10 @@ const SiteRoutes = () => {
         <Route path="/:id/points/:pointId" element={<SurveyPoint />} />
         <Route path="/:id/new_survey" element={<Surveys />} />
         <Route path="/:id/survey_details/:sid" element={<Surveys />} />
+        <Route
+          path="/:id/reef_check_survey/:sid"
+          element={<ReefCheckSurveyViewPage />}
+        />
         <Route path="/:id/upload_data" element={<UploadData />} />
       </Routes>
     </>

@@ -263,25 +263,24 @@ const SiteNavBar = ({
                         )}
                       </Button>
                     </Grid>
-                    {site.sensorId &&
-                      (site.status === 'shipped' ||
-                        site.status === 'deployed') && (
-                        <Grid item>
-                          <Button
-                            className={classes.button}
-                            onClick={() =>
-                              setExclusionDatesDeployDialogOpen(true)
-                            }
-                            size="small"
-                            color="primary"
-                            variant="outlined"
-                          >
-                            {site.status === 'shipped'
-                              ? 'MARK AS DEPLOYED'
-                              : 'ADD EXCLUSION DATES'}
-                          </Button>
-                        </Grid>
-                      )}
+                    {(site.status === 'shipped' ||
+                      site.status === 'deployed') && (
+                      <Grid item>
+                        <Button
+                          className={classes.button}
+                          onClick={() =>
+                            setExclusionDatesDeployDialogOpen(true)
+                          }
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        >
+                          {site.status === 'shipped'
+                            ? 'MARK AS DEPLOYED'
+                            : 'ADD EXCLUSION DATES'}
+                        </Button>
+                      </Grid>
+                    )}
                     <Grid item>
                       <Button
                         component={Link}

@@ -11,8 +11,8 @@ exports[`renders as expected 1`] = `
       <mock-iconbutton
         color="primary"
         component="[object Object]"
+        href="/sites/1"
         size="large"
-        to="/sites/1"
       >
         <mock-arrowback />
       </mock-iconbutton>

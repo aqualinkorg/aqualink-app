@@ -29,7 +29,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
     classname="SiteTable-dropdownWrapper-5"
   >
     <div
-      class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1el2auf-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+      class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-12kco1g-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       style="background-color: rgb(70, 154, 187); border-radius: 4px;"
     >
       <div
@@ -146,6 +146,18 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               HOBO loggers
             </mock-typography>
           </mock-menuitem>
+          <mock-menuitem
+            aria-selected="false"
+            data-value="Reef Check"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              style="color: black;"
+            >
+              Reef Check
+            </mock-typography>
+          </mock-menuitem>
         </mock-menulist>
       </mock-popover>
     </div>
@@ -165,7 +177,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         Sort By: 
       </mock-typography>
       <div
-        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 css-4rp9ef-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       >
         <div
           aria-controls=":r1:"

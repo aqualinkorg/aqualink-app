@@ -153,8 +153,13 @@ export const sitesFilterFn = (
       return hasDeployedSpotter(s);
     case 'HOBO loggers':
       return s?.hasHobo;
+    case 'Reef Check':
+      return !!s?.reefCheckSite;
     default:
       console.error(`Unhandled Option: ${filter}`);
+      // This will cause a TS error if there is an unhandled option
+      // eslint-disable-next-line prettier/prettier
+      filter satisfies never;
       return true;
   }
 };

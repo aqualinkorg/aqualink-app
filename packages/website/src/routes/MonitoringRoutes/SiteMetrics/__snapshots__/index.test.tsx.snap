@@ -69,7 +69,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
           Site ID
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-e2mr0a-MuiInputBase-root-MuiOutlinedInput-root"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-3tcely-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
@@ -104,7 +104,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
           Spotter ID
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-e2mr0a-MuiInputBase-root-MuiOutlinedInput-root"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-3tcely-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
@@ -128,7 +128,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
         </div>
       </div>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-4 css-1xp5r68-MuiFormControl-root-MuiTextField-root"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-4 css-1b1fjlj-MuiFormControl-root-MuiTextField-root"
       >
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-47g1cz-MuiFormLabel-root-MuiInputLabel-root"
@@ -139,14 +139,16 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
           start date
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly MuiInputBase-readOnly css-e2mr0a-MuiInputBase-root-MuiOutlinedInput-root"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-1ritcye-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
             aria-label="Choose date, selected date is Jul 20, 2023"
-            aria-readonly="true"
-            class="MuiInputBase-input MuiOutlinedInput-input Mui-readOnly MuiInputBase-readOnly css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+            autocomplete="off"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
             id=":r2:"
+            inputmode="text"
+            placeholder="MM/DD/YYYY"
             readonly=""
             type="text"
             value="07/20/2023"
@@ -173,20 +175,20 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
           classname="css-154ra1s"
         >
           <div
-            class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
+            class="MuiPickersLayout-root css-1y6l765-MuiPickersLayout-root"
           >
             <div
-              class="css-1cwxofe"
+              class="MuiPickersLayout-contentWrapper css-18jb465-MuiPickersLayout-contentWrapper"
             >
               <div
-                class="MuiCalendarPicker-root css-dooxo9-MuiCalendarPicker-root"
+                class="MuiDateCalendar-root css-5wchs2-MuiDateCalendar-root"
               >
                 <div
-                  class="MuiPickersCalendarHeader-root css-1mue8ia-MuiPickersCalendarHeader-root"
+                  class="MuiPickersCalendarHeader-root css-fgwy5w-MuiPickersCalendarHeader-root"
                 >
                   <div
                     aria-live="polite"
-                    class="MuiPickersCalendarHeader-labelContainer css-10fao8b-MuiPickersCalendarHeader-labelContainer"
+                    class="MuiPickersCalendarHeader-labelContainer css-cyfsxc-MuiPickersCalendarHeader-labelContainer"
                     role="presentation"
                   >
                     <div
@@ -194,7 +196,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                     >
                       <div
                         class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
-                        id=":r3:-grid-label"
+                        id=":r4:-grid-label"
                         style="opacity: 1;"
                       >
                         July 2023
@@ -202,7 +204,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                     </div>
                     <mock-iconbutton
                       aria-label="calendar view is open, switch to year view"
-                      classname="MuiPickersCalendarHeader-switchViewButton css-4e2l6-MuiPickersCalendarHeader-switchViewButton"
+                      classname="MuiPickersCalendarHeader-switchViewButton css-v6xlml-MuiPickersCalendarHeader-switchViewButton"
                       size="small"
                     >
                       <svg
@@ -224,15 +226,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                   >
                     <mock-iconbutton
                       aria-label="Previous month"
-                      classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                      classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-previousIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
                       disabled="false"
                       edge="end"
-                      size="small"
+                      size="medium"
                       title="Previous month"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-leftArrowIcon css-1ckov0h-MuiSvgIcon-root"
                         data-testid="ArrowLeftIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -247,15 +249,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                     />
                     <mock-iconbutton
                       aria-label="Next month"
-                      classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                      classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-nextIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
                       disabled="false"
                       edge="start"
-                      size="small"
+                      size="medium"
                       title="Next month"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-rightArrowIcon css-1ckov0h-MuiSvgIcon-root"
                         data-testid="ArrowRightIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -268,22 +270,23 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                   </div>
                 </div>
                 <div
-                  class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-1t66xej-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
+                  class="MuiPickersFadeTransitionGroup-root MuiDateCalendar-viewTransitionContainer css-hwynws-MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer"
                 >
                   <div
                     style="opacity: 1;"
                   >
                     <div
-                      aria-labelledby=":r3:-grid-label"
+                      aria-labelledby=":r4:-grid-label"
+                      class="MuiDayCalendar-root css-q5we01-MuiDayCalendar-root"
                       role="grid"
                     >
                       <div
-                        class="MuiDayPicker-header css-1vi9hgp-MuiDayPicker-header"
+                        class="MuiDayCalendar-header css-1rl1vrc-MuiDayCalendar-header"
                         role="row"
                       >
                         <mock-typography
                           aria-label="Sunday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -291,7 +294,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Monday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -299,7 +302,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Tuesday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -307,7 +310,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Wednesday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -315,7 +318,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Thursday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -323,7 +326,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Friday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -331,7 +334,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Saturday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -339,44 +342,47 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                       </div>
                       <div
-                        class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-18bv5fz-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
+                        class="MuiPickersSlideTransition-root MuiDayCalendar-slideTransition css-1n1xn3x-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition"
                         role="presentation"
                       >
                         <div
-                          class="MuiDayPicker-monthContainer css-1i7aeku-MuiDayPicker-monthContainer"
+                          class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer"
                           role="rowgroup"
                         >
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="1"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688169600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -385,12 +391,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="2"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688256000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -398,8 +407,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               2
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688342400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -407,8 +418,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               3
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688428800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -416,8 +429,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               4
                             </button>
                             <button
+                              aria-colindex="4"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688515200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -425,8 +440,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               5
                             </button>
                             <button
+                              aria-colindex="5"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688601600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -434,8 +451,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               6
                             </button>
                             <button
+                              aria-colindex="6"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688688000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -443,8 +462,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               7
                             </button>
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688774400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -453,12 +474,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="3"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688860800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -466,8 +490,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               9
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1688947200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -475,8 +501,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               10
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689033600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -484,8 +512,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               11
                             </button>
                             <button
+                              aria-colindex="4"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689120000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -493,8 +523,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               12
                             </button>
                             <button
+                              aria-colindex="5"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689206400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -502,8 +534,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               13
                             </button>
                             <button
+                              aria-colindex="6"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689292800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -511,8 +545,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               14
                             </button>
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689379200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -521,12 +557,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="4"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689465600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -534,8 +573,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               16
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689552000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -543,8 +584,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               17
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689638400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -552,8 +595,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               18
                             </button>
                             <button
+                              aria-colindex="4"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689724800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -561,8 +606,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               19
                             </button>
                             <button
+                              aria-colindex="5"
                               aria-selected="true"
-                              class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689811200000"
                               role="gridcell"
                               tabindex="0"
                               type="button"
@@ -573,8 +620,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               />
                             </button>
                             <button
+                              aria-colindex="6"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689897600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -582,8 +631,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               21
                             </button>
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1689984000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -592,12 +643,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="5"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690070400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -605,8 +659,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               23
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690156800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -614,8 +670,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               24
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690243200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -623,8 +681,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               25
                             </button>
                             <button
+                              aria-colindex="4"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690329600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -632,8 +692,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               26
                             </button>
                             <button
+                              aria-colindex="5"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690416000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -641,8 +703,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               27
                             </button>
                             <button
+                              aria-colindex="6"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690502400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -650,8 +714,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               28
                             </button>
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690588800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -660,12 +726,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="6"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690675200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -673,8 +742,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               30
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1690761600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -682,23 +753,23 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               31
                             </button>
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                           </div>
@@ -709,45 +780,50 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                 </div>
               </div>
             </div>
+            <mock-dialogactions
+              classname="MuiPickersLayout-actionBar"
+              ownerstate="[object Object]"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Cancel
+              </button>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                OK
+              </button>
+            </mock-dialogactions>
           </div>
         </mock-dialogcontent>
-        <mock-dialogactions>
-          <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
-            type="button"
-          >
-            Cancel
-          </button>
-          <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
-            type="button"
-          >
-            OK
-          </button>
-        </mock-dialogactions>
       </mock-dialog>
       <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-4 css-1xp5r68-MuiFormControl-root-MuiTextField-root"
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-4 css-1b1fjlj-MuiFormControl-root-MuiTextField-root"
       >
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-47g1cz-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for=":r4:"
-          id=":r4:-label"
+          for=":r5:"
+          id=":r5:-label"
         >
           end date
         </label>
         <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl Mui-readOnly MuiInputBase-readOnly css-e2mr0a-MuiInputBase-root-MuiOutlinedInput-root"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-1ritcye-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             aria-invalid="false"
             aria-label="Choose date, selected date is Oct 20, 2023"
-            aria-readonly="true"
-            class="MuiInputBase-input MuiOutlinedInput-input Mui-readOnly MuiInputBase-readOnly css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r4:"
+            autocomplete="off"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r5:"
+            inputmode="text"
+            placeholder="MM/DD/YYYY"
             readonly=""
             type="text"
             value="10/20/2023"
@@ -774,20 +850,20 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
           classname="css-154ra1s"
         >
           <div
-            class="MuiCalendarOrClockPicker-root css-1vcokmn-MuiCalendarOrClockPicker-root"
+            class="MuiPickersLayout-root css-1y6l765-MuiPickersLayout-root"
           >
             <div
-              class="css-1cwxofe"
+              class="MuiPickersLayout-contentWrapper css-18jb465-MuiPickersLayout-contentWrapper"
             >
               <div
-                class="MuiCalendarPicker-root css-dooxo9-MuiCalendarPicker-root"
+                class="MuiDateCalendar-root css-5wchs2-MuiDateCalendar-root"
               >
                 <div
-                  class="MuiPickersCalendarHeader-root css-1mue8ia-MuiPickersCalendarHeader-root"
+                  class="MuiPickersCalendarHeader-root css-fgwy5w-MuiPickersCalendarHeader-root"
                 >
                   <div
                     aria-live="polite"
-                    class="MuiPickersCalendarHeader-labelContainer css-10fao8b-MuiPickersCalendarHeader-labelContainer"
+                    class="MuiPickersCalendarHeader-labelContainer css-cyfsxc-MuiPickersCalendarHeader-labelContainer"
                     role="presentation"
                   >
                     <div
@@ -795,7 +871,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                     >
                       <div
                         class="MuiPickersCalendarHeader-label css-1chuxo2-MuiPickersCalendarHeader-label"
-                        id=":r5:-grid-label"
+                        id=":r7:-grid-label"
                         style="opacity: 1;"
                       >
                         October 2023
@@ -803,7 +879,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                     </div>
                     <mock-iconbutton
                       aria-label="calendar view is open, switch to year view"
-                      classname="MuiPickersCalendarHeader-switchViewButton css-4e2l6-MuiPickersCalendarHeader-switchViewButton"
+                      classname="MuiPickersCalendarHeader-switchViewButton css-v6xlml-MuiPickersCalendarHeader-switchViewButton"
                       size="small"
                     >
                       <svg
@@ -825,15 +901,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                   >
                     <mock-iconbutton
                       aria-label="Previous month"
-                      classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                      classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-previousIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
                       disabled="false"
                       edge="end"
-                      size="small"
+                      size="medium"
                       title="Previous month"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-leftArrowIcon css-1ckov0h-MuiSvgIcon-root"
                         data-testid="ArrowLeftIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -848,15 +924,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                     />
                     <mock-iconbutton
                       aria-label="Next month"
-                      classname="MuiPickersArrowSwitcher-button css-k8zkc9-MuiPickersArrowSwitcher-button"
+                      classname="MuiPickersArrowSwitcher-button MuiPickersArrowSwitcher-nextIconButton css-1n00uti-MuiPickersArrowSwitcher-button"
                       disabled="false"
                       edge="start"
-                      size="small"
+                      size="medium"
                       title="Next month"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit MuiPickersArrowSwitcher-rightArrowIcon css-1ckov0h-MuiSvgIcon-root"
                         data-testid="ArrowRightIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -869,22 +945,23 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                   </div>
                 </div>
                 <div
-                  class="MuiPickersFadeTransitionGroup-root MuiCalendarPicker-viewTransitionContainer css-1t66xej-MuiPickersFadeTransitionGroup-root-MuiCalendarPicker-viewTransitionContainer"
+                  class="MuiPickersFadeTransitionGroup-root MuiDateCalendar-viewTransitionContainer css-hwynws-MuiPickersFadeTransitionGroup-root-MuiDateCalendar-viewTransitionContainer"
                 >
                   <div
                     style="opacity: 1;"
                   >
                     <div
-                      aria-labelledby=":r5:-grid-label"
+                      aria-labelledby=":r7:-grid-label"
+                      class="MuiDayCalendar-root css-q5we01-MuiDayCalendar-root"
                       role="grid"
                     >
                       <div
-                        class="MuiDayPicker-header css-1vi9hgp-MuiDayPicker-header"
+                        class="MuiDayCalendar-header css-1rl1vrc-MuiDayCalendar-header"
                         role="row"
                       >
                         <mock-typography
                           aria-label="Sunday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -892,7 +969,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Monday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -900,7 +977,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Tuesday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -908,7 +985,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Wednesday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -916,7 +993,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Thursday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -924,7 +1001,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Friday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -932,7 +1009,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                         <mock-typography
                           aria-label="Saturday"
-                          classname="MuiDayPicker-weekDayLabel css-8qgq5u-MuiDayPicker-weekDayLabel"
+                          classname="MuiDayCalendar-weekDayLabel css-jpmu5p-MuiDayCalendar-weekDayLabel"
                           role="columnheader"
                           variant="caption"
                         >
@@ -940,20 +1017,23 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                         </mock-typography>
                       </div>
                       <div
-                        class="PrivatePickersSlideTransition-root MuiDayPicker-slideTransition css-18bv5fz-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition"
+                        class="MuiPickersSlideTransition-root MuiDayCalendar-slideTransition css-1n1xn3x-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition"
                         role="presentation"
                       >
                         <div
-                          class="MuiDayPicker-monthContainer css-1i7aeku-MuiDayPicker-monthContainer"
+                          class="MuiDayCalendar-monthContainer css-4wda5y-MuiDayCalendar-monthContainer"
                           role="rowgroup"
                         >
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="1"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696118400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -961,8 +1041,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               1
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696204800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -970,8 +1052,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               2
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696291200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -979,8 +1063,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               3
                             </button>
                             <button
+                              aria-colindex="4"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696377600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -988,8 +1074,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               4
                             </button>
                             <button
+                              aria-colindex="5"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696464000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -997,8 +1085,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               5
                             </button>
                             <button
+                              aria-colindex="6"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696550400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1006,8 +1096,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               6
                             </button>
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696636800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1016,12 +1108,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="2"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696723200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1029,8 +1124,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               8
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696809600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1038,8 +1135,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               9
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696896000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1047,8 +1146,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               10
                             </button>
                             <button
+                              aria-colindex="4"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1696982400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1056,8 +1157,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               11
                             </button>
                             <button
+                              aria-colindex="5"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697068800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1065,8 +1168,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               12
                             </button>
                             <button
+                              aria-colindex="6"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697155200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1074,8 +1179,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               13
                             </button>
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697241600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1084,12 +1191,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="3"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697328000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1097,8 +1207,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               15
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697414400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1106,8 +1218,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               16
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697500800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1115,8 +1229,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               17
                             </button>
                             <button
+                              aria-colindex="4"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697587200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1124,8 +1240,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               18
                             </button>
                             <button
+                              aria-colindex="5"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697673600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1133,9 +1251,11 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               19
                             </button>
                             <button
+                              aria-colindex="6"
                               aria-current="date"
                               aria-selected="true"
-                              class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin MuiPickersDay-today css-1m0n6vx-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root Mui-selected MuiPickersDay-dayWithMargin MuiPickersDay-today css-qt9k9u-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697760000000"
                               role="gridcell"
                               tabindex="0"
                               type="button"
@@ -1143,8 +1263,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               20
                             </button>
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697846400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1153,12 +1275,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="4"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1697932800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1166,8 +1291,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               22
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698019200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1175,8 +1302,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               23
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698105600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1184,8 +1313,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               24
                             </button>
                             <button
+                              aria-colindex="4"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698192000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1193,8 +1324,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               25
                             </button>
                             <button
+                              aria-colindex="5"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698278400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1202,8 +1335,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               26
                             </button>
                             <button
+                              aria-colindex="6"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698364800000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1211,8 +1346,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               27
                             </button>
                             <button
+                              aria-colindex="7"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698451200000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1221,12 +1358,15 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                             </button>
                           </div>
                           <div
-                            class="MuiDayPicker-weekContainer css-14pb4q3-MuiDayPicker-weekContainer"
+                            aria-rowindex="5"
+                            class="MuiDayCalendar-weekContainer css-1pv2de5-MuiDayCalendar-weekContainer"
                             role="row"
                           >
                             <button
+                              aria-colindex="1"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698537600000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1234,8 +1374,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               29
                             </button>
                             <button
+                              aria-colindex="2"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698624000000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1243,8 +1385,10 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               30
                             </button>
                             <button
+                              aria-colindex="3"
                               aria-selected="false"
-                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-bubnpt-MuiButtonBase-root-MuiPickersDay-root"
+                              class="MuiButtonBase-root MuiPickersDay-root MuiPickersDay-dayWithMargin css-wbk8ya-MuiButtonBase-root-MuiPickersDay-root"
+                              data-timestamp="1698710400000"
                               role="gridcell"
                               tabindex="-1"
                               type="button"
@@ -1252,19 +1396,19 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                               31
                             </button>
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                             <div
-                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-1xitql2-MuiPickersDay-root"
+                              class="MuiPickersDay-root MuiPickersDay-dayWithMargin MuiPickersDay-hiddenDaySpacingFiller MuiPickersDay-hiddenDaySpacingFiller css-ebi9pt-MuiPickersDay-root"
                               role="gridcell"
                             />
                           </div>
@@ -1275,24 +1419,27 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
                 </div>
               </div>
             </div>
+            <mock-dialogactions
+              classname="MuiPickersLayout-actionBar"
+              ownerstate="[object Object]"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Cancel
+              </button>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                OK
+              </button>
+            </mock-dialogactions>
           </div>
         </mock-dialogcontent>
-        <mock-dialogactions>
-          <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
-            type="button"
-          >
-            Cancel
-          </button>
-          <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
-            type="button"
-          >
-            OK
-          </button>
-        </mock-dialogactions>
       </mock-dialog>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-switchContainer-3 css-174grhv-MuiGrid-root"

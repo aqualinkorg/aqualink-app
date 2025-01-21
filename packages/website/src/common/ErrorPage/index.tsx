@@ -1,9 +1,8 @@
 import { Grid, Typography, Box, Button, useTheme } from '@mui/material';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-
-import NavBar from '../NavBar';
-import Footer from '../Footer';
+import Footer from 'common/Footer';
+import NavBar from 'common/NavBar';
 
 const ErrorPage = () => {
   const theme = useTheme();

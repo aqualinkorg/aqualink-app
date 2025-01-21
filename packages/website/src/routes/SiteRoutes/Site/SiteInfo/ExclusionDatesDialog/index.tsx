@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Alert, Theme, Box, Typography, Grid, TextField } from '@mui/material';
+import { Alert, Theme, Box, Typography, Grid } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -14,7 +14,11 @@ import {
 import { setTimeZone } from 'helpers/dates';
 import Dialog, { Action } from 'common/Dialog';
 import siteServices from 'services/siteServices';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import {
+  DatePicker,
+  LocalizationProvider,
+  TimePicker,
+} from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ConfirmationDialog from './ConfirmationDialog';
 
@@ -240,10 +244,9 @@ const ExclusionDatesDialog = ({
             >
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker<Date>
+                  <DatePicker
                     className={classes.textField}
-                    showToolbar={false}
-                    inputFormat="MM/dd/yyyy"
+                    format="MM/dd/yyyy"
                     closeOnSelect
                     // size="small"
                     // fullWidth
@@ -258,41 +261,39 @@ const ExclusionDatesDialog = ({
                         ? setDeployDateTime
                         : setMaintainStartDateTime
                     }
-                    OpenPickerButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        error={
+                    slotProps={{
+                      toolbar: {
+                        hidden: true,
+                      },
+
+                      textField: {
+                        className: classes.textField,
+                        variant: 'outlined',
+                        error:
                           dialogType === 'deploy'
                             ? pickerError !== ''
-                            : startPickerError !== ''
-                        }
-                        helperText={
+                            : startPickerError !== '',
+                        helperText:
                           dialogType === 'deploy'
                             ? pickerError
-                            : startPickerError
-                        }
-                        slotProps={{
-                          htmlInput: {
-                            className: classes.textField,
-                          },
-                        }}
-                      />
-                    )}
+                            : startPickerError,
+                      },
+
+                      openPickerButton: {
+                        'aria-label': 'change date',
+                      },
+                    }}
                   />
                 </LocalizationProvider>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker<Date>
+                  <TimePicker
                     className={classes.textField}
                     // size="small"
                     closeOnSelect
                     // fullWidth
-                    inputFormat="HH:mm"
+                    format="HH:mm"
                     value={
                       dialogType === 'deploy'
                         ? deployDateTime
@@ -303,30 +304,24 @@ const ExclusionDatesDialog = ({
                         ? setDeployDateTime
                         : setMaintainStartDateTime
                     }
-                    OpenPickerButtonProps={{
-                      'aria-label': 'change time',
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        error={
+                    slotProps={{
+                      textField: {
+                        className: classes.textField,
+                        variant: 'outlined',
+                        error:
                           dialogType === 'deploy'
                             ? pickerError !== ''
-                            : startPickerError !== ''
-                        }
-                        helperText={
+                            : startPickerError !== '',
+                        helperText:
                           dialogType === 'deploy'
                             ? pickerError
-                            : startPickerError
-                        }
-                        slotProps={{
-                          htmlInput: {
-                            className: classes.textField,
-                          },
-                        }}
-                      />
-                    )}
+                            : startPickerError,
+                      },
+
+                      openPickerButton: {
+                        'aria-label': 'change time',
+                      },
+                    }}
                   />
                 </LocalizationProvider>
               </Grid>
@@ -343,61 +338,55 @@ const ExclusionDatesDialog = ({
                 <Grid container item spacing={1}>
                   <Grid item xs={12} sm={6}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker<Date>
+                      <DatePicker
                         className={classes.textField}
-                        showToolbar={false}
-                        inputFormat="MM/dd/yyyy"
+                        format="MM/dd/yyyy"
                         // size="small"
                         closeOnSelect
                         // fullWidth
                         // showTodayButton
                         value={maintainEndDateTime}
                         onChange={setMaintainEndDateTime}
-                        OpenPickerButtonProps={{
-                          'aria-label': 'change date',
+                        slotProps={{
+                          toolbar: {
+                            hidden: true,
+                          },
+
+                          textField: {
+                            className: classes.textField,
+                            variant: 'outlined',
+                            error: endPickerError !== '',
+                            helperText: endPickerError,
+                          },
+
+                          openPickerButton: {
+                            'aria-label': 'change date',
+                          },
                         }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            error={endPickerError !== ''}
-                            helperText={endPickerError}
-                            slotProps={{
-                              htmlInput: {
-                                className: classes.textField,
-                              },
-                            }}
-                          />
-                        )}
                       />
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DatePicker<Date>
+                      <TimePicker
                         className={classes.textField}
                         closeOnSelect
                         // size="small"
                         // fullWidth
-                        inputFormat="HH:mm"
+                        format="HH:mm"
                         value={maintainEndDateTime}
                         onChange={setMaintainEndDateTime}
-                        OpenPickerButtonProps={{
-                          'aria-label': 'change time',
+                        slotProps={{
+                          textField: {
+                            className: classes.textField,
+                            variant: 'outlined',
+                            error: endPickerError !== '',
+                            helperText: endPickerError,
+                          },
+                          openPickerButton: {
+                            'aria-label': 'change time',
+                          },
                         }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            error={endPickerError !== ''}
-                            helperText={endPickerError}
-                            slotProps={{
-                              htmlInput: {
-                                className: classes.textField,
-                              },
-                            }}
-                          />
-                        )}
                       />
                     </LocalizationProvider>
                   </Grid>
@@ -429,6 +418,10 @@ const styles = (theme: Theme) =>
       },
       '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.main,
+      },
+      '& input': {
+        paddingTop: 0,
+        paddingBottom: 0,
       },
     },
   });

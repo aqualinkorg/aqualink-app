@@ -10,6 +10,9 @@ describe('Featured Media Card', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
+      reefCheckSurveyList: {
+        list: [],
+      },
       user: {
         userInfo: mockUser,
       },

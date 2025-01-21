@@ -1826,7 +1826,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
           minwidth="220"
         >
           <mock-card
-            classname="AnalysisCard-AnalysisCardCard-25"
+            classname="AnalysisCard-AnalysisCardCard-23"
           >
             <mock-typography
               color="textSecondary"
@@ -1891,7 +1891,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       title=""
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30"
+                        classname="AnalysisCard-values-28"
                         style="color: rgb(107, 193, 225);"
                         variant="subtitle2"
                       >
@@ -1903,7 +1903,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -1916,7 +1916,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -1929,7 +1929,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <mock-typography
-                      classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                      classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                       color="textSecondary"
                       variant="h5"
                     >
@@ -2042,7 +2042,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -2107,7 +2107,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -2119,7 +2119,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2132,7 +2132,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2145,7 +2145,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2224,7 +2224,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -2289,7 +2289,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -2301,7 +2301,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2314,7 +2314,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2327,7 +2327,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2406,7 +2406,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
             minwidth="220"
           >
             <mock-card
-              classname="AnalysisCard-AnalysisCardCard-25"
+              classname="AnalysisCard-AnalysisCardCard-23"
             >
               <mock-typography
                 color="textSecondary"
@@ -2471,7 +2471,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                         title=""
                       >
                         <mock-typography
-                          classname="AnalysisCard-values-30"
+                          classname="AnalysisCard-values-28"
                           style="color: rgb(250, 141, 0);"
                           variant="subtitle2"
                         >
@@ -2483,7 +2483,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2495,7 +2495,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
@@ -2507,7 +2507,7 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <mock-typography
-                        classname="AnalysisCard-values-30 AnalysisCard-lightFont-29"
+                        classname="AnalysisCard-values-28 AnalysisCard-lightFont-27"
                         color="textSecondary"
                         variant="h5"
                       >
