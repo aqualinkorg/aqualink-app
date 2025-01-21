@@ -20,7 +20,7 @@ describe('ReefCheckSurveyCard', () => {
     );
   }
 
-  it('should render date & depth', () => {
+  it('should render correctly', () => {
     const { getByText } = renderReefCheckSurveyCard();
 
     expect(
@@ -29,6 +29,7 @@ describe('ReefCheckSurveyCard', () => {
     expect(
       getByText(`Depth: ${mockReefCheckSurvey.depth}m`),
     ).toBeInTheDocument();
+    expect(getByText('User: Reef Check')).toBeInTheDocument();
   });
 
   it('should render user if submittedBy is present', () => {
