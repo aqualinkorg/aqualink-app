@@ -20,11 +20,14 @@ describe('ReefCheckSurveyCard', () => {
     );
   }
 
-  it('should render date', () => {
+  it('should render date & depth', () => {
     const { getByText } = renderReefCheckSurveyCard();
 
     expect(
       getByText(`Date: ${new Date(mockReefCheckSurvey.date).toLocaleString()}`),
+    ).toBeInTheDocument();
+    expect(
+      getByText(`Depth: ${mockReefCheckSurvey.depth}m`),
     ).toBeInTheDocument();
   });
 
@@ -52,7 +55,7 @@ describe('ReefCheckSurveyCard', () => {
         'Count',
         'INVERTEBRATES (2)',
         'Count',
-        'BLEACHING AND CORAL DIDEASES',
+        'BLEACHING AND CORAL DISEASES',
         'YES/NO',
         'IMPACT',
         'YES/NO',
