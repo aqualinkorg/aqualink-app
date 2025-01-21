@@ -17,7 +17,10 @@ import withStyles, {
 } from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
-import { searchResultSelector } from 'store/Homepage/homepageSlice';
+import {
+  searchResultSelector,
+  siteOnMapSelector,
+} from 'store/Homepage/homepageSlice';
 import { CollectionDetails } from 'store/Collection/types';
 import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
@@ -67,6 +70,7 @@ const HomepageMap = ({
     useState<string>();
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
+  const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<Map>(null);
 
   const onLocationSearch = () => {
@@ -114,6 +118,21 @@ const HomepageMap = ({
       }
     }
   }, [searchResult]);
+
+  useEffect(() => {
+    const map = ref.current?.leafletElement;
+    if (map && siteOnMap?.polygon.type === 'Point') {
+      const [lng, lat] = siteOnMap.polygon.coordinates;
+      const latLng = [lat, lng] as [number, number];
+      const pointBounds = L.latLngBounds(latLng, latLng);
+      const maxZoom = Math.max(map.getZoom() || 6);
+      map.flyToBounds(pointBounds, {
+        duration: 2,
+        maxZoom,
+        paddingTopLeft: L.point(0, 200),
+      });
+    }
+  }, [siteOnMap]);
 
   const onBaseLayerChange = ({ name }: LayersControlEvent) => {
     setLegendName(name);
