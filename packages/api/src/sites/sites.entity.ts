@@ -167,7 +167,7 @@ export class Site {
 
   maskedSpotterApiToken?: string;
 
-  waterQuality?: string[];
+  waterQualitySources?: string[];
 
   @Expose()
   get applied(): boolean {
