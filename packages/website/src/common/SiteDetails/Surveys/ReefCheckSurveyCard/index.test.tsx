@@ -65,7 +65,7 @@ describe('ReefCheckSurveyCard', () => {
 
     expect(getByRole('link', { name: 'VIEW DETAILS' })).toHaveAttribute(
       'href',
-      `/reef_check_survey/${mockReefCheckSurvey.id}`,
+      `reef_check_survey/${mockReefCheckSurvey.id}`,
     );
   });
 });

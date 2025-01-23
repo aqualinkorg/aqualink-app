@@ -7,12 +7,15 @@ import { mockSite } from 'mocks/mockSite';
 import { mockReefCheckSurvey } from 'mocks/mockReefCheckSurvey';
 import { SelectedSiteState } from 'store/Sites/types';
 import theme from 'layout/App/theme';
+import * as navigation from 'next/navigation';
 import { formatDate } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyViewPage } from '.';
 import * as organismsTableModule from './ReefCheckSurveyOrganismsTable';
 import * as substratesModule from './ReefCheckSurveySubstratesTable';
 
 jest.mock('common/NavBar', () => 'Mock-NavBar');
+jest.mock('./ReefCheckSurveyOrganismsTable');
+jest.mock('./ReefCheckSurveySubstratesTable');
 
 describe('ReefCheckSurveyViewPage', () => {
   const mockStore = configureStore([]);
@@ -23,6 +26,9 @@ describe('ReefCheckSurveyViewPage', () => {
     organismsTableModule,
     'ReefCheckSurveyOrganismsTable',
   );
+  const useParamsSpy = jest
+    .spyOn(navigation, 'useParams')
+    .mockReturnValue({ id: '1', sid: '1' });
 
   const reefCheckSurveySubstratesTableSpy = jest.spyOn(
     substratesModule,
@@ -52,6 +58,7 @@ describe('ReefCheckSurveyViewPage', () => {
   afterAll(() => {
     reefCheckSurveyOrganismsTableSpy.mockRestore();
     reefCheckSurveySubstratesTableSpy.mockRestore();
+    useParamsSpy.mockRestore();
     scrollToSpy.mockRestore();
   });
 
