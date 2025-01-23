@@ -78,7 +78,11 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
       Object.entries(timeSeriesData || {})
         .map(([key, val]) => {
           const values = val
-            .find((x) => x.type === source)
+            .find(
+              (x) =>
+                // hui is specific type of sonde, look for hui as well when looking for sonde
+                x.type === source || (source === 'sonde' && x.type === 'hui'),
+            )
             ?.data.map((x) => x.value);
           if (!values) return [undefined, undefined];
           return [key, getMeanCalculationFunction(source)(values)];
