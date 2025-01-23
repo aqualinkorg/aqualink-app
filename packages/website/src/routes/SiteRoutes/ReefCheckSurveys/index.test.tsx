@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { RootState } from 'store/configure';
@@ -38,25 +37,12 @@ describe('ReefCheckSurveyViewPage', () => {
         survey: mockReefCheckSurvey,
       },
     } as Partial<RootState>);
-    const mockSiteId = 1;
-    const mockSurveyId = 1;
 
     store.dispatch = jest.fn();
     const renderResult = render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <MemoryRouter
-            initialEntries={[
-              `/sites/${mockSiteId}/reefCheckSurvey/${mockSurveyId}`,
-            ]}
-          >
-            <Routes>
-              <Route
-                path="/sites/:id/reefCheckSurvey/:surveyId"
-                element={<ReefCheckSurveyViewPage />}
-              />
-            </Routes>
-          </MemoryRouter>
+          <ReefCheckSurveyViewPage />
         </ThemeProvider>
       </Provider>,
     );

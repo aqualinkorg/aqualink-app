@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { reefCheckSurveyGetRequest } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
@@ -49,7 +50,7 @@ export const ReefCheckSurveyViewPage = () => {
             color="primary"
             startIcon={<ArrowBack />}
             component={Link}
-            to={`/sites/${siteId}`}
+            href={`/sites/${siteId}`}
           >
             <Typography style={{ textTransform: 'none' }}>
               Back to site

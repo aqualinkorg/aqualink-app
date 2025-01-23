@@ -1,5 +1,4 @@
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 
@@ -23,9 +22,7 @@ describe('Search', () => {
 
     element = render(
       <Provider store={store}>
-        <Router>
-          <Search />
-        </Router>
+        <Search />
       </Provider>,
     ).container;
   });

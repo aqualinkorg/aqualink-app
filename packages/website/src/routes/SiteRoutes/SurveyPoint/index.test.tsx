@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
@@ -54,14 +53,7 @@ describe('Survey Point Detail Page', () => {
     element = render(
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <Router initialEntries={['/sites/1/points/1']}>
-            <Routes>
-              <Route
-                path="/sites/:id/points/:pointId"
-                element={<SurveyPoint />}
-              />
-            </Routes>
-          </Router>
+          <SurveyPoint />
         </Provider>
       </ThemeProvider>,
     ).container;

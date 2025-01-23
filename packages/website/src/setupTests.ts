@@ -18,6 +18,21 @@ Object.defineProperties(globalThis, {
   ReadableStream: { value: ReadableStream },
 });
 
+jest.mock('next/navigation', () => {
+  return {
+    __esModule: true,
+    useRouter: jest.fn(() => ({
+      push: jest.fn(),
+      replace: jest.fn(),
+    })),
+    useSearchParams: jest.fn(() => ({
+      // get: jest.fn(),
+    })),
+    usePathname: jest.fn(),
+    useParams: jest.fn(() => ({})),
+  };
+});
+
 function mockIcon(iconName: string) {
   jest.mock(`@mui/icons-material/${iconName}`, () => ({
     __esModule: true,

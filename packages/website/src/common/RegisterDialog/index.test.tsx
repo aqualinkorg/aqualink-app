@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { mockUser } from 'mocks/mockUser';
 
 import RegisterDialog from '.';
@@ -23,13 +22,11 @@ describe('RegisterDialog', () => {
 
     element = render(
       <Provider store={store}>
-        <Router>
-          <RegisterDialog
-            open
-            handleRegisterOpen={jest.fn}
-            handleSignInOpen={jest.fn}
-          />
-        </Router>
+        <RegisterDialog
+          open
+          handleRegisterOpen={jest.fn}
+          handleSignInOpen={jest.fn}
+        />
       </Provider>,
     ).container;
   });

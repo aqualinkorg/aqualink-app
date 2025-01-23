@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import { parseLatestData } from 'store/Sites/helpers';
 import { mockUser } from 'mocks/mockUser';
@@ -27,9 +26,7 @@ describe('Sensor Card', () => {
 
     element = render(
       <Provider store={store}>
-        <Router>
-          <Sensor depth={mockSite.depth} id={mockSite.id} data={data} />
-        </Router>
+        <Sensor depth={mockSite.depth} id={mockSite.id} data={data} />
       </Provider>,
     ).container;
   });

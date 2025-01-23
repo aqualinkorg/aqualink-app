@@ -6,7 +6,6 @@ import { mockSite } from 'mocks/mockSite';
 import { mockDataRange } from 'mocks/mockDataRange';
 import { mockTimeSeries } from 'mocks/mockTimeSeries';
 import { mockGranularDailyData } from 'mocks/mockGranularDailyData';
-import { MemoryRouter } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import { mockSurveyList } from 'mocks/mockSurveyList';
 import { mockSurvey } from 'mocks/mockSurvey';
@@ -60,25 +59,19 @@ describe('MultipleSensorsCharts', () => {
     (jest as any).setSystemTime(new Date('2023-06-28T21:00:00.000Z'));
 
     element = render(
-      <MemoryRouter
-        initialEntries={[
-          { pathname: '/sites/1', search: '?start=2022-05-28&end=2022-06-28' },
-        ]}
-      >
-        <ThemeProvider theme={theme}>
-          <SnackbarProvider>
-            <Provider store={store}>
-              <MultipleSensorsCharts
-                site={mockSite}
-                disableGutters
-                displayOceanSenseCharts
-                surveysFiltered={false}
-                hasAdditionalSensorData={false}
-              />
-            </Provider>
-          </SnackbarProvider>
-        </ThemeProvider>
-      </MemoryRouter>,
+      <ThemeProvider theme={theme}>
+        <SnackbarProvider>
+          <Provider store={store}>
+            <MultipleSensorsCharts
+              site={mockSite}
+              disableGutters
+              displayOceanSenseCharts
+              surveysFiltered={false}
+              hasAdditionalSensorData={false}
+            />
+          </Provider>
+        </SnackbarProvider>
+      </ThemeProvider>,
     ).container;
 
     jest.useRealTimers();
