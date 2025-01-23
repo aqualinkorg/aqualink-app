@@ -196,10 +196,13 @@ export async function getCardData(
           return currMin < min ? currMin : min;
         }, new Date().toISOString());
 
-        const maxDate = inLastYear.reduce((max, curr) => {
+        const maxDate =
+          inLastYear.length > 0
+            ? inLastYear.reduce((max, curr) => {
           const currMax = curr.maxDate || curr.dataUpload.maxDate;
           return currMax > max ? currMax : max;
-        }, new Date(0).toISOString());
+              }, new Date(0).toISOString())
+            : new Date().toISOString();
 
         const [data] = await timeSeriesRequest({
           siteId,
@@ -209,7 +212,7 @@ export async function getCardData(
           hourly: true,
         });
 
-        const pointId = inLastYear[0].surveyPoint;
+        const pointId = inLastYear[0]?.surveyPoint;
         const samePoint =
           pointId !== null
             ? inLastYear.reduce(
