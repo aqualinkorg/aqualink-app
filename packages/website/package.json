@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cross-env next dev",
-    "build": "cross-env next build",
+    "start": "next dev --turbopack",
+    "build": "next build",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore --max-warnings 0",
