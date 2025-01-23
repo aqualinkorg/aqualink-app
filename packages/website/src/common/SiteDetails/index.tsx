@@ -319,7 +319,7 @@ const SiteDetails = ({
           titleItems={featuredMediaTitleItems()}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
-          loadingImage={playIcon}
+          loadingImage={playIcon.src}
         >
           {/* video first, then 3d model, then image */}
           {site && !videoStream && site.sketchFab?.uuid && (
