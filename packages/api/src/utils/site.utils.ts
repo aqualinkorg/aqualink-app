@@ -283,9 +283,7 @@ export const hasWaterQualityDataSubQuery = async (
 ): Promise<Map<number, string[]>> => {
   const latestData: LatestData[] = await latestDataRepository
     .createQueryBuilder('water_quality_data')
-    .select('site_id', 'siteId')
-    .addSelect('metric')
-    .addSelect('source')
+    .select('site_id', 'siteId', 'metric', 'source')
     .where(`source != '${SourceType.HOBO}'`)
     .getRawMany();
 
