@@ -57,10 +57,13 @@ const ReefCheckSurveyCardComponent = ({
   return (
     <Paper className={classes.paper}>
       <Box display="flex" justifyContent="space-between">
-        <Typography>Date: {new Date(survey.date).toLocaleString()}</Typography>
-        {survey.submittedBy && (
-          <Typography>User: {survey.submittedBy}</Typography>
-        )}
+        <Box display="flex" gap={2}>
+          <Typography>
+            Date: {new Date(survey.date).toLocaleString()}
+          </Typography>
+          <Typography>Depth: {survey.depth}m</Typography>
+        </Box>
+        <Typography>User: {survey.submittedBy ?? 'Reef Check'}</Typography>
       </Box>
       <TableContainer className={classes.tableRoot}>
         <Table size="small">
@@ -75,7 +78,7 @@ const ReefCheckSurveyCardComponent = ({
               </TableCell>
               <TableCell>Count</TableCell>
               <TableCell className={classes.label}>
-                BLEACHING AND CORAL DIDEASES
+                BLEACHING AND CORAL DISEASES
               </TableCell>
               <TableCell>YES/NO</TableCell>
               <TableCell className={classes.label}>IMPACT</TableCell>

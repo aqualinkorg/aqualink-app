@@ -784,7 +784,7 @@ exports[`renders as expected 1`] = `
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-s43td4-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r6:"
+          id=":r3:"
           name="installationResources"
           placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
           style="height: 0px; overflow: hidden;"

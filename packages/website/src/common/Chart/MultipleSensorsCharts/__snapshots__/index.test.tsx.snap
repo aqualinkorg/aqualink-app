@@ -141,9 +141,6 @@ exports[`MultipleSensorsCharts should render with given state from Redux store 1
               type="button"
             >
               Download
-              <span
-                class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
-              />
             </button>
           </mock-dialogactions>
         </mock-dialog>

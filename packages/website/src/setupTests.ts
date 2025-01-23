@@ -188,3 +188,10 @@ stubMuiComponent('TableRow');
 stubMuiComponent('TableCell');
 stubMuiComponent('TablePagination');
 stubMuiComponent('TableSortLabel');
+
+jest.doMock(`@mui/x-date-pickers/DatePicker`, () => ({
+  ...jest.requireActual(`@mui/x-date-pickers/DatePicker`),
+  __esModule: true,
+  default: `mock-date-picker`,
+  DatePicker: `mock-date-picker`,
+}));

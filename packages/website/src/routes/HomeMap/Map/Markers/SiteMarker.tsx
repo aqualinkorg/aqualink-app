@@ -1,17 +1,18 @@
-import { Marker, useMap } from 'react-leaflet';
+import React from 'react';
+import { CircleMarker, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Site } from 'store/Sites/types';
 import {
-  siteOnMapSelector,
-  setSiteOnMap,
+  isSelectedOnMapSelector,
   setSearchResult,
+  setSiteOnMap,
 } from 'store/Homepage/homepageSlice';
-import { useMarkerIcon } from 'helpers/map';
-import { hasDeployedSpotter } from 'helpers/siteUtils';
 import {
   alertColorFinder,
   alertIconFinder,
 } from 'helpers/bleachingAlertIntervals';
+import { useMarkerIcon } from 'helpers/map';
+import { hasDeployedSpotter } from 'helpers/siteUtils';
 import Popup from '../Popup';
 
 // To make sure we can see all the sites all the time, and especially
@@ -20,21 +21,54 @@ const LNG_OFFSETS = [-360, 0, 360];
 
 interface SiteMarkerProps {
   site: Site;
-  setCenter: (inputMap: L.Map, latLng: [number, number], zoom: number) => void;
 }
 
 /**
  * All in one site marker with icon, offset duplicates, and popup built in.
  */
-export default function SiteMarker({ site, setCenter }: SiteMarkerProps) {
-  const siteOnMap = useSelector(siteOnMapSelector);
-  const map = useMap();
+export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
+  const isSelected = useSelector(isSelectedOnMapSelector(site.id));
+  const dispatch = useDispatch();
+  const { tempWeeklyAlert } = site.collectionData || {};
+
+  if (site.polygon.type !== 'Point') return null;
+
+  const [lng, lat] = site.polygon.coordinates;
+
+  return (
+    <>
+      {LNG_OFFSETS.map((offset) => (
+        <CircleMarker
+          eventHandlers={{
+            click: () => {
+              dispatch(setSearchResult());
+              dispatch(setSiteOnMap(site));
+            },
+          }}
+          key={`${site.id}-${offset}`}
+          center={[lat, lng + offset]}
+          radius={5}
+          fillColor={alertColorFinder(tempWeeklyAlert)}
+          fillOpacity={1}
+          color="black"
+          weight={1}
+          data-alert={tempWeeklyAlert}
+        >
+          {isSelected && <Popup site={site} autoOpen={offset === 0} />}
+        </CircleMarker>
+      ))}
+    </>
+  );
+});
+
+export const SensorSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
+  const isSelected = useSelector(isSelectedOnMapSelector(site.id));
   const dispatch = useDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
   const markerIcon = useMarkerIcon(
     hasDeployedSpotter(site),
     site.hasHobo,
-    siteOnMap?.id === site.id,
+    isSelected,
     alertColorFinder(tempWeeklyAlert),
     alertIconFinder(tempWeeklyAlert),
   );
@@ -42,26 +76,25 @@ export default function SiteMarker({ site, setCenter }: SiteMarkerProps) {
   if (site.polygon.type !== 'Point') return null;
 
   const [lng, lat] = site.polygon.coordinates;
+
   return (
     <>
-      {LNG_OFFSETS.map((offset) => {
-        return (
-          <Marker
-            eventHandlers={{
-              click: () => {
-                if (map) setCenter(map, [lat, lng], 6);
-                dispatch(setSearchResult());
-                dispatch(setSiteOnMap(site));
-              },
-            }}
-            key={`${site.id}-${offset}`}
-            icon={markerIcon}
-            position={[lat, lng + offset]}
-          >
-            <Popup site={site} autoOpen={offset === 0} />
-          </Marker>
-        );
-      })}
+      {LNG_OFFSETS.map((offset) => (
+        <Marker
+          eventHandlers={{
+            click: () => {
+              dispatch(setSearchResult());
+              dispatch(setSiteOnMap(site));
+            },
+          }}
+          key={`${site.id}-${offset}`}
+          icon={markerIcon}
+          position={[lat, lng + offset]}
+          data-alert={tempWeeklyAlert}
+        >
+          {isSelected && <Popup site={site} autoOpen={offset === 0} />}
+        </Marker>
+      ))}
     </>
   );
-}
+});

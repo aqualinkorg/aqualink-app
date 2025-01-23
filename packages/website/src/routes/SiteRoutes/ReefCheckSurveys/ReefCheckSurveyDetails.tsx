@@ -65,6 +65,11 @@ const surveyFields = [
 // eslint-disable-next-line prettier/prettier
 ] satisfies Array<NonNullable<SurveyFields[keyof SurveyFields]>>;
 
+const formatFieldValue = (value: any, formatter?: (v: any) => string) => {
+  if (value != null && formatter) return formatter(value);
+  return value ?? '';
+};
+
 const ReefCheckSurveyDetailsComponent = ({
   classes,
 }: ReefCheckSurveyDetailsProps) => {
@@ -89,7 +94,7 @@ const ReefCheckSurveyDetailsComponent = ({
                   className={classes.skeleton}
                 />
               ) : (
-                formatter?.(survey[field]) ?? survey[field] ?? ''
+                formatFieldValue(survey[field], formatter)
               )}
             </Typography>
           </Grid>
