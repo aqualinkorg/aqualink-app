@@ -287,7 +287,7 @@ export const getWaterQualityDataSubQuery = async (
     .select('site_id', 'siteId')
     .addSelect('metric')
     .addSelect('source')
-    .where(`source in ['${SourceType.HUI}', '${SourceType.SONDE}']`)
+    .where(`source in ('${SourceType.HUI}', '${SourceType.SONDE}')`)
     .getRawMany();
 
   const sondeMetrics = [
