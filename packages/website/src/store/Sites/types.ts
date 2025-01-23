@@ -288,7 +288,7 @@ export interface Site {
   contactInformation?: string;
   maskedSpotterApiToken?: string;
   iframe?: string | null;
-  waterQuality?: string[];
+  waterQualitySources?: string[];
   reefCheckSurveys: ReefCheckSurvey[];
   reefCheckSite: ReefCheckSite | null;
 }

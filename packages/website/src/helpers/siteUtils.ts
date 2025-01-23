@@ -153,7 +153,7 @@ export const sitesFilterFn = (
     case 'HOBO loggers':
       return s?.hasHobo;
     case 'Water quality':
-      return s?.waterQuality?.length;
+      return s?.waterQualitySources?.length;
     case 'Reef Check':
       return !!s?.reefCheckSite;
     default:

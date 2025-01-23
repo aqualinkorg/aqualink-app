@@ -10,7 +10,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ObjectLiteral, Repository } from 'typeorm';
-import { groupBy, mapValues, some, camelCase } from 'lodash';
+import { groupBy, mapValues, some } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
@@ -23,6 +23,7 @@ import { LatestData } from '../time-series/latest-data.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { getHistoricalMonthlyMeans, getMMM } from './temperature';
 import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Site Utils');
@@ -278,21 +279,23 @@ export const hasHoboDataSubQuery = async (
   return hasHoboDataSet;
 };
 
-export const hasWaterQualityDataSubQuery = async (
+export const getWaterQualityDataSubQuery = async (
   latestDataRepository: Repository<LatestData>,
 ): Promise<Map<number, string[]>> => {
   const latestData: LatestData[] = await latestDataRepository
     .createQueryBuilder('water_quality_data')
-    .select('site_id', 'siteId', 'metric', 'source')
-    .where(`source != '${SourceType.HOBO}'`)
+    .select('site_id', 'siteId')
+    .addSelect('metric')
+    .addSelect('source')
+    .where(`source in ['${SourceType.HUI}', '${SourceType.SONDE}']`)
     .getRawMany();
 
   const sondeMetrics = [
-    'odoConcentration',
-    'cholorophyllConcentration',
-    'ph',
-    'salinity',
-    'turbidity',
+    Metric.ODO_CONCENTRATION,
+    Metric.CHOLOROPHYLL_CONCENTRATION,
+    Metric.PH,
+    Metric.SALINITY,
+    Metric.TURBIDITY,
   ];
 
   const waterQualityDataSet = new Map<number, string[]>();
@@ -307,7 +310,7 @@ export const hasWaterQualityDataSubQuery = async (
           // eslint-disable-next-line fp/no-mutating-methods
           waterQualityDataSet.get(id)!.push('hui');
         }
-        if (sondeMetrics.includes(camelCase(siteData.metric))) {
+        if (sondeMetrics.includes(siteData.metric)) {
           // eslint-disable-next-line fp/no-mutation
           sondeMetricsCount += 1;
           if (sondeMetricsCount >= 3) {
