@@ -59,7 +59,7 @@ const SurveyCard = ({
             variant="rectangular"
             height="100%"
             width="100%"
-            image={pointImageSkeleton}
+            image={pointImageSkeleton.src}
           >
             {survey && (
               <Link href={`/sites/${siteId}/survey_details/${survey.id}`}>

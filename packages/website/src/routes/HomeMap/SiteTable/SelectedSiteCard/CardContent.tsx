@@ -118,7 +118,7 @@ const SelectedSiteCardContent = ({
           <Box position="relative" height="100%" minHeight={300}>
             <LoadingSkeleton
               className={classes.imageBorderRadius}
-              image={featuredImageLoading}
+              image={featuredImageLoading.src}
               loading={loading}
               variant="rectangular"
               height="100%"

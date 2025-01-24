@@ -18,7 +18,7 @@ const NotFoundPage = ({ classes }: NotFoundPageProps) => {
 const styles = () =>
   createStyles({
     background: {
-      backgroundImage: `url("${NotFoundBG}")`,
+      backgroundImage: `url("${NotFoundBG.src}")`,
       height: '100vh',
       display: 'flex',
       alignItems: 'center',
