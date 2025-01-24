@@ -202,16 +202,6 @@ theme.components = {
       },
     },
   },
-  MuiDatePicker: {
-    styleOverrides: {
-      root: {
-        color: black,
-      },
-      textFiled: {
-        color: black,
-      },
-    },
-  },
   MuiPickersDay: {
     styleOverrides: {
       root: {
@@ -233,10 +223,10 @@ theme.components = {
       },
     },
   },
-  MuiYearPicker: {
+  MuiPickersYear: {
     styleOverrides: {
-      root: {
-        color: 'black',
+      yearButton: {
+        color: black,
       },
     },
   },

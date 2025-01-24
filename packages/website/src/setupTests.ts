@@ -73,6 +73,7 @@ jest.mock('@react-leaflet/core', () => ({
 jest.mock('react-leaflet', () => ({
   ...jest.requireActual('react-leaflet'),
   Popup: 'mock-LeafletPopup',
+  // @ts-ignore
   MapContainer: forwardRef((props, ref) => {
     // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-unused-vars
     ref = { current: { fitBounds: jest.fn() } };
