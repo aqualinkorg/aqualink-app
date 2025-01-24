@@ -32,14 +32,14 @@ body {
 }
 
 .leaflet-popup-content-wrapper {
-  border-radius: 4px;
-  padding: 0px;
+  border-radius: 4px !important;
+  padding: 0px !important;
 }
 
 .leaflet-popup-content {
   width: 100% !important;
   border-radius: 4px;
-  margin: 0px;
+  margin: 0px !important;
 }
 
 .leaflet-popup-tip {

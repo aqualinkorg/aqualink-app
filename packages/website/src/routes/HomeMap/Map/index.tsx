@@ -124,7 +124,7 @@ const HomepageMap = ({
   //   setLegendName(name);
   // };
   useEffect(() => {
-    const map = ref.current?.leafletElement;
+    const map = ref.current;
     if (map && siteOnMap?.polygon.type === 'Point') {
       const [lng, lat] = siteOnMap.polygon.coordinates;
       const latLng = [lat, lng] as [number, number];
