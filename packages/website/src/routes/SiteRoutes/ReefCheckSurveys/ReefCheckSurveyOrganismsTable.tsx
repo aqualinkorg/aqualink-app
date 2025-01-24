@@ -19,7 +19,6 @@ export const ReefCheckSurveyOrganismsTable = ({
 }: ReefCheckSurveyOrganismsTableProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
   const rows =
-    // eslint-disable-next-line fp/no-mutating-methods
     survey?.organisms.filter(filter).sort(segmentsTotalSortComparator) ?? [];
 
   if (error) {

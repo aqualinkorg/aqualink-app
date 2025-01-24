@@ -22,7 +22,6 @@ export function useGoogleTranslation() {
       'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
     );
     document.head.appendChild(script);
-    // eslint-disable-next-line fp/no-mutation
     (window as any).googleTranslateElementInit = googleTranslateElementInit;
   };
 
@@ -35,10 +34,8 @@ export function useGoogleTranslation() {
     const translationElem = document.getElementById('google_translate_element');
 
     if (translationOpen && translationElem) {
-      // eslint-disable-next-line fp/no-mutation
       translationElem.style.display = 'inline';
     } else if (translationElem) {
-      // eslint-disable-next-line fp/no-mutation
       translationElem.style.display = 'none';
     }
 

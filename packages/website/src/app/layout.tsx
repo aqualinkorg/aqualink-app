@@ -6,6 +6,7 @@ import theme from 'layout/App/theme';
 import ClientProviders from './providers';
 
 import '../index.css';
+import '../layout/App/App.css';
 import 'leaflet/dist/leaflet.css';
 import '../assets/css/bootstrap.css';
 

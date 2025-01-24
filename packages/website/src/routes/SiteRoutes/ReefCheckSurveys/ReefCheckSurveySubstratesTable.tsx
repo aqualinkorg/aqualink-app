@@ -19,7 +19,6 @@ export const ReefCheckSurveySubstrates = ({
 }: ReefCheckSurveySubstratesTableProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
   const rows =
-    // eslint-disable-next-line fp/no-mutating-methods
     survey?.substrates.filter(filter).sort(segmentsTotalSortComparator) ?? [];
 
   if (error) {

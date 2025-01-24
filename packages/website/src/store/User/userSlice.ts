@@ -42,7 +42,6 @@ export const createUser = createAsyncThunk<
   ) => {
     let user;
     try {
-      // eslint-disable-next-line fp/no-mutation
       user = (await userServices.createUser(email, password))?.user;
       const token = await user?.getIdToken();
 

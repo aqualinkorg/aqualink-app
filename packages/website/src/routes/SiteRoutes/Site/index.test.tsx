@@ -1,4 +1,3 @@
-/* eslint-disable fp/no-mutation */
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';

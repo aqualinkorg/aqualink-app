@@ -14,15 +14,13 @@ const plugin = {
     const chartWidth = chartArea.right - chartArea.left;
     const day = 1;
     ctx.save();
-    // eslint-disable-next-line fp/no-mutation
     ctx.fillStyle = options.color;
     if (options.xTicksFontWeight) {
-      // eslint-disable-next-line no-param-reassign,fp/no-mutation
+      // eslint-disable-next-line no-param-reassign
       chart.scales['x-axis-0'].options.ticks.fontSize =
         (chartWidth * options.xTicksFontWeight) / 100;
     }
     const nTicks = ticksPositions.length;
-    // eslint-disable-next-line fp/no-mutation
     for (let i = 0; i < nTicks; i += day) {
       // Color every other day
       if (i % 2 === 0) {

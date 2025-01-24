@@ -226,7 +226,6 @@ export async function getCardData(
         };
       }
       case 'sonde': {
-        // eslint-disable-next-line fp/no-mutating-methods
         uploads.sort((a, b) => {
           if (a.maxDate && b.maxDate) {
             const timeA = new Date(a.maxDate).getTime();

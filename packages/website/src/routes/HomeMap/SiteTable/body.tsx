@@ -145,7 +145,6 @@ const SiteTableBody = ({
   const idToIndexMap = useMemo(
     () =>
       tableData.reduce((acc, item, index) => {
-        // eslint-disable-next-line fp/no-mutation
         acc[item.tableData.id] = index;
         return acc;
       }, {} as Record<number, number>),

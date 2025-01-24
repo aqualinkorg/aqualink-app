@@ -11,7 +11,6 @@ import { forwardRef } from 'react';
 
 // Polyfill to address Jest+jsdom issue: https://github.com/jsdom/jsdom/issues/2524
 // Define the globals that are missing
-// eslint-disable-next-line fp/no-mutating-methods
 Object.defineProperties(globalThis, {
   TextDecoder: { value: TextDecoder },
   TextEncoder: { value: TextEncoder },
@@ -75,7 +74,7 @@ jest.mock('react-leaflet', () => ({
   ...jest.requireActual('react-leaflet'),
   Popup: 'mock-LeafletPopup',
   MapContainer: forwardRef((props, ref) => {
-    // eslint-disable-next-line fp/no-mutation, no-param-reassign, @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-unused-vars
     ref = { current: { fitBounds: jest.fn() } };
     return 'mock-MapContainer';
   }),
@@ -120,7 +119,6 @@ function stubMuiComponent(componentName: string, namedExports: any = {}) {
 /**
  * fix: `matchMedia` not present, legacy browsers require a polyfill
  */
-// eslint-disable-next-line fp/no-mutation
 global.matchMedia =
   global.matchMedia ||
   // eslint-disable-next-line func-names
@@ -134,7 +132,6 @@ global.matchMedia =
     };
   };
 
-// eslint-disable-next-line fp/no-mutation
 process.env.NEXT_PUBLIC_API_BASE_URL =
   'https://programize-dot-ocean-systems.uc.r.appspot.com/api/';
 

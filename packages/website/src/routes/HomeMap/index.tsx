@@ -96,7 +96,6 @@ const Homepage = ({ classes }: HomepageProps) => {
       document.getElementsByClassName(`${className}--opened`)[0] ||
       document.getElementsByClassName(`${className}--closed`)[0];
     if (!drawer) return;
-    // eslint-disable-next-line fp/no-mutation
     drawer.scrollTop = 0;
   });
 

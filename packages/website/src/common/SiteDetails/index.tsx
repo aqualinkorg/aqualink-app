@@ -60,7 +60,6 @@ function dateRangeWithinInterval(
   interval: Interval,
   dataRange: DataRange[],
 ): boolean {
-  // eslint-disable-next-line fp/no-mutation
   for (let index = 0; index < dataRange.length; index += 1) {
     if (interval.contains(DateTime.fromISO(dataRange[index].maxDate))) {
       return true;
@@ -77,7 +76,6 @@ function sourceWithinDataRangeInterval(
   if (!dataRanges) return false;
 
   const ranges = Object.entries(dataRanges);
-  // eslint-disable-next-line fp/no-mutation
   for (let index = 0; index < ranges.length; index += 1) {
     if (
       ranges[index][1].find(

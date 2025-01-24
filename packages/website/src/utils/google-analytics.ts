@@ -42,7 +42,6 @@ export const useGATagManager = () => {
     `;
 
     const script = document.createElement('script');
-    // eslint-disable-next-line fp/no-mutation
     script.innerHTML = getScript();
     document.head.appendChild(script);
 

@@ -78,9 +78,7 @@ function getComparator<Key extends keyof any>(
 // Sorts an array without mutating it. Uses a list of comparators to achieve multi-column sorting.
 function stableSort<T>(array: T[], ...comparators: ((a: T, b: T) => number)[]) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  // eslint-disable-next-line fp/no-mutating-methods
   stabilizedThis.sort((a, b) => {
-    // eslint-disable-next-line fp/no-mutation
     for (let i = 0; i < comparators.length; i += 1) {
       const order = comparators[i](a[0], b[0]);
       if (order !== 0) {

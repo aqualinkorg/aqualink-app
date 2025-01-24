@@ -27,7 +27,6 @@ const ReefCheckSurveyCardComponent = ({
   classes,
 }: ReefCheckSurveyCardProps) => {
   const stats = groupBy(
-    // eslint-disable-next-line fp/no-mutating-methods
     survey.organisms
       .map((organism) => ({
         ...organism,

@@ -1,4 +1,3 @@
-/* eslint-disable fp/no-mutating-methods */
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, TextField } from '@mui/material';

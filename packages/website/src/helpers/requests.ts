@@ -13,7 +13,6 @@ const instance = axios.create({
 const cachedInstance = setupCache(instance);
 
 const agent = (contentType?: string) => {
-  // eslint-disable-next-line fp/no-mutation
   cachedInstance.defaults.headers['Content-Type'] =
     contentType || 'application/json';
 
