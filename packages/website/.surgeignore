@@ -1,0 +1,2 @@
+# Exclude sites 3000-9999 from deployment because of surge limits (4500 files and ~430MB)
+sites/[3-9][0-9][0-9][0-9]*.{html,txt}

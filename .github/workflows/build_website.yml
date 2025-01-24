@@ -66,6 +66,11 @@ jobs:
         working-directory: packages/website/build
         run: cp index.html 200.html
 
+      - name: Move .surgeignore
+        if: steps.build_website.outcome == 'success' && github.event.pull_request.number != null
+        working-directory: packages/website
+        run: cp .surgeignore build/.surgeignore
+
       - name: Deploy pull request on surge
         if: steps.build_website.outcome == 'success' && github.event.pull_request.number != null
         uses: dswistowski/surge-sh-action@v1
