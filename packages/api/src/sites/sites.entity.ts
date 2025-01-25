@@ -167,6 +167,8 @@ export class Site {
 
   maskedSpotterApiToken?: string;
 
+  waterQualitySources?: string[];
+
   @Expose()
   get applied(): boolean {
     return !!this.siteApplication?.permitRequirements;

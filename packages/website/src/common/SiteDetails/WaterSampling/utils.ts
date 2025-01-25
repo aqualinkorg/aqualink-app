@@ -176,8 +176,12 @@ export async function getCardData(
     );
 
     const uploads =
-      uploadHistory.filter((x) => x.dataUpload.sensorTypes.includes(source)) ||
-      [];
+      uploadHistory.filter(
+        (x) =>
+          x.dataUpload.sensorTypes.includes(source) ||
+          // hui is specific type of sonde, look for hui as well when looking for sonde
+          (source === 'sonde' && x.dataUpload.sensorTypes.includes('hui')),
+      ) || [];
     if (uploads.length < 1) {
       return {};
     }
@@ -196,10 +200,13 @@ export async function getCardData(
           return currMin < min ? currMin : min;
         }, new Date().toISOString());
 
-        const maxDate = inLastYear.reduce((max, curr) => {
-          const currMax = curr.maxDate || curr.dataUpload.maxDate;
-          return currMax > max ? currMax : max;
-        }, new Date(0).toISOString());
+        const maxDate =
+          inLastYear.length > 0
+            ? inLastYear.reduce((max, curr) => {
+                const currMax = curr.maxDate || curr.dataUpload.maxDate;
+                return currMax > max ? currMax : max;
+              }, new Date(0).toISOString())
+            : new Date().toISOString();
 
         const [data] = await timeSeriesRequest({
           siteId,
@@ -209,7 +216,7 @@ export async function getCardData(
           hourly: true,
         });
 
-        const pointId = inLastYear[0].surveyPoint;
+        const pointId = inLastYear[0]?.surveyPoint;
         const samePoint =
           pointId !== null
             ? inLastYear.reduce(

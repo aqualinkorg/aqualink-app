@@ -148,6 +148,18 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
           </mock-menuitem>
           <mock-menuitem
             aria-selected="false"
+            data-value="Water quality"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              style="color: black;"
+            >
+              Water quality
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            aria-selected="false"
             data-value="Reef Check"
             role="option"
             selected="false"
