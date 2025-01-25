@@ -51,8 +51,9 @@ import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
 import { TemperatureChange } from './TemperatureChange';
 
+/**  Show only the last year of HUI data, should match with {@link getCardData} */
 const acceptHUIInterval = Interval.fromDateTimes(
-  DateTime.now().minus({ years: 2 }),
+  DateTime.now().minus({ years: 1 }),
   DateTime.now(),
 );
 
@@ -158,7 +159,11 @@ const SiteDetails = ({
         MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
 
       const hasHUI =
-        latestData.some((x) => x.source === 'hui') ||
+        latestData.some(
+          (x) =>
+            x.source === 'hui' &&
+            acceptHUIInterval.contains(DateTime.fromISO(x.timestamp)),
+        ) ||
         sourceWithinDataRangeInterval(
           acceptHUIInterval,
           'hui',

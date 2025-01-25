@@ -288,6 +288,7 @@ export interface Site {
   contactInformation?: string;
   maskedSpotterApiToken?: string;
   iframe?: string | null;
+  waterQualitySources?: string[];
   reefCheckSurveys: ReefCheckSurvey[];
   reefCheckSite: ReefCheckSite | null;
 }
@@ -459,5 +460,6 @@ export const siteOptions = [
   'Live streams',
   '3D Models',
   'HOBO loggers',
+  'Water quality',
   'Reef Check',
 ] as const;
