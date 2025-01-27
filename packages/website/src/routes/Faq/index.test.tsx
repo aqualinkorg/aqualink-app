@@ -1,8 +1,6 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { mockUser } from 'mocks/mockUser';
 
 import Faq from '.';
@@ -26,9 +24,7 @@ describe('Faq', () => {
 
     element = render(
       <Provider store={store}>
-        <Router>
-          <Faq />
-        </Router>
+        <Faq />
       </Provider>,
     ).container;
   });

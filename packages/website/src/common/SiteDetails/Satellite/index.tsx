@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Card,
   CardContent,
@@ -128,7 +127,7 @@ const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
         <UpdateInfo
           relativeTime={relativeTime}
           timeText="Last data received"
-          image={satellite}
+          image={satellite.src}
           imageText="NOAA"
           live={false}
           frequency="daily"

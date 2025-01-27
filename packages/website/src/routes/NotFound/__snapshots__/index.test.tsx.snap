@@ -10,7 +10,7 @@ exports[`renders as expected 1`] = `
     >
       <img
         alt="404 Not Found"
-        src="404_click.png"
+        src="/img.jpg"
       />
     </a>
   </div>

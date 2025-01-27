@@ -1,16 +1,15 @@
-import React from 'react';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import NotFoundButton from '../../assets/img/404_click.png';
 import NotFoundBG from '../../assets/img/404_background.jpg';
 
 const NotFoundPage = ({ classes }: NotFoundPageProps) => {
   return (
     <div className={classes.background}>
-      <Link to="/map">
-        <img src={NotFoundButton} alt="404 Not Found" />
+      <Link href="/map">
+        <img src={NotFoundButton.src} alt="404 Not Found" />
       </Link>
     </div>
   );
@@ -19,7 +18,7 @@ const NotFoundPage = ({ classes }: NotFoundPageProps) => {
 const styles = () =>
   createStyles({
     background: {
-      backgroundImage: `url("${NotFoundBG}")`,
+      backgroundImage: `url("${NotFoundBG.src}")`,
       height: '100vh',
       display: 'flex',
       alignItems: 'center',

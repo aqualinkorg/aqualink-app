@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useCallback } from 'react';
+import { useState, ChangeEvent, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Theme,
@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useForm, Controller } from 'react-hook-form';
 
 import { diveLocationSelector } from 'store/Survey/surveySlice';
@@ -322,7 +322,7 @@ function SurveyForm({ siteId, timeZone = null, onSubmit }: SurveyFormProps) {
         <Grid item>
           <Button
             component={Link}
-            to={`/sites/${siteId}`}
+            href={`/sites/${siteId}`}
             onClick={resetForm}
             color="primary"
             variant="outlined"

@@ -352,7 +352,6 @@ export const parseLatestData = (
   );
 
   // sort data by timestamp ASCENDING but prioritize spotter data
-  // eslint-disable-next-line fp/no-mutating-methods
   const sorted = filtered.sort((x, y) => {
     // if spotter data is available and, use it.
     if (x.source === 'spotter' && y.source !== 'spotter') {

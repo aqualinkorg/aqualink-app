@@ -1,4 +1,5 @@
-import { LatLng } from 'leaflet';
+'use client';
+
 import { maxBy, meanBy, snakeCase } from 'lodash';
 
 import {
@@ -37,7 +38,7 @@ export const findSiteById = (sites: Site[], siteId: string): Site | null => {
 export const findInitialSitePosition = (
   sites: Site[],
   initialSiteId?: string,
-): LatLng | null => {
+): [number, number] | null => {
   const initialSite =
     (initialSiteId && findSiteById(sites, initialSiteId)) ||
     maxBy(
@@ -50,10 +51,10 @@ export const findInitialSitePosition = (
 
   // If the polygon type is a Point, return its coordinates
   if (initialSite?.polygon.type === 'Point') {
-    return new LatLng(
+    return [
       initialSite.polygon.coordinates[1],
       initialSite.polygon.coordinates[0],
-    );
+    ];
   }
 
   // If the polygon type is a Polygon, return the coordinates of its centroid
@@ -67,7 +68,7 @@ export const findInitialSitePosition = (
       (coords) => coords[0],
     );
 
-    return new LatLng(centroidLat, centroidLng);
+    return [centroidLat, centroidLng];
   }
 
   return null;

@@ -2,7 +2,6 @@ import { Box, Link, Paper, Theme, Typography, Skeleton } from '@mui/material';
 import { createStyles, WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 
-import React from 'react';
 import { useSelector } from 'react-redux';
 import cls from 'classnames';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
@@ -33,7 +32,7 @@ export const ReefCheckSurveySummaryComponent = ({
             formatDate(survey?.date ?? '')
           )}
         </Typography>
-        <img src={reefCheckLogo} width={180} alt="Reef Check Logo" />
+        <img src={reefCheckLogo.src} width={180} alt="Reef Check Logo" />
       </Box>
       <Box className={classes.columnCenter} flexShrink={0}>
         <Typography variant="h4">

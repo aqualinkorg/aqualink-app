@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import { SurveyPoints } from 'store/Sites/types';
@@ -24,13 +24,13 @@ interface SiteSurveyPoints {
 function SitesTable() {
   const classes = useStyles();
 
-  const [sitesSurveyPoints, setSitesSurveyPoints] = React.useState<
+  const [sitesSurveyPoints, setSitesSurveyPoints] = useState<
     SiteSurveyPoints[]
   >([]);
 
   const user = useSelector(userInfoSelector);
 
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
       if (!user || !user.administeredSites) return;
       const result = await Promise.all(

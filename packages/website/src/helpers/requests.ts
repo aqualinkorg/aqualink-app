@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { isUndefined, omitBy } from 'lodash';
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     Accept: 'application/json, text/html',
     crossDomain: true,
@@ -13,7 +13,6 @@ const instance = axios.create({
 const cachedInstance = setupCache(instance);
 
 const agent = (contentType?: string) => {
-  // eslint-disable-next-line fp/no-mutation
   cachedInstance.defaults.headers['Content-Type'] =
     contentType || 'application/json';
 

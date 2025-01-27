@@ -1,8 +1,6 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { mockReefCheckSurvey } from 'mocks/mockReefCheckSurvey';
 import { ReefCheckSurvey } from 'store/ReefCheckSurveys';
-import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import theme from 'layout/App/theme';
 import { ReefCheckSurveyCard } from '.';
@@ -11,11 +9,9 @@ describe('ReefCheckSurveyCard', () => {
   function renderReefCheckSurveyCard(overrides: Partial<ReefCheckSurvey> = {}) {
     return render(
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <ReefCheckSurveyCard
-            survey={{ ...mockReefCheckSurvey, ...overrides }}
-          />
-        </BrowserRouter>
+        <ReefCheckSurveyCard
+          survey={{ ...mockReefCheckSurvey, ...overrides }}
+        />
       </ThemeProvider>,
     );
   }
@@ -69,7 +65,7 @@ describe('ReefCheckSurveyCard', () => {
 
     expect(getByRole('link', { name: 'VIEW DETAILS' })).toHaveAttribute(
       'href',
-      `/reef_check_survey/${mockReefCheckSurvey.id}`,
+      `reef_check_survey/${mockReefCheckSurvey.id}`,
     );
   });
 });

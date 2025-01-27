@@ -535,13 +535,10 @@ const selectedSiteSlice = createSlice({
             const oldValues = oldTimeSeries[key]?.filter(
               (x) => !newTypes?.includes(x.type),
             );
-            // eslint-disable-next-line fp/no-mutation
             merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
           } else if (key in oldTimeSeries) {
-            // eslint-disable-next-line fp/no-mutation
             merged[key] = oldTimeSeries[key];
           } else {
-            // eslint-disable-next-line fp/no-mutation
             merged[key] = newTimeSeries[key];
           }
         });

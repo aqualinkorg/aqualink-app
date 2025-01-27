@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import Footer from 'common/Footer';
 import NavBar from 'common/NavBar';
-import React from 'react';
+import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
 import requests from 'helpers/requests';

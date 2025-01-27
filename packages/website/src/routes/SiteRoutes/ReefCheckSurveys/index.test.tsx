@@ -1,7 +1,5 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { RootState } from 'store/configure';
@@ -9,12 +7,15 @@ import { mockSite } from 'mocks/mockSite';
 import { mockReefCheckSurvey } from 'mocks/mockReefCheckSurvey';
 import { SelectedSiteState } from 'store/Sites/types';
 import theme from 'layout/App/theme';
+import * as navigation from 'next/navigation';
 import { formatDate } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyViewPage } from '.';
 import * as organismsTableModule from './ReefCheckSurveyOrganismsTable';
 import * as substratesModule from './ReefCheckSurveySubstratesTable';
 
 jest.mock('common/NavBar', () => 'Mock-NavBar');
+jest.mock('./ReefCheckSurveyOrganismsTable');
+jest.mock('./ReefCheckSurveySubstratesTable');
 
 describe('ReefCheckSurveyViewPage', () => {
   const mockStore = configureStore([]);
@@ -25,6 +26,9 @@ describe('ReefCheckSurveyViewPage', () => {
     organismsTableModule,
     'ReefCheckSurveyOrganismsTable',
   );
+  const useParamsSpy = jest
+    .spyOn(navigation, 'useParams')
+    .mockReturnValue({ id: '1', sid: '1' });
 
   const reefCheckSurveySubstratesTableSpy = jest.spyOn(
     substratesModule,
@@ -39,25 +43,12 @@ describe('ReefCheckSurveyViewPage', () => {
         survey: mockReefCheckSurvey,
       },
     } as Partial<RootState>);
-    const mockSiteId = 1;
-    const mockSurveyId = 1;
 
     store.dispatch = jest.fn();
     const renderResult = render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <MemoryRouter
-            initialEntries={[
-              `/sites/${mockSiteId}/reefCheckSurvey/${mockSurveyId}`,
-            ]}
-          >
-            <Routes>
-              <Route
-                path="/sites/:id/reefCheckSurvey/:surveyId"
-                element={<ReefCheckSurveyViewPage />}
-              />
-            </Routes>
-          </MemoryRouter>
+          <ReefCheckSurveyViewPage />
         </ThemeProvider>
       </Provider>,
     );
@@ -67,6 +58,7 @@ describe('ReefCheckSurveyViewPage', () => {
   afterAll(() => {
     reefCheckSurveyOrganismsTableSpy.mockRestore();
     reefCheckSurveySubstratesTableSpy.mockRestore();
+    useParamsSpy.mockRestore();
     scrollToSpy.mockRestore();
   });
 

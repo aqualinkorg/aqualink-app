@@ -17,9 +17,9 @@ import L, { GridLayer } from 'leaflet';
     _initTile(tile: HTMLImageElement) {
       originalInitTile.call(this, tile);
       const tileSize = this.getTileSize();
-      // eslint-disable-next-line no-param-reassign,fp/no-mutation
+      // eslint-disable-next-line no-param-reassign
       tile.style.width = `${tileSize.x + 1}px`;
-      // eslint-disable-next-line no-param-reassign,fp/no-mutation
+      // eslint-disable-next-line no-param-reassign
       tile.style.height = `${tileSize.y + 1}px`;
     },
   });

@@ -1,6 +1,6 @@
+import React from 'react';
 import { CircleMarker, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
 import { Site } from 'store/Sites/types';
 import {
   isSelectedOnMapSelector,
@@ -39,9 +39,11 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
     <>
       {LNG_OFFSETS.map((offset) => (
         <CircleMarker
-          onclick={() => {
-            dispatch(setSearchResult());
-            dispatch(setSiteOnMap(site));
+          eventHandlers={{
+            click: () => {
+              dispatch(setSearchResult());
+              dispatch(setSiteOnMap(site));
+            },
           }}
           key={`${site.id}-${offset}`}
           center={[lat, lng + offset]}
@@ -79,9 +81,11 @@ export const SensorSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
     <>
       {LNG_OFFSETS.map((offset) => (
         <Marker
-          onClick={() => {
-            dispatch(setSearchResult());
-            dispatch(setSiteOnMap(site));
+          eventHandlers={{
+            click: () => {
+              dispatch(setSearchResult());
+              dispatch(setSiteOnMap(site));
+            },
           }}
           key={`${site.id}-${offset}`}
           icon={markerIcon}

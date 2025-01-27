@@ -1,7 +1,6 @@
 import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
 import { mockSite } from 'mocks/mockSite';
-import React from 'react';
 import { mockCollection } from 'mocks/mockCollection';
 import { renderWithProviders } from 'utils/test-utils';
 import Uploads from '.';

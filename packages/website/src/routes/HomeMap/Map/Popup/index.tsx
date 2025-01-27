@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Button,
   Card,
@@ -12,11 +12,11 @@ import {
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import { Link } from 'react-router-dom';
-import { Popup as LeafletPopup, useLeaflet } from 'react-leaflet';
+import Link from 'next/link';
+import { Popup as LeafletPopup, useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
-import type { LatLngTuple } from 'leaflet';
+import type { LatLngTuple, Popup as LeafletPopupType } from 'leaflet';
 import type { Site } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
@@ -27,9 +27,9 @@ import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
 const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
-  const { map } = useLeaflet();
+  const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
-  const popupRef = useRef<LeafletPopup>(null);
+  const popupRef = useRef<LeafletPopupType>(null);
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
 
@@ -51,11 +51,10 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
       siteOnMap?.polygon.type === 'Point' &&
       autoOpen
     ) {
-      const { leafletElement: popup } = popupRef.current;
       const [lng, lat] = siteOnMap.polygon.coordinates;
 
       const point: LatLngTuple = [lat, lng];
-      popup.setLatLng(point).openOn(map);
+      popupRef.current.setLatLng(point).openOn(map);
     }
   }, [autoOpen, map, site.id, siteOnMap]);
 
@@ -137,7 +136,7 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                href={`/sites/${site.id}`}
               >
                 <Button
                   onClick={onExploreButtonClick}

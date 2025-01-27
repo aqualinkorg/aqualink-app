@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';

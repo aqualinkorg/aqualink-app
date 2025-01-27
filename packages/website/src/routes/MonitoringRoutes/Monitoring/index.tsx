@@ -1,9 +1,9 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { colors } from 'layout/App/theme';
-import React from 'react';
+import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { compereAdminLevel } from 'store/User/helpers';
 import { AdminLevel } from 'store/User/types';
 import { userInfoSelector } from 'store/User/userSlice';
@@ -57,7 +57,7 @@ function Monitoring() {
       {tiles
         .filter((x) => compereAdminLevel(user?.adminLevel, x.adminLevel) >= 0)
         .map((tile) => (
-          <Link key={tile.link} to={tile.link} className={classes.link}>
+          <Link key={tile.link} href={tile.link} className={classes.link}>
             <Card className={classes.root} raised>
               <CardContent className={classes.cardContent}>
                 <Typography

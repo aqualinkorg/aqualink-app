@@ -206,7 +206,7 @@ const selectedSurvey = createSlice({
         );
         if (action.payload.featured) {
           state.details?.surveyMedia?.forEach((media) => {
-            // eslint-disable-next-line fp/no-mutation, no-param-reassign
+            // eslint-disable-next-line no-param-reassign
             media.featured = false;
           });
         }
@@ -217,16 +217,12 @@ const selectedSurvey = createSlice({
         // to re initiate the <SliderCard /> component's state causing the SliderCard's snackbar failing to appear.
         // The creation of a new surveyMedia array, was probably confusing React.
         if (surveyMedia) {
-          // eslint-disable-next-line fp/no-mutation
           surveyMedia.comments = action.payload.comments;
-          // eslint-disable-next-line fp/no-mutation
           surveyMedia.featured = action.payload.featured;
-          // eslint-disable-next-line fp/no-mutation
           surveyMedia.observations = action.payload.observations;
-          // eslint-disable-next-line fp/no-mutation
           surveyMedia.surveyPoint = action.payload.surveyPoint;
         }
-        // eslint-disable-next-line fp/no-mutation, no-param-reassign
+        // eslint-disable-next-line no-param-reassign
         state.loadingSurveyMediaEdit = false;
       },
     );

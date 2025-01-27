@@ -29,17 +29,7 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
               edge="start"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="MenuIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
-                />
-              </svg>
+              <mock-menu />
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-2"
@@ -94,17 +84,9 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
               classname="NavBar-button-11"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-10 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                />
-              </svg>
+              <mock-expandmore
+                classname="NavBar-expandIcon-10"
+              />
             </mock-iconbutton>
             <mock-menu
               classname="NavBar-userMenu-7"
@@ -228,17 +210,7 @@ exports[`NavBar without routeButtons should render with given state from Redux s
               edge="start"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="MenuIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
-                />
-              </svg>
+              <mock-menu />
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-14"
@@ -293,17 +265,9 @@ exports[`NavBar without routeButtons should render with given state from Redux s
               classname="NavBar-button-23"
               size="large"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-22 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                />
-              </svg>
+              <mock-expandmore
+                classname="NavBar-expandIcon-22"
+              />
             </mock-iconbutton>
             <mock-menu
               classname="NavBar-userMenu-19"

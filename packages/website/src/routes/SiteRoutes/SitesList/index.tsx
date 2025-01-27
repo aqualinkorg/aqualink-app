@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, ListItemText, Theme } from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { sitesListSelector, sitesRequest } from 'store/Sites/sitesListSlice';
 
@@ -25,7 +25,7 @@ const SitesList = ({ classes }: SitesListProps) => {
             <Link
               key={`site-list-item-${site.id}`}
               style={{ color: 'inherit', textDecoration: 'none' }}
-              to={`/sites/${site.id}`}
+              href={`/sites/${site.id}`}
             >
               <ListItemButton>
                 <ListItemText style={{ color: 'white' }} primary={site.name} />

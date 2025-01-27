@@ -1,7 +1,7 @@
-import React from 'react';
+import { useEffect } from 'react';
 import ReactGA from 'react-ga4';
 
-const GA_TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID || '';
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID || '';
 if (process.env.IS_PROD && !GA_TRACKING_ID) {
   throw new Error(
     'You appear to be trying to do a production build, but no Google Analytics' +
@@ -10,47 +10,45 @@ if (process.env.IS_PROD && !GA_TRACKING_ID) {
   );
 }
 
-const GA_TAG_MANAGER_ID = process.env.REACT_APP_GA_TAG_MANAGER_ID || '';
+const GA_TAG_MANAGER_ID = process.env.NEXT_PUBLIC_GA_TAG_MANAGER_ID || '';
 
 if (process.env.IS_PROD && !GA_TAG_MANAGER_ID) {
   throw new Error(
     'You appear to be trying to do a production build, but no Google Analytics' +
-      ' tag manager id was provided!\nEither set REACT_APP_GA_TAG_MANAGER_ID as an env variable, or set up a' +
+      ' tag manager id was provided!\nEither set NEXT_PUBLIC_GA_TAG_MANAGER_ID as an env variable, or set up a' +
       ' .env.prod file.',
   );
 }
 
 export const useGATagManager = () => {
-  const getScript = () => `
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({"gtm.start": new Date().getTime(), event:"gtm.js"});
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != "dataLayer" ? "&l=" + l : "";
-      j.async = true;
-      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-      f.parentNode.insertBefore(j,f);
-    })(
-      window,
-      document,
-      "script",
-      "dataLayer",
-      "${GA_TAG_MANAGER_ID}",
-    );
-  `;
+  useEffect(() => {
+    const getScript = () => `
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({"gtm.start": new Date().getTime(), event:"gtm.js"});
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j,f);
+      })(
+        window,
+        document,
+        "script",
+        "dataLayer",
+        "${GA_TAG_MANAGER_ID}",
+      );
+    `;
 
-  React.useEffect(() => {
     const script = document.createElement('script');
-    // eslint-disable-next-line fp/no-mutation
     script.innerHTML = getScript();
     document.head.appendChild(script);
 
     return () => {
       document.head.removeChild(script);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [GA_TAG_MANAGER_ID]);
+  }, []);
 };
 
 export const initGA = () => {

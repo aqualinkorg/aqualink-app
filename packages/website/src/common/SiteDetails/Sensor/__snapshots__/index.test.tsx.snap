@@ -83,7 +83,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
           <img
             alt="sensor"
             height="150"
-            src="sensor.svg"
+            src="/img.jpg"
             style="position: absolute; bottom: 0px;"
             width="auto"
           />

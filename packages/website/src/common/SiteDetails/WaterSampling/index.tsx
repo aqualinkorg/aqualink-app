@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { colors } from 'layout/App/theme';
 import {
   Metrics,
@@ -32,12 +32,12 @@ import {
 function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
   const classes = useStyles();
 
-  const [minDate, setMinDate] = React.useState<string>();
-  const [maxDate, setMaxDate] = React.useState<string>();
-  const [point, setPoint] = React.useState<SurveyPoints>();
-  const [timeSeriesData, setTimeSeriesData] = React.useState<TimeSeriesData>();
+  const [minDate, setMinDate] = useState<string>();
+  const [maxDate, setMaxDate] = useState<string>();
+  const [point, setPoint] = useState<SurveyPoints>();
+  const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>();
 
-  const [meanValues, setMeanValues] = React.useState<
+  const [meanValues, setMeanValues] = useState<
     Partial<Record<Metrics, number>>
   >({});
 
@@ -58,7 +58,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     ? DateTime.fromISO(maxDate).toFormat('LL/dd/yyyy')
     : undefined;
 
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
       const {
         data,
@@ -73,7 +73,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     })();
   }, [siteId, source]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const newMeans = Object.fromEntries(
       Object.entries(timeSeriesData || {})
         .map(([key, val]) => {

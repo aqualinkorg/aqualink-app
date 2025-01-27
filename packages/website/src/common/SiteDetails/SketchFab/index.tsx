@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import Sketchfab from '@sketchfab/viewer-api';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';

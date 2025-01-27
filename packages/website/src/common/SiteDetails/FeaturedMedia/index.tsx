@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
 import {
   Card,
   CardMedia,
@@ -14,8 +13,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { KeyboardDoubleArrowDown } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 import { userInfoSelector } from 'store/User/userSlice';
@@ -67,7 +65,7 @@ const FeaturedMedia = ({
 
   if (featuredImage && surveyId) {
     return (
-      <Link to={`/sites/${siteId}/survey_details/${surveyId}`}>
+      <Link href={`/sites/${siteId}/survey_details/${surveyId}`}>
         <CardMedia
           className={classes.card}
           style={{ height: '100%' }}
@@ -94,23 +92,23 @@ const FeaturedMedia = ({
               <Grid item>
                 <IconButton
                   component={Link}
-                  to={`/sites/${siteId}/new_survey`}
+                  href={`/sites/${siteId}/new_survey`}
                   size="large"
                 >
-                  <img src={uploadIcon} alt="upload" />
+                  <img src={uploadIcon.src} alt="upload" />
                 </IconButton>
               </Grid>
             </>
           ) : hasReefCheckSurveys ? (
             <Box
-              component={HashLink}
-              to={`/sites/${siteId}#surveys`}
+              component={Link}
+              href={`/sites/${siteId}#surveys`}
               display="flex"
               alignItems="center"
               gap={1}
               className={classes.noVideoCardHeaderText}
             >
-              <img src={reefCheckLogo} alt="Reef Check" width={50} />
+              <img src={reefCheckLogo.src} alt="Reef Check" width={50} />
               <Typography variant="h5">REEF CHECK DATA AVAILABLE</Typography>
               <KeyboardDoubleArrowDown />
             </Box>
@@ -158,7 +156,7 @@ const styles = (theme: Theme) => {
     noVideoCardContent: {
       width: '100%',
       height: '100%',
-      backgroundImage: `url(${reefImage})`,
+      backgroundImage: `url(${reefImage.src})`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       filter: 'blur(2px)',
