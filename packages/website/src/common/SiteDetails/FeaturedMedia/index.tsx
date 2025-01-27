@@ -42,7 +42,7 @@ const FeaturedMedia = ({
   const { list: reefCheckSurveyList } = useSelector(
     reefCheckSurveyListSelector,
   );
-  const hasReefCheckSurveys = true || reefCheckSurveyList.length > 0;
+  const hasReefCheckSurveys = reefCheckSurveyList.length > 0;
   const isSiteAdmin = isAdmin(user, siteId);
 
   if (url) {

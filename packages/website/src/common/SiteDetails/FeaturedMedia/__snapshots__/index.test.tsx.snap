@@ -11,39 +11,12 @@ exports[`Featured Media Card should render with given state from Redux store 1`]
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-1qhqgqb-MuiGrid-root"
       >
-        <mock-box
-          alignitems="center"
+        <mock-typography
           classname="FeaturedMedia-noVideoCardHeaderText-4"
-          component="[object Object]"
-          display="flex"
-          gap="1"
-          href="/sites/1#surveys"
+          variant="h5"
         >
-          <img
-            alt="Reef Check"
-            src="/img.jpg"
-            width="50"
-          />
-          <mock-typography
-            variant="h5"
-          >
-            REEF CHECK DATA AVAILABLE
-          </mock-typography>
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="KeyboardDoubleArrowDownIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
-            />
-            <path
-              d="m18 13-1.41-1.41L12 16.17l-4.59-4.58L6 13l6 6z"
-            />
-          </svg>
-        </mock-box>
+          SURVEY TO BE UPLOADED
+        </mock-typography>
       </div>
     </div>
     <div
