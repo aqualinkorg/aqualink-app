@@ -293,6 +293,14 @@ export class ReefCheckSurvey {
   submittedBy: string;
 
   @ApiProperty()
+  @Column({ nullable: true })
+  teamLeader: string;
+
+  @ApiProperty()
+  @Column({ nullable: true })
+  teamScientist: string;
+
+  @ApiProperty()
   @VirtualColumn({
     query: (survey) => `
       SELECT satellite_temperature

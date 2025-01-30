@@ -21,84 +21,6 @@ type Args = {
   dryRun?: boolean;
 };
 
-yargs(hideBin(process.argv))
-  .command(
-    'upload-sites',
-    'Upload sites from the xlsx file',
-    {
-      filePath: {
-        alias: 'f',
-        describe: 'Path to the xlsx file',
-        type: 'string',
-        demandOption: true,
-      },
-      dryRun: {
-        alias: 'd',
-        describe: 'Run the script without saving to the database',
-        type: 'boolean',
-        default: false,
-      },
-    },
-    uploadSites,
-  )
-  .command(
-    'upload-surveys',
-    'Upload surveys from the xlsx file',
-    {
-      filePath: {
-        alias: 'f',
-        describe: 'Path to the xlsx file',
-        type: 'string',
-        demandOption: true,
-      },
-    },
-    uploadSurveys,
-  )
-  .command(
-    'upload-organisms',
-    'Upload organisms from the xlsx file',
-    {
-      filePath: {
-        alias: 'f',
-        describe: 'Path to the xlsx file',
-        type: 'string',
-        demandOption: true,
-      },
-    },
-    uploadOrganisms,
-  )
-  .command(
-    'upload-substrates',
-    'Upload substrates from the xlsx file',
-    {
-      filePath: {
-        alias: 'f',
-        describe: 'Path to the xlsx file',
-        type: 'string',
-        demandOption: true,
-      },
-    },
-    uploadSubstrates,
-  )
-  .command(
-    'stats',
-    'Generate stats (dublicate and close-distance sites) for the xlsx file',
-    {
-      filePath: {
-        alias: 'f',
-        describe: 'Path to the xlsx file',
-        type: 'string',
-        demandOption: true,
-      },
-    },
-    generateStats,
-  )
-  .scriptName('reef-check')
-  .version(false)
-  .help()
-  .demandCommand()
-  .parse();
-
 /**
  * The fields we need to extract from the Belt.xlsx file
  */
@@ -211,6 +133,15 @@ const substratesFields = [
   'total',
   'substrate_recorded_by',
   'what_errors',
+] as const;
+
+/**
+ * The fields we need to extract from the Data_Collectors.xlsx file
+ */
+const collectorsFields = [
+  'survey_id',
+  'team_leader',
+  'team_scientist',
 ] as const;
 
 function parseFile<T extends string>(filePath: string, fields: T[]) {
@@ -620,98 +551,119 @@ async function uploadSubstrates({ filePath }: Args) {
   }
 }
 
-function generateStats({ filePath }: Args) {
-  const { rows, header, sheetRowCount, getField } = parseFile(filePath, [
-    ...siteDescriptionFields,
-  ]);
-  const calculateDistance = (
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number,
-  ) => {
-    const toRad = (value: number) => (value * Math.PI) / 180;
-    const R = 6371; // Radius of the Earth in km
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Distance in km
-  };
+async function uploadCollectors({ filePath }: Args) {
+  logger.log(`Processing file: ${filePath}`);
 
-  let minDistance = Infinity;
-  const dups: Record<string, string[][]> = {};
-  const closeSites: string[][] = [];
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < rows.length; i++) {
-    const rawCoordinates1 = getField(
-      rows[i],
-      'coordinates_in_decimal_degree_format',
-    );
+  // Initialize typeorm connection
+  const config = configService.getTypeOrmConfig() as DataSourceOptions;
+  const dataSource = new DataSource(config);
+  const connection = await dataSource.initialize();
+  const reefCheckSurveyRepository = connection.getRepository(ReefCheckSurvey);
 
-    const [lat1, lon1] = rawCoordinates1.split(',').map(parseFloat);
-    // eslint-disable-next-line no-plusplus
-    for (let j = i + 1; j < rows.length; j++) {
-      const rawCoordinates2 = getField(
-        rows[j],
-        'coordinates_in_decimal_degree_format',
-      );
-      const [lat2, lon2] = rawCoordinates2.split(',').map(parseFloat);
-      const distance = calculateDistance(lat1, lon1, lat2, lon2);
-      if (distance === 0) {
-        logger.error(
-          `Duplicate coordinates found: ${rawCoordinates1}, for sites ${rows[i][0]} and ${rows[j][0]}`,
-        );
-        dups[rawCoordinates1] = dups[rawCoordinates1] || [];
-        dups[rawCoordinates1].push(rows[i]);
-        dups[rawCoordinates1].push(rows[j]);
+  const { rows, getField } = parseFile(filePath, [...collectorsFields]);
 
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-      if (distance < 0.1 && distance !== 0) {
-        logger.error(
-          `Close coordinates found: ${distance} km, for sites ${rows[i][0]} and ${rows[j][0]}`,
-        );
-        closeSites.push(rows[i]);
-        closeSites.push(rows[j]);
-      }
-      if (distance < minDistance) {
-        minDistance = distance;
-        logger.log(
-          'Minimum distance updated:',
-          minDistance,
-          rawCoordinates1,
-          rawCoordinates2,
-        );
-      }
-    }
-  }
+  logger.log(`Processing ${rows.length} rows`);
 
-  const getWorksheetRows = (rec: Record<string, string[][]>) =>
-    Object.values(rec).flatMap((arr) =>
-      uniqWith(arr, (v1, v2) => v1[0] === v2[0]),
-    );
-
-  const dupRows = [header, ...getWorksheetRows(dups)];
-  const closeRows = [header, ...closeSites];
-  const arrayBuffer = xlsx.build([
-    { name: 'Duplicates', data: dupRows, options: {} },
-    { name: 'Close distance', data: closeRows, options: {} },
-  ]);
-  fs.writeFileSync(
-    'duplicates.xlsx',
-    Buffer.from(arrayBuffer) as unknown as Uint8Array,
+  const surveyMap = keyBy(
+    await reefCheckSurveyRepository.find({ select: ['id'] }),
+    'id',
   );
 
-  logger.log(`Total rows: ${sheetRowCount}`);
-  logger.log(`Total sites: ${rows.length}`);
-  logger.log(`Minimum distance between any two sites: ${minDistance} km`);
-  logger.log(`Number of duplicate coordinates found: ${dupRows.length}`);
-  logger.log(`Number of close coordinates (<100m) found: ${closeRows.length}`);
+  const surveys = rows
+    .map((row) => ({
+      id: getField(row, 'survey_id'),
+      teamLeader: getField(row, 'team_leader'),
+      teamScientist: getField(row, 'team_scientist'),
+    }))
+    .filter(({ id }) => surveyMap[id]);
+
+  logger.log(`Updating ${surveys.length} surveys`);
+
+  try {
+    const result = await reefCheckSurveyRepository.save(surveys, {
+      chunk: 1000,
+    });
+
+    logger.log(`Updated ${result.length} surveys`);
+  } catch (err) {
+    logger.error('Error inserting surveys', err);
+  }
 }
+
+yargs(hideBin(process.argv))
+  .command(
+    'upload-sites',
+    'Upload sites from the xlsx file',
+    {
+      filePath: {
+        alias: 'f',
+        describe: 'Path to the xlsx file',
+        type: 'string',
+        demandOption: true,
+      },
+      dryRun: {
+        alias: 'd',
+        describe: 'Run the script without saving to the database',
+        type: 'boolean',
+        default: false,
+      },
+    },
+    uploadSites,
+  )
+  .command(
+    'upload-surveys',
+    'Upload surveys from the xlsx file',
+    {
+      filePath: {
+        alias: 'f',
+        describe: 'Path to the xlsx file',
+        type: 'string',
+        demandOption: true,
+      },
+    },
+    uploadSurveys,
+  )
+  .command(
+    'upload-organisms',
+    'Upload organisms from the xlsx file',
+    {
+      filePath: {
+        alias: 'f',
+        describe: 'Path to the xlsx file',
+        type: 'string',
+        demandOption: true,
+      },
+    },
+    uploadOrganisms,
+  )
+  .command(
+    'upload-substrates',
+    'Upload substrates from the xlsx file',
+    {
+      filePath: {
+        alias: 'f',
+        describe: 'Path to the xlsx file',
+        type: 'string',
+        demandOption: true,
+      },
+    },
+    uploadSubstrates,
+  )
+  .command(
+    'upload-collectors',
+    'Upload team leader and team scientist from the Data Collectors xlsx file',
+    {
+      filePath: {
+        alias: 'f',
+        describe: 'Path to the xlsx file',
+        type: 'string',
+        demandOption: true,
+      },
+    },
+    uploadCollectors,
+  )
+  .scriptName('reef-check')
+  .version(false)
+  .help()
+  .demandCommand()
+  .parse();
