@@ -6,7 +6,6 @@ import { Logger } from '@nestjs/common';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { groupBy, keyBy, uniqWith } from 'lodash';
-import fs from 'fs';
 import { ReefCheckSubstrate } from '../src/reef-check-substrates/reef-check-substrates.entity';
 import { ReefCheckOrganism } from '../src/reef-check-organisms/reef-check-organisms.entity';
 import { ReefCheckSurvey } from '../src/reef-check-surveys/reef-check-surveys.entity';
