@@ -65,7 +65,7 @@ export const mockReefCheckSurvey: ReefCheckSurvey = {
   suspectedDisease: null,
   rareAnimalsDetails: null,
   submittedBy: null,
-  teamLeader: 'John Doe',
+  teamLeader: null,
   teamScientist: 'Jane Doe',
   satelliteTemperature: 28.2,
   organisms: [
