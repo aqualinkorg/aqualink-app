@@ -217,9 +217,6 @@ const styles = (theme: Theme) =>
       overflowY: 'auto',
     },
     table: {
-      [theme.breakpoints.down('sm')]: {
-        tableLayout: 'fixed',
-      },
       borderCollapse: 'collapse',
     },
     extendedTable: {

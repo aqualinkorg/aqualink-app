@@ -290,7 +290,7 @@ const SiteDetails = ({
         container
         justifyContent="space-between"
         alignItems="flex-end"
-        spacing={videoStream ? 0 : 2}
+        spacing={2}
         className={classNames({
           [classes.forcedWidth]: !!videoStream,
         })}
@@ -394,7 +394,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     forcedWidth: {
       width: `calc(100% + ${theme.spacing(2)})`,
-      margin: -theme.spacing(1),
     },
     mobileMargin: {
       [theme.breakpoints.down('md')]: {
