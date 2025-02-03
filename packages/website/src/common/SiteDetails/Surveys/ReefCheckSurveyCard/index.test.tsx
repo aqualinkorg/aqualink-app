@@ -29,14 +29,14 @@ describe('ReefCheckSurveyCard', () => {
     expect(
       getByText(`Depth: ${mockReefCheckSurvey.depth}m`),
     ).toBeInTheDocument();
-    expect(getByText('User: Reef Check')).toBeInTheDocument();
+    expect(getByText('Reef Check')).toBeInTheDocument();
   });
 
-  it('should render user if submittedBy is present', () => {
+  it('should render team leader if present', () => {
     const { getByText } = renderReefCheckSurveyCard({
-      submittedBy: 'Test User',
+      teamLeader: 'Test User',
     });
-    expect(getByText('User: Test User')).toBeInTheDocument();
+    expect(getByText('Test User')).toBeInTheDocument();
   });
 
   it('should render table with correct number of rows', () => {

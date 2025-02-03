@@ -20,7 +20,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
   return (
     <>
       {sitesList.map((site: Site) =>
-        sitesList[site.id] && hasSpotter(site) ? (
+        hasSpotter(site) ? (
           <SensorSiteMarker key={`${site.id}`} site={site} />
         ) : (
           <CircleSiteMarker key={`${site.id}`} site={site} />

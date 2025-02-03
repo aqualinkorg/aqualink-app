@@ -112,6 +112,8 @@ export interface ReefCheckSurvey {
   percentOfEachColony: string | null;
   suspectedDisease: string | null;
   rareAnimalsDetails: string | null;
+  teamLeader: string | null;
+  teamScientist: string | null;
   submittedBy: string | null;
 }
 
