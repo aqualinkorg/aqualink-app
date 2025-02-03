@@ -1,10 +1,23 @@
-import { sortBy } from 'lodash';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { setSiteNameFromList, sitesFilterFn } from 'helpers/siteUtils';
+import sortBy from 'lodash/sortBy';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
+import {
+  filterOutFalsy,
+  filterSiteByHeatStress,
+  filterSiteByImpact,
+  filterSiteByReefComposition,
+  filterSiteBySensorData as filterSiteBySiteOptions,
+  setSiteNameFromList,
+} from 'helpers/siteUtils';
 import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import type {
-  siteOptions,
+  PatchSiteFiltersPayload,
+  SiteFilters,
   SitesListState,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
@@ -14,6 +27,7 @@ import type { CreateAsyncThunkTypes, RootState } from '../configure';
 const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
+  filters: {},
 };
 
 export const sitesRequest = createAsyncThunk<
@@ -22,12 +36,9 @@ export const sitesRequest = createAsyncThunk<
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue, getState }) => {
+  async (arg, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getSites();
-      const {
-        homepage: { siteFilter },
-      } = getState();
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -35,9 +46,6 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
-        sitesToDisplay: transformedData.filter((s) =>
-          sitesFilterFn(siteFilter, s),
-        ),
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
@@ -57,14 +65,28 @@ const sitesListSlice = createSlice({
   name: 'sitesList',
   initialState: sitesListInitialState,
   reducers: {
-    filterSitesWithSpotter: (
-      state,
-      action: PayloadAction<typeof siteOptions[number]>,
+    patchSiteFilters: (
+      state: SitesListState,
+      {
+        payload: { category, filter, value },
+      }: PayloadAction<{
+        category: keyof SiteFilters;
+        filter: string;
+        value: boolean;
+      }>,
     ) => ({
       ...state,
-      sitesToDisplay: state.list?.filter((s) =>
-        sitesFilterFn(action.payload, s),
-      ),
+      filters: {
+        ...state.filters,
+        [category]: filterOutFalsy({
+          ...state.filters?.[category],
+          [filter]: value,
+        }),
+      },
+    }),
+    clearSiteFilters: (state: SitesListState) => ({
+      ...state,
+      filters: {},
     }),
     setSiteName: (
       state,
@@ -81,7 +103,6 @@ const sitesListSlice = createSlice({
         return {
           ...state,
           list: action.payload.list,
-          sitesToDisplay: action.payload.sitesToDisplay,
           loading: false,
         };
       },
@@ -110,9 +131,23 @@ const sitesListSlice = createSlice({
 export const sitesListSelector = (state: RootState): SitesListState['list'] =>
   state.sitesList.list;
 
-export const sitesToDisplayListSelector = (
+export const sitesToDisplayListSelector = createSelector(
+  sitesListSelector,
+  (state: RootState) => state.sitesList.filters,
+  (list, filters) =>
+    list?.filter((s) => {
+      return [
+        filterSiteByHeatStress(s, filters),
+        filterSiteBySiteOptions(s, filters),
+        filterSiteByReefComposition(s, filters),
+        filterSiteByImpact(s, filters),
+      ].every(Boolean);
+    }),
+);
+
+export const sitesListFiltersSelector = (
   state: RootState,
-): SitesListState['sitesToDisplay'] => state.sitesList.sitesToDisplay;
+): SitesListState['filters'] => state.sitesList.filters;
 
 export const sitesListLoadingSelector = (
   state: RootState,
@@ -122,6 +157,13 @@ export const sitesListErrorSelector = (
   state: RootState,
 ): SitesListState['error'] => state.sitesList.error;
 
-export const { filterSitesWithSpotter, setSiteName } = sitesListSlice.actions;
+export const { clearSiteFilters, setSiteName } = sitesListSlice.actions;
+
+// Re-export to keep function as generic
+export const patchSiteFilters = sitesListSlice.actions.patchSiteFilters as <
+  T extends keyof SiteFilters,
+>(
+  action: PatchSiteFiltersPayload<T>,
+) => PayloadAction<PatchSiteFiltersPayload<T>>;
 
 export default sitesListSlice.reducer;
