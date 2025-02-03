@@ -579,11 +579,27 @@ async function uploadCollectors({ filePath }: Args) {
   logger.log(`Updating ${surveys.length} surveys`);
 
   try {
-    const result = await reefCheckSurveyRepository.save(surveys, {
-      chunk: 1000,
-    });
+    // Use raw query instead of the ORM for performance
 
-    logger.log(`Updated ${result.length} surveys`);
+    const values = surveys.map((s) => [s.id, s.teamLeader, s.teamScientist]);
+    // Construct parameters string: ($1, $2, $3), ($4, $5, $6), ...
+    const parameterString = values
+      .map((_, i) => `($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`)
+      .join(', ');
+    const query = `
+      update reef_check_survey as rcs
+      set
+        team_leader = c.team_leader,
+        team_scientist = c.team_scientist
+      from (values
+        ${parameterString}
+      ) as c(id, team_leader, team_scientist) 
+      where c.id = rcs.id;
+    `;
+    const parameters = values.flat();
+    const [, updatedCount] = await connection.manager.query(query, parameters);
+
+    logger.log(`Updated ${updatedCount} surveys`);
   } catch (err) {
     logger.error('Error inserting surveys', err);
   }
