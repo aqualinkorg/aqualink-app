@@ -85,6 +85,7 @@ const styles = (theme: Theme) =>
     dialogTitle: {
       backgroundColor: theme.palette.primary.main,
       overflowWrap: 'break-word',
+      color: 'white',
     },
     loading: {
       color: 'white',

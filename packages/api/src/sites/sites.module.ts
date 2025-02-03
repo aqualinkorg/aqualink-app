@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SketchFab } from 'site-sketchfab/site-sketchfab.entity';
+import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { SitesController } from './sites.controller';
 import { SitesService } from './sites.service';
 import { Site } from './sites.entity';
@@ -33,6 +34,7 @@ import { ScheduledUpdate } from './scheduled-updates.entity';
       TimeSeries,
       ScheduledUpdate,
       SketchFab,
+      ReefCheckSurvey,
     ]),
   ],
   controllers: [SitesController],

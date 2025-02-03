@@ -10,8 +10,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ObjectLiteral, Repository } from 'typeorm';
-import { groupBy, mapValues, some } from 'lodash';
+import { Dictionary, groupBy, keyBy, mapValues, merge, some } from 'lodash';
 import geoTz from 'geo-tz';
+import { ReefCheckSurvey } from 'reef-check-surveys/reef-check-surveys.entity';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
@@ -323,6 +324,44 @@ export const getWaterQualityDataSubQuery = async (
   );
 
   return waterQualityDataSet;
+};
+
+/**
+ * Get all reef check related data like organisms and substrates spotted each site
+ * This information is intented to be used to filter sites
+ */
+export const getReefCheckDataSubQuery = async (
+  reefCheckSurveyRepository: Repository<ReefCheckSurvey>,
+): Promise<
+  Dictionary<{ siteId: number; organism: string[]; substrate: string[] }>
+> => {
+  const organisms: { siteId: number; organism: string[] }[] =
+    await reefCheckSurveyRepository
+      .createQueryBuilder('survey')
+      .select('survey.site_id', 'siteId')
+      .addSelect('json_agg(distinct rco.organism)', 'organism')
+      .leftJoin('reef_check_organism', 'rco', 'rco.survey_id = survey.id')
+      .where('rco.s1 > 0')
+      .orWhere('rco.s2 > 0')
+      .orWhere('rco.s3 > 0')
+      .orWhere('rco.s4 > 0')
+      .addGroupBy('survey.site_id')
+      .getRawMany();
+
+  const substrates: { siteId: number; substrate: string[] }[] =
+    await reefCheckSurveyRepository
+      .createQueryBuilder('survey')
+      .select('survey.site_id', 'siteId')
+      .addSelect('json_agg(distinct substrate_code)', 'substrate')
+      .leftJoin('reef_check_substrate', 'rcs', 'survey_id = survey.id')
+      .where('rcs.s1 > 0')
+      .orWhere('rcs.s2 > 0')
+      .orWhere('rcs.s3 > 0')
+      .orWhere('rcs.s4 > 0')
+      .addGroupBy('survey.site_id')
+      .getRawMany();
+
+  return merge(keyBy(organisms, 'siteId'), keyBy(substrates, 'siteId'));
 };
 
 export const getLatestData = async (

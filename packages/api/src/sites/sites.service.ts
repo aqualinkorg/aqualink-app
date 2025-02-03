@@ -11,6 +11,7 @@ import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
 import Bluebird from 'bluebird';
 import { sanitizeUrl } from '@braintree/sanitize-url';
+import { ReefCheckSurvey } from 'reef-check-surveys/reef-check-surveys.entity';
 import { DateTime } from '../luxon-extensions';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
@@ -29,6 +30,7 @@ import {
   getLatestData,
   getSite,
   createSite,
+  getReefCheckDataSubQuery,
 } from '../utils/site.utils';
 import { getSpotterData, sofarLatest } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
@@ -87,6 +89,9 @@ export class SitesService {
 
     @InjectRepository(ScheduledUpdate)
     private scheduledUpdateRepository: Repository<ScheduledUpdate>,
+
+    @InjectRepository(ReefCheckSurvey)
+    private reefCheckSurveyRepository: Repository<ReefCheckSurvey>,
 
     private dataSource: DataSource,
   ) {}
@@ -204,12 +209,17 @@ export class SitesService {
       this.latestDataRepository,
     );
 
+    const reefCheckDataSet = await getReefCheckDataSubQuery(
+      this.reefCheckSurveyRepository,
+    );
+
     return res.map((site) => ({
       ...site,
       applied: site.applied,
       collectionData: mappedSiteData[site.id],
       hasHobo: hasHoboDataSet.has(site.id),
       waterQualitySources: waterQualityDataSet.get(site.id),
+      reefCheckData: reefCheckDataSet[site.id],
     }));
   }
 
