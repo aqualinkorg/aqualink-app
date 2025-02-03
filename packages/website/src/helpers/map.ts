@@ -153,6 +153,7 @@ const useMarkerStyles = makeStyles({
     animationName: 'pulse',
     animationDuration: '2s',
     animationIterationCount: 'infinite',
+    transformOrigin: '50% 65%',
   },
 });
 
