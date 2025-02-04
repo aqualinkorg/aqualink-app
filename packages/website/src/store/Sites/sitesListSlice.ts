@@ -11,6 +11,7 @@ import {
   filterSiteByImpact,
   filterSiteByReefComposition,
   filterSiteBySensorData as filterSiteBySiteOptions,
+  filterSiteBySpecies,
   setSiteNameFromList,
 } from 'helpers/siteUtils';
 import { getAxiosErrorMessage } from 'helpers/errors';
@@ -139,6 +140,7 @@ export const sitesToDisplayListSelector = createSelector(
       return [
         filterSiteByHeatStress(s, filters),
         filterSiteBySiteOptions(s, filters),
+        filterSiteBySpecies(s, filters),
         filterSiteByReefComposition(s, filters),
         filterSiteByImpact(s, filters),
       ].every(Boolean);

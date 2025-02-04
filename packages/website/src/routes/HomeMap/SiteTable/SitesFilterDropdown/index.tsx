@@ -58,8 +58,6 @@ const SitesFilterModalComponent = ({
     square: true,
   };
 
-  console.log({ filters, noFilterSelected }); // REMOVE before merge
-
   return (
     <>
       <Button
@@ -195,13 +193,13 @@ const SitesFilterModalComponent = ({
             </AccordionSummary>
             <AccordionDetails>
               <FormGroup>
-                {siteFilterOptions.reefComposition.map((item) => (
+                {siteFilterOptions.reefComposition.map(({ value, label }) => (
                   <FormControlLabel
-                    key={item}
-                    checked={filters.reefComposition?.[item] ?? false}
-                    onChange={handleFilterChange('reefComposition', item)}
+                    key={value}
+                    checked={filters.reefComposition?.[value] ?? false}
+                    onChange={handleFilterChange('reefComposition', value)}
                     control={<Checkbox />}
-                    label={item}
+                    label={label}
                   />
                 ))}
               </FormGroup>

@@ -1,5 +1,9 @@
 /* eslint-disable camelcase */
-import type { ReefCheckSite, ReefCheckSurvey } from 'store/ReefCheckSurveys';
+import type {
+  ReefCheckData,
+  ReefCheckSite,
+  ReefCheckSurvey,
+} from 'store/ReefCheckSurveys';
 import { User } from '../User/types';
 
 export type Position = [number, number];
@@ -291,6 +295,7 @@ export interface Site {
   waterQualitySources?: string[];
   reefCheckSurveys: ReefCheckSurvey[];
   reefCheckSite: ReefCheckSite | null;
+  reefCheckData: ReefCheckData | null;
 }
 
 export interface SiteSketchFab {

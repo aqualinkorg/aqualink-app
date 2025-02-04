@@ -361,7 +361,19 @@ export const getReefCheckDataSubQuery = async (
       .addGroupBy('survey.site_id')
       .getRawMany();
 
-  return merge(keyBy(organisms, 'siteId'), keyBy(substrates, 'siteId'));
+  const impact: { siteId: number; impact: string[] }[] =
+    await reefCheckSurveyRepository
+      .createQueryBuilder('survey')
+      .select('survey.site_id', 'siteId')
+      .addSelect('json_agg(distinct overall_anthro_impact)', 'impact')
+      .addGroupBy('survey.site_id')
+      .getRawMany();
+
+  return merge(
+    keyBy(organisms, 'siteId'),
+    keyBy(substrates, 'siteId'),
+    keyBy(impact, 'siteId'),
+  );
 };
 
 export const getLatestData = async (

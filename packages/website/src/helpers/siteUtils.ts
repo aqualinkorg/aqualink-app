@@ -214,22 +214,23 @@ export const filterSiteBySpecies = (site: Site, { species }: SiteFilters) => {
     return true;
   }
   const speciesToMatch = Object.entries(species).filter(([, value]) => value).map(([key]) => key);
-  const siteSpeciesMap = keyBy(site.reefCheckSurveys?.flatMap((survey) => survey.organisms) || [], 'organism');
-  return speciesToMatch.every((s) => siteSpeciesMap[s]);
+  return speciesToMatch.every((s) => (site.reefCheckData?.organism || []).find((o) => o.includes(s)));
 }
 
 export const filterSiteByReefComposition = (site: Site, { reefComposition }: SiteFilters) => {
   if (isEmpty(reefComposition)) {
     return true;
   }
-  // TODO
-  return true;
+  
+  const substratesToMatch = Object.entries(reefComposition).filter(([, value]) => value).map(([key]) => key);
+  const siteSubstratesMap = keyBy(site.reefCheckData?.substrate || []);
+  return substratesToMatch.every((s) => siteSubstratesMap[s]);
 }
 
 export const filterSiteByImpact = (site: Site, { impact }: SiteFilters) => {
   if (isEmpty(impact)) {
     return true;
   }
-  // TODO
-  return true;
+  const impactToMatch = Object.entries(impact).filter(([, value]) => value).map(([key]) => key);
+  return impactToMatch.every((i) => site.reefCheckData?.impact?.includes(i));
 }
