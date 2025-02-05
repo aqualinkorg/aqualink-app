@@ -64,7 +64,11 @@ const ReefCheckSurveyCardComponent = ({
           </Typography>
           <Typography>Depth: {survey.depth}m</Typography>
         </Box>
-        <Typography>{survey.teamLeader ?? 'Reef Check'}</Typography>
+        <Typography>
+          {survey.teamLeader
+            ? `${survey.teamLeader}, Reef Check`
+            : 'Reef Check'}
+        </Typography>
       </Box>
       <TableContainer className={classes.tableRoot}>
         <Table size="small">
