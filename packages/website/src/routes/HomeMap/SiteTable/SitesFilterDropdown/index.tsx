@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { createStyles, WithStyles, withStyles } from '@mui/styles';
 import { Box } from '@mui/system';
+import { sum } from 'lodash';
 import isEmpty from 'lodash/isEmpty';
 import React, { SyntheticEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,10 +36,25 @@ const SitesFilterModalComponent = ({
   classes,
 }: SitesFilterModalComponentProps) => {
   const [open, setOpen] = useState(false);
+  const [accordionsDefaultExpanded, setAccordionsDefaultExpanded] = useState<
+    Partial<Record<keyof SiteFilters, boolean>>
+  >({});
   const dispatch = useDispatch();
   const filters = useSelector(sitesListFiltersSelector);
   const filteredSites = useSelector(sitesToDisplayListSelector);
 
+  const handleOpen = () => {
+    // We need to keep this state unchanged between rerenders to avoid accordion error,
+    // so we set it once onOpen
+    setAccordionsDefaultExpanded({
+      heatStress: !isEmpty(filters.heatStress),
+      siteOptions: !isEmpty(filters.siteOptions),
+      species: !isEmpty(filters.species),
+      reefComposition: !isEmpty(filters.reefComposition),
+      impact: !isEmpty(filters.impact),
+    });
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
   const handleClearAll = () => {
     if (!isEmpty(filters)) {
@@ -59,15 +75,18 @@ const SitesFilterModalComponent = ({
     disableGutters: true,
     square: true,
   };
+  const activeFiltersCount = sum(
+    Object.values(filters).map(
+      (category) => Object.values(category).length ?? 0,
+    ),
+  );
 
   return (
     <>
-      <Button
-        variant="contained"
-        startIcon={<Tune />}
-        onClick={() => setOpen(true)}
-      >
-        All sites
+      <Button variant="contained" startIcon={<Tune />} onClick={handleOpen}>
+        {activeFiltersCount > 0
+          ? `${activeFiltersCount} filter(s)`
+          : 'All sites'}
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle className={classes.title}>Filters</DialogTitle>
@@ -99,7 +118,10 @@ const SitesFilterModalComponent = ({
             />
           </Box>
           <Divider />
-          <Accordion {...accordionProps}>
+          <Accordion
+            {...accordionProps}
+            defaultExpanded={accordionsDefaultExpanded.heatStress}
+          >
             <AccordionSummary expandIcon={<ExpandMore />}>
               Heat Stress Status
             </AccordionSummary>
@@ -118,7 +140,10 @@ const SitesFilterModalComponent = ({
             </AccordionDetails>
           </Accordion>
           <Divider />
-          <Accordion {...accordionProps}>
+          <Accordion
+            {...accordionProps}
+            defaultExpanded={accordionsDefaultExpanded.siteOptions}
+          >
             <AccordionSummary expandIcon={<ExpandMore />}>
               Sensor and Data Types
             </AccordionSummary>
@@ -137,7 +162,10 @@ const SitesFilterModalComponent = ({
             </AccordionDetails>
           </Accordion>
           <Divider />
-          <Accordion {...accordionProps}>
+          <Accordion
+            {...accordionProps}
+            defaultExpanded={accordionsDefaultExpanded.species}
+          >
             <AccordionSummary expandIcon={<ExpandMore />}>
               Species
             </AccordionSummary>
@@ -190,7 +218,10 @@ const SitesFilterModalComponent = ({
             </AccordionDetails>
           </Accordion>
           <Divider />
-          <Accordion {...accordionProps}>
+          <Accordion
+            {...accordionProps}
+            defaultExpanded={accordionsDefaultExpanded.reefComposition}
+          >
             <AccordionSummary expandIcon={<ExpandMore />}>
               Reef Composition
             </AccordionSummary>
@@ -209,7 +240,10 @@ const SitesFilterModalComponent = ({
             </AccordionDetails>
           </Accordion>
           <Divider />
-          <Accordion {...accordionProps}>
+          <Accordion
+            {...accordionProps}
+            defaultExpanded={accordionsDefaultExpanded.impact}
+          >
             <AccordionSummary expandIcon={<ExpandMore />}>
               Anthropogenic Impact
             </AccordionSummary>
