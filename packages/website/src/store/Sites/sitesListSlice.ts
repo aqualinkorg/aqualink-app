@@ -1,6 +1,7 @@
 import sortBy from 'lodash/sortBy';
 import {
   createAsyncThunk,
+  createListenerMiddleware,
   createSelector,
   createSlice,
   PayloadAction,
@@ -24,6 +25,7 @@ import type {
   UpdateSiteNameFromListArgs,
 } from './types';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
+import { readFiltersFromUrl, writeFiltersToUrl } from './helpers';
 
 const sitesListInitialState: SitesListState = {
   loading: false,
@@ -64,7 +66,10 @@ export const sitesRequest = createAsyncThunk<
 
 const sitesListSlice = createSlice({
   name: 'sitesList',
-  initialState: sitesListInitialState,
+  initialState: () => ({
+    ...sitesListInitialState,
+    filters: readFiltersFromUrl(),
+  }),
   reducers: {
     patchSiteFilters: (
       state: SitesListState,
@@ -126,6 +131,27 @@ const sitesListSlice = createSlice({
         error: null,
       };
     });
+  },
+});
+
+export const siteFiltersMiddleware = createListenerMiddleware();
+
+// Update URL when filters are changed
+siteFiltersMiddleware.startListening({
+  actionCreator: sitesListSlice.actions.patchSiteFilters,
+  effect: (action, listenerApi) => {
+    const {
+      sitesList: { filters },
+    } = listenerApi.getState() as RootState;
+    writeFiltersToUrl(filters);
+  },
+});
+
+// Clear filters when the clear action is dispatched
+siteFiltersMiddleware.startListening({
+  actionCreator: sitesListSlice.actions.clearSiteFilters,
+  effect: () => {
+    writeFiltersToUrl({});
   },
 });
 

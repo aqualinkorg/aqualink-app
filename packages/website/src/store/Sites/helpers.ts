@@ -33,6 +33,7 @@ import {
   TimeSeriesDataRequestParams,
   TimeSeriesDataResponse,
   TimeSeries,
+  SiteFilters,
 } from './types';
 
 export function getSiteNameAndRegion(site: Site) {
@@ -378,4 +379,50 @@ export const parseLatestData = (
     }),
     {},
   );
+};
+
+/**
+ * Persist the filters {@link SiteFilters} to the URL
+ * Use filter categories as query parameters and filter values as query values
+ * Example:
+ *  Convert: { heatStress: { 0: true, 1: true }, siteOptions: { reefCheckSites: true } }
+ *  To: ?heatStress=0&heatStress=1&siteOptions=reefCheckSites
+ */
+export const writeFiltersToUrl = (filters: SiteFilters) => {
+  const params = new URLSearchParams();
+  Object.entries(filters).forEach(([category, filterValues]) => {
+    Object.keys(filterValues).forEach((filter) => {
+      params.append(category, filter);
+    });
+  });
+
+  window.history.replaceState(null, '', `?${params.toString()}`);
+};
+
+/**
+ * Read the filters {@link SiteFilters} from the URL
+ * Used to populate the filters in the UI when the page is loaded
+ */
+export const readFiltersFromUrl = (): SiteFilters => {
+  const filterKeys: (keyof SiteFilters)[] = [
+    'heatStress',
+    'impact',
+    'siteOptions',
+    'reefComposition',
+    'species',
+  ];
+  const urlParams = new URLSearchParams(window.location.search);
+
+  return filterKeys.reduce((filters, key) => {
+    const filterValues = urlParams.has(key)
+      ? urlParams
+          .getAll(key)
+          .reduce((acc, value) => ({ ...acc, [value]: true }), {})
+      : {};
+
+    return {
+      ...filters,
+      [key]: filterValues,
+    };
+  }, {} as SiteFilters);
 };
