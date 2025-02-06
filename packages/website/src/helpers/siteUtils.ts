@@ -177,7 +177,7 @@ export const filterSiteByHeatStress = (site: Site, { heatStress }: SiteFilters) 
     return true;
   }
   const { tempWeeklyAlert } = site.collectionData || {};
-  return tempWeeklyAlert !== undefined && heatStress[tempWeeklyAlert];
+  return heatStress[tempWeeklyAlert ?? 0];
 }
 
 export const filterSiteBySensorData = (site: Site, { siteOptions: sensorDataTypes }: SiteFilters) => {
