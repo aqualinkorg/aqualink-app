@@ -36,7 +36,7 @@ describe('ReefCheckSurveyCard', () => {
     const { getByText } = renderReefCheckSurveyCard({
       teamLeader: 'Test User',
     });
-    expect(getByText('Test User')).toBeInTheDocument();
+    expect(getByText('Test User, Reef Check')).toBeInTheDocument();
   });
 
   it('should render table with correct number of rows', () => {

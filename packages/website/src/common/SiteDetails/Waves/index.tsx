@@ -263,7 +263,7 @@ const useStyles = makeStyles((theme: Theme) =>
     arrow: {
       width: 22,
       height: 22,
-      marginRight: '1rem',
+      marginRight: '0.5rem',
       marginBottom: 10,
       [theme.breakpoints.between('md', 1350)]: {
         width: 15,
