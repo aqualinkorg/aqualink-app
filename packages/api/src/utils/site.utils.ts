@@ -341,10 +341,7 @@ export const getReefCheckDataSubQuery = async (
       .select('survey.site_id', 'siteId')
       .addSelect('json_agg(distinct rco.organism)', 'organism')
       .leftJoin('reef_check_organism', 'rco', 'rco.survey_id = survey.id')
-      .where('rco.s1 > 0')
-      .orWhere('rco.s2 > 0')
-      .orWhere('rco.s3 > 0')
-      .orWhere('rco.s4 > 0')
+      .where('(rco.s1 + rco.s2 + rco.s3 + rco.s4) > 0')
       .addGroupBy('survey.site_id')
       .getRawMany();
 
@@ -354,10 +351,7 @@ export const getReefCheckDataSubQuery = async (
       .select('survey.site_id', 'siteId')
       .addSelect('json_agg(distinct substrate_code)', 'substrate')
       .leftJoin('reef_check_substrate', 'rcs', 'survey_id = survey.id')
-      .where('rcs.s1 > 0')
-      .orWhere('rcs.s2 > 0')
-      .orWhere('rcs.s3 > 0')
-      .orWhere('rcs.s4 > 0')
+      .where('(rcs.s1 + rcs.s2 + rcs.s3 + rcs.s4) > 0')
       .addGroupBy('survey.site_id')
       .getRawMany();
 
