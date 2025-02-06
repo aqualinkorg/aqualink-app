@@ -41,7 +41,9 @@ const SitesFilterModalComponent = ({
 
   const handleClose = () => setOpen(false);
   const handleClearAll = () => {
-    dispatch(clearSiteFilters());
+    if (!isEmpty(filters)) {
+      dispatch(clearSiteFilters());
+    }
   };
   const handleFilterChange =
     <T extends keyof SiteFilters>(
@@ -85,6 +87,7 @@ const SitesFilterModalComponent = ({
           <Box px={2}>
             <FormControlLabel
               checked={noFilterSelected}
+              onChange={handleClearAll}
               control={<Checkbox />}
               label="All Sites and Data"
               className={classes.allSites}
@@ -248,7 +251,7 @@ const styles = createStyles({
     fontWeight: 'bold',
   },
   allSites: {
-    margin: 0,
+    marginBottom: 0,
   },
   accordion: {
     boxShadow: 'none',
