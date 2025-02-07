@@ -14,7 +14,13 @@ import {
   updateNOAALocation,
 } from '../src/utils/noaa-availability-utils';
 
-let netcdf4;
+type Argv = {
+  s?: number[];
+  a: boolean;
+  u: boolean;
+};
+
+let netcdf4: any;
 try {
   // eslint-disable-next-line global-require, fp/no-mutation, import/no-unresolved
   netcdf4 = require('netcdf4');
@@ -88,7 +94,7 @@ async function getAvailabilityMapFromNetCDF4() {
 }
 
 async function run() {
-  const { s: sites, a: all, u: update } = argv;
+  const { s: sites, a: all, u: update } = argv as Argv;
   const parsedIds = sites && sites.map((site) => Number(site));
   const siteIds =
     parsedIds?.filter((x, i) => {
