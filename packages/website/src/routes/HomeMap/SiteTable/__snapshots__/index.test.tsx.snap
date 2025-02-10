@@ -101,7 +101,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  No Alert
+                  Alert Level 1
                 </mock-typography>
               </label>
               <label
@@ -114,7 +114,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Watch
+                  Alert Level 2
                 </mock-typography>
               </label>
               <label
@@ -140,7 +140,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Alert Level 1
+                  Watch
                 </mock-typography>
               </label>
               <label
@@ -153,7 +153,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Alert Level 2
+                  No Alert
                 </mock-typography>
               </label>
             </div>
@@ -197,19 +197,6 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Live streams
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
                   3D Models
                 </mock-typography>
               </label>
@@ -236,7 +223,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Water quality
+                  Live streams
                 </mock-typography>
               </label>
               <label
@@ -250,6 +237,19 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   component="span"
                 >
                   Reef Check Sites
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Water quality
                 </mock-typography>
               </label>
             </div>
@@ -286,33 +286,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Butterflyfish
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Haemulidae
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Snapper
+                  Algae-farming Damsel
                 </mock-typography>
               </label>
               <label
@@ -351,72 +325,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Parrotfish
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Moray Eel
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  King Angelfish
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Giant Hawkfish
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Mexican Hogfish
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Algae-farming Damsel
+                  Butterflyfish
                 </mock-typography>
               </label>
               <label
@@ -442,7 +351,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Wrasse
+                  Giant Hawkfish
                 </mock-typography>
               </label>
               <label
@@ -471,6 +380,97 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   Grouper
                 </mock-typography>
               </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Haemulidae
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  King Angelfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Mexican Hogfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Moray Eel
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Parrotfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Snapper
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Wrasse
+                </mock-typography>
+              </label>
             </div>
             <mock-typography
               fontweight="bold"
@@ -491,46 +491,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Urchin
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Diadema
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Tripneustes
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Edible Sea Cucumber
+                  Banded Coral Shrimp
                 </mock-typography>
               </label>
               <label
@@ -556,7 +517,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Lobster
+                  Cowries
                 </mock-typography>
               </label>
               <label
@@ -569,7 +530,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Spider Crab
+                  Diadema
                 </mock-typography>
               </label>
               <label
@@ -582,33 +543,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Banded Coral Shrimp
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Pencil Urchin
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Triton
+                  Edible Sea Cucumber
                 </mock-typography>
               </label>
               <label
@@ -634,6 +569,19 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
+                  Giant Clam
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
                   Gorgonian
                 </mock-typography>
               </label>
@@ -647,7 +595,20 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Cowries
+                  Lobster
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Pencil Urchin
                 </mock-typography>
               </label>
               <label
@@ -673,7 +634,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Giant Clam
+                  Sea Star
                 </mock-typography>
               </label>
               <label
@@ -686,7 +647,46 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Sea Star
+                  Spider Crab
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Triton
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Tripneustes
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Urchin
                 </mock-typography>
               </label>
             </div>
@@ -709,20 +709,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Sharks
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Turtles
+                  Lionfish
                 </mock-typography>
               </label>
               <label
@@ -748,7 +735,20 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Lionfish
+                  Sharks
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Turtles
                 </mock-typography>
               </label>
             </div>
@@ -779,46 +779,20 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
+                  Fleshy Seaweed
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
                   Hard Coral
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Rubble
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Recently Killed Coral
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
-                  Rock
                 </mock-typography>
               </label>
               <label
@@ -857,19 +831,6 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Soft Coral
-                </mock-typography>
-              </label>
-              <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
-              >
-                <mock-checkbox
-                  checked="false"
-                />
-                <mock-typography
-                  classname="MuiFormControlLabel-label"
-                  component="span"
-                >
                   Nutrient indicator Algea
                 </mock-typography>
               </label>
@@ -883,7 +844,33 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Sponge
+                  Rock
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Recently Killed Coral
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Rubble
                 </mock-typography>
               </label>
               <label
@@ -922,7 +909,20 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
                   classname="MuiFormControlLabel-label"
                   component="span"
                 >
-                  Fleshy Seaweed
+                  Soft Coral
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Sponge
                 </mock-typography>
               </label>
               <label
