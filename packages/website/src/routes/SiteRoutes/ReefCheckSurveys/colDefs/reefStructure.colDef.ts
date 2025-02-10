@@ -1,8 +1,11 @@
 import { mean } from 'lodash';
-import { ReefCheckSubstrate } from 'store/ReefCheckSurveys/types';
+import {
+  ReefCheckSubstrate,
+  SubstrateCode,
+} from 'store/ReefCheckSurveys/types';
 import type { ColumnDef } from '../ReefCheckSurveyTable';
 
-const substrateCodesMap: Record<string, string> = {
+const substrateCodesMap: Record<SubstrateCode, string> = {
   HC: 'Hard Coral',
   'HC/B': 'Hard Coral Bleaching',
   'HC/D': 'Hard Coral Disease',

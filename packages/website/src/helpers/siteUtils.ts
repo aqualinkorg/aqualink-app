@@ -1,5 +1,5 @@
 import { LatLng } from 'leaflet';
-import { maxBy, meanBy, snakeCase } from 'lodash';
+import { isEmpty, keyBy, maxBy, meanBy, snakeCase } from 'lodash';
 
 import {
   DataRangeWithMetric,
@@ -11,6 +11,8 @@ import {
   UpdateSiteNameFromListArgs,
 } from 'store/Sites/types';
 import type {
+  SiteFilters,
+  SiteOption,
   TimeSeriesDataRequestParams,
   siteOptions,
 } from 'store/Sites/types';
@@ -164,3 +166,71 @@ export const sitesFilterFn = (
       return true;
   }
 };
+
+export const filterOutFalsy = <T extends Record<string, boolean>>(obj: T): Record<string, true> => {
+  return Object.fromEntries(Object.entries(obj).filter(([, value]) => value)) as Record<string, true>;
+};
+
+
+export const filterSiteByHeatStress = (site: Site, { heatStress }: SiteFilters) => {
+  if (isEmpty(heatStress)) {
+    return true;
+  }
+  const { tempWeeklyAlert } = site.collectionData || {};
+  return heatStress[tempWeeklyAlert ?? 0];
+}
+
+export const filterSiteBySensorData = (site: Site, { siteOptions: sensorDataTypes }: SiteFilters) => {
+  if (isEmpty(sensorDataTypes)) {
+    return true;
+  }
+  const siteOptions: SiteOption[] = Object.entries(sensorDataTypes).filter(([, value]) => value).map(([key]) => key) as SiteOption[];
+  return siteOptions.every((option) => {
+    switch (option) {
+      case 'liveStreams':
+        return !!site.videoStream;
+      case '3DModels':
+        return !!site.sketchFab;
+      case 'activeBuoys':
+        return hasDeployedSpotter(site);
+      case 'hoboLoggers':
+        return site.hasHobo;
+      case 'waterQuality':
+        return site.waterQualitySources?.length;
+      case 'reefCheckSites':
+        return !!site.reefCheckSite;
+      default:
+        console.error(`Unhandled Option: ${option}`);
+        // This will cause a TS error if there is an unhandled option
+        // eslint-disable-next-line prettier/prettier
+        option satisfies never;
+        return true;
+    }
+  });
+}
+
+export const filterSiteBySpecies = (site: Site, { species }: SiteFilters) => {
+  if (isEmpty(species)) {
+    return true;
+  }
+  const speciesToMatch = Object.entries(species).filter(([, value]) => value).map(([key]) => key);
+  return speciesToMatch.every((s) => (site.reefCheckData?.organism || []).find((o) => o.includes(s)));
+}
+
+export const filterSiteByReefComposition = (site: Site, { reefComposition }: SiteFilters) => {
+  if (isEmpty(reefComposition)) {
+    return true;
+  }
+  
+  const substratesToMatch = Object.entries(reefComposition).filter(([, value]) => value).map(([key]) => key);
+  const siteSubstratesMap = keyBy(site.reefCheckData?.substrate || []);
+  return substratesToMatch.every((s) => siteSubstratesMap[s]);
+}
+
+export const filterSiteByImpact = (site: Site, { impact }: SiteFilters) => {
+  if (isEmpty(impact)) {
+    return true;
+  }
+  const impactToMatch = Object.entries(impact).filter(([, value]) => value).map(([key]) => key);
+  return impactToMatch.every((i) => site.reefCheckData?.impact?.includes(i));
+}

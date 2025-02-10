@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import reducer from './reducer';
+import { appMiddlewares } from './middleware';
 
-export const store = configureStore({ reducer });
+export const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(appMiddlewares),
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 

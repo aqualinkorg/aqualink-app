@@ -34,7 +34,7 @@ export interface ReefCheckSubstrate {
   id: number;
   surveyId: string;
   date: string;
-  substrateCode: string;
+  substrateCode: SubstrateCode;
   s1: number;
   s2: number;
   s3: number;
@@ -128,3 +128,24 @@ export interface ReefCheckSurveyListState {
   loading: boolean;
   error?: string;
 }
+
+export interface ReefCheckData {
+  organism: string[];
+  substrate: SubstrateCode[];
+  impact: string[];
+}
+
+export type SubstrateCode =
+  | 'HC'
+  | 'HC/B'
+  | 'HC/D'
+  | 'SC'
+  | 'RKC'
+  | 'NIA'
+  | 'FS'
+  | 'SP'
+  | 'RC'
+  | 'RB'
+  | 'SD'
+  | 'SI'
+  | 'OT';

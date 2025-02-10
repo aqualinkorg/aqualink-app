@@ -109,7 +109,7 @@ const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
     <div className={classes.searchBar}>
       <div className={classes.searchBarIcon}>
         <IconButton size="small" onClick={onSearchSubmit}>
-          <SearchIcon />
+          <SearchIcon sx={{ color: 'black' }} />
         </IconButton>
       </div>
       <div className={classes.searchBarText}>
@@ -126,6 +126,7 @@ const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
               : undefined
           }
           getOptionLabel={siteAugmentedName}
+          getOptionKey={(option) => option.id.toString()}
           value={searchedSite}
           onChange={onDropdownItemSelect}
           onInputChange={(_event, _value, reason) =>
@@ -144,6 +145,11 @@ const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
               }}
             />
           )}
+          slotProps={{
+            popupIndicator: {
+              sx: { color: 'black' },
+            },
+          }}
         />
       </div>
     </div>
@@ -157,6 +163,7 @@ const styles = () =>
       alignItems: 'stretch',
       borderRadius: 4,
       overflow: 'hidden',
+      color: 'black',
     },
     searchBarIcon: {
       display: 'flex',
@@ -181,6 +188,10 @@ const styles = () =>
       },
       height: '100%',
       width: '100%',
+
+      '& input::placeholder': {
+        opacity: 1,
+      },
     },
     listbox: {
       overflowX: 'hidden',

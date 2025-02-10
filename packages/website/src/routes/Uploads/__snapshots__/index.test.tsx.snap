@@ -8,7 +8,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
     open="false"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-filledSuccess MuiAlert-filled makeStyles-alert-7 css-19sgit9-MuiPaper-root-MuiAlert-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-filledSuccess MuiAlert-filled makeStyles-alert-7 css-d55hu6-MuiPaper-root-MuiAlert-root"
       role="alert"
       style="--Paper-shadow: none;"
     >
@@ -69,7 +69,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
     open="false"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-filledError MuiAlert-filled makeStyles-alert-7 css-el7crv-MuiPaper-root-MuiAlert-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-filledError MuiAlert-filled makeStyles-alert-7 css-1eta1yh-MuiPaper-root-MuiAlert-root"
       role="alert"
       style="--Paper-shadow: none;"
     >
@@ -969,7 +969,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >
