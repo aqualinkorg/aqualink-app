@@ -19,6 +19,7 @@ jobs:
       NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
 
       surge_url: aqualink-app-${{ github.event.pull_request.number }}.surge.sh
+      NEXT_PUBLIC_WEBSITE_BASE_URL: ${{ env.surge_url }}
       NEXT_PUBLIC_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
       NEXT_PUBLIC_FEATURED_SITE_ID: ${{ vars.REACT_APP_FEATURED_SITE_ID }}
     steps:
