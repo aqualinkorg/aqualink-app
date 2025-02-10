@@ -184,7 +184,7 @@ export async function getSitesDailyData(
 
       // If no data returned from the update function, skip
       if (hasNoData(dailyDataInput)) {
-        console.log(`No data has been fetched. Skipping ${site.id}...`);
+        Logger.log(`No data has been fetched. Skipping ${site.id}...`);
         return;
       }
 
