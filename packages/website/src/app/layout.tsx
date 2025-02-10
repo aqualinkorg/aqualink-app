@@ -13,6 +13,7 @@ import '../assets/css/bootstrap.css';
 export const metadata: Metadata = {
   title: 'Aqualink',
   description: 'Ocean Monitoring',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_BASE_URL!),
 };
 
 export const viewport: Viewport = {
