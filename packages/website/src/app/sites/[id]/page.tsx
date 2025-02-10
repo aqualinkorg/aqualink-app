@@ -21,10 +21,8 @@ export const generateMetadata = async ({
 }) => {
   const id = parseInt((await params).id, 10);
   // We use the same /sites request, instead of site/:id, because the response is cached (axios-cache)
-  const { name } = (await fetchSites()).find((site) => site.id === id) ?? {
-    name: `Site ${id}`,
-  };
-
+  const name =
+    (await fetchSites()).find((site) => site.id === id)?.name ?? `Site ${id}`;
   return {
     title: `Monitoring ${name} | Aqualink dashboard`,
     description: `View real-time data for ${name}, including reef health, water temperature, wind, and wave conditions. Monitor marine ecosystems with Aqualink.`,
