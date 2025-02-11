@@ -28,151 +28,1014 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
   <mock-box
     classname="SiteTable-dropdownWrapper-5"
   >
-    <div
-      class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-12kco1g-MuiInputBase-root-MuiInput-root-MuiSelect-root"
-      style="background-color: rgb(70, 154, 187); border-radius: 4px;"
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-kigga0-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
     >
+      <span
+        class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
+      >
+        <mock-tune />
+      </span>
+      All sites
+    </button>
+    <mock-dialog
+      fullwidth="true"
+      open="false"
+    >
+      <mock-dialogtitle
+        classname="SitesFilterModalComponent-title-11"
+      >
+        Filters
+      </mock-dialogtitle>
+      <mock-iconbutton
+        aria-label="close"
+      >
+        <mock-closeoutlined />
+      </mock-iconbutton>
       <div
-        aria-controls=":r0:"
-        aria-expanded="false"
-        aria-haspopup="listbox"
-        class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-        role="combobox"
-        tabindex="0"
+        class="MuiBox-root css-0"
       >
-        <span
-          aria-hidden="true"
-          class="notranslate"
+        <mock-divider />
+        <div
+          class="MuiBox-root css-gajhq5"
         >
-          ​
-        </span>
+          <label
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd SitesFilterModalComponent-allSites-12 css-19opgx6-MuiFormControlLabel-root"
+          >
+            <mock-checkbox
+              checked="true"
+            />
+            <mock-typography
+              classname="MuiFormControlLabel-label"
+              component="span"
+              fontweight="bold"
+            >
+              All Sites and Data
+            </mock-typography>
+          </label>
+        </div>
+        <mock-divider />
+        <mock-accordion
+          classes="[object Object]"
+          disablegutters="true"
+          square="true"
+        >
+          <mock-accordionsummary
+            expandicon="[object Object]"
+          >
+            Heat Stress Status
+          </mock-accordionsummary>
+          <mock-accordiondetails>
+            <div
+              class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
+            >
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Alert Level 1
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Alert Level 2
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Warning
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Watch
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  No Alert
+                </mock-typography>
+              </label>
+            </div>
+          </mock-accordiondetails>
+        </mock-accordion>
+        <mock-divider />
+        <mock-accordion
+          classes="[object Object]"
+          disablegutters="true"
+          square="true"
+        >
+          <mock-accordionsummary
+            expandicon="[object Object]"
+          >
+            Sensor and Data Types
+          </mock-accordionsummary>
+          <mock-accordiondetails>
+            <div
+              class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
+            >
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Active buoys
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  3D Models
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  HOBO loggers
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Live streams
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Reef Check Sites
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Water quality
+                </mock-typography>
+              </label>
+            </div>
+          </mock-accordiondetails>
+        </mock-accordion>
+        <mock-divider />
+        <mock-accordion
+          classes="[object Object]"
+          disablegutters="true"
+          square="true"
+        >
+          <mock-accordionsummary
+            expandicon="[object Object]"
+          >
+            Species
+          </mock-accordionsummary>
+          <mock-accordiondetails>
+            <mock-typography
+              fontweight="bold"
+              variant="h6"
+            >
+              Fish
+            </mock-typography>
+            <div
+              class="MuiBox-root css-xm7yc3"
+            >
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Algae-farming Damsel
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Barramundi Cod
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Bumphead Parrot
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Butterflyfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Camotillo
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Giant Hawkfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Grunt
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Grouper
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Haemulidae
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  King Angelfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Mexican Hogfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Moray Eel
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Parrotfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Snapper
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Wrasse
+                </mock-typography>
+              </label>
+            </div>
+            <mock-typography
+              fontweight="bold"
+              variant="h6"
+            >
+              Invertebrate
+            </mock-typography>
+            <div
+              class="MuiBox-root css-xm7yc3"
+            >
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Banded Coral Shrimp
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  COTS
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Cowries
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Diadema
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Edible Sea Cucumber
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Flamingo Tongue
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Giant Clam
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Gorgonian
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Lobster
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Pencil Urchin
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Sea Fan
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Sea Star
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Spider Crab
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Triton
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Tripneustes
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Urchin
+                </mock-typography>
+              </label>
+            </div>
+            <mock-typography
+              fontweight="bold"
+              variant="h6"
+            >
+              Rare Animals
+            </mock-typography>
+            <div
+              class="MuiBox-root css-xm7yc3"
+            >
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Lionfish
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Mantas
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Sharks
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Turtles
+                </mock-typography>
+              </label>
+            </div>
+          </mock-accordiondetails>
+        </mock-accordion>
+        <mock-divider />
+        <mock-accordion
+          classes="[object Object]"
+          disablegutters="true"
+          square="true"
+        >
+          <mock-accordionsummary
+            expandicon="[object Object]"
+          >
+            Reef Composition
+          </mock-accordionsummary>
+          <mock-accordiondetails>
+            <div
+              class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
+            >
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Fleshy Seaweed
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Hard Coral
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Hard Coral Bleaching
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Hard Coral Disease
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Nutrient indicator Algea
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Rock
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Recently Killed Coral
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Rubble
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Sand
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Silt/Clay
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Soft Coral
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Sponge
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Other
+                </mock-typography>
+              </label>
+            </div>
+          </mock-accordiondetails>
+        </mock-accordion>
+        <mock-divider />
+        <mock-accordion
+          classes="[object Object]"
+          disablegutters="true"
+          square="true"
+        >
+          <mock-accordionsummary
+            expandicon="[object Object]"
+          >
+            Anthropogenic Impact
+          </mock-accordionsummary>
+          <mock-accordiondetails>
+            <div
+              class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
+            >
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  None
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Low
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  Medium
+                </mock-typography>
+              </label>
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+              >
+                <mock-checkbox
+                  checked="false"
+                />
+                <mock-typography
+                  classname="MuiFormControlLabel-label"
+                  component="span"
+                >
+                  High
+                </mock-typography>
+              </label>
+            </div>
+          </mock-accordiondetails>
+        </mock-accordion>
       </div>
-      <input
-        aria-hidden="true"
-        aria-invalid="false"
-        class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-        tabindex="-1"
-        value=""
-      />
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
-        data-testid="ArrowDropDownIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M7 10l5 5 5-5z"
-        />
-      </svg>
-      <mock-popover
-        anchorel="[object HTMLDivElement]"
-        anchororigin="[object Object]"
-        classname="css-s4soc1-MuiMenu-root"
-        id="menu-"
-        open="false"
-        slotprops="[object Object]"
-        slots="[object Object]"
-        transformorigin="[object Object]"
-        transitionduration="auto"
-        transitionprops="[object Object]"
-      >
-        <mock-menulist
-          actions="[object Object]"
-          autofocusitem="false"
-          classname="MuiMenu-list css-7drlel-MuiMenu-list"
-          disablelistwrap="true"
-          id=":r0:"
-          role="listbox"
-          variant="selectedMenu"
+      <mock-dialogactions>
+        <div
+          class="MuiBox-root css-z7mtfw"
         >
-          <mock-menuitem
-            aria-selected="false"
-            data-value="All sites"
-            role="option"
-            selected="false"
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+            disabled=""
+            tabindex="-1"
+            type="button"
           >
-            <mock-typography
-              style="color: black;"
-            >
-              All sites
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            aria-selected="false"
-            data-value="Active buoys"
-            role="option"
-            selected="false"
+            CLEAR ALL
+          </button>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-kigga0-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
           >
-            <mock-typography
-              style="color: black;"
-            >
-              Active buoys
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            aria-selected="false"
-            data-value="Live streams"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              style="color: black;"
-            >
-              Live streams
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            aria-selected="false"
-            data-value="3D Models"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              style="color: black;"
-            >
-              3D Models
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            aria-selected="false"
-            data-value="HOBO loggers"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              style="color: black;"
-            >
-              HOBO loggers
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            aria-selected="false"
-            data-value="Water quality"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              style="color: black;"
-            >
-              Water quality
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            aria-selected="false"
-            data-value="Reef Check"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              style="color: black;"
-            >
-              Reef Check
-            </mock-typography>
-          </mock-menuitem>
-        </mock-menulist>
-      </mock-popover>
-    </div>
+            SHOW 
+            1
+             Sites
+          </button>
+        </div>
+      </mock-dialogactions>
+    </mock-dialog>
   </mock-box>
   <mock-hidden
     mdup="true"
@@ -192,7 +1055,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       >
         <div
-          aria-controls=":r1:"
+          aria-controls=":r0:"
           aria-expanded="false"
           aria-haspopup="listbox"
           class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
@@ -245,7 +1108,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             autofocusitem="false"
             classname="MuiMenu-list css-7drlel-MuiMenu-list"
             disablelistwrap="true"
-            id=":r1:"
+            id=":r0:"
             role="listbox"
             variant="selectedMenu"
           >
@@ -410,7 +1273,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             <mock-tablerow>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-11"
+                classname="EnhancedTableHead-headCells-15"
                 padding="normal"
                 sortdirection="false"
                 style="width: 40%;"
@@ -430,7 +1293,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-11"
+                classname="EnhancedTableHead-headCells-15"
                 padding="normal"
                 sortdirection="false"
               >
@@ -456,7 +1319,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-11"
+                classname="EnhancedTableHead-headCells-15"
                 padding="normal"
                 sortdirection="false"
               >
@@ -482,7 +1345,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-11"
+                classname="EnhancedTableHead-headCells-15"
                 padding="normal"
                 sortdirection="desc"
                 style="width: 5%;"
@@ -505,7 +1368,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
         </mock-hidden>
         <mock-tablebody>
           <mock-tablerow
-            classname="SiteTableBody-tableRow-18"
+            classname="SiteTableBody-tableRow-22"
             hover="true"
             id="homepage-table-row-0"
             role="button"
@@ -513,7 +1376,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
             tabindex="-1"
           >
             <mock-tablecell
-              classname="SiteTableBody-nameCells-12"
+              classname="SiteTableBody-nameCells-16"
             >
               <mock-typography
                 align="left"
@@ -524,10 +1387,10 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="SiteTableBody-cellTextAlign-16"
+              classname="SiteTableBody-cellTextAlign-20"
             >
               <mock-typography
-                classname="SiteTableBody-numberCellsTitle-15"
+                classname="SiteTableBody-numberCellsTitle-19"
                 style="color: rgb(22, 141, 189);"
                 variant="h6"
               >
@@ -546,10 +1409,10 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="SiteTableBody-cellTextAlign-16"
+              classname="SiteTableBody-cellTextAlign-20"
             >
               <mock-typography
-                classname="SiteTableBody-numberCellsTitle-15"
+                classname="SiteTableBody-numberCellsTitle-19"
                 style="color: rgb(8, 91, 163);"
                 variant="h6"
               >
@@ -568,7 +1431,7 @@ exports[`SiteTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="SiteTableBody-cellTextAlign-16"
+              classname="SiteTableBody-cellTextAlign-20"
             >
               <svg
                 aria-hidden="true"

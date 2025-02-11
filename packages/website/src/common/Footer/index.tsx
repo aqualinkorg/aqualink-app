@@ -30,6 +30,7 @@ const styles = (theme: Theme) =>
     appBar: {
       '&.MuiPaper-root': {
         backgroundColor: theme.palette.primary.main,
+        color: 'white',
       },
     },
     navBarLink: {

@@ -371,6 +371,7 @@ const styles = (theme: Theme) =>
       height: 64,
       '&.MuiPaper-root': {
         backgroundColor: theme.palette.primary.main,
+        color: 'white',
       },
     },
     navBarLink: {

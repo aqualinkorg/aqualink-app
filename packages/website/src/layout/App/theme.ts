@@ -278,6 +278,13 @@ theme.components = {
       },
     },
   },
+  MuiPaper: {
+    styleOverrides: {
+      root: {
+        color: black,
+      },
+    },
+  },
 };
 
 export default theme;

@@ -159,6 +159,7 @@ const styles = (theme: Theme) =>
   createStyles({
     popupHeader: {
       backgroundColor: theme.palette.primary.main,
+      color: 'white',
     },
 
     popupHeaderContent: {

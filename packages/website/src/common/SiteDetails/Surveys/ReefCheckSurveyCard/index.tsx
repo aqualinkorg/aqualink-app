@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { groupBy, times } from 'lodash';
 import cls from 'classnames';
 import { reefCheckImpactRows, ReefCheckSurvey } from 'store/ReefCheckSurveys';
+import reefCheckLogo from '../../../../assets/img/reef-check-logo.png';
 
 type ReefCheckSurveyCardIncomingProps = {
   survey: ReefCheckSurvey;
@@ -62,7 +63,18 @@ const ReefCheckSurveyCardComponent = ({
           </Typography>
           <Typography>Depth: {survey.depth}m</Typography>
         </Box>
-        <Typography>User: {survey.submittedBy ?? 'Reef Check'}</Typography>
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography>
+            {survey.teamLeader
+              ? `${survey.teamLeader}, Reef Check`
+              : 'Reef Check'}
+          </Typography>
+          <img
+            src={reefCheckLogo}
+            alt="Reef Check Logo"
+            style={{ height: 20 }}
+          />
+        </Box>
       </Box>
       <TableContainer className={classes.tableRoot}>
         <Table size="small">

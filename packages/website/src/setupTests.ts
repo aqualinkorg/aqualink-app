@@ -44,6 +44,7 @@ mockIcon('ArrowBack');
 mockIcon('Build');
 mockIcon('Cancel');
 mockIcon('Clear');
+mockIcon('CloseOutlined');
 mockIcon('Code');
 mockIcon('Email');
 mockIcon('ExpandMore');
@@ -63,6 +64,7 @@ mockIcon('Person');
 mockIcon('Share');
 mockIcon('Star');
 mockIcon('StarBorder');
+mockIcon('Tune');
 mockIcon('ZoomOutMap');
 
 jest.mock('@react-leaflet/core', () => ({

@@ -149,7 +149,7 @@ const HomepageMap = ({
       id="sites-map"
       ref={ref}
       preferCanvas
-      renderer={L.canvas()}
+      renderer={L.canvas({ tolerance: 15 })}
       maxBoundsViscosity={1.0}
       className={classes.map}
       center={initialCenter}

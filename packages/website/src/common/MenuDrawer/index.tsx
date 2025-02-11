@@ -139,6 +139,7 @@ const styles = (theme: Theme) =>
       width: '18rem',
       alignItems: 'center',
       backgroundColor: darkBlue,
+      color: 'white',
     },
     contributeButton: {
       width: '50%',

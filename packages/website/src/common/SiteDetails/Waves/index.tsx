@@ -260,9 +260,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
     },
     arrow: {
-      width: 20,
-      height: 20,
-      marginRight: '1rem',
+      width: 22,
+      height: 22,
+      marginRight: '0.5rem',
       marginBottom: 10,
       [theme.breakpoints.between('md', 1350)]: {
         width: 15,

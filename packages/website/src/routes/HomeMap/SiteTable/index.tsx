@@ -7,7 +7,6 @@ import {
   Hidden,
   MenuItem,
   Select,
-  SelectChangeEvent,
   SelectProps,
   Table,
   TableContainer,
@@ -17,26 +16,20 @@ import {
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
-import {
-  filterSitesWithSpotter,
-  sitesListLoadingSelector,
-} from 'store/Sites/sitesListSlice';
-import {
-  siteOnMapSelector,
-  setWithSpotterOnly,
-  siteFilterSelector,
-} from 'store/Homepage/homepageSlice';
+
+import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { siteOptions } from 'store/Sites/types';
+import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import SelectedSiteCard from './SelectedSiteCard';
 import SiteTableBody from './body';
 import { getOrderKeysFriendlyString, Order, OrderKeys } from './utils';
 import EnhancedTableHead from './tableHead';
 import { Collection } from '../../Dashboard/collection';
+import { SitesFilterModal } from './SitesFilterDropdown';
 
 const SMALL_HEIGHT = 720;
 
@@ -84,8 +77,6 @@ const SiteTable = ({
 }: SiteTableProps) => {
   const loading = useSelector(sitesListLoadingSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
-  const siteFilter = useSelector(siteFilterSelector);
-  const dispatch = useDispatch();
   const { height } = useWindowSize() || {};
 
   const [order, setOrder] = useState<Order>('desc');
@@ -95,14 +86,6 @@ const SiteTable = ({
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const filterOnChange = (event: SelectChangeEvent<unknown>) => {
-    const {
-      target: { value },
-    } = event;
-    dispatch(filterSitesWithSpotter(value as any));
-    dispatch(setWithSpotterOnly(value as any));
   };
 
   // This function is used to prevent the drawer onClick close effect on mobile
@@ -150,22 +133,7 @@ const SiteTable = ({
       {showCard && <SelectedSiteCard />}
       {showSiteFiltersDropdown && (
         <Box className={classes.dropdownWrapper}>
-          <Select
-            value={siteFilter}
-            onChange={filterOnChange}
-            variant="standard"
-            disableUnderline
-            style={{ backgroundColor: '#469abb', borderRadius: '4px' }}
-            renderValue={(val) => (
-              <Typography style={{ marginLeft: '0.75rem' }}>{val}</Typography>
-            )}
-          >
-            {(siteOptions || []).map((x) => (
-              <MenuItem key={x} value={x}>
-                <Typography style={{ color: 'black' }}>{x}</Typography>
-              </MenuItem>
-            ))}
-          </Select>
+          <SitesFilterModal />
         </Box>
       )}
       {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
@@ -250,9 +218,6 @@ const styles = (theme: Theme) =>
       overflowY: 'auto',
     },
     table: {
-      [theme.breakpoints.down('sm')]: {
-        tableLayout: 'fixed',
-      },
       borderCollapse: 'collapse',
     },
     extendedTable: {

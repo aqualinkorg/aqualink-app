@@ -240,7 +240,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-g7pk96-MuiSvgIcon-root"
                     data-testid="SearchIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -282,7 +282,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       >
                         <mock-iconbutton
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator css-jhk8ta-MuiAutocomplete-popupIndicator"
+                          classname="MuiAutocomplete-popupIndicator css-z4hckw-MuiAutocomplete-popupIndicator"
                           disabled="false"
                           tabindex="-1"
                           title="Open"
@@ -459,7 +459,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-g7pk96-MuiSvgIcon-root"
                     data-testid="SearchIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -501,7 +501,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       >
                         <mock-iconbutton
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator css-jhk8ta-MuiAutocomplete-popupIndicator"
+                          classname="MuiAutocomplete-popupIndicator css-z4hckw-MuiAutocomplete-popupIndicator"
                           disabled="false"
                           tabindex="-1"
                           title="Open"
@@ -984,7 +984,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >
@@ -1208,7 +1208,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >
@@ -2796,7 +2796,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         component="div"
                       >
                         <div
-                          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-894 css-1bvccj3-MuiPaper-root"
+                          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-894 css-14gemme-MuiPaper-root"
                           style="--Paper-shadow: none;"
                         >
                           <div
@@ -2926,7 +2926,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyCardWrapper-912 css-wcmnoq-MuiGrid-root"
                       >
                         <div
-                          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-894 css-1bvccj3-MuiPaper-root"
+                          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-894 css-14gemme-MuiPaper-root"
                           style="--Paper-shadow: none;"
                         >
                           <div
@@ -3316,7 +3316,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-g7pk96-MuiSvgIcon-root"
                     data-testid="SearchIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -3358,7 +3358,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       >
                         <mock-iconbutton
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator css-jhk8ta-MuiAutocomplete-popupIndicator"
+                          classname="MuiAutocomplete-popupIndicator css-z4hckw-MuiAutocomplete-popupIndicator"
                           disabled="false"
                           tabindex="-1"
                           title="Open"
@@ -3535,7 +3535,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-g7pk96-MuiSvgIcon-root"
                     data-testid="SearchIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -3577,7 +3577,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       >
                         <mock-iconbutton
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator css-jhk8ta-MuiAutocomplete-popupIndicator"
+                          classname="MuiAutocomplete-popupIndicator css-z4hckw-MuiAutocomplete-popupIndicator"
                           disabled="false"
                           tabindex="-1"
                           title="Open"
@@ -4060,7 +4060,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >
@@ -4284,7 +4284,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >
@@ -4425,7 +4425,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
       mt="1.3rem"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-1qtu5b0-MuiPaper-root-MuiAlert-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-1qljgbl-MuiPaper-root-MuiAlert-root"
         role="alert"
         style="--Paper-shadow: none;"
       >

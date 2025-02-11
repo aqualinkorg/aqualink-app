@@ -57,6 +57,7 @@ export const mockSite: Site = {
   },
   reefCheckSurveys: [],
   reefCheckSite: null,
+  reefCheckData: null,
 };
 
 export const generateMockSite = ({

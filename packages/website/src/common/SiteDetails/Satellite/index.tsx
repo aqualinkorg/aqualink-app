@@ -145,6 +145,7 @@ const styles = () =>
       height: '100%',
       display: 'flex',
       flexDirection: 'column',
+      color: 'white',
     },
     content: {
       display: 'flex',

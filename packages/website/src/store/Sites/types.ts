@@ -1,5 +1,9 @@
 /* eslint-disable camelcase */
-import type { ReefCheckSite, ReefCheckSurvey } from 'store/ReefCheckSurveys';
+import type {
+  ReefCheckData,
+  ReefCheckSite,
+  ReefCheckSurvey,
+} from 'store/ReefCheckSurveys';
 import { User } from '../User/types';
 
 export type Position = [number, number];
@@ -291,6 +295,7 @@ export interface Site {
   waterQualitySources?: string[];
   reefCheckSurveys: ReefCheckSurvey[];
   reefCheckSite: ReefCheckSite | null;
+  reefCheckData: ReefCheckData | null;
 }
 
 export interface SiteSketchFab {
@@ -388,12 +393,11 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
-  sitesToDisplay: Site[];
 }
 
 export interface SitesListState {
   list?: Site[];
-  sitesToDisplay?: Site[];
+  filters: SiteFilters;
   loading: boolean;
   error?: string | null;
 }
@@ -463,3 +467,26 @@ export const siteOptions = [
   'Water quality',
   'Reef Check',
 ] as const;
+
+export type HeatStressLevel = number;
+export type SiteOption =
+  | 'activeBuoys'
+  | 'liveStreams'
+  | '3DModels'
+  | 'hoboLoggers'
+  | 'waterQuality'
+  | 'reefCheckSites';
+
+export interface SiteFilters {
+  heatStress?: Partial<Record<HeatStressLevel, true>>;
+  siteOptions?: Partial<Record<SiteOption, true>>;
+  species?: Partial<Record<string, true>>;
+  reefComposition?: Partial<Record<string, true>>;
+  impact?: Partial<Record<string, true>>;
+}
+
+export type PatchSiteFiltersPayload<T extends keyof SiteFilters> = {
+  category: T;
+  filter: keyof NonNullable<SiteFilters[T]>;
+  value: boolean;
+};
