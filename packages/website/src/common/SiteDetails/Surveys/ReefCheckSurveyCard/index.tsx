@@ -70,7 +70,7 @@ const ReefCheckSurveyCardComponent = ({
               : 'Reef Check'}
           </Typography>
           <img
-            src={reefCheckLogo}
+            src={reefCheckLogo.src}
             alt="Reef Check Logo"
             style={{ height: 20 }}
           />
