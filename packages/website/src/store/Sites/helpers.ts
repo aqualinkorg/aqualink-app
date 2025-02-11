@@ -412,6 +412,7 @@ export const readFiltersFromUrl = (): SiteFilters => {
     'reefComposition',
     'species',
   ];
+  if (typeof window === 'undefined') return {};
   const urlParams = new URLSearchParams(window.location.search);
 
   return filterKeys.reduce((filters, key) => {
