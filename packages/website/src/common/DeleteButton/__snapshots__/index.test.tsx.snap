@@ -44,7 +44,7 @@ exports[`Delete Button should render with given state from Redux store 1`] = `
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-1yey3j8-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-95d7z1-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >

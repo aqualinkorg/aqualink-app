@@ -44,7 +44,7 @@ const FeaturedMedia = ({
   const { list: reefCheckSurveyList } = useSelector(
     reefCheckSurveyListSelector,
   );
-  const hasReefCheckSurveys = true || reefCheckSurveyList.length > 0;
+  const hasReefCheckSurveys = reefCheckSurveyList.length > 0;
   const isSiteAdmin = isAdmin(user, siteId);
 
   if (url) {
@@ -81,7 +81,20 @@ const FeaturedMedia = ({
     <Card className={classes.card}>
       <div className={classes.noVideoCardHeader}>
         <Grid container direction="column" alignItems="center" spacing={2}>
-          {isSiteAdmin ? (
+          {hasReefCheckSurveys ? (
+            <Box
+              component={HashLink}
+              to={`/sites/${siteId}#surveys`}
+              display="flex"
+              alignItems="center"
+              gap={1}
+              className={classes.noVideoCardHeaderText}
+            >
+              <img src={reefCheckLogo} alt="Reef Check" width={50} />
+              <Typography variant="h5">REEF CHECK DATA AVAILABLE</Typography>
+              <KeyboardDoubleArrowDown />
+            </Box>
+          ) : isSiteAdmin ? (
             <>
               <Grid item>
                 <Typography
@@ -101,19 +114,6 @@ const FeaturedMedia = ({
                 </IconButton>
               </Grid>
             </>
-          ) : hasReefCheckSurveys ? (
-            <Box
-              component={HashLink}
-              to={`/sites/${siteId}#surveys`}
-              display="flex"
-              alignItems="center"
-              gap={1}
-              className={classes.noVideoCardHeaderText}
-            >
-              <img src={reefCheckLogo} alt="Reef Check" width={50} />
-              <Typography variant="h5">REEF CHECK DATA AVAILABLE</Typography>
-              <KeyboardDoubleArrowDown />
-            </Box>
           ) : (
             <Typography className={classes.noVideoCardHeaderText} variant="h5">
               SURVEY TO BE UPLOADED

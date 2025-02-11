@@ -54,7 +54,7 @@ exports[`Site registration page should render with given state from Redux store 
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 css-1ej0ikx-MuiGrid-root"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1bvccj3-MuiPaper-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-14gemme-MuiPaper-root"
               style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
             >
               <mock-box
@@ -385,7 +385,7 @@ exports[`Site registration page should render with given state from Redux store 
     open="false"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-colorError MuiAlert-filledError MuiAlert-filled css-el7crv-MuiPaper-root-MuiAlert-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-colorError MuiAlert-filledError MuiAlert-filled css-1eta1yh-MuiPaper-root-MuiAlert-root"
       role="alert"
       style="--Paper-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);"
     >
@@ -905,7 +905,7 @@ exports[`Site registration page should render with given state from Redux store 
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >

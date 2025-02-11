@@ -6,6 +6,7 @@ const styles = {
   },
   dialogHeader: {
     backgroundColor: theme.palette.primary.main,
+    color: 'white',
   },
   dialogHeaderSecondPart: {
     color: '#8AC6DE',

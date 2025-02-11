@@ -2,6 +2,7 @@ import {
   Hidden,
   TableBody,
   TableCell,
+  TableFooter,
   TablePagination,
   TableRow,
   Theme,
@@ -192,10 +193,7 @@ const SiteTableBody = ({
   return (
     <>
       <TableBody>
-        {stableSort<Row>(
-          constructTableData(sitesList),
-          getComparator(order, orderBy),
-        )
+        {tableData
           .slice(page * ROWS_PER_PAGE, page * ROWS_PER_PAGE + ROWS_PER_PAGE)
           .map((site) => {
             return (
@@ -279,14 +277,23 @@ const SiteTableBody = ({
           })}
       </TableBody>
       {sitesList.length > ROWS_PER_PAGE && (
-        <TablePagination
-          className={classes.stickyFooter}
-          count={sitesList.length}
-          rowsPerPage={ROWS_PER_PAGE}
-          rowsPerPageOptions={[ROWS_PER_PAGE]}
-          page={page}
-          onPageChange={handlePageChange}
-        />
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              className={classes.stickyFooter}
+              count={sitesList.length}
+              rowsPerPage={ROWS_PER_PAGE}
+              rowsPerPageOptions={[ROWS_PER_PAGE]}
+              page={page}
+              onPageChange={handlePageChange}
+              slotProps={{
+                displayedRows: {
+                  sx: { marginBottom: 0 },
+                },
+              }}
+            />
+          </TableRow>
+        </TableFooter>
       )}
     </>
   );

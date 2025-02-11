@@ -4,6 +4,7 @@ import { DataSource, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { DateTime } from 'luxon';
+import { Logger } from '@nestjs/common';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
 import { getMax } from '../utils/math';
@@ -128,6 +129,32 @@ export function getMaxAlert(
   return getMax([weeklyAlertLevel, dailyAlertLevel].filter(isNumber));
 }
 
+export async function getSitesIdsWithoutDataForDate(
+  dataSource: DataSource,
+  date: Date,
+  siteIds?: number[],
+): Promise<number[]> {
+  const query = dataSource
+    .getRepository(Site)
+    .createQueryBuilder('s')
+    .select('s.id', 'id')
+    .where(
+      `NOT EXISTS (
+        SELECT 1
+        FROM daily_data dd
+        WHERE dd.site_id = s.id
+        AND dd.date = :date
+      )`,
+      { date },
+    );
+
+  if (siteIds?.length) {
+    query.andWhere('s.id IN (:...siteIds)', { siteIds });
+  }
+
+  return (await query.getRawMany<{ id: number }>()).map((site) => site.id);
+}
+
 /* eslint-disable no-console */
 export async function getSitesDailyData(
   dataSource: DataSource,
@@ -147,7 +174,7 @@ export async function getSitesDailyData(
     select: getAllColumns(siteRepository),
   });
   const start = new Date();
-  console.log(
+  Logger.log(
     `Updating ${allSites.length} sites for ${endOfDate.toDateString()}.`,
   );
   await Bluebird.map(
@@ -157,7 +184,7 @@ export async function getSitesDailyData(
 
       // If no data returned from the update function, skip
       if (hasNoData(dailyDataInput)) {
-        console.log('No data has been fetched. Skipping...');
+        Logger.log(`No data has been fetched. Skipping ${site.id}...`);
         return;
       }
 
@@ -200,7 +227,7 @@ export async function getSitesDailyData(
     },
     { concurrency: 8 },
   );
-  console.log(
+  Logger.log(
     `Updated ${allSites.length} sites in ${
       (new Date().valueOf() - start.valueOf()) / 1000
     } seconds`,

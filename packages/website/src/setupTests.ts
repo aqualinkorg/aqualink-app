@@ -23,6 +23,7 @@ jest.mock('@mui/icons-material', () => ({
   Build: 'mock-Build',
   Cancel: 'mock-Cancel',
   Clear: 'mock-Clear',
+  CloseOutlined: 'mock-CloseOutlined',
   Code: 'mock-Code',
   Email: 'mock-Email',
   ExpandMore: 'mock-ExpandMore',
@@ -43,6 +44,7 @@ jest.mock('@mui/icons-material', () => ({
   Share: 'mock-Share',
   Star: 'mock-Star',
   StarBorder: 'mock-StarBorder',
+  Tune: 'mock-Tune',
   ZoomOutMap: 'mock-ZoomOutMap',
 }));
 

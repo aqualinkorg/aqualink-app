@@ -19,9 +19,9 @@ describe('SiteTable', () => {
       },
       sitesList: {
         list: [mockSite],
-        sitesToDisplay: [mockSite],
         loading: false,
         error: null,
+        filters: {},
       },
       selectedSite: {
         loading: false,

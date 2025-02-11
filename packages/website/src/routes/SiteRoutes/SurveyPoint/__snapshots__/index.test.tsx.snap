@@ -252,7 +252,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-g7pk96-MuiSvgIcon-root"
                     data-testid="SearchIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -294,7 +294,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       >
                         <mock-iconbutton
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator css-jhk8ta-MuiAutocomplete-popupIndicator"
+                          classname="MuiAutocomplete-popupIndicator css-z4hckw-MuiAutocomplete-popupIndicator"
                           disabled="false"
                           tabindex="-1"
                           title="Open"
@@ -479,7 +479,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-g7pk96-MuiSvgIcon-root"
                     data-testid="SearchIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -521,7 +521,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       >
                         <mock-iconbutton
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator css-jhk8ta-MuiAutocomplete-popupIndicator"
+                          classname="MuiAutocomplete-popupIndicator css-z4hckw-MuiAutocomplete-popupIndicator"
                           disabled="false"
                           tabindex="-1"
                           title="Open"
@@ -1004,7 +1004,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >
@@ -1256,7 +1256,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1fa6j4p-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >
