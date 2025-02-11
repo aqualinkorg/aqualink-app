@@ -19,7 +19,7 @@ import { createStyles, WithStyles, withStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import { sum } from 'lodash';
 import isEmpty from 'lodash/isEmpty';
-import React, { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { siteFilterOptions } from 'store/Sites/constants';
 import {
