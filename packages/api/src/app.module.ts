@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import { MonitoringModule } from 'monitoring/monitoring.module';
+import { MonitoringModule } from './monitoring/monitoring.module';
+import { MetadataModule } from './metadata/metadata.module';
 import { ReefCheckSitesModule } from './reef-check-sites/reef-check-sites.module';
 import { ReefCheckSurveysModule } from './reef-check-surveys/reef-check-surveys.module';
 import { configService } from './config/config.service';
@@ -50,6 +51,7 @@ import { SensorDataModule } from './sensor-data/sensor-data.module';
     MonitoringModule,
     ReefCheckSitesModule,
     ReefCheckSurveysModule,
+    MetadataModule,
   ],
   controllers: [AppController],
 })
