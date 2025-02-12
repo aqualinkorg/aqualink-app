@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { LinearProgress, Grid, Typography, Container } from '@mui/material';
 import { WithStyles } from '@mui/styles';

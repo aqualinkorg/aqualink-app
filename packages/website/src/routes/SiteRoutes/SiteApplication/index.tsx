@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable no-nested-ternary */
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';

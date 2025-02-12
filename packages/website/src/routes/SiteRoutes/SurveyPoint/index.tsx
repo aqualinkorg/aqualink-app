@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { LinearProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
