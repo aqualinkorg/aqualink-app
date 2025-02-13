@@ -48,7 +48,7 @@ describe('ReefCheckSurveyViewPage', () => {
     const renderResult = render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <ReefCheckSurveyViewPage />
+          <ReefCheckSurveyViewPage siteId="1" surveyId="1" />
         </ThemeProvider>
       </Provider>,
     );

@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import { LinearProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'next/navigation';
 import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
@@ -29,10 +28,13 @@ import SurveyHistory from './SurveyHistory';
 
 const BG_COLOR = 'rgb(245, 246, 246)';
 
-const SurveyPoint = () => {
-  const { id = '', pointId = '' } =
-    useParams<{ id: string; pointId: string }>();
-  const siteIdNumber = parseInt(id, 10);
+interface SurveyPointProps {
+  siteId: string;
+  pointId: string;
+}
+
+const SurveyPoint = ({ siteId, pointId }: SurveyPointProps) => {
+  const siteIdNumber = parseInt(siteId, 10);
   const pointIdNumber = parseInt(pointId, 10);
 
   const dispatch = useDispatch();
@@ -66,16 +68,16 @@ const SurveyPoint = () => {
 
   // Get HOBO data range
   useEffect(() => {
-    dispatch(siteTimeSeriesDataRangeRequest({ siteId: id, pointId }));
-  }, [dispatch, id, pointId]);
+    dispatch(siteTimeSeriesDataRangeRequest({ siteId, pointId }));
+  }, [dispatch, siteId, pointId]);
 
   useEffect(() => {
     if (!site || site.id !== siteIdNumber) {
-      dispatch(siteRequest(id));
-      dispatch(spotterPositionRequest(id));
-      dispatch(surveysRequest(id));
+      dispatch(siteRequest(siteId));
+      dispatch(spotterPositionRequest(siteId));
+      dispatch(surveysRequest(siteId));
     }
-  }, [dispatch, id, pointId, site, siteIdNumber]);
+  }, [dispatch, siteId, pointId, site, siteIdNumber]);
 
   return (
     <>
@@ -83,7 +85,7 @@ const SurveyPoint = () => {
       {loading && <LinearProgress />}
       {!loading && site && (
         <>
-          <BackButton siteId={id} bgColor={BG_COLOR} />
+          <BackButton siteId={siteId} bgColor={BG_COLOR} />
           <InfoCard site={site} pointId={pointIdNumber} bgColor={BG_COLOR} />
           {showChart && (
             <MultipleSensorsCharts

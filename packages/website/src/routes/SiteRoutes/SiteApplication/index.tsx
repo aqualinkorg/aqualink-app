@@ -2,7 +2,6 @@
 
 /* eslint-disable no-nested-ternary */
 import { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   Theme,
@@ -41,13 +40,11 @@ import Obligations from './Obligations';
 import Agreements from './Agreements';
 import Form from './Form';
 
-const Apply = ({ classes }: ApplyProps) => {
+const Apply = ({ classes, siteId }: ApplyProps) => {
   const dispatch = useDispatch();
   const site = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const userLoading = useSelector(userLoadingSelector);
-  const params = useParams<{ id: string }>();
-  const siteId = parseInt(params.id ?? '', 10);
   const user = useSelector(userInfoSelector);
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
@@ -298,6 +295,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-type ApplyProps = WithStyles<typeof styles>;
+type ApplyProps = { siteId: number } & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Apply);

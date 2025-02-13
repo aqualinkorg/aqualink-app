@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Button, Grid, Typography } from '@mui/material';
@@ -22,9 +21,15 @@ import { ReefCheckSurveySummary } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyDetails } from './ReefCheckSurveyDetails';
 import { ReefCheckSurveySubstrates } from './ReefCheckSurveySubstratesTable';
 
-export const ReefCheckSurveyViewPage = () => {
-  const { id: siteId = '', sid: surveyId = '' } =
-    useParams<{ id: string; sid: string }>();
+interface ReefCheckSurveyViewPageProps {
+  siteId: string;
+  surveyId: string;
+}
+
+export const ReefCheckSurveyViewPage = ({
+  siteId,
+  surveyId,
+}: ReefCheckSurveyViewPageProps) => {
   const error = useSelector(siteErrorSelector);
   const dispatch = useDispatch();
 

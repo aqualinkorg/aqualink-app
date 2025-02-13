@@ -6,7 +6,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import Link from 'next/link';
 import { DropzoneProps } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { SiteUploadHistory, Sources } from 'store/Sites/types';
 import { userInfoSelector } from 'store/User/userSlice';
 import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
@@ -37,13 +37,15 @@ import Header from './Header';
 import Selectors from './Selectors';
 import HistoryTable from './HistoryTable';
 
-const UploadData = () => {
-  const params = useParams<{ id: string }>();
+interface UploadDataProps {
+  siteId: string;
+}
+const UploadData = ({ siteId }: UploadDataProps) => {
   const router = useRouter();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { token } = useSelector(userInfoSelector) || {};
-  const { site, siteLoading } = useSiteRequest(params.id ?? '');
+  const { site, siteLoading } = useSiteRequest(siteId);
   const [selectedSensor, setSelectedSensor] = useState<Sources>();
   const [selectedPoint, setSelectedPoint] = useState<number>();
   const [useSiteTimezone, setUseSiteTimezone] = useState(false);
@@ -142,7 +144,7 @@ const UploadData = () => {
 
   // on component did mount
   useEffect(() => {
-    if (uploadTarget?.siteId && uploadTarget.siteId !== Number(params.id)) {
+    if (uploadTarget?.siteId && uploadTarget.siteId !== Number(siteId)) {
       if (uploadLoading) {
         setShouldShowPage(false);
       } else {

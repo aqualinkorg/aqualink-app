@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { createStyles, WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { groupBy, times } from 'lodash';
 import cls from 'classnames';
@@ -27,6 +28,7 @@ const ReefCheckSurveyCardComponent = ({
   survey,
   classes,
 }: ReefCheckSurveyCardProps) => {
+  const pathname = usePathname();
   const stats = groupBy(
     survey.organisms
       .map((organism) => ({
@@ -126,7 +128,7 @@ const ReefCheckSurveyCardComponent = ({
       </TableContainer>
 
       <Box marginTop={2}>
-        <Link href={`reef_check_survey/${survey.id}`}>
+        <Link href={`${pathname}/reef_check_survey/${survey.id}`}>
           <Button size="small" variant="outlined" color="primary">
             VIEW DETAILS
           </Button>
