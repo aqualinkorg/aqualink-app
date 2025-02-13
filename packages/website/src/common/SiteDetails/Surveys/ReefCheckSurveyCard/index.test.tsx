@@ -5,6 +5,10 @@ import { ThemeProvider } from '@mui/material';
 import theme from 'layout/App/theme';
 import { ReefCheckSurveyCard } from '.';
 
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn().mockReturnValue('/sites/1'),
+}));
+
 describe('ReefCheckSurveyCard', () => {
   function renderReefCheckSurveyCard(overrides: Partial<ReefCheckSurvey> = {}) {
     return render(
@@ -65,7 +69,7 @@ describe('ReefCheckSurveyCard', () => {
 
     expect(getByRole('link', { name: 'VIEW DETAILS' })).toHaveAttribute(
       'href',
-      `reef_check_survey/${mockReefCheckSurvey.id}`,
+      `/sites/1/reef_check_survey/${mockReefCheckSurvey.id}`,
     );
   });
 });

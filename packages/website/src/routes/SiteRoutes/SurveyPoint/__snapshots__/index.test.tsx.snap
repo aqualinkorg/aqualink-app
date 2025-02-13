@@ -1202,7 +1202,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       >
         <a
           class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
-          href="/sites"
+          href="/sites/1"
           tabindex="0"
         >
           <span
@@ -1310,6 +1310,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       variant="subtitle2"
                     >
                       Last surveyed: 
+                      Sep 10, 2020
                     </mock-typography>
                   </mock-box>
                 </div>
@@ -1357,7 +1358,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                               classname="SurveyInfo-coloredText-52"
                               variant="h5"
                             >
-                              0
+                              1
                             </mock-typography>
                           </div>
                           <div
@@ -1385,7 +1386,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                               classname="SurveyInfo-coloredText-52"
                               variant="h5"
                             >
-                              0
+                              1
                             </mock-typography>
                           </div>
                           <div
@@ -1408,7 +1409,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 editmodeenabled="false"
                 editpointlatitude="[object Object]"
                 editpointlongitude="[object Object]"
-                selectedpointid="NaN"
+                selectedpointid="1"
                 site="[object Object]"
               />
             </div>
@@ -1444,20 +1445,281 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         >
           <ul
             class="MuiTimeline-root MuiTimeline-positionRight css-i6popu-MuiTimeline-root"
-          />
+          >
+            <li
+              class="MuiTimelineItem-root MuiTimelineItem-positionRight makeStyles-timelineItem-63 css-ny8qih-MuiTimelineItem-root"
+            >
+              <mock-typography
+                classname="MuiTimelineOppositeContent-root MuiTimelineOppositeContent-positionRight makeStyles-timelineOppositeContent-64 css-1ovglxb-MuiTimelineOppositeContent-root"
+                component="div"
+              >
+                <mock-typography
+                  classname="makeStyles-dates-56"
+                  variant="h6"
+                >
+                  09/10/2020
+                </mock-typography>
+              </mock-typography>
+              <div
+                class="MuiTimelineSeparator-root css-1muvgbz-MuiTimelineSeparator-root"
+              >
+                <hr
+                  class="makeStyles-connector-67"
+                />
+                <span
+                  class="MuiTimelineDot-root MuiTimelineDot-outlined MuiTimelineDot-outlinedGrey makeStyles-dot-68 css-6xp33q-MuiTimelineDot-root"
+                />
+                <hr
+                  class="makeStyles-connector-67"
+                />
+              </div>
+              <mock-typography
+                classname="MuiTimelineContent-root MuiTimelineContent-positionRight makeStyles-surveyCardWrapper-58 css-15qjzwo-MuiTimelineContent-root"
+                component="div"
+              >
+                <div
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-80 css-14gemme-MuiPaper-root"
+                  style="--Paper-shadow: none;"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container css-hgxf4k-MuiGrid-root"
+                    style="height: 100%;"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-84 css-1ej0ikx-MuiGrid-root"
+                    >
+                      <a
+                        href="/sites/1/survey_details/46"
+                      >
+                        <div
+                          class="MuiCardMedia-root makeStyles-cardImage-81 css-utntyq-MuiCardMedia-root"
+                          role="img"
+                          style="background-image: url(image-url);"
+                        />
+                      </a>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-85 css-14c8q5g-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-90 css-aksm9b-MuiGrid-root"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+                        >
+                          <mock-typography
+                            classname="makeStyles-cardFields-82"
+                            variant="h6"
+                          >
+                            User:
+                          </mock-typography>
+                          <mock-typography
+                            classname="makeStyles-cardValues-83 makeStyles-valuesWithMargin-88"
+                            variant="h6"
+                          >
+                            Joe Doe
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-86 css-otecwo-MuiGrid-root"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+                            style="height: 80%;"
+                          >
+                            <mock-typography
+                              classname="makeStyles-cardFields-82"
+                              variant="h6"
+                            >
+                              Comments:
+                            </mock-typography>
+                            <mock-typography
+                              classname="makeStyles-cardValues-83 makeStyles-comments-87"
+                              variant="h6"
+                            >
+                              No comments
+                            </mock-typography>
+                          </div>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+                        >
+                          <mock-typography
+                            classname="makeStyles-cardFields-82"
+                            variant="h6"
+                          >
+                            Temp:
+                          </mock-typography>
+                          <mock-typography
+                            classname="makeStyles-cardValues-83 makeStyles-valuesWithMargin-88"
+                            variant="h6"
+                          >
+                            10.0 °C
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
+                          >
+                            <a
+                              href="/sites/1/survey_details/46"
+                              style="text-decoration: none;"
+                            >
+                              <button
+                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                VIEW DETAILS
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mock-typography>
+            </li>
+          </ul>
         </mock-hidden>
         <mock-hidden
           lgup="true"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-          />
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyWrapper-104 css-ldi2p4-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 makeStyles-dateWrapper-95 css-tideur-MuiGrid-root"
+              >
+                <mock-typography
+                  classname="makeStyles-dates-96"
+                  variant="h6"
+                >
+                  09/10/2020
+                </mock-typography>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyCardWrapper-98 css-wcmnoq-MuiGrid-root"
+              >
+                <div
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-80 css-14gemme-MuiPaper-root"
+                  style="--Paper-shadow: none;"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container css-hgxf4k-MuiGrid-root"
+                    style="height: 100%;"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-84 css-1ej0ikx-MuiGrid-root"
+                    >
+                      <a
+                        href="/sites/1/survey_details/46"
+                      >
+                        <div
+                          class="MuiCardMedia-root makeStyles-cardImage-81 css-utntyq-MuiCardMedia-root"
+                          role="img"
+                          style="background-image: url(image-url);"
+                        />
+                      </a>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-85 css-14c8q5g-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-90 css-aksm9b-MuiGrid-root"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+                        >
+                          <mock-typography
+                            classname="makeStyles-cardFields-82"
+                            variant="h6"
+                          >
+                            User:
+                          </mock-typography>
+                          <mock-typography
+                            classname="makeStyles-cardValues-83 makeStyles-valuesWithMargin-88"
+                            variant="h6"
+                          >
+                            Joe Doe
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-86 css-otecwo-MuiGrid-root"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+                            style="height: 80%;"
+                          >
+                            <mock-typography
+                              classname="makeStyles-cardFields-82"
+                              variant="h6"
+                            >
+                              Comments:
+                            </mock-typography>
+                            <mock-typography
+                              classname="makeStyles-cardValues-83 makeStyles-comments-87"
+                              variant="h6"
+                            >
+                              No comments
+                            </mock-typography>
+                          </div>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+                        >
+                          <mock-typography
+                            classname="makeStyles-cardFields-82"
+                            variant="h6"
+                          >
+                            Temp:
+                          </mock-typography>
+                          <mock-typography
+                            classname="makeStyles-cardValues-83 makeStyles-valuesWithMargin-88"
+                            variant="h6"
+                          >
+                            10.0 °C
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
+                          >
+                            <a
+                              href="/sites/1/survey_details/46"
+                              style="text-decoration: none;"
+                            >
+                              <button
+                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                VIEW DETAILS
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </mock-hidden>
       </div>
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-80"
+    classname="Footer-appBar-111"
     position="static"
   >
     <mock-toolbar>
@@ -1468,7 +1730,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
         >
           <mock-link
-            classname="Footer-navBarLink-81"
+            classname="Footer-navBarLink-112"
             href="/map"
             underline="hover"
           >

@@ -12,6 +12,7 @@ export const mockSurveyList: SurveyListItem = {
     id: 0,
     fullName: 'Joe Doe',
   },
+  surveyPoints: [1],
   surveyPointImage: { '1': [{ url: 'image-url' }] },
   featuredSurveyMedia: {
     comments: null,

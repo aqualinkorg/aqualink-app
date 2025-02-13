@@ -53,7 +53,10 @@ describe('Survey Point Detail Page', () => {
     element = render(
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <SurveyPoint />
+          <SurveyPoint
+            siteId={mockSite.id.toString()}
+            pointId={mockSurveyList.surveyPoints![0].toString()}
+          />
         </Provider>
       </ThemeProvider>,
     ).container;
