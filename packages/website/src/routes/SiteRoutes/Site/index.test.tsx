@@ -60,6 +60,9 @@ describe('Site Detail Page', () => {
           details: null,
         },
       },
+      reefCheckSurveyList: {
+        list: [],
+      },
       collection: {
         details: mockCollection,
         loading: false,
@@ -91,6 +94,9 @@ describe('Site Detail Page', () => {
         list: [mockSurveyList],
         loading: false,
         error: null,
+      },
+      reefCheckSurveyList: {
+        list: [],
       },
       survey: {
         selectedSurvey: {
