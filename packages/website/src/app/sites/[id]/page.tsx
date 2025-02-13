@@ -1,12 +1,12 @@
 import Site from 'routes/SiteRoutes/Site';
-import { getSites } from 'services/metadataServices';
+import siteServices from 'services/siteServices';
 
 type PageProps = {
   params: Promise<{ id: string }>;
 };
 
 export const generateStaticParams = async () => {
-  const { data: sites } = await getSites();
+  const { data: sites } = await siteServices.getSites();
   return sites.map(({ id }) => ({ id: `${id}` }));
 };
 
