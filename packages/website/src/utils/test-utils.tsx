@@ -3,10 +3,9 @@ import React, { PropsWithChildren } from 'react';
 
 import { render, RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import theme from 'layout/App/theme';
 import { Store } from 'redux';
-import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
+import theme from 'layout/App/theme';
 
 type RenderWithProvidersOptions = Omit<RenderOptions, 'queries'> & {
   store?: Store;
@@ -25,9 +24,7 @@ export const renderWithProviders = (
   return render(ui, {
     wrapper: ({ children }) => (
       <ThemeProvider theme={theme}>
-        <StoreProvider>
-          <BrowserRouter>{children}</BrowserRouter>
-        </StoreProvider>
+        <StoreProvider>{children}</StoreProvider>
       </ThemeProvider>
     ),
     ...options,

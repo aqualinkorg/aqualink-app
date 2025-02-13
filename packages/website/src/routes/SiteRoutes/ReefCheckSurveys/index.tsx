@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+'use client';
+
+import { useEffect } from 'react';
+import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { reefCheckSurveyGetRequest } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
@@ -19,9 +21,15 @@ import { ReefCheckSurveySummary } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyDetails } from './ReefCheckSurveyDetails';
 import { ReefCheckSurveySubstrates } from './ReefCheckSurveySubstratesTable';
 
-export const ReefCheckSurveyViewPage = () => {
-  const { id: siteId = '', sid: surveyId = '' } =
-    useParams<{ id: string; sid: string }>();
+interface ReefCheckSurveyViewPageProps {
+  siteId: string;
+  surveyId: string;
+}
+
+export const ReefCheckSurveyViewPage = ({
+  siteId,
+  surveyId,
+}: ReefCheckSurveyViewPageProps) => {
   const error = useSelector(siteErrorSelector);
   const dispatch = useDispatch();
 
@@ -49,7 +57,7 @@ export const ReefCheckSurveyViewPage = () => {
             color="primary"
             startIcon={<ArrowBack />}
             component={Link}
-            to={`/sites/${siteId}`}
+            href={`/sites/${siteId}`}
           >
             <Typography style={{ textTransform: 'none' }}>
               Back to site

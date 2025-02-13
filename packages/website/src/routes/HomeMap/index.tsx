@@ -1,7 +1,7 @@
-import { LatLng } from 'leaflet';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import * as React from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -23,21 +23,21 @@ enum QueryParamKeys {
 }
 
 interface MapQueryParams {
-  initialCenter: LatLng;
+  initialCenter: [number, number];
   initialZoom: number;
   initialSiteId: string | undefined;
 }
 
-const INITIAL_CENTER = new LatLng(0, 121.3);
+const INITIAL_CENTER: [number, number] = [0, 121.3];
 const INITIAL_ZOOM = 5;
 
 function useQuery() {
-  const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
+  const urlParams = useSearchParams();
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
   const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
   const sitesList = useSelector(sitesListSelector) || [];
-  const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
+  const featuredSiteId = process.env.NEXT_PUBLIC_FEATURED_SITE_ID || '';
   const initialSiteId = queryParamSiteId
     ? findSiteById(sitesList, queryParamSiteId)?.id.toString() ||
       findSiteById(sitesList, featuredSiteId)?.id.toString() ||
@@ -96,7 +96,6 @@ const Homepage = ({ classes }: HomepageProps) => {
       document.getElementsByClassName(`${className}--opened`)[0] ||
       document.getElementsByClassName(`${className}--closed`)[0];
     if (!drawer) return;
-    // eslint-disable-next-line fp/no-mutation
     drawer.scrollTop = 0;
   });
 

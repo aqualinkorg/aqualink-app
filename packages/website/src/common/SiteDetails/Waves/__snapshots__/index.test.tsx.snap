@@ -23,7 +23,7 @@ exports[`renders as expected 1`] = `
           <img
             alt="wind"
             class="makeStyles-titleImages-10"
-            src="wind.svg"
+            src="/img.jpg"
           />
         </div>
         <div
@@ -74,7 +74,7 @@ exports[`renders as expected 1`] = `
               <img
                 alt="arrow"
                 class="makeStyles-arrow-14 makeStyles-windDirectionArrow-15 makeStyles-windDirectionArrow-17"
-                src="directioncircle.svg"
+                src="/img.jpg"
               />
               <mock-typography
                 classname="makeStyles-contentTextValues-5"
@@ -98,7 +98,7 @@ exports[`renders as expected 1`] = `
           <img
             alt="waves"
             class="makeStyles-titleImages-10"
-            src="waves.svg"
+            src="/img.jpg"
           />
         </div>
         <div
@@ -178,7 +178,7 @@ exports[`renders as expected 1`] = `
               <img
                 alt="arrow"
                 class="makeStyles-arrow-14 makeStyles-wavesDirectionArrow-16 makeStyles-wavesDirectionArrow-18"
-                src="directioncircle.svg"
+                src="/img.jpg"
               />
               <mock-typography
                 classname="makeStyles-contentTextValues-5"

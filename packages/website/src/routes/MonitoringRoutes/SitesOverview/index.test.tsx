@@ -1,6 +1,4 @@
-import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
@@ -40,9 +38,7 @@ describe('Monitoring SitesOverview Page', () => {
     element = render(
       <SnackbarProvider>
         <ReduxProvider store={store}>
-          <BrowserRouter>
-            <SitesOverview />
-          </BrowserRouter>
+          <SitesOverview />
         </ReduxProvider>
       </SnackbarProvider>,
     ).container;

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import * as React from 'react';
 import {
   Button,
   Grid,
@@ -7,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Map, TileLayer, Marker, Polyline } from 'react-leaflet';
+import { TileLayer, Marker, Polyline, MapContainer } from 'react-leaflet';
 import L from 'leaflet';
 
 import {
@@ -32,7 +33,7 @@ type WaveData = {
 };
 
 const pinIcon = L.icon({
-  iconUrl: marker,
+  iconUrl: marker.src,
   iconSize: [20, 30],
   iconAnchor: [10, 30],
   popupAnchor: [0, -41],
@@ -140,7 +141,7 @@ const BuoyContent = ({
           Distance: {distance.toFixed(0)} m, Heading: {heading.toFixed(0)}{' '}
           degrees ({compass})
         </div>
-        <Map
+        <MapContainer
           key={0}
           center={{ lat: lastPosition.latitude, lng: lastPosition.longitude }}
           zoom={13}
@@ -161,7 +162,7 @@ const BuoyContent = ({
           <Polyline
             positions={waveData.map((wave) => [wave.latitude, wave.longitude])}
           />
-        </Map>
+        </MapContainer>
       </>
     );
   }

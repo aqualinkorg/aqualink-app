@@ -1,7 +1,6 @@
-import React from 'react';
 import { Box, Card, Theme, Typography } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { useSelector } from 'react-redux';
 import makeStyles from '@mui/styles/makeStyles';
@@ -16,7 +15,7 @@ import { sortByDate } from 'helpers/dates';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import SelectedSiteCardContent from './CardContent';
 
-const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
+const featuredSiteId = process.env.NEXT_PUBLIC_FEATURED_SITE_ID || '';
 
 const SelectedSiteCard = () => {
   const classes = useStyles();
@@ -54,7 +53,7 @@ const SelectedSiteCard = () => {
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
               {!hasMedia && (
-                <Link to={`/sites/${site?.id}`}>
+                <Link href={`/sites/${site?.id}`}>
                   <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}

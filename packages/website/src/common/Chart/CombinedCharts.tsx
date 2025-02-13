@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 
 import createStyles from '@mui/styles/createStyles';
@@ -44,7 +43,7 @@ const CombinedCharts = ({
         variant="rectangular"
         height={256}
         width="100%"
-        image={chartSkeletonImage}
+        image={chartSkeletonImage.src}
       >
         {site && heatStressDataset && (
           <>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { getMockDailyData } from 'mocks/mockDailyData';
 import { renderWithProviders } from 'utils/test-utils';
 import { TemperatureChange } from '.';

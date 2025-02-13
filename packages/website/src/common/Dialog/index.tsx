@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import {
   Theme,
   Dialog as MuiDialog,
@@ -67,7 +66,7 @@ const Dialog = ({
                 <Link
                   key={action.text}
                   style={{ color: 'inherit', textDecoration: 'none' }}
-                  to={action.link}
+                  href={action.link}
                 >
                   {ActionButton(action)}
                 </Link>

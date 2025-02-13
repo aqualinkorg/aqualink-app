@@ -1,4 +1,3 @@
-import React from 'react';
 import { Grid, Typography, Theme } from '@mui/material';
 
 import createStyles from '@mui/styles/createStyles';
@@ -34,7 +33,7 @@ const FootPrintImage = ({ imageHeight }: FootPrintImageProps) => {
         >
           <img
             className={classes.footPrintImage}
-            src={footprint}
+            src={footprint.src}
             alt="footprint"
           />
         </a>

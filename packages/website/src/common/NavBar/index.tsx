@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useState } from 'react';
+import * as React from 'react';
 import {
   AppBar,
   Toolbar,
@@ -21,7 +24,7 @@ import {
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
 import PublishIcon from '@mui/icons-material/Publish';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -229,7 +232,7 @@ const NavBar = ({
                           const siteIdentifier = name || region?.name;
                           return (
                             <Link
-                              to={`/sites/${id}`}
+                              href={`/sites/${id}`}
                               key={`site-link-${id}`}
                               className={classes.menuItemLink}
                             >
@@ -249,7 +252,7 @@ const NavBar = ({
                           <div>
                             <Divider className={classes.userMenuDivider} />
                             <Link
-                              to="/uploads"
+                              href="/uploads"
                               className={classes.menuItemLink}
                             >
                               <MenuItem
@@ -272,7 +275,7 @@ const NavBar = ({
                           <div>
                             <Divider className={classes.userMenuDivider} />
                             <Link
-                              to="/monitoring"
+                              href="/monitoring"
                               className={classes.menuItemLink}
                             >
                               <MenuItem
@@ -290,7 +293,7 @@ const NavBar = ({
                           </div>
                         )}
                       <Divider className={classes.userMenuDivider} />
-                      <Link to="/dashboard" className={classes.menuItemLink}>
+                      <Link href="/dashboard" className={classes.menuItemLink}>
                         <MenuItem
                           key="user-menu-dashboard"
                           className={classes.menuItem}

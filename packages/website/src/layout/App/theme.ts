@@ -1,3 +1,5 @@
+'use client';
+
 import { pink } from '@mui/material/colors';
 import { createTheme, Theme } from '@mui/material/styles';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
@@ -200,20 +202,6 @@ theme.components = {
       },
     },
   },
-  MuiDateCalendar: {
-    styleOverrides: {
-      root: {
-        color: black,
-      },
-    },
-  },
-  MuiPickersLayout: {
-    styleOverrides: {
-      root: {
-        color: black,
-      },
-    },
-  },
   MuiPickersDay: {
     styleOverrides: {
       root: {
@@ -235,10 +223,10 @@ theme.components = {
       },
     },
   },
-  MuiYearCalendar: {
+  MuiPickersYear: {
     styleOverrides: {
-      root: {
-        color: 'black',
+      yearButton: {
+        color: black,
       },
     },
   },

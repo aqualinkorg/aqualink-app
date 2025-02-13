@@ -14,7 +14,7 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import ErrorIcon from '@mui/icons-material/Error';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TableRow as Row } from 'store/Homepage/types';
 import { constructTableData } from 'store/Sites/helpers';
@@ -145,7 +145,6 @@ const SiteTableBody = ({
   const idToIndexMap = useMemo(
     () =>
       tableData.reduce((acc, item, index) => {
-        // eslint-disable-next-line fp/no-mutation
         acc[item.tableData.id] = index;
         return acc;
       }, {} as Record<number, number>),

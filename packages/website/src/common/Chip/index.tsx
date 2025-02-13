@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import * as React from 'react';
 import { Typography, Grid, Theme, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { grey, green } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,7 +71,7 @@ const LinkWrapper: FC<
 
   return url ? (
     <Link
-      to={url}
+      href={url}
       target={href ? '_blank' : undefined}
       className={className}
       rel="noopener noreferrer"
@@ -97,7 +98,7 @@ const Chip = ({
     <Grid className={classes.chip} item>
       <Grid container alignItems="center" justifyContent="center">
         <Button className={classes.button} onClick={onClick}>
-          <LinkWrapper to={to} href={href} className={classes.link}>
+          <LinkWrapper href={to || href} className={classes.link}>
             {live ? (
               <>
                 <div className={classes.circle} />

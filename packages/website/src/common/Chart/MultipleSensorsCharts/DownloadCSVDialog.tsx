@@ -13,7 +13,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { DateTime } from 'luxon-extensions';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { ValueWithTimestamp } from 'store/Sites/types';
 
 export interface DownloadCSVDialogProps {
@@ -48,9 +48,9 @@ const DownloadCSVDialog = ({
   loading,
 }: DownloadCSVDialogProps) => {
   const classes = useStyles();
-  const [additionalData, setAdditionalData] = React.useState(false);
-  const [allDates, setAllDates] = React.useState(false);
-  const [hourly, setHourly] = React.useState(false);
+  const [additionalData, setAdditionalData] = useState(false);
+  const [allDates, setAllDates] = useState(false);
+  const [hourly, setHourly] = useState(false);
 
   const handleClose = (shouldDownload: boolean) => {
     if (shouldDownload) {
@@ -60,7 +60,7 @@ const DownloadCSVDialog = ({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       setAdditionalData(false);
       setAllDates(false);

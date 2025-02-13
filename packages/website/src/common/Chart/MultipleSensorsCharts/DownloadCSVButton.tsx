@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { siteTimeSeriesDataRangeSelector } from 'store/Sites/selectedSiteSlice';
@@ -48,7 +48,7 @@ function DownloadCSVButton({
     try {
       const resp = await fetch(
         `${
-          process.env.REACT_APP_API_BASE_URL
+          process.env.NEXT_PUBLIC_API_BASE_URL
         }/${constructTimeSeriesDataCsvRequestUrl({
           hourly,
           start: allDates ? undefined : startDate,

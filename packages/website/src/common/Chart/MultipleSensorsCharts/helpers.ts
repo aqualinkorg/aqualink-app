@@ -354,7 +354,6 @@ export const generateTempAnalysisDatasets = (
 };
 
 function getMedian(arr: number[]) {
-  // eslint-disable-next-line fp/no-mutating-methods
   arr.sort((a, b) => a - b);
   const middleIndex = Math.floor(arr.length / 2);
 

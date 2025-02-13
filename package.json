@@ -43,6 +43,10 @@
     "prettier": "2.5.1",
     "typescript": "^4.9.5"
   },
+  "resolutions": {
+    "react-leaflet": "^5.0.0-rc.1",
+    "@react-leaflet/core": "^3.0.0-rc.1"
+  },
   "engines": {
     "node": "18",
     "yarn": "^1.22"

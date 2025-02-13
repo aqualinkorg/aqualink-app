@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   Button,
@@ -14,8 +13,9 @@ import {
 } from '@mui/material';
 import { createStyles, WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { groupBy, times } from 'lodash';
-import { Link } from 'react-router-dom';
 import cls from 'classnames';
 import { reefCheckImpactRows, ReefCheckSurvey } from 'store/ReefCheckSurveys';
 import reefCheckLogo from '../../../../assets/img/reef-check-logo.png';
@@ -28,8 +28,8 @@ const ReefCheckSurveyCardComponent = ({
   survey,
   classes,
 }: ReefCheckSurveyCardProps) => {
+  const pathname = usePathname();
   const stats = groupBy(
-    // eslint-disable-next-line fp/no-mutating-methods
     survey.organisms
       .map((organism) => ({
         ...organism,
@@ -72,7 +72,7 @@ const ReefCheckSurveyCardComponent = ({
               : 'Reef Check'}
           </Typography>
           <img
-            src={reefCheckLogo}
+            src={reefCheckLogo.src}
             alt="Reef Check Logo"
             style={{ height: 20 }}
           />
@@ -128,7 +128,7 @@ const ReefCheckSurveyCardComponent = ({
       </TableContainer>
 
       <Box marginTop={2}>
-        <Link to={`reef_check_survey/${survey.id}`}>
+        <Link href={`${pathname}/reef_check_survey/${survey.id}`}>
           <Button size="small" variant="outlined" color="primary">
             VIEW DETAILS
           </Button>

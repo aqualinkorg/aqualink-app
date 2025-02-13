@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Card,
   CardContent,
@@ -11,7 +10,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -223,7 +222,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
             <img
               style={{ position: 'absolute', bottom: '0' }}
               alt="sensor"
-              src={sensor}
+              src={sensor.src}
               height={getImageHeight()}
               width="auto"
             />
@@ -284,7 +283,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
             {clickable ? (
               <Link
                 className={classes.newSpotterLink}
-                to={`/sites/${id}/apply`}
+                href={`/sites/${id}/apply`}
               >
                 <Typography variant="h6">{alertText}</Typography>
               </Link>

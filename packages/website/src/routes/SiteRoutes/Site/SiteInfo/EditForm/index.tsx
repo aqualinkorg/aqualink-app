@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import {
   Button,
   Grid,
@@ -39,11 +39,9 @@ const EditForm = ({
   const { latitude: draftLatitude, longitude: draftLongitude } =
     draftSite?.coordinates || {};
 
-  const [editToken, setEditToken] = React.useState(
-    !!site.maskedSpotterApiToken,
-  );
+  const [editToken, setEditToken] = useState(!!site.maskedSpotterApiToken);
 
-  const [editContactInfo, setEditContactInfo] = React.useState(false);
+  const [editContactInfo, setEditContactInfo] = useState(false);
 
   const setDraftSiteCoordinates =
     (field: 'longitude' | 'latitude') => (value: string) => {
@@ -93,7 +91,7 @@ const EditForm = ({
     ['maxLength'],
   );
 
-  const [apiTokenChanged, setApiTokenChanged] = React.useState(false);
+  const [apiTokenChanged, setApiTokenChanged] = useState(false);
 
   const [status, setStatus] = useFormField<string>(site.status, []);
 

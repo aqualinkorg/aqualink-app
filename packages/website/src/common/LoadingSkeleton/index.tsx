@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import * as React from 'react';
 import { useTheme, useMediaQuery, Skeleton } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { alpha } from '@mui/material/styles';

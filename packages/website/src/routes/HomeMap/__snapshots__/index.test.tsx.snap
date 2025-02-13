@@ -20,7 +20,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
       >
         <mock-map
-          initialcenter="LatLng(0, 0)"
+          initialcenter="0,0"
           initialzoom="5"
           showsitetable="true"
         />

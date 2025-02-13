@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import * as React from 'react';
 import isISODate from 'validator/lib/isISO8601';
 import { Box, Container, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';

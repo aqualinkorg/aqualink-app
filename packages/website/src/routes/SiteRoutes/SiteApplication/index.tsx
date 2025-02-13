@@ -1,5 +1,8 @@
+'use client';
+
 /* eslint-disable no-nested-ternary */
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
 import {
   Theme,
   Grid,
@@ -12,7 +15,6 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
@@ -38,13 +40,11 @@ import Obligations from './Obligations';
 import Agreements from './Agreements';
 import Form from './Form';
 
-const Apply = ({ classes }: ApplyProps) => {
+const Apply = ({ classes, siteId }: ApplyProps) => {
   const dispatch = useDispatch();
   const site = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const userLoading = useSelector(userLoadingSelector);
-  const params = useParams<{ id: string }>();
-  const siteId = parseInt(params.id ?? '', 10);
   const user = useSelector(userInfoSelector);
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
@@ -200,7 +200,7 @@ const Apply = ({ classes }: ApplyProps) => {
             <Grid item>
               {site &&
                 (user ? (
-                  <Link to={`/sites/${siteId}`} className={classes.link}>
+                  <Link href={`/sites/${siteId}`} className={classes.link}>
                     <Button
                       onClick={() => {
                         if (user?.token) {
@@ -295,6 +295,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-type ApplyProps = WithStyles<typeof styles>;
+type ApplyProps = { siteId: number } & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Apply);

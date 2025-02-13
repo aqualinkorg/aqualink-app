@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+'use client';
+
+import UploadWarnings from 'common/FileUploads/UploadWarnings';
+import StatusSnackbar from 'common/StatusSnackbar';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { UploadTimeSeriesResult } from 'services/uploadServices';
 import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
 import {
-  clearUploadsError,
-  clearUploadsFiles,
-  clearUploadsResponse,
-  clearUploadsTarget,
-  uploadsErrorSelector,
   uploadsInProgressSelector,
+  uploadsErrorSelector,
   uploadsResponseSelector,
   uploadsTargetSelector,
+  clearUploadsFiles,
+  clearUploadsTarget,
+  clearUploadsError,
+  clearUploadsResponse,
 } from 'store/uploads/uploadsSlice';
-import StatusSnackbar from 'common/StatusSnackbar';
-import { UploadTimeSeriesResult } from 'services/uploadServices';
-import UploadWarnings from 'common/FileUploads/UploadWarnings';
-import Site from './Site';
-import SiteApplication from './SiteApplication';
-import SitesList from './SitesList';
-import Surveys from '../Surveys';
-import SurveyPoint from './SurveyPoint';
-import UploadData from './UploadData';
-import { ReefCheckSurveyViewPage } from './ReefCheckSurveys';
 
-const SiteRoutes = () => {
+export default function SitesLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
   const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
@@ -49,12 +48,12 @@ const SiteRoutes = () => {
   const [siteId, setSiteId] = useState<number | undefined>(undefined);
 
   const onHandleUploadError = () => {
-    navigate(`/sites/${uploadTarget?.siteId}/upload_data`);
+    router.push(`/sites/${uploadTarget?.siteId}/upload_data`);
   };
 
   const handleRefreshOnSuccessUpload = () => {
     dispatch(setSelectedSite());
-    navigate({ pathname: `/sites/${siteId}`, search: 'refresh=true' });
+    router.push(`/sites/${siteId}?refresh=true`);
     setIsUploadSnackbarOpen(false);
     dispatch(clearUploadsFiles());
     dispatch(clearUploadsTarget());
@@ -111,21 +110,7 @@ const SiteRoutes = () => {
         open={hasWarnings && isUploadDetailsDialogOpen}
         onClose={handleDetailsDialogClose}
       />
-      <Routes>
-        <Route path="/" element={<SitesList />} />
-        <Route path="/:id" element={<Site />} />
-        <Route path="/:id/apply" element={<SiteApplication />} />
-        <Route path="/:id/points/:pointId" element={<SurveyPoint />} />
-        <Route path="/:id/new_survey" element={<Surveys />} />
-        <Route path="/:id/survey_details/:sid" element={<Surveys />} />
-        <Route
-          path="/:id/reef_check_survey/:sid"
-          element={<ReefCheckSurveyViewPage />}
-        />
-        <Route path="/:id/upload_data" element={<UploadData />} />
-      </Routes>
+      {children}
     </>
   );
-};
-
-export default SiteRoutes;
+}

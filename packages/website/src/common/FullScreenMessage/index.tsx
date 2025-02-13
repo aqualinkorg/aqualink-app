@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme, Box, Typography } from '@mui/material';
 
 const FullScreenMessage = ({ message }: FullScreenMessageProps) => {
