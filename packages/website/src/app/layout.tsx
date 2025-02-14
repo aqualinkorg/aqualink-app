@@ -10,10 +10,16 @@ import '../layout/App/App.css';
 import 'leaflet/dist/leaflet.css';
 import '../assets/css/bootstrap.css';
 
+if (!process.env.NEXT_PUBLIC_WEBSITE_BASE_URL) {
+  throw new Error(
+    'NEXT_PUBLIC_WEBSITE_BASE_URL environment variable is not defined',
+  );
+}
+
 export const metadata: Metadata = {
   title: 'Aqualink',
   description: 'Ocean Monitoring',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_BASE_URL!),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_WEBSITE_BASE_URL),
 };
 
 export const viewport: Viewport = {
