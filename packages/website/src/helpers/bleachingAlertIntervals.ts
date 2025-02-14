@@ -31,54 +31,54 @@ export const findIntervalByLevel = (
     case 0:
       return {
         label: 'no alert',
-        image: noStress,
+        image: noStress.src,
         color: '#C6E5FA',
-        icon: pinNoStress,
+        icon: pinNoStress.src,
         level: 0,
       };
 
     case 1:
       return {
         label: 'watch',
-        image: watch,
+        image: watch.src,
         color: '#FFF200',
-        icon: pinWatch,
+        icon: pinWatch.src,
         level: 1,
       };
 
     case 2:
       return {
         label: 'warning',
-        image: warning,
+        image: warning.src,
         color: '#F8AB00',
-        icon: pinWarning,
+        icon: pinWarning.src,
         level: 2,
       };
 
     case 3:
       return {
         label: 'level 1',
-        image: lvl1,
+        image: lvl1.src,
         color: '#EF0000',
-        icon: pinLvl1,
+        icon: pinLvl1.src,
         level: 3,
       };
 
     case 4:
       return {
         label: 'level 2',
-        image: lvl2,
+        image: lvl2.src,
         color: '#940000',
-        icon: pinLvl2,
+        icon: pinLvl2.src,
         level: 4,
       };
 
     default:
       return {
         label: 'no alert',
-        image: noStress,
+        image: noStress.src,
         color: '#C6E5FA',
-        icon: pinNoStress,
+        icon: pinNoStress.src,
         level: 0,
       };
   }

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Theme,
   useTheme,
@@ -13,7 +12,7 @@ import {
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { isNumber } from 'lodash';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import classNames from 'classnames';
 
 import { Site } from 'store/Sites/types';
@@ -119,13 +118,13 @@ const SelectedSiteCardContent = ({
           <Box position="relative" height="100%" minHeight={300}>
             <LoadingSkeleton
               className={classes.imageBorderRadius}
-              image={featuredImageLoading}
+              image={featuredImageLoading.src}
               loading={loading}
               variant="rectangular"
               height="100%"
             >
               {site && imageUrl && (
-                <Link to={`/sites/${site.id}`}>
+                <Link href={`/sites/${site.id}`}>
                   <CardMedia
                     className={classNames(
                       classes.cardImage,
@@ -170,7 +169,7 @@ const SelectedSiteCardContent = ({
                       <Chip
                         live
                         liveText="LIVE VIDEO"
-                        to={`/sites/${site.id}`}
+                        href={`/sites/${site.id}`}
                         width={80}
                       />
                     )}
@@ -178,7 +177,7 @@ const SelectedSiteCardContent = ({
                       <Button
                         className={classes.exporeButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        href={`/sites/${site.id}`}
                         onClick={onExploreButtonClick}
                         size="small"
                         variant="contained"
@@ -224,7 +223,7 @@ const SelectedSiteCardContent = ({
                   <Chip
                     live
                     liveText="LIVE VIDEO"
-                    to={`/sites/${site.id}`}
+                    href={`/sites/${site.id}`}
                     width={80}
                   />
                 )}
@@ -262,7 +261,7 @@ const SelectedSiteCardContent = ({
         </Box>
         <Hidden mdDown>
           <LoadingSkeleton
-            image={chartLoading}
+            image={chartLoading.src}
             loading={loading}
             variant="rectangular"
             width="98%"
@@ -274,7 +273,7 @@ const SelectedSiteCardContent = ({
         <Hidden mdUp>
           <LoadingSkeleton
             className={classes.mobileChartLoading}
-            image={chartLoading}
+            image={chartLoading.src}
             loading={loading}
             variant="rectangular"
             width="98%"

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import {
   Alert,
   Box,
@@ -12,7 +13,7 @@ import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import DropZone from 'common/FileUploads/Dropzone';
 import NavBar from 'common/NavBar';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { DropzoneProps } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfoSelector } from 'store/User/userSlice';
@@ -27,7 +28,6 @@ import {
 import StatusSnackbar from 'common/StatusSnackbar';
 import { UploadTimeSeriesResult } from 'services/uploadServices';
 import UploadWarnings from 'common/FileUploads/UploadWarnings';
-import { useNavigate } from 'react-router-dom';
 import { Sources } from 'store/Sites/types';
 import SitesTable from './SitesTable';
 import { OptionsList, selectProps, SENSOR_TYPES } from './utils';
@@ -35,20 +35,19 @@ import { OptionsList, selectProps, SENSOR_TYPES } from './utils';
 function Uploads() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = React.useState(false);
-  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = React.useState(false);
+  const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
-    React.useState(false);
-  const [files, setFiles] = React.useState<File[]>([]);
-  const [uploadDetails, setUploadDetails] = React.useState<
-    UploadTimeSeriesResult[]
-  >([]);
+    useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [uploadDetails, setUploadDetails] = useState<UploadTimeSeriesResult[]>(
+    [],
+  );
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedSource, setSelectedSource] =
-    React.useState<Sources>('sheet_data');
-  const [siteTimezone, setSiteTimezone] = React.useState(false);
+  const [selectedSource, setSelectedSource] = useState<Sources>('sheet_data');
+  const [siteTimezone, setSiteTimezone] = useState(false);
 
   const user = useSelector(userInfoSelector);
   const uploadLoading = useSelector(uploadsInProgressSelector);
@@ -59,7 +58,7 @@ function Uploads() {
     (data) => (data.ignoredHeaders?.length ?? 0) > 0,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (uploadResult && !uploadLoading && !uploadError) {
       setUploadDetails(uploadResult);
       if (!uploadResult.some((x) => !!x.error)) {
@@ -68,7 +67,7 @@ function Uploads() {
     }
   }, [uploadResult, uploadLoading, uploadError]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsErrorSnackbarOpen(!!uploadError);
   }, [uploadError]);
 
@@ -78,8 +77,7 @@ function Uploads() {
   const onStatusSnackbarClose = () => setIsErrorSnackbarOpen(false);
 
   const handleRefreshOnSuccessUpload = () => {
-    // eslint-disable-next-line fp/no-mutating-methods
-    navigate(`/map`);
+    router.push(`/map`);
   };
 
   const onFilesDrop: DropzoneProps['onDropAccepted'] = (

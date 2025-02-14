@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useEffect } from 'react';
 import { Alert, Box, Container, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import Link from 'next/link';
 import { DropzoneProps } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 import { SiteUploadHistory, Sources } from 'store/Sites/types';
 import { userInfoSelector } from 'store/User/userSlice';
 import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
@@ -34,13 +37,15 @@ import Header from './Header';
 import Selectors from './Selectors';
 import HistoryTable from './HistoryTable';
 
-const UploadData = () => {
-  const params = useParams<{ id: string }>();
+interface UploadDataProps {
+  siteId: string;
+}
+const UploadData = ({ siteId }: UploadDataProps) => {
+  const router = useRouter();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { token } = useSelector(userInfoSelector) || {};
-  const { site, siteLoading } = useSiteRequest(params.id ?? '');
+  const { site, siteLoading } = useSiteRequest(siteId);
   const [selectedSensor, setSelectedSensor] = useState<Sources>();
   const [selectedPoint, setSelectedPoint] = useState<number>();
   const [useSiteTimezone, setUseSiteTimezone] = useState(false);
@@ -109,8 +114,7 @@ const UploadData = () => {
         // so that we fetch the updated data.
         dispatch(setSelectedSite());
         if (typeof site?.id === 'number') {
-          // eslint-disable-next-line fp/no-mutating-methods
-          navigate(`/sites/${site.id}`);
+          router.push(`/sites/${site.id}`);
         }
       }
     } catch (err) {
@@ -140,7 +144,7 @@ const UploadData = () => {
 
   // on component did mount
   useEffect(() => {
-    if (uploadTarget?.siteId && uploadTarget.siteId !== Number(params.id)) {
+    if (uploadTarget?.siteId && uploadTarget.siteId !== Number(siteId)) {
       if (uploadLoading) {
         setShouldShowPage(false);
       } else {
@@ -157,8 +161,7 @@ const UploadData = () => {
   }, [site?.id]);
 
   const onGoBackClick = () => {
-    // eslint-disable-next-line fp/no-mutating-methods
-    navigate(`/sites/${site?.id}`);
+    router.push(`/sites/${site?.id}`);
   };
 
   return (
@@ -203,7 +206,7 @@ const UploadData = () => {
                 <Alert severity="info">
                   Upload in progress. please DO NOT reload the page, it may take
                   a while. You can still{' '}
-                  <Link to={`/sites/${site?.id}`}>have a look around</Link>
+                  <Link href={`/sites/${site?.id}`}>have a look around</Link>
                 </Alert>
               </Box>
             )}

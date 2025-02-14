@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
+import { useRef, useEffect, useCallback, useState } from 'react';
+import { TileLayer, Polygon, Marker, MapContainer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import L, { LatLngTuple } from 'leaflet';
+import L, { LatLngTuple, Map, Marker as LeafletMarker } from 'leaflet';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -17,7 +17,7 @@ import {
 } from 'store/Sites/types';
 import { siteDraftSelector, setSiteDraft } from 'store/Sites/selectedSiteSlice';
 import { userInfoSelector } from 'store/User/userSlice';
-import { samePosition } from 'helpers/map';
+import { getMiddlePoint, samePosition, toLatLng } from 'helpers/map';
 import { isManager } from 'helpers/user';
 import SurveyPointPopup from './SurveyPointPopup';
 
@@ -27,14 +27,14 @@ import pointIcon from '../../../assets/alerts/pin_nostress@2x.png';
 import selectedPointIcon from '../../../assets/alerts/pin_warning@2x.png';
 
 const pinIcon = L.icon({
-  iconUrl: marker,
+  iconUrl: marker.src,
   iconSize: [20, 30],
   iconAnchor: [10, 30],
   popupAnchor: [0, -41],
 });
 
 const buoyIcon = L.icon({
-  iconUrl: buoy,
+  iconUrl: buoy.src,
   iconSize: [30, 40],
   iconAnchor: [10, 30],
   popupAnchor: [0, -41],
@@ -42,7 +42,7 @@ const buoyIcon = L.icon({
 
 const surveyPointIcon = (selected: boolean) =>
   L.icon({
-    iconUrl: selected ? selectedPointIcon : pointIcon,
+    iconUrl: selected ? selectedPointIcon.src : pointIcon.src,
     iconSize: [24, 27],
     iconAnchor: [12, 27],
     popupAnchor: [0, -27],
@@ -62,8 +62,8 @@ const SiteMap = ({
 }: SiteMapProps) => {
   const dispatch = useDispatch();
   const mapRef = useRef<Map>(null);
-  const markerRef = useRef<Marker>(null);
-  const editPointMarkerRer = useRef<Marker>(null);
+  const markerRef = useRef<LeafletMarker>(null);
+  const editPointMarkerRer = useRef<LeafletMarker>(null);
   const draftSite = useSelector(siteDraftSelector);
   const user = useSelector(userInfoSelector);
   const [focusedPoint, setFocusedPoint] = useState<SurveyPoints>();
@@ -110,19 +110,16 @@ const SiteMap = ({
   );
 
   useEffect(() => {
-    if (
-      mapRef?.current?.leafletElement &&
-      focusedPoint?.polygon?.type === 'Point'
-    ) {
+    if (mapRef?.current && focusedPoint?.polygon?.type === 'Point') {
       const [lng, lat] = focusedPoint.polygon.coordinates;
-      setCenter(mapRef.current.leafletElement, [lat, lng], 15);
+      setCenter(mapRef.current, [lat, lng], 15);
     }
   }, [focusedPoint]);
 
   useEffect(() => {
     const { current } = mapRef;
-    if (current?.leafletElement) {
-      const map = current.leafletElement;
+    if (current) {
+      const map = current;
       // Initialize map's position to fit the given polygon
       if (polygon.type === 'Polygon') {
         map.fitBounds(L.polygon(polygon.coordinates).getBounds());
@@ -143,8 +140,8 @@ const SiteMap = ({
 
   const handleDragChange = () => {
     const { current } = markerRef;
-    if (current?.leafletElement) {
-      const mapMarker = current.leafletElement;
+    if (current) {
+      const mapMarker = current;
       const { lat, lng } = mapMarker.getLatLng().wrap();
       dispatch(
         setSiteDraft({
@@ -159,16 +156,17 @@ const SiteMap = ({
 
   const handleEditPointDragChange = () => {
     const { current } = editPointMarkerRer;
-    if (current && current.leafletElement && onEditPointCoordinatesChange) {
-      const mapMarker = current.leafletElement;
+    if (current && current && onEditPointCoordinatesChange) {
+      const mapMarker = current;
       const { lat, lng } = mapMarker.getLatLng().wrap();
       onEditPointCoordinatesChange(lat.toString(), lng.toString());
     }
   };
 
   return (
-    <Map
+    <MapContainer
       ref={mapRef}
+      center={toLatLng(getMiddlePoint(polygon))}
       minZoom={1}
       maxZoom={17}
       zoom={13}
@@ -189,7 +187,6 @@ const SiteMap = ({
             <Marker
               ref={editPointMarkerRer}
               draggable={surveyPointEditModeEnabled}
-              ondragend={handleEditPointDragChange}
               icon={surveyPointIcon(true)}
               zIndexOffset={100}
               position={[
@@ -202,17 +199,22 @@ const SiteMap = ({
                     selectedSurveyPoint.polygon.coordinates[0]) ||
                   polygon.coordinates[0],
               ]}
+              eventHandlers={{
+                dragend: handleEditPointDragChange,
+              }}
             />
           )}
           <Marker
             ref={markerRef}
             draggable={Boolean(draftSite)}
-            ondragend={handleDragChange}
             icon={pinIcon}
             position={[
               draftSite?.coordinates?.latitude || polygon.coordinates[1],
               draftSite?.coordinates?.longitude || polygon.coordinates[0],
             ]}
+            eventHandlers={{
+              dragend: handleDragChange,
+            }}
           />
           {surveyPoints.map(
             (point) =>
@@ -226,7 +228,9 @@ const SiteMap = ({
                     point.polygon.coordinates[1],
                     point.polygon.coordinates[0],
                   ]}
-                  onclick={() => setFocusedPoint(point)}
+                  eventHandlers={{
+                    click: () => setFocusedPoint(point),
+                  }}
                 >
                   <SurveyPointPopup siteId={siteId} point={point} />
                 </Marker>
@@ -240,7 +244,7 @@ const SiteMap = ({
           position={[spotterPosition.latitude, spotterPosition.longitude]}
         />
       )}
-    </Map>
+    </MapContainer>
   );
 };
 

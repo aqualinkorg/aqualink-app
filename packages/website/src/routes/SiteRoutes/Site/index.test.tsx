@@ -1,9 +1,6 @@
-/* eslint-disable fp/no-mutation */
-import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { mockSite } from 'mocks/mockSite';
 import { mockUser } from 'mocks/mockUser';
 import { mockSurveyList } from 'mocks/mockSurveyList';
@@ -110,11 +107,7 @@ describe('Site Detail Page', () => {
     elementEmpty = render(
       <ThemeProvider theme={theme}>
         <Provider store={emptyStore}>
-          <Router initialEntries={['/sites/1']}>
-            <Routes>
-              <Route path="/sites/:id" element={<Site />} />
-            </Routes>
-          </Router>
+          <Site />
         </Provider>
       </ThemeProvider>,
     ).container;
@@ -122,11 +115,7 @@ describe('Site Detail Page', () => {
     elementFull = render(
       <ThemeProvider theme={theme}>
         <Provider store={fullStore}>
-          <Router initialEntries={['/sites/1']}>
-            <Routes>
-              <Route path="/sites/:id" element={<Site />} />
-            </Routes>
-          </Router>
+          <Site />
         </Provider>
       </ThemeProvider>,
     ).container;

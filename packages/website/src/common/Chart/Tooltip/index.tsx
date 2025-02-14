@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Card,
   CardHeader,
@@ -10,7 +9,7 @@ import {
 import { WithStyles, styled } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { isNumber } from 'lodash';
 
 import { formatNumber } from 'helpers/numberUtils';
@@ -144,7 +143,7 @@ const Tooltip = ({
               <Grid item>
                 <Link
                   className={classes.surveyLink}
-                  to={`/sites/${siteId}/survey_details/${surveyId}`}
+                  href={`/sites/${siteId}/survey_details/${surveyId}`}
                 >
                   <Button variant="contained" color="primary" size="small">
                     VIEW SURVEY

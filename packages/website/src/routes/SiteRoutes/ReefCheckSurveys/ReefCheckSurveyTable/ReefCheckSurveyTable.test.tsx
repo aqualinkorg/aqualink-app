@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material';
 import theme from 'layout/App/theme';

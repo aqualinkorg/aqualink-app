@@ -39,7 +39,6 @@ exports[`renders as expected 1`] = `
         style="color: white;"
         tabindex="0"
         target="_blank"
-        to=""
       >
         Highlighted Sites
       </a>
@@ -66,7 +65,6 @@ exports[`renders as expected 1`] = `
         style="color: white;"
         tabindex="0"
         target="_blank"
-        to=""
       >
         Bristlemouth
       </a>

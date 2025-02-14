@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LinearProgress } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 
 import { userInfoSelector, userLoadingSelector } from 'store/User/userSlice';
 import {
@@ -23,16 +23,14 @@ const collections: Record<string, number> = {
   minderoo: 1,
 };
 
-const Dashboard = ({ classes }: DashboardProps) => {
+const Dashboard = ({ classes, urlCollectionName }: DashboardProps) => {
   const dispatch = useDispatch();
-  const { collectionName: urlCollectionName } =
-    useParams<{ collectionName?: string }>();
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
   const { id: storedCollectionId } =
     useSelector(collectionDetailsSelector) || {};
   const [publicNotFound, setPublicNotFound] = useState(false);
-  const { pathname } = useLocation();
+  const pathname = usePathname();
   const atDashboard = pathname.endsWith('/dashboard');
 
   // If we are at `/dashboard`, make a request for
@@ -120,6 +118,8 @@ const styles = () =>
     },
   });
 
-type DashboardProps = WithStyles<typeof styles>;
+type DashboardProps = { urlCollectionName?: string } & WithStyles<
+  typeof styles
+>;
 
 export default withStyles(styles)(Dashboard);

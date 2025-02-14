@@ -1,4 +1,3 @@
-import React from 'react';
 import configureStore from 'redux-mock-store';
 
 import { mockSurveyList } from 'mocks/mockSurveyList';

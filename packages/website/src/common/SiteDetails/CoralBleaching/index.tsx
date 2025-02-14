@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent, Typography, CardHeader, Grid } from '@mui/material';
 
 import { WithStyles } from '@mui/styles';

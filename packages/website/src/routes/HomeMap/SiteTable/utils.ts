@@ -53,6 +53,5 @@ export function getComparator(
 }
 
 export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-  // eslint-disable-next-line fp/no-mutating-methods
   return [...array].sort(comparator);
 }

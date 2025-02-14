@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   useMediaQuery,
   useTheme,
@@ -15,7 +15,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import classNames from 'classnames';
 import NavBar from 'common/NavBar';
@@ -127,7 +127,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
                       <Grid key={label} item xs={isTablet ? 12 : undefined}>
                         <Button
                           component={Link}
-                          to={to}
+                          href={to}
                           className={classNames(classes.buttons, {
                             [classes.whiteColorButton]: hasWhiteColor,
                           })}
@@ -174,7 +174,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     landingImage: {
-      backgroundImage: `url("${landingPageImage}")`,
+      backgroundImage: `url("${landingPageImage.src}")`,
       backgroundSize: 'cover',
       left: 160,
       minHeight: 864,

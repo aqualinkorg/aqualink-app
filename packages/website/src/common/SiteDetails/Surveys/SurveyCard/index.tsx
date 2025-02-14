@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Theme,
   Paper,
@@ -8,7 +7,7 @@ import {
   Button,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { SurveyListItem } from 'store/Survey/types';
 import { userInfoSelector } from 'store/User/userSlice';
@@ -60,10 +59,10 @@ const SurveyCard = ({
             variant="rectangular"
             height="100%"
             width="100%"
-            image={pointImageSkeleton}
+            image={pointImageSkeleton.src}
           >
             {survey && (
-              <Link to={`/sites/${siteId}/survey_details/${survey.id}`}>
+              <Link href={`/sites/${siteId}/survey_details/${survey.id}`}>
                 <CardMedia
                   className={classes.cardImage}
                   image={
@@ -177,7 +176,7 @@ const SurveyCard = ({
                     <Grid item xs={10}>
                       <Link
                         style={{ color: 'inherit', textDecoration: 'none' }}
-                        to={`/sites/${siteId}/survey_details/${survey.id}`}
+                        href={`/sites/${siteId}/survey_details/${survey.id}`}
                       >
                         <Button size="small" variant="outlined" color="primary">
                           VIEW DETAILS

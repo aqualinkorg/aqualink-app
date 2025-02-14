@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import { ReefCheckOrganism } from 'store/ReefCheckSurveys/types';
@@ -20,7 +19,6 @@ export const ReefCheckSurveyOrganismsTable = ({
 }: ReefCheckSurveyOrganismsTableProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
   const rows =
-    // eslint-disable-next-line fp/no-mutating-methods
     survey?.organisms.filter(filter).sort(segmentsTotalSortComparator) ?? [];
 
   if (error) {

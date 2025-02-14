@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import {
   Box,
   Button,
@@ -90,8 +89,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           key={text}
           component={href ? ExternalLink : Link}
           target={href ? '_blank' : undefined}
-          href={href || undefined}
-          to={to || ''}
+          href={to || href || ''}
           onClick={() =>
             trackButtonClick(
               GaCategory.BUTTON_CLICK,
@@ -127,7 +125,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
             href="https://ovio.org/project/aqualinkorg/aqualink-app"
             className={classes.contributeButton}
           >
-            <img src={ovioLogo} alt="Ovio Logo" />
+            <img src={ovioLogo.src} alt="Ovio Logo" />
           </Button>
         </ButtonGroup>
       </Box>

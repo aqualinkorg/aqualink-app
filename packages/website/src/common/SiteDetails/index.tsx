@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Theme, Box, useTheme, useMediaQuery } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
@@ -61,7 +61,6 @@ function dateRangeWithinInterval(
   interval: Interval,
   dataRange: DataRange[],
 ): boolean {
-  // eslint-disable-next-line fp/no-mutation
   for (let index = 0; index < dataRange.length; index += 1) {
     if (interval.contains(DateTime.fromISO(dataRange[index].maxDate))) {
       return true;
@@ -78,7 +77,6 @@ function sourceWithinDataRangeInterval(
   if (!dataRanges) return false;
 
   const ranges = Object.entries(dataRanges);
-  // eslint-disable-next-line fp/no-mutation
   for (let index = 0; index < ranges.length; index += 1) {
     if (
       ranges[index][1].find(
@@ -324,7 +322,7 @@ const SiteDetails = ({
           titleItems={featuredMediaTitleItems()}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
-          loadingImage={playIcon}
+          loadingImage={playIcon.src}
         >
           {/* video first, then 3d model, then image */}
           {site && !videoStream && site.sketchFab?.uuid && (

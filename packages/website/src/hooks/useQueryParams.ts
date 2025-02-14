@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable fp/no-mutating-methods */
-/* eslint-disable fp/no-mutation */
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import * as React from 'react';
 
 let processing = false;
 const queue: { key: string; value?: string }[] = [];
@@ -19,8 +19,11 @@ export const useQueryParam = (
   key: string,
   valid: (value: string) => boolean = () => true,
 ) => {
-  const { search } = useLocation();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const search = searchParams.toString();
+
   const [value, setValue] = useState<string | undefined>(() => {
     // NOTE: IE does not support URLSearchParams
     const params = new URLSearchParams(search);
@@ -43,9 +46,7 @@ export const useQueryParam = (
       processStack();
       return;
     }
-    navigate({
-      search: newSearch,
-    });
+    router.push(`${pathname}?${newSearch}`);
   };
 
   useEffect(() => {

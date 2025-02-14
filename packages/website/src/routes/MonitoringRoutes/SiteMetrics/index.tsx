@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Grid, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -133,23 +133,23 @@ function getChartPeriod(siteInfo: ArrayElement<GetMonitoringMetricsResponse>) {
 function SiteMetrics() {
   const classes = useStyles();
 
-  const [siteId, setSiteId] = React.useState<string>('');
-  const [spotterId, setSpotterId] = React.useState<string>('');
-  const [monthly, setMonthly] = React.useState<boolean>(false);
-  const [startDate, setStartDate] = React.useState<Date>(
+  const [siteId, setSiteId] = useState<string>('');
+  const [spotterId, setSpotterId] = useState<string>('');
+  const [monthly, setMonthly] = useState<boolean>(false);
+  const [startDate, setStartDate] = useState<Date>(
     DateTime.now().minus({ months: 3 }).toJSDate(),
   );
-  const [endDate, setEndDate] = React.useState<Date>(DateTime.now().toJSDate());
+  const [endDate, setEndDate] = useState<Date>(DateTime.now().toJSDate());
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSpotterId('');
   }, [siteId]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSiteId('');
   }, [spotterId]);
 
-  const getResult = React.useCallback(
+  const getResult = useCallback(
     async (token: string) =>
       (
         await monitoringServices.getMonitoringStats({

@@ -1,3 +1,5 @@
+'use client';
+
 import {
   isNil,
   mapValues,
@@ -353,7 +355,6 @@ export const parseLatestData = (
   );
 
   // sort data by timestamp ASCENDING but prioritize spotter data
-  // eslint-disable-next-line fp/no-mutating-methods
   const sorted = filtered.sort((x, y) => {
     // if spotter data is available and, use it.
     if (x.source === 'spotter' && y.source !== 'spotter') {
@@ -411,6 +412,7 @@ export const readFiltersFromUrl = (): SiteFilters => {
     'reefComposition',
     'species',
   ];
+  if (typeof window === 'undefined') return {};
   const urlParams = new URLSearchParams(window.location.search);
 
   return filterKeys.reduce((filters, key) => {

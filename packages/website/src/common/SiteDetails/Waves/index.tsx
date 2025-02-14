@@ -1,4 +1,3 @@
-import React from 'react';
 import { Theme, Card, CardContent, Typography, Grid } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
@@ -55,7 +54,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
             >
               WIND
             </Typography>
-            <img className={classes.titleImages} alt="wind" src={wind} />
+            <img className={classes.titleImages} alt="wind" src={wind.src} />
           </Grid>
           <Grid className={classes.paddingContainer} container item xs={12}>
             <Grid item xs={6}>
@@ -102,7 +101,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
                       classes.windDirectionArrow,
                     )}
                     alt="arrow"
-                    src={arrow}
+                    src={arrow.src}
                   />
                 )}
                 <Typography
@@ -124,7 +123,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
             >
               WAVES
             </Typography>
-            <img className={classes.titleImages} alt="waves" src={waves} />
+            <img className={classes.titleImages} alt="waves" src={waves.src} />
           </Grid>
           <Grid
             className={classes.paddingContainer}
@@ -203,7 +202,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
                       classes.wavesDirectionArrow,
                     )}
                     alt="arrow"
-                    src={arrow}
+                    src={arrow.src}
                   />
                 )}
                 <Typography

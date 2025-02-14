@@ -1,5 +1,5 @@
 import { OptionsObject, SnackbarKey, SnackbarMessage } from 'notistack';
-import React from 'react';
+import * as React from 'react';
 import { User } from 'store/User/types';
 
 interface FetchDataProps<T> {

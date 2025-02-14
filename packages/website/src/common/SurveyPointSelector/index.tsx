@@ -2,7 +2,7 @@ import { Button, MenuItem, TextField, Theme } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import React from 'react';
+import * as React from 'react';
 import { useSelector } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 import classNames from 'classnames';
