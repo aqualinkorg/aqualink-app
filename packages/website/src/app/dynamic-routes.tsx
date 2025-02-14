@@ -4,6 +4,7 @@ import Surveys from 'routes/Surveys';
 import SurveyPoint from 'routes/SiteRoutes/SurveyPoint';
 import { ReefCheckSurveyViewPage } from 'routes/SiteRoutes/ReefCheckSurveys';
 import UploadData from 'routes/SiteRoutes/UploadData';
+import Dashboard from 'routes/Dashboard';
 
 interface DynamicRoute {
   regex: RegExp;
@@ -11,6 +12,12 @@ interface DynamicRoute {
 }
 
 export const DYNAMIC_ROUTES: Array<DynamicRoute> = [
+  {
+    regex: /^\/collections\/(.+)$/,
+    Component: ([, collectionName]: RegExpMatchArray) => (
+      <Dashboard urlCollectionName={collectionName} />
+    ),
+  },
   {
     regex: /^\/sites\/(\d+)$/,
     Component: ([, siteId]: RegExpMatchArray) => <Site siteId={siteId} />,

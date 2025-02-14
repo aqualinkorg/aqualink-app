@@ -4,7 +4,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import { userInfoSelector, userLoadingSelector } from 'store/User/userSlice';
 import {
@@ -23,10 +23,8 @@ const collections: Record<string, number> = {
   minderoo: 1,
 };
 
-const Dashboard = ({ classes }: DashboardProps) => {
+const Dashboard = ({ classes, urlCollectionName }: DashboardProps) => {
   const dispatch = useDispatch();
-  const { collectionName: urlCollectionName } =
-    useParams<{ collectionName?: string }>();
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
   const { id: storedCollectionId } =
@@ -120,6 +118,8 @@ const styles = () =>
     },
   });
 
-type DashboardProps = WithStyles<typeof styles>;
+type DashboardProps = { urlCollectionName?: string } & WithStyles<
+  typeof styles
+>;
 
 export default withStyles(styles)(Dashboard);
