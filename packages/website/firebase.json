@@ -4,36 +4,22 @@
       "target": "prod-target",
       "public": "build",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
+      "cleanUrls": true,
+      "trailingSlash": false
     },
     {
       "target": "staging-target",
       "public": "build",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
+      "cleanUrls": true,
+      "trailingSlash": false
     },
     {
       "target": "programize-target",
       "public": "build",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "cleanUrls": true,
-      "trailingSlash": false,
-      "rewrites": [
-        {
-          "source": "/sites/*",
-          "destination": "/sites/[id].html"
-        }
-      ]
+      "trailingSlash": false
     }
   ]
 }
