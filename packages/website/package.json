@@ -39,7 +39,7 @@
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.4.4",
     "firebase": "^11.0.0",
-    "firebase-tools": "^13.28.0",
+    "firebase-tools": "^13.31.0",
     "geolib": "^3.3.4",
     "immutable": "^4.0.0-rc.12",
     "leaflet": "^1.7.1",
