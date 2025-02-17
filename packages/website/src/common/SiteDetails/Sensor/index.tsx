@@ -306,6 +306,7 @@ const styles = () =>
       display: 'flex',
       flexDirection: 'column',
       backgroundColor: '#128cc0',
+      color: 'white',
     },
     titleImage: {
       height: 35,
