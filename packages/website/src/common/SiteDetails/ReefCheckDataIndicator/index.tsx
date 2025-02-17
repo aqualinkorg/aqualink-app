@@ -29,8 +29,8 @@ export function ReefCheckDataIndicator({
       gap={1}
       color="black"
     >
-      <img src={reefCheckLogo} alt="Reef Check" width={50} />
-      <Typography variant="h5">REEF CHECK DATA AVAILABLE</Typography>
+      <img src={reefCheckLogo} alt="Reef Check" width={40} />
+      <Typography fontSize="1rem">REEF CHECK DATA AVAILABLE</Typography>
       <KeyboardDoubleArrowDown />
     </Box>
   );
