@@ -30,7 +30,17 @@ export function ReefCheckDataIndicator({
       color="black"
     >
       <img src={reefCheckLogo} alt="Reef Check" width={40} />
-      <Typography fontSize="1rem">REEF CHECK DATA AVAILABLE</Typography>
+      <Typography
+        fontSize="1rem"
+        sx={{
+          display: {
+            xs: 'none', // hide on mobile
+            sm: 'block', // show on tablet and up
+          },
+        }}
+      >
+        REEF CHECK DATA AVAILABLE
+      </Typography>
       <KeyboardDoubleArrowDown />
     </Box>
   );

@@ -224,7 +224,7 @@ const Surveys = ({ site }: SurveysProps) => {
             justifyContent="space-between"
             item
             lg={12}
-            xs={11}
+            xs={12}
             alignItems="baseline"
             spacing={isTablet ? 4 : 1}
           >
@@ -300,7 +300,7 @@ const Surveys = ({ site }: SurveysProps) => {
             </Grid>
           </Grid>
         )}
-        <Grid container justifyContent="center" item xs={11} lg={12}>
+        <Grid container justifyContent="center" item xs={12} lg={12}>
           <Timeline
             isAdmin={isSiteAdmin}
             loading={isLoading}
