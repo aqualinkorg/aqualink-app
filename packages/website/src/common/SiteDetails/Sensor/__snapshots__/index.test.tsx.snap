@@ -56,22 +56,6 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
           </mock-typography>
         </div>
         <div
-          style="grid-area: value1;"
-        >
-          <mock-typography
-            classname="Sensor-contentTextTitles-4"
-            variant="subtitle2"
-          >
-            TEMP AT DEPTH
-          </mock-typography>
-          <mock-typography
-            classname="Sensor-contentTextValues-5"
-            variant="h3"
-          >
-            - -°C
-          </mock-typography>
-        </div>
-        <div
           style="grid-area: spacer1; display: inherit; min-height: 2em;"
         />
         <div
