@@ -12,6 +12,7 @@ import {
   createAndSaveCompactFile,
   getAvailabilityMapFromFile,
   updateNOAALocation,
+  updateNOAALocations,
 } from '../src/utils/noaa-availability-utils';
 
 type Argv = {
@@ -121,11 +122,7 @@ async function run() {
     },
   });
 
-  await Bluebird.map(
-    allSites,
-    (site) => updateNOAALocation(site, availabilityArray, siteRepository),
-    { concurrency: 8 },
-  );
+  await updateNOAALocations(allSites, availabilityArray, siteRepository);
 }
 
 run();

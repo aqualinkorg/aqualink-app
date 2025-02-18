@@ -39,7 +39,8 @@ const { argv } = yargs
 async function run() {
   const { d: days, s: sites, m: missing } = argv as Args;
   const backlogArray = Array.from(Array(days).keys());
-  const siteIds = sites && sites.map((site) => parseInt(`${site}`, 10));
+  const siteIds =
+    sites && sites.map((site) => parseInt(`${site}`, 10)).sort((a, b) => b - a);
   const today = DateTime.utc().endOf('day');
   const connection = await AqualinkDataSource.initialize();
 

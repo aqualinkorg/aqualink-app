@@ -76,6 +76,7 @@ async function augmentSites(connection: DataSource) {
       const augmentedData = await getAugmentedData(site, regionRepository);
       await siteRepository.update(site.id, augmentedData);
       // Add HistoricalMonthlyMeans
+      // TODO - use closest noaa longitude and latitude
       const [longitude, latitude] = (site.polygon as Point).coordinates;
       const HistoricalMonthlyMeans = await getHistoricalMonthlyMeans(
         longitude,
@@ -90,9 +91,9 @@ async function augmentSites(connection: DataSource) {
                 month,
                 temperature,
               }));
-          } catch {
+          } catch (error) {
             console.warn(
-              `Monthly max values not imported for ${site.id} - the data was likely there already.`,
+              `Monthly max values not imported for ${site.id} - Error: ${error}`,
             );
           }
         }),
