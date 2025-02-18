@@ -97,8 +97,9 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
     {
       label: `TEMP AT ${depth ? `${depth}m` : 'DEPTH'}`,
       value: `${formatNumber(bottomTemperature?.value, 1)}°C`,
+      show: Boolean(bottomTemperature?.value),
     },
-  ];
+  ].filter((metric) => metric.show !== false);
 
   const [alertText, clickable] = getApplicationTag(user, id);
 
