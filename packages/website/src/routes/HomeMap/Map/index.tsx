@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Map, TileLayer, Marker, Circle } from 'react-leaflet';
 import L, { LatLng, LatLngBounds, LayersControlEvent } from 'leaflet';
@@ -127,9 +127,11 @@ const HomepageMap = ({
       const pointBounds = L.latLngBounds(latLng, latLng);
       const maxZoom = Math.max(map.getZoom() || 6);
       map.flyToBounds(pointBounds, {
-        animate: false,
+        duration: 3,
         maxZoom,
         paddingTopLeft: L.point(0, 200),
+        noMoveStart: true, // Prevent unnecessary move events
+        animate: true,
       });
     }
   }, [siteOnMap]);
@@ -139,6 +141,33 @@ const HomepageMap = ({
   };
 
   const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
+
+  // Memoize the layers to prevent unnecessary re-renders
+  const sofarLayers = useMemo(
+    () => <SofarLayers defaultLayerName={defaultLayerName} />,
+    [defaultLayerName],
+  );
+
+  const siteMarkers = useMemo(
+    () => <SiteMarkers collection={collection} />,
+    [collection],
+  );
+
+  // Memoize the TileLayer to prevent unnecessary redraws
+  const tileLayer = useMemo(
+    () => (
+      <TileLayer
+        attribution={attribution}
+        url={tileURL}
+        keepBuffer={6}
+        updateWhenIdle
+        updateInterval={400}
+        // Prevent tile fading animation which can cause flicker
+        className="no-tile-fade"
+      />
+    ),
+    [],
+  );
 
   return loading ? (
     <div className={classes.loading}>
@@ -154,7 +183,7 @@ const HomepageMap = ({
       className={classes.map}
       center={initialCenter}
       zoom={initialZoom}
-      minZoom={collection ? 1 : 2} // If we're on dashboard page, the map's wrapping div is smaller, so we need to allow higher zoom
+      minZoom={collection ? 1 : 2}
       worldCopyJump
       onbaselayerchange={onBaseLayerChange}
       bounds={initialBounds}
@@ -189,9 +218,9 @@ const HomepageMap = ({
           </IconButton>
         </div>
       </Hidden>
-      <TileLayer attribution={attribution} url={tileURL} />
-      <SofarLayers defaultLayerName={defaultLayerName} />
-      <SiteMarkers collection={collection} />
+      {tileLayer}
+      {sofarLayers}
+      {siteMarkers}
       {currentLocation && (
         <Marker icon={currentLocationMarker} position={currentLocation} />
       )}
@@ -257,6 +286,14 @@ const styles = () =>
     },
     expandIcon: {
       fontSize: '34px',
+    },
+    '@global': {
+      // Disable tile fade animation
+      '.no-tile-fade': {
+        '& .leaflet-tile-loaded': {
+          opacity: '1 !important',
+        },
+      },
     },
   });
 
