@@ -52,7 +52,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
       zindex="-1"
     />
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-11 MuiGrid-grid-lg-12 makeStyles-surveyWrapper-2 css-1gwh4pv-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 MuiGrid-grid-lg-12 makeStyles-surveyWrapper-2 css-wdlm1q-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-3 css-ku179n-MuiGrid-root"
@@ -332,7 +332,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-lg-12 css-tb9a8j-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-12 css-fgj1s9-MuiGrid-root"
     >
       <div
         class="SurveyTimeline-root-21"

@@ -41,6 +41,7 @@ exports[`renders as expected 1`] = `
                 color="red"
               />
               <mock-typography
+                color="white"
                 variant="caption"
               >
                 MOCK LOGGER
