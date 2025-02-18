@@ -1,5 +1,14 @@
-import { Box, Link, Paper, Theme, Typography, Skeleton } from '@mui/material';
+import {
+  Box,
+  Link,
+  Paper,
+  Theme,
+  Typography,
+  Skeleton,
+  Button,
+} from '@mui/material';
 import { createStyles, WithStyles } from '@mui/styles';
+import { OpenInNew } from '@mui/icons-material';
 import withStyles from '@mui/styles/withStyles';
 
 import React from 'react';
@@ -8,6 +17,9 @@ import cls from 'classnames';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import ObservationBox from 'routes/Surveys/View/ObservationBox';
 import reefCheckLogo from '../../../assets/img/reef-check.png';
+
+const REQUEST_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSc6VTTr9Z20exlrf_l9kr_br03kfPOFksUsGXv-mJVRucg8TQ/viewform';
 
 export const ReefCheckSurveySummaryComponent = ({
   classes,
@@ -89,10 +101,17 @@ export const ReefCheckSurveySummaryComponent = ({
             satelliteTemperature={survey?.satelliteTemperature ?? undefined}
           />
         )}
-        {/* TODO: Add back when functionality is finalized
-         <Button variant="outlined" color="primary" disabled={!!loading}>
+        <Button
+          component={Link}
+          variant="outlined"
+          color="primary"
+          disabled={!!loading}
+          href={REQUEST_FORM_URL}
+          target="_blank"
+          endIcon={<OpenInNew />}
+        >
           REQUEST TO DOWNLOAD REEF CHECK DATA
-        </Button> */}
+        </Button>
       </Box>
     </Paper>
   );
