@@ -131,7 +131,6 @@ const HomepageMap = ({
         maxZoom,
         paddingTopLeft: L.point(0, 200),
         noMoveStart: true, // Prevent unnecessary move events
-        animate: true,
       });
     }
   }, [siteOnMap]);
