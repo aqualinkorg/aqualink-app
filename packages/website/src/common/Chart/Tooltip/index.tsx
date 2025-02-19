@@ -57,7 +57,7 @@ const TemperatureMetric = ({
 }) => (
   <Grid container item className={gridClassName}>
     <Circle color={color} />
-    <Typography variant="caption">
+    <Typography variant="caption" color="white">
       {title} {`${formatNumber(value, 1)} ${unit}`}
       {sourceTitle(title, source)}
     </Typography>
