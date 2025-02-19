@@ -90,9 +90,9 @@ async function augmentSites(connection: DataSource) {
                 month,
                 temperature,
               }));
-          } catch {
+          } catch (error) {
             console.warn(
-              `Monthly max values not imported for ${site.id} - the data was likely there already.`,
+              `Monthly max values not imported for ${site.id} - Error: ${error.message}`,
             );
           }
         }),

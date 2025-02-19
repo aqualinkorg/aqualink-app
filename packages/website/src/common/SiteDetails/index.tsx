@@ -50,6 +50,7 @@ import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
 import { TemperatureChange } from './TemperatureChange';
+import { ReefCheckDataIndicator } from './ReefCheckDataIndicator';
 
 /**  Show only the last year of HUI data, should match with {@link getCardData} */
 const acceptHUIInterval = Interval.fromDateTimes(
@@ -282,6 +283,8 @@ const SiteDetails = ({
         return [];
     }
   };
+  const showFeatureMediaCard =
+    isLoading || !!featuredSurveyId || !!site?.sketchFab?.uuid || !!videoStream;
 
   return (
     <Box mt="1.5rem">
@@ -301,7 +304,11 @@ const SiteDetails = ({
             [classes.mobileMargin]: !!videoStream,
           })}
           titleItems={mapTitleItems}
-          gridProps={{ xs: 12, md: 6 }}
+          rightHeaderItem={
+            !showFeatureMediaCard &&
+            site && <ReefCheckDataIndicator siteId={site?.id} />
+          }
+          gridProps={{ xs: 12, md: showFeatureMediaCard ? 6 : 12 }}
           forcedAspectRatio={!!videoStream}
         >
           {site && (
@@ -316,29 +323,35 @@ const SiteDetails = ({
           )}
         </CardWithTitle>
 
-        <CardWithTitle
-          loading={isLoading}
-          className={classNames({
-            [classes.mobileMargin]: !!videoStream,
-          })}
-          titleItems={featuredMediaTitleItems()}
-          gridProps={{ xs: 12, md: 6 }}
-          forcedAspectRatio={!!videoStream}
-          loadingImage={playIcon}
-        >
-          {/* video first, then 3d model, then image */}
-          {site && !videoStream && site.sketchFab?.uuid && (
-            <SketchFab uuid={site.sketchFab.uuid} />
-          )}
-          {site && (videoStream || !site.sketchFab?.uuid) && (
-            <FeaturedMedia
-              siteId={site.id}
-              url={videoStream}
-              featuredImage={site.featuredImage}
-              surveyId={featuredSurveyId}
-            />
-          )}
-        </CardWithTitle>
+        {showFeatureMediaCard && (
+          <CardWithTitle
+            loading={isLoading}
+            className={classNames({
+              [classes.mobileMargin]: !!videoStream,
+            })}
+            titleItems={featuredMediaTitleItems()}
+            rightHeaderItem={
+              showFeatureMediaCard &&
+              site && <ReefCheckDataIndicator siteId={site?.id} />
+            }
+            gridProps={{ xs: 12, md: 6 }}
+            forcedAspectRatio={!!videoStream}
+            loadingImage={playIcon}
+          >
+            {/* video first, then 3d model, then image */}
+            {site && !videoStream && site.sketchFab?.uuid && (
+              <SketchFab uuid={site.sketchFab.uuid} />
+            )}
+            {site && (videoStream || !site.sketchFab?.uuid) && (
+              <FeaturedMedia
+                siteId={site.id}
+                url={videoStream}
+                featuredImage={site.featuredImage}
+                surveyId={featuredSurveyId}
+              />
+            )}
+          </CardWithTitle>
+        )}
       </Grid>
 
       <Grid
