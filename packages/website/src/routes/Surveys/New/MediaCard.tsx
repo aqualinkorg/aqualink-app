@@ -17,7 +17,7 @@ import { DeleteOutlineOutlined } from '@mui/icons-material';
 import observationOptions from 'constants/uploadDropdowns';
 import { SurveyPoints } from 'store/Sites/types';
 import SurveyPointSelector from 'common/SurveyPointSelector';
-import { ReactComponent as StarIcon } from '../../../assets/starIcon.svg';
+import StarIcon from 'assets/starIcon.svg';
 
 const MediaCard = ({
   preview,

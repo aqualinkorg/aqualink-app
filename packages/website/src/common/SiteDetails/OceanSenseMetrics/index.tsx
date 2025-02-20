@@ -24,11 +24,11 @@ import { OceanSenseData, OceanSenseKeys } from 'store/Sites/types';
 import { formatNumber } from 'helpers/numberUtils';
 import { toRelativeTime } from 'helpers/dates';
 import UpdateInfo from '../../UpdateInfo';
-import { ReactComponent as AcidityIcon } from '../../../assets/acidity.svg';
-import { ReactComponent as ConductivityIcon } from '../../../assets/conductivuty.svg';
-import { ReactComponent as PressureIcon } from '../../../assets/pressure.svg';
-import { ReactComponent as DissolvedOxygenIcon } from '../../../assets/dissolved_oxygen.svg';
-import { ReactComponent as OrpIcon } from '../../../assets/orp.svg';
+import AcidityIcon  from 'assets/acidity.svg';
+import ConductivityIcon  from 'assets/conductivuty.svg';
+import PressureIcon from 'assets/pressure.svg';
+import DissolvedOxygenIcon  from 'assets/dissolved_oxygen.svg';
+import OrpIcon  from 'assets/orp.svg';
 
 interface Metric {
   label: string;

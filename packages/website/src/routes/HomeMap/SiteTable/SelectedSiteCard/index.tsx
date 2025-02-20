@@ -16,7 +16,7 @@ import { sortByDate } from 'helpers/dates';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import SelectedSiteCardContent from './CardContent';
 
-const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
+const featuredSiteId = import.meta.env.VITEFEATURED_SITE_ID || '';
 
 const SelectedSiteCard = () => {
   const classes = useStyles();

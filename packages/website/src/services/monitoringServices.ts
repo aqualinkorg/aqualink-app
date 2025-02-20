@@ -65,7 +65,7 @@ const getMonitoringStatsCSV = async ({
 }: GetMonitoringMetricsRequestProps) => {
   const resp = await fetch(
     `${
-      process.env.REACT_APP_API_BASE_URL
+      import.meta.env.VITEAPI_BASE_URL
     }/monitoring${requests.generateUrlQueryParams({ ...rest, csv: true })}`,
     {
       headers: { Authorization: `Bearer ${token}` },
@@ -95,7 +95,7 @@ const getMonitoringLastMonthCSV = async ({
 }: GetMonitoringLastMonthProps) => {
   const resp = await fetch(
     `${
-      process.env.REACT_APP_API_BASE_URL
+      import.meta.env.VITEAPI_BASE_URL
     }/monitoring/last-month${requests.generateUrlQueryParams({
       csv: true,
     })}`,

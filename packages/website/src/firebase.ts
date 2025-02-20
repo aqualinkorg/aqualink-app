@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 
-const { REACT_APP_FIREBASE_API_KEY: apiKey } = process.env;
+const { VITEFIREBASE_API_KEY: apiKey } = import.meta.env;
 
 if (!apiKey) {
   console.warn(

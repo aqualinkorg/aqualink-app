@@ -14,8 +14,8 @@ import {
 } from 'store/User/userSlice';
 import { belongsToCollection } from 'helpers/siteUtils';
 import collectionServices from 'services/collectionServices';
-import { ReactComponent as WatchIcon } from '../../../../../assets/watch.svg';
-import { ReactComponent as UnWatchIcon } from '../../../../../assets/unwatch.svg';
+import WatchIcon from 'assets/watch.svg';
+import UnWatchIcon from 'assets/unwatch.svg';
 
 const CollectionButton = ({
   siteId,

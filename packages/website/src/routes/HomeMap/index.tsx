@@ -37,7 +37,7 @@ function useQuery() {
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
   const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
   const sitesList = useSelector(sitesListSelector) || [];
-  const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
+  const featuredSiteId = import.meta.env.VITEFEATURED_SITE_ID || '';
   const initialSiteId = queryParamSiteId
     ? findSiteById(sitesList, queryParamSiteId)?.id.toString() ||
       findSiteById(sitesList, featuredSiteId)?.id.toString() ||
