@@ -3,7 +3,7 @@ import { ScheduledUpdate } from '../sites/scheduled-updates.entity';
 import { Site } from '../sites/sites.entity';
 import {
   getAvailabilityMapFromFile,
-  updateNOAALocation,
+  updateNOAALocations,
 } from '../utils/noaa-availability-utils';
 
 export async function NOAALocationUpdate(connection: DataSource) {
@@ -14,10 +14,10 @@ export async function NOAALocationUpdate(connection: DataSource) {
   if (updates.length === 0) return;
 
   const availability = getAvailabilityMapFromFile();
-  await Promise.all(
-    updates.map((x) =>
-      updateNOAALocation(x.site, availability, siteRepository),
-    ),
+  await updateNOAALocations(
+    updates.map((x) => x.site),
+    availability,
+    siteRepository,
   );
 
   await scheduledUpdateRepository.delete({ id: In(updates.map((x) => x.id)) });

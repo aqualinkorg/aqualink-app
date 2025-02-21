@@ -184,7 +184,7 @@ export const addWindWaveData = async (
         }),
       );
     },
-    { concurrency: 4 },
+    { concurrency: 10 },
   );
   logger.log('Completed updating hindcast data');
 };

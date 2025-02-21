@@ -109,7 +109,10 @@ export const updateSST = async (
 
   logger.log('Fetching sites');
   // Fetch sites entities
-  const sites = await getSites(siteIds, siteRepository);
+  // eslint-disable-next-line fp/no-mutating-methods
+  const sites = (await getSites(siteIds, siteRepository)).sort(
+    (a, b) => Number(a.id) - Number(b.id),
+  );
 
   // Fetch sources
   const sources = await Promise.all(
@@ -266,10 +269,9 @@ export const updateSST = async (
         { concurrency: 100 },
       );
 
-      return Bluebird.map(
+      await Bluebird.map(
         data,
-        // Save data on time_series table
-        ({ sst, dhw, alert, sstAnomaly }) =>
+        async ({ sst, dhw, alert, sstAnomaly }) =>
           Promise.all([
             insertSiteDataToTimeSeries(
               sst,
