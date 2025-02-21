@@ -123,7 +123,7 @@ const HomepageMap = ({
     const map = ref.current?.leafletElement;
     if (map && siteOnMap?.polygon.type === 'Point') {
       const [lng, lat] = siteOnMap.polygon.coordinates;
-      
+
       // Get current center and adjust longitude for shortest path
       const currentCenter = map.getCenter();
       let adjustedLng = lng;
@@ -133,9 +133,11 @@ const HomepageMap = ({
       if (lngDiff > 180) {
         if (currentCenter.lng < 0) {
           // If current position is in western hemisphere, add 360 to eastern target
+          // eslint-disable-next-line fp/no-mutating-methods
           adjustedLng = lng < 0 ? lng : lng - 360;
         } else {
           // If current position is in eastern hemisphere, subtract 360 from western target
+          // eslint-disable-next-line fp/no-mutating-methods
           adjustedLng = lng > 0 ? lng : lng + 360;
         }
       }
