@@ -123,14 +123,31 @@ const HomepageMap = ({
     const map = ref.current?.leafletElement;
     if (map && siteOnMap?.polygon.type === 'Point') {
       const [lng, lat] = siteOnMap.polygon.coordinates;
-      const latLng = [lat, lng] as [number, number];
+      
+      // Get current center and adjust longitude for shortest path
+      const currentCenter = map.getCenter();
+      let adjustedLng = lng;
+
+      // If the difference between longitudes is greater than 180 degrees, adjust the new longitude
+      const lngDiff = Math.abs(currentCenter.lng - lng);
+      if (lngDiff > 180) {
+        if (currentCenter.lng < 0) {
+          // If current position is in western hemisphere, add 360 to eastern target
+          adjustedLng = lng < 0 ? lng : lng - 360;
+        } else {
+          // If current position is in eastern hemisphere, subtract 360 from western target
+          adjustedLng = lng > 0 ? lng : lng + 360;
+        }
+      }
+
+      const latLng = [lat, adjustedLng] as [number, number];
       const pointBounds = L.latLngBounds(latLng, latLng);
       const maxZoom = Math.max(map.getZoom() || 6);
       map.flyToBounds(pointBounds, {
         duration: 3,
         maxZoom,
         paddingTopLeft: L.point(0, 200),
-        noMoveStart: true, // Prevent unnecessary move events
+        noMoveStart: true,
       });
     }
   }, [siteOnMap]);
