@@ -12,6 +12,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
   loading,
   gridProps,
   titleItems,
+  rightHeaderItem = null,
   className,
   forcedAspectRatio,
   children,
@@ -31,6 +32,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
         >
           <LoadingSkeleton loading={loading} variant="text" lines={1}>
             <Title values={titleItems} />
+            {rightHeaderItem}
           </LoadingSkeleton>
         </Grid>
       )}
@@ -99,6 +101,7 @@ interface CardWithTitleProps {
   gridProps: GridProps;
   loading: boolean;
   titleItems: Value[];
+  rightHeaderItem?: React.ReactNode;
   className?: string;
   forcedAspectRatio?: boolean;
   loadingImage?: string;
