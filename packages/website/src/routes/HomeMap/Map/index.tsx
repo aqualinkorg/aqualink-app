@@ -133,11 +133,11 @@ const HomepageMap = ({
       if (lngDiff > 180) {
         if (currentCenter.lng < 0) {
           // If current position is in western hemisphere, add 360 to eastern target
-          // eslint-disable-next-line fp/no-mutating-methods
+          // eslint-disable-next-line fp/no-mutation
           adjustedLng = lng < 0 ? lng : lng - 360;
         } else {
           // If current position is in eastern hemisphere, subtract 360 from western target
-          // eslint-disable-next-line fp/no-mutating-methods
+          // eslint-disable-next-line fp/no-mutation
           adjustedLng = lng > 0 ? lng : lng + 360;
         }
       }
