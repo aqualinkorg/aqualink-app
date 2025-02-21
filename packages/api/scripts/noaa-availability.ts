@@ -5,13 +5,11 @@ import { Logger } from '@nestjs/common';
 import fs from 'fs';
 import yargs from 'yargs';
 import { In, IsNull } from 'typeorm';
-import Bluebird from 'bluebird';
 import { Site } from '../src/sites/sites.entity';
 import AqualinkDataSource from '../ormconfig';
 import {
   createAndSaveCompactFile,
   getAvailabilityMapFromFile,
-  updateNOAALocation,
   updateNOAALocations,
 } from '../src/utils/noaa-availability-utils';
 
