@@ -127,10 +127,40 @@ export async function updateNOAALocation(
     Logger.log(
       `Updated site ${id} (${longitude}, ${latitude}) -> (${NOAALongitude}, ${NOAALatitude}) `,
     );
-  } catch (error) {
-    console.error(error);
+    return null;
+  } catch (error: any) {
+    const failedSite = { id, longitude, latitude, error: error.message };
     Logger.warn(
       `Could not get nearest point for site id: ${site.id}, (lon, lat): (${longitude}, ${latitude})`,
     );
+    return failedSite;
   }
+}
+
+export async function updateNOAALocations(
+  sites: Site[],
+  worldMap: number[][],
+  siteRepository: Repository<Site>,
+) {
+  Logger.log(`Updating ${sites.length} sites...`);
+  const failedSites = (
+    await Promise.all(
+      sites.map((site) => updateNOAALocation(site, worldMap, siteRepository)),
+    )
+  ).filter((site) => site !== null);
+
+  if (failedSites.length > 0) {
+    Logger.warn(`Failed to process ${failedSites.length} sites:`);
+    failedSites.forEach((site) => {
+      if (!site) return;
+      Logger.warn(
+        `- Site ${site.id}: (${site.longitude}, ${site.latitude}) - ${site.error}`,
+      );
+    });
+    Logger.warn(
+      `Failed to process ${failedSites.map((x) => x?.id).join(', ')}`,
+    );
+  }
+
+  return failedSites;
 }

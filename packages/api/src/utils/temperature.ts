@@ -4,6 +4,15 @@ import { pointToPixel } from './coordinates';
 const HistoricalMonthlyMeanRoot =
   'https://storage.googleapis.com/reef_climatology/';
 
+const tiffCache = new Map<string, Promise<any>>();
+
+async function getTiffFromCache(url: string) {
+  if (!tiffCache.has(url)) {
+    tiffCache.set(url, GeoTIFF.fromUrl(url, { forceXHR: true }));
+  }
+  return tiffCache.get(url)!;
+}
+
 async function getValueFromTiff(tiff: any, long: number, lat: number) {
   const image = await tiff.getImage();
 
@@ -50,10 +59,8 @@ async function getValueFromTiff(tiff: any, long: number, lat: number) {
  * */
 
 export async function getMMM(long: number, lat: number) {
-  const tiff = await GeoTIFF.fromUrl(
-    `${HistoricalMonthlyMeanRoot}sst_clim_mmm.tiff`,
-    { forceXHR: true },
-  );
+  const url = `${HistoricalMonthlyMeanRoot}sst_clim_mmm.tiff`;
+  const tiff = await getTiffFromCache(url);
   return getValueFromTiff(tiff, long, lat);
 }
 
@@ -75,10 +82,8 @@ export async function getHistoricalMonthlyMeans(long: number, lat: number) {
 
   return Promise.all(
     HistoricalMonthlyMeanMapping.map(async (month, index) => {
-      const tiff = await GeoTIFF.fromUrl(
-        `${HistoricalMonthlyMeanRoot}sst_clim_${month}.tiff`,
-        { forceXHR: true },
-      );
+      const url = `${HistoricalMonthlyMeanRoot}sst_clim_${month}.tiff`;
+      const tiff = await getTiffFromCache(url);
       return {
         month: index + 1,
         temperature: await getValueFromTiff(tiff, long, lat),
