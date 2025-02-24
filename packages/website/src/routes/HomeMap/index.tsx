@@ -154,6 +154,7 @@ const styles = () =>
     root: {
       display: 'flex',
       flexGrow: 1,
+      userSelect: 'none',
     },
     map: {
       display: 'flex',

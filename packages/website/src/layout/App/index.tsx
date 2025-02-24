@@ -34,6 +34,7 @@ import theme from './theme';
 import 'leaflet/dist/leaflet.css';
 import './App.css';
 import '../../assets/css/bootstrap.css';
+import '../../assets/css/leaflet.css';
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
