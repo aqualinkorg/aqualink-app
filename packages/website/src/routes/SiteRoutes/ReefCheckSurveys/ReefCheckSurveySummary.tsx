@@ -72,6 +72,18 @@ export const ReefCheckSurveySummaryComponent = ({
             survey?.reefCheckSite?.region
           )}
         </Typography>
+        <Button
+          component={Link}
+          variant="outlined"
+          color="primary"
+          disabled={!!loading}
+          href={REQUEST_FORM_URL}
+          target="_blank"
+          endIcon={<OpenInNew />}
+          style={{ alignSelf: 'flex-end', marginTop: 'auto' }}
+        >
+          REQUEST TO DOWNLOAD DATA
+        </Button>
       </Box>
       <Box className={cls(classes.note, classes.columnSpaceBetween)}>
         <Typography>
@@ -87,32 +99,23 @@ export const ReefCheckSurveySummaryComponent = ({
           Learn more about the data and how it’s collected
         </Link>
       </Box>
-      <Box className={cls(classes.observationBox, classes.columnSpaceBetween)}>
-        {loading ? (
-          <Skeleton
-            variant="rectangular"
-            width="100%"
-            height={150}
-            className={classes.skeleton}
-          />
-        ) : (
-          <ObservationBox
-            depth={survey?.depth ?? null}
-            satelliteTemperature={survey?.satelliteTemperature ?? undefined}
-          />
-        )}
-        <Button
-          component={Link}
-          variant="outlined"
-          color="primary"
-          disabled={!!loading}
-          href={REQUEST_FORM_URL}
-          target="_blank"
-          endIcon={<OpenInNew />}
-        >
-          REQUEST TO DOWNLOAD REEF CHECK DATA
-        </Button>
-      </Box>
+      {survey?.satelliteTemperature && (
+        <Box className={classes.columnSpaceBetween}>
+          {loading ? (
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height={150}
+              className={classes.skeleton}
+            />
+          ) : (
+            <ObservationBox
+              depth={survey?.depth ?? null}
+              satelliteTemperature={survey?.satelliteTemperature ?? undefined}
+            />
+          )}
+        </Box>
+      )}
     </Paper>
   );
 };
@@ -153,9 +156,6 @@ const styles = (theme: Theme) =>
       padding: 12,
       borderRadius: 8,
       backgroundColor: '#F5F6F6',
-    },
-    observationBox: {
-      gap: 32,
     },
     columnSpaceBetween: {
       display: 'flex',
