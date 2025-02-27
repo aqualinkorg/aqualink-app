@@ -18,8 +18,7 @@ import MultipleSensorsCharts from '.';
 const mockStore = configureStore([]);
 
 describe('MultipleSensorsCharts', () => {
-  let element: HTMLElement;
-  beforeEach(() => {
+  it('should render with given state from Redux store', () => {
     const store = mockStore({
       selectedSite: {
         details: { ...mockSite },
@@ -54,13 +53,13 @@ describe('MultipleSensorsCharts', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
-    (jest as any).setSystemTime(new Date('2023-06-28T21:00:00.000Z'));
+    vi.setSystemTime(new Date('2023-06-28T21:00:00.000Z'));
 
-    element = render(
+    const element = render(
       <MemoryRouter
         initialEntries={[
           { pathname: '/sites/1', search: '?start=2022-05-28&end=2022-06-28' },
@@ -82,10 +81,8 @@ describe('MultipleSensorsCharts', () => {
       </MemoryRouter>,
     ).container;
 
-    jest.useRealTimers();
-  });
+    vi.useRealTimers();
 
-  it('should render with given state from Redux store', () => {
     expect(element).toMatchSnapshot();
   });
 });

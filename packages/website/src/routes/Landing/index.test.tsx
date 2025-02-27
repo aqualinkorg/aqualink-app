@@ -24,7 +24,7 @@ describe('Landing Page', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<LandingPage />, { store }).container;
   });

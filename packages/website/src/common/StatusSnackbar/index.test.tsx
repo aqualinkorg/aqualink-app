@@ -9,7 +9,7 @@ test('renders as expected', () => {
       open
       message="All good!!"
       severity="success"
-      handleClose={jest.fn()}
+      handleClose={vi.fn()}
     />,
   );
   expect(container).toMatchSnapshot();

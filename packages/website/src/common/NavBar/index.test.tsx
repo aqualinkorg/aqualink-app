@@ -6,10 +6,10 @@ import { mockCollection } from 'mocks/mockCollection';
 import { renderWithProviders } from 'utils/test-utils';
 import HomePageNavBar from '.';
 
-jest.mock('../RegisterDialog', () => 'Mock-RegisterDialog');
-jest.mock('../SignInDialog', () => 'Mock-SignInDialog');
-jest.mock('../Search', () => 'Mock-Search');
-jest.mock('../MenuDrawer', () => 'Mock-MenuDrawer');
+vi.mock('../RegisterDialog', () => ({ default: 'Mock-RegisterDialog' }));
+vi.mock('../SignInDialog', () => ({ default: 'Mock-SignInDialog' }));
+vi.mock('../Search', () => ({ default: 'Mock-Search' }));
+vi.mock('../MenuDrawer', () => ({ default: 'Mock-MenuDrawer' }));
 
 const mockStore = configureStore([]);
 
@@ -29,7 +29,7 @@ describe('NavBar with routeButtons', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(
       <HomePageNavBar routeButtons searchLocation={false} />,
@@ -58,7 +58,7 @@ describe('NavBar without routeButtons', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<HomePageNavBar searchLocation={false} />, {
       store,

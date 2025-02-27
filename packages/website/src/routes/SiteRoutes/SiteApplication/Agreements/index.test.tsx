@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import Agreements from '.';
 import { AgreementsChecked } from '../types';
 
-const handleChange = jest.fn();
+const handleChange = vi.fn();
 const agreementsChecked: AgreementsChecked = {
   buoy: false,
   shipping: true,

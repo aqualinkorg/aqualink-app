@@ -6,18 +6,17 @@ import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
 import { SnackbarProvider } from 'notistack';
 import { mockCollection } from 'mocks/mockCollection';
-import { advanceTo, clear } from 'jest-date-mock';
 import SitesOverview from '.';
 
 const mockStore = configureStore([]);
 
 describe('Monitoring SitesOverview Page', () => {
   beforeAll(() => {
-    advanceTo(new Date('2023-11-23T12:00:00'));
+    vi.setSystemTime(new Date('2023-11-23T12:00:00'));
   });
 
   afterAll(() => {
-    clear();
+    vi.useRealTimers();
   });
 
   let element: HTMLElement;
@@ -35,7 +34,7 @@ describe('Monitoring SitesOverview Page', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = render(
       <SnackbarProvider>

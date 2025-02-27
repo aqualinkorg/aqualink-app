@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Multi Site Uploads should render with given state from Redux store 1`] = `
+exports[`Multi Site Uploads > should render with given state from Redux store 1`] = `
 <div>
   <mock-snackbar
     anchororigin="[object Object]"
@@ -42,11 +42,12 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       <div
         class="MuiAlert-action css-rgppqo-MuiAlert-action"
       >
-        <mock-iconbutton
+        <button
           aria-label="Close"
-          color="inherit"
-          size="small"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-2yamib-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
           title="Close"
+          type="button"
         >
           <svg
             aria-hidden="true"
@@ -59,7 +60,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
             />
           </svg>
-        </mock-iconbutton>
+        </button>
       </div>
     </div>
   </mock-snackbar>
@@ -103,11 +104,12 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
       <div
         class="MuiAlert-action css-rgppqo-MuiAlert-action"
       >
-        <mock-iconbutton
+        <button
           aria-label="Close"
-          color="inherit"
-          size="small"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-2yamib-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
           title="Close"
+          type="button"
         >
           <svg
             aria-hidden="true"
@@ -120,7 +122,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
               d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
             />
           </svg>
-        </mock-iconbutton>
+        </button>
       </div>
     </div>
   </mock-snackbar>
@@ -337,7 +339,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             >
               <img
                 alt="Ovio Logo"
-                src="ovio_logo.png"
+                src="/src/assets/img/ovio_logo.png"
               />
             </a>
           </div>
@@ -543,10 +545,8 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
@@ -591,7 +591,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <mock-cardcontent>
@@ -907,10 +907,8 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
@@ -955,7 +953,7 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <div
@@ -1284,125 +1282,6 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
                 d="M7 10l5 5 5-5z"
               />
             </svg>
-            <mock-popover
-              anchorel="[object HTMLDivElement]"
-              anchororigin="[object Object]"
-              classname="css-s4soc1-MuiMenu-root"
-              id="menu-"
-              open="false"
-              slotprops="[object Object]"
-              slots="[object Object]"
-              transformorigin="[object Object]"
-              transitionduration="auto"
-              transitionprops="[object Object]"
-            >
-              <mock-menulist
-                actions="[object Object]"
-                aria-labelledby=":r7:-label"
-                autofocusitem="false"
-                classname="MuiMenu-list css-7drlel-MuiMenu-list"
-                disablelistwrap="true"
-                id=":r8:"
-                role="listbox"
-                variant="selectedMenu"
-              >
-                <mock-menuitem
-                  aria-selected="true"
-                  classname="makeStyles-menuItem-2"
-                  data-value="0"
-                  role="option"
-                  selected="true"
-                >
-                  <mock-typography
-                    classname="makeStyles-itemName-3"
-                    color="textSecondary"
-                    title="Default"
-                  >
-                    Default
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  aria-selected="false"
-                  classname="makeStyles-menuItem-2"
-                  data-value="1"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    classname="makeStyles-itemName-3"
-                    color="textSecondary"
-                    title="Sonde data"
-                  >
-                    Sonde data
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  aria-selected="false"
-                  classname="makeStyles-menuItem-2"
-                  data-value="2"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    classname="makeStyles-itemName-3"
-                    color="textSecondary"
-                    title="Meteorological data"
-                  >
-                    Meteorological data
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  aria-selected="false"
-                  classname="makeStyles-menuItem-2"
-                  data-value="3"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    classname="makeStyles-itemName-3"
-                    color="textSecondary"
-                    title="HOBO data"
-                  >
-                    HOBO data
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  aria-selected="false"
-                  classname="makeStyles-menuItem-2"
-                  data-value="4"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    classname="makeStyles-itemName-3"
-                    color="textSecondary"
-                    title="HUI data"
-                  >
-                    HUI data
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
-                  aria-selected="false"
-                  classname="makeStyles-menuItem-2"
-                  data-value="5"
-                  disabled="true"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    classname="makeStyles-itemName-3"
-                    color="textSecondary"
-                    title="Spotter data"
-                  >
-                    Spotter data
-                  </mock-typography>
-                  <mock-chip
-                    classname="makeStyles-comingSoonChip-4"
-                    label="[object Object]"
-                  />
-                </mock-menuitem>
-              </mock-menulist>
-            </mock-popover>
             <fieldset
               aria-hidden="true"
               class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
@@ -1428,12 +1307,11 @@ exports[`Multi Site Uploads should render with given state from Redux store 1`] 
             checked="false"
             color="primary"
           />
-          <mock-typography
-            classname="MuiFormControlLabel-label"
-            component="span"
+          <span
+            class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-809xgg-MuiTypography-root"
           >
             Use Site Timezone
-          </mock-typography>
+          </span>
         </label>
       </div>
     </div>

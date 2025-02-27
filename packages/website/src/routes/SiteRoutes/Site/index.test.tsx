@@ -16,15 +16,16 @@ import Site from '.';
 
 const mockStore = configureStore([]);
 
-window.scrollTo = jest.fn();
+window.scrollTo = vi.fn();
 
-jest.mock('common/SiteDetails/Map', () => 'Mock-Map');
-jest.mock('common/SiteDetails/FeaturedMedia', () => 'Mock-FeaturedMedia');
+vi.mock('common/SiteDetails/Map', () => ({ default: 'Mock-Map' }));
+vi.mock('common/SiteDetails/FeaturedMedia', () => ({
+  default: 'Mock-FeaturedMedia',
+}));
 
-jest.mock(
-  'common/Chart/MultipleSensorsCharts',
-  () => 'Mock-MultipleSensorsCharts',
-);
+vi.mock('common/Chart/MultipleSensorsCharts', () => ({
+  default: 'Mock-MultipleSensorsCharts',
+}));
 
 describe('Site Detail Page', () => {
   let elementEmpty: HTMLElement;
@@ -110,8 +111,8 @@ describe('Site Detail Page', () => {
       },
     });
 
-    emptyStore.dispatch = jest.fn();
-    fullStore.dispatch = jest.fn();
+    emptyStore.dispatch = vi.fn();
+    fullStore.dispatch = vi.fn();
 
     elementEmpty = render(
       <ThemeProvider theme={theme}>
