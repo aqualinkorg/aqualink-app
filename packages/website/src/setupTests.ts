@@ -40,6 +40,7 @@ jest.mock('@mui/icons-material', () => ({
   LocalOffer: 'mock-LocalOffer',
   Menu: 'mock-Menu',
   MoreVert: 'mock-MoreVert',
+  OpenInNew: 'mock-OpenInNew',
   Person: 'mock-Person',
   Share: 'mock-Share',
   Star: 'mock-Star',
