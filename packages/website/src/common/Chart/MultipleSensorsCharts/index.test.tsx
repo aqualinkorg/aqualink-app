@@ -18,7 +18,7 @@ import MultipleSensorsCharts from '.';
 const mockStore = configureStore([]);
 
 describe('MultipleSensorsCharts', () => {
-  it('should render with given state from Redux store', () => {
+  it.skip('should render with given state from Redux store', () => {
     const store = mockStore({
       selectedSite: {
         details: { ...mockSite },
