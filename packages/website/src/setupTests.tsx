@@ -141,6 +141,7 @@ const muiComponents = [
   'TablePagination',
   'TableSortLabel',
   'Skeleton',
+  'LinearProgress',
 ];
 
 muiComponents.forEach(async (componentName: string) => {
