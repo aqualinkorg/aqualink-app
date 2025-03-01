@@ -42,6 +42,7 @@ app.get('*', async (c) => {
     const site = (await res.json()) as any;
     const { name } = site;
 
+    // eslint-disable-next-line fp/no-mutation
     title = `Aqualink Site ${name}`;
   }
 
