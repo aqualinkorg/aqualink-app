@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "rsbuild dev",
-    "build": "rsbuild build && yarn build:worker",
-    "build:worker": "node build-worker.js",
+    "build": "rsbuild build",
     "test": "vitest",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore --max-warnings 0",
     "scan": "yarn start & npx react-scan@latest localhost:3000",
@@ -13,6 +12,7 @@
     "deploy:prod": "dotenv -e .env.prod yarn build && yarn run firebase deploy --only hosting:prod-target",
     "deploy:staging": "dotenv -e .env.staging yarn build && yarn run firebase deploy --only hosting:staging-target",
     "deploy:programize": "dotenv -e .env.programize yarn build && yarn run firebase deploy --only hosting:programize-target",
+    "start:worker": "wrangler dev",
     "deploy:worker": "wrangler deploy"
   },
   "dependencies": {
@@ -84,6 +84,7 @@
     "node": "18.x"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250224.0",
     "@rsbuild/core": "^1.2.10",
     "@rsbuild/plugin-eslint": "^1.1.1",
     "@rsbuild/plugin-react": "^1.1.1",

@@ -1,5 +1,9 @@
 /**
- * Cloudflare Worker function to pre-render html with site specific metadata
+ * Cloudflare Worker function to pre-render html with site specific metadata.
+ * It fetches the index.html from the static assets and injects the metadata into the header.
+ * The metadata is fetched either:
+ * - from a local object
+ * - fetched from external sites API
  */
 
 import { Hono } from 'hono';
@@ -23,17 +27,27 @@ const metadata: Record<string, any> = {
   },
 };
 
-const app = new Hono();
+type Bindings = {
+  ASSETS: {
+    fetch: (request: Request | string) => Promise<Response>;
+  };
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
 
 app.get('*', async (c) => {
   const request = c.req;
 
   const url = new URL(request.url);
-  const firstSegment = url.pathname.split('/').filter(Boolean)[0];
-  const id = url.pathname.split('/').filter(Boolean)[1];
+  const { origin, pathname } = url;
+  const firstSegment = pathname.split('/').filter(Boolean)[0];
+  const id = pathname.split('/').filter(Boolean)[1];
 
   let title = metadata[firstSegment]?.title || 'Aqualink';
   const description = metadata[firstSegment]?.description || 'Ocean Monitoring';
+
+  const index = await c.env.ASSETS.fetch(new URL('/', origin).toString());
+  const indexHtml = await index.text();
 
   if (firstSegment === 'sites') {
     const res = await fetch(
@@ -53,8 +67,7 @@ app.get('*', async (c) => {
 <meta property="og:description" content="${description}" />
 `;
 
-  const buildHtml = `BUILD_INJECTION`;
-  const html = buildHtml.replace('<!-- server rendered meta -->', meta);
+  const html = indexHtml.replace('<!-- server rendered meta -->', meta);
   return c.html(html);
 });
 
