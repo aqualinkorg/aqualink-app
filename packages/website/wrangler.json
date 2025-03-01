@@ -1,0 +1,10 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "aqualink",
+    "main": "worker/index.ts",
+    "compatibility_date": "2025-02-14",
+    "assets": {
+        "directory": "./build/",
+        "binding": "ASSETS"
+    }
+}

@@ -30,3 +30,6 @@ lerna-debug.log*
 
 # Firebase emulator
 .runtimeconfig.json
+
+.wrangler
+packages/website/worker

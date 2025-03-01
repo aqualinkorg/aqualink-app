@@ -4,14 +4,16 @@
   "private": true,
   "scripts": {
     "start": "rsbuild dev",
-    "build": "rsbuild build",
+    "build": "rsbuild build && yarn build:worker",
+    "build:worker": "node build-worker.js",
     "test": "vitest",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore --max-warnings 0",
     "scan": "yarn start & npx react-scan@latest localhost:3000",
     "precommit": "lint-staged",
     "deploy:prod": "dotenv -e .env.prod yarn build && yarn run firebase deploy --only hosting:prod-target",
     "deploy:staging": "dotenv -e .env.staging yarn build && yarn run firebase deploy --only hosting:staging-target",
-    "deploy:programize": "dotenv -e .env.programize yarn build && yarn run firebase deploy --only hosting:programize-target"
+    "deploy:programize": "dotenv -e .env.programize yarn build && yarn run firebase deploy --only hosting:programize-target",
+    "deploy:worker": "wrangler deploy"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.0.1",
@@ -37,6 +39,7 @@
     "firebase": "^11.0.0",
     "firebase-tools": "^13.31.0",
     "geolib": "^3.3.4",
+    "hono": "^4.7.2",
     "immutable": "^4.0.0-rc.12",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
@@ -111,7 +114,8 @@
     "dotenv-cli": "^4.0.0",
     "jsdom": "^26.0.0",
     "surge": "^0.23.1",
-    "vitest": "^3.0.7"
+    "vitest": "^3.0.7",
+    "wrangler": "^3.111.0"
   },
   "volta": {
     "node": "18.20.7"
