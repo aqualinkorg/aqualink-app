@@ -210,6 +210,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     height: '100%',
     backgroundColor: colors.greenCardColor,
+    color: 'white',
   },
   content: {
     display: 'flex',
