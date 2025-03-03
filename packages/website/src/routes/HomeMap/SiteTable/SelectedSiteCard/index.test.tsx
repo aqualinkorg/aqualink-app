@@ -26,7 +26,7 @@ const store = mockStore({
   },
 });
 
-store.dispatch = jest.fn();
+store.dispatch = vi.fn();
 
 test('renders as expected', () => {
   process.env.REACT_APP_FEATURED_SITE_ID = '2';

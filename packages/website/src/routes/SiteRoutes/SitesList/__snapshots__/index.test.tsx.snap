@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Sites List should render with given state from Redux store 1`] = `
+exports[`Sites List > should render with given state from Redux store 1`] = `
 <div>
   <div
     class="SitesList-root-1"

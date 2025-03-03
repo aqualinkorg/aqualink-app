@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
-import { advanceTo, clear } from 'jest-date-mock';
 import { renderWithProviders } from 'utils/test-utils';
 import SurveyForm from '.';
 
@@ -20,19 +19,19 @@ describe('SurveyForm', () => {
     },
   });
 
-  store.dispatch = jest.fn();
+  store.dispatch = vi.fn();
 
-  const mockFunction = jest.fn(
+  const mockFunction = vi.fn(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (diveDateTime, diveLocation, weatherConditions, comments) => {},
   );
 
   beforeAll(() => {
-    advanceTo(new Date('2023-10-20T12:00:00'));
+    vi.setSystemTime(new Date('2023-10-20T12:00:00'));
   });
 
   afterAll(() => {
-    clear();
+    vi.useRealTimers();
   });
 
   // TODO: fix this test

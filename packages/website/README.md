@@ -1,11 +1,11 @@
 # Aqualink - Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template, but now is migrated to rsbuild.
 
 - **Styling & UI Library** Use [Material UI](https://material-ui.com/). Note that to use the [styles API](https://material-ui.com/styles/basics/) you can `import @material-ui/core/styles`. We prefer the Hooks styles API.
 - **Routing** Uses [React Router](https://reacttraining.com/react-router/web/guides/quick-start).
 - **State Management** Uses [Redux](https://redux.js.org/introduction/getting-started) and the [Redux Toolkit](https://redux-toolkit.js.org/api/configureStore) with slices.
-- **Testing** Uses [Jest](https://jestjs.io/) with [Enzyme](https://enzymejs.github.io/enzyme/)
+- **Testing** Uses [Vitest](https://vitest.dev/)
 
 ## Settings
 
@@ -46,7 +46,6 @@ You will also see any lint errors in the console.
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `yarn build`
 
@@ -56,24 +55,12 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
 ### `yarn scan`
 
 Runs the app in development mode and scans the application for performance issues using `react-scan`.
 
-### `yarn eject`
+## Server render with Cloudflare worker
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+We use Cloudflare Worker to server render site's meta in header tags for SEO purposes. The site is still running as a single-page-application(SPA), but with specific urls, Cloudflare Worker will return with meta header.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+To test server render, run `yarn start:worker`. You do need to run `yarn build` first to have static assets ready to be used by worker.

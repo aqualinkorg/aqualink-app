@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`renders as expected 1`] = `
 <div>
@@ -10,7 +10,7 @@ exports[`renders as expected 1`] = `
     >
       <img
         alt="404 Not Found"
-        src="404_click.png"
+        src="/src/assets/img/404_click.png"
       />
     </a>
   </div>

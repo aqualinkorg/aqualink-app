@@ -16,7 +16,7 @@ describe('Survey Card', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(
       <SurveyCard

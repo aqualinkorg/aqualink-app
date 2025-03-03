@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Monitoring SiteMetrics Page should render with given state from Redux store 1`] = `
+exports[`Monitoring SiteMetrics Page > should render with given state from Redux store 1`] = `
 <div>
   <div>
     <div
@@ -143,7 +143,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
         format="MM/dd/yyyy"
         label="start date"
         slotprops="[object Object]"
-        value="Thu Jul 20 2023 12:00:00 GMT+0000 (Coordinated Universal Time)"
+        value="Wed Aug 23 2023 12:00:00 GMT+0000 (Coordinated Universal Time)"
       />
       <mock-date-picker
         classname="makeStyles-filterItem-4"
@@ -151,7 +151,7 @@ exports[`Monitoring SiteMetrics Page should render with given state from Redux s
         format="MM/dd/yyyy"
         label="end date"
         slotprops="[object Object]"
-        value="Fri Oct 20 2023 12:00:00 GMT+0000 (Coordinated Universal Time)"
+        value="Thu Nov 23 2023 12:00:00 GMT+0000 (Coordinated Universal Time)"
       />
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-switchContainer-3 css-174grhv-MuiGrid-root"

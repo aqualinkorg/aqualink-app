@@ -24,7 +24,7 @@ describe('SiteNavBar', () => {
         error: null,
       },
     });
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(
       <SiteNavBar

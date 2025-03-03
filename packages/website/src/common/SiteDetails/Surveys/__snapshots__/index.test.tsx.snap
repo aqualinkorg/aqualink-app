@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Surveys should render with given state from Redux store 1`] = `
+exports[`Surveys > should render with given state from Redux store 1`] = `
 <div>
   <mock-dialog
     fullwidth="true"
@@ -119,43 +119,6 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                     d="M7 10l5 5 5-5z"
                   />
                 </svg>
-                <mock-popover
-                  anchorel="[object HTMLDivElement]"
-                  anchororigin="[object Object]"
-                  classname="css-s4soc1-MuiMenu-root"
-                  id="menu-survey-point"
-                  open="false"
-                  slotprops="[object Object]"
-                  slots="[object Object]"
-                  transformorigin="[object Object]"
-                  transitionduration="auto"
-                  transitionprops="[object Object]"
-                >
-                  <mock-menulist
-                    actions="[object Object]"
-                    aria-labelledby="survey-point"
-                    autofocusitem="false"
-                    classname="MuiMenu-list css-7drlel-MuiMenu-list"
-                    disablelistwrap="true"
-                    id=":r0:"
-                    role="listbox"
-                    variant="selectedMenu"
-                  >
-                    <mock-menuitem
-                      aria-selected="true"
-                      data-value="All"
-                      role="option"
-                      selected="true"
-                    >
-                      <mock-typography
-                        classname="makeStyles-menuItem-16"
-                        variant="h6"
-                      >
-                        All
-                      </mock-typography>
-                    </mock-menuitem>
-                  </mock-menulist>
-                </mock-popover>
               </div>
             </div>
           </div>
@@ -219,113 +182,6 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   d="M7 10l5 5 5-5z"
                 />
               </svg>
-              <mock-popover
-                anchorel="[object HTMLDivElement]"
-                anchororigin="[object Object]"
-                classname="css-s4soc1-MuiMenu-root"
-                id="menu-survey-observation"
-                open="false"
-                slotprops="[object Object]"
-                slots="[object Object]"
-                transformorigin="[object Object]"
-                transitionduration="auto"
-                transitionprops="[object Object]"
-              >
-                <mock-menulist
-                  actions="[object Object]"
-                  aria-labelledby="survey-observation"
-                  autofocusitem="false"
-                  classname="MuiMenu-list css-7drlel-MuiMenu-list"
-                  disablelistwrap="true"
-                  id=":r1:"
-                  role="listbox"
-                  variant="selectedMenu"
-                >
-                  <mock-menuitem
-                    aria-selected="true"
-                    data-value="any"
-                    role="option"
-                    selected="true"
-                  >
-                    <mock-typography
-                      classname="makeStyles-menuItem-8"
-                      variant="h6"
-                    >
-                      Any
-                    </mock-typography>
-                  </mock-menuitem>
-                  <mock-menuitem
-                    aria-selected="false"
-                    classname="makeStyles-menuItem-8"
-                    data-value="healthy"
-                    role="option"
-                    selected="false"
-                    title="Appears healthy"
-                  >
-                    Appears healthy
-                  </mock-menuitem>
-                  <mock-menuitem
-                    aria-selected="false"
-                    classname="makeStyles-menuItem-8"
-                    data-value="possible-disease"
-                    role="option"
-                    selected="false"
-                    title="Showing possible signs of disease"
-                  >
-                    Showing possible signs of disease
-                  </mock-menuitem>
-                  <mock-menuitem
-                    aria-selected="false"
-                    classname="makeStyles-menuItem-8"
-                    data-value="evident-disease"
-                    role="option"
-                    selected="false"
-                    title="Signs of disease are evident"
-                  >
-                    Signs of disease are evident
-                  </mock-menuitem>
-                  <mock-menuitem
-                    aria-selected="false"
-                    classname="makeStyles-menuItem-8"
-                    data-value="mortality"
-                    role="option"
-                    selected="false"
-                    title="Signs of mortality are evident"
-                  >
-                    Signs of mortality are evident
-                  </mock-menuitem>
-                  <mock-menuitem
-                    aria-selected="false"
-                    classname="makeStyles-menuItem-8"
-                    data-value="environmental"
-                    role="option"
-                    selected="false"
-                    title="Signs of environmental disturbance are evident (e.g. storm damage)"
-                  >
-                    Signs of environmental disturbance are evident (e.g. storm damage)
-                  </mock-menuitem>
-                  <mock-menuitem
-                    aria-selected="false"
-                    classname="makeStyles-menuItem-8"
-                    data-value="anthropogenic"
-                    role="option"
-                    selected="false"
-                    title="Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)"
-                  >
-                    Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
-                  </mock-menuitem>
-                  <mock-menuitem
-                    aria-selected="false"
-                    classname="makeStyles-menuItem-8"
-                    data-value="invasive-species"
-                    role="option"
-                    selected="false"
-                    title="Signs of damage from invasive species"
-                  >
-                    Signs of damage from invasive species
-                  </mock-menuitem>
-                </mock-menulist>
-              </mock-popover>
             </div>
           </div>
         </div>
@@ -346,9 +202,8 @@ exports[`Surveys should render with given state from Redux store 1`] = `
             <li
               class="MuiTimelineItem-root MuiTimelineItem-positionRight makeStyles-timelineItem-30 css-ny8qih-MuiTimelineItem-root"
             >
-              <mock-typography
-                classname="MuiTimelineOppositeContent-root MuiTimelineOppositeContent-positionRight makeStyles-timelineOppositeContent-31 css-1ovglxb-MuiTimelineOppositeContent-root"
-                component="div"
+              <div
+                class="MuiTypography-root MuiTypography-body1 MuiTimelineOppositeContent-root MuiTimelineOppositeContent-positionRight makeStyles-timelineOppositeContent-31 css-193a741-MuiTypography-root-MuiTimelineOppositeContent-root"
               >
                 <mock-typography
                   classname="makeStyles-dates-23"
@@ -356,7 +211,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                 >
                   09/10/2020
                 </mock-typography>
-              </mock-typography>
+              </div>
               <div
                 class="MuiTimelineSeparator-root css-1muvgbz-MuiTimelineSeparator-root"
               >
@@ -370,9 +225,8 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   class="makeStyles-connector-34"
                 />
               </div>
-              <mock-typography
-                classname="MuiTimelineContent-root MuiTimelineContent-positionRight makeStyles-surveyCardWrapper-25 css-15qjzwo-MuiTimelineContent-root"
-                component="div"
+              <div
+                class="MuiTypography-root MuiTypography-body1 MuiTimelineContent-root MuiTimelineContent-positionRight makeStyles-surveyCardWrapper-25 css-1qq9j0n-MuiTypography-root-MuiTimelineContent-root"
               >
                 <div
                   class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-14gemme-MuiPaper-root"
@@ -478,7 +332,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                     </div>
                   </div>
                 </div>
-              </mock-typography>
+              </div>
             </li>
           </ul>
         </mock-hidden>
