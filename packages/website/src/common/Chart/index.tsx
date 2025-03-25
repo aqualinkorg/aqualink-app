@@ -93,9 +93,6 @@ const makeAnnotation = (
   },
 });
 
-const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
-  isEqual(prevProps.datasets, nextProps.datasets);
-
 function Chart({
   datasets,
   surveys,
@@ -307,4 +304,11 @@ function Chart({
   );
 }
 
-export default memo(Chart, returnMemoized);
+export default memo(Chart, (prevProps, nextProps) => {
+  return (
+    prevProps.startDate === nextProps.startDate &&
+    prevProps.endDate === nextProps.endDate &&
+    isEqual(prevProps.datasets, nextProps.datasets) &&
+    prevProps.chartPeriod === nextProps.chartPeriod
+  );
+});
