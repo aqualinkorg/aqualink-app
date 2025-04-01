@@ -191,7 +191,7 @@ const EditForm = ({
         setSensorId(newValue);
         break;
       case 'spotterApiToken':
-        setSiteSpotterApiToken(newValue);
+        setSiteSpotterApiToken(newValue.trim());
         setApiTokenChanged(true);
         break;
       case 'status':
