@@ -146,10 +146,14 @@ const SelectedSiteCardContent = ({
                   left={0}
                 >
                   <Box className={classes.cardImageTextWrapper}>
-                    <Typography variant="h5">{name}</Typography>
+                    <Typography variant="h5" color="white">
+                      {name}
+                    </Typography>
 
                     {regionName && (
-                      <Typography variant="h6">{regionName}</Typography>
+                      <Typography variant="h6" color="white">
+                        {regionName}
+                      </Typography>
                     )}
                   </Box>
                 </Box>
