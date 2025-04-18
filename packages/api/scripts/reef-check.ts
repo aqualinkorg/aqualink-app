@@ -18,6 +18,7 @@ const logger = new Logger('reef-check');
 type Args = {
   filePath: string;
   dryRun?: boolean;
+  all?: boolean;
 };
 
 /**
@@ -169,8 +170,8 @@ function parseFile<T extends string>(filePath: string, fields: T[]) {
   };
 }
 
-async function uploadSites({ filePath, dryRun }: Args) {
-  logger.log(`Processing file: ${filePath}, dryRun: ${dryRun}`);
+async function uploadSites({ filePath, dryRun, all }: Args) {
+  logger.log(`Processing file: ${filePath}, dryRun: ${dryRun}, all: ${all}`);
 
   // Initialize typeorm connection
   const config = configService.getTypeOrmConfig() as DataSourceOptions;
@@ -183,6 +184,19 @@ async function uploadSites({ filePath, dryRun }: Args) {
   const reefCheckSiteRepository = connection.getRepository(ReefCheckSite);
   let errors = 0;
 
+  // Fetch existing site IDs if onlyNew mode is enabled
+  const existingSiteIds = new Set<string>();
+  if (!all) {
+    logger.log(
+      '--all flag not specified: Fetching existing ReefCheckSite IDs to skip them...',
+    );
+    const existingSites = await reefCheckSiteRepository.find({
+      select: ['id'],
+    });
+    existingSites.forEach((site) => existingSiteIds.add(site.id));
+    logger.log(`Found ${existingSiteIds.size} existing ReefCheckSite IDs.`);
+  }
+
   await uniqWith(
     rows,
     (val, otherVal) =>
@@ -190,6 +204,13 @@ async function uploadSites({ filePath, dryRun }: Args) {
   ).reduce(async (prevPromise, row) => {
     await prevPromise;
     const siteId = getField(row, 'site_id');
+
+    // Skip if onlyNew mode is enabled and site ID already exists
+    if (!all && existingSiteIds.has(siteId)) {
+      logger.debug(`Skipping site ID ${siteId} as it already exists.`);
+      return; // Skip this row
+    }
+
     const siteName = getField(row, 'reef_name');
     const rawCoordinates = getField(
       row,
@@ -273,8 +294,8 @@ async function uploadSites({ filePath, dryRun }: Args) {
   await connection.destroy();
 }
 
-async function uploadSurveys({ filePath, dryRun }: Args) {
-  logger.log(`Processing file: ${filePath}, dryRun: ${dryRun}`);
+async function uploadSurveys({ filePath, dryRun, all }: Args) {
+  logger.log(`Processing file: ${filePath}, dryRun: ${dryRun}, all: ${all}`);
 
   // Initialize typeorm connection
   const config = configService.getTypeOrmConfig() as DataSourceOptions;
@@ -296,6 +317,19 @@ async function uploadSurveys({ filePath, dryRun }: Args) {
   });
   logger.log(`Total reef check sites loaded: ${reefCheckSites.length}`);
 
+  // Fetch existing survey IDs if onlyNew mode is enabled
+  const existingSurveyIds = new Set<string>();
+  if (!all) {
+    logger.log(
+      '--all flag not specified: Fetching existing ReefCheckSurvey IDs to skip them...',
+    );
+    const existingSurveys = await reefCheckSurveyRepository.find({
+      select: ['id'],
+    });
+    existingSurveys.forEach((survey) => existingSurveyIds.add(survey.id));
+    logger.log(`Found ${existingSurveyIds.size} existing ReefCheckSurvey IDs.`);
+  }
+
   const surveys: Omit<ReefCheckSurvey, 'site' | 'reefCheckSite'>[] = rows
     .map((row) => {
       const date = new Date(
@@ -303,6 +337,14 @@ async function uploadSurveys({ filePath, dryRun }: Args) {
           getField(row, 'time_of_day_work_began') ?? ''
         }`,
       );
+      const surveyId = getField(row, 'survey_id');
+
+      // Skip if onlyNew mode is enabled and survey ID already exists
+      if (!all && existingSurveyIds.has(surveyId)) {
+        logger.debug(`Skipping survey ID ${surveyId} as it already exists.`);
+        return null; // Skip this row
+      }
+
       const siteId = reefCheckSiteIdToSiteIdMap.get(getField(row, 'site_id'));
       // Skip surveys that don't match an existing site in the database
       // Note: Make sure to run the upload-sites command first
@@ -622,6 +664,13 @@ yargs(hideBin(process.argv))
         type: 'boolean',
         default: false,
       },
+      all: {
+        alias: 'a',
+        describe:
+          'Process all entries from the file, even if they already exist in the database. Default processes only new entries.',
+        type: 'boolean',
+        default: false,
+      },
     },
     uploadSites,
   )
@@ -638,6 +687,13 @@ yargs(hideBin(process.argv))
       dryRun: {
         alias: 'd',
         describe: 'Run the script without saving to the database',
+        type: 'boolean',
+        default: false,
+      },
+      all: {
+        alias: 'a',
+        describe:
+          'Process all entries from the file, even if they already exist in the database. Default processes only new entries.',
         type: 'boolean',
         default: false,
       },
