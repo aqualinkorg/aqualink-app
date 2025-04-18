@@ -189,6 +189,18 @@ refreshMaterializedView(repository)
 
 Reef Check is an organization dedicated to the conservation of reefs and we integrate their surveys into our app. We have separate tables for their sites and surveys (`reef_check_site` and `reef_check_surveys`) Each Reef Check Site is linked to one Site, we are either creating a new one or linking to an existing one within 100m.  We are also storing information about substrates, fish and diseases in `reef_check_organism` and `reef_check_substrates` related to each survey. Reef Check data is manually send to us in xlsx files and we upload them in database with the `reef-check.ts` script. Run `yarn reef-check --help` or check the script for more information.
 
+Series of commands to run to load/update Reef Check data:
+
+```
+yarn reef-check upload-sites -n -f reef_check_data/Site\ Description.xlsx
+yarn reef-check upload-surveys -f reef_check_data/Site\ Description.xlsx
+yarn reef-check upload-substrates -f reef_check_data/Substrate.csv
+yarn reef-check upload-organisms -f reef_check_data/Belt.csv
+yarn reef-check upload-collectors -f reef_check_data/Data\ Collectors.xlsx
+```
+
+If you run into errors with the Substrate en Belt files, convert them to `.xls` files first and try again.
+
 ### Jest
 
 In order to test our application we have created both `functional` and `e2e` tests. After all tests have run we also calculate our coverage. We aim for green coverage on all api endpoints and and all util functions that are tested. There is no need to try and fully cover all functions in the codebase as many of those rely on third party libraries, which makes it complicated and unnecessary to test.
