@@ -608,11 +608,11 @@ async function uploadCollectors({ filePath }: Args) {
 yargs(hideBin(process.argv))
   .command(
     'upload-sites',
-    'Upload sites from the xlsx file',
+    'Upload sites from the "Site Description.xlsx" file',
     {
       filePath: {
         alias: 'f',
-        describe: 'Path to the xlsx file',
+        describe: 'Path to the "Site Description.xlsx" file',
         type: 'string',
         demandOption: true,
       },
@@ -627,24 +627,30 @@ yargs(hideBin(process.argv))
   )
   .command(
     'upload-surveys',
-    'Upload surveys from the xlsx file',
+    'Upload surveys from the "Site Description.xlsx" file',
     {
       filePath: {
         alias: 'f',
-        describe: 'Path to the xlsx file',
+        describe: 'Path to the "Site Description.xlsx" file',
         type: 'string',
         demandOption: true,
+      },
+      dryRun: {
+        alias: 'd',
+        describe: 'Run the script without saving to the database',
+        type: 'boolean',
+        default: false,
       },
     },
     uploadSurveys,
   )
   .command(
     'upload-organisms',
-    'Upload organisms from the xlsx file',
+    'Upload organisms from the "Belt.xlsx" file',
     {
       filePath: {
         alias: 'f',
-        describe: 'Path to the xlsx file',
+        describe: 'Path to the "Belt.xlsx" file',
         type: 'string',
         demandOption: true,
       },
@@ -653,11 +659,11 @@ yargs(hideBin(process.argv))
   )
   .command(
     'upload-substrates',
-    'Upload substrates from the xlsx file',
+    'Upload substrates from the "Substrate.xlsx" file',
     {
       filePath: {
         alias: 'f',
-        describe: 'Path to the xlsx file',
+        describe: 'Path to the "Substrate.xlsx" file',
         type: 'string',
         demandOption: true,
       },
@@ -666,11 +672,11 @@ yargs(hideBin(process.argv))
   )
   .command(
     'upload-collectors',
-    'Upload team leader and team scientist from the Data Collectors xlsx file',
+    'Upload team leader and team scientist from the "Data Collectors.xlsx" file',
     {
       filePath: {
         alias: 'f',
-        describe: 'Path to the xlsx file',
+        describe: 'Path to the "Data Collectors.xlsx" file',
         type: 'string',
         demandOption: true,
       },
