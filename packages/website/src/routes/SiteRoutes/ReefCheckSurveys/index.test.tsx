@@ -9,7 +9,7 @@ import { mockSite } from 'mocks/mockSite';
 import { mockReefCheckSurvey } from 'mocks/mockReefCheckSurvey';
 import { SelectedSiteState } from 'store/Sites/types';
 import theme from 'layout/App/theme';
-import { formatDate } from './ReefCheckSurveySummary';
+import { formatReefCheckSurveyDate } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyViewPage } from '.';
 import * as organismsTableModule from './ReefCheckSurveyOrganismsTable';
 import * as substratesModule from './ReefCheckSurveySubstratesTable';
@@ -103,7 +103,7 @@ describe('ReefCheckSurveyViewPage', () => {
       const { reefName, region } = mockReefCheckSurvey.reefCheckSite ?? {};
 
       expect(
-        getByText(formatDate(mockReefCheckSurvey.date)),
+        getByText(formatReefCheckSurveyDate(mockReefCheckSurvey.date)),
       ).toBeInTheDocument();
       expect(getByAltText('Reef Check Logo')).toBeInTheDocument();
       expect(getByText(reefName ?? '')).toBeInTheDocument();
@@ -127,10 +127,10 @@ describe('ReefCheckSurveyViewPage', () => {
     it('should render survey details', () => {
       const { getByText } = renderReefCheckSurveyViewPage();
       const { date } = mockReefCheckSurvey;
-      const displayDate = new Date(date).toLocaleDateString();
+      const displayDate = formatReefCheckSurveyDate(date, 'MMM dd, yyyy');
 
       expect(
-        getByText(`${displayDate} REEF CHECK SURVEY DATA`),
+        getByText(`REEF CHECK SURVEY - ${displayDate}`),
       ).toBeInTheDocument();
     });
   });

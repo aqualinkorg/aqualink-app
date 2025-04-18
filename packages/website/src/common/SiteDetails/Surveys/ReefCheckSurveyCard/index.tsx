@@ -18,6 +18,7 @@ import { groupBy, times } from 'lodash';
 import { Link } from 'react-router-dom';
 import cls from 'classnames';
 import { reefCheckImpactRows, ReefCheckSurvey } from 'store/ReefCheckSurveys';
+import { formatReefCheckSurveyDate } from 'routes/SiteRoutes/ReefCheckSurveys/ReefCheckSurveySummary';
 import reefCheckLogo from '../../../../assets/img/reef-check-logo.png';
 
 type ReefCheckSurveyCardIncomingProps = {
@@ -61,7 +62,7 @@ const ReefCheckSurveyCardComponent = ({
       <Box display="flex" justifyContent="space-between">
         <Box display="flex" gap={2}>
           <Typography>
-            Date: {new Date(survey.date).toLocaleString()}
+            Date: {formatReefCheckSurveyDate(survey.date)}
           </Typography>
           <Typography>Depth: {survey.depth}m</Typography>
         </Box>

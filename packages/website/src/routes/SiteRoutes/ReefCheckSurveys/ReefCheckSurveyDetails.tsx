@@ -12,6 +12,7 @@ import { createStyles, WithStyles } from '@mui/styles';
 import { useSelector } from 'react-redux';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import { ReefCheckSurvey } from 'store/ReefCheckSurveys/types';
+import { formatReefCheckSurveyDate } from './ReefCheckSurveySummary';
 
 type SurveyField<T extends keyof ReefCheckSurvey> = {
   field: T;
@@ -75,14 +76,17 @@ const ReefCheckSurveyDetailsComponent = ({
   classes,
 }: ReefCheckSurveyDetailsProps) => {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
-  const date = survey?.date ? new Date(survey.date).toLocaleDateString() : '';
+
+  const formattedDate = formatReefCheckSurveyDate(survey?.date ?? '', 'MMM dd, yyyy')
 
   if (error) {
     return null;
   }
   return (
     <Paper className={classes.paper}>
-      <Typography className={classes.title}>{date} REEF CHECK SURVEY DATA</Typography>
+      <Typography className={classes.title}>
+        REEF CHECK SURVEY - {formattedDate}
+      </Typography>
       <Box className={classes.container}>
         {surveyFields.map(({ field, label, formatter }) => (
           <Grid key={field} container className={classes.item}>

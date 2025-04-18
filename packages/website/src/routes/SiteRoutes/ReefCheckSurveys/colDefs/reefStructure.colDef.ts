@@ -27,31 +27,39 @@ export const reefStructureColumns: ColumnDef<ReefCheckSubstrate>[] = [
     header: 'Reef Structure and Composition Type',
   },
   {
-    field: ({ s1 }) => `${s1}%`,
+    field: ({ s1 }) => `${Math.round((s1 / 40) * 100)}%`,
     header: 's1 (0-20m)',
     align: 'center',
     width: 200,
   },
   {
-    field: ({ s2 }) => `${s2}%`,
+    field: ({ s2 }) => `${Math.round((s2 / 40) * 100)}%`,
     header: 's2 (25-45m)',
     align: 'center',
     width: 200,
   },
   {
-    field: ({ s3 }) => `${s3}%`,
+    field: ({ s3 }) => `${Math.round((s3 / 40) * 100)}%`,
     header: 's3 (50-70m)',
     align: 'center',
     width: 200,
   },
   {
-    field: ({ s4 }) => `${s4}%`,
+    field: ({ s4 }) => `${Math.round((s4 / 40) * 100)}%`,
     header: 's4 (75-95m)',
     align: 'center',
     width: 200,
   },
   {
-    field: (row) => `${mean([row.s1, row.s2, row.s3, row.s4])}%`,
+    field: (row) =>
+      `${Math.round(
+        mean([
+          (row.s1 / 40) * 100,
+          (row.s2 / 40) * 100,
+          (row.s3 / 40) * 100,
+          (row.s4 / 40) * 100,
+        ]),
+      )}%`,
     header: 'Average % per 100m²',
     align: 'center',
     width: 200,

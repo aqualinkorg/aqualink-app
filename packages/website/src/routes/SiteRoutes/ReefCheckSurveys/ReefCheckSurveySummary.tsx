@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import cls from 'classnames';
 import { reefCheckSurveySelector } from 'store/ReefCheckSurveys/reefCheckSurveySlice';
 import ObservationBox from 'routes/Surveys/View/ObservationBox';
+import { displayTimeInLocalTimezone } from 'helpers/dates';
 import reefCheckLogo from '../../../assets/img/reef-check.png';
 
 const REQUEST_FORM_URL =
@@ -42,7 +43,7 @@ export const ReefCheckSurveySummaryComponent = ({
               className={classes.skeleton}
             />
           ) : (
-            formatDate(survey?.date ?? '')
+            formatReefCheckSurveyDate(survey?.date ?? '')
           )}
         </Typography>
         <img src={reefCheckLogo} width={180} alt="Reef Check Logo" />
@@ -120,15 +121,19 @@ export const ReefCheckSurveySummaryComponent = ({
   );
 };
 
-export const formatDate = (dateStr: string): string => {
-  const date = new Date(dateStr);
-  return date.toLocaleTimeString([], {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+export const formatReefCheckSurveyDate = (
+  dateStr: string,
+  format?: string,
+): string => {
+  const formatted = displayTimeInLocalTimezone({
+    isoDate: dateStr,
+    format: format ?? 'MM/dd/yyyy, hh:mm a',
+    displayTimezone: false,
+    // This is a workaround to display the date in the local timezone of the reef
+    // TODO: Remove this once we have fixed the import of the ReefCheckSurvey
+    timeZone: 'UTC',
   });
+  return formatted ?? '';
 };
 
 const styles = (theme: Theme) =>
