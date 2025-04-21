@@ -18,6 +18,7 @@ import withStyles from '@mui/styles/withStyles';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
+import L from 'leaflet';
 
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
@@ -72,6 +73,7 @@ const SiteTable = ({
   collection,
   scrollTableOnSelection = true,
   scrollPageOnSelection,
+  map,
   classes,
 }: SiteTableProps) => {
   const loading = useSelector(sitesListLoadingSelector);
@@ -187,6 +189,7 @@ const SiteTable = ({
               collection={collection}
               scrollTableOnSelection={scrollTableOnSelection}
               scrollPageOnSelection={scrollPageOnSelection}
+              map={map}
             />
           </Table>
         </TableContainer>
@@ -269,6 +272,7 @@ interface SiteTableIncomingProps {
   collection?: Collection;
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
+  map?: L.Map | null; // Add map prop type
 }
 
 export default withStyles(styles)(SiteTable);

@@ -61,6 +61,7 @@ const HomepageMap = ({
   legendBottom,
   legendLeft,
   classes,
+  onMapLoad,
 }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
@@ -72,6 +73,14 @@ const HomepageMap = ({
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<Map>(null);
+
+  useEffect(() => {
+    if (ref.current && onMapLoad) {
+      onMapLoad(ref.current.leafletElement);
+    }
+    // We only want this effect to run once when the ref is set, or when onMapLoad changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref.current, onMapLoad]);
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -124,25 +133,10 @@ const HomepageMap = ({
     if (map && siteOnMap?.polygon.type === 'Point') {
       const [lng, lat] = siteOnMap.polygon.coordinates;
 
-      // Get current center and adjust longitude for shortest path
-      const currentCenter = map.getCenter();
-      let adjustedLng = lng;
+      // Use the pre-calculated displayLng if available, otherwise use original lng
+      const finalLng = siteOnMap.displayLng ?? lng;
 
-      // If the difference between longitudes is greater than 180 degrees, adjust the new longitude
-      const lngDiff = Math.abs(currentCenter.lng - lng);
-      if (lngDiff > 180) {
-        if (currentCenter.lng < 0) {
-          // If current position is in western hemisphere, add 360 to eastern target
-          // eslint-disable-next-line fp/no-mutation
-          adjustedLng = lng < 0 ? lng : lng - 360;
-        } else {
-          // If current position is in eastern hemisphere, subtract 360 from western target
-          // eslint-disable-next-line fp/no-mutation
-          adjustedLng = lng > 0 ? lng : lng + 360;
-        }
-      }
-
-      const latLng = [lat, adjustedLng] as [number, number];
+      const latLng = [lat, finalLng] as [number, number];
       const pointBounds = L.latLngBounds(latLng, latLng);
       const maxZoom = Math.max(map.getZoom() || 6);
       map.flyToBounds(pointBounds, {
@@ -328,6 +322,7 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  onMapLoad?: (map: L.Map) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

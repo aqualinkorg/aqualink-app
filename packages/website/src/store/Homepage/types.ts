@@ -13,8 +13,10 @@ export type MapLayerName =
   | 'Sea Surface Temperature'
   | 'SST Anomaly';
 
+export type SiteOnMap = (Site & { displayLng?: number }) | null;
+
 export interface HomePageState {
-  siteOnMap: Site | null;
+  siteOnMap: SiteOnMap;
   searchResult?: MapboxGeolocationData;
   siteFilter: typeof siteOptions[number];
 }
