@@ -194,7 +194,7 @@ export class SitesService {
       .leftJoinAndSelect('site.region', 'region')
       .leftJoinAndSelect('site.sketchFab', 'sketchFab')
       .leftJoinAndSelect('site.admins', 'admins')
-      .leftJoinAndSelect('site.reefCheckSite', 'reefCheckSite')
+      .leftJoinAndSelect('site.reefCheckSites', 'reefCheckSites')
       .andWhere('display = true')
       .getMany();
 
@@ -234,7 +234,7 @@ export class SitesService {
         'siteApplication',
         'sketchFab',
         'reefCheckSurveys',
-        'reefCheckSite',
+        'reefCheckSites',
       ],
       true,
     );
@@ -260,7 +260,7 @@ export class SitesService {
       name: site.name,
       sensorId: site.sensorId,
       reefCheckSurveys: site.reefCheckSurveys ?? [],
-      reefCheckSite: site.reefCheckSite,
+      reefCheckSites: site.reefCheckSites ?? [],
       polygon: site.polygon,
       nearestNOAALocation: site.nearestNOAALocation,
       depth: site.depth,

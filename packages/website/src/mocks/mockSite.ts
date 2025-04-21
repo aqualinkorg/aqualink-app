@@ -56,7 +56,7 @@ export const mockSite: Site = {
     sstAnomaly: 1.2,
   },
   reefCheckSurveys: [],
-  reefCheckSite: null,
+  reefCheckSites: [],
   reefCheckData: null,
 };
 
