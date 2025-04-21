@@ -69,7 +69,7 @@
     "@braintree/sanitize-url": "^7.0.1",
     "@google-cloud/storage": "^6.11.0",
     "@googlemaps/google-maps-services-js": "^3.3.41",
-    "@nestjs/common": "^9.3.9",
+    "@nestjs/common": "^10.4.16",
     "@nestjs/core": "^9.3.9",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^10.4.14",
