@@ -16,6 +16,7 @@ import withStyles from '@mui/styles/withStyles';
 import ErrorIcon from '@mui/icons-material/Error';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLeaflet } from 'react-leaflet';
 import { TableRow as Row } from 'store/Homepage/types';
 import { constructTableData } from 'store/Sites/helpers';
 import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
@@ -28,6 +29,7 @@ import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { formatNumber } from 'helpers/numberUtils';
 import { alertColorFinder } from 'helpers/bleachingAlertIntervals';
 import { colors } from 'layout/App/theme';
+import { calculateAdjustedLng } from 'helpers/map';
 import { getComparator, Order, OrderKeys, stableSort } from './utils';
 import { Collection } from '../../Dashboard/collection';
 
@@ -128,6 +130,7 @@ const SiteTableBody = ({
     [collection, storedSites],
   );
   const siteOnMap = useSelector(siteOnMapSelector);
+  const { map } = useLeaflet();
   const [selectedRow, setSelectedRow] = useState<number>();
   const [page, setPage] = useState(0);
 
@@ -155,7 +158,14 @@ const SiteTableBody = ({
   const handleClick = (event: unknown, site: Row) => {
     setSelectedRow(site.tableData.id);
     dispatch(setSearchResult());
-    dispatch(setSiteOnMap(sitesList[site.tableData.id]));
+
+    // Get the target site and calculate adjusted longitude
+    const targetSite = sitesList[site.tableData.id]
+    if (!targetSite || targetSite.polygon.type !== 'Point') return;
+    const [lng] = targetSite.polygon.coordinates;
+    const adjustedLng = calculateAdjustedLng(map || null, lng);
+    dispatch(setSiteOnMap({ ...targetSite, displayLng: adjustedLng }));
+
     const mapElement = document.getElementById('sites-map');
     if (scrollPageOnSelection && mapElement) {
       mapElement.scrollIntoView({ block: 'center', behavior: 'smooth' });

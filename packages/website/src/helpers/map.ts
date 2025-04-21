@@ -210,3 +210,38 @@ export const useMarkerIcon = (
   if (hasSpotter || hasHobo) return sensorIcon;
   return buoyIcon(iconUrl);
 };
+
+/**
+ * Calculate the adjusted longitude for map display, handling wrap-around.
+ * Ensures the map flies to the closest longitude copy (-360, 0, +360) to the current view.
+ */
+export const calculateAdjustedLng = (map: L.Map | null, targetLng: number): number => {
+  if (!map) return targetLng;
+  const currentCenter = map.getCenter();
+  const mapLng = currentCenter.lng;
+  let adjustedLng = targetLng;
+
+  // Check if the difference requires wrapping around the date line
+  const lngDiff = Math.abs(mapLng - targetLng);
+  console.log('lngDiff', lngDiff);
+  if (lngDiff > 180) {
+    if (mapLng < 0 && targetLng > 0) {
+      // Map center is west, target is east: Choose targetLng - 360
+      adjustedLng = targetLng - 360;
+    } else if (mapLng > 0 && targetLng < 0) {
+      // Map center is east, target is west: Choose targetLng + 360
+      adjustedLng = targetLng + 360;
+    } else if (Math.abs(mapLng - (targetLng - 360)) < Math.abs(mapLng - (targetLng + 360))) {
+      // If map center/target have same sign OR one is 0, but diff > 180:
+      // Determine which offset copy (-360 or +360) is closer. Choose -360.
+      adjustedLng = targetLng - 360;
+    } else {
+      // If map center/target have same sign OR one is 0, but diff > 180:
+      // Determine which offset copy (-360 or +360) is closer. Choose +360.
+      adjustedLng = targetLng + 360;
+    }
+  }
+  // If lngDiff <= 180, adjustedLng remains targetLng (no wrapping needed)
+
+  return adjustedLng;
+};
