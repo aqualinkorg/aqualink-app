@@ -4,8 +4,8 @@ import {
   Index,
   JoinColumn,
   PrimaryColumn,
-  OneToOne,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
@@ -22,7 +22,7 @@ export class ReefCheckSite {
   siteId: number;
 
   @ApiProperty({ type: () => Site })
-  @OneToOne(() => Site)
+  @ManyToOne(() => Site)
   @JoinColumn({ name: 'site_id' })
   @Index()
   site: Site;

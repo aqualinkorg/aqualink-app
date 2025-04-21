@@ -15,7 +15,7 @@ import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 
 import {
@@ -47,6 +47,7 @@ const SiteNavBar = ({
 }: SiteNavBarProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const navigate = useNavigate();
   const user = useSelector(userInfoSelector);
   const sitesList = useSelector(sitesListSelector);
   const siteContactInfoLoading = useSelector(siteContactInfoLoadingSelector);
@@ -63,6 +64,13 @@ const SiteNavBar = ({
   const clearSiteInfo = () => {
     if (!hasDailyData) {
       dispatch(setSelectedSite(null));
+    }
+
+    // Go back if there's history, otherwise go to map
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/map');
     }
   };
 

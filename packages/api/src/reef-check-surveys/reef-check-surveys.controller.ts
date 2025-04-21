@@ -6,18 +6,16 @@ import { ApiNestNotFoundResponse } from '../docs/api-response';
 import { ReefCheckSurvey } from './reef-check-surveys.entity';
 
 @ApiTags('Reef Check Surveys')
-@Controller('reef-check-sites/:reefCheckSiteId/surveys')
+@Controller('reef-check-sites/:siteId/surveys')
 export class ReefCheckSurveysController {
   constructor(private surveysService: ReefCheckSurveysService) {}
 
   @ApiOperation({ summary: "Returns all reef check site's survey" })
-  @ApiParam({ name: 'reefCheckSiteId', example: '12345678-abcd-efgh-12345678' })
+  @ApiParam({ name: 'siteId', example: '4236' })
   @Public()
   @Get()
-  find(
-    @Param('reefCheckSiteId') reefCheckSiteId: string,
-  ): Promise<ReefCheckSurvey[]> {
-    return this.surveysService.find(reefCheckSiteId);
+  find(@Param('siteId') siteId: string): Promise<ReefCheckSurvey[]> {
+    return this.surveysService.find(siteId);
   }
 
   @ApiNestNotFoundResponse(
