@@ -1,4 +1,4 @@
-import { LatLng } from 'leaflet';
+import L, { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -62,6 +62,7 @@ const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
+  const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -114,6 +115,7 @@ const Homepage = ({ classes }: HomepageProps) => {
             md={showSiteTable ? 6 : 12}
           >
             <HomepageMap
+              onMapLoad={setMapInstance}
               setShowSiteTable={setShowSiteTable}
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
@@ -123,7 +125,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           {showSiteTable && (
             <Hidden mdDown>
               <Grid className={classes.siteTable} item md={6}>
-                <SiteTable />
+                <SiteTable map={mapInstance} />
               </Grid>
             </Hidden>
           )}
@@ -139,7 +141,7 @@ const Homepage = ({ classes }: HomepageProps) => {
               open={isDrawerOpen}
             >
               <div role="presentation" onClick={toggleDrawer}>
-                <SiteTable isDrawerOpen={isDrawerOpen} />
+                <SiteTable map={mapInstance} isDrawerOpen={isDrawerOpen} />
               </div>
             </SwipeableBottomSheet>
           </Hidden>

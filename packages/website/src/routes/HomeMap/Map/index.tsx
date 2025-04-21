@@ -61,6 +61,7 @@ const HomepageMap = ({
   legendBottom,
   legendLeft,
   classes,
+  onMapLoad,
 }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
@@ -72,6 +73,14 @@ const HomepageMap = ({
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<Map>(null);
+
+  useEffect(() => {
+    if (ref.current && onMapLoad) {
+      onMapLoad(ref.current.leafletElement);
+    }
+    // We only want this effect to run once when the ref is set, or when onMapLoad changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref.current, onMapLoad]);
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -313,6 +322,7 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  onMapLoad?: (map: L.Map) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
