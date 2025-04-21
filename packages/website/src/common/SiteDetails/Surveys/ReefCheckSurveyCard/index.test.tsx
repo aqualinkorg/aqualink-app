@@ -5,6 +5,7 @@ import { ReefCheckSurvey } from 'store/ReefCheckSurveys';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import theme from 'layout/App/theme';
+import { formatReefCheckSurveyDate } from 'routes/SiteRoutes/ReefCheckSurveys/ReefCheckSurveySummary';
 import { ReefCheckSurveyCard } from '.';
 
 describe('ReefCheckSurveyCard', () => {
@@ -24,7 +25,7 @@ describe('ReefCheckSurveyCard', () => {
     const { getByText } = renderReefCheckSurveyCard();
 
     expect(
-      getByText(`Date: ${new Date(mockReefCheckSurvey.date).toLocaleString()}`),
+      getByText(`Date: ${formatReefCheckSurveyDate(mockReefCheckSurvey.date)}`),
     ).toBeInTheDocument();
     expect(
       getByText(`Depth: ${mockReefCheckSurvey.depth}m`),
