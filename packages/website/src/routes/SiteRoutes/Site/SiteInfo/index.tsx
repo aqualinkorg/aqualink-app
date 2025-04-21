@@ -15,11 +15,10 @@ import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 
 import {
-  setSelectedSite,
   setSiteData,
   setSiteDraft,
   siteContactInfoLoadingSelector,
@@ -28,8 +27,8 @@ import {
 import { Site, SiteUpdateParams } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import {
-  setAdministeredSiteName,
   userInfoSelector,
+  setAdministeredSiteName,
 } from 'store/User/userSlice';
 import { sitesListSelector, setSiteName } from 'store/Sites/sitesListSlice';
 import { displayTimeInLocalTimezone } from 'helpers/dates';
@@ -39,7 +38,6 @@ import ExclusionDatesDialog from './ExclusionDatesDialog';
 import CollectionButton from './CollectionButton';
 
 const SiteNavBar = ({
-  hasDailyData,
   site,
   lastSurvey = null,
   isAdmin,
@@ -48,6 +46,7 @@ const SiteNavBar = ({
   const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector(userInfoSelector);
   const sitesList = useSelector(sitesListSelector);
   const siteContactInfoLoading = useSelector(siteContactInfoLoadingSelector);
@@ -62,12 +61,7 @@ const SiteNavBar = ({
     useState(false);
 
   const clearSiteInfo = () => {
-    if (!hasDailyData) {
-      dispatch(setSelectedSite(null));
-    }
-
-    // Go back if there's history, otherwise go to map
-    if (window.history.length > 1) {
+    if (location.key !== 'default') {
       navigate(-1);
     } else {
       navigate('/map');
@@ -182,7 +176,7 @@ const SiteNavBar = ({
                   edge="start"
                   color="primary"
                   aria-label="menu"
-                  component={Link}
+                  component={RouterLink}
                   to="/map"
                   size="large"
                 >
@@ -291,7 +285,7 @@ const SiteNavBar = ({
                     )}
                     <Grid item>
                       <Button
-                        component={Link}
+                        component={RouterLink}
                         to={`/sites/${site.id}/upload_data`}
                         className={classes.button}
                         color="primary"
@@ -333,7 +327,6 @@ const styles = () =>
   });
 
 interface SiteNavBarIncomingProps {
-  hasDailyData: boolean;
   site: Site;
   lastSurvey?: string | null;
   isAdmin: boolean;
