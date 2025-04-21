@@ -52,11 +52,15 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
       autoOpen
     ) {
       const { leafletElement: popup } = popupRef.current;
-      const [lng, lat] = siteOnMap.polygon.coordinates;
+      const [_lng, lat] = siteOnMap.polygon.coordinates; // Original lng not needed here
 
-      const point: LatLngTuple = [lat, lng];
-      popup.setLatLng(point).openOn(map);
+      // Use displayLng from state if available, fall back to original lng
+      const popupLng = siteOnMap.displayLng ?? _lng;
+
+      const targetPoint: LatLngTuple = [lat, popupLng];
+      popup.setLatLng(targetPoint).openOn(map);
     }
+    // No need for cleanup function or moveend listener anymore
   }, [autoOpen, map, site.id, siteOnMap]);
 
   return (

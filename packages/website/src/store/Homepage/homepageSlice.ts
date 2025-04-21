@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { HomePageState } from './types';
-import { Site, siteOptions } from '../Sites/types';
+import { HomePageState, SiteOnMap } from './types';
+import { siteOptions } from '../Sites/types';
 import type { RootState } from '../configure';
 
 const homepageInitialState: HomePageState = {
@@ -27,7 +27,7 @@ const homepageSlice = createSlice({
       ...state,
       searchResult: action.payload,
     }),
-    setSiteOnMap: (state, action: PayloadAction<Site>) => ({
+    setSiteOnMap: (state, action: PayloadAction<SiteOnMap>) => ({
       ...state,
       siteOnMap: action.payload,
     }),
