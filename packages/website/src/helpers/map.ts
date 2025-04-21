@@ -1,3 +1,4 @@
+/* eslint-disable fp/no-mutation */
 import { isEqual, mean, meanBy, minBy } from 'lodash';
 import L, { LatLng, LatLngBounds, Polygon as LeafletPolygon } from 'leaflet';
 import makeStyles from '@mui/styles/makeStyles';
