@@ -143,21 +143,24 @@ export const sitesFilterFn = (
   filter: typeof siteOptions[number],
   s?: Site | null,
 ) => {
+  if (!s) {
+    return false;
+  }
   switch (filter) {
     case 'All sites':
       return true;
     case 'Live streams':
-      return !!s?.videoStream;
+      return !!s.videoStream;
     case '3D Models':
-      return !!s?.sketchFab;
+      return !!s.sketchFab;
     case 'Active buoys':
       return hasDeployedSpotter(s);
     case 'HOBO loggers':
-      return s?.hasHobo;
+      return s.hasHobo;
     case 'Water quality':
-      return s?.waterQualitySources?.length;
+      return s.waterQualitySources?.length;
     case 'Reef Check':
-      return !!s?.reefCheckSite;
+      return !!(s.reefCheckSites && s.reefCheckSites.length > 0);
     default:
       console.error(`Unhandled Option: ${filter}`);
       // This will cause a TS error if there is an unhandled option
@@ -198,7 +201,7 @@ export const filterSiteBySensorData = (site: Site, { siteOptions: sensorDataType
       case 'waterQuality':
         return site.waterQualitySources?.length;
       case 'reefCheckSites':
-        return !!site.reefCheckSite;
+        return !!(site.reefCheckSites && site.reefCheckSites.length > 0);
       default:
         console.error(`Unhandled Option: ${option}`);
         // This will cause a TS error if there is an unhandled option
