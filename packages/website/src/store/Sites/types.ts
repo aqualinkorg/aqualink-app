@@ -294,7 +294,7 @@ export interface Site {
   iframe?: string | null;
   waterQualitySources?: string[];
   reefCheckSurveys: ReefCheckSurvey[];
-  reefCheckSite: ReefCheckSite | null;
+  reefCheckSites: ReefCheckSite[];
   reefCheckData: ReefCheckData | null;
 }
 

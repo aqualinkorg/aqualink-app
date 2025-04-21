@@ -129,9 +129,9 @@ export class Site {
   })
   admins: User[];
 
-  @ApiProperty()
-  @OneToOne(() => ReefCheckSite, (reefCheckSite) => reefCheckSite.site)
-  reefCheckSite: ReefCheckSite;
+  @ApiPropertyOptional({ type: () => [ReefCheckSite] })
+  @OneToMany(() => ReefCheckSite, (reefCheckSite) => reefCheckSite.site)
+  reefCheckSites: ReefCheckSite[];
 
   @ApiPropertyOptional()
   @OneToMany(() => Survey, (survey) => survey.site)
