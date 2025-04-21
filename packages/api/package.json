@@ -137,7 +137,7 @@
     "typeorm-seeding": "^1.6.1",
     "yargs": "^15.4.1"
   },
-  "optionalDependencies": {
+  "_optionalDependencies": {
     "netcdf4": "https://github.com/ovio-forks/netcdf4"
   }
 }
