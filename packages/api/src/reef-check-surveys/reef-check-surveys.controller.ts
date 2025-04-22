@@ -11,10 +11,10 @@ export class ReefCheckSurveysController {
   constructor(private surveysService: ReefCheckSurveysService) {}
 
   @ApiOperation({ summary: "Returns all reef check site's survey" })
-  @ApiParam({ name: 'siteId', example: '4236' })
+  @ApiParam({ name: 'siteId', example: 4236 })
   @Public()
   @Get()
-  find(@Param('siteId') siteId: string): Promise<ReefCheckSurvey[]> {
+  find(@Param('siteId') siteId: number): Promise<ReefCheckSurvey[]> {
     return this.surveysService.find(siteId);
   }
 
