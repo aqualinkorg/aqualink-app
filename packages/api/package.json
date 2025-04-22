@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -70,7 +70,7 @@
     "@google-cloud/storage": "^6.11.0",
     "@googlemaps/google-maps-services-js": "^3.3.41",
     "@nestjs/common": "11.0.16",
-    "@nestjs/core": "^9.3.9",
+    "@nestjs/core": "11.0.16",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^10.4.14",
     "@nestjs/schedule": "^3.0.3",
@@ -137,7 +137,7 @@
     "typeorm-seeding": "^1.6.1",
     "yargs": "^15.4.1"
   },
-  "optionalDependencies": {
+  "_optionalDependencies": {
     "netcdf4": "https://github.com/ovio-forks/netcdf4"
   }
 }
