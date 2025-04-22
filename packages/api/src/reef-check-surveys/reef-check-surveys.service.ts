@@ -13,9 +13,9 @@ export class ReefCheckSurveysService {
     private reefCheckSurveyRepository: Repository<ReefCheckSurvey>,
   ) {}
 
-  async find(reefCheckSiteId: string): Promise<ReefCheckSurvey[]> {
+  async find(siteId: number): Promise<ReefCheckSurvey[]> {
     return this.reefCheckSurveyRepository.find({
-      where: { reefCheckSiteId },
+      where: { siteId },
       relations: ['organisms', 'substrates', 'reefCheckSite'],
     });
   }
