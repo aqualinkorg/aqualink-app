@@ -183,10 +183,12 @@ const Site = ({ classes }: SiteProps) => {
 
   // Fetch reef check surveys
   useEffect(() => {
+    console.log('siteDetails', siteDetails?.reefCheckSites);
     if (siteDetails?.reefCheckSites && siteDetails.reefCheckSites.length > 0) {
-      dispatch(reefCheckSurveysRequest(siteDetails.id.toString()));
+      console.log('dispatching reef check surveys request');
+      dispatch(reefCheckSurveysRequest(siteDetails.id));
     }
-  }, [dispatch, siteDetails]);
+  }, [dispatch, siteDetails?.reefCheckSites, siteDetails?.id]);
 
   // Fetch time series data range for the site's closest survey point
   // once the survey points are successfully fetched

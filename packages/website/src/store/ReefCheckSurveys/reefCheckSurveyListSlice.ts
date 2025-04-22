@@ -12,9 +12,10 @@ const surveyListInitialState: ReefCheckSurveyListState = {
   loading: false,
 };
 
-const getSurveys = async (siteId: string) => {
+const getSurveys = async (siteId: number) => {
   try {
     const { data } = await getReefCheckSurveys(siteId);
+    console.log('data', data);
     return sortBy(data, 'date');
   } catch (err) {
     return Promise.reject(getAxiosErrorMessage(err));
@@ -23,9 +24,9 @@ const getSurveys = async (siteId: string) => {
 
 export const reefCheckSurveysRequest = createAsyncThunk<
   ReefCheckSurveyListState['list'],
-  string,
+  number,
   CreateAsyncThunkTypes
->('reefCheckSurveyList/request', (siteId: string) => getSurveys(siteId));
+>('reefCheckSurveyList/request', (siteId: number) => getSurveys(siteId));
 
 const reefCheckSurveyListSlice = createSlice({
   name: 'reefCheckSurveyList',
