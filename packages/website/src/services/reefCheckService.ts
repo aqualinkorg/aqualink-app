@@ -9,7 +9,7 @@ export const getReefCheckSurvey = async (siteId: string, id: string) =>
     method: 'GET',
   });
 
-export const getReefCheckSurveys = async (siteId: string) =>
+export const getReefCheckSurveys = async (siteId: number) =>
   requests.send<ReefCheckSurvey[]>({
     url: `reef-check-sites/${encodeURIComponent(siteId)}/surveys`,
     method: 'GET',
