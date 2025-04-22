@@ -15,7 +15,6 @@ const surveyListInitialState: ReefCheckSurveyListState = {
 const getSurveys = async (siteId: number) => {
   try {
     const { data } = await getReefCheckSurveys(siteId);
-    console.log('data', data);
     return sortBy(data, 'date');
   } catch (err) {
     return Promise.reject(getAxiosErrorMessage(err));
