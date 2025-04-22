@@ -183,9 +183,7 @@ const Site = ({ classes }: SiteProps) => {
 
   // Fetch reef check surveys
   useEffect(() => {
-    console.log('siteDetails', siteDetails?.reefCheckSites);
     if (siteDetails?.reefCheckSites && siteDetails.reefCheckSites.length > 0) {
-      console.log('dispatching reef check surveys request');
       dispatch(reefCheckSurveysRequest(siteDetails.id));
     }
   }, [dispatch, siteDetails?.reefCheckSites, siteDetails?.id]);
