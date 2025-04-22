@@ -24,7 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.59.7",
     "babel-eslint": "^10.1.0",
-    "cross-spawn": "^7.0.02",
+    "cross-spawn": "^7.0.6",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -74,5 +74,6 @@
   "bugs": {
     "url": "https://github.com/aqualinkorg/aqualink-app/issues"
   },
-  "homepage": "https://aqualink.org"
+  "homepage": "https://aqualink.org",
+  "packageManager": "yarn@4.9.1"
 }

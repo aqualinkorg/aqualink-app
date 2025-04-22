@@ -17,6 +17,7 @@ WORKDIR /app
 COPY ["package.json", "yarn.lock", "./"]
 
 RUN yarn install --production
+RUN yarn install netcdf4
 
 COPY . .
 

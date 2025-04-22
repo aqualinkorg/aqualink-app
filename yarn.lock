@@ -11668,7 +11668,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@^7.0.02, cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.5
   resolution: "cross-spawn@npm:7.0.5"
   dependencies:
@@ -11679,7 +11679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.5":
+"cross-spawn@npm:^7.0.5, cross-spawn@npm:^7.0.6":
   version: 7.0.6
   resolution: "cross-spawn@npm:7.0.6"
   dependencies:
@@ -25492,7 +25492,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^5.5.0"
     "@typescript-eslint/parser": "npm:^5.59.7"
     babel-eslint: "npm:^10.1.0"
-    cross-spawn: ^7.0.02
+    cross-spawn: "npm:^7.0.6"
     eslint: "npm:^7.32.0"
     eslint-config-airbnb: "npm:^18.1.0"
     eslint-config-prettier: "npm:^6.11.0"
