@@ -58,7 +58,7 @@ jobs:
         id: install
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
-          yarn install --immutable
+          yarn install
 
       - name: Run API lint
         if: success() || steps.install.conclusion == 'skipped'
