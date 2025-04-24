@@ -58,14 +58,15 @@ interface ChipProps {
   image?: string | null;
   width?: number;
   onClick?: () => void;
+  state?: any;
 }
 
 const LinkWrapper: FC<
-  Pick<ChipProps, 'to' | 'href'> & {
+  Pick<ChipProps, 'to' | 'href' | 'state'> & {
     className?: string;
     children?: React.ReactNode;
   }
-> = ({ to, href, className, children }) => {
+> = ({ to, href, className, children, state }) => {
   const url = to || href;
 
   return url ? (
@@ -74,6 +75,7 @@ const LinkWrapper: FC<
       target={href ? '_blank' : undefined}
       className={className}
       rel="noopener noreferrer"
+      state={state}
     >
       {children}
     </Link>
@@ -91,13 +93,19 @@ const Chip = ({
   liveText = 'LIVE',
   width,
   onClick,
+  state,
 }: ChipProps) => {
   const classes = useStyles({ width });
   return (
     <Grid className={classes.chip} item>
       <Grid container alignItems="center" justifyContent="center">
         <Button className={classes.button} onClick={onClick}>
-          <LinkWrapper to={to} href={href} className={classes.link}>
+          <LinkWrapper
+            to={to}
+            href={href}
+            className={classes.link}
+            state={state}
+          >
             {live ? (
               <>
                 <div className={classes.circle} />
