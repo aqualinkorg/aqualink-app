@@ -7,6 +7,9 @@
  */
 
 import { Hono } from 'hono';
+import { Site } from './store/Sites/types';
+import { SurveyListItem } from './store/Survey/types';
+import { sortByDate } from './helpers/dates';
 
 const metadata: Record<string, any> = {
   about: {
@@ -24,6 +27,11 @@ const metadata: Record<string, any> = {
     title: 'Aqualink Drone | An Autonomous Surface Vehicle',
     description:
       "Explore Aqualink's underwater drone technology for ocean conservation, monitoring marine ecosystems to help protect and preserve our oceans.",
+  },
+  map: {
+    title: 'Aqualink Map | Explore Ocean Monitoring Sites Worldwide',
+    description:
+      "Explore Aqualink's global network of ocean monitoring sites. View real-time data on ocean temperatures, marine ecosystems and coral reefs worldwide.",
   },
 };
 
@@ -49,15 +57,71 @@ app.get('*', async (c) => {
   const index = await c.env.ASSETS.fetch(new URL('/', origin).toString());
   const indexHtml = await index.text();
 
-  if (firstSegment === 'sites') {
-    const res = await fetch(
-      `https://ocean-systems.uc.r.appspot.com/api/sites/${id}`,
-    );
-    const site = (await res.json()) as any;
-    const { name } = site;
+  if (firstSegment === 'sites' && id) {
+    try {
+      // Revert to direct fetch with specific base URL for worker environment
+      const res = await fetch(
+        `https://ocean-systems.uc.r.appspot.com/api/sites/${id}`,
+      );
+      if (!res.ok) {
+        throw new Error(`Failed to fetch site: ${res.statusText}`);
+      }
+      const site = (await res.json()) as Site;
+      const { name } = site;
+      let featuredImageUrl: string | null | undefined = null;
+      let surveys: SurveyListItem[] = [];
 
-    // eslint-disable-next-line fp/no-mutation
-    title = `Aqualink Site ${name}`;
+      if (name) {
+        // eslint-disable-next-line fp/no-mutation
+        title = `Aqualink Site - ${name}`;
+      }
+
+      // Try fetching surveys separately
+      try {
+        const resSurveys = await fetch(
+          `https://ocean-systems.uc.r.appspot.com/api/sites/${id}/surveys`,
+        );
+        if (resSurveys.ok) {
+          surveys = (await resSurveys.json()) as SurveyListItem[];
+        } else {
+          console.error(
+            `Failed to fetch surveys for site ${id}: ${resSurveys.statusText}`,
+          );
+        }
+      } catch (surveyError) {
+        console.error(`Error fetching surveys for site ${id}:`, surveyError);
+        // Proceed without survey data if fetch fails
+      }
+
+      if (surveys.length > 0) {
+        const sortedSurveys = sortByDate(surveys, 'diveDate', 'desc');
+        const featuredSurvey = sortedSurveys.find(
+          (survey) => survey.featuredSurveyMedia?.type === 'image',
+        );
+        featuredImageUrl =
+          featuredSurvey?.featuredSurveyMedia?.thumbnailUrl ||
+          featuredSurvey?.featuredSurveyMedia?.url;
+      }
+
+      const imageMeta = featuredImageUrl
+        ? `<meta property="og:image" content="${featuredImageUrl}" />`
+        : '';
+
+      const descriptionMeta =
+        metadata[firstSegment]?.description || 'Ocean Monitoring';
+      const meta = `
+<title>${title}</title>
+<meta name="description" content="${descriptionMeta}" />
+<meta property="og:title" content="${title}" />
+<meta property="og:description" content="${descriptionMeta}" />
+${imageMeta} 
+`;
+
+      const html = indexHtml.replace('<!-- server rendered meta -->', meta);
+      return c.html(html);
+    } catch (error) {
+      console.error(`Failed to fetch site ${id}:`, error);
+    }
   }
 
   const meta = `
