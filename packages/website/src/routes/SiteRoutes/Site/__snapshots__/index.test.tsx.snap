@@ -1291,10 +1291,8 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               <mock-iconbutton
                 aria-label="menu"
                 color="primary"
-                component="[object Object]"
                 edge="start"
                 size="large"
-                to="/map"
               >
                 <svg
                   aria-hidden="true"
@@ -4383,10 +4381,8 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               <mock-iconbutton
                 aria-label="menu"
                 color="primary"
-                component="[object Object]"
                 edge="start"
                 size="large"
-                to="/map"
               >
                 <svg
                   aria-hidden="true"
