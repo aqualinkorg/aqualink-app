@@ -417,6 +417,14 @@ export class SitesService {
     const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
     const spotterLatest = await sofarLatest({ sensorId, token: sofarToken });
 
+    if (!spotterLatest) {
+      return {
+        isDeployed: false,
+        timestamp: undefined,
+        position: undefined,
+      };
+    }
+
     const lastTrack =
       spotterLatest.track &&
       spotterLatest.track.length &&

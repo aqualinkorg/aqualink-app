@@ -78,17 +78,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
     </div>
     <div
       class="slick-slider MediaDetails-carousel-3 slick-initialized"
-      dir="ltr"
     >
-      <button
-        class="slick-arrow slick-prev"
-        data-role="none"
-        style="display: block;"
-        type="button"
-      >
-         
-        Previous
-      </button>
       <div
         class="slick-list"
       >
@@ -96,70 +86,6 @@ exports[`Terms page should render with given state from Redux store 1`] = `
           class="slick-track"
           style="opacity: 1; transform: translate3d(0px, 0px, 0px);"
         >
-          <div
-            aria-hidden="true"
-            class="slick-slide slick-cloned"
-            data-index="-1"
-            style="width: 0px;"
-            tabindex="-1"
-          >
-            <div>
-              <mock-card
-                classname="SliderCard-shadowBox-10"
-                elevation="3"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container SliderCard-fullHeight-12 css-1dphqhe-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 SliderCard-imageWrapper-13 css-r9w7kf-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiCardMedia-root SliderCard-cardImage-14 css-utntyq-MuiCardMedia-root"
-                      role="img"
-                      style="background-image: url(image-url);"
-                    />
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 SliderCard-mediaInfoWrapper-15 css-xwivmn-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-grid-xs-10 css-ea6zgh-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
-                      >
-                        <mock-typography
-                          variant="h6"
-                        >
-                          IMAGE OBSERVATION
-                        </mock-typography>
-                        <mock-typography
-                          variant="subtitle1"
-                        >
-                          Appears healthy
-                        </mock-typography>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
-                      >
-                        <mock-typography
-                          variant="h6"
-                        >
-                          IMAGE COMMENTS
-                        </mock-typography>
-                        <mock-typography
-                          variant="subtitle1"
-                        >
-                          comment 2222
-                        </mock-typography>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </mock-card>
-            </div>
-          </div>
           <div
             aria-hidden="false"
             class="slick-slide slick-active slick-current"
@@ -224,93 +150,8 @@ exports[`Terms page should render with given state from Redux store 1`] = `
               </mock-card>
             </div>
           </div>
-          <div
-            aria-hidden="true"
-            class="slick-slide slick-cloned"
-            data-index="1"
-            style="width: 0px;"
-            tabindex="-1"
-          >
-            <div>
-              <mock-card
-                classname="SliderCard-shadowBox-10"
-                elevation="3"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container SliderCard-fullHeight-12 css-1dphqhe-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 SliderCard-imageWrapper-13 css-r9w7kf-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiCardMedia-root SliderCard-cardImage-14 css-utntyq-MuiCardMedia-root"
-                      role="img"
-                      style="background-image: url(image-url);"
-                    />
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 SliderCard-mediaInfoWrapper-15 css-xwivmn-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-grid-xs-10 css-ea6zgh-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
-                      >
-                        <mock-typography
-                          variant="h6"
-                        >
-                          IMAGE OBSERVATION
-                        </mock-typography>
-                        <mock-typography
-                          variant="subtitle1"
-                        >
-                          Appears healthy
-                        </mock-typography>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
-                      >
-                        <mock-typography
-                          variant="h6"
-                        >
-                          IMAGE COMMENTS
-                        </mock-typography>
-                        <mock-typography
-                          variant="subtitle1"
-                        >
-                          comment 2222
-                        </mock-typography>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </mock-card>
-            </div>
-          </div>
         </div>
       </div>
-      <button
-        class="slick-arrow slick-next"
-        data-role="none"
-        style="display: block;"
-        type="button"
-      >
-         
-        Next
-      </button>
-      <ul
-        class="slick-dots"
-        style="display: block;"
-      >
-        <li
-          class="slick-active"
-        >
-          <button>
-            1
-          </button>
-        </li>
-      </ul>
     </div>
   </div>
 </div>
