@@ -185,7 +185,7 @@ const SelectedSiteCardContent = ({
                     )}
                     <Grid item>
                       <Button
-                        className={classes.exporeButton}
+                        className={classes.exploreButton}
                         component={Link}
                         to={`/sites/${site.id}`}
                         state={{ from: location.pathname }}
@@ -410,7 +410,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   mobileChartLoading: {
     margin: 'auto',
   },
-  exporeButton: {
+  exploreButton: {
     '&:hover': {
       color: 'white',
     },
