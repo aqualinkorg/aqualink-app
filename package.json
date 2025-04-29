@@ -74,5 +74,8 @@
   "bugs": {
     "url": "https://github.com/aqualinkorg/aqualink-app/issues"
   },
-  "homepage": "https://aqualink.org"
+  "homepage": "https://aqualink.org",
+  "volta": {
+    "node": "18.20.8"
+  }
 }

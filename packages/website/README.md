@@ -1,6 +1,6 @@
 # Aqualink - Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template, but now is migrated to rsbuild.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template, but now is migrated to [rsbuild](https://rsbuild.dev/).
 
 - **Styling & UI Library** Use [Material UI](https://material-ui.com/). Note that to use the [styles API](https://material-ui.com/styles/basics/) you can `import @material-ui/core/styles`. We prefer the Hooks styles API.
 - **Routing** Uses [React Router](https://reacttraining.com/react-router/web/guides/quick-start).
@@ -61,6 +61,9 @@ Runs the app in development mode and scans the application for performance issue
 
 ## Server render with Cloudflare worker
 
-We use Cloudflare Worker to server render site's meta in header tags for SEO purposes. The site is still running as a single-page-application(SPA), but with specific urls, Cloudflare Worker will return with meta header.
+We use Cloudflare Worker to server render site's meta in header tags for SEO purposes, but the site is still running as a single-page-application(SPA). This is how it works:
+
+- On first page load, Cloudflare Worker will return all static assets, with meta header injected;
+- On user's subsequent navigation, site will behave as regular SPA. 
 
 To test server render, run `yarn start:worker`. You do need to run `yarn build` first to have static assets ready to be used by worker.
