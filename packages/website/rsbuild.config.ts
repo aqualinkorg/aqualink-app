@@ -18,7 +18,7 @@ export default defineConfig((env) => ({
     distPath: {
       root: 'build',
     },
-    sourceMap: false,
+    sourceMap: env.envMode === 'development',
   },
   source: {
     define: {
