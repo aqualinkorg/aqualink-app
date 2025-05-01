@@ -71,11 +71,7 @@ const SiteNavBar = ({
     const previousPath = location.state?.from;
     // Default to '/map' if no state or state.from is not a valid page
     const targetPath =
-      previousPath &&
-      !previousPath.startsWith('/sites/') &&
-      (previousPath.startsWith('/dashboard') ||
-        previousPath.startsWith('/collections/') ||
-        previousPath === '/map')
+      previousPath && !previousPath.startsWith('/sites/')
         ? previousPath
         : '/map';
 
