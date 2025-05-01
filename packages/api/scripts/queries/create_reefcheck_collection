@@ -1,3 +1,8 @@
+-- This script creates a new Reef Check collection for a given country and user.
+-- It first finds all unique sites with Reef Check data for the given country,
+-- then creates a new collection with the given name and user as the admin.
+-- Finally, it adds the sites to the collection and sets the user as admin for these sites.
+--
 -- Start a transaction to ensure all changes are atomic
 BEGIN;
 
