@@ -30,7 +30,7 @@ export function createAndSaveCompactFile(worldMap: number[][]) {
       buffer.push(byte);
     }
   }
-  fs.writeFileSync(AVAILABILITY_FILE, Buffer.from(buffer));
+  fs.writeFileSync(AVAILABILITY_FILE, new Uint8Array(buffer));
 }
 
 export function getAvailabilityMapFromFile() {
