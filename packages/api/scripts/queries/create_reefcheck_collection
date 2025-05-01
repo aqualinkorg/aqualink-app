@@ -1,0 +1,86 @@
+-- Start a transaction to ensure all changes are atomic
+BEGIN;
+
+-- Use SQL variables instead
+DO $$
+DECLARE
+    v_user_email VARCHAR := 'replaceMe@reefcheck.org.my';
+    v_country VARCHAR := 'Malaysia';
+    v_collection_name VARCHAR := 'Reef Check Malaysia';
+    v_user_id INT;
+    v_collection_id INT;
+    v_site_count INT;
+BEGIN
+    -- Get the user ID
+    SELECT id INTO v_user_id FROM "users" WHERE email = v_user_email;
+    
+    IF v_user_id IS NULL THEN
+        RAISE EXCEPTION 'User with email % not found', v_user_email;
+    END IF;
+    
+    -- Step 2: Find all UNIQUE sites with ReefCheck data for Malaysia
+    -- Create a temp table to hold the site IDs
+    CREATE TEMP TABLE reef_check_sites AS
+    SELECT DISTINCT site_id
+    FROM reef_check_site
+    WHERE country = v_country;
+
+    SELECT COUNT(*) INTO v_site_count FROM reef_check_sites;
+    
+    IF v_site_count = 0 THEN
+        RAISE EXCEPTION 'No Reef Check sites found for country: %', v_country;
+    END IF;
+    
+    RAISE NOTICE 'Found % unique sites with Reef Check data for %', v_site_count, v_country;
+    
+    -- Step 3: Create or find the collection
+    SELECT id INTO v_collection_id FROM collection WHERE name = v_collection_name;
+    
+    IF v_collection_id IS NULL THEN
+        -- Create a new collection
+        INSERT INTO collection (name, "is_public", "user_id")
+        VALUES (v_collection_name, TRUE, v_user_id)
+        RETURNING id INTO v_collection_id;
+        
+        RAISE NOTICE 'Created new collection with ID %', v_collection_id;
+    ELSE
+        RAISE NOTICE 'Found existing collection with ID %', v_collection_id;
+    END IF;
+    
+    -- Step 4: Add the sites to the collection
+    INSERT INTO collection_sites_site ("collection_id", "site_id")
+    SELECT v_collection_id, site_id
+    FROM reef_check_sites
+    WHERE NOT EXISTS (
+        SELECT 1 FROM collection_sites_site 
+        WHERE "collection_id" = v_collection_id AND "site_id" = reef_check_sites.site_id
+    );
+    
+    RAISE NOTICE 'Added % sites to the collection', 
+        (SELECT COUNT(*) FROM collection_sites_site WHERE "collection_id" = v_collection_id);
+    
+    -- Step 5: Set the user as admin for these sites
+    -- First, identify sites that need the user added as admin
+    CREATE TEMP TABLE sites_needing_admin AS
+    SELECT site_id
+    FROM reef_check_sites
+    WHERE NOT EXISTS (
+        SELECT 1 FROM users_administered_sites_site 
+        WHERE "site_id" = reef_check_sites.site_id AND "users_id" = v_user_id
+    );
+    
+    -- Then add the admin relationship
+    INSERT INTO users_administered_sites_site ("site_id", "users_id")
+    SELECT site_id, v_user_id
+    FROM sites_needing_admin;
+    
+    RAISE NOTICE 'Added user as admin to % sites', 
+        (SELECT COUNT(*) FROM sites_needing_admin);
+    
+    -- Cleanup
+    DROP TABLE reef_check_sites;
+    DROP TABLE sites_needing_admin;
+END $$;
+
+-- Commit the transaction
+COMMIT;
