@@ -67,6 +67,7 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn install
+          yarn add eslint
 
       - name: Run API lint
         if: success() || steps.install.conclusion == 'skipped'
