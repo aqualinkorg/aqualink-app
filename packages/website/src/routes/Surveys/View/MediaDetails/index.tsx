@@ -61,8 +61,17 @@ const MediaDetails = ({ siteId, point, classes }: MediaDetailsProps) => {
     }
   };
 
+  const mediaCount = point.surveyMedia.length;
   const images = getNumberOfImages(point.surveyMedia);
   const videos = getNumberOfVideos(point.surveyMedia);
+
+  // Dynamically adjust slider settings based on slide count
+  const dynamicCarouselSettings = {
+    ...carouselSettings,
+    infinite: mediaCount > carouselSettings.slidesToShow, // Disable infinite loop if only one slide shown
+    // Optional: also disable dots if only one slide
+    // dots: mediaCount > carouselSettings.slidesToShow,
+  };
 
   return (
     <div key={point.name}>
@@ -84,7 +93,7 @@ const MediaDetails = ({ siteId, point, classes }: MediaDetailsProps) => {
       </Grid>
       <Slider
         className={classes.carousel}
-        {...carouselSettings}
+        {...dynamicCarouselSettings} // Use dynamic settings
         beforeChange={() => setEditing(false)}
       >
         {point.surveyMedia.map((media) => (

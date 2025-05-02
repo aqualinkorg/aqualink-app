@@ -12,7 +12,7 @@ import {
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Popup as LeafletPopup, useLeaflet } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
@@ -30,6 +30,7 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
   const { map } = useLeaflet();
   const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
+  const location = useLocation();
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
 
@@ -142,6 +143,7 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
                 to={`/sites/${site.id}`}
+                state={{ from: location.pathname }}
               >
                 <Button
                   onClick={onExploreButtonClick}

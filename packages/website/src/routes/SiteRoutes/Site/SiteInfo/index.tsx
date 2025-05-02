@@ -61,11 +61,15 @@ const SiteNavBar = ({
     useState(false);
 
   const clearSiteInfo = () => {
-    if (location.key !== 'default') {
-      navigate(-1);
-    } else {
-      navigate('/map');
-    }
+    // Determine the target path based on location state
+    const previousPath = location.state?.from;
+    // Default to '/map' if no state or state.from is not a valid page
+    const targetPath =
+      previousPath && !previousPath.startsWith('/sites/')
+        ? previousPath
+        : '/map';
+
+    navigate(targetPath);
   };
 
   const onCloseForm = () => {
