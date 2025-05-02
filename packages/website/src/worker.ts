@@ -82,6 +82,7 @@ app.get('*', async (c) => {
           `https://ocean-systems.uc.r.appspot.com/api/sites/${id}/surveys`,
         );
         if (resSurveys.ok) {
+          // eslint-disable-next-line fp/no-mutation
           surveys = (await resSurveys.json()) as SurveyListItem[];
         } else {
           console.error(
@@ -98,6 +99,7 @@ app.get('*', async (c) => {
         const featuredSurvey = sortedSurveys.find(
           (survey) => survey.featuredSurveyMedia?.type === 'image',
         );
+        // eslint-disable-next-line fp/no-mutation
         featuredImageUrl =
           featuredSurvey?.featuredSurveyMedia?.thumbnailUrl ||
           featuredSurvey?.featuredSurveyMedia?.url;

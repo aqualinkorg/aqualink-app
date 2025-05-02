@@ -47,10 +47,6 @@ jobs:
           corepack enable
           corepack prepare yarn@stable --activate
 
-      - name: Set Yarn version
-        run: |
-          yarn --version  # Verify the version
-
       - uses: actions/cache@v4
         id: yarn-cache
         with:
@@ -67,7 +63,6 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn install
-          yarn add eslint
 
       - name: Run API lint
         if: success() || steps.install.conclusion == 'skipped'
