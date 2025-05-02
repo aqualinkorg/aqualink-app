@@ -15,7 +15,7 @@ import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 
 import {
@@ -48,6 +48,7 @@ const SiteNavBar = ({
   const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector(userInfoSelector);
   const sitesList = useSelector(sitesListSelector);
   const siteContactInfoLoading = useSelector(siteContactInfoLoadingSelector);
@@ -66,12 +67,15 @@ const SiteNavBar = ({
       dispatch(setSelectedSite(null));
     }
 
-    // Go back if there's history, otherwise go to map
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate('/map');
-    }
+    // Determine the target path based on location state
+    const previousPath = location.state?.from;
+    // Default to '/map' if no state or state.from is not a valid page
+    const targetPath =
+      previousPath && !previousPath.startsWith('/sites/')
+        ? previousPath
+        : '/map';
+
+    navigate(targetPath);
   };
 
   const onCloseForm = () => {
@@ -182,8 +186,6 @@ const SiteNavBar = ({
                   edge="start"
                   color="primary"
                   aria-label="menu"
-                  component={Link}
-                  to="/map"
                   size="large"
                 >
                   <ArrowBack />
