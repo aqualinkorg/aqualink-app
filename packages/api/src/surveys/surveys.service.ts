@@ -76,7 +76,7 @@ export class SurveysService {
       );
     }
     const url = await this.googleCloudService.uploadBuffer(
-      file.buffer,
+      new Uint8Array(file.buffer),
       file.originalname,
       'image',
       GoogleCloudDir.SURVEYS,
@@ -86,9 +86,12 @@ export class SurveysService {
     // Upload resized
     const type = validateMimetype(file.mimetype);
     if (type !== 'image') return { url };
-    const imageData = await getImageData(file.buffer);
+    const imageData = await getImageData(new Uint8Array(file.buffer));
     if ((imageData.width || 0) <= this.surveyImageResizeWidth) return { url };
-    const resizedImage = await resize(file.buffer, this.surveyImageResizeWidth);
+    const resizedImage = await resize(
+      new Uint8Array(file.buffer),
+      this.surveyImageResizeWidth,
+    );
 
     const { bucket, destination } = getThumbnailBucketAndDestination(url);
     const thumbnailUrl =
