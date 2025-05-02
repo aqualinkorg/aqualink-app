@@ -1285,6 +1285,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               <mock-iconbutton
                 aria-label="menu"
                 color="primary"
+                component="[object Object]"
                 edge="start"
                 size="large"
               >
@@ -4217,6 +4218,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               <mock-iconbutton
                 aria-label="menu"
                 color="primary"
+                component="[object Object]"
                 edge="start"
                 size="large"
               >
