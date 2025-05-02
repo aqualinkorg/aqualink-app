@@ -181,7 +181,6 @@ const SiteNavBar = ({
                   color="primary"
                   aria-label="menu"
                   component={RouterLink}
-                  to="/map"
                   size="large"
                 >
                   <ArrowBack />
