@@ -10,7 +10,7 @@ BEGIN;
 DO $$
 DECLARE
     v_user_email VARCHAR := 'replaceMe@reefcheck.org.my';
-    v_country VARCHAR := 'Malaysia';
+    v_country_or_region VARCHAR := 'Malaysia';
     v_collection_name VARCHAR := 'Reef Check Malaysia';
     v_user_id INT;
     v_collection_id INT;
@@ -28,15 +28,16 @@ BEGIN
     CREATE TEMP TABLE reef_check_sites AS
     SELECT DISTINCT site_id
     FROM reef_check_site
-    WHERE country = v_country;
+    WHERE country = v_country_or_region
+    OR region = v_country_or_region;
 
     SELECT COUNT(*) INTO v_site_count FROM reef_check_sites;
     
     IF v_site_count = 0 THEN
-        RAISE EXCEPTION 'No Reef Check sites found for country: %', v_country;
+        RAISE EXCEPTION 'No Reef Check sites found for country: %', v_country_or_region;
     END IF;
     
-    RAISE NOTICE 'Found % unique sites with Reef Check data for %', v_site_count, v_country;
+    RAISE NOTICE 'Found % unique sites with Reef Check data for %', v_site_count, v_country_or_region;
     
     -- Step 3: Create or find the collection
     SELECT id INTO v_collection_id FROM collection WHERE name = v_collection_name;
