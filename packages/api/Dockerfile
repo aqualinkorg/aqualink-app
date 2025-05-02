@@ -18,6 +18,9 @@ COPY ["package.json", "yarn.lock", "./"]
 
 RUN yarn install --production
 
+RUN yarn add yargs
+RUN yarn add netcdf4
+
 COPY . .
 
 CMD [ "yarn", "start" ]
