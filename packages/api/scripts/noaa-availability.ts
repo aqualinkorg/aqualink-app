@@ -66,7 +66,7 @@ async function getAvailabilityMapFromNetCDF4() {
   const response = await axios.get(FILE_URL, {
     responseType: 'arraybuffer',
   });
-  const buff = Buffer.from(response.data);
+  const buff = new Uint8Array(response.data);
   fs.writeFileSync(tempFileName, buff);
 
   const netcdfData = new netcdf4.File(tempFileName, 'r');

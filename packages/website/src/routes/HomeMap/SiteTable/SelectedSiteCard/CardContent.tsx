@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { isNumber } from 'lodash';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Site } from 'store/Sites/types';
@@ -35,6 +35,7 @@ const SelectedSiteCardContent = ({
 }: SelectedSiteCardContentProps) => {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
+  const location = useLocation();
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const {
     bottomTemperature,
@@ -125,7 +126,10 @@ const SelectedSiteCardContent = ({
               height="100%"
             >
               {site && imageUrl && (
-                <Link to={`/sites/${site.id}`}>
+                <Link
+                  to={`/sites/${site.id}`}
+                  state={{ from: location.pathname }}
+                >
                   <CardMedia
                     className={classNames(
                       classes.cardImage,
@@ -175,14 +179,16 @@ const SelectedSiteCardContent = ({
                         live
                         liveText="LIVE VIDEO"
                         to={`/sites/${site.id}`}
+                        state={{ from: location.pathname }}
                         width={80}
                       />
                     )}
                     <Grid item>
                       <Button
-                        className={classes.exporeButton}
+                        className={classes.exploreButton}
                         component={Link}
                         to={`/sites/${site.id}`}
+                        state={{ from: location.pathname }}
                         onClick={onExploreButtonClick}
                         size="small"
                         variant="contained"
@@ -229,6 +235,7 @@ const SelectedSiteCardContent = ({
                     live
                     liveText="LIVE VIDEO"
                     to={`/sites/${site.id}`}
+                    state={{ from: location.pathname }}
                     width={80}
                   />
                 )}
@@ -403,7 +410,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   mobileChartLoading: {
     margin: 'auto',
   },
-  exporeButton: {
+  exploreButton: {
     '&:hover': {
       color: 'white',
     },
