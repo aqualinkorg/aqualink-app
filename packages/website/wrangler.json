@@ -1,10 +1,15 @@
 {
-    "$schema": "node_modules/wrangler/config-schema.json",
-    "name": "aqualink",
-    "main": "src/worker.ts",
-    "compatibility_date": "2025-02-14",
-    "assets": {
-        "directory": "./build/",
-        "binding": "ASSETS"
-    }
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aqualink",
+  "main": "src/worker.ts",
+  "compatibility_date": "2025-02-14",
+  "vars": {
+    "NODE_VERSION": "18",
+    "REACT_APP_API_BASE_URL": "https://ocean-systems.uc.r.appspot.com/api",
+    "SKIP_DEPENDENCY_INSTALL": 1
+  },
+  "assets": {
+    "directory": "./build/",
+    "binding": "ASSETS"
+  }
 }
