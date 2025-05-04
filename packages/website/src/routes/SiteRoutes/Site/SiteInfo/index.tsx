@@ -19,6 +19,7 @@ import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 
 import {
+  setSelectedSite,
   setSiteData,
   setSiteDraft,
   siteContactInfoLoadingSelector,
@@ -37,12 +38,13 @@ import EditForm from './EditForm';
 import ExclusionDatesDialog from './ExclusionDatesDialog';
 import CollectionButton from './CollectionButton';
 
-const SiteNavBar = ({
+const SiteInfo = ({
+  hasDailyData,
   site,
   lastSurvey = null,
   isAdmin,
   classes,
-}: SiteNavBarProps) => {
+}: SiteInfoProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -61,6 +63,10 @@ const SiteNavBar = ({
     useState(false);
 
   const clearSiteInfo = () => {
+    if (!hasDailyData) {
+      dispatch(setSelectedSite(null));
+    }
+
     // Determine the target path based on location state
     const previousPath = location.state?.from;
     // Default to '/map' if no state or state.from is not a valid page
@@ -328,12 +334,13 @@ const styles = () =>
     },
   });
 
-interface SiteNavBarIncomingProps {
+interface SiteInfoIncomingProps {
+  hasDailyData: boolean;
   site: Site;
   lastSurvey?: string | null;
   isAdmin: boolean;
 }
 
-type SiteNavBarProps = SiteNavBarIncomingProps & WithStyles<typeof styles>;
+type SiteInfoProps = SiteInfoIncomingProps & WithStyles<typeof styles>;
 
-export default withStyles(styles)(SiteNavBar);
+export default withStyles(styles)(SiteInfo);

@@ -4,11 +4,11 @@ import configureStore from 'redux-mock-store';
 import { mockSite } from 'mocks/mockSite';
 import { mockUser } from 'mocks/mockUser';
 import { renderWithProviders } from 'utils/test-utils';
-import SiteNavBar from '.';
+import SiteInfo from '.';
 
 const mockStore = configureStore([]);
 
-describe('SiteNavBar', () => {
+describe('SiteInfo', () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -27,8 +27,7 @@ describe('SiteNavBar', () => {
     store.dispatch = vi.fn();
 
     element = renderWithProviders(
-      <SiteNavBar
-        hasDailyData
+      <SiteInfo
         site={mockSite}
         isAdmin
         lastSurvey="2020-09-10T10:27:00.000Z"
