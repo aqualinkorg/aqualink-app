@@ -12,8 +12,8 @@
     "deploy:prod": "dotenv -e .env.prod yarn build && yarn run firebase deploy --only hosting:prod-target",
     "deploy:staging": "dotenv -e .env.staging yarn build && yarn run firebase deploy --only hosting:staging-target",
     "deploy:programize": "dotenv -e .env.programize yarn build && yarn run firebase deploy --only hosting:programize-target",
-    "start:worker": "wrangler dev",
-    "deploy:worker": "wrangler deploy"
+    "start:worker": "rsbuild build && wrangler dev",
+    "deploy:worker": "rsbuild build && wrangler deploy"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.0.1",

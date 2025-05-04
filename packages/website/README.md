@@ -66,4 +66,4 @@ We use Cloudflare Worker to server render site's meta in header tags for SEO pur
 - On first page load, Cloudflare Worker will return all static assets, with meta header injected;
 - On user's subsequent navigation, site will behave as regular SPA. 
 
-To test server render, run `yarn start:worker`. You do need to run `yarn build` first to have static assets ready to be used by worker.
+To test server render, run `yarn start:worker`. This will also run `yarn build` first to have static assets ready to be used by worker.
