@@ -139,9 +139,6 @@
     "typeorm-seeding": "^1.6.1",
     "yargs": "^17.7.2"
   },
-  "resolutions": {
-    "sharp/tar-fs": "^3.0.7"
-  },
   "_optionalDependencies": {
     "netcdf4": "https://github.com/ovio-forks/netcdf4"
   }
