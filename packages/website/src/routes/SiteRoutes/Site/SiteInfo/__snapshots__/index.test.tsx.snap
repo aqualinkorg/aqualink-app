@@ -76,7 +76,6 @@ exports[`SiteNavBar > should render with given state from Redux store 1`] = `
           <mock-iconbutton
             aria-label="menu"
             color="primary"
-            component="[object Object]"
             edge="start"
             size="large"
           >

@@ -180,7 +180,6 @@ const SiteNavBar = ({
                   edge="start"
                   color="primary"
                   aria-label="menu"
-                  component={RouterLink}
                   size="large"
                 >
                   <ArrowBack />
