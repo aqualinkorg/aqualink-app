@@ -105,6 +105,7 @@ app.get('*', async (c) => {
           url: `sites/${id}/surveys`,
           method: 'GET',
         });
+        // eslint-disable-next-line fp/no-mutation
         surveys = surveysResponse.data;
       } catch (surveyError) {
         console.error(`Error fetching surveys for site ${id}:`, surveyError);
@@ -154,16 +155,20 @@ ${imageMeta}
       let collectionResponse;
       let collection: Collection;
       if (collectionId && !isHeatStress) {
+        // eslint-disable-next-line fp/no-mutation
         collectionResponse = await requests.send<Collection>({
           url: `collections/public/${collectionId}`,
           method: 'GET',
         });
+        // eslint-disable-next-line fp/no-mutation
         collection = collectionResponse.data;
       } else if (isHeatStress) {
+        // eslint-disable-next-line fp/no-mutation
         collectionResponse = await requests.send<Collection>({
           url: 'collections/heat-stress-tracker',
           method: 'GET',
         });
+        // eslint-disable-next-line fp/no-mutation
         collection = collectionResponse.data;
       } else {
         throw new Error(`Invalid collection identifier: ${id}`);
