@@ -1280,7 +1280,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-174grhv-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item SiteNavBar-headerButtonWrapper-730 css-x7bhrq-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item SiteInfo-headerButtonWrapper-730 css-x7bhrq-MuiGrid-root"
             >
               <mock-iconbutton
                 aria-label="menu"
@@ -1302,7 +1302,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               </mock-iconbutton>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteNavBar-headerWrapper-731 css-1accxqv-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteInfo-headerWrapper-731 css-1accxqv-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 css-1f6br5b-MuiGrid-root"
@@ -1314,7 +1314,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item SiteNavBar-siteNameWrapper-732 css-x7bhrq-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item SiteInfo-siteNameWrapper-732 css-x7bhrq-MuiGrid-root"
                     >
                       <mock-typography
                         variant="h4"
@@ -1323,7 +1323,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item SiteNavBar-headerButtonWrapper-730 css-x7bhrq-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item SiteInfo-headerButtonWrapper-730 css-x7bhrq-MuiGrid-root"
                     >
                       <mock-tooltip
                         arrow="true"
@@ -4212,7 +4212,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-174grhv-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item SiteNavBar-headerButtonWrapper-53 css-x7bhrq-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item SiteInfo-headerButtonWrapper-53 css-x7bhrq-MuiGrid-root"
             >
               <mock-iconbutton
                 aria-label="menu"
@@ -4234,7 +4234,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               </mock-iconbutton>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteNavBar-headerWrapper-54 css-1accxqv-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteInfo-headerWrapper-54 css-1accxqv-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 css-1f6br5b-MuiGrid-root"
@@ -4246,7 +4246,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item SiteNavBar-siteNameWrapper-55 css-x7bhrq-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item SiteInfo-siteNameWrapper-55 css-x7bhrq-MuiGrid-root"
                     >
                       <mock-typography
                         variant="h4"
@@ -4255,7 +4255,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item SiteNavBar-headerButtonWrapper-53 css-x7bhrq-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item SiteInfo-headerButtonWrapper-53 css-x7bhrq-MuiGrid-root"
                     >
                       <mock-tooltip
                         arrow="true"
