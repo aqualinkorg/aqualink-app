@@ -33,6 +33,22 @@ const metadata: Record<string, any> = {
     description:
       "Explore Aqualink's global network of ocean monitoring sites. View real-time data on ocean temperatures, marine ecosystems and coral reefs worldwide.",
   },
+  dashboard: {
+    title: 'Your Ocean Monitoring Dashboard - Aqualink',
+    description:
+      'Monitor your selected ocean sites in one dashboard. View real-time data and track changes in the marine ecosystems you care about.',
+  },
+  collections: {
+    title: 'Ocean Monitoring Collections - Aqualink',
+    description:
+      'Explore curated collections of ocean monitoring sites. View grouped data from specific regions or projects.',
+  },
+};
+
+// Collection name to ID mapping, similar to what's used in Dashboard
+const collections: Record<string, number> = {
+  minderoo: 1,
+  'heat-stress': 2, // Special case for heat stress collection
 };
 
 type Bindings = {
@@ -123,6 +139,54 @@ ${imageMeta}
       return c.html(html);
     } catch (error) {
       console.error(`Failed to fetch site ${id}:`, error);
+    }
+  } else if (firstSegment === 'collections' && id) {
+    try {
+      // Check if id is a collection name or a numeric id
+      const collectionId = Number.isNaN(Number(id))
+        ? collections[id.toLowerCase()] // Handle string name lookup
+        : Number(id); // Handle numeric id directly
+
+      // Handle special case for heat-stress
+      const isHeatStress = id === 'heat-stress';
+
+      if (collectionId || isHeatStress) {
+        let apiUrl = `https://ocean-systems.uc.r.appspot.com/api/collections/${collectionId}`;
+        if (isHeatStress) {
+          // eslint-disable-next-line fp/no-mutation
+          apiUrl =
+            'https://ocean-systems.uc.r.appspot.com/api/collections/heat-stress';
+        }
+
+        const res = await fetch(apiUrl);
+        if (!res.ok) {
+          throw new Error(`Failed to fetch collection: ${res.statusText}`);
+        }
+
+        const collection = await res.json();
+
+        // Update title with collection name
+        if (collection.name) {
+          // eslint-disable-next-line fp/no-mutation
+          title = `Aqualink Collection - ${collection.name}`;
+        }
+
+        // Build meta tags
+        const siteCount = collection.sites?.length || 0;
+        const collectionDescription = `View ${siteCount} ocean monitoring sites in the ${collection.name} collection. Real-time data from Aqualink's global monitoring network.`;
+
+        const meta = `
+<title>${title}</title>
+<meta name="description" content="${collectionDescription}" />
+<meta property="og:title" content="${title}" />
+<meta property="og:description" content="${collectionDescription}" />
+`;
+
+        const html = indexHtml.replace('<!-- server rendered meta -->', meta);
+        return c.html(html);
+      }
+    } catch (error) {
+      console.error(`Failed to fetch collection ${id}:`, error);
     }
   }
 
