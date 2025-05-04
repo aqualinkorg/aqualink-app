@@ -19779,7 +19779,7 @@ __metadata:
     prebuild-install: "npm:^7.1.1"
     semver: "npm:^7.5.4"
     simple-get: "npm:^4.0.1"
-    tar-fs: "npm:^3.0.7"
+    tar-fs: "npm:^3.0.4"
     tunnel-agent: "npm:^0.6.0"
   checksum: 10c0/f6a756fec5051ef2f9341e0543cde1da4e822982dd5398010baad92e2262bd177e08b753eb19b2fbee30f2fcb0e8756f24088fafc48293a364e9a8f8dc65a300
   languageName: node
