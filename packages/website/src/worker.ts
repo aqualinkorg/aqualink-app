@@ -10,6 +10,14 @@ import { Hono } from 'hono';
 import { Site } from './store/Sites/types';
 import { SurveyListItem } from './store/Survey/types';
 import { sortByDate } from './helpers/dates';
+import requests from './helpers/requests';
+
+// Define Collection interface based on what we need
+interface Collection {
+  id: number;
+  name: string;
+  sites: Array<{ id: number }>;
+}
 
 const metadata: Record<string, any> = {
   about: {
@@ -75,14 +83,13 @@ app.get('*', async (c) => {
 
   if (firstSegment === 'sites' && id) {
     try {
-      // Revert to direct fetch with specific base URL for worker environment
-      const res = await fetch(
-        `https://ocean-systems.uc.r.appspot.com/api/sites/${id}`,
-      );
-      if (!res.ok) {
-        throw new Error(`Failed to fetch site: ${res.statusText}`);
-      }
-      const site = (await res.json()) as Site;
+      // Use requests helper to fetch site data
+      const response = await requests.send<Site>({
+        url: `sites/${id}`,
+        method: 'GET',
+      });
+      const site = response.data;
+
       const { name } = site;
       let featuredImageUrl: string | null | undefined = null;
       let surveys: SurveyListItem[] = [];
@@ -94,17 +101,11 @@ app.get('*', async (c) => {
 
       // Try fetching surveys separately
       try {
-        const resSurveys = await fetch(
-          `https://ocean-systems.uc.r.appspot.com/api/sites/${id}/surveys`,
-        );
-        if (resSurveys.ok) {
-          // eslint-disable-next-line fp/no-mutation
-          surveys = (await resSurveys.json()) as SurveyListItem[];
-        } else {
-          console.error(
-            `Failed to fetch surveys for site ${id}: ${resSurveys.statusText}`,
-          );
-        }
+        const surveysResponse = await requests.send<SurveyListItem[]>({
+          url: `sites/${id}/surveys`,
+          method: 'GET',
+        });
+        surveys = surveysResponse.data;
       } catch (surveyError) {
         console.error(`Error fetching surveys for site ${id}:`, surveyError);
         // Proceed without survey data if fetch fails
@@ -150,41 +151,43 @@ ${imageMeta}
       // Handle special case for heat-stress
       const isHeatStress = id === 'heat-stress';
 
-      if (collectionId || isHeatStress) {
-        let apiUrl = `https://ocean-systems.uc.r.appspot.com/api/collections/${collectionId}`;
-        if (isHeatStress) {
-          // eslint-disable-next-line fp/no-mutation
-          apiUrl =
-            'https://ocean-systems.uc.r.appspot.com/api/collections/heat-stress';
-        }
+      let collectionResponse;
+      let collection: Collection;
+      if (collectionId && !isHeatStress) {
+        collectionResponse = await requests.send<Collection>({
+          url: `collections/public/${collectionId}`,
+          method: 'GET',
+        });
+        collection = collectionResponse.data;
+      } else if (isHeatStress) {
+        collectionResponse = await requests.send<Collection>({
+          url: 'collections/heat-stress-tracker',
+          method: 'GET',
+        });
+        collection = collectionResponse.data;
+      } else {
+        throw new Error(`Invalid collection identifier: ${id}`);
+      }
 
-        const res = await fetch(apiUrl);
-        if (!res.ok) {
-          throw new Error(`Failed to fetch collection: ${res.statusText}`);
-        }
+      // Update title with collection name
+      if (collection.name) {
+        // eslint-disable-next-line fp/no-mutation
+        title = `Aqualink Collection - ${collection.name}`;
+      }
 
-        const collection = await res.json();
+      // Build meta tags
+      const siteCount = collection.sites?.length || 0;
+      const collectionDescription = `View ${siteCount} ocean monitoring sites in the ${collection.name} collection. Real-time data from Aqualink's global monitoring network.`;
 
-        // Update title with collection name
-        if (collection.name) {
-          // eslint-disable-next-line fp/no-mutation
-          title = `Aqualink Collection - ${collection.name}`;
-        }
-
-        // Build meta tags
-        const siteCount = collection.sites?.length || 0;
-        const collectionDescription = `View ${siteCount} ocean monitoring sites in the ${collection.name} collection. Real-time data from Aqualink's global monitoring network.`;
-
-        const meta = `
+      const meta = `
 <title>${title}</title>
 <meta name="description" content="${collectionDescription}" />
 <meta property="og:title" content="${title}" />
 <meta property="og:description" content="${collectionDescription}" />
 `;
 
-        const html = indexHtml.replace('<!-- server rendered meta -->', meta);
-        return c.html(html);
-      }
+      const html = indexHtml.replace('<!-- server rendered meta -->', meta);
+      return c.html(html);
     } catch (error) {
       console.error(`Failed to fetch collection ${id}:`, error);
     }
