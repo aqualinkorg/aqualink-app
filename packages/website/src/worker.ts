@@ -125,6 +125,7 @@ app.get('*', async (c) => {
       if (name) {
         // eslint-disable-next-line fp/no-mutation
         title = metadata.sites.title.replace('{siteName}', name);
+        // eslint-disable-next-line fp/no-mutation
         description = metadata.sites.description.replace('{siteName}', name);
       }
 
@@ -211,6 +212,7 @@ ${imageMeta}
 
         // Build description with site count and collection name
         const siteCount = collection.sites?.length || 0;
+        // eslint-disable-next-line fp/no-mutation
         description = metadata.collections.description
           .replace('{collectionName}', collection.name)
           .replace(
