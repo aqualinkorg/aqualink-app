@@ -20,10 +20,17 @@ interface Collection {
 }
 
 const metadata: Record<string, any> = {
+  // Home page
+  '': {
+    title: 'Free Data Management Platform for Monitoring of Marine Ecosystems',
+    description:
+      'Integrate data from sensors and surveys to create an instant view of your marine ecosystem. Explore our interactive map & dashboards using advanced ocean technology.',
+  },
+  // Routes
   about: {
     title: 'About Us - Aqualink',
     description:
-      "Learn about Aqualink's mission, our team, and our efforts in ocean conservation technology.",
+      "Learn how Aqualink's ocean monitoring technology helps protect coral reefs and marine ecosystems by providing real-time data to researchers worldwide.",
   },
   buoy: {
     title:
@@ -37,9 +44,9 @@ const metadata: Record<string, any> = {
       "Explore Aqualink's underwater drone technology for ocean conservation, monitoring marine ecosystems to help protect and preserve our oceans.",
   },
   map: {
-    title: 'Aqualink Map | Explore Ocean Monitoring Sites Worldwide',
+    title: 'Aqualink Map | Interactive Ocean Monitoring for Marine Ecosystems',
     description:
-      "Explore Aqualink's global network of ocean monitoring sites. View real-time data on ocean temperatures, marine ecosystems and coral reefs worldwide.",
+      "Explore Aqualink's interactive ocean map! View live ocean temperatures and coral reef data globally. Track heat wave & heat stress in marine ecosystems.",
   },
   dashboard: {
     title: 'Your Ocean Monitoring Dashboard - Aqualink',
@@ -47,9 +54,30 @@ const metadata: Record<string, any> = {
       'Monitor your selected ocean sites in one dashboard. View real-time data and track changes in the marine ecosystems you care about.',
   },
   collections: {
-    title: 'Ocean Monitoring Collections - Aqualink',
+    title: '{collectionName} - Ocean Monitoring Collection',
     description:
-      'Explore curated collections of ocean monitoring sites. View grouped data from specific regions or projects.',
+      "View ocean monitoring sites in the {collectionName} collection. Real-time data from Aqualink's global monitoring network.",
+  },
+  tracker: {
+    title: 'Tracking Ocean Heat Waves and Coral Bleaching Globally and Locally',
+    description:
+      'Track ocean Heat Waves and Heat Stress on Aqualink. Access global data and surveys for coral bleaching and coral reef health tracking.',
+  },
+  faq: {
+    title:
+      'Aqualink FAQ | Common Questions About Our Ocean Monitoring Platform',
+    description:
+      "Answers to frequently asked questions about Aqualink's real-time ocean monitoring system, reef data, how to use the platform, and how to monitor your reef.",
+  },
+  register: {
+    title: 'Register sites on Aqualink and get dashboards with real-time data',
+    description:
+      'Register the reef you want to monitor in 1 minute. Your dashboard will come with real-time temperature, wind, and wave data. Add surveys and data publicly.',
+  },
+  sites: {
+    title: 'Monitoring "{siteName}" | Aqualink Dashboard',
+    description:
+      'View real-time data for "{siteName}", including reef health, ocean temperature, wind and wave conditions. Monitor your local marine ecosystem with Aqualink.',
   },
 };
 
@@ -72,11 +100,11 @@ app.get('*', async (c) => {
 
   const url = new URL(request.url);
   const { origin, pathname } = url;
-  const firstSegment = pathname.split('/').filter(Boolean)[0];
+  const firstSegment = pathname.split('/').filter(Boolean)[0] || '';
   const id = pathname.split('/').filter(Boolean)[1];
 
   let title = metadata[firstSegment]?.title || 'Aqualink';
-  const description = metadata[firstSegment]?.description || 'Ocean Monitoring';
+  let description = metadata[firstSegment]?.description || 'Ocean Monitoring';
 
   const index = await c.env.ASSETS.fetch(new URL('/', origin).toString());
   const indexHtml = await index.text();
@@ -96,7 +124,8 @@ app.get('*', async (c) => {
 
       if (name) {
         // eslint-disable-next-line fp/no-mutation
-        title = `Aqualink Site - ${name}`;
+        title = metadata.sites.title.replace('{siteName}', name);
+        description = metadata.sites.description.replace('{siteName}', name);
       }
 
       // Try fetching surveys separately
@@ -127,13 +156,11 @@ app.get('*', async (c) => {
         ? `<meta property="og:image" content="${featuredImageUrl}" />`
         : '';
 
-      const descriptionMeta =
-        metadata[firstSegment]?.description || 'Ocean Monitoring';
       const meta = `
 <title>${title}</title>
-<meta name="description" content="${descriptionMeta}" />
+<meta name="description" content="${description}" />
 <meta property="og:title" content="${title}" />
-<meta property="og:description" content="${descriptionMeta}" />
+<meta property="og:description" content="${description}" />
 ${imageMeta} 
 `;
 
@@ -177,18 +204,26 @@ ${imageMeta}
       // Update title with collection name
       if (collection.name) {
         // eslint-disable-next-line fp/no-mutation
-        title = `Aqualink Collection - ${collection.name}`;
-      }
+        title = metadata.collections.title.replace(
+          '{collectionName}',
+          collection.name,
+        );
 
-      // Build meta tags
-      const siteCount = collection.sites?.length || 0;
-      const collectionDescription = `View ${siteCount} ocean monitoring sites in the ${collection.name} collection. Real-time data from Aqualink's global monitoring network.`;
+        // Build description with site count and collection name
+        const siteCount = collection.sites?.length || 0;
+        description = metadata.collections.description
+          .replace('{collectionName}', collection.name)
+          .replace(
+            'ocean monitoring sites',
+            `${siteCount} ocean monitoring sites`,
+          );
+      }
 
       const meta = `
 <title>${title}</title>
-<meta name="description" content="${collectionDescription}" />
+<meta name="description" content="${description}" />
 <meta property="og:title" content="${title}" />
-<meta property="og:description" content="${collectionDescription}" />
+<meta property="og:description" content="${description}" />
 `;
 
       const html = indexHtml.replace('<!-- server rendered meta -->', meta);
