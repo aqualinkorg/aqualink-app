@@ -6,7 +6,7 @@ import { mockUser } from 'mocks/mockUser';
 import { renderWithProviders } from 'utils/test-utils';
 import SiteTable from '.';
 
-jest.mock('./SelectedSiteCard', () => 'Mock-SelectedSiteCard');
+vi.mock('./SelectedSiteCard', () => ({ default: 'Mock-SelectedSiteCard' }));
 
 const mockStore = configureStore([]);
 
@@ -34,7 +34,7 @@ describe('SiteTable', () => {
 
     const openDrawer = false;
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<SiteTable isDrawerOpen={openDrawer} />, {
       store,

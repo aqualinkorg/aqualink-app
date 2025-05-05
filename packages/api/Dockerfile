@@ -18,8 +18,9 @@ COPY ["package.json", "yarn.lock", "./"]
 
 RUN yarn install --production
 
-# Add yargs to the project so that we can run NOAA available scripts using netcdf in the container.
+# Add yargs and Netcdf to the project so that we can run NOAA available scripts using netcdf in the container.
 RUN yarn add yargs
+RUN yarn add netcdf4
 
 COPY . .
 

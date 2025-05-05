@@ -24,7 +24,7 @@ describe('Error Page', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
     element = renderWithProviders(<ErrorPage />, { store }).container;
   });
 

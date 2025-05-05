@@ -20,15 +20,15 @@ describe('SignInDialog', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = render(
       <Provider store={store}>
         <Router>
           <SignInDialog
             open
-            handleRegisterOpen={jest.fn}
-            handleSignInOpen={jest.fn}
+            handleRegisterOpen={vi.fn}
+            handleSignInOpen={vi.fn}
           />
         </Router>
       </Provider>,

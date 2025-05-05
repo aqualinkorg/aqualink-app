@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SignInDialog should render with given state from Redux store 1`] = `
+exports[`SignInDialog > should render with given state from Redux store 1`] = `
 <div>
   <mock-dialog
     maxwidth="xs"
@@ -16,10 +16,8 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-16xl4zq-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1oukqxz-MuiGrid-root"
@@ -64,7 +62,7 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <div

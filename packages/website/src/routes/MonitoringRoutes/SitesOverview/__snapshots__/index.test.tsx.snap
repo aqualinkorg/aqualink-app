@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Monitoring SitesOverview Page should render with given state from Redux store 1`] = `
+exports[`Monitoring SitesOverview Page > should render with given state from Redux store 1`] = `
 <div>
   <div>
     <div
@@ -314,109 +314,6 @@ exports[`Monitoring SitesOverview Page should render with given state from Redux
               d="M7 10l5 5 5-5z"
             />
           </svg>
-          <mock-popover
-            anchorel="[object HTMLDivElement]"
-            anchororigin="[object Object]"
-            classname="css-s4soc1-MuiMenu-root"
-            id="menu-"
-            open="false"
-            slotprops="[object Object]"
-            slots="[object Object]"
-            transformorigin="[object Object]"
-            transitionduration="auto"
-            transitionprops="[object Object]"
-          >
-            <mock-menulist
-              actions="[object Object]"
-              aria-labelledby=":r6:-label"
-              autofocusitem="false"
-              classname="MuiMenu-list css-7drlel-MuiMenu-list"
-              disablelistwrap="true"
-              id=":r7:"
-              role="listbox"
-              variant="selectedMenu"
-            >
-              <mock-menuitem
-                aria-selected="true"
-                classname="makeStyles-menuItem-7"
-                data-value=""
-                role="option"
-                selected="true"
-              />
-              <mock-menuitem
-                aria-selected="false"
-                classname="makeStyles-menuItem-7"
-                data-value="in_review"
-                role="option"
-                selected="false"
-              >
-                in_review
-              </mock-menuitem>
-              <mock-menuitem
-                aria-selected="false"
-                classname="makeStyles-menuItem-7"
-                data-value="rejected"
-                role="option"
-                selected="false"
-              >
-                rejected
-              </mock-menuitem>
-              <mock-menuitem
-                aria-selected="false"
-                classname="makeStyles-menuItem-7"
-                data-value="approved"
-                role="option"
-                selected="false"
-              >
-                approved
-              </mock-menuitem>
-              <mock-menuitem
-                aria-selected="false"
-                classname="makeStyles-menuItem-7"
-                data-value="shipped"
-                role="option"
-                selected="false"
-              >
-                shipped
-              </mock-menuitem>
-              <mock-menuitem
-                aria-selected="false"
-                classname="makeStyles-menuItem-7"
-                data-value="deployed"
-                role="option"
-                selected="false"
-              >
-                deployed
-              </mock-menuitem>
-              <mock-menuitem
-                aria-selected="false"
-                classname="makeStyles-menuItem-7"
-                data-value="maintenance"
-                role="option"
-                selected="false"
-              >
-                maintenance
-              </mock-menuitem>
-              <mock-menuitem
-                aria-selected="false"
-                classname="makeStyles-menuItem-7"
-                data-value="lost"
-                role="option"
-                selected="false"
-              >
-                lost
-              </mock-menuitem>
-              <mock-menuitem
-                aria-selected="false"
-                classname="makeStyles-menuItem-7"
-                data-value="end_of_life"
-                role="option"
-                selected="false"
-              >
-                end_of_life
-              </mock-menuitem>
-            </mock-menulist>
-          </mock-popover>
           <fieldset
             aria-hidden="true"
             class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"

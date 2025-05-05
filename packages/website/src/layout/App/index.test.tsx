@@ -2,16 +2,15 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-jest.mock('../../routes/Landing', () => 'Mock-LandingPage');
-jest.mock('../../routes/HomeMap', () => 'Mock-HomeMap');
-jest.mock('../../routes/SiteRoutes', () => 'Mock-SiteRoutes');
-jest.mock('../../routes/About', () => 'Mock-About');
-jest.mock('../../routes/RegisterSite', () => 'Mock-RegisterSite');
-jest.mock('../../routes/Buoy', () => 'Mock-Buoy');
-jest.mock('../../routes/Drones', () => 'Mock-Drones');
-jest.mock('../../routes/Faq', () => 'Mock-Faq');
-jest.mock('../../routes/NotFound', () => ({
-  __esModule: true,
+vi.mock('../../routes/Landing', () => 'Mock-LandingPage');
+vi.mock('../../routes/HomeMap', () => 'Mock-HomeMap');
+vi.mock('../../routes/SiteRoutes', () => 'Mock-SiteRoutes');
+vi.mock('../../routes/About', () => 'Mock-About');
+vi.mock('../../routes/RegisterSite', () => 'Mock-RegisterSite');
+vi.mock('../../routes/Buoy', () => 'Mock-Buoy');
+vi.mock('../../routes/Drones', () => 'Mock-Drones');
+vi.mock('../../routes/Faq', () => 'Mock-Faq');
+vi.mock('../../routes/NotFound', () => ({
   NotFound: 'Mock-NotFound',
 }));
 

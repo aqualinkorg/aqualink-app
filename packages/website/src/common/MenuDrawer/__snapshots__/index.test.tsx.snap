@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MenuDrawer closed should render with given state from Redux store 1`] = `<div />`;
+exports[`MenuDrawer closed > should render with given state from Redux store 1`] = `<div />`;
 
-exports[`MenuDrawer open should render with given state from Redux store 1`] = `
+exports[`MenuDrawer open > should render with given state from Redux store 1`] = `
 <div>
   <mock-drawer
     anchor="left"
@@ -175,7 +175,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
         >
           <img
             alt="Ovio Logo"
-            src="ovio_logo.png"
+            src="/src/assets/img/ovio_logo.png"
           />
         </a>
       </div>

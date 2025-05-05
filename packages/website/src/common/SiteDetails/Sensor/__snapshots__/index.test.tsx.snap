@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Sensor Card should render with given state from Redux store 1`] = `
+exports[`Sensor Card > should render with given state from Redux store 1`] = `
 <div>
   <mock-card
     classname="Sensor-root-8"
@@ -11,10 +11,8 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
       <div
         class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
       >
-        <mock-typography
-          classname="MuiCardHeader-title"
-          component="span"
-          variant="h5"
+        <span
+          class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-16xl4zq-MuiTypography-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
@@ -30,7 +28,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               </mock-typography>
             </div>
           </div>
-        </mock-typography>
+        </span>
       </div>
     </div>
     <mock-cardcontent
@@ -67,7 +65,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
           <img
             alt="sensor"
             height="150"
-            src="sensor.svg"
+            src="/src/assets/sensor.svg"
             style="position: absolute; bottom: 0px;"
             width="auto"
           />

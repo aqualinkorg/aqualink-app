@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Featured Media Card should render with given state from Redux store 1`] = `
+exports[`Featured Media Card > should render with given state from Redux store 1`] = `
 <div>
   <mock-card
     classname="FeaturedMedia-card-1"

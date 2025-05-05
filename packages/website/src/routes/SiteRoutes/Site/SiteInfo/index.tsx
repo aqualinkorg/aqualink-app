@@ -15,7 +15,7 @@ import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 
 import {
@@ -28,8 +28,8 @@ import {
 import { Site, SiteUpdateParams } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import {
-  setAdministeredSiteName,
   userInfoSelector,
+  setAdministeredSiteName,
 } from 'store/User/userSlice';
 import { sitesListSelector, setSiteName } from 'store/Sites/sitesListSlice';
 import { displayTimeInLocalTimezone } from 'helpers/dates';
@@ -38,13 +38,13 @@ import EditForm from './EditForm';
 import ExclusionDatesDialog from './ExclusionDatesDialog';
 import CollectionButton from './CollectionButton';
 
-const SiteNavBar = ({
+const SiteInfo = ({
   hasDailyData,
   site,
   lastSurvey = null,
   isAdmin,
   classes,
-}: SiteNavBarProps) => {
+}: SiteInfoProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -293,7 +293,7 @@ const SiteNavBar = ({
                     )}
                     <Grid item>
                       <Button
-                        component={Link}
+                        component={RouterLink}
                         to={`/sites/${site.id}/upload_data`}
                         className={classes.button}
                         color="primary"
@@ -334,13 +334,13 @@ const styles = () =>
     },
   });
 
-interface SiteNavBarIncomingProps {
+interface SiteInfoIncomingProps {
   hasDailyData: boolean;
   site: Site;
   lastSurvey?: string | null;
   isAdmin: boolean;
 }
 
-type SiteNavBarProps = SiteNavBarIncomingProps & WithStyles<typeof styles>;
+type SiteInfoProps = SiteInfoIncomingProps & WithStyles<typeof styles>;
 
-export default withStyles(styles)(SiteNavBar);
+export default withStyles(styles)(SiteInfo);

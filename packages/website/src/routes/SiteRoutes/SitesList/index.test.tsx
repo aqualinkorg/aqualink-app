@@ -18,7 +18,7 @@ describe('Sites List', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<SitesList />, { store }).container;
   });
