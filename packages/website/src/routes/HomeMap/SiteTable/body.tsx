@@ -123,6 +123,7 @@ const SiteTableBody = ({
   scrollPageOnSelection = false,
   map,
   classes,
+  onEmptyColumnsChange,
 }: SiteTableBodyProps) => {
   const dispatch = useDispatch();
   const storedSites = useSelector(sitesToDisplayListSelector);
@@ -145,6 +146,31 @@ const SiteTableBody = ({
       ),
     [order, orderBy, sitesList],
   );
+
+  // Check which columns have all empty values
+  const emptyColumns = useMemo(() => {
+    const columnsToCheck = [OrderKeys.BUOY_TOP, OrderKeys.BUOY_BOTTOM];
+
+    return columnsToCheck.reduce((emptyCols, column) => {
+      const hasValue = tableData.some((site) => {
+        if (column === OrderKeys.BUOY_TOP) return site.buoyTop !== null;
+        if (column === OrderKeys.BUOY_BOTTOM) return site.buoyBottom !== null;
+        return false;
+      });
+
+      if (!hasValue) {
+        // eslint-disable-next-line fp/no-mutating-methods
+        emptyCols.push(column);
+      }
+      return emptyCols;
+    }, [] as OrderKeys[]);
+  }, [tableData]);
+
+  // Notify parent component of empty columns
+  useEffect(() => {
+    onEmptyColumnsChange?.(emptyColumns);
+  }, [emptyColumns, onEmptyColumnsChange]);
+
   const idToIndexMap = useMemo(
     () =>
       tableData.reduce((acc, item, index) => {
@@ -262,7 +288,7 @@ const SiteTableBody = ({
                   color={dhwColorFinder(site.dhw)}
                   unit="DHW"
                 />
-                {isExtended && (
+                {isExtended && !emptyColumns.includes(OrderKeys.BUOY_TOP) && (
                   <RowNumberCell
                     isExtended={isExtended}
                     classes={classes}
@@ -271,15 +297,16 @@ const SiteTableBody = ({
                     unit="°C"
                   />
                 )}
-                {isExtended && (
-                  <RowNumberCell
-                    isExtended={isExtended}
-                    classes={classes}
-                    value={site.buoyBottom}
-                    color={colors.black}
-                    unit="°C"
-                  />
-                )}
+                {isExtended &&
+                  !emptyColumns.includes(OrderKeys.BUOY_BOTTOM) && (
+                    <RowNumberCell
+                      isExtended={isExtended}
+                      classes={classes}
+                      value={site.buoyBottom}
+                      color={colors.black}
+                      unit="°C"
+                    />
+                  )}
                 <RowAlertCell site={site} classes={classes} />
               </TableRow>
             );
@@ -351,7 +378,7 @@ const styles = (theme: Theme) =>
     },
   });
 
-type SiteTableBodyIncomingProps = {
+interface SiteTableBodyIncomingProps {
   order: Order;
   orderBy: OrderKeys;
   isExtended?: boolean;
@@ -359,7 +386,8 @@ type SiteTableBodyIncomingProps = {
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
   map?: L.Map | null;
-};
+  onEmptyColumnsChange: (emptyColumns: OrderKeys[]) => void;
+}
 
 type SiteTableBodyProps = WithStyles<typeof styles> &
   SiteTableBodyIncomingProps;

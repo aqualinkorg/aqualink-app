@@ -42,6 +42,7 @@ const EnhancedTableHead = ({
   order,
   orderBy,
   isExtended = false,
+  emptyColumns = [],
 }: EnhancedTableProps) => {
   const createSortHandler =
     (property: OrderKeys) => (event: React.MouseEvent<unknown>) => {
@@ -83,13 +84,13 @@ const EnhancedTableHead = ({
       id: OrderKeys.BUOY_TOP,
       label: 'BUOY',
       unit: '1m',
-      display: !!isExtended,
+      display: !!isExtended && !emptyColumns.includes(OrderKeys.BUOY_TOP),
     },
     {
       id: OrderKeys.BUOY_BOTTOM,
       label: 'BUOY',
       unit: 'DEPTH',
-      display: !!isExtended,
+      display: !!isExtended && !emptyColumns.includes(OrderKeys.BUOY_BOTTOM),
     },
     {
       id: OrderKeys.ALERT,
@@ -148,6 +149,7 @@ interface EnhancedTableIncomingProps {
   order: Order;
   orderBy: OrderKeys;
   isExtended?: boolean;
+  emptyColumns: OrderKeys[];
 }
 
 const styles = () =>

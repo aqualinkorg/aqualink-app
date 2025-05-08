@@ -102,6 +102,10 @@ const SiteTable = ({
     setOrder(newOrder);
     setOrderBy(newOrderBy);
   };
+
+  // Get empty columns from SiteTableBody
+  const [emptyColumns, setEmptyColumns] = useState<OrderKeys[]>([]);
+
   return (
     <>
       {/* Holds drawer handle and site name text on mobile */}
@@ -180,6 +184,7 @@ const SiteTable = ({
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
                 isExtended={isExtended}
+                emptyColumns={emptyColumns}
               />
             </Hidden>
             <SiteTableBody
@@ -190,6 +195,7 @@ const SiteTable = ({
               scrollTableOnSelection={scrollTableOnSelection}
               scrollPageOnSelection={scrollPageOnSelection}
               map={map}
+              onEmptyColumnsChange={setEmptyColumns}
             />
           </Table>
         </TableContainer>
