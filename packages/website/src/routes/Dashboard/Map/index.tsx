@@ -15,6 +15,8 @@ const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
   const [collectionCenter, collectionBounds] =
     getCollectionCenterAndBounds(collection);
 
+  const isHeatStress = collection.name.includes('Heat Stress');
+
   return (
     <Box className={classes.root}>
       <Map
@@ -26,7 +28,7 @@ const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
         showAlertLevelLegend={false}
         showWaterMark={false}
         geolocationEnabled={false}
-        defaultLayerName="Heat Stress"
+        defaultLayerName={isHeatStress ? 'Heat Stress' : undefined}
         legendBottom={isMobile ? 35 : 20}
         legendLeft={isMobile ? 2 : 4}
       />
