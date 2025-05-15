@@ -1308,7 +1308,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                   classname="ForwardRef-cardTitle-45"
                   variant="h5"
                 >
-                  Over 500 sites across hundreds of organizations
+                  Over 6,000 sites across hundreds of organizations
                 </mock-typography>
               </mock-box>
               <mock-typography
