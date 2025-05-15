@@ -24,7 +24,7 @@ describe('Sensor Card', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = render(
       <Provider store={store}>

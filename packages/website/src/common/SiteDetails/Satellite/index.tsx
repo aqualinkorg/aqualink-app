@@ -20,8 +20,8 @@ import {
   degreeHeatingWeeksCalculator,
 } from 'helpers/degreeHeatingWeeks';
 import { toRelativeTime } from 'helpers/dates';
+import satellite from 'assets/satellite.svg';
 import { dhwColorCode } from '../../../assets/colorCode';
-import satellite from '../../../assets/satellite.svg';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Delete Button should render with given state from Redux store 1`] = `
+exports[`Delete Button > should render with given state from Redux store 1`] = `
 <div>
   <mock-iconbutton
     size="large"

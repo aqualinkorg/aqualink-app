@@ -70,7 +70,7 @@ export class SurveysService {
     file: Express.Multer.File,
   ): Promise<{ url: string; thumbnailUrl?: string }> {
     // Upload original
-    if (Buffer.byteLength(file.buffer) > this.maxFileSizeB) {
+    if (file.buffer.byteLength > this.maxFileSizeB) {
       throw new BadRequestException(
         `Max size allowed is ${this.maxFileSizeMB} MB`,
       );

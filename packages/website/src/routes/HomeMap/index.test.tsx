@@ -8,9 +8,9 @@ import { mockUser } from 'mocks/mockUser';
 import { mockSite } from 'mocks/mockSite';
 import Homepage from '.';
 
-jest.mock('common/NavBar', () => 'Mock-NavBar');
-jest.mock('./Map', () => 'Mock-Map');
-jest.mock('./SiteTable', () => 'Mock-SiteTable');
+vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+vi.mock('./Map', () => ({ default: 'Mock-Map' }));
+vi.mock('./SiteTable', () => ({ default: 'Mock-SiteTable' }));
 
 const mockStore = configureStore([]);
 describe('Homepage', () => {
@@ -35,7 +35,7 @@ describe('Homepage', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = render(
       <Provider store={store}>

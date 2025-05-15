@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Landing Page should render with given state from Redux store 1`] = `
+exports[`Landing Page > should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
     classname="NavBar-appBar-7"
@@ -181,7 +181,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             >
               <img
                 alt="Ovio Logo"
-                src="ovio_logo.png"
+                src="/src/assets/img/ovio_logo.png"
               />
             </a>
           </div>
@@ -377,10 +377,8 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
@@ -425,7 +423,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <mock-cardcontent>
@@ -741,10 +739,8 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
@@ -789,7 +785,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <div
@@ -1155,7 +1151,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImage-46 css-1kuwa16-MuiCardMedia-root"
-              src="metrics.jpg"
+              src="/src/assets/img/landing-page/metrics.jpg"
             />
           </div>
         </div>
@@ -1198,7 +1194,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="sensors.png"
+              src="/src/assets/img/landing-page/sensors.png"
             />
           </div>
         </div>
@@ -1241,7 +1237,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="survey-images.jpg"
+              src="/src/assets/img/landing-page/survey-images.jpg"
             />
           </div>
         </div>
@@ -1284,7 +1280,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="map.png"
+              src="/src/assets/img/landing-page/map.png"
             />
           </div>
         </div>
@@ -1325,7 +1321,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             <img
               class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="customers.jpg"
+              src="/src/assets/img/landing-page/customers.jpg"
             />
           </div>
         </div>

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Buoy should render with given state from Redux store 1`] = `
+exports[`Buoy > should render with given state from Redux store 1`] = `
 <div>
   <mock-navbar
     searchlocation="false"
@@ -37,7 +37,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
           <img
             alt="bouydiagram2"
             class="img-fluid mg-lg mx-auto d-block img-responsive diagram lazyload"
-            src="fulldiag3_1.svg"
+            src="/src/assets/img/fulldiag3_1.svg"
           />
         </div>
       </div>
@@ -61,7 +61,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
           <img
             alt="Asset%204"
             class="img-fluid mx-auto d-block img-responsive diagram lazyload"
-            src="fulldiag3.svg"
+            src="/src/assets/img/fulldiag3.svg"
           />
         </div>
       </div>

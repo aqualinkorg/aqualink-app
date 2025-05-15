@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`NavBar with routeButtons should render with given state from Redux store 1`] = `
+exports[`NavBar with routeButtons > should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
     classname="NavBar-appBar-1"
@@ -199,7 +199,7 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
 </div>
 `;
 
-exports[`NavBar without routeButtons should render with given state from Redux store 1`] = `
+exports[`NavBar without routeButtons > should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
     classname="NavBar-appBar-13"

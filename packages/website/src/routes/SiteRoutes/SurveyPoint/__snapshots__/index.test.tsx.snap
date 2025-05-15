@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Survey Point Detail Page should render with given state from Redux store: snapshot 1`] = `
+exports[`Survey Point Detail Page > should render with given state from Redux store > snapshot 1`] = `
 <div>
   <mock-appbar
     classname="NavBar-appBar-1 NavBar-appBarXs-3"
@@ -181,7 +181,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             >
               <img
                 alt="Ovio Logo"
-                src="ovio_logo.png"
+                src="/src/assets/img/ovio_logo.png"
               />
             </a>
           </div>
@@ -292,10 +292,9 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       <div
                         class="MuiAutocomplete-endAdornment css-1uhhrmm-MuiAutocomplete-endAdornment"
                       >
-                        <mock-iconbutton
+                        <button
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator css-z4hckw-MuiAutocomplete-popupIndicator"
-                          disabled="false"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-1qf8es8-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                           tabindex="-1"
                           title="Open"
                           type="button"
@@ -311,7 +310,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                               d="M7 10l5 5 5-5z"
                             />
                           </svg>
-                        </mock-iconbutton>
+                        </button>
                       </div>
                       <fieldset
                         aria-hidden="true"
@@ -519,10 +518,9 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       <div
                         class="MuiAutocomplete-endAdornment css-1uhhrmm-MuiAutocomplete-endAdornment"
                       >
-                        <mock-iconbutton
+                        <button
                           aria-label="Open"
-                          classname="MuiAutocomplete-popupIndicator css-z4hckw-MuiAutocomplete-popupIndicator"
-                          disabled="false"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-1qf8es8-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                           tabindex="-1"
                           title="Open"
                           type="button"
@@ -538,7 +536,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                               d="M7 10l5 5 5-5z"
                             />
                           </svg>
-                        </mock-iconbutton>
+                        </button>
                       </div>
                       <fieldset
                         aria-hidden="true"
@@ -578,10 +576,8 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
@@ -626,7 +622,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <mock-cardcontent>
@@ -942,10 +938,8 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
@@ -990,7 +984,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <div
