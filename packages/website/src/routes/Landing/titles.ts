@@ -38,7 +38,7 @@ export const cardTitles: CardIncomingProps[] = [
     scaleDown: true,
   },
   {
-    title: 'Over 500 sites across hundreds of organizations',
+    title: 'Over 6,000 sites across hundreds of organizations',
     text: '',
     backgroundColor: '#ffffff',
     direction: 'row-reverse',
