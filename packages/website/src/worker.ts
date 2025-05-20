@@ -75,9 +75,9 @@ const metadata: Record<string, any> = {
       'Register the reef you want to monitor in 1 minute. Your dashboard will come with real-time temperature, wind, and wave data. Add surveys and data publicly.',
   },
   sites: {
-    title: 'Monitoring "{siteName}" | Aqualink Dashboard',
+    title: 'Monitoring {siteName} | Aqualink Dashboard',
     description:
-      'View real-time data for "{siteName}", including reef health, ocean temperature, wind and wave conditions. Monitor your local marine ecosystem with Aqualink.',
+      'View real-time data for {siteName}, including reef health, ocean temperature, wind and wave conditions. Monitor your local marine ecosystem with Aqualink.',
   },
 };
 
