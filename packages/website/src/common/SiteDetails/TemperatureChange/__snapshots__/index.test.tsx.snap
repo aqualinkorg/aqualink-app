@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TemperatureChange card should render with given state from Redux store 1`] = `
+exports[`TemperatureChange card > should render with given state from Redux store 1`] = `
 <div>
   <mock-card
     classname="TemperatureChangeComponent-root-8"
@@ -11,10 +11,8 @@ exports[`TemperatureChange card should render with given state from Redux store 
       <div
         class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
       >
-        <mock-typography
-          classname="MuiCardHeader-title"
-          component="span"
-          variant="h5"
+        <span
+          class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
@@ -31,7 +29,7 @@ exports[`TemperatureChange card should render with given state from Redux store 
               </mock-typography>
             </div>
           </div>
-        </mock-typography>
+        </span>
       </div>
     </div>
     <mock-cardcontent

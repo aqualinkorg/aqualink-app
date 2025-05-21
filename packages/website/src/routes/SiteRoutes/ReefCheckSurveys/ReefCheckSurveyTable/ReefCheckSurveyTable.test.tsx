@@ -4,13 +4,6 @@ import { ThemeProvider } from '@mui/material';
 import theme from 'layout/App/theme';
 import { ColumnDef, ReefCheckSurveyTable } from '.';
 
-jest.mock('@mui/material/Skeleton', () => ({
-  ...jest.requireActual(`@mui/material/Skeleton`),
-  __esModule: true,
-  Skeleton: 'mock-skeleton',
-  default: 'mock-skeleton',
-}));
-
 describe('ReefCheckSurveyTable', () => {
   type MockDataItem = {
     id: number;

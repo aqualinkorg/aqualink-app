@@ -42,20 +42,27 @@ jobs:
         with:
           node-version: 18
 
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@stable --activate
+
       - uses: actions/cache@v4
         id: yarn-cache
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-yarn-api-${{ hashFiles('yarn.lock') }}
+            .yarn/cache
+            .yarn/install-state.gz
+          key: ${{ runner.os }}-yarn-v4-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-api-
+            ${{ runner.os }}-yarn-v4-
       
       - name: Install dependencies if needed.
         id: install
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
-          yarn install --ignore-engines --frozen-lockfile
+          yarn install
 
       - name: Run API lint
         if: success() || steps.install.conclusion == 'skipped'

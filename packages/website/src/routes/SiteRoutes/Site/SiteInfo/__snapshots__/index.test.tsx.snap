@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SiteNavBar should render with given state from Redux store 1`] = `
+exports[`SiteInfo > should render with given state from Redux store 1`] = `
 <div>
   <div
     class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
@@ -71,7 +71,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-174grhv-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item SiteNavBar-headerButtonWrapper-3 css-x7bhrq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item SiteInfo-headerButtonWrapper-3 css-x7bhrq-MuiGrid-root"
         >
           <mock-iconbutton
             aria-label="menu"
@@ -93,7 +93,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
           </mock-iconbutton>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteNavBar-headerWrapper-4 css-1accxqv-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteInfo-headerWrapper-4 css-1accxqv-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 css-1f6br5b-MuiGrid-root"
@@ -105,7 +105,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item SiteNavBar-siteNameWrapper-5 css-x7bhrq-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item SiteInfo-siteNameWrapper-5 css-x7bhrq-MuiGrid-root"
                 >
                   <mock-typography
                     variant="h4"
@@ -114,7 +114,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
                   </mock-typography>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item SiteNavBar-headerButtonWrapper-3 css-x7bhrq-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item SiteInfo-headerButtonWrapper-3 css-x7bhrq-MuiGrid-root"
                 >
                   <mock-tooltip
                     arrow="true"
@@ -162,7 +162,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteNavBar-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
@@ -173,7 +173,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteNavBar-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                 href="/sites/1/upload_data"
                 tabindex="0"
               >

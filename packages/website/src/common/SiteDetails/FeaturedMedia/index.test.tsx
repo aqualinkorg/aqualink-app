@@ -19,7 +19,7 @@ describe('Featured Media Card', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<FeaturedMedia siteId={1} url={null} />, {
       store,

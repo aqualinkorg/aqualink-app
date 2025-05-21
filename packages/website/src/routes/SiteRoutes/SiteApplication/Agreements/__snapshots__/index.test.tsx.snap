@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`renders as expected 1`] = `
 <div>
@@ -20,12 +20,11 @@ exports[`renders as expected 1`] = `
           checked="true"
           color="primary"
         />
-        <mock-typography
-          classname="MuiFormControlLabel-label"
-          component="span"
+        <span
+          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
         >
           Handle any shipping and permitting charges
-        </mock-typography>
+        </span>
       </label>
       <label
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd Agreements-formControlLabel-2 css-19opgx6-MuiFormControlLabel-root"
@@ -34,12 +33,11 @@ exports[`renders as expected 1`] = `
           checked="false"
           color="primary"
         />
-        <mock-typography
-          classname="MuiFormControlLabel-label"
-          component="span"
+        <span
+          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
         >
           Provide mooring and deploy buoy
-        </mock-typography>
+        </span>
       </label>
       <label
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd Agreements-formControlLabel-2 css-19opgx6-MuiFormControlLabel-root"
@@ -48,12 +46,11 @@ exports[`renders as expected 1`] = `
           checked="true"
           color="primary"
         />
-        <mock-typography
-          classname="MuiFormControlLabel-label"
-          component="span"
+        <span
+          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
         >
           Conduct initial survey
-        </mock-typography>
+        </span>
       </label>
     </div>
   </div>
