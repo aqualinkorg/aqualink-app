@@ -242,7 +242,11 @@ ${imageMeta}
 <meta property="og:description" content="${description}" />
 `;
 
-  const html = indexHtml.replace('<!-- server rendered meta -->', meta);
+  // we need to inject new meta in between the comment tags so to replace the default title/description
+  const html = indexHtml
+    .split('<!-- server rendered meta -->')
+    .map((part, i) => (i === 1 ? meta : part))
+    .join('');
   return c.html(html);
 });
 
