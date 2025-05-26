@@ -5,6 +5,7 @@ on:
   pull_request:
     paths: 
       - 'packages/api/**'
+      - 'yarn.lock'
   push:
     branches:
       - master
