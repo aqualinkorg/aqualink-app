@@ -7,24 +7,23 @@
   "main": "./packages/api/cloud-functions/dist/cloud-functions/main.js",
   "scripts": {
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint --fix",
-    "lint:all": "lerna run lint",
+    "lint:all": "yarn workspaces foreach --since run lint",
     "clean": "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
-    "clean:artifacts": "lerna run clean --parallel",
-    "clean:packages": "lerna clean --yes",
+    "clean:artifacts": "yarn workspaces foreach --all run clean",
+    "clean:packages": "yarn workspaces foreach --all --verbose rimraf node_modules",
     "clean:root": "rimraf node_modules",
-    "start": "lerna run start -- --parallel",
-    "build": "lerna run build --concurrency=1 --stream",
-    "test": "lerna run test --concurrency=1 --stream",
-    "test:quick": "lerna run test:quick --concurrency=1 --stream",
-    "test:coverage": "lerna run test:coverage --parallel",
-    "test:watch": "lerna run test:watch --parallel",
-    "publish:release": "lerna publish --force-publish=* --no-push --no-git-tag-version"
+    "start": "yarn workspaces foreach --all --parallel run start",
+    "build": "yarn workspaces foreach --all --verbose run build",
+    "test": "yarn workspaces foreach --all --verbose run test",
+    "test:quick": "yarn workspaces foreach run --all --verbose test:quick",
+    "test:coverage": "yarn workspaces foreach --all --parallel run test:coverage",
+    "test:watch": "yarn workspaces foreach --all --parallel run test:watch",
+    "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.59.7",
     "babel-eslint": "^10.1.0",
-    "cross-spawn": "^7.0.02",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -38,7 +37,6 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.2.5",
-    "lerna": "^6.6.2",
     "lint-staged": "^10.2.9",
     "prettier": "2.5.1",
     "typescript": "^4.9.5"
@@ -74,5 +72,6 @@
   "bugs": {
     "url": "https://github.com/aqualinkorg/aqualink-app/issues"
   },
-  "homepage": "https://aqualink.org"
+  "homepage": "https://aqualink.org",
+  "packageManager": "yarn@4.9.1"
 }

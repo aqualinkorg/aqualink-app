@@ -5,8 +5,8 @@ import { mockUser } from 'mocks/mockUser';
 import { renderWithProviders } from 'utils/test-utils';
 import Buoy from '.';
 
-jest.mock('common/NavBar', () => 'Mock-NavBar');
-jest.mock('common/Footer', () => 'Mock-Footer');
+vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+vi.mock('common/Footer', () => ({ default: 'Mock-Footer' }));
 
 const mockStore = configureStore([]);
 describe('Buoy', () => {
@@ -20,7 +20,7 @@ describe('Buoy', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<Buoy />).container;
   });

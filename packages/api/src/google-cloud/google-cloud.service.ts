@@ -97,7 +97,7 @@ export class GoogleCloudService {
   }
 
   public uploadBuffer(
-    buffer: Buffer,
+    buffer: Buffer | Uint8Array,
     filePath: string,
     type: string,
     dir: string,
@@ -108,7 +108,7 @@ export class GoogleCloudService {
   }
 
   public async uploadBufferToDestination(
-    buffer: Buffer,
+    buffer: Buffer | Uint8Array,
     destination: string,
     bucket = this.GCS_BUCKET,
   ) {
@@ -118,7 +118,8 @@ export class GoogleCloudService {
     }
     const file = this.storage.bucket(bucket).file(destination);
     try {
-      await file.save(buffer, { public: true, gzip: true });
+      const bufferData = Buffer.isBuffer(buffer) ? buffer : Buffer.from(buffer);
+      await file.save(bufferData, { public: true, gzip: true });
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException();

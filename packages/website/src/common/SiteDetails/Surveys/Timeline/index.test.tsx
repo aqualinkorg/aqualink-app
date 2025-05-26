@@ -18,7 +18,7 @@ describe('SiteRoutes Surveys', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(
       <Timeline

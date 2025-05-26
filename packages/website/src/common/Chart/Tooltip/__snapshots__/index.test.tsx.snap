@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`renders as expected 1`] = `
 <div>
@@ -14,13 +14,17 @@ exports[`renders as expected 1`] = `
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            color="textPrimary"
-            style="white-space: nowrap;"
-            variant="caption"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-16xl4zq-MuiTypography-root"
           >
-            12/20/20 07:19 AM UTC
-          </mock-typography>
+            <mock-typography
+              color="textPrimary"
+              style="white-space: nowrap;"
+              variant="caption"
+            >
+              12/20/20 07:19 AM UTC
+            </mock-typography>
+          </span>
         </div>
       </div>
       <mock-cardcontent

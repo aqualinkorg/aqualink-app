@@ -25,7 +25,7 @@ describe('Surveys', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<Surveys site={mockSite} />, {
       store,

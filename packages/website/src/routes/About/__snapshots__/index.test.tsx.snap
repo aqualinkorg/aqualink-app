@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`About should render with given state from Redux store 1`] = `
+exports[`About > should render with given state from Redux store 1`] = `
 <div>
   <mock-navbar
     searchlocation="false"
@@ -112,7 +112,7 @@ exports[`About should render with given state from Redux store 1`] = `
                     <img
                       alt="placeholder user"
                       class="rounded-circle mx-auto d-block mt-5 img-style lazyload"
-                      src="peter.jpg"
+                      src="/src/assets/img/peter.jpg"
                       width="100"
                     />
                     <h5
@@ -140,7 +140,7 @@ exports[`About should render with given state from Redux store 1`] = `
                     <img
                       alt="placeholder user"
                       class="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
-                      src="caesar.jpg"
+                      src="/src/assets/img/caesar.jpg"
                       width="100"
                     />
                     <h5
@@ -169,7 +169,7 @@ exports[`About should render with given state from Redux store 1`] = `
                     <img
                       alt="placeholder user"
                       class="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
-                      src="eric.jpg"
+                      src="/src/assets/img/eric.jpg"
                       width="100"
                     />
                     <h5

@@ -14,19 +14,19 @@ import { ReefCheckSurveyViewPage } from '.';
 import * as organismsTableModule from './ReefCheckSurveyOrganismsTable';
 import * as substratesModule from './ReefCheckSurveySubstratesTable';
 
-jest.mock('common/NavBar', () => 'Mock-NavBar');
+vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
 
 describe('ReefCheckSurveyViewPage', () => {
   const mockStore = configureStore([]);
-  const scrollToSpy = jest
+  const scrollToSpy = vi
     .spyOn(window, 'scrollTo')
     .mockImplementation(() => null);
-  const reefCheckSurveyOrganismsTableSpy = jest.spyOn(
+  const reefCheckSurveyOrganismsTableSpy = vi.spyOn(
     organismsTableModule,
     'ReefCheckSurveyOrganismsTable',
   );
 
-  const reefCheckSurveySubstratesTableSpy = jest.spyOn(
+  const reefCheckSurveySubstratesTableSpy = vi.spyOn(
     substratesModule,
     'ReefCheckSurveySubstrates',
   );
@@ -42,7 +42,7 @@ describe('ReefCheckSurveyViewPage', () => {
     const mockSiteId = 1;
     const mockSurveyId = 1;
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
     const renderResult = render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>

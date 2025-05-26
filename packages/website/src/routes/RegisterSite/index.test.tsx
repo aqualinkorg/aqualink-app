@@ -6,8 +6,8 @@ import Apply from '.';
 
 const mockStore = configureStore([]);
 
-jest.mock('common/NavBar', () => 'Mock-NavBar');
-jest.mock('./LocationMap', () => 'Mock-LocationMap');
+vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+vi.mock('./LocationMap', () => ({ default: 'Mock-LocationMap' }));
 
 describe('Site registration page', () => {
   let element: HTMLElement;
@@ -18,7 +18,7 @@ describe('Site registration page', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<Apply />, { store }).container;
   });

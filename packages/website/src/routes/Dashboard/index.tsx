@@ -19,7 +19,7 @@ import DashboardContent from './Content';
 
 // This will be removed when the idea of public collections will be introduced.
 // For now only this static one is being used.
-const collections: Record<string, number> = {
+export const collections: Record<string, number> = {
   minderoo: 1,
 };
 

@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
 import Map from '.';
 
-jest.mock('react-leaflet');
+vi.mock('react-leaflet');
 
 const mockStore = configureStore([]);
 
@@ -23,7 +23,7 @@ describe('Site Map', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = render(
       <Provider store={store}>

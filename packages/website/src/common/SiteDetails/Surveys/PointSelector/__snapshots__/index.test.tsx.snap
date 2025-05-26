@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`renders as expected 1`] = `
 <div>
@@ -58,43 +58,6 @@ exports[`renders as expected 1`] = `
                 d="M7 10l5 5 5-5z"
               />
             </svg>
-            <mock-popover
-              anchorel="[object HTMLDivElement]"
-              anchororigin="[object Object]"
-              classname="css-s4soc1-MuiMenu-root"
-              id="menu-survey-point"
-              open="false"
-              slotprops="[object Object]"
-              slots="[object Object]"
-              transformorigin="[object Object]"
-              transitionduration="auto"
-              transitionprops="[object Object]"
-            >
-              <mock-menulist
-                actions="[object Object]"
-                aria-labelledby="survey-point"
-                autofocusitem="false"
-                classname="MuiMenu-list css-7drlel-MuiMenu-list"
-                disablelistwrap="true"
-                id=":r0:"
-                role="listbox"
-                variant="selectedMenu"
-              >
-                <mock-menuitem
-                  aria-selected="true"
-                  data-value="All"
-                  role="option"
-                  selected="true"
-                >
-                  <mock-typography
-                    classname="makeStyles-menuItem-5"
-                    variant="h6"
-                  >
-                    All
-                  </mock-typography>
-                </mock-menuitem>
-              </mock-menulist>
-            </mock-popover>
           </div>
         </div>
       </div>

@@ -18,10 +18,10 @@ describe('NewSurveyPointDialog', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(
-      <NewSurveyPointDialog open siteId={1} onClose={jest.fn()} />,
+      <NewSurveyPointDialog open siteId={1} onClose={vi.fn()} />,
       { store },
     ).container;
   });

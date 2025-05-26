@@ -5,15 +5,13 @@ import { mockSite } from 'mocks/mockSite';
 import { renderWithProviders } from 'utils/test-utils';
 import Popup from '.';
 
-jest.mock('react-leaflet', () => ({
-  __esModule: true,
+vi.mock('react-leaflet', () => ({
   useLeaflet: () => {
     return {
-      map: jest.requireActual('react').createElement('mock-LeafletPopup', {}),
+      map: React.createElement('mock-LeafletPopup', {}),
     };
   },
-  Popup: (props: any) =>
-    jest.requireActual('react').createElement('mock-LeafletPopup', props),
+  Popup: (props: any) => React.createElement('mock-LeafletPopup', props),
 }));
 
 const mockStore = configureStore([]);
@@ -26,7 +24,7 @@ describe('Popup', () => {
       },
     });
 
-    store.dispatch = jest.fn();
+    store.dispatch = vi.fn();
 
     element = renderWithProviders(<Popup site={mockSite} />, {
       store,

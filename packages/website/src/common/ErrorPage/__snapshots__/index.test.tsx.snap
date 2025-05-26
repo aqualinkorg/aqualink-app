@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Error Page should render with given state from Redux store 1`] = `
+exports[`Error Page > should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
     classname="NavBar-appBar-1"
@@ -181,7 +181,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
             >
               <img
                 alt="Ovio Logo"
-                src="ovio_logo.png"
+                src="/src/assets/img/ovio_logo.png"
               />
             </a>
           </div>
@@ -377,10 +377,8 @@ exports[`Error Page should render with given state from Redux store 1`] = `
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
@@ -425,7 +423,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <mock-cardcontent>
@@ -741,10 +739,8 @@ exports[`Error Page should render with given state from Redux store 1`] = `
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
-          <mock-typography
-            classname="MuiCardHeader-title"
-            component="span"
-            variant="h5"
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
@@ -789,7 +785,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
                 </mock-iconbutton>
               </div>
             </div>
-          </mock-typography>
+          </span>
         </div>
       </div>
       <div
