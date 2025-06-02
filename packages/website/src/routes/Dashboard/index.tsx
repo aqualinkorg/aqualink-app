@@ -21,6 +21,17 @@ import DashboardContent from './Content';
 // For now only this static one is being used.
 export const collections: Record<string, number> = {
   minderoo: 1,
+  Bermuda: 746,
+  MNMRC: 766,
+  HOKWO: 778,
+  Palau: 779,
+  Brazil: 787,
+  Caribbean: 804,
+  SuperNOVA: 805,
+  Florida_Keys: 811,
+  TNC: 837,
+  Hawaii: 838, 
+  Malaysia: 839,
 };
 
 const Dashboard = ({ classes }: DashboardProps) => {

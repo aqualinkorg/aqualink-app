@@ -85,6 +85,17 @@ const metadata: Record<string, any> = {
 const collections: Record<string, number> = {
   minderoo: 1,
   'heat-stress': 2, // Special case for heat stress collection
+  Bermuda: 746,
+  MNMRC: 766,
+  HOKWO: 778,
+  Palau: 779,
+  Brazil: 787,
+  Caribbean: 804,
+  SuperNOVA: 805,
+  Florida_Keys: 811,
+  TNC: 837,
+  Hawaii: 838, 
+  Malaysia: 839,
 };
 
 type Bindings = {
