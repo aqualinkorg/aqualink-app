@@ -2668,7 +2668,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                                 <div
                                   class="MuiCardMedia-root makeStyles-cardImage-891 css-utntyq-MuiCardMedia-root"
                                   role="img"
-                                  style="background-image: url(image-url);"
+                                  style="background-image: url("image-url");"
                                 />
                               </a>
                             </div>
@@ -2739,7 +2739,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                                   >
                                     <a
                                       href="/sites/1/survey_details/46"
-                                      style="text-decoration: none;"
+                                      style="color: inherit; text-decoration: none;"
                                     >
                                       <button
                                         class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
@@ -2798,7 +2798,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                                 <div
                                   class="MuiCardMedia-root makeStyles-cardImage-891 css-utntyq-MuiCardMedia-root"
                                   role="img"
-                                  style="background-image: url(image-url);"
+                                  style="background-image: url("image-url");"
                                 />
                               </a>
                             </div>
@@ -2869,7 +2869,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                                   >
                                     <a
                                       href="/sites/1/survey_details/46"
-                                      style="text-decoration: none;"
+                                      style="color: inherit; text-decoration: none;"
                                     >
                                       <button
                                         class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
