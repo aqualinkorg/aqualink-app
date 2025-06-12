@@ -61,6 +61,10 @@ const menuRoutes = [
     text: 'Drone',
     to: '/drones',
   },
+  {
+    text: 'Contact us',
+    href: 'https://highlights.aqualink.org/contact-us',
+  },
 ];
 
 const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {

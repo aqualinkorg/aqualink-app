@@ -99,7 +99,7 @@ exports[`Popup > should render with given state from Redux store 1`] = `
           >
             <a
               href="/sites/1"
-              style="text-decoration: none;"
+              style="color: inherit; text-decoration: none;"
             >
               <button
                 class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
