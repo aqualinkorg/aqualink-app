@@ -53,11 +53,11 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
               <div
                 aria-hidden="false"
                 data-swipeable="true"
-                style="width: 100%; flex-shrink: 0; overflow: visible; box-sizing: border-box;"
+                style="width: 100%; flex-shrink: 0; overflow: visible; box-sizing: border-box; margin-bottom: -60px;"
               >
                 <div
                   class="ReactSwipeableBottomSheet--closed"
-                  style="overflow: hidden; background-color: white; height: initial; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
+                  style="overflow: hidden; background-color: white; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
                 >
                   <div
                     role="presentation"

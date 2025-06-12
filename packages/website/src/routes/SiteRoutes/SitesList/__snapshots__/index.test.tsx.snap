@@ -10,7 +10,7 @@ exports[`Sites List > should render with given state from Redux store 1`] = `
     >
       <a
         href="/sites/1"
-        style="color: inherit; text-decoration: none;"
+        style="text-decoration: none;"
       >
         <div
           class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4afvok-MuiButtonBase-root-MuiListItemButton-root"
