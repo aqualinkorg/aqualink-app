@@ -21,17 +21,17 @@ import DashboardContent from './Content';
 // For now only this static one is being used.
 export const collections: Record<string, number> = {
   minderoo: 1,
-  Bermuda: 746,
-  MNMRC: 766,
-  HOKWO: 778,
-  Palau: 779,
-  Brazil: 787,
-  Caribbean: 804,
-  SuperNOVA: 805,
-  Florida_Keys: 811,
-  TNC: 837,
-  Hawaii: 838,
-  Malaysia: 839,
+  bermuda: 746,
+  mnmrc: 766,
+  hokwo: 778,
+  palau: 779,
+  brazil: 787,
+  caribbean: 804,
+  supernova: 805,
+  'florida-keys': 811,
+  tnc: 837,
+  hawaii: 838,
+  malaysia: 839,
 };
 
 const Dashboard = ({ classes }: DashboardProps) => {
@@ -74,7 +74,9 @@ const Dashboard = ({ classes }: DashboardProps) => {
       const isId = !Number.isNaN(Number(urlCollectionName));
       const urlCollectionId = isId
         ? Number(urlCollectionName)
-        : (!!urlCollectionName && collections[urlCollectionName]) || undefined;
+        : (!!urlCollectionName &&
+            collections[urlCollectionName.toLowerCase()]) ||
+          undefined;
 
       if (
         (urlCollectionId && storedCollectionId !== urlCollectionId) ||
