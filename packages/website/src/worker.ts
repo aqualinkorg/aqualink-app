@@ -94,7 +94,7 @@ const collections: Record<string, number> = {
   SuperNOVA: 805,
   Florida_Keys: 811,
   TNC: 837,
-  Hawaii: 838, 
+  Hawaii: 838,
   Malaysia: 839,
 };
 
