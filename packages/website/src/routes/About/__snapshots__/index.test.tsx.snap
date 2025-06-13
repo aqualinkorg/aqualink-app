@@ -177,7 +177,6 @@ exports[`About > should render with given state from Redux store 1`] = `
                     >
                       <a
                         href="https://www.linkedin.com/in/ericpboucher/"
-                        style="color: inherit;"
                       >
                         Eric Boucher
                       </a>

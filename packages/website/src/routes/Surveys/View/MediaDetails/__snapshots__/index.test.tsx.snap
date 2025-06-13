@@ -84,7 +84,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
       >
         <div
           class="slick-track"
-          style="opacity: 1; -webkit-transform: translate3d(0px, 0px, 0px); transform: translate3d(0px, 0px, 0px);"
+          style="opacity: 1; transform: translate3d(0px, 0px, 0px);"
         >
           <div
             aria-hidden="false"
@@ -107,7 +107,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                     <div
                       class="MuiCardMedia-root SliderCard-cardImage-14 css-utntyq-MuiCardMedia-root"
                       role="img"
-                      style="background-image: url("image-url");"
+                      style="background-image: url(image-url);"
                     />
                   </div>
                   <div
