@@ -152,7 +152,7 @@ The rest of the scripts are used to either augment the models with missing data 
 - Wind-wave data: Update hindcast data in `forecast_data` table
   - `yarn update-wind-wave-date [-s siteId1 siteId2 ...]`
 - `fill-noaa-nearest-point` requires optional dependency `netcdf4` to run. You may have trouble installing it with python versions at or above `3.11`. `Python 3.10.6` is tested to build the package successfully.
-- `reef-check`: Upload sites, surveys and data from Reef Check. This script is currently run manually when Reef Check sends us new data. Supports 4 commands: `upload-sites`, `upload-surveys`, `upload-organisms` & `upload-substrates`. Upload sites and surveys first. 
+- `reef-check`: Upload sites, surveys and data from Reef Check. This script is currently run manually when Reef Check sends us new data. Supports 5 commands: `upload-sites`, `upload-surveys`, `upload-organisms`, `upload-substrates` & `upload-collectors`. Upload sites and surveys first.
 
 ### Swagger API docs
 
@@ -192,7 +192,7 @@ Reef Check is an organization dedicated to the conservation of reefs and we inte
 Series of commands to run to load/update Reef Check data:
 
 ```
-yarn reef-check upload-sites -n -f reef_check_data/Site\ Description.xlsx
+yarn reef-check upload-sites -f reef_check_data/Site\ Description.xlsx
 yarn reef-check upload-surveys -f reef_check_data/Site\ Description.xlsx
 yarn reef-check upload-substrates -f reef_check_data/Substrate.csv
 yarn reef-check upload-organisms -f reef_check_data/Belt.csv
