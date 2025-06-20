@@ -8,6 +8,11 @@ import {
   Snackbar,
   Hidden,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Button,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -26,6 +31,9 @@ import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
+import CloseIcon from '@mui/icons-material/Close';
+import InfoIcon from '@mui/icons-material/Info';
+import Tune from '@mui/icons-material/Tune';
 import { mapIconSize } from 'layout/App/theme';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
@@ -63,6 +71,7 @@ const HomepageMap = ({
   classes,
   onMapLoad,
 }: HomepageMapProps) => {
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] =
@@ -181,6 +190,14 @@ const HomepageMap = ({
     [],
   );
 
+  const handleInfoClick = () => {
+    setInfoDialogOpen(true);
+  };
+
+  const handleInfoClose = () => {
+    setInfoDialogOpen(false);
+  };
+
   return loading ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
@@ -229,7 +246,203 @@ const HomepageMap = ({
             <ExpandIcon color="primary" className={classes.expandIcon} />
           </IconButton>
         </div>
+        <div className={classes.infoIconButton}>
+          <IconButton onClick={handleInfoClick} size="large">
+            <InfoIcon color="primary" />
+          </IconButton>
+        </div>
       </Hidden>
+      <Dialog open={infoDialogOpen} onClose={handleInfoClose}>
+        <DialogTitle
+          color="primary"
+          sx={{ fontSize: '20px', textAlign: 'center', fontWeight: 'bold' }}
+        >
+          How to Use the Map
+        </DialogTitle>
+        <IconButton
+          onClick={handleInfoClose}
+          color="primary"
+          size="large"
+          sx={{
+            position: 'absolute',
+            right: 10,
+            top: 10,
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent>
+          <DialogContentText component="div">
+            <div className={classes.infoDialog}>
+              <div className={classes.infoDialogSection}>
+                <h3 className={classes.infoDialogSectionTitle}>Icons</h3>
+                <div className={classes.infoDialogFlexContainer}>
+                  <img
+                    src="https://lh6.googleusercontent.com/I6YUWMwUrlekFL-RXGGRYvIMpTHp9P22-Wehlt_0WiMvezaO4txKmeDADbWnKEaQ7NConr2Fvbx3B5Nz_QEL3ecJBrAOM93r_9Csfw_b2d5R6rvcMwS9f83IMLVor0tF0tofq1181lgi59pboj6TsgNrjqYfZ30TFWG9qagB1Xf5NwpBI5HFkg=w1280"
+                    alt="Layer icon"
+                    className={classes.infoDialogImage}
+                  />
+                  <p>
+                    Layer icon - Select the layer of the map. You can choose
+                    from Satellite Imagery, Sea Surface Temperature, Heat
+                    Stress, or SST Anomaly.
+                  </p>
+                </div>
+
+                <div className={classes.infoDialogFlexContainer}>
+                  <FullscreenIcon
+                    className={classes.infoDialogIcon}
+                    color="primary"
+                  />
+                  <p>
+                    Fullscreen icon - Toggle between full screen and half
+                    screen.
+                  </p>
+                </div>
+
+                <div className={classes.infoDialogFlexContainer}>
+                  <MyLocationIcon
+                    className={classes.infoDialogIcon}
+                    color="primary"
+                  />
+                  <p>
+                    My location icon - Click on this icon to zoom in to where
+                    you&apos;re currently located.
+                  </p>
+                </div>
+
+                <div className={classes.infoDialogFlexContainer}>
+                  <img
+                    src="https://lh4.googleusercontent.com/6BeZbkdCTGAVOnm2rx_0SnIRQtYuX8YdrBENuXSxL4Nx23-2CcezjjY0_AfYr4L5qniFaqEzF2i3OON18lBv7XKp96dyUp8CST7cKeZ6TNDNES1n_L0wwpmhYo8Q0nIcIbFer8KFkwSZLpmPuLAfRKgurscywCtaCQBwIpP3W_3cleNYHOrj=w1280"
+                    alt="Layer icon"
+                    className={classes.infoDialogImage}
+                  />
+                  <p>Zoom in and out on the map.</p>
+                </div>
+
+                <div className={classes.infoDialogFlexContainer}>
+                  <Button
+                    sx={{
+                      flex: '1 0 130px',
+                    }}
+                    variant="contained"
+                    startIcon={<Tune />}
+                  >
+                    All sites
+                  </Button>
+                  <p>
+                    Map filter - Select what type of data and heat stress you
+                    want to explore. You can also select multiple species, reef
+                    composition, and anthropogenic impact, and the map will
+                    display all the selected items.
+                  </p>
+                </div>
+              </div>
+
+              <div className={classes.infoDialogSection}>
+                <h3 className={classes.infoDialogSectionTitle}>Layers</h3>
+                <p>
+                  Click on the layer icon in the top right corner. Then select
+                  Satellite Imagery, Sea Surface Temperature, Heat Stress, or
+                  SST Anomaly.
+                </p>
+                <p>
+                  Sea Surface Temperature - View the global ocean temperature in
+                  Celsius (°C). The bar in the bottom left corner indicates what
+                  temperature the colors are.
+                </p>
+                <p>
+                  Heat Stress - Heat stress is a measure of the amount of time
+                  above the 20 year historical maximum temperature. The unit of
+                  measure for heat stress is Degree Heating Weeks (DHW). Many
+                  marine environments, like coral sites, degrade after prolonged
+                  heat exposure, which is why this is an important metric. The
+                  DHW bar indicates how many weeks each area of the ocean has
+                  been experiencing heat stress. For more in-depth information,
+                  view{' '}
+                  <a href="https://coralreefwatch.noaa.gov/product/5km/tutorial/crw10a_dhw_product.php">
+                    NOAA CRW&apos;s Heat Stress page.
+                  </a>
+                </p>
+                <p>
+                  SST Anomaly - Sea Surface Temperature Anomaly is the
+                  difference between the daily observed SST and the normal
+                  (long-term) SST conditions for that specific day of the year.
+                  For more in-depth information, view{' '}
+                  <a href="https://coralreefwatch.noaa.gov/product/5km/tutorial/crw07a_ssta_product.php">
+                    NOAA CRW&apos;s SST Anomaly page.
+                  </a>
+                </p>
+              </div>
+
+              <div className={classes.infoDialogSection}>
+                <h3 className={classes.infoDialogSectionTitle}>
+                  Site Icons and Colors
+                </h3>
+                <p>
+                  Each site has its own icon on the map. The heat stress level
+                  that each site is experiencing is indicated by its color. To
+                  learn more about heat stress levels, view{' '}
+                  <a href="https://coralreefwatch.noaa.gov/product/5km/tutorial/crw11a_baa.php">
+                    NOAA CRW&apos;s bleaching alert page.
+                  </a>
+                </p>
+                <div
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '50px',
+                    marginBottom: '-30px',
+                  }}
+                >
+                  <AlertLevelLegend />
+                </div>
+                <p>
+                  Each site has its own icon on the map, which varies depending
+                  on the data it has.
+                </p>
+                <div className={classes.infoDialogFlexContainer}>
+                  <img
+                    src="https://lh3.googleusercontent.com/yms_84DLBk7m_lnFegJw6GlPeymlJgola0WSZZQpwH-S3BlPidT2rzaumox80z2mTsM548rGJgyk-ENsRKxTsJkP46FEQFhLnlNv0SISGuf9doDpgZ8DkS-w5s3qSNZkqENkDtZHQSyEprcyUMQELIrHzHMk5O5h7sr9OcFbHOalr1Z2U0Qxfw=w1280"
+                    alt="Sofar Smart Mooring Spotter"
+                    className={classes.infoDialogImage}
+                  />
+                  <p>
+                    This icon indicates that this site has a Sofar Smart Mooring
+                    Spotter with transmits real-time wind, wave, and temperature
+                    data from the seafloor and sea surface.
+                  </p>
+                </div>
+                <div className={classes.infoDialogFlexContainer}>
+                  <img
+                    src="https://lh4.googleusercontent.com/ij_JPoLZs3NpQc4wI7fpFbL50DaB1hmcl2YuWbUk4lQOPy_zWQHKa0pHmBHJorGztFErG2KGFsjV1ktZ568s9uDTprGLEH4KfskB-ZWj9xV4kctHk4EjIuf6RyTMPKMjkNa-4KB_wulY9BTL0yq5c5GD4SB96DPiO6zoSjWyWX2Y8w5SUSvGLw=w1280"
+                    alt="Dashboard"
+                    className={classes.infoDialogImage}
+                  />
+                  <p>
+                    This icon indicate that this site has at least one
+                    temperature logger connected to the dashboard.
+                  </p>
+                </div>
+                <div className={classes.infoDialogFlexContainer}>
+                  <img
+                    src="https://lh6.googleusercontent.com/pP0rB206ny9NEATUcRR_I5Yv8t8HM9zcIG8aIjojWd6HghXzhUwhW5xkkuoMbSPdN8PH4ixZphVGs54D4D14gbBAdSvWFnUTa_4UblqpwOvS-1lM1qkx4ypsLizLSn-N-yXg4MtjUoAa_McTQAnQhrCuL1p8SoYYNjY4JHshyt_X6yuUv6M7wg=w1280"
+                    alt="Other sites"
+                    className={classes.infoDialogImage}
+                  />
+                  <p>
+                    All the other sites have this icon. This includes sites with
+                    water quality data, Reef Check data, 3D models, Live
+                    streams, surveys, and all others. Every site is
+                    automatically equipped with wind, wave, and temperature data
+                    from NOAA satellites.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
       {tileLayer}
       {sofarLayers}
       {siteMarkers}
@@ -296,8 +509,44 @@ const styles = () =>
       top: 50,
       zIndex: 400,
     },
+    infoIconButton: {
+      ...mapButtonStyles,
+      right: 0,
+      top: 100,
+      zIndex: 400,
+    },
     expandIcon: {
       fontSize: '34px',
+    },
+    infoDialog: {
+      maxWidth: '100%',
+      fontFamily: 'Roboto, sans-serif',
+      fontSize: '14px',
+    },
+    infoDialogSection: {
+      marginBottom: '10px',
+    },
+    infoDialogSectionTitle: {
+      color: 'rgb(22, 141, 189)',
+      marginBottom: '15px',
+      fontSize: '18px',
+    },
+    infoDialogFlexContainer: {
+      marginBottom: '15px',
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '10px',
+    },
+    infoDialogIcon: {
+      width: '40px',
+      height: '40px',
+      objectFit: 'contain',
+      border: '2px solid #c6c4c5',
+      borderRadius: '5px',
+    },
+    infoDialogImage: {
+      width: '40px',
+      objectFit: 'contain',
     },
     '@global': {
       // Disable tile fade animation
