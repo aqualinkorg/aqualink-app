@@ -387,14 +387,7 @@ const HomepageMap = ({
                     NOAA CRW&apos;s bleaching alert page.
                   </a>
                 </p>
-                <div
-                  style={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '50px',
-                    marginBottom: '-30px',
-                  }}
-                >
+                <div className={classes.alertLevelLegendContainer}>
                   <AlertLevelLegend />
                 </div>
                 <p>
@@ -547,6 +540,13 @@ const styles = () =>
     infoDialogImage: {
       width: '40px',
       objectFit: 'contain',
+    },
+    alertLevelLegendContainer: {
+      position: 'relative',
+      width: '100%',
+      height: '60px',
+      marginBottom: '-30px',
+      transform: 'translate(-20%, 0)',
     },
     '@global': {
       // Disable tile fade animation
