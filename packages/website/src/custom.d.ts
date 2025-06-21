@@ -1,5 +1,6 @@
 declare module '*.png';
 declare module '*.jpg';
+declare module '*.svg';
 
 // Generic CSS import definition
 declare module '*.css' {

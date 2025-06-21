@@ -55,7 +55,7 @@
     "react-ga4": "^2.1.0",
     "react-hook-form": "^7.41.5",
     "react-jwt": "^1.1.8",
-    "react-leaflet": "^2.8.0",
+    "react-leaflet": "^4.2.1",
     "react-leaflet-markercluster": "^2.0.0",
     "react-material-ui-carousel": "3.4.2",
     "react-redux": "^7.2.0",

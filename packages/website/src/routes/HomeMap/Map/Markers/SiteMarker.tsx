@@ -1,4 +1,4 @@
-import { CircleMarker, Marker, useLeaflet } from 'react-leaflet';
+import { CircleMarker, Marker, useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import { Site } from 'store/Sites/types';
@@ -27,7 +27,7 @@ interface SiteMarkerProps {
  * All in one site marker with icon, offset duplicates, and popup built in.
  */
 export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
-  const { map } = useLeaflet();
+  const map = useMap();
   const isSelected = useSelector(isSelectedOnMapSelector(site.id));
   const dispatch = useDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
@@ -40,10 +40,12 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
     <>
       {LNG_OFFSETS.map((offset) => (
         <CircleMarker
-          onclick={() => {
-            const adjustedLng = calculateAdjustedLng(map || null, lng);
-            dispatch(setSearchResult());
-            dispatch(setSiteOnMap({ ...site, displayLng: adjustedLng }));
+          eventHandlers={{
+            click: () => {
+              const adjustedLng = calculateAdjustedLng(map || null, lng);
+              dispatch(setSearchResult());
+              dispatch(setSiteOnMap({ ...site, displayLng: adjustedLng }));
+            },
           }}
           key={`${site.id}-${offset}`}
           center={[lat, lng + offset]}
@@ -62,7 +64,7 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
 });
 
 export const SensorSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
-  const { map } = useLeaflet();
+  const map = useMap();
   const isSelected = useSelector(isSelectedOnMapSelector(site.id));
   const dispatch = useDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
@@ -82,10 +84,12 @@ export const SensorSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
     <>
       {LNG_OFFSETS.map((offset) => (
         <Marker
-          onClick={() => {
-            const adjustedLng = calculateAdjustedLng(map || null, lng);
-            dispatch(setSearchResult());
-            dispatch(setSiteOnMap({ ...site, displayLng: adjustedLng }));
+          eventHandlers={{
+            click: () => {
+              const adjustedLng = calculateAdjustedLng(map || null, lng);
+              dispatch(setSearchResult());
+              dispatch(setSiteOnMap({ ...site, displayLng: adjustedLng }));
+            },
           }}
           key={`${site.id}-${offset}`}
           icon={markerIcon}
