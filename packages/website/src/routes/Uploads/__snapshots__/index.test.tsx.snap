@@ -303,9 +303,24 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             Drone
           </mock-typography>
         </a>
+        <mock-link
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          href="https://highlights.aqualink.org/contact-us"
+          tabindex="0"
+          target="_blank"
+          to=""
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Contact us
+          </mock-typography>
+        </mock-link>
         <mock-box
           margintop="auto"
-          padding="25px"
+          padding="1rem"
+          paddingtop="0px"
         >
           <mock-typography
             variant="subtitle1"

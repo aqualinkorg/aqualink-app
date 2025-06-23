@@ -61,6 +61,10 @@ const menuRoutes = [
     text: 'Drone',
     to: '/drones',
   },
+  {
+    text: 'Contact us',
+    href: 'https://highlights.aqualink.org/contact-us',
+  },
 ];
 
 const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
@@ -105,7 +109,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           </Typography>
         </Button>
       ))}
-      <Box marginTop="auto" padding="25px">
+      <Box marginTop="auto" padding="1rem" paddingTop="0px">
         <Typography variant="subtitle1">
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           Aqualink is open-source (MIT)
@@ -154,7 +158,7 @@ const styles = (theme: Theme) =>
       },
     },
     menuDrawerButton: {
-      margin: theme.spacing(2, 2, 2),
+      margin: theme.spacing(1, 2, 1),
       '&:hover': {
         color: 'white',
       },
