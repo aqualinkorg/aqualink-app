@@ -161,7 +161,8 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
         </mock-link>
         <mock-box
           margintop="auto"
-          padding="25px"
+          padding="1rem"
+          paddingtop="0px"
         >
           <mock-typography
             variant="subtitle1"

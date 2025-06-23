@@ -155,7 +155,8 @@ exports[`MenuDrawer open > should render with given state from Redux store 1`] =
     </mock-link>
     <mock-box
       margintop="auto"
-      padding="25px"
+      padding="1rem"
+      paddingtop="0px"
     >
       <mock-typography
         variant="subtitle1"
