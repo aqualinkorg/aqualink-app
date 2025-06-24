@@ -28,13 +28,7 @@ const IconDescription: React.FC<IconDescriptionProps> = ({
   description,
   isLarge,
 }) => (
-  <Box
-    display="flex"
-    alignItems="center"
-    gap={3}
-    marginBottom={2}
-    paddingTop={1}
-  >
+  <Box display="flex" alignItems="center" gap={3} mb={2} pt={1}>
     <Box
       display="flex"
       alignItems="center"
@@ -58,6 +52,7 @@ const InfoDialogContent: React.FC = () => {
           style={{
             flex: '1 0 40px',
             height: '40px',
+            width: '40px',
             backgroundSize: '36px, 36px',
             backgroundRepeat: 'no-repeat',
             border: '2px solid #c6c4c5',
@@ -254,6 +249,12 @@ const InfoDialogContent: React.FC = () => {
               transform: {
                 lg: 'translate(-10%, 0)',
                 md: 'translate(10%, 0)',
+              },
+              height: {
+                xs: '130px',
+              },
+              marginBottom: {
+                xs: '-60px',
               },
             }}
           >
