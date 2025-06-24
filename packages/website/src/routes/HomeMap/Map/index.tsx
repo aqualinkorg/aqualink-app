@@ -8,6 +8,7 @@ import {
   Snackbar,
   Hidden,
   Alert,
+  Theme,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -185,7 +186,6 @@ const HomepageMap = ({
   );
 
   const handleInfoClick = () => {
-    console.log('click????');
     setInfoDialogOpen(true);
   };
 
@@ -292,7 +292,7 @@ const mapButtonStyles: CSSProperties | CreateCSSProperties<{}> = {
   border: '2px solid rgba(0,0,0,0.2)',
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     map: {
       flex: 1,
@@ -322,6 +322,9 @@ const styles = () =>
       right: 0,
       top: 100,
       zIndex: 400,
+      [theme.breakpoints.down('lg')]: {
+        top: 50,
+      },
     },
     expandIcon: {
       fontSize: '34px',

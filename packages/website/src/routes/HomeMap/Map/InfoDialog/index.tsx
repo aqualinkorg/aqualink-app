@@ -139,6 +139,7 @@ const InfoDialogContent: React.FC = () => {
       icon: (
         <div
           style={{ width: '30px', height: '30px' }}
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: spotter('#FFF200') }}
         />
       ),
@@ -149,6 +150,7 @@ const InfoDialogContent: React.FC = () => {
       icon: (
         <div
           style={{ width: '25px', height: '66px' }}
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: hobo('#FFF200') }}
         />
       ),
@@ -248,7 +250,12 @@ const InfoDialogContent: React.FC = () => {
             width="100%"
             height={60}
             mb={-3}
-            sx={{ transform: 'translate(-20%, 0)' }}
+            sx={{
+              transform: {
+                lg: 'translate(-10%, 0)',
+                md: 'translate(10%, 0)',
+              },
+            }}
           >
             <AlertLevelLegend />
           </Box>
