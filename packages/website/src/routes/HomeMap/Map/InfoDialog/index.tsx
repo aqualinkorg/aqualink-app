@@ -15,7 +15,7 @@ import Tune from '@mui/icons-material/Tune';
 import CloseIcon from '@mui/icons-material/Close';
 import { spotter } from 'assets/spotter';
 import { hobo } from 'assets/hobo';
-import AlertLevelLegend from '../alertLevelLegend';
+import { AlertLevelLegendContent } from '../alertLevelLegend';
 
 interface IconDescriptionProps {
   icon: React.ReactNode;
@@ -243,22 +243,17 @@ const InfoDialogContent: React.FC = () => {
           <Box
             position="relative"
             width="100%"
-            height={60}
-            mb={-3}
+            mb={1}
             sx={{
-              transform: {
-                lg: 'translate(-10%, 0)',
-                md: 'translate(10%, 0)',
-              },
-              height: {
-                xs: '130px',
-              },
-              marginBottom: {
-                xs: '-60px',
+              display: 'flex',
+              justifyContent: 'center',
+              fontSize: {
+                xs: '12px',
+                md: '16px',
               },
             }}
           >
-            <AlertLevelLegend />
+            <AlertLevelLegendContent />
           </Box>
 
           <Typography variant="body2" paragraph>
