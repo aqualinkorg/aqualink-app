@@ -7,9 +7,9 @@ import createStyles from '@mui/styles/createStyles';
 
 import { alertLevelColorCode } from '../../../assets/colorCode';
 
-const AlertLevelLegend = ({ classes }: AlertLevelLegendProps) => {
+const AlertLevelLegendItems = ({ classes }: AlertLevelLegendItemsProps) => {
   return (
-    <div className={classes.root}>
+    <>
       {alertLevelColorCode.map((item, index) => (
         <div
           key={item.value}
@@ -23,27 +23,14 @@ const AlertLevelLegend = ({ classes }: AlertLevelLegendProps) => {
           {item.value}
         </div>
       ))}
-    </div>
+    </>
   );
 };
 
-const styles = (theme: Theme) =>
+const contentStyles = (theme: Theme) =>
   createStyles({
-    root: {
-      zIndex: 401,
-      color: 'white',
-      position: 'absolute',
-      bottom: 40,
-      right: 10,
-      display: 'flex',
-      [theme.breakpoints.down('lg')]: {
-        left: 10,
-      },
-      [theme.breakpoints.down('sm')]: {
-        bottom: 80,
-      },
-    },
     legendItem: {
+      color: 'white',
       fontWeight: 600,
       display: 'flex',
       alignItems: 'center',
@@ -58,6 +45,37 @@ const styles = (theme: Theme) =>
     },
     lastChild: {
       margin: 0,
+    },
+  });
+
+type AlertLevelLegendItemsProps = WithStyles<typeof contentStyles>;
+
+export const AlertLevelLegendContent = withStyles(contentStyles)(
+  AlertLevelLegendItems,
+);
+
+const AlertLevelLegend = ({ classes }: AlertLevelLegendProps) => {
+  return (
+    <div className={classes.root}>
+      <AlertLevelLegendContent />
+    </div>
+  );
+};
+
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      zIndex: 401,
+      position: 'absolute',
+      bottom: 40,
+      right: 10,
+      display: 'flex',
+      [theme.breakpoints.down('lg')]: {
+        left: 10,
+      },
+      [theme.breakpoints.down('sm')]: {
+        bottom: 80,
+      },
     },
   });
 
