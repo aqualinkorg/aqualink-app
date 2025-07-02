@@ -13,7 +13,7 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import { Link, useLocation } from 'react-router-dom';
-import { Popup as LeafletPopup, useLeaflet } from 'react-leaflet';
+import { Popup as LeafletPopup, useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import type { LatLngTuple } from 'leaflet';
@@ -27,7 +27,7 @@ import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
 const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
-  const { map } = useLeaflet();
+  const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
   const location = useLocation();
@@ -52,7 +52,7 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
       siteOnMap?.polygon.type === 'Point' &&
       autoOpen
     ) {
-      const { leafletElement: popup } = popupRef.current;
+      const popup = popupRef.current;
       const [_lng, lat] = siteOnMap.polygon.coordinates; // Original lng not needed here
 
       // Use displayLng from state if available, fall back to original lng
