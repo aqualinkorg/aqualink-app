@@ -8,6 +8,7 @@ import {
   Snackbar,
   Hidden,
   Alert,
+  Theme,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -26,9 +27,11 @@ import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
+import InfoIcon from '@mui/icons-material/Info';
 import { mapIconSize } from 'layout/App/theme';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
+import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
 
@@ -63,6 +66,7 @@ const HomepageMap = ({
   classes,
   onMapLoad,
 }: HomepageMapProps) => {
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] =
@@ -181,6 +185,14 @@ const HomepageMap = ({
     [],
   );
 
+  const handleInfoClick = () => {
+    setInfoDialogOpen(true);
+  };
+
+  const handleInfoClose = () => {
+    setInfoDialogOpen(false);
+  };
+
   return loading ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
@@ -230,6 +242,15 @@ const HomepageMap = ({
           </IconButton>
         </div>
       </Hidden>
+      <div className={classes.infoIconButton}>
+        <IconButton onClick={handleInfoClick} size="large">
+          <InfoIcon color="primary" />
+        </IconButton>
+      </div>
+      <InfoDialog
+        infoDialogOpen={infoDialogOpen}
+        handleInfoClose={handleInfoClose}
+      />
       {tileLayer}
       {sofarLayers}
       {siteMarkers}
@@ -271,7 +292,7 @@ const mapButtonStyles: CSSProperties | CreateCSSProperties<{}> = {
   border: '2px solid rgba(0,0,0,0.2)',
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     map: {
       flex: 1,
@@ -295,6 +316,15 @@ const styles = () =>
       right: 0,
       top: 50,
       zIndex: 400,
+    },
+    infoIconButton: {
+      ...mapButtonStyles,
+      right: 0,
+      top: 100,
+      zIndex: 400,
+      [theme.breakpoints.down('lg')]: {
+        top: 50,
+      },
     },
     expandIcon: {
       fontSize: '34px',
