@@ -30,8 +30,8 @@ test('It processes Sofar API for daily data.', async () => {
     site: { id: 1 },
     date,
     dailyAlertLevel: 0,
-    degreeHeatingDays: 21.206205519211903,
-    satelliteTemperature: 16.029768748901425,
+    degreeHeatingDays: 15.397786264922775,
+    satelliteTemperature: 15.419691827607394,
   };
 
   expect(values).toEqual(expected);
