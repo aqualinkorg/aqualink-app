@@ -27,7 +27,6 @@ type Args = {
  * The fields we need to extract from the Belt.xlsx file
  */
 const beltFields = [
-  'site_id',
   'survey_id',
   'date',
   'depth (m)',
@@ -839,11 +838,11 @@ yargs(hideBin(process.argv))
   )
   .command(
     'upload-organisms',
-    'Upload organisms from the "Belt.xlsx" file',
+    'Upload organisms from the "Belt.csv" file',
     {
       filePath: {
         alias: 'f',
-        describe: 'Path to the "Belt.xlsx" file',
+        describe: 'Path to the "Belt.csv" file',
         type: 'string',
         demandOption: true,
       },
@@ -859,11 +858,11 @@ yargs(hideBin(process.argv))
   )
   .command(
     'upload-substrates',
-    'Upload substrates from the "Substrate.xlsx" file',
+    'Upload substrates from the "Substrate.csv" file',
     {
       filePath: {
         alias: 'f',
-        describe: 'Path to the "Substrate.xlsx" file',
+        describe: 'Path to the "Substrate.csv" file',
         type: 'string',
         demandOption: true,
       },
