@@ -6,7 +6,7 @@ import { Site } from '../sites/sites.entity';
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
 
-  const date = new Date('2022-08-31');
+  const date = new Date('2024-08-31');
   date.setUTCHours(23, 59, 59, 999);
   const site = {
     id: 1,
