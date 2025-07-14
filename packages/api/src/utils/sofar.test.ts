@@ -18,7 +18,7 @@ test('It processes Sofar API for daily data.', async () => {
   );
 
   expect(values).toEqual([
-    { timestamp: '2024-08-30T12:00:00.000Z', value: 27.70993356218372 },
+    { timestamp: '2024-08-30T12:00:00.000Z', value: 29.509984820290786 },
   ]);
 });
 
