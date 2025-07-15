@@ -1,10 +1,10 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
+import { vi } from 'vitest';
 
 import { mockSite } from 'mocks/mockSite';
 import { renderWithProviders } from 'utils/test-utils';
 import Popup from '.';
-import { vi } from 'vitest';
 
 vi.mock('react-leaflet', async (importOriginal) => {
   const actual = await importOriginal();
