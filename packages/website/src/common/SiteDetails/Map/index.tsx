@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { Map, TileLayer, Polygon, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Polygon, Marker } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import L, { LatLngTuple } from 'leaflet';
 import { WithStyles } from '@mui/styles';
@@ -61,9 +61,9 @@ const SiteMap = ({
   classes,
 }: SiteMapProps) => {
   const dispatch = useDispatch();
-  const mapRef = useRef<Map>(null);
-  const markerRef = useRef<Marker>(null);
-  const editPointMarkerRer = useRef<Marker>(null);
+  const mapRef = useRef<L.Map>(null);
+  const markerRef = useRef<L.Marker>(null);
+  const editPointMarkerRer = useRef<L.Marker>(null);
   const draftSite = useSelector(siteDraftSelector);
   const user = useSelector(userInfoSelector);
   const [focusedPoint, setFocusedPoint] = useState<SurveyPoints>();
@@ -110,19 +110,16 @@ const SiteMap = ({
   );
 
   useEffect(() => {
-    if (
-      mapRef?.current?.leafletElement &&
-      focusedPoint?.polygon?.type === 'Point'
-    ) {
+    if (mapRef?.current && focusedPoint?.polygon?.type === 'Point') {
       const [lng, lat] = focusedPoint.polygon.coordinates;
-      setCenter(mapRef.current.leafletElement, [lat, lng], 15);
+      setCenter(mapRef.current, [lat, lng], 15);
     }
   }, [focusedPoint]);
 
   useEffect(() => {
     const { current } = mapRef;
-    if (current?.leafletElement) {
-      const map = current.leafletElement;
+    if (current) {
+      const map = current;
       // Initialize map's position to fit the given polygon
       if (polygon.type === 'Polygon') {
         map.fitBounds(L.polygon(polygon.coordinates).getBounds());
@@ -143,8 +140,8 @@ const SiteMap = ({
 
   const handleDragChange = () => {
     const { current } = markerRef;
-    if (current?.leafletElement) {
-      const mapMarker = current.leafletElement;
+    if (current) {
+      const mapMarker = current;
       const { lat, lng } = mapMarker.getLatLng().wrap();
       dispatch(
         setSiteDraft({
@@ -159,16 +156,21 @@ const SiteMap = ({
 
   const handleEditPointDragChange = () => {
     const { current } = editPointMarkerRer;
-    if (current && current.leafletElement && onEditPointCoordinatesChange) {
-      const mapMarker = current.leafletElement;
+    if (current && onEditPointCoordinatesChange) {
+      const mapMarker = current;
       const { lat, lng } = mapMarker.getLatLng().wrap();
       onEditPointCoordinatesChange(lat.toString(), lng.toString());
     }
   };
 
   return (
-    <Map
+    <MapContainer
       ref={mapRef}
+      center={
+        polygon.type === 'Polygon'
+          ? [0, 0]
+          : [polygon.coordinates[1], polygon.coordinates[0]]
+      }
       minZoom={1}
       maxZoom={17}
       zoom={13}
@@ -189,7 +191,9 @@ const SiteMap = ({
             <Marker
               ref={editPointMarkerRer}
               draggable={surveyPointEditModeEnabled}
-              ondragend={handleEditPointDragChange}
+              eventHandlers={{
+                dragend: handleEditPointDragChange,
+              }}
               icon={surveyPointIcon(true)}
               zIndexOffset={100}
               position={[
@@ -207,7 +211,9 @@ const SiteMap = ({
           <Marker
             ref={markerRef}
             draggable={Boolean(draftSite)}
-            ondragend={handleDragChange}
+            eventHandlers={{
+              dragend: handleDragChange,
+            }}
             icon={pinIcon}
             position={[
               draftSite?.coordinates?.latitude || polygon.coordinates[1],
@@ -226,7 +232,9 @@ const SiteMap = ({
                     point.polygon.coordinates[1],
                     point.polygon.coordinates[0],
                   ]}
-                  onclick={() => setFocusedPoint(point)}
+                  eventHandlers={{
+                    click: () => setFocusedPoint(point),
+                  }}
                 >
                   <SurveyPointPopup siteId={siteId} point={point} />
                 </Marker>
@@ -240,7 +248,7 @@ const SiteMap = ({
           position={[spotterPosition.latitude, spotterPosition.longitude]}
         />
       )}
-    </Map>
+    </MapContainer>
   );
 };
 

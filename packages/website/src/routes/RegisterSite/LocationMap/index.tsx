@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Map, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import L, { LeafletEvent } from 'leaflet';
 import { Theme } from '@mui/material';
 
@@ -18,6 +18,20 @@ const pinIcon = L.icon({
 });
 
 const INITIAL_ZOOM = 5;
+
+const MapEventsHandler = ({
+  updateLatLng,
+  setZoom,
+}: {
+  updateLatLng: (event: L.LeafletMouseEvent) => void;
+  setZoom: (event: LeafletEvent) => void;
+}) => {
+  useMapEvents({
+    click: updateLatLng,
+    zoomend: setZoom,
+  });
+  return null;
+};
 
 const LocationMap = ({
   markerPositionLat,
@@ -49,19 +63,21 @@ const LocationMap = ({
   ];
 
   return (
-    <Map
+    <MapContainer
       center={markerPosition}
       zoom={zoom}
       className={classes.map}
-      onclick={(e) => updateLatLng(e)}
-      onzoomend={onZoomEnd}
       maxBounds={mapConstants.MAX_BOUNDS}
       maxBoundsViscosity={1.0}
       minZoom={1}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {markerPosition && <Marker icon={pinIcon} position={markerPosition} />}
-    </Map>
+      <MapEventsHandler
+        updateLatLng={(e) => updateLatLng(e)}
+        setZoom={(e) => onZoomEnd(e)}
+      />
+    </MapContainer>
   );
 };
 
