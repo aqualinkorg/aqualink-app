@@ -1,18 +1,23 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
+import { vi } from 'vitest';
 
 import { mockSite } from 'mocks/mockSite';
 import { renderWithProviders } from 'utils/test-utils';
 import Popup from '.';
 
-vi.mock('react-leaflet', () => ({
-  useLeaflet: () => {
-    return {
-      map: React.createElement('mock-LeafletPopup', {}),
-    };
-  },
-  Popup: (props: any) => React.createElement('mock-LeafletPopup', props),
-}));
+vi.mock('react-leaflet', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...(actual as object),
+    useMap: () => ({
+      setView: vi.fn(),
+      getCenter: () => ({ lat: 0, lng: 0 }),
+      // add more mock methods if needed
+    }),
+    Popup: (props: any) => React.createElement('mock-LeafletPopup', props),
+  };
+});
 
 const mockStore = configureStore([]);
 describe('Popup', () => {
