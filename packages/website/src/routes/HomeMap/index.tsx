@@ -12,7 +12,7 @@ import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
-import { findSiteById, findInitialSitePosition } from 'helpers/siteUtils';
+import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
@@ -29,7 +29,7 @@ interface MapQueryParams {
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
-const INITIAL_ZOOM = 5;
+const INITIAL_ZOOM = 4;
 
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
@@ -45,11 +45,14 @@ function useQuery() {
     : featuredSiteId;
 
   // Focus on the site provided in the queryParamSiteId or the site with highest alert level.
-  const initialCenter =
-    findInitialSitePosition(
-      sitesList,
-      queryParamSiteId === initialSiteId ? initialSiteId : undefined,
-    ) || INITIAL_CENTER;
+  // const initialCenter =
+  //   findInitialSitePosition(
+  //     sitesList,
+  //     queryParamSiteId === initialSiteId ? initialSiteId : undefined,
+  //   ) || INITIAL_CENTER;
+
+  // WARNING - temporarily zoom to Australia during summer
+  const initialCenter = INITIAL_CENTER;
 
   return {
     initialCenter,
