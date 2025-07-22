@@ -43,13 +43,18 @@ import AlertLevelLegend from './alertLevelLegend';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const tileURL = accessToken
+const ZOOM_THRESHOLD = 8;
+// Free tile layer (ArcGIS World Imagery)
+const freeTileURL =
+  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}@2x';
+const freeAttribution = '';
+// Paid tile layer (Mapbox custom style)
+const paidTileURL = accessToken
   ? `https://api.mapbox.com/styles/v1/eric-ovio/ckesyzu658klw19s6zc0adlgp/tiles/{z}/{x}/{y}@2x?access_token=${accessToken}`
-  : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}@2x';
-
-const attribution = accessToken
+  : freeTileURL;
+const paidAttribution = accessToken
   ? '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
-  : '';
+  : freeAttribution;
 
 const currentLocationMarker = L.divIcon({
   className: 'current-position-marker',
@@ -58,11 +63,14 @@ const currentLocationMarker = L.divIcon({
 
 const MapEventsHandler = ({
   onBaseLayerChange,
+  onZoomChange,
 }: {
   onBaseLayerChange: (e: LayersControlEvent) => void;
+  onZoomChange: (zoom: number) => void;
 }) => {
   useMapEvents({
     baselayerchange: (e) => onBaseLayerChange(e),
+    zoomend: (e) => onZoomChange(e.target.getZoom()),
   });
   return null;
 };
@@ -90,6 +98,9 @@ const HomepageMap = ({
     useState<number>();
   const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
     useState<string>();
+  const [usePaidTiles, setUsePaidTiles] = useState<boolean>(
+    initialZoom >= ZOOM_THRESHOLD,
+  );
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
@@ -171,6 +182,13 @@ const HomepageMap = ({
     setLegendName(name);
   };
 
+  const onZoomChange = (zoom: number) => {
+    const shouldUsePaidTiles = zoom >= ZOOM_THRESHOLD && Boolean(accessToken);
+    if (shouldUsePaidTiles !== usePaidTiles) {
+      setUsePaidTiles(shouldUsePaidTiles);
+    }
+  };
+
   const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
 
   // Memoize the layers to prevent unnecessary re-renders
@@ -188,8 +206,9 @@ const HomepageMap = ({
   const tileLayer = useMemo(
     () => (
       <TileLayer
-        attribution={attribution}
-        url={tileURL}
+        key={usePaidTiles ? 'paid' : 'free'}
+        attribution={usePaidTiles ? paidAttribution : freeAttribution}
+        url={usePaidTiles ? paidTileURL : freeTileURL}
         keepBuffer={6}
         updateWhenIdle
         updateInterval={400}
@@ -197,7 +216,7 @@ const HomepageMap = ({
         className="no-tile-fade"
       />
     ),
-    [],
+    [usePaidTiles],
   );
 
   const handleInfoClick = () => {
@@ -287,7 +306,10 @@ const HomepageMap = ({
           </IconButton>
         </div>
       )}
-      <MapEventsHandler onBaseLayerChange={onBaseLayerChange} />
+      <MapEventsHandler
+        onBaseLayerChange={onBaseLayerChange}
+        onZoomChange={onZoomChange}
+      />
     </MapContainer>
   );
 };
