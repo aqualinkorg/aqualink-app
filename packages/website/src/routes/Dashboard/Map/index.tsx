@@ -22,8 +22,13 @@ const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
       <Map
         classes={{ map: classes.map }}
         initialCenter={collectionCenter || new LatLng(0, 0)}
-        initialBounds={collectionBounds}
-        initialZoom={3}
+        {...(collectionBounds
+          ? {
+              initialBounds: collectionBounds,
+            }
+          : {
+              initialZoom: 3,
+            })}
         collection={collection}
         showAlertLevelLegend={false}
         showWaterMark={false}

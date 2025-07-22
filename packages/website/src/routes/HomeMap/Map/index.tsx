@@ -378,7 +378,7 @@ const styles = (theme: Theme) =>
 
 interface HomepageMapIncomingProps {
   initialCenter: LatLng;
-  initialZoom: number;
+  initialZoom?: number;
   showSiteTable?: boolean;
   setShowSiteTable?: React.Dispatch<React.SetStateAction<boolean>>;
   initialBounds?: LatLngBounds;
