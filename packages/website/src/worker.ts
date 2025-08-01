@@ -96,6 +96,12 @@ const collections: Record<string, number> = {
   tnc: 837,
   hawaii: 838,
   malaysia: 839,
+  KAUST: 850,
+  Iran: 858,
+  Barbados: 859,
+  Jamaica: 862,
+  Bleach-Watch: 864,
+  Saint-Lucia: 865,
 };
 
 type Bindings = {
