@@ -36,8 +36,8 @@ export const collections: Record<string, number> = {
   Iran: 858,
   Barbados: 859,
   Jamaica: 862,
-  Bleach-Watch: 864,
-  Saint-Lucia: 865,
+  'Bleach-Watch': 864,
+  'Saint-Lucia': 865,
 };
 
 const Dashboard = ({ classes }: DashboardProps) => {
