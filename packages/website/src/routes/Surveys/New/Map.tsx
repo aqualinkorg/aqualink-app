@@ -87,10 +87,14 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
   }, [diveLocation]);
 
   return (
-    <MapContainer 
-      ref={mapRef} 
+    <MapContainer
+      ref={mapRef}
       className={classes.map}
-      center={polygon.type === 'Polygon' ? [0, 0] : [polygon.coordinates[1], polygon.coordinates[0]]}
+      center={
+        polygon.type === 'Polygon'
+          ? [0, 0]
+          : [polygon.coordinates[1], polygon.coordinates[0]]
+      }
       zoom={13}
       style={{ height: '400px', width: '100%' }}
     >
