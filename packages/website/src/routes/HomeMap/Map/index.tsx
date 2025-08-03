@@ -58,12 +58,25 @@ const currentLocationMarker = L.divIcon({
 
 const MapEventsHandler = ({
   onBaseLayerChange,
+  onMapReady,
 }: {
   onBaseLayerChange: (e: LayersControlEvent) => void;
+  onMapReady: () => void;
 }) => {
-  useMapEvents({
+  const map = useMapEvents({
     baselayerchange: (e) => onBaseLayerChange(e),
   });
+
+  useEffect(() => {
+    if (map) {
+      const timer = setTimeout(() => {
+        onMapReady();
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [map, onMapReady]);
+
   return null;
 };
 
@@ -90,6 +103,7 @@ const HomepageMap = ({
     useState<number>();
   const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
     useState<string>();
+  const [mapReady, setMapReady] = useState(false);
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
@@ -149,7 +163,7 @@ const HomepageMap = ({
 
   useEffect(() => {
     const { current: map } = ref;
-    if (map && siteOnMap?.polygon.type === 'Point') {
+    if (map && mapReady && siteOnMap?.polygon.type === 'Point') {
       const [lng, lat] = siteOnMap.polygon.coordinates;
 
       // Use the pre-calculated displayLng if available, otherwise use original lng
@@ -165,10 +179,14 @@ const HomepageMap = ({
         noMoveStart: true,
       });
     }
-  }, [siteOnMap]);
+  }, [siteOnMap, mapReady]);
 
   const onBaseLayerChange = ({ name }: LayersControlEvent) => {
     setLegendName(name);
+  };
+
+  const onMapReady = () => {
+    setMapReady(true);
   };
 
   const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
@@ -287,7 +305,10 @@ const HomepageMap = ({
           </IconButton>
         </div>
       )}
-      <MapEventsHandler onBaseLayerChange={onBaseLayerChange} />
+      <MapEventsHandler
+        onBaseLayerChange={onBaseLayerChange}
+        onMapReady={onMapReady}
+      />
     </MapContainer>
   );
 };
