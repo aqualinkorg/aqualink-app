@@ -82,8 +82,6 @@ const metadata: Record<string, any> = {
   },
 };
 
-
-
 type Bindings = {
   ASSETS: {
     fetch: (request: Request | string) => Promise<Response>;
