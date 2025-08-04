@@ -69,12 +69,8 @@ const MapEventsHandler = ({
 
   useEffect(() => {
     if (map) {
-      const timer = setTimeout(() => {
-        onMapReady();
-      }, 0);
-      return () => clearTimeout(timer);
+      onMapReady();
     }
-    return undefined;
   }, [map, onMapReady]);
 
   return null;
