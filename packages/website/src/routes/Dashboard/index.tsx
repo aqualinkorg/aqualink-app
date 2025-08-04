@@ -32,12 +32,12 @@ export const collections: Record<string, number> = {
   tnc: 837,
   hawaii: 838,
   malaysia: 839,
-  KAUST: 850,
-  Iran: 858,
-  Barbados: 859,
-  Jamaica: 862,
-  'Bleach-Watch': 864,
-  'Saint-Lucia': 865,
+  kaust: 850,
+  iran: 858,
+  barbados: 859,
+  jamaica: 862,
+  'bleach-watch': 864,
+  'saint-lucia': 865,
 };
 
 const Dashboard = ({ classes }: DashboardProps) => {
