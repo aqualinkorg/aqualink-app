@@ -87,7 +87,17 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
   }, [diveLocation]);
 
   return (
-    <MapContainer ref={mapRef} className={classes.map}>
+    <MapContainer
+      ref={mapRef}
+      className={classes.map}
+      center={
+        polygon.type === 'Polygon'
+          ? [0, 0]
+          : [polygon.coordinates[1], polygon.coordinates[0]]
+      }
+      zoom={13}
+      style={{ height: '400px', width: '100%' }}
+    >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {markerLat && markerLng && (
         <Marker icon={pinIcon} position={[markerLat, markerLng]} />

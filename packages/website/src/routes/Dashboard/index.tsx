@@ -16,23 +16,7 @@ import Footer from 'common/Footer';
 import Delayed from 'common/Delayed';
 import FullScreenMessage from 'common/FullScreenMessage';
 import DashboardContent from './Content';
-
-// This will be removed when the idea of public collections will be introduced.
-// For now only this static one is being used.
-export const collections: Record<string, number> = {
-  minderoo: 1,
-  bermuda: 746,
-  mnmrc: 766,
-  hokwo: 778,
-  palau: 779,
-  brazil: 787,
-  caribbean: 804,
-  supernova: 805,
-  'florida-keys': 811,
-  tnc: 837,
-  hawaii: 838,
-  malaysia: 839,
-};
+import { getCollectionId } from '../../constants/collections';
 
 const Dashboard = ({ classes }: DashboardProps) => {
   const dispatch = useDispatch();
@@ -74,8 +58,7 @@ const Dashboard = ({ classes }: DashboardProps) => {
       const isId = !Number.isNaN(Number(urlCollectionName));
       const urlCollectionId = isId
         ? Number(urlCollectionName)
-        : (!!urlCollectionName &&
-            collections[urlCollectionName.toLowerCase()]) ||
+        : (!!urlCollectionName && getCollectionId(urlCollectionName)) ||
           undefined;
 
       if (
