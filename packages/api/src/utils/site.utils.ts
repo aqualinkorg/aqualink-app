@@ -85,13 +85,8 @@ export const getRegion = async (
 ) => {
   const country = await getGoogleRegion(longitude, latitude);
   
-  // If no country/region found, return null instead of undefined
-  // This prevents TypeORM from assigning the first database item
-  // https://github.com/typeorm/typeorm/issues/2500
-  // 
-  // Fix for issue #1137: "Make undefined regions blank"
-  // Instead of returning undefined (which causes TypeORM to assign the first
-  // available region), we return null, which leaves the region field blank.
+  // Return null for undefined/null/empty country values to prevent TypeORM
+  // from assigning the first available region in the database
   if (!country) {
     return null;
   }
@@ -102,7 +97,7 @@ export const getRegion = async (
     return region;
   }
 
-  // Only create and save new region if we have a valid country name
+  // Create and save new region if not found
   return regionRepository.save({
     name: country,
     polygon: createPoint(longitude, latitude),
@@ -403,7 +398,6 @@ export const createSite = async (
   );
   const timezones = getTimezones(latitude, longitude) as string[];
   
-  // Log when no region is found for better debugging
   if (!region) {
     logger.warn(
       `No region found for site ${name} at coordinates (${latitude}, ${longitude}). Region will be left blank.`,

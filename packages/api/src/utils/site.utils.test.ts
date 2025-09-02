@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
-import { Region } from '../sites/regions.entity';
+import { Region } from '../regions/regions.entity';
 
 describe('Site Utils - Region Handling Logic', () => {
   let regionRepository: Repository<Region>;
