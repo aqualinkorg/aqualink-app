@@ -130,7 +130,7 @@ export class SitesService {
       siteId: site.id,
     });
 
-    const regionWarningMessage = site.region
+    const regionWarningMessage = !site.region
       ? '\n:warning: *Warning*: No region was found for this site, please ask devs to enter one manually.'
       : '';
 
