@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
-import { Region } from '../sites/regions.entity';
+import { Region } from '../regions/regions.entity';
 
 describe('Site Utils - Region Handling Logic', () => {
   let regionRepository: Repository<Region>;
@@ -11,7 +11,6 @@ describe('Site Utils - Region Handling Logic', () => {
       providers: [],
     }).compile();
 
-    // Create a mock repository
     mockRegionRepository = {
       findOne: jest.fn(),
       save: jest.fn(),
@@ -26,7 +25,6 @@ describe('Site Utils - Region Handling Logic', () => {
 
   describe('Region Assignment Logic', () => {
     it('should handle null/undefined country values correctly', () => {
-      // Test the logic that handles undefined/null country values
       const testCases = [undefined, null, '', '   '];
       
       testCases.forEach(country => {
@@ -36,7 +34,6 @@ describe('Site Utils - Region Handling Logic', () => {
     });
 
     it('should handle valid country values correctly', () => {
-      // Test the logic that handles valid country values
       const testCases = ['Australia', 'New Zealand', 'United States'];
       
       testCases.forEach(country => {
@@ -46,15 +43,19 @@ describe('Site Utils - Region Handling Logic', () => {
     });
 
     it('should verify repository interaction patterns', async () => {
-      // Test that the repository methods are called correctly
-      const mockRegion = { id: 1, name: 'Australia' };
+      const mockRegion = { 
+        id: 1, 
+        name: 'Australia',
+        polygon: { type: 'Point', coordinates: [0, 0] },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        parent: null
+      };
       
-      // Simulate finding an existing region
       mockRegionRepository.findOne.mockResolvedValue(mockRegion);
       
       expect(mockRegionRepository.findOne).not.toHaveBeenCalled();
       
-      // Simulate the call
       await mockRegionRepository.findOne({ where: { name: 'Australia' } });
       
       expect(mockRegionRepository.findOne).toHaveBeenCalledWith({
@@ -63,10 +64,15 @@ describe('Site Utils - Region Handling Logic', () => {
     });
 
     it('should verify region creation pattern', async () => {
-      // Test that new regions are created correctly
-      const mockNewRegion = { id: 2, name: 'New Zealand' };
+      const mockNewRegion = { 
+        id: 2, 
+        name: 'New Zealand',
+        polygon: { type: 'Point', coordinates: [0, 0] },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        parent: null
+      };
       
-      // Simulate creating a new region
       mockRegionRepository.save.mockResolvedValue(mockNewRegion);
       
       const result = await mockRegionRepository.save({
@@ -84,16 +90,10 @@ describe('Site Utils - Region Handling Logic', () => {
 
   describe('Fix Verification', () => {
     it('should verify the fix prevents undefined region assignment', () => {
-      // This test verifies that our fix logic works correctly
-      
-      // Before fix: undefined would cause TypeORM to assign first region
-      // After fix: null is returned, which leaves region blank
-      
       const undefinedCountry = undefined;
       const nullCountry = null;
       const emptyCountry = '';
       
-      // All these should result in null (blank region)
       const results = [undefinedCountry, nullCountry, emptyCountry].map(country => {
         return !country ? null : country;
       });
@@ -102,8 +102,6 @@ describe('Site Utils - Region Handling Logic', () => {
     });
 
     it('should verify valid countries are processed correctly', () => {
-      // This test verifies that valid countries are still processed
-      
       const validCountries = ['Australia', 'New Zealand', 'United States'];
       
       const results = validCountries.map(country => {
