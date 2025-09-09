@@ -86,20 +86,21 @@ export const getRegion = async (
   const country = await getGoogleRegion(longitude, latitude);
   // undefined values would result in the first database item
   // https://github.com/typeorm/typeorm/issues/2500
-  const region = country
-    ? await regionRepository.findOne({ where: { name: country } })
-    : null;
+  // bail out to avoid incorrect region assignment
+  if (!country) {
+    return undefined;
+  }
+
+  const region = await regionRepository.findOne({ where: { name: country } });
 
   if (region) {
     return region;
   }
 
-  return country
-    ? regionRepository.save({
-        name: country,
-        polygon: createPoint(longitude, latitude),
-      })
-    : undefined;
+  return regionRepository.save({
+    name: country,
+    polygon: createPoint(longitude, latitude),
+  });
 };
 
 export const getTimezones = (latitude: number, longitude: number) => {
