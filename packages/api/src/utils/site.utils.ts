@@ -84,11 +84,11 @@ export const getRegion = async (
   regionRepository: Repository<Region>,
 ) => {
   const country = await getGoogleRegion(longitude, latitude);
-  
-  // Return null for undefined/null/empty country values to prevent TypeORM
-  // from assigning the first available region in the database
+  // undefined values would result in the first database item
+  // https://github.com/typeorm/typeorm/issues/2500
+  // bail out to avoid incorrect region assignment
   if (!country) {
-    return null;
+    return undefined;
   }
 
   const region = await regionRepository.findOne({ where: { name: country } });
@@ -97,7 +97,6 @@ export const getRegion = async (
     return region;
   }
 
-  // Create and save new region if not found
   return regionRepository.save({
     name: country,
     polygon: createPoint(longitude, latitude),

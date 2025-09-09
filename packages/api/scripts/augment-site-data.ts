@@ -7,30 +7,8 @@ import { Site } from '../src/sites/sites.entity';
 import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 import { Region } from '../src/regions/regions.entity';
 import { getMMM, getHistoricalMonthlyMeans } from '../src/utils/temperature';
-import { getGoogleRegion } from '../src/utils/site.utils';
-import { createPoint } from '../src/utils/coordinates';
+import { getRegion } from '../src/utils/site.utils';
 import AqualinkDataSource from '../ormconfig';
-
-async function getRegion(
-  longitude: number,
-  latitude: number,
-  regionRepository: Repository<Region>,
-) {
-  const googleRegion = await getGoogleRegion(longitude, latitude);
-  const regions = await regionRepository.find({
-    where: { name: googleRegion },
-  });
-
-  if (regions.length > 0) {
-    return regions[0];
-  }
-  return googleRegion
-    ? regionRepository.save({
-        name: googleRegion,
-        polygon: createPoint(longitude, latitude),
-      })
-    : undefined;
-}
 
 async function getAugmentedData(
   site: Site,
