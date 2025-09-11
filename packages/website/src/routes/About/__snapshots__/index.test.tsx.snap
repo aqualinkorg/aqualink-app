@@ -180,7 +180,7 @@ exports[`About > should render with given state from Redux store 1`] = `
           class="col-md-5"
         >
           <img
-            alt="Aqualink System Image"
+            alt="Aqualink System. Displaying the unique three-part foundation with satellite, in-situ sensors, and reef surfveys."
             class="About-responsiveImg-7"
             src="/src/assets/img/system_image.jpg"
           />
