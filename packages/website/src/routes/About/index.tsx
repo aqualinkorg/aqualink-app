@@ -193,26 +193,26 @@ const About = ({ classes }: AboutProps) => {
                     />
                   </div>
                 </div>
-                  <div className={classes.buttonGroup}>
-                    <a
-                      href="https://www.reefcheck.org/tropical-program/courses-products/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="contained" color="primary">
-                        Become a Reef Check Diver
-                      </Button>
-                    </a>
-                    <a
-                      href="https://aqualink.org/register"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="contained" color="primary">
-                        Create Free Aqualink Dashboards
-                      </Button>
-                    </a>
-                  </div>
+                <div className={classes.buttonGroup}>
+                  <a
+                    href="https://www.reefcheck.org/tropical-program/courses-products/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="contained" color="primary">
+                      Become a Reef Check Diver
+                    </Button>
+                  </a>
+                  <a
+                    href="https://aqualink.org/register"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="contained" color="primary">
+                      Create Free Aqualink Dashboards
+                    </Button>
+                  </a>
+                </div>
                 {/* Section 4: The Interactive Map */}
                 <div className="row mt-5">
                   <div className="col-12">
