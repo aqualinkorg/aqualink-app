@@ -66,16 +66,16 @@ export const getForecastData = async (latitude: number, longitude: number) => {
   ];
 
   const response = await Promise.all(
-    hindcastOptions.map(([sofarModel, sofarVariableId]) => {
-      return sofarHindcast(
+    hindcastOptions.map(([sofarModel, sofarVariableId]) =>
+      sofarHindcast(
         sofarModel,
         sofarVariableId,
         latitude,
         longitude,
         yesterday,
         today,
-      );
-    }),
+      ),
+    ),
   );
 
   const [

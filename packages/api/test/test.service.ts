@@ -101,13 +101,13 @@ export class TestService {
         latitude,
       );
 
-      return Bluebird.map(historicalMonthlyMean, (hmm) => {
-        return connection.getRepository(HistoricalMonthlyMean).save({
+      return Bluebird.map(historicalMonthlyMean, (hmm) =>
+        connection.getRepository(HistoricalMonthlyMean).save({
           site,
           month: hmm.month,
           temperature: hmm.temperature,
-        });
-      });
+        }),
+      );
     });
   }
 

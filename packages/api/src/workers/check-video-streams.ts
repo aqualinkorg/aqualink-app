@@ -44,8 +44,8 @@ export const fetchVideoDetails = (
   youTubeIds: string[],
   apiKey: string,
   playlist = false,
-): AxiosPromise<YouTubeApiResponse> => {
-  return axios({
+): AxiosPromise<YouTubeApiResponse> =>
+  axios({
     url: `https://www.googleapis.com/youtube/v3/${
       playlist ? 'playlists' : 'videos'
     }`,
@@ -56,7 +56,6 @@ export const fetchVideoDetails = (
       part: `status${playlist ? '' : ',liveStreamingDetails'}`,
     },
   });
-};
 
 export const getErrorMessage = (
   item: YouTubeVideoItem,
@@ -166,12 +165,13 @@ const checkVideoOptions = (
   youTubeVideoItems: YouTubeVideoItem[],
   isPlaylist: boolean,
 ) =>
-  youTubeVideoItems.reduce<Dictionary<string>>((mapping, item) => {
-    return {
+  youTubeVideoItems.reduce<Dictionary<string>>(
+    (mapping, item) => ({
       ...mapping,
       [item.id]: getErrorMessage(item, isPlaylist),
-    };
-  }, {});
+    }),
+    {},
+  );
 
 export const checkVideoStreams = async (
   dataSource: DataSource,

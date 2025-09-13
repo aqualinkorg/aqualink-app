@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
 import { Site } from 'store/Sites/types';
 import 'leaflet/dist/leaflet.css';
-import 'react-leaflet-markercluster/dist/styles.min.css';
+// Removed react-leaflet-markercluster styles - replaced with react-leaflet-cluster
 import { CollectionDetails } from 'store/Collection/types';
 import { hasDeployedSpotter } from 'helpers/siteUtils';
 import { CircleSiteMarker, SensorSiteMarker } from './SiteMarker';
