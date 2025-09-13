@@ -21,6 +21,8 @@
     "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-flow": "^7.26.0",
+    "@babel/plugin-transform-react-jsx": "^7.25.9",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "eslint": "^8.57.1",
