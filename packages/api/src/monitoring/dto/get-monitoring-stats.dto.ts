@@ -21,7 +21,7 @@ export class GetMonitoringStatsDto {
       }
 
       return splitted.map((x) => parseInt(x, 10));
-    } catch (error) {
+    } catch {
       throw new BadRequestException('siteIds: invalid format');
     }
   })
