@@ -343,7 +343,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       minHeight: '24rem',
     },
     [theme.breakpoints.down('md')]: {
-      height: imageUrl || loading ? '42rem' : '27rem',
+      height: imageUrl || loading ? '42rem' : 'auto',
     },
   }),
   imageBorderRadius: {
