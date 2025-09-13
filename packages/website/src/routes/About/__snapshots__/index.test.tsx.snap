@@ -197,38 +197,34 @@ exports[`About > should render with given state from Redux store 1`] = `
               </div>
             </div>
             <div
-              class="row"
+              class="About-buttonGroup-5"
             >
-              <div
-                class="About-buttonGroup-5"
+              <a
+                href="https://www.reefcheck.org/tropical-program/courses-products/"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                <a
-                  href="https://www.reefcheck.org/tropical-program/courses-products/"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1abvrni-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
                 >
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1abvrni-MuiButtonBase-root-MuiButton-root"
-                    tabindex="0"
-                    type="button"
-                  >
-                    Become a Reef Check Diver
-                  </button>
-                </a>
-                <a
-                  href="https://aqualink.org/register"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                  Become a Reef Check Diver
+                </button>
+              </a>
+              <a
+                href="https://aqualink.org/register"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1abvrni-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
                 >
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1abvrni-MuiButtonBase-root-MuiButton-root"
-                    tabindex="0"
-                    type="button"
-                  >
-                    Create Free Aqualink Dashboards
-                  </button>
-                </a>
-              </div>
+                  Create Free Aqualink Dashboards
+                </button>
+              </a>
             </div>
             <div
               class="row mt-5"

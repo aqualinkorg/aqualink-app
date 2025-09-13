@@ -193,7 +193,6 @@ const About = ({ classes }: AboutProps) => {
                     />
                   </div>
                 </div>
-                <div className="row">
                   <div className={classes.buttonGroup}>
                     <a
                       href="https://www.reefcheck.org/tropical-program/courses-products/"
@@ -214,7 +213,6 @@ const About = ({ classes }: AboutProps) => {
                       </Button>
                     </a>
                   </div>
-                </div>
                 {/* Section 4: The Interactive Map */}
                 <div className="row mt-5">
                   <div className="col-12">
