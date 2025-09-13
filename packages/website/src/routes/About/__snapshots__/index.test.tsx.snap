@@ -9,500 +9,518 @@ exports[`About > should render with given state from Redux store 1`] = `
     class="About-root-1"
   >
     <div
-      class="container bloc-md"
+      class="page-container"
     >
       <div
-        class="row"
+        class="bloc l-bloc"
+        id="bloc-0"
       >
         <div
-          class="col-12"
-        >
-          <mock-typography
-            classname="About-title-3"
-            variant="h4"
-          >
-            About Us
-          </mock-typography>
-          <p>
-            Aqualink is a free, open-source platform that provides a complete, real-time picture of marine health. We do this through two powerful, interconnected features: our integrated
-             
-            <b>
-              Dashboards
-            </b>
-             and our global 
-            <b>
-              Interactive Map
-            </b>
-            .
-          </p>
-          <p>
-            Our mission is to give scientists, the public, and local communities the tools they need to understand and protect our oceans by weaving together all available data into one clear, accessible place.
-          </p>
-        </div>
-      </div>
-      <div
-        class="row About-sectionSpacer-2"
-      >
-        <div
-          class="col-md-6"
-        >
-          <a
-            href="https://aqualink.org/sites/3197"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <img
-              alt="Dashboard and Coral Reef"
-              class="About-responsiveImg-7"
-              src="/src/assets/img/dashboard.jpg"
-            />
-          </a>
-          <mock-typography
-            classname="About-columnTitle-8"
-            variant="h6"
-          >
-            The Dashboard: A Complete View
-          </mock-typography>
-          <p
-            class="About-columnParagraph-9"
-          >
-            Our dashboards weave together satellite data, in-water sensors, and visual observations to tell the complete story of your reef. Interactive graphs are automatically created for all incoming data.
-          </p>
-        </div>
-        <div
-          class="col-md-6"
-        >
-          <a
-            href="https://aqualink.org/map"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <img
-              alt="Map of Aqualink sites"
-              class="About-responsiveImg-7"
-              src="/src/assets/img/map.jpg"
-            />
-          </a>
-          <mock-typography
-            classname="About-columnTitle-8"
-            variant="h6"
-          >
-            The Map: Discover & Analyze
-          </mock-typography>
-          <p
-            class="About-columnParagraph-9"
-          >
-            Our interactive map allows you to explore over 6,000 sites, analyze global temperature trends, and filter data to find what matters.
-          </p>
-        </div>
-      </div>
-      <div
-        class="row About-sectionSpacer-2 align-items-center"
-      >
-        <div
-          class="col-12"
-        >
-          <mock-typography
-            classname="About-sectionTitle-5"
-            variant="h4"
-          >
-            The Aqualink Dashboard: Unique Three-Part Foundation
-          </mock-typography>
-        </div>
-        <div
-          class="col-md-7"
-        >
-          <mock-typography
-            classname="About-subSectionTitle-6"
-            style="margin-top: 0px;"
-            variant="h6"
-          >
-            Satellite Data: The Big Picture, Automatically
-          </mock-typography>
-          <p>
-            Every dashboard is automatically equipped with daily satellite data from 
-            <a
-              href="https://coralreefwatch.noaa.gov/product/5km/tutorial/welcome.php"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              NOAA CRW
-            </a>
-            , providing essential context for your site. This includes:
-          </p>
-          <ul>
-            <li>
-              Daily Sea Surface Temperature (SST)
-            </li>
-            <li>
-              Wind and Wave data (updated every 6 hours)
-            </li>
-            <li>
-              Built-in Heat Stress Analysis: We automatically calculate and display the current heat stress level, 7-day temperature trends, historical temperature maximums, and bleaching alert levels.
-            </li>
-          </ul>
-          <mock-typography
-            classname="About-subSectionTitle-6"
-            variant="h6"
-          >
-            In-Water Sensor Data: The On-Site Reality
-          </mock-typography>
-          <p>
-            By connecting data from virtually any marine sensor, we can get a detailed analysis of the site's condition and stressors. The dashboard automatically produces graphs when data is uploaded.
-          </p>
-          <ul>
-            <li>
-              Supports both continuous, real-time streams (e.g., from Sofar Spotters) and periodic batch uploads (e.g., from water quality sensors).
-            </li>
-            <li>
-              Integrates temperature, water quality, wind, and wave data.
-            </li>
-          </ul>
-          <mock-typography
-            classname="About-subSectionTitle-6"
-            variant="h6"
-          >
-            Visual Observations: Surveys from the Reef
-          </mock-typography>
-          <p>
-            Document what’s actually happening below the surface. Visual observations bring the sensor and satellite data to life by confirming how the marine life is reacting to the conditions they are facing.
-          </p>
-          <ul>
-            <li>
-              Aqualink Surveys: Use our simple survey feature to quickly upload images and comments from the field.
-            </li>
-            <li>
-              Reef Check Surveys: For in-depth analysis, conduct a standardized Reef Check survey. All data on reef composition, species, bleaching, disease, and human impacts is automatically uploaded to your Aqualink dashboard, creating the most comprehensive view possible.
-            </li>
-          </ul>
-        </div>
-        <div
-          class="col-md-5"
-        >
-          <img
-            alt="Aqualink System. Displaying the unique three-part foundation with satellite, in-situ sensors, and reef surfveys."
-            class="About-responsiveImg-7"
-            src="/src/assets/img/system_image.jpg"
-          />
-        </div>
-      </div>
-      <div
-        class="About-buttonGroup-10"
-      >
-        <a
-          href="https://www.reefcheck.org/tropical-program/courses-products/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1abvrni-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
-            type="button"
-          >
-            Become a Reef Check Diver
-          </button>
-        </a>
-        <a
-          href="https://aqualink.org/register"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1abvrni-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
-            type="button"
-          >
-            Create Free Aqualink Dashboards
-          </button>
-        </a>
-      </div>
-      <div
-        class="row About-sectionSpacer-2"
-      >
-        <div
-          class="col-12"
-        >
-          <mock-typography
-            classname="About-sectionTitle-5"
-            variant="h4"
-          >
-            The Interactive Map: Discover, Compare, and Analyze
-          </mock-typography>
-          <p>
-            Our map is more than just a collection of dots; it's a powerful tool for global analysis. With over 6,000 sites, you can explore local ecosystems worldwide and understand how they fit into the bigger picture.
-          </p>
-        </div>
-        <div
-          class="col-md-6"
-        >
-          <mock-typography
-            classname="About-subSectionTitle-6"
-            variant="h6"
-          >
-            Global Trends with Satellite Powered Map Layers
-          </mock-typography>
-          <p>
-            The map is powered by the same live NOAA satellite data as our dashboards, allowing you to visualize global trends in:
-          </p>
-          <ul>
-            <li>
-              Sea Surface Temperature
-            </li>
-            <li>
-              Coral Bleaching Heat Stress
-            </li>
-            <li>
-              Sea Surface Temperature Anomaly
-            </li>
-          </ul>
-        </div>
-        <div
-          class="col-md-6"
-        >
-          <mock-typography
-            classname="About-subSectionTitle-6"
-            variant="h6"
-          >
-            Filter and Find What Matters
-          </mock-typography>
-          <p>
-            Our advanced filtering system sets the Aqualink map apart. Go beyond just finding a location and actively analyze the state of the world's reefs. You can filter our 6,000+ sites by:
-          </p>
-          <ul>
-            <li>
-              Current heat stress level
-            </li>
-            <li>
-              Type of in-situ sensors and data available
-            </li>
-            <li>
-              Species, reef composition, and anthropogenic impacts (from integrated Reef Check data)
-            </li>
-          </ul>
-        </div>
-        <div>
-          <a
-            href="https://aqualink.org/map"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <img
-              alt="Aqualink map where you can explore dashboards worldwide and measure heatstress, ocean temperatures, and coral bleaching levels."
-              class="About-responsiveImg-7"
-              src="/src/assets/img/map_long.jpg"
-            />
-          </a>
-        </div>
-      </div>
-      <div
-        class="row About-sectionSpacer-2"
-      >
-        <div
-          class="col-12"
-        >
-          <mock-typography
-            classname="About-sectionTitle-5"
-            variant="h4"
-          >
-            See It in Action
-          </mock-typography>
-          <p>
-            Watch a short overview to see the Aqualink platform in action.
-          </p>
-          <div
-            class="offset-lg-0 col-lg-12 order-lg-1 About-videoWrapper-11"
-          >
-            <iframe
-              allow="fullscreen"
-              class="MuiCardMedia-root MuiCardMedia-media About-video-12 css-1oysmh0-MuiCardMedia-root"
-              src="https://www.youtube.com/embed/EQZ3HiPevTY?si=dKTi4Mdv_Z9e9n-P"
-              title="What can you do with Aqualink?"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="row About-sectionSpacer-2"
-      >
-        <div
-          class="col-12"
-        >
-          <mock-typography
-            classname="About-sectionTitle-5"
-            variant="h4"
-          >
-            Want To Monitor Your Local Marine Ecosystems?
-          </mock-typography>
-        </div>
-        <div
-          class="col-md-4 text-center"
-        >
-          <mock-typography
-            classname="About-subSectionTitle-6"
-            style="margin-top: 0px;"
-            variant="h6"
-          >
-            Contribute your own observations!
-          </mock-typography>
-          <p>
-            Our animated field guide below provides an overview of best practices for conducting a survey with the Aqualink system.
-          </p>
-        </div>
-        <div
-          class="col-md-4 text-center"
-        >
-          <mock-typography
-            classname="About-subSectionTitle-6"
-            style="margin-top: 0px;"
-            variant="h6"
-          >
-            Get your own dashboards!
-          </mock-typography>
-          <p>
-            Sign up for an Aqualink account and go to 
-            <a
-              href="https://aqualink.org/register"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Register A Site
-            </a>
-            . It's free!
-          </p>
-        </div>
-        <div
-          class="col-md-4 text-center"
-        >
-          <mock-typography
-            classname="About-subSectionTitle-6"
-            style="margin-top: 0px;"
-            variant="h6"
-          >
-            No sensors or surveys?
-          </mock-typography>
-          <p>
-            You can find a lot of value in only using the wind, wave, and temperature satellite data with the built-in Heat Stress Analysis. Surveys and in-situ sensor data can be added later, but are not a requirement.
-          </p>
-        </div>
-      </div>
-      <div
-        class="offset-lg-0 col-lg-12 order-lg-1 About-videoWrapper-11"
-      >
-        <iframe
-          allow="fullscreen"
-          class="MuiCardMedia-root MuiCardMedia-media About-video-12 css-1oysmh0-MuiCardMedia-root"
-          src="https://www.youtube.com/embed/E_nXCl612lg"
-          title="field_guide"
-        />
-      </div>
-      <div
-        class="row About-sectionSpacer-2"
-      >
-        <div
-          class="centered col"
-        >
-          <mock-typography
-            classname="About-sectionTitle-5"
-            variant="h4"
-          >
-            The Team
-          </mock-typography>
-          <p>
-            We have been working in rapid development and entrepreneurial businesses that scale and hope to bring a similar mindset to ocean conservation. We have an extended team of engineering contractors in a variety of disciplines, all of whom embrace open source philosophies and want to help build ocean conservation tools. 
-            <br />
-          </p>
-        </div>
-      </div>
-      <div
-        class="row voffset-md"
-      >
-        <div
-          class="col-lg-4 col-md-4"
+          class="bloc l-bloc"
+          id="bloc-1"
         >
           <div
-            class="card border-0"
+            class="container bloc-md mobilecentered"
           >
             <div
-              class="card-body team-card"
+              class="row"
             >
-              <img
-                alt="Peter Rive"
-                class="rounded-circle mx-auto d-block mt-5 img-style lazyload"
-                src="/src/assets/img/peter.jpg"
-                width="100"
-              />
-              <h5
-                class="text-center mg-sm"
+              <div
+                class="col-12"
               >
-                Peter Rive
-              </h5>
-              <p
-                class="text-lg-center"
-              >
-                Co-founder of SolarCity, a pioneer in making solar energy an affordable alternative to fossil fuels for homeowners.
-              </p>
+                <mock-typography
+                  classname="About-title-2"
+                  variant="h4"
+                >
+                  About Us
+                </mock-typography>
+                <p>
+                  Aqualink is a free, open-source platform that provides a complete, real-time picture of marine health. We do this through two powerful, interconnected features: our integrated 
+                  <b>
+                    Dashboards
+                  </b>
+                   and our global
+                   
+                  <b>
+                    Interactive Map
+                  </b>
+                  .
+                </p>
+                <p>
+                  Our mission is to give scientists, the public, and local communities the tools they need to understand and protect our oceans by weaving together all available data into one clear, accessible place.
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
-        <div
-          class="col-lg-4 col-md-4 mt-3 mt-md-0"
-        >
-          <div
-            class="card border-0"
-          >
             <div
-              class="card-body team-card"
+              class="row mt-5"
             >
-              <img
-                alt="Caesar Hjerten"
-                class="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
-                src="/src/assets/img/caesar.jpg"
-                width="100"
-              />
-              <h5
-                class="text-center mg-sm"
-              >
-                Caesar Hjerten
-              </h5>
-              <p
-                class="text-lg-center"
-              >
-                Swedish-born, University of Hawaii-based Business graduate, ex-collegiate soccer player, and a passionate contributor to saving our ocean. Aqualink's point of contact for customer relations.
-                <br />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div
-          class="col-lg-4 col-md-4 mt-3 mt-md-0"
-        >
-          <div
-            class="card border-0"
-          >
-            <div
-              class="card-body team-card"
-            >
-              <img
-                alt="Eric Boucher"
-                class="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
-                src="/src/assets/img/ericb.jpg"
-                width="100"
-              />
-              <h5
-                class="text-center mg-sm"
+              <div
+                class="col-md-6"
               >
                 <a
-                  href="https://www.linkedin.com/in/ericpboucher/"
-                  style="text-decoration: none;"
+                  href="https://aqualink.org/sites/3197"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
-                  Eric Boucher
+                  <img
+                    alt="Dashboard and Coral Reef"
+                    class="About-responsiveImg-4"
+                    src="/src/assets/img/dashboard.jpg"
+                  />
                 </a>
-              </h5>
-              <p
-                class="text-lg-center"
+                <mock-typography
+                  classname="font-weight-bold text-center mt-3 mb-2"
+                  variant="h6"
+                >
+                  The Dashboard: A Complete View
+                </mock-typography>
+                <p
+                  class="text-center"
+                >
+                  Our dashboards weave together satellite data, in-water sensors, and visual observations to tell the complete story of your reef. Interactive graphs are automatically created for all incoming data.
+                </p>
+              </div>
+              <div
+                class="col-md-6"
               >
-                Entrepreneur and software engineer, passionate about open source and social impact. Loves sailing and exploring the ocean.
-              </p>
+                <a
+                  href="https://aqualink.org/map"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="Map of Aqualink sites"
+                    class="About-responsiveImg-4"
+                    src="/src/assets/img/map.jpg"
+                  />
+                </a>
+                <mock-typography
+                  classname="font-weight-bold text-center mt-3 mb-2"
+                  variant="h6"
+                >
+                  The Map: Discover & Analyze
+                </mock-typography>
+                <p
+                  class="text-center"
+                >
+                  Our interactive map allows you to explore over 6,000 sites, analyze global temperature trends, and filter data to find what matters.
+                </p>
+              </div>
+            </div>
+            <div
+              class="row mt-5 align-items-center"
+            >
+              <div
+                class="col-12"
+              >
+                <mock-typography
+                  classname="About-sectionTitle-3"
+                  variant="h4"
+                >
+                  The Aqualink Dashboard: Unique Three-Part Foundation
+                </mock-typography>
+              </div>
+              <div
+                class="col-md-7"
+              >
+                <mock-typography
+                  classname="font-weight-bold mb-2"
+                  variant="h6"
+                >
+                  Satellite Data: The Big Picture, Automatically
+                </mock-typography>
+                <p>
+                  Every dashboard is automatically equipped with daily satellite data from 
+                  <a
+                    href="https://coralreefwatch.noaa.gov/product/5km/tutorial/welcome.php"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    NOAA CRW
+                  </a>
+                  , providing essential context for your site. This includes:
+                </p>
+                <ul>
+                  <li>
+                    Daily Sea Surface Temperature (SST)
+                  </li>
+                  <li>
+                    Wind and Wave data (updated every 6 hours)
+                  </li>
+                  <li>
+                    Built-in Heat Stress Analysis: We automatically calculate and display the current heat stress level, 7-day temperature trends, historical temperature maximums, and bleaching alert levels.
+                  </li>
+                </ul>
+                <mock-typography
+                  classname="font-weight-bold mt-4 mb-2"
+                  variant="h6"
+                >
+                  In-Water Sensor Data: The On-Site Reality
+                </mock-typography>
+                <p>
+                  By connecting data from virtually any marine sensor, we can get a detailed analysis of the site's condition and stressors. The dashboard automatically produces graphs when data is uploaded.
+                </p>
+                <ul>
+                  <li>
+                    Supports both continuous, real-time streams (e.g., from Sofar Spotters) and periodic batch uploads (e.g., from water quality sensors).
+                  </li>
+                  <li>
+                    Integrates temperature, water quality, wind, and wave data.
+                  </li>
+                </ul>
+                <mock-typography
+                  classname="font-weight-bold mt-4 mb-2"
+                  variant="h6"
+                >
+                  Visual Observations: Surveys from the Reef
+                </mock-typography>
+                <p>
+                  Document what’s actually happening below the surface. Visual observations bring the sensor and satellite data to life by confirming how the marine life is reacting to the conditions they are facing.
+                </p>
+                <ul>
+                  <li>
+                    Aqualink Surveys: Use our simple survey feature to quickly upload images and comments from the field.
+                  </li>
+                  <li>
+                    Reef Check Surveys: For in-depth analysis, conduct a standardized Reef Check survey. All data on reef composition, species, bleaching, disease, and human impacts is automatically uploaded to your Aqualink dashboard, creating the most comprehensive view possible.
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="col-md-5"
+              >
+                <img
+                  alt="Aqualink System. Displaying the unique three-part foundation with satellite, in-situ sensors, and reef surfveys."
+                  class="About-responsiveImg-4"
+                  src="/src/assets/img/system_image.jpg"
+                />
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="About-buttonGroup-5"
+              >
+                <a
+                  href="https://www.reefcheck.org/tropical-program/courses-products/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1abvrni-MuiButtonBase-root-MuiButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    Become a Reef Check Diver
+                  </button>
+                </a>
+                <a
+                  href="https://aqualink.org/register"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1abvrni-MuiButtonBase-root-MuiButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    Create Free Aqualink Dashboards
+                  </button>
+                </a>
+              </div>
+            </div>
+            <div
+              class="row mt-5"
+            >
+              <div
+                class="col-12"
+              >
+                <mock-typography
+                  classname="About-sectionTitle-3"
+                  variant="h4"
+                >
+                  The Interactive Map: Discover, Compare, and Analyze
+                </mock-typography>
+                <p>
+                  Our map is more than just a collection of dots; it's a powerful tool for global analysis. With over 6,000 sites, you can explore local ecosystems worldwide and understand how they fit into the bigger picture.
+                </p>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <mock-typography
+                  classname="font-weight-bold mt-4 mb-2"
+                  variant="h6"
+                >
+                  Global Trends with Satellite Powered Map Layers
+                </mock-typography>
+                <p>
+                  The map is powered by the same live NOAA satellite data as our dashboards, allowing you to visualize global trends in:
+                </p>
+                <ul>
+                  <li>
+                    Sea Surface Temperature
+                  </li>
+                  <li>
+                    Coral Bleaching Heat Stress
+                  </li>
+                  <li>
+                    Sea Surface Temperature Anomaly
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <mock-typography
+                  classname="font-weight-bold mt-4 mb-2"
+                  variant="h6"
+                >
+                  Filter and Find What Matters
+                </mock-typography>
+                <p>
+                  Our advanced filtering system sets the Aqualink map apart. Go beyond just finding a location and actively analyze the state of the world's reefs. You can filter our 6,000+ sites by:
+                </p>
+                <ul>
+                  <li>
+                    Current heat stress level
+                  </li>
+                  <li>
+                    Type of in-situ sensors and data available
+                  </li>
+                  <li>
+                    Species, reef composition, and anthropogenic impacts (from integrated Reef Check data)
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <a
+                  href="https://aqualink.org/map"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="Aqualink map where you can explore dashboards worldwide and measure heatstress, ocean temperatures, and coral bleaching levels."
+                    class="About-responsiveImg-4"
+                    src="/src/assets/img/map_long.jpg"
+                  />
+                </a>
+              </div>
+            </div>
+            <div
+              class="row mt-5"
+            >
+              <div
+                class="col-12"
+              >
+                <mock-typography
+                  classname="About-sectionTitle-3"
+                  variant="h4"
+                >
+                  See It in Action
+                </mock-typography>
+                <p>
+                  Watch a short overview to see the Aqualink platform in action.
+                </p>
+                <div
+                  class="offset-lg-0 col-lg-12 order-lg-1 About-videoWrapper-6"
+                >
+                  <iframe
+                    allow="fullscreen"
+                    class="MuiCardMedia-root MuiCardMedia-media About-video-7 css-1oysmh0-MuiCardMedia-root"
+                    src="https://www.youtube.com/embed/EQZ3HiPevTY?si=dKTi4Mdv_Z9e9n-P"
+                    title="What can you do with Aqualink?"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="row mt-5"
+            >
+              <div
+                class="col-12"
+              >
+                <mock-typography
+                  classname="About-sectionTitle-3"
+                  variant="h4"
+                >
+                  Want To Monitor Your Local Marine Ecosystems?
+                </mock-typography>
+              </div>
+              <div
+                class="col-md-4 text-center"
+              >
+                <mock-typography
+                  classname="font-weight-bold mb-2"
+                  variant="h6"
+                >
+                  Contribute your own observations!
+                </mock-typography>
+                <p>
+                  Our animated field guide below provides an overview of best practices for conducting a survey with the Aqualink system.
+                </p>
+              </div>
+              <div
+                class="col-md-4 text-center"
+              >
+                <mock-typography
+                  classname="font-weight-bold mb-2"
+                  variant="h6"
+                >
+                  Get your own dashboards!
+                </mock-typography>
+                <p>
+                  Sign up for an Aqualink account and go to 
+                  <a
+                    href="https://aqualink.org/register"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Register A Site
+                  </a>
+                  . It's free!
+                </p>
+              </div>
+              <div
+                class="col-md-4 text-center"
+              >
+                <mock-typography
+                  classname="font-weight-bold mb-2"
+                  variant="h6"
+                >
+                  No sensors or surveys?
+                </mock-typography>
+                <p>
+                  You can find a lot of value in only using the wind, wave, and temperature satellite data with the built-in Heat Stress Analysis. Surveys and in-situ sensor data can be added later, but are not a requirement.
+                </p>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="offset-lg-0 col-lg-12 order-lg-1 About-videoWrapper-6"
+              >
+                <iframe
+                  allow="fullscreen"
+                  class="MuiCardMedia-root MuiCardMedia-media About-video-7 css-1oysmh0-MuiCardMedia-root"
+                  src="https://www.youtube.com/embed/E_nXCl612lg"
+                  title="field_guide"
+                />
+              </div>
+            </div>
+            <div
+              class="row mt-5"
+            >
+              <div
+                class="centered col"
+              >
+                <mock-typography
+                  classname="About-sectionTitle-3"
+                  variant="h4"
+                >
+                  The Team
+                </mock-typography>
+                <p>
+                  We have been working in rapid development and entrepreneurial businesses that scale and hope to bring a similar mindset to ocean conservation. We have an extended team of engineering contractors in a variety of disciplines, all of whom embrace open source philosophies and want to help build ocean conservation tools. 
+                  <br />
+                </p>
+              </div>
+            </div>
+            <div
+              class="row voffset-md"
+            >
+              <div
+                class="col-lg-4 col-md-4"
+              >
+                <div
+                  class="card border-0"
+                >
+                  <div
+                    class="card-body team-card"
+                  >
+                    <img
+                      alt="Peter Rive"
+                      class="rounded-circle mx-auto d-block mt-5 img-style lazyload"
+                      src="/src/assets/img/peter.jpg"
+                      width="100"
+                    />
+                    <h5
+                      class="text-center mg-sm"
+                    >
+                      Peter Rive
+                    </h5>
+                    <p
+                      class="text-lg-center"
+                    >
+                      Co-founder of SolarCity, a pioneer in making solar energy an affordable alternative to fossil fuels for homeowners.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-lg-4 col-md-4 mt-3 mt-md-0"
+              >
+                <div
+                  class="card border-0"
+                >
+                  <div
+                    class="card-body team-card"
+                  >
+                    <img
+                      alt="Caesar Hjerten"
+                      class="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
+                      src="/src/assets/img/caesar.jpg"
+                      width="100"
+                    />
+                    <h5
+                      class="text-center mg-sm"
+                    >
+                      Caesar Hjerten
+                    </h5>
+                    <p
+                      class="text-lg-center"
+                    >
+                      Swedish-born, University of Hawaii-based Business graduate, ex-collegiate soccer player, and a passionate contributor to saving our ocean. Aqualink's point of contact for customer relations.
+                      <br />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-lg-4 col-md-4 mt-3 mt-md-0"
+              >
+                <div
+                  class="card border-0"
+                >
+                  <div
+                    class="card-body team-card"
+                  >
+                    <img
+                      alt="Eric Boucher"
+                      class="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
+                      src="/src/assets/img/ericb.jpg"
+                      width="100"
+                    />
+                    <h5
+                      class="text-center mg-sm"
+                    >
+                      <a
+                        href="https://www.linkedin.com/in/ericpboucher/"
+                        style="text-decoration: none;"
+                      >
+                        Eric Boucher
+                      </a>
+                    </h5>
+                    <p
+                      class="text-lg-center"
+                    >
+                      Entrepreneur and software engineer, passionate about open source and social impact. Loves sailing and exploring the ocean.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
