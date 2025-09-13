@@ -57,7 +57,6 @@
     "react-jwt": "^1.1.8",
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
-    "react-material-ui-carousel": "^3.4.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",
     "react-router-hash-link": "^2.4.3",
@@ -67,6 +66,7 @@
     "redux": "^5.0.1",
     "redux-mock-store": "^1.5.4",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.15",
     "validator": "^13.12.0"
   },
   "browserslist": {
@@ -123,8 +123,5 @@
     "vite": "^5.4.10",
     "vitest": "^3.0.7",
     "wrangler": "^4.17.0"
-  },
-  "optionalDependencies": {
-    "canvas": "^2.11.2"
   }
 }
