@@ -38,7 +38,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "typeorm": "ts-node $(yarn bin typeorm) -d ormconfig.ts",
+    "typeorm": "ts-node --project tsconfig.typeorm.json -r tsconfig-paths/register $(yarn bin typeorm) -d ormconfig.ts",
     "migration:generate": "yarn typeorm migration:generate",
     "migration:run": "yarn typeorm migration:run --transaction each",
     "migration:revert": "yarn typeorm migration:revert",

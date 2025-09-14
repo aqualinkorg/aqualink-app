@@ -40,23 +40,6 @@ interface YouTubeApiResponse {
 const getSiteFrontEndURL = (siteId: number, frontUrl: string) =>
   new URL(`sites/${siteId}`, frontUrl).href;
 
-export const fetchVideoDetails = (
-  youTubeIds: string[],
-  apiKey: string,
-  playlist = false,
-): AxiosPromise<YouTubeApiResponse> =>
-  axios({
-    url: `https://www.googleapis.com/youtube/v3/${
-      playlist ? 'playlists' : 'videos'
-    }`,
-    method: 'get',
-    params: {
-      key: apiKey,
-      id: youTubeIds.join(),
-      part: `status${playlist ? '' : ',liveStreamingDetails'}`,
-    },
-  });
-
 export const getErrorMessage = (
   item: YouTubeVideoItem,
   isPlaylist: boolean,
@@ -103,6 +86,23 @@ const checkVideoOptions = (
     }),
     {},
   );
+
+export const fetchVideoDetails = (
+  youTubeIds: string[],
+  apiKey: string,
+  playlist = false,
+): AxiosPromise<YouTubeApiResponse> =>
+  axios({
+    url: `https://www.googleapis.com/youtube/v3/${
+      playlist ? 'playlists' : 'videos'
+    }`,
+    method: 'get',
+    params: {
+      key: apiKey,
+      id: youTubeIds.join(),
+      part: `status${playlist ? '' : ',liveStreamingDetails'}`,
+    },
+  });
 
 const getYTErrors = async (
   sites: Site[],

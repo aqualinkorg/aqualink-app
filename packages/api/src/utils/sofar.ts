@@ -19,6 +19,23 @@ import {
 } from './sofar.types';
 import { sendSlackMessage, SlackMessage } from './slack.utils';
 
+export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
+  const lastTowPressures = spotterBarometer?.slice(-2);
+  const valueDiff =
+    lastTowPressures?.length === 2
+      ? lastTowPressures[1].value - lastTowPressures[0].value
+      : undefined;
+
+  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
+    ? {
+        value: valueDiff,
+        timestamp: lastTowPressures![1].timestamp,
+      }
+    : null;
+
+  return spotterBarometricDiff;
+}
+
 export const getLatestData = (
   sofarValues: ValueWithTimestamp[] | undefined,
 ): ValueWithTimestamp | undefined => {
@@ -196,23 +213,6 @@ export async function getSofarHindcastData(
 
   // Filter out unknown values
   return filterSofarResponse(hindcastVariables);
-}
-
-export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
-  const lastTowPressures = spotterBarometer?.slice(-2);
-  const valueDiff =
-    lastTowPressures?.length === 2
-      ? lastTowPressures[1].value - lastTowPressures[0].value
-      : undefined;
-
-  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
-    ? {
-        value: valueDiff,
-        timestamp: lastTowPressures![1].timestamp,
-      }
-    : null;
-
-  return spotterBarometricDiff;
 }
 
 export async function getSpotterData(

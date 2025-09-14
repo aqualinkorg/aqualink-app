@@ -40,7 +40,7 @@ async function bootstrap() {
     new UnauthorizedExceptionFilter(),
   );
   app.use(apiLoggerMiddleware);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, react-hooks/rules-of-hooks
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(8080);
   // eslint-disable-next-line no-console

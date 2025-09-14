@@ -36,6 +36,17 @@ import { AdminLevel, User } from '../../users/users.entity';
 import { DataUploadsSites } from '../../data-uploads/data-uploads-sites.entity';
 import { GoogleCloudDir } from '../google-cloud.utils';
 
+function getTimezoneOffset(timezone: string, date: Date) {
+  try {
+    const timezoneDate = new Date(
+      date.toLocaleString('en-US', { timeZone: timezone }),
+    );
+    return timezoneDate.valueOf() - date.valueOf();
+  } catch {
+    return 0;
+  }
+}
+
 interface Repositories {
   siteRepository: Repository<Site>;
   surveyPointRepository: Repository<SiteSurveyPoint>;
@@ -332,17 +343,6 @@ const groupBySitePointDepth = ({
     };
   });
 };
-
-function getTimezoneOffset(timezone: string, date: Date) {
-  try {
-    const timezoneDate = new Date(
-      date.toLocaleString('en-US', { timeZone: timezone }),
-    );
-    return timezoneDate.valueOf() - date.valueOf();
-  } catch {
-    return 0;
-  }
-}
 
 export const convertData = (
   workSheetData: string[][],
