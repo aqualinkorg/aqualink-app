@@ -18,7 +18,8 @@
     "test:quick": "yarn workspaces foreach run --all --verbose test:quick",
     "test:coverage": "yarn workspaces foreach --all --parallel run test:coverage",
     "test:watch": "yarn workspaces foreach --all --parallel run test:watch",
-    "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish"
+    "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -47,11 +48,6 @@
     "yarn": "^1.22"
   },
   "version": "0.0.0",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "packages/*/{src,scripts,test}/**/*.{js,jsx,ts,tsx}": [
       "yarn run lint"
