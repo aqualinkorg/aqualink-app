@@ -44,6 +44,6 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(8080);
   // eslint-disable-next-line no-console
-  console.log(`App listening on port 8080`);
+  console.log('App listening on port 8080');
 }
 bootstrap();
