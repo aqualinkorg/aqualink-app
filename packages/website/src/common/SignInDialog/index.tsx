@@ -38,12 +38,12 @@ import { UserSignInParams } from 'store/User/types';
 import dialogStyles from '../styles/dialogStyles';
 import { SignInFormFields } from '../types';
 
-const SignInDialog = ({
+function SignInDialog({
   open,
   handleRegisterOpen,
   handleSignInOpen,
   classes,
-}: SignInDialogProps) => {
+}: SignInDialogProps) {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const loading = useSelector(userLoadingSelector);
@@ -318,7 +318,7 @@ const SignInDialog = ({
       </Card>
     </Dialog>
   );
-};
+}
 
 const styles = () =>
   createStyles({

@@ -27,12 +27,12 @@ import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import featuredImageLoading from '../../../../assets/img/loading-image.svg';
 import chartLoading from '../../../../assets/img/chart_skeleton.png';
 
-const SelectedSiteCardContent = ({
+function SelectedSiteCardContent({
   site,
   loading,
   error,
   imageUrl = null,
-}: SelectedSiteCardContentProps) => {
+}: SelectedSiteCardContentProps) {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
   const location = useLocation();
@@ -334,7 +334,7 @@ const SelectedSiteCardContent = ({
       </Grid>
     </Grid>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   cardWrapper: ({ imageUrl, loading }: SelectedSiteCardContentStyleProps) => ({

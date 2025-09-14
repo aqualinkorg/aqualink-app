@@ -36,13 +36,13 @@ import { Collection } from '../../Dashboard/collection';
 const SCROLLT_TIMEOUT = 500;
 const ROWS_PER_PAGE = 200;
 
-const RowNameCell = ({
+function RowNameCell({
   site: { locationName, region },
   classes,
 }: {
   site: Row;
   classes: SiteTableBodyProps['classes'];
-}) => {
+}) {
   return (
     <TableCell className={classes.nameCells}>
       <Typography align="left" variant="h6" color="textSecondary">
@@ -56,9 +56,9 @@ const RowNameCell = ({
       )}
     </TableCell>
   );
-};
+}
 
-const RowNumberCell = ({
+function RowNumberCell({
   color = colors.black,
   unit = '',
   decimalPlaces = 1,
@@ -72,7 +72,7 @@ const RowNumberCell = ({
   decimalPlaces?: number;
   classes: SiteTableBodyProps['classes'];
   isExtended?: boolean;
-}) => {
+}) {
   return (
     <TableCell
       className={
@@ -94,15 +94,15 @@ const RowNumberCell = ({
       </Typography>
     </TableCell>
   );
-};
+}
 
-const RowAlertCell = ({
+function RowAlertCell({
   site: { alertLevel },
   classes,
 }: {
   site: Row;
   classes: SiteTableBodyProps['classes'];
-}) => {
+}) {
   return (
     <TableCell className={classes.cellTextAlign}>
       <ErrorIcon
@@ -112,9 +112,9 @@ const RowAlertCell = ({
       />
     </TableCell>
   );
-};
+}
 
-const SiteTableBody = ({
+function SiteTableBody({
   order,
   orderBy,
   isExtended = false,
@@ -124,7 +124,7 @@ const SiteTableBody = ({
   map,
   classes,
   onEmptyColumnsChange,
-}: SiteTableBodyProps) => {
+}: SiteTableBodyProps) {
   const dispatch = useDispatch();
   const storedSites = useSelector(sitesToDisplayListSelector);
   const sitesList = useMemo(
@@ -173,11 +173,14 @@ const SiteTableBody = ({
 
   const idToIndexMap = useMemo(
     () =>
-      tableData.reduce((acc, item, index) => {
-        // eslint-disable-next-line fp/no-mutation
-        acc[item.tableData.id] = index;
-        return acc;
-      }, {} as Record<number, number>),
+      tableData.reduce(
+        (acc, item, index) => {
+          // eslint-disable-next-line fp/no-mutation
+          acc[item.tableData.id] = index;
+          return acc;
+        },
+        {} as Record<number, number>,
+      ),
     [tableData],
   );
 
@@ -230,87 +233,84 @@ const SiteTableBody = ({
       <TableBody>
         {tableData
           .slice(page * ROWS_PER_PAGE, page * ROWS_PER_PAGE + ROWS_PER_PAGE)
-          .map((site) => {
-            return (
-              <TableRow
-                id={`homepage-table-row-${site.tableData.id}`}
-                hover
-                className={classes.tableRow}
-                style={{
-                  backgroundColor:
-                    site.tableData.id === selectedRow
-                      ? colors.lighterBlue
-                      : 'white',
+          .map((site) => (
+            <TableRow
+              id={`homepage-table-row-${site.tableData.id}`}
+              hover
+              className={classes.tableRow}
+              style={{
+                backgroundColor:
+                  site.tableData.id === selectedRow
+                    ? colors.lighterBlue
+                    : 'white',
+              }}
+              onClick={(event) => handleClick(event, site)}
+              role="button"
+              tabIndex={-1}
+              key={site.tableData.id}
+            >
+              <RowNameCell
+                site={site}
+                classes={{
+                  ...classes,
+                  nameCells: isExtended
+                    ? classes.extendedTableNameCells
+                    : classes.nameCells,
                 }}
-                onClick={(event) => handleClick(event, site)}
-                role="button"
-                tabIndex={-1}
-                key={site.tableData.id}
-              >
-                <RowNameCell
-                  site={site}
-                  classes={{
-                    ...classes,
-                    nameCells: isExtended
-                      ? classes.extendedTableNameCells
-                      : classes.nameCells,
-                  }}
-                />
+              />
+              <RowNumberCell
+                isExtended={isExtended}
+                classes={classes}
+                value={site.sst}
+                color={isExtended ? colors.black : colors.lightBlue}
+                unit="°C"
+              />
+              {isExtended && (
                 <RowNumberCell
                   isExtended={isExtended}
                   classes={classes}
-                  value={site.sst}
-                  color={isExtended ? colors.black : colors.lightBlue}
+                  value={site.historicMax}
+                  color={colors.black}
                   unit="°C"
                 />
-                {isExtended && (
-                  <RowNumberCell
-                    isExtended={isExtended}
-                    classes={classes}
-                    value={site.historicMax}
-                    color={colors.black}
-                    unit="°C"
-                  />
-                )}
-                {isExtended && (
-                  <RowNumberCell
-                    isExtended={isExtended}
-                    classes={classes}
-                    value={site.sstAnomaly}
-                    color={colors.black}
-                    unit="°C"
-                  />
-                )}
+              )}
+              {isExtended && (
                 <RowNumberCell
                   isExtended={isExtended}
                   classes={classes}
-                  value={site.dhw}
-                  color={dhwColorFinder(site.dhw)}
-                  unit="DHW"
+                  value={site.sstAnomaly}
+                  color={colors.black}
+                  unit="°C"
                 />
-                {isExtended && !emptyColumns.includes(OrderKeys.BUOY_TOP) && (
-                  <RowNumberCell
-                    isExtended={isExtended}
-                    classes={classes}
-                    value={site.buoyTop}
-                    color={colors.black}
-                    unit="°C"
-                  />
-                )}
-                {isExtended &&
-                  !emptyColumns.includes(OrderKeys.BUOY_BOTTOM) && (
-                    <RowNumberCell
-                      isExtended={isExtended}
-                      classes={classes}
-                      value={site.buoyBottom}
-                      color={colors.black}
-                      unit="°C"
-                    />
-                  )}
-                <RowAlertCell site={site} classes={classes} />
-              </TableRow>
-            );
-          })}
+              )}
+              <RowNumberCell
+                isExtended={isExtended}
+                classes={classes}
+                value={site.dhw}
+                color={dhwColorFinder(site.dhw)}
+                unit="DHW"
+              />
+              {isExtended && !emptyColumns.includes(OrderKeys.BUOY_TOP) && (
+                <RowNumberCell
+                  isExtended={isExtended}
+                  classes={classes}
+                  value={site.buoyTop}
+                  color={colors.black}
+                  unit="°C"
+                />
+              )}
+              {isExtended && !emptyColumns.includes(OrderKeys.BUOY_BOTTOM) && (
+                <RowNumberCell
+                  isExtended={isExtended}
+                  classes={classes}
+                  value={site.buoyBottom}
+                  color={colors.black}
+                  unit="°C"
+                />
+              )}
+              <RowAlertCell site={site} classes={classes} />
+            </TableRow>
+          ))}
       </TableBody>
       {sitesList.length > ROWS_PER_PAGE && (
         <TableFooter>
@@ -333,7 +333,7 @@ const SiteTableBody = ({
       )}
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

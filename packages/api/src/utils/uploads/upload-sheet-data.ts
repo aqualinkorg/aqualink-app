@@ -333,6 +333,17 @@ const groupBySitePointDepth = ({
   });
 };
 
+function getTimezoneOffset(timezone: string, date: Date) {
+  try {
+    const timezoneDate = new Date(
+      date.toLocaleString('en-US', { timeZone: timezone }),
+    );
+    return timezoneDate.valueOf() - date.valueOf();
+  } catch {
+    return 0;
+  }
+}
+
 export const convertData = (
   workSheetData: string[][],
   headers: string[],
@@ -533,17 +544,6 @@ interface CreateEntitiesAndConvertProps {
   depth?: number;
   mimetype?: Mimetype;
   siteTimezone?: boolean;
-}
-
-function getTimezoneOffset(timezone: string, date: Date) {
-  try {
-    const timezoneDate = new Date(
-      date.toLocaleString('en-US', { timeZone: timezone }),
-    );
-    return timezoneDate.valueOf() - date.valueOf();
-  } catch {
-    return 0;
-  }
 }
 
 const createEntitiesAndConvert = async ({

@@ -41,7 +41,7 @@ const carouselSettings = {
   ],
 };
 
-const MediaDetails = ({ siteId, point, classes }: MediaDetailsProps) => {
+function MediaDetails({ siteId, point, classes }: MediaDetailsProps) {
   const [editing, setEditing] = React.useState(false);
   const [editSurveyPointId, setEditSurveyPointId] = React.useState<
     number | undefined
@@ -110,7 +110,7 @@ const MediaDetails = ({ siteId, point, classes }: MediaDetailsProps) => {
       </Slider>
     </div>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

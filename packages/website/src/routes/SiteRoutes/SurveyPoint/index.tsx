@@ -27,9 +27,11 @@ import SurveyHistory from './SurveyHistory';
 
 const BG_COLOR = 'rgb(245, 246, 246)';
 
-const SurveyPoint = () => {
-  const { id = '', pointId = '' } =
-    useParams<{ id: string; pointId: string }>();
+function SurveyPoint() {
+  const { id = '', pointId = '' } = useParams<{
+    id: string;
+    pointId: string;
+  }>();
   const siteIdNumber = parseInt(id, 10);
   const pointIdNumber = parseInt(pointId, 10);
 
@@ -103,6 +105,6 @@ const SurveyPoint = () => {
       )}
     </>
   );
-};
+}
 
 export default SurveyPoint;

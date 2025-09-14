@@ -25,7 +25,7 @@ import EditForm from './EditForm';
 import Info from './Info';
 import Map from './Map';
 
-const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
+function InfoCard({ site, pointId, bgColor, classes }: InfoCardProps) {
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
   const surveyPoint = site.surveyPoints.find((item) => item.id === pointId);
@@ -177,7 +177,7 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
       </Container>
     </Box>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

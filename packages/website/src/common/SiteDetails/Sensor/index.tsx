@@ -65,7 +65,7 @@ const getApplicationTag = (
   }
 };
 
-const Sensor = ({ depth, id, data, classes }: SensorProps) => {
+function Sensor({ depth, id, data, classes }: SensorProps) {
   const {
     topTemperature,
     bottomTemperature,
@@ -297,7 +297,7 @@ const Sensor = ({ depth, id, data, classes }: SensorProps) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 const styles = () =>
   createStyles({

@@ -22,7 +22,7 @@ import { maxLengths } from 'constants/names';
 import EditDialog, { Action } from '../../../Dialog';
 import CustomLink from '../../../Link';
 
-const PointSelector = ({
+function PointSelector({
   siteId,
   pointOptions,
   point,
@@ -36,7 +36,7 @@ const PointSelector = ({
   disableeditSurveyPointName,
   submitSurveyPointNameUpdate,
   onDeleteButtonClick,
-}: PointSelectorProps) => {
+}: PointSelectorProps) {
   const classes = useStyles();
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editSurveyPoint, seteditSurveyPoint] = useState<SurveyPoints>();
@@ -247,7 +247,7 @@ const PointSelector = ({
       </Grid>
     </>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

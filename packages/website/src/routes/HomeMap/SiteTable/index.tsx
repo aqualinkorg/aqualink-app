@@ -65,7 +65,7 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
     [],
   );
 
-const SiteTable = ({
+function SiteTable({
   isDrawerOpen = false,
   showCard = true,
   showSiteFiltersDropdown = true,
@@ -75,7 +75,7 @@ const SiteTable = ({
   scrollPageOnSelection,
   map,
   classes,
-}: SiteTableProps) => {
+}: SiteTableProps) {
   const loading = useSelector(sitesListLoadingSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const { height } = useWindowSize() || {};
@@ -212,7 +212,7 @@ const SiteTable = ({
       </Box>
     </>
   );
-};
+}
 const styles = (theme: Theme) =>
   createStyles({
     tableHolder: {

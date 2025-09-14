@@ -38,7 +38,7 @@ const tableCellTypographyProps: TypographyProps = {
   variant: 'subtitle2',
 };
 
-const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
+function HistoryTable({ site, uploadHistory, onDelete }: HistoryTableProps) {
   const nUploads = uploadHistory.length;
   const classes = useStyles();
   const { timezone } = site;
@@ -158,7 +158,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
       </TableContainer>
     </div>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

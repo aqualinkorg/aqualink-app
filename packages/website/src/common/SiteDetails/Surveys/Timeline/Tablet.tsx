@@ -12,7 +12,7 @@ import { TimelineProps } from './types';
 import LoadingSkeleton from '../../../LoadingSkeleton';
 import { ReefCheckSurveyCard } from '../ReefCheckSurveyCard';
 
-const TimelineTablet = ({
+function TimelineTablet({
   siteId,
   loading,
   surveys,
@@ -21,7 +21,7 @@ const TimelineTablet = ({
   pointName,
   isAdmin,
   timeZone,
-}: TimelineProps) => {
+}: TimelineProps) {
   const classes = useStyles();
   const isSiteIdValid = typeof siteId === 'number';
 
@@ -85,7 +85,7 @@ const TimelineTablet = ({
       ))}
     </Grid>
   );
-};
+}
 
 const useStyles = makeStyles(() => ({
   ...incomingStyles,

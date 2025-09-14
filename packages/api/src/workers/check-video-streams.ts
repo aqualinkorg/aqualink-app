@@ -92,6 +92,18 @@ export const getErrorMessage = (
   return '';
 };
 
+const checkVideoOptions = (
+  youTubeVideoItems: YouTubeVideoItem[],
+  isPlaylist: boolean,
+) =>
+  youTubeVideoItems.reduce<Dictionary<string>>(
+    (mapping, item) => ({
+      ...mapping,
+      [item.id]: getErrorMessage(item, isPlaylist),
+    }),
+    {},
+  );
+
 const getYTErrors = async (
   sites: Site[],
   isPlaylist: boolean,
@@ -160,18 +172,6 @@ const getYTErrors = async (
 
   return blocks;
 };
-
-const checkVideoOptions = (
-  youTubeVideoItems: YouTubeVideoItem[],
-  isPlaylist: boolean,
-) =>
-  youTubeVideoItems.reduce<Dictionary<string>>(
-    (mapping, item) => ({
-      ...mapping,
-      [item.id]: getErrorMessage(item, isPlaylist),
-    }),
-    {},
-  );
 
 export const checkVideoStreams = async (
   dataSource: DataSource,

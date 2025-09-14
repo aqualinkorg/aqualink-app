@@ -38,13 +38,13 @@ import EditForm from './EditForm';
 import ExclusionDatesDialog from './ExclusionDatesDialog';
 import CollectionButton from './CollectionButton';
 
-const SiteInfo = ({
+function SiteInfo({
   hasDailyData,
   site,
   lastSurvey = null,
   isAdmin,
   classes,
-}: SiteInfoProps) => {
+}: SiteInfoProps) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -312,7 +312,7 @@ const SiteInfo = ({
       </Grid>
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

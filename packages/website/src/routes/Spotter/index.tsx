@@ -45,12 +45,12 @@ type BuoySelectorProps = {
   handleBuoyClick: (buoyId: string) => void;
 };
 
-const BuoySelector = ({
+function BuoySelector({
   buoyData,
   token,
   selectedBuoy,
   handleBuoyClick,
-}: BuoySelectorProps) => {
+}: BuoySelectorProps) {
   if (!token) {
     return null;
   }
@@ -88,7 +88,7 @@ const BuoySelector = ({
       )}
     </Grid>
   );
-};
+}
 
 type BuoyContentProps = {
   selectedBuoy: { id: string; name: string } | undefined;
@@ -96,11 +96,11 @@ type BuoyContentProps = {
   userLocation: { lat: number; lng: number } | undefined;
 };
 
-const BuoyContent = ({
+function BuoyContent({
   selectedBuoy,
   waveData,
   userLocation,
-}: BuoyContentProps) => {
+}: BuoyContentProps) {
   if (!selectedBuoy) {
     return (
       <div style={{ paddingTop: '1em', paddingLeft: '1em' }}>
@@ -171,9 +171,9 @@ const BuoyContent = ({
       {selectedBuoy.name || selectedBuoy.id}
     </div>
   );
-};
+}
 
-const BuoyPage = () => {
+function BuoyPage() {
   // Get token from localStorage or use default
   const initialToken = localStorage.getItem('token') || undefined;
   const initialSelectedBuoy = JSON.parse(
@@ -204,15 +204,13 @@ const BuoyPage = () => {
       .then((response) => response.json())
       .then((data) => {
         const buoys = data?.data?.devices.reduce(
-          (acc: BuoyData, device: any) => {
-            return {
-              ...acc,
-              [device.spotterId]: {
-                id: device.spotterId,
-                name: device.name,
-              },
-            };
-          },
+          (acc: BuoyData, device: any) => ({
+            ...acc,
+            [device.spotterId]: {
+              id: device.spotterId,
+              name: device.name,
+            },
+          }),
           {},
         );
         // only save token if we successfully get buoy data
@@ -281,6 +279,6 @@ const BuoyPage = () => {
       </Grid>
     </Grid>
   );
-};
+}
 
 export default BuoyPage;

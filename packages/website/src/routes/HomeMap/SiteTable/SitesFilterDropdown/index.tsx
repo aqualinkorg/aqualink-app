@@ -32,9 +32,9 @@ import { PatchSiteFiltersPayload, SiteFilters } from 'store/Sites/types';
 
 type SitesFilterModalComponentProps = WithStyles<typeof styles>;
 
-const SitesFilterModalComponent = ({
+function SitesFilterModalComponent({
   classes,
-}: SitesFilterModalComponentProps) => {
+}: SitesFilterModalComponentProps) {
   const [open, setOpen] = useState(false);
   const [accordionsDefaultExpanded, setAccordionsDefaultExpanded] = useState<
     Partial<Record<keyof SiteFilters, boolean>>
@@ -275,7 +275,7 @@ const SitesFilterModalComponent = ({
       </Dialog>
     </>
   );
-};
+}
 
 const styles = createStyles({
   title: {

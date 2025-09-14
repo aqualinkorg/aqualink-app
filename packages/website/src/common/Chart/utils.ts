@@ -38,13 +38,10 @@ const timeDiff = (incomingDate: string, date: Date) =>
 export const findSurveyFromDate = (
   inputDate: string,
   surveys: SurveyListItem[],
-): number | null | undefined => {
-  return (
-    surveys.find(
-      (survey) => survey.diveDate && sameDay(survey.diveDate, inputDate),
-    )?.id || null
-  );
-};
+): number | null | undefined =>
+  surveys.find(
+    (survey) => survey.diveDate && sameDay(survey.diveDate, inputDate),
+  )?.id || null;
 
 export function getHistoricalMonthlyMeanDataClosestToDate(
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
@@ -347,7 +344,7 @@ export const createDatasets = (
           )
           .map(
             ({ timestamp, value }) =>
-              ({ x: timestamp, y: value } as Chart.ChartPoint),
+              ({ x: timestamp, y: value }) as Chart.ChartPoint,
           ),
       }
     : undefined;

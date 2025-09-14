@@ -22,7 +22,7 @@ import {
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import ConfirmationDialog from './ConfirmationDialog';
 
-const ExclusionDatesDialog = ({
+function ExclusionDatesDialog({
   dialogType,
   open,
   token,
@@ -30,7 +30,7 @@ const ExclusionDatesDialog = ({
   siteId,
   onClose,
   classes,
-}: ExclusionDatesDialogProps) => {
+}: ExclusionDatesDialogProps) {
   const dispatch = useDispatch();
 
   // State variables for deploy dialog
@@ -398,7 +398,7 @@ const ExclusionDatesDialog = ({
       />
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

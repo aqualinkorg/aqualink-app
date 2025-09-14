@@ -58,14 +58,24 @@ import {
 } from '../../../constants/chartConfigs/huiConfig';
 import ChartWithCard from './ChartWithCard';
 
-const MultipleSensorsCharts = ({
+const useStyles = makeStyles((theme: Theme) => ({
+  chartWithRange: {
+    marginTop: theme.spacing(4),
+  },
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'end',
+  },
+}));
+
+function MultipleSensorsCharts({
   site,
   pointId,
   surveysFiltered,
   disableGutters,
   displayOceanSenseCharts = true,
   hasAdditionalSensorData,
-}: MultipleSensorsChartsProps) => {
+}: MultipleSensorsChartsProps) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [startParam, setStartParam] = useQueryParam('start', isISODate);
@@ -705,17 +715,7 @@ const MultipleSensorsCharts = ({
         )}
     </Container>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  chartWithRange: {
-    marginTop: theme.spacing(4),
-  },
-  buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'end',
-  },
-}));
+}
 
 interface MultipleSensorsChartsProps {
   site: Site;

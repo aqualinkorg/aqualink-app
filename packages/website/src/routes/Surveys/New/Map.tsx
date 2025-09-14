@@ -21,7 +21,7 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const SiteMap = ({ polygon, classes }: SiteMapProps) => {
+function SiteMap({ polygon, classes }: SiteMapProps) {
   const mapRef = useRef<L.Map>(null);
   const diveLocation = useSelector(diveLocationSelector);
   const [markerLat, setMarkerLat] = useState<number | null>(null);
@@ -104,17 +104,16 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
       )}
     </MapContainer>
   );
-};
+}
 
-const styles = () => {
-  return createStyles({
+const styles = () =>
+  createStyles({
     map: {
       height: '100%',
       width: '100%',
       borderRadius: 4,
     },
   });
-};
 
 interface SiteMapIncomingProps {
   polygon: Site['polygon'];

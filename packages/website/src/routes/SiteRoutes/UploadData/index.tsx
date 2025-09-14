@@ -34,7 +34,7 @@ import Header from './Header';
 import Selectors from './Selectors';
 import HistoryTable from './HistoryTable';
 
-const UploadData = () => {
+function UploadData() {
   const params = useParams<{ id: string }>();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -223,7 +223,7 @@ const UploadData = () => {
       )}
     </>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

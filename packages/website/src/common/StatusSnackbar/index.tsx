@@ -9,14 +9,14 @@ import {
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
-const StatusSnackbar = ({
+function StatusSnackbar({
   open,
   message,
   furtherActionLabel,
   severity,
   handleClose,
   onFurtherActionTake = () => {},
-}: StatusSnackbarProps) => {
+}: StatusSnackbarProps) {
   const classes = useStyles({ hasMessage: !!message });
 
   return message ? (
@@ -49,7 +49,7 @@ const StatusSnackbar = ({
       </Alert>
     </Snackbar>
   ) : null;
-};
+}
 
 const useStyles = makeStyles<Theme, { hasMessage: boolean }>(
   (theme: Theme) => ({

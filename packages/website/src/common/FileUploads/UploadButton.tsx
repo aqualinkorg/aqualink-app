@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
 
-const UploadButton = ({ loading, onUpload }: UploadButtonProps) => {
+function UploadButton({ loading, onUpload }: UploadButtonProps) {
   const classes = useStyles();
 
   return (
@@ -23,7 +23,7 @@ const UploadButton = ({ loading, onUpload }: UploadButtonProps) => {
       </Button>
     </Box>
   );
-};
+}
 
 const useStyles = makeStyles(() => ({
   root: {

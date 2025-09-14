@@ -35,12 +35,10 @@ function transformToDatasets(
     timeSeriesRequests,
     CSVDownloadRequests,
   ]: ValueWithTimestamp[][] = monitoringDataKeys.map((key) =>
-    siteInfo.data.map((x) => {
-      return {
-        value: Number(x[key]),
-        timestamp: x.date,
-      };
-    }),
+    siteInfo.data.map((x) => ({
+      value: Number(x[key]),
+      timestamp: x.date,
+    })),
   );
 
   const totalRequestsDataset: Dataset = {

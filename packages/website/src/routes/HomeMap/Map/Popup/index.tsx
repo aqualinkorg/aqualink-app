@@ -26,7 +26,7 @@ import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
-const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
+function Popup({ site, classes, autoOpen = true }: PopupProps) {
   const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
@@ -160,7 +160,7 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
       </Card>
     </LeafletPopup>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

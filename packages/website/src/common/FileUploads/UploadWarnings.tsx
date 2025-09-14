@@ -21,7 +21,7 @@ import { UploadTimeSeriesResult } from 'services/uploadServices';
 
 const YELLOW = yellow[600];
 
-const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
+function DetailsDialog({ open, details, onClose }: DetailsDialogProps) {
   const classes = useStyles();
 
   return (
@@ -71,7 +71,7 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
       </DialogContent>
     </Dialog>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialogTitle: {

@@ -24,12 +24,12 @@ import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import surveyServices from 'services/surveyServices';
 
-const NewSurveyPointDialog = ({
+function NewSurveyPointDialog({
   open,
   siteId,
   onClose,
   onSuccess,
-}: NewSurveyPointDialogProps) => {
+}: NewSurveyPointDialogProps) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
@@ -139,7 +139,7 @@ const NewSurveyPointDialog = ({
       </form>
     </Dialog>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialogTitle: {

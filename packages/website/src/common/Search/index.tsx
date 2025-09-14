@@ -28,7 +28,7 @@ const siteAugmentedName = (site: Site) => {
   return name || region || '';
 };
 
-const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
+function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const navigate = useNavigate();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
@@ -154,7 +154,7 @@ const Search = ({ geocodingEnabled = false, classes }: SearchProps) => {
       </div>
     </div>
   );
-};
+}
 
 const styles = () =>
   createStyles({

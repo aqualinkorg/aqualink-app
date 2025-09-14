@@ -38,7 +38,7 @@ import Obligations from './Obligations';
 import Agreements from './Agreements';
 import Form from './Form';
 
-const Apply = ({ classes }: ApplyProps) => {
+function Apply({ classes }: ApplyProps) {
   const dispatch = useDispatch();
   const site = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
@@ -268,7 +268,7 @@ const Apply = ({ classes }: ApplyProps) => {
       <Footer />
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

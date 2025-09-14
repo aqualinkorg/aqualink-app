@@ -19,14 +19,14 @@ import { uploadsTargetSelector } from 'store/uploads/uploadsSlice';
 import NewSurveyPointDialog from 'common/NewSurveyPointDialog';
 import { OptionsList, selectProps, SENSOR_TYPES } from 'routes/Uploads/utils';
 
-const Selectors = ({
+function Selectors({
   site,
   siteTimezone,
   setSiteTimezone,
   onCompletedSelection,
   onSensorChange,
   onPointChange,
-}: SelectorsProps) => {
+}: SelectorsProps) {
   const classes = useStyles();
   const uploadsTarget = useSelector(uploadsTargetSelector);
   const pointOptions = site.surveyPoints;
@@ -191,7 +191,7 @@ const Selectors = ({
       </Grid>
     </>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   selectorsWrapper: {

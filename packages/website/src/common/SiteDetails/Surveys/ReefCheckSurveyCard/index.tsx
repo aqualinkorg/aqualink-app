@@ -25,10 +25,10 @@ type ReefCheckSurveyCardIncomingProps = {
   survey: ReefCheckSurvey;
 };
 
-const ReefCheckSurveyCardComponent = ({
+function ReefCheckSurveyCardComponent({
   survey,
   classes,
-}: ReefCheckSurveyCardProps) => {
+}: ReefCheckSurveyCardProps) {
   const stats = groupBy(
     // eslint-disable-next-line fp/no-mutating-methods
     survey.organisms
@@ -137,7 +137,7 @@ const ReefCheckSurveyCardComponent = ({
       </Box>
     </Paper>
   );
-};
+}
 
 const formatImpactCount = (count?: number) => {
   if (count === undefined) {

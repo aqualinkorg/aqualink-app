@@ -10,7 +10,7 @@ import { CircleSiteMarker, SensorSiteMarker } from './SiteMarker';
 
 const hasSpotter = (site: Site) => site.hasHobo || hasDeployedSpotter(site);
 
-export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
+export function SiteMarkers({ collection }: SiteMarkersProps) {
   const storedSites = useSelector(sitesToDisplayListSelector);
   const sitesList = useMemo(
     () => collection?.sites || storedSites || [],
@@ -28,7 +28,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
       )}
     </>
   );
-};
+}
 
 interface SiteMarkersProps {
   collection?: CollectionDetails;

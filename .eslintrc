@@ -10,7 +10,8 @@
     "fp",
     "@typescript-eslint",
     "prettier",
-    "import"
+    "import",
+    "react-hooks"
   ],
   "rules": {
     // Disable default rule for TS rule
@@ -116,7 +117,9 @@
           "**/*.spec.{ts,tsx}"
         ]
       }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "settings": {
     "import/resolver": {

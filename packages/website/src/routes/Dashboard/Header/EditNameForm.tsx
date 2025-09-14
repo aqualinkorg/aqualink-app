@@ -21,13 +21,13 @@ import collectionServices from 'services/collectionServices';
 
 import { red, green } from '@mui/material/colors';
 
-const EditNameForm = ({
+function EditNameForm({
   collectionId,
   initialName,
   signedInUser,
   onClose,
   classes,
-}: EditNameFormProps) => {
+}: EditNameFormProps) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -103,7 +103,7 @@ const EditNameForm = ({
       </Grid>
     </Grid>
   );
-};
+}
 
 const styles = () =>
   createStyles({

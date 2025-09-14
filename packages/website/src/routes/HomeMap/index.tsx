@@ -61,7 +61,7 @@ function useQuery() {
   };
 }
 
-const Homepage = ({ classes }: HomepageProps) => {
+function Homepage({ classes }: HomepageProps) {
   const dispatch = useDispatch();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
@@ -152,7 +152,7 @@ const Homepage = ({ classes }: HomepageProps) => {
       </div>
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

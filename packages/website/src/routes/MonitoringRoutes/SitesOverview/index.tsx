@@ -67,21 +67,18 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'contactInformation' },
 ];
 
-const getUniqueValues = (arr: Array<string | null>) => {
-  return [...new Set(arr)].filter(Boolean).join(', ');
-};
+const getUniqueValues = (arr: Array<string | null>) =>
+  [...new Set(arr)].filter(Boolean).join(', ');
 
 const getResult = async (token: string) => {
   const { data } = await monitoringServices.getSitesOverview({ token });
 
-  return data.map((x) => {
-    return {
-      ...x,
-      organizations: getUniqueValues(x.organizations),
-      adminNames: getUniqueValues(x.adminNames),
-      adminEmails: getUniqueValues(x.adminEmails),
-    };
-  });
+  return data.map((x) => ({
+    ...x,
+    organizations: getUniqueValues(x.organizations),
+    adminNames: getUniqueValues(x.adminNames),
+    adminEmails: getUniqueValues(x.adminEmails),
+  }));
 };
 
 function SitesOverview() {

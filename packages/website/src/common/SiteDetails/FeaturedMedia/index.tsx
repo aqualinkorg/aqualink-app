@@ -28,13 +28,13 @@ const playerOptions = {
   playsinline: 1,
 };
 
-const FeaturedMedia = ({
+function FeaturedMedia({
   siteId,
   url = null,
   featuredImage = null,
   surveyId = null,
   classes,
-}: FeaturedMediaProps) => {
+}: FeaturedMediaProps) {
   const user = useSelector(userInfoSelector);
   const isSiteAdmin = isAdmin(user, siteId);
 
@@ -102,10 +102,10 @@ const FeaturedMedia = ({
       <div className={classes.noVideoCardContent} />
     </Card>
   );
-};
+}
 
-const styles = (theme: Theme) => {
-  return createStyles({
+const styles = (theme: Theme) =>
+  createStyles({
     card: {
       height: '100%',
       width: '100%',
@@ -147,7 +147,6 @@ const styles = (theme: Theme) => {
       width: '100%',
     },
   });
-};
 
 interface FeaturedMediaIncomingProps {
   siteId: number;

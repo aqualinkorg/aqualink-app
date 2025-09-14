@@ -43,7 +43,7 @@ import { DateTime } from 'luxon-extensions';
 import SurveyDetails from './SurveyDetails';
 import SurveyMediaDetails from './MediaDetails';
 
-const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
+function SurveyViewPage({ site, surveyId, classes }: SurveyViewPageProps) {
   const dispatch = useDispatch();
   const prevMediaLoading = React.useRef<boolean>();
   const { enqueueSnackbar } = useSnackbar();
@@ -229,7 +229,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       </Box>
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

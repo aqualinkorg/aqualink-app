@@ -198,6 +198,23 @@ export async function getSofarHindcastData(
   return filterSofarResponse(hindcastVariables);
 }
 
+export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
+  const lastTowPressures = spotterBarometer?.slice(-2);
+  const valueDiff =
+    lastTowPressures?.length === 2
+      ? lastTowPressures[1].value - lastTowPressures[0].value
+      : undefined;
+
+  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
+    ? {
+        value: valueDiff,
+        timestamp: lastTowPressures![1].timestamp,
+      }
+    : null;
+
+  return spotterBarometricDiff;
+}
+
 export async function getSpotterData(
   sensorId: string,
   sofarToken?: string,
@@ -385,21 +402,4 @@ export function getValueClosestToDate(
       ? nextPoint
       : prevClosest,
   ).value;
-}
-
-export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
-  const lastTowPressures = spotterBarometer?.slice(-2);
-  const valueDiff =
-    lastTowPressures?.length === 2
-      ? lastTowPressures[1].value - lastTowPressures[0].value
-      : undefined;
-
-  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
-    ? {
-        value: valueDiff,
-        timestamp: lastTowPressures![1].timestamp,
-      }
-    : null;
-
-  return spotterBarometricDiff;
 }

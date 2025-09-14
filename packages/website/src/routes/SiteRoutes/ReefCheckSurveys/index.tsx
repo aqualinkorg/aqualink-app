@@ -19,9 +19,11 @@ import { ReefCheckSurveySummary } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyDetails } from './ReefCheckSurveyDetails';
 import { ReefCheckSurveySubstrates } from './ReefCheckSurveySubstratesTable';
 
-export const ReefCheckSurveyViewPage = () => {
-  const { id: siteId = '', sid: surveyId = '' } =
-    useParams<{ id: string; sid: string }>();
+export function ReefCheckSurveyViewPage() {
+  const { id: siteId = '', sid: surveyId = '' } = useParams<{
+    id: string;
+    sid: string;
+  }>();
   const error = useSelector(siteErrorSelector);
   const dispatch = useDispatch();
 
@@ -118,4 +120,4 @@ export const ReefCheckSurveyViewPage = () => {
       </Box>
     </>
   );
-};
+}

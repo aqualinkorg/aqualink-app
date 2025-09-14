@@ -35,12 +35,12 @@ import { UserRegisterParams } from 'store/User/types';
 import dialogStyles from '../styles/dialogStyles';
 import { RegisterFormFields } from '../types';
 
-const RegisterDialog = ({
+function RegisterDialog({
   open,
   handleRegisterOpen,
   handleSignInOpen,
   classes,
-}: RegisterDialogProps) => {
+}: RegisterDialogProps) {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const loading = useSelector(userLoadingSelector);
@@ -365,7 +365,7 @@ const RegisterDialog = ({
       </Card>
     </Dialog>
   );
-};
+}
 
 const styles = () =>
   createStyles({

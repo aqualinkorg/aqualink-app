@@ -23,7 +23,7 @@ import SurveyPoint from './SurveyPoint';
 import UploadData from './UploadData';
 import { ReefCheckSurveyViewPage } from './ReefCheckSurveys';
 
-const SiteRoutes = () => {
+function SiteRoutes() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
@@ -126,6 +126,6 @@ const SiteRoutes = () => {
       </Routes>
     </>
   );
-};
+}
 
 export default SiteRoutes;

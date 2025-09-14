@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { GridProps, Grid, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -8,7 +8,7 @@ import Title from './Title';
 import { Value } from './types';
 import LoadingSkeleton from '../../LoadingSkeleton';
 
-const CardWithTitle: FC<CardWithTitleProps> = ({
+function CardWithTitle({
   loading,
   gridProps,
   titleItems,
@@ -17,7 +17,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
   forcedAspectRatio,
   children,
   loadingImage,
-}: PropsWithChildren<CardWithTitleProps>) => {
+}: PropsWithChildren<CardWithTitleProps>) {
   const classes = useStyles();
 
   return (
@@ -62,7 +62,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
       </Grid>
     </Grid>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => {
   const aspectRatio = '16 / 9';

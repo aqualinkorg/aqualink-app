@@ -84,9 +84,8 @@ export const signInUser = createAsyncThunk<
       const { user } = (await userServices.signInUser(email, password)) || {};
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
-      const { data: collections } = await collectionServices.getCollections(
-        token,
-      );
+      const { data: collections } =
+        await collectionServices.getCollections(token);
       return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
@@ -112,9 +111,8 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
   async (token: string, { rejectWithValue }) => {
     try {
       const { data: userData } = await userServices.getSelf(token);
-      const { data: collections } = await collectionServices.getCollections(
-        token,
-      );
+      const { data: collections } =
+        await collectionServices.getCollections(token);
       return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
@@ -265,33 +263,27 @@ const userSlice = createSlice({
 
     builder.addCase(
       createCollectionRequest.fulfilled,
-      (state, action: PayloadAction<UserState['userInfo']>) => {
-        return {
-          ...state,
-          userInfo: action.payload,
-          loadingCollection: false,
-        };
-      },
+      (state, action: PayloadAction<UserState['userInfo']>) => ({
+        ...state,
+        userInfo: action.payload,
+        loadingCollection: false,
+      }),
     );
 
     builder.addCase(
       createCollectionRequest.rejected,
-      (state, action: PayloadAction<UserState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-          loadingCollection: false,
-        };
-      },
+      (state, action: PayloadAction<UserState['error']>) => ({
+        ...state,
+        error: action.payload,
+        loadingCollection: false,
+      }),
     );
 
-    builder.addCase(createCollectionRequest.pending, (state) => {
-      return {
-        ...state,
-        loadingCollection: true,
-        error: null,
-      };
-    });
+    builder.addCase(createCollectionRequest.pending, (state) => ({
+      ...state,
+      loadingCollection: true,
+      error: null,
+    }));
   },
 });
 

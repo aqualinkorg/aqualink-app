@@ -7,7 +7,7 @@ import { Site } from 'store/Sites/types';
 
 const exampleFiles = ['hobo', 'sonde', 'metlog', 'hui'];
 
-const Header = ({ site }: HeaderProps) => {
+function Header({ site }: HeaderProps) {
   const classes = useStyles();
   return (
     <Grid container alignItems="center" spacing={1}>
@@ -64,7 +64,7 @@ const Header = ({ site }: HeaderProps) => {
       </Grid>
     </Grid>
   );
-};
+}
 
 const useStyles = makeStyles(() => ({
   downloadButton: {

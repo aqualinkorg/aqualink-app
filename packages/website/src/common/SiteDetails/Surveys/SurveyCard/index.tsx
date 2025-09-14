@@ -22,14 +22,14 @@ import LoadingSkeleton from '../../../LoadingSkeleton';
 import pointImageSkeleton from '../../../../assets/img/loading-image.svg';
 import DeleteButton from '../../../DeleteButton';
 
-const SurveyCard = ({
+function SurveyCard({
   pointId,
   pointName,
   isAdmin,
   siteId,
   survey = null,
   loading = false,
-}: SurveyCardProps) => {
+}: SurveyCardProps) {
   const classes = useStyles();
   const isShowingFeatured = pointId === -1;
   const user = useSelector(userInfoSelector);
@@ -39,7 +39,9 @@ const SurveyCard = ({
     if (survey?.id && siteId && user && user.token) {
       return surveyServices.deleteSurvey(siteId, survey.id, user.token);
     }
-    return new Promise<void>((resolve) => resolve());
+    return new Promise<void>((resolve) => {
+      resolve();
+    });
   };
 
   const onSurveyDeleteSuccess = () => dispatch(surveysRequest(`${siteId}`));
@@ -210,7 +212,7 @@ const SurveyCard = ({
       </Grid>
     </Paper>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   ...incomingStyles,

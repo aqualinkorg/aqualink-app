@@ -24,7 +24,7 @@ import { ReefCheckSurveyCard } from '../ReefCheckSurveyCard';
 
 const CONNECTOR_COLOR = grey[500];
 
-const TimelineDesktop = ({
+function TimelineDesktop({
   siteId,
   loading,
   displayAddButton,
@@ -33,7 +33,7 @@ const TimelineDesktop = ({
   pointName,
   isAdmin,
   timeZone,
-}: TimelineProps) => {
+}: TimelineProps) {
   const classes = useStyles();
   const isSiteIdValid = typeof siteId === 'number';
 
@@ -101,7 +101,7 @@ const TimelineDesktop = ({
       ))}
     </Timeline>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   ...incomingStyles,

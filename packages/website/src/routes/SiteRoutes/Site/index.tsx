@@ -110,7 +110,7 @@ const getAlertMessage = (
   }
 };
 
-const Site = ({ classes }: SiteProps) => {
+function Site({ classes }: SiteProps) {
   const siteDetails = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
@@ -258,7 +258,7 @@ const Site = ({ classes }: SiteProps) => {
       <SiteFooter />
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

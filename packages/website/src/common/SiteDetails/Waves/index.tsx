@@ -14,7 +14,7 @@ import arrow from '../../../assets/directioncircle.svg';
 import wind from '../../../assets/wind.svg';
 import { styles as incomingStyles } from '../styles';
 
-const Waves = ({ data, hasSpotter }: WavesProps) => {
+function Waves({ data, hasSpotter }: WavesProps) {
   const {
     significantWaveHeight,
     waveMeanDirection,
@@ -230,7 +230,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

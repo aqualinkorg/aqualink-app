@@ -22,9 +22,9 @@ import reefCheckLogo from '../../../assets/img/reef-check.png';
 const REQUEST_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSc6VTTr9Z20exlrf_l9kr_br03kfPOFksUsGXv-mJVRucg8TQ/viewform';
 
-export const ReefCheckSurveySummaryComponent = ({
+export function ReefCheckSurveySummaryComponent({
   classes,
-}: ReefCheckSurveySummaryProps) => {
+}: ReefCheckSurveySummaryProps) {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
 
   if (error) {
@@ -119,7 +119,7 @@ export const ReefCheckSurveySummaryComponent = ({
       )}
     </Paper>
   );
-};
+}
 
 export const formatReefCheckSurveyDate = (
   dateStr: string,

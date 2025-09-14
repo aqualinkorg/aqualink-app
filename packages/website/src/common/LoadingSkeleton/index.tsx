@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme, useMediaQuery, Skeleton } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { alpha } from '@mui/material/styles';
@@ -9,7 +9,7 @@ import classNames from 'classnames';
 
 const BACKGROUND_IMAGE_OPACITY = 0.3;
 
-const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
+function LoadingSkeleton({
   loading,
   children,
   variant,
@@ -21,7 +21,7 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   className,
   longText,
   textHeight,
-}) => {
+}: LoadingSkeletonProps) {
   const classes = useStyles({ image, textHeight });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -49,7 +49,7 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   }, [isMobile, lines, longText]);
 
   if (!loading) {
-    return <>{children}</>;
+    return children;
   }
 
   if (variant === 'text' && typeof lines === 'number' && lineWidths.length) {
@@ -80,7 +80,7 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
       {...rectSkeletonProps}
     />
   );
-};
+}
 
 const useStyles = makeStyles(() => ({
   root: {

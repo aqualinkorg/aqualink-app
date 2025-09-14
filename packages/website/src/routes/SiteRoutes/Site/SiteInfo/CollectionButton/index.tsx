@@ -17,11 +17,11 @@ import collectionServices from 'services/collectionServices';
 import { ReactComponent as WatchIcon } from 'assets/watch.svg';
 import { ReactComponent as UnWatchIcon } from 'assets/unwatch.svg';
 
-const CollectionButton = ({
+function CollectionButton({
   siteId,
   errorCallback,
   classes,
-}: CollectionButtonProps) => {
+}: CollectionButtonProps) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
@@ -138,7 +138,7 @@ const CollectionButton = ({
       </IconButton>
     </Tooltip>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

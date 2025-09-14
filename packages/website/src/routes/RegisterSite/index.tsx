@@ -36,7 +36,7 @@ interface FormElement {
   validator?: (value: string) => string | undefined;
 }
 
-const Apply = ({ classes }: ApplyProps) => {
+function Apply({ classes }: ApplyProps) {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const [formModel, setFormModel] = useState(Map<string, string | boolean>());
@@ -341,7 +341,7 @@ const Apply = ({ classes }: ApplyProps) => {
       />
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

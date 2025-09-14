@@ -24,13 +24,13 @@ import { sanitizeUrl } from '@braintree/sanitize-url';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
-const EditForm = ({
+function EditForm({
   site,
   loading,
   onClose,
   onSubmit,
   classes,
-}: EditFormProps) => {
+}: EditFormProps) {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
 
@@ -446,7 +446,7 @@ const EditForm = ({
       </Grid>
     </form>
   );
-};
+}
 
 const styles = () =>
   createStyles({

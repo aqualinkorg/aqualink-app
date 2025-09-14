@@ -34,7 +34,7 @@ import PointSelector from './PointSelector';
 import Timeline from './Timeline';
 import DeleteSurveyPointDialog, { Action } from '../../Dialog';
 
-const Surveys = ({ site }: SurveysProps) => {
+function Surveys({ site }: SurveysProps) {
   const classes = useStyles();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
@@ -83,9 +83,8 @@ const Surveys = ({ site }: SurveysProps) => {
     setObservation(event.target.value as SurveyMedia['observations'] | 'any');
   };
 
-  const pointIdFinder = (name: string) => {
-    return pointOptions.find((option) => option.name === name)?.id || -1;
-  };
+  const pointIdFinder = (name: string) =>
+    pointOptions.find((option) => option.name === name)?.id || -1;
 
   const handleDeleteSurveyPointDialogClose = () => {
     setDeleteSurveyPointDialogOpen(false);
@@ -315,7 +314,7 @@ const Surveys = ({ site }: SurveysProps) => {
       </Grid>
     </>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

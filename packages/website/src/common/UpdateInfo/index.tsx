@@ -10,7 +10,7 @@ const CHIP_LARGE_DEFAULT_WIDTH = 60;
 const UPDATE_ICON_SIZE = 24;
 const UPDATE_ICON_RIGHT_MARGIN = 4;
 
-const UpdateInfo = ({
+function UpdateInfo({
   relativeTime,
   timeText,
   image,
@@ -22,7 +22,7 @@ const UpdateInfo = ({
   chipWidth,
   subtitle,
   onClick,
-}: UpdateInfoProps) => {
+}: UpdateInfoProps) {
   const classes = useStyles({ chipWidth });
   return (
     <Grid
@@ -66,7 +66,7 @@ const UpdateInfo = ({
       </Grid>
     </Grid>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   updateInfo: {

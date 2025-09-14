@@ -103,14 +103,14 @@ const sondeMetrics: (keyof LatestDataASSofarValue)[] = [
 
 const MINIMUM_SONDE_METRICS_TO_SHOW_CARD = 3;
 
-const SiteDetails = ({
+function SiteDetails({
   site,
   selectedSurveyPointId,
   surveys,
   featuredSurveyId = null,
   featuredSurveyPoint = null,
   surveyDiveDate = null,
-}: SiteDetailsProps) => {
+}: SiteDetailsProps) {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -140,13 +140,14 @@ const SiteDetails = ({
     }
   }, [dispatch, site, spotterPosition, latestData, forecastData]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       dispatch(unsetForecastData());
-    };
-  }, [dispatch]);
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     if (forecastData && latestData) {
@@ -399,7 +400,7 @@ const SiteDetails = ({
       </Box>
     </Box>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

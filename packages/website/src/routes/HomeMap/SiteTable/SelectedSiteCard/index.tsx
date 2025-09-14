@@ -18,7 +18,7 @@ import SelectedSiteCardContent from './CardContent';
 
 const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
 
-const SelectedSiteCard = () => {
+function SelectedSiteCard() {
   const classes = useStyles();
   const site = useSelector(siteDetailsSelector);
   const loading = useSelector(siteLoadingSelector);
@@ -75,7 +75,7 @@ const SelectedSiteCard = () => {
       </Card>
     </Box>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {

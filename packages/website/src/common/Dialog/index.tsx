@@ -16,24 +16,17 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
 
-const Dialog = ({
-  open,
-  header,
-  content = null,
-  actions = [],
-  error,
-  onClose = () => {},
+function ActionButton({
+  text,
+  color,
+  variant,
+  size,
+  disabled,
+  loading,
+  action,
   classes,
-}: DialogProps) => {
-  const ActionButton = ({
-    text,
-    color,
-    variant,
-    size,
-    disabled,
-    loading,
-    action,
-  }: Action) => (
+}: Action & { classes: any }) {
+  return (
     <Button
       key={text}
       color={color}
@@ -49,7 +42,17 @@ const Dialog = ({
       )}
     </Button>
   );
+}
 
+function Dialog({
+  open,
+  header,
+  content = null,
+  actions = [],
+  error,
+  onClose = () => {},
+  classes,
+}: DialogProps) {
   return (
     <MuiDialog fullWidth onClose={onClose} open={open}>
       {header && (
@@ -69,16 +72,16 @@ const Dialog = ({
                   style={{ color: 'inherit', textDecoration: 'none' }}
                   to={action.link}
                 >
-                  {ActionButton(action)}
+                  <ActionButton {...action} classes={classes} />
                 </Link>
               );
             }
-            return ActionButton(action);
+            return <ActionButton {...action} classes={classes} />;
           })}
       </DialogActions>
     </MuiDialog>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({
