@@ -9,6 +9,7 @@ exports[`Sites List > should render with given state from Redux store 1`] = `
       component="nav"
     >
       <a
+        data-discover="true"
         href="/sites/1"
         style="text-decoration: none;"
       >
