@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { List, ListItemText, Theme } from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import { WithStyles } from '@mui/styles';
@@ -11,7 +12,7 @@ import { sitesListSelector, sitesRequest } from 'store/Sites/sitesListSlice';
 
 function SitesList({ classes }: SitesListProps) {
   const sitesList = useSelector(sitesListSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(sitesRequest());

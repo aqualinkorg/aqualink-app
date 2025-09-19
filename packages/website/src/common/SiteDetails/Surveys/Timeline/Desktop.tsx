@@ -24,6 +24,39 @@ import { ReefCheckSurveyCard } from '../ReefCheckSurveyCard';
 
 const CONNECTOR_COLOR = grey[500];
 
+const useStyles = makeStyles((theme: Theme) => ({
+  ...incomingStyles,
+  timelineItem: {
+    alignItems: 'center',
+  },
+  timelineOppositeContent: {
+    flex: '0 0 130px',
+  },
+  addNewButtonOpposite: {
+    padding: theme.spacing(0, 1.25),
+  },
+  addNewButtonWrapper: {
+    marginRight: theme.spacing(10),
+  },
+  connector: {
+    height: 180,
+    borderLeft: `2px dashed ${CONNECTOR_COLOR}`,
+    marginTop: 0,
+    marginBottom: 0,
+  },
+  dot: {
+    border: `1px solid ${CONNECTOR_COLOR}`,
+    backgroundColor: theme.palette.primary.light,
+    height: '1rem',
+    width: '1rem',
+    padding: 0,
+    margin: 0,
+  },
+  dateSkeleton: {
+    marginLeft: 'auto',
+  },
+}));
+
 function TimelineDesktop({
   siteId,
   loading,
@@ -102,38 +135,5 @@ function TimelineDesktop({
     </Timeline>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  ...incomingStyles,
-  timelineItem: {
-    alignItems: 'center',
-  },
-  timelineOppositeContent: {
-    flex: '0 0 130px',
-  },
-  addNewButtonOpposite: {
-    padding: theme.spacing(0, 1.25),
-  },
-  addNewButtonWrapper: {
-    marginRight: theme.spacing(10),
-  },
-  connector: {
-    height: 180,
-    borderLeft: `2px dashed ${CONNECTOR_COLOR}`,
-    marginTop: 0,
-    marginBottom: 0,
-  },
-  dot: {
-    border: `1px solid ${CONNECTOR_COLOR}`,
-    backgroundColor: theme.palette.primary.light,
-    height: '1rem',
-    width: '1rem',
-    padding: 0,
-    margin: 0,
-  },
-  dateSkeleton: {
-    marginLeft: 'auto',
-  },
-}));
 
 export default TimelineDesktop;

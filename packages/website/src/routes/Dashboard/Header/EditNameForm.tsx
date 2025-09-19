@@ -11,7 +11,7 @@ import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import { User } from 'store/User/types';
 import { setName } from 'store/Collection/collectionSlice';
@@ -29,7 +29,7 @@ function EditNameForm({
   classes,
 }: EditNameFormProps) {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [collectionName, setCollectionName] = useFormField(initialName, [
     'required',

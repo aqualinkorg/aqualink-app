@@ -28,7 +28,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { sortBy } from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import classNames from 'classnames';
 import LanguageIcon from '@mui/icons-material/Language';
 import { userInfoSelector, signOutUser } from 'store/User/userSlice';
@@ -59,7 +60,7 @@ function NavBar({
 }: NavBarProps) {
   const user = useSelector(userInfoSelector);
   const storedCollection = useSelector(collectionDetailsSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.up('md'));
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);

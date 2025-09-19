@@ -8,6 +8,39 @@ import Title from './Title';
 import { Value } from './types';
 import LoadingSkeleton from '../../LoadingSkeleton';
 
+const useStyles = makeStyles((theme: Theme) => {
+  const aspectRatio = '16 / 9';
+
+  return createStyles({
+    forcedAspectRatioWrapper: {
+      paddingTop: `calc((100% - ${theme.spacing(
+        2,
+      )}) / (${aspectRatio}) + ${theme.spacing(2)})`,
+      marginTop: -theme.spacing(1),
+      position: 'relative',
+    },
+    row: {
+      margin: theme.spacing(0, 2, 1, 2),
+    },
+    container: {
+      height: '30rem',
+      [theme.breakpoints.only('md')]: {
+        height: '25rem',
+      },
+      [theme.breakpoints.down('sm')]: {
+        height: '20rem',
+      },
+    },
+    absolutePositionedContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    },
+  });
+});
+
 function CardWithTitle({
   loading,
   gridProps,
@@ -63,39 +96,6 @@ function CardWithTitle({
     </Grid>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => {
-  const aspectRatio = '16 / 9';
-
-  return createStyles({
-    forcedAspectRatioWrapper: {
-      paddingTop: `calc((100% - ${theme.spacing(
-        2,
-      )}) / (${aspectRatio}) + ${theme.spacing(2)})`,
-      marginTop: -theme.spacing(1),
-      position: 'relative',
-    },
-    row: {
-      margin: theme.spacing(0, 2, 1, 2),
-    },
-    container: {
-      height: '30rem',
-      [theme.breakpoints.only('md')]: {
-        height: '25rem',
-      },
-      [theme.breakpoints.down('sm')]: {
-        height: '20rem',
-      },
-    },
-    absolutePositionedContainer: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-    },
-  });
-});
 
 interface CardWithTitleProps {
   gridProps: GridProps;

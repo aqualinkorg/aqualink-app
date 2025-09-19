@@ -5,7 +5,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
 import times from 'lodash/times';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
 import type {
   Site,
@@ -51,6 +52,26 @@ import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
 import { TemperatureChange } from './TemperatureChange';
 import { ReefCheckDataIndicator } from './ReefCheckDataIndicator';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    ...incomingStyles,
+    root: {
+      marginTop: '2rem',
+    },
+    forcedWidth: {
+      width: `calc(100% + ${theme.spacing(2)})`,
+    },
+    mobileMargin: {
+      [theme.breakpoints.down('md')]: {
+        margin: theme.spacing(1, 0),
+      },
+    },
+    metricsWrapper: {
+      marginTop: '1rem',
+    },
+  }),
+);
 
 /**  Show only the last year of HUI data, should match with {@link getCardData} */
 const acceptHUIInterval = Interval.fromDateTimes(
@@ -113,7 +134,7 @@ function SiteDetails({
 }: SiteDetailsProps) {
   const classes = useStyles();
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const spotterPosition = useSelector(spotterPositionSelector);
   const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
     useState<LatestDataASSofarValue>({});
@@ -401,26 +422,6 @@ function SiteDetails({
     </Box>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    ...incomingStyles,
-    root: {
-      marginTop: '2rem',
-    },
-    forcedWidth: {
-      width: `calc(100% + ${theme.spacing(2)})`,
-    },
-    mobileMargin: {
-      [theme.breakpoints.down('md')]: {
-        margin: theme.spacing(1, 0),
-      },
-    },
-    metricsWrapper: {
-      marginTop: '1rem',
-    },
-  }),
-);
 
 interface SiteDetailsProps {
   site?: Site;

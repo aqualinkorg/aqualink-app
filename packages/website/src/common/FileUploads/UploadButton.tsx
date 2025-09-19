@@ -3,6 +3,13 @@ import { Box, Button, CircularProgress } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
 
+const useStyles = makeStyles(() => ({
+  root: {
+    marginLeft: 'auto',
+    minWidth: 140,
+  },
+}));
+
 function UploadButton({ loading, onUpload }: UploadButtonProps) {
   const classes = useStyles();
 
@@ -24,13 +31,6 @@ function UploadButton({ loading, onUpload }: UploadButtonProps) {
     </Box>
   );
 }
-
-const useStyles = makeStyles(() => ({
-  root: {
-    marginLeft: 'auto',
-    minWidth: 140,
-  },
-}));
 
 interface UploadButtonProps {
   loading: boolean;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useMemo } from 'react';
 import {
   Button,
   Card,
@@ -13,7 +13,7 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import { Link, useLocation } from 'react-router-dom';
-import { Popup as LeafletPopup, useMap } from 'react-leaflet';
+import { Popup as LeafletPopup } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import type { LatLngTuple } from 'leaflet';
@@ -27,9 +27,7 @@ import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
 function Popup({ site, classes, autoOpen = true }: PopupProps) {
-  const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
-  const popupRef = useRef<LeafletPopup>(null);
   const location = useLocation();
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
@@ -44,29 +42,29 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
     );
   };
 
-  useEffect(() => {
+  // Calculate popup position based on site data
+  const popupPosition = useMemo((): LatLngTuple | null => {
     if (
-      map &&
-      popupRef?.current &&
       siteOnMap?.id === site.id &&
       siteOnMap?.polygon.type === 'Point' &&
       autoOpen
     ) {
-      const popup = popupRef.current;
-      const [_lng, lat] = siteOnMap.polygon.coordinates; // Original lng not needed here
-
+      const [_lng, lat] = siteOnMap.polygon.coordinates;
       // Use displayLng from state if available, fall back to original lng
       const popupLng = siteOnMap.displayLng ?? _lng;
-
-      const targetPoint: LatLngTuple = [lat, popupLng];
-      popup.setLatLng(targetPoint).openOn(map);
+      return [lat, popupLng];
     }
-    // No need for cleanup function or moveend listener anymore
-  }, [autoOpen, map, site.id, siteOnMap]);
+    return null;
+  }, [autoOpen, site.id, siteOnMap]);
+
+  // Only render popup if we have a valid position
+  if (!popupPosition) {
+    return null;
+  }
 
   return (
     <LeafletPopup
-      ref={siteOnMap?.id === site.id ? popupRef : null}
+      position={popupPosition}
       closeButton={false}
       className={classes.popup}
       autoPan={false}

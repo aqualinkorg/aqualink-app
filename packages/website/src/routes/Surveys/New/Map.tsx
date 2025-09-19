@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import L from 'leaflet';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -26,7 +27,7 @@ function SiteMap({ polygon, classes }: SiteMapProps) {
   const diveLocation = useSelector(diveLocationSelector);
   const [markerLat, setMarkerLat] = useState<number | null>(null);
   const [markerLng, setMarkerLng] = useState<number | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const { current } = mapRef;

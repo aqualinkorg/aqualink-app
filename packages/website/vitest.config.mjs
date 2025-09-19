@@ -1,8 +1,11 @@
-import { defineConfig } from 'vitest/config';
+/// <reference types="vitest" />
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath, URL } from 'node:url';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const srcPath = path.resolve(__dirname, 'src');
 const aliases = Object.fromEntries(
   fs
@@ -13,12 +16,17 @@ const aliases = Object.fromEntries(
 
 export default defineConfig({
   plugins: [react()],
+  esbuild: {
+    target: 'node18',
+  },
   test: {
     threads: false,
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/setupTests.tsx',
-    globalSetup: './src/global-setup.js',
+    globalSetup: './src/global-setup.mjs',
+    retry: 0, // Don't retry failed tests
+    bail: 1, // Stop after first test failure when running in CI
     env: {
       REACT_APP_API_BASE_URL:
         'https://programize-dot-ocean-systems.uc.r.appspot.com/api/',

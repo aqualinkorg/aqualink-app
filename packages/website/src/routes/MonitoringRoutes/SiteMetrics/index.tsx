@@ -102,6 +102,31 @@ function transformToDatasets(
 
 const ONE_DAY = 24 * 60 * 60 * 1000; // One day in milliseconds
 
+const useStyles = makeStyles(() => ({
+  chart: {
+    width: '100%',
+    height: '16rem',
+    marginBottom: '3rem',
+    marginTop: '1rem',
+  },
+  filtersWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: '2rem',
+    padding: '2rem',
+    flexBasis: '5rem',
+  },
+  switchContainer: {
+    width: 'fit-content',
+    height: '3rem',
+  },
+  filterItem: {
+    height: '3rem',
+  },
+}));
+
 function getChartPeriod(siteInfo: ArrayElement<GetMonitoringMetricsResponse>) {
   const { data } = siteInfo;
   const maxDate = data.reduce(
@@ -276,30 +301,5 @@ function SiteMetrics() {
     />
   );
 }
-
-const useStyles = makeStyles(() => ({
-  chart: {
-    width: '100%',
-    height: '16rem',
-    marginBottom: '3rem',
-    marginTop: '1rem',
-  },
-  filtersWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    gap: '2rem',
-    padding: '2rem',
-    flexBasis: '5rem',
-  },
-  switchContainer: {
-    width: 'fit-content',
-    height: '3rem',
-  },
-  filterItem: {
-    height: '3rem',
-  },
-}));
 
 export default SiteMetrics;

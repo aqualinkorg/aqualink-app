@@ -2,10 +2,12 @@
   "name": "website",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "rsbuild dev",
     "build": "rsbuild build",
-    "test": "vitest",
+    "test": "vitest --run",
+    "test:watch": "vitest",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --max-warnings 0",
     "scan": "yarn start & npx react-scan@latest localhost:3000",
     "precommit": "lint-staged",

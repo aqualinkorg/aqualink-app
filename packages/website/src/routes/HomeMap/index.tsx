@@ -1,6 +1,7 @@
 import L, { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
 import { Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
@@ -62,7 +63,7 @@ function useQuery() {
 }
 
 function Homepage({ classes }: HomepageProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);

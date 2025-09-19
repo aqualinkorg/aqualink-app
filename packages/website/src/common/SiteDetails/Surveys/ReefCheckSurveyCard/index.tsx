@@ -25,6 +25,13 @@ type ReefCheckSurveyCardIncomingProps = {
   survey: ReefCheckSurvey;
 };
 
+const formatImpactCount = (count?: number) => {
+  if (count === undefined) {
+    return '';
+  }
+  return count > 0 ? 'YES' : 'NO';
+};
+
 function ReefCheckSurveyCardComponent({
   survey,
   classes,
@@ -138,13 +145,6 @@ function ReefCheckSurveyCardComponent({
     </Paper>
   );
 }
-
-const formatImpactCount = (count?: number) => {
-  if (count === undefined) {
-    return '';
-  }
-  return count > 0 ? 'YES' : 'NO';
-};
 
 const styles = (theme: Theme) =>
   createStyles({

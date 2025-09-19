@@ -14,7 +14,8 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import { grey } from '@mui/material/colors';
 import CloseIcon from '@mui/icons-material/Close';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import { maxLengths } from 'constants/names';
 import { userInfoSelector } from 'store/User/userSlice';
@@ -24,6 +25,18 @@ import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import surveyServices from 'services/surveyServices';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  dialogTitle: {
+    borderBottom: `1px solid ${grey[400]}`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dialogContent: {
+    paddingTop: theme.spacing(3),
+  },
+}));
+
 function NewSurveyPointDialog({
   open,
   siteId,
@@ -31,7 +44,7 @@ function NewSurveyPointDialog({
   onSuccess,
 }: NewSurveyPointDialogProps) {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
   const [pointName, setPointName] = useState('');
   const [newPointError, setNewPointError] = useState<string>();
@@ -140,18 +153,6 @@ function NewSurveyPointDialog({
     </Dialog>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  dialogTitle: {
-    borderBottom: `1px solid ${grey[400]}`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  dialogContent: {
-    paddingTop: theme.spacing(3),
-  },
-}));
 
 interface NewSurveyPointDialogProps {
   open: boolean;

@@ -3,7 +3,8 @@ import { Tooltip, IconButton, useTheme, Theme } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import {
   createCollectionRequest,
@@ -23,7 +24,7 @@ function CollectionButton({
   classes,
 }: CollectionButtonProps) {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
   const userCollectionLoading = useSelector(userCollectionLoadingSelector);
   const userError = useSelector(userErrorSelector);

@@ -19,6 +19,24 @@ import { uploadsTargetSelector } from 'store/uploads/uploadsSlice';
 import NewSurveyPointDialog from 'common/NewSurveyPointDialog';
 import { OptionsList, selectProps, SENSOR_TYPES } from 'routes/Uploads/utils';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  selectorsWrapper: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+  menuPaper: {
+    width: 240,
+  },
+  buttonMenuItem: {
+    padding: 0,
+  },
+  newPointButton: {
+    color: theme.palette.text.secondary,
+    paddingTop: 8.5,
+    paddingBottom: 8.5,
+  },
+}));
+
 function Selectors({
   site,
   siteTimezone,
@@ -192,24 +210,6 @@ function Selectors({
     </>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  selectorsWrapper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
-  menuPaper: {
-    width: 240,
-  },
-  buttonMenuItem: {
-    padding: 0,
-  },
-  newPointButton: {
-    color: theme.palette.text.secondary,
-    paddingTop: 8.5,
-    paddingBottom: 8.5,
-  },
-}));
 
 interface SelectorsProps {
   site: Site;

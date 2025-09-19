@@ -1,6 +1,7 @@
 /* eslint-disable fp/no-mutating-methods */
 import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { IconButton, TextField } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -33,7 +34,7 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const sites = useSelector(sitesListSelector);
   const filteredSites = (sites || [])
     .filter((site) => siteAugmentedName(site))

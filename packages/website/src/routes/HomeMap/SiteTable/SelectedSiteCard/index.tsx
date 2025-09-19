@@ -18,6 +18,23 @@ import SelectedSiteCardContent from './CardContent';
 
 const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  card: {
+    [theme.breakpoints.down('md')]: {
+      padding: 10,
+    },
+    padding: 20,
+  },
+  launchIcon: {
+    fontSize: 20,
+    marginLeft: '0.5rem',
+    color: '#2f2f2f',
+    '&:hover': {
+      color: '#2f2f2f',
+    },
+  },
+}));
+
 function SelectedSiteCard() {
   const classes = useStyles();
   const site = useSelector(siteDetailsSelector);
@@ -76,22 +93,5 @@ function SelectedSiteCard() {
     </Box>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  card: {
-    [theme.breakpoints.down('md')]: {
-      padding: 10,
-    },
-    padding: 20,
-  },
-  launchIcon: {
-    fontSize: 20,
-    marginLeft: '0.5rem',
-    color: '#2f2f2f',
-    '&:hover': {
-      color: '#2f2f2f',
-    },
-  },
-}));
 
 export default SelectedSiteCard;

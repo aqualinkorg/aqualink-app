@@ -10,6 +10,44 @@ const CHIP_LARGE_DEFAULT_WIDTH = 60;
 const UPDATE_ICON_SIZE = 24;
 const UPDATE_ICON_RIGHT_MARGIN = 4;
 
+const useStyles = makeStyles((theme: Theme) => ({
+  updateInfo: {
+    backgroundColor: grey[400],
+    color: grey[700],
+    padding: 4,
+    minHeight: 40,
+    flexWrap: 'nowrap',
+  },
+  withMargin: {
+    marginTop: 32,
+  },
+  updateIcon: {
+    marginRight: UPDATE_ICON_RIGHT_MARGIN,
+    height: UPDATE_ICON_SIZE,
+    width: UPDATE_ICON_SIZE,
+  },
+  updateInfoText: {
+    width: '99%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    [theme.breakpoints.between('md', 'lg')]: {
+      fontSize: 8.5,
+    },
+  },
+  dateInfoWrapper: ({ chipWidth }: { chipWidth?: number }) => ({
+    width: `calc(100% - ${chipWidth || CHIP_LARGE_DEFAULT_WIDTH}px)`,
+    [theme.breakpoints.only('md')]: {
+      width: `calc(100% - ${chipWidth || CHIP_SMALL_DEFAULT_WIDTH}px)`,
+    },
+    display: 'flex',
+    justifyContent: 'flex-start',
+  }),
+  dateInfo: {
+    width: `calc(100% - ${UPDATE_ICON_RIGHT_MARGIN + UPDATE_ICON_SIZE}px)`,
+  },
+}));
+
 function UpdateInfo({
   relativeTime,
   timeText,
@@ -67,44 +105,6 @@ function UpdateInfo({
     </Grid>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  updateInfo: {
-    backgroundColor: grey[400],
-    color: grey[700],
-    padding: 4,
-    minHeight: 40,
-    flexWrap: 'nowrap',
-  },
-  withMargin: {
-    marginTop: 32,
-  },
-  updateIcon: {
-    marginRight: UPDATE_ICON_RIGHT_MARGIN,
-    height: UPDATE_ICON_SIZE,
-    width: UPDATE_ICON_SIZE,
-  },
-  updateInfoText: {
-    width: '99%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    [theme.breakpoints.between('md', 'lg')]: {
-      fontSize: 8.5,
-    },
-  },
-  dateInfoWrapper: ({ chipWidth }: { chipWidth?: number }) => ({
-    width: `calc(100% - ${chipWidth || CHIP_LARGE_DEFAULT_WIDTH}px)`,
-    [theme.breakpoints.only('md')]: {
-      width: `calc(100% - ${chipWidth || CHIP_SMALL_DEFAULT_WIDTH}px)`,
-    },
-    display: 'flex',
-    justifyContent: 'flex-start',
-  }),
-  dateInfo: {
-    width: `calc(100% - ${UPDATE_ICON_RIGHT_MARGIN + UPDATE_ICON_SIZE}px)`,
-  },
-}));
 
 interface UpdateInfoProps {
   relativeTime?: string;

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { MapContainer, TileLayer, Polygon, Marker } from 'react-leaflet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import L, { LatLngTuple } from 'leaflet';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -60,7 +61,7 @@ function SiteMap({
   onEditPointCoordinatesChange = () => {},
   classes,
 }: SiteMapProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const mapRef = useRef<L.Map>(null);
   const markerRef = useRef<L.Marker>(null);
   const editPointMarkerRer = useRef<L.Marker>(null);

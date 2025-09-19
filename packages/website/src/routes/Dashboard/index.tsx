@@ -3,7 +3,8 @@ import { LinearProgress } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { userInfoSelector, userLoadingSelector } from 'store/User/userSlice';
@@ -52,7 +53,7 @@ function DashboardComponent({
 }
 
 function Dashboard({ classes }: DashboardProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { collectionName: urlCollectionName } = useParams<{
     collectionName?: string;
   }>();

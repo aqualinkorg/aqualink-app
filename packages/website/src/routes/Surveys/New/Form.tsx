@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { Grid, Collapse, IconButton } from '@mui/material';
 import Alert from '@mui/material/Alert';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { SurveyData, SurveyState } from 'store/Survey/types';
 import {
   surveyErrorSelector,
@@ -14,7 +15,7 @@ function SurveyForm({ siteId, timeZone = null, changeTab }: SurveyFormProps) {
   const user = useSelector(userInfoSelector);
   const surveyError = useSelector(surveyErrorSelector);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSubmit = useCallback(
     (

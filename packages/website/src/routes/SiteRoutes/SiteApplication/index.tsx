@@ -11,7 +11,8 @@ import {
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { Link, useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
@@ -39,7 +40,7 @@ import Agreements from './Agreements';
 import Form from './Form';
 
 function Apply({ classes }: ApplyProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const site = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const userLoading = useSelector(userLoadingSelector);

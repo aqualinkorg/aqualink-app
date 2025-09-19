@@ -12,6 +12,16 @@ import { TimelineProps } from './types';
 import LoadingSkeleton from '../../../LoadingSkeleton';
 import { ReefCheckSurveyCard } from '../ReefCheckSurveyCard';
 
+const useStyles = makeStyles(() => ({
+  ...incomingStyles,
+  addNewButtonMobileWrapper: {
+    marginBottom: '1rem',
+  },
+  surveyWrapper: {
+    marginTop: '2rem',
+  },
+}));
+
 function TimelineTablet({
   siteId,
   loading,
@@ -86,15 +96,5 @@ function TimelineTablet({
     </Grid>
   );
 }
-
-const useStyles = makeStyles(() => ({
-  ...incomingStyles,
-  addNewButtonMobileWrapper: {
-    marginBottom: '1rem',
-  },
-  surveyWrapper: {
-    marginTop: '2rem',
-  },
-}));
 
 export default TimelineTablet;

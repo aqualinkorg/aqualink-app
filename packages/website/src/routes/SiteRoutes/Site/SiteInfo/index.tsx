@@ -14,7 +14,8 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 
@@ -45,7 +46,7 @@ function SiteInfo({
   isAdmin,
   classes,
 }: SiteInfoProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();

@@ -22,7 +22,8 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm, Controller } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import {
   createUser,
@@ -41,7 +42,7 @@ function RegisterDialog({
   handleSignInOpen,
   classes,
 }: RegisterDialogProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
   const loading = useSelector(userLoadingSelector);
   const error = useSelector(userErrorSelector);

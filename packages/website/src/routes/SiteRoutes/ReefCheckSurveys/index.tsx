@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { Link, useParams } from 'react-router-dom';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
@@ -25,7 +26,7 @@ export function ReefCheckSurveyViewPage() {
     sid: string;
   }>();
   const error = useSelector(siteErrorSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     window.scrollTo({ top: 0 });

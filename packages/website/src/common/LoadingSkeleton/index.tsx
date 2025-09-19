@@ -9,6 +9,55 @@ import classNames from 'classnames';
 
 const BACKGROUND_IMAGE_OPACITY = 0.3;
 
+interface LoadingSkeletonProps {
+  loading?: boolean;
+  variant?: SkeletonProps['variant'];
+  width?: SkeletonProps['width'];
+  height?: SkeletonProps['height'];
+  lines?: number;
+  image?: string;
+  dark?: boolean;
+  className?: string;
+  longText?: boolean;
+  textHeight?: SkeletonProps['height'];
+  children?: React.ReactNode;
+}
+
+type LoadingSkeletonStyleProps = Pick<
+  LoadingSkeletonProps,
+  'textHeight' | 'image'
+>;
+
+const useStyles = makeStyles(() => ({
+  root: {
+    borderRadius: 4,
+  },
+  dark: {
+    backgroundColor: alpha('#000000', 0.11),
+  },
+  textHeight: ({ textHeight }: LoadingSkeletonStyleProps) =>
+    typeof textHeight !== 'undefined'
+      ? {
+          height: textHeight,
+        }
+      : {},
+  image: ({ image }: LoadingSkeletonStyleProps) =>
+    image
+      ? {
+          backgroundImage: `
+            linear-gradient(
+              rgba(255, 255, 255, ${BACKGROUND_IMAGE_OPACITY}),
+              rgba(255, 255, 255, ${BACKGROUND_IMAGE_OPACITY})
+            ),
+            url("${image}")
+          `,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'grayscale(1)',
+        }
+      : {},
+}));
+
 function LoadingSkeleton({
   loading,
   children,
@@ -81,54 +130,5 @@ function LoadingSkeleton({
     />
   );
 }
-
-const useStyles = makeStyles(() => ({
-  root: {
-    borderRadius: 4,
-  },
-  dark: {
-    backgroundColor: alpha('#000000', 0.11),
-  },
-  textHeight: ({ textHeight }: LoadingSkeletonStyleProps) =>
-    typeof textHeight !== 'undefined'
-      ? {
-          height: textHeight,
-        }
-      : {},
-  image: ({ image }: LoadingSkeletonStyleProps) =>
-    image
-      ? {
-          backgroundImage: `
-            linear-gradient(
-              rgba(255, 255, 255, ${BACKGROUND_IMAGE_OPACITY}),
-              rgba(255, 255, 255, ${BACKGROUND_IMAGE_OPACITY})
-            ),
-            url("${image}")
-          `,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          filter: 'grayscale(1)',
-        }
-      : {},
-}));
-
-interface LoadingSkeletonProps {
-  loading?: boolean;
-  variant?: SkeletonProps['variant'];
-  width?: SkeletonProps['width'];
-  height?: SkeletonProps['height'];
-  lines?: number;
-  image?: string;
-  dark?: boolean;
-  className?: string;
-  longText?: boolean;
-  textHeight?: SkeletonProps['height'];
-  children?: React.ReactNode;
-}
-
-type LoadingSkeletonStyleProps = Pick<
-  LoadingSkeletonProps,
-  'textHeight' | 'image'
->;
 
 export default LoadingSkeleton;

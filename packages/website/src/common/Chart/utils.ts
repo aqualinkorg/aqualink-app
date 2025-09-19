@@ -13,12 +13,19 @@ import type {
 import { SurveyListItem } from 'store/Survey/types';
 import { sortByDate } from 'helpers/dates';
 import { DateTime } from 'luxon-extensions';
+import type { Chart, ChartDataset } from 'chart.js';
 import type { ChartProps, Dataset } from '.';
+
+// Define ChartPoint interface for time series data with string timestamps
+interface ChartPoint {
+  x: string | number;
+  y: number | null | undefined;
+}
 
 interface Context {
   chart?: Chart;
   dataIndex?: number;
-  dataset?: Chart.ChartDataSets;
+  dataset?: ChartDataset;
   datasetIndex?: number;
 }
 
@@ -198,9 +205,7 @@ const pointColor = (surveyDate?: Date) => (context: Context) => {
     context.dataset?.data &&
     typeof context.dataIndex === 'number'
   ) {
-    const chartPoint = context.dataset.data[
-      context.dataIndex
-    ] as Chart.ChartPoint;
+    const chartPoint = context.dataset.data[context.dataIndex] as ChartPoint;
     const chartDate = new Date(chartPoint.x as string);
     return sameDay(surveyDate, chartDate)
       ? SELECTED_SURVEY_CHART_POINT_COLOR
@@ -217,13 +222,10 @@ const pointColor = (surveyDate?: Date) => (context: Context) => {
  * @param maxHoursGap The maximum number of hours threshold
  * @returns The augmented data array with the invalid values
  */
-const createGaps = (
-  data: Chart.ChartPoint[],
-  maxHoursGap: number,
-): Chart.ChartPoint[] => {
+const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
   const nPoints = data.length;
   if (nPoints > 0) {
-    return data.reduce<Chart.ChartPoint[]>((acc, curr, currIndex) => {
+    return data.reduce<ChartPoint[]>((acc, curr, currIndex) => {
       // If current and next point differ more than maxHoursGap then
       // insert a point in their middle with no value so that chartJS
       // will notice the gap.
@@ -267,7 +269,7 @@ export const createDatasets = (
   datasets: ChartProps['datasets'],
   surveys: ChartProps['surveys'],
   selectedSurveyDate?: Date,
-): Chart.ChartDataSets[] => {
+): any[] => {
   const surveyDates = getSurveyDates(surveys || []);
   const processedDatasets = datasets
     ?.filter(({ displayData }) => displayData)
@@ -304,8 +306,7 @@ export const createDatasets = (
           borderColor: curveColor,
           borderWidth: 2,
           pointRadius: 0,
-          cubicInterpolationMode:
-            'monotone' as Chart.ChartDataSets['cubicInterpolationMode'],
+          cubicInterpolationMode: 'monotone',
           backgroundColor:
             isNumber(threshold) &&
             fillColorAboveThreshold &&
@@ -344,7 +345,7 @@ export const createDatasets = (
           )
           .map(
             ({ timestamp, value }) =>
-              ({ x: timestamp, y: value }) as Chart.ChartPoint,
+              ({ x: timestamp, y: value }) as ChartPoint,
           ),
       }
     : undefined;

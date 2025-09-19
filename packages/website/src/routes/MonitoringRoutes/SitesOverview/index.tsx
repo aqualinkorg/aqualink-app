@@ -81,6 +81,21 @@ const getResult = async (token: string) => {
   }));
 };
 
+const useStyles = makeStyles(() => ({
+  filtersWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: '2rem',
+    padding: '2rem',
+    flexBasis: '5rem',
+  },
+  filterItem: {
+    height: '3rem',
+  },
+}));
+
 function SitesOverview() {
   const classes = useStyles();
 
@@ -163,20 +178,5 @@ function SitesOverview() {
     />
   );
 }
-
-const useStyles = makeStyles(() => ({
-  filtersWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    gap: '2rem',
-    padding: '2rem',
-    flexBasis: '5rem',
-  },
-  filterItem: {
-    height: '3rem',
-  },
-}));
 
 export default SitesOverview;

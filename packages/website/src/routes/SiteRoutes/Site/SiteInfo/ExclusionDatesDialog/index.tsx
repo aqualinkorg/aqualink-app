@@ -3,7 +3,7 @@ import { Alert, Theme, Box, Typography, Grid } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import {
   clearTimeSeriesData,
@@ -31,7 +31,7 @@ function ExclusionDatesDialog({
   onClose,
   classes,
 }: ExclusionDatesDialogProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // State variables for deploy dialog
   const [deployDateTime, setDeployDateTime] = useState<Date | null>(null);
@@ -114,6 +114,8 @@ function ExclusionDatesDialog({
     }
   };
 
+  const onConfirmationDialogClose = () => setIsConfirmationDialogOpen(false);
+
   const onMaintainAdd = () => {
     const localStartDate = setTimeZone(maintainStartDateTime, timeZone);
     const localEndDate = setTimeZone(maintainEndDateTime, timeZone);
@@ -168,7 +170,6 @@ function ExclusionDatesDialog({
   };
 
   const onConfirmationDialogOpen = () => setIsConfirmationDialogOpen(true);
-  const onConfirmationDialogClose = () => setIsConfirmationDialogOpen(false);
 
   const actions: Action[] = [
     {

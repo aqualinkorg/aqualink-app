@@ -21,6 +21,21 @@ import { UploadTimeSeriesResult } from 'services/uploadServices';
 
 const YELLOW = yellow[600];
 
+const useStyles = makeStyles((theme: Theme) => ({
+  dialogTitle: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.text.primary,
+  },
+  avatar: {
+    backgroundColor: YELLOW,
+  },
+}));
+
 function DetailsDialog({ open, details, onClose }: DetailsDialogProps) {
   const classes = useStyles();
 
@@ -72,21 +87,6 @@ function DetailsDialog({ open, details, onClose }: DetailsDialogProps) {
     </Dialog>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  dialogTitle: {
-    backgroundColor: theme.palette.primary.main,
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.text.primary,
-  },
-  avatar: {
-    backgroundColor: YELLOW,
-  },
-}));
 
 interface DetailsDialogProps {
   open: boolean;

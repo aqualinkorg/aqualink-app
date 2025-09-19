@@ -10,7 +10,8 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { find } from 'lodash';
 
 import { Site, SiteUpdateParams, Status } from 'store/Sites/types';
@@ -31,7 +32,7 @@ function EditForm({
   onSubmit,
   classes,
 }: EditFormProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
 
   const draftSite = useSelector(siteDraftSelector);

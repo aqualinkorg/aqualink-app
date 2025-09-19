@@ -24,7 +24,8 @@ import {
   Controller,
   SubmitHandler,
 } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import {
   resetPassword,
@@ -44,7 +45,7 @@ function SignInDialog({
   handleSignInOpen,
   classes,
 }: SignInDialogProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
   const loading = useSelector(userLoadingSelector);
   const error = useSelector(userErrorSelector);
@@ -68,6 +69,19 @@ function SignInDialog({
       setErrorAlertOpen(true);
     }
   }, [user, handleSignInOpen, error]);
+
+  const resetPasswordHelper = (
+    email?: string,
+    event?: BaseSyntheticEvent<object, any, any>,
+  ) => {
+    if (event) {
+      event.preventDefault();
+    }
+    if (!email) return;
+    dispatch(resetPassword({ email: email.toLowerCase() }));
+    setPasswordResetEmail(email.toLowerCase());
+    clearErrors('password');
+  };
 
   const onSubmit = (
     data: SignInFormFields,
@@ -97,19 +111,6 @@ function SignInDialog({
     event,
   ) => {
     resetPasswordHelper(data.emailAddress, event);
-  };
-
-  const resetPasswordHelper = (
-    email?: string,
-    event?: BaseSyntheticEvent<object, any, any>,
-  ) => {
-    if (event) {
-      event.preventDefault();
-    }
-    if (!email) return;
-    dispatch(resetPassword({ email: email.toLowerCase() }));
-    setPasswordResetEmail(email.toLowerCase());
-    clearErrors('password');
   };
 
   const clearUserError = () => dispatch(clearError());

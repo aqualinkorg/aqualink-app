@@ -76,7 +76,9 @@ function Dialog({
                 </Link>
               );
             }
-            return <ActionButton {...action} classes={classes} />;
+            return (
+              <ActionButton key={action.text} {...action} classes={classes} />
+            );
           })}
       </DialogActions>
     </MuiDialog>

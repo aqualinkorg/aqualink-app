@@ -3,7 +3,8 @@ import { Theme, Grid } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -48,7 +49,7 @@ function MediaDetails({ siteId, point, classes }: MediaDetailsProps) {
   >(point.pointId);
   const user = useSelector(userInfoSelector);
   const selectedPoi = useSelector(selectedSurveyPointSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSurveyMediaUpdate = (
     mediaId: number,

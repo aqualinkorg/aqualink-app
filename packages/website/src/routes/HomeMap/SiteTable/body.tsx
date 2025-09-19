@@ -15,7 +15,8 @@ import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import ErrorIcon from '@mui/icons-material/Error';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { TableRow as Row } from 'store/Homepage/types';
 import { constructTableData } from 'store/Sites/helpers';
 import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
@@ -125,7 +126,7 @@ function SiteTableBody({
   classes,
   onEmptyColumnsChange,
 }: SiteTableBodyProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const storedSites = useSelector(sitesToDisplayListSelector);
   const sitesList = useMemo(
     () => collection?.sites || storedSites || [],

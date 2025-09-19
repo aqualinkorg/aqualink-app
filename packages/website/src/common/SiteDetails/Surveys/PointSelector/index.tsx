@@ -22,6 +22,53 @@ import { maxLengths } from 'constants/names';
 import EditDialog, { Action } from '../../../Dialog';
 import CustomLink from '../../../Link';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    subTitle: {
+      lineHeight: 1,
+      color: '#474747',
+      marginRight: '1rem',
+    },
+    selectorWrapper: {
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
+    },
+    selector: {
+      minWidth: 120,
+      maxWidth: 190,
+      color: theme.palette.primary.main,
+      marginRight: '1rem',
+    },
+    itemName: {
+      maxWidth: 140,
+      whiteSpace: 'normal',
+      overflowWrap: 'break-word',
+      wordWrap: 'break-word',
+      wordBreak: 'break-word',
+      hyphens: 'auto',
+    },
+    menuItem: {
+      minWidth: 240,
+      color: theme.palette.primary.main,
+    },
+    editSurveyPointTextField: {
+      color: 'black',
+      alignItems: 'center',
+      padding: 8,
+    },
+    menuButton: {
+      padding: 0,
+    },
+    checkIcon: {
+      color: theme.palette.success.main,
+    },
+    closeIcon: {
+      color: theme.palette.error.main,
+    },
+  }),
+);
+
 function PointSelector({
   siteId,
   pointOptions,
@@ -248,53 +295,6 @@ function PointSelector({
     </>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    subTitle: {
-      lineHeight: 1,
-      color: '#474747',
-      marginRight: '1rem',
-    },
-    selectorWrapper: {
-      [theme.breakpoints.down('sm')]: {
-        width: '100%',
-      },
-    },
-    selector: {
-      minWidth: 120,
-      maxWidth: 190,
-      color: theme.palette.primary.main,
-      marginRight: '1rem',
-    },
-    itemName: {
-      maxWidth: 140,
-      whiteSpace: 'normal',
-      overflowWrap: 'break-word',
-      wordWrap: 'break-word',
-      wordBreak: 'break-word',
-      hyphens: 'auto',
-    },
-    menuItem: {
-      minWidth: 240,
-      color: theme.palette.primary.main,
-    },
-    editSurveyPointTextField: {
-      color: 'black',
-      alignItems: 'center',
-      padding: 8,
-    },
-    menuButton: {
-      padding: 0,
-    },
-    checkIcon: {
-      color: theme.palette.success.main,
-    },
-    closeIcon: {
-      color: theme.palette.error.main,
-    },
-  }),
-);
 
 interface PointSelectorProps {
   siteId?: number;
