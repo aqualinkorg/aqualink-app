@@ -141,18 +141,19 @@ export class TestService {
   }
 
   public async cleanAllEntities(connection: DataSource) {
-    await connection.getRepository(TimeSeries).delete({});
-    await connection.getRepository(Sources).delete({});
-    await connection.getRepository(Collection).delete({});
-    await connection.getRepository(Region).delete({});
-    await connection.getRepository(SiteApplication).delete({});
-    await connection.getRepository(SiteSurveyPoint).delete({});
-    await connection.getRepository(DailyData).delete({});
-    await connection.getRepository(ExclusionDates).delete({});
-    await connection.getRepository(Survey).delete({});
-    await connection.getRepository(SurveyMedia).delete({});
-    await connection.getRepository(HistoricalMonthlyMean).delete({});
-    await connection.getRepository(Site).delete({});
-    await connection.getRepository(User).delete({});
+    // Use clear() method instead of delete({}) to avoid TypeORM restriction
+    await connection.getRepository(TimeSeries).clear();
+    await connection.getRepository(Sources).clear();
+    await connection.getRepository(Collection).clear();
+    await connection.getRepository(Region).clear();
+    await connection.getRepository(SiteApplication).clear();
+    await connection.getRepository(SiteSurveyPoint).clear();
+    await connection.getRepository(DailyData).clear();
+    await connection.getRepository(ExclusionDates).clear();
+    await connection.getRepository(Survey).clear();
+    await connection.getRepository(SurveyMedia).clear();
+    await connection.getRepository(HistoricalMonthlyMean).clear();
+    await connection.getRepository(Site).clear();
+    await connection.getRepository(User).clear();
   }
 }
