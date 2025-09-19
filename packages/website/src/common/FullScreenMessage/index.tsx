@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme, Box, Typography } from '@mui/material';
 
-const FullScreenMessage = ({ message }: FullScreenMessageProps) => {
+function FullScreenMessage({ message }: FullScreenMessageProps) {
   const theme = useTheme();
   return (
     <Box
@@ -15,7 +15,7 @@ const FullScreenMessage = ({ message }: FullScreenMessageProps) => {
       <Typography variant="h2">{message}</Typography>
     </Box>
   );
-};
+}
 
 interface FullScreenMessageProps {
   message: string;

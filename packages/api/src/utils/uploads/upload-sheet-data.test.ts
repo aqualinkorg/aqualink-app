@@ -714,9 +714,7 @@ describe('CheckConvertingWork', () => {
       'text/csv',
     );
 
-    const editRes = result.map(({ timestamp, ...rest }) => {
-      return rest;
-    });
+    const editRes = result.map(({ timestamp, ...rest }) => rest);
 
     expect(editRes).toEqual(expectedResult);
   });

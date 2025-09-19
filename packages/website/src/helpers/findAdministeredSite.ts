@@ -4,6 +4,5 @@ import { Site } from 'store/Sites/types';
 export const findAdministeredSite = (
   user: User | null,
   siteId: number,
-): Site | undefined => {
-  return user?.administeredSites?.find((item) => item.id === siteId);
-};
+): Site | undefined =>
+  user?.administeredSites?.find((item) => item.id === siteId);

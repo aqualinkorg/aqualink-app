@@ -7,7 +7,7 @@ import createStyles from '@mui/styles/createStyles';
 
 import { alertLevelColorCode } from '../../../assets/colorCode';
 
-const AlertLevelLegendItems = ({ classes }: AlertLevelLegendItemsProps) => {
+function AlertLevelLegendItems({ classes }: AlertLevelLegendItemsProps) {
   return (
     <>
       {alertLevelColorCode.map((item, index) => (
@@ -25,7 +25,7 @@ const AlertLevelLegendItems = ({ classes }: AlertLevelLegendItemsProps) => {
       ))}
     </>
   );
-};
+}
 
 const contentStyles = (theme: Theme) =>
   createStyles({
@@ -54,13 +54,13 @@ export const AlertLevelLegendContent = withStyles(contentStyles)(
   AlertLevelLegendItems,
 );
 
-const AlertLevelLegend = ({ classes }: AlertLevelLegendProps) => {
+function AlertLevelLegend({ classes }: AlertLevelLegendProps) {
   return (
     <div className={classes.root}>
       <AlertLevelLegendContent />
     </div>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

@@ -1,12 +1,15 @@
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
 import { DataSource } from 'typeorm';
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { isTestEnv } from './src/utils/constants';
+import type { DataSourceOptions } from 'typeorm';
+
+// Use __dirname global for CommonJS compatibility (Jest/Node.js)
+declare const __dirname: string;
 
 // If we have a DATABASE_URL, use that
 // If the node_env is set to test then use the TEST_DATABASE_URL instead.
 // If no TEST_DATABASE_URL is defined then use the same connection as on development but use database TEST_POSTGRES_DATABASE
+const isTestEnv = process.env.NODE_ENV === 'test';
 const prefix = isTestEnv ? 'TEST_' : '';
 const databaseUrl = process.env[`${prefix}DATABASE_URL`];
 const dataSourceInfo = databaseUrl
@@ -26,7 +29,7 @@ const dataSourceInfo = databaseUrl
       }),
     };
 
-export const dataSourceOptions: PostgresConnectionOptions = {
+export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   ...dataSourceInfo,
   // We don't want to auto-synchronize production data - we should deliberately run migrations.

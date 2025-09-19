@@ -10,23 +10,21 @@ export const getCardTemperatureValues = (
   bottomTemperature: TimeSeries | undefined,
   topTemperature: TimeSeries | undefined,
   date: string | null | undefined,
-) => {
-  return {
-    spotterBottom: getSensorValue(
-      bottomTemperature?.find((x) => x.type === 'spotter')?.data,
-      date,
-    ),
-    spotterTop: getSensorValue(
-      topTemperature?.find((x) => x.type === 'spotter')?.data,
-      date,
-    ),
-    hoboBottom: getSensorValue(
-      bottomTemperature?.find((x) => x.type === 'hobo')?.data,
-      date,
-    ),
-    hoboSurface: getSensorValue(
-      topTemperature?.find((x) => x.type === 'hobo')?.data,
-      date,
-    ),
-  };
-};
+) => ({
+  spotterBottom: getSensorValue(
+    bottomTemperature?.find((x) => x.type === 'spotter')?.data,
+    date,
+  ),
+  spotterTop: getSensorValue(
+    topTemperature?.find((x) => x.type === 'spotter')?.data,
+    date,
+  ),
+  hoboBottom: getSensorValue(
+    bottomTemperature?.find((x) => x.type === 'hobo')?.data,
+    date,
+  ),
+  hoboSurface: getSensorValue(
+    topTemperature?.find((x) => x.type === 'hobo')?.data,
+    date,
+  ),
+});

@@ -20,7 +20,45 @@ const ACCEPTED_TYPES = [
   },
 ];
 
-const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    marginTop: theme.spacing(5),
+    border: `1px dashed ${theme.palette.primary.main}`,
+    borderRadius: 10,
+    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+    padding: theme.spacing(4),
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: alpha(theme.palette.primary.main, 0.15),
+    },
+    transition: theme.transitions.create(
+      ['background-color', 'box-shadow', 'border'],
+      {
+        duration: '250ms',
+        delay: '0ms',
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+    ),
+  },
+  disabled: {
+    opacity: 0.5,
+    pointerEvents: 'none',
+    borderColor: GREY_COLOR,
+    color: GREY_COLOR,
+    backgroundColor: alpha(GREY_COLOR, 0.1),
+  },
+  bold: {
+    fontWeight: 700,
+  },
+  grey: {
+    color: GREY_COLOR,
+  },
+  button: {
+    marginBottom: theme.spacing(2),
+  },
+}));
+
+function DropZone({ disabled, onFilesDrop }: DropZoneProps) {
   const classes = useStyles();
 
   return (
@@ -107,45 +145,7 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
       )}
     </DefaultDropzone>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    marginTop: theme.spacing(5),
-    border: `1px dashed ${theme.palette.primary.main}`,
-    borderRadius: 10,
-    backgroundColor: alpha(theme.palette.primary.main, 0.1),
-    padding: theme.spacing(4),
-    '&:hover': {
-      cursor: 'pointer',
-      backgroundColor: alpha(theme.palette.primary.main, 0.15),
-    },
-    transition: theme.transitions.create(
-      ['background-color', 'box-shadow', 'border'],
-      {
-        duration: '250ms',
-        delay: '0ms',
-        easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      },
-    ),
-  },
-  disabled: {
-    opacity: 0.5,
-    pointerEvents: 'none',
-    borderColor: GREY_COLOR,
-    color: GREY_COLOR,
-    backgroundColor: alpha(GREY_COLOR, 0.1),
-  },
-  bold: {
-    fontWeight: 700,
-  },
-  grey: {
-    color: GREY_COLOR,
-  },
-  button: {
-    marginBottom: theme.spacing(2),
-  },
-}));
+}
 
 interface DropZoneProps {
   disabled: boolean;

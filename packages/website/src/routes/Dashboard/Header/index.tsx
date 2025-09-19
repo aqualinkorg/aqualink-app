@@ -13,7 +13,7 @@ import { userInfoSelector } from 'store/User/userSlice';
 import { isCollectionOwner } from 'helpers/user';
 import EditNameForm from './EditNameForm';
 
-const Header = ({ collection, classes }: HeaderProps) => {
+function Header({ collection, classes }: HeaderProps) {
   const signedInUser = useSelector(userInfoSelector);
   const [editNameEnabled, setEditNameEnabled] = useState(false);
 
@@ -54,7 +54,7 @@ const Header = ({ collection, classes }: HeaderProps) => {
       </Grid>
     </Box>
   );
-};
+}
 
 const styles = () =>
   createStyles({

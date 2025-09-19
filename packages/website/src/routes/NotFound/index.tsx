@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import NotFoundButton from '../../assets/img/404_click.png';
 import NotFoundBG from '../../assets/img/404_background.jpg';
 
-const NotFoundPage = ({ classes }: NotFoundPageProps) => {
+function NotFoundPage({ classes }: NotFoundPageProps) {
   return (
     <div className={classes.background}>
       <Link to="/map">
@@ -14,7 +14,7 @@ const NotFoundPage = ({ classes }: NotFoundPageProps) => {
       </Link>
     </div>
   );
-};
+}
 
 const styles = () =>
   createStyles({

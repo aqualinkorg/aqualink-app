@@ -105,32 +105,26 @@ const sitesListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => {
-        return {
-          ...state,
-          list: action.payload.list,
-          loading: false,
-        };
-      },
+      (state, action: PayloadAction<SitesRequestData>) => ({
+        ...state,
+        list: action.payload.list,
+        loading: false,
+      }),
     );
 
-    builder.addCase(sitesRequest.rejected, (state, action) => {
-      return {
-        ...state,
-        error: action.error.message
-          ? action.error.message
-          : action.error.toString(),
-        loading: false,
-      };
-    });
+    builder.addCase(sitesRequest.rejected, (state, action) => ({
+      ...state,
+      error: action.error.message
+        ? action.error.message
+        : action.error.toString(),
+      loading: false,
+    }));
 
-    builder.addCase(sitesRequest.pending, (state) => {
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    });
+    builder.addCase(sitesRequest.pending, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    }));
   },
 });
 
@@ -162,15 +156,15 @@ export const sitesToDisplayListSelector = createSelector(
   sitesListSelector,
   (state: RootState) => state.sitesList.filters,
   (list, filters) =>
-    list?.filter((s) => {
-      return [
+    list?.filter((s) =>
+      [
         filterSiteByHeatStress(s, filters),
         filterSiteBySiteOptions(s, filters),
         filterSiteBySpecies(s, filters),
         filterSiteByReefComposition(s, filters),
         filterSiteByImpact(s, filters),
-      ].every(Boolean);
-    }),
+      ].every(Boolean),
+    ),
 );
 
 export const sitesListFiltersSelector = (

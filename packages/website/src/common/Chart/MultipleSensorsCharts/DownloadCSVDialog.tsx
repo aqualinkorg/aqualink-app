@@ -39,14 +39,27 @@ const additionalDataLabels = [
   'additional site-specific data when available',
 ];
 
-const DownloadCSVDialog = ({
+const useStyles = makeStyles((theme: Theme) => ({
+  dialogTitle: {
+    backgroundColor: theme.palette.primary.main,
+    overflowWrap: 'break-word',
+  },
+  bold: {
+    fontWeight: 700,
+  },
+  dialogContent: {
+    maxWidth: '31rem',
+  },
+}));
+
+function DownloadCSVDialog({
   onClose,
   open,
   data,
   startDate,
   endDate,
   loading,
-}: DownloadCSVDialogProps) => {
+}: DownloadCSVDialogProps) {
   const classes = useStyles();
   const [additionalData, setAdditionalData] = React.useState(false);
   const [allDates, setAllDates] = React.useState(false);
@@ -175,19 +188,6 @@ const DownloadCSVDialog = ({
       </DialogActions>
     </Dialog>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  dialogTitle: {
-    backgroundColor: theme.palette.primary.main,
-    overflowWrap: 'break-word',
-  },
-  bold: {
-    fontWeight: 700,
-  },
-  dialogContent: {
-    maxWidth: '31rem',
-  },
-}));
+}
 
 export default DownloadCSVDialog;

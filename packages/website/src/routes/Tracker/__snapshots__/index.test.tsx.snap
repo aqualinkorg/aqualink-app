@@ -250,6 +250,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
            
           <a
             class="makeStyles-link-11"
+            data-discover="true"
             href="/collections/minderoo"
           >
             here
@@ -356,6 +357,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
            
           <a
             class="makeStyles-link-11"
+            data-discover="true"
             href="/collections/heat-stress"
           >
             this page
@@ -372,6 +374,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
           variant="outlined"
         >
           <a
+            data-discover="true"
             href="/collections/heat-stress"
           >
             <div

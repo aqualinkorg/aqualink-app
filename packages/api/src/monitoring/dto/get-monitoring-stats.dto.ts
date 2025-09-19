@@ -21,7 +21,7 @@ export class GetMonitoringStatsDto {
       }
 
       return splitted.map((x) => parseInt(x, 10));
-    } catch (error) {
+    } catch {
       throw new BadRequestException('siteIds: invalid format');
     }
   })
@@ -35,9 +35,7 @@ export class GetMonitoringStatsDto {
   spotterId?: string;
 
   @IsOptional()
-  @Transform(({ value }) => {
-    return [true, 'true', 1, '1'].indexOf(value) > -1;
-  })
+  @Transform(({ value }) => [true, 'true', 1, '1'].indexOf(value) > -1)
   monthly?: boolean;
 
   @IsOptional()
@@ -51,8 +49,6 @@ export class GetMonitoringStatsDto {
   end?: Date;
 
   @IsOptional()
-  @Transform(({ value }) => {
-    return [true, 'true', 1, '1'].indexOf(value) > -1;
-  })
+  @Transform(({ value }) => [true, 'true', 1, '1'].indexOf(value) > -1)
   csv?: boolean;
 }

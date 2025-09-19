@@ -14,13 +14,13 @@ import createStyles from '@mui/styles/createStyles';
 
 import { Range } from 'store/Sites/types';
 
-const SelectRange = ({
+function SelectRange({
   open,
   value,
   setOpen,
   onRangeChange,
   classes,
-}: SelectRangeProps) => {
+}: SelectRangeProps) {
   return (
     <Grid item className={classes.selectorWrapper}>
       <Box display="flex" alignItems="flex-end">
@@ -46,7 +46,7 @@ const SelectRange = ({
       </Box>
     </Grid>
   );
-};
+}
 
 const styles = () =>
   createStyles({

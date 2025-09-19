@@ -24,7 +24,8 @@ import {
   Controller,
   SubmitHandler,
 } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import {
   resetPassword,
@@ -38,13 +39,13 @@ import { UserSignInParams } from 'store/User/types';
 import dialogStyles from '../styles/dialogStyles';
 import { SignInFormFields } from '../types';
 
-const SignInDialog = ({
+function SignInDialog({
   open,
   handleRegisterOpen,
   handleSignInOpen,
   classes,
-}: SignInDialogProps) => {
-  const dispatch = useDispatch();
+}: SignInDialogProps) {
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
   const loading = useSelector(userLoadingSelector);
   const error = useSelector(userErrorSelector);
@@ -68,6 +69,19 @@ const SignInDialog = ({
       setErrorAlertOpen(true);
     }
   }, [user, handleSignInOpen, error]);
+
+  const resetPasswordHelper = (
+    email?: string,
+    event?: BaseSyntheticEvent<object, any, any>,
+  ) => {
+    if (event) {
+      event.preventDefault();
+    }
+    if (!email) return;
+    dispatch(resetPassword({ email: email.toLowerCase() }));
+    setPasswordResetEmail(email.toLowerCase());
+    clearErrors('password');
+  };
 
   const onSubmit = (
     data: SignInFormFields,
@@ -97,19 +111,6 @@ const SignInDialog = ({
     event,
   ) => {
     resetPasswordHelper(data.emailAddress, event);
-  };
-
-  const resetPasswordHelper = (
-    email?: string,
-    event?: BaseSyntheticEvent<object, any, any>,
-  ) => {
-    if (event) {
-      event.preventDefault();
-    }
-    if (!email) return;
-    dispatch(resetPassword({ email: email.toLowerCase() }));
-    setPasswordResetEmail(email.toLowerCase());
-    clearErrors('password');
   };
 
   const clearUserError = () => dispatch(clearError());
@@ -318,7 +319,7 @@ const SignInDialog = ({
       </Card>
     </Dialog>
   );
-};
+}
 
 const styles = () =>
   createStyles({

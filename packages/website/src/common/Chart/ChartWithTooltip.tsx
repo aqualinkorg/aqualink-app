@@ -124,23 +124,21 @@ function ChartWithTooltip({
         }}
       />
       {showTooltip ? (
-        <>
-          <div
-            className="chart-tooltip"
-            id="chart-tooltip"
-            style={{
-              position: 'fixed',
-              top: tooltipPosition.top,
-              left: tooltipPosition.left,
-            }}
-          >
-            <Tooltip
-              {...tooltipData}
-              siteTimeZone={timeZone}
-              userTimeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
-            />
-          </div>
-        </>
+        <div
+          className="chart-tooltip"
+          id="chart-tooltip"
+          style={{
+            position: 'fixed',
+            top: tooltipPosition.top,
+            left: tooltipPosition.left,
+          }}
+        >
+          <Tooltip
+            {...tooltipData}
+            siteTimeZone={timeZone}
+            userTimeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
+          />
+        </div>
       ) : null}
     </div>
   );

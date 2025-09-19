@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { GridProps, Grid, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -8,7 +8,40 @@ import Title from './Title';
 import { Value } from './types';
 import LoadingSkeleton from '../../LoadingSkeleton';
 
-const CardWithTitle: FC<CardWithTitleProps> = ({
+const useStyles = makeStyles((theme: Theme) => {
+  const aspectRatio = '16 / 9';
+
+  return createStyles({
+    forcedAspectRatioWrapper: {
+      paddingTop: `calc((100% - ${theme.spacing(
+        2,
+      )}) / (${aspectRatio}) + ${theme.spacing(2)})`,
+      marginTop: -theme.spacing(1),
+      position: 'relative',
+    },
+    row: {
+      margin: theme.spacing(0, 2, 1, 2),
+    },
+    container: {
+      height: '30rem',
+      [theme.breakpoints.only('md')]: {
+        height: '25rem',
+      },
+      [theme.breakpoints.down('sm')]: {
+        height: '20rem',
+      },
+    },
+    absolutePositionedContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    },
+  });
+});
+
+function CardWithTitle({
   loading,
   gridProps,
   titleItems,
@@ -17,7 +50,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
   forcedAspectRatio,
   children,
   loadingImage,
-}: PropsWithChildren<CardWithTitleProps>) => {
+}: PropsWithChildren<CardWithTitleProps>) {
   const classes = useStyles();
 
   return (
@@ -62,40 +95,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
       </Grid>
     </Grid>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => {
-  const aspectRatio = '16 / 9';
-
-  return createStyles({
-    forcedAspectRatioWrapper: {
-      paddingTop: `calc((100% - ${theme.spacing(
-        2,
-      )}) / (${aspectRatio}) + ${theme.spacing(2)})`,
-      marginTop: -theme.spacing(1),
-      position: 'relative',
-    },
-    row: {
-      margin: theme.spacing(0, 2, 1, 2),
-    },
-    container: {
-      height: '30rem',
-      [theme.breakpoints.only('md')]: {
-        height: '25rem',
-      },
-      [theme.breakpoints.down('sm')]: {
-        height: '20rem',
-      },
-    },
-    absolutePositionedContainer: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-    },
-  });
-});
+}
 
 interface CardWithTitleProps {
   gridProps: GridProps;

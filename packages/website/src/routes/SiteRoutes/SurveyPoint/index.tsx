@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { LinearProgress } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { useParams } from 'react-router-dom';
 import {
   clearTimeSeriesData,
@@ -27,13 +28,15 @@ import SurveyHistory from './SurveyHistory';
 
 const BG_COLOR = 'rgb(245, 246, 246)';
 
-const SurveyPoint = () => {
-  const { id = '', pointId = '' } =
-    useParams<{ id: string; pointId: string }>();
+function SurveyPoint() {
+  const { id = '', pointId = '' } = useParams<{
+    id: string;
+    pointId: string;
+  }>();
   const siteIdNumber = parseInt(id, 10);
   const pointIdNumber = parseInt(pointId, 10);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const site = useSelector(siteDetailsSelector);
   const spotterPosition = useSelector(spotterPositionSelector);
   const siteLoading = useSelector(siteLoadingSelector);
@@ -103,6 +106,6 @@ const SurveyPoint = () => {
       )}
     </>
   );
-};
+}
 
 export default SurveyPoint;

@@ -28,7 +28,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { sortBy } from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import classNames from 'classnames';
 import LanguageIcon from '@mui/icons-material/Language';
 import { userInfoSelector, signOutUser } from 'store/User/userSlice';
@@ -50,16 +51,16 @@ import RouteButtons from '../RouteButtons';
 import MenuDrawer from '../MenuDrawer';
 import requests from '../../helpers/requests';
 
-const NavBar = ({
+function NavBar({
   searchLocation,
   geocodingEnabled = false,
   routeButtons = false,
   loading = false,
   classes,
-}: NavBarProps) => {
+}: NavBarProps) {
   const user = useSelector(userInfoSelector);
   const storedCollection = useSelector(collectionDetailsSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.up('md'));
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
@@ -102,16 +103,16 @@ const NavBar = ({
   React.useEffect(() => {
     const responseInterceptor =
       requests.axiosInstance.interceptors.response.use(
-        (response) => {
-          return response;
-        },
+        (response) => response,
         async (error) => {
           if ([401, 403].includes(error?.response?.status)) {
             onUserSignOut();
             // temporarily log server errors here to investigate
             // potential erroneous 403 errors.
             console.error(error);
-            await new Promise((resolve) => setTimeout(resolve));
+            await new Promise((resolve) => {
+              setTimeout(resolve, 0);
+            });
             handleSignInDialog(true);
           }
           return Promise.reject(error);
@@ -204,121 +205,116 @@ const NavBar = ({
                 </IconButton>
               </Tooltip>
               {user ? (
-                <>
-                  <Box display="flex" flexWrap="nowrap" alignItems="center">
-                    {user.fullName ? user.fullName : 'My Profile'}
-                    <IconButton
-                      className={classes.button}
-                      onClick={handleClick}
-                      size="large"
-                    >
-                      <ExpandMoreIcon className={classes.expandIcon} />
-                    </IconButton>
-                    <Menu
-                      key="user-menu"
-                      className={classes.userMenu}
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleMenuClose}
-                      MenuListProps={{ className: classes.userMenu }}
-                      PopoverClasses={{ paper: classes.userMenuWrapper }}
-                    >
-                      {sortBy(user.administeredSites, 'id').map(
-                        ({ id, name, region }, index) => {
-                          const siteIdentifier = name || region?.name;
-                          return (
-                            <Link
-                              to={`/sites/${id}`}
-                              key={`site-link-${id}`}
-                              className={classes.menuItemLink}
+                <Box display="flex" flexWrap="nowrap" alignItems="center">
+                  {user.fullName ? user.fullName : 'My Profile'}
+                  <IconButton
+                    className={classes.button}
+                    onClick={handleClick}
+                    size="large"
+                  >
+                    <ExpandMoreIcon className={classes.expandIcon} />
+                  </IconButton>
+                  <Menu
+                    key="user-menu"
+                    className={classes.userMenu}
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                    MenuListProps={{ className: classes.userMenu }}
+                    PopoverClasses={{ paper: classes.userMenuWrapper }}
+                  >
+                    {sortBy(user.administeredSites, 'id').map(
+                      ({ id, name, region }, index) => {
+                        const siteIdentifier = name || region?.name;
+                        return (
+                          <Link
+                            to={`/sites/${id}`}
+                            key={`site-link-${id}`}
+                            className={classes.menuItemLink}
+                          >
+                            <MenuItem
+                              onClick={() => onSiteChange()}
+                              className={classes.menuItem}
                             >
-                              <MenuItem
-                                onClick={() => onSiteChange()}
-                                className={classes.menuItem}
-                              >
-                                {siteIdentifier || `Site ${index + 1}`}
-                              </MenuItem>
-                            </Link>
-                          );
-                        },
+                              {siteIdentifier || `Site ${index + 1}`}
+                            </MenuItem>
+                          </Link>
+                        );
+                      },
+                    )}
+                    {user &&
+                      (user.adminLevel === 'site_manager' ||
+                        user.adminLevel === 'super_admin') && (
+                        <div>
+                          <Divider className={classes.userMenuDivider} />
+                          <Link to="/uploads" className={classes.menuItemLink}>
+                            <MenuItem
+                              key="user-menu-uploads"
+                              className={classes.menuItem}
+                            >
+                              <Grid container spacing={1}>
+                                <Grid item>
+                                  <PublishIcon fontSize="small" />
+                                </Grid>
+                                <Grid item>Uploads</Grid>
+                              </Grid>
+                            </MenuItem>
+                          </Link>
+                        </div>
                       )}
-                      {user &&
-                        (user.adminLevel === 'site_manager' ||
-                          user.adminLevel === 'super_admin') && (
-                          <div>
-                            <Divider className={classes.userMenuDivider} />
-                            <Link
-                              to="/uploads"
-                              className={classes.menuItemLink}
+                    {user &&
+                      (user.adminLevel === 'site_manager' ||
+                        user.adminLevel === 'super_admin') && (
+                        <div>
+                          <Divider className={classes.userMenuDivider} />
+                          <Link
+                            to="/monitoring"
+                            className={classes.menuItemLink}
+                          >
+                            <MenuItem
+                              key="user-menu-monitoring"
+                              className={classes.menuItem}
                             >
-                              <MenuItem
-                                key="user-menu-uploads"
-                                className={classes.menuItem}
-                              >
-                                <Grid container spacing={1}>
-                                  <Grid item>
-                                    <PublishIcon fontSize="small" />
-                                  </Grid>
-                                  <Grid item>Uploads</Grid>
+                              <Grid container spacing={1}>
+                                <Grid item>
+                                  <EqualizerIcon fontSize="small" />
                                 </Grid>
-                              </MenuItem>
-                            </Link>
-                          </div>
-                        )}
-                      {user &&
-                        (user.adminLevel === 'site_manager' ||
-                          user.adminLevel === 'super_admin') && (
-                          <div>
-                            <Divider className={classes.userMenuDivider} />
-                            <Link
-                              to="/monitoring"
-                              className={classes.menuItemLink}
-                            >
-                              <MenuItem
-                                key="user-menu-monitoring"
-                                className={classes.menuItem}
-                              >
-                                <Grid container spacing={1}>
-                                  <Grid item>
-                                    <EqualizerIcon fontSize="small" />
-                                  </Grid>
-                                  <Grid item>Monitoring</Grid>
-                                </Grid>
-                              </MenuItem>
-                            </Link>
-                          </div>
-                        )}
-                      <Divider className={classes.userMenuDivider} />
-                      <Link to="/dashboard" className={classes.menuItemLink}>
-                        <MenuItem
-                          key="user-menu-dashboard"
-                          className={classes.menuItem}
-                        >
-                          <Grid container spacing={1}>
-                            <Grid item>
-                              <DashboardTwoToneIcon fontSize="small" />
-                            </Grid>
-                            <Grid item>Dashboard</Grid>
-                          </Grid>
-                        </MenuItem>
-                      </Link>
-                      <Divider className={classes.userMenuDivider} />
+                                <Grid item>Monitoring</Grid>
+                              </Grid>
+                            </MenuItem>
+                          </Link>
+                        </div>
+                      )}
+                    <Divider className={classes.userMenuDivider} />
+                    <Link to="/dashboard" className={classes.menuItemLink}>
                       <MenuItem
-                        key="user-menu-logout"
+                        key="user-menu-dashboard"
                         className={classes.menuItem}
-                        onClick={onUserSignOut}
                       >
                         <Grid container spacing={1}>
                           <Grid item>
-                            <PowerSettingsNewIcon fontSize="small" />
+                            <DashboardTwoToneIcon fontSize="small" />
                           </Grid>
-                          <Grid item>Logout</Grid>
+                          <Grid item>Dashboard</Grid>
                         </Grid>
                       </MenuItem>
-                    </Menu>
-                  </Box>
-                </>
+                    </Link>
+                    <Divider className={classes.userMenuDivider} />
+                    <MenuItem
+                      key="user-menu-logout"
+                      className={classes.menuItem}
+                      onClick={onUserSignOut}
+                    >
+                      <Grid container spacing={1}>
+                        <Grid item>
+                          <PowerSettingsNewIcon fontSize="small" />
+                        </Grid>
+                        <Grid item>Logout</Grid>
+                      </Grid>
+                    </MenuItem>
+                  </Menu>
+                </Box>
               ) : (
                 <div style={{ display: 'flex' }}>
                   <Button
@@ -360,7 +356,7 @@ const NavBar = ({
       />
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

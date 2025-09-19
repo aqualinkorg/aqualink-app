@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import L from 'leaflet';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -21,12 +22,12 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const SiteMap = ({ polygon, classes }: SiteMapProps) => {
+function SiteMap({ polygon, classes }: SiteMapProps) {
   const mapRef = useRef<L.Map>(null);
   const diveLocation = useSelector(diveLocationSelector);
   const [markerLat, setMarkerLat] = useState<number | null>(null);
   const [markerLng, setMarkerLng] = useState<number | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const { current } = mapRef;
@@ -104,17 +105,16 @@ const SiteMap = ({ polygon, classes }: SiteMapProps) => {
       )}
     </MapContainer>
   );
-};
+}
 
-const styles = () => {
-  return createStyles({
+const styles = () =>
+  createStyles({
     map: {
       height: '100%',
       width: '100%',
       borderRadius: 4,
     },
   });
-};
 
 interface SiteMapIncomingProps {
   polygon: Site['polygon'];

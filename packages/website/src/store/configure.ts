@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, ThunkDispatch, UnknownAction } from '@reduxjs/toolkit';
 
 import reducer from './reducer';
 import { appMiddlewares } from './middleware';
@@ -11,7 +11,7 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ThunkDispatch<RootState, unknown, UnknownAction>;
 
 export type CreateAsyncThunkTypes = {
   dispatch: AppDispatch;

@@ -46,7 +46,7 @@ const landingPageButtons: LandingPageButton[] = [
   },
 ];
 
-const LandingPage = ({ classes }: LandingPageProps) => {
+function LandingPage({ classes }: LandingPageProps) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -169,7 +169,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
       <Footer />
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

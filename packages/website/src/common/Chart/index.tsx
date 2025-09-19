@@ -304,11 +304,11 @@ function Chart({
   );
 }
 
-export default memo(Chart, (prevProps, nextProps) => {
-  return (
+export default memo(
+  Chart,
+  (prevProps, nextProps) =>
     prevProps.startDate === nextProps.startDate &&
     prevProps.endDate === nextProps.endDate &&
     isEqual(prevProps.datasets, nextProps.datasets) &&
-    prevProps.chartPeriod === nextProps.chartPeriod
-  );
-});
+    prevProps.chartPeriod === nextProps.chartPeriod,
+);

@@ -56,13 +56,13 @@ const currentLocationMarker = L.divIcon({
   iconSize: L.point(16, 16, true),
 });
 
-const MapEventsHandler = ({
+function MapEventsHandler({
   onBaseLayerChange,
   onMapReady,
 }: {
   onBaseLayerChange: (e: LayersControlEvent) => void;
   onMapReady: () => void;
-}) => {
+}) {
   const map = useMapEvents({
     baselayerchange: (e) => onBaseLayerChange(e),
   });
@@ -74,9 +74,9 @@ const MapEventsHandler = ({
   }, [map, onMapReady]);
 
   return null;
-};
+}
 
-const HomepageMap = ({
+function HomepageMap({
   initialCenter,
   initialZoom,
   showSiteTable = true,
@@ -91,7 +91,7 @@ const HomepageMap = ({
   legendLeft,
   classes,
   onMapLoad,
-}: HomepageMapProps) => {
+}: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
@@ -307,7 +307,7 @@ const HomepageMap = ({
       />
     </MapContainer>
   );
-};
+}
 
 const mapButtonStyles: CSSProperties | CreateCSSProperties<{}> = {
   cursor: 'pointer',

@@ -21,13 +21,8 @@ import requests from './requests';
 export const longDHW = (dhw: number | null): string =>
   `0000${dhw ? Math.round(dhw * 10) : '0'}`.slice(-4);
 
-export const findSiteById = (sites: Site[], siteId: string): Site | null => {
-  return (
-    sites.find((site: Site) => {
-      return site.id.toString() === siteId;
-    }) || null
-  );
-};
+export const findSiteById = (sites: Site[], siteId: string): Site | null =>
+  sites.find((site: Site) => site.id.toString() === siteId) || null;
 
 /**
  * If an initial site is provided we try to load it, otherwise we find the site with the highest
@@ -93,20 +88,18 @@ export const constructTimeSeriesDataRequestUrl = ({
   siteId,
   pointId,
   ...rest
-}: TimeSeriesDataRequestParams) => {
-  return `time-series/sites/${encodeURIComponent(siteId)}${
+}: TimeSeriesDataRequestParams) =>
+  `time-series/sites/${encodeURIComponent(siteId)}${
     pointId ? `/site-survey-points/${encodeURIComponent(pointId)}` : ''
   }${requests.generateUrlQueryParams(rest)}`;
-};
 
 export const constructTimeSeriesDataCsvRequestUrl = ({
   siteId,
   ...rest
-}: TimeSeriesDataRequestParams) => {
-  return `time-series/sites/${encodeURIComponent(
+}: TimeSeriesDataRequestParams) =>
+  `time-series/sites/${encodeURIComponent(
     siteId,
   )}/csv${requests.generateUrlQueryParams(rest)}`;
-};
 
 export const findSurveyPointFromList = (
   pointId?: string,
@@ -124,23 +117,22 @@ export const getSourceRanges = (
   dataRanges: TimeSeriesDataRange,
   source: Sources,
 ): DataRangeWithMetric[] => {
-  const result = Object.entries(dataRanges).map(([metric, sources]) => {
-    return (
+  const result = Object.entries(dataRanges).map(
+    ([metric, sources]) =>
       sources
         .find((x) => x.type === source)
         ?.data.map((range) => ({
           metric: snakeCase(metric) as MetricsKeys,
           minDate: range.minDate,
           maxDate: range.maxDate,
-        })) || []
-    );
-  });
+        })) || [],
+  );
 
   return result.flat();
 };
 
 export const sitesFilterFn = (
-  filter: typeof siteOptions[number],
+  filter: (typeof siteOptions)[number],
   s?: Site | null,
 ) => {
   if (!s) {
@@ -170,24 +162,34 @@ export const sitesFilterFn = (
   }
 };
 
-export const filterOutFalsy = <T extends Record<string, boolean>>(obj: T): Record<string, true> => {
-  return Object.fromEntries(Object.entries(obj).filter(([, value]) => value)) as Record<string, true>;
-};
+export const filterOutFalsy = <T extends Record<string, boolean>>(
+  obj: T,
+): Record<string, true> =>
+  Object.fromEntries(
+    Object.entries(obj).filter(([, value]) => value),
+  ) as Record<string, true>;
 
-
-export const filterSiteByHeatStress = (site: Site, { heatStress }: SiteFilters) => {
+export const filterSiteByHeatStress = (
+  site: Site,
+  { heatStress }: SiteFilters,
+) => {
   if (isEmpty(heatStress)) {
     return true;
   }
   const { tempWeeklyAlert } = site.collectionData || {};
   return heatStress[tempWeeklyAlert ?? 0];
-}
+};
 
-export const filterSiteBySensorData = (site: Site, { siteOptions: sensorDataTypes }: SiteFilters) => {
+export const filterSiteBySensorData = (
+  site: Site,
+  { siteOptions: sensorDataTypes }: SiteFilters,
+) => {
   if (isEmpty(sensorDataTypes)) {
     return true;
   }
-  const siteOptions: SiteOption[] = Object.entries(sensorDataTypes).filter(([, value]) => value).map(([key]) => key) as SiteOption[];
+  const siteOptions: SiteOption[] = Object.entries(sensorDataTypes)
+    .filter(([, value]) => value)
+    .map(([key]) => key) as SiteOption[];
   return siteOptions.every((option) => {
     switch (option) {
       case 'liveStreams':
@@ -210,30 +212,41 @@ export const filterSiteBySensorData = (site: Site, { siteOptions: sensorDataType
         return true;
     }
   });
-}
+};
 
 export const filterSiteBySpecies = (site: Site, { species }: SiteFilters) => {
   if (isEmpty(species)) {
     return true;
   }
-  const speciesToMatch = Object.entries(species).filter(([, value]) => value).map(([key]) => key);
-  return speciesToMatch.every((s) => (site.reefCheckData?.organism || []).find((o) => o.includes(s)));
-}
+  const speciesToMatch = Object.entries(species)
+    .filter(([, value]) => value)
+    .map(([key]) => key);
+  return speciesToMatch.every((s) =>
+    (site.reefCheckData?.organism || []).find((o) => o.includes(s)),
+  );
+};
 
-export const filterSiteByReefComposition = (site: Site, { reefComposition }: SiteFilters) => {
+export const filterSiteByReefComposition = (
+  site: Site,
+  { reefComposition }: SiteFilters,
+) => {
   if (isEmpty(reefComposition)) {
     return true;
   }
-  
-  const substratesToMatch = Object.entries(reefComposition).filter(([, value]) => value).map(([key]) => key);
+
+  const substratesToMatch = Object.entries(reefComposition)
+    .filter(([, value]) => value)
+    .map(([key]) => key);
   const siteSubstratesMap = keyBy(site.reefCheckData?.substrate || []);
   return substratesToMatch.every((s) => siteSubstratesMap[s]);
-}
+};
 
 export const filterSiteByImpact = (site: Site, { impact }: SiteFilters) => {
   if (isEmpty(impact)) {
     return true;
   }
-  const impactToMatch = Object.entries(impact).filter(([, value]) => value).map(([key]) => key);
+  const impactToMatch = Object.entries(impact)
+    .filter(([, value]) => value)
+    .map(([key]) => key);
   return impactToMatch.every((i) => site.reefCheckData?.impact?.includes(i));
-}
+};

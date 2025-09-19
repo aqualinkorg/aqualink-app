@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { MapContainer, TileLayer, Polygon, Marker } from 'react-leaflet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import L, { LatLngTuple } from 'leaflet';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -48,7 +49,7 @@ const surveyPointIcon = (selected: boolean) =>
     popupAnchor: [0, -27],
   });
 
-const SiteMap = ({
+function SiteMap({
   siteId,
   spotterPosition = null,
   polygon,
@@ -59,8 +60,8 @@ const SiteMap = ({
   editPointLongitude = null,
   onEditPointCoordinatesChange = () => {},
   classes,
-}: SiteMapProps) => {
-  const dispatch = useDispatch();
+}: SiteMapProps) {
+  const dispatch = useAppDispatch();
   const mapRef = useRef<L.Map>(null);
   const markerRef = useRef<L.Marker>(null);
   const editPointMarkerRer = useRef<L.Marker>(null);
@@ -68,9 +69,9 @@ const SiteMap = ({
   const user = useSelector(userInfoSelector);
   const [focusedPoint, setFocusedPoint] = useState<SurveyPoints>();
 
-  const reverseCoords = (coordArray: Position[]): [Position[]] => {
-    return [coordArray.map((coords) => [coords[1], coords[0]])];
-  };
+  const reverseCoords = (coordArray: Position[]): [Position[]] => [
+    coordArray.map((coords) => [coords[1], coords[0]]),
+  ];
 
   const selectedSurveyPoint = surveyPoints.find(
     (item) => item.id === selectedPointId,
@@ -250,17 +251,16 @@ const SiteMap = ({
       )}
     </MapContainer>
   );
-};
+}
 
-const styles = () => {
-  return createStyles({
+const styles = () =>
+  createStyles({
     map: {
       height: '100%',
       width: '100%',
       borderRadius: 4,
     },
   });
-};
 
 interface SiteMapIncomingProps {
   siteId: number;

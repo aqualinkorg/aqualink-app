@@ -7,7 +7,7 @@ import createStyles from '@mui/styles/createStyles';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { grey } from '@mui/material/colors';
 
-const AddButton = ({ siteId, classes }: AddButtonProps) => {
+function AddButton({ siteId, classes }: AddButtonProps) {
   return (
     <Button
       className={classes.addSurveyButton}
@@ -21,7 +21,7 @@ const AddButton = ({ siteId, classes }: AddButtonProps) => {
       </Typography>
     </Button>
   );
-};
+}
 
 const styles = () =>
   createStyles({

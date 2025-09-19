@@ -62,9 +62,9 @@ const saveDataBatch = (
   source: Sources,
   metric: Metric,
   timeSeriesRepository: Repository<TimeSeries>,
-) => {
+) =>
   // TODO - Filter out nil values
-  return timeSeriesRepository
+  timeSeriesRepository
     .createQueryBuilder('time_series')
     .insert()
     .values(
@@ -79,8 +79,6 @@ const saveDataBatch = (
     )
     .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
     .execute();
-};
-
 /**
  * Fetch spotter and wave data from sofar and save them on time_series table
  * @param siteIds The siteIds for which to perform the update

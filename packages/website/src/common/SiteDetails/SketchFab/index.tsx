@@ -5,7 +5,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 
-const SketchFab = ({ classes, uuid }: SiteMapProps) => {
+function SketchFab({ classes, uuid }: SiteMapProps) {
   const iFrameRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -32,17 +32,16 @@ const SketchFab = ({ classes, uuid }: SiteMapProps) => {
       className={classes.map}
     />
   );
-};
+}
 
-const styles = () => {
-  return createStyles({
+const styles = () =>
+  createStyles({
     map: {
       height: '100%',
       width: '100%',
       borderRadius: 4,
     },
   });
-};
 
 interface SiteMapIncomingProps {
   uuid: string;

@@ -3,7 +3,8 @@ import { Alert, Container, Box } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { Link, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import {
@@ -110,13 +111,13 @@ const getAlertMessage = (
   }
 };
 
-const Site = ({ classes }: SiteProps) => {
+function Site({ classes }: SiteProps) {
   const siteDetails = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
   const spotterPosition = useSelector(spotterPositionSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { id: siteId = '' } = useParams<{ id: string }>();
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
@@ -258,7 +259,7 @@ const Site = ({ classes }: SiteProps) => {
       <SiteFooter />
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

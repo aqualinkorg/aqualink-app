@@ -14,7 +14,8 @@ import DropZone from 'common/FileUploads/Dropzone';
 import NavBar from 'common/NavBar';
 import React from 'react';
 import { DropzoneProps } from 'react-dropzone';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { userInfoSelector } from 'store/User/userSlice';
 import FileList from 'common/FileUploads/FileList';
 import UploadButton from 'common/FileUploads/UploadButton';
@@ -32,9 +33,16 @@ import { Sources } from 'store/Sites/types';
 import SitesTable from './SitesTable';
 import { OptionsList, selectProps, SENSOR_TYPES } from './utils';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+}));
+
 function Uploads() {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = React.useState(false);
@@ -223,12 +231,5 @@ function Uploads() {
     </>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
-}));
 
 export default Uploads;

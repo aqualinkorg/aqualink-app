@@ -7,11 +7,7 @@ interface InfoWithActionProps {
   action: () => void;
 }
 
-const InfoWithAction = ({
-  message,
-  actionText,
-  action,
-}: InfoWithActionProps) => {
+function InfoWithAction({ message, actionText, action }: InfoWithActionProps) {
   return (
     <>
       <Typography variant="h3" style={{ textAlign: 'center' }} color="primary">
@@ -22,6 +18,6 @@ const InfoWithAction = ({
       </Button>
     </>
   );
-};
+}
 
 export default InfoWithAction;

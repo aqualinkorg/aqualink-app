@@ -98,21 +98,20 @@ const logger = new Logger('ParseHoboData');
 const siteQuery = (
   siteRepository: Repository<Site>,
   polygon?: GeoJSON | null,
-) => {
-  return siteRepository
+) =>
+  siteRepository
     .createQueryBuilder(`entity`)
     .where(
       `entity.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
       { polygon },
     )
     .getOne();
-};
 
 const poiQuery = (
   poiRepository: Repository<SiteSurveyPoint>,
   polygon?: GeoJSON | null,
-) => {
-  return poiRepository
+) =>
+  poiRepository
     .createQueryBuilder(`surveyPoints`)
     .innerJoinAndSelect('surveyPoints.site', 'site')
     .where(
@@ -120,7 +119,6 @@ const poiQuery = (
       { polygon },
     )
     .getOne();
-};
 
 const castCsvValues =
   (integerColumns: string[], floatColumns: string[], dateColumns: string[]) =>
@@ -149,15 +147,16 @@ const castCsvValues =
  * @param repository The repository for the entity
  * @param polygon The polygon value
  */
-const handleEntityDuplicate = <T extends ObjectLiteral>(
-  repository: Repository<T>,
-  query: (
+const handleEntityDuplicate =
+  <T extends ObjectLiteral>(
     repository: Repository<T>,
+    query: (
+      repository: Repository<T>,
+      polygon?: GeoJSON | null,
+    ) => Promise<T | null>,
     polygon?: GeoJSON | null,
-  ) => Promise<T | null>,
-  polygon?: GeoJSON | null,
-) => {
-  return (err) => {
+  ) =>
+  (err) => {
     // Catch unique violation, i.e. there is already a site at this location
     if (err.code === '23505') {
       return query(repository, polygon).then((found) => {
@@ -173,7 +172,6 @@ const handleEntityDuplicate = <T extends ObjectLiteral>(
 
     throw err;
   };
-};
 
 /**
  * Read Coords.csv file
@@ -186,9 +184,7 @@ const readCoordsFile = (rootPath: string, siteIds: number[]) => {
   const coordsHeaders = ['site', 'colony', 'lat', 'long'];
   const castFunction = castCsvValues(['site', 'colony'], ['lat', 'long'], []);
   return parseCSV<Coords>(coordsFilePath, coordsHeaders, castFunction).filter(
-    (record) => {
-      return siteIds.includes(record.site);
-    },
+    (record) => siteIds.includes(record.site),
   );
 };
 
@@ -216,13 +212,11 @@ const getSiteRecords = async (
       );
 
       const siteRecord = filteredSiteCoords.reduce(
-        (previous, record) => {
-          return {
-            ...previous,
-            lat: previous.lat + record.lat,
-            long: previous.long + record.long,
-          };
-        },
+        (previous, record) => ({
+          ...previous,
+          lat: previous.lat + record.lat,
+          long: previous.long + record.long,
+        }),
         { site: siteId, colony: 0, lat: 0, long: 0 },
       );
 
@@ -296,12 +290,11 @@ const createSites = async (
           return null;
         }
 
-        return historicalMonthlyMean.map(({ month, temperature }) => {
-          return (
+        return historicalMonthlyMean.map(
+          ({ month, temperature }) =>
             temperature &&
-            historicalMonthlyMeanRepository.save({ site, month, temperature })
-          );
-        });
+            historicalMonthlyMeanRepository.save({ site, month, temperature }),
+        );
       });
     },
     { concurrency: 4 },
@@ -398,13 +391,11 @@ const createSources = async (
   sourcesRepository: Repository<Sources>,
 ) => {
   // Create sources for each new poi
-  const sources = poiEntities.map((poi) => {
-    return {
-      site: poi.site,
-      poi,
-      type: SourceType.HOBO,
-    };
-  });
+  const sources = poiEntities.map((poi) => ({
+    site: poi.site,
+    poi,
+    type: SourceType.HOBO,
+  }));
 
   logger.log('Saving sources');
   const sourceEntities = await Promise.all(
@@ -503,14 +494,14 @@ const parseHoboData = async (
   // So we need to break them in batches
   const batchSize = 1000;
   logger.log(`Saving time series data in batches of ${batchSize}`);
-  const inserts = chunk(bottomTemperatureData, batchSize).map((batch) => {
-    return timeSeriesRepository
+  const inserts = chunk(bottomTemperatureData, batchSize).map((batch) =>
+    timeSeriesRepository
       .createQueryBuilder('time_series')
       .insert()
       .values(batch)
       .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
-      .execute();
-  });
+      .execute(),
+  );
 
   // Return insert promises and print progress updates
   const actionsLength = inserts.length;
@@ -586,18 +577,16 @@ const uploadSitePhotos = async (
             weatherConditions: WeatherConditions.NoData,
           };
 
-          return surveyRepository.save(survey).then((surveyEntity) => {
-            return {
-              url,
-              featured: true,
-              hidden: false,
-              type: MediaType.Image,
-              surveyPoint: image.poi,
-              surveyId: surveyEntity,
-              metadata: JSON.stringify({}),
-              observations: Observations.NoData,
-            };
-          });
+          return surveyRepository.save(survey).then((surveyEntity) => ({
+            url,
+            featured: true,
+            hidden: false,
+            type: MediaType.Image,
+            surveyPoint: image.poi,
+            surveyId: surveyEntity,
+            metadata: JSON.stringify({}),
+            observations: Observations.NoData,
+          }));
         }),
     ),
     (data, idx) => {
@@ -646,16 +635,13 @@ export const uploadHoboData = async (
 
   const siteSet = fs
     .readdirSync(rootPath)
-    .filter((f) => {
-      // File must be directory and be in Patch_Site_{site_id} format
-      return (
+    .filter(
+      (f) =>
+        // File must be directory and be in Patch_Site_{site_id} format
         fs.statSync(path.join(rootPath, f)).isDirectory() &&
-        f.includes(FOLDER_PREFIX)
-      );
-    })
-    .map((siteFolder) => {
-      return parseInt(siteFolder.replace(FOLDER_PREFIX, ''), 10);
-    });
+        f.includes(FOLDER_PREFIX),
+    )
+    .map((siteFolder) => parseInt(siteFolder.replace(FOLDER_PREFIX, ''), 10));
 
   const dataAsJson = readCoordsFile(rootPath, siteSet);
 
