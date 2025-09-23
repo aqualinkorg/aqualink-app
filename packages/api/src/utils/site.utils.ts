@@ -12,7 +12,7 @@ import {
 import { ObjectLiteral, Repository } from 'typeorm';
 import { Dictionary, groupBy, keyBy, mapValues, merge, some } from 'lodash';
 import geoTz from 'geo-tz';
-import { ReefCheckSurvey } from 'reef-check-surveys/reef-check-surveys.entity';
+import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
