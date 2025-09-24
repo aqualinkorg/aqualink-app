@@ -13,11 +13,9 @@ import { Sources } from '../src/sites/sources.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Collection } from '../src/collections/collections.entity';
 import { DailyData } from '../src/sites/daily-data.entity';
-import { Region } from '../src/regions/regions.entity';
 import { Survey } from '../src/surveys/surveys.entity';
 import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
-import { ExclusionDates } from '../src/sites/exclusion-dates.entity';
 import { getHistoricalMonthlyMeans } from '../src/utils/temperature';
 import { users } from './mock/user.mock';
 import { sites } from './mock/site.mock';
@@ -141,19 +139,28 @@ export class TestService {
   }
 
   public async cleanAllEntities(connection: DataSource) {
-    // Use clear() method instead of delete({}) to avoid TypeORM restriction
-    await connection.getRepository(TimeSeries).clear();
-    await connection.getRepository(Sources).clear();
-    await connection.getRepository(Collection).clear();
-    await connection.getRepository(Region).clear();
-    await connection.getRepository(SiteApplication).clear();
-    await connection.getRepository(SiteSurveyPoint).clear();
-    await connection.getRepository(DailyData).clear();
-    await connection.getRepository(ExclusionDates).clear();
-    await connection.getRepository(Survey).clear();
-    await connection.getRepository(SurveyMedia).clear();
-    await connection.getRepository(HistoricalMonthlyMean).clear();
-    await connection.getRepository(Site).clear();
-    await connection.getRepository(User).clear();
+    // Use direct SQL TRUNCATE CASCADE to handle foreign key constraints
+    const tables = [
+      'users_administered_sites_site',
+      'collection_sites_site',
+      'time_series',
+      'survey_media',
+      'survey',
+      'exclusion_dates',
+      'daily_data',
+      'historical_monthly_mean',
+      'site_survey_point',
+      'site_application',
+      'sources',
+      'site',
+      'collection',
+      'region',
+      'users',
+    ];
+
+    // Truncate all tables with CASCADE to handle dependencies
+    await connection.query(
+      `TRUNCATE TABLE ${tables.map((t) => `"${t}"`).join(', ')} RESTART IDENTITY CASCADE`,
+    );
   }
 }
