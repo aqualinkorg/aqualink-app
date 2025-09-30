@@ -98,6 +98,7 @@
     "luxon": "^3.5.0",
     "md5-file": "^5.0.0",
     "multer": "^2.0.2",
+    "node-gyp": "^11.4.2",
     "node-xlsx": "^0.24.0",
     "objects-to-csv": "^1.3.6",
     "passport": "^0.6.0",
