@@ -48,7 +48,7 @@ async function main() {
                 site: { id: site.id },
                 date,
                 satelliteTemperature,
-              } as DailyData),
+              }) as DailyData,
           );
           return yearEntities.concat(yearEntitiesForSite);
         },
