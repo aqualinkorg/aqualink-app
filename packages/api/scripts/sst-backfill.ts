@@ -41,14 +41,14 @@ async function main() {
         (yearEntities: DailyData[], year) => {
           console.log(`Processing year ${year}...`);
           const [longitude, latitude] = (site.polygon as Point).coordinates;
-          const data = getNOAAData(year, longitude, latitude);
+          const data = getNOAAData(longitude, latitude, year);
           const yearEntitiesForSite = data.map(
             ({ date, satelliteTemperature }) =>
               ({
                 site: { id: site.id },
                 date,
                 satelliteTemperature,
-              }) as DailyData,
+              } as DailyData),
           );
           return yearEntities.concat(yearEntitiesForSite);
         },
