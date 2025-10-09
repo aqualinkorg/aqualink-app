@@ -2,6 +2,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
 import { DataSource } from 'typeorm';
 import type { DataSourceOptions } from 'typeorm';
+import 'dotenv/config';
 
 // Use __dirname global for CommonJS compatibility (Jest/Node.js)
 declare const __dirname: string;

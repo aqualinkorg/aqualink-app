@@ -14,9 +14,10 @@ WORKDIR /app
 
 # TODO - Find a way to get the yarn.lock which is "out of context".
 # Because we are in a sub-package it is located at ../../yarn.lock
-COPY ["package.json", "yarn.lock", "./"]
+COPY temp_yarn_workspace_lock ./yarn.lock
+COPY ["package.json", "./"]
 
-RUN yarn install --immutable --mode=skip-build
+RUN yarn install --mode=skip-build
 
 # Add yargs and Netcdf to the project so that we can run NOAA available scripts using netcdf in the container.
 RUN yarn add netcdf4@https://github.com/ovio-forks/netcdf4
