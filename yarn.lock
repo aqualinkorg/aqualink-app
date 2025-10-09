@@ -947,16 +947,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.21.0":
-  version: 7.25.0
-  resolution: "@babel/runtime@npm:7.25.0"
-  dependencies:
-    regenerator-runtime: "npm:^0.14.0"
-  checksum: 10c0/bd3faf246170826cef2071a94d7b47b49d532351360ecd17722d03f6713fd93a3eb3dbd9518faa778d5e8ccad7392a7a604e56bd37aaad3f3aa68d619ccd983d
-  languageName: node
-  linkType: hard
-
-"@babel/runtime@npm:^7.24.4, @babel/runtime@npm:^7.28.3":
+"@babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.24.4, @babel/runtime@npm:^7.28.3":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4"
   checksum: 10c0/792ce7af9750fb9b93879cc9d1db175701c4689da890e6ced242ea0207c9da411ccf16dc04e689cc01158b28d7898c40d75598f4559109f761c12ce01e959bf7
@@ -8425,7 +8416,7 @@ __metadata:
     "@types/sharp": "npm:^0.30.4"
     "@types/supertest": "npm:2.0.12"
     "@types/ungap__structured-clone": "npm:^0.3.0"
-    axios: "npm:^1.8.2"
+    axios: "npm:^1.12.2"
     axios-retry: "npm:^3.8.1"
     bluebird: "npm:^3.7.2"
     class-transformer: "npm:^0.5.1"
@@ -8933,25 +8924,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.5.1":
-  version: 1.7.4
-  resolution: "axios@npm:1.7.4"
+"axios@npm:^1.12.2":
+  version: 1.12.2
+  resolution: "axios@npm:1.12.2"
   dependencies:
     follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.0"
+    form-data: "npm:^4.0.4"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/5ea1a93140ca1d49db25ef8e1bd8cfc59da6f9220159a944168860ad15a2743ea21c5df2967795acb15cbe81362f5b157fdebbea39d53117ca27658bab9f7f17
-  languageName: node
-  linkType: hard
-
-"axios@npm:^1.8.2":
-  version: 1.8.4
-  resolution: "axios@npm:1.8.4"
-  dependencies:
-    follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.0"
-    proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/450993c2ba975ffccaf0d480b68839a3b2435a5469a71fa2fb0b8a55cdb2c2ae47e609360b9c1e2b2534b73dfd69e2733a1cf9f8215bee0bcd729b72f801b0ce
+  checksum: 10c0/80b063e318cf05cd33a4d991cea0162f3573481946f9129efb7766f38fde4c061c34f41a93a9f9521f02b7c9565ccbc197c099b0186543ac84a24580017adfed
   languageName: node
   linkType: hard
 
@@ -10736,12 +10716,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns-tz@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "date-fns-tz@npm:2.0.0"
+"date-fns-tz@npm:^1.3.8":
+  version: 1.3.8
+  resolution: "date-fns-tz@npm:1.3.8"
   peerDependencies:
     date-fns: ">=2.0.0"
-  checksum: 10c0/31cacb83c675ef8c2cf31d21c298ab6d74c5e975412dd804664d031ac0f2f03ed5bfb2a950fa15a321bbbcb90b833c300823fbceba0133680065a71894cc1170
+  checksum: 10c0/4cb16aeae3ea4a72ac4ae9f7db2011e38797aff122a78be16217a0492dde3938e1e62d21dbf1469a36fb4426824196233cedc70807f0a3033bca132bf76d563e
   languageName: node
   linkType: hard
 
@@ -13329,6 +13309,19 @@ __metadata:
     es-set-tostringtag: "npm:^2.1.0"
     mime-types: "npm:^2.1.12"
   checksum: 10c0/e534b0cf025c831a0929bf4b9bbe1a9a6b03e273a8161f9947286b9b13bf8fb279c6944aae0070c4c311100c6d6dbb815cd955dc217728caf73fad8dc5b8ee9c
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "form-data@npm:4.0.4"
+  dependencies:
+    asynckit: "npm:^0.4.0"
+    combined-stream: "npm:^1.0.8"
+    es-set-tostringtag: "npm:^2.1.0"
+    hasown: "npm:^2.0.2"
+    mime-types: "npm:^2.1.12"
+  checksum: 10c0/373525a9a034b9d57073e55eab79e501a714ffac02e7a9b01be1c820780652b16e4101819785e1e18f8d98f0aee866cc654d660a435c378e16a72f2e7cac9695
   languageName: node
   linkType: hard
 
@@ -19719,15 +19712,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^7.1.1":
-  version: 7.9.1
-  resolution: "react-router-dom@npm:7.9.1"
+"react-router-dom@npm:^7.9.4":
+  version: 7.9.4
+  resolution: "react-router-dom@npm:7.9.4"
   dependencies:
-    react-router: "npm:7.9.1"
+    react-router: "npm:7.9.4"
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10c0/a211b9e6d69e6efc9b55cfc0f1eb8a772832f86b13fd16a6d89befb78ff6bfc06d9cc48abf4b96420edd81a07216f910c15afb0769ae4d4f445b59d4e2ec9376
+  checksum: 10c0/03979ef887411230188d8eb7e001379c164f28235d5e3589f9192f73edae4c6e59a155aec0bcdcb84b3fa4e72caff0c38f4709ffb2e4cdca4cb8a8ab1c60dd35
   languageName: node
   linkType: hard
 
@@ -19743,9 +19736,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:7.9.1":
-  version: 7.9.1
-  resolution: "react-router@npm:7.9.1"
+"react-router@npm:7.9.4":
+  version: 7.9.4
+  resolution: "react-router@npm:7.9.4"
   dependencies:
     cookie: "npm:^1.0.1"
     set-cookie-parser: "npm:^2.6.0"
@@ -19755,7 +19748,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10c0/27448e4c84199d240f6a15d503cf26509320fd4ea31aec6f12a427ac4a560a320321e9b119981eddad25801c062be0f814d4461174f69efdc9f9e5af14cf6915
+  checksum: 10c0/c7556b752fa88d2bff600ce3533c962dcbe9ca9bf71f9c4b8e8a21f904856990bcb284844d53eb1dd486adaa7567c7ecf0deb3e518262269ea1ea89bea246be4
   languageName: node
   linkType: hard
 
@@ -23898,7 +23891,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.18.2"
     "@typescript-eslint/parser": "npm:^8.18.2"
     "@vitejs/plugin-react": "npm:^4.3.4"
-    axios: "npm:^1.8.2"
+    axios: "npm:^1.12.2"
     axios-cache-interceptor: "npm:^1.6.0"
     browserslist: "npm:^4.24.2"
     chart.js: "npm:^4.4.3"
@@ -23907,7 +23900,7 @@ __metadata:
     classnames: "npm:^2.2.6"
     csv-stringify: "npm:^6.4.5"
     date-fns: "npm:^2.30.0"
-    date-fns-tz: "npm:^2.0.0"
+    date-fns-tz: "npm:^1.3.8"
     dotenv-cli: "npm:^8.0.0"
     eslint: "npm:^8.57.1"
     firebase: "npm:^11.0.2"
@@ -23933,7 +23926,7 @@ __metadata:
     react-leaflet: "npm:^4.2.1"
     react-leaflet-cluster: "npm:^2.1.0"
     react-redux: "npm:^9.2.0"
-    react-router-dom: "npm:^7.1.1"
+    react-router-dom: "npm:^7.9.4"
     react-router-hash-link: "npm:^2.4.3"
     react-slick: "npm:^0.30.3"
     react-swipeable-bottom-sheet: "npm:^1.1.2"

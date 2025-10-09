@@ -70,5 +70,8 @@
     "url": "https://github.com/aqualinkorg/aqualink-app/issues"
   },
   "homepage": "https://aqualink.org",
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.1",
+  "resolutions": {
+    "axios": "^1.12.2"
+  }
 }
