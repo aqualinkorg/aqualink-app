@@ -188,9 +188,13 @@ const HomepageMap = ({
   const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
 
   // Memoize the layers to prevent unnecessary re-renders
+  // Try to read a date from the URL if present, so WMS can use it.
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const timeParam = urlSearchParams.get('at') || undefined;
+
   const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} />,
-    [defaultLayerName],
+    () => <SofarLayers defaultLayerName={defaultLayerName} time={timeParam} />,
+    [defaultLayerName, timeParam],
   );
 
   const siteMarkers = useMemo(

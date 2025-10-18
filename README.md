@@ -29,7 +29,7 @@ will also need to do some package-specific configuration such as setting up a `.
 
 ```bash
 # Build all of the packages
-yarn build 
+yarn build
 
 # Run tests for all of the packages
 yarn test
