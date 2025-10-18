@@ -73,7 +73,11 @@ const Homepage = ({ classes }: HomepageProps) => {
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest(selectedDate ? { at: selectedDate.toISOString() } : undefined));
+    dispatch(
+      sitesRequest(
+        selectedDate ? { at: selectedDate.toISOString() } : undefined,
+      ),
+    );
   }, [dispatch, selectedDate]);
 
   useEffect(() => {
@@ -119,7 +123,13 @@ const Homepage = ({ classes }: HomepageProps) => {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
-            <Box display="flex" justifyContent="flex-end" p={1} zIndex={1000} position="relative">
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              p={1}
+              zIndex={1000}
+              position="relative"
+            >
               <DatePicker
                 value={selectedDate}
                 onChange={(date) => setSelectedDate(date)}

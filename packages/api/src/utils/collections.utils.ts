@@ -53,9 +53,7 @@ export const getCollectionData = async (
   // We join to sources to filter out HOBO and group by site id.
   const rows = await latestDataRepository.manager
     .createQueryBuilder()
-    .select(
-      'DISTINCT ON (ts.metric, src.type, src.site_id) ts.id',
-    )
+    .select(`DISTINCT ON (ts.metric, src.type, src.site_id) ts.id`)
     .addSelect('ts.timestamp', 'timestamp')
     .addSelect('ts.value', 'value')
     .addSelect('src.site_id', 'siteId')
