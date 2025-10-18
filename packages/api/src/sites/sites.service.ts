@@ -199,9 +199,10 @@ export class SitesService {
       .getMany();
 
     // Optional historical-as-of date
-    const atDate = filter.at && DateTime.fromISO(filter.at).isValid
-      ? DateTime.fromISO(filter.at).toJSDate()
-      : undefined;
+    const atDate =
+      filter.at && DateTime.fromISO(filter.at).isValid
+        ? DateTime.fromISO(filter.at).toJSDate()
+        : undefined;
 
     const mappedSiteData = await getCollectionData(
       res,
