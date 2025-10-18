@@ -17,11 +17,11 @@ export const getCollectionData = async (
     return {};
   }
 
-  // If an "at" date is provided, query time_series as-of that timestamp;
+  // If an "at" date is provided, query time_series historical data at that timestamp;
   // otherwise, use the materialized latest_data view for performance.
-  const at = options?.at;
+  const until = options?.at;
 
-  if (!at) {
+  if (!until) {
     const latestData: LatestData[] = await latestDataRepository
       .createQueryBuilder('latest_data')
       .select('id')
@@ -48,7 +48,7 @@ export const getCollectionData = async (
       .toJSON();
   }
 
-  // As-of query: select the latest row <= :at per (site, metric, source type excluding HOBO)
+  // As-of query: select the latest row <= the specified timestamp per (site, metric, source type excluding HOBO)
   // using DISTINCT ON ordering by timestamp DESC.
   // We join to sources to filter out HOBO and group by site id.
   const rows = await latestDataRepository.manager
@@ -63,7 +63,7 @@ export const getCollectionData = async (
     .innerJoin('sources', 'src', 'src.id = ts.source_id')
     .where('src.site_id IN (:...siteIds)', { siteIds })
     .andWhere('src.type != :hoboSource', { hoboSource: SourceType.HOBO })
-    .andWhere('ts.timestamp <= :at', { at })
+    .andWhere('ts.timestamp <= :until', { until })
     .orderBy('ts.metric, src.type, src.site_id, ts.timestamp', 'DESC')
     .getRawMany();
 
