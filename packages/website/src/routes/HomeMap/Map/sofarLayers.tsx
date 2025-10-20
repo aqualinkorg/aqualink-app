@@ -40,10 +40,13 @@ const WMS_LAYERS: WMSLayerDefinition[] = [
 
 const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 
-// Note: SOFAR API supports historical data via &time parameter for applicable models
-// Verify with SOFAR API documentation that NOAA Coral Reef Watch model supports historical queries
-const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition, time?: string) =>
-  `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}${time ? `&time=${encodeURIComponent(time)}` : ''}`;
+const sofarUrlFromDef = (
+  { model, cmap, variableId }: SofarLayerDefinition,
+  time?: string,
+) =>
+  `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}${
+    time ? `&time=${encodeURIComponent(time)}` : ''
+  }`;
 
 export const SofarLayers = ({ defaultLayerName, time }: SofarLayersProps) => {
   return (
@@ -83,7 +86,7 @@ export const SofarLayers = ({ defaultLayerName, time }: SofarLayersProps) => {
             format="image/png"
             opacity={0.7}
             url={def.url}
-            params={time ? { time } : undefined}
+            params={time ? { TIME: time } : undefined}
           />
         </LayersControl.BaseLayer>
       ))}
