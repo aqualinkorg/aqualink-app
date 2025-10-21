@@ -1253,8 +1253,8 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-47g1cz-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for=":r7:"
-            id=":r7:-label"
+            for=":r8:"
+            id=":r8:-label"
           >
             Sensor type
           </label>
@@ -1262,12 +1262,12 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <div
-              aria-controls=":r8:"
+              aria-controls=":r9:"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby=":r7:-label :r7:"
+              aria-labelledby=":r8:-label :r8:"
               class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-18f70e-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-              id=":r7:"
+              id=":r8:"
               role="combobox"
               tabindex="0"
             >

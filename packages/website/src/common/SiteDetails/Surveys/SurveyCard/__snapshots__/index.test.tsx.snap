@@ -19,7 +19,7 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
           <div
             class="MuiCardMedia-root makeStyles-cardImage-6 css-utntyq-MuiCardMedia-root"
             role="img"
-            style="background-image: url(image-url);"
+            style="background-image: url("image-url");"
           />
         </a>
       </div>
@@ -90,7 +90,7 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
             >
               <a
                 href="/sites/0/survey_details/46"
-                style="text-decoration: none;"
+                style="color: inherit; text-decoration: none;"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
