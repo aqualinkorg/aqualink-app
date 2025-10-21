@@ -97,7 +97,9 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         text: msg.text,
       }));
 
-      const response = await fetch('http://localhost:8080/api/ai-chat', {
+      const API_URL =
+        process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+      const response = await fetch(`${API_URL}/ai-chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
