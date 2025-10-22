@@ -13818,10 +13818,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.7.2":
-  version: 4.7.2
-  resolution: "hono@npm:4.7.2"
-  checksum: 10c0/2bf7a85f25048c0deb181a767cf020491be611089a51f45448018fc4fa8a33ab9d34d8d0d39fe4e05c0abd5cd338d9c973984583c27ce7dc8d8919cadd2991d9
+"hono@npm:^4.10.2":
+  version: 4.10.2
+  resolution: "hono@npm:4.10.2"
+  checksum: 10c0/783ec7f879c8a0a389b65a92e43e15a3d60e9e67da749b88a84e763d4625c22493461d4c2c6c40068c554e27abfcf94db06a861ce94f871dd7ada2c751ad7a3b
   languageName: node
   linkType: hard
 
@@ -22720,7 +22720,7 @@ __metadata:
     firebase: "npm:^11.0.0"
     firebase-tools: "npm:^13.31.0"
     geolib: "npm:^3.3.4"
-    hono: "npm:^4.7.2"
+    hono: "npm:^4.10.2"
     immutable: "npm:^4.0.0-rc.12"
     jsdom: "npm:^26.0.0"
     leaflet: "npm:^1.9.4"
