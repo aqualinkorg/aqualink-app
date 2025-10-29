@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { buildPromptWithContext } from './aiPrompts';
+import { buildPromptWithContext } from './prompts';
 
 const GROK_API_URL = 'https://api.x.ai/v1/chat/completions';
 const GROK_MODEL = 'grok-4-fast-reasoning'; // Fast and cost-effective
@@ -32,6 +32,7 @@ export async function callGrokAPI(
   userMessage: string,
   siteContext: string,
   conversationHistory?: Array<{ sender: string; text: string }>,
+  isFirstMessage?: boolean, // Add this parameter
 ): Promise<string> {
   const apiKey = process.env.GROK_API_KEY;
 
@@ -44,6 +45,7 @@ export async function callGrokAPI(
     userMessage,
     siteContext,
     conversationHistory,
+    isFirstMessage, // Pass the flag to buildPromptWithContext
   );
 
   // Format for Grok API
@@ -52,11 +54,15 @@ export async function callGrokAPI(
       role: 'system',
       content: systemPrompt,
     },
-    {
+  ];
+
+  // Only add user message if it's not empty and not the first message
+  if (userMessage && userMessage.trim() && !isFirstMessage) {
+    messages.push({
       role: 'user',
       content: userMessage,
-    },
-  ];
+    });
+  }
 
   try {
     const response = await axios.post<GrokResponse>(

@@ -19,6 +19,7 @@ interface AiChatRequest {
     sender: 'user' | 'assistant';
     text: string;
   }>;
+  isFirstMessage?: boolean;
 }
 
 interface AiChatResponse {
@@ -41,10 +42,10 @@ export class AiChatController {
   @ApiResponse({ status: 400, description: 'Invalid request' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async chat(@Body() body: AiChatRequest): Promise<AiChatResponse> {
-    const { message, siteId, conversationHistory } = body;
+    const { message, siteId, conversationHistory, isFirstMessage } = body;
 
     // Validate input
-    if (!message || !message.trim()) {
+    if ((!message || !message.trim()) && !isFirstMessage) {
       throw new HttpException('Message is required', HttpStatus.BAD_REQUEST);
     }
 
@@ -68,6 +69,7 @@ export class AiChatController {
         message,
         siteContext,
         conversationHistory,
+        isFirstMessage,
       );
 
       this.logger.log(`AI response generated for site ${siteId}`);

@@ -19,43 +19,85 @@ interface ChatWindowProps extends WithStyles<typeof styles> {
   siteId: number;
 }
 
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+
+// FIX 4: Debug the API call - this function generates the initial greeting
+const generateInitialGreeting = async (siteId: number): Promise<string> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/ai-chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: '',
+        siteId,
+        conversationHistory: [],
+        isFirstMessage: true,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.response;
+    }
+
+    const errorText = await response.text();
+    console.error('API error:', errorText);
+  } catch (error) {
+    console.error('Failed to generate initial greeting:', error);
+  }
+
+  // Fallback greeting if API fails
+  return "Hi! I'm your AI assistant for coral reef monitoring. I can help you understand heat stress, coral bleaching, and suggest response actions. What would you like to know?";
+};
+
 const ChatWindow: React.FC<ChatWindowProps> = ({
   classes,
   onClose,
   siteId,
 }) => {
-  // Load messages from localStorage on mount
-  const [messages, setMessages] = useState<Message[]>(() => {
-    const saved = localStorage.getItem(`chat-history-${siteId}`);
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return [
-          {
-            sender: 'assistant',
-            text: "Hi! I'm your AI assistant for coral reef monitoring. I can help you understand heat stress, coral bleaching, and suggest response actions. What would you like to know?",
-            id: `msg-${Date.now()}`,
-          },
-        ];
-      }
-    }
-    return [
-      {
-        sender: 'assistant',
-        text: "Hi! I'm your AI assistant for coral reef monitoring. I can help you understand heat stress, coral bleaching, and suggest response actions. What would you like to know?",
-        id: `msg-${Date.now()}`,
-      },
-    ];
-  });
-
+  // FIX 2: Initialize with empty array
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingGreeting, setIsLoadingGreeting] = useState(true); // Track greeting load
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // FIX 2: Load or generate initial greeting
+  useEffect(() => {
+    const initializeChat = async () => {
+      // Try to load from localStorage first
+      const saved = localStorage.getItem(`chat-history-${siteId}`);
+      if (saved) {
+        try {
+          const savedMessages = JSON.parse(saved);
+          setMessages(savedMessages);
+          setIsLoadingGreeting(false);
+          return;
+        } catch (error) {
+          console.error('Failed to load chat history:', error);
+        }
+      }
+
+      // No saved history, generate fresh greeting
+      const greetingText = await generateInitialGreeting(siteId);
+      const initialMessage: Message = {
+        sender: 'assistant',
+        text: greetingText,
+        id: `msg-${Date.now()}`,
+      };
+      setMessages([initialMessage]);
+      setIsLoadingGreeting(false);
+    };
+
+    initializeChat();
+  }, [siteId]);
 
   // Save messages to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem(`chat-history-${siteId}`, JSON.stringify(messages));
+    if (messages.length > 0) {
+      localStorage.setItem(`chat-history-${siteId}`, JSON.stringify(messages));
+    }
   }, [messages, siteId]);
 
   // Auto-scroll to bottom when new messages arrive
@@ -63,17 +105,21 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleClearHistory = () => {
+  const handleClearHistory = async () => {
     // eslint-disable-next-line no-alert
     const confirmClear = window.confirm('Clear chat history for this site?');
     if (confirmClear) {
+      setIsLoadingGreeting(true);
+      // Generate fresh contextual greeting
+      const greetingText = await generateInitialGreeting(siteId);
       const initialMessage: Message = {
         sender: 'assistant',
-        text: "Hi! I'm your AI assistant for coral reef monitoring. I can help you understand heat stress, coral bleaching, and suggest response actions. What would you like to know?",
+        text: greetingText,
         id: `msg-${Date.now()}`,
       };
       setMessages([initialMessage]);
       localStorage.removeItem(`chat-history-${siteId}`);
+      setIsLoadingGreeting(false);
     }
   };
 
@@ -83,7 +129,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     const userMessage: Message = {
       sender: 'user',
       text: inputValue,
-      id: `msg-${Date.now()}-${Math.random()}`,
+      id: `msg-${Date.now()}-user`,
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -97,9 +143,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         text: msg.text,
       }));
 
-      const API_URL =
-        process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
-      const response = await fetch(`${API_URL}/ai-chat`, {
+      const response = await fetch(`${API_BASE_URL}/ai-chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +164,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       const assistantMessage: Message = {
         sender: 'assistant',
         text: data.response,
-        id: `msg-${Date.now()}-${Math.random()}`,
+        id: `msg-${Date.now()}-assistant`,
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -171,30 +215,45 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
       {/* Messages */}
       <Box className={classes.messagesContainer}>
-        {messages.map((msg) => (
+        {/* FIX 3: Show loading state while greeting is being generated */}
+        {isLoadingGreeting ? (
           <Box
-            key={msg.id}
-            className={`${classes.messageWrapper} ${
-              msg.sender === 'user'
-                ? classes.userMessageWrapper
-                : classes.assistantMessageWrapper
-            }`}
+            className={`${classes.messageWrapper} ${classes.assistantMessageWrapper}`}
           >
-            <Box
-              className={`${classes.message} ${
-                msg.sender === 'user'
-                  ? classes.userMessage
-                  : classes.assistantMessage
-              }`}
-            >
-              {msg.sender === 'assistant' ? (
-                <ReactMarkdown>{msg.text}</ReactMarkdown>
-              ) : (
-                <Typography variant="body2">{msg.text}</Typography>
-              )}
+            <Box className={`${classes.message} ${classes.assistantMessage}`}>
+              <Box className={classes.loadingDots}>
+                <Box className={`${classes.dot} ${classes.dot1}`} />
+                <Box className={`${classes.dot} ${classes.dot2}`} />
+                <Box className={classes.dot} />
+              </Box>
             </Box>
           </Box>
-        ))}
+        ) : (
+          messages.map((msg) => (
+            <Box
+              key={msg.id}
+              className={`${classes.messageWrapper} ${
+                msg.sender === 'user'
+                  ? classes.userMessageWrapper
+                  : classes.assistantMessageWrapper
+              }`}
+            >
+              <Box
+                className={`${classes.message} ${
+                  msg.sender === 'user'
+                    ? classes.userMessage
+                    : classes.assistantMessage
+                }`}
+              >
+                {msg.sender === 'assistant' ? (
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                ) : (
+                  <Typography variant="body2">{msg.text}</Typography>
+                )}
+              </Box>
+            </Box>
+          ))
+        )}
 
         {isLoading && (
           <Box
