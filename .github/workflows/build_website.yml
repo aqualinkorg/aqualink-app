@@ -4,9 +4,9 @@ name: Aqualink Website CI
 on:
   # Run on all pull requests and on pushes to main.
   pull_request:
-    paths: 
-      - 'packages/website/**'
-      - 'yarn.lock'
+    paths:
+      - "packages/website/**"
+      - "yarn.lock"
   push:
     branches:
       - master
@@ -26,10 +26,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3 
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Enable Corepack
         run: |
