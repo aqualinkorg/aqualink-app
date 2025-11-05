@@ -2,7 +2,7 @@ import React from 'react';
 import { Fab, Tooltip } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
-import ChatIcon from '@mui/icons-material/Chat';
+import aiChat from '../../assets/aiChat.png';
 import { styles } from './styles';
 
 const ChatButton = ({ classes, onClick }: ChatButtonProps) => {
@@ -13,12 +13,13 @@ const ChatButton = ({ classes, onClick }: ChatButtonProps) => {
     >
       <Fab
         className={classes.chatButton}
-        color="primary"
-        aria-label="open ai chat"
         onClick={onClick}
-      >
-        <ChatIcon />
-      </Fab>
+        style={{
+          backgroundImage: `url(${aiChat})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
     </Tooltip>
   );
 };

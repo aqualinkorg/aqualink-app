@@ -1,5 +1,15 @@
 /**
- * Initial Greeting - Template for first message in conversations
+ * INITIAL GREETING TEMPLATE
+ *
+ * Controls what users see when they first open the chat.
+ * Provides personalized reef status and environmental context.
+ *
+ * Edit this file to change:
+ * - Greeting message structure
+ * - Which environmental factors to assess
+ * - How the reef status is summarized
+ *
+ * The AI will fill in [placeholders] with actual site data.
  */
 
 export const INITIAL_GREETING = `
@@ -14,10 +24,9 @@ When a user opens a new conversation (first message), you MUST provide a context
 
 ### GREETING TEMPLATE:
 
-"Hi! I'm here to help you monitor [Site Name]. 
+**Here is the current reef status for [Site Name]:** This site is currently at [Weekly Alert Level Name] for heat stress, with [DHW] Degree Heating Weeks (DHW) accumulated stress indicating [bleaching likelihood based on DHW]. Water temperature is [SST]°C ([temperature difference with +/- sign] from historical maximum of [MMM]°C), with a [7-day trend] trend over the past week.
 
-**About your site:**
-Based on the location ([Latitude, Longitude] near [Country/Region]), here's a quick environmental context:
+**About your site:** Here's a quick environmental context:
 
 - **Fishing pressure** (within 50km): [low/medium/high]
 - **Industrial activity** (within 50km): [low/medium/high]
@@ -26,7 +35,19 @@ Based on the location ([Latitude, Longitude] near [Country/Region]), here's a qu
 - **Marine Protected Area**: [yes/no]
 - **Likely reef composition**: [coral/rocky reef/kelp forest/mixed]
 
-I can help you understand heat stress, coral bleaching, and suggest response actions. What would you like to know?"
+What would you like to know about heat stress, bleaching, or response actions?
+
+**How to fill in the brackets:**
+- [Site Name]: Use "Site Name" from SITE INFORMATION
+- [Weekly Alert Level Name]: Use the name from "Weekly Alert Level" (e.g., "Alert Level 2")
+- [DHW]: Use exact value from "Degree Heating Weeks (DHW)"
+- [bleaching likelihood]: Use "Accumulated Stress" description
+- [SST]: Use exact value from "Sea Surface Temperature (SST)"
+- [temperature difference]: Use "Temperature Difference from MMM" (includes +/- sign)
+- [MMM]: Use "Historical Maximum (MMM)"
+- [7-day trend]: Use "7-Day Trend" value
+
+All these values are in the CURRENT REEF METRICS section above.
 
 ### HOW TO GENERATE THE CONTEXTUAL SUMMARY:
 
@@ -106,10 +127,9 @@ I can help you understand heat stress, coral bleaching, and suggest response act
 **User's first message**: "Hello"
 
 **Assistant response**:
-"Hi! I'm here to help you monitor Cayo Rosario. 
+**Here is the current reef status for Ocean Beach:** This site is currently at Alert Lever 2 for heat stress, with 14.7 Degree Heating Weeks (DHW) accumulated stress indicating severe bleaching and mortality are likely. Water temperature is 29.11°C (+0.87°C from historical maximum of 28.24°C), with a stable trend over the past week.
 
-**About your site:**
-Based on the location (17.8°N, -67.1°W near Puerto Rico), here's a quick environmental context:
+**About your site:** Here's a quick environmental context:
 
 - **Fishing pressure** (within 50km): medium
 - **Industrial activity** (within 50km): medium
@@ -118,7 +138,7 @@ Based on the location (17.8°N, -67.1°W near Puerto Rico), here's a quick envir
 - **Marine Protected Area**: no
 - **Likely reef composition**: coral
 
-I can help you understand heat stress, coral bleaching, and suggest response actions. What would you like to know?"
+What would you like to know about heat stress, bleaching, or response actions?
 
 ### DETECTION LOGIC:
 

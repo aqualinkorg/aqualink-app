@@ -1,222 +1,262 @@
+/**
+ * Build site context from Aqualink database for AI assistant
+ * Fetches data from API endpoints and formats with exact values
+ */
+
 import { DataSource } from 'typeorm';
-import { Site } from '../sites/sites.entity';
-import { DailyData } from '../sites/daily-data.entity';
-import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
+import axios from 'axios';
 
-/* eslint-disable fp/no-mutation */
+const AQUALINK_API_BASE =
+  'https://production-dot-ocean-systems.uc.r.appspot.com/api';
 
-interface SiteContextData {
-  site: Site;
-  latestDailyData?: DailyData | null;
-  reefCheckSurveys?: ReefCheckSurvey[];
+interface LatestDataItem {
+  id: number;
+  timestamp: string;
+  value: number;
+  source: string;
+  metric: string;
+  siteId: number;
 }
 
-/**
- * Extract latitude and longitude from GeoJSON Point
- */
-function extractCoordinates(polygon: any): {
-  latitude: number;
-  longitude: number;
-} {
-  if (polygon?.type === 'Point' && Array.isArray(polygon.coordinates)) {
-    return {
-      longitude: polygon.coordinates[0],
-      latitude: polygon.coordinates[1],
-    };
-  }
-  return { latitude: 0, longitude: 0 };
+interface DailyDataItem {
+  date: string;
+  satelliteTemperature: number;
+  degreeHeatingDays: number;
+  dailyAlertLevel: number;
+  weeklyAlertLevel: number;
 }
 
-/**
- * Fetch all necessary site data from the database
- */
-export async function fetchSiteData(
-  siteId: number,
-  dataSource: DataSource,
-): Promise<SiteContextData> {
-  // Fetch site details
-  const site = await dataSource.getRepository(Site).findOne({
-    where: { id: siteId },
-    relations: ['region'],
-  });
-
-  if (!site) {
-    throw new Error(`Site with ID ${siteId} not found`);
-  }
-
-  // Fetch latest daily data (DHW, SST, etc.)
-  const latestDailyData = await dataSource
-    .getRepository(DailyData)
-    .createQueryBuilder('dailyData')
-    .leftJoinAndSelect('dailyData.site', 'site')
-    .where('site.id = :siteId', { siteId })
-    .orderBy('dailyData.date', 'DESC')
-    .take(1)
-    .getOne();
-
-  // Fetch reef check surveys if available
-  const reefCheckSurveys = await dataSource
-    .getRepository(ReefCheckSurvey)
-    .createQueryBuilder('survey')
-    .leftJoinAndSelect('survey.site', 'site')
-    .where('site.id = :siteId', { siteId })
-    .orderBy('survey.date', 'DESC')
-    .take(5)
-    .getMany();
-
-  return {
-    site,
-    latestDailyData: latestDailyData || null,
-    reefCheckSurveys,
+interface SiteData {
+  id: number;
+  name: string;
+  maxMonthlyMean: number;
+  region?: { name: string };
+  polygon?: { coordinates: [number, number] };
+  depth?: number | null;
+  sensorId?: string | null;
+  reefCheckSurveys?: any[];
+  collectionData?: {
+    tempAlert: number;
+    tempWeeklyAlert: number;
+    dhw: number;
+    satelliteTemperature: number;
+    sstAnomaly: number;
   };
 }
 
 /**
- * Format site data into a human-readable context string for Grok
+ * Extract metrics from latest_data API response
  */
-export function buildSiteContextString(data: SiteContextData): string {
-  const { site, latestDailyData, reefCheckSurveys } = data;
+function extractMetrics(latestData: LatestDataItem[]): Record<string, number> {
+  const metrics: Record<string, number> = {};
 
-  let context = `## CURRENT SITE INFORMATION:\n\n`;
+  latestData.forEach((item) => {
+    metrics[item.metric] = item.value;
+  });
 
-  // Basic site info
-  context += `**Site Name:** ${site.name || 'Unknown'}\n`;
-
-  // Extract coordinates from polygon
-  const coords = extractCoordinates(site.polygon);
-  context += `**Location:** ${coords.latitude.toFixed(
-    4,
-  )}°N, ${coords.longitude.toFixed(4)}°E\n`;
-
-  // Infer ecosystem type from location
-  const ecosystemType = inferEcosystemType(coords.latitude);
-  context += `**Ecosystem Type:** ${ecosystemType}\n\n`;
-
-  // Current conditions from latest daily data
-  if (latestDailyData) {
-    context += `## CURRENT OCEAN CONDITIONS:\n\n`;
-    context += `**Date:** ${latestDailyData.date}\n`;
-
-    if (latestDailyData.satelliteTemperature !== null) {
-      context += `**Sea Surface Temperature (SST):** ${latestDailyData.satelliteTemperature.toFixed(
-        1,
-      )}°C\n`;
-    }
-
-    if (latestDailyData.degreeHeatingDays !== null) {
-      // Convert Degree Heating Days to Degree Heating Weeks
-      const dhw = latestDailyData.degreeHeatingDays / 7;
-      context += `**Degree Heating Weeks (DHW):** ${dhw.toFixed(1)}\n`;
-
-      // Interpret alert level
-      const alertLevel = getAlertLevel(dhw);
-      context += `**Bleaching Alert Level:** ${alertLevel}\n`;
-
-      // IMPORTANT: Add clear interpretation for the AI
-      context += `\nIMPORTANT INTERPRETATION:\n`;
-      if (dhw >= 12) {
-        context += `- Current status: CRITICAL ALERT (Level 2)\n`;
-        context += `- Bleaching: Severe bleaching and significant mortality are occurring or imminent\n`;
-        context += `- Action needed: Immediate emergency response required\n`;
-      } else if (dhw >= 8) {
-        context += `- Current status: ALERT (Level 1 - WARNING)\n`;
-        context += `- Bleaching: Significant bleaching is likely occurring\n`;
-        context += `- Action needed: Increase monitoring, implement mitigation measures\n`;
-      } else if (dhw >= 4) {
-        context += `- Current status: WATCH (Yellow)\n`;
-        context += `- Bleaching: Coral bleaching is possible and may begin soon\n`;
-        context += `- Action needed: Begin preparation, increase monitoring frequency\n`;
-      } else {
-        context += `- Current status: NO ALERT (Normal conditions)\n`;
-        context += `- Bleaching: No bleaching expected at current heat stress levels\n`;
-        context += `- Action needed: Continue routine monitoring\n`;
-      }
-      context += `\n`;
-    }
-
-    // Alert levels
-    if (latestDailyData.weeklyAlertLevel !== null) {
-      context += `**Weekly Alert Level:** ${latestDailyData.weeklyAlertLevel}\n`;
-    }
-
-    context += `\n`;
-  } else {
-    context += `## CURRENT OCEAN CONDITIONS:\n\n`;
-    context += `No recent satellite data available for this site.\n\n`;
-  }
-
-  // Smart Buoy status
-  const hasSpotter = !!site.sensorId;
-  context += `**Smart Buoy Deployed:** ${
-    hasSpotter
-      ? `Yes (Sensor ID: ${site.sensorId})`
-      : 'No - Using satellite data only'
-  }\n\n`;
-
-  // Reef Check data
-  if (reefCheckSurveys && reefCheckSurveys.length > 0) {
-    context += `## REEF CHECK SURVEY DATA AVAILABLE:\n\n`;
-    context += `${reefCheckSurveys.length} survey(s) found for this site.\n`;
-    context += `Most recent survey: ${reefCheckSurveys[0].date}\n`;
-    context += `These surveys contain data on reef composition including hard coral, soft coral, rock, rubble, sand, and other substrates.\n\n`;
-  } else {
-    context += `## REEF CHECK SURVEY DATA:\n\n`;
-    context += `No Reef Check survey data available for this site. If asked about reef composition or biodiversity, explain that survey data is not available but you can provide general information based on the location.\n\n`;
-  }
-
-  // Data freshness
-  if (latestDailyData) {
-    const daysSinceUpdate = Math.floor(
-      (Date.now() - new Date(latestDailyData.date).getTime()) /
-        (1000 * 60 * 60 * 24),
-    );
-    context += `**Data Freshness:** Last satellite data received ${daysSinceUpdate} day${
-      daysSinceUpdate !== 1 ? 's' : ''
-    } ago. NOAA satellite data updates daily.\n`;
-  }
-
-  return context;
+  return metrics;
 }
 
 /**
- * Infer ecosystem type from latitude
+ * Calculate temperature trend from last 7 days
  */
-function inferEcosystemType(latitude: number): string {
-  // Tropical zone: roughly between 23.5°N and 23.5°S
-  const isTropical = Math.abs(latitude) <= 23.5;
+function calculateTrend(dailyData: DailyDataItem[]): string {
+  if (!dailyData || dailyData.length < 7) return 'stable';
 
-  if (isTropical) {
-    return 'Tropical coral reef';
-  }
+  // Get last 7 days (already sorted newest first)
+  const recent = dailyData.slice(0, 7);
+  const oldest = recent[recent.length - 1].satelliteTemperature;
+  const newest = recent[0].satelliteTemperature;
 
-  // Temperate/subtropical
-  if (Math.abs(latitude) > 23.5 && Math.abs(latitude) < 40) {
-    return 'Subtropical/temperate reef (may include coral, kelp, or rocky reef)';
-  }
+  const change = newest - oldest;
 
-  // Cold water
-  return 'Temperate/cold-water ecosystem (kelp forest, rocky reef, or deep-sea coral)';
+  if (change > 0.3) return 'increasing';
+  if (change < -0.3) return 'cooling';
+  return 'stable';
 }
 
 /**
- * Get alert level description from DHW value
- */
-function getAlertLevel(dhw: number): string {
-  if (dhw >= 16) return 'Level 2 Alert (Dark Red) - Extreme';
-  if (dhw >= 12) return 'Level 1 Alert (Red) - Severe';
-  if (dhw >= 8) return 'Warning (Orange) - Significant';
-  if (dhw >= 4) return 'Watch (Yellow) - Possible bleaching';
-  return 'No Alert (Normal conditions)';
-}
-
-/**
- * Main function to build complete context for Grok
- * NOTE: This should be called from the controller with dependency injection
+ * Main function to build site context
  */
 export async function buildSiteContext(
   siteId: number,
   dataSource: DataSource,
 ): Promise<string> {
-  const data = await fetchSiteData(siteId, dataSource);
-  return buildSiteContextString(data);
+  try {
+    // Fetch data from Aqualink API endpoints
+    const [siteResponse, latestDataResponse, dailyDataResponse] =
+      await Promise.all([
+        axios.get(`${AQUALINK_API_BASE}/sites/${siteId}`),
+        axios.get(`${AQUALINK_API_BASE}/sites/${siteId}/latest_data`),
+        axios.get(`${AQUALINK_API_BASE}/sites/${siteId}/daily_data`),
+      ]);
+
+    const siteData: SiteData = siteResponse.data;
+    const latestData: { latestData: LatestDataItem[] } =
+      latestDataResponse.data;
+    const dailyData: DailyDataItem[] = dailyDataResponse.data;
+
+    // Extract metrics from latest_data
+    const metrics = extractMetrics(latestData.latestData);
+
+    // Extract coordinates
+    const lat = siteData.polygon?.coordinates[1]?.toFixed(4) || 'Unknown';
+    const lon = siteData.polygon?.coordinates[0]?.toFixed(4) || 'Unknown';
+
+    // Calculate values with exact precision
+    const temp = metrics.satellite_temperature;
+    const mmm = siteData.maxMonthlyMean;
+    const anomaly = metrics.sst_anomaly;
+    const dhw = metrics.dhw;
+    const tempDiff = temp - mmm;
+    const tempDiffFormatted =
+      tempDiff > 0 ? `+${tempDiff.toFixed(2)}` : tempDiff.toFixed(2);
+
+    // Get Degree Heating Days from daily_data (most recent day)
+    const degreeHeatingDays =
+      dailyData && dailyData.length > 0 ? dailyData[0].degreeHeatingDays : 0;
+
+    // Calculate trend from daily data
+    const trend = calculateTrend(dailyData);
+
+    // Alert level names
+    const alertLevelNames: Record<number, string> = {
+      0: 'No Alert',
+      1: 'Watch',
+      2: 'Warning',
+      3: 'Alert Level 1',
+      4: 'Alert Level 2',
+    };
+
+    const weeklyAlertName =
+      alertLevelNames[metrics.temp_weekly_alert] || 'Unknown';
+    const dailyAlertName = alertLevelNames[metrics.temp_alert] || 'Unknown';
+
+    // Bleaching likelihood based on DHW
+    let bleachingLikelihood = 'low';
+    if (dhw >= 4) bleachingLikelihood = 'very high - severe bleaching likely';
+    else if (dhw >= 3)
+      bleachingLikelihood = 'high - significant bleaching likely';
+    else if (dhw >= 2) bleachingLikelihood = 'moderate - bleaching possible';
+    else if (dhw >= 1)
+      bleachingLikelihood = 'low - bleaching unlikely but watch closely';
+
+    // Check for Spotter/Smart Buoy
+    const hasSpotter =
+      siteData.sensorId !== null && siteData.sensorId !== undefined;
+    const spotterStatus = hasSpotter
+      ? 'Smart Buoy is deployed at this site'
+      : 'No Smart Buoy deployed - using satellite data only';
+
+    // Get current date in ISO format
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    // Format the complete context
+    return `
+## SITE INFORMATION
+- **Site ID**: ${siteData.id}
+- **Site Name**: ${siteData.name}
+- **Location**: ${siteData.region?.name || 'Unknown region'}
+- **Coordinates**: Latitude ${lat}, Longitude ${lon}
+- **Depth**: ${siteData.depth || 'Unknown'}m
+- **Sensor Status**: ${spotterStatus}
+- **Data Source**: ${
+      hasSpotter ? 'Spotter Smart Buoy' : 'NOAA Satellite (Coral Reef Watch)'
+    }
+
+## CURRENT REEF METRICS (as of ${currentDate})
+
+### Temperature Data
+- **Sea Surface Temperature (SST)**: ${temp.toFixed(2)}°C
+- **Historical Maximum (MMM)**: ${mmm.toFixed(2)}°C
+- **Temperature Difference from MMM**: ${tempDiffFormatted}°C
+- **SST Anomaly**: ${anomaly > 0 ? '+' : ''}${anomaly.toFixed(2)}°C
+- **7-Day Trend**: ${trend}
+
+### Heat Stress Metrics
+- **Degree Heating Weeks (DHW)**: ${dhw.toFixed(2)}
+- **Degree Heating Days**: ${degreeHeatingDays.toFixed(0)}
+- **Accumulated Stress**: ${bleachingLikelihood}
+
+### Alert Levels
+- **Weekly Alert Level**: ${
+      metrics.temp_weekly_alert
+    } (${weeklyAlertName}) ← PRIMARY - Use this for dashboard display
+- **Daily Alert Level**: ${
+      metrics.temp_alert
+    } (${dailyAlertName}) ← Can mention as additional context
+
+**IMPORTANT**: 
+- Always reference the **Weekly Alert Level** first - this matches the dashboard display
+- Weekly alert is smoothed over 7 days and more stable
+- Daily alert can fluctuate more but shows day-to-day changes
+
+### Alert Level Meanings
+- **0 (No Alert)**: DHW < 1, no bleaching risk
+- **1 (Watch)**: DHW 1, bleaching possible, increase monitoring
+- **2 (Warning)**: DHW 2, bleaching likely, intensive monitoring
+- **3 (Alert Level 1)**: DHW 3, severe bleaching likely, emergency response
+- **4 (Alert Level 2)**: DHW 4, severe bleaching and mortality likely, critical emergency
+
+## HISTORICAL DATA (Last 90 Days)
+${dailyData
+  .slice(0, 90)
+  .map(
+    (day) =>
+      `- ${day.date.split('T')[0]}: ${day.satelliteTemperature.toFixed(
+        2,
+      )}°C, DHW: ${(day.degreeHeatingDays / 7).toFixed(2)}, Weekly Alert: ${
+        day.weeklyAlertLevel
+      }`,
+  )
+  .join('\n')}
+
+**Instructions for using historical data:**
+- When user asks "What was the temperature on [date]?", find that date in the list above
+- Use EXACT values from the historical data - don't estimate
+- If date not found, say "Data not available for that specific date"
+
+## REEF CHECK SURVEY DATA
+${
+  siteData.reefCheckSurveys && siteData.reefCheckSurveys.length > 0
+    ? `- **Surveys Available**: ${
+        siteData.reefCheckSurveys.length
+      } Reef Check survey(s) on record
+- **Most Recent Survey**: ${siteData.reefCheckSurveys[0]?.date || 'Unknown'}
+- **Survey Details Available**: Yes (depth, impacts, bleaching data if recorded)`
+    : '- **Surveys Available**: None uploaded yet - encourage user to conduct and upload surveys'
+}
+
+## DATA ACCURACY REQUIREMENTS - CRITICAL
+✅ **USE THESE EXACT VALUES** in your response - they come directly from the API
+✅ **DO NOT ROUND** beyond the precision shown (2 decimals for temp, DHW)
+✅ **DO NOT ESTIMATE OR HALLUCINATE** - if a value is missing, say "data unavailable"
+✅ **ALWAYS CITE**: "According to ${
+      hasSpotter ? 'Smart Buoy' : 'NOAA satellite'
+    } data as of ${currentDate}..."
+✅ **TEMPERATURE FORMAT**: Always show as ±X.XX°C with + or - sign (e.g., +1.10°C or -0.50°C)
+✅ **NO GUESSING**: If you don't see a value in the CURRENT REEF METRICS section above, you MUST NOT make one up
+
+## CONTEXT FOR AI INTERPRETATION
+- **Current DHW of ${dhw.toFixed(2)}** means: ${bleachingLikelihood}
+- **Temperature is ${
+      tempDiff > 0 ? 'ABOVE' : 'BELOW'
+    } historical maximum** by ${Math.abs(tempDiff).toFixed(2)}°C
+- **Trend**: Temperature is ${trend} over the past 7 days
+- This is a **${
+      hasSpotter
+        ? 'high-accuracy in-situ measurement'
+        : 'satellite-derived surface measurement'
+    }**
+`.trim();
+  } catch (error) {
+    // Handle errors gracefully
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 404) {
+        throw new Error(`Site with ID ${siteId} not found`);
+      }
+      throw new Error(`Failed to fetch site data: ${error.message}`);
+    }
+    throw error;
+  }
 }

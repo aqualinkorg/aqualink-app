@@ -1,6 +1,11 @@
 /**
- * README Knowledge - Key information from repository documentation
- * Source: Main repo READMEs (not node_modules)
+ * REPOSITORY DOCUMENTATION
+ *
+ * Information extracted from project README files.
+ * Helps the AI understand the Aqualink codebase and architecture.
+ *
+ * Auto-generated from README.md files.
+ * Edit source READMEs, not this file directly.
  */
 
 export const README_KNOWLEDGE = `

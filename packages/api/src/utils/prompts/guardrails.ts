@@ -1,5 +1,13 @@
 /**
- * Guardrails - Defines what the AI assistant can and cannot answer
+ * GUARDRAILS & SCOPE LIMITS
+ *
+ * Defines what the AI can and cannot answer.
+ * Protects against off-topic questions and harmful requests.
+ *
+ * Edit this file to:
+ * - Add/remove allowed topics
+ * - Change how the AI handles out-of-scope requests
+ * - Update safety rules
  */
 
 export const GUARDRAILS = `

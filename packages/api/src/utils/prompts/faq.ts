@@ -1,6 +1,13 @@
 /**
- * FAQ Knowledge - Embedded from aqualink.org/faq
- * Last updated: [Date when you populate this]
+ * FREQUENTLY ASKED QUESTIONS
+ *
+ * Common questions and answers about Aqualink and reef monitoring.
+ * Pre-written responses for consistent, accurate answers. Most are taken from the published FAQ page on Aqualink.
+ *
+ * Edit this file to:
+ * - Add new FAQs
+ * - Update existing answers
+ * - Remove outdated questions
  */
 
 export const FAQ_KNOWLEDGE = `

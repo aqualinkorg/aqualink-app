@@ -1,5 +1,13 @@
 /**
- * Survey Guide - How to conduct Aqualink surveys
+ * SURVEY & MONITORING PROTOCOLS
+ *
+ * Instructions for conducting reef surveys and documentation.
+ * Guides users through the survey upload process.
+ *
+ * Edit this file to:
+ * - Update survey protocols
+ * - Change monitoring recommendations
+ * - Modify survey upload instructions
  */
 
 export const SURVEY_GUIDE = `

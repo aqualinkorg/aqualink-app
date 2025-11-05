@@ -1,5 +1,13 @@
 /**
- * Bleaching Response Guide - Emergency protocols and action plans
+ * BLEACHING RESPONSE PROTOCOLS
+ *
+ * Emergency action plans for different bleaching severity levels.
+ * Provides step-by-step guidance during heat stress events.
+ *
+ * Edit this file to:
+ * - Update response actions
+ * - Change alert level thresholds
+ * - Modify emergency protocols
  */
 
 export const BLEACHING_RESPONSE_GUIDE = `

@@ -1,5 +1,14 @@
 /**
- * Data Guide - Technical information about Aqualink data sources and API
+ * DATA INTERPRETATION GUIDE
+ *
+ * Technical reference for Aqualink's data sources and API.
+ * Teaches the AI how to prioritize and explain different data types.
+ *
+ * Edit this file to:
+ * - Update API endpoint documentation
+ * - Change data source priorities
+ * - Modify data interpretation rules
+ * - Add new metrics or sensors
  */
 
 export const DATA_GUIDE = `

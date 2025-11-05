@@ -2913,23 +2913,11 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           title="Ask AI about coral bleaching and heat stress"
         >
           <button
-            aria-label="open ai chat"
-            class="MuiButtonBase-root MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-primary MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-primary ChatButton-chatButton-1068 css-1wrj97t-MuiButtonBase-root-MuiFab-root"
+            class="MuiButtonBase-root MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-default MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-default ChatButton-chatButton-1068 css-1qwkc5n-MuiButtonBase-root-MuiFab-root"
+            style="background-image: url("/src/assets/aiChat.png"); background-size: cover; background-position: center;"
             tabindex="0"
             type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="ChatIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2M6 9h12v2H6zm8 5H6v-2h8zm4-6H6V6h12z"
-              />
-            </svg>
-          </button>
+          />
         </mock-tooltip>
       </mock-box>
     </div>
@@ -5645,23 +5633,11 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           title="Ask AI about coral bleaching and heat stress"
         >
           <button
-            aria-label="open ai chat"
-            class="MuiButtonBase-root MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-primary MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-primary ChatButton-chatButton-236 css-1wrj97t-MuiButtonBase-root-MuiFab-root"
+            class="MuiButtonBase-root MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-default MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-default ChatButton-chatButton-236 css-1qwkc5n-MuiButtonBase-root-MuiFab-root"
+            style="background-image: url("/src/assets/aiChat.png"); background-size: cover; background-position: center;"
             tabindex="0"
             type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="ChatIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2M6 9h12v2H6zm8 5H6v-2h8zm4-6H6V6h12z"
-              />
-            </svg>
-          </button>
+          />
         </mock-tooltip>
       </mock-box>
     </div>

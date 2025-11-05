@@ -1,6 +1,11 @@
 /**
- * Prompt System Index
- * Combines all prompt modules into the complete system prompt
+ * PROMPT SYSTEM BUILDER
+ *
+ * Combines all prompt modules into the complete system prompt.
+ * Handles prompt assembly and context injection.
+ *
+ * This file orchestrates how all prompts work together.
+ * Usually doesn't need editing unless changing the prompt structure.
  */
 
 import { SYSTEM_PROMPT } from './system';

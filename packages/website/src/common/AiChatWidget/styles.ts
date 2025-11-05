@@ -8,10 +8,10 @@ export const styles = (theme: Theme) =>
       bottom: theme.spacing(3),
       right: theme.spacing(3),
       zIndex: 1000,
-      width: 60,
-      height: 60,
+      width: 80,
+      height: 80,
       borderRadius: '50%',
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: 'white',
       color: 'white',
       boxShadow: theme.shadows[6],
       '&:hover': {
@@ -29,7 +29,7 @@ export const styles = (theme: Theme) =>
       position: 'fixed',
       bottom: theme.spacing(10),
       right: theme.spacing(2),
-      width: 650, // Made 1.5x wider (was 400)
+      width: 650,
       height: 600,
       zIndex: 1000,
       borderRadius: theme.spacing(1),
