@@ -6,6 +6,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ReactMarkdown from 'react-markdown';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
+import { useSelector } from 'react-redux';
+import { userInfoSelector } from '../../store/User/userSlice';
 import { styles } from './styles';
 
 interface Message {
@@ -23,7 +25,10 @@ const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
 
 // Generate the initial greeting by calling the API with isFirstMessage: true
-const generateInitialGreeting = async (siteId: number): Promise<string> => {
+const generateInitialGreeting = async (
+  siteId: number,
+  userId?: number,
+): Promise<string> => {
   try {
     const response = await fetch(`${API_BASE_URL}/ai-chat`, {
       method: 'POST',
@@ -31,6 +36,7 @@ const generateInitialGreeting = async (siteId: number): Promise<string> => {
       body: JSON.stringify({
         message: 'Hello',
         siteId,
+        userId,
         conversationHistory: [],
         isFirstMessage: true,
       }),
@@ -56,6 +62,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   onClose,
   siteId,
 }) => {
+  const user = useSelector(userInfoSelector);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +91,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       }
 
       // No saved history, generate fresh greeting
-      const greetingText = await generateInitialGreeting(siteId);
+      const greetingText = await generateInitialGreeting(siteId, user?.id);
       const initialMessage: Message = {
         sender: 'assistant',
         text: greetingText,
@@ -95,7 +102,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     };
 
     initializeChat();
-  }, [siteId]);
+  }, [siteId, user?.id]);
 
   // Save messages to localStorage whenever they change
   useEffect(() => {
@@ -115,7 +122,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
     if (confirmClear) {
       setIsLoadingGreeting(true);
       // Generate fresh contextual greeting
-      const greetingText = await generateInitialGreeting(siteId);
+      const greetingText = await generateInitialGreeting(siteId, user?.id);
       const initialMessage: Message = {
         sender: 'assistant',
         text: greetingText,
@@ -155,6 +162,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         body: JSON.stringify({
           message: inputValue,
           siteId,
+          userId: user?.id,
           conversationHistory,
         }),
       });
