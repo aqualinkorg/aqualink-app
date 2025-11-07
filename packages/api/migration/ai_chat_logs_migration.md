@@ -1,20 +1,16 @@
 -- Create AI chat logs table
 CREATE TABLE ai_chat_logs (
-id SERIAL PRIMARY KEY,
-site_id INTEGER NOT NULL,
-user_message TEXT NOT NULL,
-ai_response TEXT NOT NULL,
-user_id INTEGER NULL;
-created_at timestamp without time zone NOT NULL DEFAULT now()
-
+    id SERIAL PRIMARY KEY,
+    site_id INTEGER NOT NULL,
+    user_message TEXT NOT NULL,
+    ai_response TEXT NOT NULL,
+    user_id INTEGER NULL,
+    created_at timestamp without time zone NOT NULL DEFAULT now(),
     -- Foreign key to sites table
-    CONSTRAINT fk_site FOREIGN KEY (site_id) REFERENCES sites(id) ON DELETE CASCADE
-
+    CONSTRAINT fk_site FOREIGN KEY (site_id) REFERENCES sites(id) ON DELETE CASCADE,
+    -- Foreign key to users table
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
-
-ALTER TABLE ai_chat_logs
-ADD CONSTRAINT fk_user
-FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL;
 
 -- Add index for querying by site
 CREATE INDEX idx_ai_chat_logs_site_id ON ai_chat_logs(site_id);
