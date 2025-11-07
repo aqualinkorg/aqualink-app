@@ -451,6 +451,17 @@ A: **Top-right corner has three important buttons**:
 - Click "DOWNLOAD CSV"
 - Includes: Satellite temperature, DHW, Spotter data (if deployed), surveys, uploaded sensor data
 
+**Q: How do I change the language on my dashboard?**
+A: You can translate the entire Aqualink website (including dashboards, map, and all pages) to your preferred language:
+
+1. **Look for the globe icon** 🌐 in the top-right corner of the page
+2. **Click the globe icon** to open the language selector
+3. **Select your language** from the available options
+
+This feature uses Google Translate to automatically translate the entire interface. The globe icon is available on all Aqualink pages since it's part of the global header/menu bar.
+
+**Note**: The translation applies to the user interface text. Data values (temperatures, DHW, etc.) remain in their original units (Celsius, etc.).
+
 **Q: Do I need an account?**
 A: 
 - Browse sites and data: No account needed

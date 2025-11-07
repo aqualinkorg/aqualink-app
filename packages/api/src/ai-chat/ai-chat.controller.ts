@@ -11,10 +11,12 @@ import { DataSource } from 'typeorm';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { buildSiteContext } from '../utils/aiSiteContextBuilder';
 import { callGrokAPI } from '../utils/aiGrokService';
+import { AiChatLog } from '../ai-chat-logs/ai-chat-logs.entity';
 
 interface AiChatRequest {
   message: string;
   siteId: number;
+  userId?: number;
   conversationHistory?: Array<{
     sender: 'user' | 'assistant';
     text: string;
@@ -42,7 +44,8 @@ export class AiChatController {
   @ApiResponse({ status: 400, description: 'Invalid request' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
   async chat(@Body() body: AiChatRequest): Promise<AiChatResponse> {
-    const { message, siteId, conversationHistory, isFirstMessage } = body;
+    const { message, siteId, userId, conversationHistory, isFirstMessage } =
+      body;
 
     // Validate input
     if ((!message || !message.trim()) && !isFirstMessage) {
@@ -74,6 +77,17 @@ export class AiChatController {
 
       this.logger.log(`AI response generated for site ${siteId}`);
 
+      // Log the interaction (skip initial greeting)
+      if (!isFirstMessage) {
+        this.logInteraction(siteId, userId, message, aiResponse).catch(
+          (err) => {
+            const errorMessage =
+              err instanceof Error ? err.message : 'Unknown error';
+            this.logger.error(`Failed to log AI interaction: ${errorMessage}`);
+          },
+        );
+      }
+
       return {
         response: aiResponse,
       };
@@ -100,6 +114,30 @@ export class AiChatController {
       throw new HttpException(
         'Failed to generate AI response',
         HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+  private async logInteraction(
+    siteId: number,
+    userId: number | undefined,
+    userMessage: string,
+    aiResponse: string,
+  ): Promise<void> {
+    try {
+      const logEntry = this.dataSource.getRepository(AiChatLog).create({
+        siteId,
+        userId: userId || null,
+        userMessage,
+        aiResponse,
+      });
+
+      await this.dataSource.getRepository(AiChatLog).save(logEntry);
+      this.logger.debug(`Logged AI interaction for site ${siteId}`);
+    } catch (error) {
+      this.logger.error(
+        `Error logging AI interaction: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
       );
     }
   }

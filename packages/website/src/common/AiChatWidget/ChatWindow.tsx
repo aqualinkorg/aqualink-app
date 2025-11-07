@@ -22,14 +22,14 @@ interface ChatWindowProps extends WithStyles<typeof styles> {
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
 
-// FIX 4: Debug the API call - this function generates the initial greeting
+// Generate the initial greeting by calling the API with isFirstMessage: true
 const generateInitialGreeting = async (siteId: number): Promise<string> => {
   try {
     const response = await fetch(`${API_BASE_URL}/ai-chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        message: '',
+        message: 'Hello',
         siteId,
         conversationHistory: [],
         isFirstMessage: true,
@@ -56,14 +56,13 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   onClose,
   siteId,
 }) => {
-  // FIX 2: Initialize with empty array
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingGreeting, setIsLoadingGreeting] = useState(true); // Track greeting load
+  const [isLoadingGreeting, setIsLoadingGreeting] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // FIX 2: Load or generate initial greeting
+  // Load or generate initial greeting
   useEffect(() => {
     const initializeChat = async () => {
       // Try to load from localStorage first
@@ -71,11 +70,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       if (saved) {
         try {
           const savedMessages = JSON.parse(saved);
-          setMessages(savedMessages);
-          setIsLoadingGreeting(false);
-          return;
+          // NEW: Validate saved messages aren't corrupted
+          if (Array.isArray(savedMessages) && savedMessages.length > 0) {
+            setMessages(savedMessages);
+            setIsLoadingGreeting(false);
+            return;
+          }
         } catch (error) {
           console.error('Failed to load chat history:', error);
+          // NEW: Clear corrupted localStorage
+          localStorage.removeItem(`chat-history-${siteId}`);
         }
       }
 
@@ -215,7 +219,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
       {/* Messages */}
       <Box className={classes.messagesContainer}>
-        {/* FIX 3: Show loading state while greeting is being generated */}
         {isLoadingGreeting ? (
           <Box
             className={`${classes.messageWrapper} ${classes.assistantMessageWrapper}`}
