@@ -60,7 +60,7 @@ interface SeapHOxData {
 function removePadding(hexString: string): string {
   let cleaned = hexString;
   while (cleaned.endsWith('00')) {
-    cleaned = cleaned.slice(0, -2);
+    return removePadding(cleaned.slice(0, -2));
   }
   return cleaned;
 }
