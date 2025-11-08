@@ -68,6 +68,30 @@ export class SitesController {
     return this.sitesService.find(filterSiteDto);
   }
 
+  @Get('debug/:id')
+  @Public()
+  async testSite(@Param('id', ParseIntPipe) id: number): Promise<any> {
+    const site = await this.sitesService.findOne(id);
+
+    return {
+      id: site?.id,
+      name: site?.name,
+      sensorId: site?.sensorId,
+      bristlemouthNodeId: site?.bristlemouthNodeId,
+      hasSeaphox: site?.hasSeaphox,
+    };
+  }
+
+  @Get('raw/:id')
+  @Public()
+  async rawTest(@Param('id') id: string) {
+    const result = await this.sitesService['sitesRepository'].query(
+      'SELECT id, name, sensor_id, bristlemouth_node_id, has_seaphox FROM site WHERE id = $1',
+      [id],
+    );
+    return result[0];
+  }
+
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Returns specified site' })
   @ApiParam({ name: 'id', example: 1 })

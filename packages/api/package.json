@@ -63,7 +63,8 @@
     "stormglass-csv": "ts-node -r dotenv/config scripts/generate-stormglass-csv.ts",
     "fill-noaa-nearest-point": "ts-node -r dotenv/config scripts/noaa-availability.ts",
     "check-video-streams": "ts-node -r dotenv/config scripts/check-video-streams.ts",
-    "reef-check": "ts-node -r dotenv/config scripts/reef-check.ts"
+    "reef-check": "ts-node -r dotenv/config scripts/reef-check.ts",
+    "spotter-worker": "ts-node -r dotenv/config scripts/spotter-update.ts"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.0.1",

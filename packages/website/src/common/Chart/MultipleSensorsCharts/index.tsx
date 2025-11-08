@@ -57,6 +57,7 @@ import {
   getPublicHuiMetrics,
 } from '../../../constants/chartConfigs/huiConfig';
 import ChartWithCard from './ChartWithCard';
+import { getSeapHOxIndividualCharts } from './seaphoxChartConfig';
 
 const MultipleSensorsCharts = ({
   site,
@@ -224,6 +225,18 @@ const MultipleSensorsCharts = ({
       getHuiConfig,
     );
 
+  const seaphoxDatasets = () => {
+    const charts = getSeapHOxIndividualCharts(timeSeriesData);
+    return charts.map((chart) => ({
+      key: chart.metric,
+      title: chart.title,
+      surveyPoint: undefined,
+      source: 'spotter' as Sources, // Changed from 'bristlemouth' to match database
+      rangeLabel: 'SeapHOx',
+      dataset: chart.datasets[0],
+    }));
+  };
+
   // post monitoring metric
   useEffect(() => {
     if (user?.token) {
@@ -286,23 +299,39 @@ const MultipleSensorsCharts = ({
       isBefore(pickerStartDate, pickerEndDate) &&
       timeSeriesDataRanges
     ) {
-      const sources: Sources[] = ['spotter', 'sonde', 'metlog', 'hui'];
-      const [spotterRanges, sondeRanges, metlogRanges, huiRanges] = sources.map(
-        (source) =>
-          getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
-            rangeOverlapWithRange(
-              x.minDate,
-              x.maxDate,
-              pickerStartDate,
-              pickerEndDate,
-            ),
+      const sources: Sources[] = [
+        'spotter',
+        'sonde',
+        'metlog',
+        'hui',
+        'bristlemouth',
+      ];
+      const [
+        spotterRanges,
+        sondeRanges,
+        metlogRanges,
+        huiRanges,
+        bristlemouthRanges,
+      ] = sources.map((source) =>
+        getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
+          rangeOverlapWithRange(
+            x.minDate,
+            x.maxDate,
+            pickerStartDate,
+            pickerEndDate,
           ),
+        ),
       );
 
       const allMetrics = [
         ...DEFAULT_METRICS,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
+        ...bristlemouthRanges.map((x) => x.metric),
+        // SeapHOx metrics are in spotterRanges (with type: 'spotter' in DB)
+        ...spotterRanges
+          .filter((x) => x.metric.startsWith('seaphox_'))
+          .map((x) => x.metric),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);
 
@@ -314,6 +343,7 @@ const MultipleSensorsCharts = ({
           sondeRanges.length > 0 && 'sonde',
           metlogRanges.length > 0 && 'metlog',
           huiRanges.length > 0 && 'hui',
+          bristlemouthRanges.length > 0 && 'bristlemouth',
         ].filter((x): x is Sources => x !== false),
       );
 
@@ -621,6 +651,7 @@ const MultipleSensorsCharts = ({
         ...sondeDatasets(),
         ...metlogDatasets(),
         ...huiDatasets(),
+        ...seaphoxDatasets(),
       ].map(({ key, title, surveyPoint, source, rangeLabel, dataset }) => (
         <Box mt={4} key={key}>
           <ChartWithCard

@@ -19,6 +19,7 @@ import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
 import { getSources, refreshMaterializedView } from './time-series.utils';
 import { Metric } from '../time-series/metrics.enum';
+import { extractSeapHoxFromSofarData, SeapHOxData } from './seaphox-decoder';
 
 const MAX_DISTANCE_FROM_SITE = 50;
 
@@ -100,7 +101,7 @@ export const addSpotterData = async (
       ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
       sensorId: Not(IsNull()),
     },
-    select: ['id', 'sensorId', 'spotterApiToken', 'polygon'],
+    select: ['id', 'sensorId', 'spotterApiToken', 'polygon', 'hasSeaphox'],
   });
 
   logger.log('Fetching sources');
@@ -131,9 +132,12 @@ export const addSpotterData = async (
   logger.log('Saving spotter data');
   await Bluebird.map(
     sites,
-    (site) =>
-      Bluebird.map(
-        times(days),
+    (site) => {
+      // Fetch 18 days for SeapHOx sites to ensure historical data from deployment
+      const daysToFetch = site.hasSeaphox ? Math.max(days, 18) : days;
+
+      return Bluebird.map(
+        times(daysToFetch),
         async (i) => {
           const startDate = DateTime.now()
             .minus({ days: i })
@@ -202,33 +206,98 @@ export const addSpotterData = async (
             ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
           ];
 
-          // Save data to time_series
-          return Promise.all(
-            spotterData
+          // Save standard spotter data to time_series
+          const spotterPromises = spotterData
+            .map((dailySpotterData) =>
+              dataLabels.map(([spotterDataLabel, metric]) =>
+                saveDataBatch(
+                  dailySpotterData[spotterDataLabel] as ValueWithTimestamp[],
+                  siteToSource[site.id],
+                  metric,
+                  repositories.timeSeriesRepository,
+                ),
+              ),
+            )
+            .flat();
+
+          // Process SeapHOx data if site has it
+          let seaphoxPromises: Promise<any>[] = [];
+
+          if (site.hasSeaphox) {
+            // Extract SeapHOx data from all daily spotter data
+            const allSeaphoxData = spotterData
               .map((dailySpotterData) =>
-                dataLabels.map(([spotterDataLabel, metric]) =>
-                  saveDataBatch(
-                    dailySpotterData[spotterDataLabel] as ValueWithTimestamp[], // We know that there would not be any undefined values here
+                extractSeapHoxFromSofarData(dailySpotterData.raw || []),
+              )
+              .flat();
+
+            if (allSeaphoxData.length > 0) {
+              logger.debug(
+                `Found ${allSeaphoxData.length} SeapHOx data points for site ${site.id}`,
+              );
+
+              // Define metrics with proper typing
+              const seaphoxMetrics: Array<[keyof SeapHOxData, Metric]> = [
+                ['temperature', Metric.SEAPHOX_TEMPERATURE],
+                ['externalPh', Metric.SEAPHOX_EXTERNAL_PH],
+                ['internalPh', Metric.SEAPHOX_INTERNAL_PH],
+                ['externalPhVolt', Metric.SEAPHOX_EXTERNAL_PH_VOLT],
+                ['internalPhVolt', Metric.SEAPHOX_INTERNAL_PH_VOLT],
+                ['phTemperature', Metric.SEAPHOX_PH_TEMPERATURE],
+                ['pressure', Metric.SEAPHOX_PRESSURE],
+                ['salinity', Metric.SEAPHOX_SALINITY],
+                ['conductivity', Metric.SEAPHOX_CONDUCTIVITY],
+                ['oxygen', Metric.SEAPHOX_OXYGEN],
+                ['relativeHumidity', Metric.SEAPHOX_RELATIVE_HUMIDITY],
+                ['sampleNumber', Metric.SEAPHOX_SAMPLE_NUMBER],
+                ['intTemperature', Metric.SEAPHOX_INT_TEMPERATURE],
+              ];
+
+              seaphoxPromises = seaphoxMetrics.map(([field, metric]) => {
+                // Filter out null values and ensure we have valid numbers
+                const values: ValueWithTimestamp[] = allSeaphoxData
+                  .filter((data) => {
+                    const value = data[field];
+                    return (
+                      value !== null &&
+                      typeof value === 'number' &&
+                      !isNaN(value)
+                    );
+                  })
+                  .map((data) => ({
+                    value: data[field] as number, // Safe cast since we filtered above
+                    timestamp: data.timestamp,
+                  }));
+
+                if (values.length > 0) {
+                  return saveDataBatch(
+                    values,
                     siteToSource[site.id],
                     metric,
                     repositories.timeSeriesRepository,
-                  ),
-                ),
-              )
-              .flat(),
-          );
+                  );
+                }
+                return Promise.resolve();
+              });
+            }
+          }
+
+          // Save both standard Spotter and SeapHOx data
+          return Promise.all([...spotterPromises, ...seaphoxPromises]);
         })
         .then(() => {
           // After each successful execution, log the event
+          const daysToFetch = site.hasSeaphox ? Math.max(days, 18) : days;
           const startDate = DateTime.now()
-            .minus({ days: days - 1 })
+            .minus({ days: daysToFetch - 1 })
             .startOf('day');
 
           const endDate = DateTime.now().endOf('day');
           logger.debug(
             `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
           );
-        }),
+        });
+    },
     { concurrency: 1 },
   );
 

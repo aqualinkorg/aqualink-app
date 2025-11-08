@@ -14,7 +14,7 @@ import arrow from '../../../assets/directioncircle.svg';
 import wind from '../../../assets/wind.svg';
 import { styles as incomingStyles } from '../styles';
 
-const Waves = ({ data, hasSpotter }: WavesProps) => {
+const Waves = ({ data }: WavesProps) => {
   const {
     significantWaveHeight,
     waveMeanDirection,
@@ -24,6 +24,14 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
   } = data;
 
   const waveHeight = significantWaveHeight;
+
+  // Check if we have actual Spotter wind/wave data (not just temperature)
+  const hasSpotterWindWaveData = Boolean(
+    windSpeed?.value ||
+      significantWaveHeight?.value ||
+      waveMeanDirection?.value ||
+      waveMeanPeriod?.value,
+  );
 
   // Make sure to get the direction the wind is COMING FROM.
   // use `numberUtils.invertDirection` if needed.
@@ -220,11 +228,11 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
           </Grid>
           <UpdateInfo
             relativeTime={windRelativeTime}
-            timeText={hasSpotter ? 'Last data received' : 'Valid'}
-            live={hasSpotter}
-            frequency={hasSpotter ? 'hourly' : 'every 6 hours'}
+            timeText={hasSpotterWindWaveData ? 'Last data received' : 'Valid'}
+            live={hasSpotterWindWaveData}
+            frequency={hasSpotterWindWaveData ? 'hourly' : 'every 6 hours'}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-            imageText={hasSpotter ? undefined : 'SOFAR MODEL'}
+            imageText={hasSpotterWindWaveData ? undefined : 'SOFAR MODEL'}
           />
         </Grid>
       </CardContent>
@@ -281,7 +289,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface WavesProps {
   data: LatestDataASSofarValue;
-  hasSpotter: boolean;
 }
 
 interface StyleProps {

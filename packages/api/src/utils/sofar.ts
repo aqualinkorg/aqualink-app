@@ -123,6 +123,7 @@ export function sofarSensor(
         startDate: start,
         endDate: end,
         token,
+        includeSmartMooringData: true,
       },
     })
     .then((response) => response.data)
@@ -376,6 +377,7 @@ export async function getSpotterData(
     surfaceTemperature: sofarSpotterSurfaceTemp,
     latitude: spotterLatitude,
     longitude: spotterLongitude,
+    raw: smartMooringData,
   };
 }
 
