@@ -22,24 +22,11 @@ const SeapHOx = ({ data, classes }: SeapHOxProps) => {
   const {
     seaphoxTemperature,
     seaphoxExternalPh,
-    seaphoxInternalPh,
     seaphoxSalinity,
     seaphoxOxygen,
     seaphoxConductivity,
     seaphoxPressure,
-    seaphoxPhTemperature,
-    seaphoxRelativeHumidity,
   } = data;
-
-  console.log('=== SEAPHOX COMPONENT DEBUG ===');
-  console.log('Full data prop:', data);
-  console.log('Data keys:', Object.keys(data || {}));
-  console.log('Temperature:', seaphoxTemperature);
-  console.log('pH:', seaphoxExternalPh);
-  console.log('Salinity:', seaphoxSalinity);
-  console.log('Oxygen:', seaphoxOxygen);
-  console.log('Conductivity:', seaphoxConductivity);
-  console.log('Pressure:', seaphoxPressure);
 
   const relativeTime =
     seaphoxTemperature?.timestamp &&

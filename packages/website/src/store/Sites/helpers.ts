@@ -365,33 +365,6 @@ export const parseLatestData = (
       !spotterTempWhitelist.has(value.metric),
   );
 
-  // ADD THIS DEBUG BLOCK
-  console.log('=== PARSE LATEST DATA DEBUG ===');
-  console.log('Total input records:', copy.length);
-  console.log('After filtering:', filtered.length);
-  const seaphoxInput = copy.filter((d) => d.metric.startsWith('seaphox_'));
-  const seaphoxFiltered = filtered.filter((d) =>
-    d.metric.startsWith('seaphox_'),
-  );
-  console.log('SeapHOx input:', seaphoxInput.length);
-  console.log('SeapHOx after filter:', seaphoxFiltered.length);
-  if (seaphoxInput.length > 0) {
-    console.log('Sample SeapHOx input:', seaphoxInput[0]);
-  }
-  if (seaphoxFiltered.length > 0) {
-    console.log('Sample SeapHOx filtered:', seaphoxFiltered[0]);
-  } else if (seaphoxInput.length > 0) {
-    console.log('⚠️ SeapHOx data was REMOVED by filter!');
-    const sample = seaphoxInput[0];
-    console.log('Timestamp:', new Date(sample.timestamp));
-    console.log('Validity date:', new Date(validityDate));
-    console.log(
-      'Is recent?:',
-      new Date(sample.timestamp).getTime() > validityDate,
-    );
-    console.log('In whitelist?:', spotterTempWhitelist.has(sample.metric));
-  }
-
   // sort data by timestamp ASCENDING but prioritize spotter data
   // eslint-disable-next-line fp/no-mutating-methods
   const sorted = filtered.sort((x, y) => {

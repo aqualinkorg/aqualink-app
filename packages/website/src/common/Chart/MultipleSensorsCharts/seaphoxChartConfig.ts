@@ -6,6 +6,8 @@
  * File: packages/website/src/common/Chart/MultipleSensorsCharts/seaphoxChartConfig.ts
  */
 
+/* eslint-disable fp/no-mutation */
+
 import { Dataset } from 'common/Chart';
 import { TimeSeriesData } from 'store/Sites/types';
 
