@@ -6,8 +6,16 @@
 import { DataSource } from 'typeorm';
 import axios from 'axios';
 
-const AQUALINK_API_BASE =
-  'https://production-dot-ocean-systems.uc.r.appspot.com/api';
+// Get backend base URL from environment variable
+const { BACKEND_BASE_URL } = process.env;
+if (!BACKEND_BASE_URL) {
+  throw new Error('BACKEND_BASE_URL environment variable is required');
+}
+
+// Ensure the URL ends with /api
+const AQUALINK_API_BASE = BACKEND_BASE_URL.endsWith('/api')
+  ? BACKEND_BASE_URL
+  : `${BACKEND_BASE_URL}/api`;
 
 interface LatestDataItem {
   id: number;

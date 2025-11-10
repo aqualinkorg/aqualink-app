@@ -10,6 +10,17 @@
  * - Remove outdated questions
  */
 
+// Get backend base URL from environment variable
+const { BACKEND_BASE_URL } = process.env;
+if (!BACKEND_BASE_URL) {
+  throw new Error('BACKEND_BASE_URL environment variable is required');
+}
+
+// Ensure the URL ends with /api
+const API_BASE_URL = BACKEND_BASE_URL.endsWith('/api')
+  ? BACKEND_BASE_URL
+  : `${BACKEND_BASE_URL}/api`;
+
 export const FAQ_KNOWLEDGE = `
 ## AQUALINK FREQUENTLY ASKED QUESTIONS
 
@@ -112,7 +123,7 @@ A: We collect temperature through two methods:
 
 2. **Spotter (Smart Buoy)**: When deployed, we collect temperature information every hour from:
    - 1 meter depth
-   - Moored depth (at the sea floor. Depth is listed in meters in this link https://production-dot-ocean-systems.uc.r.appspot.com/api/sites/{siteId} in this section: {"type":"Point","coordinates":[114.6,22.55]},"depth":5,"iframe":null,"status":"in_review","maxMonthlyMean":28.3,"timezone":"Asia/Shanghai","display":true,"createdAt":"2025-01-29T22:53:29.572Z","updatedAt":"2025-02-17T22:52:12.457Z","region":{"id":1039,"name":"China","polygon":{"type":"Point","coordinates":[121.9419,36.5171]})
+   - Moored depth (at the sea floor. Depth is listed in meters in this link ${API_BASE_URL}/sites/{siteId} in this section: {"type":"Point","coordinates":[114.6,22.55]},"depth":5,"iframe":null,"status":"in_review","maxMonthlyMean":28.3,"timezone":"Asia/Shanghai","display":true,"createdAt":"2025-01-29T22:53:29.572Z","updatedAt":"2025-02-17T22:52:12.457Z","region":{"id":1039,"name":"China","polygon":{"type":"Point","coordinates":[121.9419,36.5171]})
 
 **Priority**: Smart Buoy data is always more accurate when available, as it measures actual underwater temperature where corals live.
 

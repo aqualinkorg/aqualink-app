@@ -11,6 +11,17 @@
  * - Add new metrics or sensors
  */
 
+// Get backend base URL from environment variable
+const { BACKEND_BASE_URL } = process.env;
+if (!BACKEND_BASE_URL) {
+  throw new Error('BACKEND_BASE_URL environment variable is required');
+}
+
+// Ensure the URL ends with /api
+const API_BASE_URL = BACKEND_BASE_URL.endsWith('/api')
+  ? BACKEND_BASE_URL
+  : `${BACKEND_BASE_URL}/api`;
+
 export const DATA_GUIDE = `
 ## AQUALINK DATA SOURCES & API
 
@@ -20,7 +31,7 @@ All Aqualink data is accessible via public API. Replace {siteId} with the actual
 
 **1. Site Information**
 \`\`\`
-https://production-dot-ocean-systems.uc.r.appspot.com/api/sites/{siteId}
+${API_BASE_URL}/sites/{siteId}
 \`\`\`
 Contains:
 - Site name, location (lat/lon)
@@ -33,7 +44,7 @@ Example: \`/api/sites/8169\`
 
 **2. Daily Data (Time Series)**
 \`\`\`
-https://production-dot-ocean-systems.uc.r.appspot.com/api/sites/{siteId}/daily_data
+${API_BASE_URL}/sites/{siteId}/daily_data
 \`\`\`
 Historical time series including:
 - Satellite SST and DHW
@@ -43,7 +54,7 @@ Historical time series including:
 
 **3. Latest Data**
 \`\`\`
-https://production-dot-ocean-systems.uc.r.appspot.com/api/sites/{siteId}/latest_data
+${API_BASE_URL}/sites/{siteId}/latest_data
 \`\`\`
 Most recent readings from all sources:
 - Current SST and DHW
@@ -278,13 +289,13 @@ If Spotter readings exist with recent timestamps, data is active.
 // Example: Fetch site data
 const siteId = 8169;
 const response = await fetch(
-  \\\`https://production-dot-ocean-systems.uc.r.appspot.com/api/sites/\\\${siteId}\\\`
+  \\\`${API_BASE_URL}/sites/\\\${siteId}\\\`
 );
 const siteData = await response.json();
 
 // Example: Get time series
 const dailyData = await fetch(
-  \\\`https://production-dot-ocean-systems.uc.r.appspot.com/api/sites/\\\${siteId}/daily_data\\\`
+  \\\`${API_BASE_URL}/sites/\\\${siteId}/daily_data\\\`
 );
 const timeSeriesData = await dailyData.json();
 \`\`\`
