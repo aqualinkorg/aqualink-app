@@ -47,8 +47,16 @@ const generateInitialGreeting = async (
       return data.response;
     }
 
-    const errorText = await response.text();
-    console.error('API error:', errorText);
+    // Try to parse structured error
+    let details = 'Unknown error';
+    try {
+      const err = await response.json();
+      details = err?.details || err?.message || details;
+    } catch {
+      const errorText = await response.text();
+      details = errorText || details;
+    }
+    console.error('API error:', details);
   } catch (error) {
     console.error('Failed to generate initial greeting:', error);
   }
@@ -168,7 +176,19 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get AI response');
+        // Attempt to read structured backend error
+        let backendMessage = 'Failed to get AI response';
+        try {
+          const err = await response.json();
+          const msg = err?.message;
+          const details = err?.details;
+          backendMessage = [msg, details].filter(Boolean).join(': ');
+        } catch {
+          // Fallback to text
+          const text = await response.text();
+          if (text) backendMessage = text;
+        }
+        throw new Error(backendMessage);
       }
 
       const data = await response.json();
@@ -181,10 +201,14 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error calling AI:', error);
+      const readable =
+        error instanceof Error ? error.message : String(error);
+      console.error('Error calling AI:', readable);
       const errorMessage: Message = {
         sender: 'assistant',
-        text: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.",
+        text:
+          readable ||
+          "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.",
         id: `msg-${Date.now()}-error`,
       };
       setMessages((prev) => [...prev, errorMessage]);

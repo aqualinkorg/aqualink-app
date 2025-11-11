@@ -100,19 +100,28 @@ export class AiChatController {
 
       // Handle specific errors
       if (errorMessage.includes('Site with ID')) {
-        throw new HttpException('Site not found', HttpStatus.NOT_FOUND);
+        throw new HttpException(
+          { message: 'Site not found', details: errorMessage },
+          HttpStatus.NOT_FOUND,
+        );
       }
 
       if (errorMessage.includes('Grok API')) {
         throw new HttpException(
-          'AI service temporarily unavailable',
+          {
+            message: 'AI service temporarily unavailable',
+            details: errorMessage,
+          },
           HttpStatus.SERVICE_UNAVAILABLE,
         );
       }
 
       // Generic error
       throw new HttpException(
-        'Failed to generate AI response',
+        {
+          message: 'Failed to generate AI response',
+          details: errorMessage,
+        },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

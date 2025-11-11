@@ -123,7 +123,8 @@ export async function callGrokAPI(
 
     // Generic error
     console.error('Unexpected error calling Grok:', error);
-    throw new Error('Failed to get AI response');
+    const underlying = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to get AI response: ${underlying}`);
   }
 }
 
