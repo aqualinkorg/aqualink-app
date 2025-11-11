@@ -33,8 +33,6 @@ interface AiChatResponse {
 export class AiChatController {
   private readonly logger = new Logger(AiChatController.name);
 
-  constructor(@InjectDataSource() private dataSource: DataSource) {}
-
   @Post()
   @ApiOperation({ summary: 'Get AI assistance for coral reef monitoring' })
   @ApiResponse({
@@ -65,7 +63,7 @@ export class AiChatController {
 
     try {
       // Build site context from database
-      const siteContext = await buildSiteContext(siteId, this.dataSource);
+      const siteContext = await buildSiteContext(siteId);
 
       // Call Grok API
       const aiResponse = await callGrokAPI(
