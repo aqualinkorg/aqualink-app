@@ -33,6 +33,8 @@ interface AiChatResponse {
 export class AiChatController {
   private readonly logger = new Logger(AiChatController.name);
 
+  constructor(@InjectDataSource() private dataSource: DataSource) {}
+
   @Post()
   @ApiOperation({ summary: 'Get AI assistance for coral reef monitoring' })
   @ApiResponse({
