@@ -3,7 +3,6 @@
  * Fetches data from API endpoints and formats with exact values
  */
 
-import { DataSource } from 'typeorm';
 import axios from 'axios';
 
 // Get backend base URL from environment variable
@@ -86,11 +85,15 @@ function calculateTrend(dailyData: DailyDataItem[]): string {
 /**
  * Main function to build site context
  */
-export async function buildSiteContext(
-  siteId: number,
-  dataSource: DataSource,
-): Promise<string> {
+export async function buildSiteContext(siteId: number): Promise<string> {
   try {
+    // Helper to safely format numbers
+    const formatNumber = (value: number | undefined, decimals = 2): string => {
+      return typeof value === 'number' && Number.isFinite(value)
+        ? value.toFixed(decimals)
+        : 'Unknown';
+    };
+
     // Fetch data from Aqualink API endpoints
     const [siteResponse, latestDataResponse, dailyDataResponse] =
       await Promise.all([
@@ -99,10 +102,10 @@ export async function buildSiteContext(
         axios.get(`${AQUALINK_API_BASE}/sites/${siteId}/daily_data`),
       ]);
 
-    const siteData: SiteData = siteResponse.data;
-    const latestData: { latestData: LatestDataItem[] } =
-      latestDataResponse.data;
-    const dailyData: DailyDataItem[] = dailyDataResponse.data;
+    const { data: siteData }: { data: SiteData } = siteResponse;
+    const { data: latestData }: { data: { latestData: LatestDataItem[] } } =
+      latestDataResponse;
+    const { data: dailyData }: { data: DailyDataItem[] } = dailyDataResponse;
 
     // Extract metrics from latest_data
     const metrics = extractMetrics(latestData.latestData);
@@ -112,17 +115,25 @@ export async function buildSiteContext(
     const lon = siteData.polygon?.coordinates[0]?.toFixed(4) || 'Unknown';
 
     // Calculate values with exact precision
-    const temp = metrics.satellite_temperature;
+    const temp = (metrics as Record<string, number>).satellite_temperature;
+    const anomaly = (metrics as Record<string, number>).sst_anomaly;
+    const { dhw } = metrics as { dhw?: number };
     const mmm = siteData.maxMonthlyMean;
-    const anomaly = metrics.sst_anomaly;
-    const dhw = metrics.dhw;
-    const tempDiff = temp - mmm;
-    const tempDiffFormatted =
-      tempDiff > 0 ? `+${tempDiff.toFixed(2)}` : tempDiff.toFixed(2);
+    const tempDiff =
+      typeof temp === 'number' && typeof mmm === 'number'
+        ? temp - mmm
+        : undefined;
+    const tempDiffFormatted = (() => {
+      if (typeof tempDiff !== 'number') return 'Unknown';
+      return tempDiff > 0 ? `+${tempDiff.toFixed(2)}` : tempDiff.toFixed(2);
+    })();
+    const tempVs = (() => {
+      if (typeof tempDiff !== 'number') return 'UNKNOWN';
+      return tempDiff > 0 ? 'ABOVE' : 'BELOW';
+    })();
 
     // Get Degree Heating Days from daily_data (most recent day)
-    const degreeHeatingDays =
-      dailyData && dailyData.length > 0 ? dailyData[0].degreeHeatingDays : 0;
+    const { degreeHeatingDays = 0 } = dailyData?.[0] ?? {};
 
     // Calculate trend from daily data
     const trend = calculateTrend(dailyData);
@@ -137,17 +148,19 @@ export async function buildSiteContext(
     };
 
     const weeklyAlertName =
-      alertLevelNames[metrics.temp_weekly_alert] || 'Unknown';
-    const dailyAlertName = alertLevelNames[metrics.temp_alert] || 'Unknown';
+      alertLevelNames[Number(metrics.temp_weekly_alert)] || 'Unknown';
+    const dailyAlertName =
+      alertLevelNames[Number(metrics.temp_alert)] || 'Unknown';
 
     // Bleaching likelihood based on DHW
-    let bleachingLikelihood = 'low';
-    if (dhw >= 4) bleachingLikelihood = 'very high - severe bleaching likely';
-    else if (dhw >= 3)
-      bleachingLikelihood = 'high - significant bleaching likely';
-    else if (dhw >= 2) bleachingLikelihood = 'moderate - bleaching possible';
-    else if (dhw >= 1)
-      bleachingLikelihood = 'low - bleaching unlikely but watch closely';
+    const bleachingLikelihood = (() => {
+      if (typeof dhw !== 'number') return 'unknown';
+      if (dhw >= 4) return 'very high - severe bleaching likely';
+      if (dhw >= 3) return 'high - significant bleaching likely';
+      if (dhw >= 2) return 'moderate - bleaching possible';
+      if (dhw >= 1) return 'low - bleaching unlikely but watch closely';
+      return 'low';
+    })();
 
     // Check for Spotter/Smart Buoy
     const hasSpotter =
@@ -175,23 +188,29 @@ export async function buildSiteContext(
 ## CURRENT REEF METRICS (as of ${currentDate})
 
 ### Temperature Data
-- **Sea Surface Temperature (SST)**: ${temp.toFixed(2)}°C
-- **Historical Maximum (MMM)**: ${mmm.toFixed(2)}°C
+- **Sea Surface Temperature (SST)**: ${formatNumber(temp)}°C
+- **Historical Maximum (MMM)**: ${formatNumber(mmm)}°C
 - **Temperature Difference from MMM**: ${tempDiffFormatted}°C
-- **SST Anomaly**: ${anomaly > 0 ? '+' : ''}${anomaly.toFixed(2)}°C
+ - **SST Anomaly**: ${
+   typeof anomaly === 'number'
+     ? `${anomaly > 0 ? '+' : ''}${anomaly.toFixed(2)}`
+     : 'Unknown'
+ }°C
 - **7-Day Trend**: ${trend}
 
 ### Heat Stress Metrics
-- **Degree Heating Weeks (DHW)**: ${dhw.toFixed(2)}
+- **Degree Heating Weeks (DHW)**: ${formatNumber(dhw)}
 - **Degree Heating Days**: ${degreeHeatingDays.toFixed(0)}
 - **Accumulated Stress**: ${bleachingLikelihood}
 
 ### Alert Levels
 - **Weekly Alert Level**: ${
-      metrics.temp_weekly_alert
+      typeof metrics.temp_weekly_alert === 'number'
+        ? metrics.temp_weekly_alert
+        : 'Unknown'
     } (${weeklyAlertName}) ← PRIMARY - Use this for dashboard display
 - **Daily Alert Level**: ${
-      metrics.temp_alert
+      typeof metrics.temp_alert === 'number' ? metrics.temp_alert : 'Unknown'
     } (${dailyAlertName}) ← Can mention as additional context
 
 **IMPORTANT**: 
@@ -211,9 +230,9 @@ ${dailyData
   .slice(0, 90)
   .map(
     (day) =>
-      `- ${day.date.split('T')[0]}: ${day.satelliteTemperature.toFixed(
-        2,
-      )}°C, DHW: ${(day.degreeHeatingDays / 7).toFixed(2)}, Weekly Alert: ${
+      `- ${day.date.split('T')[0]}: ${formatNumber(
+        day.satelliteTemperature,
+      )}°C, DHW: ${formatNumber(day.degreeHeatingDays / 7)}, Weekly Alert: ${
         day.weeklyAlertLevel
       }`,
   )
@@ -246,10 +265,10 @@ ${
 ✅ **NO GUESSING**: If you don't see a value in the CURRENT REEF METRICS section above, you MUST NOT make one up
 
 ## CONTEXT FOR AI INTERPRETATION
-- **Current DHW of ${dhw.toFixed(2)}** means: ${bleachingLikelihood}
-- **Temperature is ${
-      tempDiff > 0 ? 'ABOVE' : 'BELOW'
-    } historical maximum** by ${Math.abs(tempDiff).toFixed(2)}°C
+- **Current DHW of ${formatNumber(dhw)}** means: ${bleachingLikelihood}
+- **Temperature is ${tempVs} historical maximum** by ${
+      typeof tempDiff === 'number' ? Math.abs(tempDiff).toFixed(2) : 'Unknown'
+    }°C
 - **Trend**: Temperature is ${trend} over the past 7 days
 - This is a **${
       hasSpotter
