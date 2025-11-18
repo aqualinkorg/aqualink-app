@@ -26,12 +26,20 @@ const Waves = ({ data }: WavesProps) => {
   const waveHeight = significantWaveHeight;
 
   // Check if we have actual Spotter wind/wave data (not just temperature)
-  const hasSpotterWindWaveData = Boolean(
-    windSpeed?.value ||
-      significantWaveHeight?.value ||
-      waveMeanDirection?.value ||
-      waveMeanPeriod?.value,
-  );
+  // Spotter data is updated hourly, model data every 6+ hours
+  const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+  const now = Date.now();
+
+  const hasRecentWindData = windSpeed?.timestamp
+    ? now - new Date(windSpeed.timestamp).getTime() < spotterValidityLimit
+    : false;
+
+  const hasRecentWaveData = significantWaveHeight?.timestamp
+    ? now - new Date(significantWaveHeight.timestamp).getTime() <
+      spotterValidityLimit
+    : false;
+
+  const hasSpotterWindWaveData = hasRecentWindData || hasRecentWaveData;
 
   // Make sure to get the direction the wind is COMING FROM.
   // use `numberUtils.invertDirection` if needed.
@@ -42,8 +50,10 @@ const Waves = ({ data }: WavesProps) => {
     wavesDirection: waveDirectionFrom,
   });
 
-  const windRelativeTime =
-    windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp);
+  const windRelativeTime = hasSpotterWindWaveData
+    ? windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp)
+    : significantWaveHeight?.timestamp &&
+      toRelativeTime(significantWaveHeight.timestamp);
 
   return (
     <Card className={classes.root}>

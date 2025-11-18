@@ -345,17 +345,10 @@ export const parseLatestData = (
     'barometric_pressure_top_diff',
     'seaphox_temperature',
     'seaphox_external_ph',
-    'seaphox_internal_ph',
-    'seaphox_salinity',
     'seaphox_pressure',
+    'seaphox_salinity',
     'seaphox_conductivity',
     'seaphox_oxygen',
-    'seaphox_relative_humidity',
-    'seaphox_sample_number',
-    'seaphox_ph_temperature',
-    'seaphox_external_ph_volt',
-    'seaphox_internal_ph_volt',
-    'seaphox_int_temperature',
   ]);
 
   const filtered = copy.filter(

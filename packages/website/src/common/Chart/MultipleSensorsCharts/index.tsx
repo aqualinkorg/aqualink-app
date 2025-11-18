@@ -12,6 +12,7 @@ import {
   SONDE_DATA_COLOR,
   SPOTTER_METRIC_DATA_COLOR,
   HUI_DATA_COLOR,
+  SEAPHOX_DATA_COLOR,
 } from 'constants/charts';
 import {
   siteGranularDailyDataSelector,
@@ -44,6 +45,10 @@ import { DateTime } from 'luxon-extensions';
 import { userInfoSelector } from 'store/User/userSlice';
 import monitoringServices from 'services/monitoringServices';
 import {
+  getPublicSeapHOxMetrics,
+  getSeapHOxConfig,
+} from 'constants/chartConfigs/seaphoxConfig';
+import {
   constructOceanSenseDatasets,
   findChartWidth,
   generateMetricDataset,
@@ -57,7 +62,6 @@ import {
   getPublicHuiMetrics,
 } from '../../../constants/chartConfigs/huiConfig';
 import ChartWithCard from './ChartWithCard';
-import { getSeapHOxIndividualCharts } from './seaphoxChartConfig';
 
 const MultipleSensorsCharts = ({
   site,
@@ -105,6 +109,11 @@ const MultipleSensorsCharts = ({
 
   const hasHuiData = availableSources.includes('hui');
 
+  const hasSeapHOxData = Boolean(
+    timeSeriesData &&
+      Object.keys(timeSeriesData).some((key) => key.startsWith('seaphox')),
+  );
+
   const chartStartDate =
     startDate || DateTime.fromISO(today).minus({ weeks: 1 }).toISOString();
   const now = DateTime.now();
@@ -124,6 +133,7 @@ const MultipleSensorsCharts = ({
     granularDailyData,
     timeSeriesData?.bottomTemperature?.find((x) => x.type === 'spotter')?.data,
     timeSeriesData?.topTemperature?.find((x) => x.type === 'spotter')?.data,
+    timeSeriesData?.seaphoxTemperature?.[0]?.data,
     hoboBottomTemperatureSensors,
     site.historicalMonthlyMean,
     startDate,
@@ -225,17 +235,16 @@ const MultipleSensorsCharts = ({
       getHuiConfig,
     );
 
-  const seaphoxDatasets = () => {
-    const charts = getSeapHOxIndividualCharts(timeSeriesData);
-    return charts.map((chart) => ({
-      key: chart.metric,
-      title: chart.title,
-      surveyPoint: undefined,
-      source: 'spotter' as Sources, // Changed from 'bristlemouth' to match database
-      rangeLabel: 'SeapHOx',
-      dataset: chart.datasets[0],
-    }));
-  };
+  const seaphoxDatasets = () =>
+    getDatesetFun(
+      hasSeapHOxData,
+      SEAPHOX_DATA_COLOR,
+      'spotter',
+      'seaphox',
+      'seaphox',
+      getPublicSeapHOxMetrics,
+      getSeapHOxConfig,
+    );
 
   // post monitoring metric
   useEffect(() => {
@@ -299,35 +308,23 @@ const MultipleSensorsCharts = ({
       isBefore(pickerStartDate, pickerEndDate) &&
       timeSeriesDataRanges
     ) {
-      const sources: Sources[] = [
-        'spotter',
-        'sonde',
-        'metlog',
-        'hui',
-        'bristlemouth',
-      ];
-      const [
-        spotterRanges,
-        sondeRanges,
-        metlogRanges,
-        huiRanges,
-        bristlemouthRanges,
-      ] = sources.map((source) =>
-        getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
-          rangeOverlapWithRange(
-            x.minDate,
-            x.maxDate,
-            pickerStartDate,
-            pickerEndDate,
+      const sources: Sources[] = ['spotter', 'sonde', 'metlog', 'hui'];
+      const [spotterRanges, sondeRanges, metlogRanges, huiRanges] = sources.map(
+        (source) =>
+          getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
+            rangeOverlapWithRange(
+              x.minDate,
+              x.maxDate,
+              pickerStartDate,
+              pickerEndDate,
+            ),
           ),
-        ),
       );
 
       const allMetrics = [
         ...DEFAULT_METRICS,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
-        ...bristlemouthRanges.map((x) => x.metric),
         // SeapHOx metrics are in spotterRanges (with type: 'spotter' in DB)
         ...spotterRanges
           .filter((x) => x.metric.startsWith('seaphox_'))
@@ -343,7 +340,6 @@ const MultipleSensorsCharts = ({
           sondeRanges.length > 0 && 'sonde',
           metlogRanges.length > 0 && 'metlog',
           huiRanges.length > 0 && 'hui',
-          bristlemouthRanges.length > 0 && 'bristlemouth',
         ].filter((x): x is Sources => x !== false),
       );
 

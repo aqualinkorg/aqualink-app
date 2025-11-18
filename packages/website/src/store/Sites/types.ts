@@ -96,18 +96,10 @@ export const metricsKeysList = [
   'surface_temperature',
   'seaphox_temperature',
   'seaphox_external_ph',
-  'seaphox_internal_ph',
-  'seaphox_external_ph_volt',
-  'seaphox_internal_ph_volt',
-  'seaphox_ph_temperature',
   'seaphox_pressure',
   'seaphox_salinity',
   'seaphox_conductivity',
   'seaphox_oxygen',
-  'seaphox_relative_humidity',
-  'seaphox_sample_number',
-  'seaphox_error_flags',
-  'seaphox_int_temperature',
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];

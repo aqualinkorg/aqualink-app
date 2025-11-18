@@ -1,19 +1,5 @@
 /**
- * SeapHOx Hex Decoder (Aligned with Bristlemouth Explorer)
- * Matches the stringToStruct approach from Bristlemouth Explorer
- *
- * Input format:
- * "535350484f5830313035302c323032352d31302d31375432303a30393a30382c202031313739312c20303030302c..."
- *
- * Output format:
- * {
- *   name: "SSPHOX01050",
- *   dateTime: "2025-10-17T20:09:08",
- *   sampleNumber: "11791",
- *   errorFlags: "0000",
- *   temperature: "27.2112",
- *   ...
- * }
+ * SeapHOx Hex Decoder
  */
 
 interface SeapHOxRawData {
@@ -146,7 +132,7 @@ export function seapHOxToLatestData(
   metadata?: Record<string, any>;
 }> {
   const timestamp = decoded.dateTime;
-  const source = 'bristlemouth';
+  const source = 'spotter';
 
   return [
     {
@@ -250,22 +236,3 @@ export function seapHOxToLatestData(
     },
   ];
 }
-
-/**
- * Example usage:
- *
- * const hexData = "535350484f5830313035302c323032352d31302d31375432303a30393a30382c202031313739312c20303030302c2032372e323131322c372e393735312c372e393936302c2d302e3937383237362c2d312e3032383432332c2032372e323330332c20202032342e3530302c202033352e303734322c2020352e35353038302c2020342e3631372c2034342e392c32372e330d320d";
- *
- * const decoded = decodeSeapHOxHex(hexData);
- * console.log(decoded);
- * // {
- * //   name: "SSPHOX01050",
- * //   dateTime: "2025-10-17T20:09:08",
- * //   temperature: 27.2112,
- * //   externalPh: 7.9751,
- * //   ...
- * // }
- *
- * const latestDataEntries = seapHOxToLatestData(decoded, 123, "0x3fe044d4a9e8f229");
- * // Store in database
- */

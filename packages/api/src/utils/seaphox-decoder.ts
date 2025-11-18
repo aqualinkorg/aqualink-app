@@ -1,14 +1,6 @@
 /**
  * SeapHOx Data Decoder
- *
- * Decodes hex-encoded SeapHOx data from Sofar API and extracts measurements.
- * Based on SeapHOx V2 manual specification and working decoder implementation.
- *
- * SeapHOx OutputFormat=1 (decimal format, engineering units):
- * FrameSync, DateTime(UTC), Sample Number, Error Flags,
- * Temperature(Celsius), External pH(pH), Internal pH(pH), External pH(Volt),
- * Internal pH(Volt), pH Temperature(Celsius), Pressure(Decibar), Salinity(psu),
- * Conductivity(S/m), Oxygen(ml/L), Relative Humidity(%), Int Temperature(Celsius)
+ * Decodes hex-encoded SeapHOx data from Sofar API
  *
  * Example:
  * "SSPHOX01050,2025-10-20T13:49:08, 11988, 0000, 26.9476,7.9640,7.9808,-0.979159,-1.029476, 26.9785,   24.609,   34.9964,   5.51207,   4.392, 45.0,27.1"
@@ -142,35 +134,4 @@ export function extractSeapHoxFromSofarData(sofarData: any[]): SeapHOxData[] {
   }
 
   return seaphoxDataPoints;
-}
-
-/**
- * Test function - remove this after testing
- */
-export function testSeapHoxDecoder() {
-  // Your actual data from the raw API response
-  const testHex =
-    '535350484f5830313035302c323032352d31302d32305431333a34393a30382c202031313938382c20303030302c2032362e393437362c372e393634302c372e393830382c2d302e3937393135392c2d312e3032393437362c2032362e393738352c202020322c362e3630392c202033342e393936342c2020352e35313230372c2020342e3339322c2034352e302c32372e31';
-
-  const result = parseSeapHoxData(testHex);
-  console.log('Test result:', result);
-
-  // Expected output:
-  // {
-  //   timestamp: '2025-10-20T13:49:08',
-  //   sampleNumber: 11988,
-  //   errorFlags: '0000',
-  //   temperature: 26.9476,
-  //   externalPh: 7.9640,
-  //   internalPh: 7.9808,
-  //   externalPhVolt: -0.979159,
-  //   internalPhVolt: -1.029476,
-  //   phTemperature: 26.9785,
-  //   pressure: 24.609,
-  //   salinity: 34.9964,
-  //   oxygen: 5.51207,
-  //   conductivity: 4.392,
-  //   relativeHumidity: 45.0,
-  //   intTemperature: 27.1
-  // }
 }

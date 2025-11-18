@@ -16,7 +16,7 @@ import { toRelativeTime } from '../../../helpers/dates';
 import UpdateInfo from '../../UpdateInfo';
 import { styles as incomingStyles } from '../styles';
 
-const SEAPHOX_PURPLE = '#6B46C1';
+const SEAPHOX_DARK_BLUE = '#23225b';
 
 interface SeapHOxCardProps {
   depth: number | null;
@@ -238,7 +238,7 @@ const styles = () =>
       height: '100%',
       display: 'flex',
       flexDirection: 'column',
-      backgroundColor: SEAPHOX_PURPLE,
+      backgroundColor: SEAPHOX_DARK_BLUE,
       color: 'white',
     },
     content: {

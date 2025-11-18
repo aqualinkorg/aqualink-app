@@ -68,7 +68,6 @@ export class SitesController {
     return this.sitesService.find(filterSiteDto);
   }
 
-  @Get('debug/:id')
   @Public()
   async testSite(@Param('id', ParseIntPipe) id: number): Promise<any> {
     const site = await this.sitesService.findOne(id);
@@ -82,7 +81,6 @@ export class SitesController {
     };
   }
 
-  @Get('raw/:id')
   @Public()
   async rawTest(@Param('id') id: string) {
     const result = await this.sitesService['sitesRepository'].query(

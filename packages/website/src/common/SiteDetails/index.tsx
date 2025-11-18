@@ -43,7 +43,6 @@ import Waves from './Waves';
 import OceanSenseMetrics from './OceanSenseMetrics';
 import Surveys from './Surveys';
 import CardWithTitle from './CardWithTitle';
-// import SeapHOx from './SeapHOx/index';
 import { Value } from './CardWithTitle/types';
 import CombinedCharts from '../Chart/CombinedCharts';
 import WaterSamplingCard from './WaterSampling';
@@ -226,7 +225,6 @@ const SiteDetails = ({
 
           // CARD 3: SeapHOx (priority) or WaterSampling/CoralBleaching (fallback)
           (() => {
-            // PRIORITY: Show SeapHOx if data available
             if (hasSeapHOxData) {
               return (
                 <SeapHOxCard

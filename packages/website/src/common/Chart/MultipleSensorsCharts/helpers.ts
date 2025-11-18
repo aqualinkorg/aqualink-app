@@ -212,6 +212,7 @@ export const generateTempAnalysisDatasets = (
   dailyData?: DailyData[],
   spotterBottom?: ValueWithTimestamp[],
   spotterTop?: ValueWithTimestamp[],
+  seaphoxTemp?: ValueWithTimestamp[],
   hoboBottom?: TimeSeries,
   historicalMonthlyMean?: HistoricalMonthlyMean[],
   startDate?: string,
@@ -241,22 +242,26 @@ export const generateTempAnalysisDatasets = (
     localDailyData,
     localSpotterBottomData,
     localSpotterTopData,
+    localSeaphoxTempData,
     ...localHoboBottomData
   ] = [
     processedDailyData,
     spotterBottom,
     spotterTop,
+    seaphoxTemp,
     ...(hoboBottom?.map((x) => x.data) || []),
   ].map(convertSofarDataToLocalTime(timezone));
 
   const [
     hasEnoughSpotterBottomData,
     hasEnoughSpotterTopData,
+    hasEnoughSeaphoxTempData,
     hasEnoughDailyData,
     ...hasEnoughHoboBottomData
   ] = [
     localSpotterBottomData,
     localSpotterTopData,
+    localSeaphoxTempData,
     localDailyData,
     ...localHoboBottomData,
   ]
@@ -324,6 +329,19 @@ export const generateTempAnalysisDatasets = (
       displayData: hasEnoughSpotterBottomData,
       displayCardColumn: hasEnoughSpotterBottomData,
       metric: 'bottomTemperature',
+      source: 'spotter',
+    },
+    {
+      label: 'SEAPHOX',
+      data: localSeaphoxTempData,
+      curveColor: '#6B46C1',
+      type: 'line',
+      unit: '°C',
+      maxHoursGap: 24,
+      tooltipMaxHoursGap: 6,
+      displayData: hasEnoughSeaphoxTempData,
+      displayCardColumn: hasEnoughSeaphoxTempData,
+      metric: 'seaphoxTemperature',
       source: 'spotter',
     },
     ...(hoboBottom?.map((item, index) => {

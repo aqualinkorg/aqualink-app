@@ -5,9 +5,7 @@ import { isUndefined, omitBy } from 'lodash';
 const instance = axios.create({
   baseURL:
     process.env.REACT_APP_API_BASE_URL ||
-    // use a default for cloudflare workers as it doesn't have process.env
-    process.env.REACT_APP_API_URL ||
-    'http://localhost:8080/api',
+    'https://programize-dot-ocean-systems.uc.r.appspot.com/api',
   headers: {
     Accept: 'application/json, text/html',
     crossDomain: true,

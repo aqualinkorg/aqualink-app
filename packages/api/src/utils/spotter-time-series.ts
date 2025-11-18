@@ -249,8 +249,8 @@ export const addSpotterData = async (
                 ['conductivity', Metric.SEAPHOX_CONDUCTIVITY],
                 ['oxygen', Metric.SEAPHOX_OXYGEN],
                 ['relativeHumidity', Metric.SEAPHOX_RELATIVE_HUMIDITY],
-                ['sampleNumber', Metric.SEAPHOX_SAMPLE_NUMBER],
                 ['intTemperature', Metric.SEAPHOX_INT_TEMPERATURE],
+                ['sampleNumber', Metric.SEAPHOX_SAMPLE_NUMBER],
               ];
 
               seaphoxPromises = seaphoxMetrics.map(([field, metric]) => {
@@ -287,7 +287,7 @@ export const addSpotterData = async (
         })
         .then(() => {
           // After each successful execution, log the event
-          const daysToFetch = site.hasSeaphox ? Math.max(days, 18) : days;
+          const daysToFetch = site.hasSeaphox ? Math.max(days, 30) : days;
           const startDate = DateTime.now()
             .minus({ days: daysToFetch - 1 })
             .startOf('day');
