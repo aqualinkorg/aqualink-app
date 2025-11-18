@@ -5,6 +5,7 @@
 
 import { Dataset } from 'common/Chart';
 import { TimeSeriesData } from 'store/Sites/types';
+
 const SEAPHOX_ORANGE = '#FF8C00';
 
 /**

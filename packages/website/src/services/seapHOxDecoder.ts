@@ -44,8 +44,8 @@ interface SeapHOxData {
  * Removes trailing null bytes (padding) from hex string
  */
 function removePadding(hexString: string): string {
-  let cleaned = hexString;
-  while (cleaned.endsWith('00')) {
+  const cleaned = hexString;
+  if (cleaned.endsWith('00')) {
     return removePadding(cleaned.slice(0, -2));
   }
   return cleaned;
