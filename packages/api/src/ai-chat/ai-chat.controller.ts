@@ -65,7 +65,7 @@ export class AiChatController {
 
     try {
       // Build site context from database
-      const siteContext = await buildSiteContext(siteId);
+      const siteContext = await buildSiteContext(siteId, this.dataSource);
 
       // Call Grok API
       const aiResponse = await callGrokAPI(

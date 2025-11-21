@@ -179,7 +179,7 @@ Document what's actually happening below the surface. Visual observations **brin
 **Reef Check Surveys**:
 - For in-depth standardized analysis
 - Includes reef composition, species, bleaching, disease, and human impacts
-- Automatically uploaded to your dashboard
+- Automatically uploaded to your dashboard from Reef Check HQ
 - Creates the most comprehensive view possible
 
 **The Power of Three**: By combining satellite context, sensor precision, and visual confirmation, Aqualink provides the most complete picture of reef health available.
@@ -343,6 +343,7 @@ A: There are two types of surveys on Aqualink:
 - Automatically linked to satellite temperature data
 - Show up as clickable circles in temperature graphs
 - Perfect for frequent monitoring and emergency response
+- Can be uploaded on the Aqualink dashboard
 
 **Reef Check Surveys**:
 - Comprehensive, standardized, formal monitoring
@@ -350,6 +351,7 @@ A: There are two types of surveys on Aqualink:
 - Requires Reef Check diver certification: https://www.reefcheck.org/tropical-program/courses-products/
 - Data syncs with global Reef Check database
 - Used for scientific studies and formal assessments
+- Has to be sent for processing to Reef Check HQ before it's sent over to the Aqualink platform
 
 **Both are valuable**: Use Reef Check for formal assessments, Aqualink surveys for frequent updates!
 

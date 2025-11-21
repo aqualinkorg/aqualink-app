@@ -1,24 +1,11 @@
-/**
- * Build site context from Aqualink database for AI assistant
- * Fetches data from API endpoints and formats with exact values
- */
-
-import axios from 'axios';
-
-// Get backend base URL from environment variable
-const { BACKEND_BASE_URL } = process.env;
-if (!BACKEND_BASE_URL) {
-  throw new Error('BACKEND_BASE_URL environment variable is required');
-}
-
-// Ensure the URL ends with /api
-const AQUALINK_API_BASE = BACKEND_BASE_URL.endsWith('/api')
-  ? BACKEND_BASE_URL
-  : `${BACKEND_BASE_URL}/api`;
+import { DataSource } from 'typeorm';
+import { Site } from '../sites/sites.entity';
+import { DailyData } from '../sites/daily-data.entity';
+import { LatestData } from '../time-series/latest-data.entity';
 
 interface LatestDataItem {
   id: number;
-  timestamp: string;
+  timestamp: Date; // Changed from string to Date
   value: number;
   source: string;
   metric: string;
@@ -26,29 +13,11 @@ interface LatestDataItem {
 }
 
 interface DailyDataItem {
-  date: string;
-  satelliteTemperature: number;
-  degreeHeatingDays: number;
+  date: Date; // Changed from string to Date
+  satelliteTemperature: number | null;
+  degreeHeatingDays: number | null;
   dailyAlertLevel: number;
   weeklyAlertLevel: number;
-}
-
-interface SiteData {
-  id: number;
-  name: string;
-  maxMonthlyMean: number;
-  region?: { name: string };
-  polygon?: { coordinates: [number, number] };
-  depth?: number | null;
-  sensorId?: string | null;
-  reefCheckSurveys?: any[];
-  collectionData?: {
-    tempAlert: number;
-    tempWeeklyAlert: number;
-    dhw: number;
-    satelliteTemperature: number;
-    sstAnomaly: number;
-  };
 }
 
 /**
@@ -56,11 +25,9 @@ interface SiteData {
  */
 function extractMetrics(latestData: LatestDataItem[]): Record<string, number> {
   const metrics: Record<string, number> = {};
-
   latestData.forEach((item) => {
     metrics[item.metric] = item.value;
   });
-
   return metrics;
 }
 
@@ -69,14 +36,11 @@ function extractMetrics(latestData: LatestDataItem[]): Record<string, number> {
  */
 function calculateTrend(dailyData: DailyDataItem[]): string {
   if (!dailyData || dailyData.length < 7) return 'stable';
-
-  // Get last 7 days (already sorted newest first)
   const recent = dailyData.slice(0, 7);
   const oldest = recent[recent.length - 1].satelliteTemperature;
   const newest = recent[0].satelliteTemperature;
-
+  if (!oldest || !newest) return 'stable';
   const change = newest - oldest;
-
   if (change > 0.3) return 'increasing';
   if (change < -0.3) return 'cooling';
   return 'stable';
@@ -85,40 +49,66 @@ function calculateTrend(dailyData: DailyDataItem[]): string {
 /**
  * Main function to build site context
  */
-export async function buildSiteContext(siteId: number): Promise<string> {
+export async function buildSiteContext(
+  siteId: number,
+  dataSource: DataSource,
+): Promise<string> {
   try {
     // Helper to safely format numbers
-    const formatNumber = (value: number | undefined, decimals = 2): string => {
+    const formatNumber = (
+      value: number | null | undefined,
+      decimals = 2,
+    ): string => {
       return typeof value === 'number' && Number.isFinite(value)
         ? value.toFixed(decimals)
         : 'Unknown';
     };
 
-    // Fetch data from Aqualink API endpoints
-    const [siteResponse, latestDataResponse, dailyDataResponse] =
-      await Promise.all([
-        axios.get(`${AQUALINK_API_BASE}/sites/${siteId}`),
-        axios.get(`${AQUALINK_API_BASE}/sites/${siteId}/latest_data`),
-        axios.get(`${AQUALINK_API_BASE}/sites/${siteId}/daily_data`),
-      ]);
+    // Query database directly using TypeORM
+    const siteRepository = dataSource.getRepository(Site);
+    const dailyDataRepository = dataSource.getRepository(DailyData);
+    const latestDataRepository = dataSource.getRepository(LatestData);
 
-    const { data: siteData }: { data: SiteData } = siteResponse;
-    const { data: latestData }: { data: { latestData: LatestDataItem[] } } =
-      latestDataResponse;
-    const { data: dailyData }: { data: DailyDataItem[] } = dailyDataResponse;
+    const [siteData, latestDataArray, dailyData] = await Promise.all([
+      siteRepository.findOne({
+        where: { id: siteId },
+        relations: ['region'],
+      }),
+      latestDataRepository.find({
+        where: { site: { id: siteId } },
+      }),
+      dailyDataRepository.find({
+        where: { site: { id: siteId } },
+        order: { date: 'DESC' },
+        take: 90,
+      }),
+    ]);
+
+    if (!siteData) {
+      throw new Error(`Site with ID ${siteId} not found`);
+    }
+
+    // Transform latestData to match expected structure
+    const latestData = { latestData: latestDataArray };
 
     // Extract metrics from latest_data
     const metrics = extractMetrics(latestData.latestData);
 
-    // Extract coordinates
-    const lat = siteData.polygon?.coordinates[1]?.toFixed(4) || 'Unknown';
-    const lon = siteData.polygon?.coordinates[0]?.toFixed(4) || 'Unknown';
+    // Extract coordinates (handle Point type)
+    const lat =
+      siteData.polygon?.type === 'Point'
+        ? siteData.polygon.coordinates[1]?.toFixed(4)
+        : 'Unknown';
+    const lon =
+      siteData.polygon?.type === 'Point'
+        ? siteData.polygon.coordinates[0]?.toFixed(4)
+        : 'Unknown';
 
     // Calculate values with exact precision
-    const temp = (metrics as Record<string, number>).satellite_temperature;
-    const anomaly = (metrics as Record<string, number>).sst_anomaly;
-    const { dhw } = metrics as { dhw?: number };
-    const mmm = siteData.maxMonthlyMean;
+    const temp = metrics.satellite_temperature;
+    const anomaly = metrics.sst_anomaly;
+    const { dhw } = metrics;
+    const mmm = siteData.maxMonthlyMean ?? undefined;
     const tempDiff =
       typeof temp === 'number' && typeof mmm === 'number'
         ? temp - mmm
@@ -133,10 +123,10 @@ export async function buildSiteContext(siteId: number): Promise<string> {
     })();
 
     // Get Degree Heating Days from daily_data (most recent day)
-    const { degreeHeatingDays = 0 } = dailyData?.[0] ?? {};
+    const degreeHeatingDays = dailyData?.[0]?.degreeHeatingDays ?? 0;
 
     // Calculate trend from daily data
-    const trend = calculateTrend(dailyData);
+    const trend = calculateTrend(dailyData as DailyDataItem[]);
 
     // Alert level names
     const alertLevelNames: Record<number, string> = {
@@ -191,16 +181,16 @@ export async function buildSiteContext(siteId: number): Promise<string> {
 - **Sea Surface Temperature (SST)**: ${formatNumber(temp)}°C
 - **Historical Maximum (MMM)**: ${formatNumber(mmm)}°C
 - **Temperature Difference from MMM**: ${tempDiffFormatted}°C
- - **SST Anomaly**: ${
-   typeof anomaly === 'number'
-     ? `${anomaly > 0 ? '+' : ''}${anomaly.toFixed(2)}`
-     : 'Unknown'
- }°C
+- **SST Anomaly**: ${
+      typeof anomaly === 'number'
+        ? `${anomaly > 0 ? '+' : ''}${anomaly.toFixed(2)}`
+        : 'Unknown'
+    }°C
 - **7-Day Trend**: ${trend}
 
 ### Heat Stress Metrics
 - **Degree Heating Weeks (DHW)**: ${formatNumber(dhw)}
-- **Degree Heating Days**: ${degreeHeatingDays.toFixed(0)}
+- **Degree Heating Days**: ${formatNumber(degreeHeatingDays, 0)}
 - **Accumulated Stress**: ${bleachingLikelihood}
 
 ### Alert Levels
@@ -230,11 +220,11 @@ ${dailyData
   .slice(0, 90)
   .map(
     (day) =>
-      `- ${day.date.split('T')[0]}: ${formatNumber(
+      `- ${day.date.toISOString().split('T')[0]}: ${formatNumber(
         day.satelliteTemperature,
-      )}°C, DHW: ${formatNumber(day.degreeHeatingDays / 7)}, Weekly Alert: ${
-        day.weeklyAlertLevel
-      }`,
+      )}°C, DHW: ${formatNumber(
+        (day.degreeHeatingDays ?? 0) / 7,
+      )}, Weekly Alert: ${day.weeklyAlertLevel}`,
   )
   .join('\n')}
 
@@ -243,19 +233,8 @@ ${dailyData
 - Use EXACT values from the historical data - don't estimate
 - If date not found, say "Data not available for that specific date"
 
-## REEF CHECK SURVEY DATA
-${
-  siteData.reefCheckSurveys && siteData.reefCheckSurveys.length > 0
-    ? `- **Surveys Available**: ${
-        siteData.reefCheckSurveys.length
-      } Reef Check survey(s) on record
-- **Most Recent Survey**: ${siteData.reefCheckSurveys[0]?.date || 'Unknown'}
-- **Survey Details Available**: Yes (depth, impacts, bleaching data if recorded)`
-    : '- **Surveys Available**: None uploaded yet - encourage user to conduct and upload surveys'
-}
-
 ## DATA ACCURACY REQUIREMENTS - CRITICAL
-✅ **USE THESE EXACT VALUES** in your response - they come directly from the API
+✅ **USE THESE EXACT VALUES** in your response - they come directly from the database
 ✅ **DO NOT ROUND** beyond the precision shown (2 decimals for temp, DHW)
 ✅ **DO NOT ESTIMATE OR HALLUCINATE** - if a value is missing, say "data unavailable"
 ✅ **ALWAYS CITE**: "According to ${
@@ -278,10 +257,7 @@ ${
 `.trim();
   } catch (error) {
     // Handle errors gracefully
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 404) {
-        throw new Error(`Site with ID ${siteId} not found`);
-      }
+    if (error instanceof Error) {
       throw new Error(`Failed to fetch site data: ${error.message}`);
     }
     throw error;

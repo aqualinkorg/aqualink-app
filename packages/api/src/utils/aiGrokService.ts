@@ -32,7 +32,7 @@ export async function callGrokAPI(
   userMessage: string,
   siteContext: string,
   conversationHistory?: Array<{ sender: string; text: string }>,
-  isFirstMessage?: boolean, // Add this parameter
+  isFirstMessage?: boolean,
 ): Promise<string> {
   const apiKey = process.env.GROK_API_KEY;
 
@@ -45,14 +45,16 @@ export async function callGrokAPI(
     userMessage,
     siteContext,
     conversationHistory,
-    isFirstMessage, // Pass the flag to buildPromptWithContext
+    isFirstMessage,
   );
 
   // Format for Grok API
   const messages: GrokMessage[] = [
     {
       role: 'system',
-      content: systemPrompt,
+      content:
+        systemPrompt +
+        '\n\n**OUTPUT FORMAT REQUIREMENT**: Provide only your final response to the user. Do not include reasoning steps, internal thoughts, or assessment processes. Output should be clean, polished, and ready for the user to read.',
     },
   ];
 
@@ -70,7 +72,7 @@ export async function callGrokAPI(
       {
         model: GROK_MODEL,
         messages,
-        temperature: 0.7, // Balanced between creative and focused
+        temperature: 0.3, // Lower temperature for more deterministic, focused output
         max_tokens: 1500, // Limit response length
         stream: false,
       },
@@ -91,18 +93,35 @@ export async function callGrokAPI(
       throw new Error('Invalid response from Grok API');
     }
 
-    const assistantMessage = response.data.choices[0].message.content;
+    let assistantMessage = response.data.choices[0].message.content;
 
-    // Log token usage for monitoring (optional)
-    // if (response.data.usage) {
-    //   console.log('Grok API usage:', {
-    //     prompt_tokens: response.data.usage.prompt_tokens,
-    //     completion_tokens: response.data.usage.completion_tokens,
-    //     total_tokens: response.data.usage.total_tokens,
-    //   });
-    // }
+    // Strip out reasoning process if present (Grok API behavior change)
+    const reasoningMarkers = [
+      'First, the system prompt',
+      'First, ',
+      'I must output ONLY',
+      'Now, fill in',
+      'Quick mental',
+      'Instructions say',
+      'Looking at',
+      'The prompt says',
+      'I need to',
+      'The greeting template',
+    ];
 
-    return assistantMessage;
+    // Check if response starts with reasoning
+    for (const marker of reasoningMarkers) {
+      if (assistantMessage.includes(marker)) {
+        // Find where actual content starts (usually after reasoning block)
+        const contentStart = assistantMessage.indexOf('Here is');
+        if (contentStart !== -1) {
+          assistantMessage = assistantMessage.substring(contentStart);
+          break;
+        }
+      }
+    }
+
+    return assistantMessage.trim();
   } catch (error) {
     // Handle different types of errors
     if (axios.isAxiosError(error)) {

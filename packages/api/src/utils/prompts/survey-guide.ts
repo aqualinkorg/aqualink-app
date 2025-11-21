@@ -356,7 +356,10 @@ A **Survey Point** is a specific location within your survey site where you take
 - Access global comparison data
 
 **How to add Reef Check surveys**:
-- To conduct Reef Check surveys, you have to become a Reef Check diver. Become a Reef Check diver here: https://www.reefcheck.org/tropical-program/courses-products/
+1. To conduct Reef Check surveys, you have to become a Reef Check diver. Become a Reef Check diver here: https://www.reefcheck.org/tropical-program/courses-products/
+2. Conduct your survey following Reef Check protocols
+3. Submit your survey data to Reef Check HQ
+4. Reef Check HQ will process and share the data with Aqualink during their quarterly data transfers
 
 **Reef Check vs Aqualink Surveys**:
 - **Reef Check**: Comprehensive, standardized, formal monitoring

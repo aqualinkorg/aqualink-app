@@ -18,6 +18,7 @@ const ChatButton = ({ classes, onClick }: ChatButtonProps) => {
           backgroundImage: `url(${aiChat})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundColor: '#2873c5',
         }}
       />
     </Tooltip>
