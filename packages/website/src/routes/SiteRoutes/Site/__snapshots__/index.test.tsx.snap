@@ -2914,7 +2914,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
         >
           <button
             class="MuiButtonBase-root MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-default MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-default ChatButton-chatButton-1068 css-1qwkc5n-MuiButtonBase-root-MuiFab-root"
-            style="background-image: url("/src/assets/aiChat.png"); background-size: cover; background-position: center;"
+            style="background-image: url("/src/assets/aiChat.png"); background-size: cover; background-position: center; background-color: rgb(40, 115, 197);"
             tabindex="0"
             type="button"
           />
@@ -5634,7 +5634,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
         >
           <button
             class="MuiButtonBase-root MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-default MuiFab-root MuiFab-circular MuiFab-sizeLarge MuiFab-default ChatButton-chatButton-236 css-1qwkc5n-MuiButtonBase-root-MuiFab-root"
-            style="background-image: url("/src/assets/aiChat.png"); background-size: cover; background-position: center;"
+            style="background-image: url("/src/assets/aiChat.png"); background-size: cover; background-position: center; background-color: rgb(40, 115, 197);"
             tabindex="0"
             type="button"
           />
