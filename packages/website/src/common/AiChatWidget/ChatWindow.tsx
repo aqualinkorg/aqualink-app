@@ -47,15 +47,17 @@ const generateInitialGreeting = async (
       return data.response;
     }
 
-    // Try to parse structured error
-    let details = 'Unknown error';
-    try {
-      const err = await response.json();
-      details = err?.details || err?.message || details;
-    } catch {
-      const errorText = await response.text();
-      details = errorText || details;
-    }
+    // Try to parse structured error (no mutations)
+    const details = await (async () => {
+      try {
+        const err = await response.json();
+        return err?.details || err?.message || 'Unknown error';
+      } catch {
+        const errorText = await response.text();
+        return errorText || 'Unknown error';
+      }
+    })();
+
     console.error('API error:', details);
   } catch (error) {
     console.error('Failed to generate initial greeting:', error);
@@ -201,8 +203,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      const readable =
-        error instanceof Error ? error.message : String(error);
+      const readable = error instanceof Error ? error.message : String(error);
       console.error('Error calling AI:', readable);
       const errorMessage: Message = {
         sender: 'assistant',
