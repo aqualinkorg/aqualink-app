@@ -179,17 +179,20 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
       if (!response.ok) {
         // Attempt to read structured backend error
-        let backendMessage = 'Failed to get AI response';
-        try {
-          const err = await response.json();
-          const msg = err?.message;
-          const details = err?.details;
-          backendMessage = [msg, details].filter(Boolean).join(': ');
-        } catch {
-          // Fallback to text
-          const text = await response.text();
-          if (text) backendMessage = text;
-        }
+        const backendMessage = await (async () => {
+          try {
+            const err = await response.json();
+            const msg = err?.message;
+            const details = err?.details;
+            return (
+              [msg, details].filter(Boolean).join(': ') ||
+              'Failed to get AI response'
+            );
+          } catch {
+            const text = await response.text();
+            return text || 'Failed to get AI response';
+          }
+        })();
         throw new Error(backendMessage);
       }
 
