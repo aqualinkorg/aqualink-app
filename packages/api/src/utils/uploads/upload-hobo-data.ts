@@ -10,6 +10,7 @@ import path from 'path';
 import { CastingContext, CastingFunction } from 'csv-parse';
 import { Point, GeoJSON } from 'geojson';
 import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { ExifParserFactory } from 'ts-exif-parser';
 import parse from 'csv-parse/lib/sync';
 
