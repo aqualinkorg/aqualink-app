@@ -164,7 +164,9 @@ export const addSpotterData = async (
                 sofarToken,
                 endDate,
                 startDate,
-              ).then((data) => excludeSpotterData(data, sensorExclusionDates));
+              ).then((rawSpotterData) =>
+                excludeSpotterData(rawSpotterData, sensorExclusionDates),
+              );
 
               if (
                 !skipDistanceCheck &&
