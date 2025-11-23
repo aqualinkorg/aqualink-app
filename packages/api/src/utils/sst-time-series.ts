@@ -148,125 +148,131 @@ export const updateSST = async (
         const data = await Promise.all(
           intervals.map((interval, index) =>
             innerLimit(async () => {
-          const endDate =
-            index !== 0
-              ? // subtract 1 minute to be within the api date diff limit
-                DateTime.now()
-                  .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS, minutes: 1 })
-                  .toString()
-              : DateTime.now().minus({ minutes: 1 }).toString();
-          const startDate = DateTime.now()
-            .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS + interval })
-            .toString();
+              const endDate =
+                index !== 0
+                  ? // subtract 1 minute to be within the api date diff limit
+                    DateTime.now()
+                      .minus({
+                        days: index * MAX_SOFAR_DATE_DIFF_DAYS,
+                        minutes: 1,
+                      })
+                      .toString()
+                  : DateTime.now().minus({ minutes: 1 }).toString();
+              const startDate = DateTime.now()
+                .minus({ days: index * MAX_SOFAR_DATE_DIFF_DAYS + interval })
+                .toString();
 
-          const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] = await Promise.all([
-            // Fetch satellite surface temperature data
-            sofarHindcast(
-              SofarModels.NOAACoralReefWatch,
-              sofarVariableIDs[SofarModels.NOAACoralReefWatch]
-                .analysedSeaSurfaceTemperature,
-              NOAALatitude,
-              NOAALongitude,
-              startDate,
-              endDate,
-            ),
-            // Fetch degree heating weeks data
-            sofarHindcast(
-              SofarModels.NOAACoralReefWatch,
-              sofarVariableIDs[SofarModels.NOAACoralReefWatch]
-                .degreeHeatingWeek,
-              NOAALatitude,
-              NOAALongitude,
-              startDate,
-              endDate,
-            ),
-          ]);
+              const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] =
+                await Promise.all([
+                  // Fetch satellite surface temperature data
+                  sofarHindcast(
+                    SofarModels.NOAACoralReefWatch,
+                    sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+                      .analysedSeaSurfaceTemperature,
+                    NOAALatitude,
+                    NOAALongitude,
+                    startDate,
+                    endDate,
+                  ),
+                  // Fetch degree heating weeks data
+                  sofarHindcast(
+                    SofarModels.NOAACoralReefWatch,
+                    sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+                      .degreeHeatingWeek,
+                    NOAALatitude,
+                    NOAALongitude,
+                    startDate,
+                    endDate,
+                  ),
+                ]);
 
-          // Filter out null values
-          const sstFiltered = filterSofarResponse(SofarSSTRaw);
-          const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
-
-          const getDateNoTime = (x?: string) =>
-            new Date(x || '').toDateString();
-
-          const invalidDateKey = getDateNoTime(undefined);
-
-          // Get latest dhw
-          // There should be only one value for each date from sofar api
-          const groupedDHWFiltered = omit(
-            groupBy(dhwFiltered, (x) => getDateNoTime(x.timestamp)),
-            // remove invalid date entries if any
-            invalidDateKey,
-          );
-          const latestDhw = Object.keys(groupedDHWFiltered).map((x) =>
-            getLatestData(groupedDHWFiltered[x]),
-          );
-
-          // Get alert level
-          const groupedSSTFiltered = omit(
-            groupBy(sstFiltered, (x) => getDateNoTime(x.timestamp)),
-            // remove invalid date entries if any
-            invalidDateKey,
-          );
-          const alertLevel = Object.keys(groupedSSTFiltered)
-            .map((x) => {
-              const latest = getLatestData(groupedSSTFiltered[x]);
-              const dhw = latestDhw.find(
-                (y) =>
-                  getDateNoTime(y?.timestamp) ===
-                  getDateNoTime(latest?.timestamp),
+              // Filter out null values
+              const sstFiltered = filterSofarResponse(SofarSSTRaw);
+              const dhwFiltered = filterSofarResponse(
+                sofarDegreeHeatingWeekRaw,
               );
-              const alert = calculateAlertLevel(
-                site.maxMonthlyMean,
-                latest?.value,
-                // Calculate degree heating days
-                dhw && dhw.value * 7,
+
+              const getDateNoTime = (x?: string) =>
+                new Date(x || '').toDateString();
+
+              const invalidDateKey = getDateNoTime(undefined);
+
+              // Get latest dhw
+              // There should be only one value for each date from sofar api
+              const groupedDHWFiltered = omit(
+                groupBy(dhwFiltered, (x) => getDateNoTime(x.timestamp)),
+                // remove invalid date entries if any
+                invalidDateKey,
               );
-              if (!alert) return undefined;
-              if (!latest) return undefined;
-              return {
-                value: alert,
-                timestamp: latest.timestamp,
+              const latestDhw = Object.keys(groupedDHWFiltered).map((x) =>
+                getLatestData(groupedDHWFiltered[x]),
+              );
+
+              // Get alert level
+              const groupedSSTFiltered = omit(
+                groupBy(sstFiltered, (x) => getDateNoTime(x.timestamp)),
+                // remove invalid date entries if any
+                invalidDateKey,
+              );
+              const alertLevel = Object.keys(groupedSSTFiltered)
+                .map((x) => {
+                  const latest = getLatestData(groupedSSTFiltered[x]);
+                  const dhw = latestDhw.find(
+                    (y) =>
+                      getDateNoTime(y?.timestamp) ===
+                      getDateNoTime(latest?.timestamp),
+                  );
+                  const alert = calculateAlertLevel(
+                    site.maxMonthlyMean,
+                    latest?.value,
+                    // Calculate degree heating days
+                    dhw && dhw.value * 7,
+                  );
+                  if (!alert) return undefined;
+                  if (!latest) return undefined;
+                  return {
+                    value: alert,
+                    timestamp: latest.timestamp,
+                  };
+                })
+                .filter((x): x is ValueWithTimestamp => x !== undefined);
+
+              // Calculate the sstAnomaly
+              const anomalyPerDateArray = Object.keys(groupedSSTFiltered).map(
+                (x) => {
+                  const filtered = groupedSSTFiltered[x];
+                  return (
+                    filtered
+                      .map((sst) => ({
+                        value: getSstAnomaly(site.historicalMonthlyMean, sst),
+                        timestamp: sst.timestamp,
+                      }))
+                      // Filter out null values
+                      .filter(
+                        (
+                          sstAnomalyValue,
+                        ): sstAnomalyValue is ValueWithTimestamp => {
+                          return !isNil(sstAnomalyValue.value);
+                        },
+                      )
+                  );
+                },
+              );
+
+              const anomaly = flatten(anomalyPerDateArray);
+
+              const result = {
+                sst: sstFiltered,
+                dhw: dhwFiltered,
+                sstAnomaly: anomaly,
+                alert: alertLevel,
               };
-            })
-            .filter((x): x is ValueWithTimestamp => x !== undefined);
 
-          // Calculate the sstAnomaly
-          const anomalyPerDateArray = Object.keys(groupedSSTFiltered).map(
-            (x) => {
-              const filtered = groupedSSTFiltered[x];
-              return (
-                filtered
-                  .map((sst) => ({
-                    value: getSstAnomaly(site.historicalMonthlyMean, sst),
-                    timestamp: sst.timestamp,
-                  }))
-                  // Filter out null values
-                  .filter(
-                    (
-                      sstAnomalyValue,
-                    ): sstAnomalyValue is ValueWithTimestamp => {
-                      return !isNil(sstAnomalyValue.value);
-                    },
-                  )
-              );
-            },
-          );
-
-          const anomaly = flatten(anomalyPerDateArray);
-
-          const result = {
-            sst: sstFiltered,
-            dhw: dhwFiltered,
-            sstAnomaly: anomaly,
-            alert: alertLevel,
-          };
-
-          if (!result.sst.length) {
-            console.error(
-              `No Hindcast data available for site '${site.id}' for dates ${startDate} ${endDate}`,
-            );
-          }
+              if (!result.sst.length) {
+                console.error(
+                  `No Hindcast data available for site '${site.id}' for dates ${startDate} ${endDate}`,
+                );
+              }
 
               return result;
             }),

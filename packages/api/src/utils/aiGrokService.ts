@@ -52,9 +52,7 @@ export async function callGrokAPI(
   const messages: GrokMessage[] = [
     {
       role: 'system',
-      content:
-        systemPrompt +
-        '\n\n**OUTPUT FORMAT REQUIREMENT**: Provide only your final response to the user. Do not include reasoning steps, internal thoughts, or assessment processes. Output should be clean, polished, and ready for the user to read.',
+      content: `${systemPrompt}\n\n**OUTPUT FORMAT REQUIREMENT**: Provide only your final response to the user. Do not include reasoning steps, internal thoughts, or assessment processes. Output should be clean, polished, and ready for the user to read.`,
     },
   ];
 

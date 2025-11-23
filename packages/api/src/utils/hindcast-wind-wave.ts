@@ -144,46 +144,46 @@ export const addWindWaveData = async (
   await Promise.all(
     sites.map((site) =>
       limit(async () => {
-      const { polygon } = site;
+        const { polygon } = site;
 
-      const [longitude, latitude] = getSofarNearestAvailablePoint(
-        polygon as Point,
-      );
+        const [longitude, latitude] = getSofarNearestAvailablePoint(
+          polygon as Point,
+        );
 
-      logger.log(
-        `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
-      );
+        logger.log(
+          `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
+        );
 
-      const forecastData = await getForecastData(latitude, longitude);
+        const forecastData = await getForecastData(latitude, longitude);
 
-      // Save wind wave data to forecast_data
-      await Promise.all(
-        // eslint-disable-next-line array-callback-return, consistent-return
-        dataLabels.map(([dataLabel, metric, source]) => {
-          const sofarValue = forecastData[dataLabel] as ValueWithTimestamp;
-          if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {
-            return repositories.hindcastRepository
-              .createQueryBuilder('forecast_data')
-              .insert()
-              .values([
-                {
-                  site,
-                  timestamp: DateTime.fromISO(sofarValue.timestamp)
-                    .startOf('minute')
-                    .toJSDate(),
-                  metric,
-                  source,
-                  value: sofarValue.value,
-                  updatedAt: today,
-                },
-              ])
-              .onConflict(
-                `ON CONSTRAINT "one_row_per_site_per_metric_per_source" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
-              )
-              .execute();
-          }
-        }),
-      );
+        // Save wind wave data to forecast_data
+        await Promise.all(
+          // eslint-disable-next-line array-callback-return, consistent-return
+          dataLabels.map(([dataLabel, metric, source]) => {
+            const sofarValue = forecastData[dataLabel] as ValueWithTimestamp;
+            if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {
+              return repositories.hindcastRepository
+                .createQueryBuilder('forecast_data')
+                .insert()
+                .values([
+                  {
+                    site,
+                    timestamp: DateTime.fromISO(sofarValue.timestamp)
+                      .startOf('minute')
+                      .toJSDate(),
+                    metric,
+                    source,
+                    value: sofarValue.value,
+                    updatedAt: today,
+                  },
+                ])
+                .onConflict(
+                  `ON CONSTRAINT "one_row_per_site_per_metric_per_source" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
+                )
+                .execute();
+            }
+          }),
+        );
       }),
     ),
   );

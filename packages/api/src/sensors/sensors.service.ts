@@ -57,7 +57,8 @@ export class SensorsService {
           if (site.sensorId === null) {
             console.warn(`Spotter for site ${site.id} appears null.`);
           }
-          const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
+          const sofarToken =
+            site.spotterApiToken || process.env.SOFAR_API_TOKEN;
           return getSpotterData(site.sensorId!, sofarToken).then((data) => {
             return {
               id: site.id,
