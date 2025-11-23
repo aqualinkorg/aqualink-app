@@ -96,6 +96,9 @@ export async function sofarHindcast(
         end,
         token: process.env.SOFAR_API_TOKEN,
       },
+      paramsSerializer: {
+        indexes: null,
+      },
     })
     .then((response) => {
       // The api return an array of requested variables, but since we request one, ours it's always first
