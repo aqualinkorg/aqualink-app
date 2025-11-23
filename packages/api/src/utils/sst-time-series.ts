@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import { flatten, groupBy, isNil, omit, sortBy, times } from 'lodash';
@@ -123,27 +123,31 @@ export const updateSST = async (
 
   logger.log(`Back-filling ${sources.length} sites`);
 
-  await Bluebird.map(
-    sources,
-    async (source) => {
-      const { site } = source;
-      const { polygon, nearestNOAALocation } = site;
-      // Extract site coordinates
-      const [NOAALongitude, NOAALatitude] = nearestNOAALocation
-        ? (nearestNOAALocation as Point).coordinates
-        : (polygon as Point).coordinates;
+  // Speed up if this is just a daily update
+  // Concurrency should remain low, otherwise it will overwhelm the sofar api server
+  const outerLimit = pLimit(days <= 5 ? 10 : 1);
+  await Promise.all(
+    sources.map((source) =>
+      outerLimit(async () => {
+        const { site } = source;
+        const { polygon, nearestNOAALocation } = site;
+        // Extract site coordinates
+        const [NOAALongitude, NOAALatitude] = nearestNOAALocation
+          ? (nearestNOAALocation as Point).coordinates
+          : (polygon as Point).coordinates;
 
-      const div = Math.floor(days / MAX_SOFAR_DATE_DIFF_DAYS);
-      const mod = days % MAX_SOFAR_DATE_DIFF_DAYS;
-      const intervals = [
-        ...Array<number>(div).fill(MAX_SOFAR_DATE_DIFF_DAYS),
-        mod,
-        // remove possible zero at the end due to mod (%) operation
-      ].filter((x) => x !== 0);
+        const div = Math.floor(days / MAX_SOFAR_DATE_DIFF_DAYS);
+        const mod = days % MAX_SOFAR_DATE_DIFF_DAYS;
+        const intervals = [
+          ...Array<number>(div).fill(MAX_SOFAR_DATE_DIFF_DAYS),
+          mod,
+          // remove possible zero at the end due to mod (%) operation
+        ].filter((x) => x !== 0);
 
-      const data = await Bluebird.map(
-        intervals,
-        async (interval, index) => {
+        const innerLimit = pLimit(100);
+        const data = await Promise.all(
+          intervals.map((interval, index) =>
+            innerLimit(async () => {
           const endDate =
             index !== 0
               ? // subtract 1 minute to be within the api date diff limit
@@ -264,91 +268,92 @@ export const updateSST = async (
             );
           }
 
-          return result;
-        },
-        { concurrency: 100 },
-      );
+              return result;
+            }),
+          ),
+        );
 
-      await Bluebird.map(
-        data,
-        async ({ sst, dhw, alert, sstAnomaly }) =>
-          Promise.all([
-            insertSiteDataToTimeSeries(
-              sst,
-              Metric.SATELLITE_TEMPERATURE,
-              source,
-              timeSeriesRepository,
+        const insertLimit = pLimit(100);
+        await Promise.all(
+          data.map(({ sst, dhw, alert, sstAnomaly }) =>
+            insertLimit(async () =>
+              Promise.all([
+                insertSiteDataToTimeSeries(
+                  sst,
+                  Metric.SATELLITE_TEMPERATURE,
+                  source,
+                  timeSeriesRepository,
+                ),
+                insertSiteDataToTimeSeries(
+                  dhw,
+                  Metric.DHW,
+                  source,
+                  timeSeriesRepository,
+                ),
+                insertSiteDataToTimeSeries(
+                  alert,
+                  Metric.ALERT,
+                  source,
+                  timeSeriesRepository,
+                ),
+                insertSiteDataToTimeSeries(
+                  sstAnomaly,
+                  Metric.SST_ANOMALY,
+                  source,
+                  timeSeriesRepository,
+                ),
+              ]),
             ),
-            insertSiteDataToTimeSeries(
-              dhw,
-              Metric.DHW,
-              source,
-              timeSeriesRepository,
-            ),
-            insertSiteDataToTimeSeries(
-              alert,
-              Metric.ALERT,
-              source,
-              timeSeriesRepository,
-            ),
-            insertSiteDataToTimeSeries(
-              sstAnomaly,
-              Metric.SST_ANOMALY,
-              source,
-              timeSeriesRepository,
-            ),
-          ]),
-        { concurrency: 100 },
-      );
-    },
-    // Speed up if this is just a daily update
-    // Concurrency should remain low, otherwise it will overwhelm the sofar api server
-    { concurrency: days <= 5 ? 10 : 1 },
+          ),
+        );
+      }),
+    ),
   );
 
   logger.log('Back-filling weekly alert level');
   // We calculate weekly alert separately because it depends on values of alert levels across 7 days
-  await Bluebird.map(
-    times(days),
-    async (i) => {
-      const endDate =
-        i === 0
-          ? DateTime.now().toString()
-          : DateTime.now().minus({ days: i }).endOf('day').toString();
+  // Concurrency is set to 1 to avoid read and writing the table time_series at the same time
+  const weeklyLimit = pLimit(1);
+  await Promise.all(
+    times(days).map((i) =>
+      weeklyLimit(async () => {
+        const endDate =
+          i === 0
+            ? DateTime.now().toString()
+            : DateTime.now().minus({ days: i }).endOf('day').toString();
 
-      logger.log(`Back-filling weekly alert for ${endDate}`);
-      // Calculate max alert by fetching the max alert in the last 7 days
-      // As timestamp it is selected the latest available timestamp
-      const maxAlert = await repositories.timeSeriesRepository
-        .createQueryBuilder('time_series')
-        .select('MAX(value)', 'value')
-        .addSelect('source_id', 'source')
-        .addSelect('MAX(timestamp)', 'timestamp')
-        .where('timestamp <= :endDate::timestamp', { endDate })
-        .andWhere("timestamp >= :endDate::timestamp - INTERVAL '7 days'", {
-          endDate,
-        })
-        .andWhere('metric = :alertMetric', { alertMetric: Metric.ALERT })
-        .andWhere('source_id IN (:...sourceIds)', {
-          sourceIds: sources.map((source) => source.id),
-        })
-        .groupBy('source_id')
-        .getRawMany();
+        logger.log(`Back-filling weekly alert for ${endDate}`);
+        // Calculate max alert by fetching the max alert in the last 7 days
+        // As timestamp it is selected the latest available timestamp
+        const maxAlert = await repositories.timeSeriesRepository
+          .createQueryBuilder('time_series')
+          .select('MAX(value)', 'value')
+          .addSelect('source_id', 'source')
+          .addSelect('MAX(timestamp)', 'timestamp')
+          .where('timestamp <= :endDate::timestamp', { endDate })
+          .andWhere("timestamp >= :endDate::timestamp - INTERVAL '7 days'", {
+            endDate,
+          })
+          .andWhere('metric = :alertMetric', { alertMetric: Metric.ALERT })
+          .andWhere('source_id IN (:...sourceIds)', {
+            sourceIds: sources.map((source) => source.id),
+          })
+          .groupBy('source_id')
+          .getRawMany();
 
-      await repositories.timeSeriesRepository
-        .createQueryBuilder('time_series')
-        .insert()
-        .values(
-          maxAlert.map((data) => ({
-            ...data,
-            metric: Metric.WEEKLY_ALERT,
-          })),
-        )
-        .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
-        .execute();
-    },
-    // Concurrency is set to 1 to avoid read and writing the table time_series at the same time
-    { concurrency: 1 },
+        await repositories.timeSeriesRepository
+          .createQueryBuilder('time_series')
+          .insert()
+          .values(
+            maxAlert.map((data) => ({
+              ...data,
+              metric: Metric.WEEKLY_ALERT,
+            })),
+          )
+          .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
+          .execute();
+      }),
+    ),
   );
 
   // Update materialized view

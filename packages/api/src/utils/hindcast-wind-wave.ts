@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { Point } from 'geojson';
 import { isNil } from 'lodash';
 import { In, Repository } from 'typeorm';
@@ -140,9 +140,10 @@ export const addWindWaveData = async (
   const { today } = getTodayYesterdayDates();
 
   logger.log('Saving wind & wave forecast data');
-  await Bluebird.map(
-    sites,
-    async (site) => {
+  const limit = pLimit(10);
+  await Promise.all(
+    sites.map((site) =>
+      limit(async () => {
       const { polygon } = site;
 
       const [longitude, latitude] = getSofarNearestAvailablePoint(
@@ -183,8 +184,8 @@ export const addWindWaveData = async (
           }
         }),
       );
-    },
-    { concurrency: 10 },
+      }),
+    ),
   );
   logger.log('Completed updating hindcast data');
 };
