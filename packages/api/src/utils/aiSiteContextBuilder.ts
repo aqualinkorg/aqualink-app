@@ -24,11 +24,13 @@ interface DailyDataItem {
  * Extract metrics from latest_data API response
  */
 function extractMetrics(latestData: LatestDataItem[]): Record<string, number> {
-  const metrics: Record<string, number> = {};
-  latestData.forEach((item) => {
-    metrics[item.metric] = item.value;
-  });
-  return metrics;
+  return latestData.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.metric]: item.value,
+    }),
+    {} as Record<string, number>,
+  );
 }
 
 /**

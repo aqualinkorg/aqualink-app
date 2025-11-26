@@ -48,21 +48,24 @@ export async function callGrokAPI(
     isFirstMessage,
   );
 
-  // Format for Grok API
-  const messages: GrokMessage[] = [
-    {
-      role: 'system',
-      content: `${systemPrompt}\n\n**OUTPUT FORMAT REQUIREMENT**: Provide only your final response to the user. Do not include reasoning steps, internal thoughts, or assessment processes. Output should be clean, polished, and ready for the user to read.`,
-    },
-  ];
+  // Format for Grok API (no mutations)
+  const systemMessage: GrokMessage = {
+    role: 'system',
+    content: `${systemPrompt}\n\n**OUTPUT FORMAT REQUIREMENT**: Provide only your final response to the user. Do not include reasoning steps, internal thoughts, or assessment processes. Output should be clean, polished, and ready for the user to read.`,
+  };
 
-  // Only add user message if it's not empty and not the first message
-  if (userMessage && userMessage.trim() && !isFirstMessage) {
-    messages.push({
-      role: 'user',
-      content: userMessage,
-    });
-  }
+  const userMessageObj: GrokMessage | null =
+    userMessage && userMessage.trim() && !isFirstMessage
+      ? {
+          role: 'user',
+          content: userMessage,
+        }
+      : null;
+
+  const messages: GrokMessage[] = [
+    systemMessage,
+    ...(userMessageObj ? [userMessageObj] : []),
+  ];
 
   try {
     const response = await axios.post<GrokResponse>(
@@ -91,9 +94,9 @@ export async function callGrokAPI(
       throw new Error('Invalid response from Grok API');
     }
 
-    let assistantMessage = response.data.choices[0].message.content;
+    const rawMessage = response.data.choices[0].message.content;
 
-    // Strip out reasoning process if present (Grok API behavior change)
+    // Strip reasoning if present (functional approach - no mutations)
     const reasoningMarkers = [
       'First, the system prompt',
       'First, ',
@@ -107,19 +110,15 @@ export async function callGrokAPI(
       'The greeting template',
     ];
 
-    // Check if response starts with reasoning
-    for (const marker of reasoningMarkers) {
-      if (assistantMessage.includes(marker)) {
-        // Find where actual content starts (usually after reasoning block)
-        const contentStart = assistantMessage.indexOf('Here is');
-        if (contentStart !== -1) {
-          assistantMessage = assistantMessage.substring(contentStart);
-          break;
-        }
+    const cleanedMessage = reasoningMarkers.reduce((message, marker) => {
+      if (message.includes(marker)) {
+        const contentStart = message.indexOf('Here is');
+        return contentStart !== -1 ? message.substring(contentStart) : message;
       }
-    }
+      return message;
+    }, rawMessage);
 
-    return assistantMessage.trim();
+    return cleanedMessage.trim();
   } catch (error) {
     // Handle different types of errors
     if (axios.isAxiosError(error)) {
