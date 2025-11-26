@@ -48,10 +48,10 @@ export async function callGrokAPI(
     isFirstMessage,
   );
 
-  // Format for Grok API (no mutations)
+  // Format for Grok API
   const systemMessage: GrokMessage = {
     role: 'system',
-    content: `${systemPrompt}\n\n**OUTPUT FORMAT REQUIREMENT**: Provide only your final response to the user. Do not include reasoning steps, internal thoughts, or assessment processes. Output should be clean, polished, and ready for the user to read.`,
+    content: systemPrompt,
   };
 
   const userMessageObj: GrokMessage | null =
@@ -73,8 +73,9 @@ export async function callGrokAPI(
       {
         model: GROK_MODEL,
         messages,
-        temperature: 0.3, // Lower temperature for more deterministic, focused output
-        max_tokens: 1500, // Limit response length
+        // Lower temperature for more deterministic, focused output (0.1 is best for strict templates)
+        temperature: 0.1,
+        max_tokens: 2500, // Accommodate reasoning + output
         stream: false,
       },
       {
@@ -96,29 +97,31 @@ export async function callGrokAPI(
 
     const rawMessage = response.data.choices[0].message.content;
 
-    // Strip reasoning if present (functional approach - no mutations)
-    const reasoningMarkers = [
-      'First, the system prompt',
-      'First, ',
-      'I must output ONLY',
-      'Now, fill in',
-      'Quick mental',
-      'Instructions say',
-      'Looking at',
-      'The prompt says',
-      'I need to',
-      'The greeting template',
-    ];
+    // --- PARSING LOGIC ---
 
-    const cleanedMessage = reasoningMarkers.reduce((message, marker) => {
-      if (message.includes(marker)) {
-        const contentStart = message.indexOf('Here is');
-        return contentStart !== -1 ? message.substring(contentStart) : message;
-      }
-      return message;
-    }, rawMessage);
+    // 1. Tag-based extraction (Primary Strategy)
+    // Matches content between <greeting> and </greeting>, handling newlines/formatting
+    const tagMatch = rawMessage.match(/<greeting>([\s\S]*?)<\/greeting>/i);
 
-    return cleanedMessage.trim();
+    if (tagMatch && tagMatch[1]) {
+      return tagMatch[1].trim();
+    }
+
+    // 2. Fallback extraction (Secondary Strategy)
+    // If the model forgot tags but included the standard start phrase
+    const greetingStartPhrase = 'Here is the current reef status';
+    const startIndex = rawMessage.indexOf(greetingStartPhrase);
+
+    if (startIndex !== -1) {
+      return rawMessage.substring(startIndex).trim();
+    }
+
+    // 3. Last Resort
+    // If we can't find tags or the start phrase, return raw message
+    // but clean obvious reasoning markers if they exist at the very start.
+    return rawMessage
+      .replace(/^[\s\S]*?internal_processing[\s\S]*?(\n|$)/, '')
+      .trim();
   } catch (error) {
     // Handle different types of errors
     if (axios.isAxiosError(error)) {
