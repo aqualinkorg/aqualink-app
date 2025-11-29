@@ -153,8 +153,16 @@ export function sofarWaveData(
         includeBarometerData: true,
       },
     })
-    .then((response) => response.data as { data: SofarWaveDateResponse })
-    .catch((error) => sofarErrorHandler({ error, sensorId }));
+    .then((response) => {
+      // API returns { data: { spotterId, waves, ... } }
+      // axios wraps it, so response.data = { data: { spotterId, waves, ... } }
+      const waveData = response.data?.data || response.data;
+      return { data: waveData as SofarWaveDateResponse };
+    })
+    .catch((error) => {
+      sofarErrorHandler({ error, sensorId });
+      return undefined;
+    });
 }
 
 export async function sofarLatest({
