@@ -143,18 +143,70 @@ export class TestService {
   public async cleanAllEntities(connection: DataSource) {
     // Delete in order respecting foreign key constraints
     // Child tables first, then parent tables
-    await connection.getRepository(TimeSeries).createQueryBuilder().delete().execute();
-    await connection.getRepository(SurveyMedia).createQueryBuilder().delete().execute();
-    await connection.getRepository(Survey).createQueryBuilder().delete().execute();
-    await connection.getRepository(ExclusionDates).createQueryBuilder().delete().execute();
-    await connection.getRepository(DailyData).createQueryBuilder().delete().execute();
-    await connection.getRepository(HistoricalMonthlyMean).createQueryBuilder().delete().execute();
-    await connection.getRepository(SiteSurveyPoint).createQueryBuilder().delete().execute();
-    await connection.getRepository(Collection).createQueryBuilder().delete().execute();
-    await connection.getRepository(SiteApplication).createQueryBuilder().delete().execute();
-    await connection.getRepository(Sources).createQueryBuilder().delete().execute();
-    await connection.getRepository(Site).createQueryBuilder().delete().execute();
-    await connection.getRepository(Region).createQueryBuilder().delete().execute();
-    await connection.getRepository(User).createQueryBuilder().delete().execute();
+    await connection
+      .getRepository(TimeSeries)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(SurveyMedia)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(Survey)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(ExclusionDates)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(DailyData)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(HistoricalMonthlyMean)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(SiteSurveyPoint)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(Collection)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(SiteApplication)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(Sources)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(Site)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(Region)
+      .createQueryBuilder()
+      .delete()
+      .execute();
+    await connection
+      .getRepository(User)
+      .createQueryBuilder()
+      .delete()
+      .execute();
   }
 }
