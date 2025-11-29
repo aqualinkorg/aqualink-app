@@ -54,20 +54,20 @@ export class TestService {
 
     const connection = this.app.get(DataSource);
     try {
-      // Clean up database
-      await this.cleanAllEntities(connection);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log('Clean up failed');
-      throw err;
-    }
-
-    try {
-      // Make sure database is up-to-date
+      // Make sure database is up-to-date (run migrations first before cleaning)
       await connection.runMigrations({ transaction: 'each' });
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log('Migrations failed to run');
+      throw err;
+    }
+
+    try {
+      // Clean up database (after migrations have created the tables)
+      await this.cleanAllEntities(connection);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log('Clean up failed');
       throw err;
     }
 
@@ -141,18 +141,20 @@ export class TestService {
   }
 
   public async cleanAllEntities(connection: DataSource) {
-    await connection.getRepository(TimeSeries).delete({});
-    await connection.getRepository(Sources).delete({});
-    await connection.getRepository(Collection).delete({});
-    await connection.getRepository(Region).delete({});
-    await connection.getRepository(SiteApplication).delete({});
-    await connection.getRepository(SiteSurveyPoint).delete({});
-    await connection.getRepository(DailyData).delete({});
-    await connection.getRepository(ExclusionDates).delete({});
-    await connection.getRepository(Survey).delete({});
-    await connection.getRepository(SurveyMedia).delete({});
-    await connection.getRepository(HistoricalMonthlyMean).delete({});
-    await connection.getRepository(Site).delete({});
-    await connection.getRepository(User).delete({});
+    // Delete in order respecting foreign key constraints
+    // Child tables first, then parent tables
+    await connection.getRepository(TimeSeries).createQueryBuilder().delete().execute();
+    await connection.getRepository(SurveyMedia).createQueryBuilder().delete().execute();
+    await connection.getRepository(Survey).createQueryBuilder().delete().execute();
+    await connection.getRepository(ExclusionDates).createQueryBuilder().delete().execute();
+    await connection.getRepository(DailyData).createQueryBuilder().delete().execute();
+    await connection.getRepository(HistoricalMonthlyMean).createQueryBuilder().delete().execute();
+    await connection.getRepository(SiteSurveyPoint).createQueryBuilder().delete().execute();
+    await connection.getRepository(Collection).createQueryBuilder().delete().execute();
+    await connection.getRepository(SiteApplication).createQueryBuilder().delete().execute();
+    await connection.getRepository(Sources).createQueryBuilder().delete().execute();
+    await connection.getRepository(Site).createQueryBuilder().delete().execute();
+    await connection.getRepository(Region).createQueryBuilder().delete().execute();
+    await connection.getRepository(User).createQueryBuilder().delete().execute();
   }
 }
