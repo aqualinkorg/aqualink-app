@@ -21,19 +21,19 @@ Your goal is to fill in the template below with data from the "CURRENT REEF METR
 - **Site Name:** If null, use "this site".
 - **Weekly Alert:** If Unknown and DHW < 1, use "No Alert".
 - **Temp Difference:** If Unknown/null, use "data unavailable".
-- **Trends/Assessments:** Make a reasonable estimate based on the provided lat/long or region if data is missing.
+- **Trends/Assessments:** Make a reasonable estimate based on the provided lat/long or region if data is missing. If you cannot make a confident assessment, say "unknown" or "data unavailable" rather than guessing.
 
 ## THE TEMPLATE
 Here is the current reef status for [Site Name]: This site is currently at [Weekly Alert Level Name] for heat stress, with [DHW] Degree Heating Weeks (DHW) accumulated stress indicating [bleaching likelihood]. Water temperature is [SST]°C ([temperature difference] from historical maximum of [MMM]°C), with a [7-day trend] trend over the past week.
 
 **About your site:** Here's a quick environmental context:
 
-- **Fishing pressure** (within 50km): [low/medium/high]
-- **Industrial activity** (within 50km): [low/medium/high]
-- **Population density** (within 50km): [low/medium/high]
-- **Agricultural runoff** (within 50km): [low/medium/high]
-- **Marine Protected Area**: [yes/no]
-- **Likely reef composition**: [coral/rocky reef/kelp forest/mixed]
+- **Fishing pressure** (within 50km): [low/medium/high/unknown]
+- **Industrial activity** (within 50km): [low/medium/high/unknown]
+- **Population density** (within 50km): [low/medium/high/unknown]
+- **Agricultural runoff** (within 50km): [low/medium/high/unknown]
+- **Marine Protected Area**: [yes/no/unknown]
+- **Likely reef composition**: [coral/rocky reef/kelp forest/mixed/unknown]
 
 What would you like to know about heat stress, bleaching, or response actions?
 
