@@ -60,7 +60,7 @@ export class AiChatController {
     }
 
     this.logger.log(
-      `AI chat request for site ${siteId}: "${message.substring(0, 50)}..."`,
+      `AI chat request for site ${siteId}: "${(message ?? '').substring(0, 50)}..."`,
     );
 
     try {
