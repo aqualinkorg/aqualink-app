@@ -10,6 +10,7 @@ import path from 'path';
 import { CastingContext, CastingFunction } from 'csv-parse';
 import { Point, GeoJSON } from 'geojson';
 import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { ExifParserFactory } from 'ts-exif-parser';
 import parse from 'csv-parse/lib/sync';
 
@@ -273,31 +274,33 @@ const createSites = async (
   );
 
   logger.log(`Saving monthly max data`);
-  await Bluebird.map(
-    siteEntities,
-    (site) => {
-      const point: Point = site.polygon as Point;
-      const [longitude, latitude] = point.coordinates;
+  const limit = pLimit(4);
+  await Promise.all(
+    siteEntities.map((site) =>
+      limit(() => {
+        const point: Point = site.polygon as Point;
+        const [longitude, latitude] = point.coordinates;
 
-      return Promise.all([
-        getHistoricalMonthlyMeans(longitude, latitude),
-        historicalMonthlyMeanRepository.findOne({
-          where: { site: { id: site.id } },
-        }),
-      ]).then(([historicalMonthlyMean, found]) => {
-        if (found || !historicalMonthlyMean) {
-          logger.warn(`Site ${site.id} has already monthly max data`);
-          return null;
-        }
+        return Promise.all([
+          getHistoricalMonthlyMeans(longitude, latitude),
+          historicalMonthlyMeanRepository.findOne({
+            where: { site: { id: site.id } },
+          }),
+        ]).then(([historicalMonthlyMean, found]) => {
+          if (found || !historicalMonthlyMean) {
+            logger.warn(`Site ${site.id} has already monthly max data`);
+            return null;
+          }
 
-        return historicalMonthlyMean.map(
-          ({ month, temperature }) =>
-            temperature &&
-            historicalMonthlyMeanRepository.save({ site, month, temperature }),
-        );
-      });
-    },
-    { concurrency: 4 },
+          return historicalMonthlyMean.map(({ month, temperature }) => {
+            return (
+              temperature &&
+              historicalMonthlyMeanRepository.save({ site, month, temperature })
+            );
+          });
+        });
+      }),
+    ),
   );
 
   // Create reverse map (db.site.id => csv.site_id)
@@ -674,32 +677,36 @@ export const uploadHoboData = async (
 
   const surveyPointsGroupedBySite = groupBy(poiEntities, (poi) => poi.site.id);
 
-  const siteDiffArray = await Bluebird.map(
-    Object.values(surveyPointsGroupedBySite),
-    (surveyPoints) =>
-      parseHoboData(
-        surveyPoints,
-        dbIdToCSVId,
-        rootPath,
-        poiToSourceMap,
-        repositories.timeSeriesRepository,
+  const limit1 = pLimit(1);
+  const siteDiffArray = await Promise.all(
+    Object.values(surveyPointsGroupedBySite).map((surveyPoints) =>
+      limit1(() =>
+        parseHoboData(
+          surveyPoints,
+          dbIdToCSVId,
+          rootPath,
+          poiToSourceMap,
+          repositories.timeSeriesRepository,
+        ),
       ),
-    { concurrency: 1 },
+    ),
   );
 
-  await Bluebird.map(
-    Object.values(surveyPointsGroupedBySite),
-    (surveyPoints) =>
-      uploadSitePhotos(
-        surveyPoints,
-        dbIdToCSVId,
-        rootPath,
-        googleCloudService,
-        user,
-        repositories.surveyRepository,
-        repositories.surveyMediaRepository,
+  const limit2 = pLimit(1);
+  await Promise.all(
+    Object.values(surveyPointsGroupedBySite).map((surveyPoints) =>
+      limit2(() =>
+        uploadSitePhotos(
+          surveyPoints,
+          dbIdToCSVId,
+          rootPath,
+          googleCloudService,
+          user,
+          repositories.surveyRepository,
+          repositories.surveyMediaRepository,
+        ),
       ),
-    { concurrency: 1 },
+    ),
   );
 
   performBackfill(siteDiffArray.flat(), dataSource);

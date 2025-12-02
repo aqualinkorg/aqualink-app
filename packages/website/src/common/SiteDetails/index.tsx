@@ -52,6 +52,7 @@ import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
 import { TemperatureChange } from './TemperatureChange';
 import { ReefCheckDataIndicator } from './ReefCheckDataIndicator';
+import AiChatWidget from '../AiChatWidget';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -419,6 +420,8 @@ function SiteDetails({
         )}
         <Surveys site={site} />
       </Box>
+      {/* AI Chat Widget */}
+      {site && <AiChatWidget siteId={site.id} />}
     </Box>
   );
 }

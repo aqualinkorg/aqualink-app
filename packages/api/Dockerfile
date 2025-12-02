@@ -20,6 +20,7 @@ COPY ["package.json", "./"]
 RUN yarn install --mode=skip-build
 
 # Add yargs and Netcdf to the project so that we can run NOAA available scripts using netcdf in the container.
+RUN yarn add yargs
 RUN yarn add netcdf4@https://github.com/ovio-forks/netcdf4
 
 COPY . .

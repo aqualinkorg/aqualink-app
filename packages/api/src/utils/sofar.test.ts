@@ -83,17 +83,15 @@ test('it process Sofar Wave Date API for surface temperature', async () => {
   const yesterday = yesterdayDate.toISOString();
 
   const response = await sofarWaveData(
-    'SPOT-1519',
+    'SPOT-1644',
     process.env.SOFAR_API_TOKEN,
     yesterday,
     today,
   );
 
-  // API may return undefined if data is not available for the requested parameters
-  // This is acceptable behavior, so we just test that the function doesn't throw
-  expect(typeof response).toBeDefined();
-  if (response && response.data && response.data.waves) {
-    expect(Array.isArray(response.data.waves)).toBe(true);
-    // Data availability may vary, so just check structure
-  }
+  expect(response).toBeDefined();
+  expect(response?.data).toBeDefined();
+  expect(response?.data.waves).toBeDefined();
+  expect(Array.isArray(response?.data.waves)).toBe(true);
+  expect(response?.data.waves.length).toBeGreaterThan(0);
 });

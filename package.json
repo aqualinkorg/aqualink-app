@@ -45,7 +45,7 @@
   },
   "engines": {
     "node": "20",
-    "yarn": "^4.9.1"
+    "yarn": "^1.22"
   },
   "version": "0.0.0",
   "lint-staged": {
@@ -70,8 +70,5 @@
     "url": "https://github.com/aqualinkorg/aqualink-app/issues"
   },
   "homepage": "https://aqualink.org",
-  "packageManager": "yarn@4.9.1",
-  "resolutions": {
-    "axios": "^1.12.2"
-  }
+  "packageManager": "yarn@1.22.21"
 }

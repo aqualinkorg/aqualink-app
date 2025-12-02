@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { get, times } from 'lodash';
 import { In, IsNull, Not, Repository } from 'typeorm';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { distance } from '@turf/turf';
 import { Point } from 'geojson';
 import { DateTime } from '../luxon-extensions';
@@ -127,107 +127,110 @@ export const addSpotterData = async (
     );
 
   logger.log('Saving spotter data');
-  await Bluebird.map(
-    sites,
-    (site) =>
-      Bluebird.map(
-        times(days),
-        async (i) => {
-          const startDate = DateTime.now()
-            .minus({ days: i })
-            .startOf('day')
-            .toJSDate();
-          const endDate = DateTime.now()
-            .minus({ days: i })
-            .endOf('day')
-            .toJSDate();
+  const outerLimit = pLimit(1);
+  await Promise.all(
+    sites.map((site) =>
+      outerLimit(async () => {
+        const innerLimit = pLimit(100);
+        const spotterData = await Promise.all(
+          times(days).map((i) =>
+            innerLimit(async () => {
+              const startDate = DateTime.now()
+                .minus({ days: i })
+                .startOf('day')
+                .toJSDate();
+              const endDate = DateTime.now()
+                .minus({ days: i })
+                .endOf('day')
+                .toJSDate();
 
-          if (!site.sensorId) {
-            return DEFAULT_SPOTTER_DATA_VALUE;
-          }
+              if (!site.sensorId) {
+                return DEFAULT_SPOTTER_DATA_VALUE;
+              }
 
-          const sensorExclusionDates = get(
-            sensorToExclusionDates,
-            site.sensorId,
-            [],
-          );
-
-          const sofarToken =
-            site.spotterApiToken || process.env.SOFAR_API_TOKEN;
-          // Fetch spotter and wave data from sofar
-          const spotterData = await getSpotterData(
-            site.sensorId,
-            sofarToken,
-            endDate,
-            startDate,
-          ).then((data) => excludeSpotterData(data, sensorExclusionDates));
-
-          if (
-            !skipDistanceCheck &&
-            spotterData?.latitude?.length &&
-            spotterData?.longitude?.length
-          ) {
-            // Check if spotter is within specified distance from its site, else don't return any data.
-            const dist = distance(
-              (site.polygon as Point).coordinates,
-              [spotterData.longitude[0].value, spotterData.latitude[0].value],
-              { units: 'kilometers' },
-            );
-            if (dist > MAX_DISTANCE_FROM_SITE) {
-              logger.warn(
-                `Spotter is over ${MAX_DISTANCE_FROM_SITE}km from site ${site.id}. Data will not be saved.`,
+              const sensorExclusionDates = get(
+                sensorToExclusionDates,
+                site.sensorId,
+                [],
               );
-              return DEFAULT_SPOTTER_DATA_VALUE;
-            }
-          }
 
-          return spotterData;
-        },
-        { concurrency: 100 },
-      )
-        .then((spotterData) => {
-          const dataLabels: [keyof SpotterData, Metric][] = [
-            ['topTemperature', Metric.TOP_TEMPERATURE],
-            ['bottomTemperature', Metric.BOTTOM_TEMPERATURE],
-            ['significantWaveHeight', Metric.SIGNIFICANT_WAVE_HEIGHT],
-            ['waveMeanDirection', Metric.WAVE_MEAN_DIRECTION],
-            ['waveMeanPeriod', Metric.WAVE_MEAN_PERIOD],
-            ['windDirection', Metric.WIND_DIRECTION],
-            ['windSpeed', Metric.WIND_SPEED],
-            ['barometerTop', Metric.BAROMETRIC_PRESSURE_TOP],
-            ['barometerBottom', Metric.BAROMETRIC_PRESSURE_BOTTOM],
-            ['barometricTopDiff', Metric.BAROMETRIC_PRESSURE_TOP_DIFF],
-            ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
-          ];
+              const sofarToken =
+                site.spotterApiToken || process.env.SOFAR_API_TOKEN;
+              // Fetch spotter and wave data from sofar
+              const data = await getSpotterData(
+                site.sensorId,
+                sofarToken,
+                endDate,
+                startDate,
+              ).then((rawSpotterData) =>
+                excludeSpotterData(rawSpotterData, sensorExclusionDates),
+              );
 
-          // Save data to time_series
-          return Promise.all(
-            spotterData
-              .map((dailySpotterData) =>
-                dataLabels.map(([spotterDataLabel, metric]) =>
-                  saveDataBatch(
-                    dailySpotterData[spotterDataLabel] as ValueWithTimestamp[], // We know that there would not be any undefined values here
-                    siteToSource[site.id],
-                    metric,
-                    repositories.timeSeriesRepository,
-                  ),
+              if (
+                !skipDistanceCheck &&
+                data?.latitude?.length &&
+                data?.longitude?.length
+              ) {
+                // Check if spotter is within specified distance from its site, else don't return any data.
+                const dist = distance(
+                  (site.polygon as Point).coordinates,
+                  [data.longitude[0].value, data.latitude[0].value],
+                  { units: 'kilometers' },
+                );
+                if (dist > MAX_DISTANCE_FROM_SITE) {
+                  logger.warn(
+                    `Spotter is over ${MAX_DISTANCE_FROM_SITE}km from site ${site.id}. Data will not be saved.`,
+                  );
+                  return DEFAULT_SPOTTER_DATA_VALUE;
+                }
+              }
+
+              return data;
+            }),
+          ),
+        );
+
+        const dataLabels: [keyof SpotterData, Metric][] = [
+          ['topTemperature', Metric.TOP_TEMPERATURE],
+          ['bottomTemperature', Metric.BOTTOM_TEMPERATURE],
+          ['significantWaveHeight', Metric.SIGNIFICANT_WAVE_HEIGHT],
+          ['waveMeanDirection', Metric.WAVE_MEAN_DIRECTION],
+          ['waveMeanPeriod', Metric.WAVE_MEAN_PERIOD],
+          ['windDirection', Metric.WIND_DIRECTION],
+          ['windSpeed', Metric.WIND_SPEED],
+          ['barometerTop', Metric.BAROMETRIC_PRESSURE_TOP],
+          ['barometerBottom', Metric.BAROMETRIC_PRESSURE_BOTTOM],
+          ['barometricTopDiff', Metric.BAROMETRIC_PRESSURE_TOP_DIFF],
+          ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
+        ];
+
+        // Save data to time_series
+        await Promise.all(
+          spotterData
+            .map((dailySpotterData) =>
+              dataLabels.map(([spotterDataLabel, metric]) =>
+                saveDataBatch(
+                  dailySpotterData[spotterDataLabel] as ValueWithTimestamp[], // We know that there would not be any undefined values here
+                  siteToSource[site.id],
+                  metric,
+                  repositories.timeSeriesRepository,
                 ),
-              )
-              .flat(),
-          );
-        })
-        .then(() => {
-          // After each successful execution, log the event
-          const startDate = DateTime.now()
-            .minus({ days: days - 1 })
-            .startOf('day');
+              ),
+            )
+            .flat(),
+        );
 
-          const endDate = DateTime.now().endOf('day');
-          logger.debug(
-            `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
-          );
-        }),
-    { concurrency: 1 },
+        // After each successful execution, log the event
+        const startDate = DateTime.now()
+          .minus({ days: days - 1 })
+          .startOf('day');
+
+        const endDate = DateTime.now().endOf('day');
+        logger.debug(
+          `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
+        );
+      }),
+    ),
   );
 
   // Update materialized view

@@ -34,3 +34,7 @@ sst_clim_*.tiff
 
 # Temporary yarn.lock
 temp_yarn_workspace_lock
+yarn.lock
+
+# .env
+.env
