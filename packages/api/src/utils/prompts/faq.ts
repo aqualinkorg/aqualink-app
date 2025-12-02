@@ -11,7 +11,8 @@
  */
 
 // Get backend base URL from environment variable
-const { BACKEND_BASE_URL } = process.env;
+const { BACKEND_BASE_URL } =
+  process.env || 'https://production-dot-ocean-systems.uc.r.appspot.com/api';
 if (!BACKEND_BASE_URL) {
   throw new Error('BACKEND_BASE_URL environment variable is required');
 }
