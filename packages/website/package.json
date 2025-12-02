@@ -57,6 +57,7 @@
     "react-jwt": "^1.1.8",
     "react-leaflet": "^4.2.1",
     "react-leaflet-markercluster": "^2.0.0",
+    "react-markdown": "^10.1.0",
     "react-material-ui-carousel": "3.4.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^6.0.0",
@@ -82,7 +83,7 @@
     ]
   },
   "engines": {
-    "node": "18.x"
+    "node": "20"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250224.0",
@@ -96,10 +97,13 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/chart.js": "^2.9.27",
     "@types/classnames": "^2.2.10",
+    "@types/hast": "^3.0.4",
     "@types/immutable": "^3.8.7",
     "@types/leaflet.locatecontrol": "^0.74.4",
     "@types/lodash": "^4.14.149",
     "@types/luxon": "^3.3.1",
+    "@types/mdast": "^4.0.4",
+    "@types/ms": "^2.1.0",
     "@types/node": "^18.16.16",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.1",
@@ -110,6 +114,7 @@
     "@types/react-slick": "^0.23.4",
     "@types/react-swipeable-views": "^0.13.0",
     "@types/redux-mock-store": "^1.0.2",
+    "@types/unist": "^3.0.3",
     "@types/validator": "^13.1.0",
     "@typescript-eslint/eslint-plugin": "^8.35.1",
     "@typescript-eslint/parser": "^8.35.1",
@@ -118,7 +123,8 @@
     "dotenv-cli": "^4.0.0",
     "jsdom": "^26.0.0",
     "surge": "^0.23.1",
-    "vitest": "^3.0.7",
+    "vite": "^5.0.0",
+    "vitest": "^1.6.0",
     "wrangler": "^4.12.0"
   }
 }
