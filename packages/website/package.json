@@ -59,6 +59,7 @@
     "react-jwt": "^1.1.8",
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
+    "react-markdown": "^10.1.0",
     "react-material-ui-carousel": "3.4.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.4",
