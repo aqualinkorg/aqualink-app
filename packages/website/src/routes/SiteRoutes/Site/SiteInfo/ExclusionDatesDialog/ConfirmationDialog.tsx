@@ -10,7 +10,16 @@ import makeStyles from '@mui/styles/makeStyles';
 import { grey } from '@mui/material/colors';
 import { DateTime } from 'luxon-extensions';
 
-const ConfirmationDialog = ({
+const useStyles = makeStyles(() => ({
+  content: {
+    borderBottom: `1px solid ${grey[300]}`,
+  },
+  bold: {
+    fontWeight: 700,
+  },
+}));
+
+function ConfirmationDialog({
   open,
   isConfirmLoading,
   start,
@@ -18,7 +27,7 @@ const ConfirmationDialog = ({
   timeZone,
   onClose,
   handleMaintainPeriodAddition,
-}: ConfirmationDialogProps) => {
+}: ConfirmationDialogProps) {
   const classes = useStyles();
   if (!start || !end) return null;
 
@@ -61,16 +70,7 @@ const ConfirmationDialog = ({
       </DialogActions>
     </Dialog>
   );
-};
-
-const useStyles = makeStyles(() => ({
-  content: {
-    borderBottom: `1px solid ${grey[300]}`,
-  },
-  bold: {
-    fontWeight: 700,
-  },
-}));
+}
 
 interface ConfirmationDialogProps {
   open: boolean;

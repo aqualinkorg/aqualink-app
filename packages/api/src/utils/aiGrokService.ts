@@ -182,6 +182,7 @@ export async function checkGrokAPIHealth(): Promise<boolean> {
 
     return response.status === 200;
   } catch (error) {
+    console.error('Grok API health check failed:', error);
     return false;
   }
 }

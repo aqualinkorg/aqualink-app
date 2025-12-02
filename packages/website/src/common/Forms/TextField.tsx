@@ -7,7 +7,7 @@ import createStyles from '@mui/styles/createStyles';
 
 import { FormField } from 'hooks/useFormField';
 
-const CustomTextfield = ({
+function CustomTextfield({
   formField,
   label,
   placeholder,
@@ -22,7 +22,7 @@ const CustomTextfield = ({
   onFocus,
   classes,
   select = false,
-}: CustomTextfieldProps) => {
+}: CustomTextfieldProps) {
   return (
     <TextField
       disabled={disabled}
@@ -46,7 +46,7 @@ const CustomTextfield = ({
       }}
     />
   );
-};
+}
 
 const styles = () =>
   createStyles({

@@ -5,7 +5,7 @@ import withStyles from '@mui/styles/withStyles';
 import aiChat from '../../assets/aiChat.png';
 import { styles } from './styles';
 
-const ChatButton = ({ classes, onClick }: ChatButtonProps) => {
+function ChatButton({ classes, onClick }: ChatButtonProps) {
   return (
     <Tooltip
       title="Ask AI about coral bleaching and heat stress"
@@ -23,7 +23,7 @@ const ChatButton = ({ classes, onClick }: ChatButtonProps) => {
       />
     </Tooltip>
   );
-};
+}
 
 interface ChatButtonIncomingProps {
   onClick: () => void;

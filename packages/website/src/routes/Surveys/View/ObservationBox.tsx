@@ -12,12 +12,12 @@ import {
 import { formatNumber } from 'helpers/numberUtils';
 import { getCardTemperatureValues } from './utils';
 
-const ObservationBox = ({
+function ObservationBox({
   depth,
   date = null,
   classes,
   satelliteTemperature,
-}: ObservationBoxProps) => {
+}: ObservationBoxProps) {
   const { bottomTemperature, topTemperature } =
     useSelector(siteTimeSeriesDataSelector) || {};
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
@@ -101,7 +101,7 @@ const ObservationBox = ({
       )}
     </div>
   );
-};
+}
 
 const styles = () =>
   createStyles({

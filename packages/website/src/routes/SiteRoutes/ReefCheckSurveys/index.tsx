@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { Link, useParams } from 'react-router-dom';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
@@ -19,11 +20,13 @@ import { ReefCheckSurveySummary } from './ReefCheckSurveySummary';
 import { ReefCheckSurveyDetails } from './ReefCheckSurveyDetails';
 import { ReefCheckSurveySubstrates } from './ReefCheckSurveySubstratesTable';
 
-export const ReefCheckSurveyViewPage = () => {
-  const { id: siteId = '', sid: surveyId = '' } =
-    useParams<{ id: string; sid: string }>();
+export function ReefCheckSurveyViewPage() {
+  const { id: siteId = '', sid: surveyId = '' } = useParams<{
+    id: string;
+    sid: string;
+  }>();
   const error = useSelector(siteErrorSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -118,4 +121,4 @@ export const ReefCheckSurveyViewPage = () => {
       </Box>
     </>
   );
-};
+}

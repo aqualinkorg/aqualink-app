@@ -59,12 +59,10 @@ export class SensorsService {
           }
           const sofarToken =
             site.spotterApiToken || process.env.SOFAR_API_TOKEN;
-          return getSpotterData(site.sensorId!, sofarToken).then((data) => {
-            return {
-              id: site.id,
-              ...data,
-            };
-          });
+          return getSpotterData(site.sensorId!, sofarToken).then((data) => ({
+            id: site.id,
+            ...data,
+          }));
         }),
       ),
     );
@@ -272,8 +270,8 @@ export class SensorsService {
     // Group the data by source id
     const groupedData = groupBy(timeSeriesData, (o) => o.source);
 
-    return Object.keys(groupedData).reduce<SensorDataDto>((data, key) => {
-      return {
+    return Object.keys(groupedData).reduce<SensorDataDto>(
+      (data, key) => ({
         ...data,
         // Replace source id by source using the mapped source object
         // Keep only timestamps and value from the resulting objects
@@ -285,7 +283,8 @@ export class SensorsService {
           ),
           (v) => ({ timestamp: v.timestamp, value: v.value }),
         ),
-      };
-    }, {});
+      }),
+      {},
+    );
   }
 }

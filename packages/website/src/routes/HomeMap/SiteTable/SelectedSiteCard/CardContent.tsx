@@ -27,12 +27,93 @@ import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import featuredImageLoading from '../../../../assets/img/loading-image.svg';
 import chartLoading from '../../../../assets/img/chart_skeleton.png';
 
-const SelectedSiteCardContent = ({
+const useStyles = makeStyles((theme: Theme) => ({
+  cardWrapper: ({ imageUrl, loading }: SelectedSiteCardContentStyleProps) => ({
+    minHeight: '18rem',
+    [theme.breakpoints.down('lg')]: {
+      minHeight: '24rem',
+    },
+    [theme.breakpoints.down('md')]: {
+      height: imageUrl || loading ? '42rem' : '27rem',
+    },
+  }),
+  imageBorderRadius: {
+    borderRadius: '4px 0 0 4px',
+    [theme.breakpoints.down('lg')]: {
+      borderRadius: '4px 0 0 0',
+    },
+    [theme.breakpoints.down('md')]: {
+      borderRadius: '4px 4px 0 0',
+    },
+  },
+  cardImage: {
+    height: '100%',
+
+    [theme.breakpoints.down('md')]: {
+      height: 300,
+    },
+  },
+  cardImageTextWrapper: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    right: 16,
+    overflowWrap: 'break-word',
+  },
+  cardAnalyticsWrapper: {
+    marginBottom: '2rem',
+    maxHeight: '14rem',
+  },
+  cardTitleWrapper: {
+    maxWidth: 'calc(100% - 88px)',
+    marginRight: theme.spacing(1),
+  },
+  cardTitle: {
+    width: '100%',
+    display: 'block',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  siteRegionName: {
+    marginBottom: '0.6rem',
+  },
+  metricsContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '100%',
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(3),
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      flexDirection: 'column',
+      alignItems: 'start',
+    },
+  },
+  metric: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  mobileChartLoading: {
+    margin: 'auto',
+  },
+  exploreButton: {
+    '&:hover': {
+      color: 'white',
+    },
+  },
+}));
+
+function SelectedSiteCardContent({
   site,
   loading,
   error,
   imageUrl = null,
-}: SelectedSiteCardContentProps) => {
+}: SelectedSiteCardContentProps) {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
   const location = useLocation();
@@ -334,88 +415,7 @@ const SelectedSiteCardContent = ({
       </Grid>
     </Grid>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  cardWrapper: ({ imageUrl, loading }: SelectedSiteCardContentStyleProps) => ({
-    minHeight: '18rem',
-    [theme.breakpoints.down('lg')]: {
-      minHeight: '24rem',
-    },
-    [theme.breakpoints.down('md')]: {
-      height: imageUrl || loading ? '42rem' : '27rem',
-    },
-  }),
-  imageBorderRadius: {
-    borderRadius: '4px 0 0 4px',
-    [theme.breakpoints.down('lg')]: {
-      borderRadius: '4px 0 0 0',
-    },
-    [theme.breakpoints.down('md')]: {
-      borderRadius: '4px 4px 0 0',
-    },
-  },
-  cardImage: {
-    height: '100%',
-
-    [theme.breakpoints.down('md')]: {
-      height: 300,
-    },
-  },
-  cardImageTextWrapper: {
-    position: 'absolute',
-    top: 16,
-    left: 16,
-    right: 16,
-    overflowWrap: 'break-word',
-  },
-  cardAnalyticsWrapper: {
-    marginBottom: '2rem',
-    maxHeight: '14rem',
-  },
-  cardTitleWrapper: {
-    maxWidth: 'calc(100% - 88px)',
-    marginRight: theme.spacing(1),
-  },
-  cardTitle: {
-    width: '100%',
-    display: 'block',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-  },
-  siteRegionName: {
-    marginBottom: '0.6rem',
-  },
-  metricsContainer: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flexDirection: 'row',
-    width: '100%',
-    [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(3),
-      marginBottom: theme.spacing(3),
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      flexDirection: 'column',
-      alignItems: 'start',
-    },
-  },
-  metric: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  mobileChartLoading: {
-    margin: 'auto',
-  },
-  exploreButton: {
-    '&:hover': {
-      color: 'white',
-    },
-  },
-}));
+}
 
 interface SelectedSiteCardContentProps {
   site?: Site | null;

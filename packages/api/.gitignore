@@ -33,6 +33,7 @@ sst_clim_*.tiff
 .jest-cache
 
 # Temporary yarn.lock
+temp_yarn_workspace_lock
 yarn.lock
 
 # .env

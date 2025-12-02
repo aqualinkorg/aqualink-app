@@ -25,10 +25,17 @@ type ReefCheckSurveyCardIncomingProps = {
   survey: ReefCheckSurvey;
 };
 
-const ReefCheckSurveyCardComponent = ({
+const formatImpactCount = (count?: number) => {
+  if (count === undefined) {
+    return '';
+  }
+  return count > 0 ? 'YES' : 'NO';
+};
+
+function ReefCheckSurveyCardComponent({
   survey,
   classes,
-}: ReefCheckSurveyCardProps) => {
+}: ReefCheckSurveyCardProps) {
   const stats = groupBy(
     // eslint-disable-next-line fp/no-mutating-methods
     survey.organisms
@@ -137,14 +144,7 @@ const ReefCheckSurveyCardComponent = ({
       </Box>
     </Paper>
   );
-};
-
-const formatImpactCount = (count?: number) => {
-  if (count === undefined) {
-    return '';
-  }
-  return count > 0 ? 'YES' : 'NO';
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

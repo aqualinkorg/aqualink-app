@@ -70,7 +70,7 @@ const metrics = (data?: OceanSenseData): Record<OceanSenseKeys, Metric> => ({
   },
 });
 
-const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
+function OceanSenseMetrics({ classes }: OceanSenseMetricsProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.up('md'));
@@ -139,7 +139,7 @@ const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
       </Grid>
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

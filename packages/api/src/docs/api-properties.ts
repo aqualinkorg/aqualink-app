@@ -13,9 +13,7 @@ import {
 } from '../sites/dto/create-site.dto';
 import { PointSchema } from './api-schemas';
 
-export const ApiPointProperty = () => {
-  return applyDecorators(ApiProperty(PointSchema));
-};
+export const ApiPointProperty = () => applyDecorators(ApiProperty(PointSchema));
 
 export const ApiFileUpload = () => {
   const maxFileSizeMB = process.env.STORAGE_MAX_FILE_SIZE_MB
@@ -39,8 +37,8 @@ export const ApiFileUpload = () => {
   );
 };
 
-export const ApiUpdateSiteApplicationBody = () => {
-  return applyDecorators(
+export const ApiUpdateSiteApplicationBody = () =>
+  applyDecorators(
     ApiBody({
       schema: {
         type: 'object',
@@ -55,10 +53,9 @@ export const ApiUpdateSiteApplicationBody = () => {
       },
     }),
   );
-};
 
-export const ApiCreateSiteBody = () => {
-  return applyDecorators(
+export const ApiCreateSiteBody = () =>
+  applyDecorators(
     ApiBody({
       schema: {
         type: 'object',
@@ -73,4 +70,3 @@ export const ApiCreateSiteBody = () => {
       },
     }),
   );
-};

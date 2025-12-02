@@ -5,7 +5,7 @@ import ChatButton from './ChatButton';
 import ChatWindow from './ChatWindow';
 import { styles } from './styles';
 
-const AiChatWidget = ({ siteId }: AiChatWidgetProps) => {
+function AiChatWidget({ siteId }: AiChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -22,7 +22,7 @@ const AiChatWidget = ({ siteId }: AiChatWidgetProps) => {
       {isOpen && <ChatWindow onClose={handleClose} siteId={siteId} />}
     </>
   );
-};
+}
 
 interface AiChatWidgetIncomingProps {
   siteId: number;

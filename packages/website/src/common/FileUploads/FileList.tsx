@@ -26,7 +26,41 @@ import { pluralize } from 'helpers/stringUtils';
 
 const CIRCULAR_PROGRESS_SIZE = 36;
 
-const FileList = ({ files, onFileDelete }: FileListProps) => {
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    marginTop: theme.spacing(3),
+  },
+  card: {
+    position: 'relative',
+  },
+  cardContent: {
+    maxWidth: 'calc(100% - 40px - 48px)', // Full width minus the two icons (file icon and delete icon)
+  },
+  cardHeaderTitle: {
+    overflow: 'hidden',
+    width: '100%',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  fileIcon: {
+    color: theme.palette.text.secondary,
+  },
+  loading: {
+    opacity: 0.5,
+    pointerEvents: 'none',
+    cursor: 'default',
+  },
+  circularProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -CIRCULAR_PROGRESS_SIZE / 2,
+    marginLeft: -CIRCULAR_PROGRESS_SIZE / 2,
+    color: grey[500],
+  },
+}));
+
+function FileList({ files, onFileDelete }: FileListProps) {
   const classes = useStyles();
   const errors = useSelector(uploadsErrorSelector) as Record<
     string,
@@ -88,41 +122,7 @@ const FileList = ({ files, onFileDelete }: FileListProps) => {
       ))}
     </Grid>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-  },
-  card: {
-    position: 'relative',
-  },
-  cardContent: {
-    maxWidth: 'calc(100% - 40px - 48px)', // Full width minus the two icons (file icon and delete icon)
-  },
-  cardHeaderTitle: {
-    overflow: 'hidden',
-    width: '100%',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  fileIcon: {
-    color: theme.palette.text.secondary,
-  },
-  loading: {
-    opacity: 0.5,
-    pointerEvents: 'none',
-    cursor: 'default',
-  },
-  circularProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -CIRCULAR_PROGRESS_SIZE / 2,
-    marginLeft: -CIRCULAR_PROGRESS_SIZE / 2,
-    color: grey[500],
-  },
-}));
+}
 
 interface FileListProps {
   files: File[];

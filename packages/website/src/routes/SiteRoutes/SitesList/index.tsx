@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { List, ListItemText, Theme } from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import { WithStyles } from '@mui/styles';
@@ -9,34 +10,32 @@ import { Link } from 'react-router-dom';
 
 import { sitesListSelector, sitesRequest } from 'store/Sites/sitesListSlice';
 
-const SitesList = ({ classes }: SitesListProps) => {
+function SitesList({ classes }: SitesListProps) {
   const sitesList = useSelector(sitesListSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(sitesRequest());
   }, [dispatch]);
 
   return (
-    <>
-      <div className={classes.root}>
-        <List component="nav">
-          {sitesList?.map((site) => (
-            <Link
-              key={`site-list-item-${site.id}`}
-              style={{ color: 'inherit', textDecoration: 'none' }}
-              to={`/sites/${site.id}`}
-            >
-              <ListItemButton>
-                <ListItemText style={{ color: 'white' }} primary={site.name} />
-              </ListItemButton>
-            </Link>
-          ))}
-        </List>
-      </div>
-    </>
+    <div className={classes.root}>
+      <List component="nav">
+        {sitesList?.map((site) => (
+          <Link
+            key={`site-list-item-${site.id}`}
+            style={{ color: 'inherit', textDecoration: 'none' }}
+            to={`/sites/${site.id}`}
+          >
+            <ListItemButton>
+              <ListItemText style={{ color: 'white' }} primary={site.name} />
+            </ListItemButton>
+          </Link>
+        ))}
+      </List>
+    </div>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

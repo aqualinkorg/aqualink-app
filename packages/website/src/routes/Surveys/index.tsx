@@ -3,7 +3,8 @@ import { LinearProgress, Grid, Typography, Container } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -17,12 +18,12 @@ import Footer from 'common/Footer';
 import NewSurvey from './New';
 import SurveyViewPage from './View';
 
-const Surveys = ({ classes }: SurveysProps) => {
+function Surveys({ classes }: SurveysProps) {
   const params = useParams<{ id: string; sid?: string }>();
   const siteDetails = useSelector(siteDetailsSelector);
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const siteId = params.id ?? '';
   const surveyId = params.sid;
 
@@ -67,7 +68,7 @@ const Surveys = ({ classes }: SurveysProps) => {
       <Footer />
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

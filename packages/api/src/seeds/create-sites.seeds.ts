@@ -21,26 +21,26 @@ export class CreateSite implements Seeder {
     });
 
     await Promise.all(
-      dates.map((date) => {
-        return factory(DailyData)()
+      dates.map((date) =>
+        factory(DailyData)()
           .map(async (dailyData) => {
             dailyData.date = date;
             dailyData.site = site;
             return dailyData;
           })
-          .create();
-      }),
+          .create(),
+      ),
     );
 
     const surveyPoints = await Promise.all(
-      times(4, () => {
-        return factory(SiteSurveyPoint)()
+      times(4, () =>
+        factory(SiteSurveyPoint)()
           .map(async (surveyPoint) => {
             surveyPoint.site = site;
             return surveyPoint;
           })
-          .create();
-      }),
+          .create(),
+      ),
     );
 
     const metrics = [
@@ -53,16 +53,16 @@ export class CreateSite implements Seeder {
     ];
 
     const sources = await Promise.all(
-      surveyPoints.map((surveyPoint) => {
-        return factory(Sources)()
+      surveyPoints.map((surveyPoint) =>
+        factory(Sources)()
           .map(async (data) => {
             data.site = site;
             data.surveyPoint = surveyPoint;
             data.type = SourceType.HOBO;
             return data;
           })
-          .create();
-      }),
+          .create(),
+      ),
     );
 
     const sourcesMap: { [k: number]: Sources } = Object.fromEntries(
@@ -70,8 +70,8 @@ export class CreateSite implements Seeder {
     );
 
     await Promise.all(
-      times(1000, () => {
-        return factory(TimeSeries)()
+      times(1000, () =>
+        factory(TimeSeries)()
           .map(async (data) => {
             const metricId = Math.floor(Math.random() * 5);
             const surveyPointId = Math.floor(Math.random() * 4);
@@ -79,8 +79,8 @@ export class CreateSite implements Seeder {
             data.metric = metrics[metricId];
             return data;
           })
-          .create();
-      }),
+          .create(),
+      ),
     );
   }
 }

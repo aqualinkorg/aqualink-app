@@ -94,6 +94,25 @@ function stableSort<T>(array: T[], ...comparators: ((a: T, b: T) => number)[]) {
 
 const rowsPerPageOptions = [10, 20, 50, 100];
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    visuallyHidden: {
+      border: 0,
+      clip: 'rect(0 0 0 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      top: 20,
+      width: 1,
+    },
+    toolbar: {
+      flexDirection: 'row-reverse',
+    },
+  }),
+);
+
 function MonitoringTable<
   T extends { [key in keyof T]: string | number | null },
 >({
@@ -246,24 +265,5 @@ function MonitoringTable<
     </Paper>
   );
 }
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    visuallyHidden: {
-      border: 0,
-      clip: 'rect(0 0 0 0)',
-      height: 1,
-      margin: -1,
-      overflow: 'hidden',
-      padding: 0,
-      position: 'absolute',
-      top: 20,
-      width: 1,
-    },
-    toolbar: {
-      flexDirection: 'row-reverse',
-    },
-  }),
-);
 
 export default MonitoringTable;

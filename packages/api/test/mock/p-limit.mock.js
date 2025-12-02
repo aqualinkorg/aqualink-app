@@ -5,9 +5,7 @@
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function pLimit(_concurrency) {
-  return async (fn) => {
-    return fn();
-  };
+  return async (fn) => fn();
 }
 
 module.exports = pLimit;

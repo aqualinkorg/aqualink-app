@@ -127,10 +127,10 @@ interface TrackerProps {
   shouldShowFooter?: boolean;
 }
 
-const Tracker = ({
+function Tracker({
   shouldShowNav = true,
   shouldShowFooter = true,
-}: TrackerProps) => {
+}: TrackerProps) {
   const heroAspectRatio = useImageAspectRatio(hero);
   const image1AspectRatio = useImageAspectRatio(image1);
   const image2AspectRatio = useImageAspectRatio(image2);
@@ -415,6 +415,6 @@ const Tracker = ({
       {shouldShowFooter && <Footer />}
     </>
   );
-};
+}
 
 export default Tracker;

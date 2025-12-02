@@ -3,6 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { DataSource } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
+import { ExclusionDates } from 'sites/exclusion-dates.entity';
+import { Region } from 'regions/regions.entity';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/users.entity';
 import { Site } from '../src/sites/sites.entity';
@@ -13,11 +15,9 @@ import { Sources } from '../src/sites/sources.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Collection } from '../src/collections/collections.entity';
 import { DailyData } from '../src/sites/daily-data.entity';
-import { Region } from '../src/regions/regions.entity';
 import { Survey } from '../src/surveys/surveys.entity';
 import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
-import { ExclusionDates } from '../src/sites/exclusion-dates.entity';
 import { getHistoricalMonthlyMeans } from '../src/utils/temperature';
 import { users } from './mock/user.mock';
 import { sites } from './mock/site.mock';
@@ -101,13 +101,13 @@ export class TestService {
         latitude,
       );
 
-      return Bluebird.map(historicalMonthlyMean, (hmm) => {
-        return connection.getRepository(HistoricalMonthlyMean).save({
+      return Bluebird.map(historicalMonthlyMean, (hmm) =>
+        connection.getRepository(HistoricalMonthlyMean).save({
           site,
           month: hmm.month,
           temperature: hmm.temperature,
-        });
-      });
+        }),
+      );
     });
   }
 

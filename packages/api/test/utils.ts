@@ -36,19 +36,19 @@ export const createMockFirebaseUser = (
 export const mockDeleteFile = (app: INestApplication) => {
   const surveysService = app.get(SurveysService);
 
+  // Use mockImplementationOnce for one-time use
   jest
     .spyOn(surveysService.googleCloudService, 'deleteFile')
-    .mockImplementation((props: string) => Promise.resolve());
+    .mockResolvedValueOnce(undefined);
 };
 
 export const mockDeleteFileFalling = (app: INestApplication) => {
   const surveysService = app.get(SurveysService);
 
+  // Use mockImplementationOnce for one-time use
   jest
     .spyOn(surveysService.googleCloudService, 'deleteFile')
-    .mockImplementation((props: string) =>
-      Promise.reject(new Error('Delete file failed')),
-    );
+    .mockRejectedValueOnce(new Error('Delete file failed'));
 };
 
 export const mockBackfillSiteData = () => {

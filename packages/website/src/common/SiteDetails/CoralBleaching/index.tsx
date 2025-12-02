@@ -12,7 +12,7 @@ import UpdateInfo from '../../UpdateInfo';
 
 import { styles as incomingStyles } from '../styles';
 
-const Bleaching = ({ data, classes }: BleachingProps) => {
+function Bleaching({ data, classes }: BleachingProps) {
   const { timestamp, value: tempWeeklyAlertValue } = data.tempWeeklyAlert || {
     value: 0,
   };
@@ -64,7 +64,7 @@ const Bleaching = ({ data, classes }: BleachingProps) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 const styles = () =>
   createStyles({

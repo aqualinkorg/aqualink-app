@@ -13,15 +13,16 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
       />
     </div>
     <a
+      data-discover="true"
       href="/monitoring"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-cjd39g-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-17b85jl-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
         <span
-          class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
+          class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
         >
           <svg
             aria-hidden="true"
@@ -39,14 +40,14 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
       </button>
     </a>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-cjd39g-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-17b85jl-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >
       Refresh
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-cjd39g-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-17b85jl-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >
@@ -73,8 +74,8 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for=":r1:"
-          id=":r1:-label"
+          for=":r4:"
+          id=":r4:-label"
         >
           Site ID
         </label>
@@ -84,16 +85,16 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r1:"
+            id=":r4:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="css-81qg8w"
+              class="css-1n64csd-MuiNotchedOutlined-root"
             >
               <span>
                 Site ID
@@ -108,8 +109,8 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for=":r2:"
-          id=":r2:-label"
+          for=":r5:"
+          id=":r5:-label"
         >
           Spotter ID
         </label>
@@ -119,16 +120,16 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r2:"
+            id=":r5:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="css-81qg8w"
+              class="css-1n64csd-MuiNotchedOutlined-root"
             >
               <span>
                 Spotter ID

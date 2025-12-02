@@ -7,7 +7,20 @@ import { Site } from 'store/Sites/types';
 
 const exampleFiles = ['hobo', 'sonde', 'metlog', 'hui'];
 
-const Header = ({ site }: HeaderProps) => {
+const useStyles = makeStyles(() => ({
+  downloadButton: {
+    background: 'none !important',
+    border: 'none',
+    padding: '0 !important',
+    color: '#069',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    textTransform: 'none',
+    minWidth: 0,
+  },
+}));
+
+function Header({ site }: HeaderProps) {
   const classes = useStyles();
   return (
     <Grid container alignItems="center" spacing={1}>
@@ -64,20 +77,7 @@ const Header = ({ site }: HeaderProps) => {
       </Grid>
     </Grid>
   );
-};
-
-const useStyles = makeStyles(() => ({
-  downloadButton: {
-    background: 'none !important',
-    border: 'none',
-    padding: '0 !important',
-    color: '#069',
-    textDecoration: 'underline',
-    cursor: 'pointer',
-    textTransform: 'none',
-    minWidth: 0,
-  },
-}));
+}
 
 interface HeaderProps {
   site: Site;

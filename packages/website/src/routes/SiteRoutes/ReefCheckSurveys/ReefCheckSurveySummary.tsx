@@ -22,9 +22,24 @@ import reefCheckLogo from '../../../assets/img/reef-check.png';
 const REQUEST_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSc6VTTr9Z20exlrf_l9kr_br03kfPOFksUsGXv-mJVRucg8TQ/viewform';
 
-export const ReefCheckSurveySummaryComponent = ({
+export const formatReefCheckSurveyDate = (
+  dateStr: string,
+  format?: string,
+): string => {
+  const formatted = displayTimeInLocalTimezone({
+    isoDate: dateStr,
+    format: format ?? 'MM/dd/yyyy, hh:mm a',
+    displayTimezone: false,
+    // This is a workaround to display the date in the local timezone of the reef
+    // TODO: Remove this once we have fixed the import of the ReefCheckSurvey
+    timeZone: 'UTC',
+  });
+  return formatted ?? '';
+};
+
+export function ReefCheckSurveySummaryComponent({
   classes,
-}: ReefCheckSurveySummaryProps) => {
+}: ReefCheckSurveySummaryProps) {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
 
   if (error) {
@@ -119,22 +134,7 @@ export const ReefCheckSurveySummaryComponent = ({
       )}
     </Paper>
   );
-};
-
-export const formatReefCheckSurveyDate = (
-  dateStr: string,
-  format?: string,
-): string => {
-  const formatted = displayTimeInLocalTimezone({
-    isoDate: dateStr,
-    format: format ?? 'MM/dd/yyyy, hh:mm a',
-    displayTimezone: false,
-    // This is a workaround to display the date in the local timezone of the reef
-    // TODO: Remove this once we have fixed the import of the ReefCheckSurvey
-    timeZone: 'UTC',
-  });
-  return formatted ?? '';
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

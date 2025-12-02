@@ -31,6 +31,7 @@ describe('SiteInfo', () => {
         site={mockSite}
         isAdmin
         lastSurvey="2020-09-10T10:27:00.000Z"
+        hasDailyData
       />,
       { store },
     ).container;

@@ -20,7 +20,8 @@ import { Box } from '@mui/system';
 import { sum } from 'lodash';
 import isEmpty from 'lodash/isEmpty';
 import React, { SyntheticEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { siteFilterOptions } from 'store/Sites/constants';
 import {
   sitesListFiltersSelector,
@@ -32,14 +33,14 @@ import { PatchSiteFiltersPayload, SiteFilters } from 'store/Sites/types';
 
 type SitesFilterModalComponentProps = WithStyles<typeof styles>;
 
-const SitesFilterModalComponent = ({
+function SitesFilterModalComponent({
   classes,
-}: SitesFilterModalComponentProps) => {
+}: SitesFilterModalComponentProps) {
   const [open, setOpen] = useState(false);
   const [accordionsDefaultExpanded, setAccordionsDefaultExpanded] = useState<
     Partial<Record<keyof SiteFilters, boolean>>
   >({});
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const filters = useSelector(sitesListFiltersSelector);
   const filteredSites = useSelector(sitesToDisplayListSelector);
 
@@ -275,7 +276,7 @@ const SitesFilterModalComponent = ({
       </Dialog>
     </>
   );
-};
+}
 
 const styles = createStyles({
   title: {

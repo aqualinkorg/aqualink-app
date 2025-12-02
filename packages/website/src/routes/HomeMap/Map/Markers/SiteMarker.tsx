@@ -1,5 +1,6 @@
 import { CircleMarker, Marker, useMap } from 'react-leaflet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import React from 'react';
 import { Site } from 'store/Sites/types';
 import {
@@ -29,7 +30,7 @@ interface SiteMarkerProps {
 export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
   const map = useMap();
   const isSelected = useSelector(isSelectedOnMapSelector(site.id));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
 
   if (site.polygon.type !== 'Point') return null;
@@ -66,7 +67,7 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
 export const SensorSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
   const map = useMap();
   const isSelected = useSelector(isSelectedOnMapSelector(site.id));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
   const markerIcon = useMarkerIcon(
     hasDeployedSpotter(site),

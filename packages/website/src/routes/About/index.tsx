@@ -17,7 +17,7 @@ import peter from '../../assets/img/peter.jpg';
 import caesar from '../../assets/img/caesar.jpg';
 import ericb from '../../assets/img/ericb.jpg';
 
-const About = ({ classes }: AboutProps) => {
+function About({ classes }: AboutProps) {
   return (
     <>
       <NavBar searchLocation={false} />
@@ -456,7 +456,7 @@ const About = ({ classes }: AboutProps) => {
       <Footer />
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

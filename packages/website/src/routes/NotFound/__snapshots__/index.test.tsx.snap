@@ -6,6 +6,7 @@ exports[`renders as expected 1`] = `
     class="NotFoundPage-background-1"
   >
     <a
+      data-discover="true"
       href="/map"
     >
       <img

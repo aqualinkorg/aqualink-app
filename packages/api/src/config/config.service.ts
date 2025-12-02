@@ -38,7 +38,7 @@ class ConfigService {
     return value;
   }
 
-  API_URL = this.getValue('BACKEND_BASE_URL', true);
+  API_URL = this.getValue('BACKEND_BASE_URL', false) || 'http://localhost:3000';
 
   public ensureValues(keys: string[]) {
     keys.forEach((k) => this.getValue(k, true));
@@ -58,7 +58,7 @@ class ConfigService {
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       ...dataSourceOptions,
-    };
+    } as TypeOrmModuleOptions;
   }
 
   // eslint-disable-next-line class-methods-use-this

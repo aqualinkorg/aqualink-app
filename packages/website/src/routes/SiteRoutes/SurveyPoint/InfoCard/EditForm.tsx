@@ -11,7 +11,7 @@ import TextField from 'common/Forms/TextField';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
-const EditForm = ({
+function EditForm({
   editLoading,
   editPointName,
   editPointLatitude,
@@ -20,7 +20,7 @@ const EditForm = ({
   onCancelButtonClick,
   onSaveButtonClick,
   classes,
-}: EditFormProps) => {
+}: EditFormProps) {
   return (
     <Grid
       className={classes.formWrapper}
@@ -106,7 +106,7 @@ const EditForm = ({
       </Grid>
     </Grid>
   );
-};
+}
 
 const styles = () =>
   createStyles({
