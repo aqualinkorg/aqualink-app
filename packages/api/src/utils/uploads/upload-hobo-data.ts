@@ -292,12 +292,15 @@ const createSites = async (
             return null;
           }
 
-          return historicalMonthlyMean.map(({ month, temperature }) => {
-            return (
+          return historicalMonthlyMean.map(
+            ({ month, temperature }) =>
               temperature &&
-              historicalMonthlyMeanRepository.save({ site, month, temperature })
-            );
-          });
+              historicalMonthlyMeanRepository.save({
+                site,
+                month,
+                temperature,
+              }),
+          );
         });
       }),
     ),

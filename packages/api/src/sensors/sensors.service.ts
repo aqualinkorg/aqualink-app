@@ -59,12 +59,10 @@ export class SensorsService {
           }
           const sofarToken =
             site.spotterApiToken || process.env.SOFAR_API_TOKEN;
-          return getSpotterData(site.sensorId!, sofarToken).then((data) => {
-            return {
-              id: site.id,
-              ...data,
-            };
-          });
+          return getSpotterData(site.sensorId!, sofarToken).then((data) => ({
+            id: site.id,
+            ...data,
+          }));
         }),
       ),
     );

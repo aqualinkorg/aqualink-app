@@ -248,9 +248,8 @@ export const updateSST = async (
                       .filter(
                         (
                           sstAnomalyValue,
-                        ): sstAnomalyValue is ValueWithTimestamp => {
-                          return !isNil(sstAnomalyValue.value);
-                        },
+                        ): sstAnomalyValue is ValueWithTimestamp =>
+                          !isNil(sstAnomalyValue.value),
                       )
                   );
                 },
