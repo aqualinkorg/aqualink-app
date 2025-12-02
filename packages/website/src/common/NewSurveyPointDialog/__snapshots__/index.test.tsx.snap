@@ -43,8 +43,8 @@ exports[`NewSurveyPointDialog > should render with given state from Redux store 
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-focused MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-47g1cz-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for=":r1:"
-            id=":r1:-label"
+            for=":r0:"
+            id=":r0:-label"
           >
             Survey Point Name
           </label>
@@ -54,7 +54,7 @@ exports[`NewSurveyPointDialog > should render with given state from Redux store 
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-              id=":r1:"
+              id=":r0:"
               type="text"
               value=""
             />

@@ -990,7 +990,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
         class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       >
         <div
-          aria-controls=":r1:"
+          aria-controls=":r0:"
           aria-expanded="false"
           aria-haspopup="listbox"
           class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
