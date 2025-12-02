@@ -43,21 +43,14 @@ jobs:
         with:
           node-version: 20
 
-      - name: Enable Corepack
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-
       - uses: actions/cache@v4
         id: yarn-cache
         with:
           path: |
             **/node_modules
-            .yarn/cache
-            .yarn/install-state.gz
-          key: ${{ runner.os }}-yarn-v4-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-v4-
+            ${{ runner.os }}-yarn-v1-
 
       - name: Install dependencies if needed.
         id: install
