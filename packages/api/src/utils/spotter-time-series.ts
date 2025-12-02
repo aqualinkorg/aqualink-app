@@ -133,8 +133,8 @@ export const addSpotterData = async (
   await Bluebird.map(
     sites,
     (site) => {
-      // Fetch 18 days for SeapHOx sites to ensure historical data from deployment
-      const daysToFetch = site.hasSeaphox ? Math.max(days, 18) : days;
+      // Fetch 60 days for SeapHOx sites to ensure historical data from deployment
+      const daysToFetch = site.hasSeaphox ? Math.max(days, 60) : days;
 
       return Bluebird.map(
         times(daysToFetch),
@@ -253,6 +253,7 @@ export const addSpotterData = async (
                 ['sampleNumber', Metric.SEAPHOX_SAMPLE_NUMBER],
               ];
 
+              // eslint-disable-next-line fp/no-mutation
               seaphoxPromises = seaphoxMetrics.map(([field, metric]) => {
                 // Filter out null values and ensure we have valid numbers
                 const values: ValueWithTimestamp[] = allSeaphoxData
@@ -261,7 +262,7 @@ export const addSpotterData = async (
                     return (
                       value !== null &&
                       typeof value === 'number' &&
-                      !isNaN(value)
+                      !Number.isNaN(value)
                     );
                   })
                   .map((data) => ({
@@ -287,7 +288,6 @@ export const addSpotterData = async (
         })
         .then(() => {
           // After each successful execution, log the event
-          const daysToFetch = site.hasSeaphox ? Math.max(days, 30) : days;
           const startDate = DateTime.now()
             .minus({ days: daysToFetch - 1 })
             .startOf('day');

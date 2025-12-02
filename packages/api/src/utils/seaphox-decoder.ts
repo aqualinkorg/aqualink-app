@@ -28,15 +28,14 @@ export interface SeapHOxData {
  * Decodes hex-encoded string to ASCII
  */
 function hexToAscii(hexString: string): string {
-  let ascii = '';
-  for (let i = 0; i < hexString.length; i += 2) {
-    const hexByte = hexString.substring(i, i + 2);
-    const byte = parseInt(hexByte, 16);
-    // Stop at null bytes (padding)
-    if (byte === 0) break;
-    ascii += String.fromCharCode(byte);
-  }
-  return ascii;
+  return (
+    hexString
+      .match(/.{1,2}/g)
+      ?.map((hexByte) => parseInt(hexByte, 16))
+      .filter((byte) => byte !== 0)
+      .map((byte) => String.fromCharCode(byte))
+      .join('') || ''
+  );
 }
 
 /**
@@ -69,7 +68,7 @@ export function parseSeapHoxData(hexValue: string): SeapHOxData | null {
     // Parse floating point values - return null if invalid
     const parseValue = (str: string): number | null => {
       const val = parseFloat(str);
-      return isNaN(val) ? null : val;
+      return Number.isNaN(val) ? null : val;
     };
 
     const temperature = parseValue(values[4]);
@@ -117,21 +116,20 @@ export function extractSeapHoxFromSofarData(sofarData: any[]): SeapHOxData[] {
     return [];
   }
 
-  const seaphoxDataPoints: SeapHOxData[] = [];
-
-  for (const dataPoint of sofarData) {
-    // Check if this data point has bristlemouth data with hex value
-    if (dataPoint.bristlemouth_node_id && dataPoint.value) {
-      const parsed = parseSeapHoxData(dataPoint.value);
-      if (parsed) {
-        // Use the Sofar timestamp as primary, fallback to SeapHOx timestamp
-        if (dataPoint.timestamp) {
-          parsed.timestamp = dataPoint.timestamp;
-        }
-        seaphoxDataPoints.push(parsed);
+  const results = sofarData
+    .filter((item) => item.bristlemouth_node_id && item.value)
+    .map((item) => {
+      const parsed = parseSeapHoxData(item.value);
+      if (!parsed) {
+        return null;
       }
-    }
-  }
 
-  return seaphoxDataPoints;
+      if (item.timestamp) {
+        return { ...parsed, timestamp: item.timestamp };
+      }
+      return parsed;
+    })
+    .filter((item): item is SeapHOxData => item !== null);
+
+  return results;
 }

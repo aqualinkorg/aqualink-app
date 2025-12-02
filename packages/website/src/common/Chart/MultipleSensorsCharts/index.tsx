@@ -166,7 +166,16 @@ const MultipleSensorsCharts = ({
               timeSeriesData?.[camelCase(key) as Metrics]?.find(
                 (x) => x.type === source,
               ) || {};
-            const { title, units, convert } = getConfig(key);
+            const {
+              title,
+              units,
+              convert,
+              decimalPlaces,
+              yAxisStepSize,
+              yAxisPadding,
+              yAxisMin: configYMin,
+              yAxisMax: configYMax,
+            } = getConfig(key);
 
             return {
               key,
@@ -174,19 +183,26 @@ const MultipleSensorsCharts = ({
               surveyPoint,
               source,
               rangeLabel,
-              dataset: generateMetricDataset(
-                sensor,
-                (data || []).map((x) => ({
-                  ...x,
-                  value:
-                    typeof convert === 'number' ? convert * x.value : x.value,
-                })),
-                units,
-                color,
-                chartStartDate,
-                chartEndDate,
-                site.timezone,
-              ),
+              dataset: {
+                ...generateMetricDataset(
+                  sensor,
+                  (data || []).map((x) => ({
+                    ...x,
+                    value:
+                      typeof convert === 'number' ? convert * x.value : x.value,
+                  })),
+                  units,
+                  color,
+                  chartStartDate,
+                  chartEndDate,
+                  site.timezone,
+                ),
+                decimalPlaces,
+                yAxisStepSize,
+                yAxisPadding,
+                yAxisMin: configYMin,
+                yAxisMax: configYMax,
+              },
             };
           })
       : [];

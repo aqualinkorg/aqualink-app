@@ -55,6 +55,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       displayCardColumn,
       cardColumnName,
       cardColumnTooltip,
+      decimalPlaces,
     }) => ({
       title: cardColumnName || label,
       color: curveColor,
@@ -63,6 +64,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       rows: calculateCardMetrics(chartStartDate, chartEndDate, data, label),
       unit,
       tooltip: cardColumnTooltip,
+      decimalPlaces,
     }),
   );
 
@@ -142,7 +144,8 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
                           variant="h5"
                           color="textSecondary"
                         >
-                          {formatNumber(value, 1)} {item.unit}
+                          {formatNumber(value, item.decimalPlaces ?? 1)}{' '}
+                          {item.unit}
                         </Typography>
                       </Grid>
                     ))}

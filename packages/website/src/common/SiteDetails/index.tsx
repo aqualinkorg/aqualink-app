@@ -178,10 +178,21 @@ const SiteDetails = ({
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
       setHasHUIData(hasHUI);
+      const seapHOxInterval = Interval.fromDateTimes(
+        DateTime.now().minus({ days: 7 }), // Only show if data within last 7 days
+        DateTime.now(),
+      );
+
       const hasSeapHOx = Boolean(
-        parsedData.seaphoxTemperature ||
+        (parsedData.seaphoxTemperature ||
           parsedData.seaphoxExternalPh ||
-          parsedData.seaphoxSalinity,
+          parsedData.seaphoxSalinity) &&
+          latestData.some(
+            (x) =>
+              x.source === 'spotter' &&
+              x.metric.startsWith('seaphox_') &&
+              seapHOxInterval.contains(DateTime.fromISO(x.timestamp)),
+          ),
       );
       setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);

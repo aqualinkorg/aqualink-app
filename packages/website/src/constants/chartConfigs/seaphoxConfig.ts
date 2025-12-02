@@ -17,6 +17,10 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     description: '',
     visibility: 'public',
     order: 1,
+    decimalPlaces: 4,
+    yAxisStepSize: 0.01,
+    yAxisMin: 7.95,
+    yAxisMax: 8.05,
   },
   seaphox_pressure: {
     title: 'Pressure',
@@ -24,6 +28,9 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     description: '',
     visibility: 'public',
     order: 2,
+    decimalPlaces: 3,
+    yAxisStepSize: 0.2,
+    yAxisPadding: 0.1,
   },
   seaphox_salinity: {
     title: 'Salinity',
@@ -31,6 +38,9 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     description: '',
     visibility: 'public',
     order: 3,
+    decimalPlaces: 4,
+    yAxisStepSize: 0.01,
+    yAxisPadding: 0.1,
   },
   seaphox_conductivity: {
     title: 'Conductivity',
@@ -38,6 +48,9 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     description: '',
     visibility: 'public',
     order: 4,
+    decimalPlaces: 5,
+    yAxisStepSize: 0.01,
+    yAxisPadding: 0.1,
   },
   seaphox_oxygen: {
     title: 'Dissolved Oxygen',
@@ -45,6 +58,9 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     description: '',
     visibility: 'public',
     order: 5,
+    decimalPlaces: 3,
+    yAxisStepSize: 0.1,
+    yAxisPadding: 0.1,
   },
 };
 

@@ -334,7 +334,7 @@ export const generateTempAnalysisDatasets = (
     {
       label: 'SEAPHOX',
       data: localSeaphoxTempData,
-      curveColor: '#6B46C1',
+      curveColor: '#23225b',
       type: 'line',
       unit: '°C',
       maxHoursGap: 24,
