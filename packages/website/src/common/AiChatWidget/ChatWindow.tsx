@@ -67,11 +67,11 @@ const generateInitialGreeting = async (
   return "Hi! I'm your AI assistant for coral reef monitoring. I can help you understand heat stress, coral bleaching, and suggest response actions. What would you like to know?";
 };
 
-const ChatWindow: React.FC<ChatWindowProps> = ({
+function ChatWindow({
   classes,
   onClose,
   siteId,
-}) => {
+}: ChatWindowProps) {
   const user = useSelector(userInfoSelector);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -336,6 +336,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
       </Box>
     </Box>
   );
-};
+}
 
 export default withStyles(styles)(ChatWindow);
