@@ -94,6 +94,12 @@ export const metricsKeysList = [
   'barometric_pressure_top_diff',
   'nitrate_plus_nitrite',
   'surface_temperature',
+  'seaphox_temperature',
+  'seaphox_external_ph',
+  'seaphox_pressure',
+  'seaphox_salinity',
+  'seaphox_conductivity',
+  'seaphox_oxygen',
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];
@@ -129,7 +135,8 @@ export type Sources =
   | 'sonde'
   | 'metlog'
   | 'hui'
-  | 'sheet_data';
+  | 'sheet_data'
+  | 'bristlemouth';
 
 export type LatestDataASSofarValue = {
   [keys in Metrics]?: ValueWithTimestamp;
@@ -286,6 +293,7 @@ export interface Site {
   surveyPoints: SurveyPoints[];
   historicalMonthlyMean: HistoricalMonthlyMean[];
   hasHobo: boolean;
+  hasSeaphox: boolean;
   collectionData?: CollectionData;
   sketchFab?: SiteSketchFab;
   display: boolean;

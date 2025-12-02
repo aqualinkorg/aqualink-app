@@ -12,6 +12,7 @@ import {
   SONDE_DATA_COLOR,
   SPOTTER_METRIC_DATA_COLOR,
   HUI_DATA_COLOR,
+  SEAPHOX_DATA_COLOR,
 } from 'constants/charts';
 import {
   siteGranularDailyDataSelector,
@@ -43,6 +44,10 @@ import {
 import { DateTime } from 'luxon-extensions';
 import { userInfoSelector } from 'store/User/userSlice';
 import monitoringServices from 'services/monitoringServices';
+import {
+  getPublicSeapHOxMetrics,
+  getSeapHOxConfig,
+} from 'constants/chartConfigs/seaphoxConfig';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -104,6 +109,11 @@ const MultipleSensorsCharts = ({
 
   const hasHuiData = availableSources.includes('hui');
 
+  const hasSeapHOxData = Boolean(
+    timeSeriesData &&
+      Object.keys(timeSeriesData).some((key) => key.startsWith('seaphox')),
+  );
+
   const chartStartDate =
     startDate || DateTime.fromISO(today).minus({ weeks: 1 }).toISOString();
   const now = DateTime.now();
@@ -123,6 +133,7 @@ const MultipleSensorsCharts = ({
     granularDailyData,
     timeSeriesData?.bottomTemperature?.find((x) => x.type === 'spotter')?.data,
     timeSeriesData?.topTemperature?.find((x) => x.type === 'spotter')?.data,
+    timeSeriesData?.seaphoxTemperature?.[0]?.data,
     hoboBottomTemperatureSensors,
     site.historicalMonthlyMean,
     startDate,
@@ -155,7 +166,16 @@ const MultipleSensorsCharts = ({
               timeSeriesData?.[camelCase(key) as Metrics]?.find(
                 (x) => x.type === source,
               ) || {};
-            const { title, units, convert } = getConfig(key);
+            const {
+              title,
+              units,
+              convert,
+              decimalPlaces,
+              yAxisStepSize,
+              yAxisPadding,
+              yAxisMin: configYMin,
+              yAxisMax: configYMax,
+            } = getConfig(key);
 
             return {
               key,
@@ -163,19 +183,26 @@ const MultipleSensorsCharts = ({
               surveyPoint,
               source,
               rangeLabel,
-              dataset: generateMetricDataset(
-                sensor,
-                (data || []).map((x) => ({
-                  ...x,
-                  value:
-                    typeof convert === 'number' ? convert * x.value : x.value,
-                })),
-                units,
-                color,
-                chartStartDate,
-                chartEndDate,
-                site.timezone,
-              ),
+              dataset: {
+                ...generateMetricDataset(
+                  sensor,
+                  (data || []).map((x) => ({
+                    ...x,
+                    value:
+                      typeof convert === 'number' ? convert * x.value : x.value,
+                  })),
+                  units,
+                  color,
+                  chartStartDate,
+                  chartEndDate,
+                  site.timezone,
+                ),
+                decimalPlaces,
+                yAxisStepSize,
+                yAxisPadding,
+                yAxisMin: configYMin,
+                yAxisMax: configYMax,
+              },
             };
           })
       : [];
@@ -222,6 +249,17 @@ const MultipleSensorsCharts = ({
       'HUI',
       getPublicHuiMetrics,
       getHuiConfig,
+    );
+
+  const seaphoxDatasets = () =>
+    getDatesetFun(
+      hasSeapHOxData,
+      SEAPHOX_DATA_COLOR,
+      'spotter',
+      'seaphox',
+      'seaphox',
+      getPublicSeapHOxMetrics,
+      getSeapHOxConfig,
     );
 
   // post monitoring metric
@@ -303,6 +341,10 @@ const MultipleSensorsCharts = ({
         ...DEFAULT_METRICS,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
+        // SeapHOx metrics are in spotterRanges (with type: 'spotter' in DB)
+        ...spotterRanges
+          .filter((x) => x.metric.startsWith('seaphox_'))
+          .map((x) => x.metric),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);
 
@@ -621,6 +663,7 @@ const MultipleSensorsCharts = ({
         ...sondeDatasets(),
         ...metlogDatasets(),
         ...huiDatasets(),
+        ...seaphoxDatasets(),
       ].map(({ key, title, surveyPoint, source, rangeLabel, dataset }) => (
         <Box mt={4} key={key}>
           <ChartWithCard

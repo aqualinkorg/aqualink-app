@@ -343,6 +343,12 @@ export const parseLatestData = (
     'top_temperature',
     'barometric_pressure_top',
     'barometric_pressure_top_diff',
+    'seaphox_temperature',
+    'seaphox_external_ph',
+    'seaphox_pressure',
+    'seaphox_salinity',
+    'seaphox_conductivity',
+    'seaphox_oxygen',
   ]);
 
   const filtered = copy.filter(

@@ -1,9 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { Survey } from '../surveys/surveys.entity';
 import { CronJobs } from './tasks.constants';
+import { runSpotterTimeSeriesUpdate } from '../workers/spotterTimeSeries';
 
 @Injectable()
 export class TasksService {
@@ -12,7 +13,20 @@ export class TasksService {
   constructor(
     @InjectRepository(Survey)
     private surveyRepository: Repository<Survey>,
+    private dataSource: DataSource,
   ) {}
+
+  // Run task every hour at 00 minutes.
+  @Cron('0 * * * *', { name: CronJobs.UpdateSpotterData })
+  async updateSpotterData() {
+    this.logger.log('Starting spotter time series update...');
+    try {
+      await runSpotterTimeSeriesUpdate(this.dataSource, false);
+      this.logger.log('Spotter time series update completed successfully.');
+    } catch (error) {
+      this.logger.error('Error updating spotter time series:', error);
+    }
+  }
 
   // Run task every 2 hours at 00 minutes.
   @Cron('0 */2 * * *', { name: CronJobs.DeleteEmptySurveys })
