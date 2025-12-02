@@ -3,6 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { DataSource } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
+import { ExclusionDates } from 'sites/exclusion-dates.entity';
+import { Region } from 'regions/regions.entity';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/users.entity';
 import { Site } from '../src/sites/sites.entity';
