@@ -266,8 +266,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SiteTableProps
-  extends SiteTableIncomingProps,
-    WithStyles<typeof styles> {}
+  extends SiteTableIncomingProps, WithStyles<typeof styles> {}
 
 interface SiteTableIncomingProps {
   // used on mobile to add descriptive elements if the drawer is closed.

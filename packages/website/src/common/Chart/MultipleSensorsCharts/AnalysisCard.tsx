@@ -196,8 +196,7 @@ const styles = (theme: Theme) =>
   });
 
 interface AnalysisCardProps
-  extends AnalysisCardIncomingProps,
-    WithStyles<typeof styles> {}
+  extends AnalysisCardIncomingProps, WithStyles<typeof styles> {}
 
 interface AnalysisCardIncomingProps {
   datasets: Dataset[];
