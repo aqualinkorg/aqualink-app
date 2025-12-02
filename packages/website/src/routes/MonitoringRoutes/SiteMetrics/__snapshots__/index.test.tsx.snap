@@ -73,8 +73,8 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for=":r0:"
-          id=":r0:-label"
+          for=":r1:"
+          id=":r1:-label"
         >
           Site ID
         </label>
@@ -84,7 +84,7 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r0:"
+            id=":r1:"
             type="text"
             value=""
           />
@@ -108,8 +108,8 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for=":r1:"
-          id=":r1:-label"
+          for=":r2:"
+          id=":r2:-label"
         >
           Spotter ID
         </label>
@@ -119,7 +119,7 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r1:"
+            id=":r2:"
             type="text"
             value=""
           />

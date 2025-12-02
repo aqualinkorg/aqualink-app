@@ -57,7 +57,7 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
               >
                 <div
                   class="ReactSwipeableBottomSheet--closed"
-                  style="overflow: hidden; background-color: white; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
+                  style="overflow: hidden; background-color: white; height: initial; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
                 >
                   <div
                     role="presentation"

@@ -96,6 +96,9 @@ export async function sofarHindcast(
         end,
         token: process.env.SOFAR_API_TOKEN,
       },
+      paramsSerializer: {
+        indexes: null,
+      },
     })
     .then((response) => {
       // The api return an array of requested variables, but since we request one, ours it's always first
@@ -150,8 +153,16 @@ export function sofarWaveData(
         includeBarometerData: true,
       },
     })
-    .then((response) => response.data as { data: SofarWaveDateResponse })
-    .catch((error) => sofarErrorHandler({ error, sensorId }));
+    .then((response) => {
+      // API returns { data: { spotterId, waves, ... } }
+      // axios wraps it, so response.data = { data: { spotterId, waves, ... } }
+      const waveData = response.data?.data || response.data;
+      return { data: waveData as SofarWaveDateResponse };
+    })
+    .catch((error) => {
+      sofarErrorHandler({ error, sensorId });
+      return undefined;
+    });
 }
 
 export async function sofarLatest({
