@@ -62,6 +62,77 @@ Most recent readings from all sources:
 - Recent survey data
 - Current alert level
 
+**4. Site Surveys**
+\`\`\`
+${API_BASE_URL}/sites/{siteId}/surveys
+\`\`\`
+All surveys uploaded for this site:
+- Survey date and media
+- Observations and notes
+- Weather conditions and ocean temperature at the survey date
+- Coral bleaching and disease information
+
+**5. Reef Check Surveys**
+\`\`\`
+${API_BASE_URL}/reef-check-sites/{siteId}/surveys
+\`\`\`
+Reef Check surveys use their standardized protocol. The data include:
+- Reef Check survey site information
+- Reef structure and composition
+- Fish count
+- Invertebrate count
+- Anthropogenic impact
+- Bleaching and coral diseases
+- Rare animal count
+
+**6. Time Series Range**
+\`\`\`
+${API_BASE_URL}/time-series/sites/{siteId}/range
+\`\`\`
+Available date ranges and metrics:
+- What data types exist (temperature, wind, waves, etc.)
+- Start and end dates for each metric
+- Identifies gaps in data collection
+- Shows which sensors have historical data
+- For detailed historical data, direct users to dashboard graphs (adjustable date ranges) or CSV download
+
+**7. Wind-Wave Hindcast**
+\`\`\`
+${API_BASE_URL}/wind-wave-data-hindcast/sites/{siteId}
+\`\`\`
+Historical wind and wave data:
+- Hindcast model for wind and wave data
+- Displays what date each metric was received
+
+### WHEN TO QUERY EACH ENDPOINT
+
+**Always check these endpoints when users ask about:**
+
+1. **Reef Check surveys** → Call ${API_BASE_URL}/reef-check-sites/{siteId}/surveys
+   - If response is empty/null: "No Reef Check surveys available"
+   - If data exists: Summarize findings (fish counts, bleaching, etc.)
+
+2. **Site surveys** → Call ${API_BASE_URL}/sites/{siteId}/surveys
+   - If response is empty: "No surveys uploaded yet"
+   - If data exists: Reference survey dates, observations, media
+
+3. **Historical data availability** → Call ${API_BASE_URL}/time-series/sites/{siteId}/range
+   - Shows what metrics exist and date ranges
+   - Direct users to dashboard graphs for detailed viewing
+
+4. **Current conditions** → Use ${API_BASE_URL}/sites/{siteId}/latest_data (already in context)
+
+**CRITICAL: Never assume data doesn't exist - always query the endpoint first.**
+
+### HISTORICAL DATA (HOBO, Water Quality, etc.)
+
+**IMPORTANT**: The /time-series/sites/{siteId}/range endpoint shows what historical uploaded data exists (HOBO loggers, water quality sondes, etc.), but this data is NOT included in the AI assistant context. 
+
+**When users ask about historical sensor data:**
+- Direct them to check the dashboard's time-series charts
+- Mention they can view data availability at the /time-series/sites/{siteId}/range endpoint
+- Note that uploaded data (HOBO, Hui, etc.) can be accessed via the dashboard's date range selector and CSV download
+
 ### DATA SOURCE HIERARCHY
 
 **CRITICAL: Spotter/Smart Buoy data is ALWAYS the most accurate when available.**

@@ -2,6 +2,12 @@ import { DataSource } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
 import { LatestData } from '../time-series/latest-data.entity';
+import { Survey } from '../surveys/surveys.entity';
+import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
+import { ForecastData } from '../wind-wave-data/forecast-data.entity';
+import { TimeSeries } from '../time-series/time-series.entity';
+import { Metric } from '../time-series/metrics.enum';
+import { In } from 'typeorm';
 
 interface LatestDataItem {
   id: number;
@@ -71,7 +77,15 @@ export async function buildSiteContext(
     const dailyDataRepository = dataSource.getRepository(DailyData);
     const latestDataRepository = dataSource.getRepository(LatestData);
 
-    const [siteData, latestDataArray, dailyData] = await Promise.all([
+    const [
+      siteData,
+      latestDataArray,
+      dailyData,
+      surveys,
+      reefCheckSurveys,
+      windWaveData,
+      spotterHistory,
+    ] = await Promise.all([
       siteRepository.findOne({
         where: { id: siteId },
         relations: ['region'],
@@ -84,7 +98,65 @@ export async function buildSiteContext(
         order: { date: 'DESC' },
         take: 90,
       }),
+      dataSource.getRepository(Survey).find({
+        where: { site: { id: siteId } },
+        order: { diveDate: 'DESC' },
+        relations: ['surveyMedia'],
+      }),
+      dataSource.getRepository(ReefCheckSurvey).find({
+        where: { site: { id: siteId } },
+        order: { date: 'DESC' },
+        relations: ['organisms', 'substrates'],
+      }),
+      dataSource.getRepository(ForecastData).find({
+        where: { site: { id: siteId } },
+        order: { timestamp: 'DESC' },
+      }),
+      dataSource.getRepository(TimeSeries).find({
+        where: {
+          source: { site: { id: siteId }, type: In(['spotter', 'seaphox']) },
+          metric: In([
+            Metric.TOP_TEMPERATURE,
+            Metric.BOTTOM_TEMPERATURE,
+            'seaphox_external_ph',
+            'seaphox_internal_ph',
+            'seaphox_pressure',
+            'seaphox_salinity',
+            'seaphox_conductivity',
+            'seaphox_oxygen',
+            'seaphox_relative_humidity',
+          ]),
+        },
+        order: { timestamp: 'DESC' },
+        take: 200,
+        relations: ['source'],
+      }),
     ]);
+
+    const spotterTopTemp = spotterHistory
+      .filter((s) => s.metric === Metric.TOP_TEMPERATURE)
+      .map((s) => ({ timestamp: s.timestamp, value: s.value }));
+
+    const spotterBottomTemp = spotterHistory
+      .filter((s) => s.metric === Metric.BOTTOM_TEMPERATURE)
+      .map((s) => ({ timestamp: s.timestamp, value: s.value }));
+
+    const seaphoxMetrics = [
+      'seaphox_external_ph',
+      'seaphox_internal_ph',
+      'seaphox_pressure',
+      'seaphox_salinity',
+      'seaphox_conductivity',
+      'seaphox_oxygen',
+      'seaphox_relative_humidity',
+    ];
+    const latestSeaphox: Record<string, number> = {};
+    seaphoxMetrics.forEach((metric) => {
+      const reading = spotterHistory.find((s) => s.metric === metric);
+      if (reading) {
+        latestSeaphox[metric] = reading.value;
+      }
+    });
 
     if (!siteData) {
       throw new Error(`Site with ID ${siteId} not found`);
@@ -180,7 +252,22 @@ export async function buildSiteContext(
 ## CURRENT REEF METRICS (as of ${currentDate})
 
 ### Temperature Data
+${
+  hasSpotter && (metrics.top_temperature || metrics.bottom_temperature)
+    ? `**SPOTTER DATA (Most Accurate - Live In-Situ Readings):**
+- **Top Temperature** (1m depth): ${formatNumber(metrics.top_temperature)}°C
+- **Bottom Temperature** (${siteData.depth || '?'}m depth): ${formatNumber(
+        metrics.bottom_temperature,
+      )}°C
+- **Data Source**: Spotter Smart Buoy (real-time sensor)
+
+**SATELLITE DATA (for comparison):**
 - **Sea Surface Temperature (SST)**: ${formatNumber(temp)}°C
+- **Note**: Spotter data is more accurate. Satellite measures surface only.`
+    : `**SATELLITE DATA:**
+- **Sea Surface Temperature (SST)**: ${formatNumber(temp)}°C
+- **Data Source**: NOAA Satellite (Coral Reef Watch)`
+}
 - **Historical Maximum (MMM)**: ${formatNumber(mmm)}°C
 - **Temperature Difference from MMM**: ${tempDiffFormatted}°C
 - **SST Anomaly**: ${
@@ -235,6 +322,160 @@ ${dailyData
 - Use EXACT values from the historical data - don't estimate
 - If date not found, say "Data not available for that specific date"
 
+## SURVEY DATA
+
+### Aqualink Surveys
+${
+  surveys.length > 0
+    ? surveys
+        .map(
+          (s) =>
+            `- **${s.diveDate.toISOString().split('T')[0]}**: Weather: ${
+              s.weatherConditions
+            }, Temp: ${s.temperature ? `${s.temperature}°C` : 'N/A'}${
+              s.comments ? `, Notes: ${s.comments.substring(0, 100)}` : ''
+            }${
+              s.surveyMedia && s.surveyMedia.length > 0
+                ? ` (${s.surveyMedia.length} images)`
+                : ''
+            }`,
+        )
+        .join('\n')
+    : '- No Aqualink surveys uploaded yet'
+}
+
+### Reef Check Surveys
+${
+  reefCheckSurveys.length > 0
+    ? reefCheckSurveys
+        .map((rc) => {
+          const fishData = rc.organisms
+            ?.filter((o) => o.type === 'Fish' && o.s1 + o.s2 + o.s3 + o.s4 > 0)
+            .map((o) => `${o.organism}: ${o.s1 + o.s2 + o.s3 + o.s4}`)
+            .join(', ');
+
+          const impactData = rc.organisms
+            ?.filter(
+              (o) => o.type === 'Impact' && o.s1 + o.s2 + o.s3 + o.s4 > 0,
+            )
+            .map((o) => `${o.organism}: ${o.s1 + o.s2 + o.s3 + o.s4}`)
+            .join(', ');
+
+          return `- **${
+            rc.date?.toISOString().split('T')[0] || 'Unknown date'
+          }**: Depth: ${rc.depth}m, Water temp: ${rc.waterTempAtSurface}°C${
+            rc.overallAnthroImpact
+              ? `, Overall impact: ${rc.overallAnthroImpact}`
+              : ''
+          }${fishData ? `\n  Fish: ${fishData}` : ''}${
+            impactData ? `\n  Impacts: ${impactData}` : ''
+          }`;
+        })
+        .join('\n')
+    : '- No Reef Check surveys available'
+}
+
+**When asked about surveys:**
+- Reference specific dates and observations from above
+- For Reef Check data, check if surveys exist before saying "no data"
+- Mention that users can view full survey details on the dashboard
+
+## WIND & WAVE DATA
+
+${
+  hasSpotter &&
+  (metrics.wind_speed ||
+    metrics.significant_wave_height ||
+    metrics.wave_mean_period)
+    ? `**SPOTTER DATA (Real-Time Buoy Readings):**
+${
+  metrics.wind_speed
+    ? `- **Wind Speed**: ${formatNumber(metrics.wind_speed, 2)} m/s`
+    : ''
+}
+${
+  metrics.wind_direction
+    ? `- **Wind Direction**: ${formatNumber(metrics.wind_direction, 0)}°`
+    : ''
+}
+${
+  metrics.significant_wave_height
+    ? `- **Wave Height**: ${formatNumber(metrics.significant_wave_height, 2)} m`
+    : ''
+}
+${
+  metrics.wave_mean_period
+    ? `- **Wave Period**: ${formatNumber(metrics.wave_mean_period, 2)} s`
+    : ''
+}
+${
+  metrics.wave_mean_direction
+    ? `- **Wave Direction**: ${formatNumber(metrics.wave_mean_direction, 0)}°`
+    : ''
+}
+- **Data Source**: Spotter Smart Buoy (live sensor)
+
+**HINDCAST DATA (for comparison/history):**
+${
+  windWaveData.length > 0
+    ? (() => {
+        const latestByMetric = windWaveData.reduce((acc, item) => {
+          if (
+            !acc[item.metric] ||
+            new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
+          ) {
+            acc[item.metric] = item;
+          }
+          return acc;
+        }, {} as Record<string, typeof windWaveData[0]>);
+
+        return Object.entries(latestByMetric)
+          .map(
+            ([metric, data]) =>
+              `- **${metric.replace(/_/g, ' ')}**: ${data.value.toFixed(2)} (${
+                data.source
+              }, ${data.timestamp.toISOString().split('T')[0]})`,
+          )
+          .join('\n');
+      })()
+    : '- No hindcast data available'
+}`
+    : windWaveData.length > 0
+    ? `**HINDCAST DATA:**
+${(() => {
+  const latestByMetric = windWaveData.reduce((acc, item) => {
+    if (
+      !acc[item.metric] ||
+      new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
+    ) {
+      acc[item.metric] = item;
+    }
+    return acc;
+  }, {} as Record<string, typeof windWaveData[0]>);
+
+  return Object.entries(latestByMetric)
+    .map(
+      ([metric, data]) =>
+        `- **${metric.replace(/_/g, ' ')}**: ${data.value.toFixed(2)} (${
+          data.source
+        }, ${data.timestamp.toISOString().split('T')[0]})`,
+    )
+    .join('\n');
+})()}`
+    : '- No wind/wave data available'
+}
+
+## HISTORICAL DATA AVAILABILITY (Time Series Range)
+${(() => {
+  try {
+    // Note: This would need to be fetched via API call since it's a complex endpoint
+    // For now, we note that users should check the dashboard for historical data
+    return '- Check /time-series/sites/{siteId}/range endpoint for detailed historical data availability\n- This includes HOBO loggers, water quality sensors, and other uploaded data\n- View date ranges and data types on the dashboard time-series charts';
+  } catch {
+    return '- Historical data range information available via API';
+  }
+})()}
+
 ## DATA ACCURACY REQUIREMENTS - CRITICAL
 ✅ **USE THESE EXACT VALUES** in your response - they come directly from the database
 ✅ **DO NOT ROUND** beyond the precision shown (2 decimals for temp, DHW)
@@ -244,6 +485,7 @@ ${dailyData
     } data as of ${currentDate}..."
 ✅ **TEMPERATURE FORMAT**: Always show as ±X.XX°C with + or - sign (e.g., +1.10°C or -0.50°C)
 ✅ **NO GUESSING**: If you don't see a value in the CURRENT REEF METRICS section above, you MUST NOT make one up
+✅ **ANSWER DIRECTLY**: Provide the requested data without suggesting types of sensors unless specifically asked about accuracy, data quality, or how the user can improve
 
 ## CONTEXT FOR AI INTERPRETATION
 - **Current DHW of ${formatNumber(dhw)}** means: ${bleachingLikelihood}
