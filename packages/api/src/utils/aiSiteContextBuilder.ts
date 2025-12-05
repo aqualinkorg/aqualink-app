@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm';
+import { DataSource, In } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
 import { LatestData } from '../time-series/latest-data.entity';
@@ -7,7 +7,6 @@ import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity
 import { ForecastData } from '../wind-wave-data/forecast-data.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { Metric } from '../time-series/metrics.enum';
-import { In } from 'typeorm';
 
 interface LatestDataItem {
   id: number;
@@ -133,14 +132,6 @@ export async function buildSiteContext(
       }),
     ]);
 
-    const spotterTopTemp = spotterHistory
-      .filter((s) => s.metric === Metric.TOP_TEMPERATURE)
-      .map((s) => ({ timestamp: s.timestamp, value: s.value }));
-
-    const spotterBottomTemp = spotterHistory
-      .filter((s) => s.metric === Metric.BOTTOM_TEMPERATURE)
-      .map((s) => ({ timestamp: s.timestamp, value: s.value }));
-
     const seaphoxMetrics = [
       'seaphox_external_ph',
       'seaphox_internal_ph',
@@ -150,13 +141,13 @@ export async function buildSiteContext(
       'seaphox_oxygen',
       'seaphox_relative_humidity',
     ];
-    const latestSeaphox: Record<string, number> = {};
-    seaphoxMetrics.forEach((metric) => {
-      const reading = spotterHistory.find((s) => s.metric === metric);
-      if (reading) {
-        latestSeaphox[metric] = reading.value;
-      }
-    });
+    const latestSeaphox: Record<string, number> = seaphoxMetrics.reduce(
+      (acc, metric) => {
+        const reading = spotterHistory.find((s) => s.metric === metric);
+        return reading ? { ...acc, [metric]: reading.value } : acc;
+      },
+      {} as Record<string, number>,
+    );
 
     if (!siteData) {
       throw new Error(`Site with ID ${siteId} not found`);
@@ -229,9 +220,6 @@ export async function buildSiteContext(
     // Check for Spotter/Smart Buoy
     const hasSpotter =
       siteData.sensorId !== null && siteData.sensorId !== undefined;
-    const spotterStatus = hasSpotter
-      ? 'Smart Buoy is deployed at this site'
-      : 'No Smart Buoy deployed - using satellite data only';
 
     // Get current date in ISO format
     const currentDate = new Date().toISOString().split('T')[0];
@@ -244,7 +232,7 @@ export async function buildSiteContext(
 - **Location**: ${siteData.region?.name || 'Unknown region'}
 - **Coordinates**: Latitude ${lat}, Longitude ${lon}
 - **Depth**: ${siteData.depth || 'Unknown'}m
-- **Sensor Status**: ${spotterStatus}
+${hasSpotter ? `- **Sensor Status**: Smart Buoy is deployed at this site` : ''}
 - **Data Source**: ${
       hasSpotter ? 'Spotter Smart Buoy' : 'NOAA Satellite (Coral Reef Watch)'
     }
@@ -382,12 +370,38 @@ ${
 
 ## WIND & WAVE DATA
 
-${
-  hasSpotter &&
-  (metrics.wind_speed ||
-    metrics.significant_wave_height ||
-    metrics.wave_mean_period)
-    ? `**SPOTTER DATA (Real-Time Buoy Readings):**
+${(() => {
+  const hasSpotterWindWave =
+    hasSpotter &&
+    (metrics.wind_speed ||
+      metrics.significant_wave_height ||
+      metrics.wave_mean_period);
+
+  const formatHindcast = () => {
+    if (windWaveData.length === 0) return '- No hindcast data available';
+
+    const latestByMetric = windWaveData.reduce((acc, item) => {
+      if (
+        !acc[item.metric] ||
+        new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
+      ) {
+        return { ...acc, [item.metric]: item };
+      }
+      return acc;
+    }, {} as Record<string, typeof windWaveData[0]>);
+
+    return Object.entries(latestByMetric)
+      .map(
+        ([metric, data]) =>
+          `- **${metric.replace(/_/g, ' ')}**: ${data.value.toFixed(2)} (${
+            data.source
+          }, ${data.timestamp.toISOString().split('T')[0]})`,
+      )
+      .join('\n');
+  };
+
+  if (hasSpotterWindWave) {
+    return `**SPOTTER DATA (Real-Time Buoy Readings):**
 ${
   metrics.wind_speed
     ? `- **Wind Speed**: ${formatNumber(metrics.wind_speed, 2)} m/s`
@@ -416,65 +430,35 @@ ${
 - **Data Source**: Spotter Smart Buoy (live sensor)
 
 **HINDCAST DATA (for comparison/history):**
+${formatHindcast()}`;
+  }
+
+  if (windWaveData.length > 0) {
+    return `**HINDCAST DATA:**
+${formatHindcast()}`;
+  }
+
+  return '- No wind/wave data available';
+})()}
+
+## SEAPHOX SENSOR DATA
 ${
-  windWaveData.length > 0
-    ? (() => {
-        const latestByMetric = windWaveData.reduce((acc, item) => {
-          if (
-            !acc[item.metric] ||
-            new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
-          ) {
-            acc[item.metric] = item;
-          }
-          return acc;
-        }, {} as Record<string, typeof windWaveData[0]>);
-
-        return Object.entries(latestByMetric)
-          .map(
-            ([metric, data]) =>
-              `- **${metric.replace(/_/g, ' ')}**: ${data.value.toFixed(2)} (${
-                data.source
-              }, ${data.timestamp.toISOString().split('T')[0]})`,
-          )
-          .join('\n');
-      })()
-    : '- No hindcast data available'
-}`
-    : windWaveData.length > 0
-    ? `**HINDCAST DATA:**
-${(() => {
-  const latestByMetric = windWaveData.reduce((acc, item) => {
-    if (
-      !acc[item.metric] ||
-      new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
-    ) {
-      acc[item.metric] = item;
-    }
-    return acc;
-  }, {} as Record<string, typeof windWaveData[0]>);
-
-  return Object.entries(latestByMetric)
-    .map(
-      ([metric, data]) =>
-        `- **${metric.replace(/_/g, ' ')}**: ${data.value.toFixed(2)} (${
-          data.source
-        }, ${data.timestamp.toISOString().split('T')[0]})`,
-    )
-    .join('\n');
-})()}`
-    : '- No wind/wave data available'
+  Object.keys(latestSeaphox).length > 0
+    ? Object.entries(latestSeaphox)
+        .map(
+          ([metric, value]) =>
+            `- **${metric
+              .replace(/seaphox_/g, '')
+              .replace(/_/g, ' ')}**: ${formatNumber(value, 2)}`,
+        )
+        .join('\n')
+    : '- No SeapHOx sensor data available'
 }
 
 ## HISTORICAL DATA AVAILABILITY (Time Series Range)
-${(() => {
-  try {
-    // Note: This would need to be fetched via API call since it's a complex endpoint
-    // For now, we note that users should check the dashboard for historical data
-    return '- Check /time-series/sites/{siteId}/range endpoint for detailed historical data availability\n- This includes HOBO loggers, water quality sensors, and other uploaded data\n- View date ranges and data types on the dashboard time-series charts';
-  } catch {
-    return '- Historical data range information available via API';
-  }
-})()}
+- Check /time-series/sites/{siteId}/range endpoint for detailed historical data availability
+- This includes HOBO loggers, water quality sensors, and other uploaded data
+- View date ranges and data types on the dashboard time-series charts
 
 ## DATA ACCURACY REQUIREMENTS - CRITICAL
 ✅ **USE THESE EXACT VALUES** in your response - they come directly from the database
@@ -485,7 +469,7 @@ ${(() => {
     } data as of ${currentDate}..."
 ✅ **TEMPERATURE FORMAT**: Always show as ±X.XX°C with + or - sign (e.g., +1.10°C or -0.50°C)
 ✅ **NO GUESSING**: If you don't see a value in the CURRENT REEF METRICS section above, you MUST NOT make one up
-✅ **ANSWER DIRECTLY**: Provide the requested data without suggesting types of sensors unless specifically asked about accuracy, data quality, or how the user can improve
+✅ **ANSWER DIRECTLY**: Provide the requested data without mentioning sensors that are NOT deployed unless specifically asked about accuracy, data quality, or how the user can improve
 
 ## CONTEXT FOR AI INTERPRETATION
 - **Current DHW of ${formatNumber(dhw)}** means: ${bleachingLikelihood}
