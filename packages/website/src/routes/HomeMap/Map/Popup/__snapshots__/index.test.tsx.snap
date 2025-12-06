@@ -6,7 +6,6 @@ exports[`Popup > should render with given state from Redux store 1`] = `
     autopan="false"
     classname="Popup-popup-4"
     closebutton="false"
-    position="0,0"
   >
     <mock-card>
       <div
