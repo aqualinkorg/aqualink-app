@@ -39,7 +39,7 @@ function addTrailingSlashToUrl(url: string) {
   return url.endsWith('/') ? url : `${url}/`;
 }
 
-function hasProjectId(config): config is { projectId: string } {
+function hasProjectId(config: any): config is { projectId: string } {
   return config && 'projectId' in config;
 }
 
@@ -73,7 +73,7 @@ const {
   password,
   entities: defaultEntities,
   ...dbConfig
-} = dataSourceOptions;
+} = dataSourceOptions as any;
 
 async function runWithDataSource(
   functionName: string,
