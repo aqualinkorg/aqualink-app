@@ -35,8 +35,6 @@ export const createMockFirebaseUser = (
 
 export const mockDeleteFile = (app: INestApplication) => {
   const surveysService = app.get(SurveysService);
-
-  // Use mockImplementationOnce for one-time use
   jest
     .spyOn(surveysService.googleCloudService, 'deleteFile')
     .mockResolvedValueOnce(undefined);
@@ -44,8 +42,6 @@ export const mockDeleteFile = (app: INestApplication) => {
 
 export const mockDeleteFileFalling = (app: INestApplication) => {
   const surveysService = app.get(SurveysService);
-
-  // Use mockImplementationOnce for one-time use
   jest
     .spyOn(surveysService.googleCloudService, 'deleteFile')
     .mockRejectedValueOnce(new Error('Delete file failed'));
