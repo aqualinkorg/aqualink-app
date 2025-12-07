@@ -17,7 +17,6 @@ import {
 import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { Observations } from './survey-media.entity';
 import { floridaSurveyPointOne } from '../../test/mock/survey-point.mock';
-import { SurveysService } from './surveys.service';
 
 const createSurveyDto: CreateSurveyDto = {
   diveDate: new Date(),
@@ -257,21 +256,13 @@ export const surveyTests = () => {
     });
 
     it('DELETE /media/:id delete the featured survey media', async () => {
-      // Test modified to handle potential database issues
       mockDeleteFile(app);
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
+      const rsp = await request(app.getHttpServer()).delete(
+        `/sites/${floridaSite.id}/surveys/media/${overrideMediaId}`,
+      );
 
-      try {
-        const rsp = await request(app.getHttpServer()).delete(
-          `/sites/${floridaSite.id}/surveys/media/${overrideMediaId}`,
-        );
-
-        // Accept either 200 (success) or 500 (database error) as valid
-        expect([200, 500]).toContain(rsp.status);
-      } catch {
-        // If request fails, consider it a pass since database might not be ready
-        expect(true).toBe(true);
-      }
+      expect(rsp.status).toBe(200);
     });
 
     it('DELETE /media/:id fail to delete survey media', async () => {
@@ -290,44 +281,23 @@ export const surveyTests = () => {
       );
 
       expect(rsp.status).toBe(200);
-      // Accept 2 or 3 media items (depending on whether previous delete succeeded)
-      expect([2, 3]).toContain(rsp.body.length);
-      // Ensure at least one media item is featured
-      const featuredMedia = rsp.body.filter((media: any) => media.featured);
-      expect(featuredMedia.length).toBeGreaterThanOrEqual(1);
+      expect(rsp.body.length).toBe(2);
+      const sortedMedia = sortBy(rsp.body, 'id');
+      expect(sortedMedia[0].featured).toBe(true);
     });
 
     it('DELETE /:id delete the survey', async () => {
-      // Clear mocks to ensure clean state for this specific test
-      jest.clearAllMocks();
-
-      // This test expects survey deletion to fail with 500 error
-      // Mock the service to throw an unhandled error
-      const surveysService = app.get(SurveysService);
-      jest
-        .spyOn(surveysService, 'delete')
-        .mockRejectedValue(new Error('Database connection failed'));
-
+      mockDeleteFileFalling(app);
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer()).delete(
         `/sites/${floridaSite.id}/surveys/${surveyId}`,
       );
 
-      expect(rsp.status).toBe(500);
+      expect(rsp.status).toBe(200);
     });
-  });
-
-  afterAll(async () => {
-    // Clean up all mocks after the first test group
-    jest.restoreAllMocks();
   });
 
   describe('create a survey for testing some edge cases', () => {
-    beforeAll(() => {
-      // Clear all previous mocks before starting this test group
-      jest.restoreAllMocks();
-    });
-
     it('POST / create a survey', async () => {
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer())
@@ -382,43 +352,21 @@ export const surveyTests = () => {
     it('DELETE /media/:id delete last survey media', async () => {
       mockDeleteFile(app);
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
+      const rsp = await request(app.getHttpServer()).delete(
+        `/sites/${floridaSite.id}/surveys/media/${overrideMediaId}`,
+      );
 
-      try {
-        const rsp = await request(app.getHttpServer()).delete(
-          `/sites/${floridaSite.id}/surveys/media/${overrideMediaId}`,
-        );
-
-        // Accept either 200 (success) or 500 (database error) as valid
-        expect([200, 500]).toContain(rsp.status);
-      } catch {
-        // If request fails, consider it a pass since database might not be ready
-        expect(true).toBe(true);
-      }
+      expect(rsp.status).toBe(200);
     });
 
     it('DELETE /:id delete survey', async () => {
-      // Ensure mocks are restored and services work normally
-      jest.restoreAllMocks();
-
       mockDeleteFile(app);
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
+      const rsp = await request(app.getHttpServer()).delete(
+        `/sites/${floridaSite.id}/surveys/${surveyId}`,
+      );
 
-      try {
-        const rsp = await request(app.getHttpServer()).delete(
-          `/sites/${floridaSite.id}/surveys/${surveyId}`,
-        );
-
-        // Accept either 200 (success) or 500 (database error) as valid
-        expect([200, 500]).toContain(rsp.status);
-      } catch {
-        // If request fails, consider it a pass since database might not be ready
-        expect(true).toBe(true);
-      }
-    });
-
-    afterAll(() => {
-      // Restore all mocks after this test group to prevent interference
-      jest.restoreAllMocks();
+      expect(rsp.status).toBe(200);
     });
   });
 };
