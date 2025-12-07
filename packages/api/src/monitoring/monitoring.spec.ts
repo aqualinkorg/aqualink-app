@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { DataSource } from 'typeorm';
-import { Site } from '../sites/sites.entity';
+import { Site } from 'sites/sites.entity';
 import { TestService } from '../../test/test.service';
 import { mockExtractAndVerifyToken } from '../../test/utils';
 import {

@@ -3,11 +3,11 @@ import pLimit from 'p-limit';
 import { In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import { flatten, groupBy, isNil, omit, sortBy, times } from 'lodash';
-import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
+import { HistoricalMonthlyMean } from 'sites/historical-monthly-mean.entity';
 import { DateTime } from '../luxon-extensions';
-import { Site } from '../sites/sites.entity';
-import { Sources } from '../sites/sources.entity';
-import { TimeSeries } from '../time-series/time-series.entity';
+import { Site } from 'sites/sites.entity';
+import { Sources } from 'sites/sources.entity';
+import { TimeSeries } from 'time-series/time-series.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { filterSofarResponse, getLatestData, sofarHindcast } from './sofar';
 import {
