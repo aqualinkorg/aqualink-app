@@ -5,6 +5,9 @@ RUN apt update
 RUN apt install -y sudo
 RUN sudo apt install -y libnetcdf-dev
 
+RUN yarn global add typescript
+RUN yarn global add ts-node
+
 # Run application
 ENV NODE_ENV=production
 WORKDIR /app
