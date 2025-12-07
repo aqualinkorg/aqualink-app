@@ -1,31 +1,10 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
     "module": "commonjs",
     "outDir": "dist",
-    "target": "es2017",
-    "skipLibCheck": true,
-    "noImplicitAny": false,
-    "strict": false,
-    "skipLibCheck": true,
-    "noCheck": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "exactOptionalPropertyTypes": false,
-    "noImplicitReturns": false,
-    "noFallthroughCasesInSwitch": false,
-    "noUncheckedIndexedAccess": false,
-    "noImplicitOverride": false,
-    "allowUnreachableCode": true,
-    "allowUnusedLabels": true,
-    "noPropertyAccessFromIndexSignature": false,
-    "useUnknownInCatchVariables": false,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "skipDefaultLibCheck": true,
-    "forceConsistentCasingInFileNames": false
+    "target": "es2017"
   },
   "files": ["main.ts"]
 }
