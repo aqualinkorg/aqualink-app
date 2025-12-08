@@ -10,7 +10,7 @@ export class AiChatLogs1765217580486 implements MigrationInterface {
                 ai_response TEXT NOT NULL,
                 user_id INTEGER NULL,
                 created_at timestamp without time zone NOT NULL DEFAULT now(),
-                CONSTRAINT fk_site FOREIGN KEY (site_id) REFERENCES sites(id) ON DELETE CASCADE,
+                CONSTRAINT fk_site FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE,
                 CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
             )
         `);
