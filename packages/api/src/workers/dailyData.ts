@@ -2,7 +2,7 @@
 import { get, isNil, isNumber, isUndefined, omit, omitBy } from 'lodash';
 import { DataSource, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { DateTime } from 'luxon';
 import { Logger } from '@nestjs/common';
 import { Site } from '../sites/sites.entity';
@@ -177,55 +177,56 @@ export async function getSitesDailyData(
   Logger.log(
     `Updating ${allSites.length} sites for ${endOfDate.toDateString()}.`,
   );
-  await Bluebird.map(
-    allSites,
-    async (site) => {
-      const dailyDataInput = await getDailyData(site, endOfDate);
+  const limit = pLimit(8);
+  await Promise.all(
+    allSites.map((site) =>
+      limit(async () => {
+        const dailyDataInput = await getDailyData(site, endOfDate);
 
-      // If no data returned from the update function, skip
-      if (hasNoData(dailyDataInput)) {
-        Logger.log(`No data has been fetched. Skipping ${site.id}...`);
-        return;
-      }
-
-      // Calculate weekly alert level
-      const weeklyAlertLevel = await getWeeklyAlertLevel(
-        dailyDataRepository,
-        endOfDate,
-        site,
-      );
-
-      const entity = dailyDataRepository.create({
-        ...dailyDataInput,
-        weeklyAlertLevel: getMaxAlert(
-          dailyDataInput.dailyAlertLevel,
-          weeklyAlertLevel,
-        ),
-      });
-      try {
-        // Try to save daily data entity
-        await dailyDataRepository.save(entity);
-      } catch (err) {
-        // Update instead of insert
-        if (get(err, 'constraint') === 'no_duplicated_date') {
-          const filteredData = omitBy(entity, isNil);
-          await dailyDataRepository
-            .createQueryBuilder('dailyData')
-            .update()
-            .where('site_id = :site_id', { site_id: site.id })
-            .andWhere('Date(date) = Date(:date)', { date: entity.date })
-            .set(filteredData)
-            .execute();
-        } else {
-          console.error(
-            `Error updating data for Site ${
-              site.id
-            } & ${endOfDate.toDateString()}: ${err}.`,
-          );
+        // If no data returned from the update function, skip
+        if (hasNoData(dailyDataInput)) {
+          Logger.log(`No data has been fetched. Skipping ${site.id}...`);
+          return;
         }
-      }
-    },
-    { concurrency: 8 },
+
+        // Calculate weekly alert level
+        const weeklyAlertLevel = await getWeeklyAlertLevel(
+          dailyDataRepository,
+          endOfDate,
+          site,
+        );
+
+        const entity = dailyDataRepository.create({
+          ...dailyDataInput,
+          weeklyAlertLevel: getMaxAlert(
+            dailyDataInput.dailyAlertLevel,
+            weeklyAlertLevel,
+          ),
+        });
+        try {
+          // Try to save daily data entity
+          await dailyDataRepository.save(entity);
+        } catch (err) {
+          // Update instead of insert
+          if (get(err, 'constraint') === 'no_duplicated_date') {
+            const filteredData = omitBy(entity, isNil);
+            await dailyDataRepository
+              .createQueryBuilder('dailyData')
+              .update()
+              .where('site_id = :site_id', { site_id: site.id })
+              .andWhere('Date(date) = Date(:date)', { date: entity.date })
+              .set(filteredData)
+              .execute();
+          } else {
+            console.error(
+              `Error updating data for Site ${
+                site.id
+              } & ${endOfDate.toDateString()}: ${err}.`,
+            );
+          }
+        }
+      }),
+    ),
   );
   Logger.log(
     `Updated ${allSites.length} sites in ${

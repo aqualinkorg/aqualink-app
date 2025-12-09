@@ -3,9 +3,9 @@ name: Aqualink API CI
 on:
   # Run on all pull requests and on pushes to main.
   pull_request:
-    paths: 
-      - 'packages/api/**'
-      - 'yarn.lock'
+    paths:
+      - "packages/api/**"
+      - "yarn.lock"
   push:
     branches:
       - master
@@ -38,27 +38,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js 20.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-
-      - name: Enable Corepack
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
+          node-version: 20
 
       - uses: actions/cache@v4
         id: yarn-cache
         with:
           path: |
             **/node_modules
-            .yarn/cache
-            .yarn/install-state.gz
-          key: ${{ runner.os }}-yarn-v4-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-v4-
-      
+            ${{ runner.os }}-yarn-v1-
+
       - name: Install dependencies if needed.
         id: install
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -69,7 +62,7 @@ jobs:
         if: success() || steps.install.conclusion == 'skipped'
         working-directory: packages/api
         run: yarn lint
-      
+
       - name: Build API
         if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
         working-directory: packages/api

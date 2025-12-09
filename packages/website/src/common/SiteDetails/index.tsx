@@ -52,6 +52,7 @@ import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
 import { TemperatureChange } from './TemperatureChange';
 import { ReefCheckDataIndicator } from './ReefCheckDataIndicator';
+import AiChatWidget from '../AiChatWidget';
 
 /**  Show only the last year of HUI data, should match with {@link getCardData} */
 const acceptHUIInterval = Interval.fromDateTimes(
@@ -436,6 +437,8 @@ const SiteDetails = ({
         )}
         <Surveys site={site} />
       </Box>
+      {/* AI Chat Widget */}
+      {site && <AiChatWidget siteId={site.id} />}
     </Box>
   );
 };

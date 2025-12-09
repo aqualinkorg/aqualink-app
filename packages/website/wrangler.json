@@ -4,7 +4,7 @@
   "main": "src/worker.ts",
   "compatibility_date": "2025-02-14",
   "vars": {
-    "NODE_VERSION": "18",
+    "NODE_VERSION": "20",
     "REACT_APP_API_BASE_URL": "https://production-dot-ocean-systems.uc.r.appspot.com/api",
     "SKIP_DEPENDENCY_INSTALL": 1
   },

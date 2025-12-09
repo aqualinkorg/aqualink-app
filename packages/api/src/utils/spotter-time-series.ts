@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { get, times } from 'lodash';
 import { In, IsNull, Not, Repository } from 'typeorm';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { distance } from '@turf/turf';
 import { Point } from 'geojson';
 import { DateTime } from '../luxon-extensions';

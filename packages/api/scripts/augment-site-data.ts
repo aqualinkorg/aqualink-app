@@ -1,5 +1,5 @@
 import { isNil, omitBy } from 'lodash';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { DataSource, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
@@ -48,36 +48,37 @@ async function augmentSites(connection: DataSource) {
 
   const start = new Date();
   console.log(`Augmenting ${allSites.length} sites...`);
-  await Bluebird.map(
-    allSites,
-    async (site) => {
-      const augmentedData = await getAugmentedData(site, regionRepository);
-      await siteRepository.update(site.id, augmentedData);
-      // Add HistoricalMonthlyMeans
-      // TODO - use closest noaa longitude and latitude
-      const [longitude, latitude] = (site.polygon as Point).coordinates;
-      const HistoricalMonthlyMeans = await getHistoricalMonthlyMeans(
-        longitude,
-        latitude,
-      );
-      await Promise.all(
-        HistoricalMonthlyMeans.map(async ({ month, temperature }) => {
-          try {
-            await (temperature &&
-              HistoricalMonthlyMeanRepository.insert({
-                site,
-                month,
-                temperature,
-              }));
-          } catch (error) {
-            console.warn(
-              `Monthly max values not imported for ${site.id} - Error: ${error}`,
-            );
-          }
-        }),
-      );
-    },
-    { concurrency: 1 },
+  const limit = pLimit(1);
+  await Promise.all(
+    allSites.map((site) =>
+      limit(async () => {
+        const augmentedData = await getAugmentedData(site, regionRepository);
+        await siteRepository.update(site.id, augmentedData);
+        // Add HistoricalMonthlyMeans
+        // TODO - use closest noaa longitude and latitude
+        const [longitude, latitude] = (site.polygon as Point).coordinates;
+        const HistoricalMonthlyMeans = await getHistoricalMonthlyMeans(
+          longitude,
+          latitude,
+        );
+        await Promise.all(
+          HistoricalMonthlyMeans.map(async ({ month, temperature }) => {
+            try {
+              await (temperature &&
+                HistoricalMonthlyMeanRepository.insert({
+                  site,
+                  month,
+                  temperature,
+                }));
+            } catch (error) {
+              console.warn(
+                `Monthly max values not imported for ${site.id} - Error: ${error}`,
+              );
+            }
+          }),
+        );
+      }),
+    ),
   );
   console.log(
     `Augmented ${allSites.length} sites in ${
