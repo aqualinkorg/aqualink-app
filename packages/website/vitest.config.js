@@ -14,7 +14,7 @@ const aliases = Object.fromEntries(
 export default defineConfig({
   plugins: [react()],
   test: {
-    threads: false,
+    pool: 'forks',
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/setupTests.tsx',
