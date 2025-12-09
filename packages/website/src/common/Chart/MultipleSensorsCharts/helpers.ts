@@ -333,6 +333,7 @@ export const generateTempAnalysisDatasets = (
     },
     {
       label: 'SEAPHOX',
+      tooltipLabel: `SEAPHOX ${depth}m`,
       data: localSeaphoxTempData,
       curveColor: '#23225b',
       type: 'line',

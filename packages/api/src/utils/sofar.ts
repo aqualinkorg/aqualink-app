@@ -115,6 +115,7 @@ export function sofarSensor(
   token?: string,
   start?: string,
   end?: string,
+  includeSmartMooringData?: boolean,
 ) {
   return axios
     .get(SOFAR_SENSOR_DATA_URL, {
@@ -123,7 +124,7 @@ export function sofarSensor(
         startDate: start,
         endDate: end,
         token,
-        includeSmartMooringData: true,
+        ...(includeSmartMooringData && { includeSmartMooringData: true }),
       },
     })
     .then((response) => response.data)
@@ -207,6 +208,7 @@ export async function getSpotterData(
   sofarToken?: string,
   endDate?: Date,
   startDate?: Date,
+  includeSeapHOxData?: boolean,
 ): Promise<SpotterData> {
   console.time(`getSpotterData for sensor ${sensorId}`);
   const [start, end] =
@@ -227,6 +229,7 @@ export async function getSpotterData(
     sofarToken,
     start,
     end,
+    includeSeapHOxData,
   )) || { data: [] };
 
   const sofarSpotterSurfaceTemp: ValueWithTimestamp[] = surfaceTemp.map(

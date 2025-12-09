@@ -31,15 +31,15 @@ export const getSeapHOxDisplayName = (metric: string): string => {
  */
 export const SEAPHOX_METRIC_UNITS: Record<string, string> = {
   seaphox_temperature: '°C',
-  seaphox_external_ph: '',
-  seaphox_internal_ph: '',
+  seaphox_external_ph: 'pH',
+  seaphox_internal_ph: 'pH',
   seaphox_external_ph_volt: 'V',
   seaphox_internal_ph_volt: 'V',
   seaphox_ph_temperature: '°C',
   seaphox_pressure: 'dbar',
   seaphox_salinity: 'PSU',
   seaphox_conductivity: 'S/m',
-  seaphox_oxygen: 'mg/L',
+  seaphox_oxygen: 'ml/L',
   seaphox_relative_humidity: '%',
   seaphox_int_temperature: '°C',
 };

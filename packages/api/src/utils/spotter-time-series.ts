@@ -33,6 +33,24 @@ interface Repositories {
 const logger = new Logger('SpotterTimeSeries');
 
 /**
+ * Check if site already has SeapHOx data in time_series table
+ * Used to determine if we need to backfill 60 days or just fetch recent data
+ */
+const hasExistingSeapHOxData = async (
+  siteId: number,
+  timeSeriesRepository: Repository<TimeSeries>,
+): Promise<boolean> => {
+  const count = await timeSeriesRepository.count({
+    where: {
+      source: { site: { id: siteId } },
+      metric: Metric.SEAPHOX_EXTERNAL_PH,
+    },
+    take: 1,
+  });
+  return count > 0;
+};
+
+/**
  * Fetches the exclusion dates for the selected sources.
  * @param sources The selected sources
  * @param exclusionDatesRepository The necessary repository to perform the query
@@ -132,9 +150,18 @@ export const addSpotterData = async (
   logger.log('Saving spotter data');
   await Bluebird.map(
     sites,
-    (site) => {
-      // Fetch 60 days for SeapHOx sites to ensure historical data from deployment
-      const daysToFetch = site.hasSeaphox ? Math.max(days, 60) : days;
+    async (site) => {
+      // Fetch 60 days for NEW SeapHOx sites (first run only)
+      // After first run, just fetch recent data like normal spotters
+      const hasSeapHOxData = site.hasSeaphox
+        ? await hasExistingSeapHOxData(
+            site.id,
+            repositories.timeSeriesRepository,
+          )
+        : false;
+
+      const daysToFetch =
+        site.hasSeaphox && !hasSeapHOxData ? Math.max(days, 60) : days;
 
       return Bluebird.map(
         times(daysToFetch),
@@ -166,6 +193,7 @@ export const addSpotterData = async (
             sofarToken,
             endDate,
             startDate,
+            site.hasSeaphox,
           ).then((data) => excludeSpotterData(data, sensorExclusionDates));
 
           if (

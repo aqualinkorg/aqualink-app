@@ -8,5 +8,4 @@ export enum SourceType {
   SOFAR_MODEL = 'sofar_model',
   HUI = 'hui',
   SHEET_DATA = 'sheet_data',
-  SEAPHOX = 'seaphox',
 }

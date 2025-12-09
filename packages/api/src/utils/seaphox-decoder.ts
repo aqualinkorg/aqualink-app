@@ -2,8 +2,8 @@
  * SeapHOx Data Decoder
  * Decodes hex-encoded SeapHOx data from Sofar API
  *
- * Example:
- * "SSPHOX01050,2025-10-20T13:49:08, 11988, 0000, 26.9476,7.9640,7.9808,-0.979159,-1.029476, 26.9785,   24.609,   34.9964,   5.51207,   4.392, 45.0,27.1"
+ * "SSPHOX01050,YYYY-MM-DDTHH:MM:SS, 11988, 0000, 26.9476,7.9640,7.9808,-0.979159,-1.029476, 26.9785,   24.609,   34.9964,   5.51207,   4.392, 45.0,27.1"
+ 
  */
 
 export interface SeapHOxData {
@@ -117,7 +117,15 @@ export function extractSeapHoxFromSofarData(sofarData: any[]): SeapHOxData[] {
   }
 
   const results = sofarData
-    .filter((item) => item.bristlemouth_node_id && item.value)
+    .filter((item) => {
+      if (!item.value) {
+        return false;
+      }
+      if (!item.bristlemouth_node_id) {
+        console.warn('Sofar data item missing bristlemouth_node_id:', item);
+      }
+      return true;
+    })
     .map((item) => {
       const parsed = parseSeapHoxData(item.value);
       if (!parsed) {
