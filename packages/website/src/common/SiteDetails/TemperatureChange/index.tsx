@@ -26,10 +26,10 @@ const getAvgTemp = (data: DailyData[]) =>
       data.length
     : null;
 
-const TemperatureChangeComponent = ({
+function TemperatureChangeComponent({
   dailyData,
   classes,
-}: TemperatureChangeProps) => {
+}: TemperatureChangeProps) {
   const lastWeekAvgTemp = getAvgTemp(dailyData.slice(0, 7));
   const prevWeekAvgTemp = getAvgTemp(dailyData.slice(7, 14));
   const temperatureChange =
@@ -99,7 +99,7 @@ const TemperatureChangeComponent = ({
       </CardContent>
     </Card>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

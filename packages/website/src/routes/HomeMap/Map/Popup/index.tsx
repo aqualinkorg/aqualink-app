@@ -17,6 +17,7 @@ import { Popup as LeafletPopup, useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
 import type { LatLngTuple } from 'leaflet';
+import type L from 'leaflet';
 import type { Site } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
@@ -26,10 +27,10 @@ import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
-const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
+function Popup({ site, classes, autoOpen = true }: PopupProps) {
   const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
-  const popupRef = useRef<LeafletPopup>(null);
+  const popupRef = useRef<L.Popup>(null);
   const location = useLocation();
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
@@ -160,7 +161,7 @@ const Popup = ({ site, classes, autoOpen = true }: PopupProps) => {
       </Card>
     </LeafletPopup>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

@@ -27,7 +27,7 @@ const legends = [
   },
 ];
 
-const Legend = ({ legendName, bottom, left, classes }: LegendProps) => {
+function Legend({ legendName, bottom, left, classes }: LegendProps) {
   const legend = legends.find((item) => item.name === legendName);
   return (
     <div
@@ -39,7 +39,7 @@ const Legend = ({ legendName, bottom, left, classes }: LegendProps) => {
       {legend?.element}
     </div>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

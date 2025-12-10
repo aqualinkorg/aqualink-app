@@ -40,7 +40,7 @@ const sourceTitle = (title: string, source: Sources | undefined) => {
   return source ? ` (${source.toUpperCase()})` : '';
 };
 
-const TemperatureMetric = ({
+function TemperatureMetric({
   value,
   title,
   color,
@@ -54,17 +54,19 @@ const TemperatureMetric = ({
   unit: string;
   gridClassName: string | undefined;
   source?: Sources;
-}) => (
-  <Grid container item className={gridClassName}>
-    <Circle color={color} />
-    <Typography variant="caption" color="white">
-      {title} {`${formatNumber(value, 1)} ${unit}`}
-      {sourceTitle(title, source)}
-    </Typography>
-  </Grid>
-);
+}) {
+  return (
+    <Grid container item className={gridClassName}>
+      <Circle color={color} />
+      <Typography variant="caption" color="white">
+        {title} {`${formatNumber(value, 1)} ${unit}`}
+        {sourceTitle(title, source)}
+      </Typography>
+    </Grid>
+  );
+}
 
-const Tooltip = ({
+function Tooltip({
   siteId,
   date,
   datasets,
@@ -72,7 +74,7 @@ const Tooltip = ({
   siteTimeZone,
   userTimeZone,
   classes,
-}: TooltipProps) => {
+}: TooltipProps) {
   const hasHourlyData = datasets.some(({ isDailyUpdated }) => !isDailyUpdated);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
@@ -163,7 +165,7 @@ const Tooltip = ({
       />
     </div>
   );
-};
+}
 
 const styles = () =>
   createStyles({

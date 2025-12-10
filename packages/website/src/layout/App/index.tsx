@@ -6,7 +6,7 @@ import {
   Navigate,
   Route,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import { getSelf } from 'store/User/userSlice';
@@ -38,7 +38,7 @@ import '../../assets/css/leaflet.css';
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useGATagManager();
 
   useEffect(() => {
