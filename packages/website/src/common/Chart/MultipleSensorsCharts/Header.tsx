@@ -20,7 +20,7 @@ import { grey } from '@mui/material/colors';
 import { AvailableRange, RangeButton, RangeValue } from './types';
 import { availableRangeString } from './helpers';
 
-const Header = ({
+function Header({
   id,
   range,
   disableMaxRange,
@@ -31,7 +31,7 @@ const Header = ({
   timeZone,
   showRangeButtons = true,
   surveyPoint,
-}: HeaderProps) => {
+}: HeaderProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -168,7 +168,7 @@ const Header = ({
       </Grid>
     </div>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

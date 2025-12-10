@@ -4,19 +4,17 @@ import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.inte
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from '../time-series/metrics.enum';
 
-const reduceArrayToObject = <T>(previousValue: T, currentValue: T) => {
-  return {
-    ...currentValue,
-    ...previousValue,
-  };
-};
+const reduceArrayToObject = <T>(previousValue: T, currentValue: T) => ({
+  ...currentValue,
+  ...previousValue,
+});
 
 export const ApiTimeSeriesResponse = () => {
   const sources = Object.values(SourceType)
     .map((source) => {
       const metrics = Object.values(Metric)
-        .map((metric): Record<string, SchemaObject> => {
-          return {
+        .map(
+          (metric): Record<string, SchemaObject> => ({
             [metric]: {
               type: 'array',
               items: {
@@ -33,8 +31,8 @@ export const ApiTimeSeriesResponse = () => {
                 },
               },
             },
-          };
-        })
+          }),
+        )
         .reduce(reduceArrayToObject, {});
 
       return {
@@ -60,8 +58,8 @@ export const ApiTimeSeriesRangeResponse = () => {
   const sources = Object.values(SourceType)
     .map((source) => {
       const metrics = Object.values(Metric)
-        .map((metric): Record<string, SchemaObject> => {
-          return {
+        .map(
+          (metric): Record<string, SchemaObject> => ({
             [metric]: {
               type: 'array',
               items: {
@@ -78,8 +76,8 @@ export const ApiTimeSeriesRangeResponse = () => {
                 },
               },
             },
-          };
-        })
+          }),
+        )
         .reduce(reduceArrayToObject, {});
 
       return {

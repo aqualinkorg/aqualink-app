@@ -33,7 +33,7 @@ import {
   surveyMediaEditLoadingSelector,
 } from 'store/Survey/surveySlice';
 
-const SliderCard = ({
+function SliderCard({
   media,
   isSiteAdmin,
   editing,
@@ -41,7 +41,7 @@ const SliderCard = ({
   editSurveyPointId,
   onSurveyMediaUpdate,
   classes,
-}: SliderCardProps) => {
+}: SliderCardProps) {
   const {
     id,
     url,
@@ -236,7 +236,7 @@ const SliderCard = ({
       )}
     </Card>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

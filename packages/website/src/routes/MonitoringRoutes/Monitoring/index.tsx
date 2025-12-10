@@ -48,6 +48,39 @@ const tiles: Tile[] = [
   },
 ];
 
+const useStyles = makeStyles(() => ({
+  root: {
+    width: '17rem',
+    height: '7rem',
+    boxShadow: '7rem',
+    '&:hover': {
+      backgroundColor: colors.backgroundGray,
+    },
+  },
+  title: {
+    textDecoration: 'none',
+  },
+  link: {
+    '&:hover': {
+      textDecoration: 'none',
+    },
+  },
+  wrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: '2rem',
+    padding: '2rem',
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'space-between',
+  },
+}));
+
 function Monitoring() {
   const classes = useStyles();
   const user = useSelector(userInfoSelector);
@@ -83,38 +116,5 @@ function Monitoring() {
     </div>
   );
 }
-
-const useStyles = makeStyles(() => ({
-  root: {
-    width: '17rem',
-    height: '7rem',
-    boxShadow: '7rem',
-    '&:hover': {
-      backgroundColor: colors.backgroundGray,
-    },
-  },
-  title: {
-    textDecoration: 'none',
-  },
-  link: {
-    '&:hover': {
-      textDecoration: 'none',
-    },
-  },
-  wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    gap: '2rem',
-    padding: '2rem',
-  },
-  cardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    justifyContent: 'space-between',
-  },
-}));
 
 export default Monitoring;

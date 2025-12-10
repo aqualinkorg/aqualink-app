@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { Grid, Collapse, IconButton } from '@mui/material';
 import Alert from '@mui/material/Alert';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { SurveyData, SurveyState } from 'store/Survey/types';
 import {
   surveyErrorSelector,
@@ -10,15 +11,11 @@ import {
 import { userInfoSelector } from 'store/User/userSlice';
 import Form from 'common/SurveyForm';
 
-const SurveyForm = ({
-  siteId,
-  timeZone = null,
-  changeTab,
-}: SurveyFormProps) => {
+function SurveyForm({ siteId, timeZone = null, changeTab }: SurveyFormProps) {
   const user = useSelector(userInfoSelector);
   const surveyError = useSelector(surveyErrorSelector);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSubmit = useCallback(
     (
@@ -63,7 +60,7 @@ const SurveyForm = ({
       <Form siteId={siteId} timeZone={timeZone} onSubmit={onSubmit} />
     </>
   );
-};
+}
 
 interface SurveyFormProps {
   changeTab: (index: number) => void;
