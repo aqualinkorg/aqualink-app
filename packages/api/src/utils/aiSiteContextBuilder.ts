@@ -109,10 +109,20 @@ export async function buildSiteContext(
         order: { date: 'DESC' },
         relations: ['organisms', 'substrates'],
       }),
-      dataSource.getRepository(ForecastData).find({
-        where: { site: { id: siteId } },
-        order: { timestamp: 'DESC' },
-      }),
+      // Only query wind/wave hindcast if site has it
+      (async () => {
+        const hasHindcast = await dataSource.getRepository(ForecastData).count({
+          where: { site: { id: siteId } },
+          take: 1,
+        });
+
+        if (hasHindcast === 0) return [];
+
+        return dataSource.getRepository(ForecastData).find({
+          where: { site: { id: siteId } },
+          order: { timestamp: 'DESC' },
+        });
+      })(),
       dataSource.getRepository(TimeSeries).find({
         where: {
           source: { site: { id: siteId }, type: In(['spotter', 'seaphox']) },
@@ -132,31 +142,46 @@ export async function buildSiteContext(
         take: 200,
         relations: ['source'],
       }),
-      // NEW: Query HUI water quality data
-      dataSource.getRepository(TimeSeries).find({
-        where: {
-          source: { site: { id: siteId }, type: SourceType.HUI },
-          metric: In([
-            Metric.NITROGEN_TOTAL,
-            Metric.PHOSPHORUS_TOTAL,
-            Metric.PHOSPHORUS,
-            Metric.SILICATE,
-            Metric.NNN, // nitrate_plus_nitrite
-            Metric.AMMONIUM,
-            Metric.ODO_SATURATION,
-            Metric.ODO_CONCENTRATION,
-            Metric.SALINITY,
-            Metric.TURBIDITY,
-            Metric.PH,
-          ]),
-          timestamp: MoreThan(
-            new Date(Date.now() - 2 * 365 * 24 * 60 * 60 * 1000),
-          ),
-        },
-        order: { timestamp: 'DESC' },
-        take: 2000,
-        relations: ['source'],
-      }),
+      // NEW: Query HUI water quality data - ONLY if site has HUI data
+      (async () => {
+        // Check if site has any HUI data first
+        const hasHuiData = await latestDataRepository.findOne({
+          where: {
+            site: { id: siteId },
+            source: SourceType.HUI,
+          },
+        });
+
+        if (!hasHuiData) {
+          return []; // Return empty array if no HUI data
+        }
+
+        // Only query if HUI data exists
+        return dataSource.getRepository(TimeSeries).find({
+          where: {
+            source: { site: { id: siteId }, type: SourceType.HUI },
+            metric: In([
+              Metric.NITROGEN_TOTAL,
+              Metric.PHOSPHORUS_TOTAL,
+              Metric.PHOSPHORUS,
+              Metric.SILICATE,
+              Metric.NNN, // nitrate_plus_nitrite
+              Metric.AMMONIUM,
+              Metric.ODO_SATURATION,
+              Metric.ODO_CONCENTRATION,
+              Metric.SALINITY,
+              Metric.TURBIDITY,
+              Metric.PH,
+            ]),
+            timestamp: MoreThan(
+              new Date(Date.now() - 2 * 365 * 24 * 60 * 60 * 1000),
+            ),
+          },
+          order: { timestamp: 'DESC' },
+          take: 2000,
+          relations: ['source'],
+        });
+      })(),
     ]);
 
     const seaphoxMetrics = [
