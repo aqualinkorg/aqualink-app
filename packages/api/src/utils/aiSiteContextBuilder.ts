@@ -120,7 +120,7 @@ export async function buildSiteContext(
             Metric.TOP_TEMPERATURE,
             Metric.BOTTOM_TEMPERATURE,
             'seaphox_external_ph',
-            'seaphox_internal_ph',
+            'seaphox_temperature',
             'seaphox_pressure',
             'seaphox_salinity',
             'seaphox_conductivity',
@@ -161,7 +161,7 @@ export async function buildSiteContext(
 
     const seaphoxMetrics = [
       'seaphox_external_ph',
-      'seaphox_internal_ph',
+      'seaphox_temperature',
       'seaphox_pressure',
       'seaphox_salinity',
       'seaphox_conductivity',
