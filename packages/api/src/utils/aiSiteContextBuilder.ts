@@ -412,6 +412,7 @@ ${(() => {
         return { ...acc, [item.metric]: item };
       }
       return acc;
+      // prettier-ignore
     }, {} as Record<string, typeof windWaveData[0]>);
 
     return Object.entries(latestByMetric)
@@ -559,6 +560,7 @@ ${(() => {
         },
       ],
     };
+    // prettier-ignore
   }, {} as Record<string, Array<{ value: number; timestamp: Date }>>);
 
   // Sort each metric's data by timestamp (newest first) - immutable
