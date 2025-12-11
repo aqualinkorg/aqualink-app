@@ -403,7 +403,7 @@ ${(() => {
 
   const formatHindcast = () => {
     if (windWaveData.length === 0) return '- No hindcast data available';
-    
+
     const latestByMetric = windWaveData.reduce(
       (acc, item) => {
         if (
