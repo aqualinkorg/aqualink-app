@@ -403,8 +403,8 @@ ${(() => {
 
   const formatHindcast = () => {
     if (windWaveData.length === 0) return '- No hindcast data available';
-
-const latestByMetric = windWaveData.reduce(
+    
+    const latestByMetric = windWaveData.reduce(
       (acc, item) => {
         if (
           !acc[item.metric] ||
@@ -550,7 +550,7 @@ ${(() => {
     .filter((d): d is NonNullable<typeof d> => d !== null);
 
   // Format HUI data - get ALL values for each metric (last 2 years)
-const huiDataByMetric = huiWaterQualityData.reduce(
+  const huiDataByMetric = huiWaterQualityData.reduce(
     (acc, reading) => {
       const metricData = acc[reading.metric] || [];
       return {
