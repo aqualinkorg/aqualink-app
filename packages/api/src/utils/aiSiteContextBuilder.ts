@@ -84,7 +84,6 @@ export async function buildSiteContext(
       surveys,
       reefCheckSurveys,
       windWaveData,
-      spotterHistory,
       huiWaterQualityData,
     ] = await Promise.all([
       siteRepository.findOne({
@@ -125,18 +124,8 @@ export async function buildSiteContext(
       })(),
       dataSource.getRepository(TimeSeries).find({
         where: {
-          source: { site: { id: siteId }, type: In(['spotter', 'seaphox']) },
-          metric: In([
-            Metric.TOP_TEMPERATURE,
-            Metric.BOTTOM_TEMPERATURE,
-            'seaphox_external_ph',
-            'seaphox_temperature',
-            'seaphox_pressure',
-            'seaphox_salinity',
-            'seaphox_conductivity',
-            'seaphox_oxygen',
-            'seaphox_relative_humidity',
-          ]),
+          source: { site: { id: siteId }, type: In(['spotter']) },
+          metric: In([Metric.TOP_TEMPERATURE, Metric.BOTTOM_TEMPERATURE]),
         },
         order: { timestamp: 'DESC' },
         take: 200,
@@ -183,23 +172,6 @@ export async function buildSiteContext(
         });
       })(),
     ]);
-
-    const seaphoxMetrics = [
-      'seaphox_external_ph',
-      'seaphox_temperature',
-      'seaphox_pressure',
-      'seaphox_salinity',
-      'seaphox_conductivity',
-      'seaphox_oxygen',
-      'seaphox_relative_humidity',
-    ];
-    const latestSeaphox: Record<string, number> = seaphoxMetrics.reduce(
-      (acc, metric) => {
-        const reading = spotterHistory.find((s) => s.metric === metric);
-        return reading ? { ...acc, [metric]: reading.value } : acc;
-      },
-      {} as Record<string, number>,
-    );
 
     if (!siteData) {
       throw new Error(`Site with ID ${siteId} not found`);
@@ -492,20 +464,6 @@ ${formatHindcast()}`;
 
   return '- No wind/wave data available';
 })()}
-
-## SEAPHOX SENSOR DATA
-${
-  Object.keys(latestSeaphox).length > 0
-    ? Object.entries(latestSeaphox)
-        .map(
-          ([metric, value]) =>
-            `- **${metric
-              .replace(/seaphox_/g, '')
-              .replace(/_/g, ' ')}**: ${formatNumber(value, 2)}`,
-        )
-        .join('\n')
-    : '- No SeapHOx sensor data available'
-}
 
 ## WATER QUALITY DATA
 ${(() => {
