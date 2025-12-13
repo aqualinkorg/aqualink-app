@@ -186,12 +186,18 @@ const SiteDetails = ({
 
       const hasSeapHOx = Boolean(
         (parsedData.seaphoxTemperature ||
-          parsedData.seaphoxExternalPh ||
-          parsedData.seaphoxSalinity) &&
+          parsedData.ph ||
+          parsedData.salinity ||
+          parsedData.dissolvedOxygen) &&
           latestData.some(
             (x) =>
               x.source === 'spotter' &&
-              x.metric.startsWith('seaphox_') &&
+              (x.metric === 'seaphox_temperature' ||
+                x.metric === 'ph' ||
+                x.metric === 'salinity' ||
+                x.metric === 'conductivity' ||
+                x.metric === 'pressure' ||
+                x.metric === 'dissolved_oxygen') &&
               seapHOxInterval.contains(DateTime.fromISO(x.timestamp)),
           ),
       );

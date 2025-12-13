@@ -95,11 +95,7 @@ export const metricsKeysList = [
   'nitrate_plus_nitrite',
   'surface_temperature',
   'seaphox_temperature',
-  'seaphox_external_ph',
-  'seaphox_pressure',
-  'seaphox_salinity',
-  'seaphox_conductivity',
-  'seaphox_oxygen',
+  'dissolved_oxygen',
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];

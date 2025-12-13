@@ -332,7 +332,6 @@ export const parseLatestData = (
 ): LatestDataASSofarValue => {
   if (!data || data.length === 0) return {};
 
-  // Copying, sorting and filtering to keep spotter or latest data.
   const copy = [...data];
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
   const validityDate = Date.now() - spotterValidityLimit;
@@ -344,11 +343,11 @@ export const parseLatestData = (
     'barometric_pressure_top',
     'barometric_pressure_top_diff',
     'seaphox_temperature',
-    'seaphox_external_ph',
-    'seaphox_pressure',
-    'seaphox_salinity',
-    'seaphox_conductivity',
-    'seaphox_oxygen',
+    'ph',
+    'pressure',
+    'salinity',
+    'conductivity',
+    'dissolved_oxygen',
   ]);
 
   const filtered = copy.filter(

@@ -337,14 +337,14 @@ const MultipleSensorsCharts = ({
           ),
       );
 
-      const allMetrics = [
+      const allMetrics: MetricsKeys[] = [
         ...DEFAULT_METRICS,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
-        // SeapHOx metrics are in spotterRanges (with type: 'spotter' in DB)
-        ...spotterRanges
-          .filter((x) => x.metric.startsWith('seaphox_'))
-          .map((x) => x.metric),
+        // SeapHOx metrics - include renamed metrics + seaphox_temperature
+        ...(spotterRanges.length > 0
+          ? [...getPublicSeapHOxMetrics(), 'seaphox_temperature' as MetricsKeys]
+          : []),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);
 

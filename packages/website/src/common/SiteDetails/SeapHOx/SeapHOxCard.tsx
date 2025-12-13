@@ -27,11 +27,11 @@ const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
   // Define which metrics to display
   const metrics = [
     { key: 'seaphoxTemperature', label: 'Temperature', unit: '°C' },
-    { key: 'seaphoxExternalPh', label: 'Acidity', unit: 'pH' },
-    { key: 'seaphoxPressure', label: 'Pressure', unit: 'dbar' },
-    { key: 'seaphoxSalinity', label: 'Salinity', unit: 'psu' },
-    { key: 'seaphoxConductivity', label: 'Conductivity', unit: 'S/m' },
-    { key: 'seaphoxOxygen', label: 'Dissolved Oxygen', unit: 'ml/L' },
+    { key: 'ph', label: 'Acidity', unit: 'pH' },
+    { key: 'pressure', label: 'Pressure', unit: 'dbar' },
+    { key: 'salinity', label: 'Salinity', unit: 'psu' },
+    { key: 'conductivity', label: 'Conductivity', unit: 'S/m' },
+    { key: 'dissolvedOxygen', label: 'Dissolved Oxygen', unit: 'ml/L' },
   ];
 
   const formatValue = (value: number | undefined): string => {
@@ -43,11 +43,11 @@ const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
   const getRelativeTime = () => {
     const timestamp =
       data.seaphoxTemperature?.timestamp ||
-      data.seaphoxExternalPh?.timestamp ||
-      data.seaphoxPressure?.timestamp ||
-      data.seaphoxSalinity?.timestamp ||
-      data.seaphoxConductivity?.timestamp ||
-      data.seaphoxOxygen?.timestamp;
+      data.ph?.timestamp ||
+      data.pressure?.timestamp ||
+      data.salinity?.timestamp ||
+      data.conductivity?.timestamp ||
+      data.dissolvedOxygen?.timestamp;
 
     return timestamp ? toRelativeTime(timestamp) : null;
   };
@@ -115,7 +115,7 @@ const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
                     className={classes.contentTextValues}
                     variant="h3"
                   >
-                    {formatValue(data.seaphoxExternalPh?.value)}
+                    {formatValue(data.ph?.value)}
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     pH
@@ -138,7 +138,7 @@ const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
                     className={classes.contentTextValues}
                     variant="h3"
                   >
-                    {formatValue(data.seaphoxPressure?.value)}
+                    {formatValue(data.pressure?.value)}
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     dbar
@@ -161,7 +161,7 @@ const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
                     className={classes.contentTextValues}
                     variant="h3"
                   >
-                    {formatValue(data.seaphoxSalinity?.value)}
+                    {formatValue(data.salinity?.value)}
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     psu
@@ -184,7 +184,7 @@ const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
                     className={classes.contentTextValues}
                     variant="h3"
                   >
-                    {formatValue(data.seaphoxConductivity?.value)}
+                    {formatValue(data.conductivity?.value)}
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     S/m
@@ -207,7 +207,7 @@ const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
                     className={classes.contentTextValues}
                     variant="h3"
                   >
-                    {formatValue(data.seaphoxOxygen?.value)}
+                    {formatValue(data.dissolvedOxygen?.value)}
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     ml/L

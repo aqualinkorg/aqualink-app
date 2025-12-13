@@ -3,15 +3,11 @@ import { BaseSourceConfig } from '../../utils/types';
 
 export type SeaphoxMetricsKeys = Extract<
   MetricsKeys,
-  | 'seaphox_external_ph'
-  | 'seaphox_pressure'
-  | 'seaphox_salinity'
-  | 'seaphox_conductivity'
-  | 'seaphox_oxygen'
+  'ph' | 'pressure' | 'salinity' | 'conductivity' | 'dissolved_oxygen'
 >;
 
 export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
-  seaphox_external_ph: {
+  ph: {
     title: 'pH',
     units: 'pH',
     description: '',
@@ -22,7 +18,7 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     yAxisMin: 7.95,
     yAxisMax: 8.05,
   },
-  seaphox_pressure: {
+  pressure: {
     title: 'Pressure',
     units: 'dbar',
     description: '',
@@ -32,7 +28,7 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     yAxisStepSize: 0.2,
     yAxisPadding: 0.1,
   },
-  seaphox_salinity: {
+  salinity: {
     title: 'Salinity',
     units: 'psu',
     description: '',
@@ -42,7 +38,7 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     yAxisStepSize: 0.01,
     yAxisPadding: 0.1,
   },
-  seaphox_conductivity: {
+  conductivity: {
     title: 'Conductivity',
     units: 'S/m',
     description: '',
@@ -52,7 +48,7 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
     yAxisStepSize: 0.01,
     yAxisPadding: 0.1,
   },
-  seaphox_oxygen: {
+  dissolved_oxygen: {
     title: 'Dissolved Oxygen',
     units: 'ml/L',
     description: '',

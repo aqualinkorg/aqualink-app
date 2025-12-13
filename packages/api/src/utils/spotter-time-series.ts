@@ -34,7 +34,7 @@ const logger = new Logger('SpotterTimeSeries');
 
 /**
  * Check if site already has SeapHOx data in time_series table
- * Used to determine if we need to backfill 60 days or just fetch recent data
+ * Used to determine if we need to backfill 90 days or just fetch recent data
  */
 const hasExistingSeapHOxData = async (
   siteId: number,
@@ -43,7 +43,7 @@ const hasExistingSeapHOxData = async (
   const count = await timeSeriesRepository.count({
     where: {
       source: { site: { id: siteId } },
-      metric: Metric.SEAPHOX_EXTERNAL_PH,
+      metric: Metric.PH,
     },
     take: 1,
   });
@@ -151,7 +151,7 @@ export const addSpotterData = async (
   await Bluebird.map(
     sites,
     async (site) => {
-      // Fetch 60 days for NEW SeapHOx sites (first run only)
+      // Fetch 90 days for NEW SeapHOx sites (first run only)
       // After first run, just fetch recent data like normal spotters
       const hasSeapHOxData = site.hasSeaphox
         ? await hasExistingSeapHOxData(
@@ -161,7 +161,7 @@ export const addSpotterData = async (
         : false;
 
       const daysToFetch =
-        site.hasSeaphox && !hasSeapHOxData ? Math.max(days, 60) : days;
+        site.hasSeaphox && !hasSeapHOxData ? Math.max(days, 90) : days;
 
       return Bluebird.map(
         times(daysToFetch),
@@ -264,21 +264,21 @@ export const addSpotterData = async (
                 `Found ${allSeaphoxData.length} SeapHOx data points for site ${site.id}`,
               );
 
-              // Define metrics with proper typing
               const seaphoxMetrics: Array<[keyof SeapHOxData, Metric]> = [
                 ['temperature', Metric.SEAPHOX_TEMPERATURE],
-                ['externalPh', Metric.SEAPHOX_EXTERNAL_PH],
-                ['internalPh', Metric.SEAPHOX_INTERNAL_PH],
-                ['externalPhVolt', Metric.SEAPHOX_EXTERNAL_PH_VOLT],
-                ['internalPhVolt', Metric.SEAPHOX_INTERNAL_PH_VOLT],
-                ['phTemperature', Metric.SEAPHOX_PH_TEMPERATURE],
-                ['pressure', Metric.SEAPHOX_PRESSURE],
-                ['salinity', Metric.SEAPHOX_SALINITY],
-                ['conductivity', Metric.SEAPHOX_CONDUCTIVITY],
-                ['oxygen', Metric.SEAPHOX_OXYGEN],
-                ['relativeHumidity', Metric.SEAPHOX_RELATIVE_HUMIDITY],
-                ['intTemperature', Metric.SEAPHOX_INT_TEMPERATURE],
-                ['sampleNumber', Metric.SEAPHOX_SAMPLE_NUMBER],
+                ['externalPh', Metric.PH],
+                ['internalPh', Metric.INTERNAL_PH],
+                ['externalPhVolt', Metric.EXTERNAL_PH_VOLT],
+                ['internalPhVolt', Metric.INTERNAL_PH_VOLT],
+                ['phTemperature', Metric.PH_TEMPERATURE],
+                ['pressure', Metric.PRESSURE],
+                ['salinity', Metric.SALINITY],
+                ['conductivity', Metric.CONDUCTIVITY],
+                ['oxygen', Metric.DISSOLVED_OXYGEN],
+                ['relativeHumidity', Metric.RELATIVE_HUMIDITY],
+                ['intTemperature', Metric.INTERNAL_TEMPERATURE],
+                ['sampleNumber', Metric.SAMPLE_NUMBER],
+                ['errorFlags', Metric.ERROR_FLAGS],
               ];
 
               // eslint-disable-next-line fp/no-mutation
