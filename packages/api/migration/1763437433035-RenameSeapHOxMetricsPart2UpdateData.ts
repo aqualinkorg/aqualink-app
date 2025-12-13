@@ -25,10 +25,11 @@ export class RenameSeapHOxMetricsPart2UpdateData1734567890125
 
     for (const [oldMetric, newMetric] of metricMappings) {
       // Check if there's data with the old metric name
+      // FIX: Cast metric column to text (::text) to avoid "invalid input value for enum" error
       const result = await queryRunner.query(`
-        SELECT COUNT(*) as count FROM time_series 
-        WHERE metric = '${oldMetric}'::time_series_metric_enum
-      `);
+          SELECT COUNT(*) as count FROM time_series 
+          WHERE metric::text = '${oldMetric}'
+        `);
 
       const count = parseInt(result[0].count, 10);
 
@@ -37,11 +38,12 @@ export class RenameSeapHOxMetricsPart2UpdateData1734567890125
           `Updating ${count} rows from '${oldMetric}' to '${newMetric}'`,
         );
 
+        // FIX: Cast metric column to text in the WHERE clause here as well
         await queryRunner.query(`
-          UPDATE time_series 
-          SET metric = '${newMetric}'::time_series_metric_enum
-          WHERE metric = '${oldMetric}'::time_series_metric_enum
-        `);
+            UPDATE time_series 
+            SET metric = '${newMetric}'::time_series_metric_enum
+            WHERE metric::text = '${oldMetric}'
+          `);
       } else {
         console.log(`No data found for '${oldMetric}', skipping`);
       }
@@ -75,7 +77,7 @@ export class RenameSeapHOxMetricsPart2UpdateData1734567890125
       await queryRunner.query(`
         UPDATE time_series 
         SET metric = '${oldMetric}'::time_series_metric_enum
-        WHERE metric = '${newMetric}'::time_series_metric_enum
+        WHERE metric::text = '${newMetric}'
         AND source_id IN (
           SELECT id FROM sources 
           WHERE type = 'spotter' 
