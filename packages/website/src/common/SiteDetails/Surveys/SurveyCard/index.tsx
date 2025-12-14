@@ -9,7 +9,8 @@ import {
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { SurveyListItem } from 'store/Survey/types';
 import { userInfoSelector } from 'store/User/userSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
@@ -22,24 +23,64 @@ import LoadingSkeleton from '../../../LoadingSkeleton';
 import pointImageSkeleton from '../../../../assets/img/loading-image.svg';
 import DeleteButton from '../../../DeleteButton';
 
-const SurveyCard = ({
+const useStyles = makeStyles((theme: Theme) => ({
+  ...incomingStyles,
+  cardImageWrapper: {
+    height: '100%',
+    [theme.breakpoints.down('md')]: {
+      height: '50%',
+    },
+  },
+  infoWrapper: {
+    height: '100%',
+    [theme.breakpoints.down('md')]: {
+      height: '50%',
+    },
+  },
+  commentsWrapper: {
+    maxHeight: '51%',
+  },
+  comments: {
+    height: '100%',
+    overflowY: 'auto',
+  },
+  valuesWithMargin: {
+    marginLeft: '1rem',
+    maxWidth: '60%',
+    display: 'block',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  blueText: {
+    color: theme.palette.primary.main,
+  },
+  info: {
+    height: '100%',
+    padding: '0.5rem 0.5rem 0.5rem 1rem',
+  },
+}));
+
+function SurveyCard({
   pointId,
   pointName,
   isAdmin,
   siteId,
   survey = null,
   loading = false,
-}: SurveyCardProps) => {
+}: SurveyCardProps) {
   const classes = useStyles();
   const isShowingFeatured = pointId === -1;
   const user = useSelector(userInfoSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSurveyDelete = async () => {
     if (survey?.id && siteId && user && user.token) {
       return surveyServices.deleteSurvey(siteId, survey.id, user.token);
     }
-    return new Promise<void>((resolve) => resolve());
+    return new Promise<void>((resolve) => {
+      resolve();
+    });
   };
 
   const onSurveyDeleteSuccess = () => dispatch(surveysRequest(`${siteId}`));
@@ -210,45 +251,7 @@ const SurveyCard = ({
       </Grid>
     </Paper>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  ...incomingStyles,
-  cardImageWrapper: {
-    height: '100%',
-    [theme.breakpoints.down('md')]: {
-      height: '50%',
-    },
-  },
-  infoWrapper: {
-    height: '100%',
-    [theme.breakpoints.down('md')]: {
-      height: '50%',
-    },
-  },
-  commentsWrapper: {
-    maxHeight: '51%',
-  },
-  comments: {
-    height: '100%',
-    overflowY: 'auto',
-  },
-  valuesWithMargin: {
-    marginLeft: '1rem',
-    maxWidth: '60%',
-    display: 'block',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  blueText: {
-    color: theme.palette.primary.main,
-  },
-  info: {
-    height: '100%',
-    padding: '0.5rem 0.5rem 0.5rem 1rem',
-  },
-}));
+}
 
 interface SurveyCardProps {
   pointId: number;

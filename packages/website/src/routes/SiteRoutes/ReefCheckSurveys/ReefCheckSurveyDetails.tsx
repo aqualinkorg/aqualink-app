@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Grid,
-  Paper,
-  Theme,
-  Typography,
-  Skeleton
-} from '@mui/material';
+import { Box, Grid, Paper, Theme, Typography, Skeleton } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 import { createStyles, WithStyles } from '@mui/styles';
 import { useSelector } from 'react-redux';
@@ -64,7 +57,7 @@ const surveyFields = [
   { field: 'isSiteProtected', label: 'Is Site Protected?' },
   { field: 'isProtectionEnforced', label: 'Is Protection Enforced?' },
   { field: 'levelOfPoaching', label: 'Level of Poaching' },
-// eslint-disable-next-line prettier/prettier
+  // eslint-disable-next-line prettier/prettier
 ] satisfies Array<NonNullable<SurveyFields[keyof SurveyFields]>>;
 
 const formatFieldValue = (value: any, formatter?: (v: any) => string) => {
@@ -72,12 +65,15 @@ const formatFieldValue = (value: any, formatter?: (v: any) => string) => {
   return value ?? '';
 };
 
-const ReefCheckSurveyDetailsComponent = ({
+function ReefCheckSurveyDetailsComponent({
   classes,
-}: ReefCheckSurveyDetailsProps) => {
+}: ReefCheckSurveyDetailsProps) {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
 
-  const formattedDate = formatReefCheckSurveyDate(survey?.date ?? '', 'MMM dd, yyyy')
+  const formattedDate = formatReefCheckSurveyDate(
+    survey?.date ?? '',
+    'MMM dd, yyyy',
+  );
 
   if (error) {
     return null;
@@ -107,7 +103,7 @@ const ReefCheckSurveyDetailsComponent = ({
       </Box>
     </Paper>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

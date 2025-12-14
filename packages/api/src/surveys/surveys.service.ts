@@ -462,13 +462,14 @@ export class SurveysService {
    * @param secondary The optional secondary key to perform a deeper group
    */
   private groupBySurveyId(object: any[], key: string, secondary?: string) {
-    return object.reduce((result, current) => {
-      return {
+    return object.reduce(
+      (result, current) => ({
         ...result,
         [current.survey_id]: secondary
           ? { ...result[current.survey_id], [current[secondary]]: current[key] }
           : [...(result[current.survey_id] || []), current[key]],
-      };
-    }, {});
+      }),
+      {},
+    );
   }
 }

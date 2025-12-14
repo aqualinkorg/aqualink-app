@@ -18,7 +18,7 @@ export type SiteOnMap = (Site & { displayLng?: number }) | null;
 export interface HomePageState {
   siteOnMap: SiteOnMap;
   searchResult?: MapboxGeolocationData;
-  siteFilter: typeof siteOptions[number];
+  siteFilter: (typeof siteOptions)[number];
 }
 
 export interface TableRow {

@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:20
 
 # Install netcdf
 RUN apt update
@@ -20,7 +20,7 @@ RUN yarn install --production
 
 # Add yargs and Netcdf to the project so that we can run NOAA available scripts using netcdf in the container.
 RUN yarn add yargs
-RUN yarn add netcdf4
+RUN yarn add netcdf4@https://github.com/ovio-forks/netcdf4
 
 COPY . .
 

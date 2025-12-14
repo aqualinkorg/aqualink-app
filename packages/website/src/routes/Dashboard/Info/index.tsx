@@ -9,7 +9,7 @@ import { CollectionDetails } from 'store/Collection/types';
 import Header from './Header';
 import BarChart from './BarChart';
 
-const Info = ({ collection, classes }: InfoProps) => {
+function Info({ collection, classes }: InfoProps) {
   return (
     <Box className={classes.root}>
       {collection.user && (
@@ -18,7 +18,7 @@ const Info = ({ collection, classes }: InfoProps) => {
       <BarChart collection={collection} />
     </Box>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

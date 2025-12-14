@@ -15,11 +15,7 @@ import {
 } from 'helpers/surveyMedia';
 import ObservationBox from './ObservationBox';
 
-const SurveyDetails = ({
-  site,
-  survey = null,
-  classes,
-}: SurveyDetailsProps) => {
+function SurveyDetails({ site, survey = null, classes }: SurveyDetailsProps) {
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getSiteNameAndRegion(site);
@@ -96,7 +92,7 @@ const SurveyDetails = ({
       </Grid>
     </Grid>
   );
-};
+}
 
 const styles = () =>
   createStyles({

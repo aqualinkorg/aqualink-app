@@ -67,22 +67,34 @@ const bodyCells: BodyCell<TableData>[] = [
   { id: 'contactInformation' },
 ];
 
-const getUniqueValues = (arr: Array<string | null>) => {
-  return [...new Set(arr)].filter(Boolean).join(', ');
-};
+const getUniqueValues = (arr: Array<string | null>) =>
+  [...new Set(arr)].filter(Boolean).join(', ');
 
 const getResult = async (token: string) => {
   const { data } = await monitoringServices.getSitesOverview({ token });
 
-  return data.map((x) => {
-    return {
-      ...x,
-      organizations: getUniqueValues(x.organizations),
-      adminNames: getUniqueValues(x.adminNames),
-      adminEmails: getUniqueValues(x.adminEmails),
-    };
-  });
+  return data.map((x) => ({
+    ...x,
+    organizations: getUniqueValues(x.organizations),
+    adminNames: getUniqueValues(x.adminNames),
+    adminEmails: getUniqueValues(x.adminEmails),
+  }));
 };
+
+const useStyles = makeStyles(() => ({
+  filtersWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: '2rem',
+    padding: '2rem',
+    flexBasis: '5rem',
+  },
+  filterItem: {
+    height: '3rem',
+  },
+}));
 
 function SitesOverview() {
   const classes = useStyles();
@@ -166,20 +178,5 @@ function SitesOverview() {
     />
   );
 }
-
-const useStyles = makeStyles(() => ({
-  filtersWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    gap: '2rem',
-    padding: '2rem',
-    flexBasis: '5rem',
-  },
-  filterItem: {
-    height: '3rem',
-  },
-}));
 
 export default SitesOverview;
