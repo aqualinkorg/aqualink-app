@@ -34,32 +34,26 @@ const reefCheckSurveyListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       reefCheckSurveysRequest.fulfilled,
-      (state, action: PayloadAction<ReefCheckSurveyListState['list']>) => {
-        return {
-          ...state,
-          list: action.payload,
-          loading: false,
-        };
-      },
+      (state, action: PayloadAction<ReefCheckSurveyListState['list']>) => ({
+        ...state,
+        list: action.payload,
+        loading: false,
+      }),
     );
 
-    builder.addCase(reefCheckSurveysRequest.rejected, (state, action) => {
-      return {
-        ...state,
-        error: action.error.message
-          ? action.error.message
-          : action.error.toString(),
-        loading: false,
-      };
-    });
+    builder.addCase(reefCheckSurveysRequest.rejected, (state, action) => ({
+      ...state,
+      error: action.error.message
+        ? action.error.message
+        : action.error.toString(),
+      loading: false,
+    }));
 
-    builder.addCase(reefCheckSurveysRequest.pending, (state) => {
-      return {
-        ...state,
-        loading: true,
-        error: undefined,
-      };
-    });
+    builder.addCase(reefCheckSurveysRequest.pending, (state) => ({
+      ...state,
+      loading: true,
+      error: undefined,
+    }));
   },
 });
 

@@ -27,8 +27,8 @@ describe('RegisterDialog', () => {
         <Router>
           <RegisterDialog
             open
-            handleRegisterOpen={vi.fn}
-            handleSignInOpen={vi.fn}
+            handleRegisterOpen={vi.fn()}
+            handleSignInOpen={vi.fn()}
           />
         </Router>
       </Provider>,

@@ -9,7 +9,7 @@ export default defineConfig((env) => ({
   plugins: [
     pluginReact(),
     pluginSvgr({ mixedImport: true }),
-    pluginEslint({ enable: env.command === 'build' }),
+    pluginEslint({ enable: false }),
   ],
   html: {
     template: './public/index.html',

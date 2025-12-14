@@ -27,7 +27,7 @@ import DatePicker from '../../Datepicker';
 import { findChartPeriod, moreThanOneYear } from './helpers';
 import { Dataset } from '..';
 
-const Chart = ({
+function Chart({
   datasets,
   site,
   pointId,
@@ -43,7 +43,7 @@ const Chart = ({
   onStartDateChange,
   onEndDateChange,
   classes,
-}: ChartProps) => {
+}: ChartProps) {
   const theme = useTheme();
   const dataRanges = useSelector(siteTimeSeriesDataRangeSelector) || {};
   const someMetricRangeWithCurrentSource =
@@ -194,7 +194,7 @@ const Chart = ({
       )}
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({
