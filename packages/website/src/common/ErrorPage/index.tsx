@@ -5,7 +5,7 @@ import { useLocation, Link } from 'react-router-dom';
 import NavBar from '../NavBar';
 import Footer from '../Footer';
 
-const ErrorPage = () => {
+function ErrorPage() {
   const theme = useTheme();
   const { pathname } = useLocation();
 
@@ -50,6 +50,6 @@ const ErrorPage = () => {
       <Footer />
     </>
   );
-};
+}
 
 export default ErrorPage;

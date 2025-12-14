@@ -4,10 +4,10 @@ import { In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import { flatten, groupBy, isNil, omit, sortBy, times } from 'lodash';
 import { HistoricalMonthlyMean } from 'sites/historical-monthly-mean.entity';
+import { Site } from 'sites/sites.entity';
+import { Sources } from 'sites/sources.entity';
+import { TimeSeries } from 'time-series/time-series.entity';
 import { DateTime } from '../luxon-extensions';
-import { Site } from '../sites/sites.entity';
-import { Sources } from '../sites/sources.entity';
-import { TimeSeries } from '../time-series/time-series.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { filterSofarResponse, getLatestData, sofarHindcast } from './sofar';
 import {
@@ -84,12 +84,11 @@ const getSstAnomaly = (
  * @param siteRepository The repository needed to perform the query
  * @returns A site array with all the requested sites. If no siteIds request then returns all sites available.
  */
-const getSites = (siteIds: number[], siteRepository: Repository<Site>) => {
-  return siteRepository.find({
+const getSites = (siteIds: number[], siteRepository: Repository<Site>) =>
+  siteRepository.find({
     where: siteIds.length > 0 ? { id: In(siteIds) } : {},
     relations: ['historicalMonthlyMean'],
   });
-};
 
 /**
  * A function to fetch satellite temperature data and degree heating weeks from sofar,
@@ -116,9 +115,7 @@ export const updateSST = async (
 
   // Fetch sources
   const sources = await Promise.all(
-    sites.map((site) => {
-      return getNOAASource(site, sourceRepository);
-    }),
+    sites.map((site) => getNOAASource(site, sourceRepository)),
   );
 
   logger.log(`Back-filling ${sources.length} sites`);
@@ -251,9 +248,8 @@ export const updateSST = async (
                       .filter(
                         (
                           sstAnomalyValue,
-                        ): sstAnomalyValue is ValueWithTimestamp => {
-                          return !isNil(sstAnomalyValue.value);
-                        },
+                        ): sstAnomalyValue is ValueWithTimestamp =>
+                          !isNil(sstAnomalyValue.value),
                       )
                   );
                 },

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 import { Value } from './types';
 
-const Title = ({ classes, values }: TitleProps) => {
+function Title({ classes, values }: TitleProps) {
   return (
     <Box className={classes.root}>
       <Grid container alignItems="baseline">
@@ -34,7 +34,7 @@ const Title = ({ classes, values }: TitleProps) => {
       </Grid>
     </Box>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({
