@@ -82,7 +82,6 @@ export async function buildSiteContext(
       surveys,
       reefCheckSurveys,
       windWaveData,
-      spotterHistory,
     ] = await Promise.all([
       siteRepository.findOne({
         where: { id: siteId },
@@ -112,41 +111,14 @@ export async function buildSiteContext(
       }),
       dataSource.getRepository(TimeSeries).find({
         where: {
-          source: { site: { id: siteId }, type: In(['spotter', 'seaphox']) },
-          metric: In([
-            Metric.TOP_TEMPERATURE,
-            Metric.BOTTOM_TEMPERATURE,
-            'seaphox_external_ph',
-            'seaphox_internal_ph',
-            'seaphox_pressure',
-            'seaphox_salinity',
-            'seaphox_conductivity',
-            'seaphox_oxygen',
-            'seaphox_relative_humidity',
-          ]),
+          source: { site: { id: siteId }, type: In(['spotter']) },
+          metric: In([Metric.TOP_TEMPERATURE, Metric.BOTTOM_TEMPERATURE]),
         },
         order: { timestamp: 'DESC' },
         take: 200,
         relations: ['source'],
       }),
     ]);
-
-    const seaphoxMetrics = [
-      'seaphox_external_ph',
-      'seaphox_internal_ph',
-      'seaphox_pressure',
-      'seaphox_salinity',
-      'seaphox_conductivity',
-      'seaphox_oxygen',
-      'seaphox_relative_humidity',
-    ];
-    const latestSeaphox: Record<string, number> = seaphoxMetrics.reduce(
-      (acc, metric) => {
-        const reading = spotterHistory.find((s) => s.metric === metric);
-        return reading ? { ...acc, [metric]: reading.value } : acc;
-      },
-      {} as Record<string, number>,
-    );
 
     if (!siteData) {
       throw new Error(`Site with ID ${siteId} not found`);
@@ -379,15 +351,18 @@ ${(() => {
   const formatHindcast = () => {
     if (windWaveData.length === 0) return '- No hindcast data available';
 
-    const latestByMetric = windWaveData.reduce((acc, item) => {
-      if (
-        !acc[item.metric] ||
-        new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
-      ) {
-        return { ...acc, [item.metric]: item };
-      }
-      return acc;
-    }, {} as Record<string, typeof windWaveData[0]>);
+    const latestByMetric = windWaveData.reduce(
+      (acc, item) => {
+        if (
+          !acc[item.metric] ||
+          new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
+        ) {
+          return { ...acc, [item.metric]: item };
+        }
+        return acc;
+      },
+      {} as Record<string, (typeof windWaveData)[0]>,
+    );
 
     return Object.entries(latestByMetric)
       .map(
@@ -439,20 +414,6 @@ ${formatHindcast()}`;
 
   return '- No wind/wave data available';
 })()}
-
-## SEAPHOX SENSOR DATA
-${
-  Object.keys(latestSeaphox).length > 0
-    ? Object.entries(latestSeaphox)
-        .map(
-          ([metric, value]) =>
-            `- **${metric
-              .replace(/seaphox_/g, '')
-              .replace(/_/g, ' ')}**: ${formatNumber(value, 2)}`,
-        )
-        .join('\n')
-    : '- No SeapHOx sensor data available'
-}
 
 ## HISTORICAL DATA AVAILABILITY (Time Series Range)
 - Check /time-series/sites/{siteId}/range endpoint for detailed historical data availability
