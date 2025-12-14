@@ -6,7 +6,7 @@ import createStyles from '@mui/styles/createStyles';
 import { ArrowBack } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
-const BackButton = ({ siteId, bgColor, classes }: BackButtonProps) => {
+function BackButton({ siteId, bgColor, classes }: BackButtonProps) {
   return (
     <Box bgcolor={bgColor}>
       <Container>
@@ -25,7 +25,7 @@ const BackButton = ({ siteId, bgColor, classes }: BackButtonProps) => {
       </Container>
     </Box>
   );
-};
+}
 
 const styles = () =>
   createStyles({

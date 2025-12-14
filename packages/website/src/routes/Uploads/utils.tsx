@@ -137,6 +137,27 @@ export const SENSOR_TYPES: EnhancedSelectOption[] = [
   { id: 2, name: 'spotter', label: 'Spotter data', disabled: true },
 ];
 
+const OptionsListStyles = makeStyles((theme: Theme) => ({
+  menuItem: {
+    paddingTop: 8.5,
+    paddingBottom: 8.5,
+  },
+  itemName: {
+    maxWidth: '100%',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    height: 19,
+  },
+  comingSoonChip: {
+    marginLeft: theme.spacing(1),
+    height: 18,
+  },
+  comingSoonChipText: {
+    fontSize: 8,
+  },
+}));
+
 export const OptionsList = <T extends EnhancedSelectOption>(
   options: T[],
 ): React.JSX.Element[] => {
@@ -175,27 +196,6 @@ export const OptionsList = <T extends EnhancedSelectOption>(
     )
     .filter((x): x is React.JSX.Element => x !== null);
 };
-
-const OptionsListStyles = makeStyles((theme: Theme) => ({
-  menuItem: {
-    paddingTop: 8.5,
-    paddingBottom: 8.5,
-  },
-  itemName: {
-    maxWidth: '100%',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    height: 19,
-  },
-  comingSoonChip: {
-    marginLeft: theme.spacing(1),
-    height: 18,
-  },
-  comingSoonChipText: {
-    fontSize: 8,
-  },
-}));
 
 export const selectProps: TextFieldProps['SelectProps'] = {
   MenuProps: {

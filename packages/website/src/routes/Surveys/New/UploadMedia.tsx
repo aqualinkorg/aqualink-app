@@ -28,12 +28,12 @@ import MediaCard from './MediaCard';
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
-const UploadMedia = ({
+function UploadMedia({
   siteId,
   siteName,
   changeTab,
   classes,
-}: UploadMediaProps) => {
+}: UploadMediaProps) {
   const navigate = useNavigate();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
@@ -148,8 +148,8 @@ const UploadMedia = ({
       .finally(() => setLoading(false));
   };
 
-  const handleSurveyPointChange = (index: number) => {
-    return (event: ChangeEvent<{ value: unknown }>) => {
+  const handleSurveyPointChange =
+    (index: number) => (event: ChangeEvent<{ value: unknown }>) => {
       const surveyPoint = Number(event.target.value);
       const newMetadata = metadata.map((item, key) => {
         if (key === index) {
@@ -162,10 +162,9 @@ const UploadMedia = ({
       });
       setMetadata(newMetadata);
     };
-  };
 
-  const handleObservationChange = (index: number) => {
-    return (event: ChangeEvent<{ value: unknown }>) => {
+  const handleObservationChange =
+    (index: number) => (event: ChangeEvent<{ value: unknown }>) => {
       const observation = event.target.value as SurveyMediaData['observations'];
       const newMetadata = metadata.map((item, key) => {
         if (key === index) {
@@ -178,10 +177,9 @@ const UploadMedia = ({
       });
       setMetadata(newMetadata);
     };
-  };
 
-  const handleCommentsChange = (index: number) => {
-    return (event: ChangeEvent<{ value: unknown }>) => {
+  const handleCommentsChange =
+    (index: number) => (event: ChangeEvent<{ value: unknown }>) => {
       const comments = event.target.value as string;
       const newMetadata = metadata.map((item, key) => {
         if (key === index) {
@@ -194,29 +192,26 @@ const UploadMedia = ({
       });
       setMetadata(newMetadata);
     };
-  };
 
-  const fileCards = previews.map((preview, index) => {
-    return (
-      <MediaCard
-        key={preview}
-        siteId={siteId}
-        index={index}
-        preview={preview}
-        file={files[index]}
-        handleSurveyPointOptionAdd={handleSurveyPointOptionAdd(index)}
-        surveyPoint={metadata?.[index]?.surveyPoint}
-        observation={metadata?.[index]?.observation || ''}
-        comments={metadata?.[index]?.comments || ''}
-        deleteCard={deleteCard}
-        setFeatured={setFeatured}
-        featuredFile={featuredFile}
-        handleCommentsChange={handleCommentsChange(index)}
-        handleObservationChange={handleObservationChange(index)}
-        handleSurveyPointChange={handleSurveyPointChange(index)}
-      />
-    );
-  });
+  const fileCards = previews.map((preview, index) => (
+    <MediaCard
+      key={preview}
+      siteId={siteId}
+      index={index}
+      preview={preview}
+      file={files[index]}
+      handleSurveyPointOptionAdd={handleSurveyPointOptionAdd(index)}
+      surveyPoint={metadata?.[index]?.surveyPoint}
+      observation={metadata?.[index]?.observation || ''}
+      comments={metadata?.[index]?.comments || ''}
+      deleteCard={deleteCard}
+      setFeatured={setFeatured}
+      featuredFile={featuredFile}
+      handleCommentsChange={handleCommentsChange(index)}
+      handleObservationChange={handleObservationChange(index)}
+      handleSurveyPointChange={handleSurveyPointChange(index)}
+    />
+  ));
 
   return (
     <>
@@ -335,7 +330,7 @@ const UploadMedia = ({
       </Grid>
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

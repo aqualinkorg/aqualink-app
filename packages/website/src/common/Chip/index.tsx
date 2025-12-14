@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Typography, Grid, Theme, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -61,12 +61,16 @@ interface ChipProps {
   state?: any;
 }
 
-const LinkWrapper: FC<
-  Pick<ChipProps, 'to' | 'href' | 'state'> & {
-    className?: string;
-    children?: React.ReactNode;
-  }
-> = ({ to, href, className, children, state }) => {
+function LinkWrapper({
+  to,
+  href,
+  className,
+  children,
+  state,
+}: Pick<ChipProps, 'to' | 'href' | 'state'> & {
+  className?: string;
+  children?: React.ReactNode;
+}) {
   const url = to || href;
 
   return url ? (
@@ -80,11 +84,11 @@ const LinkWrapper: FC<
       {children}
     </Link>
   ) : (
-    <>{children}</>
+    children
   );
-};
+}
 
-const Chip = ({
+function Chip({
   live,
   href,
   to,
@@ -94,7 +98,7 @@ const Chip = ({
   width,
   onClick,
   state,
-}: ChipProps) => {
+}: ChipProps) {
   const classes = useStyles({ width });
   return (
     <Grid className={classes.chip} item>
@@ -130,6 +134,6 @@ const Chip = ({
       </Grid>
     </Grid>
   );
-};
+}
 
 export default Chip;

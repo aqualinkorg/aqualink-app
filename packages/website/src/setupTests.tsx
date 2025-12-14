@@ -87,7 +87,9 @@ global.matchMedia =
 const svgs = ['watch', 'unwatch', 'caret', 'satellite'];
 svgs.forEach((svgName) => {
   vi.doMock(`assets/${svgName}.svg`, () => ({
-    ReactComponent: (props) => <svg {...props}>{`${svgName}.svg`}</svg>,
+    ReactComponent: (props: React.SVGProps<SVGSVGElement>) => (
+      <svg {...props}>{`${svgName}.svg`}</svg>
+    ),
     default: `${svgName}.svg`,
   }));
 });

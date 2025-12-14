@@ -38,7 +38,26 @@ const tableCellTypographyProps: TypographyProps = {
   variant: 'subtitle2',
 };
 
-const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+  table: {
+    minWidth: 1080,
+  },
+  headCell: {
+    backgroundColor: grey[200],
+  },
+  bold: {
+    fontWeight: 700,
+  },
+  dateIntervalButton: {
+    whiteSpace: 'nowrap',
+  },
+}));
+
+function HistoryTable({ site, uploadHistory, onDelete }: HistoryTableProps) {
   const nUploads = uploadHistory.length;
   const classes = useStyles();
   const { timezone } = site;
@@ -158,26 +177,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
       </TableContainer>
     </div>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
-  table: {
-    minWidth: 1080,
-  },
-  headCell: {
-    backgroundColor: grey[200],
-  },
-  bold: {
-    fontWeight: 700,
-  },
-  dateIntervalButton: {
-    whiteSpace: 'nowrap',
-  },
-}));
+}
 
 interface HistoryTableProps {
   site: Site;

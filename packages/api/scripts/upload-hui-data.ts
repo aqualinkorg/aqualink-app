@@ -117,15 +117,13 @@ function createSourceAndInsertTimeSeries(
       surveyPoint: targetSiteSurveyPoint,
       sourcesRepository,
     });
-    const dataAsTimeSeries = point.data.map((x) => {
-      return {
-        timestamp: x.timestamp,
-        value: x.value,
-        metric: x.metric,
-        source: sourceEntity,
-        dataUpload: dataUploadsFile,
-      };
-    });
+    const dataAsTimeSeries = point.data.map((x) => ({
+      timestamp: x.timestamp,
+      value: x.value,
+      metric: x.metric,
+      source: sourceEntity,
+      dataUpload: dataUploadsFile,
+    }));
     await saveBatchToTimeSeries(
       dataAsTimeSeries as QueryDeepPartialEntity<TimeSeries>[],
       timeSeriesRepository,
@@ -256,9 +254,7 @@ async function run() {
   if (clusterNum) logger.log(`Grouped sites into ${clusterNum + 1} clusters`);
 
   const allData = sitesClustered.reduce(
-    (acc, curr) => {
-      return [...acc, ...curr.data];
-    },
+    (acc, curr) => [...acc, ...curr.data],
     [] as {
       timestamp: string;
       value: number;

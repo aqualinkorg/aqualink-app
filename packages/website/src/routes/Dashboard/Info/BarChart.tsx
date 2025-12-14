@@ -15,7 +15,7 @@ const percentageCalculator = (count: number, max?: number) => {
   return `${percentage}%`;
 };
 
-const BarChart = ({ collection, classes }: BarChartProps) => {
+function BarChart({ collection, classes }: BarChartProps) {
   const theme = useTheme();
   const nLevels = 5;
   const groupedByAlert = groupBy(
@@ -83,7 +83,7 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
       </Box>
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

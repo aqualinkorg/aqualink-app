@@ -336,119 +336,93 @@ const selectedSiteSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => {
-        return {
-          ...state,
-          details: action.payload,
-          loading: false,
-        };
-      },
+      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
+        ...state,
+        details: action.payload,
+        loading: false,
+      }),
     );
 
     builder.addCase(
       siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-          loading: false,
-        };
-      },
+      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+        ...state,
+        error: action.payload,
+        loading: false,
+      }),
     );
 
-    builder.addCase(siteRequest.pending, (state) => {
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    });
+    builder.addCase(siteRequest.pending, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    }));
 
     builder.addCase(
       forecastDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['forecastData']>) => {
-        return {
-          ...state,
-          forecastData: action.payload,
-        };
-      },
+      (state, action: PayloadAction<SelectedSiteState['forecastData']>) => ({
+        ...state,
+        forecastData: action.payload,
+      }),
     );
 
     builder.addCase(
       forecastDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-        };
-      },
+      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+        ...state,
+        error: action.payload,
+      }),
     );
 
-    builder.addCase(forecastDataRequest.pending, (state) => {
-      return {
-        ...state,
-        error: null,
-      };
-    });
+    builder.addCase(forecastDataRequest.pending, (state) => ({
+      ...state,
+      error: null,
+    }));
     builder.addCase(
       spotterPositionRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['spotterPosition']>) => {
-        return {
-          ...state,
-          spotterPosition: action.payload,
-          loadingSpotterPosition: state.loadingSpotterPosition - 1,
-        };
-      },
+      (state, action: PayloadAction<SelectedSiteState['spotterPosition']>) => ({
+        ...state,
+        spotterPosition: action.payload,
+        loadingSpotterPosition: state.loadingSpotterPosition - 1,
+      }),
     );
 
     builder.addCase(
       spotterPositionRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => {
-        return {
-          ...state,
-          error:
-            action.payload === AlreadyLoadingErrorMessage
-              ? null
-              : action.payload,
-          loadingSpotterPosition: state.loadingSpotterPosition - 1,
-        };
-      },
+      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+        ...state,
+        error:
+          action.payload === AlreadyLoadingErrorMessage ? null : action.payload,
+        loadingSpotterPosition: state.loadingSpotterPosition - 1,
+      }),
     );
 
-    builder.addCase(spotterPositionRequest.pending, (state) => {
-      return {
-        ...state,
-        loadingSpotterPosition: state.loadingSpotterPosition + 1,
-        error: null,
-      };
-    });
+    builder.addCase(spotterPositionRequest.pending, (state) => ({
+      ...state,
+      loadingSpotterPosition: state.loadingSpotterPosition + 1,
+      error: null,
+    }));
 
     builder.addCase(
       latestDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['latestData']>) => {
-        return {
-          ...state,
-          latestData: action.payload,
-        };
-      },
+      (state, action: PayloadAction<SelectedSiteState['latestData']>) => ({
+        ...state,
+        latestData: action.payload,
+      }),
     );
 
     builder.addCase(
       latestDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-        };
-      },
+      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+        ...state,
+        error: action.payload,
+      }),
     );
 
-    builder.addCase(latestDataRequest.pending, (state) => {
-      return {
-        ...state,
-        error: null,
-      };
-    });
+    builder.addCase(latestDataRequest.pending, (state) => ({
+      ...state,
+      error: null,
+    }));
 
     builder.addCase(
       siteOceanSenseDataRequest.fulfilled,
@@ -472,41 +446,37 @@ const selectedSiteSlice = createSlice({
       }),
     );
 
-    builder.addCase(siteOceanSenseDataRequest.rejected, (state, action) => {
-      return {
-        ...state,
-        latestOceanSenseDataError: action.meta.arg.latest
-          ? action.error.message
-          : state.latestOceanSenseDataError,
-        latestOceanSenseDataLoading: action.meta.arg.latest
-          ? false
-          : state.latestOceanSenseDataLoading,
-        oceanSenseDataError: !action.meta.arg.latest
-          ? action.error.message
-          : state.oceanSenseDataError,
-        oceanSenseDataLoading: !action.meta.arg.latest
-          ? false
-          : state.oceanSenseDataLoading,
-      };
-    });
+    builder.addCase(siteOceanSenseDataRequest.rejected, (state, action) => ({
+      ...state,
+      latestOceanSenseDataError: action.meta.arg.latest
+        ? action.error.message
+        : state.latestOceanSenseDataError,
+      latestOceanSenseDataLoading: action.meta.arg.latest
+        ? false
+        : state.latestOceanSenseDataLoading,
+      oceanSenseDataError: !action.meta.arg.latest
+        ? action.error.message
+        : state.oceanSenseDataError,
+      oceanSenseDataLoading: !action.meta.arg.latest
+        ? false
+        : state.oceanSenseDataLoading,
+    }));
 
-    builder.addCase(siteOceanSenseDataRequest.pending, (state, action) => {
-      return {
-        ...state,
-        latestOceanSenseDataLoading: action.meta.arg.latest
-          ? true
-          : state.latestOceanSenseDataLoading,
-        latestOceanSenseDataError: action.meta.arg.latest
-          ? null
-          : state.latestOceanSenseDataError,
-        oceanSenseDataLoading: !action.meta.arg.latest
-          ? true
-          : state.oceanSenseDataLoading,
-        oceanSenseDataError: !action.meta.arg.latest
-          ? null
-          : state.oceanSenseDataError,
-      };
-    });
+    builder.addCase(siteOceanSenseDataRequest.pending, (state, action) => ({
+      ...state,
+      latestOceanSenseDataLoading: action.meta.arg.latest
+        ? true
+        : state.latestOceanSenseDataLoading,
+      latestOceanSenseDataError: action.meta.arg.latest
+        ? null
+        : state.latestOceanSenseDataError,
+      oceanSenseDataLoading: !action.meta.arg.latest
+        ? true
+        : state.oceanSenseDataLoading,
+      oceanSenseDataError: !action.meta.arg.latest
+        ? null
+        : state.oceanSenseDataError,
+    }));
 
     builder.addCase(
       siteTimeSeriesDataRequest.fulfilled,
@@ -566,13 +536,11 @@ const selectedSiteSlice = createSlice({
       }),
     );
 
-    builder.addCase(siteTimeSeriesDataRequest.pending, (state) => {
-      return {
-        ...state,
-        timeSeriesDataLoading: true,
-        error: null,
-      };
-    });
+    builder.addCase(siteTimeSeriesDataRequest.pending, (state) => ({
+      ...state,
+      timeSeriesDataLoading: true,
+      error: null,
+    }));
 
     builder.addCase(
       siteTimeSeriesDataRangeRequest.fulfilled,
@@ -595,13 +563,11 @@ const selectedSiteSlice = createSlice({
       }),
     );
 
-    builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state) => {
-      return {
-        ...state,
-        timeSeriesDataRangeLoading: true,
-        error: null,
-      };
-    });
+    builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state) => ({
+      ...state,
+      timeSeriesDataRangeLoading: true,
+      error: null,
+    }));
 
     builder.addCase(
       siteContactInfoRequest.fulfilled,
@@ -631,13 +597,11 @@ const selectedSiteSlice = createSlice({
       }),
     );
 
-    builder.addCase(siteContactInfoRequest.pending, (state) => {
-      return {
-        ...state,
-        contactInfoLoading: true,
-        error: null,
-      };
-    });
+    builder.addCase(siteContactInfoRequest.pending, (state) => ({
+      ...state,
+      contactInfoLoading: true,
+      error: null,
+    }));
   },
 });
 

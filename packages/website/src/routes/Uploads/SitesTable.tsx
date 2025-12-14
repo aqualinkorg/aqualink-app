@@ -21,6 +21,15 @@ interface SiteSurveyPoints {
   surveyPoints: SurveyPoints[];
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    marginTop: theme.spacing(3),
+  },
+  table: {
+    minWidth: 650,
+  },
+}));
+
 function SitesTable() {
   const classes = useStyles();
 
@@ -92,14 +101,5 @@ function SitesTable() {
     </TableContainer>
   );
 }
-
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    marginTop: theme.spacing(3),
-  },
-  table: {
-    minWidth: 650,
-  },
-}));
 
 export default SitesTable;
