@@ -130,46 +130,31 @@ export async function buildSiteContext(
         take: 200,
         relations: ['source'],
       }),
-      // NEW: Query HUI water quality data - ONLY if site has HUI data
-      (async () => {
-        // Check if site has any HUI data first
-        const hasHuiData = await latestDataRepository.findOne({
-          where: {
-            site: { id: siteId },
-            source: SourceType.HUI,
-          },
-        });
-
-        if (!hasHuiData) {
-          return []; // Return empty array if no HUI data
-        }
-
-        // Only query if HUI data exists
-        return dataSource.getRepository(TimeSeries).find({
-          where: {
-            source: { site: { id: siteId }, type: SourceType.HUI },
-            metric: In([
-              Metric.NITROGEN_TOTAL,
-              Metric.PHOSPHORUS_TOTAL,
-              Metric.PHOSPHORUS,
-              Metric.SILICATE,
-              Metric.NNN, // nitrate_plus_nitrite
-              Metric.AMMONIUM,
-              Metric.ODO_SATURATION,
-              Metric.ODO_CONCENTRATION,
-              Metric.SALINITY,
-              Metric.TURBIDITY,
-              Metric.PH,
-            ]),
-            timestamp: MoreThan(
-              new Date(Date.now() - 2 * 365 * 24 * 60 * 60 * 1000),
-            ),
-          },
-          order: { timestamp: 'DESC' },
-          take: 2000,
-          relations: ['source'],
-        });
-      })(),
+      // NEW: Query HUI water quality data
+      dataSource.getRepository(TimeSeries).find({
+        where: {
+          source: { site: { id: siteId }, type: SourceType.HUI },
+          metric: In([
+            Metric.NITROGEN_TOTAL,
+            Metric.PHOSPHORUS_TOTAL,
+            Metric.PHOSPHORUS,
+            Metric.SILICATE,
+            Metric.NNN, // nitrate_plus_nitrite
+            Metric.AMMONIUM,
+            Metric.ODO_SATURATION,
+            Metric.ODO_CONCENTRATION,
+            Metric.SALINITY,
+            Metric.TURBIDITY,
+            Metric.PH,
+          ]),
+          timestamp: MoreThan(
+            new Date(Date.now() - 2 * 365 * 24 * 60 * 60 * 1000),
+          ),
+        },
+        order: { timestamp: 'DESC' },
+        take: 2000,
+        relations: ['source'],
+      }),
     ]);
 
     if (!siteData) {
@@ -566,18 +551,8 @@ ${(() => {
     {} as Record<string, Array<{ value: number; timestamp: Date }>>,
   );
 
-  // Sort each metric's data by timestamp (newest first) - immutable
-  const sortedHuiDataByMetric = Object.entries(huiDataByMetric).reduce(
-    (acc, [metric, dataPoints]) => ({
-      ...acc,
-      // eslint-disable-next-line fp/no-mutating-methods
-      [metric]: [...dataPoints].sort(
-        (a, b) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
-      ),
-    }),
-    {} as Record<string, Array<{ value: number; timestamp: Date }>>,
-  );
+  // Data is already sorted by timestamp DESC in the database query; no need to sort again
+  const sortedHuiDataByMetric = huiDataByMetric;
 
   const huiData = Object.entries(sortedHuiDataByMetric)
     .map(([metric, dataPoints]) => {
@@ -641,9 +616,9 @@ ${sondeData.map((d) => `- **${d.label}**: ${d.value}`).join('\n')}
                 if (turbValue >= 10)
                   return `- Turbidity: ALERT level (≥10) - Poor water clarity. ${count}`;
                 if (turbValue >= 5)
-                  return `- Turbidity: WARNING level (5-10) - Elevated sediment. ${count}`;
+                  return `- Turbidity: WARNING level (5-9.9) - Elevated sediment. ${count}`;
                 if (turbValue >= 1)
-                  return `- Turbidity: WATCH level (1-5) - Slightly elevated. ${count}`;
+                  return `- Turbidity: WATCH level (1-4.9) - Slightly elevated. ${count}`;
                 return `- Turbidity: Good (<1) - Clear water. ${count}`;
               })()
             : null;
@@ -657,9 +632,9 @@ ${sondeData.map((d) => `- **${d.label}**: ${d.value}`).join('\n')}
                 if (nitrateValue >= 100)
                   return `- Nitrate+Nitrite Nitrogen: ALERT level (≥100) - High pollution risk. ${count}`;
                 if (nitrateValue >= 30)
-                  return `- Nitrate+Nitrite Nitrogen: WARNING level (30-100) - Elevated nutrients. ${count}`;
+                  return `- Nitrate+Nitrite Nitrogen: WARNING level (30-99.9) - Elevated nutrients. ${count}`;
                 if (nitrateValue >= 3.5)
-                  return `- Nitrate+Nitrite Nitrogen: WATCH level (3.5-30) - Slightly elevated. ${count}`;
+                  return `- Nitrate+Nitrite Nitrogen: WATCH level (3.5-29.9) - Slightly elevated. ${count}`;
                 return `- Nitrate+Nitrite Nitrogen: Good (<3.5) - Low nutrient pollution. ${count}`;
               })()
             : null;
