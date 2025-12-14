@@ -32,6 +32,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
             >
               <a
                 class="MediaPointName-link-5"
+                data-discover="true"
                 href="/sites/1/points/1"
               >
                 <mock-typography

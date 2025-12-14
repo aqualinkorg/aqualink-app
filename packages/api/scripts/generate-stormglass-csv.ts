@@ -257,9 +257,10 @@ const main = async () => {
 
       const stormglassData = Object.entries(sgData).reduce(
         (acc, [metric, s]) => {
-          const ss = Object.entries(s as any).map(([source, value]) => {
-            return { source, value };
-          });
+          const ss = Object.entries(s as any).map(([source, value]) => ({
+            source,
+            value,
+          }));
           const sgAI = ss.find(
             (x) => (x.source as unknown as StormGlassSourceType) === 'sg',
           );

@@ -301,12 +301,13 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
                 <a
                   class="makeStyles-link-22"
+                  data-discover="true"
                   href="/sites/1"
                   rel="noopener noreferrer"
                   target="_blank"

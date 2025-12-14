@@ -43,7 +43,7 @@ const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
   `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
 
-export const SofarLayers = ({ defaultLayerName }: SofarLayersProps) => {
+export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
   return (
     <LayersControl position="topright">
       <LayersControl.BaseLayer
@@ -86,7 +86,7 @@ export const SofarLayers = ({ defaultLayerName }: SofarLayersProps) => {
       ))}
     </LayersControl>
   );
-};
+}
 
 interface SofarLayersProps {
   defaultLayerName?: MapLayerName;

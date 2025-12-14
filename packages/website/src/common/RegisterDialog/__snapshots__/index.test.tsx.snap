@@ -116,10 +116,10 @@ exports[`RegisterDialog > should render with given state from Redux store 1`] = 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           First Name
@@ -157,10 +157,10 @@ exports[`RegisterDialog > should render with given state from Redux store 1`] = 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Last Name
@@ -198,10 +198,10 @@ exports[`RegisterDialog > should render with given state from Redux store 1`] = 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Organization
@@ -239,10 +239,10 @@ exports[`RegisterDialog > should render with given state from Redux store 1`] = 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Email Address
@@ -280,10 +280,10 @@ exports[`RegisterDialog > should render with given state from Redux store 1`] = 
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Password
@@ -318,6 +318,7 @@ exports[`RegisterDialog > should render with given state from Redux store 1`] = 
                        
                       <a
                         class="RegisterDialog-termsLink-11"
+                        data-discover="true"
                         href="/terms"
                       >
                         Terms and Conditions
@@ -330,7 +331,7 @@ exports[`RegisterDialog > should render with given state from Redux store 1`] = 
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-9 css-1idn90j-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-13q2gq8-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-13tpzue-MuiButtonBase-root-MuiButton-root"
                   disabled=""
                   tabindex="-1"
                   type="submit"
@@ -349,7 +350,7 @@ exports[`RegisterDialog > should render with given state from Redux store 1`] = 
                   Have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1588512-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >

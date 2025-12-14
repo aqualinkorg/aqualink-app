@@ -184,11 +184,11 @@ export class GoogleCloudService {
   public async deleteDanglingFiles(): Promise<void[]> {
     const danglingFiles = await this.findDanglingFiles();
 
-    const actions = danglingFiles.map((file) => {
-      return this.deleteFile(file).catch(() => {
+    const actions = danglingFiles.map((file) =>
+      this.deleteFile(file).catch(() => {
         this.logger.log(`Could not delete media ${file}.`);
-      });
-    });
+      }),
+    );
 
     return Promise.all(actions);
   }

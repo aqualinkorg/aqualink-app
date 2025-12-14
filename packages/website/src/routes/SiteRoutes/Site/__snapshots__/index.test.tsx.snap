@@ -22,7 +22,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           <mock-clear />
         </mock-iconbutton>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/"
           tabindex="0"
         >
@@ -34,7 +35,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/map"
           tabindex="0"
         >
@@ -46,7 +48,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/register"
           tabindex="0"
         >
@@ -58,7 +61,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
           href="https://highlights.aqualink.org"
           tabindex="0"
           target="_blank"
@@ -72,7 +75,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </mock-link>
         <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
           href="https://bristlemouth.aqualink.org"
           tabindex="0"
           target="_blank"
@@ -86,7 +89,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </mock-link>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/tracker"
           tabindex="0"
         >
@@ -98,7 +102,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/about"
           tabindex="0"
         >
@@ -110,7 +115,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/faq"
           tabindex="0"
         >
@@ -122,7 +128,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/buoy"
           tabindex="0"
         >
@@ -134,7 +141,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/drones"
           tabindex="0"
         >
@@ -146,7 +154,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-820 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
           href="https://highlights.aqualink.org/contact-us"
           tabindex="0"
           target="_blank"
@@ -176,20 +184,20 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             role="group"
           >
             <a
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-819 MuiButtonGroup-firstButton css-kigga0-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-819 MuiButtonGroup-firstButton css-z31nbn-MuiButtonBase-root-MuiButton-root"
               href="https://github.com/aqualinkorg/aqualink-app"
               tabindex="0"
               target="_blank"
             >
               <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
               >
                 <mock-github />
               </span>
               GitHub
             </a>
             <a
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-819 MuiButtonGroup-lastButton css-kigga0-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-819 MuiButtonGroup-lastButton css-z31nbn-MuiButtonBase-root-MuiButton-root"
               href="https://ovio.org/project/aqualinkorg/aqualink-app"
               tabindex="0"
               target="_blank"
@@ -309,7 +317,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       >
                         <button
                           aria-label="Open"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-1qf8es8-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-154b54e-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                           tabindex="-1"
                           title="Open"
                           type="button"
@@ -329,10 +337,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       </div>
                       <fieldset
                         aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                        class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-w4cd9x"
+                          class="css-1nf2c5d-MuiNotchedOutlined-root"
                         >
                           <span
                             aria-hidden="true"
@@ -406,6 +414,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               />
               <a
                 class="NavBar-menuItemLink-814"
+                data-discover="true"
                 href="/dashboard"
               >
                 <mock-menuitem
@@ -535,7 +544,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       >
                         <button
                           aria-label="Open"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-1qf8es8-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-154b54e-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                           tabindex="-1"
                           title="Open"
                           type="button"
@@ -555,10 +564,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       </div>
                       <fieldset
                         aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                        class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-w4cd9x"
+                          class="css-1nf2c5d-MuiNotchedOutlined-root"
                         >
                           <span
                             aria-hidden="true"
@@ -692,10 +701,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           First Name
@@ -733,10 +742,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Last Name
@@ -774,10 +783,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Organization
@@ -815,10 +824,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Email Address
@@ -856,10 +865,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Password
@@ -894,6 +903,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                        
                       <a
                         class="RegisterDialog-termsLink-837"
+                        data-discover="true"
                         href="/terms"
                       >
                         Terms and Conditions
@@ -906,7 +916,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-835 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1vruhd9-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
                   disabled=""
                   tabindex="-1"
                   type="submit"
@@ -925,7 +935,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                   Have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
@@ -1114,10 +1124,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Email Address
@@ -1155,10 +1165,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Password
@@ -1172,7 +1182,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-847 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-847 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
@@ -1188,7 +1198,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-846 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1vruhd9-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="submit"
                 >
@@ -1206,7 +1216,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                   Don't have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
@@ -1835,7 +1845,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                           class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
                         >
                           <button
-                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-907 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-907 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                             tabindex="0"
                             type="button"
                           >
@@ -2000,7 +2010,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                           class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
                         >
                           <button
-                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-907 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-907 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                             tabindex="0"
                             type="button"
                           >
@@ -2136,7 +2146,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                             class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
                           >
                             <button
-                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-907 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-907 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                               tabindex="0"
                               type="button"
                             >
@@ -2189,7 +2199,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       <img
                         alt="wind"
                         class="makeStyles-titleImages-956"
-                        src="/src/assets/wind.svg"
+                        src="data:image/svg+xml,%3csvg%20width='40'%20height='32'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='%236BC1E1'%20fill-rule='evenodd'%20opacity='.5'%3e%3cpath%20d='M25.034%202.516a8.027%208.027%200%2000-2.354%205.68.766.766%200%20101.53%200%206.503%206.503%200%20116.503%206.503H1.076a.763.763%200%20100%201.529h29.637a8.03%208.03%200%20006.957-12.05%208.03%208.03%200%2000-12.636-1.662z'/%3e%3cpath%20d='M2.607%2010.109a.765.765%200%20100%201.529h14.335a4.206%204.206%200%20002.977-7.182%204.208%204.208%200%2000-7.184%202.975.764.764%200%20101.53%200%202.677%202.677%200%20112.678%202.678H2.607zM26.123%2018.906H2.607a.766.766%200%20100%201.53h23.36a4.363%204.363%200%2011-1.67%208.397%204.365%204.365%200%2001-2.695-4.032.764.764%200%2010-1.53%200%205.892%205.892%200%20005.796%205.885A5.892%205.892%200%200031.858%2025a5.891%205.891%200%2000-1.544-4.186%205.888%205.888%200%2000-4.033-1.906.711.711%200%2000-.158%200z'/%3e%3c/g%3e%3c/svg%3e"
                       />
                     </div>
                     <div
@@ -2252,7 +2262,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       <img
                         alt="waves"
                         class="makeStyles-titleImages-956"
-                        src="/src/assets/waves.svg"
+                        src="data:image/svg+xml,%3csvg%20width='42'%20height='23'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='%236BC1E1'%20fill-rule='evenodd'%20opacity='.5'%3e%3cpath%20d='M.615%2019.218c1.596%201.795%203.79%202.81%206.128%202.81s4.533-1.015%206.129-2.81c1.596%201.795%203.79%202.81%206.128%202.81%202.337%200%204.532-1.015%206.128-2.81%201.596%201.795%203.791%202.81%206.129%202.81%202.593%200%205.009-1.25%206.63-3.424a.656.656%200%2000-.119-.904.619.619%200%2000-.881.121c-1.38%201.853-3.43%202.915-5.628%202.915-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-.999%200-.309.415.05.914.49%201.397zM3.428%2010.994c1.596%201.795%203.791%202.81%206.129%202.81%202.337%200%204.532-1.015%206.128-2.81%201.596%201.795%203.79%202.81%206.128%202.81s4.533-1.015%206.129-2.81c1.596%201.795%203.79%202.81%206.128%202.81%202.593%200%205.009-1.249%206.63-3.424a.656.656%200%2000-.118-.903.619.619%200%2000-.882.12c-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-1%200-1.379%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-.309.415.05.914.491%201.397zM.615%202.77c1.596%201.796%203.79%202.81%206.128%202.81s4.533-1.014%206.129-2.81c1.596%201.796%203.79%202.81%206.128%202.81%202.337%200%204.532-1.014%206.128-2.81%201.596%201.796%203.791%202.81%206.129%202.81%202.593%200%205.009-1.248%206.63-3.423a.656.656%200%2000-.119-.904.619.619%200%2000-.881.12c-1.38%201.854-3.43%202.916-5.628%202.916-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-.999%200-.309.415.05.914.49%201.397z'/%3e%3c/g%3e%3c/svg%3e"
                       />
                     </div>
                     <div
@@ -2384,7 +2394,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                             class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
                           >
                             <button
-                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-907 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-907 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                               tabindex="0"
                               type="button"
                             >
@@ -2464,14 +2474,14 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             </mock-dialogcontent>
             <mock-dialogactions>
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-jxzygd-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-14iezcd-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
                 No
               </button>
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary css-38lwvj-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary css-1ishezr-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
@@ -2524,14 +2534,13 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-987 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-987 MuiSelect-root css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                       >
                         <div
-                          aria-controls=":r1m:"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-labelledby="survey-point survey-point"
-                          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                           id="survey-point"
                           role="combobox"
                           tabindex="0"
@@ -2548,7 +2557,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                         />
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
                           data-testid="ArrowDropDownIcon"
                           focusable="false"
                           viewBox="0 0 24 24"
@@ -2582,14 +2591,13 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     class="MuiFormControl-root makeStyles-formControl-979 css-1iw3t7y-MuiFormControl-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-980 css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                      class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-980 MuiSelect-root css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                     >
                       <div
-                        aria-controls=":r1n:"
                         aria-expanded="false"
                         aria-haspopup="listbox"
                         aria-labelledby="survey-observation survey-observation"
-                        class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-982 css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                        class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-982 css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                         id="survey-observation"
                         role="combobox"
                         tabindex="0"
@@ -2611,7 +2619,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       />
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
                         data-testid="ArrowDropDownIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -2678,6 +2686,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-1020 css-1ej0ikx-MuiGrid-root"
                             >
                               <a
+                                data-discover="true"
                                 href="/sites/1/survey_details/46"
                               >
                                 <div
@@ -2753,11 +2762,12 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
                                   >
                                     <a
+                                      data-discover="true"
                                       href="/sites/1/survey_details/46"
                                       style="color: inherit; text-decoration: none;"
                                     >
                                       <button
-                                        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                                        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
                                         tabindex="0"
                                         type="button"
                                       >
@@ -2808,6 +2818,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-1020 css-1ej0ikx-MuiGrid-root"
                             >
                               <a
+                                data-discover="true"
                                 href="/sites/1/survey_details/46"
                               >
                                 <div
@@ -2883,11 +2894,12 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
                                   >
                                     <a
+                                      data-discover="true"
                                       href="/sites/1/survey_details/46"
                                       style="color: inherit; text-decoration: none;"
                                     >
                                       <button
-                                        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                                        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
                                         tabindex="0"
                                         type="button"
                                       >
@@ -2980,7 +2992,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           <mock-clear />
         </mock-iconbutton>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/"
           tabindex="0"
         >
@@ -2992,7 +3005,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/map"
           tabindex="0"
         >
@@ -3004,7 +3018,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/register"
           tabindex="0"
         >
@@ -3016,7 +3031,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
           href="https://highlights.aqualink.org"
           tabindex="0"
           target="_blank"
@@ -3030,7 +3045,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </mock-link>
         <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
           href="https://bristlemouth.aqualink.org"
           tabindex="0"
           target="_blank"
@@ -3044,7 +3059,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </mock-link>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/tracker"
           tabindex="0"
         >
@@ -3056,7 +3072,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/about"
           tabindex="0"
         >
@@ -3068,7 +3085,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/faq"
           tabindex="0"
         >
@@ -3080,7 +3098,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/buoy"
           tabindex="0"
         >
@@ -3092,7 +3111,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/drones"
           tabindex="0"
         >
@@ -3104,7 +3124,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
           </mock-typography>
         </a>
         <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-121gmvr-MuiButtonBase-root-MuiButton-root"
+          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
           href="https://highlights.aqualink.org/contact-us"
           tabindex="0"
           target="_blank"
@@ -3134,20 +3154,20 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             role="group"
           >
             <a
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-16 MuiButtonGroup-firstButton css-kigga0-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-16 MuiButtonGroup-firstButton css-z31nbn-MuiButtonBase-root-MuiButton-root"
               href="https://github.com/aqualinkorg/aqualink-app"
               tabindex="0"
               target="_blank"
             >
               <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
               >
                 <mock-github />
               </span>
               GitHub
             </a>
             <a
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-16 MuiButtonGroup-lastButton css-kigga0-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-16 MuiButtonGroup-lastButton css-z31nbn-MuiButtonBase-root-MuiButton-root"
               href="https://ovio.org/project/aqualinkorg/aqualink-app"
               tabindex="0"
               target="_blank"
@@ -3267,7 +3287,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       >
                         <button
                           aria-label="Open"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-1qf8es8-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-154b54e-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                           tabindex="-1"
                           title="Open"
                           type="button"
@@ -3287,10 +3307,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       </div>
                       <fieldset
                         aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                        class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-w4cd9x"
+                          class="css-1nf2c5d-MuiNotchedOutlined-root"
                         >
                           <span
                             aria-hidden="true"
@@ -3364,6 +3384,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               />
               <a
                 class="NavBar-menuItemLink-11"
+                data-discover="true"
                 href="/dashboard"
               >
                 <mock-menuitem
@@ -3493,7 +3514,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       >
                         <button
                           aria-label="Open"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-1qf8es8-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-154b54e-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                           tabindex="-1"
                           title="Open"
                           type="button"
@@ -3513,10 +3534,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       </div>
                       <fieldset
                         aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                        class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-w4cd9x"
+                          class="css-1nf2c5d-MuiNotchedOutlined-root"
                         >
                           <span
                             aria-hidden="true"
@@ -3650,10 +3671,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           First Name
@@ -3691,10 +3712,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Last Name
@@ -3732,10 +3753,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Organization
@@ -3773,10 +3794,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Email Address
@@ -3814,10 +3835,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Password
@@ -3852,6 +3873,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                        
                       <a
                         class="RegisterDialog-termsLink-34"
+                        data-discover="true"
                         href="/terms"
                       >
                         Terms and Conditions
@@ -3864,7 +3886,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-32 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1vruhd9-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
                   disabled=""
                   tabindex="-1"
                   type="submit"
@@ -3883,7 +3905,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                   Have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
@@ -4072,10 +4094,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Email Address
@@ -4113,10 +4135,10 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     />
                     <fieldset
                       aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                     >
                       <legend
-                        class="css-81qg8w"
+                        class="css-1n64csd-MuiNotchedOutlined-root"
                       >
                         <span>
                           Password
@@ -4130,7 +4152,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-44 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-44 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
@@ -4146,7 +4168,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-43 css-z4k4cw-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1vruhd9-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="submit"
                 >
@@ -4164,7 +4186,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                   Don't have an account?
                    
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
@@ -4814,7 +4836,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                           class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
                         >
                           <button
-                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-102 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-102 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                             tabindex="0"
                             type="button"
                           >
@@ -4979,7 +5001,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                           class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
                         >
                           <button
-                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-102 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-102 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                             tabindex="0"
                             type="button"
                           >
@@ -5115,7 +5137,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                             class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
                           >
                             <button
-                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-102 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-102 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                               tabindex="0"
                               type="button"
                             >
@@ -5168,7 +5190,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       <img
                         alt="wind"
                         class="makeStyles-titleImages-151"
-                        src="/src/assets/wind.svg"
+                        src="data:image/svg+xml,%3csvg%20width='40'%20height='32'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='%236BC1E1'%20fill-rule='evenodd'%20opacity='.5'%3e%3cpath%20d='M25.034%202.516a8.027%208.027%200%2000-2.354%205.68.766.766%200%20101.53%200%206.503%206.503%200%20116.503%206.503H1.076a.763.763%200%20100%201.529h29.637a8.03%208.03%200%20006.957-12.05%208.03%208.03%200%2000-12.636-1.662z'/%3e%3cpath%20d='M2.607%2010.109a.765.765%200%20100%201.529h14.335a4.206%204.206%200%20002.977-7.182%204.208%204.208%200%2000-7.184%202.975.764.764%200%20101.53%200%202.677%202.677%200%20112.678%202.678H2.607zM26.123%2018.906H2.607a.766.766%200%20100%201.53h23.36a4.363%204.363%200%2011-1.67%208.397%204.365%204.365%200%2001-2.695-4.032.764.764%200%2010-1.53%200%205.892%205.892%200%20005.796%205.885A5.892%205.892%200%200031.858%2025a5.891%205.891%200%2000-1.544-4.186%205.888%205.888%200%2000-4.033-1.906.711.711%200%2000-.158%200z'/%3e%3c/g%3e%3c/svg%3e"
                       />
                     </div>
                     <div
@@ -5231,7 +5253,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       <img
                         alt="waves"
                         class="makeStyles-titleImages-151"
-                        src="/src/assets/waves.svg"
+                        src="data:image/svg+xml,%3csvg%20width='42'%20height='23'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='%236BC1E1'%20fill-rule='evenodd'%20opacity='.5'%3e%3cpath%20d='M.615%2019.218c1.596%201.795%203.79%202.81%206.128%202.81s4.533-1.015%206.129-2.81c1.596%201.795%203.79%202.81%206.128%202.81%202.337%200%204.532-1.015%206.128-2.81%201.596%201.795%203.791%202.81%206.129%202.81%202.593%200%205.009-1.25%206.63-3.424a.656.656%200%2000-.119-.904.619.619%200%2000-.881.121c-1.38%201.853-3.43%202.915-5.628%202.915-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-.999%200-.309.415.05.914.49%201.397zM3.428%2010.994c1.596%201.795%203.791%202.81%206.129%202.81%202.337%200%204.532-1.015%206.128-2.81%201.596%201.795%203.79%202.81%206.128%202.81s4.533-1.015%206.129-2.81c1.596%201.795%203.79%202.81%206.128%202.81%202.593%200%205.009-1.249%206.63-3.424a.656.656%200%2000-.118-.903.619.619%200%2000-.882.12c-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-1%200-1.379%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-.309.415.05.914.491%201.397zM.615%202.77c1.596%201.796%203.79%202.81%206.128%202.81s4.533-1.014%206.129-2.81c1.596%201.796%203.79%202.81%206.128%202.81%202.337%200%204.532-1.014%206.128-2.81%201.596%201.796%203.791%202.81%206.129%202.81%202.593%200%205.009-1.248%206.63-3.423a.656.656%200%2000-.119-.904.619.619%200%2000-.881.12c-1.38%201.854-3.43%202.916-5.628%202.916-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-.999%200-.309.415.05.914.49%201.397z'/%3e%3c/g%3e%3c/svg%3e"
                       />
                     </div>
                     <div
@@ -5363,7 +5385,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                             class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
                           >
                             <button
-                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-102 css-iorydh-MuiButtonBase-root-MuiButton-root"
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-102 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                               tabindex="0"
                               type="button"
                             >
@@ -5443,14 +5465,14 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             </mock-dialogcontent>
             <mock-dialogactions>
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-jxzygd-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-14iezcd-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
                 No
               </button>
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary css-38lwvj-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary css-1ishezr-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
@@ -5503,14 +5525,13 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-182 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-182 MuiSelect-root css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                       >
                         <div
-                          aria-controls=":rc:"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-labelledby="survey-point survey-point"
-                          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                           id="survey-point"
                           role="combobox"
                           tabindex="0"
@@ -5527,7 +5548,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                         />
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
                           data-testid="ArrowDropDownIcon"
                           focusable="false"
                           viewBox="0 0 24 24"
@@ -5561,14 +5582,13 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                     class="MuiFormControl-root makeStyles-formControl-174 css-1iw3t7y-MuiFormControl-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-175 css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                      class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-175 MuiSelect-root css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                     >
                       <div
-                        aria-controls=":rd:"
                         aria-expanded="false"
                         aria-haspopup="listbox"
                         aria-labelledby="survey-observation survey-observation"
-                        class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-177 css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                        class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-177 css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                         id="survey-observation"
                         role="combobox"
                         tabindex="0"
@@ -5590,7 +5610,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
                       />
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
                         data-testid="ArrowDropDownIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
