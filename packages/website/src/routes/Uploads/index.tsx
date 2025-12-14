@@ -53,7 +53,7 @@ function Uploads() {
   const [uploadDetails, setUploadDetails] = React.useState<
     UploadTimeSeriesResult[]
   >([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [selectedSource, setSelectedSource] =
     React.useState<Sources>('sheet_data');
   const [siteTimezone, setSiteTimezone] = React.useState(false);
@@ -86,7 +86,6 @@ function Uploads() {
   const onStatusSnackbarClose = () => setIsErrorSnackbarOpen(false);
 
   const handleRefreshOnSuccessUpload = () => {
-    // eslint-disable-next-line fp/no-mutating-methods
     navigate(`/map`);
   };
 

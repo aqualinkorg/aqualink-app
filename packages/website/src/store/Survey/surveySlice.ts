@@ -194,7 +194,7 @@ const selectedSurvey = createSlice({
         );
         if (action.payload.featured) {
           state.details?.surveyMedia?.forEach((media) => {
-            // eslint-disable-next-line fp/no-mutation, no-param-reassign
+            // eslint-disable-next-line fp/no-mutation
             media.featured = false;
           });
         }
@@ -214,7 +214,7 @@ const selectedSurvey = createSlice({
           // eslint-disable-next-line fp/no-mutation
           surveyMedia.surveyPoint = action.payload.surveyPoint;
         }
-        // eslint-disable-next-line fp/no-mutation, no-param-reassign
+        // eslint-disable-next-line fp/no-mutation
         state.loadingSurveyMediaEdit = false;
       },
     );

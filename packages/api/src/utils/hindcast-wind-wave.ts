@@ -158,7 +158,6 @@ export const addWindWaveData = async (
 
         // Save wind wave data to forecast_data
         await Promise.all(
-          // eslint-disable-next-line array-callback-return, consistent-return
           dataLabels.map(([dataLabel, metric, source]) => {
             const sofarValue = forecastData[dataLabel] as ValueWithTimestamp;
             if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {

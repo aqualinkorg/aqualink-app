@@ -6,7 +6,6 @@ import L, { GridLayer } from 'leaflet';
  * https://github.com/Leaflet/Leaflet/issues/3575
  */
 
-/* eslint-disable no-underscore-dangle */
 (() => {
   if (!L || !L.GridLayer || !L.GridLayer.prototype) return;
   const gridLayerProto = L.GridLayer.prototype as GridLayer & {
@@ -17,9 +16,9 @@ import L, { GridLayer } from 'leaflet';
     _initTile(tile: HTMLImageElement) {
       originalInitTile.call(this, tile);
       const tileSize = this.getTileSize();
-      // eslint-disable-next-line no-param-reassign,fp/no-mutation
+      // eslint-disable-next-line fp/no-mutation
       tile.style.width = `${tileSize.x + 1}px`;
-      // eslint-disable-next-line no-param-reassign,fp/no-mutation
+      // eslint-disable-next-line fp/no-mutation
       tile.style.height = `${tileSize.y + 1}px`;
     },
   });

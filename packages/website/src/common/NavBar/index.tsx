@@ -148,7 +148,6 @@ function NavBar({
               item
               xs={4}
               sm={2}
-              // eslint-disable-next-line no-nested-ternary
               md={routeButtons ? 2 : searchLocation ? 6 : 4}
             >
               <Box display="flex" flexWrap="nowrap" alignItems="center">

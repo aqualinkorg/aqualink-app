@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign, fp/no-mutation */
 import Faker from 'faker';
 import { define } from 'typeorm-seeding';
 import { Site, SiteStatus } from '../sites/sites.entity';

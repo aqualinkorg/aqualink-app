@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import yargs from 'yargs';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { last } from 'lodash';

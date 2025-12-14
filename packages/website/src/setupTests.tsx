@@ -73,7 +73,6 @@ vi.mock('axios-cache-interceptor', async () => {
 // eslint-disable-next-line fp/no-mutation
 global.matchMedia =
   global.matchMedia ||
-  // eslint-disable-next-line func-names
   function () {
     return {
       matches: false,

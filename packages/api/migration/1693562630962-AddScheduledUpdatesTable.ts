@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddScheduledUpdatesTable1693562630962
-  implements MigrationInterface
-{
+export class AddScheduledUpdatesTable1693562630962 implements MigrationInterface {
   name = 'AddScheduledUpdatesTable1693562630962';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

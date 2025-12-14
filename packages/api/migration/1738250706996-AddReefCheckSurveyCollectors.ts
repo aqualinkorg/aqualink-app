@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddReefCheckSurveyCollectors1738250706996
-  implements MigrationInterface
-{
+export class AddReefCheckSurveyCollectors1738250706996 implements MigrationInterface {
   name = 'AddReefCheckSurveyCollectors1738250706996';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

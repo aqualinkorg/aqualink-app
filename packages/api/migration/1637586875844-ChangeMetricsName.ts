@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 /* eslint-disable prettier/prettier */
 import { MigrationInterface, QueryRunner } from "typeorm";
 

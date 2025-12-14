@@ -258,11 +258,7 @@ function Apply({ classes }: ApplyProps) {
                         {locationFormElements.map(({ id, label }) => (
                           <Grid
                             item
-                            // eslint-disable-next-line no-nested-ternary
-                            xs={
-                              // eslint-disable-next-line no-nested-ternary
-                              id === 'siteName' ? 8 : id === 'depth' ? 4 : 6
-                            }
+                            xs={id === 'siteName' ? 8 : id === 'depth' ? 4 : 6}
                             key={label}
                           >
                             <TextField

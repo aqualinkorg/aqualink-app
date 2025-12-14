@@ -17,7 +17,7 @@ import {
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import { colors } from 'layout/App/theme';
-// eslint-disable-next-line import/no-unresolved
+
 import { stringify } from 'csv-stringify/browser/esm/sync';
 import React from 'react';
 import { downloadBlob } from 'utils/utils';

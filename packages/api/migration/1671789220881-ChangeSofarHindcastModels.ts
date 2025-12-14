@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class ChangeSofarHindcastModels1671789220881
-  implements MigrationInterface
-{
+export class ChangeSofarHindcastModels1671789220881 implements MigrationInterface {
   name = 'ChangeSofarHindcastModels1671789220881';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddEndOfLifeStatusTospotter1675934866004
-  implements MigrationInterface
-{
+export class AddEndOfLifeStatusTospotter1675934866004 implements MigrationInterface {
   name = 'AddEndOfLifeStatusTospotter1675934866004';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

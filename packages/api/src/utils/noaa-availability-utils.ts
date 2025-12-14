@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable fp/no-mutating-methods */
-/* eslint-disable no-plusplus */
+
 /* eslint-disable fp/no-mutation */
 import { Logger } from '@nestjs/common';
 import fs from 'fs';

@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddIndividualCollections1620094532837
-  implements MigrationInterface {
+export class AddIndividualCollections1620094532837 implements MigrationInterface {
   name = 'AddIndividualCollections1620094532837';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

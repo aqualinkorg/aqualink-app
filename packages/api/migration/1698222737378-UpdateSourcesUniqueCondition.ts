@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class UpdateSourcesUniqueCondition1698222737378
-  implements MigrationInterface
-{
+export class UpdateSourcesUniqueCondition1698222737378 implements MigrationInterface {
   name = 'UpdateSourcesUniqueCondition1698222737378';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

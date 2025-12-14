@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class MakeStartExclusionDateOptional1610959829016
-  implements MigrationInterface {
+export class MakeStartExclusionDateOptional1610959829016 implements MigrationInterface {
   name = 'MakeStartExclusionDateOptional1610959829016';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

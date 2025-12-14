@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddThumbnailUrlToSurveyMedia1655476789970
-  implements MigrationInterface
-{
+export class AddThumbnailUrlToSurveyMedia1655476789970 implements MigrationInterface {
   name = 'AddThumbnailUrlToSurveyMedia1655476789970';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

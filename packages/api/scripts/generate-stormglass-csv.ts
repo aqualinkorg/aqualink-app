@@ -1,4 +1,4 @@
-/* eslint-disable no-plusplus, fp/no-mutation */
+/* eslint-disable fp/no-mutation */
 import { Point } from 'geojson';
 import fs from 'fs';
 import { Site } from '../src/sites/sites.entity';
@@ -117,7 +117,7 @@ const main = async () => {
           P[i++]
         } sofar requests: ${sofarCompleted}/${total}, stormglass requests: ${stormglassCompleted}/${total} `,
       );
-      // eslint-disable-next-line fp/no-mutation
+
       i %= P.length;
       if (sofarCompleted > 0 && !sofarStart) sofarStart = new Date().getTime();
       if (stormglassCompleted > 0 && !stormglassStart)

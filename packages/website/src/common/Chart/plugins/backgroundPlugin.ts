@@ -17,7 +17,7 @@ const plugin = {
     // eslint-disable-next-line fp/no-mutation
     ctx.fillStyle = options.color;
     if (options.xTicksFontWeight) {
-      // eslint-disable-next-line no-param-reassign,fp/no-mutation
+      // eslint-disable-next-line fp/no-mutation
       chart.scales['x-axis-0'].options.ticks.fontSize =
         (chartWidth * options.xTicksFontWeight) / 100;
     }
