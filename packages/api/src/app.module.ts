@@ -24,6 +24,8 @@ import { DataUploadsModule } from './data-uploads/data-uploads.module';
 import { SiteSketchFabModule } from './site-sketchfab/site-sketchfab.module';
 import { WindWaveModule } from './wind-wave-data/wind-wave-data.module';
 import { SensorDataModule } from './sensor-data/sensor-data.module';
+import { AiChatController } from './ai-chat/ai-chat.controller';
+import { AiChatLog } from './ai-chat-logs/ai-chat-logs.entity';
 
 @Module({
   imports: [
@@ -50,7 +52,8 @@ import { SensorDataModule } from './sensor-data/sensor-data.module';
     MonitoringModule,
     ReefCheckSitesModule,
     ReefCheckSurveysModule,
+    AiChatLog,
   ],
-  controllers: [AppController],
+  controllers: [AppController, AiChatController],
 })
 export class AppModule {}

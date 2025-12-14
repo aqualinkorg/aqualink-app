@@ -23,28 +23,26 @@ interface IconDescriptionProps {
   isLarge?: boolean;
 }
 
-const IconDescription: React.FC<IconDescriptionProps> = ({
-  icon,
-  description,
-  isLarge,
-}) => (
-  <Box display="flex" alignItems="center" gap={3} mb={2} pt={1}>
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      height={40}
-      width={isLarge ? 130 : 40}
-    >
-      {icon}
+function IconDescription({ icon, description, isLarge }: IconDescriptionProps) {
+  return (
+    <Box display="flex" alignItems="center" gap={3} mb={2} pt={1}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height={40}
+        width={isLarge ? 130 : 40}
+      >
+        {icon}
+      </Box>
+      <Typography variant="body2" style={{ lineHeight: 1.5 }}>
+        {description}
+      </Typography>
     </Box>
-    <Typography variant="body2" style={{ lineHeight: 1.5 }}>
-      {description}
-    </Typography>
-  </Box>
-);
+  );
+}
 
-const InfoDialogContent: React.FC = () => {
+function InfoDialogContent() {
   const iconDescriptions = [
     {
       icon: (
@@ -276,17 +274,17 @@ const InfoDialogContent: React.FC = () => {
       </Grid>
     </Grid>
   );
-};
+}
 
 interface InfoDialogProps {
   infoDialogOpen: boolean;
   handleInfoClose: () => void;
 }
 
-export const InfoDialog: React.FC<InfoDialogProps> = ({
+export function InfoDialog({
   infoDialogOpen,
   handleInfoClose,
-}) => {
+}: InfoDialogProps) {
   return (
     <Dialog open={infoDialogOpen} onClose={handleInfoClose}>
       <DialogTitle
@@ -312,4 +310,4 @@ export const InfoDialog: React.FC<InfoDialogProps> = ({
       </DialogContent>
     </Dialog>
   );
-};
+}

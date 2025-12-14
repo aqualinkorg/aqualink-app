@@ -12,12 +12,12 @@ type ReefCheckSurveyOrganismsTableProps = {
   filter?: (organism: ReefCheckOrganism) => boolean;
 };
 
-export const ReefCheckSurveyOrganismsTable = ({
+export function ReefCheckSurveyOrganismsTable({
   columns,
   title,
   description = '',
   filter = () => true,
-}: ReefCheckSurveyOrganismsTableProps) => {
+}: ReefCheckSurveyOrganismsTableProps) {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
   const rows =
     // eslint-disable-next-line fp/no-mutating-methods
@@ -36,4 +36,4 @@ export const ReefCheckSurveyOrganismsTable = ({
       description={description}
     />
   );
-};
+}

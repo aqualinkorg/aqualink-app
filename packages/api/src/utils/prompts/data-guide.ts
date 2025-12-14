@@ -1,0 +1,346 @@
+/**
+ * DATA INTERPRETATION GUIDE
+ *
+ * Technical reference for Aqualink's data sources and API.
+ * Teaches the AI how to prioritize and explain different data types.
+ *
+ * Edit this file to:
+ * - Update API endpoint documentation
+ * - Change data source priorities
+ * - Modify data interpretation rules
+ * - Add new metrics or sensors
+ */
+
+// Get backend base URL from environment variable
+const BACKEND_BASE_URL =
+  process.env.BACKEND_BASE_URL ||
+  (process.env.NODE_ENV === 'test'
+    ? 'https://ocean-systems.uc.r.appspot.com/api'
+    : undefined);
+if (!BACKEND_BASE_URL) {
+  throw new Error('BACKEND_BASE_URL environment variable is required');
+}
+
+// Ensure the URL ends with /api
+const API_BASE_URL = BACKEND_BASE_URL.endsWith('/api')
+  ? BACKEND_BASE_URL
+  : `${BACKEND_BASE_URL}/api`;
+
+export const DATA_GUIDE = `
+## AQUALINK DATA SOURCES & API
+
+### API ENDPOINTS
+
+All Aqualink data is accessible via public API. Replace {siteId} with the actual site ID:
+
+**1. Site Information**
+\`\`\`
+${API_BASE_URL}/sites/{siteId}
+\`\`\`
+Contains:
+- Site name, location (lat/lon)
+- Depth and ecosystem type
+- Sensor configuration
+- Contact information
+- Deployed Smart Buoy status
+
+Example: \`/api/sites/8169\`
+
+**2. Daily Data (Time Series)**
+\`\`\`
+${API_BASE_URL}/sites/{siteId}/daily_data
+\`\`\`
+Historical time series including:
+- Satellite SST and DHW
+- Smart Buoy data (if available)
+- Survey records
+- Alert level history
+
+**3. Latest Data**
+\`\`\`
+${API_BASE_URL}/sites/{siteId}/latest_data
+\`\`\`
+Most recent readings from all sources:
+- Current SST and DHW
+- Latest Smart Buoy readings
+- Recent survey data
+- Current alert level
+
+### DATA SOURCE HIERARCHY
+
+**CRITICAL: Spotter/Smart Buoy data is ALWAYS the most accurate when available.**
+
+#### Priority 1: Spotter (Smart Buoy) Data
+**When available, always prioritize this data.**
+
+What it provides:
+- **top_temperature**: Water temperature at 1 meter below surface
+  - ALWAYS at 1m depth regardless of site depth
+  - Most relevant for surface-dwelling organisms
+- **bottom_temperature**: Water temperature at seafloor
+  - Depth specified in site data (e.g., \`"depth": 25\` = 25 meters)
+  - Most relevant for benthic organisms like coral
+- **Wind data**: Speed and direction from surface sensors
+- **Wave data**: Height, period, direction from surface sensors
+- **Barometric pressure**: When sensor available
+
+**Why Spotter is most accurate:**
+✅ Real-time in-situ measurements (not estimates)
+✅ Measures actual underwater temperature (satellites only see surface)
+✅ Higher temporal resolution (typically hourly or more frequent)
+✅ Not affected by clouds, atmospheric interference, or satellite gaps
+✅ Shows temperature stratification (critical for coral depth)
+
+**When to use**: Whenever available for the site
+
+#### Priority 2: NOAA Satellite Data
+**Use when no Smart Buoy available or as regional context**
+
+What it provides:
+- **SST (Sea Surface Temperature)**: Surface only (~1mm depth)
+  - From NOAA's Coral Reef Watch satellites
+  - 5km spatial resolution
+  - Daily updates (cloud permitting)
+- **DHW (Degree Heating Weeks)**: Calculated from satellite SST
+  - Accumulated heat stress metric
+  - Updated weekly
+- **Alert Levels**: Based on satellite-derived DHW thresholds
+
+**CRITICAL - Which Alert Level to Reference**:
+- **Default**: Always refer to **tempWeeklyAlert** (weekly alert level)
+- This is what the dashboard card displays
+- Found in the site endpoint: \`/api/sites/{siteId}\`
+- Also in daily_data endpoint as: \`"weeklyAlertLevel": 3\`
+
+**Alert Level Values**:
+- 0: No Alert (White/Blue) - DHW 0
+- 1: Watch (Yellow) - DHW 1, bleaching possible
+- 2: Warning (Orange) - DHW 2, bleaching likely  
+- 3: Alert Level 1 (Red) - DHW 3, severe bleaching likely
+- 4: Alert Level 2 (Dark Red) - 4, severe bleaching and mortality likely
+
+**Where to find alert levels**:
+json
+// In /api/sites/{siteId} response:
+{
+  "tempAlert": 1,              // Daily alert level
+  "tempWeeklyAlert": 3,        // ← USE THIS ONE (weekly)
+  "dhw": 4.989948867438176,
+  "satelliteTemperature": 29.849999791604393,
+  "sstAnomaly": 1.063548178701172
+}
+
+**Response Priority**:
+1. **Always lead with tempWeeklyAlert** - this matches dashboard display
+2. **Can mention dailyAlertLevel** as additional context if relevant
+3. **Explain the difference** if user asks:
+   - Weekly: Smoothed over 7 days, more stable, used for dashboard
+   - Daily: Can fluctuate more, useful for tracking daily changes
+
+// In /api/sites/{siteId}/daily_data response:
+{
+  "dailyAlertLevel": 1,        // Daily (can mention)
+  "weeklyAlertLevel": 3        // ← PRIMARY (use this)
+}
+
+
+**Limitations:**
+⚠️ Surface only - doesn't show temperature at depth where corals live
+⚠️ Lower spatial resolution (~5km pixels)
+⚠️ Can have gaps due to clouds or satellite coverage
+⚠️ May not capture micro-scale variations
+
+**When to use**: 
+- No Smart Buoy at site
+- Regional heat stress context
+- Historical comparisons (satellite data goes back decades)
+- Multi-site comparisons
+
+### DATA ACCURACY CONSIDERATIONS
+
+**Temperature Stratification**
+Water temperature often varies with depth:
+- **Surface (satellite)**: Can be warmer due to sun heating
+- **1m depth (Spotter top)**: More representative of near-surface conditions
+- **Bottom (Spotter bottom)**: Often cooler, most relevant for benthic coral
+
+**Example scenario:**
+- Satellite SST: 30.5°C (surface)
+- Spotter top (1m): 30.2°C
+- Spotter bottom (25m): 28.8°C
+- **Interpretation**: Corals at depth experiencing less heat stress than satellite suggests
+
+**When to trust which source:**
+- Open ocean sites: Satellite and Spotter usually agree
+- Shallow reefs (<10m): Stratification minimal, both sources reliable
+- Deep sites (>20m): Significant stratification possible, Spotter bottom critical
+- Nearshore sites: Satellite less accurate, prioritize Spotter
+- After storms: Stratification breaks down, satellite may match Spotter
+
+### DETERMINING DATA AVAILABILITY
+
+**1. Check site endpoint for sensor configuration**
+Look for fields indicating Smart Buoy presence:
+- \`"sensorId"\`: Non-null means Spotter deployed
+- \`"deployed"\`: True/false status
+- \`"hasSpotter"\`: Explicit indicator
+
+**2. Check latest_data for recent Spotter readings**
+If Spotter readings exist with recent timestamps, data is active.
+
+**3. Check for data gaps**
+- Recent Spotter data: Last 24-48 hours
+- If no recent data: Buoy may be offline (maintenance, technical issue)
+- Fall back to satellite data if Spotter unavailable
+
+**4. Visual indicators on dashboard**
+- Spotter icon appears when buoy is deployed
+- Data source labeled on temperature cards
+- "Spotter Data" vs "Satellite Data" explicitly shown
+
+### INTERPRETING COMBINED DATA
+
+**Best practice workflow:**
+
+1. **Check for Spotter data first**
+   - If available: Lead with this in analysis
+   - Note the bottom temperature (coral depth)
+   - Compare to satellite for context
+
+2. **Use satellite for regional context**
+   - DHW shows accumulated stress over time
+   - Alert levels based on satellite DHW
+   - Historical patterns and trends
+
+3. **Cross-validate when both available**
+   - If satellite and Spotter diverge significantly: Explain why
+   - Temperature stratification is common cause
+   - Mention which is more relevant for coral depth
+
+4. **Explain data sources to users**
+   - "Your site has a Smart Buoy measuring 28.8°C at 25m depth..."
+   - "Satellite data shows surface temperature of 30.5°C, but your bottom sensors..."
+   - "Since no Smart Buoy is deployed here, we're using NOAA satellite data..."
+
+### KEY METRICS EXPLAINED
+
+**SST (Sea Surface Temperature)**
+- Current water temperature
+- Compare to historical maximum (MMM + 1°C)
+- Measured in Celsius
+- When SST exceeds MMM + 1°C, bleaching stress begins
+
+**DHW (Degree Heating Weeks)**
+- Accumulated heat stress over 12 weeks
+- Calculated when SST exceeds MMM + 1°C
+- Units: °C-weeks (degrees above threshold × weeks duration)
+- Key thresholds:
+  - 4: Bleaching possible, increase monitoring
+  - 8: Bleaching likely, intensive monitoring
+  - 12: Severe bleaching expected, emergency response
+
+**MMM (Maximum Monthly Mean)**
+- Historical warmest month average
+- Baseline for calculating heat stress
+- Site-specific value
+- Bleaching threshold = MMM + 1°C
+
+**Alert Levels**
+- Visual representation of DHW thresholds
+- Color-coded for quick assessment
+- Trigger points for action plans
+
+### DATA GAPS & TROUBLESHOOTING
+
+**Common issues:**
+
+1. **Satellite data missing**
+   - Cause: Cloud cover, satellite technical issues
+   - Solution: Check again in 24 hours, use Smart Buoy if available
+
+2. **Smart Buoy offline**
+   - Cause: Battery, biofouling, technical issue
+   - Solution: Report to admin@aqualink.org, use satellite temporarily
+
+3. **Conflicting data sources**
+   - Cause: Temperature stratification, different measurement depths
+   - Solution: Explain stratification, prioritize Spotter for benthic coral
+
+4. **Unusually high/low readings**
+   - Cause: May be accurate (storms, upwelling) or sensor error
+   - Solution: Check for weather events, validate with surveys, report if suspected error
+
+### SURVEY DATA INTEGRATION
+
+**Survey uploads contribute:**
+- Ground-truth validation of satellite predictions
+- Bleaching extent and severity documentation
+- Species-specific observations
+- Photo documentation
+- Community observations
+
+**Survey data appears in:**
+- Site timeline
+- Historical surveys section
+- API \`/api/sites/{siteId}/surveys\` endpoint
+- Integrated with Reef Check database when applicable
+
+### PROGRAMMATIC ACCESS
+
+**For developers and researchers:**
+
+\`\`\`javascript
+// Example: Fetch site data
+const siteId = 8169;
+const response = await fetch(
+  \\\`${API_BASE_URL}/sites/\\\${siteId}\\\`
+);
+const siteData = await response.json();
+
+// Example: Get time series
+const dailyData = await fetch(
+  \\\`${API_BASE_URL}/sites/\\\${siteId}/daily_data\\\`
+);
+const timeSeriesData = await dailyData.json();
+\`\`\`
+
+**Rate limiting:**
+- Public API is rate-limited to prevent abuse
+- For high-volume usage, contact admin@aqualink.org
+
+**Data format:**
+- JSON responses
+- Timestamps in ISO 8601 format
+- Temperature in Celsius
+- Coordinates in decimal degrees
+
+### BEST PRACTICES FOR DATA INTERPRETATION
+
+1. **Always state your data source**
+   - "According to the Smart Buoy at 25m depth..."
+   - "Satellite data shows..."
+   - Don't mix sources without clarification
+
+2. **Prioritize accuracy over recency**
+   - Recent but less accurate (satellite) < Older but more accurate (Spotter)
+   - Usually both are recent, but Spotter may have brief gaps
+
+3. **Explain limitations**
+   - "Satellite only measures surface, but coral at 20m depth may be cooler"
+   - "No Smart Buoy deployed, so we're using satellite estimates"
+
+4. **Cross-validate with surveys**
+   - If data contradicts user observations, investigate why
+   - Ground truth (surveys) can identify data issues
+
+5. **Consider ecosystem context**
+   - Not all sites have tropical coral
+   - Temperature thresholds vary by ecosystem type
+   - Adjust interpretation accordingly
+
+---
+
+**For technical support or data questions:**
+Email: admin@aqualink.org
+Website: https://www.aqualink.org
+`;
