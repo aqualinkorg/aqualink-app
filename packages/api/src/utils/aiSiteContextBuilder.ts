@@ -615,10 +615,10 @@ ${sondeData.map((d) => `- **${d.label}**: ${d.value}`).join('\n')}
                 const count = `${turbidityMetric.data.length} measurements available for trend analysis.`;
                 if (turbValue >= 10)
                   return `- Turbidity: ALERT level (≥10) - Poor water clarity. ${count}`;
-                if (turbValue >= 5)
-                  return `- Turbidity: WARNING level (5-9.9) - Elevated sediment. ${count}`;
-                if (turbValue >= 1)
-                  return `- Turbidity: WATCH level (1-4.9) - Slightly elevated. ${count}`;
+                if (turbValue >= 5 && turbValue < 10)
+                  return `- Turbidity: WARNING level (5-10) - Elevated sediment. ${count}`;
+                if (turbValue >= 1 && turbValue < 5)
+                  return `- Turbidity: WATCH level (1-5) - Slightly elevated. ${count}`;
                 return `- Turbidity: Good (<1) - Clear water. ${count}`;
               })()
             : null;
@@ -631,10 +631,10 @@ ${sondeData.map((d) => `- **${d.label}**: ${d.value}`).join('\n')}
                 const count = `${nitrateMetric.data.length} measurements available.`;
                 if (nitrateValue >= 100)
                   return `- Nitrate+Nitrite Nitrogen: ALERT level (≥100) - High pollution risk. ${count}`;
-                if (nitrateValue >= 30)
-                  return `- Nitrate+Nitrite Nitrogen: WARNING level (30-99.9) - Elevated nutrients. ${count}`;
-                if (nitrateValue >= 3.5)
-                  return `- Nitrate+Nitrite Nitrogen: WATCH level (3.5-29.9) - Slightly elevated. ${count}`;
+                if (nitrateValue >= 30 && nitrateValue < 100)
+                  return `- Nitrate+Nitrite Nitrogen: WARNING level (30-100) - Elevated nutrients. ${count}`;
+                if (nitrateValue >= 3.5 && nitrateValue < 30)
+                  return `- Nitrate+Nitrite Nitrogen: WATCH level (3.5-30) - Slightly elevated. ${count}`;
                 return `- Nitrate+Nitrite Nitrogen: Good (<3.5) - Low nutrient pollution. ${count}`;
               })()
             : null;
