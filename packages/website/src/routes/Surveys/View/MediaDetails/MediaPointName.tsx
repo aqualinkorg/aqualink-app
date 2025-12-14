@@ -8,7 +8,7 @@ import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 import SurveyPointSelector from 'common/SurveyPointSelector';
 
-const MediaPointName = ({
+function MediaPointName({
   pointName,
   pointId,
   siteId,
@@ -17,7 +17,7 @@ const MediaPointName = ({
   editSurveyPointId,
   setEditSurveyPointId,
   classes,
-}: MediaPointNameProps) => {
+}: MediaPointNameProps) {
   React.useEffect(() => {
     if (!editing) {
       setEditSurveyPointId(pointId);
@@ -73,7 +73,7 @@ const MediaPointName = ({
       )}
     </Grid>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

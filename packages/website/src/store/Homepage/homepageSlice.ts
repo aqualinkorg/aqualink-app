@@ -15,7 +15,7 @@ const homepageSlice = createSlice({
   reducers: {
     setWithSpotterOnly: (
       state,
-      action: PayloadAction<typeof siteOptions[number]>,
+      action: PayloadAction<(typeof siteOptions)[number]>,
     ) => ({
       ...state,
       siteFilter: action.payload,

@@ -3,7 +3,8 @@ import { Alert, Box, Container, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DropzoneProps } from 'react-dropzone';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { SiteUploadHistory, Sources } from 'store/Sites/types';
 import { userInfoSelector } from 'store/User/userSlice';
 import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
@@ -34,10 +35,17 @@ import Header from './Header';
 import Selectors from './Selectors';
 import HistoryTable from './HistoryTable';
 
-const UploadData = () => {
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+}));
+
+function UploadData() {
   const params = useParams<{ id: string }>();
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { token } = useSelector(userInfoSelector) || {};
   const { site, siteLoading } = useSiteRequest(params.id ?? '');
@@ -223,13 +231,6 @@ const UploadData = () => {
       )}
     </>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
-}));
+}
 
 export default UploadData;

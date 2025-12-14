@@ -5,7 +5,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
 import times from 'lodash/times';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
 import type {
   Site,
@@ -53,6 +54,26 @@ import playIcon from '../../assets/play-icon.svg';
 import { TemperatureChange } from './TemperatureChange';
 import { ReefCheckDataIndicator } from './ReefCheckDataIndicator';
 import AiChatWidget from '../AiChatWidget';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    ...incomingStyles,
+    root: {
+      marginTop: '2rem',
+    },
+    forcedWidth: {
+      width: `calc(100% + ${theme.spacing(2)})`,
+    },
+    mobileMargin: {
+      [theme.breakpoints.down('md')]: {
+        margin: theme.spacing(1, 0),
+      },
+    },
+    metricsWrapper: {
+      marginTop: '1rem',
+    },
+  }),
+);
 
 /**  Show only the last year of HUI data, should match with {@link getCardData} */
 const acceptHUIInterval = Interval.fromDateTimes(
@@ -105,17 +126,17 @@ const sondeMetrics: (keyof LatestDataASSofarValue)[] = [
 
 const MINIMUM_SONDE_METRICS_TO_SHOW_CARD = 3;
 
-const SiteDetails = ({
+function SiteDetails({
   site,
   selectedSurveyPointId,
   surveys,
   featuredSurveyId = null,
   featuredSurveyPoint = null,
   surveyDiveDate = null,
-}: SiteDetailsProps) => {
+}: SiteDetailsProps) {
   const classes = useStyles();
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const spotterPosition = useSelector(spotterPositionSelector);
   const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
     useState<LatestDataASSofarValue>({});
@@ -143,13 +164,14 @@ const SiteDetails = ({
     }
   }, [dispatch, site, spotterPosition, latestData, forecastData]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       dispatch(unsetForecastData());
-    };
-  }, [dispatch]);
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     if (forecastData && latestData) {
@@ -157,8 +179,8 @@ const SiteDetails = ({
       const parsedData = parseLatestData(combinedArray);
       const hasSpotter = Boolean(
         parsedData.bottomTemperature ||
-          parsedData.topTemperature ||
-          parsedData.surfaceTemperature,
+        parsedData.topTemperature ||
+        parsedData.surfaceTemperature,
       );
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
@@ -447,27 +469,7 @@ const SiteDetails = ({
       {site && <AiChatWidget siteId={site.id} />}
     </Box>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    ...incomingStyles,
-    root: {
-      marginTop: '2rem',
-    },
-    forcedWidth: {
-      width: `calc(100% + ${theme.spacing(2)})`,
-    },
-    mobileMargin: {
-      [theme.breakpoints.down('md')]: {
-        margin: theme.spacing(1, 0),
-      },
-    },
-    metricsWrapper: {
-      marginTop: '1rem',
-    },
-  }),
-);
+}
 
 interface SiteDetailsProps {
   site?: Site;
