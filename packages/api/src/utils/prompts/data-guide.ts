@@ -66,6 +66,98 @@ Most recent readings from all sources:
 - Recent survey data
 - Current alert level
 
+**4. Site Surveys**
+\`\`\`
+${API_BASE_URL}/sites/{siteId}/surveys
+\`\`\`
+All surveys uploaded for this site:
+- Survey date and media
+- Observations and notes
+- Weather conditions and ocean temperature at the survey date
+- Coral bleaching and disease information
+
+**5. Reef Check Surveys**
+\`\`\`
+${API_BASE_URL}/reef-check-sites/{siteId}/surveys
+\`\`\`
+Reef Check surveys use their standardized protocol. The data include:
+- Reef Check survey site information
+- Reef structure and composition
+- Fish count
+- Invertebrate count
+- Anthropogenic impact
+- Bleaching and coral diseases
+- Rare animal count
+
+**6. Time Series Range**
+\`\`\`
+${API_BASE_URL}/time-series/sites/{siteId}/range
+\`\`\`
+Available date ranges and metrics:
+- What data types exist (temperature, wind, waves, etc.)
+- Start and end dates for each metric
+- Identifies gaps in data collection
+- Shows which sensors have historical data
+- For detailed historical data, direct users to dashboard graphs (adjustable date ranges) or CSV download
+
+**7. Wind-Wave Hindcast**
+\`\`\`
+${API_BASE_URL}/wind-wave-data-hindcast/sites/{siteId}
+\`\`\`
+Historical wind and wave data:
+- Hindcast model for wind and wave data
+- Displays what date each metric was received
+
+**8. Water Quality Data**
+\`\`\`
+${API_BASE_URL}/time-series/sites/{siteId}?metrics=nitrogen_total,phosphorus_total,phosphorus,silicate,nitrate_plus_nitrite,ammonium,odo_saturation,odo_concentration,salinity,turbidity,ph
+\`\`\`
+Historical water quality data from HUI sensors:
+- Nutrients: phosphorus, nitrogen, silicate, nitrate, nitrite, ammonium
+- Physical/chemical: pH, salinity, turbidity
+- Dissolved oxygen: concentration and saturation
+- Returns time-series data (all historical readings)
+
+**Note**: SONDE water quality data is available in the latest_data endpoint (already in AI context).
+
+### WHEN TO QUERY EACH ENDPOINT
+
+**Always check these endpoints when users ask about:**
+
+1. **Reef Check surveys** → Call ${API_BASE_URL}/reef-check-sites/{siteId}/surveys
+   - If response is empty/null: "No Reef Check surveys available"
+   - If data exists: Summarize findings (fish counts, bleaching, etc.)
+
+2. **Site surveys** → Call ${API_BASE_URL}/sites/{siteId}/surveys
+   - If response is empty: "No surveys uploaded yet"
+   - If data exists: Reference survey dates, observations, media
+
+3. **Historical data availability** → Call ${API_BASE_URL}/time-series/sites/{siteId}/range
+   - Shows what metrics exist and date ranges
+   - Direct users to dashboard graphs for detailed viewing
+
+4. **Current conditions** → Use ${API_BASE_URL}/sites/{siteId}/latest_data (already in context)
+
+5. **Water quality data** → Already included in AI context:
+   - SONDE latest values: From latest_data (already loaded)
+   - HUI time-series: Automatically loaded from time_series table
+   - Reference these values directly when asked about water quality
+
+**CRITICAL: Never assume data doesn't exist - always query the endpoint first.**
+
+### HISTORICAL DATA (HOBO, Water Quality, etc.)
+
+**Water Quality Data**: Now included in AI assistant context!
+- **HUI sensor data**: Loaded from time_series table (nutrients, pH, salinity, turbidity, dissolved oxygen)
+- **SONDE sensor data**: Latest values from latest_data (conductivity, TDS, chlorophyll, etc.)
+- Both sources available for the AI to reference directly
+
+**Other Historical Sensor Data (HOBO loggers, etc.)**: 
+- The /time-series/sites/{siteId}/range endpoint shows what data exists
+- Not included in AI context due to size
+- Direct users to check the dashboard's time-series charts
+- Data can be accessed via dashboard's date range selector and CSV download
+
 ### DATA SOURCE HIERARCHY
 
 **CRITICAL: Spotter/Smart Buoy data is ALWAYS the most accurate when available.**
@@ -249,6 +341,36 @@ If Spotter readings exist with recent timestamps, data is active.
 - Visual representation of DHW thresholds
 - Color-coded for quick assessment
 - Trigger points for action plans
+
+### WATER QUALITY THRESHOLDS (HUI DATA)
+
+**HUI O Ka Wai Ola - Maui-Specific Thresholds**
+
+Hui O Ka Wai Ola is a community-based water quality monitoring program in Maui. They have established science-based thresholds for two key metrics:
+
+**Turbidity (NTU) - Water Clarity:**
+- **Good**: <1 NTU - Clear, healthy water
+- **Watch**: 1-4.9 NTU - Slightly elevated sediment, monitor closely
+- **Warning**: 5-9.9 NTU - Elevated sediment, potential coral stress
+- **Alert**: ≥10 NTU - Poor water clarity, high sediment load threatening reef health
+
+**Nitrate + Nitrite Nitrogen (µg/L) - Nutrient Pollution:**
+- **Good**: <3.5 µg/L - Low nutrient pollution, healthy baseline
+- **Watch**: 3.5-29.9 µg/L - Slightly elevated nutrients, monitor for sources
+- **Warning**: 30-99.9 µg/L - Elevated nutrients, likely pollution source present
+- **Alert**: ≥100 µg/L - High nutrient pollution, serious reef threat (algae growth, coral stress)
+
+**When interpreting HUI data:**
+1. **Always reference the threshold level** in your response (e.g., "Turbidity is at 1.45 NTU, which is at Watch level")
+2. **Explain what the level means** for reef health in simple terms
+3. **Provide context**: "This suggests slightly elevated sediment, which could be from recent rainfall or runoff"
+4. **HUI sites are Maui only** - these thresholds are specific to Hawaii's water quality conditions
+5. **Other metrics** (pH, salinity, dissolved oxygen, phosphorus, etc.) do not have established HUI thresholds
+
+**Why these thresholds matter:**
+- Turbidity affects coral photosynthesis and can smother reefs
+- Excess nutrients fuel algae growth that competes with and smothers coral
+- These are early warning indicators of land-based pollution reaching reefs
 
 ### DATA GAPS & TROUBLESHOOTING
 
