@@ -13,7 +13,7 @@ const obligations = [
   'Conduct initial and periodic photographic surveys and upload imagery to our website',
 ];
 
-const Obligations = ({ classes }: ObligationsProps) => {
+function Obligations({ classes }: ObligationsProps) {
   return (
     <div className={classes.obligations}>
       <Typography className={classes.obligationsTitle} variant="h3">
@@ -30,7 +30,7 @@ const Obligations = ({ classes }: ObligationsProps) => {
       </div>
     </div>
   );
-};
+}
 
 const styles = () =>
   createStyles({

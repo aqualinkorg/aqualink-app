@@ -10,6 +10,7 @@ import path from 'path';
 import { CastingContext, CastingFunction } from 'csv-parse';
 import { Point, GeoJSON } from 'geojson';
 import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { ExifParserFactory } from 'ts-exif-parser';
 import parse from 'csv-parse/lib/sync';
 
@@ -98,21 +99,20 @@ const logger = new Logger('ParseHoboData');
 const siteQuery = (
   siteRepository: Repository<Site>,
   polygon?: GeoJSON | null,
-) => {
-  return siteRepository
+) =>
+  siteRepository
     .createQueryBuilder(`entity`)
     .where(
       `entity.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
       { polygon },
     )
     .getOne();
-};
 
 const poiQuery = (
   poiRepository: Repository<SiteSurveyPoint>,
   polygon?: GeoJSON | null,
-) => {
-  return poiRepository
+) =>
+  poiRepository
     .createQueryBuilder(`surveyPoints`)
     .innerJoinAndSelect('surveyPoints.site', 'site')
     .where(
@@ -120,7 +120,6 @@ const poiQuery = (
       { polygon },
     )
     .getOne();
-};
 
 const castCsvValues =
   (integerColumns: string[], floatColumns: string[], dateColumns: string[]) =>
@@ -149,15 +148,16 @@ const castCsvValues =
  * @param repository The repository for the entity
  * @param polygon The polygon value
  */
-const handleEntityDuplicate = <T extends ObjectLiteral>(
-  repository: Repository<T>,
-  query: (
+const handleEntityDuplicate =
+  <T extends ObjectLiteral>(
     repository: Repository<T>,
+    query: (
+      repository: Repository<T>,
+      polygon?: GeoJSON | null,
+    ) => Promise<T | null>,
     polygon?: GeoJSON | null,
-  ) => Promise<T | null>,
-  polygon?: GeoJSON | null,
-) => {
-  return (err) => {
+  ) =>
+  (err) => {
     // Catch unique violation, i.e. there is already a site at this location
     if (err.code === '23505') {
       return query(repository, polygon).then((found) => {
@@ -173,7 +173,6 @@ const handleEntityDuplicate = <T extends ObjectLiteral>(
 
     throw err;
   };
-};
 
 /**
  * Read Coords.csv file
@@ -186,9 +185,7 @@ const readCoordsFile = (rootPath: string, siteIds: number[]) => {
   const coordsHeaders = ['site', 'colony', 'lat', 'long'];
   const castFunction = castCsvValues(['site', 'colony'], ['lat', 'long'], []);
   return parseCSV<Coords>(coordsFilePath, coordsHeaders, castFunction).filter(
-    (record) => {
-      return siteIds.includes(record.site);
-    },
+    (record) => siteIds.includes(record.site),
   );
 };
 
@@ -216,13 +213,11 @@ const getSiteRecords = async (
       );
 
       const siteRecord = filteredSiteCoords.reduce(
-        (previous, record) => {
-          return {
-            ...previous,
-            lat: previous.lat + record.lat,
-            long: previous.long + record.long,
-          };
-        },
+        (previous, record) => ({
+          ...previous,
+          lat: previous.lat + record.lat,
+          long: previous.long + record.long,
+        }),
         { site: siteId, colony: 0, lat: 0, long: 0 },
       );
 
@@ -279,32 +274,36 @@ const createSites = async (
   );
 
   logger.log(`Saving monthly max data`);
-  await Bluebird.map(
-    siteEntities,
-    (site) => {
-      const point: Point = site.polygon as Point;
-      const [longitude, latitude] = point.coordinates;
+  const limit = pLimit(4);
+  await Promise.all(
+    siteEntities.map((site) =>
+      limit(() => {
+        const point: Point = site.polygon as Point;
+        const [longitude, latitude] = point.coordinates;
 
-      return Promise.all([
-        getHistoricalMonthlyMeans(longitude, latitude),
-        historicalMonthlyMeanRepository.findOne({
-          where: { site: { id: site.id } },
-        }),
-      ]).then(([historicalMonthlyMean, found]) => {
-        if (found || !historicalMonthlyMean) {
-          logger.warn(`Site ${site.id} has already monthly max data`);
-          return null;
-        }
+        return Promise.all([
+          getHistoricalMonthlyMeans(longitude, latitude),
+          historicalMonthlyMeanRepository.findOne({
+            where: { site: { id: site.id } },
+          }),
+        ]).then(([historicalMonthlyMean, found]) => {
+          if (found || !historicalMonthlyMean) {
+            logger.warn(`Site ${site.id} has already monthly max data`);
+            return null;
+          }
 
-        return historicalMonthlyMean.map(({ month, temperature }) => {
-          return (
-            temperature &&
-            historicalMonthlyMeanRepository.save({ site, month, temperature })
+          return historicalMonthlyMean.map(
+            ({ month, temperature }) =>
+              temperature &&
+              historicalMonthlyMeanRepository.save({
+                site,
+                month,
+                temperature,
+              }),
           );
         });
-      });
-    },
-    { concurrency: 4 },
+      }),
+    ),
   );
 
   // Create reverse map (db.site.id => csv.site_id)
@@ -398,13 +397,11 @@ const createSources = async (
   sourcesRepository: Repository<Sources>,
 ) => {
   // Create sources for each new poi
-  const sources = poiEntities.map((poi) => {
-    return {
-      site: poi.site,
-      poi,
-      type: SourceType.HOBO,
-    };
-  });
+  const sources = poiEntities.map((poi) => ({
+    site: poi.site,
+    poi,
+    type: SourceType.HOBO,
+  }));
 
   logger.log('Saving sources');
   const sourceEntities = await Promise.all(
@@ -503,14 +500,14 @@ const parseHoboData = async (
   // So we need to break them in batches
   const batchSize = 1000;
   logger.log(`Saving time series data in batches of ${batchSize}`);
-  const inserts = chunk(bottomTemperatureData, batchSize).map((batch) => {
-    return timeSeriesRepository
+  const inserts = chunk(bottomTemperatureData, batchSize).map((batch) =>
+    timeSeriesRepository
       .createQueryBuilder('time_series')
       .insert()
       .values(batch)
       .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
-      .execute();
-  });
+      .execute(),
+  );
 
   // Return insert promises and print progress updates
   const actionsLength = inserts.length;
@@ -586,18 +583,16 @@ const uploadSitePhotos = async (
             weatherConditions: WeatherConditions.NoData,
           };
 
-          return surveyRepository.save(survey).then((surveyEntity) => {
-            return {
-              url,
-              featured: true,
-              hidden: false,
-              type: MediaType.Image,
-              surveyPoint: image.poi,
-              surveyId: surveyEntity,
-              metadata: JSON.stringify({}),
-              observations: Observations.NoData,
-            };
-          });
+          return surveyRepository.save(survey).then((surveyEntity) => ({
+            url,
+            featured: true,
+            hidden: false,
+            type: MediaType.Image,
+            surveyPoint: image.poi,
+            surveyId: surveyEntity,
+            metadata: JSON.stringify({}),
+            observations: Observations.NoData,
+          }));
         }),
     ),
     (data, idx) => {
@@ -646,16 +641,13 @@ export const uploadHoboData = async (
 
   const siteSet = fs
     .readdirSync(rootPath)
-    .filter((f) => {
-      // File must be directory and be in Patch_Site_{site_id} format
-      return (
+    .filter(
+      (f) =>
+        // File must be directory and be in Patch_Site_{site_id} format
         fs.statSync(path.join(rootPath, f)).isDirectory() &&
-        f.includes(FOLDER_PREFIX)
-      );
-    })
-    .map((siteFolder) => {
-      return parseInt(siteFolder.replace(FOLDER_PREFIX, ''), 10);
-    });
+        f.includes(FOLDER_PREFIX),
+    )
+    .map((siteFolder) => parseInt(siteFolder.replace(FOLDER_PREFIX, ''), 10));
 
   const dataAsJson = readCoordsFile(rootPath, siteSet);
 
@@ -688,32 +680,36 @@ export const uploadHoboData = async (
 
   const surveyPointsGroupedBySite = groupBy(poiEntities, (poi) => poi.site.id);
 
-  const siteDiffArray = await Bluebird.map(
-    Object.values(surveyPointsGroupedBySite),
-    (surveyPoints) =>
-      parseHoboData(
-        surveyPoints,
-        dbIdToCSVId,
-        rootPath,
-        poiToSourceMap,
-        repositories.timeSeriesRepository,
+  const limit1 = pLimit(1);
+  const siteDiffArray = await Promise.all(
+    Object.values(surveyPointsGroupedBySite).map((surveyPoints) =>
+      limit1(() =>
+        parseHoboData(
+          surveyPoints,
+          dbIdToCSVId,
+          rootPath,
+          poiToSourceMap,
+          repositories.timeSeriesRepository,
+        ),
       ),
-    { concurrency: 1 },
+    ),
   );
 
-  await Bluebird.map(
-    Object.values(surveyPointsGroupedBySite),
-    (surveyPoints) =>
-      uploadSitePhotos(
-        surveyPoints,
-        dbIdToCSVId,
-        rootPath,
-        googleCloudService,
-        user,
-        repositories.surveyRepository,
-        repositories.surveyMediaRepository,
+  const limit2 = pLimit(1);
+  await Promise.all(
+    Object.values(surveyPointsGroupedBySite).map((surveyPoints) =>
+      limit2(() =>
+        uploadSitePhotos(
+          surveyPoints,
+          dbIdToCSVId,
+          rootPath,
+          googleCloudService,
+          user,
+          repositories.surveyRepository,
+          repositories.surveyMediaRepository,
+        ),
       ),
-    { concurrency: 1 },
+    ),
   );
 
   performBackfill(siteDiffArray.flat(), dataSource);

@@ -42,8 +42,8 @@ export function getSiteNameAndRegion(site: Site) {
   return { name, region };
 }
 
-export const constructTableData = (list: Site[]): TableRow[] => {
-  return list.map((value, key) => {
+export const constructTableData = (list: Site[]): TableRow[] =>
+  list.map((value, key) => {
     const {
       dhw,
       satelliteTemperature,
@@ -75,7 +75,6 @@ export const constructTableData = (list: Site[]): TableRow[] => {
       alertLevel: isNil(tempWeeklyAlert) ? null : tempWeeklyAlert,
     };
   });
-};
 
 const mapMetrics = <T>(
   data: Partial<Record<MetricsKeys, T>>,

@@ -29,6 +29,34 @@ import {
   watchColor,
 } from './utils';
 
+const useStyles = makeStyles(() => ({
+  ...incomingStyles,
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    backgroundColor: colors.greenCardColor,
+    color: 'white',
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flexGrow: 1,
+    padding: 0,
+  },
+  labelWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    minHeight: '2em',
+  },
+  valueWrapper: {
+    display: 'flex',
+    alignItems: 'baseline',
+  },
+}));
+
 function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
   const classes = useStyles();
 
@@ -202,34 +230,6 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     </Card>
   );
 }
-
-const useStyles = makeStyles(() => ({
-  ...incomingStyles,
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    backgroundColor: colors.greenCardColor,
-    color: 'white',
-  },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    flexGrow: 1,
-    padding: 0,
-  },
-  labelWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'nowrap',
-    minHeight: '2em',
-  },
-  valueWrapper: {
-    display: 'flex',
-    alignItems: 'baseline',
-  },
-}));
 
 interface WaterSamplingCardProps {
   siteId: string;
