@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable class-methods-use-this */
+ 
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class migrateReefToSiteAndPoiToSurveyPoint1634007475630 implements MigrationInterface {

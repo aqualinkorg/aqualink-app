@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddExtraConstraintOnTimeSeries1615290662268
-  implements MigrationInterface {
+export class AddExtraConstraintOnTimeSeries1615290662268 implements MigrationInterface {
   name = 'AddExtraConstraintOnTimeSeries1615290662268';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

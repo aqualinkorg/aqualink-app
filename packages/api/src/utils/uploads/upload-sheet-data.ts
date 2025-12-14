@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-/* eslint-disable no-plusplus */
+
 import {
   chunk,
   first,

@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddSurfaceTemperatureMetric1687182106885
-  implements MigrationInterface
-{
+export class AddSurfaceTemperatureMetric1687182106885 implements MigrationInterface {
   name = 'AddSurfaceTemperatureMetric1687182106885';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

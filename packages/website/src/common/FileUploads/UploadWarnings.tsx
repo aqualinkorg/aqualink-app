@@ -55,7 +55,6 @@ function DetailsDialog({ open, details, onClose }: DetailsDialogProps) {
         <List>
           {details.map(({ file, ignoredHeaders }, index) =>
             ignoredHeaders?.length ? (
-              // eslint-disable-next-line react/no-array-index-key
               <ListItem key={`${file}-${index}`}>
                 <ListItemAvatar>
                   <Avatar className={classes.avatar}>

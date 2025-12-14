@@ -1,9 +1,7 @@
 // Extending the latest data range for custom sources, to show the additional metrics card in more cases
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class ExtendLatestDataInterval1687531559398
-  implements MigrationInterface
-{
+export class ExtendLatestDataInterval1687531559398 implements MigrationInterface {
   name = 'ExtendLatestDataInterval1687531559398';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

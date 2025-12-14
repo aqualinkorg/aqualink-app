@@ -132,7 +132,6 @@ function InfoDialogContent() {
       icon: (
         <div
           style={{ width: '30px', height: '30px' }}
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: spotter('#FFF200') }}
         />
       ),
@@ -143,7 +142,6 @@ function InfoDialogContent() {
       icon: (
         <div
           style={{ width: '25px', height: '66px' }}
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: hobo('#FFF200') }}
         />
       ),

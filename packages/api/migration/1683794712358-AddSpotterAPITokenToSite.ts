@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddSpotterAPITokenToSite1683794712358
-  implements MigrationInterface
-{
+export class AddSpotterAPITokenToSite1683794712358 implements MigrationInterface {
   name = 'AddSpotterAPITokenToSite1683794712358';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

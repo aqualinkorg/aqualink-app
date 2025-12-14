@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { Factory, Seeder } from 'typeorm-seeding';
 import { times } from 'lodash';
 import { Site } from '../sites/sites.entity';

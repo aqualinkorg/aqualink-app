@@ -156,7 +156,7 @@ export const sitesFilterFn = (
     default:
       console.error(`Unhandled Option: ${filter}`);
       // This will cause a TS error if there is an unhandled option
-      // eslint-disable-next-line prettier/prettier
+
       filter satisfies never;
       return true;
   }
@@ -207,7 +207,7 @@ export const filterSiteBySensorData = (
       default:
         console.error(`Unhandled Option: ${option}`);
         // This will cause a TS error if there is an unhandled option
-        // eslint-disable-next-line prettier/prettier
+
         option satisfies never;
         return true;
     }

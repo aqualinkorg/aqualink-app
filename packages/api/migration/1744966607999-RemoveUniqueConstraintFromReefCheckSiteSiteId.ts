@@ -1,9 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 // IMPORTANT: Replace 1744966607999-RemoveUniqueConstraintFromReefCheckSiteSiteId with the actual generated class name
-export class RemoveUniqueConstraintFromReefCheckSiteSiteId1744966607999
-  implements MigrationInterface
-{
+export class RemoveUniqueConstraintFromReefCheckSiteSiteId1744966607999 implements MigrationInterface {
   // Use the actual constraint name found in migration 1731505574037
   name = 'RemoveUniqueConstraintFromReefCheckSiteSiteId1744966607999'; // Replace 1744966607999
   constraintName = 'REL_228715834910cd57948e2d2dbd';

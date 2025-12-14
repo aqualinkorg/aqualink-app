@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddSpotterBottomPressure1667483794322
-  implements MigrationInterface
-{
+export class AddSpotterBottomPressure1667483794322 implements MigrationInterface {
   name = 'AddSpotterBottomPressure1667483794322';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

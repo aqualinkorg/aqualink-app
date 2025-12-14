@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropsWithChildren } from 'react';
 import ErrorPage from 'common/ErrorPage';
 

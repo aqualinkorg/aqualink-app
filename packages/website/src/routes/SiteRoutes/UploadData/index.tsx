@@ -117,7 +117,6 @@ function UploadData() {
         // so that we fetch the updated data.
         dispatch(setSelectedSite());
         if (typeof site?.id === 'number') {
-          // eslint-disable-next-line fp/no-mutating-methods
           navigate(`/sites/${site.id}`);
         }
       }
@@ -165,7 +164,6 @@ function UploadData() {
   }, [site?.id]);
 
   const onGoBackClick = () => {
-    // eslint-disable-next-line fp/no-mutating-methods
     navigate(`/sites/${site?.id}`);
   };
 

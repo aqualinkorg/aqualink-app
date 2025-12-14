@@ -102,7 +102,7 @@ export interface Action {
   variant: ButtonProps['variant'];
   color: ButtonProps['color'];
   text: string;
-  // eslint-disable-next-line react/no-unused-prop-types
+
   link?: string;
   disabled?: boolean;
   loading?: boolean;

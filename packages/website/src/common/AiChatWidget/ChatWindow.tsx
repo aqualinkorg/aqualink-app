@@ -123,7 +123,6 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
   }, [messages]);
 
   const handleClearHistory = async () => {
-    // eslint-disable-next-line no-alert
     const confirmClear = window.confirm('Clear chat history for this site?');
     if (confirmClear) {
       setIsLoadingGreeting(true);

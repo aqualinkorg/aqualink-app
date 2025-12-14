@@ -5,7 +5,7 @@ declare module 'luxon' {
     toISOString(): string;
   }
 }
-// eslint-disable-next-line fp/no-mutation, func-names
+// eslint-disable-next-line fp/no-mutation
 DateTime.prototype.toISOString = function () {
   return this.toJSDate().toISOString();
 };

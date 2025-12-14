@@ -1,11 +1,10 @@
-/* eslint-disable dot-notation */
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { max, min, union } from 'lodash';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 import { DataSource } from 'typeorm';
-// eslint-disable-next-line import/no-unresolved
+
 import { stringify } from 'csv-stringify/sync';
 import { DateTime } from '../luxon-extensions';
 import { TestService } from '../../test/test.service';

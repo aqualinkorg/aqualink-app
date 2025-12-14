@@ -48,7 +48,6 @@ export interface Dataset {
 }
 
 export interface ChartProps {
-  // eslint-disable-next-line react/no-unused-prop-types
   siteId: number;
   datasets?: Dataset[];
   timeZone?: string | null;
@@ -60,7 +59,7 @@ export interface ChartProps {
   maxMonthlyMean: number | null;
   background?: boolean;
   showYearInTicks?: boolean;
-  // eslint-disable-next-line react/no-unused-prop-types
+
   fill?: boolean;
   hideYAxisUnits?: boolean;
 
@@ -117,7 +116,7 @@ function Chart({
   if (forwardRef) {
     // this might be doable with forwardRef or callbacks, but its a little hard since we need to
     // use it in two places
-    // eslint-disable-next-line no-param-reassign
+
     forwardRef.current = chartRef.current;
   }
 

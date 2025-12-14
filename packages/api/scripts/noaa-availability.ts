@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 /* eslint-disable fp/no-mutation */
 import axios from 'axios';
 import { Logger } from '@nestjs/common';
@@ -21,7 +20,6 @@ type Argv = {
 
 let netcdf4: any;
 try {
-  // eslint-disable-next-line global-require, fp/no-mutation, import/no-unresolved
   netcdf4 = require('netcdf4');
 } catch {
   Logger.error(

@@ -46,7 +46,7 @@ function Surveys({ classes }: SurveysProps) {
     <>
       <NavBar searchLocation />
       <>
-        {/* eslint-disable-next-line no-nested-ternary */}
+        {}
         {siteDetails && !error ? (
           surveyId ? (
             <SurveyViewPage site={siteDetails} surveyId={surveyId} />

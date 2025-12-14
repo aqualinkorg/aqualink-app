@@ -42,7 +42,6 @@ function LocationMap({
   const [zoom, setZoom] = useState<number>(INITIAL_ZOOM);
 
   const onZoomEnd = useCallback(
-    // eslint-disable-next-line no-underscore-dangle
     (event: LeafletEvent) => setZoom(event.target._zoom as number),
     [],
   );

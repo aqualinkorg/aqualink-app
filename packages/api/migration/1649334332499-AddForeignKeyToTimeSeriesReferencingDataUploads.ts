@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddForeignKeyToTimeSeriesReferencingDataUploads1649334332499
-  implements MigrationInterface
-{
+export class AddForeignKeyToTimeSeriesReferencingDataUploads1649334332499 implements MigrationInterface {
   name = 'AddForeignKeyToTimeSeriesReferencingDataUploads1649334332499';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

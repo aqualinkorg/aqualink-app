@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddMinMaxDateToDataUploadsSites1714035807759
-  implements MigrationInterface
-{
+export class AddMinMaxDateToDataUploadsSites1714035807759 implements MigrationInterface {
   name = 'AddMinMaxDateToDataUploadsSites1714035807759';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

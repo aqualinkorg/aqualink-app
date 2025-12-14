@@ -80,7 +80,7 @@ async function runWithDataSource(
   callback: (conn: DataSource) => void | Promise<void>,
 ) {
   const dbUrl = functions.config().database.url;
-  // eslint-disable-next-line no-undef
+
   const entities = dbEntities.map(extractEntityDefinition);
   const dataSource = new DataSource({
     ...dbConfig,

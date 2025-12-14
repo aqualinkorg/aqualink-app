@@ -12,15 +12,14 @@ interface GrokMessage {
 interface GrokResponse {
   choices: Array<{
     message: { role: string; content: string };
-    /* eslint-disable-next-line camelcase */
+
     finish_reason: string;
   }>;
   usage: {
-    /* eslint-disable-next-line camelcase */
     prompt_tokens: number;
-    /* eslint-disable-next-line camelcase */
+
     completion_tokens: number;
-    /* eslint-disable-next-line camelcase */
+
     total_tokens: number;
   };
 }

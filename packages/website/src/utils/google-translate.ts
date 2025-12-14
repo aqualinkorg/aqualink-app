@@ -5,7 +5,6 @@ export function useGoogleTranslation() {
   const [init, setInit] = React.useState<boolean>(false);
 
   const googleTranslateElementInit = () => {
-    // eslint-disable-next-line no-new
     new (window as any).google.translate.TranslateElement(
       {
         pageLanguage: 'en',

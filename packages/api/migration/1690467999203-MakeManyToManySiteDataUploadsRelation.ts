@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class MakeManyToManySiteDataUploadsRelation1690467999203
-  implements MigrationInterface
-{
+export class MakeManyToManySiteDataUploadsRelation1690467999203 implements MigrationInterface {
   name = 'MakeManyToManySiteDataUploadsRelation1690467999203';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

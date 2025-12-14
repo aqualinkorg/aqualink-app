@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Theme,
@@ -127,7 +126,7 @@ function Apply({ classes }: ApplyProps) {
         setLoading(true);
         siteServices
           .applySite(siteId, siteApplication.appId, data, user.token)
-          // eslint-disable-next-line consistent-return
+
           .then(() => {
             if (!site?.name && user?.token) {
               return siteServices.updateSite(

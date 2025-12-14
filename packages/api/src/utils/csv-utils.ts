@@ -1,6 +1,6 @@
 import { join } from 'path';
 // https://github.com/adaltas/node-csv/issues/372
-// eslint-disable-next-line import/no-unresolved
+
 import { stringify } from 'csv-stringify/sync';
 import {
   closeSync,
@@ -59,12 +59,12 @@ export async function ReturnCSV({
   const fd = openSync(tempFileName, 'w');
 
   try {
-    // eslint-disable-next-line fp/no-mutation, no-plusplus
+    // eslint-disable-next-line fp/no-mutation
     for (let i = 0; i < chunks.length; i++) {
       const first = i === 0;
 
       // we want this not to run in parallel, that's why it is ok here to disable no-await-in-loop
-      // eslint-disable-next-line no-await-in-loop
+
       const rows = await getRows(
         chunks[i].start.toJSDate(),
         chunks[i].end.toJSDate(),

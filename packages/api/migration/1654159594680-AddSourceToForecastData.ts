@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddSourceToForecastData1654159594680
-  implements MigrationInterface
-{
+export class AddSourceToForecastData1654159594680 implements MigrationInterface {
   name = 'AddSourceToForecastData1654159594680';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

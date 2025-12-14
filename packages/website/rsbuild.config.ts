@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
-import { pluginEslint } from "@rsbuild/plugin-eslint";
+import { pluginEslint } from '@rsbuild/plugin-eslint';
 
 const { publicVars, rawPublicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
 

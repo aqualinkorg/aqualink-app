@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddNOAAAvailabilityColumn1666786316691
-  implements MigrationInterface
-{
+export class AddNOAAAvailabilityColumn1666786316691 implements MigrationInterface {
   name = 'AddNOAAAvailabilityColumn1666786316691';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

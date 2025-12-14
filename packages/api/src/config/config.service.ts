@@ -16,7 +16,6 @@ import { TimeSeriesPoint } from '../time-series/dto/time-series-point.dto';
 
 // dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
 try {
-  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
   require('dotenv').config();
 } catch {
   // Pass
@@ -54,14 +53,12 @@ class ConfigService {
     return mode !== 'development';
   }
 
-  // eslint-disable-next-line class-methods-use-this
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       ...dataSourceOptions,
     } as TypeOrmModuleOptions;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   public getSwaggerConfig() {
     const config = new DocumentBuilder()
       .setTitle('Aqualink API documentation')

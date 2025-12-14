@@ -23,7 +23,6 @@ import type { Dataset } from '..';
 
 const rows = ['MAX', 'MEAN', 'MIN'];
 
-/* eslint-disable react/prop-types */
 function AnalysisCard({
   classes,
   datasets,

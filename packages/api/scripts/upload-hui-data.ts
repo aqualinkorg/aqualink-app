@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import yargs from 'yargs';
 import { Logger } from '@nestjs/common';
 import { DataSource, DataSourceOptions, Repository } from 'typeorm';

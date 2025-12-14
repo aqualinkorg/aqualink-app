@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class RemoveTemperatureThreshold1613866723577
-  implements MigrationInterface {
+export class RemoveTemperatureThreshold1613866723577 implements MigrationInterface {
   name = 'RemoveTemperatureThreshold1613866723577';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

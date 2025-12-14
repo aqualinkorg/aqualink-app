@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class addGCloudLocationForDataUploads1649940478607
-  implements MigrationInterface
-{
+export class addGCloudLocationForDataUploads1649940478607 implements MigrationInterface {
   name = 'addGCloudLocationForDataUploads1649940478607';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

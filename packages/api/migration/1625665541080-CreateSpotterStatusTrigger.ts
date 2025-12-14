@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateSpotterStatusTrigger1625665541080
-  implements MigrationInterface {
+export class CreateSpotterStatusTrigger1625665541080 implements MigrationInterface {
   name = 'CreateSpotterStatusTrigger1625665541080';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

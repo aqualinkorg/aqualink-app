@@ -4,7 +4,7 @@ import { Extent, pointToIndex } from '../../src/utils/coordinates';
 
 let netcdf4;
 try {
-  // eslint-disable-next-line global-require, fp/no-mutation, import/no-unresolved
+  // eslint-disable-next-line fp/no-mutation
   netcdf4 = require('netcdf4');
 } catch {
   console.error(

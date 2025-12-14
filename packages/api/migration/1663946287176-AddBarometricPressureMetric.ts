@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddBarometricPressureMetric1663946287176
-  implements MigrationInterface
-{
+export class AddBarometricPressureMetric1663946287176 implements MigrationInterface {
   name = 'AddBarometricPressureMetric1663946287176';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

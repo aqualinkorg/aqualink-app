@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class MakeTimeSeriesSourceNotNull1689848494071
-  implements MigrationInterface
-{
+export class MakeTimeSeriesSourceNotNull1689848494071 implements MigrationInterface {
   name = 'MakeTimeSeriesSourceNotNull1689848494071';
 
   public async up(queryRunner: QueryRunner): Promise<void> {

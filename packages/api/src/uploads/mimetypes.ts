@@ -4,7 +4,6 @@ export const mimetypes: Record<string, string[]> = {
 };
 
 export function validateMimetype(mimetype: string): string | undefined {
-  // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(mimetypes)) {
     const belongs = value.findIndex((m) => m === mimetype) !== -1;
     if (belongs) {
