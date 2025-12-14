@@ -82,7 +82,6 @@ export async function buildSiteContext(
       surveys,
       reefCheckSurveys,
       windWaveData,
-      spotterHistory,
     ] = await Promise.all([
       siteRepository.findOne({
         where: { id: siteId },
@@ -113,17 +112,13 @@ export async function buildSiteContext(
       dataSource.getRepository(TimeSeries).find({
         where: {
           source: { site: { id: siteId }, type: In(['spotter']) },
-          metric: In([
-            Metric.TOP_TEMPERATURE,
-            Metric.BOTTOM_TEMPERATURE,
-          ]),
+          metric: In([Metric.TOP_TEMPERATURE, Metric.BOTTOM_TEMPERATURE]),
         },
         order: { timestamp: 'DESC' },
         take: 200,
         relations: ['source'],
       }),
     ]);
-
 
     if (!siteData) {
       throw new Error(`Site with ID ${siteId} not found`);
@@ -356,15 +351,18 @@ ${(() => {
   const formatHindcast = () => {
     if (windWaveData.length === 0) return '- No hindcast data available';
 
-    const latestByMetric = windWaveData.reduce((acc, item) => {
-      if (
-        !acc[item.metric] ||
-        new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
-      ) {
-        return { ...acc, [item.metric]: item };
-      }
-      return acc;
-    }, {} as Record<string, typeof windWaveData[0]>);
+    const latestByMetric = windWaveData.reduce(
+      (acc, item) => {
+        if (
+          !acc[item.metric] ||
+          new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
+        ) {
+          return { ...acc, [item.metric]: item };
+        }
+        return acc;
+      },
+      {} as Record<string, (typeof windWaveData)[0]>,
+    );
 
     return Object.entries(latestByMetric)
       .map(
