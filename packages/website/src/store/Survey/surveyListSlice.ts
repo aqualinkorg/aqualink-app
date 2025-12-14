@@ -35,56 +35,48 @@ const surveyListSlice = createSlice({
     updateSurveyPointName: (
       state,
       action: PayloadAction<{ id: number; name: string }>,
-    ) => {
-      return {
-        ...state,
-        list: state.list.map((item) => {
-          if (item.featuredSurveyMedia?.surveyPoint?.id === action.payload.id) {
-            return {
-              ...item,
-              featuredSurveyMedia: {
-                ...item.featuredSurveyMedia,
-                surveyPoint: {
-                  ...item.featuredSurveyMedia.surveyPoint,
-                  name: action.payload.name,
-                },
+    ) => ({
+      ...state,
+      list: state.list.map((item) => {
+        if (item.featuredSurveyMedia?.surveyPoint?.id === action.payload.id) {
+          return {
+            ...item,
+            featuredSurveyMedia: {
+              ...item.featuredSurveyMedia,
+              surveyPoint: {
+                ...item.featuredSurveyMedia.surveyPoint,
+                name: action.payload.name,
               },
-            };
-          }
-          return item;
-        }),
-      };
-    },
+            },
+          };
+        }
+        return item;
+      }),
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(
       surveysRequest.fulfilled,
-      (state, action: PayloadAction<SurveyListState['list']>) => {
-        return {
-          ...state,
-          list: action.payload.filter((survey) => survey.featuredSurveyMedia),
-          loading: false,
-        };
-      },
+      (state, action: PayloadAction<SurveyListState['list']>) => ({
+        ...state,
+        list: action.payload.filter((survey) => survey.featuredSurveyMedia),
+        loading: false,
+      }),
     );
 
-    builder.addCase(surveysRequest.rejected, (state, action) => {
-      return {
-        ...state,
-        error: action.error.message
-          ? action.error.message
-          : action.error.toString(),
-        loading: false,
-      };
-    });
+    builder.addCase(surveysRequest.rejected, (state, action) => ({
+      ...state,
+      error: action.error.message
+        ? action.error.message
+        : action.error.toString(),
+      loading: false,
+    }));
 
-    builder.addCase(surveysRequest.pending, (state) => {
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    });
+    builder.addCase(surveysRequest.pending, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    }));
   },
 });
 

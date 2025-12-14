@@ -11,7 +11,45 @@ import Header from './Header';
 import { AvailableRange, RangeValue } from './types';
 import type { Dataset } from '../index';
 
-const ChartWithCard = ({
+const useStyles = makeStyles((theme: Theme) => ({
+  chartWrapper: {
+    marginBottom: 20,
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: 10,
+    },
+  },
+  chart: {
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
+  },
+  largeChart: {
+    [theme.breakpoints.up('md')]: {
+      width: 'calc(100% - 230px)', // width of 100% minus the card with one column
+    },
+  },
+  mediumChart: {
+    [theme.breakpoints.up('md')]: {
+      width: 'calc(100% - 240px)', // width of 100% minus the card with two columns
+    },
+  },
+  smallChart: {
+    [theme.breakpoints.up('md')]: {
+      width: 'calc(100% - 320px)', // width of 100% minus the card with three columns
+    },
+  },
+  card: {
+    width: 'fit-content',
+    minWidth: 219,
+    [theme.breakpoints.down('md')]: {
+      width: 'inherit',
+      maxWidth: 'fit-content',
+      margin: '0 auto',
+    },
+  },
+}));
+
+function ChartWithCard({
   areSurveysFiltered,
   availableRanges = [],
   cardColumnJustification = 'space-between',
@@ -37,7 +75,7 @@ const ChartWithCard = ({
   onEndDateChange,
   onStartDateChange,
   onRangeChange,
-}: ChartWithCardProps) => {
+}: ChartWithCardProps) {
   const classes = useStyles();
   const chartWidthClass = () => {
     switch (chartWidth) {
@@ -103,45 +141,7 @@ const ChartWithCard = ({
       </Grid>
     </>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  chartWrapper: {
-    marginBottom: 20,
-    [theme.breakpoints.down('sm')]: {
-      marginBottom: 10,
-    },
-  },
-  chart: {
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
-    },
-  },
-  largeChart: {
-    [theme.breakpoints.up('md')]: {
-      width: 'calc(100% - 230px)', // width of 100% minus the card with one column
-    },
-  },
-  mediumChart: {
-    [theme.breakpoints.up('md')]: {
-      width: 'calc(100% - 240px)', // width of 100% minus the card with two columns
-    },
-  },
-  smallChart: {
-    [theme.breakpoints.up('md')]: {
-      width: 'calc(100% - 320px)', // width of 100% minus the card with three columns
-    },
-  },
-  card: {
-    width: 'fit-content',
-    minWidth: 219,
-    [theme.breakpoints.down('md')]: {
-      width: 'inherit',
-      maxWidth: 'fit-content',
-      margin: '0 auto',
-    },
-  },
-}));
+}
 
 interface ChartWithCardProps {
   areSurveysFiltered?: boolean;

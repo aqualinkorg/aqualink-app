@@ -14,7 +14,8 @@ import {
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { useSnackbar } from 'notistack';
 import {
   surveyDetailsSelector,
@@ -43,8 +44,8 @@ import { DateTime } from 'luxon-extensions';
 import SurveyDetails from './SurveyDetails';
 import SurveyMediaDetails from './MediaDetails';
 
-const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
-  const dispatch = useDispatch();
+function SurveyViewPage({ site, surveyId, classes }: SurveyViewPageProps) {
+  const dispatch = useAppDispatch();
   const prevMediaLoading = React.useRef<boolean>();
   const { enqueueSnackbar } = useSnackbar();
   const surveyList = useSelector(surveyListSelector);
@@ -229,7 +230,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
       </Box>
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import {
   siteDetailsSelector,
@@ -8,7 +9,7 @@ import {
 } from 'store/Sites/selectedSiteSlice';
 
 export const useSiteRequest = (siteId: string) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const site = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
 
