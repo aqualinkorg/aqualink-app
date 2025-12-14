@@ -88,7 +88,7 @@
     "csv-parser": "^3.2.0",
     "csv-stringify": "^6.4.0",
     "dotenv": "^17.2.3",
-    "eslint": "^8.57.0",
+    "eslint": "^9.39.2",
     "express": "^4.21.2",
     "firebase-admin": "^13.0.2",
     "geo-tz": "^6.0.0",
