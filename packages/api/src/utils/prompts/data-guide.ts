@@ -108,6 +108,18 @@ Historical wind and wave data:
 - Hindcast model for wind and wave data
 - Displays what date each metric was received
 
+**8. Water Quality Data**
+\`\`\`
+${API_BASE_URL}/time-series/sites/{siteId}?metrics=nitrogen_total,phosphorus_total,phosphorus,silicate,nitrate_plus_nitrite,ammonium,odo_saturation,odo_concentration,salinity,turbidity,ph
+\`\`\`
+Historical water quality data from HUI sensors:
+- Nutrients: phosphorus, nitrogen, silicate, nitrate, nitrite, ammonium
+- Physical/chemical: pH, salinity, turbidity
+- Dissolved oxygen: concentration and saturation
+- Returns time-series data (all historical readings)
+
+**Note**: SONDE water quality data is available in the latest_data endpoint (already in AI context).
+
 ### WHEN TO QUERY EACH ENDPOINT
 
 **Always check these endpoints when users ask about:**
@@ -126,16 +138,25 @@ Historical wind and wave data:
 
 4. **Current conditions** → Use ${API_BASE_URL}/sites/{siteId}/latest_data (already in context)
 
+5. **Water quality data** → Already included in AI context:
+   - SONDE latest values: From latest_data (already loaded)
+   - HUI time-series: Automatically loaded from time_series table
+   - Reference these values directly when asked about water quality
+
 **CRITICAL: Never assume data doesn't exist - always query the endpoint first.**
 
 ### HISTORICAL DATA (HOBO, Water Quality, etc.)
 
-**IMPORTANT**: The /time-series/sites/{siteId}/range endpoint shows what historical uploaded data exists (HOBO loggers, water quality sondes, etc.), but this data is NOT included in the AI assistant context. 
+**Water Quality Data**: Now included in AI assistant context!
+- **HUI sensor data**: Loaded from time_series table (nutrients, pH, salinity, turbidity, dissolved oxygen)
+- **SONDE sensor data**: Latest values from latest_data (conductivity, TDS, chlorophyll, etc.)
+- Both sources available for the AI to reference directly
 
-**When users ask about historical sensor data:**
-- Direct them to check the dashboard's time-series charts
-- Mention they can view data availability at the /time-series/sites/{siteId}/range endpoint
-- Note that uploaded data (HOBO, Hui, etc.) can be accessed via the dashboard's date range selector and CSV download
+**Other Historical Sensor Data (HOBO loggers, etc.)**: 
+- The /time-series/sites/{siteId}/range endpoint shows what data exists
+- Not included in AI context due to size
+- Direct users to check the dashboard's time-series charts
+- Data can be accessed via dashboard's date range selector and CSV download
 
 ### DATA SOURCE HIERARCHY
 
@@ -320,6 +341,36 @@ If Spotter readings exist with recent timestamps, data is active.
 - Visual representation of DHW thresholds
 - Color-coded for quick assessment
 - Trigger points for action plans
+
+### WATER QUALITY THRESHOLDS (HUI DATA)
+
+**HUI O Ka Wai Ola - Maui-Specific Thresholds**
+
+Hui O Ka Wai Ola is a community-based water quality monitoring program in Maui. They have established science-based thresholds for two key metrics:
+
+**Turbidity (NTU) - Water Clarity:**
+- **Good**: <1 NTU - Clear, healthy water
+- **Watch**: 1-4.9 NTU - Slightly elevated sediment, monitor closely
+- **Warning**: 5-9.9 NTU - Elevated sediment, potential coral stress
+- **Alert**: ≥10 NTU - Poor water clarity, high sediment load threatening reef health
+
+**Nitrate + Nitrite Nitrogen (µg/L) - Nutrient Pollution:**
+- **Good**: <3.5 µg/L - Low nutrient pollution, healthy baseline
+- **Watch**: 3.5-29.9 µg/L - Slightly elevated nutrients, monitor for sources
+- **Warning**: 30-99.9 µg/L - Elevated nutrients, likely pollution source present
+- **Alert**: ≥100 µg/L - High nutrient pollution, serious reef threat (algae growth, coral stress)
+
+**When interpreting HUI data:**
+1. **Always reference the threshold level** in your response (e.g., "Turbidity is at 1.45 NTU, which is at Watch level")
+2. **Explain what the level means** for reef health in simple terms
+3. **Provide context**: "This suggests slightly elevated sediment, which could be from recent rainfall or runoff"
+4. **HUI sites are Maui only** - these thresholds are specific to Hawaii's water quality conditions
+5. **Other metrics** (pH, salinity, dissolved oxygen, phosphorus, etc.) do not have established HUI thresholds
+
+**Why these thresholds matter:**
+- Turbidity affects coral photosynthesis and can smother reefs
+- Excess nutrients fuel algae growth that competes with and smothers coral
+- These are early warning indicators of land-based pollution reaching reefs
 
 ### DATA GAPS & TROUBLESHOOTING
 
