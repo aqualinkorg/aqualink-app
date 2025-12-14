@@ -17,7 +17,10 @@ describe('Delete Button', () => {
 
     store.dispatch = vi.fn();
 
-    const dummyFunc = () => new Promise<void>((resolve) => resolve());
+    const dummyFunc = () =>
+      new Promise<void>((resolve) => {
+        resolve();
+      });
 
     element = renderWithProviders(
       <DeleteButton onConfirm={dummyFunc} header="some text" />,

@@ -66,11 +66,10 @@ export async function buildSiteContext(
     const formatNumber = (
       value: number | null | undefined,
       decimals = 2,
-    ): string => {
-      return typeof value === 'number' && Number.isFinite(value)
+    ): string =>
+      typeof value === 'number' && Number.isFinite(value)
         ? value.toFixed(decimals)
         : 'Unknown';
-    };
 
     // Query database directly using TypeORM
     const siteRepository = dataSource.getRepository(Site);

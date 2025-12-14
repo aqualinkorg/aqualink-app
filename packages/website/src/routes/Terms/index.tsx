@@ -8,7 +8,7 @@ import createStyles from '@mui/styles/createStyles';
 import NavBar from 'common/NavBar';
 import Footer from 'common/Footer';
 
-const Terms = ({ classes }: TermsProps) => {
+function Terms({ classes }: TermsProps) {
   return (
     <>
       <NavBar searchLocation={false} />
@@ -348,7 +348,7 @@ const Terms = ({ classes }: TermsProps) => {
       <Footer />
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

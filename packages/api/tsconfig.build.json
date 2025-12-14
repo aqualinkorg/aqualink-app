@@ -9,5 +9,8 @@
   "compilerOptions": {
     "noEmit": false,
     "outDir": "dist",
+    "paths": {
+      "typeorm": ["../../node_modules/typeorm"]
+    }
   },
 }

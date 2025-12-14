@@ -36,6 +36,17 @@ import { AdminLevel, User } from '../../users/users.entity';
 import { DataUploadsSites } from '../../data-uploads/data-uploads-sites.entity';
 import { GoogleCloudDir } from '../google-cloud.utils';
 
+function getTimezoneOffset(timezone: string, date: Date) {
+  try {
+    const timezoneDate = new Date(
+      date.toLocaleString('en-US', { timeZone: timezone }),
+    );
+    return timezoneDate.valueOf() - date.valueOf();
+  } catch {
+    return 0;
+  }
+}
+
 interface Repositories {
   siteRepository: Repository<Site>;
   surveyPointRepository: Repository<SiteSurveyPoint>;
@@ -83,7 +94,7 @@ const nonMetric = [
   'depth',
 ] as const;
 
-type NonMetric = typeof nonMetric[number];
+type NonMetric = (typeof nonMetric)[number];
 
 type Token = Metric | NonMetric;
 
@@ -154,7 +165,7 @@ const rules: Rule[] = [
   { token: Metric.AMMONIUM, expression: /^NH4$/ },
 ];
 
-export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
+export type Mimetype = (typeof ACCEPTED_FILE_TYPES)[number]['mimetype'];
 
 export const fileFilter: MulterOptions['fileFilter'] = (_, file, callback) => {
   if (
@@ -535,17 +546,6 @@ interface CreateEntitiesAndConvertProps {
   siteTimezone?: boolean;
 }
 
-function getTimezoneOffset(timezone: string, date: Date) {
-  try {
-    const timezoneDate = new Date(
-      date.toLocaleString('en-US', { timeZone: timezone }),
-    );
-    return timezoneDate.valueOf() - date.valueOf();
-  } catch {
-    return 0;
-  }
-}
-
 const createEntitiesAndConvert = async ({
   workSheetData,
   siteId,
@@ -612,15 +612,13 @@ const uploadPerSiteAndPoint = async ({
   repositories,
   dataUploadsFileEntity,
 }: UploadPerSiteAndPointProps) => {
-  const dataAsTimeSeriesNoDiffs = data.map((x) => {
-    return {
-      timestamp: x.timestamp,
-      value: x.value,
-      metric: x.metric,
-      source: x.source,
-      dataUpload: dataUploadsFileEntity,
-    };
-  });
+  const dataAsTimeSeriesNoDiffs = data.map((x) => ({
+    timestamp: x.timestamp,
+    value: x.value,
+    metric: x.metric,
+    source: x.source,
+    dataUpload: dataUploadsFileEntity,
+  }));
 
   const barometricPressures = dataAsTimeSeriesNoDiffs.filter(
     (x) => x.metric === Metric.BAROMETRIC_PRESSURE_TOP,
@@ -808,8 +806,8 @@ export const uploadTimeSeriesData = async ({
   });
 
   const converted = await Promise.all(
-    groupedData.map((x) => {
-      return createEntitiesAndConvert({
+    groupedData.map((x) =>
+      createEntitiesAndConvert({
         workSheetData: x.data,
         siteId: x.siteId,
         surveyPointId: x.surveyPointId,
@@ -821,8 +819,8 @@ export const uploadTimeSeriesData = async ({
         repositories,
         mimetype,
         siteTimezone,
-      });
-    }),
+      }),
+    ),
   );
 
   const allDataCombined = converted.map((x) => x.data).flat();
@@ -852,15 +850,15 @@ export const uploadTimeSeriesData = async ({
   );
 
   await Promise.all(
-    converted.map((x) => {
-      return uploadPerSiteAndPoint({
+    converted.map((x) =>
+      uploadPerSiteAndPoint({
         data: x.data,
         site: x.site,
         surveyPoint: x.surveyPoint ?? undefined,
         repositories,
         dataUploadsFileEntity: dataUploadsFile,
-      });
-    }),
+      }),
+    ),
   );
 
   refreshMaterializedView(repositories.dataUploadsRepository);
