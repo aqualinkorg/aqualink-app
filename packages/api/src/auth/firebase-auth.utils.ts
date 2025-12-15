@@ -19,7 +19,7 @@ export const extractAndVerifyToken = async (
   try {
     const firebaseUser = await admin.auth().verifyIdToken(token, true);
     return firebaseUser;
-  } catch (err) {
+  } catch {
     return undefined;
   }
 };

@@ -19,7 +19,7 @@ import { SurveyPoints } from 'store/Sites/types';
 import SurveyPointSelector from 'common/SurveyPointSelector';
 import { ReactComponent as StarIcon } from '../../../assets/starIcon.svg';
 
-const MediaCard = ({
+function MediaCard({
   preview,
   surveyPoint,
   siteId,
@@ -35,7 +35,7 @@ const MediaCard = ({
   handleObservationChange,
   handleSurveyPointChange,
   classes,
-}: MediaCardProps) => {
+}: MediaCardProps) {
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
 
   const onImageClick = useCallback(() => {
@@ -183,7 +183,7 @@ const MediaCard = ({
       </Paper>
     </Grid>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

@@ -9,14 +9,36 @@ import {
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
-const StatusSnackbar = ({
+const useStyles = makeStyles<Theme, { hasMessage: boolean }>(
+  (theme: Theme) => ({
+    snackbar: {
+      maxWidth: '50%',
+      [theme.breakpoints.down('md')]: {
+        maxWidth: '90%',
+      },
+    },
+    alert: {
+      alignItems: 'center',
+    },
+    alertMessage: ({ hasMessage }) => ({
+      display: 'flex',
+      alignItems: 'center',
+      ...(hasMessage ? { padding: 0 } : {}),
+    }),
+    button: {
+      marginLeft: theme.spacing(1.5),
+    },
+  }),
+);
+
+function StatusSnackbar({
   open,
   message,
   furtherActionLabel,
   severity,
   handleClose,
   onFurtherActionTake = () => {},
-}: StatusSnackbarProps) => {
+}: StatusSnackbarProps) {
   const classes = useStyles({ hasMessage: !!message });
 
   return message ? (
@@ -49,29 +71,7 @@ const StatusSnackbar = ({
       </Alert>
     </Snackbar>
   ) : null;
-};
-
-const useStyles = makeStyles<Theme, { hasMessage: boolean }>(
-  (theme: Theme) => ({
-    snackbar: {
-      maxWidth: '50%',
-      [theme.breakpoints.down('md')]: {
-        maxWidth: '90%',
-      },
-    },
-    alert: {
-      alignItems: 'center',
-    },
-    alertMessage: ({ hasMessage }) => ({
-      display: 'flex',
-      alignItems: 'center',
-      ...(hasMessage ? { padding: 0 } : {}),
-    }),
-    button: {
-      marginLeft: theme.spacing(1.5),
-    },
-  }),
-);
+}
 
 interface StatusSnackbarProps {
   open: boolean;

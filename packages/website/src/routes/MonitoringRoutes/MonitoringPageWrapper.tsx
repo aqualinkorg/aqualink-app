@@ -9,6 +9,22 @@ import { useSnackbar } from 'notistack';
 import LoadingBackdrop from 'common/LoadingBackdrop';
 import { fetchData } from './utils';
 
+const useStyles = makeStyles(() => ({
+  button: {
+    margin: '1rem 1rem 1rem 2rem',
+  },
+  resultsContainer: {
+    margin: '2rem',
+  },
+  pageTitle: {
+    marginLeft: '2rem',
+  },
+  pageDescription: {
+    marginLeft: '2rem',
+    marginTop: '0.5em',
+  },
+}));
+
 interface MonitoringPageWrapperProps<T, A> {
   getResult: (token: string) => Promise<T>;
   ResultsComponent: React.FC<A>;
@@ -41,13 +57,6 @@ function MonitoringPageWrapper<T, A>({
   const [result, setResult] = React.useState<T | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  React.useEffect(() => {
-    if (fetchOnPageLoad) {
-      onGetMetrics();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
   const onGetMetrics = React.useCallback(() => {
     fetchData({
       user,
@@ -57,6 +66,13 @@ function MonitoringPageWrapper<T, A>({
       getResult,
     });
   }, [enqueueSnackbar, getResult, user]);
+
+  React.useEffect(() => {
+    if (fetchOnPageLoad) {
+      onGetMetrics();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   React.useEffect(() => {
     const keyDownHandler = (event: any) => {
@@ -126,21 +142,5 @@ function MonitoringPageWrapper<T, A>({
     </div>
   );
 }
-
-const useStyles = makeStyles(() => ({
-  button: {
-    margin: '1rem 1rem 1rem 2rem',
-  },
-  resultsContainer: {
-    margin: '2rem',
-  },
-  pageTitle: {
-    marginLeft: '2rem',
-  },
-  pageDescription: {
-    marginLeft: '2rem',
-    marginTop: '0.5em',
-  },
-}));
 
 export default MonitoringPageWrapper;

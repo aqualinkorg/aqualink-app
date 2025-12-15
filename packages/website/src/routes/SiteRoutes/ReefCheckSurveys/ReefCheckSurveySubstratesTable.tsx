@@ -12,12 +12,12 @@ type ReefCheckSurveySubstratesTableProps = {
   filter?: (organism: ReefCheckSubstrate) => boolean;
 };
 
-export const ReefCheckSurveySubstrates = ({
+export function ReefCheckSurveySubstrates({
   columns,
   title,
   description = '',
   filter = () => true,
-}: ReefCheckSurveySubstratesTableProps) => {
+}: ReefCheckSurveySubstratesTableProps) {
   const { survey, loading, error } = useSelector(reefCheckSurveySelector);
   const rows =
     // eslint-disable-next-line fp/no-mutating-methods
@@ -35,4 +35,4 @@ export const ReefCheckSurveySubstrates = ({
       description={description}
     />
   );
-};
+}

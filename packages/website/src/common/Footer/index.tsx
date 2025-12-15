@@ -5,7 +5,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 
-const Footer = ({ classes }: FooterProps) => {
+function Footer({ classes }: FooterProps) {
   return (
     <AppBar className={classes.appBar} position="static">
       <Toolbar>
@@ -24,7 +24,7 @@ const Footer = ({ classes }: FooterProps) => {
       </Toolbar>
     </AppBar>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({
