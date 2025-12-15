@@ -20,8 +20,8 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
       >
         <mock-map
-          initialcenter="LatLng(0, 0)"
-          initialzoom="5"
+          initialcenter="LatLng(0, 121.3)"
+          initialzoom="4"
           showsitetable="true"
         />
       </div>
@@ -57,7 +57,7 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
               >
                 <div
                   class="ReactSwipeableBottomSheet--closed"
-                  style="overflow: hidden; background-color: white; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
+                  style="overflow: hidden; background-color: white; height: initial; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
                 >
                   <div
                     role="presentation"

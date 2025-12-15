@@ -242,14 +242,14 @@ export class MonitoringService {
       });
 
       return data
-        .map((x) => {
-          return x.data.map((y) => ({
+        .map((x) =>
+          x.data.map((y) => ({
             siteId: x.siteId,
             siteName: x.siteName,
             ...y,
             date: y.date && DateTime.fromJSDate(y.date).toISO(),
-          }));
-        })
+          })),
+        )
         .flat();
     };
 

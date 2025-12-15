@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const FootPrintImage = ({ imageHeight }: FootPrintImageProps) => {
+function FootPrintImage({ imageHeight }: FootPrintImageProps) {
   const classes = useStyles({ imageHeight });
   return (
     <Grid container direction="column">
@@ -41,7 +41,7 @@ const FootPrintImage = ({ imageHeight }: FootPrintImageProps) => {
       </Grid>
     </Grid>
   );
-};
+}
 
 interface FootPrintImageProps {
   imageHeight?: number;

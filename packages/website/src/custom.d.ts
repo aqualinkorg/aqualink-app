@@ -12,6 +12,6 @@ declare module '*.css' {
   export = classNames;
 }
 
-declare module 'react-leaflet-markercluster';
+declare module 'react-leaflet-cluster';
 declare module 'react-swipeable-bottom-sheet';
 declare module '@sketchfab/viewer-api';

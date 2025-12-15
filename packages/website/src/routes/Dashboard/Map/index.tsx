@@ -9,7 +9,7 @@ import { CollectionDetails } from 'store/Collection/types';
 import { getCollectionCenterAndBounds } from 'helpers/map';
 import Map from '../../HomeMap/Map';
 
-const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
+function DashboardMap({ collection, classes }: DashboardMapProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [collectionCenter, collectionBounds] =
@@ -22,8 +22,13 @@ const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
       <Map
         classes={{ map: classes.map }}
         initialCenter={collectionCenter || new LatLng(0, 0)}
-        initialBounds={collectionBounds}
-        initialZoom={3}
+        {...(collectionBounds
+          ? {
+              initialBounds: collectionBounds,
+            }
+          : {
+              initialZoom: 3,
+            })}
         collection={collection}
         showAlertLevelLegend={false}
         showWaterMark={false}
@@ -34,7 +39,7 @@ const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
       />
     </Box>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

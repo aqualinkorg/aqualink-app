@@ -56,18 +56,27 @@ const currentLocationMarker = L.divIcon({
   iconSize: L.point(16, 16, true),
 });
 
-const MapEventsHandler = ({
+function MapEventsHandler({
   onBaseLayerChange,
+  onMapReady,
 }: {
   onBaseLayerChange: (e: LayersControlEvent) => void;
-}) => {
-  useMapEvents({
+  onMapReady: () => void;
+}) {
+  const map = useMapEvents({
     baselayerchange: (e) => onBaseLayerChange(e),
   });
-  return null;
-};
 
-const HomepageMap = ({
+  useEffect(() => {
+    if (map) {
+      onMapReady();
+    }
+  }, [map, onMapReady]);
+
+  return null;
+}
+
+function HomepageMap({
   initialCenter,
   initialZoom,
   showSiteTable = true,
@@ -82,7 +91,7 @@ const HomepageMap = ({
   legendLeft,
   classes,
   onMapLoad,
-}: HomepageMapProps) => {
+}: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
@@ -90,6 +99,7 @@ const HomepageMap = ({
     useState<number>();
   const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
     useState<string>();
+  const [mapReady, setMapReady] = useState(false);
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
@@ -149,7 +159,7 @@ const HomepageMap = ({
 
   useEffect(() => {
     const { current: map } = ref;
-    if (map && siteOnMap?.polygon.type === 'Point') {
+    if (map && mapReady && siteOnMap?.polygon.type === 'Point') {
       const [lng, lat] = siteOnMap.polygon.coordinates;
 
       // Use the pre-calculated displayLng if available, otherwise use original lng
@@ -165,10 +175,14 @@ const HomepageMap = ({
         noMoveStart: true,
       });
     }
-  }, [siteOnMap]);
+  }, [siteOnMap, mapReady]);
 
   const onBaseLayerChange = ({ name }: LayersControlEvent) => {
     setLegendName(name);
+  };
+
+  const onMapReady = () => {
+    setMapReady(true);
   };
 
   const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
@@ -287,10 +301,13 @@ const HomepageMap = ({
           </IconButton>
         </div>
       )}
-      <MapEventsHandler onBaseLayerChange={onBaseLayerChange} />
+      <MapEventsHandler
+        onBaseLayerChange={onBaseLayerChange}
+        onMapReady={onMapReady}
+      />
     </MapContainer>
   );
-};
+}
 
 const mapButtonStyles: CSSProperties | CreateCSSProperties<{}> = {
   cursor: 'pointer',
@@ -356,7 +373,7 @@ const styles = (theme: Theme) =>
 
 interface HomepageMapIncomingProps {
   initialCenter: LatLng;
-  initialZoom: number;
+  initialZoom?: number;
   showSiteTable?: boolean;
   setShowSiteTable?: React.Dispatch<React.SetStateAction<boolean>>;
   initialBounds?: LatLngBounds;

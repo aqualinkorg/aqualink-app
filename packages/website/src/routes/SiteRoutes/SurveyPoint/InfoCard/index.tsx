@@ -13,7 +13,8 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
 import CloseIcon from '@mui/icons-material/Close';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { every } from 'lodash';
 
 import { Site } from 'store/Sites/types';
@@ -25,9 +26,9 @@ import EditForm from './EditForm';
 import Info from './Info';
 import Map from './Map';
 
-const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
+function InfoCard({ site, pointId, bgColor, classes }: InfoCardProps) {
   const user = useSelector(userInfoSelector);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const surveyPoint = site.surveyPoints.find((item) => item.id === pointId);
   const [editModeEnabled, setEditModeEnabled] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -177,7 +178,7 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
       </Container>
     </Box>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

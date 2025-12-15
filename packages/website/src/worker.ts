@@ -11,6 +11,7 @@ import { Site } from './store/Sites/types';
 import { SurveyListItem } from './store/Survey/types';
 import { sortByDate } from './helpers/dates';
 import requests from './helpers/requests';
+import { getCollectionId } from './constants/collections';
 
 // Define Collection interface based on what we need
 interface Collection {
@@ -79,23 +80,6 @@ const metadata: Record<string, any> = {
     description:
       'View real-time data for {siteName}, including reef health, ocean temperature, wind and wave conditions. Monitor your local marine ecosystem with Aqualink.',
   },
-};
-
-// Collection name to ID mapping, similar to what's used in Dashboard
-const collections: Record<string, number> = {
-  minderoo: 1,
-  'heat-stress': 2, // Special case for heat stress collection
-  bermuda: 746,
-  mnmrc: 766,
-  hokwo: 778,
-  palau: 779,
-  brazil: 787,
-  caribbean: 804,
-  supernova: 805,
-  'florida-keys': 811,
-  tnc: 837,
-  hawaii: 838,
-  malaysia: 839,
 };
 
 type Bindings = {
@@ -185,7 +169,7 @@ ${imageMeta}
     try {
       // Check if id is a collection name or a numeric id
       const collectionId = Number.isNaN(Number(id))
-        ? collections[id.toLowerCase()] // Handle string name lookup
+        ? getCollectionId(id) // Handle string name lookup
         : Number(id); // Handle numeric id directly
 
       // Handle special case for heat-stress

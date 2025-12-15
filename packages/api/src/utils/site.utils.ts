@@ -12,7 +12,7 @@ import {
 import { ObjectLiteral, Repository } from 'typeorm';
 import { Dictionary, groupBy, keyBy, mapValues, merge, some } from 'lodash';
 import geoTz from 'geo-tz';
-import { ReefCheckSurvey } from 'reef-check-surveys/reef-check-surveys.entity';
+import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
@@ -54,8 +54,8 @@ const getLocality = (results: GeocodeResult[]) => {
 export const getGoogleRegion = async (
   longitude: number,
   latitude: number,
-): Promise<string | undefined> => {
-  return googleMapsClient
+): Promise<string | undefined> =>
+  googleMapsClient
     .reverseGeocode({
       params: {
         latlng: [latitude, longitude],
@@ -76,7 +76,6 @@ export const getGoogleRegion = async (
       );
       return undefined;
     });
-};
 
 export const getRegion = async (
   longitude: number,
@@ -86,25 +85,25 @@ export const getRegion = async (
   const country = await getGoogleRegion(longitude, latitude);
   // undefined values would result in the first database item
   // https://github.com/typeorm/typeorm/issues/2500
-  const region = country
-    ? await regionRepository.findOne({ where: { name: country } })
-    : null;
+  // bail out to avoid incorrect region assignment
+  if (!country) {
+    return undefined;
+  }
+
+  const region = await regionRepository.findOne({ where: { name: country } });
 
   if (region) {
     return region;
   }
 
-  return country
-    ? regionRepository.save({
-        name: country,
-        polygon: createPoint(longitude, latitude),
-      })
-    : undefined;
+  return regionRepository.save({
+    name: country,
+    polygon: createPoint(longitude, latitude),
+  });
 };
 
-export const getTimezones = (latitude: number, longitude: number) => {
-  return geoTz(latitude, longitude);
-};
+export const getTimezones = (latitude: number, longitude: number) =>
+  geoTz(latitude, longitude);
 
 export const handleDuplicateSite = (err) => {
   // Unique Violation: A site already exists at these coordinates
@@ -373,11 +372,10 @@ export const getReefCheckDataSubQuery = async (
 export const getLatestData = async (
   site: Site,
   latestDataRepository: Repository<LatestData>,
-): Promise<LatestData[]> => {
-  return latestDataRepository.findBy({
+): Promise<LatestData[]> =>
+  latestDataRepository.findBy({
     site: { id: site.id },
   });
-};
 
 export const createSite = async (
   name: string,
@@ -395,6 +393,13 @@ export const createSite = async (
     latitude,
   );
   const timezones = getTimezones(latitude, longitude) as string[];
+
+  if (!region) {
+    logger.warn(
+      `No region found for site ${name} at coordinates (${latitude}, ${longitude}). Region will be left blank.`,
+    );
+  }
+
   const site = await sitesRepository
     .save({
       name,
@@ -414,16 +419,15 @@ export const createSite = async (
   }
 
   await Promise.all(
-    historicalMonthlyMeans.map(async ({ month, temperature }) => {
-      return (
+    historicalMonthlyMeans.map(
+      async ({ month, temperature }) =>
         temperature &&
         historicalMonthlyMeanRepository.insert({
           site,
           month,
           temperature,
-        })
-      );
-    }),
+        }),
+    ),
   );
 
   return site;
