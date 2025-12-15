@@ -393,6 +393,13 @@ export const createSite = async (
     latitude,
   );
   const timezones = getTimezones(latitude, longitude) as string[];
+
+  if (!region) {
+    logger.warn(
+      `No region found for site ${name} at coordinates (${latitude}, ${longitude}). Region will be left blank.`,
+    );
+  }
+
   const site = await sitesRepository
     .save({
       name,
