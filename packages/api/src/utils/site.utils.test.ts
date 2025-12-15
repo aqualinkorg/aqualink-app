@@ -88,9 +88,7 @@ describe('Site Utils - Region Handling Logic', () => {
       const emptyCountry = '';
 
       const results = [undefinedCountry, nullCountry, emptyCountry].map(
-        (country) => {
-          return !country ? null : country;
-        },
+        (country) => !country ? null : country,
       );
 
       expect(results).toEqual([null, null, null]);
@@ -99,9 +97,7 @@ describe('Site Utils - Region Handling Logic', () => {
     it('should verify valid countries are processed correctly', () => {
       const validCountries = ['Australia', 'New Zealand', 'United States'];
 
-      const results = validCountries.map((country) => {
-        return !country ? null : country;
-      });
+      const results = validCountries.map((country) => !country ? null : country);
 
       expect(results).toEqual(['Australia', 'New Zealand', 'United States']);
     });
