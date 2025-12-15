@@ -29,11 +29,9 @@ export const COLLECTIONS: Record<string, number> = {
 export type CollectionName = keyof typeof COLLECTIONS;
 
 // Helper function to get collection ID by name
-export const getCollectionId = (name: string): number | undefined => {
-  return COLLECTIONS[name.toLowerCase() as CollectionName];
-};
+export const getCollectionId = (name: string): number | undefined =>
+  COLLECTIONS[name.toLowerCase() as CollectionName];
 
 // Helper function to check if a collection name exists
-export const isValidCollectionName = (name: string): boolean => {
-  return name.toLowerCase() in COLLECTIONS;
-};
+export const isValidCollectionName = (name: string): boolean =>
+  name.toLowerCase() in COLLECTIONS;

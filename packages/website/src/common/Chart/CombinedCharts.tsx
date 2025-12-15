@@ -13,12 +13,28 @@ import { standardDailyDataDataset } from './MultipleSensorsCharts/helpers';
 import LoadingSkeleton from '../LoadingSkeleton';
 import chartSkeletonImage from '../../assets/img/chart_skeleton.png';
 
-const CombinedCharts = ({
+const useStyles = makeStyles(() =>
+  createStyles({
+    chart: {
+      height: '16rem',
+      marginBottom: '3rem',
+      marginTop: '1rem',
+    },
+    graphtTitleWrapper: {
+      marginLeft: 42,
+    },
+    graphTitle: {
+      lineHeight: 1.5,
+    },
+  }),
+);
+
+function CombinedCharts({
   site,
   selectedSurveyPointId,
   surveys,
   hasAdditionalSensorData,
-}: CombinedChartsProps) => {
+}: CombinedChartsProps) {
   const classes = useStyles();
   const isLoading = !site;
   const heatStressDataset = site
@@ -74,23 +90,7 @@ const CombinedCharts = ({
       </LoadingSkeleton>
     </div>
   );
-};
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    chart: {
-      height: '16rem',
-      marginBottom: '3rem',
-      marginTop: '1rem',
-    },
-    graphtTitleWrapper: {
-      marginLeft: 42,
-    },
-    graphTitle: {
-      lineHeight: 1.5,
-    },
-  }),
-);
+}
 
 interface CombinedChartsProps {
   site?: Site;

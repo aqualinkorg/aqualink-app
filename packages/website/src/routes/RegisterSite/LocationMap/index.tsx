@@ -19,26 +19,26 @@ const pinIcon = L.icon({
 
 const INITIAL_ZOOM = 5;
 
-const MapEventsHandler = ({
+function MapEventsHandler({
   updateLatLng,
   setZoom,
 }: {
   updateLatLng: (event: L.LeafletMouseEvent) => void;
   setZoom: (event: LeafletEvent) => void;
-}) => {
+}) {
   useMapEvents({
     click: updateLatLng,
     zoomend: setZoom,
   });
   return null;
-};
+}
 
-const LocationMap = ({
+function LocationMap({
   markerPositionLat,
   markerPositionLng,
   updateMarkerPosition,
   classes,
-}: LocationMapProps) => {
+}: LocationMapProps) {
   const [zoom, setZoom] = useState<number>(INITIAL_ZOOM);
 
   const onZoomEnd = useCallback(
@@ -79,10 +79,10 @@ const LocationMap = ({
       />
     </MapContainer>
   );
-};
+}
 
-const styles = (theme: Theme) => {
-  return createStyles({
+const styles = (theme: Theme) =>
+  createStyles({
     map: {
       height: '100%',
       width: '100%',
@@ -94,7 +94,6 @@ const styles = (theme: Theme) => {
       },
     },
   });
-};
 
 export interface LocationMapProps extends WithStyles<typeof styles> {
   markerPositionLat: string;

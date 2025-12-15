@@ -9,10 +9,10 @@ export const sensorDataSchema: ApiPropertyOptions = {
       type: 'object',
       properties: {
         bottomTemperature: {
-          $ref: getSchemaPath(TimeSeriesPoint),
+          allOf: [{ $ref: getSchemaPath(TimeSeriesPoint) }],
         },
         topTemperature: {
-          $ref: getSchemaPath(TimeSeriesPoint),
+          allOf: [{ $ref: getSchemaPath(TimeSeriesPoint) }],
         },
       },
     },
@@ -20,7 +20,7 @@ export const sensorDataSchema: ApiPropertyOptions = {
       type: 'object',
       properties: {
         bottomTemperature: {
-          $ref: getSchemaPath(TimeSeriesPoint),
+          allOf: [{ $ref: getSchemaPath(TimeSeriesPoint) }],
         },
       },
     },
@@ -28,7 +28,7 @@ export const sensorDataSchema: ApiPropertyOptions = {
       type: 'object',
       properties: {
         satelliteTemperature: {
-          $ref: getSchemaPath(TimeSeriesPoint),
+          allOf: [{ $ref: getSchemaPath(TimeSeriesPoint) }],
         },
       },
     },

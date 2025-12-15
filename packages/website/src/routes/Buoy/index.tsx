@@ -11,7 +11,7 @@ import Footer from 'common/Footer';
 import fullDiagramBuoy from '../../assets/img/fulldiag3_1.svg';
 import fullDiagramInfra from '../../assets/img/fulldiag3.svg';
 
-const Buoy = ({ classes }: BuoyProps) => {
+function Buoy({ classes }: BuoyProps) {
   return (
     <>
       <NavBar searchLocation={false} />
@@ -74,7 +74,7 @@ const Buoy = ({ classes }: BuoyProps) => {
       <Footer />
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

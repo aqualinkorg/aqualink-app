@@ -313,8 +313,8 @@ export const getDataRangeQuery = (
 export const getNOAASource = async (
   site: Site,
   sourcesRepository: Repository<Sources>,
-) => {
-  return sourcesRepository
+) =>
+  sourcesRepository
     .findOne({
       where: {
         site: { id: site.id },
@@ -335,7 +335,6 @@ export const getNOAASource = async (
         type: SourceType.NOAA,
       });
     });
-};
 
 /**
  * Fetches the spotter sources based on the site.
@@ -349,8 +348,8 @@ export const getSources = (
   sites: Site[],
   type: SourceType,
   sourceRepository: Repository<Sources>,
-) => {
-  return sites.map((site) =>
+) =>
+  sites.map((site) =>
     sourceRepository
       .findOne({
         relations: ['site'],
@@ -378,7 +377,6 @@ export const getSources = (
         });
       }),
   );
-};
 
 export const insertSiteDataToTimeSeries = (
   data: TimeSeriesValueDto[],
