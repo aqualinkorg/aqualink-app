@@ -131,7 +131,8 @@ export type Sources =
   | 'metlog'
   | 'hui'
   | 'sheet_data'
-  | 'bristlemouth';
+  | 'bristlemouth'
+  | 'seaphox';
 
 export type LatestDataASSofarValue = {
   [keys in Metrics]?: ValueWithTimestamp;

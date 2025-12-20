@@ -144,7 +144,7 @@ function MultipleSensorsCharts({
     granularDailyData,
     timeSeriesData?.bottomTemperature?.find((x) => x.type === 'spotter')?.data,
     timeSeriesData?.topTemperature?.find((x) => x.type === 'spotter')?.data,
-    timeSeriesData?.seaphoxTemperature?.[0]?.data,
+    timeSeriesData?.bottomTemperature?.find((x) => x.type === 'seaphox')?.data,
     hoboBottomTemperatureSensors,
     site.historicalMonthlyMean,
     startDate,
