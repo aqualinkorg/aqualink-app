@@ -19,6 +19,23 @@ import {
 } from './sofar.types';
 import { sendSlackMessage, SlackMessage } from './slack.utils';
 
+export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
+  const lastTowPressures = spotterBarometer?.slice(-2);
+  const valueDiff =
+    lastTowPressures?.length === 2
+      ? lastTowPressures[1].value - lastTowPressures[0].value
+      : undefined;
+
+  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
+    ? {
+        value: valueDiff,
+        timestamp: lastTowPressures![1].timestamp,
+      }
+    : null;
+
+  return spotterBarometricDiff;
+}
+
 export const getLatestData = (
   sofarValues: ValueWithTimestamp[] | undefined,
 ): ValueWithTimestamp | undefined => {
@@ -33,16 +50,13 @@ export const getLatestData = (
   );
 };
 
-export const filterSofarResponse = (responseData: any) => {
-  return (
-    responseData
-      ? responseData.values.filter(
-          (data: ValueWithTimestamp) =>
-            !isNil(data?.value) && data.value !== 9999,
-        )
-      : []
-  ) as ValueWithTimestamp[];
-};
+export const filterSofarResponse = (responseData: any) =>
+  (responseData
+    ? responseData.values.filter(
+        (data: ValueWithTimestamp) =>
+          !isNil(data?.value) && data.value !== 9999,
+      )
+    : []) as ValueWithTimestamp[];
 
 async function sofarErrorHandler({
   error,
@@ -266,30 +280,28 @@ export async function getSpotterData(
         longitude,
       ],
       data,
-    ) => {
-      return [
-        significantWaveHeights.concat({
-          timestamp: data.timestamp,
-          value: data.significantWaveHeight,
-        }),
-        meanPeriods.concat({
-          timestamp: data.timestamp,
-          value: data.meanPeriod,
-        }),
-        meanDirections.concat({
-          timestamp: data.timestamp,
-          value: data.meanDirection,
-        }),
-        latitude.concat({
-          timestamp: data.timestamp,
-          value: data.latitude,
-        }),
-        longitude.concat({
-          timestamp: data.timestamp,
-          value: data.longitude,
-        }),
-      ];
-    },
+    ) => [
+      significantWaveHeights.concat({
+        timestamp: data.timestamp,
+        value: data.significantWaveHeight,
+      }),
+      meanPeriods.concat({
+        timestamp: data.timestamp,
+        value: data.meanPeriod,
+      }),
+      meanDirections.concat({
+        timestamp: data.timestamp,
+        value: data.meanDirection,
+      }),
+      latitude.concat({
+        timestamp: data.timestamp,
+        value: data.latitude,
+      }),
+      longitude.concat({
+        timestamp: data.timestamp,
+        value: data.longitude,
+      }),
+    ],
     [[], [], [], [], []] as [
       ValueWithTimestamp[],
       ValueWithTimestamp[],
@@ -300,18 +312,16 @@ export async function getSpotterData(
   );
 
   const [sofarWindSpeed, sofarWindDirection] = wind.reduce(
-    ([speed, direction], data) => {
-      return [
-        speed.concat({
-          timestamp: data.timestamp,
-          value: data.speed,
-        }),
-        direction.concat({
-          timestamp: data.timestamp,
-          value: data.direction,
-        }),
-      ];
-    },
+    ([speed, direction], data) => [
+      speed.concat({
+        timestamp: data.timestamp,
+        value: data.speed,
+      }),
+      direction.concat({
+        timestamp: data.timestamp,
+        value: data.direction,
+      }),
+    ],
     [[], []] as [ValueWithTimestamp[], ValueWithTimestamp[]],
   );
 
@@ -408,21 +418,4 @@ export function getValueClosestToDate(
       ? nextPoint
       : prevClosest,
   ).value;
-}
-
-export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
-  const lastTowPressures = spotterBarometer?.slice(-2);
-  const valueDiff =
-    lastTowPressures?.length === 2
-      ? lastTowPressures[1].value - lastTowPressures[0].value
-      : undefined;
-
-  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
-    ? {
-        value: valueDiff,
-        timestamp: lastTowPressures![1].timestamp,
-      }
-    : null;
-
-  return spotterBarometricDiff;
 }

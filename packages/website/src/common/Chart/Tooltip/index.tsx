@@ -40,7 +40,7 @@ const sourceTitle = (title: string, source: Sources | undefined) => {
   return source ? ` (${source.toUpperCase()})` : '';
 };
 
-const TemperatureMetric = ({
+function TemperatureMetric({
   value,
   title,
   color,
@@ -66,7 +66,7 @@ const TemperatureMetric = ({
   </Grid>
 );
 
-const Tooltip = ({
+function Tooltip({
   siteId,
   date,
   datasets,
@@ -74,7 +74,7 @@ const Tooltip = ({
   siteTimeZone,
   userTimeZone,
   classes,
-}: TooltipProps) => {
+}: TooltipProps) {
   const hasHourlyData = datasets.some(({ isDailyUpdated }) => !isDailyUpdated);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
@@ -166,7 +166,7 @@ const Tooltip = ({
       />
     </div>
   );
-};
+}
 
 const styles = () =>
   createStyles({

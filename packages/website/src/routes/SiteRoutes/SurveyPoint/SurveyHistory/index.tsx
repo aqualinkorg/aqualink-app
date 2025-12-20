@@ -10,12 +10,12 @@ import { userInfoSelector } from 'store/User/userSlice';
 import { isAdmin } from 'helpers/user';
 import TimeLine from 'common/SiteDetails/Surveys/Timeline';
 
-const SurveyHistory = ({
+function SurveyHistory({
   site,
   pointId,
   bgColor,
   classes,
-}: SurveyHistoryProps) => {
+}: SurveyHistoryProps) {
   const user = useSelector(userInfoSelector);
   const { name: pointName } =
     site?.surveyPoints.filter((point) => point.id === pointId)[0] || {};
@@ -40,7 +40,7 @@ const SurveyHistory = ({
       </Container>
     </Box>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

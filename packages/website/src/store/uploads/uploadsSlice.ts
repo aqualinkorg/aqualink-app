@@ -152,13 +152,11 @@ const uploadsSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(uploadFiles.pending, (state) => {
-      return {
-        ...state,
-        error: undefined,
-        uploadInProgress: true,
-      };
-    });
+    builder.addCase(uploadFiles.pending, (state) => ({
+      ...state,
+      error: undefined,
+      uploadInProgress: true,
+    }));
     builder.addCase(
       uploadFiles.fulfilled,
       (state, action: PayloadAction<UploadsSliceState['uploadResponse']>) => {
@@ -174,22 +172,18 @@ const uploadsSlice = createSlice({
     );
     builder.addCase(
       uploadFiles.rejected,
-      (state, action: PayloadAction<UploadsSliceState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-          uploadInProgress: false,
-        };
-      },
+      (state, action: PayloadAction<UploadsSliceState['error']>) => ({
+        ...state,
+        error: action.payload,
+        uploadInProgress: false,
+      }),
     );
 
-    builder.addCase(uploadMultiSiteFiles.pending, (state) => {
-      return {
-        ...state,
-        error: undefined,
-        uploadInProgress: true,
-      };
-    });
+    builder.addCase(uploadMultiSiteFiles.pending, (state) => ({
+      ...state,
+      error: undefined,
+      uploadInProgress: true,
+    }));
     builder.addCase(
       uploadMultiSiteFiles.fulfilled,
       (state, action: PayloadAction<UploadsSliceState['uploadResponse']>) => {
@@ -205,13 +199,11 @@ const uploadsSlice = createSlice({
     );
     builder.addCase(
       uploadMultiSiteFiles.rejected,
-      (state, action: PayloadAction<UploadsSliceState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-          uploadInProgress: false,
-        };
-      },
+      (state, action: PayloadAction<UploadsSliceState['error']>) => ({
+        ...state,
+        error: action.payload,
+        uploadInProgress: false,
+      }),
     );
   },
 });

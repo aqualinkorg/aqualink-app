@@ -3,7 +3,8 @@ import isISODate from 'validator/lib/isISO8601';
 import { Box, Container, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { camelCase, isNaN, snakeCase, sortBy } from 'lodash';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
 import {
@@ -63,16 +64,26 @@ import {
 } from '../../../constants/chartConfigs/huiConfig';
 import ChartWithCard from './ChartWithCard';
 
-const MultipleSensorsCharts = ({
+const useStyles = makeStyles((theme: Theme) => ({
+  chartWithRange: {
+    marginTop: theme.spacing(4),
+  },
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'end',
+  },
+}));
+
+function MultipleSensorsCharts({
   site,
   pointId,
   surveysFiltered,
   disableGutters,
   displayOceanSenseCharts = true,
   hasAdditionalSensorData,
-}: MultipleSensorsChartsProps) => {
+}: MultipleSensorsChartsProps) {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [startParam, setStartParam] = useQueryParam('start', isISODate);
   const [endParam, setEndParam] = useQueryParam('end', isISODate);
   const [chartParam] = useQueryParam('chart');
@@ -748,17 +759,7 @@ const MultipleSensorsCharts = ({
         )}
     </Container>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  chartWithRange: {
-    marginTop: theme.spacing(4),
-  },
-  buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'end',
-  },
-}));
+}
 
 interface MultipleSensorsChartsProps {
   site: Site;

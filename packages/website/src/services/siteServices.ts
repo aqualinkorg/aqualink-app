@@ -66,12 +66,11 @@ const getSiteSpotterPosition = (id: string) =>
     method: 'GET',
   });
 
-const getSiteTimeSeriesData = (params: TimeSeriesDataRequestParams) => {
-  return requests.send<TimeSeriesDataResponse>({
+const getSiteTimeSeriesData = (params: TimeSeriesDataRequestParams) =>
+  requests.send<TimeSeriesDataResponse>({
     url: constructTimeSeriesDataRequestUrl(params),
     method: 'GET',
   });
-};
 
 const getSiteTimeSeriesDataRange = ({
   siteId,

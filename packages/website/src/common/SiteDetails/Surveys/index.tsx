@@ -13,7 +13,8 @@ import {
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import observationOptions from 'constants/uploadDropdowns';
 import { setSiteSurveyPoints } from 'store/Sites/selectedSiteSlice';
@@ -34,7 +35,55 @@ import PointSelector from './PointSelector';
 import Timeline from './Timeline';
 import DeleteSurveyPointDialog, { Action } from '../../Dialog';
 
-const Surveys = ({ site }: SurveysProps) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      marginTop: '5rem',
+      position: 'relative',
+    },
+    surveyWrapper: {
+      marginTop: '5rem',
+    },
+    title: {
+      fontSize: 22,
+      lineHeight: 1.45,
+      color: '#2a2a2a',
+      marginBottom: '1rem',
+    },
+    subTitle: {
+      lineHeight: 1,
+      color: '#474747',
+      marginRight: '1rem',
+    },
+    selectorWrapper: {
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
+    },
+    formControl: {
+      minWidth: 120,
+      maxWidth: 240,
+    },
+    selectedItem: {
+      color: theme.palette.primary.main,
+    },
+    menuItem: {
+      color: theme.palette.primary.main,
+      width: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      display: 'block',
+    },
+    textField: {
+      width: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      display: 'block',
+    },
+  }),
+);
+
+function Surveys({ site }: SurveysProps) {
   const classes = useStyles();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
@@ -58,7 +107,7 @@ const Surveys = ({ site }: SurveysProps) => {
   >('any');
   const user = useSelector(userInfoSelector);
   const isSiteAdmin = site ? isAdmin(user, site.id) : false;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const bodyLength = useBodyLength();
 
@@ -83,9 +132,8 @@ const Surveys = ({ site }: SurveysProps) => {
     setObservation(event.target.value as SurveyMedia['observations'] | 'any');
   };
 
-  const pointIdFinder = (name: string) => {
-    return pointOptions.find((option) => option.name === name)?.id || -1;
-  };
+  const pointIdFinder = (name: string) =>
+    pointOptions.find((option) => option.name === name)?.id || -1;
 
   const handleDeleteSurveyPointDialogClose = () => {
     setDeleteSurveyPointDialogOpen(false);
@@ -315,55 +363,7 @@ const Surveys = ({ site }: SurveysProps) => {
       </Grid>
     </>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      marginTop: '5rem',
-      position: 'relative',
-    },
-    surveyWrapper: {
-      marginTop: '5rem',
-    },
-    title: {
-      fontSize: 22,
-      lineHeight: 1.45,
-      color: '#2a2a2a',
-      marginBottom: '1rem',
-    },
-    subTitle: {
-      lineHeight: 1,
-      color: '#474747',
-      marginRight: '1rem',
-    },
-    selectorWrapper: {
-      [theme.breakpoints.down('sm')]: {
-        width: '100%',
-      },
-    },
-    formControl: {
-      minWidth: 120,
-      maxWidth: 240,
-    },
-    selectedItem: {
-      color: theme.palette.primary.main,
-    },
-    menuItem: {
-      color: theme.palette.primary.main,
-      width: '100%',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      display: 'block',
-    },
-    textField: {
-      width: '100%',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      display: 'block',
-    },
-  }),
-);
+}
 
 interface SurveysProps {
   site?: Site;

@@ -145,58 +145,46 @@ const selectedSurvey = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       surveyGetRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSurveyState['details']>) => {
-        return {
-          ...state,
-          details: action.payload,
-          loading: false,
-        };
-      },
+      (state, action: PayloadAction<SelectedSurveyState['details']>) => ({
+        ...state,
+        details: action.payload,
+        loading: false,
+      }),
     );
     builder.addCase(
       surveyGetRequest.rejected,
-      (state, action: PayloadAction<SelectedSurveyState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-          loading: false,
-        };
-      },
-    );
-    builder.addCase(surveyGetRequest.pending, (state) => {
-      return {
+      (state, action: PayloadAction<SelectedSurveyState['error']>) => ({
         ...state,
-        loading: true,
-        error: null,
-      };
-    });
+        error: action.payload,
+        loading: false,
+      }),
+    );
+    builder.addCase(surveyGetRequest.pending, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    }));
     builder.addCase(
       surveyAddRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSurveyState['details']>) => {
-        return {
-          ...state,
-          details: action.payload,
-          loading: false,
-        };
-      },
+      (state, action: PayloadAction<SelectedSurveyState['details']>) => ({
+        ...state,
+        details: action.payload,
+        loading: false,
+      }),
     );
     builder.addCase(
       surveyAddRequest.rejected,
-      (state, action: PayloadAction<SelectedSurveyState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-          loading: false,
-        };
-      },
-    );
-    builder.addCase(surveyAddRequest.pending, (state) => {
-      return {
+      (state, action: PayloadAction<SelectedSurveyState['error']>) => ({
         ...state,
-        loading: true,
-        error: null,
-      };
-    });
+        error: action.payload,
+        loading: false,
+      }),
+    );
+    builder.addCase(surveyAddRequest.pending, (state) => ({
+      ...state,
+      loading: true,
+      error: null,
+    }));
 
     builder.addCase(
       surveyMediaEditRequest.fulfilled,
@@ -232,21 +220,17 @@ const selectedSurvey = createSlice({
     );
     builder.addCase(
       surveyMediaEditRequest.rejected,
-      (state, action: PayloadAction<SelectedSurveyState['error']>) => {
-        return {
-          ...state,
-          error: action.payload,
-          loadingSurveyMediaEdit: false,
-        };
-      },
-    );
-    builder.addCase(surveyMediaEditRequest.pending, (state) => {
-      return {
+      (state, action: PayloadAction<SelectedSurveyState['error']>) => ({
         ...state,
-        loadingSurveyMediaEdit: true,
-        error: null,
-      };
-    });
+        error: action.payload,
+        loadingSurveyMediaEdit: false,
+      }),
+    );
+    builder.addCase(surveyMediaEditRequest.pending, (state) => ({
+      ...state,
+      loadingSurveyMediaEdit: true,
+      error: null,
+    }));
   },
 });
 

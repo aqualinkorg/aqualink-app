@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { setSelectedSite } from 'store/Sites/selectedSiteSlice';
 import {
   clearUploadsError,
@@ -23,8 +24,8 @@ import SurveyPoint from './SurveyPoint';
 import UploadData from './UploadData';
 import { ReefCheckSurveyViewPage } from './ReefCheckSurveys';
 
-const SiteRoutes = () => {
-  const dispatch = useDispatch();
+function SiteRoutes() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
   const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
@@ -126,6 +127,6 @@ const SiteRoutes = () => {
       </Routes>
     </>
   );
-};
+}
 
 export default SiteRoutes;

@@ -14,7 +14,54 @@ import arrow from '../../../assets/directioncircle.svg';
 import wind from '../../../assets/wind.svg';
 import { styles as incomingStyles } from '../styles';
 
-const Waves = ({ data }: WavesProps) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    ...incomingStyles,
+    root: {
+      height: '100%',
+      width: '100%',
+      backgroundColor: '#eff0f0',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    coloredText: {
+      color: theme.palette.primary.main,
+    },
+    titleImages: {
+      height: 24,
+      marginLeft: '0.5rem',
+    },
+    paddingContainer: {
+      padding: '0.5rem 1rem',
+    },
+    contentWrapper: {
+      height: '100%',
+      flex: '1 1 auto',
+      padding: 0,
+    },
+    content: {
+      height: '100%',
+    },
+    arrow: {
+      width: 22,
+      height: 22,
+      marginRight: '0.5rem',
+      marginBottom: 10,
+      [theme.breakpoints.between('md', 1350)]: {
+        width: 15,
+        height: 15,
+      },
+    },
+    windDirectionArrow: ({ windDirection }: StyleProps) => ({
+      transform: `rotate(${(windDirection || 0) + 180}deg)`,
+    }),
+    wavesDirectionArrow: ({ wavesDirection }: StyleProps) => ({
+      transform: `rotate(${(wavesDirection || 0) + 180}deg)`,
+    }),
+  }),
+);
+
+function Waves({ data, hasSpotter }: WavesProps) {
   const {
     significantWaveHeight,
     waveMeanDirection,
@@ -248,54 +295,7 @@ const Waves = ({ data }: WavesProps) => {
       </CardContent>
     </Card>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    ...incomingStyles,
-    root: {
-      height: '100%',
-      width: '100%',
-      backgroundColor: '#eff0f0',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    coloredText: {
-      color: theme.palette.primary.main,
-    },
-    titleImages: {
-      height: 24,
-      marginLeft: '0.5rem',
-    },
-    paddingContainer: {
-      padding: '0.5rem 1rem',
-    },
-    contentWrapper: {
-      height: '100%',
-      flex: '1 1 auto',
-      padding: 0,
-    },
-    content: {
-      height: '100%',
-    },
-    arrow: {
-      width: 22,
-      height: 22,
-      marginRight: '0.5rem',
-      marginBottom: 10,
-      [theme.breakpoints.between('md', 1350)]: {
-        width: 15,
-        height: 15,
-      },
-    },
-    windDirectionArrow: ({ windDirection }: StyleProps) => ({
-      transform: `rotate(${(windDirection || 0) + 180}deg)`,
-    }),
-    wavesDirectionArrow: ({ wavesDirection }: StyleProps) => ({
-      transform: `rotate(${(wavesDirection || 0) + 180}deg)`,
-    }),
-  }),
-);
+}
 
 interface WavesProps {
   data: LatestDataASSofarValue;

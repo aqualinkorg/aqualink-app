@@ -67,7 +67,7 @@ const menuRoutes = [
   },
 ];
 
-const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
+function MenuDrawer({ classes, open, onClose }: MenuDrawerProps) {
   return (
     <Drawer
       anchor="left"
@@ -137,7 +137,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       </Box>
     </Drawer>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({
