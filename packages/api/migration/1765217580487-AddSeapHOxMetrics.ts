@@ -23,14 +23,6 @@ export class AddSeapHOxMetrics1765217580487
       `ALTER TYPE "public"."sources_type_enum" ADD VALUE IF NOT EXISTS 'seaphox'`,
     );
 
-    await queryRunner.query(
-      `ALTER TYPE "public"."data_uploads_sensor_type_enum" ADD VALUE IF NOT EXISTS 'seaphox'`,
-    );
-
-    await queryRunner.query(
-      `ALTER TYPE "public"."forecast_data_source_enum" ADD VALUE IF NOT EXISTS 'seaphox'`,
-    );
-
     // Add SeapHOx metrics to time_series_metric_enum
     const metrics = [
       'dissolved_oxygen',
