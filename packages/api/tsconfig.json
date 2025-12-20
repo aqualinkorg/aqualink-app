@@ -7,6 +7,6 @@
     "noImplicitAny": false,
     "baseUrl": "./src"
   },
-  "include": ["src", "migration/1763437433033-AddSeapHOxMetrics.ts"],
+  "include": ["src", "migration/1765217580487-AddSeapHOxMetrics.ts"],
   "files": ["src/custom.d.ts", "ormconfig.ts", "firebaseConfig.ts"]
 }

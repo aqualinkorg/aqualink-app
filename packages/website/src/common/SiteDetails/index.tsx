@@ -213,7 +213,7 @@ function SiteDetails({
           parsedData.dissolvedOxygen) &&
         latestData.some(
           (x) =>
-            x.source === 'spotter' &&
+            x.source === 'seaphox' &&
             (x.metric === 'bottom_temperature' ||
               x.metric === 'ph' ||
               x.metric === 'salinity' ||

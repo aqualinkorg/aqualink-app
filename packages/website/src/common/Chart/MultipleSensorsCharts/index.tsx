@@ -120,10 +120,7 @@ function MultipleSensorsCharts({
 
   const hasHuiData = availableSources.includes('hui');
 
-  const hasSeapHOxData = Boolean(
-    timeSeriesData &&
-    Object.keys(timeSeriesData).some((key) => key.startsWith('seaphox')),
-  );
+  const hasSeapHOxData = availableSources.includes('seaphox');
 
   const chartStartDate =
     startDate || DateTime.fromISO(today).minus({ weeks: 1 }).toISOString();

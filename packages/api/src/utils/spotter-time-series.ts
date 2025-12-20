@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { get, times } from 'lodash';
 import { In, IsNull, Not, Repository } from 'typeorm';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { distance } from '@turf/turf';
 import { Point } from 'geojson';
 import { Site } from '../sites/sites.entity';
@@ -35,6 +35,7 @@ const logger = new Logger('SpotterTimeSeries');
 /**
  * Check if site already has SeapHOx data in time_series table
  * Used to determine if we need to backfill 90 days or just fetch recent data
+ * We check for PH as it's a primary SeapHOx metric - if it exists, the site has been backfilled
  */
 const hasExistingSeapHOxData = async (
   siteId: number,
@@ -163,24 +164,26 @@ export const addSpotterData = async (
     );
 
   logger.log('Saving spotter data');
-  await Bluebird.map(
-    sites,
-    async (site) => {
-      // Fetch 90 days for NEW SeapHOx sites (first run only)
-      // After first run, just fetch recent data like normal spotters
-      const hasSeapHOxData = site.hasSeaphox
-        ? await hasExistingSeapHOxData(
-            site.id,
-            repositories.timeSeriesRepository,
-          )
-        : false;
+  const outerLimit = pLimit(1);
+  await Promise.all(
+    sites.map((site) =>
+      outerLimit(async () => {
+        // Fetch 90 days for NEW SeapHOx sites (first run only)
+        // After first run, just fetch recent data like normal spotters
+        const hasSeapHOxData = site.hasSeaphox
+          ? await hasExistingSeapHOxData(
+              site.id,
+              repositories.timeSeriesRepository,
+            )
+          : false;
 
-      const daysToFetch =
-        site.hasSeaphox && !hasSeapHOxData ? Math.max(days, 90) : days;
+        const daysToFetch =
+          site.hasSeaphox && !hasSeapHOxData ? Math.max(days, 90) : days;
 
-      return Bluebird.map(
-        times(daysToFetch),
-        async (i) => {
+        const innerLimit = pLimit(100);
+        return Promise.all(
+          times(daysToFetch).map((i) =>
+            innerLimit(async () => {
           const startDate = DateTime.now()
             .minus({ days: i })
             .startOf('day')
@@ -336,20 +339,20 @@ export const addSpotterData = async (
 
           // Save both standard Spotter and SeapHOx data
           return Promise.all([...spotterPromises, ...seaphoxPromises]);
-        })
-        .then(() => {
-          // After each successful execution, log the event
-          const startDate = DateTime.now()
-            .minus({ days: daysToFetch - 1 })
-            .startOf('day');
+        }),
+      ).then(() => {
+        // After each successful execution, log the event
+        const startDate = DateTime.now()
+          .minus({ days: daysToFetch - 1 })
+          .startOf('day');
 
-          const endDate = DateTime.now().endOf('day');
-          logger.debug(
-            `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
-          );
-        });
-    },
-    { concurrency: 1 },
+        const endDate = DateTime.now().endOf('day');
+        logger.debug(
+          `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
+        );
+      });
+    }),
+  ),
   );
 
   // Update materialized view

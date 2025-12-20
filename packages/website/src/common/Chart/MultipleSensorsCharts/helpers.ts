@@ -342,8 +342,8 @@ export const generateTempAnalysisDatasets = (
       tooltipMaxHoursGap: 6,
       displayData: hasEnoughSeaphoxTempData,
       displayCardColumn: hasEnoughSeaphoxTempData,
-      metric: 'seaphoxTemperature',
-      source: 'spotter',
+      metric: 'bottom_temperature',
+      source: 'seaphox',
     },
     ...(hoboBottom?.map((item, index) => {
       const label = item.depth !== undefined ? `HOBO at ${item.depth}` : 'HOBO';
