@@ -130,7 +130,11 @@ export const addSpotterData = async (
   const seaphoxSites = sites.filter((site) => site.hasSeaphox);
   const seaphoxSources = await Promise.all(
     seaphoxSites.length > 0
-      ? getSources(seaphoxSites, SourceType.SEAPHOX, repositories.sourceRepository)
+      ? getSources(
+          seaphoxSites,
+          SourceType.SEAPHOX,
+          repositories.sourceRepository,
+        )
       : [],
   );
 

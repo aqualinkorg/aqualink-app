@@ -125,7 +125,10 @@ export async function buildSiteContext(
       // Query Spotter history WITH SeapHOx metrics
       dataSource.getRepository(TimeSeries).find({
         where: {
-          source: { site: { id: siteId }, type: In([SourceType.SPOTTER, SourceType.SEAPHOX]) },
+          source: {
+            site: { id: siteId },
+            type: In([SourceType.SPOTTER, SourceType.SEAPHOX]),
+          },
           metric: In([
             Metric.TOP_TEMPERATURE,
             Metric.BOTTOM_TEMPERATURE,
