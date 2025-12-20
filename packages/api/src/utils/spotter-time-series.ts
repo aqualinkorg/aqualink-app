@@ -234,10 +234,9 @@ export const addSpotterData = async (
           }
 
           return spotterData;
-        },
-        { concurrency: 100 },
-      )
-        .then((spotterData) => {
+            }),
+          ),
+        ).then((spotterData) => {
           const dataLabels: [keyof SpotterData, Metric][] = [
             ['topTemperature', Metric.TOP_TEMPERATURE],
             ['bottomTemperature', Metric.BOTTOM_TEMPERATURE],
@@ -339,20 +338,20 @@ export const addSpotterData = async (
 
           // Save both standard Spotter and SeapHOx data
           return Promise.all([...spotterPromises, ...seaphoxPromises]);
-        }),
-      ).then(() => {
-        // After each successful execution, log the event
-        const startDate = DateTime.now()
-          .minus({ days: daysToFetch - 1 })
-          .startOf('day');
+        })
+        .then(() => {
+          // After each successful execution, log the event
+          const startDate = DateTime.now()
+            .minus({ days: daysToFetch - 1 })
+            .startOf('day');
 
-        const endDate = DateTime.now().endOf('day');
-        logger.debug(
-          `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
-        );
-      });
-    }),
-  ),
+          const endDate = DateTime.now().endOf('day');
+          logger.debug(
+            `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
+          );
+        });
+      }),
+    ),
   );
 
   // Update materialized view
