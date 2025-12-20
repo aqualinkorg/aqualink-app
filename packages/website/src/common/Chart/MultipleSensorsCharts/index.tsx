@@ -352,9 +352,9 @@ function MultipleSensorsCharts({
         ...DEFAULT_METRICS,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
-        // SeapHOx metrics - include renamed metrics + seaphox_temperature
+        // SeapHOx metrics
         ...(spotterRanges.length > 0
-          ? [...getPublicSeapHOxMetrics(), 'seaphox_temperature' as MetricsKeys]
+          ? [...getPublicSeapHOxMetrics()]
           : []),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);

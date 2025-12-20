@@ -94,7 +94,6 @@ export const metricsKeysList = [
   'barometric_pressure_top_diff',
   'nitrate_plus_nitrite',
   'surface_temperature',
-  'seaphox_temperature',
   'dissolved_oxygen',
 ] as const;
 

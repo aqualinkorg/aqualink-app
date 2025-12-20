@@ -47,7 +47,6 @@ export enum Metric {
   NNN = 'nitrate_plus_nitrite',
   AMMONIUM = 'ammonium',
   // SeapHOx Metrics
-  SEAPHOX_TEMPERATURE = 'seaphox_temperature',
   DISSOLVED_OXYGEN = 'dissolved_oxygen',
   INTERNAL_PH = 'internal_ph',
   EXTERNAL_PH_VOLT = 'external_ph_volt',

@@ -65,7 +65,7 @@ export function getSeapHOxConfig(configKey: SeaphoxMetricsKeys) {
 }
 
 export function getPublicSeapHOxMetrics() {
-  return Object.keys(seaphoxConfig).filter(
+  return ['surface_temperature', ...Object.keys(seaphoxConfig).filter(
     (key) => seaphoxConfig[key as SeaphoxMetricsKeys].visibility === 'public',
-  ) as SeaphoxMetricsKeys[];
+  ) as SeaphoxMetricsKeys[]];
 }

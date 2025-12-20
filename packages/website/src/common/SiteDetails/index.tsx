@@ -207,14 +207,14 @@ function SiteDetails({
       );
 
       const hasSeapHOx = Boolean(
-        (parsedData.seaphoxTemperature ||
+        (parsedData.surfaceTemperature ||
           parsedData.ph ||
           parsedData.salinity ||
           parsedData.dissolvedOxygen) &&
         latestData.some(
           (x) =>
             x.source === 'spotter' &&
-            (x.metric === 'seaphox_temperature' ||
+            (x.metric === 'surface_temperature' ||
               x.metric === 'ph' ||
               x.metric === 'salinity' ||
               x.metric === 'conductivity' ||

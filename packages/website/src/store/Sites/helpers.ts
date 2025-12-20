@@ -341,7 +341,7 @@ export const parseLatestData = (
     'top_temperature',
     'barometric_pressure_top',
     'barometric_pressure_top_diff',
-    'seaphox_temperature',
+    'surface_temperature',
     'ph',
     'pressure',
     'salinity',

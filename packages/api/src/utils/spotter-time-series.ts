@@ -276,7 +276,7 @@ export const addSpotterData = async (
               );
 
               const seaphoxMetrics: Array<[keyof SeapHOxData, Metric]> = [
-                ['temperature', Metric.SEAPHOX_TEMPERATURE],
+                ['temperature', Metric.SURFACE_TEMPERATURE],
                 ['externalPh', Metric.PH],
                 ['internalPh', Metric.INTERNAL_PH],
                 ['externalPhVolt', Metric.EXTERNAL_PH_VOLT],
