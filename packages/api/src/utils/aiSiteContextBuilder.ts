@@ -417,15 +417,18 @@ ${(() => {
   const formatHindcast = () => {
     if (windWaveData.length === 0) return '- No hindcast data available';
 
-    const latestByMetric = windWaveData.reduce((acc, item) => {
-      if (
-        !acc[item.metric] ||
-        new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
-      ) {
-        return { ...acc, [item.metric]: item };
-      }
-      return acc;
-    }, {} as Record<string, typeof windWaveData[0]>);
+    const latestByMetric = windWaveData.reduce(
+      (acc, item) => {
+        if (
+          !acc[item.metric] ||
+          new Date(item.timestamp) > new Date(acc[item.metric].timestamp)
+        ) {
+          return { ...acc, [item.metric]: item };
+        }
+        return acc;
+      },
+      {} as Record<string, (typeof windWaveData)[0]>,
+    );
 
     return Object.entries(latestByMetric)
       .map(
@@ -574,19 +577,22 @@ ${(() => {
     .filter((d): d is NonNullable<typeof d> => d !== null);
 
   // Format HUI data - get ALL values for each metric (last 2 years)
-  const huiDataByMetric = huiWaterQualityData.reduce((acc, reading) => {
-    const metricData = acc[reading.metric] || [];
-    return {
-      ...acc,
-      [reading.metric]: [
-        ...metricData,
-        {
-          value: reading.value,
-          timestamp: reading.timestamp,
-        },
-      ],
-    };
-  }, {} as Record<string, Array<{ value: number; timestamp: Date }>>);
+  const huiDataByMetric = huiWaterQualityData.reduce(
+    (acc, reading) => {
+      const metricData = acc[reading.metric] || [];
+      return {
+        ...acc,
+        [reading.metric]: [
+          ...metricData,
+          {
+            value: reading.value,
+            timestamp: reading.timestamp,
+          },
+        ],
+      };
+    },
+    {} as Record<string, Array<{ value: number; timestamp: Date }>>,
+  );
 
   // Data is already sorted by timestamp DESC in the database query; no need to sort again
   const sortedHuiDataByMetric = huiDataByMetric;

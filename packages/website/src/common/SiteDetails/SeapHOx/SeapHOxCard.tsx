@@ -23,7 +23,7 @@ interface SeapHOxCardProps {
   data: LatestDataASSofarValue;
 }
 
-const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
+function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
   // Define which metrics to display
   const metrics = [
     { key: 'seaphoxTemperature', label: 'Temperature', unit: '°C' },
@@ -229,7 +229,7 @@ const SeapHOxCard = ({ depth, data, classes }: SeapHOxCardPropsWithStyles) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 const styles = () =>
   createStyles({

@@ -122,7 +122,7 @@ function MultipleSensorsCharts({
 
   const hasSeapHOxData = Boolean(
     timeSeriesData &&
-      Object.keys(timeSeriesData).some((key) => key.startsWith('seaphox')),
+    Object.keys(timeSeriesData).some((key) => key.startsWith('seaphox')),
   );
 
   const chartStartDate =

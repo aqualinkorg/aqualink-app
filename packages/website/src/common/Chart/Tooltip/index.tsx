@@ -56,15 +56,17 @@ function TemperatureMetric({
   gridClassName: string | undefined;
   source?: Sources;
   decimalPlaces?: number;
-}) => (
-  <Grid container item className={gridClassName}>
-    <Circle color={color} />
-    <Typography variant="caption" color="white">
-      {title} {`${formatNumber(value, decimalPlaces ?? 1)} ${unit}`}
-      {sourceTitle(title, source)}
-    </Typography>
-  </Grid>
-);
+}) {
+  return (
+    <Grid container item className={gridClassName}>
+      <Circle color={color} />
+      <Typography variant="caption" color="white">
+        {title} {`${formatNumber(value, decimalPlaces ?? 1)} ${unit}`}
+        {sourceTitle(title, source)}
+      </Typography>
+    </Grid>
+  );
+}
 
 function Tooltip({
   siteId,

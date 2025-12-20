@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function Waves({ data, hasSpotter }: WavesProps) {
+function Waves({ data }: WavesProps) {
   const {
     significantWaveHeight,
     waveMeanDirection,

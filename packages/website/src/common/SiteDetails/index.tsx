@@ -211,17 +211,17 @@ function SiteDetails({
           parsedData.ph ||
           parsedData.salinity ||
           parsedData.dissolvedOxygen) &&
-          latestData.some(
-            (x) =>
-              x.source === 'spotter' &&
-              (x.metric === 'seaphox_temperature' ||
-                x.metric === 'ph' ||
-                x.metric === 'salinity' ||
-                x.metric === 'conductivity' ||
-                x.metric === 'pressure' ||
-                x.metric === 'dissolved_oxygen') &&
-              seapHOxInterval.contains(DateTime.fromISO(x.timestamp)),
-          ),
+        latestData.some(
+          (x) =>
+            x.source === 'spotter' &&
+            (x.metric === 'seaphox_temperature' ||
+              x.metric === 'ph' ||
+              x.metric === 'salinity' ||
+              x.metric === 'conductivity' ||
+              x.metric === 'pressure' ||
+              x.metric === 'dissolved_oxygen') &&
+            seapHOxInterval.contains(DateTime.fromISO(x.timestamp)),
+        ),
       );
       setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);
