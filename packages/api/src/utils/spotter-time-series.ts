@@ -42,7 +42,7 @@ const hasExistingSeapHOxData = async (
 ): Promise<boolean> => {
   const count = await timeSeriesRepository.count({
     where: {
-      source: { site: { id: siteId } },
+      source: { site: { id: siteId }, type: SourceType.SEAPHOX },
       metric: Metric.PH,
     },
     take: 1,
@@ -126,6 +126,14 @@ export const addSpotterData = async (
     getSources(sites, SourceType.SPOTTER, repositories.sourceRepository),
   );
 
+  // Fetch SeapHOx sources for sites that have SeapHOx
+  const seaphoxSites = sites.filter((site) => site.hasSeaphox);
+  const seaphoxSources = await Promise.all(
+    seaphoxSites.length > 0
+      ? getSources(seaphoxSites, SourceType.SEAPHOX, repositories.sourceRepository)
+      : [],
+  );
+
   const exclusionDates = await Promise.all(
     getSpotterExclusionDates(
       spotterSources,
@@ -136,6 +144,11 @@ export const addSpotterData = async (
   // Create a map from the siteIds to the source entities
   const siteToSource: Record<number, Sources> = Object.fromEntries(
     spotterSources.map((source) => [source.site.id, source]),
+  );
+
+  // Create a map from siteIds to SeapHOx source entities
+  const siteToSeaphoxSource: Record<number, Sources> = Object.fromEntries(
+    seaphoxSources.map((source) => [source.site.id, source]),
   );
 
   const sensorToExclusionDates: Record<string, ExclusionDates[]> =
@@ -297,9 +310,17 @@ export const addSpotterData = async (
                   }));
 
                 if (values.length > 0) {
+                  // Use SeapHOx source instead of spotter source
+                  const seaphoxSource = siteToSeaphoxSource[site.id];
+                  if (!seaphoxSource) {
+                    logger.warn(
+                      `No SeapHOx source found for site ${site.id}, skipping SeapHOx data`,
+                    );
+                    return Promise.resolve();
+                  }
                   return saveDataBatch(
                     values,
-                    siteToSource[site.id],
+                    seaphoxSource,
                     metric,
                     repositories.timeSeriesRepository,
                   );

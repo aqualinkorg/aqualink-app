@@ -125,17 +125,17 @@ export async function buildSiteContext(
       // Query Spotter history WITH SeapHOx metrics
       dataSource.getRepository(TimeSeries).find({
         where: {
-          source: { site: { id: siteId }, type: In(['spotter', 'seaphox']) },
+          source: { site: { id: siteId }, type: In([SourceType.SPOTTER, SourceType.SEAPHOX]) },
           metric: In([
             Metric.TOP_TEMPERATURE,
             Metric.BOTTOM_TEMPERATURE,
-            'seaphox_external_ph',
-            'seaphox_internal_ph',
-            'seaphox_pressure',
-            'seaphox_salinity',
-            'seaphox_conductivity',
-            'seaphox_oxygen',
-            'seaphox_relative_humidity',
+            Metric.PH,
+            Metric.INTERNAL_PH,
+            Metric.PRESSURE,
+            Metric.SALINITY,
+            Metric.CONDUCTIVITY,
+            Metric.DISSOLVED_OXYGEN,
+            Metric.RELATIVE_HUMIDITY,
           ]),
         },
         order: { timestamp: 'DESC' },
@@ -170,13 +170,13 @@ export async function buildSiteContext(
     ]);
 
     const seaphoxMetrics = [
-      'seaphox_external_ph',
-      'seaphox_internal_ph',
-      'seaphox_pressure',
-      'seaphox_salinity',
-      'seaphox_conductivity',
-      'seaphox_oxygen',
-      'seaphox_relative_humidity',
+      Metric.PH,
+      Metric.INTERNAL_PH,
+      Metric.PRESSURE,
+      Metric.SALINITY,
+      Metric.CONDUCTIVITY,
+      Metric.DISSOLVED_OXYGEN,
+      Metric.RELATIVE_HUMIDITY,
     ];
     const latestSeaphox: Record<string, number> = seaphoxMetrics.reduce(
       (acc, metric) => {
