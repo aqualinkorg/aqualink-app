@@ -131,7 +131,6 @@ export type Sources =
   | 'metlog'
   | 'hui'
   | 'sheet_data'
-  | 'bristlemouth'
   | 'seaphox';
 
 export type LatestDataASSofarValue = {
