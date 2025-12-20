@@ -1,7 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddSeapHOxMetrics1763437433033 implements MigrationInterface {
-  name = 'AddSeapHOxMetrics1763437433033';
+export class AddSeapHOxMetrics1765217580487
+  implements MigrationInterface
+{
+  name = 'AddSeapHOxMetrics1765217580487';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     // Add bristlemouth_node_id column to site table
@@ -16,22 +18,30 @@ export class AddSeapHOxMetrics1763437433033 implements MigrationInterface {
       ADD COLUMN IF NOT EXISTS "has_seaphox" boolean DEFAULT false
     `);
 
+    // Add seaphox as a source type
+    await queryRunner.query(
+      `ALTER TYPE "public"."sources_type_enum" ADD VALUE IF NOT EXISTS 'seaphox'`,
+    );
+
+    await queryRunner.query(
+      `ALTER TYPE "public"."data_uploads_sensor_type_enum" ADD VALUE IF NOT EXISTS 'seaphox'`,
+    );
+
+    await queryRunner.query(
+      `ALTER TYPE "public"."forecast_data_source_enum" ADD VALUE IF NOT EXISTS 'seaphox'`,
+    );
+
     // Add SeapHOx metrics to time_series_metric_enum
     const metrics = [
-      'seaphox_temperature',
-      'seaphox_external_ph',
-      'seaphox_internal_ph',
-      'seaphox_external_ph_volt',
-      'seaphox_internal_ph_volt',
-      'seaphox_ph_temperature',
-      'seaphox_pressure',
-      'seaphox_salinity',
-      'seaphox_conductivity',
-      'seaphox_oxygen',
-      'seaphox_relative_humidity',
-      'seaphox_sample_number',
-      'seaphox_error_flags',
-      'seaphox_int_temperature',
+      'dissolved_oxygen',
+      'internal_ph',
+      'external_ph_volt',
+      'internal_ph_volt',
+      'ph_temperature',
+      'internal_temperature',
+      'relative_humidity',
+      'sample_number',
+      'error_flags',
     ];
 
     for (const metric of metrics) {
@@ -51,7 +61,7 @@ export class AddSeapHOxMetrics1763437433033 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    // Remove columns (metrics can't be removed from enums easily)
+    // Remove columns
     await queryRunner.query(`
       ALTER TABLE "site" DROP COLUMN IF EXISTS "has_seaphox"
     `);
@@ -59,5 +69,11 @@ export class AddSeapHOxMetrics1763437433033 implements MigrationInterface {
     await queryRunner.query(`
       ALTER TABLE "site" DROP COLUMN IF EXISTS "bristlemouth_node_id"
     `);
+
+    // Note: Enum values cannot be easily removed in PostgreSQL
+    console.log(
+      'Rollback complete. Note: Enum values cannot be removed - this is a PostgreSQL limitation.',
+    );
   }
 }
+
