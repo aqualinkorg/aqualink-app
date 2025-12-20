@@ -353,9 +353,7 @@ function MultipleSensorsCharts({
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
         // SeapHOx metrics
-        ...(spotterRanges.length > 0
-          ? [...getPublicSeapHOxMetrics()]
-          : []),
+        ...(spotterRanges.length > 0 ? [...getPublicSeapHOxMetrics()] : []),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);
 
