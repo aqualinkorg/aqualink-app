@@ -206,8 +206,6 @@ function SiteDetails({
         DateTime.now(),
       );
 
-      console.log('parsedData', parsedData);
-
       // Check if there's seaphox data in latestData (any timestamp) or in timeSeriesRange
       const hasSeapHOxInLatestData = latestData.some(
         (x) =>
