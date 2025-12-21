@@ -60,11 +60,21 @@ export const seaphoxConfig: Record<SeaphoxMetricsKeys, BaseSourceConfig> = {
   },
 };
 
-export function getSeapHOxConfig(configKey: SeaphoxMetricsKeys) {
-  return seaphoxConfig[configKey] || {};
+export function getSeapHOxConfig(configKey: MetricsKeys): BaseSourceConfig {
+  if (configKey === 'bottom_temperature') {
+    // Use spotter config for temperature since it's shared
+    return {
+      title: 'Temperature',
+      units: '°C',
+      description: '',
+      visibility: 'public' as const,
+      order: 0,
+    };
+  }
+  return seaphoxConfig[configKey as SeaphoxMetricsKeys] || {};
 }
 
-export function getPublicSeapHOxMetrics() {
+export function getPublicSeapHOxMetrics(): MetricsKeys[] {
   return [
     'bottom_temperature',
     ...(Object.keys(seaphoxConfig).filter(
