@@ -350,8 +350,12 @@ export const parseLatestData = (
 
   const filtered = copy.filter(
     (value) =>
+      // Allow spotter data if within validity window
       (value.source === 'spotter' &&
         new Date(value.timestamp).getTime() > validityDate) ||
+      // Allow seaphox data (no time restriction since it's sensor data)
+      value.source === 'seaphox' ||
+      // Allow any data with metrics not in the whitelist
       !spotterTempWhitelist.has(value.metric),
   );
 

@@ -120,10 +120,7 @@ function MultipleSensorsCharts({
 
   const hasHuiData = availableSources.includes('hui');
 
-  const hasSeapHOxData = Boolean(
-    timeSeriesData &&
-    Object.keys(timeSeriesData).some((key) => key.startsWith('seaphox')),
-  );
+  const hasSeapHOxData = availableSources.includes('seaphox');
 
   const chartStartDate =
     startDate || DateTime.fromISO(today).minus({ weeks: 1 }).toISOString();
@@ -266,7 +263,7 @@ function MultipleSensorsCharts({
     getDatesetFun(
       hasSeapHOxData,
       SEAPHOX_DATA_COLOR,
-      'spotter',
+      'seaphox',
       'seaphox',
       'seaphox',
       getPublicSeapHOxMetrics,
@@ -335,17 +332,28 @@ function MultipleSensorsCharts({
       isBefore(pickerStartDate, pickerEndDate) &&
       timeSeriesDataRanges
     ) {
-      const sources: Sources[] = ['spotter', 'sonde', 'metlog', 'hui'];
-      const [spotterRanges, sondeRanges, metlogRanges, huiRanges] = sources.map(
-        (source) =>
-          getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
-            rangeOverlapWithRange(
-              x.minDate,
-              x.maxDate,
-              pickerStartDate,
-              pickerEndDate,
-            ),
+      const sources: Sources[] = [
+        'spotter',
+        'sonde',
+        'metlog',
+        'hui',
+        'seaphox',
+      ];
+      const [
+        spotterRanges,
+        sondeRanges,
+        metlogRanges,
+        huiRanges,
+        seaphoxRanges,
+      ] = sources.map((source) =>
+        getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
+          rangeOverlapWithRange(
+            x.minDate,
+            x.maxDate,
+            pickerStartDate,
+            pickerEndDate,
           ),
+        ),
       );
 
       const allMetrics: MetricsKeys[] = [
@@ -353,7 +361,7 @@ function MultipleSensorsCharts({
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
         // SeapHOx metrics
-        ...(spotterRanges.length > 0 ? [...getPublicSeapHOxMetrics()] : []),
+        ...(seaphoxRanges.length > 0 ? [...getPublicSeapHOxMetrics()] : []),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);
 
@@ -365,6 +373,7 @@ function MultipleSensorsCharts({
           sondeRanges.length > 0 && 'sonde',
           metlogRanges.length > 0 && 'metlog',
           huiRanges.length > 0 && 'hui',
+          seaphoxRanges.length > 0 && 'seaphox',
         ].filter((x): x is Sources => x !== false),
       );
 

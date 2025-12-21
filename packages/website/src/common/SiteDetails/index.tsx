@@ -206,22 +206,32 @@ function SiteDetails({
         DateTime.now(),
       );
 
+      // Check if there's seaphox data in latestData (any timestamp) or in timeSeriesRange
+      const hasSeapHOxInLatestData = latestData.some(
+        (x) =>
+          x.source === 'seaphox' &&
+          (x.metric === 'bottom_temperature' ||
+            x.metric === 'ph' ||
+            x.metric === 'salinity' ||
+            x.metric === 'conductivity' ||
+            x.metric === 'pressure' ||
+            x.metric === 'dissolved_oxygen'),
+      );
+
+      const hasSeapHOxInRange = sourceWithinDataRangeInterval(
+        seapHOxInterval,
+        'seaphox',
+        timeSeriesRange,
+      );
+
       const hasSeapHOx = Boolean(
         (parsedData.bottomTemperature ||
           parsedData.ph ||
           parsedData.salinity ||
-          parsedData.dissolvedOxygen) &&
-        latestData.some(
-          (x) =>
-            x.source === 'spotter' &&
-            (x.metric === 'bottom_temperature' ||
-              x.metric === 'ph' ||
-              x.metric === 'salinity' ||
-              x.metric === 'conductivity' ||
-              x.metric === 'pressure' ||
-              x.metric === 'dissolved_oxygen') &&
-            seapHOxInterval.contains(DateTime.fromISO(x.timestamp)),
-        ),
+          parsedData.dissolvedOxygen ||
+          parsedData.pressure ||
+          parsedData.conductivity) &&
+        (hasSeapHOxInLatestData || hasSeapHOxInRange),
       );
       setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);

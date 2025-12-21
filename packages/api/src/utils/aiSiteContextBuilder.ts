@@ -490,9 +490,7 @@ ${
     ? Object.entries(latestSeaphox)
         .map(
           ([metric, value]) =>
-            `- **${metric
-              .replace(/seaphox_/g, '')
-              .replace(/_/g, ' ')}**: ${formatNumber(value, 2)}`,
+            `- **${metric.replace(/_/g, ' ')}**: ${formatNumber(value, 2)}`,
         )
         .join('\n')
     : '- No SeapHOx sensor data available'
