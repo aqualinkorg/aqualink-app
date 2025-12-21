@@ -68,7 +68,11 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
         title={
           <Grid container>
             <Grid item>
-              <Typography className={classes.cardTitle} variant="h6" style={{ textTransform: 'uppercase' }}>
+              <Typography
+                className={classes.cardTitle}
+                variant="h6"
+                style={{ textTransform: 'uppercase' }}
+              >
                 SeapHOx at {depth ? `${depth}m` : ''} depth
               </Typography>
             </Grid>
