@@ -161,6 +161,26 @@ export class Site {
   @Column({ nullable: true, select: false, type: 'character varying' })
   contactInformation?: string | null;
 
+  @ApiProperty({ example: '0x3fe044d4a9e8f229' })
+  @Expose()
+  @Column({
+    name: 'bristlemouth_node_id',
+    nullable: true,
+    type: 'character varying',
+    length: 50,
+  })
+  bristlemouthNodeId?: string | null;
+
+  @ApiProperty({ example: false })
+  @Expose()
+  @Column({
+    name: 'has_seaphox',
+    default: false,
+    nullable: true,
+    type: 'boolean',
+  })
+  hasSeaphox?: boolean;
+
   hasHobo?: boolean;
 
   collectionData?: CollectionDataDto;

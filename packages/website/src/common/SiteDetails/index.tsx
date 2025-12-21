@@ -47,6 +47,7 @@ import CardWithTitle from './CardWithTitle';
 import { Value } from './CardWithTitle/types';
 import CombinedCharts from '../Chart/CombinedCharts';
 import WaterSamplingCard from './WaterSampling';
+import SeapHOxCard from './SeapHOx/SeapHOxCard';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
@@ -142,6 +143,7 @@ function SiteDetails({
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const [hasSpotterData, setHasSpotterData] = useState<boolean>(false);
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
+  const [hasSeapHOxData, setHasSeapHOxData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
@@ -199,6 +201,39 @@ function SiteDetails({
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
       setHasHUIData(hasHUI);
+      const seapHOxInterval = Interval.fromDateTimes(
+        DateTime.now().minus({ days: 7 }), // Only show if data within last 7 days
+        DateTime.now(),
+      );
+
+      // Check if there's seaphox data in latestData (any timestamp) or in timeSeriesRange
+      const hasSeapHOxInLatestData = latestData.some(
+        (x) =>
+          x.source === 'seaphox' &&
+          (x.metric === 'bottom_temperature' ||
+            x.metric === 'ph' ||
+            x.metric === 'salinity' ||
+            x.metric === 'conductivity' ||
+            x.metric === 'pressure' ||
+            x.metric === 'dissolved_oxygen'),
+      );
+
+      const hasSeapHOxInRange = sourceWithinDataRangeInterval(
+        seapHOxInterval,
+        'seaphox',
+        timeSeriesRange,
+      );
+
+      const hasSeapHOx = Boolean(
+        (parsedData.bottomTemperature ||
+          parsedData.ph ||
+          parsedData.salinity ||
+          parsedData.dissolvedOxygen ||
+          parsedData.pressure ||
+          parsedData.conductivity) &&
+        (hasSeapHOxInLatestData || hasSeapHOxInRange),
+      );
+      setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);
     }
   }, [forecastData, latestData, timeSeriesRange]);
@@ -208,12 +243,18 @@ function SiteDetails({
   const cards =
     site && latestDataAsSofarValues
       ? [
+          // CARD 1: Satellite (always shown)
           <Satellite
             data={latestDataAsSofarValues}
             maxMonthlyMean={site.maxMonthlyMean}
           />,
+
+          // CARD 2: Sensor/CoralBleaching/TemperatureChange (conditional)
           (() => {
-            if ((hasHUIData || hasSondeData) && !hasSpotterData) {
+            if (
+              (hasHUIData || hasSondeData || hasSeapHOxData) &&
+              !hasSpotterData
+            ) {
               return <CoralBleaching data={latestDataAsSofarValues} />;
             }
 
@@ -231,7 +272,19 @@ function SiteDetails({
               />
             );
           })(),
+
+          // CARD 3: SeapHOx (priority) or WaterSampling/CoralBleaching (fallback)
           (() => {
+            if (hasSeapHOxData) {
+              return (
+                <SeapHOxCard
+                  depth={site.depth}
+                  data={latestDataAsSofarValues}
+                />
+              );
+            }
+
+            // FALLBACK: Original Card 3 logic
             if (hasHUIData) {
               return (
                 <WaterSamplingCard siteId={site.id.toString()} source="hui" />
@@ -244,7 +297,9 @@ function SiteDetails({
             }
             return <CoralBleaching data={latestDataAsSofarValues} />;
           })(),
-          <Waves data={latestDataAsSofarValues} hasSpotter={hasSpotterData} />,
+
+          // CARD 4: Waves (always shown)
+          <Waves data={latestDataAsSofarValues} />,
         ]
       : times(4, () => null);
 

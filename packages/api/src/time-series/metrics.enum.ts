@@ -46,4 +46,14 @@ export enum Metric {
   SILICATE = 'silicate',
   NNN = 'nitrate_plus_nitrite',
   AMMONIUM = 'ammonium',
+  // SeapHOx Metrics
+  DISSOLVED_OXYGEN = 'dissolved_oxygen',
+  INTERNAL_PH = 'internal_ph',
+  EXTERNAL_PH_VOLT = 'external_ph_volt',
+  INTERNAL_PH_VOLT = 'internal_ph_volt',
+  PH_TEMPERATURE = 'ph_temperature',
+  INTERNAL_TEMPERATURE = 'internal_temperature',
+  RELATIVE_HUMIDITY = 'relative_humidity',
+  SAMPLE_NUMBER = 'sample_number',
+  ERROR_FLAGS = 'error_flags',
 }

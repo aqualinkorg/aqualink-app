@@ -10,6 +10,11 @@ export interface BaseSourceConfig {
   visibility: 'public' | 'admin' | 'none';
   order: number;
   convert?: number;
+  decimalPlaces?: number;
+  yAxisStepSize?: number;
+  yAxisPadding?: number;
+  yAxisMin?: number;
+  yAxisMax?: number;
 }
 
 // Helper function to create a sub array containing valid elements from arrayA
