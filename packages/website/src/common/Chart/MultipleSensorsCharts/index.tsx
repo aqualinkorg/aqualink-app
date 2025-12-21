@@ -332,17 +332,28 @@ function MultipleSensorsCharts({
       isBefore(pickerStartDate, pickerEndDate) &&
       timeSeriesDataRanges
     ) {
-      const sources: Sources[] = ['spotter', 'sonde', 'metlog', 'hui', 'seaphox'];
-      const [spotterRanges, sondeRanges, metlogRanges, huiRanges, seaphoxRanges] = sources.map(
-        (source) =>
-          getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
-            rangeOverlapWithRange(
-              x.minDate,
-              x.maxDate,
-              pickerStartDate,
-              pickerEndDate,
-            ),
+      const sources: Sources[] = [
+        'spotter',
+        'sonde',
+        'metlog',
+        'hui',
+        'seaphox',
+      ];
+      const [
+        spotterRanges,
+        sondeRanges,
+        metlogRanges,
+        huiRanges,
+        seaphoxRanges,
+      ] = sources.map((source) =>
+        getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
+          rangeOverlapWithRange(
+            x.minDate,
+            x.maxDate,
+            pickerStartDate,
+            pickerEndDate,
           ),
+        ),
       );
 
       const allMetrics: MetricsKeys[] = [
