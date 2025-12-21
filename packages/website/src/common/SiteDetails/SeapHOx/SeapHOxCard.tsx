@@ -25,8 +25,9 @@ interface SeapHOxCardProps {
 
 function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
   // Define which metrics to display
+  // Use bottomTemperature since parseLatestData converts seaphox bottom_temperature to bottomTemperature
   const metrics = [
-    { key: 'seaphoxTemperature', label: 'Temperature', unit: '°C' },
+    { key: 'bottomTemperature', label: 'Temperature', unit: '°C' },
     { key: 'ph', label: 'Acidity', unit: 'pH' },
     { key: 'pressure', label: 'Pressure', unit: 'dbar' },
     { key: 'salinity', label: 'Salinity', unit: 'psu' },
@@ -42,7 +43,7 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
   // Get the most recent timestamp from available data
   const getRelativeTime = () => {
     const timestamp =
-      data.seaphoxTemperature?.timestamp ||
+      data.bottomTemperature?.timestamp ||
       data.ph?.timestamp ||
       data.pressure?.timestamp ||
       data.salinity?.timestamp ||
@@ -92,7 +93,7 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
                     className={classes.contentTextValues}
                     variant="h3"
                   >
-                    {formatValue(data.seaphoxTemperature?.value)}
+                    {formatValue(data.bottomTemperature?.value)}
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     °C
