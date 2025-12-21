@@ -333,7 +333,7 @@ export const generateTempAnalysisDatasets = (
     },
     {
       label: 'SEAPHOX',
-      tooltipLabel: `SEAPHOX ${depth}m`,
+      tooltipLabel: `BOTTOM`,
       data: localSeaphoxTempData,
       curveColor: '#23225b',
       type: 'line',
@@ -342,7 +342,7 @@ export const generateTempAnalysisDatasets = (
       tooltipMaxHoursGap: 6,
       displayData: hasEnoughSeaphoxTempData,
       displayCardColumn: hasEnoughSeaphoxTempData,
-      metric: 'bottom_temperature',
+      metric: 'bottomTemperature',
       source: 'seaphox',
     },
     ...(hoboBottom?.map((item, index) => {
