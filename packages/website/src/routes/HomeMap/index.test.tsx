@@ -8,9 +8,9 @@ import { mockUser } from 'mocks/mockUser';
 import { mockSite } from 'mocks/mockSite';
 import Homepage from '.';
 
-vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
-vi.mock('./Map', () => ({ default: 'Mock-Map' }));
-vi.mock('./SiteTable', () => ({ default: 'Mock-SiteTable' }));
+rstest.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+rstest.mock('./Map', () => ({ default: 'Mock-Map' }));
+rstest.mock('./SiteTable', () => ({ default: 'Mock-SiteTable' }));
 
 const mockStore = configureStore([]);
 describe('Homepage', () => {
@@ -35,7 +35,7 @@ describe('Homepage', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = render(
       <Provider store={store}>

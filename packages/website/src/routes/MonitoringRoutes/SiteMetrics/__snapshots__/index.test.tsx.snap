@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Monitoring SiteMetrics Page > should render with given state from Redux store 1`] = `
 <div>
@@ -8,21 +8,36 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
       class="MuiBackdrop-root css-1rxxzfv-MuiBackdrop-root"
       style="opacity: 0; visibility: hidden; z-index: 42;"
     >
-      <mock-circularprogress
-        color="inherit"
-      />
+      <span
+        class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorInherit css-gxw4l9-MuiCircularProgress-root"
+        role="progressbar"
+        style="width: 40px; height: 40px;"
+      >
+        <svg
+          class="MuiCircularProgress-svg css-54pwck-MuiCircularProgress-svg"
+          viewBox="22 22 44 44"
+        >
+          <circle
+            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-960umw-MuiCircularProgress-circle"
+            cx="44"
+            cy="44"
+            fill="none"
+            r="20.2"
+            stroke-width="3.6"
+          />
+        </svg>
+      </span>
     </div>
     <a
-      data-discover="true"
       href="/monitoring"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-17b85jl-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-cjd39g-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
         <span
-          class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
+          class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
         >
           <svg
             aria-hidden="true"
@@ -40,31 +55,29 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
       </button>
     </a>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-17b85jl-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-cjd39g-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >
       Refresh
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-17b85jl-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary makeStyles-button-5 css-cjd39g-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >
       Download CSV
     </button>
-    <mock-typography
-      classname="makeStyles-pageTitle-7"
-      variant="h3"
+    <h3
+      class="MuiTypography-root MuiTypography-h3 makeStyles-pageTitle-7 css-18qnhdx-MuiTypography-root"
     >
       Site Metrics
-    </mock-typography>
-    <mock-typography
-      classname="makeStyles-pageDescription-8"
-      variant="body2"
+    </h3>
+    <p
+      class="MuiTypography-root MuiTypography-body2 makeStyles-pageDescription-8 css-1x8swz2-MuiTypography-root"
     >
       Use only one of Site ID or Spotter ID!
-    </mock-typography>
+    </p>
     <div
       class="makeStyles-filtersWrapper-2"
     >
@@ -74,8 +87,8 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for=":r4:"
-          id=":r4:-label"
+          for=":r1:"
+          id=":r1:-label"
         >
           Site ID
         </label>
@@ -85,16 +98,16 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r4:"
+            id=":r1:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="css-1n64csd-MuiNotchedOutlined-root"
+              class="css-81qg8w"
             >
               <span>
                 Site ID
@@ -109,8 +122,8 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for=":r5:"
-          id=":r5:-label"
+          for=":r2:"
+          id=":r2:-label"
         >
           Spotter ID
         </label>
@@ -120,16 +133,16 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiOutlinedInput-input css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r5:"
+            id=":r2:"
             type="text"
             value=""
           />
           <fieldset
             aria-hidden="true"
-            class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+            class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="css-1n64csd-MuiNotchedOutlined-root"
+              class="css-81qg8w"
             >
               <span>
                 Spotter ID
@@ -138,22 +151,86 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
           </fieldset>
         </div>
       </div>
-      <mock-date-picker
-        classname="makeStyles-filterItem-4"
-        closeonselect="true"
-        format="MM/dd/yyyy"
-        label="start date"
-        slotprops="[object Object]"
-        value="Wed Aug 23 2023 12:00:00 GMT+0000 (Coordinated Universal Time)"
-      />
-      <mock-date-picker
-        classname="makeStyles-filterItem-4"
-        closeonselect="true"
-        format="MM/dd/yyyy"
-        label="end date"
-        slotprops="[object Object]"
-        value="Thu Nov 23 2023 12:00:00 GMT+0000 (Coordinated Universal Time)"
-      />
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-4 css-1b1fjlj-MuiFormControl-root-MuiTextField-root"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-47g1cz-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for=":r3:"
+          id=":r3:-label"
+        >
+          start date
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-1ritcye-MuiInputBase-root-MuiOutlinedInput-root"
+        >
+          <input
+            aria-invalid="false"
+            aria-label="Choose date, selected date is Aug 23, 2023"
+            autocomplete="off"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r3:"
+            inputmode="text"
+            placeholder="MM/DD/YYYY"
+            readonly=""
+            type="text"
+            value="08/23/2023"
+          />
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-w1u3ce"
+            >
+              <span>
+                start date
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root MuiTextField-root makeStyles-filterItem-4 css-1b1fjlj-MuiFormControl-root-MuiTextField-root"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-47g1cz-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for=":r6:"
+          id=":r6:-label"
+        >
+          end date
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-1ritcye-MuiInputBase-root-MuiOutlinedInput-root"
+        >
+          <input
+            aria-invalid="false"
+            aria-label="Choose date, selected date is Nov 23, 2023"
+            autocomplete="off"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r6:"
+            inputmode="text"
+            placeholder="MM/DD/YYYY"
+            readonly=""
+            type="text"
+            value="11/23/2023"
+          />
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-w1u3ce"
+            >
+              <span>
+                end date
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-switchContainer-3 css-174grhv-MuiGrid-root"
       >
@@ -165,11 +242,25 @@ exports[`Monitoring SiteMetrics Page > should render with given state from Redux
         <div
           class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
         >
-          <mock-switch
-            checked="false"
-            classes="[object Object]"
-            name="checkedC"
-          />
+          <span
+            class="MuiSwitch-root MuiSwitch-sizeMedium css-rehya9-MuiSwitch-root"
+          >
+            <span
+              class="MuiButtonBase-root MuiSwitch-switchBase ForwardRef(Switch)-switchBase-9 MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase ForwardRef(Switch)-switchBase-9 MuiSwitch-colorPrimary css-xcj5lt-MuiButtonBase-root-MuiSwitch-switchBase"
+            >
+              <input
+                class="PrivateSwitchBase-input MuiSwitch-input css-j8yymo"
+                name="checkedC"
+                type="checkbox"
+              />
+              <span
+                class="MuiSwitch-thumb css-17jyosd-MuiSwitch-thumb"
+              />
+            </span>
+            <span
+              class="MuiSwitch-track ForwardRef(Switch)-track-11 css-tj8d99-MuiSwitch-track"
+            />
+          </span>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"

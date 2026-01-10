@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`SiteInfo > should render with given state from Redux store 1`] = `
 <div>
@@ -40,9 +40,10 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
           <div
             class="MuiAlert-action css-rgppqo-MuiAlert-action"
           >
-            <mock-iconbutton
-              color="inherit"
-              size="small"
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-2yamib-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -55,7 +56,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
                   d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                 />
               </svg>
-            </mock-iconbutton>
+            </button>
           </div>
         </div>
       </div>
@@ -73,11 +74,11 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
         <div
           class="MuiGrid-root MuiGrid-item SiteInfo-headerButtonWrapper-3 css-x7bhrq-MuiGrid-root"
         >
-          <mock-iconbutton
+          <button
             aria-label="menu"
-            color="primary"
-            edge="start"
-            size="large"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-edgeStart MuiIconButton-sizeLarge css-13lp6iv-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
           >
             <svg
               aria-hidden="true"
@@ -90,7 +91,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
                 d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"
               />
             </svg>
-          </mock-iconbutton>
+          </button>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteInfo-headerWrapper-4 css-1accxqv-MuiGrid-root"
@@ -107,52 +108,49 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
                 <div
                   class="MuiGrid-root MuiGrid-item SiteInfo-siteNameWrapper-5 css-x7bhrq-MuiGrid-root"
                 >
-                  <mock-typography
-                    variant="h4"
+                  <h4
+                    class="MuiTypography-root MuiTypography-h4 css-1ghn6nx-MuiTypography-root"
                   >
                     Hawaii
-                  </mock-typography>
+                  </h4>
                 </div>
                 <div
                   class="MuiGrid-root MuiGrid-item SiteInfo-headerButtonWrapper-3 css-x7bhrq-MuiGrid-root"
                 >
-                  <mock-tooltip
-                    arrow="true"
-                    placement="top"
-                    title="Add to your dashboard"
+                  <button
+                    aria-label="Add to your dashboard"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge CollectionButton-root-6 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+                    data-mui-internal-clone-element="true"
+                    tabindex="0"
+                    type="button"
                   >
-                    <mock-iconbutton
-                      classname="CollectionButton-root-6"
-                      disabled="false"
-                      size="large"
+                    <svg
+                      color="#168dbd"
+                      data-testid="mock-watch"
                     >
-                      <svg
-                        color="#168dbd"
-                      >
-                        watch.svg
-                      </svg>
-                    </mock-iconbutton>
-                  </mock-tooltip>
+                      watch
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
             >
-              <mock-typography
-                variant="h6"
+              <h6
+                class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
               >
                 Managed by Some organization
-              </mock-typography>
+              </h6>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
             >
-              <mock-typography
-                variant="subtitle1"
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle1 css-crj02l-MuiTypography-root"
               >
                 Last surveyed: Sep 10, 2020
-              </mock-typography>
+              </h6>
             </div>
           </div>
           <div
@@ -162,7 +160,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
@@ -173,8 +171,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
-                data-discover="true"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
                 href="/sites/1/upload_data"
                 tabindex="0"
               >

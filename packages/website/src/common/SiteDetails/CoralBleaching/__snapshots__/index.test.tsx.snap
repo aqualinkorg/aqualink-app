@@ -1,9 +1,10 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
-  <mock-card
-    classname="Bleaching-root-8"
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root Bleaching-root-8 css-1i00q08-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
   >
     <div
       class="MuiCardHeader-root Bleaching-header-3 css-149tc0y-MuiCardHeader-root"
@@ -20,20 +21,18 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
             >
-              <mock-typography
-                classname="Bleaching-cardTitle-2"
-                color="textSecondary"
-                variant="h6"
+              <h6
+                class="MuiTypography-root MuiTypography-h6 Bleaching-cardTitle-2 css-7vf59h-MuiTypography-root"
               >
                 HEAT STRESS ALERT LEVEL
-              </mock-typography>
+              </h6>
             </div>
           </div>
         </span>
       </div>
     </div>
-    <mock-cardcontent
-      classname="Bleaching-contentWrapper-9"
+    <div
+      class="MuiCardContent-root Bleaching-contentWrapper-9 css-dlpuou-MuiCardContent-root"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 Bleaching-content-10 css-ci9zny-MuiGrid-root"
@@ -41,7 +40,7 @@ exports[`renders as expected 1`] = `
         <img
           alt="alert-level"
           class="Bleaching-alertImage-11"
-          src="data:image/svg+xml,%3csvg%20width='202'%20height='201'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='none'%20fill-rule='evenodd'%3e%3cpath%20d='M100.29.5c35.73%200%2068.74%2019.06%2086.6%2050a100.016%20100.016%200%20010%20100%2099.988%2099.988%200%2001-86.6%2050%2099.988%2099.988%200%2001-86.6-50%20100.016%20100.016%200%20010-100%2099.988%2099.988%200%200186.6-50v30a69.986%2069.986%200%2000-60.62%2035%2070.02%2070.02%200%20000%2070c12.5%2021.66%2035.61%2035%2060.62%2035%2025.01%200%2048.12-13.34%2060.62-35a70.02%2070.02%200%20000-70%2069.986%2069.986%200%2000-60.62-35V.5z'%20fill-opacity='.002'%20fill='%23455A64'/%3e%3cpath%20d='M100.648.858a99.576%2099.576%200%200149.465%2013.349%2099.562%2099.562%200%200136.468%2036.472%2099.83%2099.83%200%20018.369%2018.692h0l-27.86%209.049a70.328%2070.328%200%2000-18.023-28.617h0l2.2-16.024-15.906%205.73a70.281%2070.281%200%2000-20.446-7.829%2070.08%2070.08%200%2000-14.267-1.537h0z'%20stroke='%23EFF0F0'%20stroke-width='.715'%20fill='%23EF0000'/%3e%3cpath%20d='M195.17%2070.05a99.555%2099.555%200%20012.588%2051.165%2099.581%2099.581%200%2001-23.423%2045.956A100.253%20100.253%200%2001159.15%20180.9h0l-17.22-23.692a70.383%2070.383%200%200028.337-64.065A70.352%2070.352%200%2000167.31%2079.1h0z'%20stroke='%23EFF0F0'%20stroke-width='.715'%20fill='%23940000'/%3e%3cpath%20d='M141.351%20157.629l17.22%2023.691a99.548%2099.548%200%2001-47.858%2018.273%2099.602%2099.602%200%2001-50.947-8.07%2099.424%2099.424%200%2001-17.756-10.202h0l17.22-23.692a70.348%2070.348%200%200069.676%207.148%2070.122%2070.122%200%200012.445-7.148h0z'%20stroke='%23EFF0F0'%20stroke-width='.715'%20fill='%23C6E5FA'/%3e%3cpath%20d='M5.411%2070.05l27.86%209.05c-7.606%2023.81-2.002%2049.883%2014.734%2068.479a70.057%2070.057%200%200010.647%209.63h0L41.432%20180.9c-28.61-20.946-43.94-55.528-40.236-90.813a99.63%2099.63%200%20014.215-20.036h0z'%20stroke='%23EFF0F0'%20stroke-width='.715'%20fill='%23FFF200'/%3e%3cpath%20d='M99.933.858v29.285A70.316%2070.316%200%200065.11%2039.57%2070.282%2070.282%200%200039.361%2065.32a70.148%2070.148%200%2000-5.869%2013.099h0l-27.86-9.05C16.71%2035.683%2044.867%2010.419%2079.575%203.04A99.87%2099.87%200%200199.933.858h0z'%20stroke='%23EFF0F0'%20stroke-width='.715'%20fill='%23F8AB00'/%3e%3cpath%20d='M78.451%2097.906l.906-2.656h4.453l.899%202.656h1.93L82.505%2086.53h-1.797l-4.18%2011.375h1.922zm4.82-4.242h-3.367l1.672-4.86h.047l1.648%204.86zm11.813%204.242V96.39h-5.227v-9.86H87.96v11.376h7.125zm9.203%200V96.39h-5.774V92.79h4.977v-1.524h-4.977v-3.21h5.72V86.53h-7.618v11.375h7.672zm3.5%200v-4.719h2.531c.583%200%201.042.172%201.375.516.333.344.5.807.5%201.39v.915c0%20.354.03.716.09%201.085.06.37.194.641.402.813h1.953v-.18c-.197-.166-.338-.409-.421-.726a3.833%203.833%200%2001-.125-.977v-.945c0-.672-.141-1.238-.422-1.7-.282-.46-.742-.792-1.383-.995.583-.256%201.027-.596%201.332-1.02.305-.425.457-.931.457-1.52%200-1.062-.346-1.88-1.04-2.453-.692-.573-1.674-.86-2.944-.86h-4.204v11.376h1.899zm2.203-6.242h-2.203v-3.61h2.305c.703%200%201.226.163%201.57.489.344.325.516.774.516%201.347%200%20.6-.175%201.045-.524%201.336-.349.292-.904.438-1.664.438zm10.508%206.242v-9.852h3.437v-1.523h-8.773v1.523h3.437v9.852h1.899zm-41.387%2020v-1.516h-5.226v-9.86h-1.899v11.376h7.125zm9.203%200v-1.516h-5.773v-3.601h4.976v-1.524h-4.976v-3.21h5.719v-1.524h-7.618v11.375h7.672zm6.336%200l4.063-11.375h-2.024l-2.719%208.414-.195.773h-.047l-.203-.789-2.71-8.398H88.79l4.054%2011.375h1.805zm13.094%200v-1.516h-5.774v-3.601h4.977v-1.524h-4.977v-3.21h5.72v-1.524h-7.618v11.375h7.672zm8.726%200v-1.516h-5.226v-9.86h-1.899v11.376h7.125zm9.883%200V106.53l-4.21.406v1.399h2.312v9.57h1.898z'%20fill='%23212121'%20fill-rule='nonzero'/%3e%3c/g%3e%3c/svg%3e"
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAyIiBoZWlnaHQ9IjIwMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xMDAuMjkuNWMzNS43MyAwIDY4Ljc0IDE5LjA2IDg2LjYgNTBhMTAwLjAxNiAxMDAuMDE2IDAgMDEwIDEwMCA5OS45ODggOTkuOTg4IDAgMDEtODYuNiA1MCA5OS45ODggOTkuOTg4IDAgMDEtODYuNi01MCAxMDAuMDE2IDEwMC4wMTYgMCAwMTAtMTAwIDk5Ljk4OCA5OS45ODggMCAwMTg2LjYtNTB2MzBhNjkuOTg2IDY5Ljk4NiAwIDAwLTYwLjYyIDM1IDcwLjAyIDcwLjAyIDAgMDAwIDcwYzEyLjUgMjEuNjYgMzUuNjEgMzUgNjAuNjIgMzUgMjUuMDEgMCA0OC4xMi0xMy4zNCA2MC42Mi0zNWE3MC4wMiA3MC4wMiAwIDAwMC03MCA2OS45ODYgNjkuOTg2IDAgMDAtNjAuNjItMzVWLjV6IiBmaWxsLW9wYWNpdHk9Ii4wMDIiIGZpbGw9IiM0NTVBNjQiLz48cGF0aCBkPSJNMTAwLjY0OC44NThhOTkuNTc2IDk5LjU3NiAwIDAxNDkuNDY1IDEzLjM0OSA5OS41NjIgOTkuNTYyIDAgMDEzNi40NjggMzYuNDcyIDk5LjgzIDk5LjgzIDAgMDE4LjM2OSAxOC42OTJoMGwtMjcuODYgOS4wNDlhNzAuMzI4IDcwLjMyOCAwIDAwLTE4LjAyMy0yOC42MTdoMGwyLjItMTYuMDI0LTE1LjkwNiA1LjczYTcwLjI4MSA3MC4yODEgMCAwMC0yMC40NDYtNy44MjkgNzAuMDggNzAuMDggMCAwMC0xNC4yNjctMS41MzdoMHoiIHN0cm9rZT0iI0VGRjBGMCIgc3Ryb2tlLXdpZHRoPSIuNzE1IiBmaWxsPSIjRUYwMDAwIi8+PHBhdGggZD0iTTE5NS4xNyA3MC4wNWE5OS41NTUgOTkuNTU1IDAgMDEyLjU4OCA1MS4xNjUgOTkuNTgxIDk5LjU4MSAwIDAxLTIzLjQyMyA0NS45NTZBMTAwLjI1MyAxMDAuMjUzIDAgMDExNTkuMTUgMTgwLjloMGwtMTcuMjItMjMuNjkyYTcwLjM4MyA3MC4zODMgMCAwMDI4LjMzNy02NC4wNjVBNzAuMzUyIDcwLjM1MiAwIDAwMTY3LjMxIDc5LjFoMHoiIHN0cm9rZT0iI0VGRjBGMCIgc3Ryb2tlLXdpZHRoPSIuNzE1IiBmaWxsPSIjOTQwMDAwIi8+PHBhdGggZD0iTTE0MS4zNTEgMTU3LjYyOWwxNy4yMiAyMy42OTFhOTkuNTQ4IDk5LjU0OCAwIDAxLTQ3Ljg1OCAxOC4yNzMgOTkuNjAyIDk5LjYwMiAwIDAxLTUwLjk0Ny04LjA3IDk5LjQyNCA5OS40MjQgMCAwMS0xNy43NTYtMTAuMjAyaDBsMTcuMjItMjMuNjkyYTcwLjM0OCA3MC4zNDggMCAwMDY5LjY3NiA3LjE0OCA3MC4xMjIgNzAuMTIyIDAgMDAxMi40NDUtNy4xNDhoMHoiIHN0cm9rZT0iI0VGRjBGMCIgc3Ryb2tlLXdpZHRoPSIuNzE1IiBmaWxsPSIjQzZFNUZBIi8+PHBhdGggZD0iTTUuNDExIDcwLjA1bDI3Ljg2IDkuMDVjLTcuNjA2IDIzLjgxLTIuMDAyIDQ5Ljg4MyAxNC43MzQgNjguNDc5YTcwLjA1NyA3MC4wNTcgMCAwMDEwLjY0NyA5LjYzaDBMNDEuNDMyIDE4MC45Yy0yOC42MS0yMC45NDYtNDMuOTQtNTUuNTI4LTQwLjIzNi05MC44MTNhOTkuNjMgOTkuNjMgMCAwMTQuMjE1LTIwLjAzNmgweiIgc3Ryb2tlPSIjRUZGMEYwIiBzdHJva2Utd2lkdGg9Ii43MTUiIGZpbGw9IiNGRkYyMDAiLz48cGF0aCBkPSJNOTkuOTMzLjg1OHYyOS4yODVBNzAuMzE2IDcwLjMxNiAwIDAwNjUuMTEgMzkuNTcgNzAuMjgyIDcwLjI4MiAwIDAwMzkuMzYxIDY1LjMyYTcwLjE0OCA3MC4xNDggMCAwMC01Ljg2OSAxMy4wOTloMGwtMjcuODYtOS4wNUMxNi43MSAzNS42ODMgNDQuODY3IDEwLjQxOSA3OS41NzUgMy4wNEE5OS44NyA5OS44NyAwIDAxOTkuOTMzLjg1OGgweiIgc3Ryb2tlPSIjRUZGMEYwIiBzdHJva2Utd2lkdGg9Ii43MTUiIGZpbGw9IiNGOEFCMDAiLz48cGF0aCBkPSJNNzguNDUxIDk3LjkwNmwuOTA2LTIuNjU2aDQuNDUzbC44OTkgMi42NTZoMS45M0w4Mi41MDUgODYuNTNoLTEuNzk3bC00LjE4IDExLjM3NWgxLjkyMnptNC44Mi00LjI0MmgtMy4zNjdsMS42NzItNC44NmguMDQ3bDEuNjQ4IDQuODZ6bTExLjgxMyA0LjI0MlY5Ni4zOWgtNS4yMjd2LTkuODZIODcuOTZ2MTEuMzc2aDcuMTI1em05LjIwMyAwVjk2LjM5aC01Ljc3NFY5Mi43OWg0Ljk3N3YtMS41MjRoLTQuOTc3di0zLjIxaDUuNzJWODYuNTNoLTcuNjE4djExLjM3NWg3LjY3MnptMy41IDB2LTQuNzE5aDIuNTMxYy41ODMgMCAxLjA0Mi4xNzIgMS4zNzUuNTE2LjMzMy4zNDQuNS44MDcuNSAxLjM5di45MTVjMCAuMzU0LjAzLjcxNi4wOSAxLjA4NS4wNi4zNy4xOTQuNjQxLjQwMi44MTNoMS45NTN2LS4xOGMtLjE5Ny0uMTY2LS4zMzgtLjQwOS0uNDIxLS43MjZhMy44MzMgMy44MzMgMCAwMS0uMTI1LS45Nzd2LS45NDVjMC0uNjcyLS4xNDEtMS4yMzgtLjQyMi0xLjctLjI4Mi0uNDYtLjc0Mi0uNzkyLTEuMzgzLS45OTUuNTgzLS4yNTYgMS4wMjctLjU5NiAxLjMzMi0xLjAyLjMwNS0uNDI1LjQ1Ny0uOTMxLjQ1Ny0xLjUyIDAtMS4wNjItLjM0Ni0xLjg4LTEuMDQtMi40NTMtLjY5Mi0uNTczLTEuNjc0LS44Ni0yLjk0NC0uODZoLTQuMjA0djExLjM3NmgxLjg5OXptMi4yMDMtNi4yNDJoLTIuMjAzdi0zLjYxaDIuMzA1Yy43MDMgMCAxLjIyNi4xNjMgMS41Ny40ODkuMzQ0LjMyNS41MTYuNzc0LjUxNiAxLjM0NyAwIC42LS4xNzUgMS4wNDUtLjUyNCAxLjMzNi0uMzQ5LjI5Mi0uOTA0LjQzOC0xLjY2NC40Mzh6bTEwLjUwOCA2LjI0MnYtOS44NTJoMy40Mzd2LTEuNTIzaC04Ljc3M3YxLjUyM2gzLjQzN3Y5Ljg1MmgxLjg5OXptLTQxLjM4NyAyMHYtMS41MTZoLTUuMjI2di05Ljg2aC0xLjg5OXYxMS4zNzZoNy4xMjV6bTkuMjAzIDB2LTEuNTE2aC01Ljc3M3YtMy42MDFoNC45NzZ2LTEuNTI0aC00Ljk3NnYtMy4yMWg1LjcxOXYtMS41MjRoLTcuNjE4djExLjM3NWg3LjY3MnptNi4zMzYgMGw0LjA2My0xMS4zNzVoLTIuMDI0bC0yLjcxOSA4LjQxNC0uMTk1Ljc3M2gtLjA0N2wtLjIwMy0uNzg5LTIuNzEtOC4zOThIODguNzlsNC4wNTQgMTEuMzc1aDEuODA1em0xMy4wOTQgMHYtMS41MTZoLTUuNzc0di0zLjYwMWg0Ljk3N3YtMS41MjRoLTQuOTc3di0zLjIxaDUuNzJ2LTEuNTI0aC03LjYxOHYxMS4zNzVoNy42NzJ6bTguNzI2IDB2LTEuNTE2aC01LjIyNnYtOS44NmgtMS44OTl2MTEuMzc2aDcuMTI1em05Ljg4MyAwVjEwNi41M2wtNC4yMS40MDZ2MS4zOTloMi4zMTJ2OS41N2gxLjg5OHoiIGZpbGw9IiMyMTIxMjEiIGZpbGwtcnVsZT0ibm9uemVybyIvPjwvZz48L3N2Zz4="
         />
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-12 makeStyles-withMargin-13 css-1urtxze-MuiGrid-root"
@@ -70,24 +69,20 @@ exports[`renders as expected 1`] = `
               <div
                 class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-17 css-x7bhrq-MuiGrid-root"
               >
-                <mock-box
-                  display="flex"
-                  flexdirection="column"
-                  width="100%"
+                <div
+                  class="MuiBox-root css-1ofqig9"
                 >
-                  <mock-typography
-                    classname="makeStyles-updateInfoText-15"
-                    variant="caption"
+                  <span
+                    class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-15 css-qa0r6-MuiTypography-root"
                   >
                     Last data received 5 min. ago
-                  </mock-typography>
-                  <mock-typography
-                    classname="makeStyles-updateInfoText-15"
-                    variant="caption"
+                  </span>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-15 css-qa0r6-MuiTypography-root"
                   >
                     Updated daily
-                  </mock-typography>
-                </mock-box>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -102,7 +97,7 @@ exports[`renders as expected 1`] = `
                 class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-iorydh-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
@@ -112,11 +107,11 @@ exports[`renders as expected 1`] = `
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <mock-typography
-                      classname="makeStyles-chipText-20"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-chipText-20 css-809xgg-MuiTypography-root"
                     >
                       NOAA CRW
-                    </mock-typography>
+                    </p>
                   </a>
                 </button>
               </div>
@@ -124,7 +119,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
       </div>
-    </mock-cardcontent>
-  </mock-card>
+    </div>
+  </div>
 </div>
 `;

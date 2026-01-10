@@ -2164,23 +2164,79 @@
     "@module-federation/error-codes" "0.21.6"
     "@module-federation/sdk" "0.21.6"
 
+<<<<<<< HEAD
 "@module-federation/runtime-tools@0.21.6":
   version "0.21.6"
   resolved "https://registry.yarnpkg.com/@module-federation/runtime-tools/-/runtime-tools-0.21.6.tgz#40cbcc16af4c597169834a2d8b71a9d31779ab0c"
   integrity sha512-fnP+ZOZTFeBGiTAnxve+axGmiYn2D60h86nUISXjXClK3LUY1krUfPgf6MaD4YDJ4i51OGXZWPekeMe16pkd8Q==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@module-federation/error-codes@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/error-codes/-/error-codes-0.21.2.tgz#a24573e2ebfb58f972a8eafbc1e1421a4a709546"
+  integrity sha512-mGbPAAApgjmQUl4J7WAt20aV04a26TyS21GDEpOGXFEQG5FqmZnSJ6FqB8K19HgTKioBT1+fF/Ctl5bGGao/EA==
+
+"@module-federation/runtime-core@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime-core/-/runtime-core-0.21.2.tgz#78bede1ea4f53967e79dc3f0de0902a8fe76f2bf"
+  integrity sha512-LtDnccPxjR8Xqa3daRYr1cH/6vUzK3mQSzgvnfsUm1fXte5syX4ftWw3Eu55VdqNY3yREFRn77AXdu9PfPEZRw==
+=======
+"@module-federation/error-codes@0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@module-federation/error-codes/-/error-codes-0.21.1.tgz#9b1c2e5a0abea487fc792a0637658ad5e809e71e"
+  integrity sha512-h1brnwR9AbwMu1P7ZoJJ9j2O2XWkuMh5p03WhXI1vNEdl3xJheSAvH8RjG8FoKRccVgMnUNDQ+vDVwevUBms/A==
+
+"@module-federation/error-codes@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/error-codes/-/error-codes-0.21.2.tgz#a24573e2ebfb58f972a8eafbc1e1421a4a709546"
+  integrity sha512-mGbPAAApgjmQUl4J7WAt20aV04a26TyS21GDEpOGXFEQG5FqmZnSJ6FqB8K19HgTKioBT1+fF/Ctl5bGGao/EA==
+
+"@module-federation/runtime-core@0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime-core/-/runtime-core-0.21.1.tgz#300687978f2b1556a645073e8f4a957aec837287"
+  integrity sha512-COob5bepqDc9mKjTziXbQd4WQMCTzhc0cuXyraZhYddYcjcepzZrMpDIXG1x5p+gdg5p1vsGNWt/ZcU8cFh/pg==
+  dependencies:
+    "@module-federation/error-codes" "0.21.1"
+    "@module-federation/sdk" "0.21.1"
+
+"@module-federation/runtime-core@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime-core/-/runtime-core-0.21.2.tgz#78bede1ea4f53967e79dc3f0de0902a8fe76f2bf"
+  integrity sha512-LtDnccPxjR8Xqa3daRYr1cH/6vUzK3mQSzgvnfsUm1fXte5syX4ftWw3Eu55VdqNY3yREFRn77AXdu9PfPEZRw==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
   dependencies:
     "@module-federation/runtime" "0.21.6"
     "@module-federation/webpack-bundler-runtime" "0.21.6"
 
+<<<<<<< HEAD
 "@module-federation/runtime@0.21.6":
   version "0.21.6"
   resolved "https://registry.yarnpkg.com/@module-federation/runtime/-/runtime-0.21.6.tgz#8d4a29a792ed4a94e5a811fe097d314a6f9dcab7"
   integrity sha512-+caXwaQqwTNh+CQqyb4mZmXq7iEemRDrTZQGD+zyeH454JAYnJ3s/3oDFizdH6245pk+NiqDyOOkHzzFQorKhQ==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@module-federation/runtime-tools@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime-tools/-/runtime-tools-0.21.2.tgz#f229fd9f47eae424aadc758cb1d772eaeed8783c"
+  integrity sha512-SgG9NWTYGNYcHSd5MepO3AXf6DNXriIo4sKKM4mu4RqfYhHyP+yNjnF/gvYJl52VD61g0nADmzLWzBqxOqk2tg==
+=======
+"@module-federation/runtime-tools@0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime-tools/-/runtime-tools-0.21.1.tgz#c2c4e3092732c4ff89a059dfeb9327788d4660e0"
+  integrity sha512-uQmammw3Osg8370yiRqZwKo7eA5zkyml9pAX9x4oS9QAkEBvQpDogERlF9f7gAgcP2P3v+xLg3/bCdquD0gt8A==
+  dependencies:
+    "@module-federation/runtime" "0.21.1"
+    "@module-federation/webpack-bundler-runtime" "0.21.1"
+
+"@module-federation/runtime-tools@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime-tools/-/runtime-tools-0.21.2.tgz#f229fd9f47eae424aadc758cb1d772eaeed8783c"
+  integrity sha512-SgG9NWTYGNYcHSd5MepO3AXf6DNXriIo4sKKM4mu4RqfYhHyP+yNjnF/gvYJl52VD61g0nADmzLWzBqxOqk2tg==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
   dependencies:
     "@module-federation/error-codes" "0.21.6"
     "@module-federation/runtime-core" "0.21.6"
     "@module-federation/sdk" "0.21.6"
 
+<<<<<<< HEAD
 "@module-federation/sdk@0.21.6":
   version "0.21.6"
   resolved "https://registry.yarnpkg.com/@module-federation/sdk/-/sdk-0.21.6.tgz#8aac1159ff37f418ed72bc79afccbbfb025f847a"
@@ -2190,9 +2246,78 @@
   version "0.21.6"
   resolved "https://registry.yarnpkg.com/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-0.21.6.tgz#6831eaf147356fe5b096d24c7a902c323e810bb9"
   integrity sha512-7zIp3LrcWbhGuFDTUMLJ2FJvcwjlddqhWGxi/MW3ur1a+HaO8v5tF2nl+vElKmbG1DFLU/52l3PElVcWf/YcsQ==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@module-federation/runtime@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime/-/runtime-0.21.2.tgz#c88dda593891d1b9bfc16797136f9f23c44de8e7"
+  integrity sha512-97jlOx4RAnAHMBTfgU5FBK6+V/pfT6GNX0YjSf8G+uJ3lFy74Y6kg/BevEkChTGw5waCLAkw/pw4LmntYcNN7g==
+=======
+"@module-federation/runtime@0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime/-/runtime-0.21.1.tgz#7d7a8a4b0ddc0a7662d0fe3efb8b7c33c6266429"
+  integrity sha512-sfBrP0gEPwXPEiREVKVd0IjEWXtr3G/i7EUZVWTt4D491nNpswog/kuKFatGmhcBb+9uD5v9rxFgmIbgL9njnQ==
   dependencies:
+    "@module-federation/error-codes" "0.21.1"
+    "@module-federation/runtime-core" "0.21.1"
+    "@module-federation/sdk" "0.21.1"
+
+"@module-federation/runtime@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/runtime/-/runtime-0.21.2.tgz#c88dda593891d1b9bfc16797136f9f23c44de8e7"
+  integrity sha512-97jlOx4RAnAHMBTfgU5FBK6+V/pfT6GNX0YjSf8G+uJ3lFy74Y6kg/BevEkChTGw5waCLAkw/pw4LmntYcNN7g==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+  dependencies:
+<<<<<<< HEAD
     "@module-federation/runtime" "0.21.6"
     "@module-federation/sdk" "0.21.6"
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+    "@module-federation/error-codes" "0.21.2"
+    "@module-federation/runtime-core" "0.21.2"
+    "@module-federation/sdk" "0.21.2"
+
+"@module-federation/sdk@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/sdk/-/sdk-0.21.2.tgz#0ec934f627105503016aa39531789506724d9715"
+  integrity sha512-t2vHSJ1a9zjg7LLJoEghcytNLzeFCqOat5TbXTav5dgU0xXw82Cf0EfLrxiJL6uUpgbtyvUdqqa2DVAvMPjiiA==
+
+"@module-federation/webpack-bundler-runtime@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-0.21.2.tgz#bbc8dca89c85c4c9ff88b250361d16459dc84ffd"
+  integrity sha512-06R/NDY6Uh5RBIaBOFwYWzJCf1dIiQd/DFHToBVhejUT3ZFG7GzHEPIIsAGqMzne/JSmVsvjlXiJu7UthQ6rFA==
+  dependencies:
+    "@module-federation/runtime" "0.21.2"
+    "@module-federation/sdk" "0.21.2"
+=======
+    "@module-federation/error-codes" "0.21.2"
+    "@module-federation/runtime-core" "0.21.2"
+    "@module-federation/sdk" "0.21.2"
+
+"@module-federation/sdk@0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@module-federation/sdk/-/sdk-0.21.1.tgz#ea9de4d85a75ecbc060756dfb92bf4fa3e79df34"
+  integrity sha512-1cHMrmCCao3NMFM4BkA0GDt4rbYbyneHct5E4z68cu5UBUnI3L/UboP5VNM8lkYMO1nCR8M0FcLkLhK35Nt48A==
+
+"@module-federation/sdk@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/sdk/-/sdk-0.21.2.tgz#0ec934f627105503016aa39531789506724d9715"
+  integrity sha512-t2vHSJ1a9zjg7LLJoEghcytNLzeFCqOat5TbXTav5dgU0xXw82Cf0EfLrxiJL6uUpgbtyvUdqqa2DVAvMPjiiA==
+
+"@module-federation/webpack-bundler-runtime@0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-0.21.1.tgz#71a208f803ca3f2915f0245feabfcaab4f1ebb95"
+  integrity sha512-yyXX6ugTV07pMxMzAHt6/JDwblS3f1NDyUI7l44CyYgXpl2ItEEUs5aj5h/5xU1c9Px7M//KkY3qW+InW4tR/A==
+  dependencies:
+    "@module-federation/runtime" "0.21.1"
+    "@module-federation/sdk" "0.21.1"
+
+"@module-federation/webpack-bundler-runtime@0.21.2":
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-0.21.2.tgz#bbc8dca89c85c4c9ff88b250361d16459dc84ffd"
+  integrity sha512-06R/NDY6Uh5RBIaBOFwYWzJCf1dIiQd/DFHToBVhejUT3ZFG7GzHEPIIsAGqMzne/JSmVsvjlXiJu7UthQ6rFA==
+  dependencies:
+    "@module-federation/runtime" "0.21.2"
+    "@module-federation/sdk" "0.21.2"
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
 
 "@mui/base@5.0.0-beta.42":
   version "5.0.0-beta.42"
@@ -2894,6 +3019,17 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.53.3.tgz#38ae84f4c04226c1d56a3b17296ef1e0460ecdfe"
   integrity sha512-UhTd8u31dXadv0MopwGgNOBpUVROFKWVQgAg5N1ESyCz8AuBcMqm4AuTjrwgQKGDfoFuz02EuMRHQIw/frmYKQ==
 
+"@rsbuild/core@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rsbuild/core/-/core-1.6.0-beta.1.tgz#a9e3f92878f06b1fb19213d91fce5f8cf87d9344"
+  integrity sha512-UjQnvXDW9m/hS4DP66ubGIMVjK2PzYx8tzgiinrO0kjNCr9i8KWuJSJGUWyczFMpSsXxp20LnuTxtx7kiGiYdA==
+  dependencies:
+    "@rspack/core" "1.6.0-beta.1"
+    "@rspack/lite-tapable" "~1.0.1"
+    "@swc/helpers" "^0.5.17"
+    core-js "~3.46.0"
+    jiti "^2.6.1"
+
 "@rsbuild/core@^1.2.10":
   version "1.6.12"
   resolved "https://registry.yarnpkg.com/@rsbuild/core/-/core-1.6.12.tgz#0c84c8cbb4c686992e205ab27535417178d6aef3"
@@ -2937,57 +3073,229 @@
   resolved "https://registry.yarnpkg.com/@rspack/binding-darwin-arm64/-/binding-darwin-arm64-1.6.6.tgz#85181892f762ec8fd6f340e8afb585e39757826a"
   integrity sha512-vGVDP0rlWa2w/gLba/sncVfkCah0HmhdmK5vGj/7sSX0iViwQneA2xjxDHyCNSQrvfq9GJmj4Kmdq/9tGh0KuA==
 
+<<<<<<< HEAD
 "@rspack/binding-darwin-x64@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-darwin-x64/-/binding-darwin-x64-1.6.6.tgz#a69a5163bfe7b8bb5203fb23be9af18b0e4acb3d"
   integrity sha512-IcdEG2kOmbPPO70Zl7gDnowDjK7d7C1hWew2vU7dPltr2t1JalRIMnS051lhiur0ULkSxV3cW1zXqv0Oi8AnOg==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-darwin-x64@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-darwin-x64/-/binding-darwin-x64-1.6.0.tgz#8948268e1070c4483e4867df492cf541b4fc9089"
+  integrity sha512-UYz+Y1XqbHGnkUOsaZRuwiuQaQaQ5rEPSboBPlIVDtblwmB71yxo3ET0nSoUhz8L/WXqQoARiraTCxUP6bvSIg==
+=======
+"@rspack/binding-darwin-arm64@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-darwin-arm64/-/binding-darwin-arm64-1.6.0-beta.1.tgz#e98906130eca3281e882dafd5da82ed8b0d923f6"
+  integrity sha512-RXQ97iVXgvQAb/cq265z/txdHOOJ6fQQRBfnn0IfMNk7gT4W2rvsLrOqQpwtMKxYV4N/mfWnycfAVa0OOf22Gg==
 
+"@rspack/binding-darwin-x64@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-darwin-x64/-/binding-darwin-x64-1.6.0.tgz#8948268e1070c4483e4867df492cf541b4fc9089"
+  integrity sha512-UYz+Y1XqbHGnkUOsaZRuwiuQaQaQ5rEPSboBPlIVDtblwmB71yxo3ET0nSoUhz8L/WXqQoARiraTCxUP6bvSIg==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+
+<<<<<<< HEAD
 "@rspack/binding-linux-arm64-gnu@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.6.6.tgz#6f02ad5b17af45736b2639b6bd9debdb8e771c83"
   integrity sha512-rIguCCtlTcwoFlwheDiUgdImk27spuCRn43zGJogARpM/ZYRFKIuSwFDGUtJT2g0TSLUAHUhWAUqC36NwvrbMQ==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-linux-arm64-gnu@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.6.0.tgz#8a913dad95d5977d01efa453acb68d9c76eb174c"
+  integrity sha512-Jr7aaxrtwOnh7ge7tZP+Mjpo6uNltvQisL25WcjpP+8PnPT0C9jziKDJso7KxeOINXnQ2yRn2h65+HBNb7FQig==
+=======
+"@rspack/binding-darwin-x64@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-darwin-x64/-/binding-darwin-x64-1.6.0-beta.1.tgz#73f5cc4c2611637ee93b1e861ece9840ba8f04f4"
+  integrity sha512-Ulb7Jyyvuf28BwPXZKSbglaSK/19b32ItWT+pgswhbFsnfhzAQQd7Jo7TUEvHNHAdVDiES8VFlrnOhOSnwEOLg==
 
+"@rspack/binding-linux-arm64-gnu@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.6.0.tgz#8a913dad95d5977d01efa453acb68d9c76eb174c"
+  integrity sha512-Jr7aaxrtwOnh7ge7tZP+Mjpo6uNltvQisL25WcjpP+8PnPT0C9jziKDJso7KxeOINXnQ2yRn2h65+HBNb7FQig==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+
+<<<<<<< HEAD
 "@rspack/binding-linux-arm64-musl@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.6.6.tgz#87dd6f17bf8445901dc508d94f76889817459bc9"
   integrity sha512-x6X6Gr0fUw6qrJGxZt3Rb6oIX+jd9pdcyp0VbtofcLaqGVQbzustYsYnuLATPOys0q4J/4kWnmEhkjLJHwkhpQ==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-linux-arm64-musl@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.6.0.tgz#f8d4540311312e82223576a98e65839309740a7c"
+  integrity sha512-hl17reUhkjgkcLao6ZvNiSRQFGFykqUpIj1//v/XtVd/2XAZ0Kt7jv9UUeaR+2zY8piH+tgCkwgefmjmajMeFg==
+=======
+"@rspack/binding-linux-arm64-gnu@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.6.0-beta.1.tgz#0c3e108b0e6c1a8975e47adc2d2b193c707ac52f"
+  integrity sha512-UyUoh5RXHTWCktqPVnqoc5rwlWyLkWqGu6ga+iyJHDxdxlrHFfwJnTSnCd4y8cRadf7CrmjHElxE61GU3WCYhw==
 
+"@rspack/binding-linux-arm64-musl@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.6.0.tgz#f8d4540311312e82223576a98e65839309740a7c"
+  integrity sha512-hl17reUhkjgkcLao6ZvNiSRQFGFykqUpIj1//v/XtVd/2XAZ0Kt7jv9UUeaR+2zY8piH+tgCkwgefmjmajMeFg==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+
+<<<<<<< HEAD
 "@rspack/binding-linux-x64-gnu@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.6.6.tgz#b44ebc13f3d8c957fc11e49ebfaa2eeef49563bf"
   integrity sha512-gSlVdASszWHosQKn+nzYOInBijdQboUnmNMGgW9/PijVg3433IvQjzviUuJFno8CMGgrACV9yw+ZFDuK0J57VA==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-linux-x64-gnu@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.6.0.tgz#353b690f3c98a6075e31f7b0b4a38c3b068f3e45"
+  integrity sha512-xdlb+ToerFU/YggndCfIrZI/S/C80CP9ZFw6lhnEFSTJDAG88KptxstsoKUh8YzyPTD45CYaOjYNtUtiv0nScg==
+=======
+"@rspack/binding-linux-arm64-musl@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.6.0-beta.1.tgz#07bd09f71b3b4d0c02c6913ab9ee5969e08b587b"
+  integrity sha512-JAXVKHQieN4Ruvs7MstvsPUtRBSAROqJ0abCh4rXdV+FzncKp/ZkdfjQploDhBWtWfU8rPvIjaxeZcPfHMI5/A==
 
+"@rspack/binding-linux-x64-gnu@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.6.0.tgz#353b690f3c98a6075e31f7b0b4a38c3b068f3e45"
+  integrity sha512-xdlb+ToerFU/YggndCfIrZI/S/C80CP9ZFw6lhnEFSTJDAG88KptxstsoKUh8YzyPTD45CYaOjYNtUtiv0nScg==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+
+<<<<<<< HEAD
 "@rspack/binding-linux-x64-musl@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-linux-x64-musl/-/binding-linux-x64-musl-1.6.6.tgz#92cd7c04f87a777e20ff9ee09f018c6116611e23"
   integrity sha512-TZaqVkh7memsTK/hxkOBrbpdzbmBUMea1YnYt++7QjMgco1kWFvAQ+YhAWtIaOaEg8s6C07Lt0Zp8izM2Dja0g==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-linux-x64-musl@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-x64-musl/-/binding-linux-x64-musl-1.6.0.tgz#efa5604675c6f63e5ea98e257d89b7e5496cefa1"
+  integrity sha512-IkXEW/FBPPz4EJJTLNZvA+94aLaW2HgUMYu7zCIw5YMc9JJ/UXexY1zjX/A7yidsCiZCRy/ZrB+veFJ5FkZv7w==
+=======
+"@rspack/binding-linux-x64-gnu@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.6.0-beta.1.tgz#4aa2cfbe06d8c0d654994c1ff6ca218090df88a4"
+  integrity sha512-LqAos71CJS5/V4knX9T7T68oGz0XPRZ2IJmI3jEByRlNcyZdxYeQ7Dw09JO9Y5Xj0T+0cudOeL2MxHcD3gTF/w==
 
+"@rspack/binding-linux-x64-musl@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-x64-musl/-/binding-linux-x64-musl-1.6.0.tgz#efa5604675c6f63e5ea98e257d89b7e5496cefa1"
+  integrity sha512-IkXEW/FBPPz4EJJTLNZvA+94aLaW2HgUMYu7zCIw5YMc9JJ/UXexY1zjX/A7yidsCiZCRy/ZrB+veFJ5FkZv7w==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+
+<<<<<<< HEAD
 "@rspack/binding-wasm32-wasi@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-wasm32-wasi/-/binding-wasm32-wasi-1.6.6.tgz#0e95e0c301fb7f02de0f0cac31500bdaf0cd4585"
   integrity sha512-W4mWdlLnYrbUaktyHOGNfATblxMTbgF7CBfDw8PhbDtjd2l8e/TnaHgIDkwITHXAOMEF/QEKfo9FtusbcQJNKw==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-wasm32-wasi@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-wasm32-wasi/-/binding-wasm32-wasi-1.6.0.tgz#692e83cc3f68c9ca324b2273366ce93aa816fdea"
+  integrity sha512-XGwX35XXnoTYVUGwDBsKNOkkk/yUsT/RF59u9BwT3QBM5eSXk767xVw/ZeiiyJf5YfI/52HDW2E4QZyvlYyv7g==
+=======
+"@rspack/binding-linux-x64-musl@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-linux-x64-musl/-/binding-linux-x64-musl-1.6.0-beta.1.tgz#13d262a1d0c0e0371a17a12abaaf427e228e8c81"
+  integrity sha512-E4dRMzIHYaoYkgmDTFLrgnGtdspbAuVbLfaPF9AWW5YkQn52obGAgbbNb1wi1JJ5f29nTBoLauYCucEO5IGFvA==
+
+"@rspack/binding-wasm32-wasi@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-wasm32-wasi/-/binding-wasm32-wasi-1.6.0.tgz#692e83cc3f68c9ca324b2273366ce93aa816fdea"
+  integrity sha512-XGwX35XXnoTYVUGwDBsKNOkkk/yUsT/RF59u9BwT3QBM5eSXk767xVw/ZeiiyJf5YfI/52HDW2E4QZyvlYyv7g==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
   dependencies:
     "@napi-rs/wasm-runtime" "1.0.7"
 
+<<<<<<< HEAD
 "@rspack/binding-win32-arm64-msvc@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.6.6.tgz#cc0fddea050cc42664f7e40925c44de035b4cc88"
   integrity sha512-cw5OgxqoDwjoZlk0L3vGEwcjPZsOVFYLwr2ssiC05rsTbhBwxj8coLpAJdvUvbf6C2TTmCB7iPe2sPq1KWD37g==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-win32-arm64-msvc@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.6.0.tgz#3127269b7f8a901abd8aaaf2080c87071035da7f"
+  integrity sha512-HOA/U7YC6EB74CpIrT2GrvPgd+TLr0anNuOp/8omw9hH1jjsP5cjUMgWeAGmWyXWxwoS8rRJ0xhRA+UIe3cL3g==
+=======
+"@rspack/binding-wasm32-wasi@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-wasm32-wasi/-/binding-wasm32-wasi-1.6.0-beta.1.tgz#7d1488da80512dcc6df462607b98e32443808832"
+  integrity sha512-PaKEjXOkYprSFlgdgVm/P3pv2E8nAQx9WSGgPmMVIAtxo3Cyz0wwFf0f1Bp9wCw0KkIWgi+9lz8oXNkgKZilug==
+  dependencies:
+    "@napi-rs/wasm-runtime" "1.0.7"
 
+"@rspack/binding-win32-arm64-msvc@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.6.0.tgz#3127269b7f8a901abd8aaaf2080c87071035da7f"
+  integrity sha512-HOA/U7YC6EB74CpIrT2GrvPgd+TLr0anNuOp/8omw9hH1jjsP5cjUMgWeAGmWyXWxwoS8rRJ0xhRA+UIe3cL3g==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+
+<<<<<<< HEAD
 "@rspack/binding-win32-ia32-msvc@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-1.6.6.tgz#4b66ab249816282ca31c70daa8a30805acbe0ecb"
   integrity sha512-M4ruR+VZ59iy+mPjy6FQPT27cOgeytf3wFBrt7e0suKeNLYGxrNyI9YhgpCTY++SMJsAMgRLGDHoI3ZgWulw1Q==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-win32-ia32-msvc@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-1.6.0.tgz#8f47727d862e043de4d5186a0e1b5133df7e9f9f"
+  integrity sha512-ThczdltBOFcq+IrTflCE+8q0GvKoISt6pTupkuGnI1/bCnqhCxPP6kx8Z06fdJUFMhvBtpZa0gDJvhh3JBZrKA==
+=======
+"@rspack/binding-win32-arm64-msvc@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.6.0-beta.1.tgz#0cafb7fef71d609ba33c17d51c755442239120ee"
+  integrity sha512-HWz9Qxrjf3TKLCwiFPJaqw+STvEsBvFYZvBXZ8umIZXqtdfgQP5d91V8JRG4Gg1J6xnGC/KhZexxBuR/y64aBA==
 
+"@rspack/binding-win32-ia32-msvc@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-1.6.0.tgz#8f47727d862e043de4d5186a0e1b5133df7e9f9f"
+  integrity sha512-ThczdltBOFcq+IrTflCE+8q0GvKoISt6pTupkuGnI1/bCnqhCxPP6kx8Z06fdJUFMhvBtpZa0gDJvhh3JBZrKA==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+
+<<<<<<< HEAD
 "@rspack/binding-win32-x64-msvc@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.6.6.tgz#cf2a8bc33060a170486939dd4af514a9c1485a6e"
   integrity sha512-q5QTvdhPUh+CA93cQG5zWKRIHMIWPzw+ftFDEwBw52zYdvNAoLniqD8o5Mi8CT0pndhulXgR5aw0Sjd3eMah+A==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding-win32-x64-msvc@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.6.0.tgz#7841e9db2ce7d891cb78451f250d0e9f25841b4c"
+  integrity sha512-Bhyvsh1m6kIpr1vqZlcdUDUTh0bheRe9SF+f6jw0kPDPbh8FfrRbshPKmRHpRZAUHt20NqgUKR2z2BaKb0IJvQ==
+=======
+"@rspack/binding-win32-ia32-msvc@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-1.6.0-beta.1.tgz#1bf4e04b982f97b3d2edb5c75e3706ff78a288e2"
+  integrity sha512-alAZHRuyPzCH3rJpEC9EBE60EZPnQjzltZ6HN8lsCidACMFTzaLBvuzZyYQah+Zm58O22ok2Eon4BpP1Coizgg==
 
+"@rspack/binding-win32-x64-msvc@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.6.0.tgz#7841e9db2ce7d891cb78451f250d0e9f25841b4c"
+  integrity sha512-Bhyvsh1m6kIpr1vqZlcdUDUTh0bheRe9SF+f6jw0kPDPbh8FfrRbshPKmRHpRZAUHt20NqgUKR2z2BaKb0IJvQ==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
+
+<<<<<<< HEAD
 "@rspack/binding@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/binding/-/binding-1.6.6.tgz#a32fa35fa83fa7c094bed6bd8adc87e2dba821d4"
   integrity sha512-noiV+qhyBTVpvG2M4bnOwKk2Ynl6G47Wf7wpCjPCFr87qr3txNwTTnhkEJEU59yj+VvIhbRD2rf5+9TLoT0Wxg==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/binding@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding/-/binding-1.6.0.tgz#8c7b8e0f7f5de7c3b7d4e14d03a6ff3068040faa"
+  integrity sha512-RqlCjvWg/LkJjHpsbI48ebo2SYpIBJsV1eh9SEMfXo1batAPvB5grhAbLX0MRUOtzuQOnZMCDGdr2v7l2L8Siw==
+=======
+"@rspack/binding-win32-x64-msvc@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.6.0-beta.1.tgz#6cb4dd49b1beb459047192e7681084aa5f056d63"
+  integrity sha512-/WBzhed0Cu0o9XQ9caGgWwzyNnnPKlENlExa2aGbRCbB14/+CwfhCyETyKlc/ID+dtlV/eHKTC9cckUNI8NpTQ==
+
+"@rspack/binding@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/binding/-/binding-1.6.0.tgz#8c7b8e0f7f5de7c3b7d4e14d03a6ff3068040faa"
+  integrity sha512-RqlCjvWg/LkJjHpsbI48ebo2SYpIBJsV1eh9SEMfXo1batAPvB5grhAbLX0MRUOtzuQOnZMCDGdr2v7l2L8Siw==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
   optionalDependencies:
     "@rspack/binding-darwin-arm64" "1.6.6"
     "@rspack/binding-darwin-x64" "1.6.6"
@@ -3000,19 +3308,68 @@
     "@rspack/binding-win32-ia32-msvc" "1.6.6"
     "@rspack/binding-win32-x64-msvc" "1.6.6"
 
+<<<<<<< HEAD
 "@rspack/core@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@rspack/core/-/core-1.6.6.tgz#037f5a42bcd53706510bf0bb0194e9966d7e7f59"
   integrity sha512-2mR+2YBydlgZ7Q0Rpd6bCC3MBnV9TS0x857K0zIhbDj4BQOqaWVy1n7fx/B3MrS8TR0QCuzKfyDAjNz+XTyJVQ==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/core@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/core/-/core-1.6.0.tgz#5122882f67127bb44af8e7cbe4d4097c0bc0920d"
+  integrity sha512-u2GDSToEhmgIsy0QbOPA81i9tu87J2HgSsRA3HHZfWIR8Vt8KdlAriQnG8CatDnvFSY/UQEumVf5Z1HUAQwxCg==
+=======
+"@rspack/binding@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/binding/-/binding-1.6.0-beta.1.tgz#f9fa0af557aa80eb3d74688a5752354c5ff528d1"
+  integrity sha512-r3L60ekkDLM5qoRjCMrqsgwU9SQ5e8oA/Omltu/FEEUspIVHawPvAqNZvAXnGB+FoNxM8YgdRRh12PAwXJww0A==
+  optionalDependencies:
+    "@rspack/binding-darwin-arm64" "1.6.0-beta.1"
+    "@rspack/binding-darwin-x64" "1.6.0-beta.1"
+    "@rspack/binding-linux-arm64-gnu" "1.6.0-beta.1"
+    "@rspack/binding-linux-arm64-musl" "1.6.0-beta.1"
+    "@rspack/binding-linux-x64-gnu" "1.6.0-beta.1"
+    "@rspack/binding-linux-x64-musl" "1.6.0-beta.1"
+    "@rspack/binding-wasm32-wasi" "1.6.0-beta.1"
+    "@rspack/binding-win32-arm64-msvc" "1.6.0-beta.1"
+    "@rspack/binding-win32-ia32-msvc" "1.6.0-beta.1"
+    "@rspack/binding-win32-x64-msvc" "1.6.0-beta.1"
+
+"@rspack/core@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@rspack/core/-/core-1.6.0.tgz#5122882f67127bb44af8e7cbe4d4097c0bc0920d"
+  integrity sha512-u2GDSToEhmgIsy0QbOPA81i9tu87J2HgSsRA3HHZfWIR8Vt8KdlAriQnG8CatDnvFSY/UQEumVf5Z1HUAQwxCg==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
   dependencies:
     "@module-federation/runtime-tools" "0.21.6"
     "@rspack/binding" "1.6.6"
     "@rspack/lite-tapable" "1.1.0"
 
+<<<<<<< HEAD
 "@rspack/lite-tapable@1.1.0", "@rspack/lite-tapable@~1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@rspack/lite-tapable/-/lite-tapable-1.1.0.tgz#3cfdafeed01078e116bd4f191b684c8b484de425"
   integrity sha512-E2B0JhYFmVAwdDiG14+DW0Di4Ze4Jg10Pc4/lILUrd5DRCaklduz2OvJ5HYQ6G+hd+WTzqQb3QnDNfK4yvAFYw==
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@rspack/lite-tapable@1.0.1", "@rspack/lite-tapable@~1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@rspack/lite-tapable/-/lite-tapable-1.0.1.tgz#d4540a5d28bd6177164bc0ba0bee4bdec0458591"
+  integrity sha512-VynGOEsVw2s8TAlLf/uESfrgfrq2+rcXB1muPJYBWbsm1Oa6r5qVQhjA5ggM6z/coYPrsVMgovl3Ff7Q7OCp1w==
+=======
+"@rspack/core@1.6.0-beta.1":
+  version "1.6.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@rspack/core/-/core-1.6.0-beta.1.tgz#8f4067960f1d4825a785f07330a8a0867eaa20cb"
+  integrity sha512-2ff8XWonPPHyQ6mEWogMspg+Sul3lXZUfNQVrbYSjfNpi8CeDV0/ZtRbHHbAXiy6pz5fvBFL6X+i/ATckjTYBw==
+  dependencies:
+    "@module-federation/runtime-tools" "0.21.1"
+    "@rspack/binding" "1.6.0-beta.1"
+    "@rspack/lite-tapable" "1.0.1"
+
+"@rspack/lite-tapable@1.0.1", "@rspack/lite-tapable@~1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@rspack/lite-tapable/-/lite-tapable-1.0.1.tgz#d4540a5d28bd6177164bc0ba0bee4bdec0458591"
+  integrity sha512-VynGOEsVw2s8TAlLf/uESfrgfrq2+rcXB1muPJYBWbsm1Oa6r5qVQhjA5ggM6z/coYPrsVMgovl3Ff7Q7OCp1w==
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
 
 "@rspack/plugin-react-refresh@^1.5.2":
   version "1.5.3"
@@ -3021,6 +3378,15 @@
   dependencies:
     error-stack-parser "^2.1.4"
     html-entities "^2.6.0"
+
+"@rstest/core@^0.6.8":
+  version "0.6.8"
+  resolved "https://registry.yarnpkg.com/@rstest/core/-/core-0.6.8.tgz#d77d05f1ef6653d7ee43035a3f200090f7923773"
+  integrity sha512-rWn3HzcOx1QY/F+Qu/5HpLM9k0f2I0Svvi08vGGB8p9TN9u2wD2/AY+Rh9ao+90wxX5GiN2RVlI//4G7lHYJBg==
+  dependencies:
+    "@rsbuild/core" "1.6.0-beta.1"
+    "@types/chai" "^5.2.3"
+    tinypool "^1.1.1"
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -4817,6 +5183,7 @@
   resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.5.tgz#db9468cb1b1b5a925b8f34822f1669df0c5472f5"
   integrity sha512-hWtVTC2q7hc7xZ/RLbxapMvDMgUnDvKvMOpKal4DrMyfGBUfB1oKaZlIRr6mJL+If3bAP6sV/QneGzF6tJjZDg==
 
+<<<<<<< HEAD
 "@types/chai@^5.2.2":
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-5.2.3.tgz#8e9cd9e1c3581fa6b341a5aed5588eb285be0b4a"
@@ -4825,6 +5192,17 @@
     "@types/deep-eql" "*"
     assertion-error "^2.0.1"
 
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+=======
+"@types/chai@^5.2.3":
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-5.2.3.tgz#8e9cd9e1c3581fa6b341a5aed5588eb285be0b4a"
+  integrity sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==
+  dependencies:
+    "@types/deep-eql" "*"
+    assertion-error "^2.0.1"
+
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
 "@types/chart.js@^2.9.27":
   version "2.9.41"
   resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.9.41.tgz#4148cdc87d4f98fad44b2883271cd0fa57f05e0d"
@@ -4870,12 +5248,23 @@
   dependencies:
     "@types/ms" "*"
 
+<<<<<<< HEAD
 "@types/deep-eql@*":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/deep-eql/-/deep-eql-4.0.2.tgz#334311971d3a07121e7eb91b684a605e7eea9cbd"
   integrity sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==
 
 "@types/eslint-scope@^3.7.7":
+||||||| parent of ad3e910f (migrate tests from vitest to rstest)
+"@types/eslint-scope@^3.7.3":
+=======
+"@types/deep-eql@*":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@types/deep-eql/-/deep-eql-4.0.2.tgz#334311971d3a07121e7eb91b684a605e7eea9cbd"
+  integrity sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==
+
+"@types/eslint-scope@^3.7.3":
+>>>>>>> ad3e910f (migrate tests from vitest to rstest)
   version "3.7.7"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.7.tgz#3108bd5f18b0cdb277c867b3dd449c9ed7079ac5"
   integrity sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==
@@ -6180,6 +6569,11 @@ assert-plus@1.0.0, assert-plus@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
   integrity sha512-NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==
+
+assertion-error@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-2.0.1.tgz#f641a196b335690b1070bf00b6e7593fec190bf7"
+  integrity sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==
 
 assertion-error@^2.0.1:
   version "2.0.1"
@@ -15852,6 +16246,11 @@ tinyglobby@^0.2.12, tinyglobby@^0.2.13, tinyglobby@^0.2.14, tinyglobby@^0.2.15:
   dependencies:
     fdir "^6.5.0"
     picomatch "^4.0.3"
+
+tinypool@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/tinypool/-/tinypool-1.1.1.tgz#059f2d042bd37567fbc017d3d426bdd2a2612591"
+  integrity sha512-Zba82s87IFq9A9XmjiX5uZA/ARWDrB03OHlq+Vw1fSdt0I+4/Kutwy8BP4Y/y/aORMo61FQ0vIb5j44vSo5Pkg==
 
 tinypool@^1.1.1:
   version "1.1.1"

@@ -1,14 +1,13 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`NavBar with routeButtons > should render with given state from Redux store 1`] = `
 <div>
-  <mock-appbar
-    classname="NavBar-appBar-1"
-    color="primary"
-    position="static"
+  <header
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic NavBar-appBar-1 css-1qfbauw-MuiPaper-root-MuiAppBar-root"
+    style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);"
   >
-    <mock-toolbar
-      classname="NavBar-toolbar-4"
+    <div
+      class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular NavBar-toolbar-4 css-j2y5px-MuiToolbar-root"
     >
       <mock-menudrawer
         open="false"
@@ -19,15 +18,13 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-2 css-3nmqko-MuiGrid-root"
         >
-          <mock-box
-            alignitems="center"
-            display="flex"
-            flexwrap="nowrap"
+          <div
+            class="MuiBox-root css-ium7el"
           >
-            <mock-iconbutton
-              color="inherit"
-              edge="start"
-              size="large"
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-uzo6ff-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -40,59 +37,56 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
                   d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
                 />
               </svg>
-            </mock-iconbutton>
-            <mock-link
-              classname="NavBar-navBarLink-2"
+            </button>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover NavBar-navBarLink-2 css-187zrab-MuiTypography-root-MuiLink-root"
               href="/map"
-              underline="hover"
             >
-              <mock-typography
-                color="textPrimary"
-                variant="h4"
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-6oevoe-MuiTypography-root"
               >
                 Aqua
-              </mock-typography>
-              <mock-typography
+              </h4>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-1ghn6nx-MuiTypography-root"
                 style="color: rgb(138, 198, 222);"
-                variant="h4"
               >
                 link
-              </mock-typography>
-            </mock-link>
-          </mock-box>
+              </h4>
+            </a>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-12 css-kdnu70-MuiGrid-root"
         >
-          <mock-tooltip
-            title="Translate"
+          <button
+            aria-label="Translate"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+            data-mui-internal-clone-element="true"
+            style="color: white;"
+            tabindex="0"
+            type="button"
           >
-            <mock-iconbutton
-              size="large"
-              style="color: white;"
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="LanguageIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="LanguageIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
-                />
-              </svg>
-            </mock-iconbutton>
-          </mock-tooltip>
-          <mock-box
-            alignitems="center"
-            display="flex"
-            flexwrap="nowrap"
+              <path
+                d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
+              />
+            </svg>
+          </button>
+          <div
+            class="MuiBox-root css-ium7el"
           >
             Mock User
-            <mock-iconbutton
-              classname="NavBar-button-11"
-              size="large"
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-11 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -105,92 +99,12 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
-            </mock-iconbutton>
-            <mock-menu
-              classname="NavBar-userMenu-7"
-              keepmounted="true"
-              menulistprops="[object Object]"
-              open="false"
-              popoverclasses="[object Object]"
-            >
-              <mock-divider
-                classname="NavBar-userMenuDivider-6"
-              />
-              <a
-                class="NavBar-menuItemLink-9"
-                data-discover="true"
-                href="/dashboard"
-              >
-                <mock-menuitem
-                  classname="NavBar-menuItem-8"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                        data-testid="DashboardTwoToneIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z"
-                          opacity=".3"
-                        />
-                        <path
-                          d="M3 13h8V3H3zm2-8h4v6H5zm8 16h8V11h-8zm2-8h4v6h-4zM13 3v6h8V3zm6 4h-4V5h4zM3 21h8v-6H3zm2-4h4v2H5z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                    >
-                      Dashboard
-                    </div>
-                  </div>
-                </mock-menuitem>
-              </a>
-              <mock-divider
-                classname="NavBar-userMenuDivider-6"
-              />
-              <mock-menuitem
-                classname="NavBar-menuItem-8"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                      data-testid="PowerSettingsNewIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M13 3h-2v10h2zm4.83 2.17-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                  >
-                    Logout
-                  </div>
-                </div>
-              </mock-menuitem>
-            </mock-menu>
-          </mock-box>
+            </button>
+          </div>
         </div>
       </div>
-    </mock-toolbar>
-  </mock-appbar>
+    </div>
+  </header>
   <mock-registerdialog
     open="false"
   />
@@ -202,13 +116,12 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
 
 exports[`NavBar without routeButtons > should render with given state from Redux store 1`] = `
 <div>
-  <mock-appbar
-    classname="NavBar-appBar-13"
-    color="primary"
-    position="static"
+  <header
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic NavBar-appBar-13 css-1qfbauw-MuiPaper-root-MuiAppBar-root"
+    style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);"
   >
-    <mock-toolbar
-      classname="NavBar-toolbar-16"
+    <div
+      class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular NavBar-toolbar-16 css-j2y5px-MuiToolbar-root"
     >
       <mock-menudrawer
         open="false"
@@ -219,15 +132,13 @@ exports[`NavBar without routeButtons > should render with given state from Redux
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-150rfs1-MuiGrid-root"
         >
-          <mock-box
-            alignitems="center"
-            display="flex"
-            flexwrap="nowrap"
+          <div
+            class="MuiBox-root css-ium7el"
           >
-            <mock-iconbutton
-              color="inherit"
-              edge="start"
-              size="large"
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-uzo6ff-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -240,59 +151,56 @@ exports[`NavBar without routeButtons > should render with given state from Redux
                   d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
                 />
               </svg>
-            </mock-iconbutton>
-            <mock-link
-              classname="NavBar-navBarLink-14"
+            </button>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover NavBar-navBarLink-14 css-187zrab-MuiTypography-root-MuiLink-root"
               href="/map"
-              underline="hover"
             >
-              <mock-typography
-                color="textPrimary"
-                variant="h4"
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-6oevoe-MuiTypography-root"
               >
                 Aqua
-              </mock-typography>
-              <mock-typography
+              </h4>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-1ghn6nx-MuiTypography-root"
                 style="color: rgb(138, 198, 222);"
-                variant="h4"
               >
                 link
-              </mock-typography>
-            </mock-link>
-          </mock-box>
+              </h4>
+            </a>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-24 css-kdnu70-MuiGrid-root"
         >
-          <mock-tooltip
-            title="Translate"
+          <button
+            aria-label="Translate"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+            data-mui-internal-clone-element="true"
+            style="color: white;"
+            tabindex="0"
+            type="button"
           >
-            <mock-iconbutton
-              size="large"
-              style="color: white;"
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="LanguageIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="LanguageIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
-                />
-              </svg>
-            </mock-iconbutton>
-          </mock-tooltip>
-          <mock-box
-            alignitems="center"
-            display="flex"
-            flexwrap="nowrap"
+              <path
+                d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
+              />
+            </svg>
+          </button>
+          <div
+            class="MuiBox-root css-ium7el"
           >
             Mock User
-            <mock-iconbutton
-              classname="NavBar-button-23"
-              size="large"
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-23 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -305,92 +213,12 @@ exports[`NavBar without routeButtons > should render with given state from Redux
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
               </svg>
-            </mock-iconbutton>
-            <mock-menu
-              classname="NavBar-userMenu-19"
-              keepmounted="true"
-              menulistprops="[object Object]"
-              open="false"
-              popoverclasses="[object Object]"
-            >
-              <mock-divider
-                classname="NavBar-userMenuDivider-18"
-              />
-              <a
-                class="NavBar-menuItemLink-21"
-                data-discover="true"
-                href="/dashboard"
-              >
-                <mock-menuitem
-                  classname="NavBar-menuItem-20"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                        data-testid="DashboardTwoToneIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z"
-                          opacity=".3"
-                        />
-                        <path
-                          d="M3 13h8V3H3zm2-8h4v6H5zm8 16h8V11h-8zm2-8h4v6h-4zM13 3v6h8V3zm6 4h-4V5h4zM3 21h8v-6H3zm2-4h4v2H5z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                    >
-                      Dashboard
-                    </div>
-                  </div>
-                </mock-menuitem>
-              </a>
-              <mock-divider
-                classname="NavBar-userMenuDivider-18"
-              />
-              <mock-menuitem
-                classname="NavBar-menuItem-20"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                      data-testid="PowerSettingsNewIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M13 3h-2v10h2zm4.83 2.17-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                  >
-                    Logout
-                  </div>
-                </div>
-              </mock-menuitem>
-            </mock-menu>
-          </mock-box>
+            </button>
+          </div>
         </div>
       </div>
-    </mock-toolbar>
-  </mock-appbar>
+    </div>
+  </header>
   <mock-registerdialog
     open="false"
   />

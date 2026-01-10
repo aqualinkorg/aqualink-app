@@ -1,14 +1,12 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Site registration page > should render with given state from Redux store 1`] = `
 <div>
   <mock-navbar
     searchlocation="false"
   />
-  <mock-box
-    classname="Apply-boxBar-1"
-    height="100%"
-    pt="4"
+  <div
+    class="Apply-boxBar-1 MuiBox-root css-124mkwf"
   >
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg css-5c1adp-MuiContainer-root"
@@ -19,22 +17,21 @@ exports[`Site registration page > should render with given state from Redux stor
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
         >
-          <mock-typography
-            gutterbottom="true"
-            variant="h3"
+          <h3
+            class="MuiTypography-root MuiTypography-h3 MuiTypography-gutterBottom css-1vie97v-MuiTypography-root"
           >
             Register your local site
-          </mock-typography>
-          <mock-typography>
+          </h3>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-809xgg-MuiTypography-root"
+          >
             To get your local site registered with Aqualink please complete the form below. Your site will become immediately available for you to see though some of the satellite and model data will take up to 24 hours to show up.
-          </mock-typography>
+          </p>
         </div>
       </div>
     </div>
-    <mock-box
-      bgcolor="grey.100"
-      mt="8"
-      p="[object Object]"
+    <div
+      class="MuiBox-root css-1k48rur"
     >
       <div
         class="MuiContainer-root MuiContainer-maxWidthLg css-5c1adp-MuiContainer-root"
@@ -57,16 +54,14 @@ exports[`Site registration page > should render with given state from Redux stor
               class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-14gemme-MuiPaper-root"
               style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
             >
-              <mock-box
-                color="text.secondary"
-                p="4"
+              <div
+                class="MuiBox-root css-dptj4h"
               >
-                <mock-typography
-                  gutterbottom="true"
-                  variant="h4"
+                <h4
+                  class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1r9pg5d-MuiTypography-root"
                 >
                   Site Information
-                </mock-typography>
+                </h4>
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-8po1oh-MuiGrid-root"
                 >
@@ -97,10 +92,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-ex8a5f-MuiNotchedOutlined-root"
+                            class="css-w1u3ce"
                           >
                             <span>
                               Name
@@ -137,10 +132,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-ex8a5f-MuiNotchedOutlined-root"
+                            class="css-w1u3ce"
                           >
                             <span>
                               Organization
@@ -177,10 +172,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-ex8a5f-MuiNotchedOutlined-root"
+                            class="css-w1u3ce"
                           >
                             <span>
                               Email
@@ -193,9 +188,11 @@ exports[`Site registration page > should render with given state from Redux stor
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                   >
-                    <mock-typography>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-809xgg-MuiTypography-root"
+                    >
                       Location: Select a coastal point on the map in the ocean or sea. Land or lakes are not allowed.
-                    </mock-typography>
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
@@ -223,10 +220,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-1n64csd-MuiNotchedOutlined-root"
+                            class="css-81qg8w"
                           >
                             <span>
                               Latitude
@@ -262,10 +259,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-1n64csd-MuiNotchedOutlined-root"
+                            class="css-81qg8w"
                           >
                             <span>
                               Longitude
@@ -301,10 +298,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-1n64csd-MuiNotchedOutlined-root"
+                            class="css-81qg8w"
                           >
                             <span>
                               Site Name
@@ -340,10 +337,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-1n64csd-MuiNotchedOutlined-root"
+                            class="css-81qg8w"
                           >
                             <span>
                               Depth (m)
@@ -356,759 +353,60 @@ exports[`Site registration page > should render with given state from Redux stor
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                   >
-                    <mock-tooltip
-                      disablehoverlistener="true"
-                      title="Please Sign up before registering a new site"
+                    <div
+                      aria-label="Please Sign up before registering a new site"
+                      class=""
+                      data-mui-internal-clone-element="true"
                     >
-                      <div>
-                        <button
-                          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-16sv74i-MuiButtonBase-root-MuiButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    </mock-tooltip>
+                      <button
+                        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-vo55b5-MuiButtonBase-root-MuiButton-root"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Submit
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </mock-box>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </mock-box>
-  </mock-box>
-  <mock-snackbar
-    anchororigin="[object Object]"
-    autohideduration="4000"
-    open="false"
+    </div>
+  </div>
+  <header
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic Footer-appBar-6 css-1qfbauw-MuiPaper-root-MuiAppBar-root"
+    style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6 MuiAlert-root MuiAlert-colorError MuiAlert-filledError MuiAlert-filled css-1eta1yh-MuiPaper-root-MuiAlert-root"
-      role="alert"
-      style="--Paper-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);"
+      class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-j2y5px-MuiToolbar-root"
     >
-      <div
-        class="MuiAlert-icon css-vab54s-MuiAlert-icon"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
-          data-testid="ErrorOutlineIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-          />
-        </svg>
-      </div>
-      <div
-        class="MuiAlert-message css-zioonp-MuiAlert-message"
-      >
-        Something went wrong, please try again
-      </div>
-      <div
-        class="MuiAlert-action css-rgppqo-MuiAlert-action"
-      >
-        <button
-          aria-label="Close"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-ww7hxw-MuiButtonBase-root-MuiIconButton-root"
-          tabindex="0"
-          title="Close"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-            data-testid="CloseIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-            />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </mock-snackbar>
-  <mock-appbar
-    classname="Footer-appBar-6"
-    position="static"
-  >
-    <mock-toolbar>
       <div
         class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
         >
-          <mock-link
-            classname="Footer-navBarLink-7"
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover Footer-navBarLink-7 css-187zrab-MuiTypography-root-MuiLink-root"
             href="/map"
-            underline="hover"
           >
-            <mock-typography
-              color="textPrimary"
-              variant="h4"
+            <h4
+              class="MuiTypography-root MuiTypography-h4 css-6oevoe-MuiTypography-root"
             >
               Aqua
-            </mock-typography>
-            <mock-typography
+            </h4>
+            <h4
+              class="MuiTypography-root MuiTypography-h4 css-1ghn6nx-MuiTypography-root"
               style="color: rgb(138, 198, 222);"
-              variant="h4"
             >
               link
-            </mock-typography>
-          </mock-link>
+            </h4>
+          </a>
         </div>
       </div>
-    </mock-toolbar>
-  </mock-appbar>
-  <mock-dialog
-    maxwidth="xs"
-    open="false"
-    scroll="body"
-    transitionprops="[object Object]"
-  >
-    <mock-card>
-      <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-9 css-149tc0y-MuiCardHeader-root"
-      >
-        <div
-          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
-        >
-          <span
-            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
-                >
-                  <mock-typography
-                    variant="h4"
-                  >
-                    Aqua
-                  </mock-typography>
-                  <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-10"
-                    variant="h4"
-                  >
-                    link
-                  </mock-typography>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-              >
-                <mock-iconbutton
-                  classname="RegisterDialog-closeButton-8"
-                  size="small"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="CloseIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </mock-iconbutton>
-              </div>
-            </div>
-          </span>
-        </div>
-      </div>
-      <mock-cardcontent>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-11 css-9ve18c-MuiGrid-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-            >
-              <mock-typography
-                color="textSecondary"
-                variant="h5"
-              >
-                Create an account
-              </mock-typography>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
-          >
-            <form
-              class="RegisterDialog-form-12"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="firstName"
-                    id="firstName-label"
-                  >
-                    First Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="firstName"
-                      name="firstName"
-                      placeholder="First Name"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          First Name
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="lastName"
-                    id="lastName-label"
-                  >
-                    Last Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="lastName"
-                      name="lastName"
-                      placeholder="Last Name"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Last Name
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="organization"
-                    id="organization-label"
-                  >
-                    Organization
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="organization"
-                      name="organization"
-                      placeholder="Organization"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Organization
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="emailAddress"
-                    id="emailAddress-label"
-                  >
-                    Email Address
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="emailAddress"
-                      name="emailAddress"
-                      placeholder="Email Address"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Email Address
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="password"
-                    id="password-label"
-                  >
-                    Password
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Password
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-16uec2a-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
-                >
-                  <mock-checkbox
-                    checked="false"
-                    classname="RegisterDialog-termsCheckbox-17"
-                    color="primary"
-                  />
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-1ow5ctt-MuiGrid-root"
-                >
-                  <mock-box>
-                    <mock-typography
-                      classname="RegisterDialog-formText-15"
-                      color="textSecondary"
-                      variant="subtitle1"
-                    >
-                      I have read the
-                       
-                      <a
-                        class="RegisterDialog-termsLink-18"
-                        data-discover="true"
-                        href="/terms"
-                      >
-                        Terms and Conditions
-                      </a>
-                    </mock-typography>
-                  </mock-box>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-16 css-z4k4cw-MuiGrid-root"
-              >
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
-                  disabled=""
-                  tabindex="-1"
-                  type="submit"
-                >
-                  CREATE ACCOUNT
-                </button>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-              >
-                <mock-typography
-                  classname="RegisterDialog-formText-15"
-                  color="textSecondary"
-                  variant="subtitle1"
-                >
-                  Have an account?
-                   
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
-                    tabindex="0"
-                    type="button"
-                  >
-                    SIGN IN
-                  </button>
-                </mock-typography>
-              </div>
-            </form>
-          </div>
-        </div>
-      </mock-cardcontent>
-    </mock-card>
-  </mock-dialog>
-  <mock-dialog
-    maxwidth="xs"
-    open="false"
-    transitionprops="[object Object]"
-  >
-    <mock-card
-      elevation="0"
-    >
-      <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-20 css-149tc0y-MuiCardHeader-root"
-      >
-        <div
-          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
-        >
-          <span
-            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
-                >
-                  <mock-typography
-                    variant="h4"
-                  >
-                    Aqua
-                  </mock-typography>
-                  <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-21"
-                    variant="h4"
-                  >
-                    link
-                  </mock-typography>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-              >
-                <mock-iconbutton
-                  classname="SignInDialog-closeButton-19"
-                  size="small"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="CloseIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </mock-iconbutton>
-              </div>
-            </div>
-          </span>
-        </div>
-      </div>
-      <div
-        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
-        style="min-height: 0px;"
-      >
-        <div
-          class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
-        >
-          <div
-            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
-          >
-            <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
-              role="alert"
-              style="--Paper-shadow: none;"
-            >
-              <div
-                class="MuiAlert-icon css-vab54s-MuiAlert-icon"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
-                  data-testid="SuccessOutlinedIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
-                  />
-                </svg>
-              </div>
-              <div
-                class="MuiAlert-message css-zioonp-MuiAlert-message"
-              >
-                Password reset email sent to .
-              </div>
-              <div
-                class="MuiAlert-action css-rgppqo-MuiAlert-action"
-              >
-                <mock-iconbutton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
-                    data-testid="CloseIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </mock-iconbutton>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <mock-cardcontent>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-22 css-9ve18c-MuiGrid-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-            >
-              <mock-typography
-                color="textSecondary"
-                variant="h5"
-              >
-                Sign In
-              </mock-typography>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
-          >
-            <form
-              class="SignInDialog-form-23"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-24 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="emailAddress"
-                    id="emailAddress-label"
-                  >
-                    Email Address
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-25 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="emailAddress"
-                      name="emailAddress"
-                      placeholder="Email Address"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Email Address
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-24 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="password"
-                    id="password-label"
-                  >
-                    Password
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-25 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Password
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-              >
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-28 css-1ysap08-MuiButtonBase-root-MuiButton-root"
-                  tabindex="0"
-                  type="button"
-                >
-                  <mock-typography
-                    color="textSecondary"
-                    variant="subtitle2"
-                  >
-                    Forgot your password?
-                  </mock-typography>
-                </button>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-27 css-z4k4cw-MuiGrid-root"
-              >
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
-                  tabindex="0"
-                  type="submit"
-                >
-                  SIGN IN
-                </button>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-              >
-                <mock-typography
-                  classname="SignInDialog-formText-26"
-                  color="textSecondary"
-                  variant="subtitle1"
-                >
-                  Don't have an account?
-                   
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
-                    tabindex="0"
-                    type="button"
-                  >
-                    SIGN UP
-                  </button>
-                </mock-typography>
-              </div>
-            </form>
-          </div>
-        </div>
-      </mock-cardcontent>
-    </mock-card>
-  </mock-dialog>
+    </div>
+  </header>
 </div>
 `;

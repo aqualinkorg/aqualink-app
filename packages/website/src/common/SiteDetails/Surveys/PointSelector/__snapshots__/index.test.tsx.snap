@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
@@ -8,12 +8,11 @@ exports[`renders as expected 1`] = `
     <div
       class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
     >
-      <mock-typography
-        classname="makeStyles-subTitle-1"
-        variant="h6"
+      <h6
+        class="MuiTypography-root MuiTypography-h6 makeStyles-subTitle-1 css-sieuai-MuiTypography-root"
       >
         Survey Point:
-      </mock-typography>
+      </h6>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item makeStyles-selectorWrapper-2 css-x7bhrq-MuiGrid-root"
@@ -25,13 +24,14 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
         >
           <div
-            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-3 MuiSelect-root css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-3 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
           >
             <div
+              aria-controls=":r1:"
               aria-expanded="false"
               aria-haspopup="listbox"
               aria-labelledby="survey-point survey-point"
-              class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+              class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
               id="survey-point"
               role="combobox"
               tabindex="0"
@@ -48,7 +48,7 @@ exports[`renders as expected 1`] = `
             />
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
               data-testid="ArrowDropDownIcon"
               focusable="false"
               viewBox="0 0 24 24"

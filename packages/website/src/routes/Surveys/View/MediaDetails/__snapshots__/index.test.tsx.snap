@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Terms page > should render with given state from Redux store 1`] = `
 <div>
@@ -16,33 +16,27 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             style="align-self: end;"
           >
-            <mock-typography
-              variant="h6"
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
             >
               Survey Point: 
-            </mock-typography>
+            </h6>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MediaPointName-surveyPointName-4 css-x7bhrq-MuiGrid-root"
           >
-            <mock-tooltip
-              arrow="true"
-              placement="top"
-              title="View survey point"
+            <a
+              aria-label="View survey point"
+              class="MediaPointName-link-5"
+              data-mui-internal-clone-element="true"
+              href="/sites/1/points/1"
             >
-              <a
-                class="MediaPointName-link-5"
-                data-discover="true"
-                href="/sites/1/points/1"
+              <h6
+                class="MuiTypography-root MuiTypography-h6 MediaPointName-titleName-6 css-sieuai-MuiTypography-root"
               >
-                <mock-typography
-                  classname="MediaPointName-titleName-6"
-                  variant="h6"
-                >
-                  Point 1
-                </mock-typography>
-              </a>
-            </mock-tooltip>
+                Point 1
+              </h6>
+            </a>
           </div>
         </div>
       </div>
@@ -52,16 +46,15 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
         <div
           class="MediaCount-mediaCount-8"
         >
-          <mock-box
-            mr="2"
+          <div
+            class="MuiBox-root css-1ay9vb9"
           >
-            <mock-typography
-              component="span"
-              variant="subtitle1"
+            <span
+              class="MuiTypography-root MuiTypography-subtitle1 css-crj02l-MuiTypography-root"
             >
               1
                image
-            </mock-typography>
+            </span>
             <svg
               aria-hidden="true"
               class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MediaCount-mediaCountIcon-9 css-1umw9bq-MuiSvgIcon-root"
@@ -73,7 +66,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 d="M2 6H0v5h.01L0 20c0 1.1.9 2 2 2h18v-2H2zm20-2h-8l-2-2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2M7 15l4.5-6 3.5 4.51 2.5-3.01L21 15z"
               />
             </svg>
-          </mock-box>
+          </div>
         </div>
       </div>
     </div>
@@ -95,9 +88,9 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
             tabindex="-1"
           >
             <div>
-              <mock-card
-                classname="SliderCard-shadowBox-10"
-                elevation="3"
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 MuiCard-root SliderCard-shadowBox-10 css-1i00q08-MuiPaper-root-MuiCard-root"
+                style="--Paper-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12);"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container SliderCard-fullHeight-12 css-1dphqhe-MuiGrid-root"
@@ -120,35 +113,35 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                       <div
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                       >
-                        <mock-typography
-                          variant="h6"
+                        <h6
+                          class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
                         >
                           IMAGE OBSERVATION
-                        </mock-typography>
-                        <mock-typography
-                          variant="subtitle1"
+                        </h6>
+                        <h6
+                          class="MuiTypography-root MuiTypography-subtitle1 css-crj02l-MuiTypography-root"
                         >
                           Appears healthy
-                        </mock-typography>
+                        </h6>
                       </div>
                       <div
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                       >
-                        <mock-typography
-                          variant="h6"
+                        <h6
+                          class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
                         >
                           IMAGE COMMENTS
-                        </mock-typography>
-                        <mock-typography
-                          variant="subtitle1"
+                        </h6>
+                        <h6
+                          class="MuiTypography-root MuiTypography-subtitle1 css-crj02l-MuiTypography-root"
                         >
                           comment 2222
-                        </mock-typography>
+                        </h6>
                       </div>
                     </div>
                   </div>
                 </div>
-              </mock-card>
+              </div>
             </div>
           </div>
         </div>

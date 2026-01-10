@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
@@ -29,24 +29,20 @@ exports[`renders as expected 1`] = `
         <div
           class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-6 css-x7bhrq-MuiGrid-root"
         >
-          <mock-box
-            display="flex"
-            flexdirection="column"
-            width="100%"
+          <div
+            class="MuiBox-root css-1ofqig9"
           >
-            <mock-typography
-              classname="makeStyles-updateInfoText-4"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-4 css-qa0r6-MuiTypography-root"
             >
               Last data received 02/01 14:00 EET
-            </mock-typography>
-            <mock-typography
-              classname="makeStyles-updateInfoText-4"
-              variant="caption"
+            </span>
+            <span
+              class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-4 css-qa0r6-MuiTypography-root"
             >
               Updated daily
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -61,15 +57,15 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
         >
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-13 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-13 css-iorydh-MuiButtonBase-root-MuiButton-root"
             tabindex="0"
             type="button"
           >
-            <mock-typography
-              classname="makeStyles-chipText-9"
+            <p
+              class="MuiTypography-root MuiTypography-body1 makeStyles-chipText-9 css-809xgg-MuiTypography-root"
             >
               NOAA
-            </mock-typography>
+            </p>
           </button>
         </div>
       </div>

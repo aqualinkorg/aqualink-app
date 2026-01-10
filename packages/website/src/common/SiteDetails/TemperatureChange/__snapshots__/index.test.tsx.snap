@@ -1,9 +1,10 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`TemperatureChange card > should render with given state from Redux store 1`] = `
 <div>
-  <mock-card
-    classname="TemperatureChangeComponent-root-8"
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root TemperatureChangeComponent-root-8 css-1i00q08-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
   >
     <div
       class="MuiCardHeader-root TemperatureChangeComponent-header-3 css-149tc0y-MuiCardHeader-root"
@@ -20,58 +21,55 @@ exports[`TemperatureChange card > should render with given state from Redux stor
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
-              <mock-typography
-                classname="TemperatureChangeComponent-cardTitle-2"
-                color="textSecondary"
-                variant="h6"
+              <h6
+                class="MuiTypography-root MuiTypography-h6 TemperatureChangeComponent-cardTitle-2 css-7vf59h-MuiTypography-root"
               >
                 7-DAYS CHANGE
-              </mock-typography>
+              </h6>
             </div>
           </div>
         </span>
       </div>
     </div>
-    <mock-cardcontent
-      classname="TemperatureChangeComponent-content-9"
+    <div
+      class="MuiCardContent-root TemperatureChangeComponent-content-9 css-dlpuou-MuiCardContent-root"
     >
-      <mock-box
-        classname="TemperatureChangeComponent-cardContent-10"
+      <div
+        class="TemperatureChangeComponent-cardContent-10 MuiBox-root css-0"
       >
-        <mock-box
-          classname="TemperatureChangeComponent-tempContainer-12 TemperatureChangeComponent-tempIncreased-13"
+        <div
+          class="TemperatureChangeComponent-tempContainer-12 TemperatureChangeComponent-tempIncreased-13 MuiBox-root css-0"
         >
           <svg
             class="TemperatureChangeComponent-icon-15"
+            data-testid="mock-caret"
           >
-            caret.svg
+            caret
           </svg>
-          <mock-typography
-            classname="TemperatureChangeComponent-temperatureChange-11"
-            variant="h1"
+          <h1
+            class="MuiTypography-root MuiTypography-h1 TemperatureChangeComponent-temperatureChange-11 css-kxanwn-MuiTypography-root"
           >
             +
             0.0
             °C
-          </mock-typography>
-        </mock-box>
-        <mock-box>
-          <mock-typography
-            classname="TemperatureChangeComponent-temperature-17"
-            color="textSecondary"
-            variant="h4"
+          </h1>
+        </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 TemperatureChangeComponent-temperature-17 css-4wq5nq-MuiTypography-root"
           >
             20.0
             °C
-          </mock-typography>
-          <mock-typography
-            color="textSecondary"
-            variant="h6"
+          </h4>
+          <h6
+            class="MuiTypography-root MuiTypography-h6 css-7vf59h-MuiTypography-root"
           >
             AVERAGE 7-DAYS TEMP
-          </mock-typography>
-        </mock-box>
-      </mock-box>
+          </h6>
+        </div>
+      </div>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-18 false css-1urtxze-MuiGrid-root"
       >
@@ -99,24 +97,20 @@ exports[`TemperatureChange card > should render with given state from Redux stor
             <div
               class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-23 css-x7bhrq-MuiGrid-root"
             >
-              <mock-box
-                display="flex"
-                flexdirection="column"
-                width="100%"
+              <div
+                class="MuiBox-root css-1ofqig9"
               >
-                <mock-typography
-                  classname="makeStyles-updateInfoText-21"
-                  variant="caption"
+                <span
+                  class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-21 css-qa0r6-MuiTypography-root"
                 >
                   Last data received 5 min. ago
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-updateInfoText-21"
-                  variant="caption"
+                </span>
+                <span
+                  class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-21 css-qa0r6-MuiTypography-root"
                 >
                   Updated daily
-                </mock-typography>
-              </mock-box>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -131,7 +125,7 @@ exports[`TemperatureChange card > should render with given state from Redux stor
               class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-30 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-30 css-iorydh-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
@@ -141,11 +135,11 @@ exports[`TemperatureChange card > should render with given state from Redux stor
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <mock-typography
-                    classname="makeStyles-chipText-26"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-chipText-26 css-809xgg-MuiTypography-root"
                   >
                     NOAA
-                  </mock-typography>
+                  </p>
                   <img
                     alt="sensor-type"
                     class="makeStyles-sensorImage-29"
@@ -157,7 +151,7 @@ exports[`TemperatureChange card > should render with given state from Redux stor
           </div>
         </div>
       </div>
-    </mock-cardcontent>
-  </mock-card>
+    </div>
+  </div>
 </div>
 `;

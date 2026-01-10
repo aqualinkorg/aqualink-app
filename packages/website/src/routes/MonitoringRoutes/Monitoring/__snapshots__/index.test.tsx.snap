@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Monitoring Page > should render with given state from Redux store 1`] = `
 <div>
@@ -7,148 +7,128 @@ exports[`Monitoring Page > should render with given state from Redux store 1`] =
   >
     <a
       class="makeStyles-link-3"
-      data-discover="true"
       href="/monitoring/sites-overview"
     >
-      <mock-card
-        classname="makeStyles-root-1"
-        raised="true"
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root makeStyles-root-1 css-1j74uew-MuiPaper-root-MuiCard-root"
+        style="--Paper-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);"
       >
-        <mock-cardcontent
-          classname="makeStyles-cardContent-5"
+        <div
+          class="MuiCardContent-root makeStyles-cardContent-5 css-1lt5qva-MuiCardContent-root"
         >
-          <mock-typography
-            classname="makeStyles-title-2"
-            color="textSecondary"
-            variant="h5"
+          <h5
+            class="MuiTypography-root MuiTypography-h5 makeStyles-title-2 css-11yxmxq-MuiTypography-root"
           >
             Sites Overview
-          </mock-typography>
-          <mock-typography
-            component="p"
+          </h5>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
             style="color: black; padding-bottom: 1rem;"
-            variant="body2"
           >
             Contact info and status data for all sites
-          </mock-typography>
-        </mock-cardcontent>
-      </mock-card>
+          </p>
+        </div>
+      </div>
     </a>
     <a
       class="makeStyles-link-3"
-      data-discover="true"
       href="/monitoring/sites-status"
     >
-      <mock-card
-        classname="makeStyles-root-1"
-        raised="true"
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root makeStyles-root-1 css-1j74uew-MuiPaper-root-MuiCard-root"
+        style="--Paper-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);"
       >
-        <mock-cardcontent
-          classname="makeStyles-cardContent-5"
+        <div
+          class="MuiCardContent-root makeStyles-cardContent-5 css-1lt5qva-MuiCardContent-root"
         >
-          <mock-typography
-            classname="makeStyles-title-2"
-            color="textSecondary"
-            variant="h5"
+          <h5
+            class="MuiTypography-root MuiTypography-h5 makeStyles-title-2 css-11yxmxq-MuiTypography-root"
           >
             Sites Status
-          </mock-typography>
-          <mock-typography
-            component="p"
+          </h5>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
             style="color: black; padding-bottom: 1rem;"
-            variant="body2"
           >
             Summary of status data accross all sites
-          </mock-typography>
-        </mock-cardcontent>
-      </mock-card>
+          </p>
+        </div>
+      </div>
     </a>
     <a
       class="makeStyles-link-3"
-      data-discover="true"
       href="/monitoring/site-metrics"
     >
-      <mock-card
-        classname="makeStyles-root-1"
-        raised="true"
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root makeStyles-root-1 css-1j74uew-MuiPaper-root-MuiCard-root"
+        style="--Paper-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);"
       >
-        <mock-cardcontent
-          classname="makeStyles-cardContent-5"
+        <div
+          class="MuiCardContent-root makeStyles-cardContent-5 css-1lt5qva-MuiCardContent-root"
         >
-          <mock-typography
-            classname="makeStyles-title-2"
-            color="textSecondary"
-            variant="h5"
+          <h5
+            class="MuiTypography-root MuiTypography-h5 makeStyles-title-2 css-11yxmxq-MuiTypography-root"
           >
             Site Usage Metrics
-          </mock-typography>
-          <mock-typography
-            component="p"
+          </h5>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
             style="color: black; padding-bottom: 1rem;"
-            variant="body2"
           >
             Detailed usage metrics for one site
-          </mock-typography>
-        </mock-cardcontent>
-      </mock-card>
+          </p>
+        </div>
+      </div>
     </a>
     <a
       class="makeStyles-link-3"
-      data-discover="true"
       href="/monitoring/monthly-report"
     >
-      <mock-card
-        classname="makeStyles-root-1"
-        raised="true"
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root makeStyles-root-1 css-1j74uew-MuiPaper-root-MuiCard-root"
+        style="--Paper-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);"
       >
-        <mock-cardcontent
-          classname="makeStyles-cardContent-5"
+        <div
+          class="MuiCardContent-root makeStyles-cardContent-5 css-1lt5qva-MuiCardContent-root"
         >
-          <mock-typography
-            classname="makeStyles-title-2"
-            color="textSecondary"
-            variant="h5"
+          <h5
+            class="MuiTypography-root MuiTypography-h5 makeStyles-title-2 css-11yxmxq-MuiTypography-root"
           >
             Monthly Usage Report
-          </mock-typography>
-          <mock-typography
-            component="p"
+          </h5>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
             style="color: black; padding-bottom: 1rem;"
-            variant="body2"
           >
             Detailed usage metrics for all sites over the past month
-          </mock-typography>
-        </mock-cardcontent>
-      </mock-card>
+          </p>
+        </div>
+      </div>
     </a>
     <a
       class="makeStyles-link-3"
-      data-discover="true"
       href="/monitoring/surveys-report"
     >
-      <mock-card
-        classname="makeStyles-root-1"
-        raised="true"
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root makeStyles-root-1 css-1j74uew-MuiPaper-root-MuiCard-root"
+        style="--Paper-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);"
       >
-        <mock-cardcontent
-          classname="makeStyles-cardContent-5"
+        <div
+          class="MuiCardContent-root makeStyles-cardContent-5 css-1lt5qva-MuiCardContent-root"
         >
-          <mock-typography
-            classname="makeStyles-title-2"
-            color="textSecondary"
-            variant="h5"
+          <h5
+            class="MuiTypography-root MuiTypography-h5 makeStyles-title-2 css-11yxmxq-MuiTypography-root"
           >
             Surveys
-          </mock-typography>
-          <mock-typography
-            component="p"
+          </h5>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
             style="color: black; padding-bottom: 1rem;"
-            variant="body2"
           >
             List all recent surveys
-          </mock-typography>
-        </mock-cardcontent>
-      </mock-card>
+          </p>
+        </div>
+      </div>
     </a>
   </div>
 </div>

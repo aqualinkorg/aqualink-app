@@ -6,8 +6,7 @@
   "scripts": {
     "start": "rsbuild dev",
     "build": "rsbuild build",
-    "test": "vitest --run",
-    "test:watch": "vitest",
+    "test": "rstest",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --max-warnings 0",
     "scan": "yarn start & npx react-scan@latest localhost:3000",
     "precommit": "lint-staged",
@@ -94,6 +93,7 @@
     "@rsbuild/plugin-eslint": "^1.1.2",
     "@rsbuild/plugin-react": "^1.1.2",
     "@rsbuild/plugin-svgr": "^1.0.7",
+    "@rstest/core": "^0.6.8",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
@@ -119,17 +119,15 @@
     "@types/redux-mock-store": "^1.0.2",
     "@types/unist": "^3.0.3",
     "@types/validator": "^13.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.18.2",
-    "@typescript-eslint/parser": "^8.18.2",
-    "@vitejs/plugin-react": "^4.3.4",
-    "dotenv-cli": "^8.0.0",
-    "eslint": "^8.57.1",
-    "jquery": "^3.7.1",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "@typescript-eslint/parser": "^8.35.1",
+    "canvas": "^2.11.2",
+    "dotenv-cli": "^4.0.0",
     "jsdom": "^26.0.0",
     "surge": "^0.23.1",
-    "typescript": "^5.7.3",
-    "vite": "^5.4.10",
-    "vitest": "^3.0.7",
-    "wrangler": "^4.17.0"
+    "wrangler": "^4.12.0"
+  },
+  "volta": {
+    "node": "20.19.6"
   }
 }

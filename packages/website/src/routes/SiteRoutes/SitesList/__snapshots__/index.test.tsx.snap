@@ -1,15 +1,14 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Sites List > should render with given state from Redux store 1`] = `
 <div>
   <div
     class="SitesList-root-1"
   >
-    <mock-list
-      component="nav"
+    <nav
+      class="MuiList-root MuiList-padding css-b7dj7n-MuiList-root"
     >
       <a
-        data-discover="true"
         href="/sites/1"
         style="color: inherit; text-decoration: none;"
       >
@@ -18,13 +17,17 @@ exports[`Sites List > should render with given state from Redux store 1`] = `
           role="button"
           tabindex="0"
         >
-          <mock-listitemtext
-            primary=""
+          <div
+            class="MuiListItemText-root css-cfq8qh-MuiListItemText-root"
             style="color: white;"
-          />
+          >
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-809xgg-MuiTypography-root"
+            />
+          </div>
         </div>
       </a>
-    </mock-list>
+    </nav>
   </div>
 </div>
 `;

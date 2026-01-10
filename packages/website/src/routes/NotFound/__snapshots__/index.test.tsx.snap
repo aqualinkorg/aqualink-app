@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
@@ -6,12 +6,11 @@ exports[`renders as expected 1`] = `
     class="NotFoundPage-background-1"
   >
     <a
-      data-discover="true"
       href="/map"
     >
       <img
         alt="404 Not Found"
-        src="/src/assets/img/404_click.png"
+        src="/static/image/404_click.4ea8ea56.png"
       />
     </a>
   </div>

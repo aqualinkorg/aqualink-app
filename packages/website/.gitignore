@@ -12,6 +12,7 @@
 
 # production
 /build
+/dist
 
 # Firebase
 .firebase/

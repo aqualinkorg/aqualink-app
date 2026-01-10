@@ -1,9 +1,10 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
-  <mock-card
-    classname="makeStyles-root-8"
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root makeStyles-root-8 css-1i00q08-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
   >
     <div
       class="MuiCardHeader-root makeStyles-header-3 css-149tc0y-MuiCardHeader-root"
@@ -20,24 +21,21 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
-              <mock-typography
-                classname="makeStyles-cardTitle-2"
-                variant="h6"
+              <h6
+                class="MuiTypography-root MuiTypography-h6 makeStyles-cardTitle-2 css-sieuai-MuiTypography-root"
               >
                 WATER SAMPLING
-              </mock-typography>
+              </h6>
             </div>
           </div>
         </span>
       </div>
     </div>
-    <mock-cardcontent
-      classname="makeStyles-content-9"
+    <div
+      class="MuiCardContent-root makeStyles-content-9 css-dlpuou-MuiCardContent-root"
     >
-      <mock-box
-        display="flex"
-        flexgrow="1"
-        p="1rem"
+      <div
+        class="MuiBox-root css-1as4n1g"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
@@ -54,31 +52,28 @@ exports[`renders as expected 1`] = `
                 <div
                   style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
                 >
-                  <mock-typography
-                    classname="makeStyles-contentTextTitles-4"
-                    variant="subtitle2"
+                  <h6
+                    class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
                   >
                     DISSOLVED OXYGEN CONCENTRATION
-                  </mock-typography>
+                  </h6>
                 </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                 style="display: flex; align-items: baseline;"
               >
-                <mock-typography
-                  classname="makeStyles-contentTextValues-5"
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-18qnhdx-MuiTypography-root"
                   style="white-space: nowrap;"
-                  variant="h3"
                 >
                   - -
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-contentUnits-6"
-                  variant="h6"
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 makeStyles-contentUnits-6 css-sieuai-MuiTypography-root"
                 >
                   mg/L
-                </mock-typography>
+                </h6>
               </div>
             </div>
           </div>
@@ -94,31 +89,28 @@ exports[`renders as expected 1`] = `
                 <div
                   style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
                 >
-                  <mock-typography
-                    classname="makeStyles-contentTextTitles-4"
-                    variant="subtitle2"
+                  <h6
+                    class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
                   >
                     CHLOROPHYLL CONCENTRATION
-                  </mock-typography>
+                  </h6>
                 </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                 style="display: flex; align-items: baseline;"
               >
-                <mock-typography
-                  classname="makeStyles-contentTextValues-5"
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-18qnhdx-MuiTypography-root"
                   style="white-space: nowrap;"
-                  variant="h3"
                 >
                   - -
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-contentUnits-6"
-                  variant="h6"
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 makeStyles-contentUnits-6 css-sieuai-MuiTypography-root"
                 >
                   µg/L
-                </mock-typography>
+                </h6>
               </div>
             </div>
           </div>
@@ -134,31 +126,28 @@ exports[`renders as expected 1`] = `
                 <div
                   style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
                 >
-                  <mock-typography
-                    classname="makeStyles-contentTextTitles-4"
-                    variant="subtitle2"
+                  <h6
+                    class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
                   >
                     ACIDITY
-                  </mock-typography>
+                  </h6>
                 </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                 style="display: flex; align-items: baseline;"
               >
-                <mock-typography
-                  classname="makeStyles-contentTextValues-5"
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-18qnhdx-MuiTypography-root"
                   style="white-space: nowrap;"
-                  variant="h3"
                 >
                   - -
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-contentUnits-6"
-                  variant="h6"
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 makeStyles-contentUnits-6 css-sieuai-MuiTypography-root"
                 >
                   pH
-                </mock-typography>
+                </h6>
               </div>
             </div>
           </div>
@@ -174,31 +163,28 @@ exports[`renders as expected 1`] = `
                 <div
                   style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
                 >
-                  <mock-typography
-                    classname="makeStyles-contentTextTitles-4"
-                    variant="subtitle2"
+                  <h6
+                    class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
                   >
                     SALINITY
-                  </mock-typography>
+                  </h6>
                 </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                 style="display: flex; align-items: baseline;"
               >
-                <mock-typography
-                  classname="makeStyles-contentTextValues-5"
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-18qnhdx-MuiTypography-root"
                   style="white-space: nowrap;"
-                  variant="h3"
                 >
                   - -
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-contentUnits-6"
-                  variant="h6"
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 makeStyles-contentUnits-6 css-sieuai-MuiTypography-root"
                 >
                   psu
-                </mock-typography>
+                </h6>
               </div>
             </div>
           </div>
@@ -214,36 +200,33 @@ exports[`renders as expected 1`] = `
                 <div
                   style="display: flex; align-items: center; flex-wrap: nowrap; min-height: 2em;"
                 >
-                  <mock-typography
-                    classname="makeStyles-contentTextTitles-4"
-                    variant="subtitle2"
+                  <h6
+                    class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
                   >
                     TURBIDITY
-                  </mock-typography>
+                  </h6>
                 </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
                 style="display: flex; align-items: baseline;"
               >
-                <mock-typography
-                  classname="makeStyles-contentTextValues-5"
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-18qnhdx-MuiTypography-root"
                   style="white-space: nowrap;"
-                  variant="h3"
                 >
                   - -
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-contentUnits-6"
-                  variant="h6"
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 makeStyles-contentUnits-6 css-sieuai-MuiTypography-root"
                 >
                   NTU
-                </mock-typography>
+                </h6>
               </div>
             </div>
           </div>
         </div>
-      </mock-box>
+      </div>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-12 false css-1urtxze-MuiGrid-root"
       >
@@ -271,22 +254,18 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-17 css-x7bhrq-MuiGrid-root"
             >
-              <mock-box
-                display="flex"
-                flexdirection="column"
-                width="100%"
+              <div
+                class="MuiBox-root css-1ofqig9"
               >
-                <mock-typography
-                  classname="makeStyles-updateInfoText-15"
-                  variant="caption"
+                <span
+                  class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-15 css-qa0r6-MuiTypography-root"
                 >
                   No data available
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-updateInfoText-15"
-                  variant="caption"
+                </span>
+                <span
+                  class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-15 css-qa0r6-MuiTypography-root"
                 />
-              </mock-box>
+              </div>
             </div>
           </div>
         </div>
@@ -301,29 +280,28 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-iorydh-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
                 <a
                   class="makeStyles-link-22"
-                  data-discover="true"
                   href="/sites/1"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <mock-typography
-                    classname="makeStyles-chipText-20"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-chipText-20 css-809xgg-MuiTypography-root"
                   >
                     VIEW UPLOAD
-                  </mock-typography>
+                  </p>
                 </a>
               </button>
             </div>
           </div>
         </div>
       </div>
-    </mock-cardcontent>
-  </mock-card>
+    </div>
+  </div>
 </div>
 `;

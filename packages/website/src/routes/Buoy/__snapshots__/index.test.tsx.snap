@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Buoy > should render with given state from Redux store 1`] = `
 <div>
@@ -18,12 +18,11 @@ exports[`Buoy > should render with given state from Redux store 1`] = `
         <div
           class="lcolpad col-12 col"
         >
-          <mock-typography
-            classname="Buoy-title-1"
-            variant="h4"
+          <h4
+            class="MuiTypography-root MuiTypography-h4 Buoy-title-1 css-1ghn6nx-MuiTypography-root"
           >
             The Aqualink Buoy
-          </mock-typography>
+          </h4>
           <p
             class="text-lg-left"
           >
@@ -37,7 +36,7 @@ exports[`Buoy > should render with given state from Redux store 1`] = `
           <img
             alt="bouydiagram2"
             class="img-fluid mg-lg mx-auto d-block img-responsive diagram lazyload"
-            src="/src/assets/img/fulldiag3_1.svg"
+            src="/static/svg/fulldiag3_1.a85c3c49.svg"
           />
         </div>
       </div>
@@ -61,7 +60,7 @@ exports[`Buoy > should render with given state from Redux store 1`] = `
           <img
             alt="Asset%204"
             class="img-fluid mx-auto d-block img-responsive diagram lazyload"
-            src="/src/assets/img/fulldiag3.svg"
+            src="/static/svg/fulldiag3.3f0e1643.svg"
           />
         </div>
       </div>

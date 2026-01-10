@@ -1,55 +1,13 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Surveys > should render with given state from Redux store 1`] = `
 <div>
-  <mock-dialog
-    fullwidth="true"
-    open="false"
-  >
-    <mock-dialogtitle
-      classname="Dialog-dialogTitle-10"
-    >
-      <mock-typography
-        variant="h4"
-      >
-        Delete undefined
-      </mock-typography>
-    </mock-dialogtitle>
-    <mock-dialogcontent
-      dividers="true"
-    >
-      <mock-typography
-        color="textSecondary"
-      >
-        Are you sure you want to delete this survey point? It will be deleted across all surveys.
-      </mock-typography>
-    </mock-dialogcontent>
-    <mock-dialogactions>
-      <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-14iezcd-MuiButtonBase-root-MuiButton-root"
-        tabindex="0"
-        type="button"
-      >
-        No
-      </button>
-      <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary css-1ishezr-MuiButtonBase-root-MuiButton-root"
-        tabindex="0"
-        type="button"
-      >
-        Yes
-      </button>
-    </mock-dialogactions>
-  </mock-dialog>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 makeStyles-root-1 css-4rolpp-MuiGrid-root"
   >
-    <mock-box
-      bgcolor="#f5f6f6"
-      height="100%"
+    <div
+      class="MuiBox-root css-hu7ys1"
       id="surveys"
-      position="absolute"
-      zindex="-1"
     />
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 MuiGrid-grid-lg-12 makeStyles-surveyWrapper-2 css-wdlm1q-MuiGrid-root"
@@ -57,11 +15,11 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-3 css-ku179n-MuiGrid-root"
       >
-        <mock-typography
-          classname="makeStyles-title-3"
+        <p
+          class="MuiTypography-root MuiTypography-body1 makeStyles-title-3 css-809xgg-MuiTypography-root"
         >
           Survey History
-        </mock-typography>
+        </p>
       </div>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-md-12 MuiGrid-grid-lg-5 css-n47sv5-MuiGrid-root"
@@ -69,12 +27,11 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
         <div
           class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
         >
-          <mock-typography
-            classname="makeStyles-subTitle-12"
-            variant="h6"
+          <h6
+            class="MuiTypography-root MuiTypography-h6 makeStyles-subTitle-12 css-sieuai-MuiTypography-root"
           >
             Survey Point:
-          </mock-typography>
+          </h6>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item makeStyles-selectorWrapper-13 css-x7bhrq-MuiGrid-root"
@@ -86,13 +43,14 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <div
-                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-14 MuiSelect-root css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-14 css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
+                  aria-controls=":r2:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-labelledby="survey-point survey-point"
-                  class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                  class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                   id="survey-point"
                   role="combobox"
                   tabindex="0"
@@ -109,7 +67,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                 />
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
                   data-testid="ArrowDropDownIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -129,12 +87,11 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
         <div
           class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
         >
-          <mock-typography
-            classname="makeStyles-subTitle-4"
-            variant="h6"
+          <h6
+            class="MuiTypography-root MuiTypography-h6 makeStyles-subTitle-4 css-sieuai-MuiTypography-root"
           >
             Observation:
-          </mock-typography>
+          </h6>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item makeStyles-selectorWrapper-5 css-x7bhrq-MuiGrid-root"
@@ -143,23 +100,23 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
             class="MuiFormControl-root makeStyles-formControl-6 css-1iw3t7y-MuiFormControl-root"
           >
             <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-7 MuiSelect-root css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-7 css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
             >
               <div
+                aria-controls=":r3:"
                 aria-expanded="false"
                 aria-haspopup="listbox"
                 aria-labelledby="survey-observation survey-observation"
-                class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-9 css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-9 css-1iiz54r-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                 id="survey-observation"
                 role="combobox"
                 tabindex="0"
               >
-                <mock-typography
-                  classname="makeStyles-menuItem-8"
-                  variant="h6"
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 makeStyles-menuItem-8 css-sieuai-MuiTypography-root"
                 >
                   Any
-                </mock-typography>
+                </h6>
               </div>
               <input
                 aria-hidden="true"
@@ -171,7 +128,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
               />
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
                 data-testid="ArrowDropDownIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -190,285 +147,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
     >
       <div
         class="SurveyTimeline-root-21"
-      >
-        <mock-hidden
-          lgdown="true"
-        >
-          <ul
-            class="MuiTimeline-root MuiTimeline-positionRight css-i6popu-MuiTimeline-root"
-          >
-            <li
-              class="MuiTimelineItem-root MuiTimelineItem-positionRight makeStyles-timelineItem-30 css-ny8qih-MuiTimelineItem-root"
-            >
-              <div
-                class="MuiTypography-root MuiTypography-body1 MuiTimelineOppositeContent-root MuiTimelineOppositeContent-positionRight makeStyles-timelineOppositeContent-31 css-193a741-MuiTypography-root-MuiTimelineOppositeContent-root"
-              >
-                <mock-typography
-                  classname="makeStyles-dates-23"
-                  variant="h6"
-                >
-                  09/10/2020
-                </mock-typography>
-              </div>
-              <div
-                class="MuiTimelineSeparator-root css-1muvgbz-MuiTimelineSeparator-root"
-              >
-                <hr
-                  class="makeStyles-connector-34"
-                />
-                <span
-                  class="MuiTimelineDot-root MuiTimelineDot-outlined MuiTimelineDot-outlinedGrey makeStyles-dot-35 css-6xp33q-MuiTimelineDot-root"
-                />
-                <hr
-                  class="makeStyles-connector-34"
-                />
-              </div>
-              <div
-                class="MuiTypography-root MuiTypography-body1 MuiTimelineContent-root MuiTimelineContent-positionRight makeStyles-surveyCardWrapper-25 css-1qq9j0n-MuiTypography-root-MuiTimelineContent-root"
-              >
-                <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-14gemme-MuiPaper-root"
-                  style="--Paper-shadow: none;"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container css-hgxf4k-MuiGrid-root"
-                    style="height: 100%;"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-51 css-1ej0ikx-MuiGrid-root"
-                    >
-                      <a
-                        data-discover="true"
-                        href="/sites/1/survey_details/46"
-                      >
-                        <div
-                          class="MuiCardMedia-root makeStyles-cardImage-48 css-utntyq-MuiCardMedia-root"
-                          role="img"
-                          style="background-image: url("image-url");"
-                        />
-                      </a>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-52 css-14c8q5g-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-57 css-aksm9b-MuiGrid-root"
-                      >
-                        <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
-                        >
-                          <mock-typography
-                            classname="makeStyles-cardFields-49"
-                            variant="h6"
-                          >
-                            User:
-                          </mock-typography>
-                          <mock-typography
-                            classname="makeStyles-cardValues-50 makeStyles-valuesWithMargin-55"
-                            variant="h6"
-                          >
-                            Joe Doe
-                          </mock-typography>
-                        </div>
-                        <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-53 css-otecwo-MuiGrid-root"
-                        >
-                          <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
-                            style="height: 80%;"
-                          >
-                            <mock-typography
-                              classname="makeStyles-cardFields-49"
-                              variant="h6"
-                            >
-                              Comments:
-                            </mock-typography>
-                            <mock-typography
-                              classname="makeStyles-cardValues-50 makeStyles-comments-54"
-                              variant="h6"
-                            >
-                              No comments
-                            </mock-typography>
-                          </div>
-                        </div>
-                        <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
-                        >
-                          <mock-typography
-                            classname="makeStyles-cardFields-49"
-                            variant="h6"
-                          >
-                            Temp:
-                          </mock-typography>
-                          <mock-typography
-                            classname="makeStyles-cardValues-50 makeStyles-valuesWithMargin-55"
-                            variant="h6"
-                          >
-                            10.0 °C
-                          </mock-typography>
-                        </div>
-                        <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
-                        >
-                          <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
-                          >
-                            <a
-                              data-discover="true"
-                              href="/sites/1/survey_details/46"
-                              style="color: inherit; text-decoration: none;"
-                            >
-                              <button
-                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
-                                tabindex="0"
-                                type="button"
-                              >
-                                VIEW DETAILS
-                              </button>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </mock-hidden>
-        <mock-hidden
-          lgup="true"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyWrapper-71 css-ldi2p4-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 makeStyles-dateWrapper-62 css-tideur-MuiGrid-root"
-              >
-                <mock-typography
-                  classname="makeStyles-dates-63"
-                  variant="h6"
-                >
-                  09/10/2020
-                </mock-typography>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyCardWrapper-65 css-wcmnoq-MuiGrid-root"
-              >
-                <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-14gemme-MuiPaper-root"
-                  style="--Paper-shadow: none;"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container css-hgxf4k-MuiGrid-root"
-                    style="height: 100%;"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-51 css-1ej0ikx-MuiGrid-root"
-                    >
-                      <a
-                        data-discover="true"
-                        href="/sites/1/survey_details/46"
-                      >
-                        <div
-                          class="MuiCardMedia-root makeStyles-cardImage-48 css-utntyq-MuiCardMedia-root"
-                          role="img"
-                          style="background-image: url("image-url");"
-                        />
-                      </a>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-52 css-14c8q5g-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-57 css-aksm9b-MuiGrid-root"
-                      >
-                        <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
-                        >
-                          <mock-typography
-                            classname="makeStyles-cardFields-49"
-                            variant="h6"
-                          >
-                            User:
-                          </mock-typography>
-                          <mock-typography
-                            classname="makeStyles-cardValues-50 makeStyles-valuesWithMargin-55"
-                            variant="h6"
-                          >
-                            Joe Doe
-                          </mock-typography>
-                        </div>
-                        <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-53 css-otecwo-MuiGrid-root"
-                        >
-                          <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
-                            style="height: 80%;"
-                          >
-                            <mock-typography
-                              classname="makeStyles-cardFields-49"
-                              variant="h6"
-                            >
-                              Comments:
-                            </mock-typography>
-                            <mock-typography
-                              classname="makeStyles-cardValues-50 makeStyles-comments-54"
-                              variant="h6"
-                            >
-                              No comments
-                            </mock-typography>
-                          </div>
-                        </div>
-                        <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
-                        >
-                          <mock-typography
-                            classname="makeStyles-cardFields-49"
-                            variant="h6"
-                          >
-                            Temp:
-                          </mock-typography>
-                          <mock-typography
-                            classname="makeStyles-cardValues-50 makeStyles-valuesWithMargin-55"
-                            variant="h6"
-                          >
-                            10.0 °C
-                          </mock-typography>
-                        </div>
-                        <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
-                        >
-                          <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
-                          >
-                            <a
-                              data-discover="true"
-                              href="/sites/1/survey_details/46"
-                              style="color: inherit; text-decoration: none;"
-                            >
-                              <button
-                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
-                                tabindex="0"
-                                type="button"
-                              >
-                                VIEW DETAILS
-                              </button>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </mock-hidden>
-      </div>
+      />
     </div>
   </div>
 </div>

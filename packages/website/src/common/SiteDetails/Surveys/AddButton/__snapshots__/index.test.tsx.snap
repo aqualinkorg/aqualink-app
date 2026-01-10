@@ -1,15 +1,14 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
   <a
-    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary AddButton-addSurveyButton-1 css-1uent87-MuiButtonBase-root-MuiButton-root"
-    data-discover="true"
+    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary AddButton-addSurveyButton-1 css-1588512-MuiButtonBase-root-MuiButton-root"
     href="/sites/1/new_survey"
     tabindex="0"
   >
     <span
-      class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium AddButton-addSurveyButtonIcon-2 css-1sh91j5-MuiButton-startIcon"
+      class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium AddButton-addSurveyButtonIcon-2 css-1jsm74t-MuiButton-startIcon"
     >
       <svg
         aria-hidden="true"
@@ -23,12 +22,11 @@ exports[`renders as expected 1`] = `
         />
       </svg>
     </span>
-    <mock-typography
-      color="inherit"
-      variant="h6"
+    <h6
+      class="MuiTypography-root MuiTypography-h6 css-1fggkh9-MuiTypography-root"
     >
       ADD NEW SURVEY
-    </mock-typography>
+    </h6>
   </a>
 </div>
 `;

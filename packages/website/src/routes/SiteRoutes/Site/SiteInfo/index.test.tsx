@@ -24,7 +24,7 @@ describe('SiteInfo', () => {
         error: null,
       },
     });
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(
       <SiteInfo
