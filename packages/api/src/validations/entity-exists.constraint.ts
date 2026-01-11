@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { ValidatorConstraint, ValidationArguments } from 'class-validator';
 
 @ValidatorConstraint({ name: 'entityExists', async: true })
 @Injectable()
 export class EntityExists {
-  constructor(private dataSource: DataSource) {}
+  constructor(@InjectDataSource() private dataSource: DataSource) {}
 
   async validate(id: number, args: ValidationArguments) {
     if (typeof id !== 'number' || Number.isNaN(id) || !Number.isInteger(id)) {
