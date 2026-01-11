@@ -6,7 +6,7 @@ import {
   ConflictException,
   ForbiddenException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
 import Bluebird from 'bluebird';
@@ -93,7 +93,7 @@ export class SitesService {
     @InjectRepository(ReefCheckSurvey)
     private reefCheckSurveyRepository: Repository<ReefCheckSurvey>,
 
-    private dataSource: DataSource,
+    @InjectDataSource() private dataSource: DataSource,
   ) {}
 
   async create(
