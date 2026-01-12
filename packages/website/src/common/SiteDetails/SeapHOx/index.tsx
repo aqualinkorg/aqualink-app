@@ -81,7 +81,7 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
       />
 
       <CardContent className={classes.content}>
-        <Box sx={{ padding: '1rem' }}>
+        <Box sx={{ padding: '1rem', display: 'flex', flexGrow: 1 }}>
           <Grid container spacing={2}>
             {/* Temperature */}
             <Grid item xs={6}>
@@ -249,7 +249,7 @@ const styles = () =>
     content: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
       flexGrow: 1,
       padding: 0,
     },

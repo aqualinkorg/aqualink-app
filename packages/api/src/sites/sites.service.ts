@@ -539,22 +539,29 @@ export class SitesService {
       );
     }
 
+    // Fetch both SPOTTER and SEAPHOX sources
     const sources = await this.sourceRepository.find({
-      where: {
-        site: { id: site.id },
-        type: SourceType.SPOTTER,
-      },
+      where: [
+        {
+          site: { id: site.id },
+          type: SourceType.SPOTTER,
+        },
+        {
+          site: { id: site.id },
+          type: SourceType.SEAPHOX,
+        },
+      ],
     });
 
-    Bluebird.Promise.each(sources, async (source) => {
+    await Bluebird.Promise.each(sources, async (source) => {
       if (!source.sensorId) {
         throw new BadRequestException(
-          'Cannot delete spotter with missing sensorId',
+          'Cannot delete data with missing sensorId',
         );
       }
 
       this.logger.log(
-        `Deleting time-series data for spotter ${source.sensorId} ; site ${site.id}`,
+        `Deleting time-series data for ${source.type} sensor ${source.sensorId} ; site ${site.id}`,
       );
 
       const alreadyExists = await this.exclusionDatesRepository.findOne({
@@ -567,7 +574,7 @@ export class SitesService {
             dateFormat,
           )}, ${DateTime.fromJSDate(endDate).toFormat(
             dateFormat,
-          )}] already exists for spotter ${source.sensorId}.`,
+          )}] already exists for sensor ${source.sensorId}.`,
         );
       }
 

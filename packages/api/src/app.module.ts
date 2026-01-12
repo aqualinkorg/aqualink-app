@@ -26,6 +26,7 @@ import { WindWaveModule } from './wind-wave-data/wind-wave-data.module';
 import { SensorDataModule } from './sensor-data/sensor-data.module';
 import { AiChatController } from './ai-chat/ai-chat.controller';
 import { AiChatLog } from './ai-chat-logs/ai-chat-logs.entity';
+import { EntityExists } from './validations/entity-exists.constraint'; // ← Add this import
 
 @Module({
   imports: [
@@ -55,5 +56,6 @@ import { AiChatLog } from './ai-chat-logs/ai-chat-logs.entity';
     AiChatLog,
   ],
   controllers: [AppController, AiChatController],
+  providers: [EntityExists],
 })
 export class AppModule {}

@@ -47,7 +47,7 @@ import CardWithTitle from './CardWithTitle';
 import { Value } from './CardWithTitle/types';
 import CombinedCharts from '../Chart/CombinedCharts';
 import WaterSamplingCard from './WaterSampling';
-import SeapHOxCard from './SeapHOx/SeapHOxCard';
+import SeapHOxCard from './SeapHOx';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';

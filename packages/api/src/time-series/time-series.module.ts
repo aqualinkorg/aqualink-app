@@ -6,14 +6,14 @@ import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
-import { EntityExists } from '../validations/entity-exists.constraint';
+import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { TimeSeriesController } from './time-series.controller';
 import { TimeSeries } from './time-series.entity';
 import { TimeSeriesService } from './time-series.service';
 
 @Module({
   controllers: [TimeSeriesController],
-  providers: [TimeSeriesService, EntityExists],
+  providers: [TimeSeriesService],
   imports: [
     TypeOrmModule.forFeature([
       TimeSeries,
@@ -23,6 +23,7 @@ import { TimeSeriesService } from './time-series.service';
       DataUploads,
       DataUploadsSites,
       Monitoring,
+      ExclusionDates,
     ]),
   ],
 })
