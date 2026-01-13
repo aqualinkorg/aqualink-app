@@ -553,19 +553,20 @@ export class SitesService {
       ],
     });
 
-    await Bluebird.Promise.each(sources, async (source) => {
-      if (!source.sensorId) {
-        throw new BadRequestException(
-          'Cannot delete data with missing sensorId',
-        );
-      }
+    // Filter out sources without sensorId
+    const sourcesWithSensor = sources.filter((source) => source.sensorId);
 
+    if (sourcesWithSensor.length === 0) {
+      throw new BadRequestException(`Site with ID ${id} has no sensor`);
+    }
+
+    await Bluebird.Promise.each(sourcesWithSensor, async (source) => {
       this.logger.log(
         `Deleting time-series data for ${source.type} sensor ${source.sensorId} ; site ${site.id}`,
       );
 
       const alreadyExists = await this.exclusionDatesRepository.findOne({
-        where: { sensorId: source.sensorId, startDate, endDate },
+        where: { sensorId: source.sensorId!, startDate, endDate },
       });
 
       if (alreadyExists) {
@@ -579,7 +580,7 @@ export class SitesService {
       }
 
       await this.exclusionDatesRepository.save({
-        sensorId: source.sensorId,
+        sensorId: source.sensorId!,
         endDate,
         startDate,
       });
