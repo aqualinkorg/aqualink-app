@@ -177,7 +177,7 @@ function SiteDetails({
     if (forecastData && latestData) {
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
-      
+
       // Check for sensor data (spotter, hobo, etc.) excluding seaphox source
       // Seaphox data should only appear in the SeapHOx card
       const hasSpotter = Boolean(
@@ -188,9 +188,10 @@ function SiteDetails({
               x.metric === 'top_temperature' ||
               x.metric === 'surface_temperature'),
         ) ||
-          (parsedData.topTemperature || parsedData.surfaceTemperature),
+        parsedData.topTemperature ||
+        parsedData.surfaceTemperature,
       );
-      
+
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
         MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
@@ -210,7 +211,7 @@ function SiteDetails({
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
       setHasHUIData(hasHUI);
-      
+
       const seapHOxInterval = Interval.fromDateTimes(
         DateTime.now().minus({ days: 7 }), // Only show if data within last 7 days
         DateTime.now(),
