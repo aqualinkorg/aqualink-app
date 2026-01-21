@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function Waves({ data }: WavesProps) {
+function Waves({ data, hasSpotter }: WavesProps) {
   const {
     significantWaveHeight,
     waveMeanDirection,
@@ -77,16 +77,16 @@ function Waves({ data }: WavesProps) {
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
   const now = Date.now();
 
-  const hasRecentWindData = windSpeed?.timestamp
-    ? now - new Date(windSpeed.timestamp).getTime() < spotterValidityLimit
-    : false;
-
-  const hasRecentWaveData = significantWaveHeight?.timestamp
-    ? now - new Date(significantWaveHeight.timestamp).getTime() <
-      spotterValidityLimit
-    : false;
-
-  const hasSpotterWindWaveData = hasRecentWindData || hasRecentWaveData;
+  // Only show as live Spotter data if site actually has a Spotter
+  // Otherwise it's model data regardless of timestamp
+  const hasSpotterWindWaveData = Boolean(
+    hasSpotter &&
+    ((windSpeed?.timestamp &&
+      now - new Date(windSpeed.timestamp).getTime() < spotterValidityLimit) ||
+      (significantWaveHeight?.timestamp &&
+        now - new Date(significantWaveHeight.timestamp).getTime() <
+          spotterValidityLimit)),
+  );
 
   // Make sure to get the direction the wind is COMING FROM.
   // use `numberUtils.invertDirection` if needed.
@@ -299,6 +299,7 @@ function Waves({ data }: WavesProps) {
 
 interface WavesProps {
   data: LatestDataASSofarValue;
+  hasSpotter: boolean;
 }
 
 interface StyleProps {

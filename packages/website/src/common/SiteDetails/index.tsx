@@ -142,6 +142,8 @@ function SiteDetails({
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const [hasSpotterData, setHasSpotterData] = useState<boolean>(false);
+  const [hasSpotterWindWaveData, setHasSpotterWindWaveData] =
+    useState<boolean>(false);
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
   const [hasSeapHOxData, setHasSeapHOxData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
@@ -178,18 +180,49 @@ function SiteDetails({
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
 
-      // Check for sensor data (spotter, hobo, etc.) excluding seaphox source
-      // Seaphox data should only appear in the SeapHOx card
-      const hasSpotter = Boolean(
+      // Check for Spotter TEMPERATURE data (for BUOY OBSERVATION card)
+      // Excludes seaphox source AND checks if data is recent (within 12 hours)
+      const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+      const now = Date.now();
+
+      const hasRecentSpotterTemperature = latestData.some((x) => {
+        if (x.source === 'seaphox') return false;
+
+        const isTemperatureMetric =
+          x.metric === 'bottom_temperature' ||
+          x.metric === 'top_temperature' ||
+          x.metric === 'surface_temperature';
+
+        if (!isTemperatureMetric) return false;
+
+        const dataAge = now - new Date(x.timestamp).getTime();
+        return dataAge < spotterValidityLimit;
+      });
+
+      const hasSpotterTemperature = Boolean(
+        hasRecentSpotterTemperature ||
+        (parsedData.topTemperature &&
+          parsedData.topTemperature.timestamp &&
+          now - new Date(parsedData.topTemperature.timestamp).getTime() <
+            spotterValidityLimit) ||
+        (parsedData.surfaceTemperature &&
+          parsedData.surfaceTemperature.timestamp &&
+          now - new Date(parsedData.surfaceTemperature.timestamp).getTime() <
+            spotterValidityLimit),
+      );
+
+      // Check for Spotter WIND/WAVE data (for Waves component LIVE indicator)
+      // Includes all sources except GFS model data
+      const hasSpotterWindWave = Boolean(
         latestData.some(
           (x) =>
-            x.source !== 'seaphox' &&
-            (x.metric === 'bottom_temperature' ||
-              x.metric === 'top_temperature' ||
-              x.metric === 'surface_temperature'),
-        ) ||
-        parsedData.topTemperature ||
-        parsedData.surfaceTemperature,
+            x.source !== 'gfs' &&
+            (x.metric === 'wind_speed' ||
+              x.metric === 'wind_direction' ||
+              x.metric === 'significant_wave_height' ||
+              x.metric === 'wave_mean_direction' ||
+              x.metric === 'wave_mean_period'),
+        ),
       );
 
       const hasSonde =
@@ -209,7 +242,8 @@ function SiteDetails({
         );
 
       setHasSondeData(hasSonde);
-      setHasSpotterData(hasSpotter);
+      setHasSpotterData(hasSpotterTemperature);
+      setHasSpotterWindWaveData(hasSpotterWindWave);
       setHasHUIData(hasHUI);
 
       const seapHOxInterval = Interval.fromDateTimes(
@@ -310,7 +344,10 @@ function SiteDetails({
           })(),
 
           // CARD 4: Waves (always shown)
-          <Waves data={latestDataAsSofarValues} />,
+          <Waves
+            data={latestDataAsSofarValues}
+            hasSpotter={hasSpotterWindWaveData}
+          />,
         ]
       : times(4, () => null);
 
