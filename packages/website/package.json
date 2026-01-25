@@ -46,7 +46,7 @@
     "immutable": "^4.0.0-rc.12",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "luxon": "^3.5.0",
     "mutationobserver-shim": "^0.3.7",
     "notistack": "^3.0.1",
