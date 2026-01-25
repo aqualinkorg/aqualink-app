@@ -42,7 +42,7 @@
     "firebase": "^11.0.2",
     "firebase-tools": "^15.0.0",
     "geolib": "^3.3.4",
-    "hono": "^4.10.3",
+    "hono": "^4.11.4",
     "immutable": "^4.0.0-rc.12",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
@@ -130,6 +130,6 @@
     "typescript": "^5.7.3",
     "vite": "^5.4.10",
     "vitest": "^3.0.7",
-    "wrangler": "^4.17.0"
+    "wrangler": "^4.59.1"
   }
 }
