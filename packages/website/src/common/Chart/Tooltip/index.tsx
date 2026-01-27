@@ -140,7 +140,7 @@ function Tooltip({
                       {...item}
                       gridClassName={classes.tooltipContentItem}
                       unit={item.unit}
-                      decimalPlaces={datasets[index]?.decimalPlaces}
+                      decimalPlaces={datasets[index]?.decimalPlaces ?? 1}
                     />
                   ),
               )}

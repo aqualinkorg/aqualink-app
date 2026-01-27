@@ -1,4 +1,3 @@
-// FILE: packages/website/src/common/SiteDetails/SeapHOx/SeapHOxCard.tsx
 import React from 'react';
 import {
   Box,
@@ -35,7 +34,7 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
     { key: 'dissolvedOxygen', label: 'Dissolved Oxygen', unit: 'ml/L' },
   ];
 
-  const formatValue = (value: number | undefined): string => {
+  const formatValue = (value: number | null | undefined): string => {
     if (value === null || value === undefined) return '--';
     return value.toFixed(2);
   };

@@ -8,6 +8,8 @@ import Waves from '.';
 test('renders as expected', () => {
   const data = parseLatestData(mockLatestData);
 
-  const { container } = renderWithProviders(<Waves data={data} />);
+  const { container } = renderWithProviders(
+    <Waves data={data} hasSpotter={false} />,
+  );
   expect(container).toMatchSnapshot();
 });

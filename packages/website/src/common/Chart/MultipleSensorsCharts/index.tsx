@@ -356,7 +356,7 @@ function MultipleSensorsCharts({
         ),
       );
 
-      const allMetrics: MetricsKeys[] = [
+      const allMetrics = [
         ...DEFAULT_METRICS,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),

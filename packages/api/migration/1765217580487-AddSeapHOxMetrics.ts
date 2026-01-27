@@ -61,11 +61,6 @@ export class AddSeapHOxMetrics1765217580487
     await queryRunner.query(`
       ALTER TABLE "site" DROP COLUMN IF EXISTS "bristlemouth_node_id"
     `);
-
-    // Note: Enum values cannot be easily removed in PostgreSQL
-    console.log(
-      'Rollback complete. Note: Enum values cannot be removed - this is a PostgreSQL limitation.',
-    );
   }
 }
 

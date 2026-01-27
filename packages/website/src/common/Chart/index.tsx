@@ -163,18 +163,11 @@ function Chart({
       const rawMax = Math.max(...values);
 
       return {
-        min: Number(
-          (
-            Math.floor((rawMin - customPadding) / customStepSize) *
-            customStepSize
-          ).toFixed(5),
-        ),
-        max: Number(
-          (
-            Math.ceil((rawMax + customPadding) / customStepSize) *
-            customStepSize
-          ).toFixed(5),
-        ),
+        min:
+          Math.floor((rawMin - customPadding) / customStepSize) *
+          customStepSize,
+        max:
+          Math.ceil((rawMax + customPadding) / customStepSize) * customStepSize,
       };
     }
 

@@ -1,3 +1,7 @@
+import { Logger } from '@nestjs/common';
+
+const logger = new Logger('SeapHOxDecoder');
+
 /**
  * SeapHOx Data Decoder
  * Decodes hex-encoded SeapHOx data from Sofar API
@@ -52,7 +56,7 @@ export function parseSeapHoxData(hexValue: string): SeapHOxData | null {
 
     // Validate minimum required values (16 total: frame sync + 15 data fields)
     if (values.length < 16) {
-      console.warn(`SeapHOx data has insufficient values: ${values.length}/16`);
+      logger.warn(`SeapHOx data has insufficient values: ${values.length}/16`);
       return null;
     }
 
@@ -102,7 +106,7 @@ export function parseSeapHoxData(hexValue: string): SeapHOxData | null {
       intTemperature,
     };
   } catch (error) {
-    console.error('Error parsing SeapHOx data:', error, 'Raw hex:', hexValue);
+    logger.error(`Error parsing SeapHOx data: ${error}, Raw hex: ${hexValue}`);
     return null;
   }
 }
@@ -122,7 +126,9 @@ export function extractSeapHoxFromSofarData(sofarData: any[]): SeapHOxData[] {
         return false;
       }
       if (!item.bristlemouth_node_id) {
-        console.warn('Sofar data item missing bristlemouth_node_id:', item);
+        logger.warn(
+          `Sofar data item missing bristlemouth_node_id: ${JSON.stringify(item)}`,
+        );
       }
       return true;
     })
