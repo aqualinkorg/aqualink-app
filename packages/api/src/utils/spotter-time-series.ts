@@ -34,7 +34,7 @@ const logger = new Logger('SpotterTimeSeries');
 
 /**
  * Check if site already has SeapHOx data in time_series table
- * Used to determine if we need to backfill 90 days or just fetch recent data
+ * Used to determine if we need to backfill 180 days or just fetch recent data
  * We check for PH as it's a primary SeapHOx metric - if it exists, the site has been backfilled
  */
 const hasExistingSeapHOxData = async (
@@ -168,7 +168,7 @@ export const addSpotterData = async (
   await Promise.all(
     sites.map((site) =>
       outerLimit(async () => {
-        // Fetch 90 days for NEW SeapHOx sites (first run only)
+        // Fetch 180 days for NEW SeapHOx sites (first run only)
         // After first run, just fetch recent data like normal spotters
         const hasSeapHOxData = site.hasSeaphox
           ? await hasExistingSeapHOxData(
@@ -178,7 +178,7 @@ export const addSpotterData = async (
           : false;
 
         const daysToFetch =
-          site.hasSeaphox && !hasSeapHOxData ? Math.max(days, 90) : days;
+          site.hasSeaphox && !hasSeapHOxData ? Math.max(days, 180) : days;
 
         const innerLimit = pLimit(100);
         return Promise.all(
