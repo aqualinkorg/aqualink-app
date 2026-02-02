@@ -5,7 +5,7 @@ import { isUndefined, omitBy } from 'lodash';
 const instance = axios.create({
   baseURL:
     process.env.REACT_APP_API_BASE_URL ||
-    'https://programize-dot-ocean-systems.uc.r.appspot.com/api',
+    'https://production-dot-ocean-systems.uc.r.appspot.com/api',
   headers: {
     Accept: 'application/json, text/html',
     crossDomain: true,
