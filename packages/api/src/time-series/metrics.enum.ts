@@ -54,6 +54,4 @@ export enum Metric {
   PH_TEMPERATURE = 'ph_temperature',
   INTERNAL_TEMPERATURE = 'internal_temperature',
   RELATIVE_HUMIDITY = 'relative_humidity',
-  SAMPLE_NUMBER = 'sample_number',
-  ERROR_FLAGS = 'error_flags',
 }

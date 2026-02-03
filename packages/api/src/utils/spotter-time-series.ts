@@ -298,8 +298,6 @@ export const addSpotterData = async (
                   ['oxygen', Metric.DISSOLVED_OXYGEN],
                   ['relativeHumidity', Metric.RELATIVE_HUMIDITY],
                   ['intTemperature', Metric.INTERNAL_TEMPERATURE],
-                  ['sampleNumber', Metric.SAMPLE_NUMBER],
-                  ['errorFlags', Metric.ERROR_FLAGS],
                 ];
 
                 // eslint-disable-next-line fp/no-mutation

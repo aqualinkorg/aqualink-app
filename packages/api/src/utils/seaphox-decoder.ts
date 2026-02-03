@@ -12,8 +12,6 @@ const logger = new Logger('SeapHOxDecoder');
 
 export interface SeapHOxData {
   timestamp: string;
-  sampleNumber: number;
-  errorFlags: string;
   temperature: number | null;
   externalPh: number | null;
   internalPh: number | null;
@@ -66,8 +64,6 @@ export function parseSeapHoxData(hexValue: string): SeapHOxData | null {
     // Index 2-15: Data fields
 
     const timestamp = values[1];
-    const sampleNumber = parseInt(values[2], 10);
-    const errorFlags = values[3];
 
     // Parse floating point values - return null if invalid
     const parseValue = (str: string): number | null => {
@@ -90,8 +86,6 @@ export function parseSeapHoxData(hexValue: string): SeapHOxData | null {
 
     return {
       timestamp,
-      sampleNumber,
-      errorFlags,
       temperature,
       externalPh,
       internalPh,
