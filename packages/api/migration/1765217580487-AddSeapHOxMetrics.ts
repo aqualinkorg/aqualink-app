@@ -32,8 +32,6 @@ export class AddSeapHOxMetrics1765217580487
       'ph_temperature',
       'internal_temperature',
       'relative_humidity',
-      'sample_number',
-      'error_flags',
     ];
 
     for (const metric of metrics) {
