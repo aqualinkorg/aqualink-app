@@ -72,6 +72,22 @@ function Waves({ data, hasSpotter }: WavesProps) {
 
   const waveHeight = significantWaveHeight;
 
+  // Check if we have actual Spotter wind/wave data (not just temperature)
+  // Spotter data is updated hourly, model data every 6+ hours
+  const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+  const now = Date.now();
+
+  // Only show as live Spotter data if site actually has a Spotter
+  // Otherwise it's model data regardless of timestamp
+  const hasSpotterWindWaveData = Boolean(
+    hasSpotter &&
+    ((windSpeed?.timestamp &&
+      now - new Date(windSpeed.timestamp).getTime() < spotterValidityLimit) ||
+      (significantWaveHeight?.timestamp &&
+        now - new Date(significantWaveHeight.timestamp).getTime() <
+          spotterValidityLimit)),
+  );
+
   // Make sure to get the direction the wind is COMING FROM.
   // use `numberUtils.invertDirection` if needed.
   const windDirectionFrom = windDirection?.value;
@@ -81,8 +97,10 @@ function Waves({ data, hasSpotter }: WavesProps) {
     wavesDirection: waveDirectionFrom,
   });
 
-  const windRelativeTime =
-    windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp);
+  const windRelativeTime = hasSpotterWindWaveData
+    ? windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp)
+    : significantWaveHeight?.timestamp &&
+      toRelativeTime(significantWaveHeight.timestamp);
 
   return (
     <Card className={classes.root}>
@@ -267,11 +285,11 @@ function Waves({ data, hasSpotter }: WavesProps) {
           </Grid>
           <UpdateInfo
             relativeTime={windRelativeTime}
-            timeText={hasSpotter ? 'Last data received' : 'Valid'}
-            live={hasSpotter}
-            frequency={hasSpotter ? 'hourly' : 'every 6 hours'}
+            timeText={hasSpotterWindWaveData ? 'Last data received' : 'Valid'}
+            live={hasSpotterWindWaveData}
+            frequency={hasSpotterWindWaveData ? 'hourly' : 'every 6 hours'}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-            imageText={hasSpotter ? undefined : 'SOFAR MODEL'}
+            imageText={hasSpotterWindWaveData ? undefined : 'SOFAR MODEL'}
           />
         </Grid>
       </CardContent>

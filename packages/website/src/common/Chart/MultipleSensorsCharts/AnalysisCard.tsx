@@ -55,6 +55,7 @@ function AnalysisCard({
       displayCardColumn,
       cardColumnName,
       cardColumnTooltip,
+      decimalPlaces,
     }) => ({
       title: cardColumnName || label,
       color: curveColor,
@@ -63,6 +64,7 @@ function AnalysisCard({
       rows: calculateCardMetrics(chartStartDate, chartEndDate, data, label),
       unit,
       tooltip: cardColumnTooltip,
+      decimalPlaces,
     }),
   );
 
@@ -142,7 +144,8 @@ function AnalysisCard({
                           variant="h5"
                           color="textSecondary"
                         >
-                          {formatNumber(value, 1)} {item.unit}
+                          {formatNumber(value, item.decimalPlaces ?? 1)}{' '}
+                          {item.unit}
                         </Typography>
                       </Grid>
                     ))}
