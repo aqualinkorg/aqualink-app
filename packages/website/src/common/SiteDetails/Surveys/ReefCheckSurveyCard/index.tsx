@@ -71,7 +71,10 @@ function ReefCheckSurveyCardComponent({
           <Typography>
             Date: {formatReefCheckSurveyDate(survey.date)}
           </Typography>
-          <Typography>Depth: {survey.depth}m</Typography>
+          <Typography>
+Depth:{survey.depth}
+m
+</Typography>
         </Box>
         <Box display="flex" alignItems="center" gap={1}>
           <Typography>
@@ -91,12 +94,14 @@ function ReefCheckSurveyCardComponent({
           <TableHead>
             <TableRow className={classes.header}>
               <TableCell className={classes.label}>
-                FISH ({stats.Fish?.length ?? 0})
-              </TableCell>
+                FISH ({stats.Fish?.length ?? 0}
+)
+</TableCell>
               <TableCell>Count</TableCell>
               <TableCell className={cls(classes.label, classes.noWrap)}>
-                INVERTEBRATES ({stats.Invertebrate?.length ?? 0})
-              </TableCell>
+                INVERTEBRATES ({stats.Invertebrate?.length ?? 0}
+)
+</TableCell>
               <TableCell>Count</TableCell>
               <TableCell className={classes.label}>
                 BLEACHING AND CORAL DISEASES

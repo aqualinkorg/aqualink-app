@@ -345,7 +345,7 @@ export const createDatasets = (
           )
           .map(
             ({ timestamp, value }) =>
-              ({ x: timestamp, y: value }) as ChartPoint,
+              ({ x: timestamp, y: value } as ChartPoint),
           ),
       }
     : undefined;

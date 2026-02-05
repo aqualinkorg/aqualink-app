@@ -10,7 +10,7 @@ export const DEFAULT_METRICS = createSubMetricsKeysArray(
   'surface_temperature',
 );
 
-export type SpotterMetricsKeys = (typeof DEFAULT_METRICS)[number];
+export type SpotterMetricsKeys = typeof DEFAULT_METRICS[number];
 
 const spotterConfig: Record<SpotterMetricsKeys, BaseSourceConfig> = {
   top_temperature: {

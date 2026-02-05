@@ -18,9 +18,6 @@ rstest.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
 
 describe('ReefCheckSurveyViewPage', () => {
   const mockStore = configureStore([]);
-  const scrollToSpy = rstest
-    .spyOn(window, 'scrollTo')
-    .mockImplementation(() => null);
   const reefCheckSurveyOrganismsTableSpy = rstest.spyOn(
     organismsTableModule,
     'ReefCheckSurveyOrganismsTable',

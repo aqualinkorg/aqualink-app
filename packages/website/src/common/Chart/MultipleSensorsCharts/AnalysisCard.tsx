@@ -81,7 +81,8 @@ function AnalysisCard({
     >
       <Card className={classes.AnalysisCardCard}>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-          {formattedpickerStartDate} - {formattedpickerEndDate}
+          {formattedpickerStartDate} -
+{formattedpickerEndDate}
         </Typography>
         <Grid
           className={classes.metricsWrapper}
@@ -196,7 +197,8 @@ const styles = (theme: Theme) =>
   });
 
 interface AnalysisCardProps
-  extends AnalysisCardIncomingProps, WithStyles<typeof styles> {}
+  extends AnalysisCardIncomingProps,
+    WithStyles<typeof styles> {}
 
 interface AnalysisCardIncomingProps {
   datasets: Dataset[];

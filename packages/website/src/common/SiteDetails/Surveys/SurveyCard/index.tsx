@@ -231,11 +231,13 @@ function SurveyCard({
                         <Grid container justifyContent="flex-end" item xs={2}>
                           <DeleteButton
                             content={
-                              <Typography color="textSecondary">{`Are you sure you would like to delete the survey for ${DateTime.fromISO(
-                                survey.diveDate,
-                              ).toFormat(
-                                'LL/dd/yyyy',
-                              )}? It will delete all media associated with this survey.`}</Typography>
+                              <Typography color="textSecondary">
+                                {`Are you sure you would like to delete the survey for ${DateTime.fromISO(
+                                  survey.diveDate,
+                                ).toFormat(
+                                  'LL/dd/yyyy',
+                                )}? It will delete all media associated with this survey.`}
+                              </Typography>
                             }
                             onConfirm={onSurveyDelete}
                             onSuccess={onSurveyDeleteSuccess}

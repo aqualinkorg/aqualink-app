@@ -4,6 +4,7 @@ import 'mutationobserver-shim';
 import { TextEncoder, TextDecoder } from 'util';
 import { ReadableStream } from 'node:stream/web';
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { rstest } from '@rstest/core';
 
 // Polyfill to address rstest+jsdom issue: https://github.com/jsdom/jsdom/issues/2524

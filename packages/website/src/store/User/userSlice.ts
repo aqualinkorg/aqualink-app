@@ -84,8 +84,9 @@ export const signInUser = createAsyncThunk<
       const { user } = (await userServices.signInUser(email, password)) || {};
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
-      const { data: collections } =
-        await collectionServices.getCollections(token);
+      const { data: collections } = await collectionServices.getCollections(
+        token,
+      );
       return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
@@ -111,8 +112,9 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
   async (token: string, { rejectWithValue }) => {
     try {
       const { data: userData } = await userServices.getSelf(token);
-      const { data: collections } =
-        await collectionServices.getCollections(token);
+      const { data: collections } = await collectionServices.getCollections(
+        token,
+      );
       return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));

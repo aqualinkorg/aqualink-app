@@ -48,9 +48,9 @@ describe('ReefCheckSurveyCard', () => {
 
   it('should show correct counts in headers', () => {
     const { container } = renderReefCheckSurveyCard();
-    const headers = [
-      ...container.querySelectorAll('thead th').values(),
-    ].map((el) => el.textContent);
+    const headers = [...container.querySelectorAll('thead th').values()].map(
+      (el) => el.textContent,
+    );
     expect(headers).toEqual(
       expect.arrayContaining([
         'FISH (2)',

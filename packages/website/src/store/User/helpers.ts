@@ -8,8 +8,9 @@ export const constructUserObject = async (
   collections: CollectionSummary[],
   token?: string,
 ): Promise<User> => {
-  const { data: administeredSites } =
-    await userServices.getAdministeredSites(token);
+  const { data: administeredSites } = await userServices.getAdministeredSites(
+    token,
+  );
 
   return {
     ...user,

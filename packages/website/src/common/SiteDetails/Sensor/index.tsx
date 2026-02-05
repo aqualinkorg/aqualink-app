@@ -83,8 +83,8 @@ function Sensor({ depth, id, data, classes }: SensorProps) {
 
   const hasSpotter = Boolean(
     topTemperature?.value ||
-    bottomTemperature?.value ||
-    surfaceTemperature?.value,
+      bottomTemperature?.value ||
+      surfaceTemperature?.value,
   );
 
   const user = useSelector(userInfoSelector);

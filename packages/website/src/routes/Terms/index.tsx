@@ -102,7 +102,8 @@ function Terms({ classes }: TermsProps) {
           </li>
           <li>
             <p>
-              <strong>Website</strong> refers to Aqualink, accessible from{' '}
+              <strong>Website</strong> refers to Aqualink, accessible from
+{' '}
               <a
                 href="http://www.aqualink.org"
                 rel="noopener noreferrer"

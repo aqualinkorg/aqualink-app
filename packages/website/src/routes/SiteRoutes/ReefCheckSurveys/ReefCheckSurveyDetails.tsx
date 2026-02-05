@@ -81,7 +81,9 @@ function ReefCheckSurveyDetailsComponent({
   return (
     <Paper className={classes.paper}>
       <Typography className={classes.title}>
-        REEF CHECK SURVEY - {formattedDate}
+        REEF CHECK SURVEY - 
+        {' '}
+        {formattedDate}
       </Typography>
       <Box className={classes.container}>
         {surveyFields.map(({ field, label, formatter }) => (

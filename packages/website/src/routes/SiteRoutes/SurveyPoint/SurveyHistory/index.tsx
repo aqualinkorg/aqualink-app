@@ -25,7 +25,10 @@ function SurveyHistory({
       <Container>
         <Grid container justifyContent="center">
           <Box className={classes.title}>
-            <Typography variant="h4">{pointName} Survey History</Typography>
+            <Typography variant="h4">{pointName}
+{' '}
+Survey History
+</Typography>
           </Box>
         </Grid>
         <TimeLine

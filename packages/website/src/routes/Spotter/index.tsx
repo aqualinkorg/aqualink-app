@@ -56,7 +56,8 @@ function BuoySelector({
   }
 
   if (!buoyData) {
-    return <Typography>No Spotters available for token {token}</Typography>;
+    return <Typography>
+No Spotters available for token{token}</Typography>;
   }
 
   return (
@@ -70,7 +71,8 @@ function BuoySelector({
       >
         {Object.keys(buoyData).map((buoyId) => (
           <MenuItem key={buoyId} value={buoyId} style={{ color: 'black' }}>
-            {buoyId} - {buoyData[buoyId].name}
+            {buoyId} -
+{buoyData[buoyId].name}
           </MenuItem>
         ))}
       </Select>
@@ -132,14 +134,17 @@ function BuoyContent({
     return (
       <>
         <div style={{ paddingTop: '1em', paddingLeft: '1em', height: '6em' }}>
-          {selectedBuoy.id} last seen at{' '}
+          {selectedBuoy.id} last seen at
+{' '}
           {new Date(lastPosition.timestamp).toLocaleString()}
           <br />
           Latitude: {lastPosition.latitude}, Longitude: {lastPosition.longitude}
           <br />
-          Distance: {distance.toFixed(0)} m, Heading: {heading.toFixed(0)}{' '}
-          degrees ({compass})
-        </div>
+          Distance: {distance.toFixed(0)} m, Heading: {heading.toFixed(0)}
+{' '}
+          degrees ({compass}
+)
+</div>
         <MapContainer
           key={0}
           center={{ lat: lastPosition.latitude, lng: lastPosition.longitude }}
