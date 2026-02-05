@@ -26,6 +26,7 @@ export interface SpotterData {
   surfaceTemperature: ValueWithTimestamp[];
   latitude?: ValueWithTimestamp[];
   longitude?: ValueWithTimestamp[];
+  raw?: any[];
 }
 
 export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {

@@ -17,6 +17,7 @@ export interface CardColumn {
   tooltip?: string;
   display: boolean;
   unit: string;
+  decimalPlaces?: number;
 }
 
 export interface OceanSenseDataset {

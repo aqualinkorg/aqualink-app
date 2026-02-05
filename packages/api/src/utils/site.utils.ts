@@ -15,7 +15,7 @@ import geoTz from 'geo-tz';
 import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import { ValueWithTimestamp, SpotterData } from './sofar.types';
+import { SpotterData } from './sofar.types';
 import { createPoint } from './coordinates';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
@@ -146,16 +146,15 @@ export const getConflictingExclusionDates = async (
   );
 };
 
-export const filterMetricDataByDate = (
+export const filterMetricDataByDate = <T extends { timestamp: string | Date }>(
   exclusionDates: ExclusionDates[],
-  metricData?: ValueWithTimestamp[],
+  metricData?: T[],
 ) =>
   metricData?.filter(
     ({ timestamp }) =>
       // Filter data that do not belong at any `[startDate, endDate]` exclusion date interval
       !some(exclusionDates, ({ startDate, endDate }) => {
         const dataDate = new Date(timestamp);
-
         return dataDate <= endDate && (!startDate || startDate <= dataDate);
       }),
   );

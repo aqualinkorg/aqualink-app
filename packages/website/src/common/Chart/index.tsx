@@ -45,6 +45,11 @@ export interface Dataset {
   tooltipLabel?: string; // An optional label for the data on the chart's tooltip. If not specified, the label property is used instead
   metric?: Metrics;
   source?: Sources;
+  decimalPlaces?: number;
+  yAxisStepSize?: number;
+  yAxisPadding?: number;
+  yAxisMin?: number;
+  yAxisMax?: number;
 }
 
 export interface ChartProps {
@@ -138,8 +143,43 @@ function Chart({
       selectedSurveyDate,
     );
 
+  const customStepSize = datasets?.[0]?.yAxisStepSize;
+  const customPadding = datasets?.[0]?.yAxisPadding;
+  const configYMin = datasets?.[0]?.yAxisMin;
+  const configYMax = datasets?.[0]?.yAxisMax;
+
+  const getAdjustedAxisBounds = () => {
+    // Use explicit config values if provided
+    if (configYMin !== undefined && configYMax !== undefined) {
+      return { min: configYMin, max: configYMax };
+    }
+
+    // Calculate from raw data with padding
+    if (customPadding !== undefined && customStepSize && datasets?.[0]?.data) {
+      const values = datasets[0].data
+        .map((d) => d.value)
+        .filter((v) => v !== null && v !== undefined);
+      const rawMin = Math.min(...values);
+      const rawMax = Math.max(...values);
+
+      return {
+        min:
+          Math.floor((rawMin - customPadding) / customStepSize) *
+          customStepSize,
+        max:
+          Math.ceil((rawMax + customPadding) / customStepSize) * customStepSize,
+      };
+    }
+
+    // Default: use processed bounds
+    return { min: yAxisMin, max: yAxisMax };
+  };
+
+  const { min: adjustedYMin, max: adjustedYMax } = getAdjustedAxisBounds();
+
   const nYTicks = 5;
-  const yStepSize = Math.ceil((yAxisMax - yAxisMin) / nYTicks);
+  const yStepSize =
+    customStepSize || Math.ceil((yAxisMax - yAxisMin) / nYTicks);
 
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
@@ -255,8 +295,8 @@ function Chart({
           },
         },
         y: {
-          min: yAxisMin,
-          max: yAxisMax,
+          min: adjustedYMin,
+          max: adjustedYMax,
           grid: {
             drawTicks: false,
           },
@@ -277,7 +317,9 @@ function Chart({
                 (index === values.length - 1 &&
                   values[index - 1] - value > 0.8 * yStepSize)
               ) {
-                return `${value}${!hideYAxisUnits ? '°' : ''}  `;
+                return `${Number(value.toFixed(2))}${
+                  !hideYAxisUnits ? '°' : ''
+                }  `;
               }
               return '';
             },

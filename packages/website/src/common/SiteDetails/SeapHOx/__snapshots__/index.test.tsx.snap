@@ -1,0 +1,218 @@
+// Rstest Snapshot v1
+
+exports[`SeapHOx Card > should render with given state from Redux store 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root SeapHOxCard-root-8 css-1j74uew-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+  >
+    <div
+      class="MuiCardHeader-root SeapHOxCard-header-3 css-149tc0y-MuiCardHeader-root"
+    >
+      <div
+        class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-16xl4zq-MuiTypography-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-h6 SeapHOxCard-cardTitle-2 css-1miy0lu-MuiTypography-root"
+                style="text-transform: uppercase;"
+              >
+                SeapHOx at 
+                 depth
+              </h6>
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+    <div
+      class="MuiCardContent-root SeapHOxCard-content-9 css-1lt5qva-MuiCardContent-root"
+    >
+      <div
+        class="MuiBox-root css-1as4n1g"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-11nsb57-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle2 SeapHOxCard-contentTextTitles-4 css-1ypmsg6-MuiTypography-root"
+              >
+                TEMPERATURE
+              </h6>
+              <div
+                class="MuiBox-root css-0"
+                style="display: flex; align-items: flex-end;"
+              >
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 SeapHOxCard-contentTextValues-5 css-13msox4-MuiTypography-root"
+                >
+                  --
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 SeapHOxCard-contentUnits-6 css-1miy0lu-MuiTypography-root"
+                >
+                  °C
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle2 SeapHOxCard-contentTextTitles-4 css-1ypmsg6-MuiTypography-root"
+              >
+                ACIDITY
+              </h6>
+              <div
+                class="MuiBox-root css-0"
+                style="display: flex; align-items: flex-end;"
+              >
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 SeapHOxCard-contentTextValues-5 css-13msox4-MuiTypography-root"
+                >
+                  --
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 SeapHOxCard-contentUnits-6 css-1miy0lu-MuiTypography-root"
+                >
+                  pH
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle2 SeapHOxCard-contentTextTitles-4 css-1ypmsg6-MuiTypography-root"
+              >
+                PRESSURE
+              </h6>
+              <div
+                class="MuiBox-root css-0"
+                style="display: flex; align-items: flex-end;"
+              >
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 SeapHOxCard-contentTextValues-5 css-13msox4-MuiTypography-root"
+                >
+                  --
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 SeapHOxCard-contentUnits-6 css-1miy0lu-MuiTypography-root"
+                >
+                  dbar
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle2 SeapHOxCard-contentTextTitles-4 css-1ypmsg6-MuiTypography-root"
+              >
+                SALINITY
+              </h6>
+              <div
+                class="MuiBox-root css-0"
+                style="display: flex; align-items: flex-end;"
+              >
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 SeapHOxCard-contentTextValues-5 css-13msox4-MuiTypography-root"
+                >
+                  --
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 SeapHOxCard-contentUnits-6 css-1miy0lu-MuiTypography-root"
+                >
+                  psu
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle2 SeapHOxCard-contentTextTitles-4 css-1ypmsg6-MuiTypography-root"
+              >
+                CONDUCTIVITY
+              </h6>
+              <div
+                class="MuiBox-root css-0"
+                style="display: flex; align-items: flex-end;"
+              >
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 SeapHOxCard-contentTextValues-5 css-13msox4-MuiTypography-root"
+                >
+                  --
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 SeapHOxCard-contentUnits-6 css-1miy0lu-MuiTypography-root"
+                >
+                  S/m
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle2 SeapHOxCard-contentTextTitles-4 css-1ypmsg6-MuiTypography-root"
+              >
+                DISSOLVED OXYGEN
+              </h6>
+              <div
+                class="MuiBox-root css-0"
+                style="display: flex; align-items: flex-end;"
+              >
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 SeapHOxCard-contentTextValues-5 css-13msox4-MuiTypography-root"
+                >
+                  --
+                </h3>
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 SeapHOxCard-contentUnits-6 css-1miy0lu-MuiTypography-root"
+                >
+                  ml/L
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

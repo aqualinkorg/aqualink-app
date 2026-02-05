@@ -47,6 +47,7 @@ function TemperatureMetric({
   unit,
   gridClassName,
   source,
+  decimalPlaces,
 }: {
   value: number | null;
   title: string;
@@ -54,12 +55,13 @@ function TemperatureMetric({
   unit: string;
   gridClassName: string | undefined;
   source?: Sources;
+  decimalPlaces?: number;
 }) {
   return (
     <Grid container item className={gridClassName}>
       <Circle color={color} />
       <Typography variant="caption" color="white">
-        {title} {`${formatNumber(value, 1)} ${unit}`}
+        {title} {`${formatNumber(value, decimalPlaces ?? 1)} ${unit}`}
         {sourceTitle(title, source)}
       </Typography>
     </Grid>
@@ -131,13 +133,14 @@ function Tooltip({
               xs={12}
             >
               {tooltipLines.map(
-                (item) =>
+                (item, index) =>
                   isNumber(item.value) && (
                     <TemperatureMetric
                       key={`${item.color}_${item.value}`}
                       {...item}
                       gridClassName={classes.tooltipContentItem}
                       unit={item.unit}
+                      decimalPlaces={datasets[index]?.decimalPlaces ?? 1}
                     />
                   ),
               )}

@@ -161,6 +161,16 @@ export class Site {
   @Column({ nullable: true, select: false, type: 'character varying' })
   contactInformation?: string | null;
 
+  @ApiProperty({ example: false })
+  @Expose()
+  @Column({
+    name: 'has_seaphox',
+    default: false,
+    nullable: true,
+    type: 'boolean',
+  })
+  hasSeaphox?: boolean;
+
   hasHobo?: boolean;
 
   collectionData?: CollectionDataDto;

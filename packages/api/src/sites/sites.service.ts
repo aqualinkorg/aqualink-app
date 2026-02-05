@@ -6,7 +6,7 @@ import {
   ConflictException,
   ForbiddenException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { omit } from 'lodash';
 import Bluebird from 'bluebird';
@@ -93,7 +93,7 @@ export class SitesService {
     @InjectRepository(ReefCheckSurvey)
     private reefCheckSurveyRepository: Repository<ReefCheckSurvey>,
 
-    private dataSource: DataSource,
+    @InjectDataSource() private dataSource: DataSource,
   ) {}
 
   async create(
@@ -539,26 +539,34 @@ export class SitesService {
       );
     }
 
+    // Fetch both SPOTTER and SEAPHOX sources
     const sources = await this.sourceRepository.find({
-      where: {
-        site: { id: site.id },
-        type: SourceType.SPOTTER,
-      },
+      where: [
+        {
+          site: { id: site.id },
+          type: SourceType.SPOTTER,
+        },
+        {
+          site: { id: site.id },
+          type: SourceType.SEAPHOX,
+        },
+      ],
     });
 
-    Bluebird.Promise.each(sources, async (source) => {
-      if (!source.sensorId) {
-        throw new BadRequestException(
-          'Cannot delete spotter with missing sensorId',
-        );
-      }
+    // Filter out sources without sensorId
+    const sourcesWithSensor = sources.filter((source) => source.sensorId);
 
+    if (sourcesWithSensor.length === 0) {
+      throw new BadRequestException(`Site with ID ${id} has no sensor`);
+    }
+
+    await Bluebird.Promise.each(sourcesWithSensor, async (source) => {
       this.logger.log(
-        `Deleting time-series data for spotter ${source.sensorId} ; site ${site.id}`,
+        `Deleting time-series data for ${source.type} sensor ${source.sensorId} ; site ${site.id}`,
       );
 
       const alreadyExists = await this.exclusionDatesRepository.findOne({
-        where: { sensorId: source.sensorId, startDate, endDate },
+        where: { sensorId: source.sensorId!, startDate, endDate },
       });
 
       if (alreadyExists) {
@@ -567,12 +575,12 @@ export class SitesService {
             dateFormat,
           )}, ${DateTime.fromJSDate(endDate).toFormat(
             dateFormat,
-          )}] already exists for spotter ${source.sensorId}.`,
+          )}] already exists for sensor ${source.sensorId}.`,
         );
       }
 
       await this.exclusionDatesRepository.save({
-        sensorId: source.sensorId,
+        sensorId: source.sensorId!,
         endDate,
         startDate,
       });

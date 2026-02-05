@@ -29,7 +29,7 @@ export default defineConfig({
     target: 'node18',
   },
   test: {
-    threads: false,
+    pool: 'forks',
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/setupTests.tsx',
