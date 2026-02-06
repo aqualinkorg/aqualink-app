@@ -19,7 +19,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             class="MuiBox-root css-ium7el"
           >
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-uzo6ff-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-hijd2o-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -58,7 +58,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
         >
           <button
             aria-label="Translate"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
             data-mui-internal-clone-element="true"
             style="color: white;"
             tabindex="0"
@@ -81,7 +81,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
           >
             Mock User
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-25 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-25 css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -167,21 +167,20 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-47g1cz-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for=":r5:"
-            id=":r5:-label"
+            for=":r8:"
+            id=":r8:-label"
           >
             Sensor type
           </label>
           <div
-            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiSelect-root css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <div
-              aria-controls=":r6:"
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby=":r5:-label :r5:"
-              class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-18f70e-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-              id=":r5:"
+              aria-labelledby=":r8:-label :r8:"
+              class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-6scorh-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+              id=":r8:"
               role="combobox"
               tabindex="0"
             >
@@ -201,7 +200,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             />
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-lohd6h-MuiSvgIcon-root-MuiSelect-icon"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-1rfqz7c-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
               data-testid="ArrowDropDownIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -212,10 +211,10 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             </svg>
             <fieldset
               aria-hidden="true"
-              class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+              class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="css-w1u3ce"
+                class="css-ex8a5f-MuiNotchedOutlined-root"
               >
                 <span>
                   Sensor type
@@ -232,10 +231,10 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
         >
           <span
-            class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-y2cdd3-MuiButtonBase-root-MuiCheckbox-root"
+            class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12yqbbs-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
           >
             <input
-              class="PrivateSwitchBase-input css-j8yymo"
+              class="PrivateSwitchBase-input css-12xagqm-MuiSwitchBase-root"
               data-indeterminate="false"
               type="checkbox"
             />
@@ -298,7 +297,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
         class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary makeStyles-button-55 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary makeStyles-button-55 css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
@@ -383,7 +382,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             >
               <button
                 aria-label="expand row"
-                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-glu04p-MuiButtonBase-root-MuiIconButton-root"
+                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-riaubk-MuiButtonBase-root-MuiIconButton-root"
                 disabled=""
                 tabindex="-1"
                 type="button"

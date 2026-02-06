@@ -9,7 +9,8 @@ exports[`renders as expected 1`] = `
       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <a
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeLarge css-1dvllei-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeLarge css-14y7ap6-MuiButtonBase-root-MuiIconButton-root"
+        data-discover="true"
         href="/sites/1"
         tabindex="0"
       >

@@ -19,7 +19,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
             class="MuiBox-root css-ium7el"
           >
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-uzo6ff-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-hijd2o-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -58,7 +58,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
         >
           <button
             aria-label="Translate"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
             data-mui-internal-clone-element="true"
             style="color: white;"
             tabindex="0"
@@ -81,7 +81,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
           >
             Mock User
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-11 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-11 css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -112,12 +112,13 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
         class="MuiGrid-root MuiGrid-container BackButton-backButtonWrapper-37 css-1dphqhe-MuiGrid-root"
       >
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iorydh-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
           href="/sites/1"
           tabindex="0"
         >
           <span
-            class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-dm569u-MuiButton-startIcon"
+            class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
           >
             <svg
               aria-hidden="true"
@@ -185,7 +186,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                 class="MuiAlert-action css-rgppqo-MuiAlert-action"
               >
                 <button
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-2yamib-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-ww7hxw-MuiButtonBase-root-MuiIconButton-root"
                   tabindex="0"
                   type="button"
                 >

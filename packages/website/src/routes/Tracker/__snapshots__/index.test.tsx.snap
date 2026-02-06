@@ -245,6 +245,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
            
           <a
             class="makeStyles-link-11"
+            data-discover="true"
             href="/collections/minderoo"
           >
             here
@@ -347,6 +348,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
            
           <a
             class="makeStyles-link-11"
+            data-discover="true"
             href="/collections/heat-stress"
           >
             this page
@@ -362,6 +364,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
           class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root makeStyles-card3-9 makeStyles-card3-17 css-1dixpig-MuiPaper-root-MuiCard-root"
         >
           <a
+            data-discover="true"
             href="/collections/heat-stress"
           >
             <div

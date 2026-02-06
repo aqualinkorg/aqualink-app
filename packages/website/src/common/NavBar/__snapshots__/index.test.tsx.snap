@@ -22,7 +22,7 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
             class="MuiBox-root css-ium7el"
           >
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-uzo6ff-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-hijd2o-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -61,7 +61,7 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
         >
           <button
             aria-label="Translate"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
             data-mui-internal-clone-element="true"
             style="color: white;"
             tabindex="0"
@@ -84,7 +84,7 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
           >
             Mock User
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-11 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-11 css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -136,7 +136,7 @@ exports[`NavBar without routeButtons > should render with given state from Redux
             class="MuiBox-root css-ium7el"
           >
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-uzo6ff-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-hijd2o-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -175,7 +175,7 @@ exports[`NavBar without routeButtons > should render with given state from Redux
         >
           <button
             aria-label="Translate"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
             data-mui-internal-clone-element="true"
             style="color: white;"
             tabindex="0"
@@ -198,7 +198,7 @@ exports[`NavBar without routeButtons > should render with given state from Redux
           >
             Mock User
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-23 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-23 css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >

@@ -41,7 +41,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
             class="MuiAlert-action css-rgppqo-MuiAlert-action"
           >
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-2yamib-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-ww7hxw-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -76,7 +76,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
         >
           <button
             aria-label="menu"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-edgeStart MuiIconButton-sizeLarge css-13lp6iv-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-edgeStart MuiIconButton-sizeLarge css-1sjjr8x-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
@@ -119,7 +119,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
                 >
                   <button
                     aria-label="Add to your dashboard"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge CollectionButton-root-6 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge CollectionButton-root-6 css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
                     data-mui-internal-clone-element="true"
                     tabindex="0"
                     type="button"
@@ -160,7 +160,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
@@ -171,7 +171,8 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary SiteInfo-button-2 css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
+                data-discover="true"
                 href="/sites/1/upload_data"
                 tabindex="0"
               >

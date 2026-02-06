@@ -3,7 +3,7 @@
 exports[`Delete Button > should render with given state from Redux store 1`] = `
 <div>
   <button
-    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
     tabindex="0"
     type="button"
   >

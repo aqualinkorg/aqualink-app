@@ -19,7 +19,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             class="MuiBox-root css-ium7el"
           >
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-uzo6ff-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-hijd2o-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -58,7 +58,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
         >
           <button
             aria-label="Translate"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
             data-mui-internal-clone-element="true"
             style="color: white;"
             tabindex="0"
@@ -81,7 +81,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
           >
             Mock User
             <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-17 css-6y3n0r-MuiButtonBase-root-MuiIconButton-root"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge NavBar-button-17 css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
             >
@@ -166,7 +166,8 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <a
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary LandingPage-buttons-5 css-kigga0-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary LandingPage-buttons-5 css-z31nbn-MuiButtonBase-root-MuiButton-root"
+                  data-discover="true"
                   href="/map"
                   tabindex="0"
                 >
@@ -181,7 +182,8 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <a
-                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary LandingPage-buttons-5 LandingPage-whiteColorButton-6 css-cjd39g-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary LandingPage-buttons-5 LandingPage-whiteColorButton-6 css-17b85jl-MuiButtonBase-root-MuiButton-root"
+                  data-discover="true"
                   href="/register"
                   tabindex="0"
                 >

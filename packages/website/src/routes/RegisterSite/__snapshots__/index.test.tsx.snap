@@ -92,10 +92,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-w1u3ce"
+                            class="css-ex8a5f-MuiNotchedOutlined-root"
                           >
                             <span>
                               Name
@@ -132,10 +132,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-w1u3ce"
+                            class="css-ex8a5f-MuiNotchedOutlined-root"
                           >
                             <span>
                               Organization
@@ -172,10 +172,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-w1u3ce"
+                            class="css-ex8a5f-MuiNotchedOutlined-root"
                           >
                             <span>
                               Email
@@ -220,10 +220,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-81qg8w"
+                            class="css-1n64csd-MuiNotchedOutlined-root"
                           >
                             <span>
                               Latitude
@@ -259,10 +259,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-81qg8w"
+                            class="css-1n64csd-MuiNotchedOutlined-root"
                           >
                             <span>
                               Longitude
@@ -298,10 +298,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-81qg8w"
+                            class="css-1n64csd-MuiNotchedOutlined-root"
                           >
                             <span>
                               Site Name
@@ -337,10 +337,10 @@ exports[`Site registration page > should render with given state from Redux stor
                         />
                         <fieldset
                           aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-1ll44ll-MuiOutlinedInput-notchedOutline"
+                          class="MuiOutlinedInput-notchedOutline Apply-notchedOutline-4 css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
                         >
                           <legend
-                            class="css-81qg8w"
+                            class="css-1n64csd-MuiNotchedOutlined-root"
                           >
                             <span>
                               Depth (m)
@@ -359,7 +359,7 @@ exports[`Site registration page > should render with given state from Redux stor
                       data-mui-internal-clone-element="true"
                     >
                       <button
-                        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-vo55b5-MuiButtonBase-root-MuiButton-root"
+                        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-16sv74i-MuiButtonBase-root-MuiButton-root"
                         tabindex="0"
                         type="button"
                       >

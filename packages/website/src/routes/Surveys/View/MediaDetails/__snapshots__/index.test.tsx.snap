@@ -28,6 +28,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
             <a
               aria-label="View survey point"
               class="MediaPointName-link-5"
+              data-discover="true"
               data-mui-internal-clone-element="true"
               href="/sites/1/points/1"
             >
