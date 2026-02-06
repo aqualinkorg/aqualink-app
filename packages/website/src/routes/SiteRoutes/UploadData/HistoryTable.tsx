@@ -85,10 +85,8 @@ function HistoryTable({ site, uploadHistory, onDelete }: HistoryTableProps) {
     <div className={classes.root}>
       <div>
         <Typography variant="h6" gutterBottom>
-          {nUploads} {pluralize(nUploads, 'file')}
-{' '}
-previously uploaded
-</Typography>
+          {nUploads} {pluralize(nUploads, 'file')} previously uploaded
+        </Typography>
       </div>
       <TableContainer>
         <Table className={classes.table}>
@@ -153,22 +151,18 @@ previously uploaded
                             <span className={classes.bold}>
                               {dataUpload.file}
                             </span>
-                            &quot;? Data between dates
-{' '}
+                            &quot;? Data between dates{' '}
                             <span className={classes.bold}>
                               {DateTime.fromISO(dataUpload.minDate).toFormat(
                                 'LL/dd/yyyy HH:mm',
                               )}
-                            </span>
-{' '}
-                            and
-{' '}
+                            </span>{' '}
+                            and{' '}
                             <span className={classes.bold}>
                               {DateTime.fromISO(dataUpload.maxDate).toFormat(
                                 'LL/dd/yyyy HH:mm',
                               )}
-                            </span>
-{' '}
+                            </span>{' '}
                             will be lost.
                           </Typography>
                         }

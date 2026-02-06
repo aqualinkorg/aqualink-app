@@ -77,7 +77,7 @@ function DeleteButton({
             <Collapse className={classes.alert} in={alertOpen}>
               <Alert
                 severity="error"
-                action={(
+                action={
                   <IconButton
                     color="inherit"
                     size="small"
@@ -87,7 +87,7 @@ function DeleteButton({
                   >
                     <CloseIcon fontSize="inherit" />
                   </IconButton>
-                )}
+                }
               >
                 {alertText}
               </Alert>

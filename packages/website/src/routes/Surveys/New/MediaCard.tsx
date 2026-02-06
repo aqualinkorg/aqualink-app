@@ -72,10 +72,7 @@ function MediaCard({
                     item
                     xs={3}
                   >
-                    <Typography variant="subtitle2">{size}
-{' '}
-MB
-</Typography>
+                    <Typography variant="subtitle2">{size} MB</Typography>
                   </Grid>
                 </Grid>
               )}

@@ -186,8 +186,7 @@ function Tracker({
               </a>
               .
               <br />
-              <br /> The image displays three surveys conducted at the
-{' '}
+              <br /> The image displays three surveys conducted at the{' '}
               <a
                 href="https://aqualink.org/sites/3331"
                 rel="noopener noreferrer"

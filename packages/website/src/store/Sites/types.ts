@@ -97,7 +97,7 @@ export const metricsKeysList = [
   'dissolved_oxygen',
 ] as const;
 
-export type MetricsKeys = typeof metricsKeysList[number];
+export type MetricsKeys = (typeof metricsKeysList)[number];
 
 export type Status =
   | 'in_review'
@@ -235,7 +235,7 @@ export type TimeSeriesDataRange = Partial<Record<Metrics, TimeSeriesRange>>;
 
 export const OceanSenseKeysList = ['DO', 'EC', 'ORP', 'PH', 'PRESS'] as const;
 
-export type OceanSenseKeys = typeof OceanSenseKeysList[number];
+export type OceanSenseKeys = (typeof OceanSenseKeysList)[number];
 
 export interface OceanSenseDataRequestParams {
   sensorID: string;

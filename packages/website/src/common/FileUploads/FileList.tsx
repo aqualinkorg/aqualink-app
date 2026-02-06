@@ -73,8 +73,7 @@ function FileList({ files, onFileDelete }: FileListProps) {
     <Grid container spacing={2} className={classes.root}>
       <Grid item xs={12}>
         <Typography gutterBottom variant="h6">
-          {files.length} {pluralize(files.length, 'file')}
-{' '}
+          {files.length} {pluralize(files.length, 'file')}{' '}
           {loading ? 'uploading' : 'to be uploaded'}
         </Typography>
       </Grid>

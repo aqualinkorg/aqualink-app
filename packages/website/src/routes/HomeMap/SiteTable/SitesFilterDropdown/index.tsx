@@ -269,10 +269,8 @@ function SitesFilterModalComponent({
               CLEAR ALL
             </Button>
             <Button variant="contained" onClick={handleClose}>
-              SHOW {filteredSites?.length ?? 0}
-{' '}
-Sites
-</Button>
+              SHOW {filteredSites?.length ?? 0} Sites
+            </Button>
           </Box>
         </DialogActions>
       </Dialog>
