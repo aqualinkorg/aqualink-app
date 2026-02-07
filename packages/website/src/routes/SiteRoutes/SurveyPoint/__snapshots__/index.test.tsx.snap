@@ -349,8 +349,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
           <h4
             class="MuiTypography-root MuiTypography-h4 css-1ghn6nx-MuiTypography-root"
           >
-             
-            Survey History
+             Survey History
           </h4>
         </div>
       </div>
