@@ -1,9 +1,10 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Featured Media Card > should render with given state from Redux store 1`] = `
 <div>
-  <mock-card
-    classname="FeaturedMedia-card-1"
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root FeaturedMedia-card-1 css-1i00q08-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
   >
     <div
       class="FeaturedMedia-noVideoCardHeader-3"
@@ -11,17 +12,16 @@ exports[`Featured Media Card > should render with given state from Redux store 1
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-1qhqgqb-MuiGrid-root"
       >
-        <mock-typography
-          classname="FeaturedMedia-noVideoCardHeaderText-4"
-          variant="h5"
+        <h5
+          class="MuiTypography-root MuiTypography-h5 FeaturedMedia-noVideoCardHeaderText-4 css-1c6scqg-MuiTypography-root"
         >
           SURVEY TO BE UPLOADED
-        </mock-typography>
+        </h5>
       </div>
     </div>
     <div
       class="FeaturedMedia-noVideoCardContent-5"
     />
-  </mock-card>
+  </div>
 </div>
 `;

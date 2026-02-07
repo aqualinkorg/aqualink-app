@@ -1,16 +1,15 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
-  <mock-box
-    classname="makeStyles-card-1"
+  <div
+    class="makeStyles-card-1 MuiBox-root css-0"
   >
-    <mock-box
-      mb="2"
+    <div
+      class="MuiBox-root css-1qm1lh"
     >
-      <mock-typography
-        color="textSecondary"
-        variant="h5"
+      <h5
+        class="MuiTypography-root MuiTypography-h5 css-1jopwmq-MuiTypography-root"
       >
         Selected Site
         <a
@@ -29,78 +28,27 @@ exports[`renders as expected 1`] = `
             />
           </svg>
         </a>
-      </mock-typography>
-    </mock-box>
-    <mock-card>
+      </h5>
+    </div>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1i00q08-MuiPaper-root-MuiCard-root"
+      style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+    >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-9 makeStyles-cardWrapper-21 css-1h90obp-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-13 css-1nyv9pn-MuiGrid-root"
         >
-          <mock-box
-            fontweight="400"
-            pb="0.5rem"
-            pl="0.5rem"
-            pt="1.5rem"
+          <div
+            class="MuiBox-root css-1mkwzy1"
           >
-            <mock-hidden
-              mddown="false"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-container css-1rp4aer-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-item makeStyles-cardTitleWrapper-14 css-x7bhrq-MuiGrid-root"
-                >
-                  <mock-typography
-                    classname="makeStyles-cardTitle-15"
-                    color="textSecondary"
-                    variant="h5"
-                  >
-                    <span
-                      title="Hawaii"
-                    >
-                      Hawaii
-                    </span>
-                  </mock-typography>
-                </div>
-              </div>
-              <mock-typography
-                classname="makeStyles-cardTitle-15 makeStyles-siteRegionName-16"
-                color="textSecondary"
-                variant="h6"
-              >
-                <span
-                  title=""
-                />
-              </mock-typography>
-            </mock-hidden>
-            <mock-typography
-              color="textSecondary"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption css-1246nq-MuiTypography-root"
             >
               DAILY SURFACE TEMP. (°C)
-            </mock-typography>
-          </mock-box>
-          <mock-hidden
-            mddown="true"
-          >
-            <div>
-              <mock-line
-                data="[object Object]"
-                options="[object Object]"
-              />
-            </div>
-          </mock-hidden>
-          <mock-hidden
-            mdup="true"
-          >
-            <mock-line
-              data="[object Object]"
-              options="[object Object]"
-            />
-          </mock-hidden>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2 css-15vsh4j-MuiGrid-root"
@@ -111,91 +59,81 @@ exports[`renders as expected 1`] = `
             <div
               class="makeStyles-metric-18"
             >
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
+              <span
+                class="MuiTypography-root MuiTypography-caption css-1246nq-MuiTypography-root"
               >
                 SURFACE TEMP
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
+              </span>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-m3r5zc-MuiTypography-root"
               >
                 15.9
                  
-                <mock-typography
-                  component="span"
-                  variant="h6"
+                <span
+                  class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
                 >
                    °C
-                </mock-typography>
-              </mock-typography>
+                </span>
+              </h4>
             </div>
             <div
               class="makeStyles-metric-18"
             >
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
+              <span
+                class="MuiTypography-root MuiTypography-caption css-1246nq-MuiTypography-root"
               >
                 HEAT STRESS
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
+              </span>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-m3r5zc-MuiTypography-root"
               >
                 0.0
                  
-                <mock-typography
-                  component="span"
-                  variant="h6"
+                <span
+                  class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
                 >
                    DHW
-                </mock-typography>
-              </mock-typography>
+                </span>
+              </h4>
             </div>
             <div
               class="makeStyles-metric-18"
             >
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
+              <span
+                class="MuiTypography-root MuiTypography-caption css-1246nq-MuiTypography-root"
               >
                 TEMP AT 0m
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
+              </span>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-m3r5zc-MuiTypography-root"
               >
                 10.7
                  
-                <mock-typography
-                  component="span"
-                  variant="h6"
+                <span
+                  class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
                 >
                    °C
-                </mock-typography>
-              </mock-typography>
+                </span>
+              </h4>
             </div>
           </div>
         </div>
       </div>
-    </mock-card>
-  </mock-box>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`renders loading as expected 1`] = `
 <div>
-  <mock-box
-    classname="makeStyles-card-44"
+  <div
+    class="makeStyles-card-36 MuiBox-root css-0"
   >
-    <mock-box
-      mb="2"
+    <div
+      class="MuiBox-root css-1qm1lh"
     >
-      <mock-typography
-        color="textSecondary"
-        variant="h5"
+      <h5
+        class="MuiTypography-root MuiTypography-h5 css-1jopwmq-MuiTypography-root"
       >
         Selected Site
         <a
@@ -204,7 +142,7 @@ exports[`renders loading as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-45 css-1umw9bq-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-37 css-1umw9bq-MuiSvgIcon-root"
             data-testid="LaunchIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -214,158 +152,98 @@ exports[`renders loading as expected 1`] = `
             />
           </svg>
         </a>
-      </mock-typography>
-    </mock-box>
-    <mock-card>
+      </h5>
+    </div>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1i00q08-MuiPaper-root-MuiCard-root"
+      style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+    >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 css-1h90obp-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-44 makeStyles-cardWrapper-56 css-1h90obp-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-56 css-1nyv9pn-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-48 css-1nyv9pn-MuiGrid-root"
         >
-          <mock-box
-            fontweight="400"
-            pb="0.5rem"
-            pl="0.5rem"
-            pt="1.5rem"
+          <div
+            class="MuiBox-root css-1mkwzy1"
           >
-            <mock-hidden
-              mddown="false"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-container css-1rp4aer-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-item makeStyles-cardTitleWrapper-57 css-x7bhrq-MuiGrid-root"
-                >
-                  <mock-typography
-                    classname="makeStyles-cardTitle-58"
-                    color="textSecondary"
-                    variant="h5"
-                  >
-                    <span
-                      title="Hawaii"
-                    >
-                      Hawaii
-                    </span>
-                  </mock-typography>
-                </div>
-              </div>
-              <mock-typography
-                classname="makeStyles-cardTitle-58 makeStyles-siteRegionName-59"
-                color="textSecondary"
-                variant="h6"
-              >
-                <span
-                  title=""
-                />
-              </mock-typography>
-            </mock-hidden>
-            <mock-typography
-              color="textSecondary"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption css-1246nq-MuiTypography-root"
             >
               DAILY SURFACE TEMP. (°C)
-            </mock-typography>
-          </mock-box>
-          <mock-hidden
-            mddown="true"
-          >
-            <div>
-              <mock-line
-                data="[object Object]"
-                options="[object Object]"
-              />
-            </div>
-          </mock-hidden>
-          <mock-hidden
-            mdup="true"
-          >
-            <mock-line
-              data="[object Object]"
-              options="[object Object]"
-            />
-          </mock-hidden>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2 css-15vsh4j-MuiGrid-root"
         >
           <div
-            class="makeStyles-metricsContainer-60"
+            class="makeStyles-metricsContainer-52"
           >
             <div
-              class="makeStyles-metric-61"
+              class="makeStyles-metric-53"
             >
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
+              <span
+                class="MuiTypography-root MuiTypography-caption css-1246nq-MuiTypography-root"
               >
                 SURFACE TEMP
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
+              </span>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-m3r5zc-MuiTypography-root"
               >
                 15.9
                  
-                <mock-typography
-                  component="span"
-                  variant="h6"
+                <span
+                  class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
                 >
                    °C
-                </mock-typography>
-              </mock-typography>
+                </span>
+              </h4>
             </div>
             <div
-              class="makeStyles-metric-61"
+              class="makeStyles-metric-53"
             >
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
+              <span
+                class="MuiTypography-root MuiTypography-caption css-1246nq-MuiTypography-root"
               >
                 HEAT STRESS
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
+              </span>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-m3r5zc-MuiTypography-root"
               >
                 0.0
                  
-                <mock-typography
-                  component="span"
-                  variant="h6"
+                <span
+                  class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
                 >
                    DHW
-                </mock-typography>
-              </mock-typography>
+                </span>
+              </h4>
             </div>
             <div
-              class="makeStyles-metric-61"
+              class="makeStyles-metric-53"
             >
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
+              <span
+                class="MuiTypography-root MuiTypography-caption css-1246nq-MuiTypography-root"
               >
                 TEMP AT 0m
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
+              </span>
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-m3r5zc-MuiTypography-root"
               >
                 10.7
                  
-                <mock-typography
-                  component="span"
-                  variant="h6"
+                <span
+                  class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
                 >
                    °C
-                </mock-typography>
-              </mock-typography>
+                </span>
+              </h4>
             </div>
           </div>
         </div>
       </div>
-    </mock-card>
-  </mock-box>
+    </div>
+  </div>
 </div>
 `;

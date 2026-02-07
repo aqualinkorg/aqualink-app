@@ -238,14 +238,14 @@ function SiteInfo({
                   )}
                   {lastSurvey && (
                     <Grid item xs={12}>
-                      <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
-                        {
+                      <Typography variant="subtitle1">
+                        {`Last surveyed: ${displayTimeInLocalTimezone({
                           isoDate: lastSurvey,
                           format: 'MMM dd, yyyy',
                           displayTimezone: false,
                           timeZone: site.timezone,
-                        },
-                      )}`}</Typography>
+                        })}`}
+                      </Typography>
                     </Grid>
                   )}
                 </Grid>

@@ -56,7 +56,7 @@ function BuoySelector({
   }
 
   if (!buoyData) {
-    return <Typography>No Spotters available for token {token}</Typography>;
+    return <Typography>No Spotters available for token{token}</Typography>;
   }
 
   return (
@@ -70,7 +70,7 @@ function BuoySelector({
       >
         {Object.keys(buoyData).map((buoyId) => (
           <MenuItem key={buoyId} value={buoyId} style={{ color: 'black' }}>
-            {buoyId} - {buoyData[buoyId].name}
+            {buoyId} -{buoyData[buoyId].name}
           </MenuItem>
         ))}
       </Select>

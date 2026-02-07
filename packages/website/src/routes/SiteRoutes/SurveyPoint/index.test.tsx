@@ -14,9 +14,9 @@ import theme from 'layout/App/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import SurveyPoint from '.';
 
-vi.mock('./InfoCard/Map', () => ({ default: 'Mock-Map' }));
+rstest.mock('./InfoCard/Map', () => ({ default: 'Mock-Map' }));
 
-window.scrollTo = vi.fn();
+window.scrollTo = rstest.fn();
 
 const mockStore = configureStore([]);
 
@@ -50,7 +50,7 @@ describe('Survey Point Detail Page', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = render(
       <ThemeProvider theme={theme}>

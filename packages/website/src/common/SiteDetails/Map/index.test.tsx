@@ -7,7 +7,14 @@ import configureStore from 'redux-mock-store';
 import { mockUser } from 'mocks/mockUser';
 import Map from '.';
 
-vi.mock('react-leaflet');
+rstest.mock('react-leaflet', () => ({
+  MapContainer: 'mock-MapContainer',
+  TileLayer: 'mock-TileLayer',
+  Polygon: 'mock-Polygon',
+  Marker: 'mock-Marker',
+  Popup: 'mock-Popup',
+  useMap: rstest.fn(),
+}));
 
 const mockStore = configureStore([]);
 
@@ -23,7 +30,7 @@ describe('Site Map', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = render(
       <Provider store={store}>

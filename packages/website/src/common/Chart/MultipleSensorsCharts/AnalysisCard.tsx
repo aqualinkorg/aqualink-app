@@ -83,7 +83,7 @@ function AnalysisCard({
     >
       <Card className={classes.AnalysisCardCard}>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-          {formattedpickerStartDate} - {formattedpickerEndDate}
+          {formattedpickerStartDate} -{formattedpickerEndDate}
         </Typography>
         <Grid
           className={classes.metricsWrapper}

@@ -218,7 +218,8 @@ function ExclusionDatesDialog({
                   ? 'Spotter data before this date will be deleted.'
                   : 'Spotter data between these dates will be deleted.'}{' '}
                 Note: The dates below are in the site&apos;s local timezone (
-                {timeZone || 'UTC'}).
+                {timeZone || 'UTC'}
+                ).
               </Alert>
             </Box>
             <Box mb="5px">

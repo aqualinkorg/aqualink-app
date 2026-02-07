@@ -10,11 +10,12 @@ const mockStore = configureStore([]);
 
 describe('Monitoring SiteMetrics Page', () => {
   beforeAll(() => {
-    vi.setSystemTime(new Date('2023-11-23T12:00:00'));
+    rstest.useFakeTimers();
+    rstest.setSystemTime(new Date('2023-11-23T12:00:00'));
   });
 
   afterAll(() => {
-    vi.useRealTimers();
+    rstest.useRealTimers();
   });
 
   let element: HTMLElement;
@@ -33,7 +34,7 @@ describe('Monitoring SiteMetrics Page', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(
       <SnackbarProvider>

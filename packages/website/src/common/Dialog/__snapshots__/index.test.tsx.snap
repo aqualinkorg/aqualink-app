@@ -1,28 +1,7 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
-<div>
-  <mock-dialog
-    fullwidth="true"
-    open="true"
-  >
-    <mock-dialogtitle
-      classname="Dialog-dialogTitle-1"
-    >
-      <mock-typography
-        variant="h4"
-      >
-        Random Header
-      </mock-typography>
-    </mock-dialogtitle>
-    <mock-dialogcontent
-      dividers="true"
-    >
-      <div>
-        Some random content
-      </div>
-    </mock-dialogcontent>
-    <mock-dialogactions />
-  </mock-dialog>
-</div>
+<div
+  aria-hidden="true"
+/>
 `;

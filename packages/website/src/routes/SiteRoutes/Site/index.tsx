@@ -86,7 +86,8 @@ const getAlertMessage = (
       return (
         <div>
           {defaultMessage} Your application for an Aqualink Smart Buoy is being
-          reviewed. You can check your application<span> </span>
+          reviewed. You can check your application
+          <span> </span>
           <Link to={`/sites/${siteId}/apply`}>here</Link>.
         </div>
       );
@@ -101,7 +102,8 @@ const getAlertMessage = (
       return (
         <div>
           Your application for an Aqualink Smart Buoy was not approved at this
-          time. For more information, you can contact<span> </span>
+          time. For more information, you can contact
+          <span> </span>
           <a href="mailto:info@aqualink.org">info@aqualink.org</a>
         </div>
       );
