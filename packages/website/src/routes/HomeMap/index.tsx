@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Grid, Hidden, Box } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -11,10 +11,12 @@ import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import { format } from 'date-fns';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import HistoricalDatePicker from 'common/HistoricalDatePicker';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -67,13 +69,18 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    // Fetch sites with optional historical date filter
+    const params = selectedDate
+      ? { at: format(selectedDate, 'yyyy-MM-dd') }
+      : undefined;
+    dispatch(sitesRequest(params));
+  }, [dispatch, selectedDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -105,6 +112,14 @@ function Homepage({ classes }: HomepageProps) {
     drawer.scrollTop = 0;
   });
 
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
+
+  const handleDateClear = () => {
+    setSelectedDate(null);
+  };
+
   return (
     <>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
@@ -118,13 +133,27 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
-            <HomepageMap
-              onMapLoad={setMapInstance}
-              setShowSiteTable={setShowSiteTable}
-              showSiteTable={showSiteTable}
-              initialZoom={initialZoom}
-              initialCenter={initialCenter}
-            />
+            <Box position="relative" height="100%">
+              <Box
+                position="absolute"
+                top={16}
+                right={16}
+                zIndex={1000}
+              >
+                <HistoricalDatePicker
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  onClear={handleDateClear}
+                />
+              </Box>
+              <HomepageMap
+                onMapLoad={setMapInstance}
+                setShowSiteTable={setShowSiteTable}
+                showSiteTable={showSiteTable}
+                initialZoom={initialZoom}
+                initialCenter={initialCenter}
+              />
+            </Box>
           </Grid>
           {showSiteTable && (
             <Hidden mdDown>
