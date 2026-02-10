@@ -85,8 +85,8 @@ const getSiteTimeSeriesDataRange = ({
 
 const getSites = (params?: { at?: string }) =>
   requests.send<SiteResponse[]>({
-    url: `sites${params?.at ? `?at=${encodeURIComponent(params.at)}` : ""}`,
-    method: "GET",
+    url: `sites${params?.at ? `?at=${encodeURIComponent(params.at)}` : ''}`,
+    method: 'GET',
   });
 
 const getSiteSurveyPoints = (

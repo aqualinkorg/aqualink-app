@@ -134,12 +134,7 @@ function Homepage({ classes }: HomepageProps) {
             md={showSiteTable ? 6 : 12}
           >
             <Box position="relative" height="100%">
-              <Box
-                position="absolute"
-                top={16}
-                right={16}
-                zIndex={1000}
-              >
+              <Box position="absolute" top={16} right={16} zIndex={1000}>
                 <HistoricalDatePicker
                   value={selectedDate}
                   onChange={handleDateChange}

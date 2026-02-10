@@ -53,7 +53,13 @@ function HistoricalDatePicker({
 
   return (
     <>
-      <Tooltip title={value ? `Viewing data from ${format(value, 'MMM dd, yyyy')}` : 'View historical data'}>
+      <Tooltip
+        title={
+          value
+            ? `Viewing data from ${format(value, 'MMM dd, yyyy')}`
+            : 'View historical data'
+        }
+      >
         <IconButton
           onClick={handleOpen}
           size="large"
@@ -72,7 +78,11 @@ function HistoricalDatePicker({
 
       <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
         <DialogTitle>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Typography variant="h6">Select Historical Date</Typography>
           </Box>
         </DialogTitle>
@@ -80,7 +90,8 @@ function HistoricalDatePicker({
           <Box display="flex" flexDirection="column" gap={2} pt={1}>
             <Typography variant="body2" color="text.secondary">
               Choose a date to view historical map and site data. This allows
-              you to explore past coral bleaching events and temperature patterns.
+              you to explore past coral bleaching events and temperature
+              patterns.
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
