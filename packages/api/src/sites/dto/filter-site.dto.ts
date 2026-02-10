@@ -42,7 +42,8 @@ export class FilterSiteDto {
   @ApiProperty({
     example: '2024-03-01',
     required: false,
-    description: 'Query data for a specific date in the past (ISO 8601 date format)',
+    description:
+      'Query data for a specific date in the past (ISO 8601 date format)',
   })
   @IsOptional()
   @IsString()
