@@ -19,11 +19,24 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
       >
-        <mock-map
-          initialcenter="LatLng(0, 121.3)"
-          initialzoom="4"
-          showsitetable="true"
-        />
+        <mock-box
+          height="100%"
+          position="relative"
+        >
+          <mock-box
+            position="absolute"
+            right="16"
+            top="16"
+            zindex="1000"
+          >
+            <mock-historicaldatepicker />
+          </mock-box>
+          <mock-map
+            initialcenter="LatLng(0, 121.3)"
+            initialzoom="4"
+            showsitetable="true"
+          />
+        </mock-box>
       </div>
       <mock-hidden
         mddown="true"

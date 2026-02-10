@@ -18,6 +18,7 @@ let cachedInstance: ReturnType<typeof setupCache> | null = null;
 
 const getCachedInstance = () => {
   if (!cachedInstance) {
+    // eslint-disable-next-line fp/no-mutation
     cachedInstance = setupCache(instance);
   }
   return cachedInstance;
