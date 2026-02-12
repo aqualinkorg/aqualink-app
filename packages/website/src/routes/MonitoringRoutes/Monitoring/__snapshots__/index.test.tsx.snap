@@ -150,6 +150,35 @@ exports[`Monitoring Page > should render with given state from Redux store 1`] =
         </mock-cardcontent>
       </mock-card>
     </a>
+    <a
+      class="makeStyles-link-3"
+      data-discover="true"
+      href="/monitoring/prompts"
+    >
+      <mock-card
+        classname="makeStyles-root-1"
+        raised="true"
+      >
+        <mock-cardcontent
+          classname="makeStyles-cardContent-5"
+        >
+          <mock-typography
+            classname="makeStyles-title-2"
+            color="textSecondary"
+            variant="h5"
+          >
+            AI Prompts
+          </mock-typography>
+          <mock-typography
+            component="p"
+            style="color: black; padding-bottom: 1rem;"
+            variant="body2"
+          >
+            Edit AI Assistant prompts and behavior
+          </mock-typography>
+        </mock-cardcontent>
+      </mock-card>
+    </a>
   </div>
 </div>
 `;
