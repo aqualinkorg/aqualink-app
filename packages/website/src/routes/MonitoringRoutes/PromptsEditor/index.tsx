@@ -62,7 +62,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     description: 'Core system prompt defining AI identity and behavior',
     category: 'core',
     version: 1,
-    updatedAt: new Date().toISOString(),
+    updatedAt: '2024-01-01T00:00:00.000Z',
     updatedBy: 'pete@aqualink.org',
     isActive: true,
   },
@@ -74,7 +74,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     description: 'Scope boundaries and what AI can/cannot answer',
     category: 'core',
     version: 1,
-    updatedAt: new Date().toISOString(),
+    updatedAt: '2024-01-01T00:00:00.000Z',
     updatedBy: 'pete@aqualink.org',
     isActive: true,
   },
@@ -85,7 +85,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     description: 'Initial conversation greeting template',
     category: 'greeting',
     version: 1,
-    updatedAt: new Date().toISOString(),
+    updatedAt: '2024-01-01T00:00:00.000Z',
     isActive: true,
   },
   {
@@ -95,7 +95,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     description: 'Technical data sources and API documentation',
     category: 'knowledge',
     version: 1,
-    updatedAt: new Date().toISOString(),
+    updatedAt: '2024-01-01T00:00:00.000Z',
     isActive: true,
   },
   {
@@ -105,7 +105,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     description: 'How to conduct Aqualink surveys',
     category: 'knowledge',
     version: 1,
-    updatedAt: new Date().toISOString(),
+    updatedAt: '2024-01-01T00:00:00.000Z',
     isActive: true,
   },
   {
@@ -115,7 +115,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     description: 'Emergency bleaching protocols',
     category: 'knowledge',
     version: 1,
-    updatedAt: new Date().toISOString(),
+    updatedAt: '2024-01-01T00:00:00.000Z',
     isActive: true,
   },
   {
@@ -125,7 +125,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     description: 'FAQ knowledge from aqualink.org/faq',
     category: 'knowledge',
     version: 1,
-    updatedAt: new Date().toISOString(),
+    updatedAt: '2024-01-01T00:00:00.000Z',
     isActive: true,
   },
   {
@@ -136,7 +136,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     description: 'Repository documentation',
     category: 'knowledge',
     version: 1,
-    updatedAt: new Date().toISOString(),
+    updatedAt: '2024-01-01T00:00:00.000Z',
     isActive: true,
   },
 ];

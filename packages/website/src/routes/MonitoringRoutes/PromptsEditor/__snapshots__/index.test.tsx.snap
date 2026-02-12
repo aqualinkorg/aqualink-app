@@ -164,7 +164,7 @@ exports[`PromptsEditor > should render without crashing 1`] = `
             size="small"
           />
           <mock-chip
-            label="2/12/2026, 7:05:29 PM"
+            label="1/1/2024, 12:00:00 AM"
             size="small"
           />
         </div>
