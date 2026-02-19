@@ -1,16 +1,15 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
   <form
     class="Form-form-1"
   >
-    <mock-typography
-      classname="Form-formTitle-2"
-      variant="h3"
+    <h3
+      class="MuiTypography-root MuiTypography-h3 Form-formTitle-2 css-18qnhdx-MuiTypography-root"
     >
       Your Site
-    </mock-typography>
+    </h3>
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-cmpglg-MuiFormControl-root-MuiTextField-root"
     >
@@ -43,14 +42,16 @@ exports[`renders as expected 1`] = `
         </fieldset>
       </div>
     </div>
-    <mock-typography
-      classname="Form-additionalInfo-4"
+    <p
+      class="MuiTypography-root MuiTypography-body1 Form-additionalInfo-4 css-809xgg-MuiTypography-root"
     >
       Please provide some additional information for each site:
-    </mock-typography>
-    <mock-typography>
+    </p>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-809xgg-MuiTypography-root"
+    >
       Permitting
-    </mock-typography>
+    </p>
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-cmpglg-MuiFormControl-root-MuiTextField-root"
     >
@@ -89,9 +90,11 @@ exports[`renders as expected 1`] = `
         </fieldset>
       </div>
     </div>
-    <mock-typography>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-809xgg-MuiTypography-root"
+    >
       Funding Source
-    </mock-typography>
+    </p>
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-cmpglg-MuiFormControl-root-MuiTextField-root"
     >
@@ -130,23 +133,56 @@ exports[`renders as expected 1`] = `
         </fieldset>
       </div>
     </div>
-    <mock-typography>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-809xgg-MuiTypography-root"
+    >
       Schedule for installation
-    </mock-typography>
-    <mock-typography
-      classname="Form-scheduleDescription-5"
+    </p>
+    <p
+      class="MuiTypography-root MuiTypography-body1 Form-scheduleDescription-5 css-809xgg-MuiTypography-root"
     >
       What is the soonest date you could install the Smart Buoy and conduct a survey?
-    </mock-typography>
-    <mock-date-picker
-      classname="Form-formField-3"
-      closeonselect="true"
-      format="MM/dd/yyyy"
-      slotprops="[object Object]"
-    />
-    <mock-typography>
+    </p>
+    <div
+      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-xwn1oi-MuiFormControl-root-MuiTextField-root"
+    >
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-iawdt4-MuiInputBase-root-MuiOutlinedInput-root"
+      >
+        <input
+          aria-invalid="false"
+          aria-label="Choose date"
+          autocomplete="off"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
+          id=":r4:"
+          inputmode="text"
+          placeholder="MM/DD/YYYY"
+          readonly=""
+          type="text"
+          value=""
+        />
+        <fieldset
+          aria-hidden="true"
+          class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+        >
+          <legend
+            class="css-1nf2c5d-MuiNotchedOutlined-root"
+          >
+            <span
+              aria-hidden="true"
+              class="notranslate"
+            >
+              ​
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+    </div>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-809xgg-MuiTypography-root"
+    >
       Installation, survey and maintenance personnel and equipment
-    </mock-typography>
+    </p>
     <div
       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root Form-formField-3 Form-textField-6 css-cmpglg-MuiFormControl-root-MuiTextField-root"
     >
@@ -156,7 +192,7 @@ exports[`renders as expected 1`] = `
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-s43td4-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r4:"
+          id=":r7:"
           name="installationResources"
           placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
           style="height: 0px; overflow: hidden;"

@@ -40,7 +40,9 @@ function Header({ site }: HeaderProps) {
       <Grid item xs={12}>
         <Typography variant="h6">
           You&apos;re about to upload data for the following parameters: site
-          &quot;{site.name}&quot;.
+          &quot;
+          {site.name}
+          &quot;.
         </Typography>
         <Typography variant="h6">
           Please confirm survey point and sensor type to continue.

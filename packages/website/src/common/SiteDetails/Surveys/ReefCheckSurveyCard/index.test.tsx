@@ -43,14 +43,14 @@ describe('ReefCheckSurveyCard', () => {
   it('should render table with correct number of rows', () => {
     const { container } = renderReefCheckSurveyCard();
 
-    expect(container.querySelectorAll('mock-tablerow').length).toBe(3);
+    expect(container.querySelectorAll('tbody tr').length).toBe(2);
   });
 
   it('should show correct counts in headers', () => {
     const { container } = renderReefCheckSurveyCard();
-    const headers = [
-      ...container.querySelectorAll('mock-tablehead mock-tablecell').values(),
-    ].map((el) => el.textContent);
+    const headers = [...container.querySelectorAll('thead th').values()].map(
+      (el) => el.textContent,
+    );
     expect(headers).toEqual(
       expect.arrayContaining([
         'FISH (2)',

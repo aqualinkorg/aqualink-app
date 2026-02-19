@@ -55,7 +55,8 @@ function SurveyDetails({ site, survey = null, classes }: SurveyDetailsProps) {
                 variant="h6"
                 className={classes.inlineText}
               >
-                SURVEY POINT{nSurveyPoints === 1 ? '' : 'S'}
+                SURVEY POINT
+                {nSurveyPoints === 1 ? '' : 'S'}
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -71,7 +72,8 @@ function SurveyDetails({ site, survey = null, classes }: SurveyDetailsProps) {
                 variant="h6"
                 className={classes.inlineText}
               >
-                IMAGE{nImages === 1 ? '' : 'S'}
+                IMAGE
+                {nImages === 1 ? '' : 'S'}
               </Typography>
             </Grid>
           </Grid>

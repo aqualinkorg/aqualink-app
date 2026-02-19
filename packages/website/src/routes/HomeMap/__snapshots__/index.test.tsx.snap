@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Homepage > should render with given state from Redux store 1`] = `
 <div>
@@ -25,56 +25,6 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
           showsitetable="true"
         />
       </div>
-      <mock-hidden
-        mddown="true"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-3 css-1k7sk4d-MuiGrid-root"
-        >
-          <mock-sitetable />
-        </div>
-      </mock-hidden>
-      <mock-hidden
-        mdup="true"
-      >
-        <div
-          style="height: 60px; position: fixed; bottom: 0px; right: 0px; left: 0px;"
-        >
-          <div
-            style="position: fixed; top: 0px; right: 0px; left: 0px; height: 768px; transition: opacity 450ms; pointer-events: none; background-color: black; opacity: 0;"
-          />
-          <div
-            style="overflow-y: initial; box-sizing: border-box;"
-          >
-            <div
-              class="react-swipeable-view-container"
-              style="flex-direction: column; transition: all 0s ease 0s; direction: ltr; display: flex; will-change: transform; box-sizing: border-box; box-shadow: rgba(0, 0, 0, 0.156863) 0px -6px 5px;"
-            >
-              <div
-                aria-hidden="false"
-                data-swipeable="true"
-                style="width: 100%; flex-shrink: 0; overflow: visible; box-sizing: border-box; margin-bottom: -60px;"
-              >
-                <div
-                  class="ReactSwipeableBottomSheet--closed"
-                  style="overflow: hidden; background-color: white; height: initial; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
-                >
-                  <div
-                    role="presentation"
-                  >
-                    <mock-sitetable
-                      isdraweropen="false"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            style="position: fixed; height: 60px; width: 200%; bottom: -60px; left: -50%; box-shadow: rgba(0, 0, 0, 0.7) 0px 0px 30px; transition: transform 450ms; transform: translateY(0);"
-          />
-        </div>
-      </mock-hidden>
     </div>
   </div>
 </div>

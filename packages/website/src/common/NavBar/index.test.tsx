@@ -6,10 +6,10 @@ import { mockCollection } from 'mocks/mockCollection';
 import { renderWithProviders } from 'utils/test-utils';
 import HomePageNavBar from '.';
 
-vi.mock('../RegisterDialog', () => ({ default: 'Mock-RegisterDialog' }));
-vi.mock('../SignInDialog', () => ({ default: 'Mock-SignInDialog' }));
-vi.mock('../Search', () => ({ default: 'Mock-Search' }));
-vi.mock('../MenuDrawer', () => ({ default: 'Mock-MenuDrawer' }));
+rstest.mock('../RegisterDialog', () => ({ default: 'Mock-RegisterDialog' }));
+rstest.mock('../SignInDialog', () => ({ default: 'Mock-SignInDialog' }));
+rstest.mock('../Search', () => ({ default: 'Mock-Search' }));
+rstest.mock('../MenuDrawer', () => ({ default: 'Mock-MenuDrawer' }));
 
 const mockStore = configureStore([]);
 
@@ -29,7 +29,7 @@ describe('NavBar with routeButtons', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(
       <HomePageNavBar routeButtons searchLocation={false} />,
@@ -58,7 +58,7 @@ describe('NavBar without routeButtons', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(<HomePageNavBar searchLocation={false} />, {
       store,

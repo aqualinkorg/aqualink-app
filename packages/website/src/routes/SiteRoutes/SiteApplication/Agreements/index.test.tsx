@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import Agreements from '.';
 import { AgreementsChecked } from '../types';
 
-const handleChange = vi.fn();
+const handleChange = rstest.fn();
 const agreementsChecked: AgreementsChecked = {
   buoy: false,
   shipping: true,

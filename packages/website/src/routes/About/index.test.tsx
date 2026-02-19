@@ -8,8 +8,8 @@ import { mockUser } from 'mocks/mockUser';
 
 import About from '.';
 
-vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
-vi.mock('common/Footer', () => ({ default: 'Mock-Footer' }));
+rstest.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+rstest.mock('common/Footer', () => ({ default: 'Mock-Footer' }));
 
 const mockStore = configureStore([]);
 const theme = createTheme(); // Create a simple theme instance
@@ -25,7 +25,7 @@ describe('About', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = render(
       <Provider store={store}>

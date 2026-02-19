@@ -24,7 +24,7 @@ describe('Landing Page', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(<LandingPage />, { store }).container;
   });

@@ -11,14 +11,16 @@ function MediaCount({ images, videos, classes }: MediaCountProps) {
     <div className={classes.mediaCount}>
       <Box mr={2}>
         <Typography component="span" variant="subtitle1">
-          {images} image{images === 1 ? '' : 's'}
+          {images} image
+          {images === 1 ? '' : 's'}
         </Typography>
         <PermMediaIcon className={classes.mediaCountIcon} />
       </Box>
       {videos > 0 && (
         <Box ml={2}>
           <Typography component="span" variant="subtitle1">
-            {videos} video{videos === 1 ? '' : 's'}
+            {videos} video
+            {videos === 1 ? '' : 's'}
           </Typography>
           <VideoLibraryIcon className={classes.mediaCountIcon} />
         </Box>

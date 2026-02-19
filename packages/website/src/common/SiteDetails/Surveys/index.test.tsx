@@ -25,7 +25,7 @@ describe('Surveys', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(<Surveys site={mockSite} />, {
       store,

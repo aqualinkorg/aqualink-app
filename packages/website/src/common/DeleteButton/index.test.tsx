@@ -15,7 +15,7 @@ describe('Delete Button', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     const dummyFunc = () =>
       new Promise<void>((resolve) => {

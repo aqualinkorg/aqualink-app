@@ -40,10 +40,9 @@ function NewSurvey({ site, classes }: NewSurveyProps) {
           <Grid className={classes.root} container justifyContent="center">
             <Grid item xs={10}>
               {site.name && (
-                <Typography
-                  className={classes.title}
-                  variant="h5"
-                >{`NEW SURVEY FOR ${site.name.toUpperCase()}`}</Typography>
+                <Typography className={classes.title} variant="h5">
+                  {`NEW SURVEY FOR ${site.name.toUpperCase()}`}
+                </Typography>
               )}
             </Grid>
             <Grid

@@ -20,15 +20,15 @@ describe('RegisterDialog', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = render(
       <Provider store={store}>
         <Router>
           <RegisterDialog
             open
-            handleRegisterOpen={vi.fn()}
-            handleSignInOpen={vi.fn()}
+            handleRegisterOpen={rstest.fn()}
+            handleSignInOpen={rstest.fn()}
           />
         </Router>
       </Provider>,

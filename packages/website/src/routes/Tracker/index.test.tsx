@@ -5,8 +5,8 @@ import { mockUser } from 'mocks/mockUser';
 import { renderWithProviders } from 'utils/test-utils';
 import Tracker from '.';
 
-vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
-vi.mock('common/Footer', () => ({ default: 'Mock-Footer' }));
+rstest.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+rstest.mock('common/Footer', () => ({ default: 'Mock-Footer' }));
 
 const mockStore = configureStore([]);
 describe('Tracker', () => {
@@ -20,7 +20,7 @@ describe('Tracker', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(<Tracker />, { store }).container;
   });

@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
@@ -8,8 +8,8 @@ exports[`renders as expected 1`] = `
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-row-2 css-1d4pq44-MuiGrid-root"
     >
-      <mock-box
-        classname="Title-root-11"
+      <div
+        class="Title-root-11 MuiBox-root css-0"
       >
         <div
           class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
@@ -18,15 +18,14 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             style="margin-right: 1rem;"
           >
-            <mock-typography
-              classname=""
-              variant="h6"
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-sieuai-MuiTypography-root"
             >
               Some value
-            </mock-typography>
+            </h6>
           </div>
         </div>
-      </mock-box>
+      </div>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"

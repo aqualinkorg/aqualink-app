@@ -1,25 +1,42 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
   <div
     class="Agreements-agreements-1"
   >
-    <mock-typography
-      variant="h5"
+    <h5
+      class="MuiTypography-root MuiTypography-h5 css-16xl4zq-MuiTypography-root"
     >
       Agree to:
-    </mock-typography>
+    </h5>
     <div
       class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
     >
       <label
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd Agreements-formControlLabel-2 css-19opgx6-MuiFormControlLabel-root"
       >
-        <mock-checkbox
-          checked="true"
-          color="primary"
-        />
+        <span
+          class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium Mui-checked MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-vuhw6e-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+        >
+          <input
+            checked=""
+            class="PrivateSwitchBase-input css-12xagqm-MuiSwitchBase-root"
+            data-indeterminate="false"
+            type="checkbox"
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="CheckBoxIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+            />
+          </svg>
+        </span>
         <span
           class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
         >
@@ -29,10 +46,26 @@ exports[`renders as expected 1`] = `
       <label
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd Agreements-formControlLabel-2 css-19opgx6-MuiFormControlLabel-root"
       >
-        <mock-checkbox
-          checked="false"
-          color="primary"
-        />
+        <span
+          class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-vuhw6e-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+        >
+          <input
+            class="PrivateSwitchBase-input css-12xagqm-MuiSwitchBase-root"
+            data-indeterminate="false"
+            type="checkbox"
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="CheckBoxOutlineBlankIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+            />
+          </svg>
+        </span>
         <span
           class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
         >
@@ -42,10 +75,27 @@ exports[`renders as expected 1`] = `
       <label
         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd Agreements-formControlLabel-2 css-19opgx6-MuiFormControlLabel-root"
       >
-        <mock-checkbox
-          checked="true"
-          color="primary"
-        />
+        <span
+          class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium Mui-checked MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-vuhw6e-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+        >
+          <input
+            checked=""
+            class="PrivateSwitchBase-input css-12xagqm-MuiSwitchBase-root"
+            data-indeterminate="false"
+            type="checkbox"
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="CheckBoxIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+            />
+          </svg>
+        </span>
         <span
           class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
         >

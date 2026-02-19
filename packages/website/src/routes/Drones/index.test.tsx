@@ -7,8 +7,8 @@ import { mockUser } from 'mocks/mockUser';
 
 import Drones from '.';
 
-vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
-vi.mock('common/Footer', () => ({ default: 'Mock-Footer' }));
+rstest.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+rstest.mock('common/Footer', () => ({ default: 'Mock-Footer' }));
 
 const mockStore = configureStore([]);
 describe('Drones', () => {
@@ -25,7 +25,7 @@ describe('Drones', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = render(
       <Provider store={store}>

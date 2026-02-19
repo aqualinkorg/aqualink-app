@@ -16,14 +16,14 @@ import Site from '.';
 
 const mockStore = configureStore([]);
 
-window.scrollTo = vi.fn();
+window.scrollTo = rstest.fn();
 
-vi.mock('common/SiteDetails/Map', () => ({ default: 'Mock-Map' }));
-vi.mock('common/SiteDetails/FeaturedMedia', () => ({
+rstest.mock('common/SiteDetails/Map', () => ({ default: 'Mock-Map' }));
+rstest.mock('common/SiteDetails/FeaturedMedia', () => ({
   default: 'Mock-FeaturedMedia',
 }));
 
-vi.mock('common/Chart/MultipleSensorsCharts', () => ({
+rstest.mock('common/Chart/MultipleSensorsCharts', () => ({
   default: 'Mock-MultipleSensorsCharts',
 }));
 
@@ -111,8 +111,8 @@ describe('Site Detail Page', () => {
       },
     });
 
-    emptyStore.dispatch = vi.fn();
-    fullStore.dispatch = vi.fn();
+    emptyStore.dispatch = rstest.fn();
+    fullStore.dispatch = rstest.fn();
 
     elementEmpty = render(
       <ThemeProvider theme={theme}>
