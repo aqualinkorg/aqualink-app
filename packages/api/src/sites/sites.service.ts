@@ -156,6 +156,9 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    const historicalDate = filter.at
+      ? DateTime.fromISO(filter.at, { zone: 'utc' }).endOf('day').toJSDate()
+      : undefined;
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -201,6 +204,7 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      historicalDate,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
