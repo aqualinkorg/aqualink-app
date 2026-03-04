@@ -43,7 +43,7 @@
     "firebase-tools": "^15.0.0",
     "geolib": "^3.3.4",
     "hono": "^4.11.7",
-    "immutable": "^4.0.0-rc.12",
+    "immutable": "^4.3.8",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
     "lodash": "^4.17.23",
