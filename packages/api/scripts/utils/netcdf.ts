@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
 import { times } from 'lodash';
 import { DateTime } from 'luxon';
 import { Extent, pointToIndex } from '../../src/utils/coordinates';
