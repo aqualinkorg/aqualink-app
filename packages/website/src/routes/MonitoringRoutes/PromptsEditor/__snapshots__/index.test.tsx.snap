@@ -30,7 +30,7 @@ exports[`PromptsEditor > should render without crashing 1`] = `
       >
         <button
           aria-pressed="true"
-          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
+          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected makeStyles-selectedToggle-14 MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
           tabindex="0"
           type="button"
           value="single"
@@ -67,6 +67,7 @@ exports[`PromptsEditor > should render without crashing 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-113d811-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
+          id="prompt-select-label"
         >
           Select Prompt
         </label>
@@ -76,12 +77,15 @@ exports[`PromptsEditor > should render without crashing 1`] = `
           <div
             aria-expanded="false"
             aria-haspopup="listbox"
+            aria-labelledby="prompt-select-label prompt-select"
             class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-18jp67o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+            id="prompt-select"
             role="combobox"
             tabindex="0"
           >
             system
             <mock-chip
+              classname="makeStyles-categoryChip-16"
               label="core"
               size="small"
               style="margin-left: 0.5rem;"
@@ -156,14 +160,17 @@ exports[`PromptsEditor > should render without crashing 1`] = `
           class="makeStyles-metadataChips-8"
         >
           <mock-chip
+            classname="makeStyles-metadataChip-15"
             label="Version 1"
             size="small"
           />
           <mock-chip
-            label="Updated by pete@aqualink.org"
+            classname="makeStyles-metadataChip-15"
+            label="Updated by hello@aqualink.org"
             size="small"
           />
           <mock-chip
+            classname="makeStyles-metadataChip-15"
             label="1/1/2024, 12:00:00 AM"
             size="small"
           />
@@ -263,11 +270,12 @@ You are Aqualink's AI assistant...
             tabindex="-1"
             type="button"
           >
-            Save Changes
+            Apply Changes
           </button>
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1blvszr-MuiButtonBase-root-MuiButton-root"
             disabled=""
+            style="background-color: rgb(255, 255, 255); color: rgb(214, 39, 52); border: 1px solid rgb(214, 39, 52);"
             tabindex="-1"
             type="button"
           >

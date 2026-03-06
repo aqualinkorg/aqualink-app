@@ -63,7 +63,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     category: 'core',
     version: 1,
     updatedAt: '2024-01-01T00:00:00.000Z',
-    updatedBy: 'pete@aqualink.org',
+    updatedBy: 'hello@aqualink.org',
     isActive: true,
   },
   {
@@ -75,7 +75,7 @@ const MOCK_PROMPTS: AIPrompt[] = [
     category: 'core',
     version: 1,
     updatedAt: '2024-01-01T00:00:00.000Z',
-    updatedBy: 'pete@aqualink.org',
+    updatedBy: 'hello@aqualink.org',
     isActive: true,
   },
   {
@@ -177,6 +177,7 @@ const useStyles = makeStyles(() => ({
   buttonGroup: {
     display: 'flex',
     gap: '1rem',
+    paddingBottom: '1rem',
   },
   searchResultCard: {
     marginBottom: '1rem',
@@ -203,6 +204,21 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '400px',
+  },
+  selectedToggle: {
+    backgroundColor: `${colors.lightBlue} !important`,
+    color: '#ffffff !important',
+  },
+  metadataChip: {
+    backgroundColor: '#e0e0e0',
+    color: '#424242',
+    fontWeight: 500,
+  },
+  categoryChip: {
+    backgroundColor: colors.lightBlue,
+    color: '#ffffff',
+    fontWeight: 500,
+    verticalAlign: 'middle',
   },
 }));
 
@@ -487,14 +503,31 @@ function PromptsEditor() {
       {/* View Mode Toggle */}
       <div className={classes.viewModeToggle}>
         <ToggleButtonGroup
-          value={viewMode}
+          value={viewMode} // ✅ Use state variable
           exclusive
-          onChange={(e, newMode) => newMode && setViewMode(newMode)}
+          onChange={(e, newMode) => newMode && setViewMode(newMode)} // ✅ Handle clicks
           size="small"
         >
-          <ToggleButton value="single">SINGLE PROMPT</ToggleButton>
-          <ToggleButton value="all">VIEW ALL</ToggleButton>
-          <ToggleButton value="search">SEARCH</ToggleButton>
+          <ToggleButton
+            value="single"
+            classes={{ selected: classes.selectedToggle }}
+          >
+            SINGLE PROMPT
+          </ToggleButton>
+
+          <ToggleButton
+            value="all"
+            classes={{ selected: classes.selectedToggle }}
+          >
+            VIEW ALL
+          </ToggleButton>
+
+          <ToggleButton
+            value="search"
+            classes={{ selected: classes.selectedToggle }}
+          >
+            SEARCH
+          </ToggleButton>
         </ToggleButtonGroup>
       </div>
 
@@ -534,8 +567,10 @@ function PromptsEditor() {
         <>
           <div className={classes.controlsWrapper}>
             <FormControl style={{ minWidth: 300 }}>
-              <InputLabel>Select Prompt</InputLabel>
+              <InputLabel id="prompt-select-label">Select Prompt</InputLabel>
               <Select
+                labelId="prompt-select-label"
+                id="prompt-select"
                 value={selectedPrompt?.promptKey || ''}
                 onChange={(e) => {
                   const prompt = prompts.find(
@@ -552,6 +587,7 @@ function PromptsEditor() {
                       <Chip
                         label={prompt.category}
                         size="small"
+                        className={classes.categoryChip}
                         style={{ marginLeft: '0.5rem' }}
                       />
                     )}
@@ -594,16 +630,19 @@ function PromptsEditor() {
                   <Chip
                     label={`Version ${selectedPrompt.version}`}
                     size="small"
+                    className={classes.metadataChip}
                   />
                   {selectedPrompt.updatedBy && (
                     <Chip
                       label={`Updated by ${selectedPrompt.updatedBy}`}
                       size="small"
+                      className={classes.metadataChip}
                     />
                   )}
                   <Chip
                     label={new Date(selectedPrompt.updatedAt).toLocaleString()}
                     size="small"
+                    className={classes.metadataChip}
                   />
                 </div>
 
@@ -637,12 +676,17 @@ function PromptsEditor() {
                     onClick={handleSave}
                     disabled={!hasChanges || loading || !token}
                   >
-                    Save Changes
+                    Apply Changes
                   </Button>
                   <Button
                     variant="outlined"
                     onClick={() => selectPrompt(selectedPrompt)}
                     disabled={!hasChanges || loading}
+                    style={{
+                      backgroundColor: '#ffffff',
+                      color: '#d62734',
+                      border: '1px solid	#d62734',
+                    }}
                   >
                     Discard Changes
                   </Button>
@@ -766,7 +810,11 @@ function PromptsEditor() {
                   }}
                 >
                   <Typography variant="h6">{prompt.promptKey}</Typography>
-                  <Chip label={prompt.category} size="small" />
+                  <Chip
+                    label={prompt.category}
+                    size="small"
+                    className={classes.categoryChip}
+                  />
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
