@@ -3,8 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn,
   JoinColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AIPrompt } from './ai-prompt.entity';
 import { User } from '../users/users.entity';
@@ -15,12 +15,13 @@ export class AIPromptHistory {
   id: number;
 
   @ManyToOne(() => AIPrompt, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'prompt_id' })
   prompt: AIPrompt;
 
-  @Column({ name: 'prompt_id' })
+  @Column()
   promptId: number;
 
-  @Column({ name: 'prompt_key' })
+  @Column()
   promptKey: string;
 
   @Column({ type: 'text' })
@@ -29,16 +30,16 @@ export class AIPromptHistory {
   @Column()
   version: number;
 
-  @CreateDateColumn({ name: 'changed_at' })
+  @CreateDateColumn()
   changedAt: Date;
 
-  @Column({ name: 'changed_by', nullable: true })
+  @Column({ nullable: true })
   changedBy: number | null;
 
   @ManyToOne(() => User, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'changed_by' })
   changedByUser: User | null;
 
-  @Column({ name: 'change_notes', type: 'text', nullable: true })
+  @Column({ type: 'text', nullable: true })
   changeNotes: string | null;
 }

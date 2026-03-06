@@ -14,7 +14,7 @@ export class AIPrompt {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'prompt_key', unique: true })
+  @Column({ unique: true })
   promptKey: string;
 
   @Column({ type: 'text' })
@@ -29,22 +29,22 @@ export class AIPrompt {
   @Column({ default: 1 })
   version: number;
 
-  @Column({ name: 'is_active', default: true })
+  @Column({ default: true })
   isActive: boolean;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ name: 'updated_by', nullable: true })
+  @Column({ nullable: true })
   updatedBy: number | null;
 
   @ManyToOne(() => User, { onDelete: 'SET NULL', nullable: true })
   @JoinColumn({ name: 'updated_by' })
   updatedByUser: User | null;
 
-  @Column({ name: 'change_notes', type: 'text', nullable: true })
+  @Column({ type: 'text', nullable: true })
   changeNotes: string | null;
 }
