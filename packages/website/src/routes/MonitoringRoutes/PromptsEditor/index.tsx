@@ -254,10 +254,10 @@ function PromptsEditor() {
   }, []);
 
   const loadPrompts = useCallback(async () => {
-    // If no token, use mock data
     if (!token) {
       setPrompts(MOCK_PROMPTS);
-      if (MOCK_PROMPTS.length > 0) {
+      // Only auto-select if prompts array is currently empty
+      if (MOCK_PROMPTS.length > 0 && prompts.length === 0) {
         selectPrompt(MOCK_PROMPTS[0]);
       }
       return;
@@ -267,20 +267,21 @@ function PromptsEditor() {
       setLoading(true);
       const { data } = await promptServices.getAllPrompts(token);
       setPrompts(data);
+      // Only auto-select if no prompt selected yet
       if (data.length > 0 && !selectedPrompt) {
         selectPrompt(data[0]);
       }
     } catch (err) {
-      // If API fails, fall back to mock data
       console.warn('Failed to load prompts from API, using mock data:', err);
       setPrompts(MOCK_PROMPTS);
-      if (MOCK_PROMPTS.length > 0) {
+      // Only auto-select if prompts array is currently empty
+      if (MOCK_PROMPTS.length > 0 && prompts.length === 0) {
         selectPrompt(MOCK_PROMPTS[0]);
       }
     } finally {
       setLoading(false);
     }
-  }, [token, selectedPrompt, selectPrompt]);
+  }, [token, selectedPrompt, selectPrompt, prompts.length]);
 
   // Load prompts on mount
   useEffect(() => {
