@@ -4,12 +4,10 @@ import { Repository } from 'typeorm';
 import { AIPrompt } from './ai-prompt.entity';
 import { AIPromptHistory } from './ai-prompt-history.entity';
 
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
-
 @Injectable()
 export class AiPromptsService {
   private logger = new Logger(AiPromptsService.name);
-  private cache: { data: AIPrompt[]; timestamp: number } | null = null;
+  private cache: AIPrompt[] | null = null;
 
   constructor(
     @InjectRepository(AIPrompt)
@@ -20,12 +18,10 @@ export class AiPromptsService {
   ) {}
 
   async getAllPrompts(): Promise<AIPrompt[]> {
-    const now = Date.now();
-
-    // Return cached data if still valid
-    if (this.cache && now - this.cache.timestamp < CACHE_TTL_MS) {
+    // If we have cached data, return it (no expiry)
+    if (this.cache) {
       this.logger.debug('Returning cached prompts');
-      return this.cache.data;
+      return this.cache;
     }
 
     // Fetch fresh data
@@ -34,9 +30,9 @@ export class AiPromptsService {
       order: { promptKey: 'ASC' },
     });
 
-    // Update cache
-    this.cache = { data: prompts, timestamp: now };
-    this.logger.debug(`Cached ${prompts.length} prompts`);
+    // Cache prompts (persists until manually cleared)
+    this.cache = prompts;
+    this.logger.debug(`Loaded and cached ${prompts.length} prompts`);
 
     return prompts;
   }
@@ -70,7 +66,7 @@ export class AiPromptsService {
       changeNotes,
     });
 
-    // Invalidate cache
+    // Invalidate cache - next request will reload
     this.cache = null;
     this.logger.log(
       `Updated prompt '${promptKey}' to version ${updated.version}`,
@@ -114,7 +110,7 @@ export class AiPromptsService {
       changeNotes: `Rolled back to version ${version}`,
     });
 
-    // Invalidate cache
+    // Invalidate cache - next request will reload
     this.cache = null;
     this.logger.log(
       `Rolled back prompt '${promptKey}' to version ${version} (now version ${updated.version})`,
@@ -125,6 +121,6 @@ export class AiPromptsService {
 
   refreshCache(): void {
     this.cache = null;
-    this.logger.log('Cache invalidated manually');
+    this.logger.log('Cache manually cleared - will reload on next request');
   }
 }
