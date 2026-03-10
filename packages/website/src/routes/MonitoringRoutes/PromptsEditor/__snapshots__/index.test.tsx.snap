@@ -138,7 +138,7 @@ exports[`PromptsEditor > should render without crashing 1`] = `
         tabindex="-1"
         type="button"
       >
-        UPDATE DATABASE
+        RELOAD PROMPTS
       </button>
     </div>
     <mock-card
