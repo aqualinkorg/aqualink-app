@@ -1,23 +1,12 @@
-import {
-  Controller,
-  Get,
-  Put,
-  Post,
-  Param,
-  Body,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Put, Post, Param, Body, Req } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AiPromptsService } from './ai-prompts.service';
 import { Auth } from '../auth/auth.decorator';
-import { AdminLevel } from '../users/users.entity';
-import { IsSiteAdminGuard } from '../auth/is-site-admin.guard';
 import { AuthRequest } from '../auth/auth.types';
+import { AdminLevel } from '../users/users.entity';
 
 @ApiTags('Monitoring - AI Prompts')
 @Controller('monitoring/prompts')
-@UseGuards(IsSiteAdminGuard)
 @Auth(AdminLevel.SuperAdmin)
 export class PromptsController {
   constructor(private aiPromptsService: AiPromptsService) {}
@@ -74,8 +63,8 @@ export class PromptsController {
 
   @ApiOperation({ summary: 'Refresh prompt cache manually' })
   @Post('cache/refresh')
-  refreshCache() {
+  refreshCache(): { message: string } {
     this.aiPromptsService.refreshCache();
-    return { success: true, message: 'Cache refreshed successfully' };
+    return { message: 'Cache refreshed successfully' };
   }
 }

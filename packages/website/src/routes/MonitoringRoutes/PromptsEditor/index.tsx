@@ -308,10 +308,18 @@ function PromptsEditor() {
         token,
       );
 
-      setSuccess(
-        'Prompt updated successfully! Changes will take effect within 5 minutes.',
-      );
+      setSuccess('Prompt updated successfully!');
+
+      // Reload prompts and re-select current one to show updated version
       await loadPrompts();
+      const freshPrompts = await promptServices.getAllPrompts(token);
+      const updatedPrompt = freshPrompts.data.find(
+        (p) => p.promptKey === selectedPrompt.promptKey,
+      );
+      if (updatedPrompt) {
+        selectPrompt(updatedPrompt);
+      }
+
       setChangeNotes('');
     } catch (err) {
       setError('Failed to update prompt');
@@ -362,7 +370,16 @@ function PromptsEditor() {
       setHistoryOpen(false);
       setRollbackDialogOpen(false);
       setRollbackVersion(null);
+
+      // Reload prompts and re-select current one to show updated version
       await loadPrompts();
+      const freshPrompts = await promptServices.getAllPrompts(token);
+      const updatedPrompt = freshPrompts.data.find(
+        (p) => p.promptKey === selectedPrompt.promptKey,
+      );
+      if (updatedPrompt) {
+        selectPrompt(updatedPrompt);
+      }
     } catch (err) {
       setError('Failed to rollback');
       console.error(err);
@@ -371,9 +388,9 @@ function PromptsEditor() {
     }
   };
 
-  const handleUpdateDatabase = async () => {
+  const handleReloadDatabase = async () => {
     if (!token) {
-      setError('Authentication required to update database');
+      setError('Authentication required to reload prompts');
       return;
     }
 
@@ -382,7 +399,7 @@ function PromptsEditor() {
       await promptServices.refreshCache(token);
       setSuccess('Database updated! Changes are now live.');
     } catch (err) {
-      setError('Failed to update database');
+      setError('Failed to reload prompts');
       console.error(err);
     } finally {
       setLoading(false);
@@ -607,14 +624,14 @@ function PromptsEditor() {
 
             <Button
               variant="outlined"
-              onClick={handleUpdateDatabase}
+              onClick={handleReloadDatabase}
               disabled={loading || !token}
               style={{
                 color: '#00ACC1',
                 borderColor: '#00ACC1',
               }}
             >
-              UPDATE DATABASE
+              RELOAD PROMPTS
             </Button>
           </div>
 
