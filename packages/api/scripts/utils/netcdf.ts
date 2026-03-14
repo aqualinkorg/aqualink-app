@@ -2,7 +2,7 @@ import { times } from 'lodash';
 import { DateTime } from 'luxon';
 import { Extent, pointToIndex } from '../../src/utils/coordinates';
 
-let netcdf4;
+let netcdf4: any;
 try {
   // eslint-disable-next-line global-require, fp/no-mutation, import/no-unresolved
   netcdf4 = require('netcdf4');
@@ -25,7 +25,7 @@ try {
  * @param lat
  */
 export function getNOAAData(long: number, lat: number, year: number = 2020) {
-  const fileName = `data/sst.day.mean.${year}.v2.nc`;
+  const fileName = `data/sst.day.mean.${year}.nc`;
   const noaaData = new netcdf4.File(fileName, 'r');
   const { dimensions, variables } = noaaData.root;
 

@@ -63,7 +63,10 @@
     "stormglass-csv": "ts-node -r dotenv/config scripts/generate-stormglass-csv.ts",
     "fill-noaa-nearest-point": "ts-node -r dotenv/config scripts/noaa-availability.ts",
     "check-video-streams": "ts-node -r dotenv/config scripts/check-video-streams.ts",
-    "reef-check": "ts-node -r dotenv/config scripts/reef-check.ts"
+    "reef-check": "ts-node -r dotenv/config scripts/reef-check.ts",
+    "backfill:seaphox": "ts-node -r dotenv/config scripts/backfill-seaphox-monthly.ts",
+    "backfill:sst": "ts-node -r dotenv/config scripts/sst-backfill.ts",
+    "backfill:sofar": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.0.1",
@@ -147,7 +150,7 @@
     "typescript": "^5.7.3",
     "yargs": "^17.7.2"
   },
-  "_optionalDependencies": {
-    "netcdf4": "https://github.com/ovio-forks/netcdf4"
+  "optionalDependencies": {
+    "netcdf4": "^0.4.1"
   }
 }
