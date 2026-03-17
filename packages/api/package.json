@@ -151,6 +151,6 @@
     "yargs": "^17.7.2"
   },
   "optionalDependencies": {
-    "netcdf4": "^0.4.1"
+    "netcdf4": "https://github.com/ovio-forks/netcdf4"
   }
 }
