@@ -18,8 +18,7 @@ const argv = yargs(process.argv.slice(2))
     siteIds: {
       alias: 's',
       type: 'array',
-      describe: 'Site IDs to backfill',
-      default: [] as number[],
+      describe: 'Site IDs to backfill (required)',
     },
     skipDailyData: {
       alias: 'skip',
@@ -30,23 +29,28 @@ const argv = yargs(process.argv.slice(2))
   })
   .parseSync();
 
-const DEFAULT_SITE_IDS = [
-  9017, 9005, 9016, 9015, 9010, 9011, 9012, 9013, 9007, 9008, 9009, 9006, 9001,
-  8996, 9000, 8999, 8998, 8997, 9018, 9014, 9004,
-];
-
 async function main() {
   const dataSource = await AqualinkDataSource.initialize();
 
   const siteIds =
-    argv.siteIds.length > 0 ? (argv.siteIds as number[]) : DEFAULT_SITE_IDS;
+    argv.siteIds && argv.siteIds.length > 0
+      ? (argv.siteIds as (string | number)[]).map((id) => Number(id))
+      : [];
+
+  if (siteIds.length === 0) {
+    console.error(
+      'No site IDs provided. Please specify at least one site ID using --siteIds or -s.',
+    );
+    await dataSource.destroy();
+    process.exitCode = 1;
+    return;
+  }
 
   console.log(
     `Starting SST backfill for ${siteIds.length} site(s) over ${argv.days} days...`,
   );
 
   if (!argv.skipDailyData) {
-    // Step 1: Backfill daily_data (feeds graphs and heat stress)
     console.log('Backfilling daily_data...');
     await Bluebird.mapSeries(siteIds, async (siteId) => {
       console.log(`Backfilling daily_data for site ${siteId}...`);
@@ -57,7 +61,6 @@ async function main() {
     console.log('Skipping daily_data backfill...');
   }
 
-  // Step 2: Backfill time_series (feeds CSV download)
   console.log('Backfilling time_series...');
   await updateSST(siteIds, argv.days, {
     siteRepository: dataSource.getRepository(Site),
@@ -66,8 +69,10 @@ async function main() {
   });
 
   console.log('SST backfill complete.');
-  dataSource.destroy();
-  process.exit(0);
+  await dataSource.destroy();
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

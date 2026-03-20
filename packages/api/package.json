@@ -57,7 +57,6 @@
     "upload-hobo-data": "ts-node -r dotenv/config scripts/upload-hobo-data.ts",
     "upload-sonde-data": "ts-node -r dotenv/config scripts/upload-sonde-data.ts",
     "upload-hui-data": "ts-node -r dotenv/config scripts/upload-hui-data.ts",
-    "backfill-sofar-time-series": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts",
     "update-wind-wave-data": "ts-node -r dotenv/config scripts/hindcast-wind-wave-data.ts",
     "resize-survey-images": "ts-node -r dotenv/config scripts/resize-survey-images.ts",
     "stormglass-csv": "ts-node -r dotenv/config scripts/generate-stormglass-csv.ts",
@@ -150,7 +149,7 @@
     "typescript": "^5.7.3",
     "yargs": "^17.7.2"
   },
-  "optionalDependencies": {
+  "_optionalDependencies": {
     "netcdf4": "https://github.com/ovio-forks/netcdf4"
   }
 }

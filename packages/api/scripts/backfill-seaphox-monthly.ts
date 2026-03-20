@@ -46,6 +46,13 @@ async function backfillSeapHOxMonthly(
   const seaphoxSource = { id: sourceResult[0].id };
 
   const token = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
+
+  if (!token) {
+    throw new Error(
+      'No Sofar API token configured. Set site.spotter_api_token or SOFAR_API_TOKEN before running the SeapHOx monthly backfill.',
+    );
+  }
+
   const startDate = new Date(startDateStr);
   const now = new Date();
   // eslint-disable-next-line fp/no-mutation
@@ -114,19 +121,34 @@ async function backfillSeapHOxMonthly(
             }));
 
           if (values.length > 0) {
-            const insertValues = values
-              .map(
-                (v) =>
-                  `('${metric}', ${v.value}, '${new Date(v.timestamp).toISOString()}', ${seaphoxSource.id})`,
-              )
-              .join(',');
+            const chunkSize = 500;
+            // eslint-disable-next-line no-restricted-syntax
+            for (let start = 0; start < values.length; start += chunkSize) {
+              const chunk = values.slice(start, start + chunkSize);
+              const params: any[] = [];
+              const valuesPlaceholders = chunk
+                .map((v, index) => {
+                  const baseIndex = index * 4;
+                  params.push(
+                    metric,
+                    v.value,
+                    new Date(v.timestamp).toISOString(),
+                    seaphoxSource.id,
+                  );
+                  return `($${baseIndex + 1}, $${baseIndex + 2}, $${baseIndex + 3}, $${baseIndex + 4})`;
+                })
+                .join(',');
 
-            // eslint-disable-next-line no-await-in-loop
-            await dataSource.query(`
-              INSERT INTO time_series (metric, value, timestamp, source_id)
-              VALUES ${insertValues}
-              ON CONFLICT ON CONSTRAINT no_duplicate_data DO NOTHING
-            `);
+              // eslint-disable-next-line no-await-in-loop
+              await dataSource.query(
+                `
+                INSERT INTO time_series (metric, value, timestamp, source_id)
+                VALUES ${valuesPlaceholders}
+                ON CONFLICT ON CONSTRAINT no_duplicate_data DO NOTHING
+              `,
+                params,
+              );
+            }
           }
         }
 
@@ -151,6 +173,40 @@ async function backfillSeapHOxMonthly(
 }
 
 async function main() {
+  // Usage: yarn backfill:seaphox <siteId> <startDate>
+  // Example: yarn backfill:seaphox 1006 2025-08-21
+  const siteIdArg = process.argv[2] ?? process.env.SEAPHOX_SITE_ID;
+  const startDateArg = process.argv[3] ?? process.env.SEAPHOX_START_DATE;
+
+  if (!siteIdArg || !startDateArg) {
+    console.error(
+      'Missing required parameters for SeapHOx backfill. ' +
+        'Provide <siteId> and <startDate> as CLI arguments or set ' +
+        'SEAPHOX_SITE_ID and SEAPHOX_START_DATE env vars. ' +
+        'Example: yarn backfill:seaphox 1006 2025-08-21',
+    );
+    process.exitCode = 1;
+    return;
+  }
+
+  const siteId = Number(siteIdArg);
+
+  if (!Number.isInteger(siteId) || siteId <= 0) {
+    console.error(
+      `Invalid siteId "${siteIdArg}". siteId must be a positive integer.`,
+    );
+    process.exitCode = 1;
+    return;
+  }
+
+  if (Number.isNaN(new Date(startDateArg).getTime())) {
+    console.error(
+      `Invalid startDate "${startDateArg}". Expected a valid date string, e.g. "2025-08-21".`,
+    );
+    process.exitCode = 1;
+    return;
+  }
+
   const dataSource = new DataSource({
     type: 'postgres',
     host: process.env.POSTGRES_HOST || 'localhost',
@@ -163,8 +219,11 @@ async function main() {
   });
 
   await dataSource.initialize();
-  await backfillSeapHOxMonthly(dataSource, 1006, '2025-08-21');
+  await backfillSeapHOxMonthly(dataSource, siteId, startDateArg);
   await dataSource.destroy();
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
