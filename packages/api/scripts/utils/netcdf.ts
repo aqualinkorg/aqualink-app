@@ -1,13 +1,17 @@
 /* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable global-require */
 import { times } from 'lodash';
 import { DateTime } from 'luxon';
 
+// eslint-disable-next-line fp/no-mutation
 let netcdf4: any;
 try {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line fp/no-mutation
   netcdf4 = require('netcdf4');
 } catch {
+  // eslint-disable-next-line fp/no-mutation
   netcdf4 = null;
 }
 
@@ -34,6 +38,7 @@ export function getNOAAData(long: number, lat: number, year: number = 2020) {
     const fileName = `${basePath}${suffix}`;
     try {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
+      // eslint-disable-next-line fp/no-mutation
       noaaData = new netcdf4.File(fileName, 'r');
       break;
     } catch (err) {

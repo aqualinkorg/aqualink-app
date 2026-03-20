@@ -42,6 +42,7 @@ async function main() {
       'No site IDs provided. Please specify at least one site ID using --siteIds or -s.',
     );
     await dataSource.destroy();
+    // eslint-disable-next-line fp/no-mutation
     process.exitCode = 1;
     return;
   }
@@ -74,5 +75,6 @@ async function main() {
 
 main().catch((error) => {
   console.error(error);
+  // eslint-disable-next-line fp/no-mutation
   process.exitCode = 1;
 });

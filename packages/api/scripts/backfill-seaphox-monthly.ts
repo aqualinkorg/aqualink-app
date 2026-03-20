@@ -122,13 +122,15 @@ async function backfillSeapHOxMonthly(
 
           if (values.length > 0) {
             const chunkSize = 500;
-            // eslint-disable-next-line no-restricted-syntax
+            // eslint-disable-next-line no-restricted-syntax, fp/no-mutation
             for (let start = 0; start < values.length; start += chunkSize) {
               const chunk = values.slice(start, start + chunkSize);
+              // eslint-disable-next-line fp/no-mutation
               const params: any[] = [];
               const valuesPlaceholders = chunk
                 .map((v, index) => {
                   const baseIndex = index * 4;
+                  // eslint-disable-next-line fp/no-mutating-methods
                   params.push(
                     metric,
                     v.value,
@@ -185,6 +187,7 @@ async function main() {
         'SEAPHOX_SITE_ID and SEAPHOX_START_DATE env vars. ' +
         'Example: yarn backfill:seaphox 1006 2025-08-21',
     );
+    // eslint-disable-next-line fp/no-mutation
     process.exitCode = 1;
     return;
   }
@@ -195,6 +198,7 @@ async function main() {
     console.error(
       `Invalid siteId "${siteIdArg}". siteId must be a positive integer.`,
     );
+    // eslint-disable-next-line fp/no-mutation
     process.exitCode = 1;
     return;
   }
@@ -203,6 +207,7 @@ async function main() {
     console.error(
       `Invalid startDate "${startDateArg}". Expected a valid date string, e.g. "2025-08-21".`,
     );
+    // eslint-disable-next-line fp/no-mutation
     process.exitCode = 1;
     return;
   }
@@ -225,5 +230,6 @@ async function main() {
 
 main().catch((error) => {
   console.error(error);
+  // eslint-disable-next-line fp/no-mutation
   process.exitCode = 1;
 });
