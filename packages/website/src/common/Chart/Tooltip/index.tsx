@@ -40,13 +40,14 @@ const sourceTitle = (title: string, source: Sources | undefined) => {
   return source ? ` (${source.toUpperCase()})` : '';
 };
 
-const TemperatureMetric = ({
+function TemperatureMetric({
   value,
   title,
   color,
   unit,
   gridClassName,
   source,
+  decimalPlaces,
 }: {
   value: number | null;
   title: string;
@@ -54,17 +55,20 @@ const TemperatureMetric = ({
   unit: string;
   gridClassName: string | undefined;
   source?: Sources;
-}) => (
-  <Grid container item className={gridClassName}>
-    <Circle color={color} />
-    <Typography variant="caption" color="white">
-      {title} {`${formatNumber(value, 1)} ${unit}`}
-      {sourceTitle(title, source)}
-    </Typography>
-  </Grid>
-);
+  decimalPlaces?: number;
+}) {
+  return (
+    <Grid container item className={gridClassName}>
+      <Circle color={color} />
+      <Typography variant="caption" color="white">
+        {title} {`${formatNumber(value, decimalPlaces ?? 1)} ${unit}`}
+        {sourceTitle(title, source)}
+      </Typography>
+    </Grid>
+  );
+}
 
-const Tooltip = ({
+function Tooltip({
   siteId,
   date,
   datasets,
@@ -72,7 +76,7 @@ const Tooltip = ({
   siteTimeZone,
   userTimeZone,
   classes,
-}: TooltipProps) => {
+}: TooltipProps) {
   const hasHourlyData = datasets.some(({ isDailyUpdated }) => !isDailyUpdated);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
@@ -129,13 +133,14 @@ const Tooltip = ({
               xs={12}
             >
               {tooltipLines.map(
-                (item) =>
+                (item, index) =>
                   isNumber(item.value) && (
                     <TemperatureMetric
                       key={`${item.color}_${item.value}`}
                       {...item}
                       gridClassName={classes.tooltipContentItem}
                       unit={item.unit}
+                      decimalPlaces={datasets[index]?.decimalPlaces ?? 1}
                     />
                   ),
               )}
@@ -163,7 +168,7 @@ const Tooltip = ({
       />
     </div>
   );
-};
+}
 
 const styles = () =>
   createStyles({

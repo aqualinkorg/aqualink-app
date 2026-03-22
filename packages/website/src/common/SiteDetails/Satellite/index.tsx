@@ -25,7 +25,7 @@ import { dhwColorCode } from '../../../assets/colorCode';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
 
-const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
+function Satellite({ maxMonthlyMean, data, classes }: SatelliteProps) {
   const { dhw, satelliteTemperature, sstAnomaly } = data;
   const degreeHeatingDays = { ...dhw, value: (dhw?.value || 0) * 7 };
   const relativeTime =
@@ -137,7 +137,7 @@ const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 const styles = () =>
   createStyles({

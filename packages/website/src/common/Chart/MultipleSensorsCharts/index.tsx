@@ -3,7 +3,8 @@ import isISODate from 'validator/lib/isISO8601';
 import { Box, Container, Theme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { camelCase, isNaN, snakeCase, sortBy } from 'lodash';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
 import {
@@ -12,6 +13,7 @@ import {
   SONDE_DATA_COLOR,
   SPOTTER_METRIC_DATA_COLOR,
   HUI_DATA_COLOR,
+  SEAPHOX_DATA_COLOR,
 } from 'constants/charts';
 import {
   siteGranularDailyDataSelector,
@@ -44,6 +46,10 @@ import { DateTime } from 'luxon-extensions';
 import { userInfoSelector } from 'store/User/userSlice';
 import monitoringServices from 'services/monitoringServices';
 import {
+  getPublicSeapHOxMetrics,
+  getSeapHOxConfig,
+} from 'constants/chartConfigs/seaphoxConfig';
+import {
   constructOceanSenseDatasets,
   findChartWidth,
   generateMetricDataset,
@@ -58,16 +64,26 @@ import {
 } from '../../../constants/chartConfigs/huiConfig';
 import ChartWithCard from './ChartWithCard';
 
-const MultipleSensorsCharts = ({
+const useStyles = makeStyles((theme: Theme) => ({
+  chartWithRange: {
+    marginTop: theme.spacing(4),
+  },
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'end',
+  },
+}));
+
+function MultipleSensorsCharts({
   site,
   pointId,
   surveysFiltered,
   disableGutters,
   displayOceanSenseCharts = true,
   hasAdditionalSensorData,
-}: MultipleSensorsChartsProps) => {
+}: MultipleSensorsChartsProps) {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [startParam, setStartParam] = useQueryParam('start', isISODate);
   const [endParam, setEndParam] = useQueryParam('end', isISODate);
   const [chartParam] = useQueryParam('chart');
@@ -104,6 +120,8 @@ const MultipleSensorsCharts = ({
 
   const hasHuiData = availableSources.includes('hui');
 
+  const hasSeapHOxData = availableSources.includes('seaphox');
+
   const chartStartDate =
     startDate || DateTime.fromISO(today).minus({ weeks: 1 }).toISOString();
   const now = DateTime.now();
@@ -123,6 +141,7 @@ const MultipleSensorsCharts = ({
     granularDailyData,
     timeSeriesData?.bottomTemperature?.find((x) => x.type === 'spotter')?.data,
     timeSeriesData?.topTemperature?.find((x) => x.type === 'spotter')?.data,
+    timeSeriesData?.bottomTemperature?.find((x) => x.type === 'seaphox')?.data,
     hoboBottomTemperatureSensors,
     site.historicalMonthlyMean,
     startDate,
@@ -155,7 +174,16 @@ const MultipleSensorsCharts = ({
               timeSeriesData?.[camelCase(key) as Metrics]?.find(
                 (x) => x.type === source,
               ) || {};
-            const { title, units, convert } = getConfig(key);
+            const {
+              title,
+              units,
+              convert,
+              decimalPlaces,
+              yAxisStepSize,
+              yAxisPadding,
+              yAxisMin: configYMin,
+              yAxisMax: configYMax,
+            } = getConfig(key);
 
             return {
               key,
@@ -163,19 +191,26 @@ const MultipleSensorsCharts = ({
               surveyPoint,
               source,
               rangeLabel,
-              dataset: generateMetricDataset(
-                sensor,
-                (data || []).map((x) => ({
-                  ...x,
-                  value:
-                    typeof convert === 'number' ? convert * x.value : x.value,
-                })),
-                units,
-                color,
-                chartStartDate,
-                chartEndDate,
-                site.timezone,
-              ),
+              dataset: {
+                ...generateMetricDataset(
+                  sensor,
+                  (data || []).map((x) => ({
+                    ...x,
+                    value:
+                      typeof convert === 'number' ? convert * x.value : x.value,
+                  })),
+                  units,
+                  color,
+                  chartStartDate,
+                  chartEndDate,
+                  site.timezone,
+                ),
+                decimalPlaces,
+                yAxisStepSize,
+                yAxisPadding,
+                yAxisMin: configYMin,
+                yAxisMax: configYMax,
+              },
             };
           })
       : [];
@@ -222,6 +257,17 @@ const MultipleSensorsCharts = ({
       'HUI',
       getPublicHuiMetrics,
       getHuiConfig,
+    );
+
+  const seaphoxDatasets = () =>
+    getDatesetFun(
+      hasSeapHOxData,
+      SEAPHOX_DATA_COLOR,
+      'seaphox',
+      'seaphox',
+      'seaphox',
+      getPublicSeapHOxMetrics,
+      getSeapHOxConfig,
     );
 
   // post monitoring metric
@@ -286,23 +332,36 @@ const MultipleSensorsCharts = ({
       isBefore(pickerStartDate, pickerEndDate) &&
       timeSeriesDataRanges
     ) {
-      const sources: Sources[] = ['spotter', 'sonde', 'metlog', 'hui'];
-      const [spotterRanges, sondeRanges, metlogRanges, huiRanges] = sources.map(
-        (source) =>
-          getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
-            rangeOverlapWithRange(
-              x.minDate,
-              x.maxDate,
-              pickerStartDate,
-              pickerEndDate,
-            ),
+      const sources: Sources[] = [
+        'spotter',
+        'sonde',
+        'metlog',
+        'hui',
+        'seaphox',
+      ];
+      const [
+        spotterRanges,
+        sondeRanges,
+        metlogRanges,
+        huiRanges,
+        seaphoxRanges,
+      ] = sources.map((source) =>
+        getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
+          rangeOverlapWithRange(
+            x.minDate,
+            x.maxDate,
+            pickerStartDate,
+            pickerEndDate,
           ),
+        ),
       );
 
       const allMetrics = [
         ...DEFAULT_METRICS,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
+        // SeapHOx metrics
+        ...(seaphoxRanges.length > 0 ? [...getPublicSeapHOxMetrics()] : []),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);
 
@@ -314,6 +373,7 @@ const MultipleSensorsCharts = ({
           sondeRanges.length > 0 && 'sonde',
           metlogRanges.length > 0 && 'metlog',
           huiRanges.length > 0 && 'hui',
+          seaphoxRanges.length > 0 && 'seaphox',
         ].filter((x): x is Sources => x !== false),
       );
 
@@ -621,6 +681,7 @@ const MultipleSensorsCharts = ({
         ...sondeDatasets(),
         ...metlogDatasets(),
         ...huiDatasets(),
+        ...seaphoxDatasets(),
       ].map(({ key, title, surveyPoint, source, rangeLabel, dataset }) => (
         <Box mt={4} key={key}>
           <ChartWithCard
@@ -705,17 +766,7 @@ const MultipleSensorsCharts = ({
         )}
     </Container>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  chartWithRange: {
-    marginTop: theme.spacing(4),
-  },
-  buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'end',
-  },
-}));
+}
 
 interface MultipleSensorsChartsProps {
   site: Site;

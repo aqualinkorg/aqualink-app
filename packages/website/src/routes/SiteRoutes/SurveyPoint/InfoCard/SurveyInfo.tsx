@@ -8,7 +8,7 @@ import createStyles from '@mui/styles/createStyles';
 import { SurveyListItem } from 'store/Survey/types';
 import { findImagesAtSurveyPoint } from 'helpers/surveys';
 
-const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
+function SurveyInfo({ surveys, pointId, classes }: SurveyInfoProps) {
   const nSurveys = surveys.length;
   const nImages = findImagesAtSurveyPoint(surveys, pointId);
 
@@ -61,7 +61,7 @@ const SurveyInfo = ({ surveys, pointId, classes }: SurveyInfoProps) => {
       </Grid>
     </Grid>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

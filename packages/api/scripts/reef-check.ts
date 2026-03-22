@@ -218,13 +218,16 @@ async function parseFile<T extends string>(
     throw new Error('Empty file or failed to load file');
   }
   const header = sheet[0];
-  const fieldIndicesMap = fields.reduce((acc, field) => {
-    acc[field] = header.indexOf(field);
-    if (acc[field] === -1) {
-      throw new Error(`Field not found: ${field}`);
-    }
-    return acc;
-  }, {} as Record<T, number>);
+  const fieldIndicesMap = fields.reduce(
+    (acc, field) => {
+      acc[field] = header.indexOf(field);
+      if (acc[field] === -1) {
+        throw new Error(`Field not found: ${field}`);
+      }
+      return acc;
+    },
+    {} as Record<T, number>,
+  );
 
   const getField = (row: string[], field: T) => row[fieldIndicesMap[field]];
 

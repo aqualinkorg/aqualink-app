@@ -6,13 +6,13 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { Launch } from '@mui/icons-material';
 
-const CustomLink = ({
+function CustomLink({
   to,
   tooltipTitle,
   isIcon,
   content = null,
   classes,
-}: CustomLinkProps) => {
+}: CustomLinkProps) {
   return (
     <Tooltip title={tooltipTitle} placement="top" arrow>
       <Link className={classes.link} to={to}>
@@ -26,7 +26,7 @@ const CustomLink = ({
       </Link>
     </Tooltip>
   );
-};
+}
 
 const styles = () =>
   createStyles({

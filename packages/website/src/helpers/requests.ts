@@ -5,7 +5,6 @@ import { isUndefined, omitBy } from 'lodash';
 const instance = axios.create({
   baseURL:
     process.env.REACT_APP_API_BASE_URL ||
-    // use a default for cloudflare workers as it doesn't have process.env
     'https://production-dot-ocean-systems.uc.r.appspot.com/api',
   headers: {
     Accept: 'application/json, text/html',
@@ -13,14 +12,24 @@ const instance = axios.create({
   },
 });
 
-const cachedInstance = setupCache(instance);
+// Lazy initialization: only setup cache when first accessed (inside a handler)
+// This prevents async I/O operations in global scope
+let cachedInstance: ReturnType<typeof setupCache> | null = null;
+
+const getCachedInstance = () => {
+  if (!cachedInstance) {
+    cachedInstance = setupCache(instance);
+  }
+  return cachedInstance;
+};
 
 const agent = (contentType?: string) => {
+  const instanceToUse = getCachedInstance();
   // eslint-disable-next-line fp/no-mutation
-  cachedInstance.defaults.headers['Content-Type'] =
+  instanceToUse.defaults.headers['Content-Type'] =
     contentType || 'application/json';
 
-  return cachedInstance;
+  return instanceToUse;
 };
 
 function send<T>(request: Request): Promise<AxiosResponse<T>> {
@@ -58,7 +67,9 @@ interface Request {
 }
 
 export default {
-  axiosInstance: cachedInstance,
+  get axiosInstance() {
+    return getCachedInstance();
+  },
   agent,
   send,
   generateUrlQueryParams,

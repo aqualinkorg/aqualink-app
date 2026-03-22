@@ -16,11 +16,11 @@ const agreements: { id: keyof AgreementsChecked; label: string }[] = [
   { id: 'survey', label: 'Conduct initial survey' },
 ];
 
-const Agreements = ({
+function Agreements({
   agreementsChecked,
   handleChange,
   classes,
-}: AgreementsProps) => {
+}: AgreementsProps) {
   return (
     <div className={classes.agreements}>
       <Typography variant="h5">Agree to:</Typography>
@@ -42,7 +42,7 @@ const Agreements = ({
       </FormGroup>
     </div>
   );
-};
+}
 
 const styles = () =>
   createStyles({

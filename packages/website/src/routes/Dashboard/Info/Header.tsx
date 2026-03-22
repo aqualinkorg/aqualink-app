@@ -8,64 +8,69 @@ import classNames from 'classnames';
 
 import { User } from 'store/User/types';
 
-const Header = ({ user, nSites, classes }: HeaderProps) => (
-  <>
-    <Grid container justifyContent="space-between">
-      <Grid item>
-        <Grid container direction="column">
-          <Grid item>
-            <Typography variant="subtitle2" color="textSecondary">
-              Managed by
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="h5" color="textSecondary">
-              {user.organization}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Grid container alignItems="center" spacing={1}>
-              <Grid item>
-                <Typography
-                  className={classNames(classes.organization, classes.blueText)}
-                >
-                  {nSites}
-                </Typography>
+function Header({ user, nSites, classes }: HeaderProps) {
+  return (
+    <>
+      <Grid container justifyContent="space-between">
+        <Grid item>
+          <Grid container direction="column">
+            <Grid item>
+              <Typography variant="subtitle2" color="textSecondary">
+                Managed by
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h5" color="textSecondary">
+                {user.organization}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Grid container alignItems="center" spacing={1}>
+                <Grid item>
+                  <Typography
+                    className={classNames(
+                      classes.organization,
+                      classes.blueText,
+                    )}
+                  >
+                    {nSites}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="h6" className={classes.grayText}>
+                    Sites
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography variant="h6" className={classes.grayText}>
-                  Sites
-                </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container direction="column">
+            <Grid item>
+              <Typography variant="subtitle1" color="textSecondary">
+                {user.fullName}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Grid container alignItems="center">
+                <Grid item>
+                  <EmailIcon className={classes.emailIcon} />
+                </Grid>
+                <Grid item>
+                  <Typography variant="caption" color="textSecondary">
+                    {user.email}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item>
-        <Grid container direction="column">
-          <Grid item>
-            <Typography variant="subtitle1" color="textSecondary">
-              {user.fullName}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Grid container alignItems="center">
-              <Grid item>
-                <EmailIcon className={classes.emailIcon} />
-              </Grid>
-              <Grid item>
-                <Typography variant="caption" color="textSecondary">
-                  {user.email}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-    <Divider className={classes.divider} />
-  </>
-);
+      <Divider className={classes.divider} />
+    </>
+  );
+}
 
 const styles = (theme: Theme) =>
   createStyles({

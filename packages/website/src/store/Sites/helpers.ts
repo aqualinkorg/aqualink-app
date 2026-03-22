@@ -42,8 +42,8 @@ export function getSiteNameAndRegion(site: Site) {
   return { name, region };
 }
 
-export const constructTableData = (list: Site[]): TableRow[] => {
-  return list.map((value, key) => {
+export const constructTableData = (list: Site[]): TableRow[] =>
+  list.map((value, key) => {
     const {
       dhw,
       satelliteTemperature,
@@ -75,7 +75,6 @@ export const constructTableData = (list: Site[]): TableRow[] => {
       alertLevel: isNil(tempWeeklyAlert) ? null : tempWeeklyAlert,
     };
   });
-};
 
 const mapMetrics = <T>(
   data: Partial<Record<MetricsKeys, T>>,
@@ -332,7 +331,6 @@ export const parseLatestData = (
 ): LatestDataASSofarValue => {
   if (!data || data.length === 0) return {};
 
-  // Copying, sorting and filtering to keep spotter or latest data.
   const copy = [...data];
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
   const validityDate = Date.now() - spotterValidityLimit;
@@ -343,12 +341,21 @@ export const parseLatestData = (
     'top_temperature',
     'barometric_pressure_top',
     'barometric_pressure_top_diff',
+    'ph',
+    'pressure',
+    'salinity',
+    'conductivity',
+    'dissolved_oxygen',
   ]);
 
   const filtered = copy.filter(
     (value) =>
+      // Allow spotter data if within validity window
       (value.source === 'spotter' &&
         new Date(value.timestamp).getTime() > validityDate) ||
+      // Allow seaphox data (no time restriction since it's sensor data)
+      value.source === 'seaphox' ||
+      // Allow any data with metrics not in the whitelist
       !spotterTempWhitelist.has(value.metric),
   );
 

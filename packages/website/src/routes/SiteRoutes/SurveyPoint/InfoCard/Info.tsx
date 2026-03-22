@@ -16,7 +16,7 @@ import { formatNumber } from 'helpers/numberUtils';
 import { isAdmin } from 'helpers/user';
 import SurveyInfo from './SurveyInfo';
 
-const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
+function Info({ site, pointId, onEditButtonClick, classes }: InfoProps) {
   const surveys = filterSurveys(
     useSelector(surveyListSelector),
     'any',
@@ -113,7 +113,7 @@ const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
       )}
     </Grid>
   );
-};
+}
 
 const styles = () =>
   createStyles({

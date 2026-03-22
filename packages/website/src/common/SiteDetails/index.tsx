@@ -5,7 +5,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
 import times from 'lodash/times';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
 import type {
   Site,
@@ -46,11 +47,33 @@ import CardWithTitle from './CardWithTitle';
 import { Value } from './CardWithTitle/types';
 import CombinedCharts from '../Chart/CombinedCharts';
 import WaterSamplingCard from './WaterSampling';
+import SeapHOxCard from './SeapHOx';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
 import { TemperatureChange } from './TemperatureChange';
 import { ReefCheckDataIndicator } from './ReefCheckDataIndicator';
+import AiChatWidget from '../AiChatWidget';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    ...incomingStyles,
+    root: {
+      marginTop: '2rem',
+    },
+    forcedWidth: {
+      width: `calc(100% + ${theme.spacing(2)})`,
+    },
+    mobileMargin: {
+      [theme.breakpoints.down('md')]: {
+        margin: theme.spacing(1, 0),
+      },
+    },
+    metricsWrapper: {
+      marginTop: '1rem',
+    },
+  }),
+);
 
 /**  Show only the last year of HUI data, should match with {@link getCardData} */
 const acceptHUIInterval = Interval.fromDateTimes(
@@ -103,23 +126,26 @@ const sondeMetrics: (keyof LatestDataASSofarValue)[] = [
 
 const MINIMUM_SONDE_METRICS_TO_SHOW_CARD = 3;
 
-const SiteDetails = ({
+function SiteDetails({
   site,
   selectedSurveyPointId,
   surveys,
   featuredSurveyId = null,
   featuredSurveyPoint = null,
   surveyDiveDate = null,
-}: SiteDetailsProps) => {
+}: SiteDetailsProps) {
   const classes = useStyles();
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const spotterPosition = useSelector(spotterPositionSelector);
   const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const [hasSpotterData, setHasSpotterData] = useState<boolean>(false);
+  const [hasSpotterWindWaveData, setHasSpotterWindWaveData] =
+    useState<boolean>(false);
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
+  const [hasSeapHOxData, setHasSeapHOxData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
@@ -140,23 +166,65 @@ const SiteDetails = ({
     }
   }, [dispatch, site, spotterPosition, latestData, forecastData]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       dispatch(unsetForecastData());
-    };
-  }, [dispatch]);
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     if (forecastData && latestData) {
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
-      const hasSpotter = Boolean(
-        parsedData.bottomTemperature ||
-          parsedData.topTemperature ||
-          parsedData.surfaceTemperature,
+
+      // Check for Spotter TEMPERATURE data (for BUOY OBSERVATION card)
+      // Excludes seaphox source AND checks if data is recent (within 12 hours)
+      const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+      const now = Date.now();
+
+      const hasRecentSpotterTemperature = latestData.some((x) => {
+        if (x.source === 'seaphox') return false;
+
+        const isTemperatureMetric =
+          x.metric === 'bottom_temperature' ||
+          x.metric === 'top_temperature' ||
+          x.metric === 'surface_temperature';
+
+        if (!isTemperatureMetric) return false;
+
+        const dataAge = now - new Date(x.timestamp).getTime();
+        return dataAge < spotterValidityLimit;
+      });
+
+      const hasSpotterTemperature = Boolean(
+        hasRecentSpotterTemperature ||
+        (parsedData.topTemperature &&
+          parsedData.topTemperature.timestamp &&
+          now - new Date(parsedData.topTemperature.timestamp).getTime() <
+            spotterValidityLimit) ||
+        (parsedData.surfaceTemperature &&
+          parsedData.surfaceTemperature.timestamp &&
+          now - new Date(parsedData.surfaceTemperature.timestamp).getTime() <
+            spotterValidityLimit),
       );
+
+      // Check for Spotter WIND/WAVE data (for Waves component LIVE indicator)
+      // Includes all sources except GFS model data
+      const hasSpotterWindWave = Boolean(
+        latestData.some(
+          (x) =>
+            x.source !== 'gfs' &&
+            (x.metric === 'wind_speed' ||
+              x.metric === 'wind_direction' ||
+              x.metric === 'significant_wave_height' ||
+              x.metric === 'wave_mean_direction' ||
+              x.metric === 'wave_mean_period'),
+        ),
+      );
+
       const hasSonde =
         sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
         MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
@@ -174,8 +242,43 @@ const SiteDetails = ({
         );
 
       setHasSondeData(hasSonde);
-      setHasSpotterData(hasSpotter);
+      setHasSpotterData(hasSpotterTemperature);
+      setHasSpotterWindWaveData(hasSpotterWindWave);
       setHasHUIData(hasHUI);
+
+      const seapHOxInterval = Interval.fromDateTimes(
+        DateTime.now().minus({ days: 7 }), // Only show if data within last 7 days
+        DateTime.now(),
+      );
+
+      // Check if there's seaphox data in latestData (any timestamp) or in timeSeriesRange
+      const hasSeapHOxInLatestData = latestData.some(
+        (x) =>
+          x.source === 'seaphox' &&
+          (x.metric === 'bottom_temperature' ||
+            x.metric === 'ph' ||
+            x.metric === 'salinity' ||
+            x.metric === 'conductivity' ||
+            x.metric === 'pressure' ||
+            x.metric === 'dissolved_oxygen'),
+      );
+
+      const hasSeapHOxInRange = sourceWithinDataRangeInterval(
+        seapHOxInterval,
+        'seaphox',
+        timeSeriesRange,
+      );
+
+      const hasSeapHOx = Boolean(
+        (parsedData.bottomTemperature ||
+          parsedData.ph ||
+          parsedData.salinity ||
+          parsedData.dissolvedOxygen ||
+          parsedData.pressure ||
+          parsedData.conductivity) &&
+        (hasSeapHOxInLatestData || hasSeapHOxInRange),
+      );
+      setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);
     }
   }, [forecastData, latestData, timeSeriesRange]);
@@ -185,12 +288,18 @@ const SiteDetails = ({
   const cards =
     site && latestDataAsSofarValues
       ? [
+          // CARD 1: Satellite (always shown)
           <Satellite
             data={latestDataAsSofarValues}
             maxMonthlyMean={site.maxMonthlyMean}
           />,
+
+          // CARD 2: Sensor/CoralBleaching/TemperatureChange (conditional)
           (() => {
-            if ((hasHUIData || hasSondeData) && !hasSpotterData) {
+            if (
+              (hasHUIData || hasSondeData || hasSeapHOxData) &&
+              !hasSpotterData
+            ) {
               return <CoralBleaching data={latestDataAsSofarValues} />;
             }
 
@@ -208,7 +317,19 @@ const SiteDetails = ({
               />
             );
           })(),
+
+          // CARD 3: SeapHOx (priority) or WaterSampling/CoralBleaching (fallback)
           (() => {
+            if (hasSeapHOxData) {
+              return (
+                <SeapHOxCard
+                  depth={site.depth}
+                  data={latestDataAsSofarValues}
+                />
+              );
+            }
+
+            // FALLBACK: Original Card 3 logic
             if (hasHUIData) {
               return (
                 <WaterSamplingCard siteId={site.id.toString()} source="hui" />
@@ -221,7 +342,12 @@ const SiteDetails = ({
             }
             return <CoralBleaching data={latestDataAsSofarValues} />;
           })(),
-          <Waves data={latestDataAsSofarValues} hasSpotter={hasSpotterData} />,
+
+          // CARD 4: Waves (always shown)
+          <Waves
+            data={latestDataAsSofarValues}
+            hasSpotter={hasSpotterWindWaveData}
+          />,
         ]
       : times(4, () => null);
 
@@ -397,29 +523,11 @@ const SiteDetails = ({
         )}
         <Surveys site={site} />
       </Box>
+      {/* AI Chat Widget */}
+      {site && <AiChatWidget siteId={site.id} />}
     </Box>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    ...incomingStyles,
-    root: {
-      marginTop: '2rem',
-    },
-    forcedWidth: {
-      width: `calc(100% + ${theme.spacing(2)})`,
-    },
-    mobileMargin: {
-      [theme.breakpoints.down('md')]: {
-        margin: theme.spacing(1, 0),
-      },
-    },
-    metricsWrapper: {
-      marginTop: '1rem',
-    },
-  }),
-);
+}
 
 interface SiteDetailsProps {
   site?: Site;

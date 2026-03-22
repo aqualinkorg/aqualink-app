@@ -8,14 +8,14 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteDialog, { Action } from '../Dialog';
 
-const DeleteButton = ({
+function DeleteButton({
   header,
   content = null,
   onConfirm,
   onSuccess = () => {},
   onError = () => {},
   classes,
-}: DeleteButtonProps) => {
+}: DeleteButtonProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertText, setAlertText] = useState<string>('');
@@ -98,7 +98,7 @@ const DeleteButton = ({
       />
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

@@ -19,7 +19,8 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import { userInfoSelector, getSelf } from 'store/User/userSlice';
 import validators from 'helpers/validators';
@@ -36,8 +37,8 @@ interface FormElement {
   validator?: (value: string) => string | undefined;
 }
 
-const Apply = ({ classes }: ApplyProps) => {
-  const dispatch = useDispatch();
+function Apply({ classes }: ApplyProps) {
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
   const [formModel, setFormModel] = useState(Map<string, string | boolean>());
   const [formErrors, setFormErrors] = useState(Map<string, string>());
@@ -341,7 +342,7 @@ const Apply = ({ classes }: ApplyProps) => {
       />
     </>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

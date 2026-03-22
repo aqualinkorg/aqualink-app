@@ -3,7 +3,7 @@ import { DateTime } from '../luxon-extensions';
 export function getStartEndDate(endDate: Date, hours: number = 24) {
   const endMoment = DateTime.fromJSDate(endDate);
   const startMoment = endMoment.minus({ hours });
-  return [startMoment.toString(), endMoment.toString()];
+  return [startMoment.toISOString(), endMoment.toISOString()];
 }
 
 // Util function to get the [startDate, endDate] time interval for time series data.

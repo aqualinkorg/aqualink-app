@@ -9,7 +9,7 @@ import { Site } from 'store/Sites/types';
 import { FormField } from 'hooks/useFormField';
 import Map from 'common/SiteDetails/Map';
 
-const SurveyPointMap = ({
+function SurveyPointMap({
   site,
   selectedPointId,
   editModeEnabled,
@@ -17,7 +17,7 @@ const SurveyPointMap = ({
   editPointLongitude,
   onEditPointCoordinatesChange,
   classes,
-}: SurveyPointMapProps) => {
+}: SurveyPointMapProps) {
   return (
     <Grid className={classes.mapWrapper} item xs={12} md={4}>
       <Map
@@ -32,7 +32,7 @@ const SurveyPointMap = ({
       />
     </Grid>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

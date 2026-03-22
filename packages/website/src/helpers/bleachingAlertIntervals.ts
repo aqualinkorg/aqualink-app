@@ -84,16 +84,13 @@ export const findIntervalByLevel = (
   }
 };
 
-export const getColorByLevel = (level: number): string => {
-  return findIntervalByLevel(level).color;
-};
+export const getColorByLevel = (level: number): string =>
+  findIntervalByLevel(level).color;
 
-export const alertIconFinder = (weeklyAlertLevel?: number | null): string => {
-  return findIntervalByLevel(weeklyAlertLevel).icon;
-};
+export const alertIconFinder = (weeklyAlertLevel?: number | null): string =>
+  findIntervalByLevel(weeklyAlertLevel).icon;
 
-export const alertColorFinder = (weeklyAlertLevel?: number | null): string => {
-  return findIntervalByLevel(weeklyAlertLevel).color;
-};
+export const alertColorFinder = (weeklyAlertLevel?: number | null): string =>
+  findIntervalByLevel(weeklyAlertLevel).color;
 
 export default { findIntervalByLevel, alertColorFinder, alertIconFinder };

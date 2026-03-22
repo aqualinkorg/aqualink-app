@@ -37,11 +37,16 @@ import {
 } from '../utils/uploads/upload-sheet-data';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
-import { surveyPointBelongsToSite } from '../utils/site.utils';
+import {
+  surveyPointBelongsToSite,
+  getExclusionDates,
+  filterMetricDataByDate,
+} from '../utils/site.utils';
 import { SampleUploadFilesDto } from './dto/sample-upload-files.dto';
 import { Metric } from './metrics.enum';
 import { User } from '../users/users.entity';
 import { DataUploadsSites } from '../data-uploads/data-uploads-sites.entity';
+import { ExclusionDates } from '../sites/exclusion-dates.entity';
 
 const DATE_FORMAT = 'yyyy_MM_dd';
 
@@ -70,6 +75,9 @@ export class TimeSeriesService {
 
     @InjectRepository(Monitoring)
     private monitoringRepository: Repository<Monitoring>,
+
+    @InjectRepository(ExclusionDates)
+    private exclusionDatesRepository: Repository<ExclusionDates>,
   ) {}
 
   async findSurveyPointData(
@@ -81,6 +89,15 @@ export class TimeSeriesService {
   ) {
     const { siteId, surveyPointId } = surveyPointDataDto;
 
+    const site = await this.siteRepository.findOne({
+      where: { id: siteId },
+    });
+
+    const exclusionDates = await getExclusionDates(
+      this.exclusionDatesRepository,
+      site?.sensorId || null,
+    );
+
     const data: TimeSeriesData[] = await getDataQuery({
       timeSeriesRepository: this.timeSeriesRepository,
       siteId,
@@ -91,7 +108,9 @@ export class TimeSeriesService {
       surveyPointId,
     });
 
-    return groupByMetricAndSource(data);
+    return groupByMetricAndSource(
+      filterMetricDataByDate(exclusionDates, data) || [],
+    );
   }
 
   async findSiteData(
@@ -108,6 +127,15 @@ export class TimeSeriesService {
       metric: MonitoringMetric.TimeSeriesRequest,
     });
 
+    const site = await this.siteRepository.findOne({
+      where: { id: siteId },
+    });
+
+    const exclusionDates = await getExclusionDates(
+      this.exclusionDatesRepository,
+      site?.sensorId || null,
+    );
+
     const data: TimeSeriesData[] = await getDataQuery({
       timeSeriesRepository: this.timeSeriesRepository,
       siteId,
@@ -117,7 +145,9 @@ export class TimeSeriesService {
       hourly,
     });
 
-    return groupByMetricAndSource(data);
+    return groupByMetricAndSource(
+      filterMetricDataByDate(exclusionDates, data) || [],
+    );
   }
 
   async findSiteDataCsv(

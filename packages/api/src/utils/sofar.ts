@@ -19,6 +19,23 @@ import {
 } from './sofar.types';
 import { sendSlackMessage, SlackMessage } from './slack.utils';
 
+export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
+  const lastTowPressures = spotterBarometer?.slice(-2);
+  const valueDiff =
+    lastTowPressures?.length === 2
+      ? lastTowPressures[1].value - lastTowPressures[0].value
+      : undefined;
+
+  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
+    ? {
+        value: valueDiff,
+        timestamp: lastTowPressures![1].timestamp,
+      }
+    : null;
+
+  return spotterBarometricDiff;
+}
+
 export const getLatestData = (
   sofarValues: ValueWithTimestamp[] | undefined,
 ): ValueWithTimestamp | undefined => {
@@ -33,16 +50,13 @@ export const getLatestData = (
   );
 };
 
-export const filterSofarResponse = (responseData: any) => {
-  return (
-    responseData
-      ? responseData.values.filter(
-          (data: ValueWithTimestamp) =>
-            !isNil(data?.value) && data.value !== 9999,
-        )
-      : []
-  ) as ValueWithTimestamp[];
-};
+export const filterSofarResponse = (responseData: any) =>
+  (responseData
+    ? responseData.values.filter(
+        (data: ValueWithTimestamp) =>
+          !isNil(data?.value) && data.value !== 9999,
+      )
+    : []) as ValueWithTimestamp[];
 
 async function sofarErrorHandler({
   error,
@@ -96,6 +110,9 @@ export async function sofarHindcast(
         end,
         token: process.env.SOFAR_API_TOKEN,
       },
+      paramsSerializer: {
+        indexes: null,
+      },
     })
     .then((response) => {
       // The api return an array of requested variables, but since we request one, ours it's always first
@@ -115,6 +132,7 @@ export function sofarSensor(
   token?: string,
   start?: string,
   end?: string,
+  includeSmartMooringData?: boolean,
 ) {
   return axios
     .get(SOFAR_SENSOR_DATA_URL, {
@@ -123,6 +141,7 @@ export function sofarSensor(
         startDate: start,
         endDate: end,
         token,
+        ...(includeSmartMooringData && { includeSmartMooringData: true }),
       },
     })
     .then((response) => response.data)
@@ -150,8 +169,16 @@ export function sofarWaveData(
         includeBarometerData: true,
       },
     })
-    .then((response) => response.data as { data: SofarWaveDateResponse })
-    .catch((error) => sofarErrorHandler({ error, sensorId }));
+    .then((response) => {
+      // API returns { data: { spotterId, waves, ... } }
+      // axios wraps it, so response.data = { data: { spotterId, waves, ... } }
+      const waveData = response.data?.data || response.data;
+      return { data: waveData as SofarWaveDateResponse };
+    })
+    .catch((error) => {
+      sofarErrorHandler({ error, sensorId });
+      return undefined;
+    });
 }
 
 export async function sofarLatest({
@@ -206,6 +233,7 @@ export async function getSpotterData(
   sofarToken?: string,
   endDate?: Date,
   startDate?: Date,
+  includeSeapHOxData?: boolean,
 ): Promise<SpotterData> {
   console.time(`getSpotterData for sensor ${sensorId}`);
   const [start, end] =
@@ -226,6 +254,7 @@ export async function getSpotterData(
     sofarToken,
     start,
     end,
+    includeSeapHOxData,
   )) || { data: [] };
 
   const sofarSpotterSurfaceTemp: ValueWithTimestamp[] = surfaceTemp.map(
@@ -251,30 +280,28 @@ export async function getSpotterData(
         longitude,
       ],
       data,
-    ) => {
-      return [
-        significantWaveHeights.concat({
-          timestamp: data.timestamp,
-          value: data.significantWaveHeight,
-        }),
-        meanPeriods.concat({
-          timestamp: data.timestamp,
-          value: data.meanPeriod,
-        }),
-        meanDirections.concat({
-          timestamp: data.timestamp,
-          value: data.meanDirection,
-        }),
-        latitude.concat({
-          timestamp: data.timestamp,
-          value: data.latitude,
-        }),
-        longitude.concat({
-          timestamp: data.timestamp,
-          value: data.longitude,
-        }),
-      ];
-    },
+    ) => [
+      significantWaveHeights.concat({
+        timestamp: data.timestamp,
+        value: data.significantWaveHeight,
+      }),
+      meanPeriods.concat({
+        timestamp: data.timestamp,
+        value: data.meanPeriod,
+      }),
+      meanDirections.concat({
+        timestamp: data.timestamp,
+        value: data.meanDirection,
+      }),
+      latitude.concat({
+        timestamp: data.timestamp,
+        value: data.latitude,
+      }),
+      longitude.concat({
+        timestamp: data.timestamp,
+        value: data.longitude,
+      }),
+    ],
     [[], [], [], [], []] as [
       ValueWithTimestamp[],
       ValueWithTimestamp[],
@@ -285,18 +312,16 @@ export async function getSpotterData(
   );
 
   const [sofarWindSpeed, sofarWindDirection] = wind.reduce(
-    ([speed, direction], data) => {
-      return [
-        speed.concat({
-          timestamp: data.timestamp,
-          value: data.speed,
-        }),
-        direction.concat({
-          timestamp: data.timestamp,
-          value: data.direction,
-        }),
-      ];
-    },
+    ([speed, direction], data) => [
+      speed.concat({
+        timestamp: data.timestamp,
+        value: data.speed,
+      }),
+      direction.concat({
+        timestamp: data.timestamp,
+        value: data.direction,
+      }),
+    ],
     [[], []] as [ValueWithTimestamp[], ValueWithTimestamp[]],
   );
 
@@ -376,6 +401,7 @@ export async function getSpotterData(
     surfaceTemperature: sofarSpotterSurfaceTemp,
     latitude: spotterLatitude,
     longitude: spotterLongitude,
+    raw: smartMooringData,
   };
 }
 
@@ -392,21 +418,4 @@ export function getValueClosestToDate(
       ? nextPoint
       : prevClosest,
   ).value;
-}
-
-export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
-  const lastTowPressures = spotterBarometer?.slice(-2);
-  const valueDiff =
-    lastTowPressures?.length === 2
-      ? lastTowPressures[1].value - lastTowPressures[0].value
-      : undefined;
-
-  const spotterBarometricDiff: ValueWithTimestamp | null = valueDiff
-    ? {
-        value: valueDiff,
-        timestamp: lastTowPressures![1].timestamp,
-      }
-    : null;
-
-  return spotterBarometricDiff;
 }

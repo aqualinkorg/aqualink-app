@@ -58,7 +58,7 @@ class ConfigService {
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       ...dataSourceOptions,
-    };
+    } as TypeOrmModuleOptions;
   }
 
   // eslint-disable-next-line class-methods-use-this

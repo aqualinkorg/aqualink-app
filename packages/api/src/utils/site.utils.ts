@@ -12,10 +12,10 @@ import {
 import { ObjectLiteral, Repository } from 'typeorm';
 import { Dictionary, groupBy, keyBy, mapValues, merge, some } from 'lodash';
 import geoTz from 'geo-tz';
-import { ReefCheckSurvey } from 'reef-check-surveys/reef-check-surveys.entity';
+import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import { ValueWithTimestamp, SpotterData } from './sofar.types';
+import { SpotterData } from './sofar.types';
 import { createPoint } from './coordinates';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
@@ -54,8 +54,8 @@ const getLocality = (results: GeocodeResult[]) => {
 export const getGoogleRegion = async (
   longitude: number,
   latitude: number,
-): Promise<string | undefined> => {
-  return googleMapsClient
+): Promise<string | undefined> =>
+  googleMapsClient
     .reverseGeocode({
       params: {
         latlng: [latitude, longitude],
@@ -76,7 +76,6 @@ export const getGoogleRegion = async (
       );
       return undefined;
     });
-};
 
 export const getRegion = async (
   longitude: number,
@@ -103,9 +102,8 @@ export const getRegion = async (
   });
 };
 
-export const getTimezones = (latitude: number, longitude: number) => {
-  return geoTz(latitude, longitude);
-};
+export const getTimezones = (latitude: number, longitude: number) =>
+  geoTz(latitude, longitude);
 
 export const handleDuplicateSite = (err) => {
   // Unique Violation: A site already exists at these coordinates
@@ -148,16 +146,15 @@ export const getConflictingExclusionDates = async (
   );
 };
 
-export const filterMetricDataByDate = (
+export const filterMetricDataByDate = <T extends { timestamp: string | Date }>(
   exclusionDates: ExclusionDates[],
-  metricData?: ValueWithTimestamp[],
+  metricData?: T[],
 ) =>
   metricData?.filter(
     ({ timestamp }) =>
       // Filter data that do not belong at any `[startDate, endDate]` exclusion date interval
       !some(exclusionDates, ({ startDate, endDate }) => {
         const dataDate = new Date(timestamp);
-
         return dataDate <= endDate && (!startDate || startDate <= dataDate);
       }),
   );
@@ -374,11 +371,10 @@ export const getReefCheckDataSubQuery = async (
 export const getLatestData = async (
   site: Site,
   latestDataRepository: Repository<LatestData>,
-): Promise<LatestData[]> => {
-  return latestDataRepository.findBy({
+): Promise<LatestData[]> =>
+  latestDataRepository.findBy({
     site: { id: site.id },
   });
-};
 
 export const createSite = async (
   name: string,
@@ -396,6 +392,13 @@ export const createSite = async (
     latitude,
   );
   const timezones = getTimezones(latitude, longitude) as string[];
+
+  if (!region) {
+    logger.warn(
+      `No region found for site ${name} at coordinates (${latitude}, ${longitude}). Region will be left blank.`,
+    );
+  }
+
   const site = await sitesRepository
     .save({
       name,
@@ -415,16 +418,15 @@ export const createSite = async (
   }
 
   await Promise.all(
-    historicalMonthlyMeans.map(async ({ month, temperature }) => {
-      return (
+    historicalMonthlyMeans.map(
+      async ({ month, temperature }) =>
         temperature &&
         historicalMonthlyMeanRepository.insert({
           site,
           month,
           temperature,
-        })
-      );
-    }),
+        }),
+    ),
   );
 
   return site;

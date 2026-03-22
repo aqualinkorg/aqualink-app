@@ -3,7 +3,8 @@ import { Tooltip, IconButton, useTheme, Theme } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 
 import {
   createCollectionRequest,
@@ -17,13 +18,13 @@ import collectionServices from 'services/collectionServices';
 import { ReactComponent as WatchIcon } from 'assets/watch.svg';
 import { ReactComponent as UnWatchIcon } from 'assets/unwatch.svg';
 
-const CollectionButton = ({
+function CollectionButton({
   siteId,
   errorCallback,
   classes,
-}: CollectionButtonProps) => {
+}: CollectionButtonProps) {
   const theme = useTheme();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
   const userCollectionLoading = useSelector(userCollectionLoadingSelector);
   const userError = useSelector(userErrorSelector);
@@ -138,7 +139,7 @@ const CollectionButton = ({
       </IconButton>
     </Tooltip>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

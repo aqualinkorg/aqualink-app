@@ -10,7 +10,7 @@ import Map from './Map';
 import Form from './Form';
 import UploadMedia from './UploadMedia';
 
-const TabPanel = (props: TabPanelProps) => {
+function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -20,9 +20,9 @@ const TabPanel = (props: TabPanelProps) => {
       </Container>
     </div>
   );
-};
+}
 
-const NewSurvey = ({ site, classes }: NewSurveyProps) => {
+function NewSurvey({ site, classes }: NewSurveyProps) {
   const [value, setValue] = useState<number>(0);
 
   const onPanelIndexChange = (index: number) => {
@@ -84,7 +84,7 @@ const NewSurvey = ({ site, classes }: NewSurveyProps) => {
       </SwipeableViews>
     </Box>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

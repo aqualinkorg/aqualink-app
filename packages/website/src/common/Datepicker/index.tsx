@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { parseISO } from 'date-fns';
 
-const DatePicker = ({
+function DatePicker({
   value,
   dateName,
   dateNameTextVariant,
@@ -17,7 +17,7 @@ const DatePicker = ({
   timeZone,
   onChange,
   classes,
-}: DatePickerProps) => {
+}: DatePickerProps) {
   return (
     <Grid item>
       <Box display="flex" alignItems="flex-end">
@@ -49,7 +49,7 @@ const DatePicker = ({
       </Box>
     </Grid>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

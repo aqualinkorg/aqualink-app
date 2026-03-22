@@ -14,12 +14,13 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-9 css-1ej0ikx-MuiGrid-root"
       >
         <a
+          data-discover="true"
           href="/sites/0/survey_details/46"
         >
           <div
             class="MuiCardMedia-root makeStyles-cardImage-6 css-utntyq-MuiCardMedia-root"
             role="img"
-            style="background-image: url(image-url);"
+            style="background-image: url("image-url");"
           />
         </a>
       </div>
@@ -89,11 +90,12 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
             >
               <a
+                data-discover="true"
                 href="/sites/0/survey_details/46"
-                style="text-decoration: none;"
+                style="color: inherit; text-decoration: none;"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
@@ -191,14 +193,14 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
                 </mock-dialogcontent>
                 <mock-dialogactions>
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorSecondary css-umjtwy-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorSecondary css-1ujppu2-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >
                     Cancel
                   </button>
                   <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-l5l5ts-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >

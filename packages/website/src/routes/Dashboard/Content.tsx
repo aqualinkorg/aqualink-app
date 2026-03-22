@@ -18,7 +18,7 @@ const bannerMessage = `You have not saved any sites yet. \
 Follow the instructions on this page and come back \
 to your dashboard after saving a few sites!`;
 
-const Content = () => {
+function Content() {
   const collection = useSelector(collectionDetailsSelector);
   const collectionLoading = useSelector(collectionLoadingSelector);
   const collectionErrored = useSelector(collectionErrorSelector);
@@ -59,6 +59,6 @@ const Content = () => {
       <Table collection={collection} />
     </Container>
   );
-};
+}
 
 export default Content;

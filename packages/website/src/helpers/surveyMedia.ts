@@ -6,23 +6,19 @@ export const getFeaturedMedia = (surveyMedia: SurveyMedia[]) => {
   return { url: media?.url, thumbnailUrl: media?.thumbnailUrl };
 };
 
-export const getNumberOfImages = (surveyMedia: SurveyMedia[]) => {
-  return surveyMedia.filter((media) => media.type === 'image').length;
-};
+export const getNumberOfImages = (surveyMedia: SurveyMedia[]) =>
+  surveyMedia.filter((media) => media.type === 'image').length;
 
-export const getNumberOfVideos = (surveyMedia: SurveyMedia[]) => {
-  return surveyMedia.filter((media) => media.type === 'video').length;
-};
+export const getNumberOfVideos = (surveyMedia: SurveyMedia[]) =>
+  surveyMedia.filter((media) => media.type === 'video').length;
 
-export const getSurveyPointNames = (surveyMedia: SurveyMedia[]) => {
-  return [
-    ...new Set(surveyMedia.map((media) => media.surveyPoint?.name)),
-  ].filter((value) => value);
-};
+export const getSurveyPointNames = (surveyMedia: SurveyMedia[]) =>
+  [...new Set(surveyMedia.map((media) => media.surveyPoint?.name))].filter(
+    (value) => value,
+  );
 
-export const getNumberOfSurveyPoints = (surveyMedia: SurveyMedia[]) => {
-  return getSurveyPointNames(surveyMedia).length;
-};
+export const getNumberOfSurveyPoints = (surveyMedia: SurveyMedia[]) =>
+  getSurveyPointNames(surveyMedia).length;
 
 export const getSurveyPointsByName = (surveyMedia: SurveyMedia[]) => {
   const sortedBySurveyPointName = sortBy(

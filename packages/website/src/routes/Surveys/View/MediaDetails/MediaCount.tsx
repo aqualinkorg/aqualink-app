@@ -6,7 +6,7 @@ import createStyles from '@mui/styles/createStyles';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 
-const MediaCount = ({ images, videos, classes }: MediaCountProps) => {
+function MediaCount({ images, videos, classes }: MediaCountProps) {
   return (
     <div className={classes.mediaCount}>
       <Box mr={2}>
@@ -25,7 +25,7 @@ const MediaCount = ({ images, videos, classes }: MediaCountProps) => {
       )}
     </div>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

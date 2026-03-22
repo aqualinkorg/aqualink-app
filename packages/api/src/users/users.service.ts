@@ -91,13 +91,11 @@ export class UsersService {
       .getOne();
 
     return (
-      user!.administeredSites.map((site) => {
-        return {
-          ...site,
-          siteApplication: undefined,
-          applied: site.applied,
-        };
-      }) || []
+      user!.administeredSites.map((site) => ({
+        ...site,
+        siteApplication: undefined,
+        applied: site.applied,
+      })) || []
     );
   }
 

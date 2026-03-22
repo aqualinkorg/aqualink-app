@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme, useMediaQuery, Skeleton } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { alpha } from '@mui/material/styles';
@@ -9,78 +9,24 @@ import classNames from 'classnames';
 
 const BACKGROUND_IMAGE_OPACITY = 0.3;
 
-const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
-  loading,
-  children,
-  variant,
-  width,
-  height,
-  lines,
-  image,
-  dark = true,
-  className,
-  longText,
-  textHeight,
-}) => {
-  const classes = useStyles({ image, textHeight });
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [lineWidths, setLineWidths] = useState<
-    { key: number; width: number }[]
-  >([]);
-  const rectSkeletonProps: SkeletonProps =
-    variant === 'rectangular' &&
-    (typeof width !== 'undefined' || typeof height !== 'undefined')
-      ? { width, height }
-      : {};
+interface LoadingSkeletonProps {
+  loading?: boolean;
+  variant?: SkeletonProps['variant'];
+  width?: SkeletonProps['width'];
+  height?: SkeletonProps['height'];
+  lines?: number;
+  image?: string;
+  dark?: boolean;
+  className?: string;
+  longText?: boolean;
+  textHeight?: SkeletonProps['height'];
+  children?: React.ReactNode;
+}
 
-  useEffect(() => {
-    if (typeof lines === 'number') {
-      setLineWidths(
-        times(lines, (i) => ({
-          key: i,
-          width: random(
-            longText || isMobile ? 50 : 20,
-            longText || isMobile ? 100 : 40,
-          ),
-        })),
-      );
-    }
-  }, [isMobile, lines, longText]);
-
-  if (!loading) {
-    return <>{children}</>;
-  }
-
-  if (variant === 'text' && typeof lines === 'number' && lineWidths.length) {
-    return (
-      <>
-        {lineWidths.map(({ key, width: lineWidth }) => (
-          <Skeleton
-            animation="wave"
-            className={classNames(classes.root, classes.textHeight, className, {
-              [classes.dark]: dark,
-            })}
-            key={key}
-            variant={variant}
-            width={width || `${lineWidth}%`}
-          />
-        ))}
-      </>
-    );
-  }
-
-  return (
-    <Skeleton
-      animation="wave"
-      className={classNames(classes.root, classes.image, className, {
-        [classes.dark]: dark,
-      })}
-      variant={variant}
-      {...rectSkeletonProps}
-    />
-  );
-};
+type LoadingSkeletonStyleProps = Pick<
+  LoadingSkeletonProps,
+  'textHeight' | 'image'
+>;
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -112,23 +58,77 @@ const useStyles = makeStyles(() => ({
       : {},
 }));
 
-interface LoadingSkeletonProps {
-  loading?: boolean;
-  variant?: SkeletonProps['variant'];
-  width?: SkeletonProps['width'];
-  height?: SkeletonProps['height'];
-  lines?: number;
-  image?: string;
-  dark?: boolean;
-  className?: string;
-  longText?: boolean;
-  textHeight?: SkeletonProps['height'];
-  children?: React.ReactNode;
-}
+function LoadingSkeleton({
+  loading,
+  children,
+  variant,
+  width,
+  height,
+  lines,
+  image,
+  dark = true,
+  className,
+  longText,
+  textHeight,
+}: LoadingSkeletonProps) {
+  const classes = useStyles({ image, textHeight });
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [lineWidths, setLineWidths] = useState<
+    { key: number; width: number }[]
+  >([]);
+  const rectSkeletonProps: SkeletonProps =
+    variant === 'rectangular' &&
+    (typeof width !== 'undefined' || typeof height !== 'undefined')
+      ? { width, height }
+      : {};
 
-type LoadingSkeletonStyleProps = Pick<
-  LoadingSkeletonProps,
-  'textHeight' | 'image'
->;
+  useEffect(() => {
+    if (typeof lines === 'number') {
+      setLineWidths(
+        times(lines, (i) => ({
+          key: i,
+          width: random(
+            longText || isMobile ? 50 : 20,
+            longText || isMobile ? 100 : 40,
+          ),
+        })),
+      );
+    }
+  }, [isMobile, lines, longText]);
+
+  if (!loading) {
+    return children;
+  }
+
+  if (variant === 'text' && typeof lines === 'number' && lineWidths.length) {
+    return (
+      <>
+        {lineWidths.map(({ key, width: lineWidth }) => (
+          <Skeleton
+            animation="wave"
+            className={classNames(classes.root, classes.textHeight, className, {
+              [classes.dark]: dark,
+            })}
+            key={key}
+            variant={variant}
+            width={width || `${lineWidth}%`}
+          />
+        ))}
+      </>
+    );
+  }
+
+  return (
+    <Skeleton
+      animation="wave"
+      className={classNames(classes.root, classes.image, className, {
+        [classes.dark]: dark,
+      })}
+      variant={variant}
+      {...rectSkeletonProps}
+    />
+  );
+}
 
 export default LoadingSkeleton;

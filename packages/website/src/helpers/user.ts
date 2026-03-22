@@ -1,13 +1,12 @@
 import { User } from 'store/User/types';
 import { CollectionDetails } from 'store/Collection/types';
 
-export const isAdmin = (user: User | null, siteId: number): boolean => {
-  return user
+export const isAdmin = (user: User | null, siteId: number): boolean =>
+  user
     ? user.adminLevel === 'super_admin' ||
-        (user.adminLevel === 'site_manager' &&
-          Boolean(user.administeredSites?.find((item) => item.id === siteId)))
+      (user.adminLevel === 'site_manager' &&
+        Boolean(user.administeredSites?.find((item) => item.id === siteId)))
     : false;
-};
 
 export const isManager = (user: User | null) =>
   user

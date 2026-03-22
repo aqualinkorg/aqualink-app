@@ -14,6 +14,7 @@ exports[`renders as expected 1`] = `
       >
         Selected Site
         <a
+          data-discover="true"
           href="/sites/1"
         >
           <svg
@@ -198,6 +199,7 @@ exports[`renders loading as expected 1`] = `
       >
         Selected Site
         <a
+          data-discover="true"
           href="/sites/1"
         >
           <svg

@@ -21,17 +21,17 @@ exports[`renders as expected 1`] = `
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled Form-textField-6 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
           disabled=""
-          id=":r0:"
+          id=":r1:"
           placeholder="Site Name e.g. 'Sombrero Site'"
           type="text"
           value="Mock Site"
         />
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="css-w4cd9x"
+            class="css-1nf2c5d-MuiNotchedOutlined-root"
           >
             <span
               aria-hidden="true"
@@ -60,7 +60,7 @@ exports[`renders as expected 1`] = `
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-s43td4-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r1:"
+          id=":r2:"
           name="permitRequirements"
           placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction."
           style="height: 0px; overflow: hidden;"
@@ -74,10 +74,10 @@ exports[`renders as expected 1`] = `
         />
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="css-w4cd9x"
+            class="css-1nf2c5d-MuiNotchedOutlined-root"
           >
             <span
               aria-hidden="true"
@@ -101,7 +101,7 @@ exports[`renders as expected 1`] = `
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-s43td4-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r2:"
+          id=":r3:"
           name="fundingSource"
           placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
           style="height: 0px; overflow: hidden;"
@@ -115,10 +115,10 @@ exports[`renders as expected 1`] = `
         />
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="css-w4cd9x"
+            class="css-1nf2c5d-MuiNotchedOutlined-root"
           >
             <span
               aria-hidden="true"
@@ -156,7 +156,7 @@ exports[`renders as expected 1`] = `
         <textarea
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Form-textField-6 css-s43td4-MuiInputBase-input-MuiOutlinedInput-input"
-          id=":r3:"
+          id=":r4:"
           name="installationResources"
           placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
           style="height: 0px; overflow: hidden;"
@@ -170,10 +170,10 @@ exports[`renders as expected 1`] = `
         />
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
         >
           <legend
-            class="css-w4cd9x"
+            class="css-1nf2c5d-MuiNotchedOutlined-root"
           >
             <span
               aria-hidden="true"
@@ -186,7 +186,7 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-kigga0-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-z31nbn-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="submit"
     >

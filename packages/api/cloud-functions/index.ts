@@ -1,7 +1,7 @@
 /* eslint-disable fp/no-mutation */
 // We need to assign cloud env variable to node env variables
 import Axios from 'axios';
-import * as functions from 'firebase-functions';
+import * as functions from 'firebase-functions/v1';
 import { DataSource } from 'typeorm';
 import { runDailyUpdate } from '../src/workers/dailyData';
 import {
@@ -39,7 +39,7 @@ function addTrailingSlashToUrl(url: string) {
   return url.endsWith('/') ? url : `${url}/`;
 }
 
-function hasProjectId(config): config is { projectId: string } {
+function hasProjectId(config: any): config is { projectId: string } {
   return config && 'projectId' in config;
 }
 
@@ -73,7 +73,7 @@ const {
   password,
   entities: defaultEntities,
   ...dbConfig
-} = dataSourceOptions;
+} = dataSourceOptions as any;
 
 async function runWithDataSource(
   functionName: string,

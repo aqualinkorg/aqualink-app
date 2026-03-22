@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import {
   Box,
   Card,
@@ -24,7 +24,7 @@ import type { Dataset } from '..';
 const rows = ['MAX', 'MEAN', 'MIN'];
 
 /* eslint-disable react/prop-types */
-const AnalysisCard: FC<AnalysisCardProps> = ({
+function AnalysisCard({
   classes,
   datasets,
   pickerStartDate,
@@ -33,7 +33,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
   chartEndDate,
   columnJustification,
   children,
-}) => {
+}: AnalysisCardProps) {
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
   const hasData = datasets.some(({ displayData }) => displayData);
   const nColumns = datasets.filter(
@@ -55,6 +55,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       displayCardColumn,
       cardColumnName,
       cardColumnTooltip,
+      decimalPlaces,
     }) => ({
       title: cardColumnName || label,
       color: curveColor,
@@ -63,6 +64,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       rows: calculateCardMetrics(chartStartDate, chartEndDate, data, label),
       unit,
       tooltip: cardColumnTooltip,
+      decimalPlaces,
     }),
   );
 
@@ -142,7 +144,8 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
                           variant="h5"
                           color="textSecondary"
                         >
-                          {formatNumber(value, 1)} {item.unit}
+                          {formatNumber(value, item.decimalPlaces ?? 1)}{' '}
+                          {item.unit}
                         </Typography>
                       </Grid>
                     ))}
@@ -156,7 +159,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       {children}
     </Box>
   );
-};
+}
 const styles = (theme: Theme) =>
   createStyles({
     autoWidth: {
@@ -196,8 +199,7 @@ const styles = (theme: Theme) =>
   });
 
 interface AnalysisCardProps
-  extends AnalysisCardIncomingProps,
-    WithStyles<typeof styles> {}
+  extends AnalysisCardIncomingProps, WithStyles<typeof styles> {}
 
 interface AnalysisCardIncomingProps {
   datasets: Dataset[];

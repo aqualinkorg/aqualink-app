@@ -8,11 +8,7 @@ import { Popup } from 'react-leaflet';
 import { SurveyPoints } from 'store/Sites/types';
 import Link from '../../../Link';
 
-const SurveyPointPopup = ({
-  siteId,
-  point,
-  classes,
-}: SurveyPointPopupProps) => {
+function SurveyPointPopup({ siteId, point, classes }: SurveyPointPopupProps) {
   return (
     <Popup closeButton={false} autoPan={false}>
       <Card className={classes.surveyPointPopup}>
@@ -43,7 +39,7 @@ const SurveyPointPopup = ({
       </Card>
     </Popup>
   );
-};
+}
 
 const styles = () =>
   createStyles({

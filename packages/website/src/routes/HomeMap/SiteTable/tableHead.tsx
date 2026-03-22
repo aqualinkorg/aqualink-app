@@ -11,7 +11,7 @@ import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import { Order, OrderKeys } from './utils';
 
-const ColumnTitle = ({
+function ColumnTitle({
   title,
   unit,
   bigText,
@@ -19,31 +19,33 @@ const ColumnTitle = ({
   title: string;
   unit?: string;
   bigText?: boolean;
-}) => (
-  <Typography
-    variant={bigText ? 'h6' : 'subtitle1'}
-    style={{ color: 'black' }}
-    noWrap
-  >
-    {title}
-    {unit && (
-      <Typography
-        variant="subtitle2"
-        style={{ color: 'black' }}
-        component="span"
-      >{` (${unit})`}</Typography>
-    )}
-  </Typography>
-);
+}) {
+  return (
+    <Typography
+      variant={bigText ? 'h6' : 'subtitle1'}
+      style={{ color: 'black' }}
+      noWrap
+    >
+      {title}
+      {unit && (
+        <Typography
+          variant="subtitle2"
+          style={{ color: 'black' }}
+          component="span"
+        >{` (${unit})`}</Typography>
+      )}
+    </Typography>
+  );
+}
 
-const EnhancedTableHead = ({
+function EnhancedTableHead({
   classes,
   onRequestSort,
   order,
   orderBy,
   isExtended = false,
   emptyColumns = [],
-}: EnhancedTableProps) => {
+}: EnhancedTableProps) {
   const createSortHandler =
     (property: OrderKeys) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
@@ -131,7 +133,7 @@ const EnhancedTableHead = ({
       </TableRow>
     </TableHead>
   );
-};
+}
 
 interface HeadCell {
   id: OrderKeys;

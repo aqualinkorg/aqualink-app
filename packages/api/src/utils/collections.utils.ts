@@ -70,12 +70,13 @@ export const getCollectionData = async (
   return _(rows)
     .groupBy((o) => o.siteId)
     .mapValues<CollectionDataDto>((data) =>
-      data.reduce<CollectionDataDto>((acc, siteData): CollectionDataDto => {
-        return {
+      data.reduce<CollectionDataDto>(
+        (acc, siteData): CollectionDataDto => ({
           ...acc,
           [camelCase(siteData.metric)]: siteData.value,
-        };
-      }, {}),
+        }),
+        {},
+      ),
     )
     .toJSON();
 };

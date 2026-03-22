@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { camelCase, groupBy, keyBy, mapKeys, mapValues } from 'lodash';
 import { GeoJSON, Point } from 'geojson';
 import { IsNull, Not, Repository } from 'typeorm';
@@ -50,21 +50,21 @@ export class SensorsService {
     });
 
     // Get spotter data and add site id to distinguish them
-    const spotterData = await Bluebird.map(
-      sites,
-      (site) => {
-        if (site.sensorId === null) {
-          console.warn(`Spotter for site ${site.id} appears null.`);
-        }
-        const sofarToken = site.spotterApiToken || process.env.SOFAR_API_TOKEN;
-        return getSpotterData(site.sensorId!, sofarToken).then((data) => {
-          return {
+    const limit = pLimit(10);
+    const spotterData = await Promise.all(
+      sites.map((site) =>
+        limit(() => {
+          if (site.sensorId === null) {
+            console.warn(`Spotter for site ${site.id} appears null.`);
+          }
+          const sofarToken =
+            site.spotterApiToken || process.env.SOFAR_API_TOKEN;
+          return getSpotterData(site.sensorId!, sofarToken).then((data) => ({
             id: site.id,
             ...data,
-          };
-        });
-      },
-      { concurrency: 10 },
+          }));
+        }),
+      ),
     );
 
     // Group spotter data by site id for easier search
@@ -270,8 +270,8 @@ export class SensorsService {
     // Group the data by source id
     const groupedData = groupBy(timeSeriesData, (o) => o.source);
 
-    return Object.keys(groupedData).reduce<SensorDataDto>((data, key) => {
-      return {
+    return Object.keys(groupedData).reduce<SensorDataDto>(
+      (data, key) => ({
         ...data,
         // Replace source id by source using the mapped source object
         // Keep only timestamps and value from the resulting objects
@@ -283,7 +283,8 @@ export class SensorsService {
           ),
           (v) => ({ timestamp: v.timestamp, value: v.value }),
         ),
-      };
-    }, {});
+      }),
+      {},
+    );
   }
 }

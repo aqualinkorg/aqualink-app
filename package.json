@@ -18,39 +18,36 @@
     "test:quick": "yarn workspaces foreach run --all --verbose test:quick",
     "test:coverage": "yarn workspaces foreach --all --parallel run test:coverage",
     "test:watch": "yarn workspaces foreach --all --parallel run test:watch",
-    "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish"
+    "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.59.7",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-config-react-app": "^6.0.0",
-    "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-plugin-flowtype": "^5.2.0",
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-syntax-flow": "^7.26.0",
+    "@babel/plugin-transform-react-jsx": "^7.25.9",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-fp": "^2.3.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.9",
-    "prettier": "2.5.1",
-    "typescript": "^4.9.5"
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.3.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3"
   },
   "engines": {
-    "node": "18",
+    "node": "20",
     "yarn": "^1.22"
   },
   "version": "0.0.0",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "packages/*/{src,scripts,test}/**/*.{js,jsx,ts,tsx}": [
       "yarn run lint"
@@ -73,5 +70,5 @@
     "url": "https://github.com/aqualinkorg/aqualink-app/issues"
   },
   "homepage": "https://aqualink.org",
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@1.22.21"
 }

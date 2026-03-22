@@ -15,6 +15,13 @@ const options: Status[] = [
   'end_of_life',
 ];
 
+const useStyles = makeStyles(() => ({
+  menuItem: {
+    color: colors.black,
+    height: '2rem',
+  },
+}));
+
 interface StatusSelectorProps {
   status: Status | '';
   onChange: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
@@ -50,12 +57,5 @@ function StatusSelector({
     </TextField>
   );
 }
-
-const useStyles = makeStyles(() => ({
-  menuItem: {
-    color: colors.black,
-    height: '2rem',
-  },
-}));
 
 export default StatusSelector;

@@ -8,7 +8,7 @@ import createStyles from '@mui/styles/createStyles';
 import NavBar from 'common/NavBar';
 import Footer from 'common/Footer';
 
-const Faq = ({ classes }: FaqProps) => {
+function Faq({ classes }: FaqProps) {
   return (
     <>
       <NavBar searchLocation={false} />
@@ -505,7 +505,7 @@ const Faq = ({ classes }: FaqProps) => {
       <Footer />
     </>
   );
-};
+}
 
 const styles = () =>
   createStyles({

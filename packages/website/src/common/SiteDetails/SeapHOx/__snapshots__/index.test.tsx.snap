@@ -1,0 +1,218 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SeapHOx Card > should render with given state from Redux store 1`] = `
+<div>
+  <mock-card
+    classname="SeapHOxCard-root-8"
+  >
+    <div
+      class="MuiCardHeader-root SeapHOxCard-header-3 css-149tc0y-MuiCardHeader-root"
+    >
+      <div
+        class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-16xl4zq-MuiTypography-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <mock-typography
+                classname="SeapHOxCard-cardTitle-2"
+                style="text-transform: uppercase;"
+                variant="h6"
+              >
+                SeapHOx at 
+                 depth
+              </mock-typography>
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+    <mock-cardcontent
+      classname="SeapHOxCard-content-9"
+    >
+      <mock-box
+        sx="[object Object]"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-11nsb57-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <mock-box>
+              <mock-typography
+                classname="SeapHOxCard-contentTextTitles-4"
+                variant="subtitle2"
+              >
+                TEMPERATURE
+              </mock-typography>
+              <mock-box
+                style="display: flex; align-items: flex-end;"
+              >
+                <mock-typography
+                  classname="SeapHOxCard-contentTextValues-5"
+                  variant="h3"
+                >
+                  --
+                </mock-typography>
+                <mock-typography
+                  classname="SeapHOxCard-contentUnits-6"
+                  variant="h6"
+                >
+                  °C
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <mock-box>
+              <mock-typography
+                classname="SeapHOxCard-contentTextTitles-4"
+                variant="subtitle2"
+              >
+                ACIDITY
+              </mock-typography>
+              <mock-box
+                style="display: flex; align-items: flex-end;"
+              >
+                <mock-typography
+                  classname="SeapHOxCard-contentTextValues-5"
+                  variant="h3"
+                >
+                  --
+                </mock-typography>
+                <mock-typography
+                  classname="SeapHOxCard-contentUnits-6"
+                  variant="h6"
+                >
+                  pH
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <mock-box>
+              <mock-typography
+                classname="SeapHOxCard-contentTextTitles-4"
+                variant="subtitle2"
+              >
+                PRESSURE
+              </mock-typography>
+              <mock-box
+                style="display: flex; align-items: flex-end;"
+              >
+                <mock-typography
+                  classname="SeapHOxCard-contentTextValues-5"
+                  variant="h3"
+                >
+                  --
+                </mock-typography>
+                <mock-typography
+                  classname="SeapHOxCard-contentUnits-6"
+                  variant="h6"
+                >
+                  dbar
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <mock-box>
+              <mock-typography
+                classname="SeapHOxCard-contentTextTitles-4"
+                variant="subtitle2"
+              >
+                SALINITY
+              </mock-typography>
+              <mock-box
+                style="display: flex; align-items: flex-end;"
+              >
+                <mock-typography
+                  classname="SeapHOxCard-contentTextValues-5"
+                  variant="h3"
+                >
+                  --
+                </mock-typography>
+                <mock-typography
+                  classname="SeapHOxCard-contentUnits-6"
+                  variant="h6"
+                >
+                  psu
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <mock-box>
+              <mock-typography
+                classname="SeapHOxCard-contentTextTitles-4"
+                variant="subtitle2"
+              >
+                CONDUCTIVITY
+              </mock-typography>
+              <mock-box
+                style="display: flex; align-items: flex-end;"
+              >
+                <mock-typography
+                  classname="SeapHOxCard-contentTextValues-5"
+                  variant="h3"
+                >
+                  --
+                </mock-typography>
+                <mock-typography
+                  classname="SeapHOxCard-contentUnits-6"
+                  variant="h6"
+                >
+                  S/m
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <mock-box>
+              <mock-typography
+                classname="SeapHOxCard-contentTextTitles-4"
+                variant="subtitle2"
+              >
+                DISSOLVED OXYGEN
+              </mock-typography>
+              <mock-box
+                style="display: flex; align-items: flex-end;"
+              >
+                <mock-typography
+                  classname="SeapHOxCard-contentTextValues-5"
+                  variant="h3"
+                >
+                  --
+                </mock-typography>
+                <mock-typography
+                  classname="SeapHOxCard-contentUnits-6"
+                  variant="h6"
+                >
+                  ml/L
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </div>
+        </div>
+      </mock-box>
+    </mock-cardcontent>
+  </mock-card>
+</div>
+`;

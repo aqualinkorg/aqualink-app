@@ -59,7 +59,7 @@ exports[`renders as expected 1`] = `
     </mock-card>
     <div
       class="Tooltip-tooltipArrow-6"
-      style="border-color: #095877 transparent transparent transparent;"
+      style="border-color: rgb(9, 88, 119) transparent transparent transparent;"
     />
   </div>
 </div>

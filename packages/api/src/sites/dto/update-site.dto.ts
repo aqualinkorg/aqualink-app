@@ -85,9 +85,7 @@ export class UpdateSiteDto {
   readonly status?: SiteStatus;
 
   @IsOptional()
-  @Transform(({ value }) => {
-    return [true, 'true', 1, '1'].indexOf(value) > -1;
-  })
+  @Transform(({ value }) => [true, 'true', 1, '1'].indexOf(value) > -1)
   readonly display?: boolean;
 
   @ApiProperty({ example: 'email: john@example.com' })

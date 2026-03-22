@@ -94,9 +94,10 @@ export const metricsKeysList = [
   'barometric_pressure_top_diff',
   'nitrate_plus_nitrite',
   'surface_temperature',
+  'dissolved_oxygen',
 ] as const;
 
-export type MetricsKeys = typeof metricsKeysList[number];
+export type MetricsKeys = (typeof metricsKeysList)[number];
 
 export type Status =
   | 'in_review'
@@ -129,7 +130,8 @@ export type Sources =
   | 'sonde'
   | 'metlog'
   | 'hui'
-  | 'sheet_data';
+  | 'sheet_data'
+  | 'seaphox';
 
 export type LatestDataASSofarValue = {
   [keys in Metrics]?: ValueWithTimestamp;
@@ -233,7 +235,7 @@ export type TimeSeriesDataRange = Partial<Record<Metrics, TimeSeriesRange>>;
 
 export const OceanSenseKeysList = ['DO', 'EC', 'ORP', 'PH', 'PRESS'] as const;
 
-export type OceanSenseKeys = typeof OceanSenseKeysList[number];
+export type OceanSenseKeys = (typeof OceanSenseKeysList)[number];
 
 export interface OceanSenseDataRequestParams {
   sensorID: string;
@@ -286,6 +288,7 @@ export interface Site {
   surveyPoints: SurveyPoints[];
   historicalMonthlyMean: HistoricalMonthlyMean[];
   hasHobo: boolean;
+  hasSeaphox: boolean;
   collectionData?: CollectionData;
   sketchFab?: SiteSketchFab;
   display: boolean;

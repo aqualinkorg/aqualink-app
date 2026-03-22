@@ -10,7 +10,8 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import Alert from '@mui/material/Alert';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import { find } from 'lodash';
 
 import { Site, SiteUpdateParams, Status } from 'store/Sites/types';
@@ -24,14 +25,14 @@ import { sanitizeUrl } from '@braintree/sanitize-url';
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
-const EditForm = ({
+function EditForm({
   site,
   loading,
   onClose,
   onSubmit,
   classes,
-}: EditFormProps) => {
-  const dispatch = useDispatch();
+}: EditFormProps) {
+  const dispatch = useAppDispatch();
   const user = useSelector(userInfoSelector);
 
   const draftSite = useSelector(siteDraftSelector);
@@ -446,7 +447,7 @@ const EditForm = ({
       </Grid>
     </form>
   );
-};
+}
 
 const styles = () =>
   createStyles({

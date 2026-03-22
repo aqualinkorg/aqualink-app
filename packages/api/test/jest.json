@@ -19,18 +19,15 @@
     "docs",
     "config"
   ],
-  "moduleDirectories": [
-    "node_modules",
-    "src"
-  ],
+  "moduleDirectories": ["node_modules", "src"],
   "transform": {
     "\\.ts$": "ts-jest"
   },
   "globalSetup": "./test/global-setup.js",
   "moduleNameMapper": {
-    "^csv-stringify/sync":
-      "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs",
-      "^typeorm$": "<rootDir>/../../node_modules/typeorm",
-      "^uuid$": "uuid"
+    "^csv-stringify/sync": "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs",
+    "^typeorm$": "<rootDir>/../../node_modules/typeorm",
+    "^uuid$": "uuid",
+    "^p-limit$": "<rootDir>/test/mock/p-limit.mock.js"
   }
 }

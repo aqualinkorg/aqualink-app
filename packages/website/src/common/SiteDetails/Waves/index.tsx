@@ -14,7 +14,54 @@ import arrow from '../../../assets/directioncircle.svg';
 import wind from '../../../assets/wind.svg';
 import { styles as incomingStyles } from '../styles';
 
-const Waves = ({ data, hasSpotter }: WavesProps) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    ...incomingStyles,
+    root: {
+      height: '100%',
+      width: '100%',
+      backgroundColor: '#eff0f0',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    coloredText: {
+      color: theme.palette.primary.main,
+    },
+    titleImages: {
+      height: 24,
+      marginLeft: '0.5rem',
+    },
+    paddingContainer: {
+      padding: '0.5rem 1rem',
+    },
+    contentWrapper: {
+      height: '100%',
+      flex: '1 1 auto',
+      padding: 0,
+    },
+    content: {
+      height: '100%',
+    },
+    arrow: {
+      width: 22,
+      height: 22,
+      marginRight: '0.5rem',
+      marginBottom: 10,
+      [theme.breakpoints.between('md', 1350)]: {
+        width: 15,
+        height: 15,
+      },
+    },
+    windDirectionArrow: ({ windDirection }: StyleProps) => ({
+      transform: `rotate(${(windDirection || 0) + 180}deg)`,
+    }),
+    wavesDirectionArrow: ({ wavesDirection }: StyleProps) => ({
+      transform: `rotate(${(wavesDirection || 0) + 180}deg)`,
+    }),
+  }),
+);
+
+function Waves({ data, hasSpotter }: WavesProps) {
   const {
     significantWaveHeight,
     waveMeanDirection,
@@ -25,6 +72,22 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
 
   const waveHeight = significantWaveHeight;
 
+  // Check if we have actual Spotter wind/wave data (not just temperature)
+  // Spotter data is updated hourly, model data every 6+ hours
+  const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+  const now = Date.now();
+
+  // Only show as live Spotter data if site actually has a Spotter
+  // Otherwise it's model data regardless of timestamp
+  const hasSpotterWindWaveData = Boolean(
+    hasSpotter &&
+    ((windSpeed?.timestamp &&
+      now - new Date(windSpeed.timestamp).getTime() < spotterValidityLimit) ||
+      (significantWaveHeight?.timestamp &&
+        now - new Date(significantWaveHeight.timestamp).getTime() <
+          spotterValidityLimit)),
+  );
+
   // Make sure to get the direction the wind is COMING FROM.
   // use `numberUtils.invertDirection` if needed.
   const windDirectionFrom = windDirection?.value;
@@ -34,8 +97,10 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
     wavesDirection: waveDirectionFrom,
   });
 
-  const windRelativeTime =
-    windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp);
+  const windRelativeTime = hasSpotterWindWaveData
+    ? windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp)
+    : significantWaveHeight?.timestamp &&
+      toRelativeTime(significantWaveHeight.timestamp);
 
   return (
     <Card className={classes.root}>
@@ -220,64 +285,17 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
           </Grid>
           <UpdateInfo
             relativeTime={windRelativeTime}
-            timeText={hasSpotter ? 'Last data received' : 'Valid'}
-            live={hasSpotter}
-            frequency={hasSpotter ? 'hourly' : 'every 6 hours'}
+            timeText={hasSpotterWindWaveData ? 'Last data received' : 'Valid'}
+            live={hasSpotterWindWaveData}
+            frequency={hasSpotterWindWaveData ? 'hourly' : 'every 6 hours'}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-            imageText={hasSpotter ? undefined : 'SOFAR MODEL'}
+            imageText={hasSpotterWindWaveData ? undefined : 'SOFAR MODEL'}
           />
         </Grid>
       </CardContent>
     </Card>
   );
-};
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    ...incomingStyles,
-    root: {
-      height: '100%',
-      width: '100%',
-      backgroundColor: '#eff0f0',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    coloredText: {
-      color: theme.palette.primary.main,
-    },
-    titleImages: {
-      height: 24,
-      marginLeft: '0.5rem',
-    },
-    paddingContainer: {
-      padding: '0.5rem 1rem',
-    },
-    contentWrapper: {
-      height: '100%',
-      flex: '1 1 auto',
-      padding: 0,
-    },
-    content: {
-      height: '100%',
-    },
-    arrow: {
-      width: 22,
-      height: 22,
-      marginRight: '0.5rem',
-      marginBottom: 10,
-      [theme.breakpoints.between('md', 1350)]: {
-        width: 15,
-        height: 15,
-      },
-    },
-    windDirectionArrow: ({ windDirection }: StyleProps) => ({
-      transform: `rotate(${(windDirection || 0) + 180}deg)`,
-    }),
-    wavesDirectionArrow: ({ wavesDirection }: StyleProps) => ({
-      transform: `rotate(${(wavesDirection || 0) + 180}deg)`,
-    }),
-  }),
-);
+}
 
 interface WavesProps {
   data: LatestDataASSofarValue;

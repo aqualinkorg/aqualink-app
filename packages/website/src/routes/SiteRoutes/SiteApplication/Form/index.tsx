@@ -17,13 +17,13 @@ interface SiteApplicationFormFields {
   installationSchedule: string;
 }
 
-const Form = ({
+function Form({
   siteName,
   application = null,
   agreed,
   handleFormSubmit,
   classes,
-}: FormProps) => {
+}: FormProps) {
   const [installationSchedule, setInstallationSchedule] = useState<Date | null>(
     null,
   );
@@ -225,7 +225,7 @@ const Form = ({
       </Button>
     </form>
   );
-};
+}
 
 const styles = (theme: Theme) =>
   createStyles({

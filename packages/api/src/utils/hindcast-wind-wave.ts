@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import Bluebird from 'bluebird';
+import pLimit from 'p-limit';
 import { Point } from 'geojson';
 import { isNil } from 'lodash';
 import { In, Repository } from 'typeorm';
@@ -66,16 +66,16 @@ export const getForecastData = async (latitude: number, longitude: number) => {
   ];
 
   const response = await Promise.all(
-    hindcastOptions.map(([sofarModel, sofarVariableId]) => {
-      return sofarHindcast(
+    hindcastOptions.map(([sofarModel, sofarVariableId]) =>
+      sofarHindcast(
         sofarModel,
         sofarVariableId,
         latitude,
         longitude,
         yesterday,
         today,
-      );
-    }),
+      ),
+    ),
   );
 
   const [
@@ -140,51 +140,52 @@ export const addWindWaveData = async (
   const { today } = getTodayYesterdayDates();
 
   logger.log('Saving wind & wave forecast data');
-  await Bluebird.map(
-    sites,
-    async (site) => {
-      const { polygon } = site;
+  const limit = pLimit(10);
+  await Promise.all(
+    sites.map((site) =>
+      limit(async () => {
+        const { polygon } = site;
 
-      const [longitude, latitude] = getSofarNearestAvailablePoint(
-        polygon as Point,
-      );
+        const [longitude, latitude] = getSofarNearestAvailablePoint(
+          polygon as Point,
+        );
 
-      logger.log(
-        `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
-      );
+        logger.log(
+          `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
+        );
 
-      const forecastData = await getForecastData(latitude, longitude);
+        const forecastData = await getForecastData(latitude, longitude);
 
-      // Save wind wave data to forecast_data
-      await Promise.all(
-        // eslint-disable-next-line array-callback-return, consistent-return
-        dataLabels.map(([dataLabel, metric, source]) => {
-          const sofarValue = forecastData[dataLabel] as ValueWithTimestamp;
-          if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {
-            return repositories.hindcastRepository
-              .createQueryBuilder('forecast_data')
-              .insert()
-              .values([
-                {
-                  site,
-                  timestamp: DateTime.fromISO(sofarValue.timestamp)
-                    .startOf('minute')
-                    .toJSDate(),
-                  metric,
-                  source,
-                  value: sofarValue.value,
-                  updatedAt: today,
-                },
-              ])
-              .onConflict(
-                `ON CONSTRAINT "one_row_per_site_per_metric_per_source" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
-              )
-              .execute();
-          }
-        }),
-      );
-    },
-    { concurrency: 10 },
+        // Save wind wave data to forecast_data
+        await Promise.all(
+          // eslint-disable-next-line array-callback-return, consistent-return
+          dataLabels.map(([dataLabel, metric, source]) => {
+            const sofarValue = forecastData[dataLabel] as ValueWithTimestamp;
+            if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {
+              return repositories.hindcastRepository
+                .createQueryBuilder('forecast_data')
+                .insert()
+                .values([
+                  {
+                    site,
+                    timestamp: DateTime.fromISO(sofarValue.timestamp)
+                      .startOf('minute')
+                      .toJSDate(),
+                    metric,
+                    source,
+                    value: sofarValue.value,
+                    updatedAt: today,
+                  },
+                ])
+                .onConflict(
+                  `ON CONSTRAINT "one_row_per_site_per_metric_per_source" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
+                )
+                .execute();
+            }
+          }),
+        );
+      }),
+    ),
   );
   logger.log('Completed updating hindcast data');
 };

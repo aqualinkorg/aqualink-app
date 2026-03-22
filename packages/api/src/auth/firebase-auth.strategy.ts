@@ -3,7 +3,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Request } from 'express';
 import { User } from '../users/users.entity';
 import { extractAndVerifyToken } from './firebase-auth.utils';
 
@@ -16,7 +15,7 @@ export class FirebaseAuthStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
-  async authenticate(req: Request): Promise<void> {
+  async authenticate(req: any, props?: any): Promise<void> {
     const self = this;
     const firebaseUser = await extractAndVerifyToken(req);
     if (!firebaseUser) {

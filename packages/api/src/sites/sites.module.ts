@@ -6,7 +6,6 @@ import { SitesController } from './sites.controller';
 import { SitesService } from './sites.service';
 import { Site } from './sites.entity';
 import { DailyData } from './daily-data.entity';
-import { EntityExists } from '../validations/entity-exists.constraint';
 import { AuthModule } from '../auth/auth.module';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from './exclusion-dates.entity';
@@ -38,6 +37,6 @@ import { ScheduledUpdate } from './scheduled-updates.entity';
     ]),
   ],
   controllers: [SitesController],
-  providers: [SitesService, EntityExists],
+  providers: [SitesService],
 })
 export class SitesModule {}
