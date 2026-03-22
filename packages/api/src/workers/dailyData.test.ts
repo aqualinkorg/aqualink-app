@@ -1,5 +1,3 @@
-import { DailyData } from 'sites/daily-data.entity';
-import { DeepPartial } from 'typeorm';
 import { getDailyData } from './dailyData';
 import { Site } from '../sites/sites.entity';
 

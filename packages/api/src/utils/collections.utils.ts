@@ -65,15 +65,18 @@ export const getCollectionData = async (
     .addOrderBy('dd.date', 'DESC')
     .getRawMany();
 
-  return rows.reduce((acc, row) => {
-    acc[row.siteId] = {
-      degreeHeatingDays: row.degreeHeatingDays,
-      satelliteTemperature: row.satelliteTemperature,
-      dailyAlertLevel: row.dailyAlertLevel,
-      weeklyAlertLevel: row.weeklyAlertLevel,
-    };
-    return acc;
-  }, {} as Record<number, CollectionDataDto>);
+  return rows.reduce(
+    (acc, row) => ({
+      ...acc,
+      [row.siteId]: {
+        degreeHeatingDays: row.degreeHeatingDays,
+        satelliteTemperature: row.satelliteTemperature,
+        dailyAlertLevel: row.dailyAlertLevel,
+        weeklyAlertLevel: row.weeklyAlertLevel,
+      },
+    }),
+    {} as Record<number, CollectionDataDto>,
+  );
 };
 
 export const heatStressTracker: DynamicCollection = {

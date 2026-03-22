@@ -1,4 +1,3 @@
-process.env.BACKEND_BASE_URL = process.env.BACKEND_BASE_URL || 'http://localhost:3000';
 
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -31,6 +30,8 @@ import { collections } from './mock/collection.mock';
 import { dailyData } from './mock/daily-data.mock';
 import { surveys } from './mock/surveys.mock';
 import { surveyMedia } from './mock/survey-media.mock';
+
+process.env.BACKEND_BASE_URL = process.env.BACKEND_BASE_URL || 'http://localhost:3000';
 
 export class TestService {
   private static instance: TestService | null = null;

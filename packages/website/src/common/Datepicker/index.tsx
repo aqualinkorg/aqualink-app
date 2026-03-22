@@ -72,6 +72,7 @@ const styles = (theme: Theme) => {
       },
     },
   });
+};
 
 interface DatePickerIncomingProps {
   value: string | null;
