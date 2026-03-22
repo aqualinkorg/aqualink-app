@@ -48,7 +48,7 @@ const sofarUrlFromDef = (
     time ? `&time=${encodeURIComponent(time)}` : ''
   }`;
 
-export const SofarLayers = ({ defaultLayerName, time }: SofarLayersProps) => {
+export function SofarLayers({ defaultLayerName, time }: SofarLayersProps) {
   return (
     <LayersControl position="topright">
       <LayersControl.BaseLayer
@@ -92,7 +92,7 @@ export const SofarLayers = ({ defaultLayerName, time }: SofarLayersProps) => {
       ))}
     </LayersControl>
   );
-};
+}
 
 interface SofarLayersProps {
   defaultLayerName?: MapLayerName;

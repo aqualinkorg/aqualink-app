@@ -9,7 +9,7 @@ import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
-import DatePicker from 'common/Datepicker';
+import { useQueryParam } from 'hooks/useQueryParams';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
@@ -68,7 +68,7 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [timeParam] = useQueryParam('at');
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -76,10 +76,10 @@ function Homepage({ classes }: HomepageProps) {
   useEffect(() => {
     dispatch(
       sitesRequest(
-        selectedDate ? { at: selectedDate.toISOString() } : undefined,
+        timeParam ? { at: timeParam } : undefined,
       ),
     );
-  }, [dispatch, selectedDate]);
+  }, [dispatch, timeParam]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,18 +124,6 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
-            <Box
-              display="flex"
-              justifyContent="flex-end"
-              p={1}
-              zIndex={1000}
-              position="relative"
-            >
-              <DatePicker
-                value={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-              />
-            </Box>
             <HomepageMap
               onMapLoad={setMapInstance}
               setShowSiteTable={setShowSiteTable}

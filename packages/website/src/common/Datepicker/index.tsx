@@ -51,8 +51,9 @@ function DatePicker({
   );
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
+const styles = (theme: Theme) => {
+  const primaryMain = theme?.palette?.primary?.main || '#168dbd';
+  return createStyles({
     datePicker: {
       marginLeft: '0.5rem',
     },
@@ -63,7 +64,7 @@ const styles = (theme: Theme) =>
         borderColor: 'rgba(0, 0, 0, 0.23)',
       },
       '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: theme.palette.primary.main,
+        borderColor: primaryMain,
       },
       '& input': {
         paddingTop: 0,

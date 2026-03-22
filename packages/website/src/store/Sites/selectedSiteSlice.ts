@@ -90,13 +90,15 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  string | { id: string; at?: string },
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (idOrParams, { rejectWithValue }) => {
+    const id = typeof idOrParams === 'string' ? idOrParams : idOrParams.id;
+    const at = typeof idOrParams === 'string' ? undefined : idOrParams.at;
     try {
-      const { data } = await siteServices.getSite(id);
+      const { data } = await siteServices.getSite(id, { at });
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
@@ -123,11 +125,13 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(idOrParams, { getState }) {
+      const id = typeof idOrParams === 'string' ? idOrParams : idOrParams.id;
+      const at = typeof idOrParams === 'string' ? undefined : idOrParams.at;
       const {
         selectedSite: { details },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || Boolean(at);
     },
   },
 );

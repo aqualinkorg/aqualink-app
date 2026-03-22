@@ -38,47 +38,42 @@ export const getCollectionData = async (
     return _(latestData)
       .groupBy((o) => o.siteId)
       .mapValues<CollectionDataDto>((data) =>
-        data.reduce<CollectionDataDto>((acc, siteData): CollectionDataDto => {
-          return {
+        data.reduce<CollectionDataDto>(
+          (acc, siteData): CollectionDataDto => ({
             ...acc,
             [camelCase(siteData.metric)]: siteData.value,
-          };
-        }, {}),
+          }),
+          {},
+        ),
       )
       .toJSON();
   }
 
-  // As-of query: select the latest row <= the specified timestamp per (site, metric, source type excluding HOBO)
-  // using DISTINCT ON ordering by timestamp DESC.
-  // We join to sources to filter out HOBO and group by site id.
+  // As-of query: select the latest row <= the specified timestamp per site from daily_data
   const rows = await latestDataRepository.manager
     .createQueryBuilder()
-    .select(`DISTINCT ON (ts.metric, src.type, src.site_id) ts.id`)
-    .addSelect('ts.timestamp', 'timestamp')
-    .addSelect('ts.value', 'value')
-    .addSelect('src.site_id', 'siteId')
-    .addSelect('ts.metric', 'metric')
-    .addSelect('src.type', 'source')
-    .from('time_series', 'ts')
-    .innerJoin('sources', 'src', 'src.id = ts.source_id')
-    .where('src.site_id IN (:...siteIds)', { siteIds })
-    .andWhere('src.type != :hoboSource', { hoboSource: SourceType.HOBO })
-    .andWhere('ts.timestamp <= :until', { until })
-    .orderBy('ts.metric, src.type, src.site_id, ts.timestamp', 'DESC')
+    .select(`DISTINCT ON (dd.site_id) dd.site_id`, 'siteId')
+    .addSelect('dd.date', 'timestamp')
+    .addSelect('dd.degree_heating_days', 'degreeHeatingDays')
+    .addSelect('dd.satellite_temperature', 'satelliteTemperature')
+    .addSelect('dd.daily_alert_level', 'dailyAlertLevel')
+    .addSelect('dd.weekly_alert_level', 'weeklyAlertLevel')
+    .from('daily_data', 'dd')
+    .where('dd.site_id IN (:...siteIds)', { siteIds })
+    .andWhere('dd.date <= :until', { until })
+    .orderBy('dd.site_id', 'ASC')
+    .addOrderBy('dd.date', 'DESC')
     .getRawMany();
 
-  return _(rows)
-    .groupBy((o) => o.siteId)
-    .mapValues<CollectionDataDto>((data) =>
-      data.reduce<CollectionDataDto>(
-        (acc, siteData): CollectionDataDto => ({
-          ...acc,
-          [camelCase(siteData.metric)]: siteData.value,
-        }),
-        {},
-      ),
-    )
-    .toJSON();
+  return rows.reduce((acc, row) => {
+    acc[row.siteId] = {
+      degreeHeatingDays: row.degreeHeatingDays,
+      satelliteTemperature: row.satelliteTemperature,
+      dailyAlertLevel: row.dailyAlertLevel,
+      weeklyAlertLevel: row.weeklyAlertLevel,
+    };
+    return acc;
+  }, {} as Record<number, CollectionDataDto>);
 };
 
 export const heatStressTracker: DynamicCollection = {
