@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden, Box } from '@mui/material';
+import { Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -74,11 +74,7 @@ function Homepage({ classes }: HomepageProps) {
     useQuery();
 
   useEffect(() => {
-    dispatch(
-      sitesRequest(
-        timeParam ? { at: timeParam } : undefined,
-      ),
-    );
+    dispatch(sitesRequest(timeParam ? { at: timeParam } : undefined));
   }, [dispatch, timeParam]);
 
   useEffect(() => {
