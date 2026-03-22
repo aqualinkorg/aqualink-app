@@ -68,4 +68,4 @@ Aqualink is an MIT-licensed open source project. Contributions from developers a
 
 ## License
 
-Aqualink is [MIT licensed](LICENSE).
+  Aqualink is [MIT licensed](LICENSE).

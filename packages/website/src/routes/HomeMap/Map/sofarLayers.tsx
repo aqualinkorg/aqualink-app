@@ -44,7 +44,8 @@ const sofarUrlFromDef = (
   { model, cmap, variableId }: SofarLayerDefinition,
   time?: string,
 ) =>
-  `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}${time ? `&time=${encodeURIComponent(time)}` : ''
+  `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}${
+    time ? `&time=${encodeURIComponent(time)}` : ''
   }`;
 
 export function SofarLayers({ defaultLayerName, time }: SofarLayersProps) {
@@ -85,7 +86,7 @@ export function SofarLayers({ defaultLayerName, time }: SofarLayersProps) {
             format="image/png"
             opacity={0.7}
             url={def.url}
-            params={time ? { TIME: time } : undefined}
+            params={time ? ({ TIME: time } as any) : undefined}
           />
         </LayersControl.BaseLayer>
       ))}
