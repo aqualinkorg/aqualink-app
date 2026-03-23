@@ -36,4 +36,4 @@ export const METLOG_DATA_COLOR = '#fa8d00';
 export const HUI_DATA_COLOR = '#fa8d00';
 
 // SeapHOx data
-export const SEAPHOX_DATA_COLOR = '#FF8C00';
+export const SEAPHOX_DATA_COLOR = '#23225b';

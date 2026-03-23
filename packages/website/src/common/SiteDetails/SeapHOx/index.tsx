@@ -27,11 +27,11 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
   // Use bottomTemperature since parseLatestData converts seaphox bottom_temperature to bottomTemperature
   const metrics = [
     { key: 'bottomTemperature', label: 'Temperature', unit: '°C' },
-    { key: 'ph', label: 'Acidity', unit: 'pH' },
     { key: 'pressure', label: 'Pressure', unit: 'dbar' },
-    { key: 'salinity', label: 'Salinity', unit: 'psu' },
     { key: 'conductivity', label: 'Conductivity', unit: 'S/m' },
     { key: 'dissolvedOxygen', label: 'Dissolved Oxygen', unit: 'ml/L' },
+    { key: 'ph', label: 'Acidity', unit: 'pH' },
+    { key: 'salinity', label: 'Salinity', unit: 'psu' },
   ];
 
   const formatValue = (value: number | null | undefined): string => {
@@ -43,12 +43,11 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
   const getRelativeTime = () => {
     const timestamp =
       data.bottomTemperature?.timestamp ||
-      data.ph?.timestamp ||
       data.pressure?.timestamp ||
-      data.salinity?.timestamp ||
       data.conductivity?.timestamp ||
-      data.dissolvedOxygen?.timestamp;
-
+      data.dissolvedOxygen?.timestamp ||
+      data.ph?.timestamp ||
+      data.salinity?.timestamp;
     return timestamp ? toRelativeTime(timestamp) : null;
   };
 
@@ -105,29 +104,6 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
               </Box>
             </Grid>
 
-            {/* pH (External) */}
-            <Grid item xs={6}>
-              <Box>
-                <Typography
-                  className={classes.contentTextTitles}
-                  variant="subtitle2"
-                >
-                  ACIDITY
-                </Typography>
-                <Box style={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <Typography
-                    className={classes.contentTextValues}
-                    variant="h3"
-                  >
-                    {formatValue(data.ph?.value)}
-                  </Typography>
-                  <Typography className={classes.contentUnits} variant="h6">
-                    pH
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-
             {/* Pressure */}
             <Grid item xs={6}>
               <Box>
@@ -146,29 +122,6 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     dbar
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-
-            {/* Salinity */}
-            <Grid item xs={6}>
-              <Box>
-                <Typography
-                  className={classes.contentTextTitles}
-                  variant="subtitle2"
-                >
-                  SALINITY
-                </Typography>
-                <Box style={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <Typography
-                    className={classes.contentTextValues}
-                    variant="h3"
-                  >
-                    {formatValue(data.salinity?.value)}
-                  </Typography>
-                  <Typography className={classes.contentUnits} variant="h6">
-                    psu
                   </Typography>
                 </Box>
               </Box>
@@ -215,6 +168,52 @@ function SeapHOxCard({ depth, data, classes }: SeapHOxCardPropsWithStyles) {
                   </Typography>
                   <Typography className={classes.contentUnits} variant="h6">
                     ml/L
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+
+            {/* pH (External) */}
+            <Grid item xs={6}>
+              <Box>
+                <Typography
+                  className={classes.contentTextTitles}
+                  variant="subtitle2"
+                >
+                  ACIDITY
+                </Typography>
+                <Box style={{ display: 'flex', alignItems: 'flex-end' }}>
+                  <Typography
+                    className={classes.contentTextValues}
+                    variant="h3"
+                  >
+                    {formatValue(data.ph?.value)}
+                  </Typography>
+                  <Typography className={classes.contentUnits} variant="h6">
+                    pH
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+
+            {/* Salinity */}
+            <Grid item xs={6}>
+              <Box>
+                <Typography
+                  className={classes.contentTextTitles}
+                  variant="subtitle2"
+                >
+                  SALINITY
+                </Typography>
+                <Box style={{ display: 'flex', alignItems: 'flex-end' }}>
+                  <Typography
+                    className={classes.contentTextValues}
+                    variant="h3"
+                  >
+                    {formatValue(data.salinity?.value)}
+                  </Typography>
+                  <Typography className={classes.contentUnits} variant="h6">
+                    psu
                   </Typography>
                 </Box>
               </Box>
