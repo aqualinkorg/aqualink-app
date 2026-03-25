@@ -301,8 +301,8 @@ function MultipleSensorsCharts({
       hasSeapHOxData,
       SEAPHOX_DATA_COLOR,
       'seaphox',
-      'seaphox',
-      'seaphox',
+      'SEAPHOX',
+      'SEAPHOX',
       () => filteredMetrics,
       getSeapHOxConfig,
     );
@@ -338,6 +338,9 @@ function MultipleSensorsCharts({
         (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
       )
       .map((d) => d.value);
+
+    if (!visiblePHValues.length) return [];
+
     const phMin = Math.min(...visiblePHValues);
     const phMax = Math.max(...visiblePHValues);
 
@@ -363,7 +366,7 @@ function MultipleSensorsCharts({
                   yAxisMin: phMin - 0.02,
                   yAxisMax: phMax + 0.02,
                   displayCardColumn: true,
-                  cardColumnName: 'seaphox',
+                  cardColumnName: 'SEAPHOX',
                 },
               ]
             : []),
@@ -386,7 +389,7 @@ function MultipleSensorsCharts({
               ]
             : []),
         ],
-        source: 'spotter' as const,
+        source: 'seaphox' as const,
         rangeLabel: 'pH',
         surveyPoint: undefined,
         dataset: undefined,
@@ -419,6 +422,9 @@ function MultipleSensorsCharts({
         (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
       )
       .map((d) => d.value);
+
+    if (!visibleSalinityValues.length) return [];
+
     const salinityMin = Math.min(...visibleSalinityValues);
     const salinityMax = Math.max(...visibleSalinityValues);
 
@@ -431,7 +437,7 @@ function MultipleSensorsCharts({
             ? [
                 {
                   ...generateMetricDataset(
-                    'seaphox',
+                    'SEAPHOX',
                     seaphoxSalinity.data,
                     seaphoxConfig.units,
                     SEAPHOX_DATA_COLOR,
@@ -444,7 +450,7 @@ function MultipleSensorsCharts({
                   yAxisMax: salinityMax + 0.05,
                   yAxisStepSize: 0.1,
                   displayCardColumn: true,
-                  cardColumnName: 'seaphox',
+                  cardColumnName: 'SEAPHOX',
                 },
               ]
             : []),
@@ -467,7 +473,7 @@ function MultipleSensorsCharts({
               ]
             : []),
         ],
-        source: 'spotter' as const,
+        source: 'seaphox' as const,
         rangeLabel: 'Salinity',
         surveyPoint: undefined,
         dataset: undefined,
@@ -914,7 +920,7 @@ function MultipleSensorsCharts({
                 chartTitle={title}
                 availableRanges={[
                   {
-                    name: 'seaphox',
+                    name: 'SEAPHOX',
                     data: timeSeriesDataRanges?.[
                       camelCase(key.replace('merged_', '')) as Metrics
                     ]?.find((x) => x.type === 'seaphox')?.data,
