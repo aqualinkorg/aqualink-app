@@ -11,7 +11,7 @@ export interface TimeSeriesQueryParams {
   startDate: Date;
   endDate: Date;
   aggregation: AggregationPeriod;
-  /** Cap on raw data rows sent to Grok. Summary is always computed from all rows. */
+  /** Cap on raw data rows sent to Grok. Summary is always computed from all aggregated rows. */
   maxRawRows?: number;
 }
 
@@ -94,15 +94,22 @@ const ALLOWED_METRICS = new Set([
   'relative_humidity',
 ]);
 
-const SQL_ROW_SAFETY_CAP = 5000;
-
 const DEFAULT_MAX_RAW_ROWS = 500;
+
+// The following indexes were applied directly to the database to support these queries:
+// CREATE INDEX "IDX_time_series_source_metric_timestamp" ON time_series (source_id, metric, timestamp DESC)
+// CREATE INDEX "IDX_sources_site_id_type" ON sources (site_id, type)
+// Applied to staging and production manually via Postico (no migration needed —
+// same pattern as IDX_cb2f3e83c09f83e8ce007ffd6f on time_series).
 
 const getTrend = (avgs: number[]): string => {
   if (avgs.length < 4) return 'stable';
   const half = Math.floor(avgs.length / 2);
-  const recentAvg = avgs.slice(0, half).reduce((a, b) => a + b, 0) / half;
-  const olderAvg = avgs.slice(half).reduce((a, b) => a + b, 0) / half;
+  const recentSlice = avgs.slice(0, half);
+  const olderSlice = avgs.slice(half);
+  if (recentSlice.length === 0 || olderSlice.length === 0) return 'stable';
+  const recentAvg = recentSlice.reduce((a, b) => a + b, 0) / recentSlice.length;
+  const olderAvg = olderSlice.reduce((a, b) => a + b, 0) / olderSlice.length;
   const delta = recentAvg - olderAvg;
   if (delta > 0.3) return 'increasing';
   if (delta < -0.3) return 'decreasing';
@@ -151,6 +158,9 @@ export class TimeSeriesAIService {
     // interpolate them as string literals in the IN clause.
     const metricLiterals = safeMetrics.map((m) => `'${m}'`).join(', ');
 
+    // No LIMIT here — applying a global LIMIT across multiple metrics would
+    // silently drop entire metrics from the result set when data is dense.
+    // The raw data array sent to Grok is capped separately below via maxRawRows.
     const sql = `
       SELECT
         date_trunc($1, ts.timestamp)          AS period,
@@ -172,7 +182,6 @@ export class TimeSeriesAIService {
       ORDER BY
         ts.metric,
         period DESC
-      LIMIT $5
     `;
 
     const rows = await this.dataSource.query(sql, [
@@ -180,7 +189,6 @@ export class TimeSeriesAIService {
       siteId,
       startDate,
       endDate,
-      SQL_ROW_SAFETY_CAP,
     ]);
 
     const allData: AggregatedDataPoint[] = rows.map(

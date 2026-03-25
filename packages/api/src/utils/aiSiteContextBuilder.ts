@@ -58,7 +58,7 @@ async function buildSpotterSummaries(
   siteId: number,
   dataSource: import('typeorm').DataSource,
 ): Promise<string> {
-  // Metrics we want summarised — matches what's already in spotterHistory
+  // Key spotter metrics to summarise — covers temperature, water quality, wind, waves, and pressure
   const SUMMARY_METRICS = [
     'top_temperature',
     'bottom_temperature',

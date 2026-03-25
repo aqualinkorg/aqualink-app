@@ -20,6 +20,8 @@ export interface AIChatRequest {
   isFirstMessage?: boolean;
 }
 
+const VALID_AGGREGATIONS: AggregationPeriod[] = ['hourly', 'daily', 'weekly'];
+
 @Injectable()
 export class AIChatService {
   private readonly logger = new Logger(AIChatService.name);
@@ -55,15 +57,31 @@ export class AIChatService {
     args: Record<string, unknown>,
   ): Promise<string> {
     try {
+      if (!Array.isArray(args.metrics) || args.metrics.length === 0) {
+        return JSON.stringify({ error: 'metrics must be a non-empty array' });
+      }
+
       const metrics = args.metrics as string[];
-      const aggregation = (args.aggregation as AggregationPeriod) ?? 'daily';
+      const aggregation = VALID_AGGREGATIONS.includes(
+        args.aggregation as AggregationPeriod,
+      )
+        ? (args.aggregation as AggregationPeriod)
+        : 'daily';
+
       const startDate = new Date(args.startDate as string);
+      if (Number.isNaN(startDate.getTime())) {
+        return JSON.stringify({ error: 'Invalid startDate format' });
+      }
+
       const endDate = args.endDate
         ? new Date(args.endDate as string)
         : new Date();
+      if (Number.isNaN(endDate.getTime())) {
+        return JSON.stringify({ error: 'Invalid endDate format' });
+      }
 
-      if (Number.isNaN(startDate.getTime())) {
-        return JSON.stringify({ error: 'Invalid startDate format' });
+      if (startDate >= endDate) {
+        return JSON.stringify({ error: 'startDate must be before endDate' });
       }
 
       const result = await this.timeSeriesAIService.queryHistoricalData({
