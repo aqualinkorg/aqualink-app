@@ -24,7 +24,13 @@ import {
   siteTimeSeriesDataRequest,
   siteTimeSeriesDataSelector,
 } from 'store/Sites/selectedSiteSlice';
-import { Metrics, MetricsKeys, Site, Sources } from 'store/Sites/types';
+import {
+  Metrics,
+  MetricsKeys,
+  Site,
+  Sources,
+  TimeSeriesSurveyPoint,
+} from 'store/Sites/types';
 import { useQueryParam } from 'hooks/useQueryParams';
 import { rangeOverlapWithRange, isBefore, setTimeZone } from 'helpers/dates';
 import { getSourceRanges } from 'helpers/siteUtils';
@@ -63,6 +69,7 @@ import {
   getPublicHuiMetrics,
 } from '../../../constants/chartConfigs/huiConfig';
 import ChartWithCard from './ChartWithCard';
+import type { Dataset } from '..';
 
 const useStyles = makeStyles((theme: Theme) => ({
   chartWithRange: {
@@ -73,6 +80,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'end',
   },
 }));
+
+type ChartItem = {
+  key: string;
+  title: string;
+  source: Sources;
+  rangeLabel: string;
+  surveyPoint: TimeSeriesSurveyPoint | undefined;
+  datasets?: Dataset[];
+  dataset?: Dataset;
+};
 
 function MultipleSensorsCharts({
   site,
@@ -203,7 +220,7 @@ function MultipleSensorsCharts({
                   color,
                   chartStartDate,
                   chartEndDate,
-                  site.timezone,
+                  site.timezone || undefined,
                 ),
                 decimalPlaces,
                 yAxisStepSize,
@@ -226,16 +243,23 @@ function MultipleSensorsCharts({
       getSpotterConfig,
     );
 
-  const sondeDatasets = () =>
-    getDatesetFun(
+  const sondeDatasets = () => {
+    const allSondeMetrics = getPublicSondeMetrics();
+    // Exclude metrics handled by merged graphs
+    const filteredMetrics = hasSeapHOxData
+      ? allSondeMetrics.filter((key) => !['ph', 'salinity'].includes(key))
+      : allSondeMetrics;
+
+    return getDatesetFun(
       hasSondeData,
       SONDE_DATA_COLOR,
       'sonde',
       'SENSOR',
       'Sonde',
-      getPublicSondeMetrics,
+      () => filteredMetrics,
       getSondeConfig,
     );
+  };
 
   const metlogDatasets = () =>
     getDatesetFun(
@@ -259,16 +283,197 @@ function MultipleSensorsCharts({
       getHuiConfig,
     );
 
-  const seaphoxDatasets = () =>
-    getDatesetFun(
+  const seaphoxDatasets = () => {
+    const allSeaphoxMetrics = getPublicSeapHOxMetrics();
+
+    const hasSondePH = timeSeriesData?.ph?.some((x) => x.type === 'sonde');
+    const hasSondeSalinity = timeSeriesData?.salinity?.some(
+      (x) => x.type === 'sonde',
+    );
+
+    const filteredMetrics = allSeaphoxMetrics.filter((key) => {
+      if (key === 'ph' && hasSondePH) return false;
+      if (key === 'salinity' && hasSondeSalinity) return false;
+      return true;
+    });
+
+    return getDatesetFun(
       hasSeapHOxData,
       SEAPHOX_DATA_COLOR,
       'seaphox',
       'seaphox',
       'seaphox',
-      getPublicSeapHOxMetrics,
+      () => filteredMetrics,
       getSeapHOxConfig,
     );
+  };
+
+  const getSensorLabel = (
+    surveyPointName: string | undefined,
+    isMerged: boolean,
+  ): string => {
+    if (surveyPointName) {
+      return `SENSOR ${surveyPointName}`;
+    }
+    return isMerged ? 'SONDE' : 'SENSOR';
+  };
+
+  const mergedPHDatasets = () => {
+    if (!hasSeapHOxData && !hasSondeData) return [];
+
+    const seaphoxPH = timeSeriesData?.ph?.find((x) => x.type === 'seaphox');
+    const sondePH = timeSeriesData?.ph?.find((x) => x.type === 'sonde');
+
+    if (!seaphoxPH?.data?.length && !sondePH?.data?.length) return [];
+
+    const seaphoxConfig = getSeapHOxConfig('ph');
+    const sondeConfig = getSondeConfig('ph');
+    const sondeSurveyPointName = sondePH?.surveyPoint?.name ?? undefined;
+
+    const visiblePHValues = [
+      ...(seaphoxPH?.data || []),
+      ...(sondePH?.data || []),
+    ]
+      .filter(
+        (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+      )
+      .map((d) => d.value);
+    const phMin = Math.min(...visiblePHValues);
+    const phMax = Math.max(...visiblePHValues);
+
+    return [
+      {
+        key: 'merged_ph',
+        title: 'pH',
+        datasets: [
+          ...(seaphoxPH?.data?.length
+            ? [
+                {
+                  ...generateMetricDataset(
+                    'seaphox',
+                    seaphoxPH.data,
+                    seaphoxConfig.units,
+                    SEAPHOX_DATA_COLOR,
+                    chartStartDate,
+                    chartEndDate,
+                    site.timezone || undefined,
+                  ),
+                  decimalPlaces: seaphoxConfig.decimalPlaces,
+                  yAxisStepSize: 0.01,
+                  yAxisMin: phMin - 0.02,
+                  yAxisMax: phMax + 0.02,
+                  displayCardColumn: true,
+                  cardColumnName: 'seaphox',
+                },
+              ]
+            : []),
+          ...(sondePH?.data?.length
+            ? [
+                {
+                  ...generateMetricDataset(
+                    getSensorLabel(sondeSurveyPointName, true),
+                    sondePH.data,
+                    sondeConfig.units,
+                    SONDE_DATA_COLOR,
+                    chartStartDate,
+                    chartEndDate,
+                    site.timezone || undefined,
+                  ),
+                  decimalPlaces: seaphoxConfig.decimalPlaces,
+                  displayCardColumn: true,
+                  cardColumnName: getSensorLabel(sondeSurveyPointName, true),
+                },
+              ]
+            : []),
+        ],
+        source: 'spotter' as const,
+        rangeLabel: 'pH',
+        surveyPoint: undefined,
+        dataset: undefined,
+      },
+    ];
+  };
+
+  const mergedSalinityDatasets = () => {
+    if (!hasSeapHOxData && !hasSondeData) return [];
+
+    const seaphoxSalinity = timeSeriesData?.salinity?.find(
+      (x) => x.type === 'seaphox',
+    );
+    const sondeSalinity = timeSeriesData?.salinity?.find(
+      (x) => x.type === 'sonde',
+    );
+
+    if (!seaphoxSalinity?.data?.length && !sondeSalinity?.data?.length)
+      return [];
+
+    const seaphoxConfig = getSeapHOxConfig('salinity');
+    const sondeConfig = getSondeConfig('salinity');
+    const sondeSurveyPointName = sondeSalinity?.surveyPoint?.name ?? undefined;
+
+    const visibleSalinityValues = [
+      ...(seaphoxSalinity?.data || []),
+      ...(sondeSalinity?.data || []),
+    ]
+      .filter(
+        (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+      )
+      .map((d) => d.value);
+    const salinityMin = Math.min(...visibleSalinityValues);
+    const salinityMax = Math.max(...visibleSalinityValues);
+
+    return [
+      {
+        key: 'merged_salinity',
+        title: 'Salinity',
+        datasets: [
+          ...(seaphoxSalinity?.data?.length
+            ? [
+                {
+                  ...generateMetricDataset(
+                    'seaphox',
+                    seaphoxSalinity.data,
+                    seaphoxConfig.units,
+                    SEAPHOX_DATA_COLOR,
+                    chartStartDate,
+                    chartEndDate,
+                    site.timezone || undefined,
+                  ),
+                  decimalPlaces: seaphoxConfig.decimalPlaces,
+                  yAxisMin: salinityMin - 0.05,
+                  yAxisMax: salinityMax + 0.05,
+                  yAxisStepSize: 0.1,
+                  displayCardColumn: true,
+                  cardColumnName: 'seaphox',
+                },
+              ]
+            : []),
+          ...(sondeSalinity?.data?.length
+            ? [
+                {
+                  ...generateMetricDataset(
+                    getSensorLabel(sondeSurveyPointName, true),
+                    sondeSalinity.data,
+                    sondeConfig.units,
+                    SONDE_DATA_COLOR,
+                    chartStartDate,
+                    chartEndDate,
+                    site.timezone || undefined,
+                  ),
+                  decimalPlaces: seaphoxConfig.decimalPlaces,
+                  displayCardColumn: true,
+                  cardColumnName: getSensorLabel(sondeSurveyPointName, true),
+                },
+              ]
+            : []),
+        ],
+        source: 'spotter' as const,
+        rangeLabel: 'Salinity',
+        surveyPoint: undefined,
+        dataset: undefined,
+      },
+    ];
+  };
 
   // post monitoring metric
   useEffect(() => {
@@ -676,51 +881,124 @@ function MultipleSensorsCharts({
         areSurveysFiltered={surveysFiltered}
         source="spotter"
       />
-      {[
-        ...spotterDatasets(),
-        ...sondeDatasets(),
-        ...metlogDatasets(),
-        ...huiDatasets(),
-        ...seaphoxDatasets(),
-      ].map(({ key, title, surveyPoint, source, rangeLabel, dataset }) => (
-        <Box mt={4} key={key}>
-          <ChartWithCard
-            datasets={[dataset]}
-            id={key}
-            range={range}
-            onRangeChange={onRangeChange}
-            disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-            chartTitle={title}
-            availableRanges={[
-              {
-                name: rangeLabel,
-                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.find(
-                  (x) => x.type === source,
-                )?.data,
-              },
-            ]}
-            timeZone={site.timezone}
-            showRangeButtons={false}
-            chartWidth="large"
-            site={site}
-            pickerStartDate={
-              pickerStartDate ||
-              DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
-            }
-            pickerEndDate={pickerEndDate || today}
-            chartStartDate={chartStartDate}
-            chartEndDate={chartEndDate}
-            onStartDateChange={onPickerDateChange('start')}
-            onEndDateChange={onPickerDateChange('end')}
-            isPickerErrored={pickerErrored}
-            showDatePickers={false}
-            surveyPoint={surveyPoint}
-            hideYAxisUnits
-            cardColumnJustification="flex-start"
-            source={source}
-          />
-        </Box>
-      ))}
+      {(
+        [
+          ...spotterDatasets(),
+          ...seaphoxDatasets(),
+          ...mergedPHDatasets(),
+          ...mergedSalinityDatasets(),
+          ...sondeDatasets(),
+          ...huiDatasets(),
+          ...metlogDatasets(),
+        ] as ChartItem[]
+      ).map((item) => {
+        const {
+          key,
+          title,
+          datasets,
+          surveyPoint,
+          source,
+          rangeLabel,
+          dataset,
+        } = item;
+
+        if (datasets && Array.isArray(datasets)) {
+          return (
+            <Box mt={4} key={key}>
+              <ChartWithCard
+                datasets={datasets}
+                id={key}
+                range={range}
+                onRangeChange={onRangeChange}
+                disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+                chartTitle={title}
+                availableRanges={[
+                  {
+                    name: 'seaphox',
+                    data: timeSeriesDataRanges?.[
+                      camelCase(key.replace('merged_', '')) as Metrics
+                    ]?.find((x) => x.type === 'seaphox')?.data,
+                  },
+                  {
+                    name: getSensorLabel(
+                      timeSeriesData?.[
+                        camelCase(key.replace('merged_', '')) as Metrics
+                      ]?.find((x) => x.type === 'sonde')?.surveyPoint?.name ??
+                        undefined,
+                      true,
+                    ),
+                    data: timeSeriesDataRanges?.[
+                      camelCase(key.replace('merged_', '')) as Metrics
+                    ]?.find((x) => x.type === 'sonde')?.data,
+                  },
+                ]}
+                timeZone={site.timezone}
+                showRangeButtons={false}
+                chartWidth="small"
+                site={site}
+                pickerStartDate={
+                  pickerStartDate ||
+                  DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
+                }
+                pickerEndDate={pickerEndDate || today}
+                chartStartDate={chartStartDate}
+                chartEndDate={chartEndDate}
+                onStartDateChange={onPickerDateChange('start')}
+                onEndDateChange={onPickerDateChange('end')}
+                isPickerErrored={pickerErrored}
+                showDatePickers={false}
+                hideYAxisUnits
+                cardColumnJustification="flex-start"
+                source={source}
+              />
+            </Box>
+          );
+        }
+
+        if (dataset) {
+          return (
+            <Box mt={4} key={key}>
+              <ChartWithCard
+                datasets={[dataset]}
+                id={key}
+                range={range}
+                onRangeChange={onRangeChange}
+                disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+                chartTitle={title}
+                availableRanges={[
+                  {
+                    name: rangeLabel,
+                    data: timeSeriesDataRanges?.[
+                      camelCase(key) as Metrics
+                    ]?.find((x) => x.type === source)?.data,
+                  },
+                ]}
+                timeZone={site.timezone}
+                showRangeButtons={false}
+                chartWidth="large"
+                site={site}
+                pickerStartDate={
+                  pickerStartDate ||
+                  DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
+                }
+                pickerEndDate={pickerEndDate || today}
+                chartStartDate={chartStartDate}
+                chartEndDate={chartEndDate}
+                onStartDateChange={onPickerDateChange('start')}
+                onEndDateChange={onPickerDateChange('end')}
+                isPickerErrored={pickerErrored}
+                showDatePickers={false}
+                surveyPoint={surveyPoint}
+                hideYAxisUnits
+                cardColumnJustification="flex-start"
+                source={source}
+              />
+            </Box>
+          );
+        }
+
+        return null;
+      })}
       {displayOceanSenseCharts &&
         hasOceanSenseId &&
         Object.entries(constructOceanSenseDatasets(oceanSenseData)).map(
