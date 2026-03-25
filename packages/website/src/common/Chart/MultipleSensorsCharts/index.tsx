@@ -863,6 +863,12 @@ function MultipleSensorsCharts({
             )?.data,
           },
           {
+            name: 'SEAPHOX',
+            data: timeSeriesDataRanges?.bottomTemperature?.find(
+              (x) => x.type === 'seaphox',
+            )?.data,
+          },
+          {
             name: 'HOBO',
             data: timeSeriesDataRanges?.bottomTemperature?.find(
               (x) => x.type === 'hobo',
