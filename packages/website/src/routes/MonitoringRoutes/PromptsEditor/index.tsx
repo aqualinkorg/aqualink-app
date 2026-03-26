@@ -238,6 +238,10 @@ function PromptsEditor() {
   const [history, setHistory] = useState<AIPromptHistory[]>([]);
   const [rollbackDialogOpen, setRollbackDialogOpen] = useState(false);
   const [rollbackVersion, setRollbackVersion] = useState<number | null>(null);
+  const [viewVersionDialogOpen, setViewVersionDialogOpen] = useState(false);
+  const [viewingVersion, setViewingVersion] = useState<AIPromptHistory | null>(
+    null,
+  );
 
   // Search functionality
   const [viewMode, setViewMode] = useState<ViewMode>('single');
@@ -386,6 +390,11 @@ function PromptsEditor() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleViewVersion = (historyItem: AIPromptHistory) => {
+    setViewingVersion(historyItem);
+    setViewVersionDialogOpen(true);
   };
 
   const handleReloadDatabase = async () => {
@@ -898,12 +907,20 @@ function PromptsEditor() {
                 key={entry.id}
                 divider
                 secondaryAction={
-                  <Button
-                    size="small"
-                    onClick={() => handleRollbackClick(entry.version)}
-                  >
-                    Rollback
-                  </Button>
+                  <Box display="flex" gap={1}>
+                    <Button
+                      size="small"
+                      onClick={() => handleViewVersion(entry)}
+                    >
+                      VIEW
+                    </Button>
+                    <Button
+                      size="small"
+                      onClick={() => handleRollbackClick(entry.version)}
+                    >
+                      ROLLBACK
+                    </Button>
+                  </Box>
                 }
               >
                 <ListItemText
@@ -928,6 +945,53 @@ function PromptsEditor() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setHistoryOpen(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* View Version Content Dialog */}
+      <Dialog
+        open={viewVersionDialogOpen}
+        onClose={() => setViewVersionDialogOpen(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>
+          Version {viewingVersion?.version} - {viewingVersion?.promptKey}
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="caption" gutterBottom>
+            {viewingVersion &&
+              new Date(viewingVersion.changedAt).toLocaleString()}
+          </Typography>
+          {viewingVersion?.changeNotes && (
+            <Typography variant="body2" gutterBottom color="textSecondary">
+              Note: {viewingVersion.changeNotes}
+            </Typography>
+          )}
+          <TextField
+            multiline
+            fullWidth
+            value={viewingVersion?.content || ''}
+            InputProps={{ readOnly: true }}
+            minRows={15}
+            maxRows={30}
+            variant="outlined"
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setViewVersionDialogOpen(false)}>CLOSE</Button>
+          <Button
+            onClick={() => {
+              if (viewingVersion) {
+                setViewVersionDialogOpen(false);
+                handleRollbackClick(viewingVersion.version);
+              }
+            }}
+            color="primary"
+          >
+            ROLLBACK TO THIS VERSION
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

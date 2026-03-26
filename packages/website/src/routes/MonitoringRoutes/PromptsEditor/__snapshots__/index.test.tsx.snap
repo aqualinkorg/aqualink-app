@@ -182,8 +182,8 @@ exports[`PromptsEditor > should render without crashing 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-113d811-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for=":r6:"
-            id=":r6:-label"
+            for=":r9:"
+            id=":r9:-label"
           >
             Prompt Content
           </label>
@@ -193,7 +193,7 @@ exports[`PromptsEditor > should render without crashing 1`] = `
             <textarea
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
-              id=":r6:"
+              id=":r9:"
               rows="20"
               style="height: 0px; overflow: hidden;"
             >
@@ -231,8 +231,8 @@ You are Aqualink's AI assistant...
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-19qnlrw-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="false"
-            for=":r7:"
-            id=":r7:-label"
+            for=":ra:"
+            id=":ra:-label"
           >
             Change Notes (optional)
           </label>
@@ -242,7 +242,7 @@ You are Aqualink's AI assistant...
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input"
-              id=":r7:"
+              id=":ra:"
               placeholder="Describe what you changed and why"
               type="text"
               value=""
@@ -332,6 +332,75 @@ You are Aqualink's AI assistant...
           type="button"
         >
           Close
+        </button>
+      </mock-dialogactions>
+    </mock-dialog>
+    <mock-dialog
+      fullwidth="true"
+      maxwidth="md"
+      open="false"
+    >
+      <mock-dialogtitle>
+        Version 
+         - 
+      </mock-dialogtitle>
+      <mock-dialogcontent>
+        <mock-typography
+          gutterbottom="true"
+          variant="caption"
+        />
+        <div
+          class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth MuiTextField-root css-16bevx5-MuiFormControl-root-MuiTextField-root"
+        >
+          <div
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline Mui-readOnly MuiInputBase-readOnly css-zsp0bh-MuiInputBase-root-MuiOutlinedInput-root"
+          >
+            <textarea
+              aria-invalid="false"
+              class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Mui-readOnly MuiInputBase-readOnly css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
+              id=":r6:"
+              readonly=""
+              style="height: 0px; overflow: hidden;"
+            />
+            <textarea
+              aria-hidden="true"
+              class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline Mui-readOnly MuiInputBase-readOnly css-w4nesw-MuiInputBase-input-MuiOutlinedInput-input"
+              readonly=""
+              style="visibility: hidden; position: absolute; overflow: hidden; height: 0px; top: 0px; left: 0px; transform: translateZ(0); padding-top: 0px; padding-bottom: 0px; width: 100%;"
+              tabindex="-1"
+            />
+            <fieldset
+              aria-hidden="true"
+              class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+            >
+              <legend
+                class="css-1nf2c5d-MuiNotchedOutlined-root"
+              >
+                <span
+                  aria-hidden="true"
+                  class="notranslate"
+                >
+                  ​
+                </span>
+              </legend>
+            </fieldset>
+          </div>
+        </div>
+      </mock-dialogcontent>
+      <mock-dialogactions>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          CLOSE
+        </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          ROLLBACK TO THIS VERSION
         </button>
       </mock-dialogactions>
     </mock-dialog>
