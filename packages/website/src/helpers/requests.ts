@@ -14,7 +14,22 @@ const instance = axios.create({
 
 const cachedInstance = setupCache(instance);
 
-const agent = () => cachedInstance;
+const getCachedInstance = () => {
+  if (!cachedInstance) {
+    // eslint-disable-next-line fp/no-mutation
+    cachedInstance = setupCache(instance);
+  }
+  return cachedInstance;
+};
+
+const agent = (contentType?: string) => {
+  const instanceToUse = getCachedInstance();
+  // eslint-disable-next-line fp/no-mutation
+  instanceToUse.defaults.headers['Content-Type'] =
+    contentType || 'application/json';
+
+  return instanceToUse;
+};
 
 function send<T>(request: Request): Promise<AxiosResponse<T>> {
   const headers = {
