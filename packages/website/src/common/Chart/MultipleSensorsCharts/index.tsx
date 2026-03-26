@@ -286,14 +286,24 @@ function MultipleSensorsCharts({
   const seaphoxDatasets = () => {
     const allSeaphoxMetrics = getPublicSeapHOxMetrics();
 
-    const hasSondePH = timeSeriesData?.ph?.some((x) => x.type === 'sonde');
-    const hasSondeSalinity = timeSeriesData?.salinity?.some(
-      (x) => x.type === 'sonde',
+    const hasSondePHData = Boolean(
+      timeSeriesData?.ph
+        ?.find((x) => x.type === 'sonde')
+        ?.data?.some(
+          (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+        ),
+    );
+    const hasSondeSalinityData = Boolean(
+      timeSeriesData?.salinity
+        ?.find((x) => x.type === 'sonde')
+        ?.data?.some(
+          (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+        ),
     );
 
     const filteredMetrics = allSeaphoxMetrics.filter((key) => {
-      if (key === 'ph' && hasSondePH) return false;
-      if (key === 'salinity' && hasSondeSalinity) return false;
+      if (key === 'ph' && hasSondePHData) return false;
+      if (key === 'salinity' && hasSondeSalinityData) return false;
       return true;
     });
 
@@ -324,7 +334,14 @@ function MultipleSensorsCharts({
     const seaphoxPH = timeSeriesData?.ph?.find((x) => x.type === 'seaphox');
     const sondePH = timeSeriesData?.ph?.find((x) => x.type === 'sonde');
 
-    if (!seaphoxPH?.data?.length && !sondePH?.data?.length) return [];
+    const seaphoxHasVisibleData = (seaphoxPH?.data || []).some(
+      (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+    );
+    const sondeHasVisibleData = (sondePH?.data || []).some(
+      (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+    );
+
+    if (!seaphoxHasVisibleData || !sondeHasVisibleData) return [];
 
     const seaphoxConfig = getSeapHOxConfig('ph');
     const sondeConfig = getSondeConfig('ph');
@@ -407,8 +424,14 @@ function MultipleSensorsCharts({
       (x) => x.type === 'sonde',
     );
 
-    if (!seaphoxSalinity?.data?.length && !sondeSalinity?.data?.length)
-      return [];
+    const seaphoxHasVisibleData = (seaphoxSalinity?.data || []).some(
+      (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+    );
+    const sondeHasVisibleData = (sondeSalinity?.data || []).some(
+      (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+    );
+
+    if (!seaphoxHasVisibleData || !sondeHasVisibleData) return [];
 
     const seaphoxConfig = getSeapHOxConfig('salinity');
     const sondeConfig = getSondeConfig('salinity');
@@ -785,7 +808,9 @@ function MultipleSensorsCharts({
       hasAdditionalSensorData &&
       !hasHuiData &&
       !hasSondeData &&
-      !(startParam || endParam)
+      !(startParam || endParam) &&
+      site.id !== 1006 &&
+      site.id !== 217
     ) {
       onRangeChange('one_year');
       setInitialPageLoad(false);
