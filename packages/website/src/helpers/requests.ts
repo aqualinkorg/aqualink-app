@@ -12,7 +12,7 @@ const instance = axios.create({
   },
 });
 
-const cachedInstance = setupCache(instance);
+let cachedInstance = setupCache(instance);
 
 const getCachedInstance = () => {
   if (!cachedInstance) {
