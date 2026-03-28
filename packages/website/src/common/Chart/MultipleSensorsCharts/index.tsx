@@ -286,14 +286,24 @@ function MultipleSensorsCharts({
   const seaphoxDatasets = () => {
     const allSeaphoxMetrics = getPublicSeapHOxMetrics();
 
-    const hasSondePH = timeSeriesData?.ph?.some((x) => x.type === 'sonde');
-    const hasSondeSalinity = timeSeriesData?.salinity?.some(
-      (x) => x.type === 'sonde',
+    const hasSondePHData = Boolean(
+      timeSeriesData?.ph
+        ?.find((x) => x.type === 'sonde')
+        ?.data?.some(
+          (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+        ),
+    );
+    const hasSondeSalinityData = Boolean(
+      timeSeriesData?.salinity
+        ?.find((x) => x.type === 'sonde')
+        ?.data?.some(
+          (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+        ),
     );
 
     const filteredMetrics = allSeaphoxMetrics.filter((key) => {
-      if (key === 'ph' && hasSondePH) return false;
-      if (key === 'salinity' && hasSondeSalinity) return false;
+      if (key === 'ph' && hasSondePHData) return false;
+      if (key === 'salinity' && hasSondeSalinityData) return false;
       return true;
     });
 
@@ -301,8 +311,8 @@ function MultipleSensorsCharts({
       hasSeapHOxData,
       SEAPHOX_DATA_COLOR,
       'seaphox',
-      'seaphox',
-      'seaphox',
+      'SEAPHOX',
+      'SEAPHOX',
       () => filteredMetrics,
       getSeapHOxConfig,
     );
@@ -324,7 +334,14 @@ function MultipleSensorsCharts({
     const seaphoxPH = timeSeriesData?.ph?.find((x) => x.type === 'seaphox');
     const sondePH = timeSeriesData?.ph?.find((x) => x.type === 'sonde');
 
-    if (!seaphoxPH?.data?.length && !sondePH?.data?.length) return [];
+    const seaphoxHasVisibleData = (seaphoxPH?.data || []).some(
+      (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+    );
+    const sondeHasVisibleData = (sondePH?.data || []).some(
+      (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+    );
+
+    if (!seaphoxHasVisibleData || !sondeHasVisibleData) return [];
 
     const seaphoxConfig = getSeapHOxConfig('ph');
     const sondeConfig = getSondeConfig('ph');
@@ -338,6 +355,9 @@ function MultipleSensorsCharts({
         (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
       )
       .map((d) => d.value);
+
+    if (!visiblePHValues.length) return [];
+
     const phMin = Math.min(...visiblePHValues);
     const phMax = Math.max(...visiblePHValues);
 
@@ -363,7 +383,7 @@ function MultipleSensorsCharts({
                   yAxisMin: phMin - 0.02,
                   yAxisMax: phMax + 0.02,
                   displayCardColumn: true,
-                  cardColumnName: 'seaphox',
+                  cardColumnName: 'SEAPHOX',
                 },
               ]
             : []),
@@ -386,7 +406,7 @@ function MultipleSensorsCharts({
               ]
             : []),
         ],
-        source: 'spotter' as const,
+        source: 'seaphox' as const,
         rangeLabel: 'pH',
         surveyPoint: undefined,
         dataset: undefined,
@@ -404,8 +424,14 @@ function MultipleSensorsCharts({
       (x) => x.type === 'sonde',
     );
 
-    if (!seaphoxSalinity?.data?.length && !sondeSalinity?.data?.length)
-      return [];
+    const seaphoxHasVisibleData = (seaphoxSalinity?.data || []).some(
+      (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+    );
+    const sondeHasVisibleData = (sondeSalinity?.data || []).some(
+      (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
+    );
+
+    if (!seaphoxHasVisibleData || !sondeHasVisibleData) return [];
 
     const seaphoxConfig = getSeapHOxConfig('salinity');
     const sondeConfig = getSondeConfig('salinity');
@@ -419,6 +445,9 @@ function MultipleSensorsCharts({
         (d) => d.timestamp >= chartStartDate && d.timestamp <= chartEndDate,
       )
       .map((d) => d.value);
+
+    if (!visibleSalinityValues.length) return [];
+
     const salinityMin = Math.min(...visibleSalinityValues);
     const salinityMax = Math.max(...visibleSalinityValues);
 
@@ -431,7 +460,7 @@ function MultipleSensorsCharts({
             ? [
                 {
                   ...generateMetricDataset(
-                    'seaphox',
+                    'SEAPHOX',
                     seaphoxSalinity.data,
                     seaphoxConfig.units,
                     SEAPHOX_DATA_COLOR,
@@ -444,7 +473,7 @@ function MultipleSensorsCharts({
                   yAxisMax: salinityMax + 0.05,
                   yAxisStepSize: 0.1,
                   displayCardColumn: true,
-                  cardColumnName: 'seaphox',
+                  cardColumnName: 'SEAPHOX',
                 },
               ]
             : []),
@@ -467,7 +496,7 @@ function MultipleSensorsCharts({
               ]
             : []),
         ],
-        source: 'spotter' as const,
+        source: 'seaphox' as const,
         rangeLabel: 'Salinity',
         surveyPoint: undefined,
         dataset: undefined,
@@ -779,7 +808,9 @@ function MultipleSensorsCharts({
       hasAdditionalSensorData &&
       !hasHuiData &&
       !hasSondeData &&
-      !(startParam || endParam)
+      !(startParam || endParam) &&
+      site.id !== 1006 &&
+      site.id !== 217
     ) {
       onRangeChange('one_year');
       setInitialPageLoad(false);
@@ -857,6 +888,12 @@ function MultipleSensorsCharts({
             )?.data,
           },
           {
+            name: 'SEAPHOX',
+            data: timeSeriesDataRanges?.bottomTemperature?.find(
+              (x) => x.type === 'seaphox',
+            )?.data,
+          },
+          {
             name: 'HOBO',
             data: timeSeriesDataRanges?.bottomTemperature?.find(
               (x) => x.type === 'hobo',
@@ -914,7 +951,7 @@ function MultipleSensorsCharts({
                 chartTitle={title}
                 availableRanges={[
                   {
-                    name: 'seaphox',
+                    name: 'SEAPHOX',
                     data: timeSeriesDataRanges?.[
                       camelCase(key.replace('merged_', '')) as Metrics
                     ]?.find((x) => x.type === 'seaphox')?.data,
