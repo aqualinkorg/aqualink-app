@@ -49,30 +49,45 @@ export const getCollectionData = async (
       .toJSON();
   }
 
-  // As-of query: select the latest row <= the specified timestamp per site from daily_data
-  const rows = await latestDataRepository.manager
-    .createQueryBuilder()
-    .select(`DISTINCT ON (dd.site_id) dd.site_id`, 'siteId')
-    .addSelect('dd.date', 'timestamp')
-    .addSelect('dd.degree_heating_days', 'degreeHeatingDays')
-    .addSelect('dd.satellite_temperature', 'satelliteTemperature')
-    .addSelect('dd.daily_alert_level', 'dailyAlertLevel')
-    .addSelect('dd.weekly_alert_level', 'weeklyAlertLevel')
-    .from('daily_data', 'dd')
-    .where('dd.site_id IN (:...siteIds)', { siteIds })
-    .andWhere('dd.date <= :until', { until })
-    .orderBy('dd.site_id', 'ASC')
-    .addOrderBy('dd.date', 'DESC')
-    .getRawMany();
+  // Historical lookups are latency-sensitive against the shared remote DB.
+  // A lateral join performs one indexed lookup per site, which is much faster
+  // than sorting all matching daily_data rows and then applying DISTINCT ON.
+  const rows = await latestDataRepository.manager.query(
+    `
+      SELECT
+        s.id AS "siteId",
+        dd.date AS "timestamp",
+        dd.degree_heating_days AS "degreeHeatingDays",
+        dd.satellite_temperature AS "satelliteTemperature",
+        dd.daily_alert_level AS "dailyAlertLevel",
+        dd.weekly_alert_level AS "weeklyAlertLevel"
+      FROM site s
+      LEFT JOIN LATERAL (
+        SELECT
+          date,
+          degree_heating_days,
+          satellite_temperature,
+          daily_alert_level,
+          weekly_alert_level
+        FROM daily_data dd
+        WHERE dd.site_id = s.id
+          AND dd.date <= $2
+        ORDER BY dd.date DESC
+        LIMIT 1
+      ) dd ON true
+      WHERE s.id = ANY($1::int[])
+    `,
+    [siteIds, until],
+  );
 
   return rows.reduce(
     (acc, row) => ({
       ...acc,
       [row.siteId]: {
-        degreeHeatingDays: row.degreeHeatingDays,
+        dhw: row.degreeHeatingDays,
         satelliteTemperature: row.satelliteTemperature,
-        dailyAlertLevel: row.dailyAlertLevel,
-        weeklyAlertLevel: row.weeklyAlertLevel,
+        tempAlert: row.dailyAlertLevel,
+        tempWeeklyAlert: row.weeklyAlertLevel,
       },
     }),
     {} as Record<number, CollectionDataDto>,
