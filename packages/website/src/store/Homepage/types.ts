@@ -1,3 +1,7 @@
 export interface HomepageState {
-  selectedDate: string | null; // ISO date string, null means "today"
+  /**
+   * ISO date string (YYYY-MM-DD) for historical map view.
+   * null means "today" (live data).
+   */
+  selectedDate: string | null;
 }
