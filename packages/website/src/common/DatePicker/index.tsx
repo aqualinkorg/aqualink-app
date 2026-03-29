@@ -1,148 +1,185 @@
-import React, { useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Box,
   Button,
   IconButton,
+  Popover,
   TextField,
   Tooltip,
   Typography,
   makeStyles,
+  Theme,
 } from "@material-ui/core";
-import HistoryIcon from "@material-ui/icons/History";
-import CloseIcon from "@material-ui/icons/Close";
+import { DatePicker as MuiDatePicker } from "@material-ui/pickers";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import RestoreIcon from "@material-ui/icons/Restore";
 import { format, isValid, parseISO } from "date-fns";
 
-interface DatePickerProps {
-  selectedDate: string | null;
-  onChange: (date: string | null) => void;
-  maxDate?: string; // ISO string, defaults to today
-  minDate?: string; // ISO string
-  label?: string;
-}
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: "flex",
     alignItems: "center",
+  },
+  button: {
+    textTransform: "none",
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.dark,
+    },
+    borderRadius: theme.shape.borderRadius,
+    padding: "6px 12px",
+    fontSize: "0.875rem",
+  },
+  activeButton: {
+    backgroundColor: theme.palette.secondary.main,
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.dark,
+    },
+  },
+  popoverContent: {
+    padding: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
     gap: theme.spacing(1),
   },
-  dateField: {
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-    "& .MuiOutlinedInput-root": {
-      height: 36,
-    },
-    "& .MuiInputLabel-outlined": {
-      transform: "translate(14px, 10px) scale(1)",
-      "&.MuiInputLabel-shrink": {
-        transform: "translate(14px, -6px) scale(0.75)",
-      },
-    },
-  },
-  activeLabel: {
-    color: theme.palette.warning.main,
-    fontWeight: 700,
-    fontSize: "0.75rem",
-    whiteSpace: "nowrap",
+  popoverTitle: {
+    fontWeight: 600,
+    marginBottom: theme.spacing(1),
   },
   resetButton: {
-    padding: 4,
-    color: theme.palette.text.secondary,
-    "&:hover": {
-      color: theme.palette.error.main,
-    },
+    marginTop: theme.spacing(1),
   },
-  historyIcon: {
-    color: theme.palette.warning.main,
-    marginRight: 2,
+  dateLabel: {
+    fontSize: "0.75rem",
+    color: theme.palette.text.secondary,
   },
 }));
 
-const today = () => format(new Date(), "yyyy-MM-dd");
+export interface DatePickerProps {
+  /** Currently selected date string (ISO format) or null for "today" */
+  selectedDate: string | null;
+  /** Called when user picks a new date */
+  onDateChange: (date: string | null) => void;
+  /** Minimum selectable date (ISO string) */
+  minDate?: string;
+  /** Maximum selectable date (ISO string), defaults to today */
+  maxDate?: string;
+}
 
-const DatePicker: React.FC<DatePickerProps> = ({
+const DatePickerComponent: React.FC<DatePickerProps> = ({
   selectedDate,
-  onChange,
-  maxDate,
+  onDateChange,
   minDate,
-  label = "View historical date",
+  maxDate,
 }) => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const val = e.target.value;
-      if (!val) {
-        onChange(null);
-        return;
-      }
-      const parsed = parseISO(val);
-      if (isValid(parsed)) {
-        onChange(val);
+  const today = new Date();
+  const maxDateObj = maxDate ? parseISO(maxDate) : today;
+  const minDateObj = minDate ? parseISO(minDate) : new Date("2010-01-01");
+
+  const selectedDateObj = selectedDate ? parseISO(selectedDate) : null;
+  const isHistorical = selectedDateObj !== null;
+
+  const handleOpen = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+    },
+    []
+  );
+
+  const handleClose = useCallback(() => {
+    setAnchorEl(null);
+  }, []);
+
+  const handleDateChange = useCallback(
+    (date: Date | null) => {
+      if (date && isValid(date)) {
+        onDateChange(format(date, "yyyy-MM-dd"));
+        handleClose();
       }
     },
-    [onChange]
+    [onDateChange, handleClose]
   );
 
   const handleReset = useCallback(() => {
-    onChange(null);
-  }, [onChange]);
+    onDateChange(null);
+    handleClose();
+  }, [onDateChange, handleClose]);
 
-  const resolvedMax = maxDate || today();
+  const open = Boolean(anchorEl);
+  const id = open ? "date-picker-popover" : undefined;
+
+  const buttonLabel = isHistorical
+    ? format(selectedDateObj!, "MMM d, yyyy")
+    : "View Historical Date";
 
   return (
     <Box className={classes.root}>
-      {selectedDate && (
-        <Tooltip title="Viewing historical data">
-          <Typography className={classes.activeLabel} variant="caption">
-            <HistoryIcon
-              className={classes.historyIcon}
-              style={{ fontSize: 14, verticalAlign: "middle" }}
-            />
-            {format(parseISO(selectedDate), "MMM d, yyyy")}
+      <Tooltip
+        title={
+          isHistorical
+            ? `Viewing data for ${format(selectedDateObj!, "MMMM d, yyyy")} — click to change`
+            : "View map data for a past date"
+        }
+        arrow
+      >
+        <Button
+          aria-describedby={id}
+          variant="contained"
+          size="small"
+          startIcon={isHistorical ? <AccessTimeIcon /> : <RestoreIcon />}
+          onClick={handleOpen}
+          className={`${classes.button} ${
+            isHistorical ? classes.activeButton : ""
+          }`}
+        >
+          {buttonLabel}
+        </Button>
+      </Tooltip>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        transformOrigin={{ vertical: "top", horizontal: "left" }}
+      >
+        <Box className={classes.popoverContent}>
+          <Typography variant="subtitle2" className={classes.popoverTitle}>
+            Select a historical date
           </Typography>
-        </Tooltip>
-      )}
-      <TextField
-        className={classes.dateField}
-        label={label}
-        type="date"
-        size="small"
-        variant="outlined"
-        value={selectedDate || ""}
-        onChange={handleChange}
-        inputProps={{
-          max: resolvedMax,
-          ...(minDate ? { min: minDate } : {}),
-        }}
-        InputLabelProps={{ shrink: true }}
-      />
-      {selectedDate && (
-        <Tooltip title="Reset to today">
-          <IconButton
-            className={classes.resetButton}
-            size="small"
-            onClick={handleReset}
-            aria-label="Reset to today"
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-      )}
-      {selectedDate && (
-        <Tooltip title="Go to today">
-          <Button
-            size="small"
-            variant="outlined"
-            onClick={handleReset}
-            style={{ whiteSpace: "nowrap", height: 36 }}
-          >
-            Today
-          </Button>
-        </Tooltip>
-      )}
+          <Typography variant="caption" className={classes.dateLabel}>
+            View ocean temperatures and site conditions as of a specific date.
+          </Typography>
+          <MuiDatePicker
+            autoOk
+            orientation="landscape"
+            variant="static"
+            openTo="date"
+            value={selectedDateObj || today}
+            onChange={handleDateChange}
+            minDate={minDateObj}
+            maxDate={maxDateObj}
+            disableFuture
+          />
+          {isHistorical && (
+            <Button
+              startIcon={<RestoreIcon />}
+              onClick={handleReset}
+              variant="outlined"
+              size="small"
+              className={classes.resetButton}
+            >
+              Return to Today
+            </Button>
+          )}
+        </Box>
+      </Popover>
     </Box>
   );
 };
 
-export default DatePicker;
+export default DatePickerComponent;
