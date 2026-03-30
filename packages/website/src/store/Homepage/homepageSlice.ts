@@ -1,63 +1,51 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { HomePageState, SiteOnMap } from './types';
-import { siteOptions } from '../Sites/types';
-import type { RootState } from '../configure';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HomePageState, MapLayerName, MapboxGeolocationData } from "./types";
 
 const homepageInitialState: HomePageState = {
-  siteOnMap: null,
-  siteFilter: 'All sites',
+  selectedMapLayer: "Heat",
+  geolocationData: null,
+  searchResult: undefined,
+  featuredSites: [],
+  selectedDate: null,
 };
 
 const homepageSlice = createSlice({
-  name: 'homepage',
+  name: "homepage",
   initialState: homepageInitialState,
   reducers: {
-    setWithSpotterOnly: (
+    setSelectedMapLayer: (
       state,
-      action: PayloadAction<(typeof siteOptions)[number]>,
-    ) => ({
-      ...state,
-      siteFilter: action.payload,
-    }),
+      action: PayloadAction<MapLayerName>
+    ) => {
+      state.selectedMapLayer = action.payload;
+    },
+    setGeolocationData: (
+      state,
+      action: PayloadAction<MapboxGeolocationData | null>
+    ) => {
+      state.geolocationData = action.payload;
+    },
     setSearchResult: (
       state,
-      action: PayloadAction<HomePageState['searchResult']>,
-    ) => ({
-      ...state,
-      searchResult: action.payload,
-    }),
-    setSiteOnMap: (state, action: PayloadAction<SiteOnMap>) => ({
-      ...state,
-      siteOnMap: action.payload,
-    }),
-    unsetSiteOnMap: (state) => ({
-      ...state,
-      siteOnMap: null,
-    }),
+      action: PayloadAction<HomePageState["searchResult"]>
+    ) => {
+      state.searchResult = action.payload;
+    },
+    setFeaturedSites: (state, action: PayloadAction<number[]>) => {
+      state.featuredSites = action.payload;
+    },
+    setSelectedDate: (state, action: PayloadAction<string | null>) => {
+      state.selectedDate = action.payload;
+    },
   },
 });
 
-export const isSelectedOnMapSelector = (id: number) => (state: RootState) =>
-  state.homepage.siteOnMap?.id === id;
-
-export const siteOnMapSelector = (
-  state: RootState,
-): HomePageState['siteOnMap'] => state.homepage.siteOnMap;
-
-export const searchResultSelector = (
-  state: RootState,
-): HomePageState['searchResult'] => state.homepage.searchResult;
-
-export const siteFilterSelector = (
-  state: RootState,
-): HomePageState['siteFilter'] => state.homepage.siteFilter;
-
 export const {
+  setSelectedMapLayer,
+  setGeolocationData,
   setSearchResult,
-  setSiteOnMap,
-  unsetSiteOnMap,
-  setWithSpotterOnly,
+  setFeaturedSites,
+  setSelectedDate,
 } = homepageSlice.actions;
 
 export default homepageSlice.reducer;
