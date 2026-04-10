@@ -1,6 +1,5 @@
 import { Logger } from '@nestjs/common';
 import pLimit from 'p-limit';
-import { Point } from 'geojson';
 import { isNil } from 'lodash';
 import { In, Repository } from 'typeorm';
 import { DateTime } from '../luxon-extensions';
@@ -10,8 +9,7 @@ import { ForecastData } from '../wind-wave-data/forecast-data.entity';
 import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
-import { sofarHindcast } from './sofar';
-import { getSofarNearestAvailablePoint } from './sofar-availability';
+import { getSofarWaveCoords, getSofarWindCoords, sofarHindcast } from './sofar';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
 
 const logger = new Logger('hindcastWindWaveData');
@@ -46,7 +44,12 @@ const getTodayYesterdayDates = () => {
   return { today, yesterday };
 };
 
-export const getForecastData = async (latitude: number, longitude: number) => {
+export const getForecastData = async (
+  waveLat: number,
+  waveLon: number,
+  windLat: number,
+  windLon: number,
+) => {
   const { today, yesterday } = getTodayYesterdayDates();
   const hindcastOptions = [
     [
@@ -70,8 +73,8 @@ export const getForecastData = async (latitude: number, longitude: number) => {
       sofarHindcast(
         sofarModel,
         sofarVariableId,
-        latitude,
-        longitude,
+        sofarModel === SofarModels.Atmosphere ? windLat : waveLat,
+        sofarModel === SofarModels.Atmosphere ? windLon : waveLon,
         yesterday,
         today,
       ),
@@ -144,17 +147,21 @@ export const addWindWaveData = async (
   await Promise.all(
     sites.map((site) =>
       limit(async () => {
-        const { polygon } = site;
-
-        const [longitude, latitude] = getSofarNearestAvailablePoint(
-          polygon as Point,
-        );
+        const { latitude: waveLat, longitude: waveLon } =
+          getSofarWaveCoords(site);
+        const { latitude: windLat, longitude: windLon } =
+          getSofarWindCoords(site);
 
         logger.log(
-          `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
+          `Saving wind & wave forecast data for ${site.id} at wave:(${waveLat}, ${waveLon}) wind:(${windLat}, ${windLon})`,
         );
 
-        const forecastData = await getForecastData(latitude, longitude);
+        const forecastData = await getForecastData(
+          waveLat,
+          waveLon,
+          windLat,
+          windLon,
+        );
 
         // Save wind wave data to forecast_data
         await Promise.all(

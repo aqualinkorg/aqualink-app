@@ -263,6 +263,8 @@ export class SitesService {
       reefCheckSites: site.reefCheckSites ?? [],
       polygon: site.polygon,
       nearestNOAALocation: site.nearestNOAALocation,
+      nearestSofarWaveLocation: site.nearestSofarWaveLocation,
+      nearestSofarWindLocation: site.nearestSofarWindLocation,
       depth: site.depth,
       iframe: site.iframe,
       status: site.status,

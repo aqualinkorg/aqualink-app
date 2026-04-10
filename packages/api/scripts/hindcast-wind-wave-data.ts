@@ -20,7 +20,7 @@ const { argv } = yargs
 
 const run = async () => {
   // Extract command line arguments
-  const { s: siteIds } = argv;
+  const { s: siteIds } = argv as any;
 
   // Cast siteIds into a number array.
   const parsedSiteIds = siteIds.map(Number);
@@ -36,3 +36,4 @@ const run = async () => {
 };
 
 run();
+// Extend definition to use the full-width of the terminal
