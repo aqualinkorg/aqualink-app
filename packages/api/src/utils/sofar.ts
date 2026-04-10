@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /** Utility function to access the Sofar API and retrieve relevant data. */
+import { GeoJSON, Point } from 'geojson';
 import { isNil } from 'lodash';
 import { DateTime } from '../luxon-extensions';
 import axios from './retry-axios';
@@ -18,6 +19,24 @@ import {
   SofarWaveDateResponse,
 } from './sofar.types';
 import { sendSlackMessage, SlackMessage } from './slack.utils';
+
+export function getSofarWaveCoords(site: {
+  polygon: GeoJSON | null;
+  nearestSofarWaveLocation: GeoJSON | null;
+}): { latitude: number; longitude: number } {
+  const source = site.nearestSofarWaveLocation ?? site.polygon;
+  const [longitude, latitude] = (source as Point).coordinates;
+  return { latitude, longitude };
+}
+
+export function getSofarWindCoords(site: {
+  polygon: GeoJSON | null;
+  nearestSofarWindLocation: GeoJSON | null;
+}): { latitude: number; longitude: number } {
+  const source = site.nearestSofarWindLocation ?? site.polygon;
+  const [longitude, latitude] = (source as Point).coordinates;
+  return { latitude, longitude };
+}
 
 export function getBarometricDiff(spotterBarometer: ValueWithTimestamp[]) {
   const lastTowPressures = spotterBarometer?.slice(-2);

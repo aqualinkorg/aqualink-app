@@ -78,6 +78,24 @@ export class Site {
   })
   nearestNOAALocation: GeoJSON | null;
 
+  @ApiPointProperty()
+  @Column({
+    type: 'geometry',
+    spatialFeatureType: 'Point',
+    srid: 4326,
+    nullable: true,
+  })
+  nearestSofarWaveLocation: GeoJSON | null;
+
+  @ApiPointProperty()
+  @Column({
+    type: 'geometry',
+    spatialFeatureType: 'Point',
+    srid: 4326,
+    nullable: true,
+  })
+  nearestSofarWindLocation: GeoJSON | null;
+
   @ApiProperty({ example: 23 })
   @Column({ nullable: true, type: 'integer' })
   depth: number | null;
