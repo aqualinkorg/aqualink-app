@@ -4,8 +4,9 @@
   "testEnvironment": "node",
   "testRegex": ["app.spec.ts$", "test.ts$"],
   "testTimeout": 120000,
-  "verbose": true,
+  "verbose": false,
   "collectCoverage": true,
+  "coverageReporters": ["text-summary", "lcov"],
   "cacheDirectory": ".jest-cache",
   "coveragePathIgnorePatterns": [
     "node_modules",
