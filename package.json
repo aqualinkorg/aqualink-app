@@ -19,7 +19,26 @@
     "test:coverage": "yarn workspaces foreach --all --parallel run test:coverage",
     "test:watch": "yarn workspaces foreach --all --parallel run test:watch",
     "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish",
-    "prepare": "husky"
+    "prepare": "husky",
+    "audit": "node scripts/yarn-audit-summary.js"
+  },
+  "resolutions": {
+    "@babel/runtime": "^7.26.10",
+    "axios": "^1.15.0",
+    "basic-ftp": "^5.2.0",
+    "brace-expansion": "^1.1.13",
+    "fast-xml-parser": "^4.5.4",
+    "file-type": "^21.3.2",
+    "follow-redirects": "^1.16.0",
+    "js-yaml": "^4.1.1",
+    "lodash": "^4.18.0",
+    "node-forge": "^1.4.0",
+    "path-to-regexp": "^8.4.2",
+    "picomatch": "^2.3.2",
+    "protocol-buffers-schema": "^3.6.1",
+    "protobufjs": "^7.5.5",
+    "qs": "^6.14.1",
+    "yaml": "^1.10.3"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
