@@ -33,7 +33,6 @@
     "js-yaml": "^4.1.1",
     "lodash": "^4.18.0",
     "node-forge": "^1.4.0",
-    "path-to-regexp": "^8.4.2",
     "picomatch": "^2.3.2",
     "protocol-buffers-schema": "^3.6.1",
     "protobufjs": "^7.5.5",
