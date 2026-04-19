@@ -78,34 +78,6 @@ exports[`SeapHOx Card > should render with given state from Redux store 1`] = `
                 classname="SeapHOxCard-contentTextTitles-4"
                 variant="subtitle2"
               >
-                ACIDITY
-              </mock-typography>
-              <mock-box
-                style="display: flex; align-items: flex-end;"
-              >
-                <mock-typography
-                  classname="SeapHOxCard-contentTextValues-5"
-                  variant="h3"
-                >
-                  --
-                </mock-typography>
-                <mock-typography
-                  classname="SeapHOxCard-contentUnits-6"
-                  variant="h6"
-                >
-                  pH
-                </mock-typography>
-              </mock-box>
-            </mock-box>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
-          >
-            <mock-box>
-              <mock-typography
-                classname="SeapHOxCard-contentTextTitles-4"
-                variant="subtitle2"
-              >
                 PRESSURE
               </mock-typography>
               <mock-box
@@ -122,34 +94,6 @@ exports[`SeapHOx Card > should render with given state from Redux store 1`] = `
                   variant="h6"
                 >
                   dbar
-                </mock-typography>
-              </mock-box>
-            </mock-box>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
-          >
-            <mock-box>
-              <mock-typography
-                classname="SeapHOxCard-contentTextTitles-4"
-                variant="subtitle2"
-              >
-                SALINITY
-              </mock-typography>
-              <mock-box
-                style="display: flex; align-items: flex-end;"
-              >
-                <mock-typography
-                  classname="SeapHOxCard-contentTextValues-5"
-                  variant="h3"
-                >
-                  --
-                </mock-typography>
-                <mock-typography
-                  classname="SeapHOxCard-contentUnits-6"
-                  variant="h6"
-                >
-                  psu
                 </mock-typography>
               </mock-box>
             </mock-box>
@@ -206,6 +150,62 @@ exports[`SeapHOx Card > should render with given state from Redux store 1`] = `
                   variant="h6"
                 >
                   ml/L
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <mock-box>
+              <mock-typography
+                classname="SeapHOxCard-contentTextTitles-4"
+                variant="subtitle2"
+              >
+                ACIDITY
+              </mock-typography>
+              <mock-box
+                style="display: flex; align-items: flex-end;"
+              >
+                <mock-typography
+                  classname="SeapHOxCard-contentTextValues-5"
+                  variant="h3"
+                >
+                  --
+                </mock-typography>
+                <mock-typography
+                  classname="SeapHOxCard-contentUnits-6"
+                  variant="h6"
+                >
+                  pH
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <mock-box>
+              <mock-typography
+                classname="SeapHOxCard-contentTextTitles-4"
+                variant="subtitle2"
+              >
+                SALINITY
+              </mock-typography>
+              <mock-box
+                style="display: flex; align-items: flex-end;"
+              >
+                <mock-typography
+                  classname="SeapHOxCard-contentTextValues-5"
+                  variant="h3"
+                >
+                  --
+                </mock-typography>
+                <mock-typography
+                  classname="SeapHOxCard-contentUnits-6"
+                  variant="h6"
+                >
+                  psu
                 </mock-typography>
               </mock-box>
             </mock-box>
