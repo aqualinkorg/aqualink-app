@@ -27,6 +27,8 @@ import { SensorDataModule } from './sensor-data/sensor-data.module';
 import { AiChatController } from './ai-chat/ai-chat.controller';
 import { AiChatLog } from './ai-chat-logs/ai-chat-logs.entity';
 import { EntityExists } from './validations/entity-exists.constraint';
+import { TimeSeriesAIService } from './time-series/timeSeriesAI.service';
+import { AIChatService } from './utils/aiChat.service';
 
 @Module({
   imports: [
@@ -56,6 +58,6 @@ import { EntityExists } from './validations/entity-exists.constraint';
     AiChatLog,
   ],
   controllers: [AppController, AiChatController],
-  providers: [EntityExists],
+  providers: [EntityExists, TimeSeriesAIService, AIChatService],
 })
 export class AppModule {}

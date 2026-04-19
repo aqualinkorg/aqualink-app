@@ -311,17 +311,19 @@ export class SitesService {
     updateSiteDto: UpdateSiteDto,
     user: User,
   ): Promise<Site> {
+    const dto = updateSiteDto ?? ({} as UpdateSiteDto);
+
     if (
-      (updateSiteDto.display ||
-        updateSiteDto.status ||
-        updateSiteDto.videoStream ||
-        updateSiteDto.contactInformation) &&
+      (dto.display ||
+        dto.status ||
+        dto.videoStream ||
+        dto.contactInformation) &&
       user.adminLevel !== AdminLevel.SuperAdmin
     ) {
       throw new ForbiddenException();
     }
 
-    const { coordinates, adminIds, regionId, iframe } = updateSiteDto;
+    const { coordinates, adminIds, regionId, iframe } = dto;
     const updateRegion =
       regionId !== undefined ? { region: { id: regionId } } : {};
     const updateCoordinates = coordinates
@@ -335,7 +337,7 @@ export class SitesService {
 
     const result = await this.sitesRepository
       .update(id, {
-        ...omit(updateSiteDto, ['adminIds', 'coordinates', 'regionId']),
+        ...omit(dto, ['adminIds', 'coordinates', 'regionId']),
         ...updateRegion,
         ...updateCoordinates,
         ...updateIframe,
@@ -496,9 +498,13 @@ export class SitesService {
   }
 
   async deploySpotter(id: number, deploySpotterDto: DeploySpotterDto) {
-    const { endDate } = deploySpotterDto;
-
     const site = await getSite(id, this.sitesRepository);
+
+    const dto = deploySpotterDto ?? ({} as DeploySpotterDto);
+    const { endDate } = dto;
+    if (endDate == null) {
+      throw new BadRequestException('endDate must be provided');
+    }
 
     if (!site.sensorId) {
       throw new BadRequestException(`Site with ID ${id} has no spotter`);

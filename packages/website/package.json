@@ -15,7 +15,8 @@
     "deploy:staging": "dotenv -e .env.staging yarn build && yarn run firebase deploy --only hosting:staging-target",
     "deploy:programize": "dotenv -e .env.programize yarn build && yarn run firebase deploy --only hosting:programize-target",
     "start:worker": "rsbuild build && wrangler dev",
-    "deploy:worker": "rsbuild build && wrangler deploy"
+    "deploy:worker": "rsbuild build && wrangler deploy",
+    "audit": "yarn --cwd ../.. run audit"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.0.1",
@@ -29,7 +30,7 @@
     "@mui/x-date-pickers": "^7.23.6",
     "@reduxjs/toolkit": "^2.5.0",
     "@sketchfab/viewer-api": "^1.12.0",
-    "axios": "^1.12.2",
+    "axios": "^1.15.0",
     "axios-cache-interceptor": "^1.11.1",
     "browserslist": "^4.24.2",
     "chart.js": "^4.4.3",
@@ -40,13 +41,12 @@
     "date-fns": "^2.30.0",
     "date-fns-tz": "^1.3.8",
     "firebase": "^11.0.2",
-    "firebase-tools": "^15.0.0",
     "geolib": "^3.3.4",
-    "hono": "^4.11.7",
-    "immutable": "^4.0.0-rc.12",
+    "hono": "^4.12.14",
+    "immutable": "^4.3.8",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.0",
     "luxon": "^3.5.0",
     "mutationobserver-shim": "^0.3.7",
     "notistack": "^3.0.1",
@@ -70,7 +70,7 @@
     "redux": "^5.0.1",
     "redux-mock-store": "^1.5.4",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.1.15",
+    "swiper": "^12.1.2",
     "validator": "^13.15.22"
   },
   "browserslist": {
@@ -124,11 +124,12 @@
     "@vitejs/plugin-react": "^4.3.4",
     "dotenv-cli": "^8.0.0",
     "eslint": "^8.57.1",
+    "firebase-tools": "^15.15.0",
     "jquery": "^3.7.1",
     "jsdom": "^26.0.0",
     "surge": "^0.23.1",
     "typescript": "^5.7.3",
-    "vite": "^5.4.10",
+    "vite": "^6.4.2",
     "vitest": "^3.0.7",
     "wrangler": "^4.59.1"
   }

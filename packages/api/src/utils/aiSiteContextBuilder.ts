@@ -54,6 +54,102 @@ function calculateTrend(dailyData: DailyDataItem[]): string {
   return 'stable';
 }
 
+async function buildSpotterSummaries(
+  siteId: number,
+  dataSource: import('typeorm').DataSource,
+): Promise<string> {
+  // Key spotter metrics to summarise — covers temperature, water quality, wind, waves, and pressure
+  const SUMMARY_METRICS = [
+    'top_temperature',
+    'bottom_temperature',
+    'wind_speed',
+    'significant_wave_height',
+    'barometric_pressure_top',
+    'ph',
+    'salinity',
+    'dissolved_oxygen',
+    'odo_saturation',
+  ];
+
+  const metricLiterals = SUMMARY_METRICS.map((m) => `'${m}'`).join(', ');
+
+  // Single query: compute both windows in one pass using conditional aggregation
+  const sql = `
+    SELECT
+      ts.metric,
+      -- 7-day window
+      ROUND(AVG(ts.value) FILTER (
+        WHERE ts.timestamp >= NOW() - INTERVAL '7 days'
+      )::numeric, 3)                                              AS avg_7d,
+      ROUND(MIN(ts.value) FILTER (
+        WHERE ts.timestamp >= NOW() - INTERVAL '7 days'
+      )::numeric, 3)                                              AS min_7d,
+      ROUND(MAX(ts.value) FILTER (
+        WHERE ts.timestamp >= NOW() - INTERVAL '7 days'
+      )::numeric, 3)                                              AS max_7d,
+      COUNT(*) FILTER (
+        WHERE ts.timestamp >= NOW() - INTERVAL '7 days'
+      )::int                                                      AS count_7d,
+      -- 30-day window
+      ROUND(AVG(ts.value) FILTER (
+        WHERE ts.timestamp >= NOW() - INTERVAL '30 days'
+      )::numeric, 3)                                              AS avg_30d,
+      ROUND(MIN(ts.value) FILTER (
+        WHERE ts.timestamp >= NOW() - INTERVAL '30 days'
+      )::numeric, 3)                                              AS min_30d,
+      ROUND(MAX(ts.value) FILTER (
+        WHERE ts.timestamp >= NOW() - INTERVAL '30 days'
+      )::numeric, 3)                                              AS max_30d,
+      COUNT(*) FILTER (
+        WHERE ts.timestamp >= NOW() - INTERVAL '30 days'
+      )::int                                                      AS count_30d
+    FROM time_series ts
+    JOIN sources s ON s.id = ts.source_id
+    WHERE
+      s.site_id = $1
+      AND ts.metric IN (${metricLiterals})
+      AND ts.timestamp >= NOW() - INTERVAL '30 days'
+    GROUP BY ts.metric
+    ORDER BY ts.metric
+  `;
+
+  type SummaryRow = {
+    metric: string;
+    avg_7d: string | null;
+    min_7d: string | null;
+    max_7d: string | null;
+    count_7d: number;
+    avg_30d: string | null;
+    min_30d: string | null;
+    max_30d: string | null;
+    count_30d: number;
+  };
+
+  const rows: SummaryRow[] = await dataSource.query(sql, [siteId]);
+
+  if (rows.length === 0) {
+    return '- No recent spotter history available for trend analysis';
+  }
+
+  const fmt = (v: string | null): string => (v !== null ? v : 'N/A');
+
+  return rows
+    .map((row: SummaryRow) => {
+      const sevenDay =
+        row.count_7d > 0
+          ? `7d avg=${fmt(row.avg_7d)} (min=${fmt(row.min_7d)}, max=${fmt(row.max_7d)}, n=${row.count_7d})`
+          : '7d: no data';
+
+      const thirtyDay =
+        row.count_30d > 0
+          ? `30d avg=${fmt(row.avg_30d)} (min=${fmt(row.min_30d)}, max=${fmt(row.max_30d)}, n=${row.count_30d})`
+          : '30d: no data';
+
+      return `- **${row.metric}**: ${sevenDay} | ${thirtyDay}`;
+    })
+    .join('\n');
+}
+
 /**
  * Main function to build site context
  */
@@ -85,6 +181,7 @@ export async function buildSiteContext(
       windWaveData,
       spotterHistory,
       huiWaterQualityData,
+      spotterSummaries,
     ] = await Promise.all([
       siteRepository.findOne({
         where: { id: siteId },
@@ -170,6 +267,7 @@ export async function buildSiteContext(
         take: 2000,
         relations: ['source'],
       }),
+      buildSpotterSummaries(siteId, dataSource),
     ]);
 
     const seaphoxMetrics = [
@@ -495,6 +593,12 @@ ${
         .join('\n')
     : '- No SeapHOx sensor data available'
 }
+
+## SPOTTER HISTORICAL SUMMARIES (Last 7 and 30 Days)
+${spotterSummaries}
+
+**Use these values when users ask about recent trends or averages.
+For longer periods or custom date ranges, use the query_time_series tool.**
 
 ## WATER QUALITY DATA
 ${(() => {

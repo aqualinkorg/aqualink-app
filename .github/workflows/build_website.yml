@@ -7,6 +7,8 @@ on:
     paths:
       - "packages/website/**"
       - "yarn.lock"
+      - "scripts/yarn-audit-summary.js"
+      - "package.json"
   push:
     branches:
       - master
@@ -56,6 +58,10 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn install
+
+      - name: Security audit
+        if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
+        run: yarn run audit
 
       - name: Run website lint
         if: success() || steps.install.conclusion == 'skipped'
