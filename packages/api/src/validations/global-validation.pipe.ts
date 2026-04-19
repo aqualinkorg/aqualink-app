@@ -28,13 +28,10 @@ export class GlobalValidationPipe extends ValidationPipe {
 
     // Missing JSON body arrives as undefined; services assume object after @Body().
     // Normalize so ValidationPipe + DTO rules run (400) instead of TypeError (500).
-    let nextValue = value;
-    if (
-      metadata?.type === 'body' &&
-      (nextValue === undefined || nextValue === null)
-    ) {
-      nextValue = {};
-    }
+    const normalizedValue =
+      metadata?.type === 'body' && (value === undefined || value === null)
+        ? {}
+        : value;
 
     // Check if we should skip transforms for this param
     if (
@@ -47,7 +44,7 @@ export class GlobalValidationPipe extends ValidationPipe {
     }
 
     try {
-      return super.transform(nextValue, metadata);
+      return super.transform(normalizedValue, metadata);
     } finally {
       this.isTransformEnabled = originalTransform;
     }
