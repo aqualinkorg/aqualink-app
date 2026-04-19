@@ -111,6 +111,7 @@ function DownloadCSVDialog({
               </span>
             </>
           )}
+          . Timestamps in the downloaded CSV are in UTC.
         </DialogContentText>
         <DialogContentText>
           <FormGroup row>
