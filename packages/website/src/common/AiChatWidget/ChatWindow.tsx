@@ -24,6 +24,9 @@ interface ChatWindowProps extends WithStyles<typeof styles> {
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
 
+// How long to wait before showing the "Retrieving historical data..." message
+const RETRIEVING_MESSAGE_DELAY_MS = 8000;
+
 // Generate the initial greeting by calling the API with isFirstMessage: true
 const generateInitialGreeting = async (
   siteId: number,
@@ -73,7 +76,19 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingGreeting, setIsLoadingGreeting] = useState(true);
+  const [showRetrievingMessage, setShowRetrievingMessage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const retrievingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Clear the retrieving timer if the component unmounts while a request is in flight
+  useEffect(
+    () => () => {
+      if (retrievingTimerRef.current) {
+        clearTimeout(retrievingTimerRef.current);
+      }
+    },
+    [],
+  );
 
   // Load or generate initial greeting
   useEffect(() => {
@@ -153,6 +168,11 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
     setInputValue('');
     setIsLoading(true);
 
+    // Show "Retrieving historical data..." if the response takes longer than expected
+    retrievingTimerRef.current = setTimeout(() => {
+      setShowRetrievingMessage(true);
+    }, RETRIEVING_MESSAGE_DELAY_MS);
+
     try {
       // Build conversation history for context (last 10 messages)
       const conversationHistory = messages.slice(-10).map((msg) => ({
@@ -213,6 +233,11 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
+      if (retrievingTimerRef.current) {
+        clearTimeout(retrievingTimerRef.current);
+        retrievingTimerRef.current = null;
+      }
+      setShowRetrievingMessage(false);
       setIsLoading(false);
     }
   };
@@ -295,11 +320,20 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
             className={`${classes.messageWrapper} ${classes.assistantMessageWrapper}`}
           >
             <Box className={`${classes.message} ${classes.assistantMessage}`}>
-              <Box className={classes.loadingDots}>
-                <Box className={`${classes.dot} ${classes.dot1}`} />
-                <Box className={`${classes.dot} ${classes.dot2}`} />
-                <Box className={classes.dot} />
-              </Box>
+              {showRetrievingMessage ? (
+                <Typography
+                  variant="body2"
+                  className={classes.retrievingMessage}
+                >
+                  Retrieving historical data for this site...
+                </Typography>
+              ) : (
+                <Box className={classes.loadingDots}>
+                  <Box className={`${classes.dot} ${classes.dot1}`} />
+                  <Box className={`${classes.dot} ${classes.dot2}`} />
+                  <Box className={classes.dot} />
+                </Box>
+              )}
             </Box>
           </Box>
         )}
