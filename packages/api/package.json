@@ -42,6 +42,7 @@
     "migration:generate": "yarn typeorm migration:generate",
     "migration:run": "yarn typeorm migration:run --transaction each",
     "migration:revert": "yarn typeorm migration:revert",
+    "migrate-prompts": "ts-node -r dotenv/config -r tsconfig-paths/register scripts/migrate-prompts.ts",
     "hashId": "ts-node -r dotenv/config scripts/url-hash.ts toHash",
     "hashId:prod": "DOTENV_CONFIG_PATH=.env.prod ts-node -r dotenv/config scripts/url-hash.ts toHash",
     "hashId:staging": "DOTENV_CONFIG_PATH=.env.staging ts-node -r dotenv/config scripts/url-hash.ts toHash",
