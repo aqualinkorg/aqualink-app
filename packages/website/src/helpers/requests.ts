@@ -12,7 +12,7 @@ const instance = axios.create({
   },
 });
 
-let cachedInstance = setupCache(instance);
+let cachedInstance: ReturnType<typeof setupCache> | undefined;
 
 const getCachedInstance = () => {
   if (!cachedInstance) {
@@ -68,7 +68,9 @@ interface Request {
 }
 
 export default {
-  axiosInstance: cachedInstance,
+  get axiosInstance() {
+    return getCachedInstance();
+  },
   agent,
   send,
   generateUrlQueryParams,
