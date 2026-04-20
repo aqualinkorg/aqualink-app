@@ -12,9 +12,7 @@ const instance = axios.create({
   },
 });
 
-// Lazy initialization: only setup cache when first accessed (inside a handler)
-// This prevents async I/O operations in global scope
-let cachedInstance: ReturnType<typeof setupCache> | null = null;
+let cachedInstance = setupCache(instance);
 
 const getCachedInstance = () => {
   if (!cachedInstance) {
@@ -34,10 +32,12 @@ const agent = (contentType?: string) => {
 };
 
 function send<T>(request: Request): Promise<AxiosResponse<T>> {
-  const headers = request.token
-    ? { Authorization: `Bearer ${request.token}` }
-    : {};
-  return agent(request.contentType).request<T>({
+  const headers = {
+    'Content-Type': request.contentType || 'application/json',
+    ...(request.token ? { Authorization: `Bearer ${request.token}` } : {}),
+  };
+
+  return agent().request<T>({
     method: request.method,
     url: request.url,
     headers,
@@ -68,9 +68,7 @@ interface Request {
 }
 
 export default {
-  get axiosInstance() {
-    return getCachedInstance();
-  },
+  axiosInstance: cachedInstance,
   agent,
   send,
   generateUrlQueryParams,
