@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   MapContainer,
   TileLayer,
@@ -40,6 +41,7 @@ import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
+import DateFilter from './DateFilter';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -91,6 +93,7 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  initialDate,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -100,10 +103,28 @@ function HomepageMap({
   const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
     useState<string>();
   const [mapReady, setMapReady] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    initialDate || null,
+  );
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<L.Map>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Update URL when selectedDate changes
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    if (selectedDate) {
+      urlParams.set('date', selectedDate.toISOString().split('T')[0]);
+    } else {
+      urlParams.delete('date');
+    }
+    const newSearch = urlParams.toString();
+    const newUrl = newSearch ? `${location.pathname}?${newSearch}` : location.pathname;
+    navigate(newUrl, { replace: true });
+  }, [selectedDate, location.pathname, location.search, navigate]);
 
   useEffect(() => {
     if (ref.current && onMapLoad) {
@@ -301,6 +322,10 @@ function HomepageMap({
           </IconButton>
         </div>
       )}
+      <DateFilter
+        selectedDate={selectedDate}
+        onDateChange={setSelectedDate}
+      />
       <MapEventsHandler
         onBaseLayerChange={onBaseLayerChange}
         onMapReady={onMapReady}
@@ -385,6 +410,7 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  initialDate?: Date | null;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
