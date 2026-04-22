@@ -38,7 +38,7 @@ class ConfigService {
     return value;
   }
 
-  API_URL = this.getValue('BACKEND_BASE_URL', true);
+  API_URL = this.getValue('BACKEND_BASE_URL', this.env.NODE_ENV !== 'test');
 
   public ensureValues(keys: string[]) {
     keys.forEach((k) => this.getValue(k, true));

@@ -7,7 +7,10 @@ import {
 } from './sofar';
 import { ValueWithTimestamp } from './sofar.types';
 
-test('It processes Sofar API for daily data.', async () => {
+const hasSofarToken = Boolean(process.env.SOFAR_API_TOKEN);
+const testOrSkip = hasSofarToken ? test : test.skip;
+
+testOrSkip('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSofarHindcastData(
     'NOAACoralReefWatch',
@@ -22,7 +25,7 @@ test('It processes Sofar API for daily data.', async () => {
   ]);
 });
 
-test('It processes Sofar Spotter API for daily data.', async () => {
+testOrSkip('It processes Sofar Spotter API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSpotterData(
     'SPOT-300434063450120',
@@ -34,7 +37,7 @@ test('It processes Sofar Spotter API for daily data.', async () => {
   expect(values.topTemperature.length).toEqual(144);
 });
 
-test('it process Sofar Hindcast API for wind-wave data', async () => {
+testOrSkip('it process Sofar Hindcast API for wind-wave data', async () => {
   jest.setTimeout(30000);
   const now = new Date();
   const yesterdayDate = new Date(now);
@@ -58,24 +61,27 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
   );
 });
 
-test('it process Sofar Wave Date API for surface temperature', async () => {
-  jest.setTimeout(30000);
-  const now = new Date();
-  const yesterdayDate = new Date(now);
-  yesterdayDate.setDate(now.getDate() - 1);
-  const today = now.toISOString();
-  const yesterday = yesterdayDate.toISOString();
+testOrSkip(
+  'it process Sofar Wave Date API for surface temperature',
+  async () => {
+    jest.setTimeout(30000);
+    const now = new Date();
+    const yesterdayDate = new Date(now);
+    yesterdayDate.setDate(now.getDate() - 1);
+    const today = now.toISOString();
+    const yesterday = yesterdayDate.toISOString();
 
-  const response = await sofarWaveData(
-    'SPOT-1644',
-    process.env.SOFAR_API_TOKEN,
-    yesterday,
-    today,
-  );
+    const response = await sofarWaveData(
+      'SPOT-1644',
+      process.env.SOFAR_API_TOKEN,
+      yesterday,
+      today,
+    );
 
-  expect(response).toBeDefined();
-  expect(response?.data).toBeDefined();
-  expect(response?.data.waves).toBeDefined();
-  expect(Array.isArray(response?.data.waves)).toBe(true);
-  expect(response?.data.waves.length).toBeGreaterThan(0);
-});
+    expect(response).toBeDefined();
+    expect(response?.data).toBeDefined();
+    expect(response?.data.waves).toBeDefined();
+    expect(Array.isArray(response?.data.waves)).toBe(true);
+    expect(response?.data.waves.length).toBeGreaterThan(0);
+  },
+);
