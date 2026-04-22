@@ -79,7 +79,7 @@ const rollbackToVersion = (
 
 const refreshCache = (token: string) =>
   requests.send<{ success: boolean; message: string }>({
-    url: 'monitoring/prompts/refresh-cache',
+    url: 'monitoring/prompts/cache/refresh',
     method: 'POST',
     token,
   });

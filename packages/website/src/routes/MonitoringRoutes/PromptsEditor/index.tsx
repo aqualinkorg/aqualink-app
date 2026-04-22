@@ -40,6 +40,7 @@ import promptServices, {
   AIPrompt,
   AIPromptHistory,
 } from 'services/promptServices';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchResult {
   promptKey: string;
@@ -226,6 +227,17 @@ function PromptsEditor() {
   const classes = useStyles();
   const user = useSelector(userInfoSelector);
   const token = user?.token || null;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || !token) {
+      navigate('/');
+      return;
+    }
+    if (user.adminLevel !== 'super_admin') {
+      navigate('/');
+    }
+  }, [user, token, navigate]);
 
   const [prompts, setPrompts] = useState<AIPrompt[]>([]);
   const [selectedPrompt, setSelectedPrompt] = useState<AIPrompt | null>(null);
@@ -242,6 +254,7 @@ function PromptsEditor() {
   const [viewingVersion, setViewingVersion] = useState<AIPromptHistory | null>(
     null,
   );
+  const [searchExecuted, setSearchExecuted] = useState(false);
 
   // Search functionality
   const [viewMode, setViewMode] = useState<ViewMode>('single');
@@ -418,6 +431,7 @@ function PromptsEditor() {
   const handleSearch = () => {
     if (!searchQuery.trim()) {
       setSearchResults([]);
+      setSearchExecuted(false);
       return;
     }
 
@@ -461,6 +475,7 @@ function PromptsEditor() {
       );
 
     setSearchResults(newResults);
+    setSearchExecuted(true);
     setViewMode('search');
   };
 
@@ -564,7 +579,11 @@ function PromptsEditor() {
           <TextField
             fullWidth
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setSearchResults([]);
+              setSearchExecuted(false);
+            }}
             onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Search across all prompts..."
             InputProps={{
@@ -806,12 +825,14 @@ function PromptsEditor() {
         </Box>
       )}
 
-      {viewMode === 'search' && searchResults.length === 0 && searchQuery && (
-        <Alert severity="info">
-          No results found for &quot;{searchQuery}&quot;. Try a different search
-          term.
-        </Alert>
-      )}
+      {viewMode === 'search' &&
+        searchResults.length === 0 &&
+        searchExecuted && (
+          <Alert severity="info">
+            No results found for &quot;{searchQuery}&quot;. Try a different
+            search term.
+          </Alert>
+        )}
 
       {/* VIEW ALL MODE */}
       {viewMode === 'all' && (
