@@ -9,11 +9,51 @@ import { LatestData } from '../time-series/latest-data.entity';
 export const getCollectionData = async (
   sites: Site[],
   latestDataRepository: Repository<LatestData>,
+  atDate?: Date,
 ): Promise<Record<number, CollectionDataDto>> => {
   const siteIds = sites.map((site) => site.id);
 
   if (!siteIds.length) {
     return {};
+  }
+
+  if (atDate) {
+    const dailyData = await latestDataRepository.manager
+      .createQueryBuilder()
+      .select('DISTINCT ON (daily_data.site_id) daily_data.site_id', 'siteId')
+      .addSelect('daily_data.degree_heating_days', 'degreeHeatingDays')
+      .addSelect('daily_data.satellite_temperature', 'satelliteTemperature')
+      .addSelect('daily_data.daily_alert_level', 'dailyAlertLevel')
+      .addSelect('daily_data.weekly_alert_level', 'weeklyAlertLevel')
+      .from('daily_data', 'daily_data')
+      .where('daily_data.site_id IN (:...siteIds)', { siteIds })
+      .andWhere('daily_data.date <= :atDate', {
+        atDate: atDate.toISOString(),
+      })
+      .orderBy('daily_data.site_id')
+      .addOrderBy('daily_data.date', 'DESC')
+      .getRawMany();
+
+    return _(dailyData)
+      .groupBy((o) => Number(o.siteId))
+      .mapValues<CollectionDataDto>((rows) => {
+        const row = rows[0];
+        return {
+          ...(row?.degreeHeatingDays !== null
+            ? { dhw: Number(row.degreeHeatingDays) }
+            : {}),
+          ...(row?.satelliteTemperature !== null
+            ? { satelliteTemperature: Number(row.satelliteTemperature) }
+            : {}),
+          ...(row?.dailyAlertLevel !== null
+            ? { tempAlert: Number(row.dailyAlertLevel) }
+            : {}),
+          ...(row?.weeklyAlertLevel !== null
+            ? { tempWeeklyAlert: Number(row.weeklyAlertLevel) }
+            : {}),
+        };
+      })
+      .toJSON();
   }
 
   // Get latest data
