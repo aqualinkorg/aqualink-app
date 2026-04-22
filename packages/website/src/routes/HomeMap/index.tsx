@@ -10,7 +10,10 @@ import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
-import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import {
+  siteOnMapSelector,
+  selectedDateSelector,
+} from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
@@ -65,6 +68,7 @@ function useQuery() {
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
   const siteOnMap = useSelector(siteOnMapSelector);
+  const selectedDate = useSelector(selectedDateSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
@@ -72,8 +76,8 @@ function Homepage({ classes }: HomepageProps) {
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(selectedDate ?? undefined));
+  }, [dispatch, selectedDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
