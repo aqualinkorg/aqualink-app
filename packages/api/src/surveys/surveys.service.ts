@@ -295,10 +295,9 @@ export class SurveysService {
     editSurveyMediaDto: EditSurveyMediaDto,
     mediaId: number,
   ): Promise<SurveyMedia> {
-    if (
-      isNil(editSurveyMediaDto.featured) ||
-      isNil(editSurveyMediaDto.hidden)
-    ) {
+    const dto = editSurveyMediaDto ?? ({} as EditSurveyMediaDto);
+
+    if (isNil(dto.featured) || isNil(dto.hidden)) {
       throw new BadRequestException(
         'Features and hidden flags must be provided',
       );
@@ -315,19 +314,12 @@ export class SurveysService {
     }
 
     // Media changes from featured to not featured
-    if (
-      surveyMedia.featured &&
-      (editSurveyMediaDto.hidden || !editSurveyMediaDto.featured)
-    ) {
+    if (surveyMedia.featured && (dto.hidden || !dto.featured)) {
       await this.assignFeaturedMedia(surveyMedia.surveyId.id, mediaId);
     }
 
     // Media changes from not featured to featured
-    if (
-      !surveyMedia.featured &&
-      !editSurveyMediaDto.hidden &&
-      editSurveyMediaDto.featured
-    ) {
+    if (!surveyMedia.featured && !dto.hidden && dto.featured) {
       await this.surveyMediaRepository.update(
         {
           surveyId: { id: surveyMedia.surveyId.id },
@@ -337,13 +329,11 @@ export class SurveysService {
       );
     }
 
-    const trimmedComments = this.transformComments(editSurveyMediaDto.comments);
+    const trimmedComments = this.transformComments(dto.comments);
     await this.surveyMediaRepository.update(mediaId, {
-      ...omit(editSurveyMediaDto, 'surveyPointId'),
-      ...(editSurveyMediaDto.surveyPointId
-        ? { surveyPoint: { id: editSurveyMediaDto.surveyPointId } }
-        : {}),
-      featured: !editSurveyMediaDto.hidden && editSurveyMediaDto.featured,
+      ...omit(dto, 'surveyPointId'),
+      ...(dto.surveyPointId ? { surveyPoint: { id: dto.surveyPointId } } : {}),
+      featured: !dto.hidden && dto.featured,
       ...(trimmedComments ? { comments: trimmedComments } : {}),
     });
 
