@@ -1,5 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable fp/no-mutation */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
 import axios from 'axios';
 import { Logger } from '@nestjs/common';
 import fs from 'fs';

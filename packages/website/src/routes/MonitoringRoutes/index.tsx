@@ -7,6 +7,7 @@ import Monitoring from './Monitoring';
 import SurveysReport from './SurveysReport';
 import SitesOverview from './SitesOverview';
 import SitesStatus from './SitesStatus';
+import PromptsEditor from './PromptsEditor';
 
 function MonitoringRoutes() {
   return (
@@ -19,6 +20,7 @@ function MonitoringRoutes() {
         <Route path="/surveys-report" element={<SurveysReport />} />
         <Route path="/sites-overview" element={<SitesOverview />} />
         <Route path="/sites-status" element={<SitesStatus />} />
+        <Route path="/prompts" element={<PromptsEditor />} />
       </Routes>
     </>
   );

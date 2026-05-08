@@ -23,19 +23,26 @@ export type SondeMetricsKeys = Extract<
 >;
 
 export const sondeConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
+  odo_concentration: {
+    title: 'Optical Dissolved Oxygen (concentration)',
+    units: 'mg/L',
+    description: '',
+    visibility: 'public',
+    order: 1,
+  },
   salinity: {
     title: 'Salinity',
     units: 'psu',
     description: '',
     visibility: 'public',
-    order: 1,
+    order: 2,
   },
   turbidity: {
     title: 'Turbidity',
     units: 'NTU',
     description: '',
     visibility: 'public',
-    order: 2,
+    order: 3,
   },
   bottom_temperature: {
     title: 'Temperature at Depth',
@@ -49,14 +56,14 @@ export const sondeConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
     units: '% sat',
     description: '',
     visibility: 'public',
-    order: 4,
+    order: 5,
   },
   ph: {
-    title: 'Acidity',
+    title: 'pH',
     units: 'pH',
     description: '',
     visibility: 'public',
-    order: 5,
+    order: 6,
   },
   cholorophyll_rfu: {
     title: 'Chlorophyll Relative Fluorescence',
@@ -82,13 +89,6 @@ export const sondeConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
   water_depth: {
     title: 'Depth',
     units: 'm',
-    description: '',
-    visibility: 'public',
-    order: 7,
-  },
-  odo_concentration: {
-    title: 'Optical Dissolved Oxygen (concentration)',
-    units: 'mg/L',
     description: '',
     visibility: 'public',
     order: 7,
@@ -122,7 +122,7 @@ export const sondeConfig: Record<SondeMetricsKeys, BaseSourceConfig> = {
     order: 8,
   },
   ph_mv: {
-    title: 'Acidity Conrol Voltage',
+    title: 'Acidity Control Voltage',
     units: 'mV',
     description: '',
     visibility: 'admin',

@@ -142,6 +142,11 @@ export const styles = (theme: Theme) =>
     sendButton: {
       minWidth: 40,
     },
+    retrievingMessage: {
+      color: theme.palette.text.secondary,
+      fontStyle: 'italic',
+      animation: '$pulse 1.8s ease-in-out infinite',
+    },
     loadingDots: {
       display: 'flex',
       gap: theme.spacing(0.5),
@@ -166,6 +171,14 @@ export const styles = (theme: Theme) =>
       },
       '40%': {
         transform: 'scale(1)',
+      },
+    },
+    '@keyframes pulse': {
+      '0%, 100%': {
+        opacity: 1,
+      },
+      '50%': {
+        opacity: 0.35,
       },
     },
   });

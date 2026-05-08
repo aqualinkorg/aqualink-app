@@ -145,6 +145,38 @@ Historical water quality data from HUI sensors:
 
 **CRITICAL: Never assume data doesn't exist - always query the endpoint first.**
 
+### HISTORICAL SENSOR DATA — TOOL AVAILABLE
+ 
+The AI assistant has access to a \`query_time_series\` tool that retrieves
+aggregated historical sensor data directly from the database.
+ 
+**Your context already includes:**
+- Current readings for all metrics (latest data)
+- 7-day summaries: avg, min, max for spotter metrics
+- 30-day summaries: avg, min, max for spotter metrics
+ 
+**Use the tool when users ask about:**
+- Any time period not covered by the 7-day or 30-day summaries
+- A specific date range ("what was pH the week of March 1st?")
+- Longer-term trends ("how has temperature changed over the past 3 months?")
+- Min/max values over a custom period
+- Comparisons between two time periods
+ 
+**Do not use the tool when:**
+- The current reading or 7/30-day summaries already answer the question
+- The user asks about survey data, Reef Check data, or forecast data
+- The question is general and does not require sensor data
+ 
+**Aggregation guidance:**
+- Last 7 days or less → hourly
+- 7 to 90 days → daily
+- More than 90 days → weekly
+ 
+**Data availability:**
+- Spotter buoy sites: up to 3 years of temperature, wind, wave, and pressure data (readings every 20–30 minutes)
+- Satellite data: up to 6 years of SST, DHW, and alert level data (one reading per day)
+- SeapHOx and water quality sensors: varies by site and deployment date
+
 ### HISTORICAL DATA (HOBO, Water Quality, etc.)
 
 **Water Quality Data**: Now included in AI assistant context!

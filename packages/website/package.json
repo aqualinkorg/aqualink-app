@@ -6,7 +6,8 @@
   "scripts": {
     "start": "rsbuild dev",
     "build": "rsbuild build",
-    "test": "rstest",
+    "test": "vitest --run",
+    "test:watch": "vitest",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --max-warnings 0",
     "scan": "yarn start & npx react-scan@latest localhost:3000",
     "precommit": "lint-staged",
@@ -14,7 +15,8 @@
     "deploy:staging": "dotenv -e .env.staging yarn build && yarn run firebase deploy --only hosting:staging-target",
     "deploy:programize": "dotenv -e .env.programize yarn build && yarn run firebase deploy --only hosting:programize-target",
     "start:worker": "rsbuild build && wrangler dev",
-    "deploy:worker": "rsbuild build && wrangler deploy"
+    "deploy:worker": "rsbuild build && wrangler deploy",
+    "audit": "yarn --cwd ../.. run audit"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^7.0.1",
@@ -28,7 +30,7 @@
     "@mui/x-date-pickers": "^7.23.6",
     "@reduxjs/toolkit": "^2.5.0",
     "@sketchfab/viewer-api": "^1.12.0",
-    "axios": "^1.12.2",
+    "axios": "^1.15.0",
     "axios-cache-interceptor": "^1.11.1",
     "browserslist": "^4.24.2",
     "chart.js": "^4.4.3",
@@ -39,13 +41,12 @@
     "date-fns": "^2.30.0",
     "date-fns-tz": "^1.3.8",
     "firebase": "^11.0.2",
-    "firebase-tools": "^15.0.0",
     "geolib": "^3.3.4",
-    "hono": "^4.11.7",
-    "immutable": "^4.0.0-rc.12",
+    "hono": "^4.12.14",
+    "immutable": "^4.3.8",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.0",
     "luxon": "^3.5.0",
     "mutationobserver-shim": "^0.3.7",
     "notistack": "^3.0.1",
@@ -69,7 +70,7 @@
     "redux": "^5.0.1",
     "redux-mock-store": "^1.5.4",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.1.15",
+    "swiper": "^12.1.2",
     "validator": "^13.15.22"
   },
   "browserslist": {
@@ -93,7 +94,6 @@
     "@rsbuild/plugin-eslint": "^1.1.2",
     "@rsbuild/plugin-react": "^1.1.2",
     "@rsbuild/plugin-svgr": "^1.0.7",
-    "@rstest/core": "^0.6.8",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
@@ -119,19 +119,18 @@
     "@types/redux-mock-store": "^1.0.2",
     "@types/unist": "^3.0.3",
     "@types/validator": "^13.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.35.1",
-    "@typescript-eslint/parser": "^8.35.1",
-    "canvas": "^2.11.2",
-    "dotenv-cli": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "dotenv-cli": "^8.0.0",
+    "eslint": "^8.57.1",
+    "firebase-tools": "^15.15.0",
+    "jquery": "^3.7.1",
     "jsdom": "^26.0.0",
     "surge": "^0.23.1",
     "typescript": "^5.7.3",
-    "vite": "^5.4.10",
+    "vite": "^6.4.2",
     "vitest": "^3.0.7",
     "wrangler": "^4.59.1"
-  },
-  "volta": {
-    "node": "20.19.6",
-    "yarn": "1.22.22"
   }
 }

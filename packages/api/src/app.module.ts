@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import { MonitoringModule } from 'monitoring/monitoring.module';
+import { MonitoringModule } from './monitoring/monitoring.module';
 import { ReefCheckSitesModule } from './reef-check-sites/reef-check-sites.module';
 import { ReefCheckSurveysModule } from './reef-check-surveys/reef-check-surveys.module';
 import { configService } from './config/config.service';
@@ -26,7 +26,9 @@ import { WindWaveModule } from './wind-wave-data/wind-wave-data.module';
 import { SensorDataModule } from './sensor-data/sensor-data.module';
 import { AiChatController } from './ai-chat/ai-chat.controller';
 import { AiChatLog } from './ai-chat-logs/ai-chat-logs.entity';
-import { EntityExists } from './validations/entity-exists.constraint'; // ← Add this import
+import { EntityExists } from './validations/entity-exists.constraint';
+import { TimeSeriesAIService } from './time-series/timeSeriesAI.service';
+import { AIChatService } from './utils/aiChat.service';
 
 @Module({
   imports: [
@@ -56,6 +58,6 @@ import { EntityExists } from './validations/entity-exists.constraint'; // ← Ad
     AiChatLog,
   ],
   controllers: [AppController, AiChatController],
-  providers: [EntityExists],
+  providers: [EntityExists, TimeSeriesAIService, AIChatService],
 })
 export class AppModule {}

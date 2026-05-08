@@ -1,108 +1,80 @@
-import { In } from 'typeorm';
+import yargs from 'yargs/yargs';
 import Bluebird from 'bluebird';
-import { Point } from 'geojson';
-import { keyBy } from 'lodash';
+import { backfillSiteData } from '../src/workers/backfill-site-data';
+import { updateSST } from '../src/utils/sst-time-series';
 import { Site } from '../src/sites/sites.entity';
-import { getNOAAData } from './utils/netcdf';
-import { DailyData } from '../src/sites/daily-data.entity';
 import { Sources } from '../src/sites/sources.entity';
-import {
-  getNOAASource,
-  insertSiteDataToTimeSeries,
-  refreshMaterializedView,
-} from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import AqualinkDataSource from '../ormconfig';
-import { Metric } from '../src/time-series/metrics.enum';
 
-// Sites and years to backfill SST for
-const yearsArray = [2017, 2018, 2019, 2020, 2021, 2022];
-const sitesToProcess: number[] = [];
+const argv = yargs(process.argv.slice(2))
+  .options({
+    days: {
+      alias: 'd',
+      type: 'number',
+      describe: 'Number of days to backfill',
+      default: 90,
+    },
+    siteIds: {
+      alias: 's',
+      type: 'array',
+      describe: 'Site IDs to backfill (required)',
+    },
+    skipDailyData: {
+      alias: 'skip',
+      type: 'boolean',
+      describe: 'Skip backfilling daily_data and only run updateSST',
+      default: false,
+    },
+  })
+  .parseSync();
 
 async function main() {
-  const connection = await AqualinkDataSource.initialize();
-  const siteRepository = connection.getRepository(Site);
-  const dailyDataRepository = connection.getRepository(DailyData);
-  const sourcesRepository = connection.getRepository(Sources);
-  const timeSeriesRepository = connection.getRepository(TimeSeries);
-  const selectedSites = await siteRepository.find({
-    where:
-      sitesToProcess.length > 0
-        ? {
-            id: In(sitesToProcess),
-          }
-        : {},
-  });
+  const dataSource = await AqualinkDataSource.initialize();
 
-  const dailyDataEntities = selectedSites.reduce(
-    (entities: DailyData[], site) => {
-      console.log(`Processing site ${site.name || site.id}...`);
-      const allYearEntities = yearsArray.reduce(
-        (yearEntities: DailyData[], year) => {
-          console.log(`Processing year ${year}...`);
-          const [longitude, latitude] = (site.polygon as Point).coordinates;
-          const data = getNOAAData(longitude, latitude, year);
-          const yearEntitiesForSite = data.map(
-            ({ date, satelliteTemperature }) =>
-              ({
-                site: { id: site.id },
-                date,
-                satelliteTemperature,
-              }) as DailyData,
-          );
-          return yearEntities.concat(yearEntitiesForSite);
-        },
-        [],
-      );
-      return entities.concat(allYearEntities);
-    },
-    [],
-  );
+  const siteIds =
+    argv.siteIds && argv.siteIds.length > 0
+      ? (argv.siteIds as (string | number)[]).map((id) => Number(id))
+      : [];
 
-  const sources = await Promise.all(
-    selectedSites.map((site) => getNOAASource(site, sourcesRepository)),
-  );
-
-  const siteToSource: Record<number, Sources> = keyBy(
-    sources,
-    (source) => source.site.id,
-  );
-
-  await Bluebird.map(dailyDataEntities, async (entity) => {
-    try {
-      await dailyDataRepository.save(entity);
-    } catch (err) {
-      if (err.constraint === 'no_duplicated_date') {
-        console.debug(
-          `Data already exists for this date ${entity.date.toDateString()}`,
-        );
-      } else {
-        console.error(err);
-      }
-    }
-
-    if (!entity.satelliteTemperature) {
-      return;
-    }
-
-    await insertSiteDataToTimeSeries(
-      [
-        {
-          value: entity.satelliteTemperature,
-          timestamp: entity.date.toISOString(),
-        },
-      ],
-      Metric.SATELLITE_TEMPERATURE,
-      siteToSource[entity.site.id],
-      timeSeriesRepository,
+  if (siteIds.length === 0) {
+    console.error(
+      'No site IDs provided. Please specify at least one site ID using --siteIds or -s.',
     );
+    await dataSource.destroy();
+    // eslint-disable-next-line fp/no-mutation
+    process.exitCode = 1;
+    return;
+  }
+
+  console.log(
+    `Starting SST backfill for ${siteIds.length} site(s) over ${argv.days} days...`,
+  );
+
+  if (!argv.skipDailyData) {
+    console.log('Backfilling daily_data...');
+    await Bluebird.mapSeries(siteIds, async (siteId) => {
+      console.log(`Backfilling daily_data for site ${siteId}...`);
+      await backfillSiteData({ dataSource, siteId, days: argv.days });
+      console.log(`Finished daily_data for site ${siteId}.`);
+    });
+  } else {
+    console.log('Skipping daily_data backfill...');
+  }
+
+  console.log('Backfilling time_series...');
+  await updateSST(siteIds, argv.days, {
+    siteRepository: dataSource.getRepository(Site),
+    sourceRepository: dataSource.getRepository(Sources),
+    timeSeriesRepository: dataSource.getRepository(TimeSeries),
   });
 
-  // Update materialized view
-  refreshMaterializedView(siteRepository);
-
-  connection.destroy();
-  process.exit(0);
+  console.log('SST backfill complete.');
+  await dataSource.destroy();
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  // eslint-disable-next-line fp/no-mutation
+  process.exitCode = 1;
+});

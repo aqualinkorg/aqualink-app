@@ -15,6 +15,11 @@ export class FirebaseAuthStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
+  /** Unused at runtime (`authenticate` handles auth); required by Nest 11 `PassportStrategy` types. */
+  validate(): null {
+    return null;
+  }
+
   async authenticate(req: any, props?: any): Promise<void> {
     const self = this;
     const firebaseUser = await extractAndVerifyToken(req);

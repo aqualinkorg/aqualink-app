@@ -295,6 +295,16 @@ function Chart({
           },
         },
         y: {
+          title: {
+            display: hideYAxisUnits && Boolean(datasets?.[0]?.unit),
+            text: datasets?.[0]?.unit || '',
+            font: {
+              size: 13,
+              weight: 'normal' as const,
+            },
+            color: '#666666',
+            padding: { bottom: 4 },
+          },
           min: adjustedYMin,
           max: adjustedYMax,
           grid: {

@@ -37,3 +37,4 @@ yarn.lock
 
 # .env
 .env
+*.nc

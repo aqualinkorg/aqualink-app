@@ -9,9 +9,8 @@ import {
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { buildSiteContext } from '../utils/aiSiteContextBuilder';
-import { callGrokAPI } from '../utils/aiGrokService';
 import { AiChatLog } from '../ai-chat-logs/ai-chat-logs.entity';
+import { AIChatService } from '../utils/aiChat.service';
 
 interface AiChatRequest {
   message: string;
@@ -33,7 +32,10 @@ interface AiChatResponse {
 export class AiChatController {
   private readonly logger = new Logger(AiChatController.name);
 
-  constructor(@InjectDataSource() private dataSource: DataSource) {}
+  constructor(
+    @InjectDataSource() private dataSource: DataSource,
+    private readonly aiChatService: AIChatService,
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Get AI assistance for coral reef monitoring' })
@@ -67,16 +69,12 @@ export class AiChatController {
     );
 
     try {
-      // Build site context from database
-      const siteContext = await buildSiteContext(siteId, this.dataSource);
-
-      // Call Grok API
-      const aiResponse = await callGrokAPI(
+      const aiResponse = await this.aiChatService.chat({
+        siteId,
         message,
-        siteContext,
         conversationHistory,
         isFirstMessage,
-      );
+      });
 
       this.logger.log(`AI response generated for site ${siteId}`);
 
@@ -129,6 +127,7 @@ export class AiChatController {
       );
     }
   }
+
   private async logInteraction(
     siteId: number,
     userId: number | undefined,

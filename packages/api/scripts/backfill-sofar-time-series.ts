@@ -1,5 +1,5 @@
 import { DataSourceOptions, DataSource } from 'typeorm';
-import yargs from 'yargs';
+import yargs from 'yargs/yargs';
 import { configService } from '../src/config/config.service';
 import { ExclusionDates } from '../src/sites/exclusion-dates.entity';
 import { Site } from '../src/sites/sites.entity';
@@ -18,7 +18,7 @@ enum TaskType {
 const tasks = Object.values(TaskType).join(', ');
 
 // Initialize command definition
-const { argv } = yargs
+const { argv } = yargs(process.argv.slice(2))
   .scriptName('backfill-sofar-time-series')
   .usage('$0 <cmd> [args]')
   .option('t', {
@@ -51,9 +51,7 @@ const { argv } = yargs
     }
 
     return true;
-  })
-  // Extend definition to use the full-width of the terminal
-  .wrap(yargs.terminalWidth());
+  });
 
 /**
  * Return selected task fn.

@@ -46,6 +46,12 @@ const tiles: Tile[] = [
     description: 'List all recent surveys',
     adminLevel: 'super_admin',
   },
+  {
+    title: 'AI Prompts',
+    link: '/monitoring/prompts',
+    description: 'Edit AI Assistant prompts and behavior',
+    adminLevel: 'super_admin',
+  },
 ];
 
 const useStyles = makeStyles(() => ({
