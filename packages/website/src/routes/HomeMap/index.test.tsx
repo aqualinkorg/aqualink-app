@@ -15,6 +15,15 @@ vi.mock('./SiteTable', () => ({ default: 'Mock-SiteTable' }));
 const mockStore = configureStore([]);
 describe('Homepage', () => {
   let element: HTMLElement;
+  beforeAll(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-05-11T00:00:00.000Z'));
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
   beforeEach(() => {
     const store = mockStore({
       sitesList: {
