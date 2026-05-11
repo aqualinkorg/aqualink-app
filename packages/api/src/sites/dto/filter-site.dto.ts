@@ -1,4 +1,5 @@
 import {
+  IsDateString,
   IsNotEmpty,
   IsString,
   IsOptional,
@@ -37,4 +38,9 @@ export class FilterSiteDto {
   @IsOptional()
   @IsBooleanString()
   readonly hasSpotter?: string;
+
+  @ApiProperty({ example: '2024-03-01' })
+  @IsOptional()
+  @IsDateString()
+  readonly date?: string;
 }

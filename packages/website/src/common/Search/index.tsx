@@ -47,7 +47,7 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
 
   // Fetch sites for the search bar
   useEffect(() => {
-    dispatch(sitesRequest());
+    dispatch(sitesRequest(undefined));
   }, [dispatch]);
 
   const onChangeSearchText = (

@@ -38,7 +38,10 @@ class ConfigService {
     return value;
   }
 
-  API_URL = this.getValue('BACKEND_BASE_URL', true);
+  API_URL =
+    this.env.NODE_ENV === 'test'
+      ? this.getValue('BACKEND_BASE_URL', false) || 'http://localhost:3000/api'
+      : this.getValue('BACKEND_BASE_URL', true);
 
   public ensureValues(keys: string[]) {
     keys.forEach((k) => this.getValue(k, true));

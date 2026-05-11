@@ -41,6 +41,7 @@ import { SiteApplication } from '../site-applications/site-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
 import { getCollectionData } from '../utils/collections.utils';
+import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 import { LatestData } from '../time-series/latest-data.entity';
 import { getYouTubeVideoId } from '../utils/urls';
 import {
@@ -198,10 +199,9 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    const mappedSiteData = filter.date
+      ? await this.getHistoricalCollectionData(res, filter.date)
+      : await getCollectionData(res, this.latestDataRepository);
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
@@ -221,6 +221,44 @@ export class SitesService {
       waterQualitySources: waterQualityDataSet.get(site.id),
       reefCheckData: reefCheckDataSet[site.id],
     }));
+  }
+
+  private async getHistoricalCollectionData(
+    sites: Site[],
+    date: string,
+  ): Promise<Record<number, CollectionDataDto>> {
+    const siteIds = sites.map((site) => site.id);
+
+    if (!siteIds.length) return {};
+
+    const rows: Array<{
+      siteId: number;
+      satelliteTemperature: number | null;
+      degreeHeatingDays: number | null;
+      tempWeeklyAlert: number | null;
+    }> = await this.dailyDataRepository
+      .createQueryBuilder('daily_data')
+      .select('DISTINCT ON (daily_data.site_id) daily_data.site_id', 'siteId')
+      .addSelect('daily_data.satellite_temperature', 'satelliteTemperature')
+      .addSelect('daily_data.degree_heating_days', 'degreeHeatingDays')
+      .addSelect('daily_data.weekly_alert_level', 'tempWeeklyAlert')
+      .where('daily_data.site_id IN (:...siteIds)', { siteIds })
+      .andWhere('daily_data.date <= :date', { date })
+      .orderBy('daily_data.site_id')
+      .addOrderBy('daily_data.date', 'DESC')
+      .getRawMany();
+
+    return rows.reduce<Record<number, CollectionDataDto>>(
+      (acc, row) => ({
+        ...acc,
+        [row.siteId]: {
+          satelliteTemperature: row.satelliteTemperature ?? undefined,
+          dhw: row.degreeHeatingDays ?? undefined,
+          tempWeeklyAlert: row.tempWeeklyAlert ?? undefined,
+        },
+      }),
+      {},
+    );
   }
 
   async findOne(id: number): Promise<Site> {

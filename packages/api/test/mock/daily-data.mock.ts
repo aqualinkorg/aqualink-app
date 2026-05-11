@@ -15,6 +15,7 @@ const getMockDailyData = (
   date,
   site,
   satelliteTemperature: random(15, 35, true),
+  weeklyAlertLevel: random(4),
 });
 
 export const getMockSpotterData = (
