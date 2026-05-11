@@ -5,6 +5,7 @@ import * as backfillSiteData from '../src/workers/backfill-site-data';
 import * as sofarUtils from '../src/utils/sofar';
 import * as temperatureUtils from '../src/utils/temperature';
 import { SurveysService } from '../src/surveys/surveys.service';
+import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { getMockSpotterData } from './mock/daily-data.mock';
 
 export const mockExtractAndVerifyToken = (
@@ -34,21 +35,15 @@ export const createMockFirebaseUser = (
 });
 
 export const mockDeleteFile = (app: INestApplication) => {
-  const surveysService = app.get(SurveysService);
-  const deleteFileMock = jest.spyOn(
-    surveysService.googleCloudService,
-    'deleteFile',
-  );
+  app.get(SurveysService);
+  const deleteFileMock = jest.spyOn(GoogleCloudService.prototype, 'deleteFile');
   deleteFileMock.mockReset();
   deleteFileMock.mockResolvedValue(undefined);
 };
 
 export const mockDeleteFileFalling = (app: INestApplication) => {
-  const surveysService = app.get(SurveysService);
-  const deleteFileMock = jest.spyOn(
-    surveysService.googleCloudService,
-    'deleteFile',
-  );
+  app.get(SurveysService);
+  const deleteFileMock = jest.spyOn(GoogleCloudService.prototype, 'deleteFile');
   deleteFileMock.mockReset();
   deleteFileMock.mockRejectedValueOnce(new Error('Delete file failed'));
 };
