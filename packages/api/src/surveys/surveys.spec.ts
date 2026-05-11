@@ -24,6 +24,8 @@ const createSurveyDto: CreateSurveyDto = {
   comments: 'No comments',
 };
 
+const itIfGcsBucket = process.env.GCS_BUCKET ? it : it.skip;
+
 export const surveyTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
@@ -255,17 +257,20 @@ export const surveyTests = () => {
       expect(rsp.body.featured).toBe(false);
     });
 
-    it('DELETE /media/:id delete the featured survey media', async () => {
-      mockDeleteFile(app);
-      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
-      const rsp = await request(app.getHttpServer()).delete(
-        `/sites/${floridaSite.id}/surveys/media/${overrideMediaId}`,
-      );
+    itIfGcsBucket(
+      'DELETE /media/:id delete the featured survey media',
+      async () => {
+        mockDeleteFile(app);
+        mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
+        const rsp = await request(app.getHttpServer()).delete(
+          `/sites/${floridaSite.id}/surveys/media/${overrideMediaId}`,
+        );
 
-      expect(rsp.status).toBe(200);
-    });
+        expect(rsp.status).toBe(200);
+      },
+    );
 
-    it('DELETE /media/:id fail to delete survey media', async () => {
+    itIfGcsBucket('DELETE /media/:id fail to delete survey media', async () => {
       mockDeleteFileFalling(app);
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer()).delete(
@@ -275,18 +280,21 @@ export const surveyTests = () => {
       expect(rsp.status).toBe(500);
     });
 
-    it('GET /:id/media check there is still a featured survey media', async () => {
-      const rsp = await request(app.getHttpServer()).get(
-        `/sites/${floridaSite.id}/surveys/${surveyId}/media`,
-      );
+    itIfGcsBucket(
+      'GET /:id/media check there is still a featured survey media',
+      async () => {
+        const rsp = await request(app.getHttpServer()).get(
+          `/sites/${floridaSite.id}/surveys/${surveyId}/media`,
+        );
 
-      expect(rsp.status).toBe(200);
-      expect(rsp.body.length).toBe(2);
-      const sortedMedia = sortBy(rsp.body, 'id');
-      expect(sortedMedia[0].featured).toBe(true);
-    });
+        expect(rsp.status).toBe(200);
+        expect(rsp.body.length).toBe(2);
+        const sortedMedia = sortBy(rsp.body, 'id');
+        expect(sortedMedia[0].featured).toBe(true);
+      },
+    );
 
-    it('DELETE /:id delete the survey', async () => {
+    itIfGcsBucket('DELETE /:id delete the survey', async () => {
       mockDeleteFileFalling(app);
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer()).delete(
@@ -349,7 +357,7 @@ export const surveyTests = () => {
       expect(rsp.body.featured).toBe(true);
     });
 
-    it('DELETE /media/:id delete last survey media', async () => {
+    itIfGcsBucket('DELETE /media/:id delete last survey media', async () => {
       mockDeleteFile(app);
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer()).delete(
@@ -359,7 +367,7 @@ export const surveyTests = () => {
       expect(rsp.status).toBe(200);
     });
 
-    it('DELETE /:id delete survey', async () => {
+    itIfGcsBucket('DELETE /:id delete survey', async () => {
       mockDeleteFile(app);
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer()).delete(
