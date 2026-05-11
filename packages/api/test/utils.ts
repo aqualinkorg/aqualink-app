@@ -35,16 +35,22 @@ export const createMockFirebaseUser = (
 
 export const mockDeleteFile = (app: INestApplication) => {
   const surveysService = app.get(SurveysService);
-  jest
-    .spyOn(surveysService.googleCloudService, 'deleteFile')
-    .mockResolvedValueOnce(undefined);
+  const deleteFileMock = jest.spyOn(
+    surveysService.googleCloudService,
+    'deleteFile',
+  );
+  deleteFileMock.mockReset();
+  deleteFileMock.mockResolvedValue(undefined);
 };
 
 export const mockDeleteFileFalling = (app: INestApplication) => {
   const surveysService = app.get(SurveysService);
-  jest
-    .spyOn(surveysService.googleCloudService, 'deleteFile')
-    .mockRejectedValueOnce(new Error('Delete file failed'));
+  const deleteFileMock = jest.spyOn(
+    surveysService.googleCloudService,
+    'deleteFile',
+  );
+  deleteFileMock.mockReset();
+  deleteFileMock.mockRejectedValueOnce(new Error('Delete file failed'));
 };
 
 export const mockBackfillSiteData = () => {

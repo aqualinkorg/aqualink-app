@@ -36,29 +36,32 @@ testIfSofarToken('It processes Sofar Spotter API for daily data.', async () => {
   expect(values.topTemperature.length).toEqual(144);
 });
 
-testIfSofarToken('it process Sofar Hindcast API for wind-wave data', async () => {
-  jest.setTimeout(30000);
-  const now = new Date();
-  const yesterdayDate = new Date(now);
-  yesterdayDate.setDate(now.getDate() - 1);
-  const today = now.toISOString();
-  const yesterday = yesterdayDate.toISOString();
+testIfSofarToken(
+  'it process Sofar Hindcast API for wind-wave data',
+  async () => {
+    jest.setTimeout(30000);
+    const now = new Date();
+    const yesterdayDate = new Date(now);
+    yesterdayDate.setDate(now.getDate() - 1);
+    const today = now.toISOString();
+    const yesterday = yesterdayDate.toISOString();
 
-  const response = await sofarHindcast(
-    SofarModels.Wave,
-    sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
-    -3.5976336810301888,
-    -178.0000002552476,
-    yesterday,
-    today,
-  );
+    const response = await sofarHindcast(
+      SofarModels.Wave,
+      sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
+      -3.5976336810301888,
+      -178.0000002552476,
+      yesterday,
+      today,
+    );
 
-  const values = response?.values[0] as ValueWithTimestamp;
+    const values = response?.values[0] as ValueWithTimestamp;
 
-  expect(new Date(values?.timestamp).getTime()).toBeLessThanOrEqual(
-    now.getTime(),
-  );
-});
+    expect(new Date(values?.timestamp).getTime()).toBeLessThanOrEqual(
+      now.getTime(),
+    );
+  },
+);
 
 testIfSofarToken(
   'it process Sofar Wave Date API for surface temperature',
