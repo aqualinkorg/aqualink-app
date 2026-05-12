@@ -27,6 +27,7 @@ describe('Homepage', () => {
       },
       homepage: {
         siteOnMap: null,
+        historicalDate: null,
       },
       user: {
         userInfo: mockUser,

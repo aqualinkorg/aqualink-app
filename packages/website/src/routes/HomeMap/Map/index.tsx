@@ -40,6 +40,7 @@ import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
+import HistoricalDatePicker from './HistoricalDatePicker';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -279,6 +280,7 @@ function HomepageMap({
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
       />
+      <HistoricalDatePicker />
       {tileLayer}
       {sofarLayers}
       {siteMarkers}

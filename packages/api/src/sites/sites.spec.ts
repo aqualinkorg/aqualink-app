@@ -99,6 +99,32 @@ export const siteTests = () => {
     siteId = sortedSites[sortedSites.length - 1].id;
   });
 
+  it('GET /?date= find all sites with historical date', async () => {
+    const date = DateTime.now().minus({ days: 2 }).toFormat('yyyy-MM-dd');
+    const rsp = await request(app.getHttpServer())
+      .get('/sites')
+      .query({ date });
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.length).toBeGreaterThan(0);
+    // Sites with daily_data should have collectionData populated from daily_data
+    const siteWithData = rsp.body.find(
+      (site: any) => site.id === californiaSite.id,
+    );
+    expect(siteWithData).toBeDefined();
+    if (siteWithData?.collectionData) {
+      // When collectionData is populated from daily_data, it should contain
+      // satellite temperature and/or DHW values
+      const { satelliteTemperature, dhw, tempAlert } =
+        siteWithData.collectionData;
+      const hasAnyData =
+        satelliteTemperature !== undefined ||
+        dhw !== undefined ||
+        tempAlert !== undefined;
+      expect(hasAnyData).toBe(true);
+    }
+  });
+
   it('GET /:id retrieve one site', async () => {
     const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
 
