@@ -11,6 +11,7 @@ const getMockDailyData = (
   site: DeepPartial<Site>,
 ): DeepPartial<DailyData> => ({
   dailyAlertLevel: random(4),
+  weeklyAlertLevel: random(4),
   degreeHeatingDays: random(70, true),
   date,
   site,

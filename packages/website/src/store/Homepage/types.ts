@@ -19,6 +19,7 @@ export interface HomePageState {
   siteOnMap: SiteOnMap;
   searchResult?: MapboxGeolocationData;
   siteFilter: (typeof siteOptions)[number];
+  historicalDate: string | null;
 }
 
 export interface TableRow {
