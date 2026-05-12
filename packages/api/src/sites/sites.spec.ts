@@ -19,6 +19,7 @@ import {
 import { createPoint } from '../utils/coordinates';
 import { AdminLevel } from '../users/users.entity';
 import { Site, SiteStatus } from './sites.entity';
+import { DailyData } from './daily-data.entity';
 import {
   athensSite,
   californiaSite,
@@ -97,6 +98,42 @@ export const siteTests = () => {
     });
     expect(testSite.id).toBeDefined();
     siteId = sortedSites[sortedSites.length - 1].id;
+  });
+
+  it('GET / find all sites with collection data for a past date', async () => {
+    const requestedDate = DateTime.now()
+      .minus({ days: 30 })
+      .endOf('day')
+      .toISOString();
+    const selectedDay = DateTime.fromISO(requestedDate);
+    const pastCollectionData = {
+      satelliteTemperature: 26.5,
+      degreeHeatingDays: 7.5,
+      dailyAlertLevel: 2,
+      weeklyAlertLevel: 4,
+    };
+
+    await dataSource.getRepository(DailyData).save({
+      ...pastCollectionData,
+      date: selectedDay.toJSDate(),
+      site: { id: californiaSite.id },
+    });
+
+    const rsp = await request(app.getHttpServer()).get('/sites').query({
+      date: requestedDate,
+    });
+
+    expect(rsp.status).toBe(200);
+    const site = rsp.body.find(
+      (item: { id: number }) => item.id === californiaSite.id,
+    );
+
+    expect(site.collectionData).toMatchObject({
+      satelliteTemperature: pastCollectionData.satelliteTemperature,
+      dhw: pastCollectionData.degreeHeatingDays,
+      tempAlert: pastCollectionData.dailyAlertLevel,
+      tempWeeklyAlert: pastCollectionData.weeklyAlertLevel,
+    });
   });
 
   it('GET /:id retrieve one site', async () => {

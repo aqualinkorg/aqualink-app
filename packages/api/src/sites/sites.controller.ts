@@ -62,6 +62,11 @@ export class SitesController {
   }
 
   @ApiOperation({ summary: 'Returns sites filtered by provided filters' })
+  @ApiQuery({
+    name: 'date',
+    required: false,
+    example: '2026-02-15T00:00:00.000Z',
+  })
   @Public()
   @Get()
   find(@Query() filterSiteDto: FilterSiteDto): Promise<Site[]> {
