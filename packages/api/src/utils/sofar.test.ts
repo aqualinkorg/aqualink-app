@@ -30,8 +30,8 @@ testOrSkip('It processes Sofar Spotter API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSpotterData(
     'SPOT-300434063450120',
-    process.env.SOFAR_API_TOKEN,
-    new Date('2020-09-02'),
+    new Date('2024-08-30'),
+    new Date('2024-08-31'),
   );
 
   expect(values.bottomTemperature.length).toEqual(144);
@@ -41,18 +41,15 @@ testOrSkip('It processes Sofar Spotter API for daily data.', async () => {
 testOrSkip('it process Sofar Hindcast API for wind-wave data', async () => {
   jest.setTimeout(30000);
   const now = new Date();
-  const yesterdayDate = new Date(now);
-  yesterdayDate.setDate(now.getDate() - 1);
-  const today = now.toISOString();
-  const yesterday = yesterdayDate.toISOString();
-
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
   const response = await sofarHindcast(
-    SofarModels.Wave,
-    sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
-    -3.5976336810301888,
-    -178.0000002552476,
+    SofarModels.GFSWave,
+    sofarVariableIDs[SofarModels.GFSWave].significantWaveHeight,
+    9.836944,
+    -84.068056,
     yesterday,
-    today,
+    now,
   );
 
   const values = response?.values[0] as ValueWithTimestamp;
