@@ -122,7 +122,11 @@ export const surveyTests = () => {
     expect(rsp.status).toBe(404);
   });
 
-  describe('create a mock survey with media', () => {
+  const hasGcs = !!process.env.GCS_BUCKET && !!process.env.GCS_KEYFILE;
+
+  const describeWithMedia = hasGcs ? describe : describe.skip;
+
+  describeWithMedia('create a mock survey with media', () => {
     it('POST / create a survey', async () => {
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer())
@@ -297,7 +301,7 @@ export const surveyTests = () => {
     });
   });
 
-  describe('create a survey for testing some edge cases', () => {
+  describeWithMedia('create a survey for testing some edge cases', () => {
     it('POST / create a survey', async () => {
       mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer())

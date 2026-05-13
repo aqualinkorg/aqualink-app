@@ -2,6 +2,10 @@ import React from 'react';
 import { LayersControl, TileLayer, WMSTileLayer } from 'react-leaflet';
 import { MapLayerName } from 'store/Homepage/types';
 
+// Format a Date as local YYYY-MM-DD, avoiding UTC shift from toISOString.
+const formatDateLocal = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
 type SofarLayerDefinition = {
   name: MapLayerName;
   model: string;
@@ -43,7 +47,14 @@ const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
   `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
 
-export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
+export function SofarLayers({
+  defaultLayerName,
+  selectedDate,
+}: SofarLayersProps) {
+  const dateSuffix = selectedDate
+    ? `&datetime=${formatDateLocal(selectedDate)}`
+    : '';
+
   return (
     <LayersControl position="topright">
       <LayersControl.BaseLayer
@@ -62,8 +73,8 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
           <TileLayer
             // Sofar tiles have a max native zoom of 9
             maxNativeZoom={9}
-            url={sofarUrlFromDef(def)}
-            key={def.variableId}
+            url={`${sofarUrlFromDef(def)}${dateSuffix}`}
+            key={`${def.variableId}${dateSuffix}`}
             opacity={0.5}
           />
         </LayersControl.BaseLayer>
@@ -81,6 +92,9 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
             format="image/png"
             opacity={0.7}
             url={def.url}
+            {...(selectedDate
+              ? { params: { time: formatDateLocal(selectedDate) } }
+              : {})}
           />
         </LayersControl.BaseLayer>
       ))}
@@ -90,6 +104,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
 
 interface SofarLayersProps {
   defaultLayerName?: MapLayerName;
+  selectedDate?: Date | null;
 }
 
 export default SofarLayers;

@@ -35,13 +35,13 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  { date?: string } | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(arg?.date);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +55,12 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg, { getState }) {
       const {
         sitesList: { list },
       } = getState();
-      return !list;
+      // Allow refetch when a date is explicitly provided
+      return !list || !!arg?.date;
     },
   },
 );

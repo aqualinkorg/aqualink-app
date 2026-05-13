@@ -4,11 +4,14 @@ import { DynamicCollection } from '../collections/collections.entity';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { DailyData } from '../sites/daily-data.entity';
 import { LatestData } from '../time-series/latest-data.entity';
 
 export const getCollectionData = async (
   sites: Site[],
   latestDataRepository: Repository<LatestData>,
+  dailyDataRepository?: Repository<DailyData>,
+  date?: string,
 ): Promise<Record<number, CollectionDataDto>> => {
   const siteIds = sites.map((site) => site.id);
 
@@ -16,7 +19,41 @@ export const getCollectionData = async (
     return {};
   }
 
-  // Get latest data
+  // When a historical date is specified, query daily_data instead of latest_data
+  if (date && dailyDataRepository) {
+    const rows = await dailyDataRepository
+      .createQueryBuilder('daily')
+      .select('daily.site_id', 'siteId')
+      .addSelect('daily.satellite_temperature', 'satelliteTemperature')
+      .addSelect('daily.degree_heating_days', 'degreeHeatingDays')
+      .addSelect('daily.daily_alert_level', 'dailyAlertLevel')
+      .addSelect('daily.weekly_alert_level', 'weeklyAlertLevel')
+      .addSelect('daily.date', 'date')
+      .where('daily.site_id IN (:...siteIds)', { siteIds })
+      .andWhere('daily.date <= :date', { date })
+      .andWhere('daily.satellite_temperature IS NOT NULL')
+      .getRawMany();
+
+    // Keep only the latest daily row per site
+    const latestById = _(rows)
+      .groupBy((o) => o.siteId)
+      .mapValues(
+        (groupRows) =>
+          _(groupRows).orderBy((o) => new Date(o.date).getTime(), 'desc')[0],
+      )
+      .toJSON();
+
+    return _(latestById)
+      .mapValues<CollectionDataDto>((data) => ({
+        satelliteTemperature: data.satelliteTemperature,
+        degreeHeatingDays: data.degreeHeatingDays,
+        dailyAlertLevel: data.dailyAlertLevel,
+        weeklyAlertLevel: data.weeklyAlertLevel,
+      }))
+      .toJSON();
+  }
+
+  // Default: get latest data
   const latestData: LatestData[] = await latestDataRepository
     .createQueryBuilder('latest_data')
     .select('id')

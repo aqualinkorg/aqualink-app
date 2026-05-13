@@ -67,13 +67,15 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    const dateStr = selectedDate?.toISOString().split('T')[0];
+    dispatch(sitesRequest(dateStr ? { date: dateStr } : undefined));
+  }, [dispatch, selectedDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,6 +126,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              selectedDate={selectedDate}
+              onDateChange={setSelectedDate}
             />
           </Grid>
           {showSiteTable && (
