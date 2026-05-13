@@ -7,7 +7,11 @@ import {
 } from './sofar';
 import { ValueWithTimestamp } from './sofar.types';
 
-test('It processes Sofar API for daily data.', async () => {
+const hasSofarToken = !!process.env.SOFAR_API_TOKEN;
+
+const testOrSkip = hasSofarToken ? test : test.skip;
+
+testOrSkip('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSofarHindcastData(
     'NOAACoralReefWatch',
@@ -22,7 +26,7 @@ test('It processes Sofar API for daily data.', async () => {
   ]);
 });
 
-test('It processes Sofar Spotter API for daily data.', async () => {
+testOrSkip('It processes Sofar Spotter API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSpotterData(
     'SPOT-300434063450120',
@@ -34,7 +38,7 @@ test('It processes Sofar Spotter API for daily data.', async () => {
   expect(values.topTemperature.length).toEqual(144);
 });
 
-test('it process Sofar Hindcast API for wind-wave data', async () => {
+testOrSkip('it process Sofar Hindcast API for wind-wave data', async () => {
   jest.setTimeout(30000);
   const now = new Date();
   const yesterdayDate = new Date(now);
@@ -58,7 +62,7 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
   );
 });
 
-test('it process Sofar Wave Date API for surface temperature', async () => {
+testOrSkip('it process Sofar Wave Date API for surface temperature', async () => {
   jest.setTimeout(30000);
   const now = new Date();
   const yesterdayDate = new Date(now);
