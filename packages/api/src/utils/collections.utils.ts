@@ -37,7 +37,12 @@ export const getCollectionData = async (
     // Keep only the latest daily row per site
     const latestById = _(rows)
       .groupBy((o) => o.siteId)
-      .mapValues((groupRows) => groupRows.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0])
+      .mapValues(
+        (groupRows) =>
+          groupRows.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          )[0],
+      )
       .toJSON();
 
     return _(latestById)
