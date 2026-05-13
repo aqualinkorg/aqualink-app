@@ -67,6 +67,7 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -124,6 +125,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              selectedDate={selectedDate}
+              onDateChange={setSelectedDate}
             />
           </Grid>
           {showSiteTable && (

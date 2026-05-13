@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
   MapContainer,
@@ -23,6 +23,7 @@ import withStyles, {
   CSSProperties,
 } from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
@@ -35,6 +36,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
 import { mapIconSize } from 'layout/App/theme';
+import DatePicker from 'common/Datepicker';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
@@ -91,6 +93,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  selectedDate,
+  onDateChange,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -104,6 +108,14 @@ function HomepageMap({
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<L.Map>(null);
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+
+  const handleDateChange = useCallback(
+    (date: Date | null) => {
+      onDateChange?.(date);
+    },
+    [onDateChange],
+  );
 
   useEffect(() => {
     if (ref.current && onMapLoad) {
@@ -189,8 +201,8 @@ function HomepageMap({
 
   // Memoize the layers to prevent unnecessary re-renders
   const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} />,
-    [defaultLayerName],
+    () => <SofarLayers defaultLayerName={defaultLayerName} selectedDate={selectedDate} />,
+    [defaultLayerName, selectedDate],
   );
 
   const siteMarkers = useMemo(
@@ -275,6 +287,33 @@ function HomepageMap({
           <InfoIcon color="primary" />
         </IconButton>
       </div>
+      <div className={classes.calendarIconButton}>
+        <IconButton onClick={() => setDatePickerOpen(!datePickerOpen)} size="large">
+          <CalendarMonthIcon color="primary" />
+        </IconButton>
+      </div>
+      {datePickerOpen && (
+        <div className={classes.datePickerContainer}>
+          <DatePicker
+            value={selectedDate ? selectedDate.toISOString() : new Date().toISOString()}
+            dateName="Map Date"
+            timeZone="UTC"
+            onChange={handleDateChange}
+          />
+          {selectedDate && (
+            <IconButton
+              size="small"
+              onClick={() => {
+                handleDateChange(null);
+                setDatePickerOpen(false);
+              }}
+              title="Show current data"
+            >
+              <span style={{ fontSize: 12 }}>Today</span>
+            </IconButton>
+          )}
+        </div>
+      )}
       <InfoDialog
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
@@ -358,6 +397,25 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    calendarIconButton: {
+      ...mapButtonStyles,
+      right: 0,
+      top: 150,
+      zIndex: 400,
+      [theme.breakpoints.down('lg')]: {
+        top: 100,
+      },
+    },
+    datePickerContainer: {
+      position: 'absolute' as 'absolute',
+      top: 200,
+      right: 10,
+      zIndex: 400,
+      backgroundColor: 'white',
+      borderRadius: 4,
+      padding: '8px 12px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -385,6 +443,8 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  selectedDate?: Date | null;
+  onDateChange?: (date: Date | null) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
