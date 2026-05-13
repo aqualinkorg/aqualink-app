@@ -43,7 +43,10 @@ const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
   `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
 
-export function SofarLayers({ defaultLayerName, selectedDate }: SofarLayersProps) {
+export function SofarLayers({
+  defaultLayerName,
+  selectedDate,
+}: SofarLayersProps) {
   const dateSuffix = selectedDate
     ? `&datetime=${selectedDate.toISOString().split('T')[0]}`
     : '';

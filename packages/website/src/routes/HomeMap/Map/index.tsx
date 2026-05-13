@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
 import { useSelector } from 'react-redux';
 import {
   MapContainer,
@@ -201,7 +207,12 @@ function HomepageMap({
 
   // Memoize the layers to prevent unnecessary re-renders
   const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} selectedDate={selectedDate} />,
+    () => (
+      <SofarLayers
+        defaultLayerName={defaultLayerName}
+        selectedDate={selectedDate}
+      />
+    ),
     [defaultLayerName, selectedDate],
   );
 
@@ -288,14 +299,21 @@ function HomepageMap({
         </IconButton>
       </div>
       <div className={classes.calendarIconButton}>
-        <IconButton onClick={() => setDatePickerOpen(!datePickerOpen)} size="large">
+        <IconButton
+          onClick={() => setDatePickerOpen(!datePickerOpen)}
+          size="large"
+        >
           <CalendarMonthIcon color="primary" />
         </IconButton>
       </div>
       {datePickerOpen && (
         <div className={classes.datePickerContainer}>
           <DatePicker
-            value={selectedDate ? selectedDate.toISOString() : new Date().toISOString()}
+            value={
+              selectedDate
+                ? selectedDate.toISOString()
+                : new Date().toISOString()
+            }
             dateName="Map Date"
             timeZone="UTC"
             onChange={handleDateChange}
