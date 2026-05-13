@@ -118,6 +118,8 @@ function HomepageMap({
 
   const handleDateChange = useCallback(
     (date: Date | null) => {
+      // Guard against invalid dates from the picker
+      if (date && isNaN(date.getTime())) return;
       onDateChange?.(date);
     },
     [onDateChange],

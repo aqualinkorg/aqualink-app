@@ -2,6 +2,10 @@ import React from 'react';
 import { LayersControl, TileLayer, WMSTileLayer } from 'react-leaflet';
 import { MapLayerName } from 'store/Homepage/types';
 
+// Format a Date as local YYYY-MM-DD, avoiding UTC shift from toISOString.
+const formatDateLocal = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
 type SofarLayerDefinition = {
   name: MapLayerName;
   model: string;
@@ -48,7 +52,7 @@ export function SofarLayers({
   selectedDate,
 }: SofarLayersProps) {
   const dateSuffix = selectedDate
-    ? `&datetime=${selectedDate.toISOString().split('T')[0]}`
+    ? `&datetime=${formatDateLocal(selectedDate)}`
     : '';
 
   return (
