@@ -62,24 +62,27 @@ testOrSkip('it process Sofar Hindcast API for wind-wave data', async () => {
   );
 });
 
-testOrSkip('it process Sofar Wave Date API for surface temperature', async () => {
-  jest.setTimeout(30000);
-  const now = new Date();
-  const yesterdayDate = new Date(now);
-  yesterdayDate.setDate(now.getDate() - 1);
-  const today = now.toISOString();
-  const yesterday = yesterdayDate.toISOString();
+testOrSkip(
+  'it process Sofar Wave Date API for surface temperature',
+  async () => {
+    jest.setTimeout(30000);
+    const now = new Date();
+    const yesterdayDate = new Date(now);
+    yesterdayDate.setDate(now.getDate() - 1);
+    const today = now.toISOString();
+    const yesterday = yesterdayDate.toISOString();
 
-  const response = await sofarWaveData(
-    'SPOT-1644',
-    process.env.SOFAR_API_TOKEN,
-    yesterday,
-    today,
-  );
+    const response = await sofarWaveData(
+      'SPOT-1644',
+      process.env.SOFAR_API_TOKEN,
+      yesterday,
+      today,
+    );
 
-  expect(response).toBeDefined();
-  expect(response?.data).toBeDefined();
-  expect(response?.data.waves).toBeDefined();
-  expect(Array.isArray(response?.data.waves)).toBe(true);
-  expect(response?.data.waves.length).toBeGreaterThan(0);
-});
+    expect(response).toBeDefined();
+    expect(response?.data).toBeDefined();
+    expect(response?.data.waves).toBeDefined();
+    expect(Array.isArray(response?.data.waves)).toBe(true);
+    expect(response?.data.waves.length).toBeGreaterThan(0);
+  },
+);
