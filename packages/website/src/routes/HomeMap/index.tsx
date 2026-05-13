@@ -73,8 +73,9 @@ function Homepage({ classes }: HomepageProps) {
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    const dateStr = selectedDate?.toISOString().split('T')[0];
+    dispatch(sitesRequest(dateStr ? { date: dateStr } : undefined));
+  }, [dispatch, selectedDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {

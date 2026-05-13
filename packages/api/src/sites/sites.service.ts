@@ -201,6 +201,8 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      this.dailyDataRepository,
+      filter.date,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
