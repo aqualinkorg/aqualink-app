@@ -79,34 +79,25 @@ export function SofarLayers({
           />
         </LayersControl.BaseLayer>
       ))}
-      {WMS_LAYERS.map((def) => {
-        const wmsParams: Record<string, string> = {
-          layers: def.layer,
-          styles: 'boxfill/x-sst',
-          transparent: 'true',
-          format: 'image/png',
-        };
-        if (selectedDate) {
-          wmsParams.time = formatDateLocal(selectedDate);
-        }
-        return (
-          <LayersControl.BaseLayer
-            checked={def.name === defaultLayerName}
-            name={def.name}
-            key={def.name}
-          >
-            <WMSTileLayer
-              layers={def.layer}
-              styles="boxfill/x-sst"
-              transparent
-              format="image/png"
-              opacity={0.7}
-              url={def.url}
-              {...(selectedDate ? { params: { time: formatDateLocal(selectedDate) } } : {})}
-            />
-          </LayersControl.BaseLayer>
-        );
-      })}
+      {WMS_LAYERS.map((def) => (
+        <LayersControl.BaseLayer
+          checked={def.name === defaultLayerName}
+          name={def.name}
+          key={def.name}
+        >
+          <WMSTileLayer
+            layers={def.layer}
+            styles="boxfill/x-sst"
+            transparent
+            format="image/png"
+            opacity={0.7}
+            url={def.url}
+            {...(selectedDate
+              ? { params: { time: formatDateLocal(selectedDate) } }
+              : {})}
+          />
+        </LayersControl.BaseLayer>
+      ))}
     </LayersControl>
   );
 }
