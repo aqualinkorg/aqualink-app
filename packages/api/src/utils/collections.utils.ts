@@ -39,9 +39,7 @@ export const getCollectionData = async (
       .groupBy((o) => o.siteId)
       .mapValues(
         (groupRows) =>
-          groupRows.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-          )[0],
+          _(groupRows).orderBy((o) => new Date(o.date).getTime(), 'desc')[0],
       )
       .toJSON();
 
