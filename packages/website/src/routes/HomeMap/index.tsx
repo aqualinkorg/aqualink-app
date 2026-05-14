@@ -67,6 +67,7 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -76,14 +77,15 @@ function Homepage({ classes }: HomepageProps) {
   }, [dispatch]);
 
   useEffect(() => {
+    const dateParam = selectedDate?.toISOString();
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, date: dateParam }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(siteRequest({ id: `${siteOnMap.id}`, date: dateParam }));
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dispatch, initialSiteId, siteOnMap, selectedDate]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -124,6 +126,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
             />
           </Grid>
           {showSiteTable && (

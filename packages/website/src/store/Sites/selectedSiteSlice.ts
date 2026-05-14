@@ -90,14 +90,18 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  { id: string; date?: string },
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async ({ id, date }, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        date,
+        date,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,11 +127,13 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition({ id, date }, { getState }) {
       const {
         selectedSite: { details },
       } = getState();
-      return `${details?.id}` !== id;
+      // If a date is provided, always fetch to get historical data.
+      // Otherwise, only fetch if the site ID has changed.
+      return !!date || `${details?.id}` !== id;
     },
   },
 );

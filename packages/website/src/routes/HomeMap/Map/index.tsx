@@ -41,6 +41,9 @@ import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
 
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const tileURL = accessToken
@@ -91,6 +94,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  selectedDate,
+  setSelectedDate,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -275,6 +280,22 @@ function HomepageMap({
           <InfoIcon color="primary" />
         </IconButton>
       </div>
+      <div className={classes.datePickerContainer}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+            label="Historical Date"
+            value={selectedDate}
+            onChange={(newValue) => setSelectedDate(newValue)}
+            slotProps={{
+              textField: {
+                size: 'small',
+                variant: 'outlined',
+                style: { backgroundColor: 'white', borderRadius: 4 },
+              },
+            }}
+          />
+        </LocalizationProvider>
+      </div>
       <InfoDialog
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
@@ -358,6 +379,17 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    datePickerContainer: {
+      position: 'absolute',
+      bottom: 30,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 400,
+      backgroundColor: 'white',
+      padding: theme.spacing(1),
+      borderRadius: theme.shape.borderRadius,
+      boxShadow: theme.shadows[3],
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -385,6 +417,8 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  selectedDate: Date | null;
+  setSelectedDate: (date: Date | null) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

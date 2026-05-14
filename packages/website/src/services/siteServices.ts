@@ -33,13 +33,16 @@ const getSite = (id: string) =>
     method: 'GET',
   });
 
-const getSiteDailyData = (id: string, start?: string, end?: string) =>
-  requests.send<DailyData[]>({
-    url: `sites/${id}/daily_data${
-      start && end ? `?end=${end}&start=${start}` : ''
-    }`,
+const getSiteDailyData = (id: string, start?: string, end?: string) => {
+  const query = new URLSearchParams();
+  if (start) query.append('start', start);
+  if (end) query.append('end', end);
+  const queryString = query.toString();
+  return requests.send<DailyData[]>({
+    url: `sites/${id}/daily_data${queryString ? `?${queryString}` : ''}`,
     method: 'GET',
   });
+};
 
 const getSiteForecastData = (id: string) =>
   requests.send<ForecastData[]>({
