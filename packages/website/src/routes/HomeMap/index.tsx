@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Box, Button, Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
+import { DateTime } from 'luxon-extensions';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
@@ -15,6 +16,7 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import DatePicker from 'common/Datepicker';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -67,13 +69,23 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [mapDate, setMapDate] = useState<string | undefined>();
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(mapDate));
+  }, [dispatch, mapDate]);
+
+  const onMapDateChange = (date: Date | null) => {
+    if (!date) {
+      setMapDate(undefined);
+      return;
+    }
+
+    setMapDate(DateTime.fromJSDate(date).toFormat('yyyy-MM-dd'));
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -111,6 +123,20 @@ function Homepage({ classes }: HomepageProps) {
         <HomepageNavBar searchLocation geocodingEnabled />
       </div>
       <div className={classes.root}>
+        <Box className={classes.mapDateControl}>
+          <DatePicker
+            value={mapDate || null}
+            dateName="Map date"
+            dateNameTextVariant="subtitle2"
+            timeZone="UTC"
+            onChange={onMapDateChange}
+          />
+          {mapDate && (
+            <Button size="small" onClick={() => setMapDate(undefined)}>
+              Today
+            </Button>
+          )}
+        </Box>
         <Grid container>
           <Grid
             className={classes.map}
@@ -161,6 +187,24 @@ const styles = () =>
       display: 'flex',
       flexGrow: 1,
       userSelect: 'none',
+      position: 'relative',
+    },
+    mapDateControl: {
+      position: 'absolute',
+      top: 16,
+      left: 16,
+      zIndex: 500,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      padding: '8px 12px',
+      backgroundColor: 'rgba(255, 255, 255, 0.92)',
+      borderRadius: 4,
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.22)',
+      '@media (max-width:600px)': {
+        top: 8,
+        left: 8,
+      },
     },
     map: {
       display: 'flex',
