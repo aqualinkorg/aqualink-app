@@ -18,6 +18,7 @@ import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
 import DatePicker from 'common/Datepicker';
 import { useQueryParam } from 'hooks/useQueryParams';
+import { toUtcEndOfMapDate } from './mapDate';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -85,14 +86,7 @@ function Homepage({ classes }: HomepageProps) {
   }, [dispatch, selectedDate]);
 
   const onDateChange = (date: Date | null) => {
-    setSelectedDate(
-      date
-        ? DateTime.fromJSDate(date)
-            .setZone('UTC', { keepLocalTime: true })
-            .endOf('day')
-            .toISOString() || undefined
-        : undefined,
-    );
+    setSelectedDate(toUtcEndOfMapDate(date));
   };
 
   const resetDate = () => {
