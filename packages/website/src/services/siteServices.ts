@@ -83,9 +83,9 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (asOf?: string | null) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: `sites${asOf ? `?asOf=${encodeURIComponent(asOf)}` : ''}`,
     method: 'GET',
   });
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Box, Button, Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -11,6 +11,7 @@ import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import DatePicker from 'common/Datepicker';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
@@ -67,13 +68,14 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [asOf, setAsOf] = useState<string | null>(null);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest({ asOf }));
+  }, [dispatch, asOf]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -118,13 +120,38 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
-            <HomepageMap
-              onMapLoad={setMapInstance}
-              setShowSiteTable={setShowSiteTable}
-              showSiteTable={showSiteTable}
-              initialZoom={initialZoom}
-              initialCenter={initialCenter}
-            />
+            <Box className={classes.mapContainer}>
+              <Box className={classes.asOfPicker}>
+                <DatePicker
+                  dateName="As of"
+                  timeZone={null}
+                  value={asOf}
+                  onChange={(date) => {
+                    if (!date) {
+                      setAsOf(null);
+                      return;
+                    }
+                    const endOfDay = new Date(date);
+                    endOfDay.setHours(23, 59, 59, 999);
+                    setAsOf(endOfDay.toISOString());
+                  }}
+                />
+                <Button
+                  size="small"
+                  onClick={() => setAsOf(null)}
+                  disabled={!asOf}
+                >
+                  Latest
+                </Button>
+              </Box>
+              <HomepageMap
+                onMapLoad={setMapInstance}
+                setShowSiteTable={setShowSiteTable}
+                showSiteTable={showSiteTable}
+                initialZoom={initialZoom}
+                initialCenter={initialCenter}
+              />
+            </Box>
           </Grid>
           {showSiteTable && (
             <Hidden mdDown>
@@ -165,6 +192,22 @@ const styles = () =>
     map: {
       display: 'flex',
       zIndex: 0,
+    },
+    mapContainer: {
+      position: 'relative',
+      flex: 1,
+    },
+    asOfPicker: {
+      position: 'absolute',
+      zIndex: 500,
+      top: 12,
+      left: 12,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      padding: '0.25rem 0.5rem',
+      borderRadius: 8,
+      background: 'rgba(255, 255, 255, 0.9)',
     },
     siteTable: {
       display: 'flex',
