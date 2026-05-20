@@ -305,6 +305,23 @@ export const siteTests = () => {
       expect(rsp.status).toBe(200);
       expect(rsp.body.length).toBe(2);
     });
+
+    it('GET / filter sites collection data by date', async () => {
+      const dailyData = californiaDailyData[0];
+      const rsp = await request(app.getHttpServer()).get('/sites').query({
+        date: dailyData.date,
+      });
+
+      expect(rsp.status).toBe(200);
+      const california = rsp.body.find(
+        (site: Site) => site.id === californiaSite.id,
+      );
+      expect(california.collectionData).toMatchObject({
+        satelliteTemperature: dailyData.satelliteTemperature,
+        dhw: dailyData.degreeHeatingDays! / 7,
+        tempAlert: dailyData.dailyAlertLevel,
+      });
+    });
   });
 
   describe('test edge cases', () => {

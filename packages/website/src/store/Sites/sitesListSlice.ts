@@ -35,13 +35,14 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  string | null | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const requestedDate = arg || null;
+      const { data } = await siteServices.getSites(requestedDate);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,17 +50,19 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        requestedDate,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: string | null | undefined, { getState }) {
+      const requestedDate = arg || null;
       const {
-        sitesList: { list },
+        sitesList: { list, requestedDate: currentRequestedDate },
       } = getState();
-      return !list;
+      return !list || currentRequestedDate !== requestedDate;
     },
   },
 );
@@ -108,6 +111,7 @@ const sitesListSlice = createSlice({
       (state, action: PayloadAction<SitesRequestData>) => ({
         ...state,
         list: action.payload.list,
+        requestedDate: action.payload.requestedDate,
         loading: false,
       }),
     );
