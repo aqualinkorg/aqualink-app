@@ -7,7 +7,7 @@ import { DateTime } from 'luxon-extensions';
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { parseISO } from 'date-fns';
+import { isValid, parseISO } from 'date-fns';
 
 function DatePicker({
   value,
@@ -18,6 +18,9 @@ function DatePicker({
   onChange,
   classes,
 }: DatePickerProps) {
+  const parsedValue = value ? parseISO(value) : null;
+  const pickerValue = parsedValue && isValid(parsedValue) ? parsedValue : null;
+
   return (
     <Grid item>
       <Box display="flex" alignItems="flex-end">
@@ -34,7 +37,7 @@ function DatePicker({
                 .toJSDate()}
               minDate={DateTime.fromMillis(0).toJSDate()}
               closeOnSelect={autoOk}
-              value={parseISO(value ?? '')}
+              value={pickerValue}
               onChange={(v) => onChange(v)}
               slotProps={{
                 textField: {

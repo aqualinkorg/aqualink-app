@@ -95,10 +95,9 @@ export const getDailyCollectionData = async (
       ...(tempWeeklyAlert !== null && { tempWeeklyAlert }),
     };
 
-    return {
-      ...acc,
-      [data.siteId]: collectionData,
-    };
+    // eslint-disable-next-line fp/no-mutation
+    acc[data.siteId] = collectionData;
+    return acc;
   }, {});
 };
 

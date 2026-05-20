@@ -201,7 +201,9 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const date = filter.date ? DateTime.fromISO(filter.date) : null;
+    const date = filter.date
+      ? DateTime.fromISO(filter.date, { zone: 'utc' })
+      : null;
 
     if (date && !date.isValid) {
       throw new BadRequestException('Invalid date');
@@ -258,7 +260,9 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
-    const date = dateString ? DateTime.fromISO(dateString) : null;
+    const date = dateString
+      ? DateTime.fromISO(dateString, { zone: 'utc' })
+      : null;
 
     if (date && !date.isValid) {
       throw new BadRequestException('Invalid date');

@@ -87,7 +87,10 @@ function Homepage({ classes }: HomepageProps) {
   const onDateChange = (date: Date | null) => {
     setSelectedDate(
       date
-        ? DateTime.fromJSDate(date).endOf('day').toISOString() || undefined
+        ? DateTime.fromJSDate(date)
+            .setZone('UTC', { keepLocalTime: true })
+            .endOf('day')
+            .toISOString() || undefined
         : undefined,
     );
   };
