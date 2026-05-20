@@ -235,7 +235,7 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, dateString?: string): Promise<Site> {
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -258,10 +258,19 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
-    const mappedSiteData = await getCollectionData(
-      [site],
-      this.latestDataRepository,
-    );
+    const date = dateString ? DateTime.fromISO(dateString) : null;
+
+    if (date && !date.isValid) {
+      throw new BadRequestException('Invalid date');
+    }
+
+    const mappedSiteData = date
+      ? await getDailyCollectionData(
+          [site],
+          this.dailyDataRepository,
+          date.endOf('day').toJSDate(),
+        )
+      : await getCollectionData([site], this.latestDataRepository);
 
     const maskedSpotterApiToken = site.spotterApiToken
       ? `****${site.spotterApiToken?.slice(-4)}`

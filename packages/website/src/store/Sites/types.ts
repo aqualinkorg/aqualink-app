@@ -414,6 +414,7 @@ export interface SitesListState {
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  detailsDate: string | null;
   spotterPosition?: {
     position?: {
       longitude: number;

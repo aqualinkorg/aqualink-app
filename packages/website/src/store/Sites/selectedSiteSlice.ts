@@ -24,6 +24,7 @@ import {
 
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
+  detailsDate: null,
   loading: true,
   loadingSpotterPosition: 0,
   timeSeriesDataLoading: false,
@@ -90,14 +91,20 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  string | { id: string; date?: string | null },
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { id, date } =
+        typeof arg === 'string' ? { id: arg, date: null } : arg;
+      const { data } = await siteServices.getSite(id, date || undefined);
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        undefined,
+        date || undefined,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,11 +130,16 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(
+      arg: string | { id: string; date?: string | null },
+      { getState },
+    ) {
+      const { id, date } =
+        typeof arg === 'string' ? { id: arg, date: null } : arg;
       const {
-        selectedSite: { details },
+        selectedSite: { details, detailsDate },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || detailsDate !== (date || null);
     },
   },
 );
@@ -334,14 +346,16 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
+    builder.addCase(siteRequest.fulfilled, (state, action) => {
+      const { date } =
+        typeof action.meta.arg === 'string' ? { date: null } : action.meta.arg;
+      return {
         ...state,
         details: action.payload,
+        detailsDate: date || null,
         loading: false,
-      }),
-    );
+      };
+    });
 
     builder.addCase(
       siteRequest.rejected,

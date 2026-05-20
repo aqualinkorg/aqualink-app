@@ -98,13 +98,15 @@ function Homepage({ classes }: HomepageProps) {
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, date: selectedDate || null }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(
+        siteRequest({ id: `${siteOnMap.id}`, date: selectedDate || null }),
+      );
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dispatch, initialSiteId, selectedDate, siteOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 

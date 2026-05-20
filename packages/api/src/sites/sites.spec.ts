@@ -132,6 +132,25 @@ export const siteTests = () => {
     expect(rsp.body.maskedSpotterApiToken).toBeUndefined();
   });
 
+  it('GET /:id retrieve one site with data from a selected date', async () => {
+    const dailyData = californiaDailyData[3];
+    const rsp = await request(app.getHttpServer())
+      .get(`/sites/${californiaSite.id}`)
+      .query({
+        date: dailyData.date,
+      });
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.collectionData).toMatchObject({
+      satelliteTemperature: dailyData.satelliteTemperature,
+      tempAlert: dailyData.dailyAlertLevel,
+      tempWeeklyAlert: dailyData.dailyAlertLevel,
+    });
+    expect(rsp.body.collectionData.dhw).toBeCloseTo(
+      Number(dailyData.degreeHeatingDays) / 7,
+    );
+  });
+
   it('GET /:id/daily_data', async () => {
     const rsp = await request(app.getHttpServer())
       .get(`/sites/${californiaSite.id}/daily_data`)
@@ -331,6 +350,16 @@ export const siteTests = () => {
       const rsp = await request(app.getHttpServer()).get('/sites/0');
 
       expect(rsp.status).toBe(404);
+    });
+
+    it('GET /:id retrieve a site with invalid date', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}`)
+        .query({
+          date: 'invalid date',
+        });
+
+      expect(rsp.status).toBe(400);
     });
 
     it('PUT /:id update a non-existing site', async () => {

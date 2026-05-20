@@ -27,19 +27,23 @@ import {
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
-const getSite = (id: string) =>
+const getSite = (id: string, date?: string) =>
   requests.send<Site>({
-    url: `sites/${id}`,
+    url: `sites/${id}${date ? `?date=${encodeURIComponent(date)}` : ''}`,
     method: 'GET',
   });
 
-const getSiteDailyData = (id: string, start?: string, end?: string) =>
-  requests.send<DailyData[]>({
-    url: `sites/${id}/daily_data${
-      start && end ? `?end=${end}&start=${start}` : ''
-    }`,
+const getSiteDailyData = (id: string, start?: string, end?: string) => {
+  const params = [start && ['start', start], end && ['end', end]].filter(
+    Boolean,
+  ) as string[][];
+  const query = new URLSearchParams(params).toString();
+
+  return requests.send<DailyData[]>({
+    url: `sites/${id}/daily_data${query ? `?${query}` : ''}`,
     method: 'GET',
   });
+};
 
 const getSiteForecastData = (id: string) =>
   requests.send<ForecastData[]>({
