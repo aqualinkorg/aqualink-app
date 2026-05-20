@@ -21,6 +21,7 @@ import type {
   PatchSiteFiltersPayload,
   SiteFilters,
   SitesListState,
+  SitesRequestParams,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
 } from './types';
@@ -30,18 +31,20 @@ import { readFiltersFromUrl, writeFiltersToUrl } from './helpers';
 const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
+  date: null,
   filters: {},
 };
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestParams | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const requestedDate = arg?.date || null;
+      const { data } = await siteServices.getSites(requestedDate || undefined);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,17 +52,19 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        date: requestedDate,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: SitesRequestParams | undefined, { getState }) {
+      const requestedDate = arg?.date || null;
       const {
-        sitesList: { list },
+        sitesList: { date, list },
       } = getState();
-      return !list;
+      return !list || date !== requestedDate;
     },
   },
 );
@@ -108,6 +113,7 @@ const sitesListSlice = createSlice({
       (state, action: PayloadAction<SitesRequestData>) => ({
         ...state,
         list: action.payload.list,
+        date: action.payload.date,
         loading: false,
       }),
     );

@@ -40,7 +40,10 @@ import { backfillSiteData } from '../workers/backfill-site-data';
 import { SiteApplication } from '../site-applications/site-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
-import { getCollectionData } from '../utils/collections.utils';
+import {
+  getCollectionData,
+  getDailyCollectionData,
+} from '../utils/collections.utils';
 import { LatestData } from '../time-series/latest-data.entity';
 import { getYouTubeVideoId } from '../utils/urls';
 import {
@@ -198,10 +201,19 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    const date = filter.date ? DateTime.fromISO(filter.date) : null;
+
+    if (date && !date.isValid) {
+      throw new BadRequestException('Invalid date');
+    }
+
+    const mappedSiteData = date
+      ? await getDailyCollectionData(
+          res,
+          this.dailyDataRepository,
+          date.endOf('day').toJSDate(),
+        )
+      : await getCollectionData(res, this.latestDataRepository);
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 

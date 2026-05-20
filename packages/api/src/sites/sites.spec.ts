@@ -99,6 +99,25 @@ export const siteTests = () => {
     siteId = sortedSites[sortedSites.length - 1].id;
   });
 
+  it('GET / find all sites with data from a selected date', async () => {
+    const dailyData = californiaDailyData[3];
+    const rsp = await request(app.getHttpServer()).get('/sites').query({
+      date: dailyData.date,
+    });
+
+    expect(rsp.status).toBe(200);
+    const site = rsp.body.find(({ id }: Site) => id === californiaSite.id);
+
+    expect(site.collectionData).toMatchObject({
+      satelliteTemperature: dailyData.satelliteTemperature,
+      tempAlert: dailyData.dailyAlertLevel,
+      tempWeeklyAlert: dailyData.dailyAlertLevel,
+    });
+    expect(site.collectionData.dhw).toBeCloseTo(
+      Number(dailyData.degreeHeatingDays) / 7,
+    );
+  });
+
   it('GET /:id retrieve one site', async () => {
     const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
 
@@ -339,6 +358,14 @@ export const siteTests = () => {
           start: 'invalid date',
           end: '2020-10-10TInvalidDate',
         });
+
+      expect(rsp.status).toBe(400);
+    });
+
+    it('GET / retrieve sites with invalid date', async () => {
+      const rsp = await request(app.getHttpServer()).get('/sites').query({
+        date: 'invalid date',
+      });
 
       expect(rsp.status).toBe(400);
     });
