@@ -1,9 +1,4 @@
 import { DateTime } from 'luxon-extensions';
 
-export const toUtcEndOfMapDate = (date: Date | null) =>
-  date
-    ? DateTime.fromJSDate(date)
-        .setZone('UTC', { keepLocalTime: true })
-        .endOf('day')
-        .toISOString() || undefined
-    : undefined;
+export const toMapDateParam = (date: Date | null) =>
+  date ? DateTime.fromJSDate(date).toISODate() || undefined : undefined;

@@ -18,7 +18,7 @@ import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
 import DatePicker from 'common/Datepicker';
 import { useQueryParam } from 'hooks/useQueryParams';
-import { toUtcEndOfMapDate } from './mapDate';
+import { toMapDateParam } from './mapDate';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -86,7 +86,7 @@ function Homepage({ classes }: HomepageProps) {
   }, [dispatch, selectedDate]);
 
   const onDateChange = (date: Date | null) => {
-    setSelectedDate(toUtcEndOfMapDate(date));
+    setSelectedDate(toMapDateParam(date));
   };
 
   const resetDate = () => {
