@@ -6,6 +6,12 @@ import { mockCollection } from 'mocks/mockCollection';
 import { renderWithProviders } from 'utils/test-utils';
 import Uploads from '.';
 
+vi.mock('services/siteServices', () => ({
+  default: {
+    getSiteSurveyPoints: vi.fn().mockResolvedValue({ data: [] }),
+  },
+}));
+
 const mockStore = configureStore([]);
 
 describe('Multi Site Uploads', () => {
