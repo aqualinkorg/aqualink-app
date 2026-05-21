@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Button, Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
+import { DateTime } from 'luxon-extensions';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
@@ -15,12 +16,16 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import DatePicker from 'common/Datepicker';
+import { useQueryParam } from 'hooks/useQueryParams';
+import { toMapDateParam } from './mapDate';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
@@ -31,6 +36,7 @@ interface MapQueryParams {
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
 const INITIAL_ZOOM = 4;
+const isValidDate = (value: string) => DateTime.fromISO(value).isValid;
 
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
@@ -67,23 +73,37 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [selectedDate, setSelectedDate] = useQueryParam(
+    QueryParamKeys.DATE,
+    isValidDate,
+  );
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest({ date: selectedDate ?? null }));
+  }, [dispatch, selectedDate]);
+
+  const onDateChange = (date: Date | null) => {
+    setSelectedDate(toMapDateParam(date));
+  };
+
+  const resetDate = () => {
+    setSelectedDate(undefined);
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, date: selectedDate ?? null }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(
+        siteRequest({ id: `${siteOnMap.id}`, date: selectedDate ?? null }),
+      );
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dispatch, initialSiteId, selectedDate, siteOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -118,6 +138,25 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
+            <div className={classes.mapDateControl}>
+              <DatePicker
+                value={selectedDate}
+                dateName="Map date"
+                dateNameTextVariant="body2"
+                timeZone="UTC"
+                onChange={onDateChange}
+              />
+              {selectedDate && (
+                <Button
+                  className={classes.latestButton}
+                  color="primary"
+                  onClick={resetDate}
+                  size="small"
+                >
+                  Latest
+                </Button>
+              )}
+            </div>
             <HomepageMap
               onMapLoad={setMapInstance}
               setShowSiteTable={setShowSiteTable}
@@ -164,7 +203,26 @@ const styles = () =>
     },
     map: {
       display: 'flex',
+      position: 'relative',
       zIndex: 0,
+    },
+    mapDateControl: {
+      alignItems: 'center',
+      backgroundColor: 'white',
+      backgroundClip: 'padding-box',
+      border: '2px solid rgba(0,0,0,0.2)',
+      borderRadius: 5,
+      display: 'flex',
+      gap: 8,
+      left: 56,
+      padding: '6px 10px',
+      position: 'absolute',
+      top: 10,
+      zIndex: 400,
+    },
+    latestButton: {
+      minWidth: 56,
+      padding: '2px 6px',
     },
     siteTable: {
       display: 'flex',

@@ -5,6 +5,7 @@ import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
+import { DailyData } from '../sites/daily-data.entity';
 
 export const getCollectionData = async (
   sites: Site[],
@@ -43,6 +44,61 @@ export const getCollectionData = async (
       ),
     )
     .toJSON();
+};
+
+export const getDailyCollectionData = async (
+  sites: Site[],
+  dailyDataRepository: Repository<DailyData>,
+  date: Date,
+): Promise<Record<number, CollectionDataDto>> => {
+  const siteIds = sites.map((site) => site.id);
+
+  if (!siteIds.length) {
+    return {};
+  }
+
+  const dailyData = await dailyDataRepository
+    .createQueryBuilder('daily_data')
+    .select('daily_data.site_id', 'siteId')
+    .addSelect('daily_data.satelliteTemperature', 'satelliteTemperature')
+    .addSelect('daily_data.degreeHeatingDays', 'degreeHeatingDays')
+    .addSelect('daily_data.dailyAlertLevel', 'dailyAlertLevel')
+    .addSelect('daily_data.weeklyAlertLevel', 'weeklyAlertLevel')
+    .where('daily_data.site_id IN (:...siteIds)', { siteIds })
+    .andWhere('daily_data.date <= :date', { date })
+    .distinctOn(['daily_data.site_id'])
+    .orderBy('daily_data.site_id', 'ASC')
+    .addOrderBy('daily_data.date', 'DESC')
+    .getRawMany<{
+      siteId: number;
+      satelliteTemperature: number | null;
+      degreeHeatingDays: number | null;
+      dailyAlertLevel: number | null;
+      weeklyAlertLevel: number | null;
+    }>();
+
+  return dailyData.reduce<Record<number, CollectionDataDto>>((acc, data) => {
+    const tempWeeklyAlert =
+      data.weeklyAlertLevel !== null
+        ? data.weeklyAlertLevel
+        : data.dailyAlertLevel;
+    const collectionData: CollectionDataDto = {
+      ...(data.satelliteTemperature !== null && {
+        satelliteTemperature: data.satelliteTemperature,
+      }),
+      ...(data.degreeHeatingDays !== null && {
+        dhw: data.degreeHeatingDays / 7,
+      }),
+      ...(data.dailyAlertLevel !== null && {
+        tempAlert: data.dailyAlertLevel,
+      }),
+      ...(tempWeeklyAlert !== null && { tempWeeklyAlert }),
+    };
+
+    // eslint-disable-next-line fp/no-mutation
+    acc[data.siteId] = collectionData;
+    return acc;
+  }, {});
 };
 
 export const heatStressTracker: DynamicCollection = {

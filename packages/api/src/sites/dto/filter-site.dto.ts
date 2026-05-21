@@ -37,4 +37,10 @@ export class FilterSiteDto {
   @IsOptional()
   @IsBooleanString()
   readonly hasSpotter?: string;
+
+  @ApiProperty({ example: '2024-05-01' })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly date?: string;
 }

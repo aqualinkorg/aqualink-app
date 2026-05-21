@@ -40,7 +40,10 @@ import { backfillSiteData } from '../workers/backfill-site-data';
 import { SiteApplication } from '../site-applications/site-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
-import { getCollectionData } from '../utils/collections.utils';
+import {
+  getCollectionData,
+  getDailyCollectionData,
+} from '../utils/collections.utils';
 import { LatestData } from '../time-series/latest-data.entity';
 import { getYouTubeVideoId } from '../utils/urls';
 import {
@@ -52,6 +55,11 @@ import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { ScheduledUpdate } from './scheduled-updates.entity';
+
+const getSiteDataCutoffDate = (dateString?: string) =>
+  dateString
+    ? DateTime.fromISO(dateString, { zone: 'utc', setZone: true })
+    : null;
 
 @Injectable()
 export class SitesService {
@@ -198,10 +206,19 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    const date = getSiteDataCutoffDate(filter.date);
+
+    if (date && !date.isValid) {
+      throw new BadRequestException('Invalid date');
+    }
+
+    const mappedSiteData = date
+      ? await getDailyCollectionData(
+          res,
+          this.dailyDataRepository,
+          date.endOf('day').toJSDate(),
+        )
+      : await getCollectionData(res, this.latestDataRepository);
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
@@ -223,7 +240,7 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, dateString?: string): Promise<Site> {
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -246,10 +263,19 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
-    const mappedSiteData = await getCollectionData(
-      [site],
-      this.latestDataRepository,
-    );
+    const date = getSiteDataCutoffDate(dateString);
+
+    if (date && !date.isValid) {
+      throw new BadRequestException('Invalid date');
+    }
+
+    const mappedSiteData = date
+      ? await getDailyCollectionData(
+          [site],
+          this.dailyDataRepository,
+          date.endOf('day').toJSDate(),
+        )
+      : await getCollectionData([site], this.latestDataRepository);
 
     const maskedSpotterApiToken = site.spotterApiToken
       ? `****${site.spotterApiToken?.slice(-4)}`
