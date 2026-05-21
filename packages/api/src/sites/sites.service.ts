@@ -56,6 +56,11 @@ import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { ScheduledUpdate } from './scheduled-updates.entity';
 
+const getSiteDataCutoffDate = (dateString?: string) =>
+  dateString
+    ? DateTime.fromISO(dateString, { zone: 'utc', setZone: true })
+    : null;
+
 @Injectable()
 export class SitesService {
   private readonly logger = new Logger(SitesService.name);
@@ -201,9 +206,7 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const date = filter.date
-      ? DateTime.fromISO(filter.date, { zone: 'utc' })
-      : null;
+    const date = getSiteDataCutoffDate(filter.date);
 
     if (date && !date.isValid) {
       throw new BadRequestException('Invalid date');
@@ -260,9 +263,7 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
-    const date = dateString
-      ? DateTime.fromISO(dateString, { zone: 'utc' })
-      : null;
+    const date = getSiteDataCutoffDate(dateString);
 
     if (date && !date.isValid) {
       throw new BadRequestException('Invalid date');

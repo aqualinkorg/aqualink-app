@@ -118,6 +118,26 @@ export const siteTests = () => {
     );
   });
 
+  it('GET / find all sites with data from a selected date-only value', async () => {
+    const dailyData = californiaDailyData[3];
+    const selectedDate = DateTime.fromISO(dailyData.date as string).toISODate();
+    const rsp = await request(app.getHttpServer()).get('/sites').query({
+      date: selectedDate,
+    });
+
+    expect(rsp.status).toBe(200);
+    const site = rsp.body.find(({ id }: Site) => id === californiaSite.id);
+
+    expect(site.collectionData).toMatchObject({
+      satelliteTemperature: dailyData.satelliteTemperature,
+      tempAlert: dailyData.dailyAlertLevel,
+      tempWeeklyAlert: dailyData.dailyAlertLevel,
+    });
+    expect(site.collectionData.dhw).toBeCloseTo(
+      Number(dailyData.degreeHeatingDays) / 7,
+    );
+  });
+
   it('GET /:id retrieve one site', async () => {
     const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
 
@@ -138,6 +158,26 @@ export const siteTests = () => {
       .get(`/sites/${californiaSite.id}`)
       .query({
         date: dailyData.date,
+      });
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.collectionData).toMatchObject({
+      satelliteTemperature: dailyData.satelliteTemperature,
+      tempAlert: dailyData.dailyAlertLevel,
+      tempWeeklyAlert: dailyData.dailyAlertLevel,
+    });
+    expect(rsp.body.collectionData.dhw).toBeCloseTo(
+      Number(dailyData.degreeHeatingDays) / 7,
+    );
+  });
+
+  it('GET /:id retrieve one site with data from a selected date-only value', async () => {
+    const dailyData = californiaDailyData[3];
+    const selectedDate = DateTime.fromISO(dailyData.date as string).toISODate();
+    const rsp = await request(app.getHttpServer())
+      .get(`/sites/${californiaSite.id}`)
+      .query({
+        date: selectedDate,
       });
 
     expect(rsp.status).toBe(200);
