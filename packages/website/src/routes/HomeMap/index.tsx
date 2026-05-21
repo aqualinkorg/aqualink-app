@@ -140,7 +140,7 @@ function Homepage({ classes }: HomepageProps) {
           >
             <div className={classes.mapDateControl}>
               <DatePicker
-                value={selectedDate ?? null}
+                value={selectedDate}
                 dateName="Map date"
                 dateNameTextVariant="body2"
                 timeZone="UTC"

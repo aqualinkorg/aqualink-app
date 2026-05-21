@@ -76,7 +76,7 @@ const styles = (theme: Theme) =>
   });
 
 interface DatePickerIncomingProps {
-  value: string | null;
+  value?: string | null;
   dateName?: string;
   dateNameTextVariant?: TypographyProps['variant'];
   autoOk?: boolean;
