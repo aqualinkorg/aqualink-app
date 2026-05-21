@@ -82,7 +82,7 @@ function Homepage({ classes }: HomepageProps) {
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest({ date: selectedDate || null }));
+    dispatch(sitesRequest({ date: selectedDate ?? null }));
   }, [dispatch, selectedDate]);
 
   const onDateChange = (date: Date | null) => {
@@ -95,11 +95,11 @@ function Homepage({ classes }: HomepageProps) {
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest({ id: initialSiteId, date: selectedDate || null }));
+      dispatch(siteRequest({ id: initialSiteId, date: selectedDate ?? null }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
       dispatch(
-        siteRequest({ id: `${siteOnMap.id}`, date: selectedDate || null }),
+        siteRequest({ id: `${siteOnMap.id}`, date: selectedDate ?? null }),
       );
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
@@ -140,7 +140,7 @@ function Homepage({ classes }: HomepageProps) {
           >
             <div className={classes.mapDateControl}>
               <DatePicker
-                value={selectedDate || null}
+                value={selectedDate ?? null}
                 dateName="Map date"
                 dateNameTextVariant="body2"
                 timeZone="UTC"
