@@ -88,6 +88,7 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const siteOnMapDisplayLng = siteOnMap?.displayLng;
   const siteOnMapId = siteOnMap?.id;
+  const selectedSiteId = siteOnMapId ? `${siteOnMapId}` : undefined;
   const sitesList = useSelector(sitesListSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
@@ -119,25 +120,16 @@ function Homepage({ classes }: HomepageProps) {
   }, [dispatch, siteOnMapDisplayLng, siteOnMapId, sitesList]);
 
   useEffect(() => {
-    if (!siteOnMap && initialSiteId) {
-      dispatch(
-        siteRequest(
-          historicalDate
-            ? { id: initialSiteId, date: historicalDate }
-            : initialSiteId,
-        ),
-      );
-      dispatch(surveysRequest(initialSiteId));
-    } else if (siteOnMap) {
-      const siteId = `${siteOnMap.id}`;
-      dispatch(
-        siteRequest(
-          historicalDate ? { id: siteId, date: historicalDate } : siteId,
-        ),
-      );
-      dispatch(surveysRequest(`${siteOnMap.id}`));
-    }
-  }, [dispatch, historicalDate, initialSiteId, siteOnMap]);
+    const siteId = selectedSiteId || initialSiteId;
+    if (!siteId) return;
+
+    dispatch(
+      siteRequest(
+        historicalDate ? { id: siteId, date: historicalDate } : siteId,
+      ),
+    );
+    dispatch(surveysRequest(siteId));
+  }, [dispatch, historicalDate, initialSiteId, selectedSiteId]);
 
   const onHistoricalDateChange = (date?: string) => {
     setHistoricalDate(date);

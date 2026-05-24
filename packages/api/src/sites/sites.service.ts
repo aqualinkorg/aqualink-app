@@ -101,7 +101,7 @@ export class SitesService {
       return undefined;
     }
 
-    const parsedDate = DateTime.fromISO(date);
+    const parsedDate = DateTime.fromISO(date, { zone: 'utc' });
     if (!parsedDate.isValid) {
       throw new BadRequestException('Date is not a valid ISO date');
     }

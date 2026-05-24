@@ -48,11 +48,11 @@ const getDailyDataRange = (date?: string) => {
     return {};
   }
 
-  const end = new Date(date);
-  end.setHours(23, 59, 59, 999);
+  const [year, month, day] = date.split('-').map(Number);
+  const end = new Date(Date.UTC(year, month - 1, day, 23, 59, 59, 999));
   const start = new Date(end);
-  start.setDate(start.getDate() - 89);
-  start.setHours(0, 0, 0, 0);
+  start.setUTCDate(start.getUTCDate() - 89);
+  start.setUTCHours(0, 0, 0, 0);
 
   return {
     start: start.toISOString(),
