@@ -396,14 +396,28 @@ export const parseLatestData = (
  *  To: ?heatStress=0&heatStress=1&siteOptions=reefCheckSites
  */
 export const writeFiltersToUrl = (filters: SiteFilters) => {
-  const params = new URLSearchParams();
+  const filterKeys: (keyof SiteFilters)[] = [
+    'heatStress',
+    'impact',
+    'siteOptions',
+    'reefComposition',
+    'species',
+  ];
+  const params = new URLSearchParams(window.location.search);
+
+  filterKeys.forEach((key) => params.delete(key));
+
   Object.entries(filters).forEach(([category, filterValues]) => {
     Object.keys(filterValues).forEach((filter) => {
       params.append(category, filter);
     });
   });
 
-  window.history.replaceState(null, '', `?${params.toString()}`);
+  window.history.replaceState(
+    null,
+    '',
+    `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}`,
+  );
 };
 
 /**

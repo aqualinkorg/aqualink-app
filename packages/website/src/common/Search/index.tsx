@@ -8,7 +8,7 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
 import type { Site } from 'store/Sites/types';
@@ -31,6 +31,7 @@ const siteAugmentedName = (site: Site) => {
 
 function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState('');
@@ -44,11 +45,14 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
       const nameB = siteAugmentedName(b);
       return nameA.localeCompare(nameB);
     });
+  const historicalDate =
+    new URLSearchParams(location.search).get('date') || undefined;
+  const historicalDateSearch = historicalDate ? `?date=${historicalDate}` : '';
 
   // Fetch sites for the search bar
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(historicalDate));
+  }, [dispatch, historicalDate]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -78,7 +82,7 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       if (!geocodingEnabled) {
-        navigate(`/sites/${value.id}`);
+        navigate(`/sites/${value.id}${historicalDateSearch}`);
       }
     }
   };
@@ -86,7 +90,7 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const onSearchSubmit = () => {
     if (searchedSite) {
       if (!geocodingEnabled) {
-        navigate(`/sites/${searchedSite.id}`);
+        navigate(`/sites/${searchedSite.id}${historicalDateSearch}`);
       }
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());

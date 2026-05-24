@@ -15,6 +15,7 @@ import {
   Hidden,
   Alert,
   Theme,
+  TextField,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -23,6 +24,7 @@ import withStyles, {
   CSSProperties,
 } from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import ClearIcon from '@mui/icons-material/Clear';
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
@@ -89,6 +91,8 @@ function HomepageMap({
   defaultLayerName,
   legendBottom,
   legendLeft,
+  historicalDate,
+  onHistoricalDateChange,
   classes,
   onMapLoad,
 }: HomepageMapProps) {
@@ -222,6 +226,8 @@ function HomepageMap({
     setInfoDialogOpen(false);
   };
 
+  const today = new Date().toISOString().slice(0, 10);
+
   return loading ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
@@ -270,6 +276,30 @@ function HomepageMap({
           </IconButton>
         </div>
       </Hidden>
+      {onHistoricalDateChange && (
+        <div className={classes.dateControl}>
+          <TextField
+            aria-label="Map date"
+            type="date"
+            size="small"
+            variant="standard"
+            value={historicalDate || ''}
+            inputProps={{ max: today }}
+            onChange={(event) =>
+              onHistoricalDateChange(event.target.value || undefined)
+            }
+          />
+          {historicalDate && (
+            <IconButton
+              aria-label="Clear map date"
+              onClick={() => onHistoricalDateChange(undefined)}
+              size="small"
+            >
+              <ClearIcon fontSize="small" />
+            </IconButton>
+          )}
+        </div>
+      )}
       <div className={classes.infoIconButton}>
         <IconButton onClick={handleInfoClick} size="large">
           <InfoIcon color="primary" />
@@ -358,6 +388,18 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    dateControl: {
+      ...mapButtonStyles,
+      top: 10,
+      left: 0,
+      zIndex: 1000,
+      width: 'auto',
+      minWidth: 150,
+      height: 'auto',
+      minHeight: mapIconSize,
+      padding: '0 8px',
+      gap: 4,
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -384,6 +426,8 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  historicalDate?: string;
+  onHistoricalDateChange?: (date?: string) => void;
   onMapLoad?: (map: L.Map) => void;
 }
 

@@ -396,10 +396,12 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  historicalDate?: string;
 }
 
 export interface SitesListState {
   list?: Site[];
+  historicalDate?: string;
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
@@ -459,6 +461,11 @@ export interface GetSiteContactInfoProps {
 
 export interface GetSiteContactInfoResponse {
   contactInformation: string;
+}
+
+export interface SiteRequestParams {
+  id: string;
+  date?: string;
 }
 
 export const siteOptions = [

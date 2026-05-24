@@ -12,6 +12,7 @@ import type {
   TimeSeriesDataRequestParams,
   GetSiteContactInfoProps,
   Site,
+  SiteRequestParams,
   Metrics,
   TimeSeries,
 } from './types';
@@ -37,6 +38,27 @@ const selectedSiteInitialState: SelectedSiteState = {
 };
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
+
+const normalizeSiteRequestParams = (
+  arg: string | SiteRequestParams,
+): SiteRequestParams => (typeof arg === 'string' ? { id: arg } : arg);
+
+const getDailyDataRange = (date?: string) => {
+  if (!date) {
+    return {};
+  }
+
+  const end = new Date(date);
+  end.setHours(23, 59, 59, 999);
+  const start = new Date(end);
+  start.setDate(start.getDate() - 89);
+  start.setHours(0, 0, 0, 0);
+
+  return {
+    start: start.toISOString(),
+    end: end.toISOString(),
+  };
+};
 
 export const forecastDataRequest = createAsyncThunk<
   SelectedSiteState['forecastData'],
@@ -90,14 +112,20 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  string | SiteRequestParams,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg: string | SiteRequestParams, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { id, date } = normalizeSiteRequestParams(arg);
+      const { start, end } = getDailyDataRange(date);
+      const { data } = await siteServices.getSite(id, date);
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        start,
+        end,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -121,14 +149,6 @@ export const siteRequest = createAsyncThunk<
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
-  },
-  {
-    condition(id: string, { getState }) {
-      const {
-        selectedSite: { details },
-      } = getState();
-      return `${details?.id}` !== id;
-    },
   },
 );
 

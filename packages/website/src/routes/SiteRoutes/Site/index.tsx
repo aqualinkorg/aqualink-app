@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Alert, Container, Box } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -121,6 +121,7 @@ function Site({ classes }: SiteProps) {
   const { id: siteId = '' } = useParams<{ id: string }>();
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
+  const [historicalDate] = useQueryParam('date');
   const [refresh, setRefresh] = useQueryParam('refresh');
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
@@ -153,6 +154,10 @@ function Site({ classes }: SiteProps) {
       : undefined;
 
   const isLoading = !siteWithFeaturedImage;
+  const siteRequestArg = useMemo(
+    () => (historicalDate ? { id: siteId, date: historicalDate } : siteId),
+    [historicalDate, siteId],
+  );
 
   useEffect(() => {
     if (refresh === 'true') {
@@ -162,7 +167,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
+      dispatch(siteRequest(siteRequestArg));
       dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
@@ -171,7 +176,7 @@ function Site({ classes }: SiteProps) {
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
+    dispatch(siteRequest(siteRequestArg));
     dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
@@ -180,7 +185,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
     };
-  }, [dispatch, siteId]);
+  }, [dispatch, siteId, siteRequestArg]);
 
   // Fetch reef check surveys
   useEffect(() => {
