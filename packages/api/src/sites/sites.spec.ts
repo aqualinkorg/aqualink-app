@@ -99,6 +99,24 @@ export const siteTests = () => {
     siteId = sortedSites[sortedSites.length - 1].id;
   });
 
+  it('GET / find all sites at a historical date', async () => {
+    const targetDailyData = californiaDailyData[5];
+    const rsp = await request(app.getHttpServer()).get('/sites').query({
+      date: targetDailyData.date,
+    });
+
+    expect(rsp.status).toBe(200);
+    const california = rsp.body.find(
+      (site: Site) => site.id === californiaSite.id,
+    );
+
+    expect(california.collectionData).toMatchObject({
+      satelliteTemperature: targetDailyData.satelliteTemperature,
+      dhw: targetDailyData.degreeHeatingDays! / 7,
+      tempAlert: targetDailyData.dailyAlertLevel,
+    });
+  });
+
   it('GET /:id retrieve one site', async () => {
     const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
 

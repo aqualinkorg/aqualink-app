@@ -3,18 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Box, Button, Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
+import { DateTime } from 'luxon-extensions';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
-import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import {
+  siteOnMapSelector,
+  unsetSiteOnMap,
+} from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import DatePicker from 'common/Datepicker';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -67,13 +72,14 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [mapDate, setMapDate] = useState<string>();
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest({ date: mapDate }));
+  }, [dispatch, mapDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -89,6 +95,17 @@ function Homepage({ classes }: HomepageProps) {
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
+  };
+
+  const onMapDateChange = (date: Date | null) => {
+    if (!date || Number.isNaN(date.getTime())) return;
+    setMapDate(DateTime.fromJSDate(date).toISODate() || undefined);
+    dispatch(unsetSiteOnMap());
+  };
+
+  const onLatestClick = () => {
+    setMapDate(undefined);
+    dispatch(unsetSiteOnMap());
   };
 
   // scroll drawer to top when its closed.
@@ -118,6 +135,25 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
+            <Box className={classes.dateControl}>
+              <DatePicker
+                value={mapDate || null}
+                dateName="MAP DATE"
+                dateNameTextVariant="subtitle1"
+                autoOk
+                onChange={onMapDateChange}
+                timeZone="UTC"
+              />
+              <Button
+                color="primary"
+                disabled={!mapDate}
+                onClick={onLatestClick}
+                size="small"
+                variant="outlined"
+              >
+                Latest
+              </Button>
+            </Box>
             <HomepageMap
               onMapLoad={setMapInstance}
               setShowSiteTable={setShowSiteTable}
@@ -164,7 +200,27 @@ const styles = () =>
     },
     map: {
       display: 'flex',
+      position: 'relative',
       zIndex: 0,
+    },
+    dateControl: {
+      position: 'absolute',
+      top: 16,
+      left: 16,
+      zIndex: 1000,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      padding: '8px 12px',
+      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      borderRadius: 4,
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.18)',
+      '@media (max-width: 600px)': {
+        top: 8,
+        left: 8,
+        right: 8,
+        justifyContent: 'space-between',
+      },
     },
     siteTable: {
       display: 'flex',

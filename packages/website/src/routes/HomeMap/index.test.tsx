@@ -9,6 +9,7 @@ import { mockSite } from 'mocks/mockSite';
 import Homepage from '.';
 
 vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+vi.mock('common/Datepicker', () => ({ default: 'Mock-DatePicker' }));
 vi.mock('./Map', () => ({ default: 'Mock-Map' }));
 vi.mock('./SiteTable', () => ({ default: 'Mock-SiteTable' }));
 
