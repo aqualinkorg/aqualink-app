@@ -218,10 +218,7 @@ function SelectedSiteCardContent({
               height="100%"
             >
               {site && imageUrl && (
-                <Link
-                  to={siteLink}
-                  state={{ from: location.pathname }}
-                >
+                <Link to={siteLink} state={{ from: location.pathname }}>
                   <CardMedia
                     className={classNames(
                       classes.cardImage,

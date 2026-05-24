@@ -10,10 +10,7 @@ import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
-import {
-  setSiteOnMap,
-  siteOnMapSelector,
-} from 'store/Homepage/homepageSlice';
+import { setSiteOnMap, siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
@@ -91,12 +88,16 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const siteOnMapDisplayLng = siteOnMap?.displayLng;
   const siteOnMapId = siteOnMap?.id;
-  const sitesList = useSelector(sitesListSelector) || [];
+  const sitesList = useSelector(sitesListSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
-  const { initialZoom, initialSiteId, initialCenter, initialDate }: MapQueryParams =
-    useQuery();
+  const {
+    initialZoom,
+    initialSiteId,
+    initialCenter,
+    initialDate,
+  }: MapQueryParams = useQuery();
   const [historicalDate, setHistoricalDate] = useState<string | undefined>(
     initialDate,
   );
@@ -107,7 +108,7 @@ function Homepage({ classes }: HomepageProps) {
 
   useEffect(() => {
     if (!siteOnMapId) return;
-    const updatedSite = sitesList.find((site) => site.id === siteOnMapId);
+    const updatedSite = sitesList?.find((site) => site.id === siteOnMapId);
     if (!updatedSite) return;
     dispatch(
       setSiteOnMap({
