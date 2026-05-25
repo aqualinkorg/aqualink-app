@@ -34,6 +34,7 @@ const selectedSiteInitialState: SelectedSiteState = {
   oceanSenseDataLoading: false,
   oceanSenseDataError: null,
   error: null,
+  date: undefined,
 };
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
@@ -90,13 +91,15 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  string | { id: string; date?: string },
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
+    const id = typeof arg === 'string' ? arg : arg.id;
+    const date = typeof arg === 'string' ? undefined : arg.date;
     try {
-      const { data } = await siteServices.getSite(id);
+      const { data } = await siteServices.getSite(id, date);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
@@ -123,11 +126,13 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(arg, { getState }) {
+      const id = typeof arg === 'string' ? arg : arg.id;
+      const date = typeof arg === 'string' ? undefined : arg.date;
       const {
-        selectedSite: { details },
+        selectedSite: { details, date: loadedDate },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || loadedDate !== date;
     },
   },
 );
@@ -336,16 +341,18 @@ const selectedSiteSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
+      (state, action) => ({
         ...state,
         details: action.payload,
+        date:
+          typeof action.meta.arg === 'string' ? undefined : action.meta.arg.date,
         loading: false,
       }),
     );
 
     builder.addCase(
       siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      (state, action) => ({
         ...state,
         error: action.payload,
         loading: false,
