@@ -62,10 +62,14 @@ export class SitesController {
   }
 
   @ApiOperation({ summary: 'Returns sites filtered by provided filters' })
+  @ApiQuery({ name: 'date', example: '2024-05-20', required: false })
   @Public()
   @Get()
-  find(@Query() filterSiteDto: FilterSiteDto): Promise<Site[]> {
-    return this.sitesService.find(filterSiteDto);
+  find(
+    @Query() filterSiteDto: FilterSiteDto,
+    @Query('date') date?: string,
+  ): Promise<Site[]> {
+    return this.sitesService.find(filterSiteDto, date);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')

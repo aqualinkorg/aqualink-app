@@ -403,6 +403,7 @@ export interface SitesListState {
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
+  selectedDate?: string;
 }
 
 export interface SelectedSiteState {

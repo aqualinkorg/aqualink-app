@@ -155,7 +155,7 @@ export class SitesService {
     });
   }
 
-  async find(filter: FilterSiteDto): Promise<Site[]> {
+  async find(filter: FilterSiteDto, date?: string): Promise<Site[]> {
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -198,9 +198,15 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
+    if (date && !DateTime.fromISO(date).isValid) {
+      throw new BadRequestException('Date is not valid');
+    }
+
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      this.dailyDataRepository,
+      date ? DateTime.fromISO(date).endOf('day').toJSDate() : undefined,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
