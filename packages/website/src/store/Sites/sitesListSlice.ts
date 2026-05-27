@@ -21,6 +21,7 @@ import type {
   PatchSiteFiltersPayload,
   SiteFilters,
   SitesListState,
+  SitesRequestParams,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
 } from './types';
@@ -35,13 +36,13 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestParams | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(arg?.date);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +56,11 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: SitesRequestParams | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { dataDate, list },
       } = getState();
-      return !list;
+      return !list || dataDate !== arg?.date;
     },
   },
 );
@@ -103,14 +104,12 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
-    );
+    builder.addCase(sitesRequest.fulfilled, (state, action) => ({
+      ...state,
+      list: action.payload.list,
+      dataDate: action.meta.arg?.date,
+      loading: false,
+    }));
 
     builder.addCase(sitesRequest.rejected, (state, action) => ({
       ...state,
