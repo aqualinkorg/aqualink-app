@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert, Container, Box } from '@mui/material';
+import { Alert, Container, Box, Button, TextField } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -39,6 +39,7 @@ import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import { DateTime } from 'luxon-extensions';
 import { reefCheckSurveysRequest } from 'store/ReefCheckSurveys';
+import { isHistoricalDateParam, todayDateParam } from 'helpers/historicalDate';
 import SiteInfo from './SiteInfo';
 import NotFoundPage from '../../NotFound/index';
 
@@ -122,6 +123,10 @@ function Site({ classes }: SiteProps) {
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
+  const [selectedDate, setSelectedDate] = useQueryParam(
+    'date',
+    isHistoricalDateParam,
+  );
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -162,7 +167,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
+      dispatch(siteRequest({ id: siteId, date: selectedDate }));
       dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
@@ -171,7 +176,7 @@ function Site({ classes }: SiteProps) {
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
+    dispatch(siteRequest({ id: siteId, date: selectedDate }));
     dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
@@ -180,7 +185,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
     };
-  }, [dispatch, siteId]);
+  }, [dispatch, selectedDate, siteId]);
 
   // Fetch reef check surveys
   useEffect(() => {
@@ -236,6 +241,33 @@ function Site({ classes }: SiteProps) {
               )}
             </LoadingSkeleton>
           </Box>
+          <Box
+            mt="1rem"
+            display="flex"
+            gap="0.75rem"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            <TextField
+              label="View data as of"
+              type="date"
+              size="small"
+              value={selectedDate || ''}
+              inputProps={{
+                max: todayDateParam(),
+                'aria-label': 'Site data date',
+              }}
+              InputLabelProps={{ shrink: true }}
+              onChange={(event) => {
+                setSelectedDate(event.target.value || undefined);
+              }}
+            />
+            {selectedDate && (
+              <Button variant="outlined" onClick={() => setSelectedDate()}>
+                Latest
+              </Button>
+            )}
+          </Box>
           {/* Only show alert message when data is loading */}
           {!hasSpotterData && !isLoading && !hasDailyData && (
             <Box mt="1.3rem">
@@ -252,6 +284,7 @@ function Site({ classes }: SiteProps) {
               surveys={surveyList}
               featuredSurveyPoint={featuredSurveyPoint}
               surveyDiveDate={diveDate}
+              asOfDate={selectedDate}
             />
           </div>
         </Container>

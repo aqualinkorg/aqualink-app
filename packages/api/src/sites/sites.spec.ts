@@ -113,6 +113,67 @@ export const siteTests = () => {
     expect(rsp.body.maskedSpotterApiToken).toBeUndefined();
   });
 
+  it('GET / returns historical collection data for a provided date', async () => {
+    const date = DateTime.fromISO(californiaDailyData[3].date as string);
+
+    await dataSource.query(
+      `UPDATE daily_data
+       SET degree_heating_days = $1,
+           satellite_temperature = $2,
+           daily_alert_level = $3,
+           weekly_alert_level = $4
+       WHERE site_id = $5 AND date = $6`,
+      [21, 27.5, 2, 3, californiaSite.id, californiaDailyData[3].date],
+    );
+
+    const rsp = await request(app.getHttpServer())
+      .get('/sites')
+      .query({
+        date: date.toFormat('yyyy-MM-dd'),
+      });
+
+    expect(rsp.status).toBe(200);
+
+    const site = rsp.body.find(
+      ({ id }: { id: number }) => id === californiaSite.id,
+    );
+
+    expect(site.collectionData).toMatchObject({
+      dhw: 3,
+      satelliteTemperature: 27.5,
+      tempAlert: 2,
+      tempWeeklyAlert: 3,
+    });
+  });
+
+  it('GET /:id returns historical collection data for a provided date', async () => {
+    const date = DateTime.fromISO(californiaDailyData[3].date as string);
+
+    const rsp = await request(app.getHttpServer())
+      .get(`/sites/${californiaSite.id}`)
+      .query({
+        date: date.toFormat('yyyy-MM-dd'),
+      });
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.collectionData).toMatchObject({
+      dhw: 3,
+      satelliteTemperature: 27.5,
+      tempAlert: 2,
+      tempWeeklyAlert: 3,
+    });
+  });
+
+  it('GET /:id rejects an invalid historical date', async () => {
+    const rsp = await request(app.getHttpServer())
+      .get(`/sites/${californiaSite.id}`)
+      .query({
+        date: 'not-a-date',
+      });
+
+    expect(rsp.status).toBe(400);
+  });
+
   it('GET /:id/daily_data', async () => {
     const rsp = await request(app.getHttpServer())
       .get(`/sites/${californiaSite.id}/daily_data`)

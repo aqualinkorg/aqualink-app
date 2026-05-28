@@ -11,6 +11,7 @@ import type {
   TimeSeriesDataRangeRequestParams,
   TimeSeriesDataRequestParams,
   GetSiteContactInfoProps,
+  SiteRequestParams,
   Site,
   Metrics,
   TimeSeries,
@@ -37,6 +38,9 @@ const selectedSiteInitialState: SelectedSiteState = {
 };
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
+
+const parseSiteRequestArg = (arg: string | SiteRequestParams) =>
+  typeof arg === 'string' ? { id: arg, date: undefined } : arg;
 
 export const forecastDataRequest = createAsyncThunk<
   SelectedSiteState['forecastData'],
@@ -90,14 +94,19 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  string | SiteRequestParams,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg: string | SiteRequestParams, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { id, date } = parseSiteRequestArg(arg);
+      const { data } = await siteServices.getSite(id, date);
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        undefined,
+        date,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,11 +132,12 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(arg: string | SiteRequestParams, { getState }) {
+      const { id, date } = parseSiteRequestArg(arg);
       const {
-        selectedSite: { details },
+        selectedSite: { details, date: currentDate },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || currentDate !== date;
     },
   },
 );
@@ -334,14 +344,12 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
-        ...state,
-        details: action.payload,
-        loading: false,
-      }),
-    );
+    builder.addCase(siteRequest.fulfilled, (state, action) => ({
+      ...state,
+      details: action.payload,
+      date: parseSiteRequestArg(action.meta.arg).date,
+      loading: false,
+    }));
 
     builder.addCase(
       siteRequest.rejected,
