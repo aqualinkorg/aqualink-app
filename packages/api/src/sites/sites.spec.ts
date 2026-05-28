@@ -114,17 +114,8 @@ export const siteTests = () => {
   });
 
   it('GET / returns historical collection data for a provided date', async () => {
-    const date = DateTime.fromISO(californiaDailyData[3].date as string);
-
-    await dataSource.query(
-      `UPDATE daily_data
-       SET degree_heating_days = $1,
-           satellite_temperature = $2,
-           daily_alert_level = $3,
-           weekly_alert_level = $4
-       WHERE site_id = $5 AND date = $6`,
-      [21, 27.5, 2, 3, californiaSite.id, californiaDailyData[3].date],
-    );
+    const historicalData = californiaDailyData[3];
+    const date = DateTime.fromISO(historicalData.date as string);
 
     const rsp = await request(app.getHttpServer())
       .get('/sites')
@@ -139,15 +130,15 @@ export const siteTests = () => {
     );
 
     expect(site.collectionData).toMatchObject({
-      dhw: 3,
-      satelliteTemperature: 27.5,
-      tempAlert: 2,
-      tempWeeklyAlert: 3,
+      dhw: Number(historicalData.degreeHeatingDays) / 7,
+      satelliteTemperature: historicalData.satelliteTemperature,
+      tempAlert: historicalData.dailyAlertLevel,
     });
   });
 
   it('GET /:id returns historical collection data for a provided date', async () => {
-    const date = DateTime.fromISO(californiaDailyData[3].date as string);
+    const historicalData = californiaDailyData[3];
+    const date = DateTime.fromISO(historicalData.date as string);
 
     const rsp = await request(app.getHttpServer())
       .get(`/sites/${californiaSite.id}`)
@@ -157,10 +148,9 @@ export const siteTests = () => {
 
     expect(rsp.status).toBe(200);
     expect(rsp.body.collectionData).toMatchObject({
-      dhw: 3,
-      satelliteTemperature: 27.5,
-      tempAlert: 2,
-      tempWeeklyAlert: 3,
+      dhw: Number(historicalData.degreeHeatingDays) / 7,
+      satelliteTemperature: historicalData.satelliteTemperature,
+      tempAlert: historicalData.dailyAlertLevel,
     });
   });
 
