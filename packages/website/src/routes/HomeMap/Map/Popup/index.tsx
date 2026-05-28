@@ -143,7 +143,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                to={`/sites/${site.id}${location.search}`}
                 state={{ from: location.pathname }}
               >
                 <Button

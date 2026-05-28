@@ -1394,6 +1394,51 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
         </div>
       </div>
     </mock-box>
+    <mock-box
+      alignitems="center"
+      display="flex"
+      flexwrap="wrap"
+      gap="0.75rem"
+      mt="1rem"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root css-1xp5r68-MuiFormControl-root-MuiTextField-root"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-wgcuqq-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for=":r4t:"
+          id=":r4t:-label"
+        >
+          View data as of
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-3tcely-MuiInputBase-root-MuiOutlinedInput-root"
+        >
+          <input
+            aria-invalid="false"
+            aria-label="Site data date"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r4t:"
+            max="2026-05-28"
+            type="date"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-ex8a5f-MuiNotchedOutlined-root"
+            >
+              <span>
+                View data as of
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+    </mock-box>
     <div>
       <mock-box
         mt="1.5rem"
@@ -4352,6 +4397,51 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </mock-box>
+    <mock-box
+      alignitems="center"
+      display="flex"
+      flexwrap="wrap"
+      gap="0.75rem"
+      mt="1rem"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root css-1xp5r68-MuiFormControl-root-MuiTextField-root"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-wgcuqq-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for=":r10:"
+          id=":r10:-label"
+        >
+          View data as of
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-3tcely-MuiInputBase-root-MuiOutlinedInput-root"
+        >
+          <input
+            aria-invalid="false"
+            aria-label="Site data date"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r10:"
+            max="2026-05-28"
+            type="date"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-ex8a5f-MuiNotchedOutlined-root"
+            >
+              <span>
+                View data as of
+              </span>
+            </legend>
+          </fieldset>
         </div>
       </div>
     </mock-box>
