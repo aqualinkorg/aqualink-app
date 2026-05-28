@@ -396,10 +396,21 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  date?: string;
+}
+
+export interface SitesRequestParams {
+  date?: string;
+}
+
+export interface SiteRequestParams {
+  id: string;
+  date?: string;
 }
 
 export interface SitesListState {
   list?: Site[];
+  date?: string;
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
@@ -408,6 +419,7 @@ export interface SitesListState {
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  date?: string;
   spotterPosition?: {
     position?: {
       longitude: number;

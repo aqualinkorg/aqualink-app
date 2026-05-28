@@ -23,21 +23,34 @@ import {
   SpotterInfoResponse,
   GetSiteContactInfoProps,
   GetSiteContactInfoResponse,
+  SitesRequestParams,
 } from 'store/Sites/types';
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
-const getSite = (id: string) =>
+const appendDateQuery = (date?: string) => (date ? `?date=${date}` : '');
+
+const dailyDataEndDate = (end?: string) =>
+  end && /^\d{4}-\d{2}-\d{2}$/.test(end) ? `${end}T23:59:59.999Z` : end;
+
+const appendDailyDataQuery = (start?: string, end?: string) => {
+  const params = new URLSearchParams({
+    ...(end ? { end: dailyDataEndDate(end) } : {}),
+    ...(start ? { start } : {}),
+  }).toString();
+
+  return params ? `?${params}` : '';
+};
+
+const getSite = (id: string, date?: string) =>
   requests.send<Site>({
-    url: `sites/${id}`,
+    url: `sites/${id}${appendDateQuery(date)}`,
     method: 'GET',
   });
 
 const getSiteDailyData = (id: string, start?: string, end?: string) =>
   requests.send<DailyData[]>({
-    url: `sites/${id}/daily_data${
-      start && end ? `?end=${end}&start=${start}` : ''
-    }`,
+    url: `sites/${id}/daily_data${appendDailyDataQuery(start, end)}`,
     method: 'GET',
   });
 
@@ -83,9 +96,9 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = ({ date }: SitesRequestParams = {}) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: `sites${appendDateQuery(date)}`,
     method: 'GET',
   });
 

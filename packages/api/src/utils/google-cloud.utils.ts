@@ -1,6 +1,7 @@
 import { InternalServerErrorException } from '@nestjs/common';
 
-const { GCS_BUCKET } = process.env;
+const GCS_BUCKET =
+  process.env.GCS_BUCKET || (process.env.NODE_ENV === 'test' && 'storage');
 
 export enum GoogleCloudDir {
   SURVEYS = 'surveys',

@@ -15,6 +15,9 @@ import {
   Hidden,
   Alert,
   Theme,
+  TextField,
+  Button,
+  Box,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -34,7 +37,9 @@ import { mapConstants } from 'constants/maps';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { mapIconSize } from 'layout/App/theme';
+import { todayDateParam } from 'helpers/historicalDate';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
@@ -91,6 +96,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  selectedDate,
+  onSelectedDateChange,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -222,6 +229,12 @@ function HomepageMap({
     setInfoDialogOpen(false);
   };
 
+  const handleDateControlClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    event.stopPropagation();
+  };
+
   return loading ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
@@ -275,6 +288,32 @@ function HomepageMap({
           <InfoIcon color="primary" />
         </IconButton>
       </div>
+      {onSelectedDateChange && (
+        <Box
+          className={classes.dateControl}
+          onClick={handleDateControlClick}
+          onDoubleClick={handleDateControlClick}
+        >
+          <CalendarTodayIcon color="primary" fontSize="small" />
+          <TextField
+            variant="standard"
+            type="date"
+            value={selectedDate || ''}
+            inputProps={{
+              max: todayDateParam(),
+              'aria-label': 'Map date',
+            }}
+            onChange={(event) => {
+              onSelectedDateChange(event.target.value || undefined);
+            }}
+          />
+          {selectedDate && (
+            <Button size="small" onClick={() => onSelectedDateChange()}>
+              Latest
+            </Button>
+          )}
+        </Box>
+      )}
       <InfoDialog
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
@@ -361,6 +400,24 @@ const styles = (theme: Theme) =>
     expandIcon: {
       fontSize: '34px',
     },
+    dateControl: {
+      position: 'absolute',
+      left: 10,
+      top: 10,
+      zIndex: 1000,
+      display: 'flex',
+      alignItems: 'center',
+      gap: theme.spacing(1),
+      padding: theme.spacing(0.75, 1),
+      backgroundColor: 'white',
+      backgroundClip: 'padding-box',
+      border: '2px solid rgba(0,0,0,0.2)',
+      borderRadius: 5,
+      '& input': {
+        width: 132,
+        padding: theme.spacing(0.5, 0),
+      },
+    },
     '@global': {
       // Disable tile fade animation
       '.no-tile-fade': {
@@ -385,6 +442,10 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  selectedDate?: string;
+  onSelectedDateChange?: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

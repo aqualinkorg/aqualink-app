@@ -15,12 +15,15 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import { useQueryParam } from 'hooks/useQueryParams';
+import { isHistoricalDateParam } from 'helpers/historicalDate';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
@@ -70,20 +73,24 @@ function Homepage({ classes }: HomepageProps) {
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
+  const [selectedDate, setSelectedDate] = useQueryParam(
+    QueryParamKeys.DATE,
+    isHistoricalDateParam,
+  );
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest({ date: selectedDate }));
+  }, [dispatch, selectedDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, date: selectedDate }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(siteRequest({ id: `${siteOnMap.id}`, date: selectedDate }));
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dispatch, initialSiteId, selectedDate, siteOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -124,6 +131,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              selectedDate={selectedDate}
+              onSelectedDateChange={setSelectedDate}
             />
           </Grid>
           {showSiteTable && (
