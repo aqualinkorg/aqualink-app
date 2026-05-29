@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Grid, Hidden, TextField, IconButton, Tooltip } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
+import ClearIcon from '@mui/icons-material/Clear';
+import DateRangeIcon from '@mui/icons-material/DateRange';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
@@ -67,6 +69,7 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>('');
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -124,7 +127,38 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              selectedDate={selectedDate || undefined}
             />
+            <div className={classes.datePicker}>
+              <Tooltip title="View historical data">
+                <DateRangeIcon
+                  className={classes.datePickerIcon}
+                  fontSize="small"
+                />
+              </Tooltip>
+              <TextField
+                type="date"
+                size="small"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                InputLabelProps={{ shrink: true }}
+                inputProps={{
+                  max: new Date().toISOString().split('T')[0],
+                }}
+                variant="standard"
+              />
+              {selectedDate && (
+                <Tooltip title="Reset to latest">
+                  <IconButton
+                    size="small"
+                    onClick={() => setSelectedDate('')}
+                    className={classes.clearDateButton}
+                  >
+                    <ClearIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </div>
           </Grid>
           {showSiteTable && (
             <Hidden mdDown>
@@ -165,6 +199,26 @@ const styles = () =>
     map: {
       display: 'flex',
       zIndex: 0,
+      position: 'relative',
+    },
+    datePicker: {
+      position: 'absolute',
+      bottom: 40,
+      right: 10,
+      zIndex: 1000,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 4,
+      backgroundColor: 'white',
+      borderRadius: 4,
+      padding: '4px 8px',
+      boxShadow: '0 1px 5px rgba(0,0,0,0.3)',
+    },
+    datePickerIcon: {
+      color: 'rgba(0, 0, 0, 0.54)',
+    },
+    clearDateButton: {
+      padding: 2,
     },
     siteTable: {
       display: 'flex',

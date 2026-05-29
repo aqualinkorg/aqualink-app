@@ -40,10 +40,18 @@ const WMS_LAYERS: WMSLayerDefinition[] = [
 
 const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 
-const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
-  `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
+const sofarUrlFromDef = (
+  { model, cmap, variableId }: SofarLayerDefinition,
+  selectedDate?: string,
+) => {
+  const baseUrl = `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
+  if (selectedDate) {
+    return `${baseUrl}&time=${selectedDate}T12:00:00Z`;
+  }
+  return baseUrl;
+};
 
-export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
+export function SofarLayers({ defaultLayerName, selectedDate }: SofarLayersProps) {
   return (
     <LayersControl position="topright">
       <LayersControl.BaseLayer
@@ -62,8 +70,8 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
           <TileLayer
             // Sofar tiles have a max native zoom of 9
             maxNativeZoom={9}
-            url={sofarUrlFromDef(def)}
-            key={def.variableId}
+            url={sofarUrlFromDef(def, selectedDate)}
+            key={`${def.variableId}-${selectedDate || 'latest'}`}
             opacity={0.5}
           />
         </LayersControl.BaseLayer>
@@ -90,6 +98,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
 
 interface SofarLayersProps {
   defaultLayerName?: MapLayerName;
+  selectedDate?: string;
 }
 
 export default SofarLayers;
