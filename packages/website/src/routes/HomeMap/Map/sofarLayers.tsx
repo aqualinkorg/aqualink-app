@@ -51,7 +51,10 @@ const sofarUrlFromDef = (
   return baseUrl;
 };
 
-export function SofarLayers({ defaultLayerName, selectedDate }: SofarLayersProps) {
+export function SofarLayers({
+  defaultLayerName,
+  selectedDate,
+}: SofarLayersProps) {
   return (
     <LayersControl position="topright">
       <LayersControl.BaseLayer
