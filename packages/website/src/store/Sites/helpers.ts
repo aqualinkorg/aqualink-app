@@ -397,6 +397,13 @@ export const parseLatestData = (
  */
 export const writeFiltersToUrl = (filters: SiteFilters) => {
   const params = new URLSearchParams();
+  const currentParams = new URLSearchParams(window.location.search);
+  const dataDate = currentParams.get('dataDate');
+
+  if (dataDate) {
+    params.set('dataDate', dataDate);
+  }
+
   Object.entries(filters).forEach(([category, filterValues]) => {
     Object.keys(filterValues).forEach((filter) => {
       params.append(category, filter);

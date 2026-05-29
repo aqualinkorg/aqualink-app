@@ -2,7 +2,7 @@ import L, { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -21,6 +21,7 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATA_DATE = 'dataDate',
 }
 
 interface MapQueryParams {
@@ -31,6 +32,16 @@ interface MapQueryParams {
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
 const INITIAL_ZOOM = 4;
+
+const getDataDateParam = (dataDate?: string) => {
+  if (!dataDate) return undefined;
+
+  const parsedDate = new Date(dataDate);
+
+  return Number.isNaN(parsedDate.getTime())
+    ? undefined
+    : parsedDate.toISOString();
+};
 
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
@@ -64,16 +75,30 @@ function useQuery() {
 
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const dataDate = searchParams.get(QueryParamKeys.DATA_DATE) || undefined;
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(getDataDateParam(dataDate)));
+  }, [dataDate, dispatch]);
+
+  const handleDataDateChange = (date?: string) => {
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    if (date) {
+      nextSearchParams.set(QueryParamKeys.DATA_DATE, date);
+    } else {
+      nextSearchParams.delete(QueryParamKeys.DATA_DATE);
+    }
+
+    setSearchParams(nextSearchParams);
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,6 +149,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              dataDate={dataDate}
+              onDataDateChange={handleDataDateChange}
             />
           </Grid>
           {showSiteTable && (
