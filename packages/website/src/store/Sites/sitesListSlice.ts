@@ -20,6 +20,7 @@ import siteServices from 'services/siteServices';
 import type {
   PatchSiteFiltersPayload,
   SiteFilters,
+  SitesRequestParams,
   SitesListState,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
@@ -35,13 +36,13 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestParams | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(arg?.date);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +56,11 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: SitesRequestParams | undefined, { getState }) {
       const {
         sitesList: { list },
       } = getState();
-      return !list;
+      return Boolean(arg?.date || arg?.force || !list);
     },
   },
 );

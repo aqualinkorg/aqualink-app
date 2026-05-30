@@ -265,7 +265,7 @@ export interface CollectionMetrics {
   sstAnomaly?: number;
 }
 
-export type CollectionDataResponse = Partial<Record<Metrics, number>>;
+export type CollectionDataResponse = Partial<Record<Metrics, number | null>>;
 
 export type CollectionData = CollectionDataResponse;
 
@@ -396,6 +396,11 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+}
+
+export interface SitesRequestParams {
+  date?: string | null;
+  force?: boolean;
 }
 
 export interface SitesListState {

@@ -35,6 +35,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
 import { mapIconSize } from 'layout/App/theme';
+import DatePicker from 'common/Datepicker';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
@@ -89,6 +90,8 @@ function HomepageMap({
   defaultLayerName,
   legendBottom,
   legendLeft,
+  selectedDataDate,
+  onSelectedDataDateChange,
   classes,
   onMapLoad,
 }: HomepageMapProps) {
@@ -279,6 +282,17 @@ function HomepageMap({
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
       />
+      {onSelectedDataDateChange && (
+        <div className={classes.datePickerControl}>
+          <DatePicker
+            value={selectedDataDate || null}
+            dateName="Data date"
+            dateNameTextVariant="body2"
+            timeZone={null}
+            onChange={onSelectedDataDateChange}
+          />
+        </div>
+      )}
       {tileLayer}
       {sofarLayers}
       {siteMarkers}
@@ -358,6 +372,15 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    datePickerControl: {
+      ...mapButtonStyles,
+      left: 0,
+      top: 50,
+      zIndex: 400,
+      width: 'auto',
+      height: 'auto',
+      padding: '6px 10px',
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -384,6 +407,8 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  selectedDataDate?: string | null;
+  onSelectedDataDateChange?: (date: Date | null) => void;
   onMapLoad?: (map: L.Map) => void;
 }
 
