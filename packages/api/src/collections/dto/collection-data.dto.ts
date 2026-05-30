@@ -23,43 +23,47 @@ type CollectionDataDtoType = Partial<
   >
 >;
 
-export class CollectionDataDto implements CollectionDataDtoType {
+type NullableCollectionDataDtoType = {
+  [K in keyof CollectionDataDtoType]: CollectionDataDtoType[K] | null;
+};
+
+export class CollectionDataDto implements NullableCollectionDataDtoType {
   @ApiPropertyOptional({ example: 28.05 })
-  bottomTemperature?: number;
+  bottomTemperature?: number | null;
 
   @ApiPropertyOptional({ example: 29.05 })
-  topTemperature?: number;
+  topTemperature?: number | null;
 
   @ApiPropertyOptional({ example: 29.13 })
-  satelliteTemperature?: number;
+  satelliteTemperature?: number | null;
 
   @ApiPropertyOptional({ example: 0 })
-  dhw?: number;
+  dhw?: number | null;
 
   @ApiPropertyOptional({ example: 1 })
-  tempAlert?: number;
+  tempAlert?: number | null;
 
   @ApiPropertyOptional({ example: 1 })
-  tempWeeklyAlert?: number;
+  tempWeeklyAlert?: number | null;
 
   @ApiPropertyOptional({ example: -0.101 })
-  sstAnomaly?: number;
+  sstAnomaly?: number | null;
 
   @ApiPropertyOptional({ example: 1.32 })
-  significantWaveHeight?: number;
+  significantWaveHeight?: number | null;
 
   @ApiPropertyOptional({ example: 2 })
-  waveMeanDirection?: number;
+  waveMeanDirection?: number | null;
 
   @ApiPropertyOptional({ example: 12 })
-  waveMeanPeriod?: number;
+  waveMeanPeriod?: number | null;
 
   @ApiPropertyOptional({ example: 12 })
-  wavePeakPeriod?: number;
+  wavePeakPeriod?: number | null;
 
   @ApiPropertyOptional({ example: 153 })
-  windDirection?: number;
+  windDirection?: number | null;
 
   @ApiPropertyOptional({ example: 10.4 })
-  windSpeed?: number;
+  windSpeed?: number | null;
 }

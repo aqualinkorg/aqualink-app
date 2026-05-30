@@ -8,6 +8,7 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
+import { DateTime } from 'luxon-extensions';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
@@ -67,6 +68,7 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [selectedDataDate, setSelectedDataDate] = useState<string | null>(null);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -74,6 +76,17 @@ function Homepage({ classes }: HomepageProps) {
   useEffect(() => {
     dispatch(sitesRequest());
   }, [dispatch]);
+
+  const handleSelectedDataDateChange = (date: Date | null) => {
+    const nextDate = date
+      ? DateTime.fromJSDate(date).endOf('day').toISOString()
+      : null;
+
+    setSelectedDataDate(nextDate);
+    dispatch(
+      sitesRequest(nextDate ? { date: nextDate } : { date: null, force: true }),
+    );
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,6 +137,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              selectedDataDate={selectedDataDate}
+              onSelectedDataDateChange={handleSelectedDataDateChange}
             />
           </Grid>
           {showSiteTable && (
