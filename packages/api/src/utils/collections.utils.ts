@@ -20,17 +20,18 @@ export const getCollectionData = async (
   }
 
   if (date && dailyDataRepository) {
-    const start = new Date(`${date}T00:00:00.000Z`);
     const end = new Date(`${date}T23:59:59.999Z`);
 
     const dailyData = await dailyDataRepository
       .createQueryBuilder('daily_data')
-      .select('daily_data.site_id', 'siteId')
+      .select('DISTINCT ON (daily_data.site_id) daily_data.site_id', 'siteId')
       .addSelect('daily_data.satellite_temperature', 'satelliteTemperature')
       .addSelect('daily_data.daily_alert_level', 'tempAlert')
       .addSelect('daily_data.weekly_alert_level', 'tempWeeklyAlert')
       .where('daily_data.site_id IN (:...siteIds)', { siteIds })
-      .andWhere('daily_data.date BETWEEN :start AND :end', { start, end })
+      .andWhere('daily_data.date <= :end', { end })
+      .orderBy('daily_data.site_id', 'ASC')
+      .addOrderBy('daily_data.date', 'DESC')
       .getRawMany();
 
     return _(dailyData)
