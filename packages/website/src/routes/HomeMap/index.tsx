@@ -2,7 +2,7 @@ import L, { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -10,7 +10,7 @@ import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
-import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import { setSiteOnMap, siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
@@ -21,12 +21,14 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
   initialCenter: LatLng;
   initialZoom: number;
   initialSiteId: string | undefined;
+  initialDate: string | undefined;
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
@@ -37,6 +39,11 @@ function useQuery() {
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
   const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
+  const queryParamDate = urlParams.get(QueryParamKeys.DATE) || undefined;
+  const initialDate =
+    queryParamDate && /^\d{4}-\d{2}-\d{2}$/.test(queryParamDate)
+      ? queryParamDate
+      : undefined;
   const sitesList = useSelector(sitesListSelector) || [];
   const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
   const initialSiteId = queryParamSiteId
@@ -57,33 +64,77 @@ function useQuery() {
 
   return {
     initialCenter,
+    initialDate,
     initialSiteId,
     initialZoom,
   };
 }
 
+const getHistoricalDateSearch = (date?: string) => {
+  const params = new URLSearchParams(window.location.search);
+
+  if (date) {
+    params.set(QueryParamKeys.DATE, date);
+  } else {
+    params.delete(QueryParamKeys.DATE);
+  }
+
+  return params.toString();
+};
+
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const siteOnMap = useSelector(siteOnMapSelector);
+  const siteOnMapDisplayLng = siteOnMap?.displayLng;
+  const siteOnMapId = siteOnMap?.id;
+  const selectedSiteId = siteOnMapId ? `${siteOnMapId}` : undefined;
+  const sitesList = useSelector(sitesListSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
-  const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
-    useQuery();
+  const {
+    initialZoom,
+    initialSiteId,
+    initialCenter,
+    initialDate,
+  }: MapQueryParams = useQuery();
+  const [historicalDate, setHistoricalDate] = useState<string | undefined>(
+    initialDate,
+  );
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(historicalDate));
+  }, [dispatch, historicalDate]);
 
   useEffect(() => {
-    if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
-      dispatch(surveysRequest(initialSiteId));
-    } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
-      dispatch(surveysRequest(`${siteOnMap.id}`));
-    }
-  }, [dispatch, initialSiteId, siteOnMap]);
+    if (!siteOnMapId) return;
+    const updatedSite = sitesList?.find((site) => site.id === siteOnMapId);
+    if (!updatedSite) return;
+    dispatch(
+      setSiteOnMap({
+        ...updatedSite,
+        displayLng: siteOnMapDisplayLng,
+      }),
+    );
+  }, [dispatch, siteOnMapDisplayLng, siteOnMapId, sitesList]);
+
+  useEffect(() => {
+    const siteId = selectedSiteId || initialSiteId;
+    if (!siteId) return;
+
+    dispatch(
+      siteRequest(
+        historicalDate ? { id: siteId, date: historicalDate } : siteId,
+      ),
+    );
+    dispatch(surveysRequest(siteId));
+  }, [dispatch, historicalDate, initialSiteId, selectedSiteId]);
+
+  const onHistoricalDateChange = (date?: string) => {
+    setHistoricalDate(date);
+    navigate({ search: getHistoricalDateSearch(date) }, { replace: true });
+  };
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -124,6 +175,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              historicalDate={historicalDate}
+              onHistoricalDateChange={onHistoricalDateChange}
             />
           </Grid>
           {showSiteTable && (

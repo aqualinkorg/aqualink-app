@@ -96,6 +96,21 @@ export class SitesService {
     @InjectDataSource() private dataSource: DataSource,
   ) {}
 
+  private parseHistoricalDate(date?: string): Date | undefined {
+    if (!date) {
+      return undefined;
+    }
+
+    const parsedDate = DateTime.fromISO(date, { zone: 'utc' });
+    if (!parsedDate.isValid) {
+      throw new BadRequestException('Date is not a valid ISO date');
+    }
+
+    return date.includes('T')
+      ? parsedDate.toJSDate()
+      : parsedDate.endOf('day').toJSDate();
+  }
+
   async create(
     appParams: CreateSiteApplicationDto,
     siteParams: CreateSiteDto,
@@ -156,6 +171,7 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    const historicalDate = this.parseHistoricalDate(filter.date);
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -201,6 +217,8 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      this.timeSeriesRepository,
+      historicalDate,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -223,7 +241,8 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, date?: string): Promise<Site> {
+    const historicalDate = this.parseHistoricalDate(date);
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -249,6 +268,8 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       [site],
       this.latestDataRepository,
+      this.timeSeriesRepository,
+      historicalDate,
     );
 
     const maskedSpotterApiToken = site.spotterApiToken
