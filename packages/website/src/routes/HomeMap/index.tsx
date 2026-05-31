@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Box, Button, Grid, Hidden, TextField } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -14,6 +14,7 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
+import { useQueryParam } from 'hooks/useQueryParams';
 import HomepageNavBar from 'common/NavBar';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
@@ -21,6 +22,7 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
@@ -31,6 +33,11 @@ interface MapQueryParams {
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
 const INITIAL_ZOOM = 4;
+const MAP_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+const isValidMapDate = (value: string) =>
+  MAP_DATE_PATTERN.test(value) &&
+  new Date(`${value}T00:00:00.000Z`) <= new Date();
 
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
@@ -67,13 +74,17 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [mapDate, setMapDate] = useQueryParam(
+    QueryParamKeys.DATE,
+    isValidMapDate,
+  );
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(mapDate));
+  }, [dispatch, mapDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -118,6 +129,30 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
+            <Box className={classes.dateControl}>
+              <TextField
+                label="Map date"
+                type="date"
+                size="small"
+                value={mapDate || ''}
+                onChange={(event) => {
+                  setMapDate(event.target.value || undefined);
+                }}
+                inputProps={{
+                  max: new Date().toISOString().slice(0, 10),
+                }}
+                InputLabelProps={{ shrink: true }}
+              />
+              {mapDate && (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() => setMapDate(undefined)}
+                >
+                  Today
+                </Button>
+              )}
+            </Box>
             <HomepageMap
               onMapLoad={setMapInstance}
               setShowSiteTable={setShowSiteTable}
@@ -165,6 +200,21 @@ const styles = () =>
     map: {
       display: 'flex',
       zIndex: 0,
+      position: 'relative',
+    },
+    dateControl: {
+      position: 'absolute',
+      left: 52,
+      top: 10,
+      zIndex: 1000,
+      display: 'flex',
+      gap: 8,
+      alignItems: 'center',
+      padding: 8,
+      borderRadius: 5,
+      backgroundColor: 'white',
+      backgroundClip: 'padding-box',
+      border: '2px solid rgba(0,0,0,0.2)',
     },
     siteTable: {
       display: 'flex',

@@ -27,9 +27,9 @@ import {
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
-const getSite = (id: string) =>
+const getSite = (id: string, date?: string) =>
   requests.send<Site>({
-    url: `sites/${id}`,
+    url: `sites/${id}${requests.generateUrlQueryParams({ date })}`,
     method: 'GET',
   });
 
@@ -83,9 +83,9 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (date?: string) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: `sites${requests.generateUrlQueryParams({ date })}`,
     method: 'GET',
   });
 
