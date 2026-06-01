@@ -5,9 +5,10 @@ import {
   IsInt,
   IsEnum,
   IsBooleanString,
+  IsDateString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { SiteStatus } from '../sites.entity';
 
 export class FilterSiteDto {
@@ -37,4 +38,9 @@ export class FilterSiteDto {
   @IsOptional()
   @IsBooleanString()
   readonly hasSpotter?: string;
+
+  @ApiPropertyOptional({ example: '2023-06-15', description: 'Show site alert data for this historical date (YYYY-MM-DD)' })
+  @IsOptional()
+  @IsDateString()
+  readonly date?: string;
 }

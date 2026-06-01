@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Grid, Hidden, TextField, Tooltip } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -67,13 +67,14 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>('');
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(selectedDate || undefined));
+  }, [dispatch, selectedDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -105,10 +106,25 @@ function Homepage({ classes }: HomepageProps) {
     drawer.scrollTop = 0;
   });
 
+  const today = new Date().toISOString().split('T')[0];
+
   return (
     <>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation geocodingEnabled />
+      </div>
+      <div className={classes.datePicker}>
+        <Tooltip title="View historical site alert data for a past date">
+          <TextField
+            label="Historical date"
+            type="date"
+            size="small"
+            value={selectedDate}
+            inputProps={{ max: today }}
+            InputLabelProps={{ shrink: true }}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+        </Tooltip>
       </div>
       <div className={classes.root}>
         <Grid container>
@@ -171,6 +187,14 @@ const styles = () =>
       flexDirection: 'column',
       height: 'calc(100vh - 64px);', // subtract height of the navbar
       overflowY: 'auto',
+    },
+    datePicker: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '4px 16px',
+      backgroundColor: '#fff',
+      borderBottom: '1px solid rgba(0,0,0,0.12)',
+      zIndex: 1,
     },
   });
 
