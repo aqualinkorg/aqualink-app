@@ -31,17 +31,18 @@ const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
   filters: {},
+  selectedDate: null,
 };
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  string | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (date, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(date);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,16 +50,19 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        date,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(date: string | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, selectedDate },
       } = getState();
+      // Always re-fetch when the requested date differs from what is loaded
+      if (date !== (selectedDate ?? undefined)) return true;
       return !list;
     },
   },
@@ -108,6 +112,7 @@ const sitesListSlice = createSlice({
       (state, action: PayloadAction<SitesRequestData>) => ({
         ...state,
         list: action.payload.list,
+        selectedDate: action.payload.date ?? null,
         loading: false,
       }),
     );
@@ -178,6 +183,10 @@ export const sitesListLoadingSelector = (
 export const sitesListErrorSelector = (
   state: RootState,
 ): SitesListState['error'] => state.sitesList.error;
+
+export const sitesListSelectedDateSelector = (
+  state: RootState,
+): SitesListState['selectedDate'] => state.sitesList.selectedDate;
 
 export const { clearSiteFilters, setSiteName } = sitesListSlice.actions;
 
