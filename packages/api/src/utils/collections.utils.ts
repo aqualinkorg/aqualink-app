@@ -72,24 +72,23 @@ export const getCollectionDataAtDate = async (
       weeklyAlertLevel: number | null;
     }>();
 
-  return dailyData.reduce<Record<number, CollectionDataDto>>((acc, data) => {
-    const collectionData: CollectionDataDto = {};
-
-    if (data.satelliteTemperature !== null) {
-      collectionData.satelliteTemperature = data.satelliteTemperature;
-    }
-    if (data.degreeHeatingDays !== null) {
-      collectionData.dhw = data.degreeHeatingDays;
-    }
-    if (data.weeklyAlertLevel !== null) {
-      collectionData.tempWeeklyAlert = data.weeklyAlertLevel;
-    }
-
-    return {
+  return dailyData.reduce<Record<number, CollectionDataDto>>(
+    (acc, data) => ({
       ...acc,
-      [data.siteId]: collectionData,
-    };
-  }, {});
+      [data.siteId]: {
+        ...(data.satelliteTemperature !== null && {
+          satelliteTemperature: data.satelliteTemperature,
+        }),
+        ...(data.degreeHeatingDays !== null && {
+          dhw: data.degreeHeatingDays,
+        }),
+        ...(data.weeklyAlertLevel !== null && {
+          tempWeeklyAlert: data.weeklyAlertLevel,
+        }),
+      },
+    }),
+    {},
+  );
 };
 
 export const heatStressTracker: DynamicCollection = {
