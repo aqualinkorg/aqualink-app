@@ -22,6 +22,13 @@ import {
   timeSeriesRequest,
 } from './helpers';
 
+type SiteRequestArg = string | { id: string; endDate?: string };
+
+const normalizeSiteRequestArg = (
+  arg: SiteRequestArg,
+): { id: string; endDate?: string } =>
+  typeof arg === 'string' ? { id: arg } : arg;
+
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
   loading: true,
@@ -90,14 +97,19 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  SiteRequestArg,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
+    const { id, endDate } = normalizeSiteRequestArg(arg);
     try {
       const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        undefined,
+        endDate,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,11 +135,12 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(arg, { getState }) {
+      const { id, endDate } = normalizeSiteRequestArg(arg);
       const {
         selectedSite: { details },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || Boolean(endDate);
     },
   },
 );

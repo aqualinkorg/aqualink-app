@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import makeStyles from '@mui/styles/makeStyles';
+import { DateTime } from 'luxon-extensions';
 
 import {
   siteDetailsSelector,
@@ -13,6 +14,7 @@ import {
 } from 'store/Sites/selectedSiteSlice';
 import { surveyListSelector } from 'store/Survey/surveyListSlice';
 import { sortByDate } from 'helpers/dates';
+import { useQueryParam } from 'hooks/useQueryParams';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import SelectedSiteCardContent from './CardContent';
 
@@ -41,6 +43,9 @@ function SelectedSiteCard() {
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
+  const [historicalDate, setHistoricalDate] = useQueryParam('date', (value) =>
+    DateTime.fromISO(value).isValid,
+  );
 
   const isFeatured = (site?.id || '').toString() === featuredSiteId;
 
@@ -85,6 +90,8 @@ function SelectedSiteCard() {
           site={site}
           loading={loading}
           error={error}
+          historicalDate={historicalDate}
+          onHistoricalDateChange={setHistoricalDate}
           imageUrl={
             featuredSurveyMedia?.thumbnailUrl || featuredSurveyMedia?.url
           }
