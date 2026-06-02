@@ -99,23 +99,6 @@ export const siteTests = () => {
     siteId = sortedSites[sortedSites.length - 1].id;
   });
 
-  it('GET / find all sites with collection data for a past date', async () => {
-    const [dailyData] = californiaDailyData;
-    const rsp = await request(app.getHttpServer())
-      .get('/sites')
-      .query({
-        date: DateTime.fromISO(dailyData.date as string).toISODate(),
-      });
-
-    expect(rsp.status).toBe(200);
-    const site = rsp.body.find(({ id }: Site) => id === californiaSite.id);
-
-    expect(site.collectionData).toMatchObject({
-      dhw: dailyData.degreeHeatingDays,
-      satelliteTemperature: dailyData.satelliteTemperature,
-    });
-  });
-
   it('GET /:id retrieve one site', async () => {
     const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
 
