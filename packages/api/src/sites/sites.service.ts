@@ -198,9 +198,21 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
+    const collectionDataDate = filter.date
+      ? DateTime.fromISO(filter.date).endOf('day')
+      : undefined;
+
+    if (collectionDataDate && !collectionDataDate.isValid) {
+      throw new BadRequestException('Date is not a valid date');
+    }
+
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      {
+        dailyDataRepository: this.dailyDataRepository,
+        date: collectionDataDate?.toJSDate(),
+      },
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);

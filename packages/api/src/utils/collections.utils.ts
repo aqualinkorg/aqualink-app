@@ -1,19 +1,82 @@
-import _, { camelCase } from 'lodash';
+import _, { camelCase, isNil, omitBy } from 'lodash';
 import { Repository } from 'typeorm';
 import { DynamicCollection } from '../collections/collections.entity';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
+import { DailyData } from '../sites/daily-data.entity';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
 
+interface DailyCollectionData {
+  siteId: number;
+  satelliteTemperature: number | null;
+  degreeHeatingDays: number | null;
+  dailyAlertLevel: number | null;
+  weeklyAlertLevel: number | null;
+}
+
+const getHistoricalCollectionData = async (
+  sites: Site[],
+  dailyDataRepository: Repository<DailyData>,
+  date: Date,
+): Promise<Record<number, CollectionDataDto>> => {
+  const siteIds = sites.map((site) => site.id);
+
+  const dailyData = await dailyDataRepository
+    .createQueryBuilder('daily_data')
+    .distinctOn(['daily_data.site_id'])
+    .select('daily_data.site_id', 'siteId')
+    .addSelect('daily_data.satellite_temperature', 'satelliteTemperature')
+    .addSelect('daily_data.degree_heating_days', 'degreeHeatingDays')
+    .addSelect('daily_data.daily_alert_level', 'dailyAlertLevel')
+    .addSelect('daily_data.weekly_alert_level', 'weeklyAlertLevel')
+    .where('daily_data.site_id IN (:...siteIds)', { siteIds })
+    .andWhere('daily_data.date <= :date', { date })
+    .orderBy('daily_data.site_id', 'ASC')
+    .addOrderBy('daily_data.date', 'DESC')
+    .getRawMany<DailyCollectionData>();
+
+  return dailyData.reduce<Record<number, CollectionDataDto>>(
+    (acc, siteData) => ({
+      ...acc,
+      [siteData.siteId]: omitBy(
+        {
+          satelliteTemperature: siteData.satelliteTemperature,
+          dhw:
+            siteData.degreeHeatingDays === null
+              ? undefined
+              : siteData.degreeHeatingDays / 7,
+          tempAlert: siteData.dailyAlertLevel,
+          tempWeeklyAlert:
+            siteData.weeklyAlertLevel ?? siteData.dailyAlertLevel,
+        },
+        isNil,
+      ) as CollectionDataDto,
+    }),
+    {},
+  );
+};
+
 export const getCollectionData = async (
   sites: Site[],
   latestDataRepository: Repository<LatestData>,
+  options?: {
+    dailyDataRepository?: Repository<DailyData>;
+    date?: Date;
+  },
 ): Promise<Record<number, CollectionDataDto>> => {
   const siteIds = sites.map((site) => site.id);
 
   if (!siteIds.length) {
     return {};
+  }
+
+  if (options?.date && options.dailyDataRepository) {
+    return getHistoricalCollectionData(
+      sites,
+      options.dailyDataRepository,
+      options.date,
+    );
   }
 
   // Get latest data
