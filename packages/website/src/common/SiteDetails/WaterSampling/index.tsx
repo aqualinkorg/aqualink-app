@@ -17,6 +17,7 @@ import {
 } from 'store/Sites/types';
 import requests from 'helpers/requests';
 import WarningIcon from '@mui/icons-material/Warning';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { DateTime } from 'luxon-extensions';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
@@ -24,6 +25,8 @@ import {
   alertColor,
   getCardData,
   getMeanCalculationFunction,
+  hwoLevelConfig,
+  hwoLevels,
   metricFields,
   warningColor,
   watchColor,
@@ -38,12 +41,30 @@ const useStyles = makeStyles(() => ({
     backgroundColor: colors.greenCardColor,
     color: 'white',
   },
+  hwoRoot: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    backgroundColor: colors.backgroundGray,
+    color: colors.black,
+  },
   content: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     flexGrow: 1,
     padding: 0,
+  },
+  hwoCardTitle: {
+    fontSize: 22,
+    fontWeight: 700,
+    color: colors.black,
+  },
+  metricTile: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: '0.75rem',
+    height: '100%',
   },
   labelWrapper: {
     display: 'flex',
@@ -70,6 +91,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
   >({});
 
   const showAlertColors = source === 'hui';
+  const showHwoCard = source === 'hwo';
 
   const isPointNameLong = (point?.name?.length || 0) > 24;
   const surveyPointDisplayName = `${isPointNameLong ? '' : ' Survey point:'} ${
@@ -121,14 +143,19 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
   }, [source, timeSeriesData]);
 
   return (
-    <Card className={classes.root}>
+    <Card className={showHwoCard ? classes.hwoRoot : classes.root}>
       <CardHeader
         className={classes.header}
         title={
           <Grid container>
             <Grid item>
-              <Typography className={classes.cardTitle} variant="h6">
-                WATER SAMPLING
+              <Typography
+                className={
+                  showHwoCard ? classes.hwoCardTitle : classes.cardTitle
+                }
+                variant={showHwoCard ? 'h4' : 'h6'}
+              >
+                {showHwoCard ? 'WATER HEALTH/CONDITION' : 'WATER SAMPLING'}
               </Typography>
             </Grid>
           </Grid>
@@ -137,10 +164,13 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
       <CardContent className={classes.content}>
         <Box p="1rem" display="flex" flexGrow={1}>
           <Grid container spacing={1}>
-            {metricFields(source, meanValues).map(
-              ({ label, value, color, unit, xs }) => (
+            {metricFields(source, meanValues, parseInt(siteId, 10)).map(
+              ({ label, value, color, unit, xs, iconType, iconColor }) => (
                 <Grid key={label} item xs={xs}>
-                  <Grid container>
+                  <Grid
+                    container
+                    className={showHwoCard ? classes.metricTile : undefined}
+                  >
                     <Grid item xs={12}>
                       <div
                         style={{
@@ -172,8 +202,32 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                     <Grid
                       item
                       xs={12}
-                      style={{ display: 'flex', alignItems: 'baseline', color }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        color: showHwoCard ? undefined : color,
+                      }}
                     >
+                      {showHwoCard && iconType === 'check' && (
+                        <CheckCircleOutlineIcon
+                          style={{
+                            fontSize: '1.5em',
+                            marginRight: '0.25em',
+                            color: iconColor,
+                            flexShrink: 0,
+                          }}
+                        />
+                      )}
+                      {showHwoCard && iconType === 'warning' && (
+                        <WarningIcon
+                          style={{
+                            fontSize: '1.5em',
+                            marginRight: '0.25em',
+                            color: iconColor,
+                            flexShrink: 0,
+                          }}
+                        />
+                      )}
                       <Typography
                         className={classes.contentTextValues}
                         variant="h3"
@@ -181,7 +235,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                       >
                         {value}
                       </Typography>
-                      {unit && (
+                      {!showHwoCard && unit && (
                         <Typography
                           className={classes.contentUnits}
                           variant="h6"
@@ -190,12 +244,29 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                         </Typography>
                       )}
                     </Grid>
+                    {showHwoCard && unit && (
+                      <Grid item xs={12}>
+                        <Typography
+                          className={classes.contentUnits}
+                          variant="h6"
+                        >
+                          {unit}
+                        </Typography>
+                      </Grid>
+                    )}
                   </Grid>
                 </Grid>
               ),
             )}
           </Grid>
         </Box>
+        {showHwoCard && (
+          <Box px="1rem" pb="0.5rem">
+            <Typography variant="caption" style={{ color: colors.black }}>
+              * Total dissolved
+            </Typography>
+          </Box>
+        )}
         {showAlertColors && (
           <Grid container>
             {[
@@ -218,6 +289,33 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
             ))}
           </Grid>
         )}
+        {showHwoCard && (
+          <Box
+            mx="1rem"
+            mb="0.75rem"
+            style={{ borderRadius: 6, overflow: 'hidden', display: 'flex' }}
+          >
+            {hwoLevels.map((level) => (
+              <Box
+                key={level}
+                style={{
+                  flex: 1,
+                  backgroundColor: hwoLevelConfig[level].color,
+                  padding: '0.35rem 0.2rem',
+                  textAlign: 'center',
+                }}
+              >
+                <Typography
+                  variant="caption"
+                  align="center"
+                  style={{ display: 'block', lineHeight: 1.2 }}
+                >
+                  {hwoLevelConfig[level].label}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        )}
         <UpdateInfo
           relativeTime={lastUpload}
           chipWidth={64}
@@ -233,7 +331,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
 
 interface WaterSamplingCardProps {
   siteId: string;
-  source: Extract<Sources, 'hui' | 'sonde'>;
+  source: Extract<Sources, 'hui' | 'sonde' | 'hwo'>;
 }
 
 export default WaterSamplingCard;

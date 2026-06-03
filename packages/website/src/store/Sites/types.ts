@@ -95,6 +95,9 @@ export const metricsKeysList = [
   'nitrate_plus_nitrite',
   'surface_temperature',
   'dissolved_oxygen',
+  'enterococcus',
+  'total_n',
+  'total_p',
 ] as const;
 
 export type MetricsKeys = (typeof metricsKeysList)[number];
@@ -131,7 +134,8 @@ export type Sources =
   | 'metlog'
   | 'hui'
   | 'sheet_data'
-  | 'seaphox';
+  | 'seaphox'
+  | 'hwo';
 
 export type LatestDataASSofarValue = {
   [keys in Metrics]?: ValueWithTimestamp;
