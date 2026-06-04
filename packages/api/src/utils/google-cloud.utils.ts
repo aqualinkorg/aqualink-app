@@ -8,9 +8,32 @@ export enum GoogleCloudDir {
 }
 
 export const getSurveyMediaFileFromURL = (url: string) => {
-  if (!GCS_BUCKET) {
-    throw new InternalServerErrorException('GCS_BUCKET variable is not set');
+  if (GCS_BUCKET) {
+    const fileFromBucket = url.split(`${GCS_BUCKET}/`)[1];
+
+    if (fileFromBucket) {
+      return fileFromBucket;
+    }
   }
 
-  return url.split(`${GCS_BUCKET}/`)[1];
+  try {
+    const { pathname } = new URL(url);
+    const segments = pathname.replace(/^\/+/, '').split('/');
+
+    if (segments.length > 1) {
+      return segments.slice(1).join('/');
+    }
+
+    if (segments[0]) {
+      return segments[0];
+    }
+  } catch {
+    throw new InternalServerErrorException(
+      'Could not derive survey media file path from URL',
+    );
+  }
+
+  throw new InternalServerErrorException(
+    'Could not derive survey media file path from URL',
+  );
 };
