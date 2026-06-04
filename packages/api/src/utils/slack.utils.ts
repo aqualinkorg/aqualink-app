@@ -26,6 +26,10 @@ export const sendSlackMessage = async (
   payload: SlackMessage,
   token: string,
 ) => {
+  if (process.env.NODE_ENV === 'test') {
+    return;
+  }
+
   const rsp = await axios.post<SlackResponse>(
     'https://slack.com/api/chat.postMessage',
     payload,
