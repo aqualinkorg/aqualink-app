@@ -177,13 +177,12 @@ export class SitesService {
       });
     }
 
+    query.leftJoinAndSelect('site.admins', 'admins');
+
     if (filter.adminId) {
-      query.innerJoin(
-        'site.admins',
-        'adminsAssociation',
-        'adminsAssociation.id = :adminId',
-        { adminId: filter.adminId },
-      );
+      query.andWhere('admins.id = :adminId', {
+        adminId: filter.adminId,
+      });
     }
 
     if (filter.hasSpotter) {
@@ -196,7 +195,6 @@ export class SitesService {
     const res = await query
       .leftJoinAndSelect('site.region', 'region')
       .leftJoinAndSelect('site.sketchFab', 'sketchFab')
-      .leftJoinAndSelect('site.admins', 'admins')
       .leftJoinAndSelect('site.reefCheckSites', 'reefCheckSites')
       .andWhere('display = true')
       .getMany();
