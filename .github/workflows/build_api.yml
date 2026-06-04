@@ -18,7 +18,7 @@ jobs:
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
       TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-      BACKEND_BASE_URL: ${{ vars.BACKEND_BASE_URL }}
+      BACKEND_BASE_URL: ${{ vars.BACKEND_BASE_URL || 'http://localhost:8080/api' }}
       STORAGE_MAX_FILE_SIZE_MB: ${{ vars.STORAGE_MAX_FILE_SIZE_MB }}
 
       GCS_BUCKET: ${{ secrets.GCS_BUCKET }}

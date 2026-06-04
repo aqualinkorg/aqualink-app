@@ -73,17 +73,18 @@ function formatAuditFailureReport(lines) {
 
 function run() {
   const { level, groups } = getAuditOptions();
+  const yarnCli = process.env.npm_execpath;
+  const command = yarnCli ? process.execPath : 'yarn';
+  const commandArgs = yarnCli
+    ? [yarnCli, 'audit', '--json', '--level', level, '--groups', ...groups]
+    : ['audit', '--json', '--level', level, '--groups', ...groups];
   const spawnOptions = {
     cwd: process.cwd(),
     encoding: 'utf8',
     ...(process.platform === 'win32' ? { shell: true } : {}),
   };
 
-  const result = spawnSync(
-    'yarn',
-    ['audit', '--json', '--level', level, '--groups', ...groups],
-    spawnOptions,
-  );
+  const result = spawnSync(command, commandArgs, spawnOptions);
 
   const stdout = result.stdout || '';
   const stderr = result.stderr || '';

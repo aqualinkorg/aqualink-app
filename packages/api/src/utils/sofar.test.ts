@@ -1,3 +1,4 @@
+import axios from './retry-axios';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
   getSofarHindcastData,
@@ -5,77 +6,216 @@ import {
   sofarHindcast,
   sofarWaveData,
 } from './sofar';
-import { ValueWithTimestamp } from './sofar.types';
 
-test('It processes Sofar API for daily data.', async () => {
-  jest.setTimeout(30000);
-  const values = await getSofarHindcastData(
-    'NOAACoralReefWatch',
-    'analysedSeaSurfaceTemperature',
-    -3.5976336810301888,
-    -178.0000002552476,
-    new Date('2024-08-31'),
-  );
+jest.mock('./retry-axios', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+  },
+}));
 
-  expect(values).toEqual([
-    { timestamp: '2024-08-30T12:00:00.000Z', value: 29.509984820290786 },
-  ]);
-});
+const mockedGet = axios.get as jest.MockedFunction<typeof axios.get>;
 
-test('It processes Sofar Spotter API for daily data.', async () => {
-  jest.setTimeout(30000);
-  const values = await getSpotterData(
-    'SPOT-300434063450120',
-    process.env.SOFAR_API_TOKEN,
-    new Date('2020-09-02'),
-  );
+describe('Sofar utils', () => {
+  beforeEach(() => {
+    mockedGet.mockReset();
+  });
 
-  expect(values.bottomTemperature.length).toEqual(144);
-  expect(values.topTemperature.length).toEqual(144);
-});
+  test('filters invalid hindcast values for daily data', async () => {
+    mockedGet.mockResolvedValueOnce({
+      data: {
+        hindcastVariables: [
+          {
+            values: [
+              { timestamp: '2024-08-30T12:00:00.000Z', value: null },
+              { timestamp: '2024-08-30T18:00:00.000Z', value: 9999 },
+              { timestamp: '2024-08-31T00:00:00.000Z', value: 29.51 },
+            ],
+          },
+        ],
+      },
+    });
 
-test('it process Sofar Hindcast API for wind-wave data', async () => {
-  jest.setTimeout(30000);
-  const now = new Date();
-  const yesterdayDate = new Date(now);
-  yesterdayDate.setDate(now.getDate() - 1);
-  const today = now.toISOString();
-  const yesterday = yesterdayDate.toISOString();
+    const values = await getSofarHindcastData(
+      'NOAACoralReefWatch',
+      'analysedSeaSurfaceTemperature',
+      -3.5976336810301888,
+      -178.0000002552476,
+      new Date('2024-08-31'),
+    );
 
-  const response = await sofarHindcast(
-    SofarModels.Wave,
-    sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
-    -3.5976336810301888,
-    -178.0000002552476,
-    yesterday,
-    today,
-  );
+    expect(values).toEqual([
+      { timestamp: '2024-08-31T00:00:00.000Z', value: 29.51 },
+    ]);
+  });
 
-  const values = response?.values[0] as ValueWithTimestamp;
+  test('maps spotter and smart mooring data into spotter metrics', async () => {
+    mockedGet
+      .mockResolvedValueOnce({
+        data: {
+          data: {
+            spotterId: 'SPOT-300434063450120',
+            waves: [
+              {
+                significantWaveHeight: 1.2,
+                meanPeriod: 8.5,
+                meanDirection: 210,
+                timestamp: '2020-09-02T00:00:00.000Z',
+                latitude: -8.1,
+                longitude: 115.1,
+              },
+            ],
+            wind: [
+              {
+                speed: 12,
+                direction: 180,
+                timestamp: '2020-09-02T00:00:00.000Z',
+                seasurfaceId: 1,
+                latitude: -8.1,
+                longitude: 115.1,
+              },
+            ],
+            surfaceTemp: [
+              {
+                degrees: 28.4,
+                timestamp: '2020-09-02T00:00:00.000Z',
+                latitude: -8.1,
+                longitude: 115.1,
+              },
+            ],
+            barometerData: [
+              {
+                value: 1000,
+                timestamp: '2020-09-02T00:00:00.000Z',
+                latitude: -8.1,
+                longitude: 115.1,
+                units: 'hPa',
+              },
+              {
+                value: 1003,
+                timestamp: '2020-09-02T01:00:00.000Z',
+                latitude: -8.1,
+                longitude: 115.1,
+                units: 'hPa',
+              },
+            ],
+          },
+        },
+      })
+      .mockResolvedValueOnce({
+        data: {
+          data: [
+            {
+              sensorPosition: 1,
+              unit_type: 'temperature',
+              value: 27.1,
+              timestamp: '2020-09-02T00:00:00.000Z',
+            },
+            {
+              sensorPosition: 2,
+              unit_type: 'temperature',
+              value: 26.3,
+              timestamp: '2020-09-02T00:00:00.000Z',
+            },
+            {
+              sensorPosition: 2,
+              unit_type: 'pressure',
+              value: 101245,
+              timestamp: '2020-09-02T00:00:00.000Z',
+            },
+          ],
+        },
+      });
 
-  expect(new Date(values?.timestamp).getTime()).toBeLessThanOrEqual(
-    now.getTime(),
-  );
-});
+    const values = await getSpotterData(
+      'SPOT-300434063450120',
+      'token',
+      new Date('2020-09-02'),
+    );
 
-test('it process Sofar Wave Date API for surface temperature', async () => {
-  jest.setTimeout(30000);
-  const now = new Date();
-  const yesterdayDate = new Date(now);
-  yesterdayDate.setDate(now.getDate() - 1);
-  const today = now.toISOString();
-  const yesterday = yesterdayDate.toISOString();
+    expect(values.topTemperature).toEqual([
+      { timestamp: '2020-09-02T00:00:00.000Z', value: 27.1 },
+    ]);
+    expect(values.bottomTemperature).toEqual([
+      { timestamp: '2020-09-02T00:00:00.000Z', value: 26.3 },
+    ]);
+    expect(values.barometerBottom).toEqual([
+      { timestamp: '2020-09-02T00:00:00.000Z', value: 101.245 },
+    ]);
+    expect(values.barometricTopDiff).toEqual([
+      { timestamp: '2020-09-02T01:00:00.000Z', value: 3 },
+    ]);
+    expect(values.surfaceTemperature).toEqual([
+      { timestamp: '2020-09-02T00:00:00.000Z', value: 28.4 },
+    ]);
+    expect(values.significantWaveHeight).toEqual([
+      { timestamp: '2020-09-02T00:00:00.000Z', value: 1.2 },
+    ]);
+  });
 
-  const response = await sofarWaveData(
-    'SPOT-1644',
-    process.env.SOFAR_API_TOKEN,
-    yesterday,
-    today,
-  );
+  test('returns the first hindcast variable payload', async () => {
+    mockedGet.mockResolvedValueOnce({
+      data: {
+        hindcastVariables: [
+          {
+            variableID:
+              sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
+            values: [{ timestamp: '2026-06-04T00:00:00.000Z', value: 1.8 }],
+          },
+        ],
+      },
+    });
 
-  expect(response).toBeDefined();
-  expect(response?.data).toBeDefined();
-  expect(response?.data.waves).toBeDefined();
-  expect(Array.isArray(response?.data.waves)).toBe(true);
-  expect(response?.data.waves.length).toBeGreaterThan(0);
+    const response = await sofarHindcast(
+      SofarModels.Wave,
+      sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
+      -3.5976336810301888,
+      -178.0000002552476,
+      '2026-06-03T00:00:00.000Z',
+      '2026-06-04T00:00:00.000Z',
+    );
+
+    expect(response).toMatchObject({
+      variableID: sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
+      values: [{ timestamp: '2026-06-04T00:00:00.000Z', value: 1.8 }],
+    });
+  });
+
+  test('unwraps wave API response data shape', async () => {
+    mockedGet.mockResolvedValueOnce({
+      data: {
+        data: {
+          spotterId: 'SPOT-1644',
+          waves: [
+            {
+              significantWaveHeight: 1.5,
+              peakPeriod: 12,
+              meanPeriod: 9,
+              peakDirection: 200,
+              peakDirectionalSpread: 15,
+              meanDirection: 190,
+              meanDirectionalSpread: 20,
+              timestamp: '2026-06-04T00:00:00.000Z',
+              latitude: -8.1,
+              longitude: 115.1,
+            },
+          ],
+          wind: [],
+          surfaceTemp: [],
+          barometerData: [],
+        },
+      },
+    });
+
+    const response = await sofarWaveData(
+      'SPOT-1644',
+      'token',
+      '2026-06-03T00:00:00.000Z',
+      '2026-06-04T00:00:00.000Z',
+    );
+
+    expect(response?.data.spotterId).toBe('SPOT-1644');
+    expect(response?.data.waves).toHaveLength(1);
+    expect(response?.data.waves[0].significantWaveHeight).toBe(1.5);
+  });
 });

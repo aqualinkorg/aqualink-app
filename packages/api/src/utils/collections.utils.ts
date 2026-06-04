@@ -5,6 +5,7 @@ import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
+import { DailyData } from '../sites/daily-data.entity';
 
 export const getCollectionData = async (
   sites: Site[],
@@ -43,6 +44,51 @@ export const getCollectionData = async (
       ),
     )
     .toJSON();
+};
+
+export const getCollectionDataAtDate = async (
+  sites: Site[],
+  dailyDataRepository: Repository<DailyData>,
+  date: string,
+): Promise<Record<number, CollectionDataDto>> => {
+  const siteIds = sites.map((site) => site.id);
+
+  if (!siteIds.length) {
+    return {};
+  }
+
+  const dailyData = await dailyDataRepository
+    .createQueryBuilder('daily_data')
+    .select('daily_data.site_id', 'siteId')
+    .addSelect('daily_data.satellite_temperature', 'satelliteTemperature')
+    .addSelect('daily_data.degree_heating_days', 'degreeHeatingDays')
+    .addSelect('daily_data.weekly_alert_level', 'weeklyAlertLevel')
+    .where('daily_data.site_id IN (:...siteIds)', { siteIds })
+    .andWhere('DATE(daily_data.date) = DATE(:date)', { date })
+    .getRawMany<{
+      siteId: number;
+      satelliteTemperature: number | null;
+      degreeHeatingDays: number | null;
+      weeklyAlertLevel: number | null;
+    }>();
+
+  return dailyData.reduce<Record<number, CollectionDataDto>>(
+    (acc, data) => ({
+      ...acc,
+      [data.siteId]: {
+        ...(data.satelliteTemperature !== null && {
+          satelliteTemperature: data.satelliteTemperature,
+        }),
+        ...(data.degreeHeatingDays !== null && {
+          dhw: data.degreeHeatingDays,
+        }),
+        ...(data.weeklyAlertLevel !== null && {
+          tempWeeklyAlert: data.weeklyAlertLevel,
+        }),
+      },
+    }),
+    {},
+  );
 };
 
 export const heatStressTracker: DynamicCollection = {
