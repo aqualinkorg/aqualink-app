@@ -101,9 +101,11 @@ export const siteTests = () => {
 
   it('GET / find all sites for a historical date', async () => {
     const historicalData = californiaDailyData[0];
-    const rsp = await request(app.getHttpServer()).get('/sites').query({
-      date: historicalData.date as string,
-    });
+    const rsp = await request(app.getHttpServer())
+      .get('/sites')
+      .query({
+        date: historicalData.date as string,
+      });
 
     const site = rsp.body.find(
       ({ id }: { id: number }) => id === californiaSite.id,
