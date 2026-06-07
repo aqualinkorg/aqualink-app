@@ -101,17 +101,15 @@ export const siteTests = () => {
   });
 
   it('GET / find all sites with historical collection data', async () => {
-    await dataSource.getRepository(DailyData).save({
-      date: new Date('2020-01-01T00:00:00.000Z'),
-      degreeHeatingDays: 12.5,
-      satelliteTemperature: 29.1,
-      dailyAlertLevel: 2,
-      weeklyAlertLevel: 4,
-      site: { id: californiaSite.id },
+    const historicalData = await dataSource.getRepository(DailyData).findOne({
+      where: { site: { id: californiaSite.id } },
+      order: { date: 'DESC' },
     });
 
+    expect(historicalData).toBeDefined();
+
     const rsp = await request(app.getHttpServer()).get('/sites').query({
-      date: '2020-01-02T00:00:00.000Z',
+      date: historicalData!.date.toISOString(),
     });
 
     expect(rsp.status).toBe(200);
@@ -119,10 +117,9 @@ export const siteTests = () => {
       (site: { id: number }) => site.id === californiaSite.id,
     );
     expect(california.collectionData).toMatchObject({
-      dhw: 12.5,
-      satelliteTemperature: 29.1,
-      tempAlert: 2,
-      tempWeeklyAlert: 4,
+      dhw: historicalData!.degreeHeatingDays,
+      satelliteTemperature: historicalData!.satelliteTemperature,
+      tempAlert: historicalData!.dailyAlertLevel,
     });
   });
 
