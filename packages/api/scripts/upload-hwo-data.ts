@@ -71,6 +71,7 @@ async function run() {
     signature,
     headers,
     importedMetrics,
+    headerIndex,
     headerToTokenMap,
   } = await getFilePathData(filePath);
 
@@ -85,9 +86,8 @@ async function run() {
   }
 
   const dataRows = workSheetData
-    .slice(1)
+    .slice(headerIndex + 1)
     .filter((x) => x.length > 0) as any[][];
-
   const groupedBySiteId = groupBy(dataRows, (x) => x[siteIdIndex]);
 
   logger.log(
