@@ -112,6 +112,7 @@ async function run() {
         {} as Sources,
         headerToTokenMap,
         null,
+        'text/csv',
       );
 
       return { siteId, site, data };
