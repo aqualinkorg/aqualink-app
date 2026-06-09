@@ -19,6 +19,24 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
       >
+        <mock-box
+          classname="Homepage-dateControl-3"
+        >
+          <mock-datepicker
+            autook="true"
+            datename="MAP DATE"
+            datenametextvariant="subtitle1"
+            timezone="UTC"
+          />
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-wyro15-MuiButtonBase-root-MuiButton-root"
+            disabled=""
+            tabindex="-1"
+            type="button"
+          >
+            Latest
+          </button>
+        </mock-box>
         <mock-map
           initialcenter="LatLng(0, 121.3)"
           initialzoom="4"
@@ -29,7 +47,7 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
         mddown="true"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-3 css-1k7sk4d-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-4 css-1k7sk4d-MuiGrid-root"
         >
           <mock-sitetable />
         </div>
