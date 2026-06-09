@@ -15,6 +15,7 @@ import {
   Hidden,
   Alert,
   Theme,
+  TextField,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -89,6 +90,8 @@ function HomepageMap({
   defaultLayerName,
   legendBottom,
   legendLeft,
+  dataDate,
+  onDataDateChange,
   classes,
   onMapLoad,
 }: HomepageMapProps) {
@@ -275,6 +278,21 @@ function HomepageMap({
           <InfoIcon color="primary" />
         </IconButton>
       </div>
+      {onDataDateChange && (
+        <div className={classes.dateControl}>
+          <TextField
+            label="Map date"
+            type="date"
+            size="small"
+            value={dataDate || ''}
+            onChange={(event) =>
+              onDataDateChange(event.target.value || undefined)
+            }
+            InputLabelProps={{ shrink: true }}
+            inputProps={{ max: new Date().toISOString().slice(0, 10) }}
+          />
+        </div>
+      )}
       <InfoDialog
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
@@ -358,6 +376,17 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    dateControl: {
+      position: 'absolute',
+      left: 10,
+      top: 10,
+      zIndex: 1000,
+      backgroundColor: 'white',
+      borderRadius: 5,
+      '& .MuiInputBase-root': {
+        backgroundColor: 'white',
+      },
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -384,6 +413,8 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  dataDate?: string;
+  onDataDateChange?: (date?: string) => void;
   onMapLoad?: (map: L.Map) => void;
 }
 
