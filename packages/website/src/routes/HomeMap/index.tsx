@@ -14,6 +14,8 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
+import { DateTime } from 'luxon-extensions';
+import { useQueryParam } from 'hooks/useQueryParams';
 import HomepageNavBar from 'common/NavBar';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
@@ -67,6 +69,9 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [historicalDate] = useQueryParam('date', (value) =>
+    DateTime.fromISO(value).isValid,
+  );
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -77,13 +82,15 @@ function Homepage({ classes }: HomepageProps) {
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, endDate: historicalDate }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(
+        siteRequest({ id: `${siteOnMap.id}`, endDate: historicalDate }),
+      );
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dispatch, historicalDate, initialSiteId, siteOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 

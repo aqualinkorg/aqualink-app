@@ -121,6 +121,9 @@ function Site({ classes }: SiteProps) {
   const { id: siteId = '' } = useParams<{ id: string }>();
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
+  const [historicalDate] = useQueryParam('date', (value) =>
+    DateTime.fromISO(value).isValid,
+  );
   const [refresh, setRefresh] = useQueryParam('refresh');
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
@@ -145,7 +148,7 @@ function Site({ classes }: SiteProps) {
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
-  const today = localizedEndOfDay(undefined, timezone);
+  const today = localizedEndOfDay(historicalDate, timezone);
 
   const siteWithFeaturedImage: SiteType | undefined =
     siteDetails && (siteId === siteDetails.id.toString() || !siteId)
@@ -162,7 +165,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
+      dispatch(siteRequest({ id: siteId, endDate: historicalDate }));
       dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
@@ -171,7 +174,7 @@ function Site({ classes }: SiteProps) {
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
+    dispatch(siteRequest({ id: siteId, endDate: historicalDate }));
     dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
@@ -180,7 +183,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
     };
-  }, [dispatch, siteId]);
+  }, [dispatch, historicalDate, siteId]);
 
   // Fetch reef check surveys
   useEffect(() => {
@@ -247,6 +250,7 @@ function Site({ classes }: SiteProps) {
           <div key={siteId}>
             <SiteDetails
               site={siteWithFeaturedImage}
+              historicalDate={historicalDate}
               selectedSurveyPointId={selectedSurveyPointId}
               featuredSurveyId={featuredSurveyId}
               surveys={surveyList}

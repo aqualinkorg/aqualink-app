@@ -128,6 +128,7 @@ const MINIMUM_SONDE_METRICS_TO_SHOW_CARD = 3;
 
 function SiteDetails({
   site,
+  historicalDate,
   selectedSurveyPointId,
   surveys,
   featuredSurveyId = null,
@@ -158,13 +159,13 @@ function SiteDetails({
     if (site && !spotterPosition) {
       dispatch(spotterPositionRequest(String(site.id)));
     }
-    if (site && !latestData) {
+    if (site && !latestData && !historicalDate) {
       dispatch(latestDataRequest(String(site.id)));
     }
     if (site && !forecastData) {
       dispatch(forecastDataRequest(String(site.id)));
     }
-  }, [dispatch, site, spotterPosition, latestData, forecastData]);
+  }, [dispatch, site, spotterPosition, latestData, forecastData, historicalDate]);
 
   useEffect(
     () => () => {
@@ -176,6 +177,22 @@ function SiteDetails({
   );
 
   useEffect(() => {
+    if (historicalDate && site?.dailyData?.[0]) {
+      const historicalDailyData = site.dailyData[0];
+      setLatestDataAsSofarValues((previous) => ({
+        ...previous,
+        satelliteTemperature: {
+          timestamp: historicalDailyData.date,
+          value: historicalDailyData.satelliteTemperature,
+        },
+        dhw: {
+          timestamp: historicalDailyData.date,
+          value: historicalDailyData.degreeHeatingDays / 7,
+        },
+      }));
+      return;
+    }
+
     if (forecastData && latestData) {
       const combinedArray = [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
@@ -281,7 +298,7 @@ function SiteDetails({
       setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);
     }
-  }, [forecastData, latestData, timeSeriesRange]);
+  }, [forecastData, historicalDate, latestData, site?.dailyData, timeSeriesRange]);
 
   const { videoStream } = site || {};
 
@@ -531,6 +548,7 @@ function SiteDetails({
 
 interface SiteDetailsProps {
   site?: Site;
+  historicalDate?: string;
   selectedSurveyPointId?: string;
   featuredSurveyId?: number | null;
   surveys: SurveyListItem[];

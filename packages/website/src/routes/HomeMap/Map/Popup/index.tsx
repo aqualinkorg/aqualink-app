@@ -32,6 +32,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<L.Popup>(null);
   const location = useLocation();
+  const sitePath = `/sites/${site.id}${location.search || ''}`;
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
 
@@ -143,7 +144,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                to={sitePath}
                 state={{ from: location.pathname }}
               >
                 <Button

@@ -15,13 +15,16 @@ import makeStyles from '@mui/styles/makeStyles';
 import { isNumber } from 'lodash';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+import { DateTime } from 'luxon-extensions';
 
 import { Site } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
+import { degreeHeatingWeeksCalculator } from 'helpers/degreeHeatingWeeks';
 import { formatNumber } from 'helpers/numberUtils';
 import Chart from 'common/Chart';
 import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
 import Chip from 'common/Chip';
+import DatePicker from 'common/Datepicker';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import featuredImageLoading from '../../../../assets/img/loading-image.svg';
@@ -112,17 +115,28 @@ function SelectedSiteCardContent({
   site,
   loading,
   error,
+  historicalDate,
+  onHistoricalDateChange,
   imageUrl = null,
 }: SelectedSiteCardContentProps) {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
   const location = useLocation();
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const historicalDailyData = historicalDate ? site?.dailyData?.[0] : undefined;
   const {
-    bottomTemperature,
-    satelliteTemperature,
-    dhw: degreeHeatingWeek,
+    bottomTemperature: latestBottomTemperature,
+    satelliteTemperature: latestSatelliteTemperature,
+    dhw: latestDegreeHeatingWeek,
   } = site?.collectionData || {};
+  const bottomTemperature =
+    historicalDailyData?.avgBottomTemperature ?? latestBottomTemperature;
+  const satelliteTemperature =
+    historicalDailyData?.satelliteTemperature ?? latestSatelliteTemperature;
+  const degreeHeatingWeek =
+    historicalDailyData
+      ? degreeHeatingWeeksCalculator(historicalDailyData.degreeHeatingDays)
+      : latestDegreeHeatingWeek;
   const useCardWithImageLayout = Boolean(loading || imageUrl);
 
   const metrics = [
@@ -181,6 +195,24 @@ function SelectedSiteCardContent({
     );
   };
 
+  const handleHistoricalDateChange = (date: Date | null) => {
+    if (!onHistoricalDateChange) return;
+    onHistoricalDateChange(
+      date
+        ? DateTime.fromJSDate(date)
+            .setZone(site?.timezone || 'UTC')
+            .endOf('day')
+            .toISOString()
+        : undefined,
+    );
+  };
+
+  const sitePath = site
+    ? `/sites/${site.id}${
+        historicalDate ? `?date=${encodeURIComponent(historicalDate)}` : ''
+      }`
+    : '#';
+
   if (error) {
     return <Alert severity="error">{error}</Alert>;
   }
@@ -207,10 +239,7 @@ function SelectedSiteCardContent({
               height="100%"
             >
               {site && imageUrl && (
-                <Link
-                  to={`/sites/${site.id}`}
-                  state={{ from: location.pathname }}
-                >
+                <Link to={sitePath} state={{ from: location.pathname }}>
                   <CardMedia
                     className={classNames(
                       classes.cardImage,
@@ -259,7 +288,7 @@ function SelectedSiteCardContent({
                       <Chip
                         live
                         liveText="LIVE VIDEO"
-                        to={`/sites/${site.id}`}
+                        to={sitePath}
                         state={{ from: location.pathname }}
                         width={80}
                       />
@@ -268,7 +297,7 @@ function SelectedSiteCardContent({
                       <Button
                         className={classes.exploreButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        to={sitePath}
                         state={{ from: location.pathname }}
                         onClick={onExploreButtonClick}
                         size="small"
@@ -293,6 +322,20 @@ function SelectedSiteCardContent({
         className={classes.cardAnalyticsWrapper}
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
+          <Box display="flex" justifyContent="flex-end" pr="0.5rem">
+            <DatePicker
+              value={
+                historicalDate ||
+                DateTime.now()
+                  .setZone(site?.timezone || 'UTC')
+                  .endOf('day')
+                  .toISOString()
+              }
+              dateName="As of"
+              timeZone={site?.timezone}
+              onChange={handleHistoricalDateChange}
+            />
+          </Box>
           <Hidden mdDown={useCardWithImageLayout}>
             <LoadingSkeleton
               loading={loading}
@@ -315,7 +358,7 @@ function SelectedSiteCardContent({
                   <Chip
                     live
                     liveText="LIVE VIDEO"
-                    to={`/sites/${site.id}`}
+                    to={sitePath}
                     state={{ from: location.pathname }}
                     width={80}
                   />
@@ -421,6 +464,10 @@ interface SelectedSiteCardContentProps {
   site?: Site | null;
   loading: boolean;
   error?: string | null;
+  historicalDate?: string;
+  onHistoricalDateChange?: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >;
   imageUrl?: string | null;
 }
 
