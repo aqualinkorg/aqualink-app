@@ -53,11 +53,11 @@ describe('MultipleSensorsCharts', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
-    vi.useFakeTimers();
+    rstest.useFakeTimers();
 
-    vi.setSystemTime(new Date('2023-06-28T21:00:00.000Z'));
+    rstest.setSystemTime(new Date('2023-06-28T21:00:00.000Z'));
 
     const element = render(
       <MemoryRouter
@@ -81,7 +81,7 @@ describe('MultipleSensorsCharts', () => {
       </MemoryRouter>,
     ).container;
 
-    vi.useRealTimers();
+    rstest.useRealTimers();
 
     expect(element).toMatchSnapshot();
   });

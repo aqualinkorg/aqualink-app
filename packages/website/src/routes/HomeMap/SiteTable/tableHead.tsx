@@ -32,7 +32,9 @@ function ColumnTitle({
           variant="subtitle2"
           style={{ color: 'black' }}
           component="span"
-        >{` (${unit})`}</Typography>
+        >
+          {` (${unit})`}
+        </Typography>
       )}
     </Typography>
   );

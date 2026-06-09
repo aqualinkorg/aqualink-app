@@ -43,10 +43,10 @@ describe('ReefCheckSurveyTable', () => {
     expect(getByText(mockTitle)).toBeInTheDocument();
     expect(getByText(mockDescription)).toBeInTheDocument();
 
-    const rows = container.querySelectorAll<HTMLElement>('mock-tablerow');
+    const rows = container.querySelectorAll<HTMLElement>('tr');
     expect(rows.length).toBe(3); // 1 header + 2 data
     expect(
-      [...container.querySelectorAll('mock-tablecell').values()].map(
+      [...container.querySelectorAll('td, th').values()].map(
         (el) => el.textContent,
       ),
     ).toEqual(['Name', 'Age', 'Joe', '30', 'Doe', '25']);
@@ -57,15 +57,11 @@ describe('ReefCheckSurveyTable', () => {
       loading: true,
       data: [],
     });
-    const rows = container.querySelectorAll<HTMLElement>('mock-tablerow');
-    expect(rows.length).toBe(4); // 1 header + 3 skeleton rows
-    rows.forEach((row, i) => {
-      if (i === 0) {
-        // skip header
-        return;
-      }
-      const cells = row.querySelectorAll('mock-skeleton');
-      expect(cells.length).toBe(mockColumns.length);
+    const rows = container.querySelectorAll<HTMLElement>('tbody tr');
+    expect(rows.length).toBe(3); // 3 skeleton rows
+    rows.forEach((row) => {
+      const skeletons = row.querySelectorAll('.MuiSkeleton-root');
+      expect(skeletons.length).toBe(mockColumns.length);
     });
   });
 });

@@ -19,7 +19,7 @@ describe('Featured Media Card', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(<FeaturedMedia siteId={1} url={null} />, {
       store,

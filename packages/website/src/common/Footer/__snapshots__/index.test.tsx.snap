@@ -1,39 +1,39 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
-  <mock-appbar
-    classname="Footer-appBar-1"
-    position="static"
+  <header
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic Footer-appBar-1 css-1qfbauw-MuiPaper-root-MuiAppBar-root"
+    style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);"
   >
-    <mock-toolbar>
+    <div
+      class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-j2y5px-MuiToolbar-root"
+    >
       <div
         class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
         >
-          <mock-link
-            classname="Footer-navBarLink-2"
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover Footer-navBarLink-2 css-187zrab-MuiTypography-root-MuiLink-root"
             href="/map"
-            underline="hover"
           >
-            <mock-typography
-              color="textPrimary"
-              variant="h4"
+            <h4
+              class="MuiTypography-root MuiTypography-h4 css-6oevoe-MuiTypography-root"
             >
               Aqua
-            </mock-typography>
-            <mock-typography
+            </h4>
+            <h4
+              class="MuiTypography-root MuiTypography-h4 css-1ghn6nx-MuiTypography-root"
               style="color: rgb(138, 198, 222);"
-              variant="h4"
             >
               link
-            </mock-typography>
-          </mock-link>
+            </h4>
+          </a>
         </div>
       </div>
-    </mock-toolbar>
-  </mock-appbar>
+    </div>
+  </header>
 </div>
 `;

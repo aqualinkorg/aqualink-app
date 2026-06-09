@@ -24,7 +24,7 @@ describe('Error Page', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
     element = renderWithProviders(<ErrorPage />, { store }).container;
   });
 

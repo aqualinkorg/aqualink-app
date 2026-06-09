@@ -1,10 +1,10 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
-  <mock-card
-    classname="Satellite-root-8"
-    style="background-color: rgb(8, 91, 163);"
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root Satellite-root-8 css-1i00q08-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12); background-color: rgb(8, 91, 163);"
   >
     <div
       class="MuiCardHeader-root Satellite-header-3 css-149tc0y-MuiCardHeader-root"
@@ -21,24 +21,21 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
-              <mock-typography
-                classname="Satellite-cardTitle-2"
-                variant="h6"
+              <h6
+                class="MuiTypography-root MuiTypography-h6 Satellite-cardTitle-2 css-sieuai-MuiTypography-root"
               >
                 SATELLITE OBSERVATION
-              </mock-typography>
+              </h6>
             </div>
           </div>
         </span>
       </div>
     </div>
-    <mock-cardcontent
-      classname="Satellite-content-9"
+    <div
+      class="MuiCardContent-root Satellite-content-9 css-dlpuou-MuiCardContent-root"
     >
-      <mock-box
-        display="flex"
-        flexgrow="1"
-        p="1rem"
+      <div
+        class="MuiBox-root css-1as4n1g"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
@@ -46,85 +43,69 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
-            <mock-typography
-              classname="Satellite-contentTextTitles-4"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 Satellite-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
             >
               SURFACE TEMP
-            </mock-typography>
-            <mock-tooltip
-              title=""
+            </h6>
+            <h3
+              aria-label=""
+              class="MuiTypography-root MuiTypography-h3 Satellite-contentTextValues-5 css-18qnhdx-MuiTypography-root"
+              data-mui-internal-clone-element="true"
             >
-              <mock-typography
-                classname="Satellite-contentTextValues-5"
-                variant="h3"
-              >
-                15.3°C
-              </mock-typography>
-            </mock-tooltip>
+              15.3°C
+            </h3>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
-            <mock-typography
-              classname="Satellite-contentTextTitles-4"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 Satellite-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
             >
               HISTORICAL MAX
-            </mock-typography>
-            <mock-tooltip
-              title="Historical maximum monthly average over the past 20 years"
+            </h6>
+            <h3
+              aria-label="Historical maximum monthly average over the past 20 years"
+              class="MuiTypography-root MuiTypography-h3 Satellite-contentTextValues-5 css-18qnhdx-MuiTypography-root"
+              data-mui-internal-clone-element="true"
             >
-              <mock-typography
-                classname="Satellite-contentTextValues-5"
-                variant="h3"
-              >
-                24.0°C
-              </mock-typography>
-            </mock-tooltip>
+              24.0°C
+            </h3>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
-            <mock-typography
-              classname="Satellite-contentTextTitles-4"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 Satellite-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
             >
               DEGREE HEATING WEEKS
-            </mock-typography>
-            <mock-tooltip
-              title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
+            </h6>
+            <h3
+              aria-label="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
+              class="MuiTypography-root MuiTypography-h3 Satellite-contentTextValues-5 css-18qnhdx-MuiTypography-root"
+              data-mui-internal-clone-element="true"
             >
-              <mock-typography
-                classname="Satellite-contentTextValues-5"
-                variant="h3"
-              >
-                0.0
-              </mock-typography>
-            </mock-tooltip>
+              0.0
+            </h3>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
-            <mock-typography
-              classname="Satellite-contentTextTitles-4"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 Satellite-contentTextTitles-4 css-jgqdn0-MuiTypography-root"
             >
               SST ANOMALY
-            </mock-typography>
-            <mock-tooltip
-              title="Difference between current SST and longterm average"
+            </h6>
+            <h3
+              aria-label="Difference between current SST and longterm average"
+              class="MuiTypography-root MuiTypography-h3 Satellite-contentTextValues-5 css-18qnhdx-MuiTypography-root"
+              data-mui-internal-clone-element="true"
             >
-              <mock-typography
-                classname="Satellite-contentTextValues-5"
-                variant="h3"
-              >
-                -0.5°C
-              </mock-typography>
-            </mock-tooltip>
+              -0.5°C
+            </h3>
           </div>
         </div>
-      </mock-box>
+      </div>
       <div
         class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
       >
@@ -132,181 +113,181 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(8, 91, 163); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               0
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(12, 157, 165); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               2
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(117, 180, 114); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               4
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(123, 217, 37); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               6
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(193, 229, 34); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               8
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(229, 187, 43); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               10
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(230, 121, 40); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               12
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(232, 79, 46); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               14
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(216, 69, 36); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               16
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(128, 58, 32); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               18
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(185, 41, 68); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               20
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
           style="background-color: rgb(128, 48, 126); height: 2rem;"
         >
-          <mock-box
-            textalign="center"
+          <div
+            class="MuiBox-root css-xi606m"
           >
-            <mock-typography
-              align="center"
-              variant="caption"
+            <span
+              class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-1qirrbe-MuiTypography-root"
+              style="--Typography-textAlign: center;"
             >
               25
-            </mock-typography>
-          </mock-box>
+            </span>
+          </div>
         </div>
       </div>
       <div
@@ -336,24 +317,20 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-15 css-x7bhrq-MuiGrid-root"
             >
-              <mock-box
-                display="flex"
-                flexdirection="column"
-                width="100%"
+              <div
+                class="MuiBox-root css-1ofqig9"
               >
-                <mock-typography
-                  classname="makeStyles-updateInfoText-13"
-                  variant="caption"
+                <span
+                  class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-13 css-qa0r6-MuiTypography-root"
                 >
                   Last data received 1 day ago
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-updateInfoText-13"
-                  variant="caption"
+                </span>
+                <span
+                  class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-13 css-qa0r6-MuiTypography-root"
                 >
                   Updated daily
-                </mock-typography>
-              </mock-box>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -378,11 +355,11 @@ exports[`renders as expected 1`] = `
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <mock-typography
-                    classname="makeStyles-chipText-18"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-chipText-18 css-809xgg-MuiTypography-root"
                   >
                     NOAA
-                  </mock-typography>
+                  </p>
                   <img
                     alt="sensor-type"
                     class="makeStyles-sensorImage-21"
@@ -394,7 +371,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
       </div>
-    </mock-cardcontent>
-  </mock-card>
+    </div>
+  </div>
 </div>
 `;

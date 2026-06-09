@@ -19,19 +19,20 @@ describe('SurveyForm', () => {
     },
   });
 
-  store.dispatch = vi.fn();
+  store.dispatch = rstest.fn();
 
-  const mockFunction = vi.fn(
+  const mockFunction = rstest.fn(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (diveDateTime, diveLocation, weatherConditions, comments) => {},
   );
 
   beforeAll(() => {
-    vi.setSystemTime(new Date('2023-10-20T12:00:00'));
+    rstest.useFakeTimers();
+    rstest.setSystemTime(new Date('2023-10-20T12:00:00'));
   });
 
   afterAll(() => {
-    vi.useRealTimers();
+    rstest.useRealTimers();
   });
 
   // TODO: fix this test

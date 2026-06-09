@@ -18,10 +18,10 @@ describe('NewSurveyPointDialog', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(
-      <NewSurveyPointDialog open siteId={1} onClose={vi.fn()} />,
+      <NewSurveyPointDialog open siteId={1} onClose={rstest.fn()} />,
       { store },
     ).container;
   });

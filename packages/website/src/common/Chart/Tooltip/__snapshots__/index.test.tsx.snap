@@ -1,12 +1,13 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
   <div
     class="Tooltip-tooltip-1"
   >
-    <mock-card
-      classname="Tooltip-tooltipCard-2"
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root Tooltip-tooltipCard-2 css-1j74uew-MuiPaper-root-MuiCard-root"
+      style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
     >
       <div
         class="MuiCardHeader-root Tooltip-tooltipHeader-3 css-149tc0y-MuiCardHeader-root"
@@ -15,20 +16,15 @@ exports[`renders as expected 1`] = `
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
         >
           <span
-            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-16xl4zq-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-caption css-17pvw5c-MuiTypography-root"
+            style="white-space: nowrap;"
           >
-            <mock-typography
-              color="textPrimary"
-              style="white-space: nowrap;"
-              variant="caption"
-            >
-              12/20/20 07:19 AM UTC
-            </mock-typography>
+            12/20/20 07:19 AM UTC
           </span>
         </div>
       </div>
-      <mock-cardcontent
-        classname="Tooltip-tooltipContent-4"
+      <div
+        class="MuiCardContent-root Tooltip-tooltipContent-4 css-1lt5qva-MuiCardContent-root"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
@@ -44,19 +40,18 @@ exports[`renders as expected 1`] = `
                 class="div-root-8 div-root-9"
                 color="red"
               />
-              <mock-typography
-                color="white"
-                variant="caption"
+              <span
+                class="MuiTypography-root MuiTypography-caption css-1yz1rl9-MuiTypography-root"
               >
                 MOCK LOGGER
                  
                 10.0 °C
-              </mock-typography>
+              </span>
             </div>
           </div>
         </div>
-      </mock-cardcontent>
-    </mock-card>
+      </div>
+    </div>
     <div
       class="Tooltip-tooltipArrow-6"
       style="border-color: rgb(9, 88, 119) transparent transparent transparent;"

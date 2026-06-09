@@ -1,12 +1,13 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`renders as expected 1`] = `
 <div>
-  <mock-card
-    classname="makeStyles-root-8"
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root makeStyles-root-8 css-1i00q08-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
   >
-    <mock-cardcontent
-      classname="makeStyles-contentWrapper-12"
+    <div
+      class="MuiCardContent-root makeStyles-contentWrapper-12 css-dlpuou-MuiCardContent-root"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-content-13 css-182mpp5-MuiGrid-root"
@@ -14,16 +15,15 @@ exports[`renders as expected 1`] = `
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-wcmnoq-MuiGrid-root"
         >
-          <mock-typography
-            classname="makeStyles-cardTitle-2 makeStyles-coloredText-9"
-            variant="h6"
+          <h6
+            class="MuiTypography-root MuiTypography-h6 makeStyles-cardTitle-2 makeStyles-coloredText-9 css-sieuai-MuiTypography-root"
           >
             WIND
-          </mock-typography>
+          </h6>
           <img
             alt="wind"
             class="makeStyles-titleImages-10"
-            src="data:image/svg+xml,%3csvg%20width='40'%20height='32'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='%236BC1E1'%20fill-rule='evenodd'%20opacity='.5'%3e%3cpath%20d='M25.034%202.516a8.027%208.027%200%2000-2.354%205.68.766.766%200%20101.53%200%206.503%206.503%200%20116.503%206.503H1.076a.763.763%200%20100%201.529h29.637a8.03%208.03%200%20006.957-12.05%208.03%208.03%200%2000-12.636-1.662z'/%3e%3cpath%20d='M2.607%2010.109a.765.765%200%20100%201.529h14.335a4.206%204.206%200%20002.977-7.182%204.208%204.208%200%2000-7.184%202.975.764.764%200%20101.53%200%202.677%202.677%200%20112.678%202.678H2.607zM26.123%2018.906H2.607a.766.766%200%20100%201.53h23.36a4.363%204.363%200%2011-1.67%208.397%204.365%204.365%200%2001-2.695-4.032.764.764%200%2010-1.53%200%205.892%205.892%200%20005.796%205.885A5.892%205.892%200%200031.858%2025a5.891%205.891%200%2000-1.544-4.186%205.888%205.888%200%2000-4.033-1.906.711.711%200%2000-.158%200z'/%3e%3c/g%3e%3c/svg%3e"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iIzZCQzFFMSIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIuNSI+PHBhdGggZD0iTTI1LjAzNCAyLjUxNmE4LjAyNyA4LjAyNyAwIDAwLTIuMzU0IDUuNjguNzY2Ljc2NiAwIDEwMS41MyAwIDYuNTAzIDYuNTAzIDAgMTE2LjUwMyA2LjUwM0gxLjA3NmEuNzYzLjc2MyAwIDEwMCAxLjUyOWgyOS42MzdhOC4wMyA4LjAzIDAgMDA2Ljk1Ny0xMi4wNSA4LjAzIDguMDMgMCAwMC0xMi42MzYtMS42NjJ6Ii8+PHBhdGggZD0iTTIuNjA3IDEwLjEwOWEuNzY1Ljc2NSAwIDEwMCAxLjUyOWgxNC4zMzVhNC4yMDYgNC4yMDYgMCAwMDIuOTc3LTcuMTgyIDQuMjA4IDQuMjA4IDAgMDAtNy4xODQgMi45NzUuNzY0Ljc2NCAwIDEwMS41MyAwIDIuNjc3IDIuNjc3IDAgMTEyLjY3OCAyLjY3OEgyLjYwN3pNMjYuMTIzIDE4LjkwNkgyLjYwN2EuNzY2Ljc2NiAwIDEwMCAxLjUzaDIzLjM2YTQuMzYzIDQuMzYzIDAgMTEtMS42NyA4LjM5NyA0LjM2NSA0LjM2NSAwIDAxLTIuNjk1LTQuMDMyLjc2NC43NjQgMCAxMC0xLjUzIDAgNS44OTIgNS44OTIgMCAwMDUuNzk2IDUuODg1QTUuODkyIDUuODkyIDAgMDAzMS44NTggMjVhNS44OTEgNS44OTEgMCAwMC0xLjU0NC00LjE4NiA1Ljg4OCA1Ljg4OCAwIDAwLTQuMDMzLTEuOTA2LjcxMS43MTEgMCAwMC0uMTU4IDB6Ii8+PC9nPjwvc3ZnPg=="
           />
         </div>
         <div
@@ -32,73 +32,62 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              color="textSecondary"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-1mf2co0-MuiTypography-root"
             >
               SPEED
-            </mock-typography>
+            </h6>
             <div
               class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
-              <mock-typography
-                classname="makeStyles-contentTextValues-5"
-                color="textSecondary"
-                variant="h3"
+              <h3
+                class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-74w3ba-MuiTypography-root"
               >
                 4.3
-              </mock-typography>
-              <mock-typography
-                classname="makeStyles-contentUnits-6"
-                color="textSecondary"
-                variant="h6"
+              </h3>
+              <h6
+                class="MuiTypography-root MuiTypography-h6 makeStyles-contentUnits-6 css-7vf59h-MuiTypography-root"
               >
                 km/h
-              </mock-typography>
+              </h6>
             </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              color="textSecondary"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-1mf2co0-MuiTypography-root"
             >
               DIRECTION
-            </mock-typography>
+            </h6>
             <div
               class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
               <img
                 alt="arrow"
                 class="makeStyles-arrow-14 makeStyles-windDirectionArrow-15 makeStyles-windDirectionArrow-17"
-                src="data:image/svg+xml,%3csvg%20viewBox='0%200%2024%2024'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='none'%20fill-rule='evenodd'%3e%3ccircle%20cx='12'%20cy='12'%20r='11.25'%20stroke='%23000'%20stroke-width='1.5'/%3e%3cpath%20d='M11.241%205.095L6.784%209.551c-.41.41-.41%201.095%200%201.506.41.41%201.095.41%201.506%200l2.647-2.631v9.734c0%20.593.471%201.065%201.064%201.065.593%200%201.065-.472%201.065-1.065V8.426l2.632%202.631a1.074%201.074%200%20001.825-.76%201.07%201.07%200%2000-.32-.76l-4.441-4.442a1.083%201.083%200%2000-.76-.32c-.29%200-.563.107-.761.32z'%20fill='%23000'/%3e%3c/g%3e%3c/svg%3e"
+                src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMS4yNSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxwYXRoIGQ9Ik0xMS4yNDEgNS4wOTVMNi43ODQgOS41NTFjLS40MS40MS0uNDEgMS4wOTUgMCAxLjUwNi40MS40MSAxLjA5NS40MSAxLjUwNiAwbDIuNjQ3LTIuNjMxdjkuNzM0YzAgLjU5My40NzEgMS4wNjUgMS4wNjQgMS4wNjUuNTkzIDAgMS4wNjUtLjQ3MiAxLjA2NS0xLjA2NVY4LjQyNmwyLjYzMiAyLjYzMWExLjA3NCAxLjA3NCAwIDAwMS44MjUtLjc2IDEuMDcgMS4wNyAwIDAwLS4zMi0uNzZsLTQuNDQxLTQuNDQyYTEuMDgzIDEuMDgzIDAgMDAtLjc2LS4zMmMtLjI5IDAtLjU2My4xMDctLjc2MS4zMnoiIGZpbGw9IiMwMDAiLz48L2c+PC9zdmc+"
               />
-              <mock-typography
-                classname="makeStyles-contentTextValues-5"
-                color="textSecondary"
-                variant="h3"
+              <h3
+                class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-74w3ba-MuiTypography-root"
               >
                 262°
-              </mock-typography>
+              </h3>
             </div>
           </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-wcmnoq-MuiGrid-root"
         >
-          <mock-typography
-            classname="makeStyles-cardTitle-2 makeStyles-coloredText-9"
-            variant="h6"
+          <h6
+            class="MuiTypography-root MuiTypography-h6 makeStyles-cardTitle-2 makeStyles-coloredText-9 css-sieuai-MuiTypography-root"
           >
             WAVES
-          </mock-typography>
+          </h6>
           <img
             alt="waves"
             class="makeStyles-titleImages-10"
-            src="data:image/svg+xml,%3csvg%20width='42'%20height='23'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='%236BC1E1'%20fill-rule='evenodd'%20opacity='.5'%3e%3cpath%20d='M.615%2019.218c1.596%201.795%203.79%202.81%206.128%202.81s4.533-1.015%206.129-2.81c1.596%201.795%203.79%202.81%206.128%202.81%202.337%200%204.532-1.015%206.128-2.81%201.596%201.795%203.791%202.81%206.129%202.81%202.593%200%205.009-1.25%206.63-3.424a.656.656%200%2000-.119-.904.619.619%200%2000-.881.121c-1.38%201.853-3.43%202.915-5.628%202.915-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-.999%200-.309.415.05.914.49%201.397zM3.428%2010.994c1.596%201.795%203.791%202.81%206.129%202.81%202.337%200%204.532-1.015%206.128-2.81%201.596%201.795%203.79%202.81%206.128%202.81s4.533-1.015%206.129-2.81c1.596%201.795%203.79%202.81%206.128%202.81%202.593%200%205.009-1.249%206.63-3.424a.656.656%200%2000-.118-.903.619.619%200%2000-.882.12c-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-1%200-1.379%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-.309.415.05.914.491%201.397zM.615%202.77c1.596%201.796%203.79%202.81%206.128%202.81s4.533-1.014%206.129-2.81c1.596%201.796%203.79%202.81%206.128%202.81%202.337%200%204.532-1.014%206.128-2.81%201.596%201.796%203.791%202.81%206.129%202.81%202.593%200%205.009-1.248%206.63-3.423a.656.656%200%2000-.119-.904.619.619%200%2000-.881.12c-1.38%201.854-3.43%202.916-5.628%202.916-2.197%200-4.25-1.062-5.627-2.915-.238-.32-.761-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.197%200-4.25-1.062-5.627-2.915-.239-.32-.762-.32-1%200-1.38%201.853-3.43%202.915-5.627%202.915-2.198%200-4.25-1.062-5.628-2.915-.238-.32-.76-.32-.999%200-.309.415.05.914.49%201.397z'/%3e%3c/g%3e%3c/svg%3e"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDIiIGhlaWdodD0iMjMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iIzZCQzFFMSIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIuNSI+PHBhdGggZD0iTS42MTUgMTkuMjE4YzEuNTk2IDEuNzk1IDMuNzkgMi44MSA2LjEyOCAyLjgxczQuNTMzLTEuMDE1IDYuMTI5LTIuODFjMS41OTYgMS43OTUgMy43OSAyLjgxIDYuMTI4IDIuODEgMi4zMzcgMCA0LjUzMi0xLjAxNSA2LjEyOC0yLjgxIDEuNTk2IDEuNzk1IDMuNzkxIDIuODEgNi4xMjkgMi44MSAyLjU5MyAwIDUuMDA5LTEuMjUgNi42My0zLjQyNGEuNjU2LjY1NiAwIDAwLS4xMTktLjkwNC42MTkuNjE5IDAgMDAtLjg4MS4xMjFjLTEuMzggMS44NTMtMy40MyAyLjkxNS01LjYyOCAyLjkxNS0yLjE5NyAwLTQuMjUtMS4wNjItNS42MjctMi45MTUtLjIzOC0uMzItLjc2MS0uMzItMSAwLTEuMzggMS44NTMtMy40MyAyLjkxNS01LjYyNyAyLjkxNS0yLjE5NyAwLTQuMjUtMS4wNjItNS42MjctMi45MTUtLjIzOS0uMzItLjc2Mi0uMzItMSAwLTEuMzggMS44NTMtMy40MyAyLjkxNS01LjYyNyAyLjkxNS0yLjE5OCAwLTQuMjUtMS4wNjItNS42MjgtMi45MTUtLjIzOC0uMzItLjc2LS4zMi0uOTk5IDAtLjMwOS40MTUuMDUuOTE0LjQ5IDEuMzk3ek0zLjQyOCAxMC45OTRjMS41OTYgMS43OTUgMy43OTEgMi44MSA2LjEyOSAyLjgxIDIuMzM3IDAgNC41MzItMS4wMTUgNi4xMjgtMi44MSAxLjU5NiAxLjc5NSAzLjc5IDIuODEgNi4xMjggMi44MXM0LjUzMy0xLjAxNSA2LjEyOS0yLjgxYzEuNTk2IDEuNzk1IDMuNzkgMi44MSA2LjEyOCAyLjgxIDIuNTkzIDAgNS4wMDktMS4yNDkgNi42My0zLjQyNGEuNjU2LjY1NiAwIDAwLS4xMTgtLjkwMy42MTkuNjE5IDAgMDAtLjg4Mi4xMmMtMS4zOCAxLjg1My0zLjQzIDIuOTE1LTUuNjI3IDIuOTE1LTIuMTk4IDAtNC4yNS0xLjA2Mi01LjYyOC0yLjkxNS0uMjM4LS4zMi0uNzYtLjMyLTEgMC0xLjM3OSAxLjg1My0zLjQzIDIuOTE1LTUuNjI3IDIuOTE1LTIuMTk3IDAtNC4yNS0xLjA2Mi01LjYyNy0yLjkxNS0uMjM4LS4zMi0uNzYxLS4zMi0xIDAtMS4zOCAxLjg1My0zLjQzIDIuOTE1LTUuNjI3IDIuOTE1LTIuMTk3IDAtNC4yNS0xLjA2Mi01LjYyNy0yLjkxNS0uMjM5LS4zMi0uNzYyLS4zMi0xIDAtLjMwOS40MTUuMDUuOTE0LjQ5MSAxLjM5N3pNLjYxNSAyLjc3YzEuNTk2IDEuNzk2IDMuNzkgMi44MSA2LjEyOCAyLjgxczQuNTMzLTEuMDE0IDYuMTI5LTIuODFjMS41OTYgMS43OTYgMy43OSAyLjgxIDYuMTI4IDIuODEgMi4zMzcgMCA0LjUzMi0xLjAxNCA2LjEyOC0yLjgxIDEuNTk2IDEuNzk2IDMuNzkxIDIuODEgNi4xMjkgMi44MSAyLjU5MyAwIDUuMDA5LTEuMjQ4IDYuNjMtMy40MjNhLjY1Ni42NTYgMCAwMC0uMTE5LS45MDQuNjE5LjYxOSAwIDAwLS44ODEuMTJjLTEuMzggMS44NTQtMy40MyAyLjkxNi01LjYyOCAyLjkxNi0yLjE5NyAwLTQuMjUtMS4wNjItNS42MjctMi45MTUtLjIzOC0uMzItLjc2MS0uMzItMSAwLTEuMzggMS44NTMtMy40MyAyLjkxNS01LjYyNyAyLjkxNS0yLjE5NyAwLTQuMjUtMS4wNjItNS42MjctMi45MTUtLjIzOS0uMzItLjc2Mi0uMzItMSAwLTEuMzggMS44NTMtMy40MyAyLjkxNS01LjYyNyAyLjkxNS0yLjE5OCAwLTQuMjUtMS4wNjItNS42MjgtMi45MTUtLjIzOC0uMzItLjc2LS4zMi0uOTk5IDAtLjMwOS40MTUuMDUuOTE0LjQ5IDEuMzk3eiIvPjwvZz48L3N2Zz4="
           />
         </div>
         <div
@@ -107,86 +96,70 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4 css-119abwu-MuiGrid-root"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              color="textSecondary"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-1mf2co0-MuiTypography-root"
             >
               HEIGHT
-            </mock-typography>
+            </h6>
             <div
               class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
-              <mock-typography
-                classname="makeStyles-contentTextValues-5"
-                color="textSecondary"
-                variant="h3"
+              <h3
+                class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-74w3ba-MuiTypography-root"
               >
                 0.6
-              </mock-typography>
-              <mock-typography
-                classname="makeStyles-contentUnits-6"
-                color="textSecondary"
-                variant="h6"
+              </h3>
+              <h6
+                class="MuiTypography-root MuiTypography-h6 makeStyles-contentUnits-6 css-7vf59h-MuiTypography-root"
               >
                 m
-              </mock-typography>
+              </h6>
             </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3 css-q8d82a-MuiGrid-root"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              color="textSecondary"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-1mf2co0-MuiTypography-root"
             >
               PERIOD
-            </mock-typography>
+            </h6>
             <div
               class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
-              <mock-typography
-                classname="makeStyles-contentTextValues-5"
-                color="textSecondary"
-                variant="h3"
+              <h3
+                class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-74w3ba-MuiTypography-root"
               >
                 6
-              </mock-typography>
-              <mock-typography
-                classname="makeStyles-contentUnits-6"
-                color="textSecondary"
-                variant="h6"
+              </h3>
+              <h6
+                class="MuiTypography-root MuiTypography-h6 makeStyles-contentUnits-6 css-7vf59h-MuiTypography-root"
               >
                 s
-              </mock-typography>
+              </h6>
             </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5 css-7v7ljq-MuiGrid-root"
           >
-            <mock-typography
-              classname="makeStyles-contentTextTitles-4"
-              color="textSecondary"
-              variant="subtitle2"
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle2 makeStyles-contentTextTitles-4 css-1mf2co0-MuiTypography-root"
             >
               DIRECTION
-            </mock-typography>
+            </h6>
             <div
               class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
               <img
                 alt="arrow"
                 class="makeStyles-arrow-14 makeStyles-wavesDirectionArrow-16 makeStyles-wavesDirectionArrow-18"
-                src="data:image/svg+xml,%3csvg%20viewBox='0%200%2024%2024'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='none'%20fill-rule='evenodd'%3e%3ccircle%20cx='12'%20cy='12'%20r='11.25'%20stroke='%23000'%20stroke-width='1.5'/%3e%3cpath%20d='M11.241%205.095L6.784%209.551c-.41.41-.41%201.095%200%201.506.41.41%201.095.41%201.506%200l2.647-2.631v9.734c0%20.593.471%201.065%201.064%201.065.593%200%201.065-.472%201.065-1.065V8.426l2.632%202.631a1.074%201.074%200%20001.825-.76%201.07%201.07%200%2000-.32-.76l-4.441-4.442a1.083%201.083%200%2000-.76-.32c-.29%200-.563.107-.761.32z'%20fill='%23000'/%3e%3c/g%3e%3c/svg%3e"
+                src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMS4yNSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxwYXRoIGQ9Ik0xMS4yNDEgNS4wOTVMNi43ODQgOS41NTFjLS40MS40MS0uNDEgMS4wOTUgMCAxLjUwNi40MS40MSAxLjA5NS40MSAxLjUwNiAwbDIuNjQ3LTIuNjMxdjkuNzM0YzAgLjU5My40NzEgMS4wNjUgMS4wNjQgMS4wNjUuNTkzIDAgMS4wNjUtLjQ3MiAxLjA2NS0xLjA2NVY4LjQyNmwyLjYzMiAyLjYzMWExLjA3NCAxLjA3NCAwIDAwMS44MjUtLjc2IDEuMDcgMS4wNyAwIDAwLS4zMi0uNzZsLTQuNDQxLTQuNDQyYTEuMDgzIDEuMDgzIDAgMDAtLjc2LS4zMmMtLjI5IDAtLjU2My4xMDctLjc2MS4zMnoiIGZpbGw9IiMwMDAiLz48L2c+PC9zdmc+"
               />
-              <mock-typography
-                classname="makeStyles-contentTextValues-5"
-                color="textSecondary"
-                variant="h3"
+              <h3
+                class="MuiTypography-root MuiTypography-h3 makeStyles-contentTextValues-5 css-74w3ba-MuiTypography-root"
               >
                 152°
-              </mock-typography>
+              </h3>
             </div>
           </div>
         </div>
@@ -217,24 +190,20 @@ exports[`renders as expected 1`] = `
               <div
                 class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-24 css-x7bhrq-MuiGrid-root"
               >
-                <mock-box
-                  display="flex"
-                  flexdirection="column"
-                  width="100%"
+                <div
+                  class="MuiBox-root css-1ofqig9"
                 >
-                  <mock-typography
-                    classname="makeStyles-updateInfoText-22"
-                    variant="caption"
+                  <span
+                    class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-22 css-qa0r6-MuiTypography-root"
                   >
                     Valid 1 day ago
-                  </mock-typography>
-                  <mock-typography
-                    classname="makeStyles-updateInfoText-22"
-                    variant="caption"
+                  </span>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption makeStyles-updateInfoText-22 css-qa0r6-MuiTypography-root"
                   >
                     Updated every 6 hours
-                  </mock-typography>
-                </mock-box>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -259,11 +228,11 @@ exports[`renders as expected 1`] = `
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <mock-typography
-                      classname="makeStyles-chipText-27"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-chipText-27 css-809xgg-MuiTypography-root"
                     >
                       SOFAR MODEL
-                    </mock-typography>
+                    </p>
                   </a>
                 </button>
               </div>
@@ -271,7 +240,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
       </div>
-    </mock-cardcontent>
-  </mock-card>
+    </div>
+  </div>
 </div>
 `;

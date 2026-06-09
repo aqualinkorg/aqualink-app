@@ -138,7 +138,8 @@ function DropZone({ disabled, onFilesDrop }: DropZoneProps) {
               display="block"
               align="center"
             >
-              Maximum upload total size: {MAX_SIZE_MB}MB
+              Maximum upload total size: {MAX_SIZE_MB}
+              MB
             </Typography>
           </Grid>
         </Grid>

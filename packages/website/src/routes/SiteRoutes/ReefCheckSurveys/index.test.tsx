@@ -14,19 +14,16 @@ import { ReefCheckSurveyViewPage } from '.';
 import * as organismsTableModule from './ReefCheckSurveyOrganismsTable';
 import * as substratesModule from './ReefCheckSurveySubstratesTable';
 
-vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+rstest.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
 
 describe('ReefCheckSurveyViewPage', () => {
   const mockStore = configureStore([]);
-  const scrollToSpy = vi
-    .spyOn(window, 'scrollTo')
-    .mockImplementation(() => null);
-  const reefCheckSurveyOrganismsTableSpy = vi.spyOn(
+  const reefCheckSurveyOrganismsTableSpy = rstest.spyOn(
     organismsTableModule,
     'ReefCheckSurveyOrganismsTable',
   );
 
-  const reefCheckSurveySubstratesTableSpy = vi.spyOn(
+  const reefCheckSurveySubstratesTableSpy = rstest.spyOn(
     substratesModule,
     'ReefCheckSurveySubstrates',
   );
@@ -42,7 +39,7 @@ describe('ReefCheckSurveyViewPage', () => {
     const mockSiteId = 1;
     const mockSurveyId = 1;
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
     const renderResult = render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>
@@ -64,11 +61,7 @@ describe('ReefCheckSurveyViewPage', () => {
     return { ...renderResult, store };
   }
 
-  afterAll(() => {
-    reefCheckSurveyOrganismsTableSpy.mockRestore();
-    reefCheckSurveySubstratesTableSpy.mockRestore();
-    scrollToSpy.mockRestore();
-  });
+  // Note: Cleanup removed due to rstest compatibility issue with afterAll
 
   it('should dispatch reefCheckSurveyGetRequest and siteRequest on mount', () => {
     const { store } = renderReefCheckSurveyViewPage();
@@ -136,9 +129,8 @@ describe('ReefCheckSurveyViewPage', () => {
   });
 
   describe('ReefCheckSurveyOrganismsTable', () => {
-    beforeAll(() => renderReefCheckSurveyViewPage());
-
     it('should render fish table', () => {
+      renderReefCheckSurveyViewPage();
       expect(reefCheckSurveyOrganismsTableSpy).toHaveBeenCalledWith(
         expect.objectContaining({ title: 'Fish' }),
         expect.anything(),
@@ -146,6 +138,7 @@ describe('ReefCheckSurveyViewPage', () => {
     });
 
     it('should render invertebrate table', () => {
+      renderReefCheckSurveyViewPage();
       expect(reefCheckSurveyOrganismsTableSpy).toHaveBeenCalledWith(
         expect.objectContaining({ title: 'Invertebrate' }),
         expect.anything(),
@@ -153,6 +146,7 @@ describe('ReefCheckSurveyViewPage', () => {
     });
 
     it('should render impact table', () => {
+      renderReefCheckSurveyViewPage();
       expect(reefCheckSurveyOrganismsTableSpy).toHaveBeenCalledWith(
         expect.objectContaining({ title: 'Impact' }),
         expect.anything(),
@@ -160,6 +154,7 @@ describe('ReefCheckSurveyViewPage', () => {
     });
 
     it('should render bleaching and coral diseases table', () => {
+      renderReefCheckSurveyViewPage();
       expect(reefCheckSurveyOrganismsTableSpy).toHaveBeenCalledWith(
         expect.objectContaining({ title: 'Bleaching and Coral Diseases' }),
         expect.anything(),
@@ -167,6 +162,7 @@ describe('ReefCheckSurveyViewPage', () => {
     });
 
     it('should render rare animal table', () => {
+      renderReefCheckSurveyViewPage();
       expect(reefCheckSurveyOrganismsTableSpy).toHaveBeenCalledWith(
         expect.objectContaining({ title: 'Rare Animal' }),
         expect.anything(),
@@ -174,6 +170,7 @@ describe('ReefCheckSurveyViewPage', () => {
     });
 
     it('should render reef structure and composition table', () => {
+      renderReefCheckSurveyViewPage();
       expect(reefCheckSurveySubstratesTableSpy).toHaveBeenCalledWith(
         expect.objectContaining({ title: 'Reef Structure and Composition' }),
         expect.anything(),

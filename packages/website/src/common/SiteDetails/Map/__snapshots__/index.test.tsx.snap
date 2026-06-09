@@ -1,3 +1,175 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
-exports[`Site Map > should render with given state from Redux store 1`] = `<div />`;
+exports[`Site Map > should render with given state from Redux store 1`] = `
+<div>
+  <div
+    class="SiteMap-map-1 leaflet-container leaflet-touch leaflet-grab leaflet-touch-drag leaflet-touch-zoom"
+    style="position: relative;"
+    tabindex="0"
+  >
+    <div
+      class="leaflet-pane leaflet-map-pane"
+      style="left: 0px; top: 0px;"
+    >
+      <div
+        class="leaflet-pane leaflet-tile-pane"
+      >
+        <div
+          class="leaflet-layer "
+          style="z-index: 1;"
+        >
+          <div
+            class="leaflet-tile-container leaflet-zoom-animated"
+            style="z-index: 18; left: 0px; top: 0px;"
+          >
+            <img
+              alt=""
+              class="leaflet-tile"
+              src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/13/4095/4095"
+              style="width: 256px; height: 256px; left: -256px; top: -256px;"
+            />
+            <img
+              alt=""
+              class="leaflet-tile"
+              src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/13/4095/4096"
+              style="width: 256px; height: 256px; left: 0px; top: -256px;"
+            />
+            <img
+              alt=""
+              class="leaflet-tile"
+              src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/13/4096/4095"
+              style="width: 256px; height: 256px; left: -256px; top: 0px;"
+            />
+            <img
+              alt=""
+              class="leaflet-tile"
+              src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/13/4096/4096"
+              style="width: 256px; height: 256px; left: 0px; top: 0px;"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="leaflet-pane leaflet-overlay-pane"
+      >
+        <svg
+          class="leaflet-zoom-animated"
+          height="0"
+          pointer-events="none"
+          style="left: 0px; top: 0px;"
+          viewBox="0 0 0 0"
+          width="0"
+        >
+          <g>
+            <path
+              class="leaflet-interactive"
+              d="M0 0z"
+              fill="#3388ff"
+              fill-opacity="0.2"
+              fill-rule="evenodd"
+              stroke="#3388ff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-opacity="1"
+              stroke-width="3"
+            />
+          </g>
+        </svg>
+      </div>
+      <div
+        class="leaflet-pane leaflet-shadow-pane"
+      />
+      <div
+        class="leaflet-pane leaflet-marker-pane"
+      />
+      <div
+        class="leaflet-pane leaflet-tooltip-pane"
+      />
+      <div
+        class="leaflet-pane leaflet-popup-pane"
+      />
+    </div>
+    <div
+      class="leaflet-control-container"
+    >
+      <div
+        class="leaflet-top leaflet-left"
+      >
+        <div
+          class="leaflet-control-zoom leaflet-bar leaflet-control"
+        >
+          <a
+            aria-disabled="false"
+            aria-label="Zoom in"
+            class="leaflet-control-zoom-in"
+            href="#"
+            role="button"
+            title="Zoom in"
+          >
+            <span
+              aria-hidden="true"
+            >
+              +
+            </span>
+          </a>
+          <a
+            aria-disabled="false"
+            aria-label="Zoom out"
+            class="leaflet-control-zoom-out"
+            href="#"
+            role="button"
+            title="Zoom out"
+          >
+            <span
+              aria-hidden="true"
+            >
+              −
+            </span>
+          </a>
+        </div>
+      </div>
+      <div
+        class="leaflet-top leaflet-right"
+      />
+      <div
+        class="leaflet-bottom leaflet-left"
+      />
+      <div
+        class="leaflet-bottom leaflet-right"
+      >
+        <div
+          class="leaflet-control-attribution leaflet-control"
+        >
+          <a
+            href="https://leafletjs.com"
+            title="A JavaScript library for interactive maps"
+          >
+            <svg
+              aria-hidden="true"
+              class="leaflet-attribution-flag"
+              height="8"
+              viewBox="0 0 12 8"
+              width="12"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h12v4H0z"
+                fill="#4C7BE1"
+              />
+              <path
+                d="M0 4h12v3H0z"
+                fill="#FFD500"
+              />
+              <path
+                d="M0 7h12v1H0z"
+                fill="#E0BC00"
+              />
+            </svg>
+             Leaflet
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

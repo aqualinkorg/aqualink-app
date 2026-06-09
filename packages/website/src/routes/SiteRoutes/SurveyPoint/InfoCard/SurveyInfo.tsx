@@ -34,7 +34,8 @@ function SurveyInfo({ surveys, pointId, classes }: SurveyInfoProps) {
             </Grid>
             <Grid item>
               <Typography variant="subtitle1" color="textSecondary">
-                SURVEY{nSurveys > 1 ? 'S' : ''}
+                SURVEY
+                {nSurveys > 1 ? 'S' : ''}
               </Typography>
             </Grid>
           </Grid>
@@ -53,7 +54,8 @@ function SurveyInfo({ surveys, pointId, classes }: SurveyInfoProps) {
             </Grid>
             <Grid item>
               <Typography variant="subtitle1" color="textSecondary">
-                IMAGE{nImages > 1 ? 'S' : ''}
+                IMAGE
+                {nImages > 1 ? 'S' : ''}
               </Typography>
             </Grid>
           </Grid>
