@@ -63,7 +63,7 @@ export function buildPromptWithContext(
 
   const openingSection = isOpeningMessage
     ? `\n\n${INITIAL_GREETING}\n\n## CRITICAL: THIS IS THE INITIAL GREETING
-You are responding to the opening of a new conversation. You MUST generate the contextual greeting exactly as specified in the "INITIAL GREETING FOR NEW CONVERSATIONS" section above.
+You are responding to the opening of a new conversation. You MUST generate the contextual greeting exactly as specified in the initial greeting template above.
 
 DO NOT respond to the user message as a question. Instead, provide the greeting with the AI-generated site summary.
 
