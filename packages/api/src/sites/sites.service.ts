@@ -198,9 +198,24 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
+    const selectedDate = filter.date ? new Date(filter.date) : undefined;
+    if (selectedDate && Number.isNaN(selectedDate.getTime())) {
+      throw new BadRequestException('date must be a valid ISO date');
+    }
+    selectedDate?.setUTCHours(23, 59, 59, 999);
+    const historicalStartDate = selectedDate
+      ? new Date(selectedDate)
+      : undefined;
+    historicalStartDate?.setUTCDate(historicalStartDate.getUTCDate() - 7);
+
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      {
+        endDate: selectedDate,
+        startDate: historicalStartDate,
+        timeSeriesRepository: this.timeSeriesRepository,
+      },
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);

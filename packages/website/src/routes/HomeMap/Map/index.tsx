@@ -9,12 +9,14 @@ import {
 } from 'react-leaflet';
 import L, { LatLng, LatLngBounds, LayersControlEvent } from 'leaflet';
 import {
+  Button,
   CircularProgress,
   IconButton,
   Snackbar,
   Hidden,
   Alert,
   Theme,
+  TextField,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -89,6 +91,8 @@ function HomepageMap({
   defaultLayerName,
   legendBottom,
   legendLeft,
+  selectedDate,
+  onDateChange,
   classes,
   onMapLoad,
 }: HomepageMapProps) {
@@ -221,6 +225,7 @@ function HomepageMap({
   const handleInfoClose = () => {
     setInfoDialogOpen(false);
   };
+  const today = useMemo(() => new Date().toISOString().split('T')[0], []);
 
   return loading ? (
     <div className={classes.loading}>
@@ -279,6 +284,30 @@ function HomepageMap({
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
       />
+      {onDateChange && (
+        <div className={classes.dateControl}>
+          <TextField
+            InputLabelProps={{ shrink: true }}
+            inputProps={{ max: today }}
+            label="Map date"
+            onChange={(event) => onDateChange(event.target.value || undefined)}
+            size="small"
+            type="date"
+            value={selectedDate || ''}
+            variant="outlined"
+          />
+          {selectedDate && (
+            <Button
+              color="primary"
+              onClick={() => onDateChange(undefined)}
+              size="small"
+              variant="text"
+            >
+              Live
+            </Button>
+          )}
+        </div>
+      )}
       {tileLayer}
       {sofarLayers}
       {siteMarkers}
@@ -358,6 +387,23 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    dateControl: {
+      position: 'absolute',
+      right: 10,
+      top: 155,
+      zIndex: 400,
+      display: 'flex',
+      gap: theme.spacing(1),
+      alignItems: 'center',
+      padding: theme.spacing(1),
+      borderRadius: 5,
+      backgroundColor: 'white',
+      backgroundClip: 'padding-box',
+      border: '2px solid rgba(0,0,0,0.2)',
+      [theme.breakpoints.down('lg')]: {
+        top: 105,
+      },
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -384,6 +430,8 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  selectedDate?: string;
+  onDateChange?: React.Dispatch<React.SetStateAction<string | undefined>>;
   onMapLoad?: (map: L.Map) => void;
 }
 
