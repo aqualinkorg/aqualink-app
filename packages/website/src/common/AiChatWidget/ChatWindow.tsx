@@ -178,10 +178,17 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
 
     try {
       // Build conversation history for context (last 10 messages)
-      const conversationHistory = messages.slice(-10).map((msg) => ({
-        sender: msg.sender,
-        text: msg.text,
-      }));
+      const conversationHistory = messages
+        .slice(-10)
+        .filter(
+          (msg) =>
+            msg.sender !== 'assistant' ||
+            !msg.text.startsWith('Here is the current reef status'),
+        )
+        .map((msg) => ({
+          sender: msg.sender,
+          text: msg.text,
+        }));
 
       const response = await fetch(`${API_BASE_URL}/ai-chat`, {
         method: 'POST',
