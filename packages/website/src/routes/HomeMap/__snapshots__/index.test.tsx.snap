@@ -19,17 +19,60 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
       >
-        <mock-map
-          initialcenter="LatLng(0, 121.3)"
-          initialzoom="4"
-          showsitetable="true"
-        />
+        <mock-box
+          classname="Homepage-mapContainer-3"
+        >
+          <mock-box
+            classname="Homepage-asOfPicker-4"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <mock-box
+                alignitems="flex-end"
+                display="flex"
+              >
+                <mock-typography
+                  color="textSecondary"
+                  variant="h6"
+                >
+                  As of:
+                </mock-typography>
+                <div
+                  class="DatePicker-datePicker-6"
+                >
+                  <mock-date-picker
+                    classname="DatePicker-textField-7"
+                    closeonselect="true"
+                    format="MM/dd/yyyy"
+                    maxdate="Wed May 20 2026 23:08:46 GMT+0000 (Coordinated Universal Time)"
+                    mindate="Thu Jan 01 1970 00:00:00 GMT+0000 (Coordinated Universal Time)"
+                    slotprops="[object Object]"
+                  />
+                </div>
+              </mock-box>
+            </div>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeSmall MuiButton-textSizeSmall MuiButton-colorPrimary css-1ccsd5i-MuiButtonBase-root-MuiButton-root"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              Latest
+            </button>
+          </mock-box>
+          <mock-map
+            initialcenter="LatLng(0, 121.3)"
+            initialzoom="4"
+            showsitetable="true"
+          />
+        </mock-box>
       </div>
       <mock-hidden
         mddown="true"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-3 css-1k7sk4d-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-5 css-1k7sk4d-MuiGrid-root"
         >
           <mock-sitetable />
         </div>

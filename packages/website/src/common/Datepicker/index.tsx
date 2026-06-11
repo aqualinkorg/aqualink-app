@@ -34,7 +34,7 @@ function DatePicker({
                 .toJSDate()}
               minDate={DateTime.fromMillis(0).toJSDate()}
               closeOnSelect={autoOk}
-              value={parseISO(value ?? '')}
+              value={value ? parseISO(value) : null}
               onChange={(v) => onChange(v)}
               slotProps={{
                 textField: {
@@ -63,7 +63,7 @@ const styles = (theme: Theme) =>
         borderColor: 'rgba(0, 0, 0, 0.23)',
       },
       '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: theme.palette.primary.main,
+        borderColor: theme?.palette?.primary?.main ?? 'rgba(0, 0, 0, 0.23)',
       },
       '& input': {
         paddingTop: 0,

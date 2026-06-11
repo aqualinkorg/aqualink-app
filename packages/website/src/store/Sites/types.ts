@@ -401,6 +401,7 @@ export interface SitesRequestData {
 export interface SitesListState {
   list?: Site[];
   filters: SiteFilters;
+  asOf?: string | null;
   loading: boolean;
   error?: string | null;
 }

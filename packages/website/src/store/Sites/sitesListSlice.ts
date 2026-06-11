@@ -31,17 +31,18 @@ const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
   filters: {},
+  asOf: null,
 };
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  { asOf?: string | null } | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(arg?.asOf ?? null);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +56,12 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: { asOf?: string | null } | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, asOf },
       } = getState();
-      return !list;
+      const requestedAsOf = arg?.asOf ?? null;
+      return !list || (asOf ?? null) !== requestedAsOf;
     },
   },
 );
@@ -103,14 +105,14 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
-    );
+    builder.addCase(sitesRequest.fulfilled, (state, action) => {
+      // eslint-disable-next-line fp/no-mutation
+      state.list = action.payload.list;
+      // eslint-disable-next-line fp/no-mutation
+      state.asOf = action.meta.arg?.asOf ?? null;
+      // eslint-disable-next-line fp/no-mutation
+      state.loading = false;
+    });
 
     builder.addCase(sitesRequest.rejected, (state, action) => ({
       ...state,

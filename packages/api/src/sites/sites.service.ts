@@ -198,9 +198,14 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
+    const asOf = filter.asOf ? new Date(filter.asOf) : undefined;
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      {
+        asOf,
+        timeSeriesRepository: this.timeSeriesRepository,
+      },
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -223,7 +228,7 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, asOf?: string): Promise<Site> {
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -249,6 +254,10 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       [site],
       this.latestDataRepository,
+      {
+        asOf: asOf ? new Date(asOf) : undefined,
+        timeSeriesRepository: this.timeSeriesRepository,
+      },
     );
 
     const maskedSpotterApiToken = site.spotterApiToken
