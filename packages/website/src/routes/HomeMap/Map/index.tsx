@@ -89,6 +89,7 @@ function HomepageMap({
   defaultLayerName,
   legendBottom,
   legendLeft,
+  selectedDate,
   classes,
   onMapLoad,
 }: HomepageMapProps) {
@@ -189,8 +190,8 @@ function HomepageMap({
 
   // Memoize the layers to prevent unnecessary re-renders
   const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} />,
-    [defaultLayerName],
+    () => <SofarLayers defaultLayerName={defaultLayerName} selectedDate={selectedDate} />,
+    [defaultLayerName, selectedDate],
   );
 
   const siteMarkers = useMemo(
@@ -384,6 +385,7 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  selectedDate?: string;
   onMapLoad?: (map: L.Map) => void;
 }
 
