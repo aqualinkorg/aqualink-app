@@ -94,7 +94,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
   useEffect(() => {
     const initializeChat = async () => {
       // Try to load from localStorage first
-      const saved = localStorage.getItem(`chat-history-${siteId}`);
+      const saved = localStorage.getItem(`chat-history-v2-${siteId}`);
       if (saved) {
         try {
           const savedMessages = JSON.parse(saved);
@@ -128,7 +128,10 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
   // Save messages to localStorage whenever they change
   useEffect(() => {
     if (messages.length > 0) {
-      localStorage.setItem(`chat-history-${siteId}`, JSON.stringify(messages));
+      localStorage.setItem(
+        `chat-history-v2-${siteId}`,
+        JSON.stringify(messages),
+      );
     }
   }, [messages, siteId]);
 
@@ -150,7 +153,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
         id: `msg-${Date.now()}`,
       };
       setMessages([initialMessage]);
-      localStorage.removeItem(`chat-history-${siteId}`);
+      localStorage.removeItem(`chat-history-v2-${siteId}`);
       setIsLoadingGreeting(false);
     }
   };
