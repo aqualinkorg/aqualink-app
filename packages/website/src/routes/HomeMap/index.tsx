@@ -1,9 +1,9 @@
 import L, { LatLng } from 'leaflet';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
-import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Grid, Hidden, Theme } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -15,18 +15,21 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import DatePicker from 'common/Datepicker';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
   initialCenter: LatLng;
   initialZoom: number;
   initialSiteId: string | undefined;
+  initialDate: string | null;
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
@@ -37,6 +40,7 @@ function useQuery() {
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
   const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
+  const initialDate = urlParams.get(QueryParamKeys.DATE);
   const sitesList = useSelector(sitesListSelector) || [];
   const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
   const initialSiteId = queryParamSiteId
@@ -59,21 +63,42 @@ function useQuery() {
     initialCenter,
     initialSiteId,
     initialZoom,
+    initialDate,
   };
 }
 
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
-  const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
+  const { initialZoom, initialSiteId, initialCenter, initialDate }: MapQueryParams =
     useQuery();
 
+  const [selectedDate, setSelectedDate] = useState<string | null>(initialDate);
+
+  const handleDateChange = useCallback(
+    (date: Date | null) => {
+      const urlParams = new URLSearchParams(location.search);
+      if (date) {
+        const isoDate = date.toISOString().slice(0, 10);
+        urlParams.set(QueryParamKeys.DATE, isoDate);
+        setSelectedDate(isoDate);
+      } else {
+        urlParams.delete(QueryParamKeys.DATE);
+        setSelectedDate(null);
+      }
+      navigate({ search: urlParams.toString() }, { replace: true });
+    },
+    [location.search, navigate],
+  );
+
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(selectedDate ?? undefined));
+  }, [dispatch, selectedDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -109,6 +134,15 @@ function Homepage({ classes }: HomepageProps) {
     <>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation geocodingEnabled />
+      </div>
+      <div className={classes.datePickerBar}>
+        <DatePicker
+          value={selectedDate}
+          dateName="View date"
+          dateNameTextVariant="body2"
+          timeZone="UTC"
+          onChange={handleDateChange}
+        />
       </div>
       <div className={classes.root}>
         <Grid container>
@@ -155,7 +189,7 @@ function Homepage({ classes }: HomepageProps) {
   );
 }
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
@@ -171,6 +205,13 @@ const styles = () =>
       flexDirection: 'column',
       height: 'calc(100vh - 64px);', // subtract height of the navbar
       overflowY: 'auto',
+    },
+    datePickerBar: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: theme.spacing(0.5, 2),
+      backgroundColor: theme.palette.background.paper,
+      borderBottom: `1px solid ${theme.palette.divider}`,
     },
   });
 
