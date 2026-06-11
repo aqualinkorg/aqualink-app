@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Button, Grid, Hidden, TextField } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -67,13 +67,14 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [mapDate, setMapDate] = useState<string | null>(null);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(mapDate));
+  }, [dispatch, mapDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -118,6 +119,31 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
+            <div className={classes.mapDateControl}>
+              <TextField
+                label="Map date"
+                size="small"
+                type="date"
+                value={mapDate || ''}
+                InputLabelProps={{ shrink: true }}
+                inputProps={{
+                  max: new Date().toISOString().slice(0, 10),
+                }}
+                onChange={(event) => {
+                  setMapDate(event.target.value || null);
+                }}
+              />
+              {mapDate && (
+                <Button
+                  color="primary"
+                  onClick={() => setMapDate(null)}
+                  size="small"
+                  variant="contained"
+                >
+                  Live
+                </Button>
+              )}
+            </div>
             <HomepageMap
               onMapLoad={setMapInstance}
               setShowSiteTable={setShowSiteTable}
@@ -164,7 +190,21 @@ const styles = () =>
     },
     map: {
       display: 'flex',
+      position: 'relative',
       zIndex: 0,
+    },
+    mapDateControl: {
+      alignItems: 'center',
+      backgroundColor: 'white',
+      borderRadius: 4,
+      boxShadow: '0 1px 4px rgba(0, 0, 0, 0.3)',
+      display: 'flex',
+      gap: 8,
+      left: 56,
+      padding: 8,
+      position: 'absolute',
+      top: 12,
+      zIndex: 401,
     },
     siteTable: {
       display: 'flex',
