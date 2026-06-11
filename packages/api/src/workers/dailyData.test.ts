@@ -3,7 +3,10 @@ import { DeepPartial } from 'typeorm';
 import { getDailyData } from './dailyData';
 import { Site } from '../sites/sites.entity';
 
-test('It processes Sofar API for daily data.', async () => {
+const hasSofarToken = Boolean(process.env.SOFAR_API_TOKEN);
+const testOrSkip = hasSofarToken ? test : test.skip;
+
+testOrSkip('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
 
   const date = new Date('2024-08-31');

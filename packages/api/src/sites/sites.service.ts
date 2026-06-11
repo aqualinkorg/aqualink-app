@@ -198,9 +198,16 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
+    // Parse the optional historical date parameter
+    const atDate = filter.at
+      ? DateTime.fromISO(filter.at, { setZone: true }).toJSDate()
+      : undefined;
+
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      this.dailyDataRepository,
+      { at: atDate },
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
