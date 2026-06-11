@@ -25,6 +25,7 @@ const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
 
 // How long to wait before showing the "Retrieving historical data..." message
+const CHAT_HISTORY_KEY = (siteId: number) => `chat-history-v2-${siteId}`;
 const RETRIEVING_MESSAGE_DELAY_MS = 8000;
 
 // Generate the initial greeting by calling the API with isFirstMessage: true
@@ -94,7 +95,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
   useEffect(() => {
     const initializeChat = async () => {
       // Try to load from localStorage first
-      const saved = localStorage.getItem(`chat-history-v2-${siteId}`);
+      const saved = localStorage.getItem(CHAT_HISTORY_KEY(siteId));
       if (saved) {
         try {
           const savedMessages = JSON.parse(saved);
@@ -107,7 +108,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
         } catch (error) {
           console.error('Failed to load chat history:', error);
           // NEW: Clear corrupted localStorage
-          localStorage.removeItem(`chat-history-${siteId}`);
+          localStorage.removeItem(CHAT_HISTORY_KEY(siteId));
         }
       }
 
@@ -128,10 +129,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
   // Save messages to localStorage whenever they change
   useEffect(() => {
     if (messages.length > 0) {
-      localStorage.setItem(
-        `chat-history-v2-${siteId}`,
-        JSON.stringify(messages),
-      );
+      localStorage.setItem(CHAT_HISTORY_KEY(siteId), JSON.stringify(messages));
     }
   }, [messages, siteId]);
 
@@ -153,7 +151,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
         id: `msg-${Date.now()}`,
       };
       setMessages([initialMessage]);
-      localStorage.removeItem(`chat-history-v2-${siteId}`);
+      localStorage.removeItem(CHAT_HISTORY_KEY(siteId));
       setIsLoadingGreeting(false);
     }
   };
