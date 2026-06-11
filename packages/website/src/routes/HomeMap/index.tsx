@@ -8,6 +8,7 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
+import { useQueryParam } from 'hooks/useQueryParams';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
@@ -21,6 +22,7 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
@@ -31,6 +33,7 @@ interface MapQueryParams {
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
 const INITIAL_ZOOM = 4;
+const isDateQueryValue = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value);
 
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
@@ -67,13 +70,17 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [historicalDate, setHistoricalDate] = useQueryParam(
+    QueryParamKeys.DATE,
+    isDateQueryValue,
+  );
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(historicalDate));
+  }, [dispatch, historicalDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,6 +131,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              historicalDate={historicalDate}
+              onHistoricalDateChange={setHistoricalDate}
             />
           </Grid>
           {showSiteTable && (

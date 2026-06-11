@@ -8,7 +8,7 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
 import type { Site } from 'store/Sites/types';
@@ -29,12 +29,18 @@ const siteAugmentedName = (site: Site) => {
   return name || region || '';
 };
 
+const isDateQueryValue = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value);
+
 function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const navigate = useNavigate();
+  const { search } = useLocation();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState('');
   const dispatch = useAppDispatch();
+  const dateQuery = new URLSearchParams(search).get('date') || undefined;
+  const dataDate =
+    dateQuery && isDateQueryValue(dateQuery) ? dateQuery : undefined;
   const sites = useSelector(sitesListSelector);
   const filteredSites = (sites || [])
     .filter((site) => siteAugmentedName(site))
@@ -47,8 +53,8 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
 
   // Fetch sites for the search bar
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(dataDate));
+  }, [dataDate, dispatch]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
