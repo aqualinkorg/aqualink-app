@@ -201,6 +201,8 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      this.dailyDataRepository,
+      filter.date,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -223,7 +225,7 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, date?: string): Promise<Site> {
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -249,6 +251,8 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       [site],
       this.latestDataRepository,
+      this.dailyDataRepository,
+      date,
     );
 
     const maskedSpotterApiToken = site.spotterApiToken

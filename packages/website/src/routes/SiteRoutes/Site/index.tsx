@@ -121,6 +121,7 @@ function Site({ classes }: SiteProps) {
   const { id: siteId = '' } = useParams<{ id: string }>();
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
+  const [selectedDate] = useQueryParam('date');
   const [refresh, setRefresh] = useQueryParam('refresh');
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
@@ -162,16 +163,16 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
+      dispatch(siteRequest({ id: siteId, date: selectedDate }));
       dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refresh]);
+  }, [refresh, selectedDate]);
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
+    dispatch(siteRequest({ id: siteId, date: selectedDate }));
     dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
@@ -180,7 +181,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
     };
-  }, [dispatch, siteId]);
+  }, [dispatch, selectedDate, siteId]);
 
   // Fetch reef check surveys
   useEffect(() => {

@@ -73,8 +73,11 @@ export class SitesController {
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Site> {
-    return this.sitesService.findOne(id);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('date') date?: string,
+  ): Promise<Site> {
+    return this.sitesService.findOne(id, date);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')

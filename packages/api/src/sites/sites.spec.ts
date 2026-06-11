@@ -99,6 +99,26 @@ export const siteTests = () => {
     siteId = sortedSites[sortedSites.length - 1].id;
   });
 
+  it('GET / find all sites as of a historical date', async () => {
+    const historicalIndex = 3;
+    const historicalDate = DateTime.now()
+      .minus({ days: historicalIndex })
+      .endOf('day')
+      .toISOString();
+    const rsp = await request(app.getHttpServer())
+      .get('/sites')
+      .query({ date: historicalDate });
+
+    expect(rsp.status).toBe(200);
+    const california = rsp.body.find((site) => site.id === californiaSite.id);
+    expect(california.collectionData).toMatchObject({
+      dhw: californiaDailyData[historicalIndex].degreeHeatingDays,
+      satelliteTemperature:
+        californiaDailyData[historicalIndex].satelliteTemperature,
+      tempAlert: californiaDailyData[historicalIndex].dailyAlertLevel,
+    });
+  });
+
   it('GET /:id retrieve one site', async () => {
     const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
 
@@ -111,6 +131,25 @@ export const siteTests = () => {
     expect(rsp.body.historicalMonthlyMean).toBeDefined();
     expect(rsp.body.historicalMonthlyMean.length).toBe(12);
     expect(rsp.body.maskedSpotterApiToken).toBeUndefined();
+  });
+
+  it('GET /:id retrieve one site as of a historical date', async () => {
+    const historicalIndex = 3;
+    const historicalDate = DateTime.now()
+      .minus({ days: historicalIndex })
+      .endOf('day')
+      .toISOString();
+    const rsp = await request(app.getHttpServer())
+      .get(`/sites/${californiaSite.id}`)
+      .query({ date: historicalDate });
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.collectionData).toMatchObject({
+      dhw: californiaDailyData[historicalIndex].degreeHeatingDays,
+      satelliteTemperature:
+        californiaDailyData[historicalIndex].satelliteTemperature,
+      tempAlert: californiaDailyData[historicalIndex].dailyAlertLevel,
+    });
   });
 
   it('GET /:id/daily_data', async () => {
