@@ -56,6 +56,7 @@ function NavBar({
   geocodingEnabled = false,
   routeButtons = false,
   loading = false,
+  sitesRequestDate,
   classes,
 }: NavBarProps) {
   const user = useSelector(userInfoSelector);
@@ -179,7 +180,10 @@ function NavBar({
             {searchLocation && (
               <Hidden smDown>
                 <Grid item sm={4} md={3}>
-                  <Search geocodingEnabled={geocodingEnabled} />
+                  <Search
+                    geocodingEnabled={geocodingEnabled}
+                    sitesRequestDate={sitesRequestDate}
+                  />
                 </Grid>
               </Hidden>
             )}
@@ -336,7 +340,10 @@ function NavBar({
             {searchLocation && (
               <Hidden smUp>
                 <Grid item xs={12} style={{ margin: 0, paddingTop: 0 }}>
-                  <Search geocodingEnabled={geocodingEnabled} />
+                  <Search
+                    geocodingEnabled={geocodingEnabled}
+                    sitesRequestDate={sitesRequestDate}
+                  />
                 </Grid>
               </Hidden>
             )}
@@ -431,6 +438,7 @@ interface NavBarIncomingProps {
   geocodingEnabled?: boolean;
   routeButtons?: boolean;
   loading?: boolean;
+  sitesRequestDate?: string;
 }
 
 type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;

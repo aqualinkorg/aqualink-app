@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import isISODate from 'validator/lib/isISO8601';
+import { Box, Button, Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -14,11 +15,14 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
+import DatePicker from 'common/Datepicker';
+import { useQueryParam } from 'hooks/useQueryParams';
 import HomepageNavBar from 'common/NavBar';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
 enum QueryParamKeys {
+  DATE = 'date',
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
 }
@@ -67,13 +71,34 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [mapDate, setMapDate] = useQueryParam(QueryParamKeys.DATE, isISODate);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
+  const mapDateValue = mapDate || new Date().toISOString();
+
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(mapDate));
+  }, [dispatch, mapDate]);
+
+  const handleMapDateChange = (date: Date | null) => {
+    if (!date || Number.isNaN(date.getTime())) {
+      return;
+    }
+
+    setMapDate(
+      new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        23,
+        59,
+        59,
+        999,
+      ).toISOString(),
+    );
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -108,7 +133,11 @@ function Homepage({ classes }: HomepageProps) {
   return (
     <>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
-        <HomepageNavBar searchLocation geocodingEnabled />
+        <HomepageNavBar
+          searchLocation
+          geocodingEnabled
+          sitesRequestDate={mapDate}
+        />
       </div>
       <div className={classes.root}>
         <Grid container>
@@ -118,6 +147,28 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
+            <Box
+              className={classes.dateControl}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <DatePicker
+                value={mapDateValue}
+                dateName="Map date"
+                dateNameTextVariant="body2"
+                timeZone="UTC"
+                onChange={handleMapDateChange}
+              />
+              {mapDate && (
+                <Button
+                  color="primary"
+                  size="small"
+                  variant="contained"
+                  onClick={() => setMapDate(undefined)}
+                >
+                  Today
+                </Button>
+              )}
+            </Box>
             <HomepageMap
               onMapLoad={setMapInstance}
               setShowSiteTable={setShowSiteTable}
@@ -164,7 +215,21 @@ const styles = () =>
     },
     map: {
       display: 'flex',
+      position: 'relative',
       zIndex: 0,
+    },
+    dateControl: {
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      border: '2px solid rgba(0, 0, 0, 0.2)',
+      borderRadius: 5,
+      display: 'flex',
+      gap: 8,
+      left: 10,
+      padding: '8px 10px',
+      position: 'absolute',
+      top: 10,
+      zIndex: 1000,
     },
     siteTable: {
       display: 'flex',

@@ -29,7 +29,11 @@ const siteAugmentedName = (site: Site) => {
   return name || region || '';
 };
 
-function Search({ geocodingEnabled = false, classes }: SearchProps) {
+function Search({
+  geocodingEnabled = false,
+  sitesRequestDate,
+  classes,
+}: SearchProps) {
   const navigate = useNavigate();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
@@ -47,8 +51,8 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
 
   // Fetch sites for the search bar
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(sitesRequestDate));
+  }, [dispatch, sitesRequestDate]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -205,6 +209,7 @@ const styles = () =>
 
 interface SearchIncomingProps {
   geocodingEnabled?: boolean;
+  sitesRequestDate?: string;
 }
 
 type SearchProps = SearchIncomingProps & WithStyles<typeof styles>;
