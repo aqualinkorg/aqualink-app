@@ -99,6 +99,25 @@ export const siteTests = () => {
     siteId = sortedSites[sortedSites.length - 1].id;
   });
 
+  it('GET / find all sites for a historical date', async () => {
+    const historicalData = californiaDailyData[3];
+    const rsp = await request(app.getHttpServer()).get('/sites').query({
+      date: historicalData.date,
+    });
+
+    expect(rsp.status).toBe(200);
+    const california = rsp.body.find(
+      (site: Site) => site.name === californiaSite.name,
+    );
+
+    expect(california.collectionData).toMatchObject({
+      satelliteTemperature: historicalData.satelliteTemperature,
+      dhw: (historicalData.degreeHeatingDays as number) / 7,
+      tempAlert: historicalData.dailyAlertLevel,
+      tempWeeklyAlert: historicalData.dailyAlertLevel,
+    });
+  });
+
   it('GET /:id retrieve one site', async () => {
     const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
 
@@ -111,6 +130,23 @@ export const siteTests = () => {
     expect(rsp.body.historicalMonthlyMean).toBeDefined();
     expect(rsp.body.historicalMonthlyMean.length).toBe(12);
     expect(rsp.body.maskedSpotterApiToken).toBeUndefined();
+  });
+
+  it('GET /:id retrieve one site for a historical date', async () => {
+    const historicalData = californiaDailyData[3];
+    const rsp = await request(app.getHttpServer())
+      .get(`/sites/${californiaSite.id}`)
+      .query({
+        date: historicalData.date,
+      });
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.collectionData).toMatchObject({
+      satelliteTemperature: historicalData.satelliteTemperature,
+      dhw: (historicalData.degreeHeatingDays as number) / 7,
+      tempAlert: historicalData.dailyAlertLevel,
+      tempWeeklyAlert: historicalData.dailyAlertLevel,
+    });
   });
 
   it('GET /:id/daily_data', async () => {

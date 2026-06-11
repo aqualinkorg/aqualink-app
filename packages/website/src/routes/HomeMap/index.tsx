@@ -2,7 +2,7 @@ import L, { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -11,6 +11,7 @@ import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import { DateTime } from 'luxon-extensions';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
@@ -21,21 +22,33 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
   initialCenter: LatLng;
   initialZoom: number;
   initialSiteId: string | undefined;
+  dataDate: string | undefined;
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
 const INITIAL_ZOOM = 4;
 
+const isValidDateParam = (date: string | null): date is string => {
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return false;
+  }
+
+  const parsedDate = DateTime.fromISO(date);
+  return parsedDate.isValid && parsedDate.toISODate() === date;
+};
+
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
+  const dateParam = urlParams.get(QueryParamKeys.DATE);
   const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
   const sitesList = useSelector(sitesListSelector) || [];
   const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
@@ -59,36 +72,61 @@ function useQuery() {
     initialCenter,
     initialSiteId,
     initialZoom,
+    dataDate: isValidDateParam(dateParam) ? dateParam : undefined,
   };
 }
 
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
-  const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
-    useQuery();
+  const {
+    initialZoom,
+    initialSiteId,
+    initialCenter,
+    dataDate,
+  }: MapQueryParams = useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest({ date: dataDate }));
+  }, [dataDate, dispatch]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, date: dataDate }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(siteRequest({ id: `${siteOnMap.id}`, date: dataDate }));
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dataDate, dispatch, initialSiteId, siteOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
+  };
+
+  const updateDataDate = (date?: string) => {
+    const urlParams = new URLSearchParams(location.search);
+    if (date) {
+      urlParams.set(QueryParamKeys.DATE, date);
+    } else {
+      urlParams.delete(QueryParamKeys.DATE);
+    }
+
+    const search = urlParams.toString();
+    navigate(
+      {
+        pathname: location.pathname,
+        search: search ? `?${search}` : '',
+      },
+      { replace: true },
+    );
   };
 
   // scroll drawer to top when its closed.
@@ -124,6 +162,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              dataDate={dataDate}
+              onDataDateChange={updateDataDate}
             />
           </Grid>
           {showSiteTable && (

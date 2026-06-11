@@ -12,6 +12,7 @@ import type {
   TimeSeriesDataRequestParams,
   GetSiteContactInfoProps,
   Site,
+  SiteRequestParams,
   Metrics,
   TimeSeries,
 } from './types';
@@ -37,6 +38,9 @@ const selectedSiteInitialState: SelectedSiteState = {
 };
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
+
+const normalizeSiteRequestParams = (params: SiteRequestParams) =>
+  typeof params === 'string' ? { id: params } : params;
 
 export const forecastDataRequest = createAsyncThunk<
   SelectedSiteState['forecastData'],
@@ -90,13 +94,14 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  SiteRequestParams,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
+    const { id, date } = normalizeSiteRequestParams(params);
     try {
-      const { data } = await siteServices.getSite(id);
+      const { data } = await siteServices.getSite(id, date);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
@@ -123,11 +128,12 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(params: SiteRequestParams, { getState }) {
+      const { id, date } = normalizeSiteRequestParams(params);
       const {
-        selectedSite: { details },
+        selectedSite: { dataDate, details },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || dataDate !== date;
     },
   },
 );
@@ -334,14 +340,12 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
-        ...state,
-        details: action.payload,
-        loading: false,
-      }),
-    );
+    builder.addCase(siteRequest.fulfilled, (state, action) => ({
+      ...state,
+      details: action.payload,
+      dataDate: normalizeSiteRequestParams(action.meta.arg).date,
+      loading: false,
+    }));
 
     builder.addCase(
       siteRequest.rejected,

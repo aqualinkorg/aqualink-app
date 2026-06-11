@@ -398,9 +398,21 @@ export interface SitesRequestData {
   list: Site[];
 }
 
+export interface SitesRequestParams {
+  date?: string;
+}
+
+export type SiteRequestParams =
+  | string
+  | {
+      id: string;
+      date?: string;
+    };
+
 export interface SitesListState {
   list?: Site[];
   filters: SiteFilters;
+  dataDate?: string;
   loading: boolean;
   error?: string | null;
 }
@@ -426,6 +438,7 @@ export interface SelectedSiteState {
   oceanSenseDataLoading: boolean;
   oceanSenseDataError?: string | null;
   granularDailyData?: DailyData[];
+  dataDate?: string;
   timeSeriesData?: TimeSeriesData;
   timeSeriesDataLoading: boolean;
   timeSeriesDataRange?: TimeSeriesDataRange;
