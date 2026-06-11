@@ -13,11 +13,20 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
   <div
     class="Homepage-root-1"
   >
+    <mock-box
+      classname="Homepage-mapDateControl-2"
+    >
+      <mock-datepicker
+        datename="Map date"
+        datenametextvariant="subtitle2"
+        timezone="UTC"
+      />
+    </mock-box>
     <div
       class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-3 css-1fyyp8j-MuiGrid-root"
       >
         <mock-map
           initialcenter="LatLng(0, 121.3)"
@@ -29,7 +38,7 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
         mddown="true"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-3 css-1k7sk4d-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-4 css-1k7sk4d-MuiGrid-root"
         >
           <mock-sitetable />
         </div>

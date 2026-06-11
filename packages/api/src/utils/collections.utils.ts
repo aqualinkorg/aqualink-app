@@ -5,6 +5,7 @@ import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
+import { DailyData } from '../sites/daily-data.entity';
 
 export const getCollectionData = async (
   sites: Site[],
@@ -42,6 +43,59 @@ export const getCollectionData = async (
         {},
       ),
     )
+    .toJSON();
+};
+
+export const getCollectionDataForDate = async (
+  sites: Site[],
+  dailyDataRepository: Repository<DailyData>,
+  date: Date,
+): Promise<Record<number, CollectionDataDto>> => {
+  const siteIds = sites.map((site) => site.id);
+
+  if (!siteIds.length) {
+    return {};
+  }
+
+  const startDate = new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
+  );
+  const endDate = new Date(
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      23,
+      59,
+      59,
+      999,
+    ),
+  );
+
+  const dailyData = await dailyDataRepository
+    .createQueryBuilder('daily_data')
+    .leftJoinAndSelect('daily_data.site', 'site')
+    .where('site.id IN (:...siteIds)', { siteIds })
+    .andWhere('daily_data.date >= :startDate', { startDate })
+    .andWhere('daily_data.date <= :endDate', { endDate })
+    .orderBy('daily_data.date', 'DESC')
+    .getMany();
+
+  return _(dailyData)
+    .filter((siteData) => Boolean(siteData.site?.id))
+    .groupBy((siteData) => siteData.site.id)
+    .mapValues<CollectionDataDto>((data) => {
+      const [siteData] = data;
+      return _.omitBy(
+        {
+          satelliteTemperature: siteData.satelliteTemperature,
+          dhw: siteData.degreeHeatingDays,
+          tempAlert: siteData.dailyAlertLevel,
+          tempWeeklyAlert: siteData.weeklyAlertLevel,
+        },
+        _.isNil,
+      ) as CollectionDataDto;
+    })
     .toJSON();
 };
 
