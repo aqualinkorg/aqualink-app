@@ -21,12 +21,14 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
   initialCenter: LatLng;
   initialZoom: number;
   initialSiteId: string | undefined;
+  date: string | undefined;
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
@@ -36,6 +38,7 @@ function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
+  const date = urlParams.get(QueryParamKeys.DATE) || undefined;
   const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
   const sitesList = useSelector(sitesListSelector) || [];
   const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
@@ -59,6 +62,7 @@ function useQuery() {
     initialCenter,
     initialSiteId,
     initialZoom,
+    date,
   };
 }
 
@@ -68,12 +72,12 @@ function Homepage({ classes }: HomepageProps) {
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
-  const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
+  const { initialZoom, initialSiteId, initialCenter, date }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(date));
+  }, [date, dispatch]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {

@@ -19,6 +19,7 @@ import {
 import { createPoint } from '../utils/coordinates';
 import { AdminLevel } from '../users/users.entity';
 import { Site, SiteStatus } from './sites.entity';
+import { DailyData } from './daily-data.entity';
 import {
   athensSite,
   californiaSite,
@@ -97,6 +98,29 @@ export const siteTests = () => {
     });
     expect(testSite.id).toBeDefined();
     siteId = sortedSites[sortedSites.length - 1].id;
+  });
+
+  it('GET / find all sites with historical collection data', async () => {
+    const historicalData = await dataSource.getRepository(DailyData).findOne({
+      where: { site: { id: californiaSite.id } },
+      order: { date: 'DESC' },
+    });
+
+    expect(historicalData).toBeDefined();
+
+    const rsp = await request(app.getHttpServer()).get('/sites').query({
+      date: historicalData!.date.toISOString(),
+    });
+
+    expect(rsp.status).toBe(200);
+    const california = rsp.body.find(
+      (site: { id: number }) => site.id === californiaSite.id,
+    );
+    expect(california.collectionData).toMatchObject({
+      dhw: historicalData!.degreeHeatingDays,
+      satelliteTemperature: historicalData!.satelliteTemperature,
+      tempAlert: historicalData!.dailyAlertLevel,
+    });
   });
 
   it('GET /:id retrieve one site', async () => {

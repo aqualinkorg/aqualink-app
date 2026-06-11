@@ -396,10 +396,12 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  date?: string;
 }
 
 export interface SitesListState {
   list?: Site[];
+  date?: string;
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
