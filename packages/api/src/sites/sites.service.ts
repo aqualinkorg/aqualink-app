@@ -193,25 +193,27 @@ export class SitesService {
     const res = await query
       .leftJoinAndSelect('site.region', 'region')
       .leftJoinAndSelect('site.sketchFab', 'sketchFab')
-      .leftJoinAndSelect('site.admins', 'admins')
       .leftJoinAndSelect('site.reefCheckSites', 'reefCheckSites')
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    // Optional historical-as-of date
+    const atDate =
+      filter.at && DateTime.fromISO(filter.at).isValid
+        ? DateTime.fromISO(filter.at).toJSDate()
+        : undefined;
 
-    const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
-
-    const waterQualityDataSet = await getWaterQualityDataSubQuery(
-      this.latestDataRepository,
-    );
-
-    const reefCheckDataSet = await getReefCheckDataSubQuery(
-      this.reefCheckSurveyRepository,
-    );
+    const [
+      mappedSiteData,
+      hasHoboDataSet,
+      waterQualityDataSet,
+      reefCheckDataSet,
+    ] = await Promise.all([
+      getCollectionData(res, this.latestDataRepository, { at: atDate }),
+      hasHoboDataSubQuery(this.sourceRepository),
+      getWaterQualityDataSubQuery(this.latestDataRepository),
+      getReefCheckDataSubQuery(this.reefCheckSurveyRepository),
+    ]);
 
     return res.map((site) => ({
       ...site,
@@ -223,7 +225,7 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, filter?: Pick<FilterSiteDto, 'at'>): Promise<Site> {
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -246,9 +248,15 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
+    const atDate =
+      filter?.at && DateTime.fromISO(filter.at).isValid
+        ? DateTime.fromISO(filter.at).toJSDate()
+        : undefined;
+
     const mappedSiteData = await getCollectionData(
       [site],
       this.latestDataRepository,
+      { at: atDate },
     );
 
     const maskedSpotterApiToken = site.spotterApiToken
