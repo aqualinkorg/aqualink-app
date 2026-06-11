@@ -15,6 +15,7 @@ import {
   Hidden,
   Alert,
   Theme,
+  Button,
 } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -23,6 +24,7 @@ import withStyles, {
   CSSProperties,
 } from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
@@ -35,6 +37,9 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
 import { mapIconSize } from 'layout/App/theme';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { format, parseISO } from 'date-fns';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
@@ -91,6 +96,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  historicalAt,
+  onHistoricalDateChange,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -100,6 +107,7 @@ function HomepageMap({
   const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
     useState<string>();
   const [mapReady, setMapReady] = useState(false);
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
@@ -184,6 +192,8 @@ function HomepageMap({
   const onMapReady = () => {
     setMapReady(true);
   };
+
+  const historicalDateValue = historicalAt ? parseISO(historicalAt) : null;
 
   const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
 
@@ -275,6 +285,42 @@ function HomepageMap({
           <InfoIcon color="primary" />
         </IconButton>
       </div>
+      <div className={classes.historicalDateButton}>
+        <IconButton
+          onClick={() => setDatePickerOpen((open) => !open)}
+          size="large"
+        >
+          <CalendarMonthIcon color={historicalAt ? 'primary' : 'action'} />
+        </IconButton>
+      </div>
+      {datePickerOpen && (
+        <div className={classes.historicalDatePanel}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Historical date"
+              format="MM/dd/yyyy"
+              maxDate={new Date()}
+              value={historicalDateValue}
+              onChange={(date) =>
+                onHistoricalDateChange(date ? format(date, 'yyyy-MM-dd') : null)
+              }
+              slotProps={{
+                textField: {
+                  size: 'small',
+                },
+              }}
+            />
+          </LocalizationProvider>
+          <Button
+            color="secondary"
+            disabled={!historicalAt}
+            onClick={() => onHistoricalDateChange(null)}
+            size="small"
+          >
+            Clear
+          </Button>
+        </div>
+      )}
       <InfoDialog
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
@@ -358,6 +404,31 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    historicalDateButton: {
+      ...mapButtonStyles,
+      right: 0,
+      top: 150,
+      zIndex: 400,
+      [theme.breakpoints.down('lg')]: {
+        top: 100,
+      },
+    },
+    historicalDatePanel: {
+      position: 'absolute',
+      right: 60,
+      top: 150,
+      zIndex: 400,
+      backgroundColor: 'white',
+      borderRadius: 8,
+      border: '1px solid rgba(0, 0, 0, 0.23)',
+      padding: theme.spacing(1),
+      display: 'flex',
+      gap: theme.spacing(1),
+      alignItems: 'center',
+      [theme.breakpoints.down('lg')]: {
+        top: 100,
+      },
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -385,6 +456,8 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  historicalAt: string | null;
+  onHistoricalDateChange: (at: string | null) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

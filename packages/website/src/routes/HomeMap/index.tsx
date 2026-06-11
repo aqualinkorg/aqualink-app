@@ -2,7 +2,7 @@ import L, { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -21,12 +21,14 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  AT = 'at',
 }
 
 interface MapQueryParams {
   initialCenter: LatLng;
   initialZoom: number;
   initialSiteId: string | undefined;
+  initialAt: string | null;
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
@@ -37,6 +39,7 @@ function useQuery() {
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
   const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
+  const initialAt = urlParams.get(QueryParamKeys.AT);
   const sitesList = useSelector(sitesListSelector) || [];
   const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
   const initialSiteId = queryParamSiteId
@@ -59,21 +62,52 @@ function useQuery() {
     initialCenter,
     initialSiteId,
     initialZoom,
+    initialAt,
   };
 }
 
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
-  const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
-    useQuery();
+  const {
+    initialZoom,
+    initialSiteId,
+    initialCenter,
+    initialAt,
+  }: MapQueryParams = useQuery();
+  const [historicalAt, setHistoricalAt] = useState<string | null>(initialAt);
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    setHistoricalAt(initialAt);
+  }, [initialAt]);
+
+  useEffect(() => {
+    dispatch(sitesRequest({ at: historicalAt || undefined }));
+  }, [dispatch, historicalAt]);
+
+  const onHistoricalDateChange = (at: string | null) => {
+    setHistoricalAt(at);
+    const queryParams = new URLSearchParams(location.search);
+
+    if (at) {
+      queryParams.set(QueryParamKeys.AT, at);
+    } else {
+      queryParams.delete(QueryParamKeys.AT);
+    }
+
+    navigate(
+      {
+        pathname: location.pathname,
+        search: queryParams.toString() ? `?${queryParams.toString()}` : '',
+      },
+      { replace: true },
+    );
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,6 +158,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              historicalAt={historicalAt}
+              onHistoricalDateChange={onHistoricalDateChange}
             />
           </Grid>
           {showSiteTable && (

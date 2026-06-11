@@ -30,18 +30,24 @@ import { readFiltersFromUrl, writeFiltersToUrl } from './helpers';
 const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
+  requestedAt: null,
   filters: {},
+};
+
+type SitesRequestArgs = {
+  at?: string;
 };
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestArgs | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
+    const requestedAt = arg?.at || null;
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(arg?.at);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,17 +55,19 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        requestedAt,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: SitesRequestArgs | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, requestedAt },
       } = getState();
-      return !list;
+      const nextRequestedAt = arg?.at || null;
+      return !list || requestedAt !== nextRequestedAt;
     },
   },
 );
@@ -108,6 +116,7 @@ const sitesListSlice = createSlice({
       (state, action: PayloadAction<SitesRequestData>) => ({
         ...state,
         list: action.payload.list,
+        requestedAt: action.payload.requestedAt,
         loading: false,
       }),
     );
