@@ -112,6 +112,7 @@ const rules: Rule[] = [
   { token: 'timestamp', expression: /^Date Time$/ },
   { token: 'timestamp', expression: /^Date_Time$/ },
   { token: 'aqualink_site_id', expression: /^aqualink_site_id$/ },
+  { token: 'aqualink_site_id', expression: /^site_id$/ },
   {
     token: 'aqualink_survey_point_id',
     expression: /^aqualink_survey_point_id$/,
@@ -163,6 +164,12 @@ const rules: Rule[] = [
   { token: Metric.SILICATE, expression: /^Silicate$/ },
   { token: Metric.NNN, expression: /^NNN$/ },
   { token: Metric.AMMONIUM, expression: /^NH4$/ },
+  // HWO Metrics
+  { token: Metric.ENTEROCOCCUS, expression: /^Entero$/ },
+  { token: Metric.TURBIDITY_1, expression: /^T1$/ },
+  { token: Metric.TURBIDITY_2, expression: /^T2$/ },
+  { token: Metric.TURBIDITY_3, expression: /^T3$/ },
+  { token: Metric.TURBIDITY_4, expression: /^T4$/ },
 ];
 
 export type Mimetype = (typeof ACCEPTED_FILE_TYPES)[number]['mimetype'];
