@@ -14,6 +14,7 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
+import { useQueryParam } from 'hooks/useQueryParams';
 import HomepageNavBar from 'common/NavBar';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
@@ -21,6 +22,7 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
@@ -31,6 +33,13 @@ interface MapQueryParams {
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
 const INITIAL_ZOOM = 4;
+const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+
+const isValidMapDate = (value: string) => {
+  if (!DATE_FORMAT_REGEX.test(value)) return false;
+  const timestamp = new Date(`${value}T00:00:00.000Z`).getTime();
+  return !Number.isNaN(timestamp) && timestamp <= Date.now();
+};
 
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
@@ -67,13 +76,17 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [mapDate, setMapDate] = useQueryParam(
+    QueryParamKeys.DATE,
+    isValidMapDate,
+  );
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest({ date: mapDate }));
+  }, [dispatch, mapDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,6 +137,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              selectedDate={mapDate}
+              onDateChange={setMapDate}
             />
           </Grid>
           {showSiteTable && (
