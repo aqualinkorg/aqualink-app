@@ -69,8 +69,9 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
-  const [historicalDate] = useQueryParam('date', (value) =>
-    DateTime.fromISO(value).isValid,
+  const [historicalDate] = useQueryParam(
+    'date',
+    (value) => DateTime.fromISO(value).isValid,
   );
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
@@ -85,9 +86,7 @@ function Homepage({ classes }: HomepageProps) {
       dispatch(siteRequest({ id: initialSiteId, endDate: historicalDate }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(
-        siteRequest({ id: `${siteOnMap.id}`, endDate: historicalDate }),
-      );
+      dispatch(siteRequest({ id: `${siteOnMap.id}`, endDate: historicalDate }));
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
   }, [dispatch, historicalDate, initialSiteId, siteOnMap]);

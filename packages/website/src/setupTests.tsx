@@ -14,6 +14,9 @@ Object.defineProperties(globalThis, {
   ReadableStream: { value: ReadableStream },
 });
 
+vi.useFakeTimers();
+vi.setSystemTime(new Date('2026-06-20T05:59:11.000Z'));
+
 vi.mock('@mui/icons-material', () => ({
   ArrowBack: 'mock-ArrowBack',
   Build: 'mock-Build',

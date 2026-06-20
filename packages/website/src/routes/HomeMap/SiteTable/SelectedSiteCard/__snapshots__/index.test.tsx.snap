@@ -44,6 +44,40 @@ exports[`renders as expected 1`] = `
             pl="0.5rem"
             pt="1.5rem"
           >
+            <mock-box
+              display="flex"
+              justifycontent="flex-end"
+              pr="0.5rem"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
+              >
+                <mock-box
+                  alignitems="flex-end"
+                  display="flex"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                    variant="h6"
+                  >
+                    As of:
+                  </mock-typography>
+                  <div
+                    class="DatePicker-datePicker-22"
+                  >
+                    <mock-date-picker
+                      classname="DatePicker-textField-23"
+                      closeonselect="true"
+                      format="MM/dd/yyyy"
+                      maxdate="Sat Jun 20 2026 05:59:11 GMT+0000 (Coordinated Universal Time)"
+                      mindate="Thu Jan 01 1970 00:00:00 GMT+0000 (Coordinated Universal Time)"
+                      slotprops="[object Object]"
+                      value="Sat Jun 20 2026 23:59:59 GMT+0000 (Coordinated Universal Time)"
+                    />
+                  </div>
+                </mock-box>
+              </div>
+            </mock-box>
             <mock-hidden
               mddown="false"
             >
@@ -188,7 +222,7 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-44"
+    classname="makeStyles-card-46"
   >
     <mock-box
       mb="2"
@@ -204,7 +238,7 @@ exports[`renders loading as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-45 css-1umw9bq-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-launchIcon-47 css-1umw9bq-MuiSvgIcon-root"
             data-testid="LaunchIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -218,10 +252,10 @@ exports[`renders loading as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 css-1h90obp-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 makeStyles-cardWrapper-54 makeStyles-cardWrapper-66 css-1h90obp-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-56 css-1nyv9pn-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 makeStyles-cardAnalyticsWrapper-58 css-1nyv9pn-MuiGrid-root"
         >
           <mock-box
             fontweight="400"
@@ -229,6 +263,40 @@ exports[`renders loading as expected 1`] = `
             pl="0.5rem"
             pt="1.5rem"
           >
+            <mock-box
+              display="flex"
+              justifycontent="flex-end"
+              pr="0.5rem"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
+              >
+                <mock-box
+                  alignitems="flex-end"
+                  display="flex"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                    variant="h6"
+                  >
+                    As of:
+                  </mock-typography>
+                  <div
+                    class="DatePicker-datePicker-67"
+                  >
+                    <mock-date-picker
+                      classname="DatePicker-textField-68"
+                      closeonselect="true"
+                      format="MM/dd/yyyy"
+                      maxdate="Sat Jun 20 2026 05:59:11 GMT+0000 (Coordinated Universal Time)"
+                      mindate="Thu Jan 01 1970 00:00:00 GMT+0000 (Coordinated Universal Time)"
+                      slotprops="[object Object]"
+                      value="Sat Jun 20 2026 23:59:59 GMT+0000 (Coordinated Universal Time)"
+                    />
+                  </div>
+                </mock-box>
+              </div>
+            </mock-box>
             <mock-hidden
               mddown="false"
             >
@@ -236,10 +304,10 @@ exports[`renders loading as expected 1`] = `
                 class="MuiGrid-root MuiGrid-container css-1rp4aer-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item makeStyles-cardTitleWrapper-57 css-x7bhrq-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item makeStyles-cardTitleWrapper-59 css-x7bhrq-MuiGrid-root"
                 >
                   <mock-typography
-                    classname="makeStyles-cardTitle-58"
+                    classname="makeStyles-cardTitle-60"
                     color="textSecondary"
                     variant="h5"
                   >
@@ -252,7 +320,7 @@ exports[`renders loading as expected 1`] = `
                 </div>
               </div>
               <mock-typography
-                classname="makeStyles-cardTitle-58 makeStyles-siteRegionName-59"
+                classname="makeStyles-cardTitle-60 makeStyles-siteRegionName-61"
                 color="textSecondary"
                 variant="h6"
               >
@@ -291,10 +359,10 @@ exports[`renders loading as expected 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2 css-15vsh4j-MuiGrid-root"
         >
           <div
-            class="makeStyles-metricsContainer-60"
+            class="makeStyles-metricsContainer-62"
           >
             <div
-              class="makeStyles-metric-61"
+              class="makeStyles-metric-63"
             >
               <mock-typography
                 color="textSecondary"
@@ -317,7 +385,7 @@ exports[`renders loading as expected 1`] = `
               </mock-typography>
             </div>
             <div
-              class="makeStyles-metric-61"
+              class="makeStyles-metric-63"
             >
               <mock-typography
                 color="textSecondary"
@@ -340,7 +408,7 @@ exports[`renders loading as expected 1`] = `
               </mock-typography>
             </div>
             <div
-              class="makeStyles-metric-61"
+              class="makeStyles-metric-63"
             >
               <mock-typography
                 color="textSecondary"

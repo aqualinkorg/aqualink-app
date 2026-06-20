@@ -165,7 +165,14 @@ function SiteDetails({
     if (site && !forecastData) {
       dispatch(forecastDataRequest(String(site.id)));
     }
-  }, [dispatch, site, spotterPosition, latestData, forecastData, historicalDate]);
+  }, [
+    dispatch,
+    site,
+    spotterPosition,
+    latestData,
+    forecastData,
+    historicalDate,
+  ]);
 
   useEffect(
     () => () => {
@@ -298,7 +305,13 @@ function SiteDetails({
       setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);
     }
-  }, [forecastData, historicalDate, latestData, site?.dailyData, timeSeriesRange]);
+  }, [
+    forecastData,
+    historicalDate,
+    latestData,
+    site?.dailyData,
+    timeSeriesRange,
+  ]);
 
   const { videoStream } = site || {};
 

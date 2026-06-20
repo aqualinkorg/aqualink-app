@@ -133,10 +133,9 @@ function SelectedSiteCardContent({
     historicalDailyData?.avgBottomTemperature ?? latestBottomTemperature;
   const satelliteTemperature =
     historicalDailyData?.satelliteTemperature ?? latestSatelliteTemperature;
-  const degreeHeatingWeek =
-    historicalDailyData
-      ? degreeHeatingWeeksCalculator(historicalDailyData.degreeHeatingDays)
-      : latestDegreeHeatingWeek;
+  const degreeHeatingWeek = historicalDailyData
+    ? degreeHeatingWeeksCalculator(historicalDailyData.degreeHeatingDays)
+    : latestDegreeHeatingWeek;
   const useCardWithImageLayout = Boolean(loading || imageUrl);
 
   const metrics = [

@@ -43,8 +43,9 @@ function SelectedSiteCard() {
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
-  const [historicalDate, setHistoricalDate] = useQueryParam('date', (value) =>
-    DateTime.fromISO(value).isValid,
+  const [historicalDate, setHistoricalDate] = useQueryParam(
+    'date',
+    (value) => DateTime.fromISO(value).isValid,
   );
 
   const isFeatured = (site?.id || '').toString() === featuredSiteId;
@@ -57,6 +58,11 @@ function SelectedSiteCard() {
     ) || {};
 
   const hasMedia = Boolean(featuredSurveyMedia?.url);
+  const sitePath = site
+    ? `/sites/${site.id}${
+        historicalDate ? `?date=${encodeURIComponent(historicalDate)}` : ''
+      }`
+    : '#';
 
   // If FEATURED_SITE is not setup, no card is displayed.
   if (featuredSiteId === '' && isFeatured) {
@@ -76,7 +82,7 @@ function SelectedSiteCard() {
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
               {!hasMedia && (
-                <Link to={`/sites/${site?.id}`}>
+                <Link to={sitePath}>
                   <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}

@@ -121,8 +121,9 @@ function Site({ classes }: SiteProps) {
   const { id: siteId = '' } = useParams<{ id: string }>();
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
-  const [historicalDate] = useQueryParam('date', (value) =>
-    DateTime.fromISO(value).isValid,
+  const [historicalDate] = useQueryParam(
+    'date',
+    (value) => DateTime.fromISO(value).isValid,
   );
   const [refresh, setRefresh] = useQueryParam('refresh');
   const { id: selectedSurveyPointId } =
