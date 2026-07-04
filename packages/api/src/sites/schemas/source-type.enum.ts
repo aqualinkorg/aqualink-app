@@ -9,4 +9,5 @@ export enum SourceType {
   HUI = 'hui',
   SHEET_DATA = 'sheet_data',
   SEAPHOX = 'seaphox',
+  OPEN_METEO = 'open_meteo',
 }

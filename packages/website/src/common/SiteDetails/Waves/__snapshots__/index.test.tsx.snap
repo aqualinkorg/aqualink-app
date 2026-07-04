@@ -194,7 +194,7 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-19 false css-1urtxze-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-23 makeStyles-dateInfoWrapper-25 css-x7bhrq-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-23 makeStyles-dateInfoWrapper-26 css-x7bhrq-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
@@ -239,30 +239,55 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-            style="display: flex; justify-content: flex-end;"
+            class="MuiGrid-root MuiGrid-item makeStyles-chipsWrapper-25 css-x7bhrq-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item makeStyles-chip-26 makeStyles-chip-32 css-x7bhrq-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item makeStyles-chip-27 makeStyles-chip-33 css-x7bhrq-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-31 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
                   <a
-                    class="makeStyles-link-29"
+                    class="makeStyles-link-30"
                     href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
                     <mock-typography
-                      classname="makeStyles-chipText-27"
+                      classname="makeStyles-chipText-28"
                     >
-                      SOFAR MODEL
+                      WIND
+                    </mock-typography>
+                  </a>
+                </button>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item makeStyles-chip-27 makeStyles-chip-34 css-x7bhrq-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
+              >
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <a
+                    class="makeStyles-link-30"
+                    href="https://open-meteo.com/en/docs/marine-weather-api"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    <mock-typography
+                      classname="makeStyles-chipText-28"
+                    >
+                      WAVE
                     </mock-typography>
                   </a>
                 </button>

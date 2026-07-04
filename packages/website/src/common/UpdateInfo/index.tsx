@@ -46,6 +46,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   dateInfo: {
     width: `calc(100% - ${UPDATE_ICON_RIGHT_MARGIN + UPDATE_ICON_SIZE}px)`,
   },
+  chipsWrapper: {
+    display: 'flex',
+    gap: 4,
+  },
 }));
 
 function UpdateInfo({
@@ -60,8 +64,14 @@ function UpdateInfo({
   chipWidth,
   subtitle,
   onClick,
+  secondaryImage,
+  secondaryImageText,
+  secondaryLive = false,
+  secondaryHref,
+  secondaryOnClick,
 }: UpdateInfoProps) {
   const classes = useStyles({ chipWidth });
+  const hasSecondaryChip = Boolean(secondaryImageText || secondaryImage);
   return (
     <Grid
       className={`${classes.updateInfo} ${withMargin && classes.withMargin}`}
@@ -93,7 +103,7 @@ function UpdateInfo({
           </Grid>
         </Grid>
       </Grid>
-      <Grid item style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Grid item className={classes.chipsWrapper}>
         <Chip
           live={live}
           href={live ? undefined : href}
@@ -101,6 +111,15 @@ function UpdateInfo({
           imageText={imageText}
           onClick={onClick}
         />
+        {hasSecondaryChip && (
+          <Chip
+            live={secondaryLive}
+            href={secondaryLive ? undefined : secondaryHref}
+            image={secondaryImage}
+            imageText={secondaryImageText}
+            onClick={secondaryOnClick}
+          />
+        )}
       </Grid>
     </Grid>
   );
@@ -118,6 +137,11 @@ interface UpdateInfoProps {
   withMargin?: boolean;
   chipWidth?: number;
   onClick?: () => void;
+  secondaryImage?: string;
+  secondaryImageText?: string;
+  secondaryLive?: boolean;
+  secondaryHref?: string;
+  secondaryOnClick?: () => void;
 }
 
 export default UpdateInfo;

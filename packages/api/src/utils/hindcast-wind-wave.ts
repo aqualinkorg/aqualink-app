@@ -10,27 +10,12 @@ import { ForecastData } from '../wind-wave-data/forecast-data.entity';
 import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
+import { openMeteoMarineBatch } from './open-meteo';
 import { sofarHindcast } from './sofar';
 import { getSofarNearestAvailablePoint } from './sofar-availability';
-import { ValueWithTimestamp, SpotterData } from './sofar.types';
+import { ValueWithTimestamp } from './sofar.types';
 
 const logger = new Logger('hindcastWindWaveData');
-
-const dataLabels: [keyof SpotterData, WindWaveMetric, SourceType][] = [
-  [
-    'significantWaveHeight',
-    WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT,
-    SourceType.SOFAR_MODEL,
-  ],
-  [
-    'waveMeanDirection',
-    WindWaveMetric.WAVE_MEAN_DIRECTION,
-    SourceType.SOFAR_MODEL,
-  ],
-  ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD, SourceType.SOFAR_MODEL],
-  ['windDirection', WindWaveMetric.WIND_DIRECTION, SourceType.GFS],
-  ['windSpeed', WindWaveMetric.WIND_SPEED, SourceType.GFS],
-];
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -46,6 +31,12 @@ const getTodayYesterdayDates = () => {
   return { today, yesterday };
 };
 
+/**
+ * Original combined Sofar wave+wind fetch, kept unchanged and exported for
+ * backward compatibility with scripts/generate-stormglass-csv.ts, which
+ * depends on this exact function. Not used by addWindWaveData below —
+ * that now sources wave data from Open-Meteo instead (see getWindData).
+ */
 export const getForecastData = async (latitude: number, longitude: number) => {
   const { today, yesterday } = getTodayYesterdayDates();
   const hindcastOptions = [
@@ -89,7 +80,6 @@ export const getForecastData = async (latitude: number, longitude: number) => {
     return x.values[x.values.length - 1]; // latest available forecast in the past
   });
 
-  // Calculate wind speed and direction from velocity
   const windNorthwardVelocity = windVelocity10MeterNorthward?.value;
   const windEastwardVelocity = windVelocity10MeterEastward?.value;
   const sameTimestamps =
@@ -120,17 +110,105 @@ export const getForecastData = async (latitude: number, longitude: number) => {
 };
 
 /**
- * Fetch spotter and wave data from sofar and save them on time_series table
- * @param siteIds The siteIds for which to perform the update
- * @param connection An active typeorm connection object
- * @param repositories The needed repositories, as defined by the interface
+ * Fetch wind data (eastward/northward velocity) from Sofar's GFS-backed
+ * Atmosphere model and derive speed + direction. Used by addWindWaveData
+ * below. Wave data is fetched separately, in bulk, via Open-Meteo.
+ */
+const getWindData = async (latitude: number, longitude: number) => {
+  const { today, yesterday } = getTodayYesterdayDates();
+
+  const [windEastwardRaw, windNorthwardRaw] = await Promise.all([
+    sofarHindcast(
+      SofarModels.Atmosphere,
+      sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterEastward,
+      latitude,
+      longitude,
+      yesterday,
+      today,
+    ),
+    sofarHindcast(
+      SofarModels.Atmosphere,
+      sofarVariableIDs[SofarModels.Atmosphere].windVelocity10MeterNorthward,
+      latitude,
+      longitude,
+      yesterday,
+      today,
+    ),
+  ]);
+
+  const windVelocity10MeterEastward =
+    windEastwardRaw && windEastwardRaw.values.length > 0
+      ? windEastwardRaw.values[windEastwardRaw.values.length - 1]
+      : undefined;
+  const windVelocity10MeterNorthward =
+    windNorthwardRaw && windNorthwardRaw.values.length > 0
+      ? windNorthwardRaw.values[windNorthwardRaw.values.length - 1]
+      : undefined;
+
+  const eastward = windVelocity10MeterEastward?.value;
+  const northward = windVelocity10MeterNorthward?.value;
+  const sameTimestamps =
+    windVelocity10MeterEastward?.timestamp ===
+    windVelocity10MeterNorthward?.timestamp;
+
+  const windSpeed: ValueWithTimestamp | undefined =
+    eastward !== undefined && northward !== undefined && sameTimestamps
+      ? {
+          timestamp: windVelocity10MeterNorthward!.timestamp,
+          value: getWindSpeed(eastward, northward),
+        }
+      : undefined;
+  const windDirection: ValueWithTimestamp | undefined =
+    eastward !== undefined && northward !== undefined && sameTimestamps
+      ? {
+          timestamp: windVelocity10MeterNorthward!.timestamp,
+          value: getWindDirection(eastward, northward),
+        }
+      : undefined;
+
+  return { windSpeed, windDirection };
+};
+
+interface CombinedWindWaveData {
+  significantWaveHeight?: ValueWithTimestamp;
+  waveMeanDirection?: ValueWithTimestamp;
+  waveMeanPeriod?: ValueWithTimestamp;
+  windSpeed?: ValueWithTimestamp;
+  windDirection?: ValueWithTimestamp;
+}
+
+const dataLabels: [keyof CombinedWindWaveData, WindWaveMetric, SourceType][] = [
+  [
+    'significantWaveHeight',
+    WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT,
+    SourceType.OPEN_METEO,
+  ],
+  [
+    'waveMeanDirection',
+    WindWaveMetric.WAVE_MEAN_DIRECTION,
+    SourceType.OPEN_METEO,
+  ],
+  ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD, SourceType.OPEN_METEO],
+  ['windDirection', WindWaveMetric.WIND_DIRECTION, SourceType.GFS],
+  ['windSpeed', WindWaveMetric.WIND_SPEED, SourceType.GFS],
+];
+
+/**
+ * Fetch wave and wind forecast data and persist it to forecast_data.
+ *
+ * Wave data is fetched in batched multi-coordinate calls to the Open-Meteo
+ * Marine API. Wind data is fetched per site from Sofar's GFS-backed
+ * Atmosphere model (unchanged from prior behaviour).
+ *
+ * @param siteIds The siteIds for which to perform the update. If empty,
+ *                all sites are updated.
+ * @param repositories The needed repositories, as defined by the interface.
  */
 export const addWindWaveData = async (
   siteIds: number[],
   repositories: Repositories,
 ) => {
   logger.log('Fetching sites');
-  // Fetch all sites
   const sites = await repositories.siteRepository.find({
     where: {
       ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
@@ -139,41 +217,56 @@ export const addWindWaveData = async (
 
   const { today } = getTodayYesterdayDates();
 
+  logger.log(`Fetching wave data from Open-Meteo for ${sites.length} sites`);
+  const waveCoordinates: Array<[number, number]> = sites.map((site) => {
+    const [longitude, latitude] = (site.polygon as Point).coordinates;
+    return [latitude, longitude];
+  });
+  const waveResults = await openMeteoMarineBatch(waveCoordinates);
+
   logger.log('Saving wind & wave forecast data');
   const limit = pLimit(10);
   await Promise.all(
-    sites.map((site) =>
+    sites.map((site, idx) =>
       limit(async () => {
         const { polygon } = site;
 
-        const [longitude, latitude] = getSofarNearestAvailablePoint(
+        const [sofarLongitude, sofarLatitude] = getSofarNearestAvailablePoint(
           polygon as Point,
         );
 
         logger.log(
-          `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
+          `Saving wind & wave forecast data for ${site.id} at ${sofarLatitude} - ${sofarLongitude}`,
         );
 
-        const forecastData = await getForecastData(latitude, longitude);
+        const waveData = waveResults[idx];
+        const windData = await getWindData(sofarLatitude, sofarLongitude);
 
-        // Save wind wave data to forecast_data
+        const combinedData: CombinedWindWaveData = {
+          significantWaveHeight: waveData?.waveHeight,
+          waveMeanDirection: waveData?.waveDirection,
+          waveMeanPeriod: waveData?.wavePeriod,
+          windSpeed: windData.windSpeed,
+          windDirection: windData.windDirection,
+        };
+
         await Promise.all(
           // eslint-disable-next-line array-callback-return, consistent-return
           dataLabels.map(([dataLabel, metric, source]) => {
-            const sofarValue = forecastData[dataLabel] as ValueWithTimestamp;
-            if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {
+            const value = combinedData[dataLabel];
+            if (!isNil(value?.value) && !Number.isNaN(value?.value)) {
               return repositories.hindcastRepository
                 .createQueryBuilder('forecast_data')
                 .insert()
                 .values([
                   {
                     site,
-                    timestamp: DateTime.fromISO(sofarValue.timestamp)
+                    timestamp: DateTime.fromISO(value!.timestamp)
                       .startOf('minute')
                       .toJSDate(),
                     metric,
                     source,
-                    value: sofarValue.value,
+                    value: value!.value,
                     updatedAt: today,
                   },
                 ])

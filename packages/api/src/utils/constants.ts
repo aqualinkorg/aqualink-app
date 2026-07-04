@@ -22,6 +22,23 @@ export const SOFAR_SENSOR_DATA_URL =
 export const SOFAR_LATEST_DATA_URL =
   'https://api.sofarocean.com/api/latest-data';
 
+// Open-Meteo Marine API
+// https://open-meteo.com/en/docs/marine-weather-api
+// Free tier (default) requires no auth. Setting OPEN_METEO_API_KEY routes
+// requests to the customer endpoint. Setting OPEN_METEO_BASE_URL overrides both.
+export const OPEN_METEO_FREE_URL =
+  'https://marine-api.open-meteo.com/v1/marine';
+export const OPEN_METEO_CUSTOMER_URL =
+  'https://customer-marine-api.open-meteo.com/v1/marine';
+
+// Number of sites to bundle into a single multi-coordinate Marine API call.
+// 100 keeps URL length safely under typical proxy limits (~8KB).
+export const OPEN_METEO_BATCH_SIZE = 100;
+
+// Concurrency cap for parallel Open-Meteo batch calls. The free tier allows
+// 600 calls/min; this leaves plenty of headroom.
+export const OPEN_METEO_CONCURRENCY = 20;
+
 export enum SofarModels {
   NOAACoralReefWatch = 'NOAACoralReefWatch',
   Wave = 'Wave',
