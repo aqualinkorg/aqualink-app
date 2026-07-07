@@ -112,6 +112,7 @@ async function openMeteoMarineFetch(
         longitude: longitudes,
         hourly: 'wave_height,wave_direction,wave_period',
         cell_selection: 'sea',
+        timezone: 'UTC',
         past_days: 1,
         forecast_days: 1,
         ...(process.env.OPEN_METEO_API_KEY && {
