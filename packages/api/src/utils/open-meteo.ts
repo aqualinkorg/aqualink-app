@@ -120,7 +120,10 @@ async function openMeteoMarineFetch(
       ? response.data
       : [response.data];
 
-    return results.map((r) => {
+    return coordinates.map((_, i) => {
+      const r = results[i];
+      if (!r) return undefined;
+
       const times = r.hourly?.time ?? [];
       return {
         waveHeight: extractLatestValue(times, r.hourly?.wave_height),
