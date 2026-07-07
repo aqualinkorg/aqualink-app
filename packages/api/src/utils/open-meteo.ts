@@ -73,6 +73,10 @@ function extractLatestValue(
   if (!values || values.length === 0) return undefined;
 
   const now = Date.now();
+  const toEpochMs = (ts: string) => {
+    const hasTzInfo = /[zZ]|[+-]\d{2}:?\d{2}$/.test(ts);
+    return new Date(hasTzInfo ? ts : `${ts}Z`).getTime();
+  };
 
   const validEntries = values
     .map((value, index) => ({ value, timestamp: times[index] }))
@@ -80,7 +84,7 @@ function extractLatestValue(
       (entry): entry is { value: number; timestamp: string } =>
         !isNil(entry.value) &&
         !Number.isNaN(entry.value) &&
-        new Date(entry.timestamp).getTime() <= now,
+        toEpochMs(entry.timestamp) <= now,
     );
 
   return validEntries.length > 0
