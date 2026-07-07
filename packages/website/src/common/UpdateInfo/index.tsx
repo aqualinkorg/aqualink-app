@@ -5,8 +5,6 @@ import { grey } from '@mui/material/colors';
 import UpdateIcon from '@mui/icons-material/Update';
 import Chip from '../Chip';
 
-const CHIP_SMALL_DEFAULT_WIDTH = 48;
-const CHIP_LARGE_DEFAULT_WIDTH = 60;
 const UPDATE_ICON_SIZE = 24;
 const UPDATE_ICON_RIGHT_MARGIN = 4;
 
@@ -35,20 +33,19 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontSize: 8.5,
     },
   },
-  dateInfoWrapper: ({ chipWidth }: { chipWidth?: number }) => ({
-    width: `calc(100% - ${chipWidth || CHIP_LARGE_DEFAULT_WIDTH}px)`,
-    [theme.breakpoints.only('md')]: {
-      width: `calc(100% - ${chipWidth || CHIP_SMALL_DEFAULT_WIDTH}px)`,
-    },
+  dateInfoWrapper: {
+    flex: '1 1 auto',
+    minWidth: 0,
     display: 'flex',
     justifyContent: 'flex-start',
-  }),
+  },
   dateInfo: {
     width: `calc(100% - ${UPDATE_ICON_RIGHT_MARGIN + UPDATE_ICON_SIZE}px)`,
   },
   chipsWrapper: {
     display: 'flex',
     gap: 4,
+    flexShrink: 0,
   },
 }));
 

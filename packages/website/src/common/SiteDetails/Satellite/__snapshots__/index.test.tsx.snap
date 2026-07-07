@@ -313,7 +313,7 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-10 false css-1urtxze-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-17 css-x7bhrq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-14 css-x7bhrq-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
@@ -361,30 +361,30 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-item makeStyles-chipsWrapper-16 css-x7bhrq-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item makeStyles-chip-18 makeStyles-chip-24 css-x7bhrq-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item makeStyles-chip-17 makeStyles-chip-23 css-x7bhrq-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-23 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-22 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
                 <a
-                  class="makeStyles-link-21"
+                  class="makeStyles-link-20"
                   href="https://coralreefwatch.noaa.gov/"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
                   <mock-typography
-                    classname="makeStyles-chipText-19"
+                    classname="makeStyles-chipText-18"
                   >
                     NOAA
                   </mock-typography>
                   <img
                     alt="sensor-type"
-                    class="makeStyles-sensorImage-22"
+                    class="makeStyles-sensorImage-21"
                     src="satellite.svg"
                   />
                 </a>

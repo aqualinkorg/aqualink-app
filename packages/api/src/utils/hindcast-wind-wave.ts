@@ -261,7 +261,9 @@ export const addWindWaveData = async (
                 .values([
                   {
                     site,
-                    timestamp: DateTime.fromISO(value!.timestamp, { zone: 'utc' })
+                    timestamp: DateTime.fromISO(value!.timestamp, {
+                      zone: 'utc',
+                    })
                       .startOf('minute')
                       .toJSDate(),
                     metric,

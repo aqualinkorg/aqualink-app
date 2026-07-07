@@ -76,7 +76,7 @@ exports[`TemperatureChange card > should render with given state from Redux stor
         class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-18 false css-1urtxze-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-22 makeStyles-dateInfoWrapper-25 css-x7bhrq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-22 css-x7bhrq-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
@@ -124,30 +124,30 @@ exports[`TemperatureChange card > should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-item makeStyles-chipsWrapper-24 css-x7bhrq-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item makeStyles-chip-26 makeStyles-chip-32 css-x7bhrq-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item makeStyles-chip-25 makeStyles-chip-31 css-x7bhrq-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-31 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-30 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
                 <a
-                  class="makeStyles-link-29"
+                  class="makeStyles-link-28"
                   href="https://coralreefwatch.noaa.gov/"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
                   <mock-typography
-                    classname="makeStyles-chipText-27"
+                    classname="makeStyles-chipText-26"
                   >
                     NOAA
                   </mock-typography>
                   <img
                     alt="sensor-type"
-                    class="makeStyles-sensorImage-30"
+                    class="makeStyles-sensorImage-29"
                     src="satellite.svg"
                   />
                 </a>
