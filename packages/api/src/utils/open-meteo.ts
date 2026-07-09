@@ -1,17 +1,21 @@
 /* eslint-disable no-console */
 /** Utility functions to access the Open-Meteo Marine API for wave data. */
 import { chunk, isNil } from 'lodash';
-import pLimit from 'p-limit';
 import axios from './retry-axios';
 import {
   OPEN_METEO_BATCH_SIZE,
-  OPEN_METEO_CONCURRENCY,
   OPEN_METEO_CUSTOMER_URL,
   OPEN_METEO_FREE_URL,
+  OPEN_METEO_REQUEST_DELAY_MS,
 } from './constants';
 import { OpenMeteoMarineResponse, OpenMeteoWaveData } from './open-meteo.types';
 import { sendSlackMessage, SlackMessage } from './slack.utils';
 import { ValueWithTimestamp } from './sofar.types';
+
+const delay = (ms: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 
 /**
  * Resolve the Marine API endpoint based on env config.
@@ -107,6 +111,7 @@ async function openMeteoMarineFetch(
 
   try {
     const response = await axios.get(getOpenMeteoUrl(), {
+      timeout: 15000,
       params: {
         latitude: latitudes,
         longitude: longitudes,
@@ -154,10 +159,19 @@ export async function openMeteoMarineBatch(
 ): Promise<(OpenMeteoWaveData | undefined)[]> {
   const batches = chunk(coordinates, OPEN_METEO_BATCH_SIZE);
 
-  const limit = pLimit(OPEN_METEO_CONCURRENCY);
-  const batchResults = await Promise.all(
-    batches.map((batch) => limit(() => openMeteoMarineFetch(batch))),
+  // Dispatch batches one at a time with a fixed pause between requests,
+  // rather than using concurrency + stagger. Open-Meteo's free tier
+  // rate limit is strict enough that true sequential pacing is more
+  // reliable than any level of parallelism.
+  const results = await batches.reduce(
+    async (accPromise, batch) => {
+      const acc = await accPromise;
+      const result = await openMeteoMarineFetch(batch);
+      await delay(OPEN_METEO_REQUEST_DELAY_MS);
+      return [...acc, result];
+    },
+    Promise.resolve([] as (OpenMeteoWaveData | undefined)[][]),
   );
 
-  return batchResults.flat();
+  return results.flat();
 }

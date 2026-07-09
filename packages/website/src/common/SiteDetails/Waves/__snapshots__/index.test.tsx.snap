@@ -122,14 +122,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h3"
               >
-                0.6
-              </mock-typography>
-              <mock-typography
-                classname="makeStyles-contentUnits-6"
-                color="textSecondary"
-                variant="h6"
-              >
-                m
+                - -
               </mock-typography>
             </div>
           </div>
@@ -151,14 +144,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h3"
               >
-                6
-              </mock-typography>
-              <mock-typography
-                classname="makeStyles-contentUnits-6"
-                color="textSecondary"
-                variant="h6"
-              >
-                s
+                - -
               </mock-typography>
             </div>
           </div>
@@ -175,17 +161,12 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
             >
-              <img
-                alt="arrow"
-                class="makeStyles-arrow-14 makeStyles-wavesDirectionArrow-16 makeStyles-wavesDirectionArrow-18"
-                src="data:image/svg+xml,%3csvg%20viewBox='0%200%2024%2024'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20fill='none'%20fill-rule='evenodd'%3e%3ccircle%20cx='12'%20cy='12'%20r='11.25'%20stroke='%23000'%20stroke-width='1.5'/%3e%3cpath%20d='M11.241%205.095L6.784%209.551c-.41.41-.41%201.095%200%201.506.41.41%201.095.41%201.506%200l2.647-2.631v9.734c0%20.593.471%201.065%201.064%201.065.593%200%201.065-.472%201.065-1.065V8.426l2.632%202.631a1.074%201.074%200%20001.825-.76%201.07%201.07%200%2000-.32-.76l-4.441-4.442a1.083%201.083%200%2000-.76-.32c-.29%200-.563.107-.761.32z'%20fill='%23000'/%3e%3c/g%3e%3c/svg%3e"
-              />
               <mock-typography
                 classname="makeStyles-contentTextValues-5"
                 color="textSecondary"
                 variant="h3"
               >
-                152°
+                - -
               </mock-typography>
             </div>
           </div>
@@ -226,7 +207,7 @@ exports[`renders as expected 1`] = `
                     classname="makeStyles-updateInfoText-22"
                     variant="caption"
                   >
-                    Valid 1 day ago
+                    No data available
                   </mock-typography>
                   <mock-typography
                     classname="makeStyles-updateInfoText-22"

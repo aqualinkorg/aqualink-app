@@ -35,9 +35,10 @@ export const OPEN_METEO_CUSTOMER_URL =
 // 100 keeps URL length safely under typical proxy limits (~8KB).
 export const OPEN_METEO_BATCH_SIZE = 100;
 
-// Concurrency cap for parallel Open-Meteo batch calls. The free tier allows
-// 600 calls/min; this leaves plenty of headroom.
-export const OPEN_METEO_CONCURRENCY = 20;
+// Minimum pause between sequential Open-Meteo Marine API requests, to
+// stay under the free tier's per-minute rate limit when processing
+// the full site list across ~60 batches.
+export const OPEN_METEO_REQUEST_DELAY_MS = 1200;
 
 export enum SofarModels {
   NOAACoralReefWatch = 'NOAACoralReefWatch',
