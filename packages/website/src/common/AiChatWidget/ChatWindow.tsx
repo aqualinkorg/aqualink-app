@@ -14,6 +14,7 @@ interface Message {
   sender: 'user' | 'assistant';
   text: string;
   id: string;
+  isGreeting?: boolean;
 }
 
 interface ChatWindowProps extends WithStyles<typeof styles> {
@@ -118,6 +119,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
         sender: 'assistant',
         text: greetingText,
         id: `msg-${Date.now()}`,
+        isGreeting: true,
       };
       setMessages([initialMessage]);
       setIsLoadingGreeting(false);
@@ -149,6 +151,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
         sender: 'assistant',
         text: greetingText,
         id: `msg-${Date.now()}`,
+        isGreeting: true,
       };
       setMessages([initialMessage]);
       localStorage.removeItem(CHAT_HISTORY_KEY(siteId));
@@ -178,11 +181,7 @@ function ChatWindow({ classes, onClose, siteId }: ChatWindowProps) {
       // Build conversation history for context (last 10 messages)
       const conversationHistory = messages
         .slice(-10)
-        .filter(
-          (msg) =>
-            msg.sender !== 'assistant' ||
-            !msg.text.startsWith('Here is the current reef status'),
-        )
+        .filter((msg) => !msg.isGreeting)
         .map((msg) => ({
           sender: msg.sender,
           text: msg.text,

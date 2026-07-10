@@ -45,8 +45,7 @@ ${prompts['readme-knowledge']}
 (This section will be populated with real-time data for each query)
 `;
 
-  const isOpeningMessage =
-    isFirstMessage || !conversationHistory || conversationHistory.length === 0;
+  const isOpeningMessage = isFirstMessage === true;
 
   const historySection =
     conversationHistory && conversationHistory.length > 0
@@ -57,6 +56,13 @@ ${prompts['readme-knowledge']}
           })
           .join('\n')}`
       : '';
+
+  const followUpSection = !isOpeningMessage
+    ? `\n\n## FOLLOW-UP RESPONSE RULES
+The user has already received the initial reef status greeting with environmental context.
+Do NOT repeat the greeting template, reef status summary, or "About your site" environmental context unless the user explicitly asks for it.
+Answer the current question directly and concisely.`
+    : '';
 
   const openingSection = isOpeningMessage
     ? `\n\n${prompts.greeting}\n\n## CRITICAL: THIS IS THE INITIAL GREETING
@@ -80,5 +86,5 @@ Use the site context provided above and web search if needed (max 2 searches) to
       ? `\n\n## CURRENT USER QUESTION:\n${userMessage}\n\nPlease provide a helpful, accurate response using the site data and context above.`
       : '';
 
-  return `${completeSystemPrompt}\n\n${siteContext}${historySection}${openingSection}${userMessageSection}`;
+  return `${completeSystemPrompt}\n\n${siteContext}${historySection}${followUpSection}${openingSection}${userMessageSection}`;
 }

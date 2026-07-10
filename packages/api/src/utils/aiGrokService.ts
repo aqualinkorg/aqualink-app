@@ -166,25 +166,26 @@ export type ToolExecutor = (
 
 // 1. Tag-based extraction (Primary Strategy)
 // Matches content between <greeting> and </greeting>, handling newlines/formatting
-function extractFinalResponse(rawMessage: string): string {
-  const tagMatch = rawMessage.match(/<greeting>([\s\S]*?)<\/greeting>/i);
+function extractFinalResponse(
+  rawMessage: string,
+  isFirstMessage?: boolean,
+): string {
+  if (isFirstMessage) {
+    const tagMatch = rawMessage.match(/<greeting>([\s\S]*?)<\/greeting>/i);
 
-  if (tagMatch && tagMatch[1]) {
-    return tagMatch[1].trim();
+    if (tagMatch && tagMatch[1]) {
+      return tagMatch[1].trim();
+    }
+
+    // If the model forgot tags but included the standard start phrase
+    const greetingStartPhrase = 'Here is the current reef status';
+    const startIndex = rawMessage.indexOf(greetingStartPhrase);
+
+    if (startIndex !== -1) {
+      return rawMessage.substring(startIndex).trim();
+    }
   }
 
-  // 2. Fallback extraction (Secondary Strategy)
-  // If the model forgot tags but included the standard start phrase
-  const greetingStartPhrase = 'Here is the current reef status';
-  const startIndex = rawMessage.indexOf(greetingStartPhrase);
-
-  if (startIndex !== -1) {
-    return rawMessage.substring(startIndex).trim();
-  }
-
-  // 3. Last Resort
-  // If we can't find tags or the start phrase, return raw message
-  // but clean obvious reasoning markers if they exist at the very start.
   return rawMessage
     .replace(/^[\s\S]*?internal_processing[\s\S]*?(\n|$)/, '')
     .trim();
@@ -291,11 +292,12 @@ const runToolLoop = async (
   messages: GrokMessage[],
   toolExecutor: ToolExecutor | undefined,
   iterationsLeft: number,
+  isFirstMessage?: boolean,
 ): Promise<string> => {
   if (iterationsLeft === 0) {
     const lastContent = messages[messages.length - 1].content;
     return typeof lastContent === 'string'
-      ? extractFinalResponse(lastContent)
+      ? extractFinalResponse(lastContent, isFirstMessage)
       : 'Unable to generate a response. Please try again.';
   }
 
@@ -325,10 +327,11 @@ const runToolLoop = async (
       [...messages, assistantMessage, ...toolResultMessages],
       toolExecutor,
       iterationsLeft - 1,
+      isFirstMessage,
     );
   }
 
-  return extractFinalResponse(choice.message.content ?? '');
+  return extractFinalResponse(choice.message.content ?? '', isFirstMessage);
 };
 
 /**
@@ -375,7 +378,13 @@ export async function callGrokAPI(
     ...(userMessageObj ? [userMessageObj] : []),
   ];
 
-  return runToolLoop(apiKey, messages, toolExecutor, MAX_TOOL_ITERATIONS);
+  return runToolLoop(
+    apiKey,
+    messages,
+    toolExecutor,
+    MAX_TOOL_ITERATIONS,
+    isFirstMessage,
+  );
 }
 
 /**
