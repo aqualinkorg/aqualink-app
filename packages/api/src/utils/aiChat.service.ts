@@ -1,9 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { buildSiteContext } from './aiSiteContextBuilder';
 import { callGrokAPI, ToolExecutor } from './aiGrokService';
-import { PromptMap } from './prompts';
+import { assertPromptMap, PromptMap } from './prompts';
 import { AiPromptsService } from '../monitoring/ai-prompts.service';
 import {
   TimeSeriesAIService,
@@ -59,11 +63,17 @@ export class AIChatService {
 
   private async getPromptMap(): Promise<PromptMap> {
     const allPrompts = await this.aiPromptsService.getAllPrompts();
-    const promptMap = allPrompts.reduce(
-      (acc, p) => ({ ...acc, [p.promptKey]: p.content }),
-      {} as Record<string, string>,
+    const partial = Object.fromEntries(
+      allPrompts.map((p) => [p.promptKey, p.content]),
     );
-    return promptMap as unknown as PromptMap;
+
+    try {
+      return assertPromptMap(partial);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      this.logger.error(msg);
+      throw new InternalServerErrorException('AI prompts are misconfigured');
+    }
   }
 
   private async executeQueryTimeSeries(

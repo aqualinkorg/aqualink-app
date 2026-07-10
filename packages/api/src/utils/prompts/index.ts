@@ -16,6 +16,38 @@ export interface PromptMap {
   'readme-knowledge': string;
 }
 
+export const PROMPT_KEYS = [
+  'system',
+  'guardrails',
+  'survey-guide',
+  'bleaching-response',
+  'faq',
+  'data-guide',
+  'greeting',
+  'readme-knowledge',
+] as const satisfies readonly (keyof PromptMap)[];
+
+export function assertPromptMap(
+  partial: Record<string, string | undefined>,
+): PromptMap {
+  const missing = PROMPT_KEYS.filter((key) => !partial[key]?.trim());
+
+  if (missing.length > 0) {
+    throw new Error(`Missing or empty AI prompts: ${missing.join(', ')}`);
+  }
+
+  return {
+    system: partial.system!.trim(),
+    guardrails: partial.guardrails!.trim(),
+    'survey-guide': partial['survey-guide']!.trim(),
+    'bleaching-response': partial['bleaching-response']!.trim(),
+    faq: partial.faq!.trim(),
+    'data-guide': partial['data-guide']!.trim(),
+    greeting: partial.greeting!.trim(),
+    'readme-knowledge': partial['readme-knowledge']!.trim(),
+  };
+}
+
 /**
  * Build a complete prompt with site context and conversation history
  */
