@@ -127,7 +127,7 @@ export class AiPromptsService {
       relations: ['updatedByUser'],
     });
 
-    // Invalidate cache - next request will reload
+    // No caching in use; changes are visible immediately
     this.logger.log(
       `Updated prompt '${promptKey}' to version ${updated.version}`,
     );
