@@ -170,13 +170,12 @@ function extractFinalResponse(
   rawMessage: string,
   isFirstMessage?: boolean,
 ): string {
+  const tagMatch = rawMessage.match(/<greeting>([\s\S]*?)<\/greeting>/i);
+  if (tagMatch?.[1]) {
+    return tagMatch[1].trim();
+  }
+
   if (isFirstMessage) {
-    const tagMatch = rawMessage.match(/<greeting>([\s\S]*?)<\/greeting>/i);
-
-    if (tagMatch && tagMatch[1]) {
-      return tagMatch[1].trim();
-    }
-
     // If the model forgot tags but included the standard start phrase
     const greetingStartPhrase = 'Here is the current reef status';
     const startIndex = rawMessage.indexOf(greetingStartPhrase);
