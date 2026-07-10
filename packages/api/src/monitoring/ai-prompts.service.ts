@@ -180,7 +180,7 @@ export class AiPromptsService {
       relations: ['updatedByUser'],
     });
 
-    // Invalidate cache - next request will reload
+    // No caching in use; changes are visible immediately
     this.logger.log(
       `Rolled back prompt '${promptKey}' to version ${version} (now version ${updated.version})`,
     );
