@@ -244,6 +244,7 @@ function PromptsEditor() {
   const [editedContent, setEditedContent] = useState('');
   const [changeNotes, setChangeNotes] = useState('');
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -273,8 +274,7 @@ function PromptsEditor() {
   const loadPrompts = useCallback(async () => {
     if (!token) {
       setPrompts(MOCK_PROMPTS);
-      // Only auto-select if prompts array is currently empty
-      if (MOCK_PROMPTS.length > 0 && prompts.length === 0) {
+      if (MOCK_PROMPTS.length > 0) {
         selectPrompt(MOCK_PROMPTS[0]);
       }
       return;
@@ -284,23 +284,21 @@ function PromptsEditor() {
       setLoading(true);
       const { data } = await promptServices.getAllPrompts(token);
       setPrompts(data);
-      // Only auto-select if no prompt selected yet
-      if (data.length > 0 && !selectedPrompt) {
+      if (data.length > 0) {
         selectPrompt(data[0]);
       }
     } catch (err) {
       console.warn('Failed to load prompts from API, using mock data:', err);
       setPrompts(MOCK_PROMPTS);
-      // Only auto-select if prompts array is currently empty
-      if (MOCK_PROMPTS.length > 0 && prompts.length === 0) {
+      if (MOCK_PROMPTS.length > 0) {
         selectPrompt(MOCK_PROMPTS[0]);
       }
     } finally {
       setLoading(false);
     }
-  }, [token, selectedPrompt, selectPrompt, prompts.length]);
+  }, [token, selectPrompt]);
 
-  // Load prompts on mount
+  // Load prompts on mount / token change only
   useEffect(() => {
     loadPrompts();
   }, [loadPrompts]);
@@ -312,11 +310,11 @@ function PromptsEditor() {
     }
 
     try {
-      setLoading(true);
+      setSaving(true);
       setSuccess(null);
       setError(null);
 
-      await promptServices.updatePrompt(
+      const { data: updatedPrompt } = await promptServices.updatePrompt(
         selectedPrompt.promptKey,
         {
           content: editedContent,
@@ -325,24 +323,19 @@ function PromptsEditor() {
         token,
       );
 
-      setSuccess('Prompt updated successfully!');
-
-      // Reload prompts and re-select current one to show updated version
-      await loadPrompts();
-      const freshPrompts = await promptServices.getAllPrompts(token);
-      const updatedPrompt = freshPrompts.data.find(
-        (p) => p.promptKey === selectedPrompt.promptKey,
+      setPrompts((prev) =>
+        prev.map((p) =>
+          p.promptKey === updatedPrompt.promptKey ? updatedPrompt : p,
+        ),
       );
-      if (updatedPrompt) {
-        selectPrompt(updatedPrompt);
-      }
-
+      selectPrompt(updatedPrompt);
+      setSuccess('Prompt updated successfully!');
       setChangeNotes('');
     } catch (err) {
       setError('Failed to update prompt');
       console.error(err);
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
 
@@ -377,31 +370,27 @@ function PromptsEditor() {
     if (!selectedPrompt || !token || rollbackVersion === null) return;
 
     try {
-      setLoading(true);
-      await promptServices.rollbackToVersion(
+      setSaving(true);
+      const { data: updatedPrompt } = await promptServices.rollbackToVersion(
         selectedPrompt.promptKey,
         { version: rollbackVersion },
         token,
       );
+      setPrompts((prev) =>
+        prev.map((p) =>
+          p.promptKey === updatedPrompt.promptKey ? updatedPrompt : p,
+        ),
+      );
+      selectPrompt(updatedPrompt);
       setSuccess(`Rolled back to version ${rollbackVersion}`);
       setHistoryOpen(false);
       setRollbackDialogOpen(false);
       setRollbackVersion(null);
-
-      // Reload prompts and re-select current one to show updated version
-      await loadPrompts();
-      const freshPrompts = await promptServices.getAllPrompts(token);
-      const updatedPrompt = freshPrompts.data.find(
-        (p) => p.promptKey === selectedPrompt.promptKey,
-      );
-      if (updatedPrompt) {
-        selectPrompt(updatedPrompt);
-      }
     } catch (err) {
       setError('Failed to rollback');
       console.error(err);
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
 
@@ -720,14 +709,14 @@ function PromptsEditor() {
                   <Button
                     variant="contained"
                     onClick={handleSave}
-                    disabled={!hasChanges || loading || !token}
+                    disabled={!hasChanges || saving || loading || !token}
                   >
-                    Apply Changes
+                    {saving ? 'Saving...' : 'Apply Changes'}
                   </Button>
                   <Button
                     variant="outlined"
                     onClick={() => selectPrompt(selectedPrompt)}
-                    disabled={!hasChanges || loading}
+                    disabled={!hasChanges || saving || loading}
                     style={{
                       backgroundColor: '#ffffff',
                       color: '#d62734',
