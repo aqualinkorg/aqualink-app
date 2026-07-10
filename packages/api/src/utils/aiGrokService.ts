@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { buildPromptWithContext } from './prompts';
+import { buildPromptWithContext, PromptMap } from './prompts';
 
 const GROK_API_URL = 'https://api.x.ai/v1/chat/completions';
 const GROK_MODEL = 'grok-4-fast-reasoning'; // Fast and cost-effective
@@ -341,6 +341,7 @@ const runToolLoop = async (
 export async function callGrokAPI(
   userMessage: string,
   siteContext: string,
+  prompts: PromptMap,
   conversationHistory?: Array<{ sender: string; text: string }>,
   isFirstMessage?: boolean,
   toolExecutor?: ToolExecutor,
@@ -352,9 +353,10 @@ export async function callGrokAPI(
   }
 
   // Build the complete prompt with context
-  const systemPrompt = await buildPromptWithContext(
+  const systemPrompt = buildPromptWithContext(
     userMessage,
     siteContext,
+    prompts,
     conversationHistory,
     isFirstMessage,
   );

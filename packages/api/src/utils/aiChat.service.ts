@@ -3,6 +3,8 @@ import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { buildSiteContext } from './aiSiteContextBuilder';
 import { callGrokAPI, ToolExecutor } from './aiGrokService';
+import { PromptMap } from './prompts';
+import { AiPromptsService } from '../monitoring/ai-prompts.service';
 import {
   TimeSeriesAIService,
   AggregationPeriod,
@@ -29,12 +31,14 @@ export class AIChatService {
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly timeSeriesAIService: TimeSeriesAIService,
+    private readonly aiPromptsService: AiPromptsService,
   ) {}
 
   async chat(request: AIChatRequest): Promise<string> {
     const { siteId, message, conversationHistory, isFirstMessage } = request;
 
     const siteContext = await buildSiteContext(siteId, this.dataSource);
+    const prompts = await this.getPromptMap();
 
     const toolExecutor: ToolExecutor = async (toolName, args) => {
       if (toolName === 'query_time_series') {
@@ -46,10 +50,20 @@ export class AIChatService {
     return callGrokAPI(
       message,
       siteContext,
+      prompts,
       conversationHistory,
       isFirstMessage,
       toolExecutor,
     );
+  }
+
+  private async getPromptMap(): Promise<PromptMap> {
+    const allPrompts = await this.aiPromptsService.getAllPrompts();
+    const promptMap = allPrompts.reduce(
+      (acc, p) => ({ ...acc, [p.promptKey]: p.content }),
+      {} as Record<string, string>,
+    );
+    return promptMap as unknown as PromptMap;
   }
 
   private async executeQueryTimeSeries(
