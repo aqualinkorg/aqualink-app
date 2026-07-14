@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { buildPromptWithContext } from './prompts';
+import { buildPromptWithContext, PromptMap } from './prompts';
 
 const GROK_API_URL = 'https://api.x.ai/v1/chat/completions';
 const GROK_MODEL = 'grok-4-fast-reasoning'; // Fast and cost-effective
@@ -166,25 +166,25 @@ export type ToolExecutor = (
 
 // 1. Tag-based extraction (Primary Strategy)
 // Matches content between <greeting> and </greeting>, handling newlines/formatting
-function extractFinalResponse(rawMessage: string): string {
+function extractFinalResponse(
+  rawMessage: string,
+  isFirstMessage?: boolean,
+): string {
   const tagMatch = rawMessage.match(/<greeting>([\s\S]*?)<\/greeting>/i);
-
-  if (tagMatch && tagMatch[1]) {
+  if (tagMatch?.[1]) {
     return tagMatch[1].trim();
   }
 
-  // 2. Fallback extraction (Secondary Strategy)
-  // If the model forgot tags but included the standard start phrase
-  const greetingStartPhrase = 'Here is the current reef status';
-  const startIndex = rawMessage.indexOf(greetingStartPhrase);
+  if (isFirstMessage) {
+    // If the model forgot tags but included the standard start phrase
+    const greetingStartPhrase = 'Here is the current reef status';
+    const startIndex = rawMessage.indexOf(greetingStartPhrase);
 
-  if (startIndex !== -1) {
-    return rawMessage.substring(startIndex).trim();
+    if (startIndex !== -1) {
+      return rawMessage.substring(startIndex).trim();
+    }
   }
 
-  // 3. Last Resort
-  // If we can't find tags or the start phrase, return raw message
-  // but clean obvious reasoning markers if they exist at the very start.
   return rawMessage
     .replace(/^[\s\S]*?internal_processing[\s\S]*?(\n|$)/, '')
     .trim();
@@ -291,11 +291,12 @@ const runToolLoop = async (
   messages: GrokMessage[],
   toolExecutor: ToolExecutor | undefined,
   iterationsLeft: number,
+  isFirstMessage?: boolean,
 ): Promise<string> => {
   if (iterationsLeft === 0) {
     const lastContent = messages[messages.length - 1].content;
     return typeof lastContent === 'string'
-      ? extractFinalResponse(lastContent)
+      ? extractFinalResponse(lastContent, isFirstMessage)
       : 'Unable to generate a response. Please try again.';
   }
 
@@ -325,10 +326,11 @@ const runToolLoop = async (
       [...messages, assistantMessage, ...toolResultMessages],
       toolExecutor,
       iterationsLeft - 1,
+      isFirstMessage,
     );
   }
 
-  return extractFinalResponse(choice.message.content ?? '');
+  return extractFinalResponse(choice.message.content ?? '', isFirstMessage);
 };
 
 /**
@@ -341,6 +343,7 @@ const runToolLoop = async (
 export async function callGrokAPI(
   userMessage: string,
   siteContext: string,
+  prompts: PromptMap,
   conversationHistory?: Array<{ sender: string; text: string }>,
   isFirstMessage?: boolean,
   toolExecutor?: ToolExecutor,
@@ -352,9 +355,10 @@ export async function callGrokAPI(
   }
 
   // Build the complete prompt with context
-  const systemPrompt = await buildPromptWithContext(
+  const systemPrompt = buildPromptWithContext(
     userMessage,
     siteContext,
+    prompts,
     conversationHistory,
     isFirstMessage,
   );
@@ -373,7 +377,13 @@ export async function callGrokAPI(
     ...(userMessageObj ? [userMessageObj] : []),
   ];
 
-  return runToolLoop(apiKey, messages, toolExecutor, MAX_TOOL_ITERATIONS);
+  return runToolLoop(
+    apiKey,
+    messages,
+    toolExecutor,
+    MAX_TOOL_ITERATIONS,
+    isFirstMessage,
+  );
 }
 
 /**

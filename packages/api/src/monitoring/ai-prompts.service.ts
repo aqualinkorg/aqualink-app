@@ -32,7 +32,6 @@ export interface AIPromptHistoryResponse {
 @Injectable()
 export class AiPromptsService {
   private logger = new Logger(AiPromptsService.name);
-  private cache: AIPromptResponse[] | null = null;
 
   constructor(
     @InjectRepository(AIPrompt)
@@ -72,26 +71,13 @@ export class AiPromptsService {
   }
 
   async getAllPrompts(): Promise<AIPromptResponse[]> {
-    // If we have cached data, return it (no expiry)
-    if (this.cache) {
-      this.logger.debug('Returning cached prompts');
-      return this.cache;
-    }
-
-    // Fetch fresh data
     const prompts = await this.aiPromptRepository.find({
       where: { isActive: true },
       relations: ['updatedByUser'],
       order: { promptKey: 'ASC' },
     });
 
-    const response = prompts.map((prompt) => this.toPromptResponse(prompt));
-
-    // Cache prompts (persists until manually cleared)
-    this.cache = response;
-    this.logger.debug(`Loaded and cached ${response.length} prompts`);
-
-    return response;
+    return prompts.map((prompt) => this.toPromptResponse(prompt));
   }
 
   async getPromptByKey(promptKey: string): Promise<AIPromptResponse> {
@@ -141,8 +127,7 @@ export class AiPromptsService {
       relations: ['updatedByUser'],
     });
 
-    // Invalidate cache - next request will reload
-    this.cache = null;
+    // No caching in use; changes are visible immediately
     this.logger.log(
       `Updated prompt '${promptKey}' to version ${updated.version}`,
     );
@@ -195,8 +180,7 @@ export class AiPromptsService {
       relations: ['updatedByUser'],
     });
 
-    // Invalidate cache - next request will reload
-    this.cache = null;
+    // No caching in use; changes are visible immediately
     this.logger.log(
       `Rolled back prompt '${promptKey}' to version ${version} (now version ${updated.version})`,
     );
@@ -205,7 +189,8 @@ export class AiPromptsService {
   }
 
   refreshCache(): void {
-    this.cache = null;
-    this.logger.log('Cache manually cleared - will reload on next request');
+    this.logger.log(
+      'Cache refresh requested - no caching in use, data is always fresh',
+    );
   }
 }
