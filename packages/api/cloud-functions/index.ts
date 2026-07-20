@@ -168,18 +168,23 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
 
 exports.scheduledWindWaveTimeSeriesUpdate = functions
   .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // Run spotter data update every hour
-  .pubsub.schedule('30 * * * *')
+  // Wave data now sourced from Open-Meteo, which only updates every
+  // 6 hours (00/06/12/18 UTC). Hourly fetching was wasteful and also
+  // exceeded the Open-Meteo free tier rate limit. Schedule shifted to
+  // ~4x/day, timed after each model cycle typically finishes publishing.
+  // Wind (still Sofar/GFS) is unaffected by this schedule change.
+  .pubsub.schedule('20 4,10,16,22 * * *')
   .timeZone('America/Los_Angeles')
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+    process.env.OPEN_METEO_API_KEY = functions.config().open_meteo?.api_key;
 
     await runWithDataSource(
       'scheduledWindWaveTimeSeriesUpdate',
       async (conn: DataSource) => {
         await runWindWaveTimeSeriesUpdate(conn);
-        console.log(`Wind and Wave data hourly update on ${new Date()}`);
+        console.log(`Wind and Wave data update on ${new Date()}`);
       },
     );
   });
