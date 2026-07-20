@@ -19,17 +19,18 @@ import requests from 'helpers/requests';
 import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { DateTime } from 'luxon-extensions';
-import { hwoLevelConfig, hwoLevels } from './utils';
-import { styles as incomingStyles } from '../styles';
-import UpdateInfo from '../../UpdateInfo';
 import {
   alertColor,
   getCardData,
   getMeanCalculationFunction,
+  hwoLevelConfig,
+  hwoLevels,
   metricFields,
   warningColor,
   watchColor,
 } from './utils';
+import { styles as incomingStyles } from '../styles';
+import UpdateInfo from '../../UpdateInfo';
 
 const useStyles = makeStyles(() => ({
   ...incomingStyles,
