@@ -1,6 +1,6 @@
 try {
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  require('dotenv').config();
+  require('dotenv').config({ quiet: true });
 } catch {
   // Pass
 }
