@@ -32,15 +32,17 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <mock-cardcontent
-      classname="makeStyles-content-9"
+      classname="makeStyles-content-10"
     >
       <mock-box
         display="flex"
         flexgrow="1"
-        p="1rem"
+        pb="1rem"
+        pt="1rem"
+        px="1rem"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-xgasok-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
@@ -245,10 +247,10 @@ exports[`renders as expected 1`] = `
         </div>
       </mock-box>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-12 false css-1urtxze-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-15 false css-1urtxze-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-16 makeStyles-dateInfoWrapper-18 css-x7bhrq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-19 makeStyles-dateInfoWrapper-21 css-x7bhrq-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
@@ -258,7 +260,7 @@ exports[`renders as expected 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall makeStyles-updateIcon-14 css-120dh41-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall makeStyles-updateIcon-17 css-120dh41-MuiSvgIcon-root"
                 data-testid="UpdateIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -269,7 +271,7 @@ exports[`renders as expected 1`] = `
               </svg>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-17 css-x7bhrq-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item makeStyles-dateInfo-20 css-x7bhrq-MuiGrid-root"
             >
               <mock-box
                 display="flex"
@@ -277,13 +279,13 @@ exports[`renders as expected 1`] = `
                 width="100%"
               >
                 <mock-typography
-                  classname="makeStyles-updateInfoText-15"
+                  classname="makeStyles-updateInfoText-18"
                   variant="caption"
                 >
                   No data available
                 </mock-typography>
                 <mock-typography
-                  classname="makeStyles-updateInfoText-15"
+                  classname="makeStyles-updateInfoText-18"
                   variant="caption"
                 />
               </mock-box>
@@ -295,25 +297,25 @@ exports[`renders as expected 1`] = `
           style="display: flex; justify-content: flex-end;"
         >
           <div
-            class="MuiGrid-root MuiGrid-item makeStyles-chip-19 makeStyles-chip-25 css-x7bhrq-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item makeStyles-chip-22 makeStyles-chip-28 css-x7bhrq-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-24 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary makeStyles-button-27 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >
                 <a
-                  class="makeStyles-link-22"
+                  class="makeStyles-link-25"
                   data-discover="true"
                   href="/sites/1"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
                   <mock-typography
-                    classname="makeStyles-chipText-20"
+                    classname="makeStyles-chipText-23"
                   >
                     VIEW UPLOAD
                   </mock-typography>
