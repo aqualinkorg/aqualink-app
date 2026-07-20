@@ -19,14 +19,13 @@ import requests from 'helpers/requests';
 import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { DateTime } from 'luxon-extensions';
+import { hwoLevelConfig, hwoLevels } from './utils';
 import { styles as incomingStyles } from '../styles';
 import UpdateInfo from '../../UpdateInfo';
 import {
   alertColor,
   getCardData,
   getMeanCalculationFunction,
-  hwoLevelConfig,
-  hwoLevels,
   metricFields,
   warningColor,
   watchColor,
@@ -56,14 +55,12 @@ const useStyles = makeStyles(() => ({
     padding: 0,
   },
   hwoCardTitle: {
-    fontSize: 22,
-    fontWeight: 700,
     color: colors.black,
   },
   metricTile: {
     backgroundColor: 'white',
     borderRadius: 8,
-    padding: '0.75rem',
+    padding: '0.4rem 0.5rem 0.25rem 0.5rem',
     height: '100%',
   },
   labelWrapper: {
@@ -146,6 +143,9 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     <Card className={showHwoCard ? classes.hwoRoot : classes.root}>
       <CardHeader
         className={classes.header}
+        style={
+          showHwoCard ? { padding: '0.5rem 0.5rem 0.15rem 0.5rem' } : undefined
+        }
         title={
           <Grid container>
             <Grid item>
@@ -153,7 +153,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                 className={
                   showHwoCard ? classes.hwoCardTitle : classes.cardTitle
                 }
-                variant={showHwoCard ? 'h4' : 'h6'}
+                variant="h6"
               >
                 {showHwoCard ? 'WATER HEALTH/CONDITION' : 'WATER SAMPLING'}
               </Typography>
@@ -162,8 +162,14 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
         }
       />
       <CardContent className={classes.content}>
-        <Box p="1rem" display="flex" flexGrow={1}>
-          <Grid container spacing={1}>
+        <Box
+          px={showHwoCard ? '0.5rem' : '1rem'}
+          pt={showHwoCard ? '0.15rem' : '1rem'}
+          pb={showHwoCard ? 0 : '1rem'}
+          display="flex"
+          flexGrow={showHwoCard ? 0 : 1}
+        >
+          <Grid container spacing={1} alignContent="flex-start">
             {metricFields(source, meanValues, parseInt(siteId, 10)).map(
               ({ label, value, color, unit, xs, iconType, iconColor }) => (
                 <Grid key={label} item xs={xs}>
@@ -171,88 +177,127 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                     container
                     className={showHwoCard ? classes.metricTile : undefined}
                   >
-                    <Grid item xs={12}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          flexWrap: 'nowrap',
-                          minHeight: '2em',
-                        }}
-                      >
-                        <Typography
-                          className={classes.contentTextTitles}
-                          variant="subtitle2"
-                        >
-                          {label}
-                        </Typography>
-                        {color && showAlertColors && (
-                          <WarningIcon
+                    {showHwoCard ? (
+                      <>
+                        <Grid item xs={12}>
+                          <Typography
                             className={classes.contentTextTitles}
+                            color="textSecondary"
+                            variant="subtitle2"
                             style={{
-                              fontSize: '1.1em',
-                              marginRight: '1em',
-                              marginLeft: 'auto',
-                              color,
+                              display: 'block',
+                              minHeight: xs === 6 ? '2em' : undefined,
                             }}
-                          />
-                        )}
-                      </div>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        color: showHwoCard ? undefined : color,
-                      }}
-                    >
-                      {showHwoCard && iconType === 'check' && (
-                        <CheckCircleOutlineIcon
+                          >
+                            {label}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Grid container alignItems="center">
+                            {iconType === 'check' && (
+                              <CheckCircleOutlineIcon
+                                style={{
+                                  fontSize: '1.5em',
+                                  marginRight: '0.2em',
+                                  color: iconColor,
+                                  flexShrink: 0,
+                                }}
+                              />
+                            )}
+                            {iconType === 'warning' && (
+                              <WarningIcon
+                                style={{
+                                  fontSize: '1.5em',
+                                  marginRight: '0.2em',
+                                  color: iconColor,
+                                  flexShrink: 0,
+                                }}
+                              />
+                            )}
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                              }}
+                            >
+                              <Typography
+                                className={classes.contentTextValues}
+                                color="textSecondary"
+                                variant="h3"
+                                style={{ whiteSpace: 'nowrap' }}
+                              >
+                                {value}
+                              </Typography>
+                              {unit && (
+                                <Typography
+                                  className={classes.contentUnits}
+                                  color="textSecondary"
+                                  variant="h6"
+                                >
+                                  {unit}
+                                </Typography>
+                              )}
+                            </div>
+                          </Grid>
+                        </Grid>
+                      </>
+                    ) : (
+                      <>
+                        <Grid item xs={12}>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              flexWrap: 'nowrap',
+                              minHeight: '2em',
+                            }}
+                          >
+                            <Typography
+                              className={classes.contentTextTitles}
+                              variant="subtitle2"
+                            >
+                              {label}
+                            </Typography>
+                            {color && showAlertColors && (
+                              <WarningIcon
+                                className={classes.contentTextTitles}
+                                style={{
+                                  fontSize: '1.1em',
+                                  marginRight: '1em',
+                                  marginLeft: 'auto',
+                                  color,
+                                }}
+                              />
+                            )}
+                          </div>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
                           style={{
-                            fontSize: '1.5em',
-                            marginRight: '0.25em',
-                            color: iconColor,
-                            flexShrink: 0,
+                            display: 'flex',
+                            alignItems: 'baseline',
+                            color,
                           }}
-                        />
-                      )}
-                      {showHwoCard && iconType === 'warning' && (
-                        <WarningIcon
-                          style={{
-                            fontSize: '1.5em',
-                            marginRight: '0.25em',
-                            color: iconColor,
-                            flexShrink: 0,
-                          }}
-                        />
-                      )}
-                      <Typography
-                        className={classes.contentTextValues}
-                        variant="h3"
-                        style={{ whiteSpace: 'nowrap' }}
-                      >
-                        {value}
-                      </Typography>
-                      {!showHwoCard && unit && (
-                        <Typography
-                          className={classes.contentUnits}
-                          variant="h6"
                         >
-                          {unit}
-                        </Typography>
-                      )}
-                    </Grid>
-                    {showHwoCard && unit && (
-                      <Grid item xs={12}>
-                        <Typography
-                          className={classes.contentUnits}
-                          variant="h6"
-                        >
-                          {unit}
-                        </Typography>
-                      </Grid>
+                          <Typography
+                            className={classes.contentTextValues}
+                            variant="h3"
+                            style={{ whiteSpace: 'nowrap' }}
+                          >
+                            {value}
+                          </Typography>
+                          {unit && (
+                            <Typography
+                              className={classes.contentUnits}
+                              variant="h6"
+                            >
+                              {unit}
+                            </Typography>
+                          )}
+                        </Grid>
+                      </>
                     )}
                   </Grid>
                 </Grid>
@@ -261,7 +306,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
           </Grid>
         </Box>
         {showHwoCard && (
-          <Box px="1rem" pb="0.5rem">
+          <Box px="0.75rem" pb="0.25rem">
             <Typography variant="caption" style={{ color: colors.black }}>
               * Total dissolved
             </Typography>
@@ -291,24 +336,36 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
         )}
         {showHwoCard && (
           <Box
-            mx="1rem"
-            mb="0.75rem"
+            mx="0.5rem"
+            mb="0.5rem"
             style={{ borderRadius: 6, overflow: 'hidden', display: 'flex' }}
           >
             {hwoLevels.map((level) => (
               <Box
                 key={level}
                 style={{
-                  flex: 1,
+                  flex: '1 1 0',
+                  minWidth: 0,
                   backgroundColor: hwoLevelConfig[level].color,
-                  padding: '0.35rem 0.2rem',
-                  textAlign: 'center',
+                  padding: '0.15rem 0.05rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
                 }}
               >
                 <Typography
                   variant="caption"
                   align="center"
-                  style={{ display: 'block', lineHeight: 1.2 }}
+                  style={{
+                    lineHeight: 1.2,
+                    fontSize: 8,
+                    letterSpacing: '-0.2px',
+                    color:
+                      level === 'acceptable' || level === 'impaired'
+                        ? 'white'
+                        : 'black',
+                  }}
                 >
                   {hwoLevelConfig[level].label}
                 </Typography>
@@ -316,6 +373,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
             ))}
           </Box>
         )}
+        {showHwoCard && <Box flexGrow={1} />}
         <UpdateInfo
           relativeTime={lastUpload}
           chipWidth={64}

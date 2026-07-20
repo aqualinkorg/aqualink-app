@@ -96,8 +96,8 @@ export const metricsKeysList = [
   'surface_temperature',
   'dissolved_oxygen',
   'enterococcus',
-  'total_n',
-  'total_p',
+  'nitrogen_total',
+  'phosphorus_total',
 ] as const;
 
 export type MetricsKeys = (typeof metricsKeysList)[number];

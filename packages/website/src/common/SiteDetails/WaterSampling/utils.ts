@@ -7,7 +7,11 @@ import { getSondeConfig } from 'constants/chartConfigs/sondeConfig';
 
 type HwoMetricsKeys = Extract<
   MetricsKeys,
-  'enterococcus' | 'total_n' | 'turbidity' | 'salinity' | 'total_p'
+  | 'enterococcus'
+  | 'nitrogen_total'
+  | 'turbidity'
+  | 'salinity'
+  | 'phosphorus_total'
 >;
 
 type HUICardMetrics = Extract<
@@ -89,93 +93,165 @@ export const hwoLevelConfig: Record<
   }
 > = {
   acceptable: {
-    color: '#4caf50',
+    color: '#00C359',
     label: 'Acceptable',
     iconType: 'check',
-    iconColor: '#4caf50',
+    iconColor: '#00C359',
   },
   moderatelyAcceptable: {
-    color: '#8bc34a',
+    color: '#71EF56',
     label: 'Moderately acceptable',
     iconType: 'check',
-    iconColor: '#8bc34a',
+    iconColor: '#71EF56',
   },
   fair: {
-    color: '#ffca28',
+    color: '#FFDC35',
     label: 'Fair',
     iconType: 'warning',
-    iconColor: '#f9a825',
+    iconColor: '#FFDC35',
   },
   moderatelyImpaired: {
-    color: '#ff9800',
+    color: '#FFA800',
     label: 'Moderately impaired',
     iconType: 'warning',
-    iconColor: '#ff9800',
+    iconColor: '#FFA800',
   },
   impaired: {
-    color: '#f44336',
+    color: '#FF001E',
     label: 'Impaired',
     iconType: 'warning',
-    iconColor: '#f44336',
+    iconColor: '#FF001E',
   },
 };
 
-// TODO: Confirm site IDs and replace placeholder thresholds for all 16 HWO sites
-const PLACEHOLDER_THRESHOLDS: HwoThresholds = {
-  enterococcus: {
-    acceptable: [0, 35],
-    moderatelyAcceptable: [35, 104],
-    fair: [104, 276],
-    moderatelyImpaired: [276, 500],
-    impaired: [500, Infinity],
+// Thresholds shared across all HWO sites
+const ENTEROCOCCUS_THRESHOLDS: HwoThresholdRange = {
+  acceptable: [0, 78],
+  moderatelyAcceptable: [78, 104],
+  fair: [104, 130],
+  moderatelyImpaired: [130, 156],
+  impaired: [156, Infinity],
+};
+
+const TURBIDITY_THRESHOLDS: HwoThresholdRange = {
+  acceptable: [0, 0.5],
+  moderatelyAcceptable: [0.5, 5],
+  fair: [5, 10],
+  moderatelyImpaired: [10, 15],
+  impaired: [15, Infinity],
+};
+
+// Salinity: no thresholds provided by HWO — placeholder
+const SALINITY_THRESHOLDS: HwoThresholdRange = {
+  acceptable: [0, 25],
+  moderatelyAcceptable: [25, 28],
+  fair: [28, 30],
+  moderatelyImpaired: [30, 35],
+  impaired: [35, Infinity],
+};
+
+// Group 1: Richardson Beach Park (9095), Carlsmith Beach Park (9084), Puhi Bay Beach (9093)
+// HAR 11-54 threshold: Nitrogen 150 µg/L, Phosphorus 20 µg/L
+const GROUP_1_THRESHOLDS: HwoThresholds = {
+  enterococcus: ENTEROCOCCUS_THRESHOLDS,
+  nitrogen_total: {
+    acceptable: [0, 90],
+    moderatelyAcceptable: [90, 120],
+    fair: [120, 150],
+    moderatelyImpaired: [150, 180],
+    impaired: [180, Infinity],
   },
-  total_n: {
-    acceptable: [0, 200],
-    moderatelyAcceptable: [200, 400],
-    fair: [400, 600],
-    moderatelyImpaired: [600, 800],
-    impaired: [800, Infinity],
+  turbidity: TURBIDITY_THRESHOLDS,
+  salinity: SALINITY_THRESHOLDS,
+  phosphorus_total: {
+    acceptable: [0, 12],
+    moderatelyAcceptable: [12, 16],
+    fair: [16, 20],
+    moderatelyImpaired: [20, 24],
+    impaired: [24, Infinity],
   },
-  turbidity: {
-    acceptable: [0, 1],
-    moderatelyAcceptable: [1, 3],
-    fair: [3, 5],
-    moderatelyImpaired: [5, 10],
-    impaired: [10, Infinity],
+};
+
+// Group 2: Moku Ola Beach (9083), Reeds Bay Beach (9094)
+// HAR 11-54 threshold: Nitrogen 200 µg/L, Phosphorus 25 µg/L
+const GROUP_2_THRESHOLDS: HwoThresholds = {
+  enterococcus: ENTEROCOCCUS_THRESHOLDS,
+  nitrogen_total: {
+    acceptable: [0, 120],
+    moderatelyAcceptable: [120, 160],
+    fair: [160, 200],
+    moderatelyImpaired: [200, 240],
+    impaired: [240, Infinity],
   },
-  salinity: {
-    acceptable: [0, 25],
-    moderatelyAcceptable: [25, 28],
-    fair: [28, 30],
-    moderatelyImpaired: [30, 35],
-    impaired: [35, Infinity],
+  turbidity: TURBIDITY_THRESHOLDS,
+  salinity: SALINITY_THRESHOLDS,
+  phosphorus_total: {
+    acceptable: [0, 15],
+    moderatelyAcceptable: [15, 20],
+    fair: [20, 25],
+    moderatelyImpaired: [25, 30],
+    impaired: [30, Infinity],
   },
-  total_p: {
-    acceptable: [0, 25],
-    moderatelyAcceptable: [25, 50],
-    fair: [50, 75],
-    moderatelyImpaired: [75, 100],
-    impaired: [100, Infinity],
+};
+
+// Group 3: Hapuna N/S (9085, 9086), Waialea N/S (9097, 9098), Secrets (9100),
+//          Paniau (9092), Kahaluu Bay A-E (9088, 9089, 9090, 9091, 9099)
+// HAR 11-54 threshold: Nitrogen 100 µg/L, Phosphorus 12.5 µg/L
+const GROUP_3_THRESHOLDS: HwoThresholds = {
+  enterococcus: ENTEROCOCCUS_THRESHOLDS,
+  nitrogen_total: {
+    acceptable: [0, 60],
+    moderatelyAcceptable: [60, 80],
+    fair: [80, 100],
+    moderatelyImpaired: [100, 120],
+    impaired: [120, Infinity],
+  },
+  turbidity: TURBIDITY_THRESHOLDS,
+  salinity: SALINITY_THRESHOLDS,
+  phosphorus_total: {
+    acceptable: [0, 7.5],
+    moderatelyAcceptable: [7.5, 10],
+    fair: [10, 12.5],
+    moderatelyImpaired: [12.5, 15],
+    impaired: [15, Infinity],
   },
 };
 
 export const hwoThresholds: Record<number, HwoThresholds> = {
-  9083: PLACEHOLDER_THRESHOLDS,
-  9084: PLACEHOLDER_THRESHOLDS,
-  9085: PLACEHOLDER_THRESHOLDS,
-  9086: PLACEHOLDER_THRESHOLDS,
-  9088: PLACEHOLDER_THRESHOLDS,
-  9089: PLACEHOLDER_THRESHOLDS,
-  9090: PLACEHOLDER_THRESHOLDS,
-  9091: PLACEHOLDER_THRESHOLDS,
-  9092: PLACEHOLDER_THRESHOLDS,
-  9093: PLACEHOLDER_THRESHOLDS,
-  9094: PLACEHOLDER_THRESHOLDS,
-  9095: PLACEHOLDER_THRESHOLDS,
-  9097: PLACEHOLDER_THRESHOLDS,
-  9098: PLACEHOLDER_THRESHOLDS,
-  9099: PLACEHOLDER_THRESHOLDS,
-  9100: PLACEHOLDER_THRESHOLDS,
+  // Production site IDs
+  9083: GROUP_2_THRESHOLDS,
+  9084: GROUP_1_THRESHOLDS,
+  9085: GROUP_3_THRESHOLDS,
+  9086: GROUP_3_THRESHOLDS,
+  9088: GROUP_3_THRESHOLDS,
+  9089: GROUP_3_THRESHOLDS,
+  9090: GROUP_3_THRESHOLDS,
+  9091: GROUP_3_THRESHOLDS,
+  9092: GROUP_3_THRESHOLDS,
+  9093: GROUP_1_THRESHOLDS,
+  9094: GROUP_2_THRESHOLDS,
+  9095: GROUP_1_THRESHOLDS,
+  9097: GROUP_3_THRESHOLDS,
+  9098: GROUP_3_THRESHOLDS,
+  9099: GROUP_3_THRESHOLDS,
+  9100: GROUP_3_THRESHOLDS,
+  // Staging site IDs
+  7556: GROUP_2_THRESHOLDS,
+  7557: GROUP_1_THRESHOLDS,
+  7558: GROUP_3_THRESHOLDS,
+  7559: GROUP_3_THRESHOLDS,
+  7560: GROUP_3_THRESHOLDS,
+  7561: GROUP_3_THRESHOLDS,
+  7562: GROUP_3_THRESHOLDS,
+  7563: GROUP_3_THRESHOLDS,
+  7564: GROUP_3_THRESHOLDS,
+  7565: GROUP_1_THRESHOLDS,
+  7566: GROUP_2_THRESHOLDS,
+  7567: GROUP_1_THRESHOLDS,
+  7568: GROUP_3_THRESHOLDS,
+  7569: GROUP_3_THRESHOLDS,
+  7570: GROUP_3_THRESHOLDS,
+  7571: GROUP_3_THRESHOLDS,
 };
 
 function getHwoLevel(
@@ -240,7 +316,13 @@ const metricsForSource: Pick<
     'salinity',
     'turbidity',
   ],
-  hwo: ['enterococcus', 'total_n', 'turbidity', 'salinity', 'total_p'],
+  hwo: [
+    'enterococcus',
+    'nitrogen_total',
+    'turbidity',
+    'salinity',
+    'phosphorus_total',
+  ],
 };
 
 interface MetricField {
@@ -329,38 +411,38 @@ export function metricFields(
           : {};
       return [
         {
-          label: 'Bacteria (Enterococcus)',
+          label: 'BACTERIA (ENTEROCOCCUS)',
           value: `${formatNumber(data?.enterococcus, 1)}`,
-          unit: 'µg/L',
+          unit: 'CFU/100 mL',
           ...iconFor('enterococcus', data?.enterococcus),
           xs: 6,
         },
         {
-          label: 'Nitrogen*',
-          value: `${formatNumber(data?.totalN, 1)}`,
+          label: 'PHOSPHORUS*',
+          value: `${formatNumber(data?.phosphorusTotal, 1)}`,
           unit: 'µg/L',
-          ...iconFor('total_n', data?.totalN),
+          ...iconFor('phosphorus_total', data?.phosphorusTotal),
           xs: 6,
         },
         {
-          label: 'Turbidity',
+          label: 'TURBIDITY',
           value: `${formatNumber(data?.turbidity, 1)}`,
           unit: 'NTU',
           ...iconFor('turbidity', data?.turbidity),
           xs: 4,
         },
         {
-          label: 'Salinity',
+          label: 'SALINITY',
           value: `${formatNumber(data?.salinity, 1)}`,
           unit: 'PPT',
           ...iconFor('salinity', data?.salinity),
           xs: 4,
         },
         {
-          label: 'Phosphorus*',
-          value: `${formatNumber(data?.totalP, 1)}`,
-          unit: 'MTN',
-          ...iconFor('total_p', data?.totalP),
+          label: 'NITROGEN*',
+          value: `${formatNumber(data?.nitrogenTotal, 1)}`,
+          unit: 'µg/L',
+          ...iconFor('nitrogen_total', data?.nitrogenTotal),
           xs: 4,
         },
       ];
