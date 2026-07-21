@@ -194,53 +194,77 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                           </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                          <Grid container alignItems="center">
-                            {iconType === 'check' && (
-                              <CheckCircleOutlineIcon
-                                style={{
-                                  fontSize: '1.5em',
-                                  marginRight: '0.2em',
-                                  color: iconColor,
-                                  flexShrink: 0,
-                                }}
-                              />
-                            )}
-                            {iconType === 'warning' && (
-                              <WarningIcon
-                                style={{
-                                  fontSize: '1.5em',
-                                  marginRight: '0.2em',
-                                  color: iconColor,
-                                  flexShrink: 0,
-                                }}
-                              />
-                            )}
+                          <div
+                            style={{
+                              display: 'flex',
+                              paddingLeft: xs === 6 ? '0.4rem' : '0.15rem',
+                            }}
+                          >
                             <div
                               style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
+                                display: 'grid',
+                                gridTemplateColumns: 'auto auto',
+                                gridTemplateRows: 'auto auto',
+                                columnGap: '0.2em',
                               }}
                             >
+                              <div
+                                style={{
+                                  gridColumn: 1,
+                                  gridRow: 1,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                {iconType === 'check' && (
+                                  <CheckCircleOutlineIcon
+                                    style={{
+                                      fontSize: xs === 6 ? '1.4em' : '1.1em',
+                                      color: iconColor,
+                                    }}
+                                  />
+                                )}
+                                {iconType === 'warning' && (
+                                  <WarningIcon
+                                    style={{
+                                      fontSize: xs === 6 ? '1.4em' : '1.1em',
+                                      color: iconColor,
+                                    }}
+                                  />
+                                )}
+                              </div>
                               <Typography
                                 className={classes.contentTextValues}
                                 color="textSecondary"
-                                variant="h3"
-                                style={{ whiteSpace: 'nowrap' }}
+                                variant={xs === 6 ? 'h3' : 'h4'}
+                                style={{
+                                  gridColumn: 2,
+                                  gridRow: 1,
+                                  whiteSpace: 'nowrap',
+                                  fontSize: xs === 4 ? '21px' : undefined,
+                                  alignSelf: 'center',
+                                }}
                               >
                                 {value}
                               </Typography>
+                              <div style={{ gridColumn: 1, gridRow: 2 }} />
                               {unit && (
                                 <Typography
                                   className={classes.contentUnits}
                                   color="textSecondary"
-                                  variant="h6"
+                                  variant="subtitle2"
+                                  style={{
+                                    gridColumn: 2,
+                                    gridRow: 2,
+                                    textAlign: 'center',
+                                    marginTop: '-4px',
+                                  }}
                                 >
                                   {unit}
                                 </Typography>
                               )}
                             </div>
-                          </Grid>
+                          </div>
                         </Grid>
                       </>
                     ) : (
@@ -348,7 +372,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                   flex: '1 1 0',
                   minWidth: 0,
                   backgroundColor: hwoLevelConfig[level].color,
-                  padding: '0.15rem 0.05rem',
+                  padding: '0.25rem 0.05rem',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -359,8 +383,8 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
                   variant="caption"
                   align="center"
                   style={{
-                    lineHeight: 1.2,
-                    fontSize: 8,
+                    lineHeight: 1,
+                    fontSize: 8.5,
                     letterSpacing: '-0.2px',
                     color:
                       level === 'acceptable' || level === 'impaired'
