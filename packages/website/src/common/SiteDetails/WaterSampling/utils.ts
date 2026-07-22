@@ -141,14 +141,7 @@ const TURBIDITY_THRESHOLDS: HwoThresholdRange = {
   impaired: [15, Infinity],
 };
 
-// Salinity: no thresholds provided by HWO — placeholder
-const SALINITY_THRESHOLDS: HwoThresholdRange = {
-  acceptable: [0, 25],
-  moderatelyAcceptable: [25, 28],
-  fair: [28, 30],
-  moderatelyImpaired: [30, 35],
-  impaired: [35, Infinity],
-};
+// Salinity: no thresholds provided by HWO
 
 // Group 1: Richardson Beach Park (9095), Carlsmith Beach Park (9084), Puhi Bay Beach (9093)
 // HAR 11-54 threshold: Nitrogen 150 µg/L, Phosphorus 20 µg/L
@@ -162,7 +155,6 @@ const GROUP_1_THRESHOLDS: HwoThresholds = {
     impaired: [180, Infinity],
   },
   turbidity: TURBIDITY_THRESHOLDS,
-  salinity: SALINITY_THRESHOLDS,
   phosphorus_total: {
     acceptable: [0, 12],
     moderatelyAcceptable: [12, 16],
@@ -184,7 +176,6 @@ const GROUP_2_THRESHOLDS: HwoThresholds = {
     impaired: [240, Infinity],
   },
   turbidity: TURBIDITY_THRESHOLDS,
-  salinity: SALINITY_THRESHOLDS,
   phosphorus_total: {
     acceptable: [0, 15],
     moderatelyAcceptable: [15, 20],
@@ -207,7 +198,6 @@ const GROUP_3_THRESHOLDS: HwoThresholds = {
     impaired: [120, Infinity],
   },
   turbidity: TURBIDITY_THRESHOLDS,
-  salinity: SALINITY_THRESHOLDS,
   phosphorus_total: {
     acceptable: [0, 7.5],
     moderatelyAcceptable: [7.5, 10],
