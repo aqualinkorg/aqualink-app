@@ -1,24 +1,9 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`SiteRoutes Surveys > should render with given state from Redux store 1`] = `
 <div>
   <div
     class="SurveyTimeline-root-1"
-  >
-    <mock-hidden
-      lgdown="true"
-    >
-      <ul
-        class="MuiTimeline-root MuiTimeline-positionRight css-i6popu-MuiTimeline-root"
-      />
-    </mock-hidden>
-    <mock-hidden
-      lgup="true"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-      />
-    </mock-hidden>
-  </div>
+  />
 </div>
 `;

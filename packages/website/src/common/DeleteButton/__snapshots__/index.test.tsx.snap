@@ -1,9 +1,11 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Delete Button > should render with given state from Redux store 1`] = `
 <div>
-  <mock-iconbutton
-    size="large"
+  <button
+    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-nslaq6-MuiButtonBase-root-MuiIconButton-root"
+    tabindex="0"
+    type="button"
   >
     <svg
       aria-hidden="true"
@@ -16,97 +18,6 @@ exports[`Delete Button > should render with given state from Redux store 1`] = `
         d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM8 9h8v10H8zm7.5-5-1-1h-5l-1 1H5v2h14V4z"
       />
     </svg>
-  </mock-iconbutton>
-  <mock-dialog
-    fullwidth="true"
-    open="false"
-  >
-    <mock-dialogtitle
-      classname="Dialog-dialogTitle-2"
-    >
-      <mock-typography
-        variant="h4"
-      >
-        some text
-      </mock-typography>
-    </mock-dialogtitle>
-    <mock-dialogcontent
-      dividers="true"
-    >
-      <div
-        class="MuiCollapse-root MuiCollapse-vertical DeleteButton-alert-1 MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
-        style="min-height: 0px;"
-      >
-        <div
-          class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
-        >
-          <div
-            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
-          >
-            <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorError MuiAlert-standardError MuiAlert-standard css-95d7z1-MuiPaper-root-MuiAlert-root"
-              role="alert"
-              style="--Paper-shadow: none;"
-            >
-              <div
-                class="MuiAlert-icon css-vab54s-MuiAlert-icon"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
-                  data-testid="ErrorOutlineIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-                  />
-                </svg>
-              </div>
-              <div
-                class="MuiAlert-message css-zioonp-MuiAlert-message"
-              />
-              <div
-                class="MuiAlert-action css-rgppqo-MuiAlert-action"
-              >
-                <mock-iconbutton
-                  color="inherit"
-                  size="small"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
-                    data-testid="CloseIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </mock-iconbutton>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </mock-dialogcontent>
-    <mock-dialogactions>
-      <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorSecondary css-1ujppu2-MuiButtonBase-root-MuiButton-root"
-        tabindex="0"
-        type="button"
-      >
-        Cancel
-      </button>
-      <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
-        tabindex="0"
-        type="button"
-      >
-        Yes
-      </button>
-    </mock-dialogactions>
-  </mock-dialog>
+  </button>
 </div>
 `;

@@ -26,21 +26,21 @@ describe('TemperatureChange card', () => {
     }));
     const { container } = renderTemperatureChange(dailyData);
 
-    const temperatureChange = container.querySelector('[variant="h1"]');
+    const temperatureChange = container.querySelector('h1');
 
     expect(temperatureChange).toHaveTextContent('+1.1°C');
   });
 
   it('should render -- when there is no data', () => {
     const { container } = renderTemperatureChange([]);
-    const temperatureChange = container.querySelector('[variant="h1"]');
+    const temperatureChange = container.querySelector('h1');
 
     expect(temperatureChange).toHaveTextContent('--°C');
   });
 
   it('should render -- when there is no data for both weeks', () => {
     const { container } = renderTemperatureChange(mockDailyData.slice(0, 7));
-    const temperatureChange = container.querySelector('[variant="h1"]');
+    const temperatureChange = container.querySelector('h1');
 
     expect(temperatureChange).toHaveTextContent('--°C');
   });

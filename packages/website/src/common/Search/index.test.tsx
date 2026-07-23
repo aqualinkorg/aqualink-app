@@ -20,7 +20,7 @@ describe('Search', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = render(
       <Provider store={store}>

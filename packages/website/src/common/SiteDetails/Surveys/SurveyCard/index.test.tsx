@@ -16,7 +16,7 @@ describe('Survey Card', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(
       <SurveyCard

@@ -6,8 +6,8 @@ import Apply from '.';
 
 const mockStore = configureStore([]);
 
-vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
-vi.mock('./LocationMap', () => ({ default: 'Mock-LocationMap' }));
+rstest.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+rstest.mock('./LocationMap', () => ({ default: 'Mock-LocationMap' }));
 
 describe('Site registration page', () => {
   let element: HTMLElement;
@@ -18,7 +18,7 @@ describe('Site registration page', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(<Apply />, { store }).container;
   });

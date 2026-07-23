@@ -71,7 +71,8 @@ function TemperatureChangeComponent({
             />
             <Typography variant="h1" className={classes.temperatureChange}>
               {increased ? '+' : ''}
-              {temperatureChange?.toFixed(1) ?? '--'}°C
+              {temperatureChange?.toFixed(1) ?? '--'}
+              °C
             </Typography>
           </Box>
           <Box>
@@ -80,7 +81,8 @@ function TemperatureChangeComponent({
               color="textSecondary"
               variant="h4"
             >
-              {lastWeekAvgTemp?.toFixed(1) ?? '--'}°C
+              {lastWeekAvgTemp?.toFixed(1) ?? '--'}
+              °C
             </Typography>
             <Typography color="textSecondary" variant="h6">
               AVERAGE 7-DAYS TEMP

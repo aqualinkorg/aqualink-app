@@ -18,7 +18,7 @@ describe('Sites List', () => {
       },
     });
 
-    store.dispatch = vi.fn();
+    store.dispatch = rstest.fn();
 
     element = renderWithProviders(<SitesList />, { store }).container;
   });

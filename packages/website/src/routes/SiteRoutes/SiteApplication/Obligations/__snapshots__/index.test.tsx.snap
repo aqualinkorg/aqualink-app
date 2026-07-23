@@ -1,37 +1,48 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Obligations 1`] = `
 <div>
   <div
     class="Obligations-obligations-1"
   >
-    <mock-typography
-      classname="Obligations-obligationsTitle-2"
-      variant="h3"
+    <h3
+      class="MuiTypography-root MuiTypography-h3 Obligations-obligationsTitle-2 css-13msox4-MuiTypography-root"
     >
       Your Obligations
-    </mock-typography>
-    <mock-typography>
+    </h3>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+    >
       You will be given a free smart buoy but there are some things you will will be expected to do or provide:
-    </mock-typography>
+    </p>
     <div
       class="Obligations-obligationsList-3"
     >
-      <mock-typography>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+      >
         1. Pay for shipping and any applicable duties
-      </mock-typography>
-      <mock-typography>
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+      >
         2. Obtain any necessary permits (if applicable)
-      </mock-typography>
-      <mock-typography>
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+      >
         3. Deploy the buoy with an appropriate mooring or anchor weight
-      </mock-typography>
-      <mock-typography>
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+      >
         4. Maintain buoy (inspect and clean every 6 months)
-      </mock-typography>
-      <mock-typography>
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+      >
         5. Conduct initial and periodic photographic surveys and upload imagery to our website
-      </mock-typography>
+      </p>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`Faq > should render with given state from Redux store 1`] = `
 <div>
@@ -22,12 +22,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-title-1"
-                variant="h4"
+              <h4
+                class="MuiTypography-root MuiTypography-h4 Faq-title-1 css-f84ov1-MuiTypography-root"
               >
                 Frequently Asked Questions
-              </mock-typography>
+              </h4>
             </div>
           </div>
           <div
@@ -36,12 +35,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 What can you do with Aqualink?
-              </mock-typography>
+              </h5>
               <p>
                 We've put together a video to showcase the capabilities of the Aqualink platform. Designed to support your monitoring efforts, it provides an instant view of your reef with free, publicly available data. This opens up access to valuable information for everyone, from enthusiasts to scientists, anywhere in the world.
                 <br />
@@ -65,12 +63,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 Overview of the Aqualink system and Survey guide
-              </mock-typography>
+              </h5>
               <p>
                 We have created an animated field guide that will describe the best practices for conducting a survey and using the Aqualink system.
                 <br />
@@ -94,12 +91,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 How are you measuring temperature?
-              </mock-typography>
+              </h5>
               <p>
                 We collect temperature through satellite observations or spotter (a Smart Buoy). Satellite measurements collect temperature information from the very top layer of the surface (skin temperature) based on a 5km grid. NOAA publishes observed temperatures on a daily basis and makes that available in their "Daily Global 5km Satellite Coral Bleaching Heat Stress Monitoring". Sofar Ocean imports this data into their servers and Aqualink uses their API to render the data in our web application. When a Smart Buoy is deployed we collect temperature information every hour from a depth of 1 meter as well as the moored depth which is at the sea floor.
               </p>
@@ -111,12 +107,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 How do I connect my Sofar Spotter to Aqualink?
-              </mock-typography>
+              </h5>
               <p>
                 You can easily connect your buoy by going to EDIT SITE DETAILS on your Aqualink dashboard. Click on Add custom API token and add the Spotter ID and the API. Then Click on Status and select deployed. Then press save. You can visit your Sofar Ocean account at 
                 <a
@@ -143,12 +138,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 What is heat stress?
-              </mock-typography>
+              </h5>
               <p>
                 Heat stress is a measure of the amount of time above the 20 year historical maximum temperature. The unit of measure for heat stress is degree heating weeks. Many marine environments, like coral sites, degrade after prolonged heat exposure which is why this is an important metric.
               </p>
@@ -160,12 +154,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 How do I upload surveys?
-              </mock-typography>
+              </h5>
               <p>
                 Scroll to the bottom of your dashboard for your site and click on "ADD NEW SURVEY". Follow the steps and add comments and pictures to your survey session.
                 <br />
@@ -187,12 +180,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 What happens if I upload the same file?
-              </mock-typography>
+              </h5>
               <p>
                 The upload process will update any row that has changed and will also include any new rows inserted.
               </p>
@@ -204,12 +196,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 How can I best conduct surveys using Aqualink?
-              </mock-typography>
+              </h5>
               <p>
                 Aqualink allows you to conduct surveys in many different ways depending on what your goal is with your monitoring efforts. First, choose your survey site. Then select survey points, which are multiple points within your survey site. Depending on your methods, this can look different. Examples of survey methods that work well in Aqualink are photo quadrant in a transect, quadrant intercept in a transect, point intersect (with quadrant or transect), or simply using known locations within your survey site that you can continuously monitor. For transects, each quadrant or point will be a survey point. The entire transect will be the survey site.
                 <br />
@@ -234,12 +225,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 How are the surveys structured?
-              </mock-typography>
+              </h5>
               <p>
                 The surveys will be lined up at the bottom of your dashboard page in chronological order. Each survey includes all of the survey points that you have added. When clicking on a survey point, you'll see all the surveys conducted at that survey point chronologically. This enables you to monitor a single point in your reef over a longer period.
               </p>
@@ -251,12 +241,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 What water quality data can I upload?
-              </mock-typography>
+              </h5>
               <p>
                 We allow HOBO data (HOBO data loggers), meteorological data, and overall water quality data that can be gathered by any sonde or method. For the overall water quality data, we have two types of dashboard cards, and they are named Sonde data and HUI data on Aqualink. Sonde data includes dissolved oxygen concentration, chlorophyll concentration, acidity (pH), salinity, and turbidity. You can use all of these five parameters or just some of them when uploading data.
                 <br />
@@ -301,12 +290,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 Can I follow a template for uploading water-quality data?
-              </mock-typography>
+              </h5>
               <p>
                 Please follow the templates below depending on what data you want to upload.
                 <br />
@@ -351,12 +339,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 How can I upload temperature data to Aqualink?
-              </mock-typography>
+              </h5>
               <p>
                 When uploading temperature data to Aqualink, please use the "HOBO data" sensor type. If you are using a HOBO temperature logger, you can upload the raw data file. If you're using any other type of temperature logger, add a column for time and date and another column for temperature. Please use this 
                 <a
@@ -384,12 +371,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 How can I track a heatwave?
-              </mock-typography>
+              </h5>
               <ol>
                 <li>
                   <p>
@@ -426,12 +412,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 I'm collecting water quality data. How can I upload it to my dashboard?
-              </mock-typography>
+              </h5>
               <p>
                 Go to your dashboard and click on "UPLOAD DATA" in the top right corner. Select your survey point and sensor type. If you have a .xls, .csv, or .xlsx file with your data but aren't using any of the selected sensors, please select Sonde data and continue to upload files.
               </p>
@@ -443,12 +428,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 Where can a site be placed?
-              </mock-typography>
+              </h5>
               <p>
                 A site can be placed almost anywhere in the world as long as it is placed in the ocean or sea. This is a requirement for satellite data to work.
               </p>
@@ -460,12 +444,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 How many sites can I have?
-              </mock-typography>
+              </h5>
               <p>
                 You can have an unlimited amount of sites.
               </p>
@@ -477,12 +460,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-title-1"
-                variant="h4"
+              <h4
+                class="MuiTypography-root MuiTypography-h4 Faq-title-1 css-f84ov1-MuiTypography-root"
               >
                 Aqualink Smart Buoy FAQ
-              </mock-typography>
+              </h4>
             </div>
           </div>
           <div
@@ -491,12 +473,11 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-question-2"
-                variant="h5"
+              <h5
+                class="MuiTypography-root MuiTypography-h5 Faq-question-2 css-16xl4zq-MuiTypography-root"
               >
                 Does Aqualink still give away Smart Buoys?
-              </mock-typography>
+              </h5>
               <p>
                 Aqualink is no longer giving away Smart Mooring buoys worldwide. However, you can still create new Aqualink sites and get dashboards just like before. If you're interested in purchasing Smart Mooring Buoys, please visit 
                 <a
@@ -524,9 +505,8 @@ exports[`Faq > should render with given state from Redux store 1`] = `
             <div
               class="col"
             >
-              <mock-typography
-                classname="Faq-title-1"
-                variant="h4"
+              <h4
+                class="MuiTypography-root MuiTypography-h4 Faq-title-1 css-f84ov1-MuiTypography-root"
               >
                 If you have any questions or comments, feel free to contact 
                 <a
@@ -537,7 +517,7 @@ exports[`Faq > should render with given state from Redux store 1`] = `
                   admin@aqualink.org
                 </a>
                 .
-              </mock-typography>
+              </h4>
             </div>
           </div>
         </div>
