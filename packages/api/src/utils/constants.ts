@@ -32,13 +32,14 @@ export const OPEN_METEO_CUSTOMER_URL =
   'https://customer-marine-api.open-meteo.com/v1/marine';
 
 // Number of sites to bundle into a single multi-coordinate Marine API call.
-// 100 keeps URL length safely under typical proxy limits (~8KB).
-export const OPEN_METEO_BATCH_SIZE = 100;
+export const OPEN_METEO_BATCH_SIZE = 150;
 
-// Minimum pause between sequential Open-Meteo Marine API requests, to
-// stay under the free tier's per-minute rate limit when processing
-// the full site list across ~60 batches.
-export const OPEN_METEO_REQUEST_DELAY_MS = 1200;
+// Now on the paid Standard tier, which tolerates concurrent requests
+// without the free tier's rate limiting. This concurrency + batch size
+// keeps a full ~6,000 site run well under the 540s Cloud Function
+// timeout, versus the fully sequential free-tier-safe approach which
+// was completing less than half the site list per run before timing out.
+export const OPEN_METEO_CONCURRENCY = 5;
 
 export enum SofarModels {
   NOAACoralReefWatch = 'NOAACoralReefWatch',
