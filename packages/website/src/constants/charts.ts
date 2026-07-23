@@ -37,3 +37,6 @@ export const HUI_DATA_COLOR = '#fa8d00';
 
 // SeapHOx data
 export const SEAPHOX_DATA_COLOR = '#23225b';
+
+// HWO data
+export const HWO_DATA_COLOR = '#0f9b8e';

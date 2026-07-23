@@ -14,6 +14,7 @@ import {
   SPOTTER_METRIC_DATA_COLOR,
   HUI_DATA_COLOR,
   SEAPHOX_DATA_COLOR,
+  HWO_DATA_COLOR,
 } from 'constants/charts';
 import {
   siteGranularDailyDataSelector,
@@ -68,6 +69,11 @@ import {
   getHuiConfig,
   getPublicHuiMetrics,
 } from '../../../constants/chartConfigs/huiConfig';
+import {
+  getHwoConfig,
+  getPublicHwoMetrics,
+} from '../../../constants/chartConfigs/hwoConfig';
+import { getHwoDohThreshold } from 'common/SiteDetails/WaterSampling/utils';
 import ChartWithCard from './ChartWithCard';
 import type { Dataset } from '..';
 
@@ -136,6 +142,8 @@ function MultipleSensorsCharts({
   const hasMetlogData = availableSources.includes('metlog');
 
   const hasHuiData = availableSources.includes('hui');
+
+  const hasHwoData = availableSources.includes('hwo');
 
   const hasSeapHOxData = availableSources.includes('seaphox');
 
@@ -282,6 +290,22 @@ function MultipleSensorsCharts({
       getPublicHuiMetrics,
       getHuiConfig,
     );
+
+  const hwoDatasets = () =>
+    getDatesetFun(
+      hasHwoData,
+      HWO_DATA_COLOR,
+      'hwo',
+      'HWO',
+      'HWO',
+      getPublicHwoMetrics,
+      getHwoConfig,
+    ).map((item) => {
+      const dohThreshold = getHwoDohThreshold(site.id, item.key);
+      return dohThreshold
+        ? { ...item, dataset: { ...item.dataset, dohThreshold } }
+        : item;
+    });
 
   const seaphoxDatasets = () => {
     const allSeaphoxMetrics = getPublicSeapHOxMetrics();
@@ -572,6 +596,7 @@ function MultipleSensorsCharts({
         'metlog',
         'hui',
         'seaphox',
+        'hwo',
       ];
       const [
         spotterRanges,
@@ -579,6 +604,7 @@ function MultipleSensorsCharts({
         metlogRanges,
         huiRanges,
         seaphoxRanges,
+        hwoRanges,
       ] = sources.map((source) =>
         getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
           rangeOverlapWithRange(
@@ -598,6 +624,7 @@ function MultipleSensorsCharts({
         ...(seaphoxRanges.length > 0 ? [...getPublicSeapHOxMetrics()] : []),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);
+      const hwoMetrics = hwoRanges.map((x) => x.metric);
 
       const uniqueMetrics = [...new Map(allMetrics.map((x) => [x, x])).keys()];
 
@@ -608,6 +635,7 @@ function MultipleSensorsCharts({
           metlogRanges.length > 0 && 'metlog',
           huiRanges.length > 0 && 'hui',
           seaphoxRanges.length > 0 && 'seaphox',
+          hwoRanges.length > 0 && 'hwo',
         ].filter((x): x is Sources => x !== false),
       );
 
@@ -644,6 +672,18 @@ function MultipleSensorsCharts({
             start: siteLocalStartDate,
             end: siteLocalEndDate,
             metrics: huiMetrics,
+            hourly: false,
+          }),
+        );
+
+      if (hwoMetrics.length > 0)
+        dispatch(
+          siteTimeSeriesDataRequest({
+            siteId: `${site.id}`,
+            pointId,
+            start: siteLocalStartDate,
+            end: siteLocalEndDate,
+            metrics: hwoMetrics,
             hourly: false,
           }),
         );
@@ -748,6 +788,14 @@ function MultipleSensorsCharts({
       },
     ),
     ...sondeDatasets().map(({ title, dataset }) => ({
+      name: snakeCase(`${title}_${dataset.label}`),
+      values: dataset.data,
+    })),
+    ...huiDatasets().map(({ title, dataset }) => ({
+      name: snakeCase(`${title}_${dataset.label}`),
+      values: dataset.data,
+    })),
+    ...hwoDatasets().map(({ title, dataset }) => ({
       name: snakeCase(`${title}_${dataset.label}`),
       values: dataset.data,
     })),
@@ -926,6 +974,7 @@ function MultipleSensorsCharts({
           ...mergedSalinityDatasets(),
           ...sondeDatasets(),
           ...huiDatasets(),
+          ...hwoDatasets(),
           ...metlogDatasets(),
         ] as ChartItem[]
       ).map((item) => {

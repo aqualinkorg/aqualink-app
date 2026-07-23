@@ -50,6 +50,7 @@ export interface Dataset {
   yAxisPadding?: number;
   yAxisMin?: number;
   yAxisMax?: number;
+  dohThreshold?: number; // HWO: static red dashed line for the site's DOH/HAR 11-54 threshold
 }
 
 export interface ChartProps {
@@ -147,6 +148,7 @@ function Chart({
   const customPadding = datasets?.[0]?.yAxisPadding;
   const configYMin = datasets?.[0]?.yAxisMin;
   const configYMax = datasets?.[0]?.yAxisMax;
+  const dohThreshold = datasets?.[0]?.dohThreshold;
 
   const getAdjustedAxisBounds = () => {
     // Use explicit config values if provided
@@ -259,6 +261,9 @@ function Chart({
                     '#ff8d00',
                   ),
                 ]
+              : []),
+            ...(dohThreshold
+              ? [makeAnnotation('DOH Threshold', dohThreshold, '#E63222')]
               : []),
           ],
         },

@@ -268,6 +268,20 @@ export function getHwoIconConfig(
   return { iconType, iconColor };
 }
 
+const DOH_THRESHOLD_METRICS: HwoMetricsKeys[] = [
+  'enterococcus',
+  'nitrogen_total',
+  'phosphorus_total',
+];
+
+export function getHwoDohThreshold(
+  siteId: number,
+  metric: HwoMetricsKeys,
+): number | undefined {
+  if (!DOH_THRESHOLD_METRICS.includes(metric)) return undefined;
+  return hwoThresholds[siteId]?.[metric]?.moderatelyImpaired[0];
+}
+
 function calculateGeometricMean(data: number[]): number | undefined {
   if (data.length === 0) return undefined;
   const lnSum = data.reduce((acc, curr) => acc + Math.log(curr), 0);
