@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /** Utility functions to access the Open-Meteo Marine API for wave data. */
 import { chunk, isNil } from 'lodash';
+import pLimit from 'p-limit';
 import axios from './retry-axios';
 import {
   OPEN_METEO_BATCH_SIZE,
@@ -11,7 +12,6 @@ import {
 import { OpenMeteoMarineResponse, OpenMeteoWaveData } from './open-meteo.types';
 import { sendSlackMessage, SlackMessage } from './slack.utils';
 import { ValueWithTimestamp } from './sofar.types';
-import pLimit from 'p-limit';
 
 /**
  * Resolve the Marine API endpoint based on env config.
