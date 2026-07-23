@@ -1,5 +1,4 @@
 # Environment variables
-.env*
 !.env.example
 
 # Virtual env
@@ -33,3 +32,4 @@ lerna-debug.log*
 
 .wrangler
 .yarn
+config.bat

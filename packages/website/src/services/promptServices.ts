@@ -32,11 +32,14 @@ export interface RollbackParams {
   version: number;
 }
 
+const noCache = { cache: { enabled: false } } as const;
+
 const getAllPrompts = (token: string) =>
   requests.send<AIPrompt[]>({
     url: 'monitoring/prompts',
     method: 'GET',
     token,
+    ...noCache,
   });
 
 const getPrompt = (promptKey: string, token: string) =>
@@ -44,6 +47,7 @@ const getPrompt = (promptKey: string, token: string) =>
     url: `monitoring/prompts/${promptKey}`,
     method: 'GET',
     token,
+    ...noCache,
   });
 
 const updatePrompt = (
@@ -56,6 +60,7 @@ const updatePrompt = (
     method: 'PUT',
     data,
     token,
+    ...noCache,
   });
 
 const getPromptHistory = (promptKey: string, token: string) =>
@@ -63,6 +68,7 @@ const getPromptHistory = (promptKey: string, token: string) =>
     url: `monitoring/prompts/${promptKey}/history`,
     method: 'GET',
     token,
+    ...noCache,
   });
 
 const rollbackToVersion = (
@@ -75,6 +81,7 @@ const rollbackToVersion = (
     method: 'POST',
     data,
     token,
+    ...noCache,
   });
 
 const refreshCache = (token: string) =>
@@ -82,6 +89,7 @@ const refreshCache = (token: string) =>
     url: 'monitoring/prompts/cache/refresh',
     method: 'POST',
     token,
+    ...noCache,
   });
 
 export default {

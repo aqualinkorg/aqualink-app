@@ -4,10 +4,34 @@ import { Repository } from 'typeorm';
 import { AIPrompt } from './ai-prompt.entity';
 import { AIPromptHistory } from './ai-prompt-history.entity';
 
+export interface AIPromptResponse {
+  id: number;
+  promptKey: string;
+  content: string;
+  description: string | null;
+  category: string | null;
+  version: number;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  updatedBy: string | null;
+  changeNotes: string | null;
+}
+
+export interface AIPromptHistoryResponse {
+  id: number;
+  promptId: number;
+  promptKey: string;
+  content: string;
+  version: number;
+  changedAt: Date;
+  changedBy: string | null;
+  changeNotes: string | null;
+}
+
 @Injectable()
 export class AiPromptsService {
   private logger = new Logger(AiPromptsService.name);
-  private cache: AIPrompt[] | null = null;
 
   constructor(
     @InjectRepository(AIPrompt)
@@ -17,27 +41,59 @@ export class AiPromptsService {
     private aiPromptHistoryRepository: Repository<AIPromptHistory>,
   ) {}
 
-  async getAllPrompts(): Promise<AIPrompt[]> {
-    // If we have cached data, return it (no expiry)
-    if (this.cache) {
-      this.logger.debug('Returning cached prompts');
-      return this.cache;
-    }
+  private toPromptResponse(prompt: AIPrompt): AIPromptResponse {
+    return {
+      id: prompt.id,
+      promptKey: prompt.promptKey,
+      content: prompt.content,
+      description: prompt.description,
+      category: prompt.category,
+      version: prompt.version,
+      isActive: prompt.isActive,
+      createdAt: prompt.createdAt,
+      updatedAt: prompt.updatedAt,
+      updatedBy: prompt.updatedByUser?.email ?? null,
+      changeNotes: prompt.changeNotes,
+    };
+  }
 
-    // Fetch fresh data
+  private toHistoryResponse(entry: AIPromptHistory): AIPromptHistoryResponse {
+    return {
+      id: entry.id,
+      promptId: entry.promptId,
+      promptKey: entry.promptKey,
+      content: entry.content,
+      version: entry.version,
+      changedAt: entry.changedAt,
+      changedBy: entry.changedByUser?.email ?? null,
+      changeNotes: entry.changeNotes,
+    };
+  }
+
+  async getAllPrompts(): Promise<AIPromptResponse[]> {
     const prompts = await this.aiPromptRepository.find({
       where: { isActive: true },
+      relations: ['updatedByUser'],
       order: { promptKey: 'ASC' },
     });
 
-    // Cache prompts (persists until manually cleared)
-    this.cache = prompts;
-    this.logger.debug(`Loaded and cached ${prompts.length} prompts`);
-
-    return prompts;
+    return prompts.map((prompt) => this.toPromptResponse(prompt));
   }
 
-  async getPromptByKey(promptKey: string): Promise<AIPrompt> {
+  async getPromptByKey(promptKey: string): Promise<AIPromptResponse> {
+    const prompt = await this.aiPromptRepository.findOne({
+      where: { promptKey, isActive: true },
+      relations: ['updatedByUser'],
+    });
+
+    if (!prompt) {
+      throw new NotFoundException(`Prompt with key '${promptKey}' not found`);
+    }
+
+    return this.toPromptResponse(prompt);
+  }
+
+  private async findPromptEntity(promptKey: string): Promise<AIPrompt> {
     const prompt = await this.aiPromptRepository.findOne({
       where: { promptKey, isActive: true },
     });
@@ -54,8 +110,8 @@ export class AiPromptsService {
     content: string,
     updatedBy: number | null,
     changeNotes: string | null,
-  ): Promise<AIPrompt> {
-    const prompt = await this.getPromptByKey(promptKey);
+  ): Promise<AIPromptResponse> {
+    const prompt = await this.findPromptEntity(promptKey);
 
     // Update prompt (avoid mutation)
     const updated = await this.aiPromptRepository.save({
@@ -66,30 +122,39 @@ export class AiPromptsService {
       changeNotes,
     });
 
-    // Invalidate cache - next request will reload
-    this.cache = null;
+    const withUser = await this.aiPromptRepository.findOne({
+      where: { id: updated.id },
+      relations: ['updatedByUser'],
+    });
+
+    // No caching in use; changes are visible immediately
     this.logger.log(
       `Updated prompt '${promptKey}' to version ${updated.version}`,
     );
 
-    return updated;
+    return this.toPromptResponse(withUser!);
   }
 
-  async getPromptHistory(promptKey: string): Promise<AIPromptHistory[]> {
-    const prompt = await this.getPromptByKey(promptKey);
+  async getPromptHistory(
+    promptKey: string,
+  ): Promise<AIPromptHistoryResponse[]> {
+    const prompt = await this.findPromptEntity(promptKey);
 
-    return this.aiPromptHistoryRepository.find({
+    const history = await this.aiPromptHistoryRepository.find({
       where: { promptId: prompt.id },
+      relations: ['changedByUser'],
       order: { version: 'DESC' },
     });
+
+    return history.map((entry) => this.toHistoryResponse(entry));
   }
 
   async rollbackToVersion(
     promptKey: string,
     version: number,
     updatedBy: number | null,
-  ): Promise<AIPrompt> {
-    const prompt = await this.getPromptByKey(promptKey);
+  ): Promise<AIPromptResponse> {
+    const prompt = await this.findPromptEntity(promptKey);
 
     const historyEntry = await this.aiPromptHistoryRepository.findOne({
       where: { promptId: prompt.id, version },
@@ -110,17 +175,22 @@ export class AiPromptsService {
       changeNotes: `Rolled back to version ${version}`,
     });
 
-    // Invalidate cache - next request will reload
-    this.cache = null;
+    const withUser = await this.aiPromptRepository.findOne({
+      where: { id: updated.id },
+      relations: ['updatedByUser'],
+    });
+
+    // No caching in use; changes are visible immediately
     this.logger.log(
       `Rolled back prompt '${promptKey}' to version ${version} (now version ${updated.version})`,
     );
 
-    return updated;
+    return this.toPromptResponse(withUser!);
   }
 
   refreshCache(): void {
-    this.cache = null;
-    this.logger.log('Cache manually cleared - will reload on next request');
+    this.logger.log(
+      'Cache refresh requested - no caching in use, data is always fresh',
+    );
   }
 }
