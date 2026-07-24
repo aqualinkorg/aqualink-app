@@ -56,6 +56,7 @@ import {
   getPublicSeapHOxMetrics,
   getSeapHOxConfig,
 } from 'constants/chartConfigs/seaphoxConfig';
+import { getHwoDohThreshold } from 'common/SiteDetails/WaterSampling/utils';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -73,7 +74,6 @@ import {
   getHwoConfig,
   getPublicHwoMetrics,
 } from '../../../constants/chartConfigs/hwoConfig';
-import { getHwoDohThreshold } from 'common/SiteDetails/WaterSampling/utils';
 import ChartWithCard from './ChartWithCard';
 import type { Dataset } from '..';
 
@@ -302,9 +302,14 @@ function MultipleSensorsCharts({
       getHwoConfig,
     ).map((item) => {
       const dohThreshold = getHwoDohThreshold(site.id, item.key);
-      return dohThreshold
-        ? { ...item, dataset: { ...item.dataset, dohThreshold } }
-        : item;
+      return {
+        ...item,
+        dataset: {
+          ...item.dataset,
+          ...(dohThreshold ? { dohThreshold } : {}),
+          metric: camelCase(item.key) as Metrics,
+        },
+      };
     });
 
   const seaphoxDatasets = () => {
@@ -1020,7 +1025,7 @@ function MultipleSensorsCharts({
                 ]}
                 timeZone={site.timezone}
                 showRangeButtons={false}
-                chartWidth="small"
+                chartWidth="extraSmall"
                 site={site}
                 pickerStartDate={
                   pickerStartDate ||
@@ -1061,7 +1066,7 @@ function MultipleSensorsCharts({
                 ]}
                 timeZone={site.timezone}
                 showRangeButtons={false}
-                chartWidth="large"
+                chartWidth={key === 'enterococcus' ? 'small' : 'large'}
                 site={site}
                 pickerStartDate={
                   pickerStartDate ||

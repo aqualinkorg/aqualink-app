@@ -97,20 +97,20 @@ export const findChartPeriod = (startDate: string, endDate: string) => {
 
 export const findChartWidth = (
   datasets: Dataset[],
-): 'small' | 'medium' | 'large' => {
+): 'extraSmall' | 'medium' | 'large' => {
   const nCardColumns = datasets.filter(
     ({ displayCardColumn }) => displayCardColumn,
   ).length;
 
   switch (true) {
     case nCardColumns === 3:
-      return 'small';
+      return 'extraSmall';
     case nCardColumns === 2:
       return 'medium';
     case nCardColumns === 1:
       return 'large';
     default:
-      return 'small';
+      return 'extraSmall';
   }
 };
 

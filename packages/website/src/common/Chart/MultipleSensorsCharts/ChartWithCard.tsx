@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   smallChart: {
     [theme.breakpoints.up('md')]: {
+      width: 'calc(100% - 270px)', // width of 100% minus the card, widened for long unit labels (e.g. Enterococcus's "CFU/100 mL")
+    },
+  },
+  extraSmallChart: {
+    [theme.breakpoints.up('md')]: {
       width: 'calc(100% - 320px)', // width of 100% minus the card with three columns
     },
   },
@@ -83,8 +88,10 @@ function ChartWithCard({
         return classes.largeChart;
       case 'medium':
         return classes.mediumChart;
-      default:
+      case 'small':
         return classes.smallChart;
+      default:
+        return classes.extraSmallChart;
     }
   };
 
@@ -135,6 +142,7 @@ function ChartWithCard({
               chartStartDate={chartStartDate}
               chartEndDate={chartEndDate}
               columnJustification={cardColumnJustification}
+              siteId={site.id}
             />
           </Grid>
         )}
@@ -150,7 +158,7 @@ interface ChartWithCardProps {
   chartEndDate: string;
   chartStartDate: string;
   chartTitle: string;
-  chartWidth: 'small' | 'medium' | 'large';
+  chartWidth: 'extraSmall' | 'small' | 'medium' | 'large';
   datasets: Dataset[];
   disableMaxRange: boolean;
   hideYAxisUnits?: boolean;

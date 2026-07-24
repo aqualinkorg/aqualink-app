@@ -5,7 +5,7 @@ import siteServices from 'services/siteServices';
 import { timeSeriesRequest } from 'store/Sites/helpers';
 import { getSondeConfig } from 'constants/chartConfigs/sondeConfig';
 
-type HwoMetricsKeys = Extract<
+export type HwoMetricsKeys = Extract<
   MetricsKeys,
   | 'enterococcus'
   | 'nitrogen_total'

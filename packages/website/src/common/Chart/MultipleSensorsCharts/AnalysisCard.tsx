@@ -13,10 +13,17 @@ import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
+import { snakeCase } from 'lodash';
+import WarningIcon from '@mui/icons-material/Warning';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 import { siteTimeSeriesDataLoadingSelector } from 'store/Sites/selectedSiteSlice';
 import { formatNumber } from 'helpers/numberUtils';
 import { DateTime } from 'luxon-extensions';
+import {
+  getHwoIconConfig,
+  HwoMetricsKeys,
+} from 'common/SiteDetails/WaterSampling/utils';
 import { calculateCardMetrics } from './helpers';
 import { CardColumn } from './types';
 import type { Dataset } from '..';
@@ -32,6 +39,7 @@ function AnalysisCard({
   chartStartDate,
   chartEndDate,
   columnJustification,
+  siteId,
   children,
 }: AnalysisCardProps) {
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
@@ -56,16 +64,36 @@ function AnalysisCard({
       cardColumnName,
       cardColumnTooltip,
       decimalPlaces,
-    }) => ({
-      title: cardColumnName || label,
-      color: curveColor,
-      display: !!displayCardColumn,
-      key: label,
-      rows: calculateCardMetrics(chartStartDate, chartEndDate, data, label),
-      unit,
-      tooltip: cardColumnTooltip,
-      decimalPlaces,
-    }),
+      metric,
+    }) => {
+      const computedRows = calculateCardMetrics(
+        chartStartDate,
+        chartEndDate,
+        data,
+        label,
+      );
+      const hwoMetric = metric
+        ? (snakeCase(metric) as HwoMetricsKeys)
+        : undefined;
+
+      return {
+        title: cardColumnName || label,
+        color: curveColor,
+        display: !!displayCardColumn,
+        key: label,
+        rows: hwoMetric
+          ? computedRows.map((row) => ({
+              ...row,
+              ...(row.value !== undefined
+                ? getHwoIconConfig(siteId, hwoMetric, row.value)
+                : {}),
+            }))
+          : computedRows,
+        unit,
+        tooltip: cardColumnTooltip,
+        decimalPlaces,
+      };
+    },
   );
 
   const formattedpickerStartDate =
@@ -134,19 +162,33 @@ function AnalysisCard({
                         </Typography>
                       </Tooltip>
                     </Grid>
-                    {item.rows.map(({ key, value }) => (
+                    {item.rows.map(({ key, value, iconType, iconColor }) => (
                       <Grid key={key} item>
-                        <Typography
-                          className={classNames(
-                            classes.values,
-                            classes.lightFont,
+                        <Box display="flex" alignItems="center">
+                          <Typography
+                            className={classNames(
+                              classes.values,
+                              classes.lightFont,
+                            )}
+                            variant="h5"
+                            color="textSecondary"
+                          >
+                            {formatNumber(value, item.decimalPlaces ?? 1)}{' '}
+                            {item.unit}
+                          </Typography>
+                          {iconType === 'check' && (
+                            <CheckCircleOutlineIcon
+                              className={classes.values}
+                              style={{ fontSize: '1.1em', color: iconColor }}
+                            />
                           )}
-                          variant="h5"
-                          color="textSecondary"
-                        >
-                          {formatNumber(value, item.decimalPlaces ?? 1)}{' '}
-                          {item.unit}
-                        </Typography>
+                          {iconType === 'warning' && (
+                            <WarningIcon
+                              className={classes.values}
+                              style={{ fontSize: '1.1em', color: iconColor }}
+                            />
+                          )}
+                        </Box>
                       </Grid>
                     ))}
                   </Grid>
@@ -209,6 +251,7 @@ interface AnalysisCardIncomingProps {
   chartEndDate: string;
   columnJustification?: GridProps['justifyContent'];
   children?: React.ReactNode;
+  siteId: number;
 }
 
 export default withStyles(styles)(AnalysisCard);
