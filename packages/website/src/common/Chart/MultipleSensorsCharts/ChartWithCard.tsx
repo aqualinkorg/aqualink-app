@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       marginBottom: 10,
     },
   },
+  compactChartWrapper: {
+    marginBottom: 4,
+  },
   chart: {
     [theme.breakpoints.down('md')]: {
       width: '100%',
@@ -41,6 +44,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   extraSmallChart: {
     [theme.breakpoints.up('md')]: {
       width: 'calc(100% - 320px)', // width of 100% minus the card with three columns
+    },
+  },
+  hwoFixedChart: {
+    [theme.breakpoints.up('lg')]: {
+      width: 900,
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
+      width: 'calc(100% - 270px)', // same reserved space as the widest HWO card (Enterococcus), so nothing wraps between md and lg
     },
   },
   card: {
@@ -77,6 +88,9 @@ function ChartWithCard({
   surveyPoint,
   timeZone,
   source,
+  compact,
+  crosshairSync,
+  dohThresholdLabel,
   onEndDateChange,
   onStartDateChange,
   onRangeChange,
@@ -90,6 +104,8 @@ function ChartWithCard({
         return classes.mediumChart;
       case 'small':
         return classes.smallChart;
+      case 'hwoFixed':
+        return classes.hwoFixedChart;
       default:
         return classes.extraSmallChart;
     }
@@ -107,9 +123,11 @@ function ChartWithCard({
         timeZone={timeZone}
         showRangeButtons={showRangeButtons}
         surveyPoint={surveyPoint}
+        compact={compact}
+        dohThresholdLabel={dohThresholdLabel}
       />
       <Grid
-        className={classes.chartWrapper}
+        className={compact ? classes.compactChartWrapper : classes.chartWrapper}
         container
         justifyContent="space-between"
         item
@@ -131,6 +149,8 @@ function ChartWithCard({
             hideYAxisUnits={hideYAxisUnits}
             showDatePickers={showDatePickers}
             source={source}
+            compact={compact}
+            crosshairSync={crosshairSync}
           />
         </Grid>
         {!isPickerErrored && (
@@ -143,6 +163,7 @@ function ChartWithCard({
               chartEndDate={chartEndDate}
               columnJustification={cardColumnJustification}
               siteId={site.id}
+              compact={compact}
             />
           </Grid>
         )}
@@ -158,7 +179,7 @@ interface ChartWithCardProps {
   chartEndDate: string;
   chartStartDate: string;
   chartTitle: string;
-  chartWidth: 'extraSmall' | 'small' | 'medium' | 'large';
+  chartWidth: 'extraSmall' | 'small' | 'medium' | 'large' | 'hwoFixed';
   datasets: Dataset[];
   disableMaxRange: boolean;
   hideYAxisUnits?: boolean;
@@ -174,6 +195,9 @@ interface ChartWithCardProps {
   surveyPoint?: TimeSeriesSurveyPoint;
   timeZone?: string | null;
   source?: Sources;
+  compact?: boolean;
+  crosshairSync?: boolean;
+  dohThresholdLabel?: string;
   onEndDateChange: (date: Date | null) => void;
   onStartDateChange: (date: Date | null) => void;
   onRangeChange: (value: RangeValue) => void;

@@ -17,6 +17,8 @@ export const hwoConfig: Record<HwoMetricsKeys, BaseSourceConfig> = {
     description: '',
     visibility: 'public',
     order: 1,
+    yAxisStepSize: 10,
+    yAxisPadding: 2,
   },
   nitrogen_total: {
     title: 'Nitrogen*',
@@ -24,27 +26,30 @@ export const hwoConfig: Record<HwoMetricsKeys, BaseSourceConfig> = {
     description: '',
     visibility: 'public',
     order: 2,
+    yAxisDecimalPlaces: 0,
   },
   turbidity: {
     title: 'Turbidity',
     units: 'NTU',
     description: '',
     visibility: 'public',
-    order: 3,
+    order: 4,
   },
   salinity: {
     title: 'Salinity',
     units: 'PPT',
     description: '',
     visibility: 'public',
-    order: 4,
+    order: 5,
+    yAxisStepSize: 2,
+    yAxisPadding: 1,
   },
   phosphorus_total: {
     title: 'Phosphorus*',
     units: 'µg/L',
     description: '',
     visibility: 'public',
-    order: 5,
+    order: 3,
   },
 };
 

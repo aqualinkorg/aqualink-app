@@ -46,11 +46,13 @@ export interface Dataset {
   metric?: Metrics;
   source?: Sources;
   decimalPlaces?: number;
+  yAxisDecimalPlaces?: number;
   yAxisStepSize?: number;
   yAxisPadding?: number;
   yAxisMin?: number;
   yAxisMax?: number;
   dohThreshold?: number; // HWO: static red dashed line for the site's DOH/HAR 11-54 threshold
+  fixedYAxisWidth?: number; // forces a fixed pixel width for the y-axis, so multiple charts share an identical left margin regardless of tick label digit count
 }
 
 export interface ChartProps {
@@ -148,6 +150,8 @@ function Chart({
   const customPadding = datasets?.[0]?.yAxisPadding;
   const configYMin = datasets?.[0]?.yAxisMin;
   const configYMax = datasets?.[0]?.yAxisMax;
+  const yAxisDecimalPlaces = datasets?.[0]?.yAxisDecimalPlaces ?? 2;
+  const fixedYAxisWidth = datasets?.[0]?.fixedYAxisWidth;
   const dohThreshold = datasets?.[0]?.dohThreshold;
 
   const getAdjustedAxisBounds = () => {
@@ -312,6 +316,12 @@ function Chart({
           },
           min: adjustedYMin,
           max: adjustedYMax,
+          afterFit: fixedYAxisWidth
+            ? (scaleInstance: any) => {
+                // eslint-disable-next-line no-param-reassign, fp/no-mutation
+                scaleInstance.width = fixedYAxisWidth;
+              }
+            : undefined,
           grid: {
             drawTicks: false,
           },
@@ -332,7 +342,7 @@ function Chart({
                 (index === values.length - 1 &&
                   values[index - 1] - value > 0.8 * yStepSize)
               ) {
-                return `${Number(value.toFixed(2))}${
+                return `${Number(value.toFixed(yAxisDecimalPlaces))}${
                   !hideYAxisUnits ? '°' : ''
                 }  `;
               }
@@ -367,5 +377,9 @@ export default memo(
     prevProps.startDate === nextProps.startDate &&
     prevProps.endDate === nextProps.endDate &&
     isEqual(prevProps.datasets, nextProps.datasets) &&
-    prevProps.chartPeriod === nextProps.chartPeriod,
+    prevProps.chartPeriod === nextProps.chartPeriod &&
+    isEqual(
+      prevProps.chartSettings?.plugins?.annotation?.annotations,
+      nextProps.chartSettings?.plugins?.annotation?.annotations,
+    ),
 );
