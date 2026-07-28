@@ -313,7 +313,7 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-updateInfo-10 false css-1urtxze-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-16 css-x7bhrq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item makeStyles-dateInfoWrapper-14 css-x7bhrq-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container css-6zo1m7-MuiGrid-root"
@@ -358,8 +358,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-          style="display: flex; justify-content: flex-end;"
+          class="MuiGrid-root MuiGrid-item makeStyles-chipsWrapper-16 css-x7bhrq-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item makeStyles-chip-17 makeStyles-chip-23 css-x7bhrq-MuiGrid-root"

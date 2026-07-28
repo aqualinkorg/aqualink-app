@@ -335,7 +335,15 @@ export const parseLatestData = (
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
   const validityDate = Date.now() - spotterValidityLimit;
 
-  // only keep spotter top/bottom temp for now and check for validity date
+  // Wave metrics are now sourced exclusively from Open-Meteo. Any
+  // sofar_model rows for these metrics are legacy leftovers from before
+  // the Open-Meteo migration and should never be displayed.
+  const waveMetrics = new Set([
+    'significant_wave_height',
+    'wave_mean_period',
+    'wave_mean_direction',
+  ]);
+
   const spotterTempWhitelist = new Set([
     'bottom_temperature',
     'top_temperature',
@@ -348,28 +356,24 @@ export const parseLatestData = (
     'dissolved_oxygen',
   ]);
 
-  const filtered = copy.filter(
-    (value) =>
-      // Allow spotter data if within validity window
+  const filtered = copy.filter((value) => {
+    if (waveMetrics.has(value.metric)) {
+      return value.source === 'open_meteo';
+    }
+
+    return (
       (value.source === 'spotter' &&
         new Date(value.timestamp).getTime() > validityDate) ||
-      // Allow seaphox data (no time restriction since it's sensor data)
       value.source === 'seaphox' ||
-      // Allow any data with metrics not in the whitelist
-      !spotterTempWhitelist.has(value.metric),
-  );
+      !spotterTempWhitelist.has(value.metric)
+    );
+  });
 
   // sort data by timestamp ASCENDING but prioritize spotter data
   // eslint-disable-next-line fp/no-mutating-methods
   const sorted = filtered.sort((x, y) => {
-    // if spotter data is available and, use it.
-    if (x.source === 'spotter' && y.source !== 'spotter') {
-      return +1;
-    }
-
-    if (y.source === 'spotter' && x.source !== 'spotter') {
-      return -1;
-    }
+    if (x.source === 'spotter' && y.source !== 'spotter') return +1;
+    if (y.source === 'spotter' && x.source !== 'spotter') return -1;
 
     const xTime = new Date(x.timestamp).getTime();
     const yTime = new Date(y.timestamp).getTime();
@@ -378,7 +382,6 @@ export const parseLatestData = (
     return 0;
   });
 
-  // reduce the array, into a mapping, keeping only the latest data for each metric
   return sorted.reduce(
     (a, c) => ({
       ...a,
