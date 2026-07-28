@@ -34,8 +34,8 @@ const getTodayYesterdayDates = () => {
 /**
  * Original combined Sofar wave+wind fetch, kept unchanged and exported for
  * backward compatibility with scripts/generate-stormglass-csv.ts, which
- * depends on this exact function. Not used by addWindWaveData below —
- * that now sources wave data from Open-Meteo instead (see getWindData).
+ * depends on this exact function. Not used by the scheduled ingest paths
+ * below — waves come from Open-Meteo and wind from getWindData.
  */
 export const getForecastData = async (latitude: number, longitude: number) => {
   const { today, yesterday } = getTodayYesterdayDates();
@@ -111,8 +111,7 @@ export const getForecastData = async (latitude: number, longitude: number) => {
 
 /**
  * Fetch wind data (eastward/northward velocity) from Sofar's GFS-backed
- * Atmosphere model and derive speed + direction. Used by addWindWaveData
- * below. Wave data is fetched separately, in bulk, via Open-Meteo.
+ * Atmosphere model and derive speed + direction.
  */
 const getWindData = async (latitude: number, longitude: number) => {
   const { today, yesterday } = getTodayYesterdayDates();
@@ -169,52 +168,68 @@ const getWindData = async (latitude: number, longitude: number) => {
   return { windSpeed, windDirection };
 };
 
-interface CombinedWindWaveData {
-  significantWaveHeight?: ValueWithTimestamp;
-  waveMeanDirection?: ValueWithTimestamp;
-  waveMeanPeriod?: ValueWithTimestamp;
-  windSpeed?: ValueWithTimestamp;
-  windDirection?: ValueWithTimestamp;
-}
+type ForecastMetricValue = {
+  metric: WindWaveMetric;
+  source: SourceType;
+  value: ValueWithTimestamp;
+};
 
-const dataLabels: [keyof CombinedWindWaveData, WindWaveMetric, SourceType][] = [
-  [
-    'significantWaveHeight',
-    WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT,
-    SourceType.OPEN_METEO,
-  ],
-  [
-    'waveMeanDirection',
-    WindWaveMetric.WAVE_MEAN_DIRECTION,
-    SourceType.OPEN_METEO,
-  ],
-  ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD, SourceType.OPEN_METEO],
-  ['windDirection', WindWaveMetric.WIND_DIRECTION, SourceType.GFS],
-  ['windSpeed', WindWaveMetric.WIND_SPEED, SourceType.GFS],
-];
-
-/**
- * Fetch wave and wind forecast data and persist it to forecast_data.
- *
- * Wave data is fetched in batched multi-coordinate calls to the Open-Meteo
- * Marine API. Wind data is fetched per site from Sofar's GFS-backed
- * Atmosphere model (unchanged from prior behaviour).
- *
- * @param siteIds The siteIds for which to perform the update. If empty,
- *                all sites are updated.
- * @param repositories The needed repositories, as defined by the interface.
- */
-export const addWindWaveData = async (
-  siteIds: number[],
+const upsertForecastMetrics = async (
+  site: Site,
+  metrics: ForecastMetricValue[],
   repositories: Repositories,
+  updatedAt: string,
 ) => {
+  await Promise.all(
+    // eslint-disable-next-line array-callback-return, consistent-return
+    metrics.map(({ metric, source, value }) => {
+      if (!isNil(value?.value) && !Number.isNaN(value?.value)) {
+        return repositories.hindcastRepository
+          .createQueryBuilder('forecast_data')
+          .insert()
+          .values([
+            {
+              site,
+              timestamp: DateTime.fromISO(value.timestamp, {
+                zone: 'utc',
+              })
+                .startOf('minute')
+                .toJSDate(),
+              metric,
+              source,
+              value: value.value,
+              updatedAt,
+            },
+          ])
+          .onConflict(
+            `ON CONSTRAINT "one_row_per_site_per_metric_per_source" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
+          )
+          .execute();
+      }
+    }),
+  );
+};
+
+const fetchSites = async (siteIds: number[], repositories: Repositories) => {
   logger.log('Fetching sites');
-  const sites = await repositories.siteRepository.find({
+  return repositories.siteRepository.find({
     where: {
       ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
     },
   });
+};
 
+/**
+ * Fetch wave forecast data from Open-Meteo and persist it to forecast_data.
+ *
+ * @param siteIds The siteIds for which to perform the update. If empty,
+ *                all sites are updated.
+ */
+export const addWaveData = async (
+  siteIds: number[],
+  repositories: Repositories,
+) => {
+  const sites = await fetchSites(siteIds, repositories);
   const { today } = getTodayYesterdayDates();
 
   logger.log(`Fetching wave data from Open-Meteo for ${sites.length} sites`);
@@ -224,63 +239,126 @@ export const addWindWaveData = async (
   });
   const waveResults = await openMeteoMarineBatch(waveCoordinates);
 
-  logger.log('Saving wind & wave forecast data');
-  const limit = pLimit(10);
+  logger.log('Saving wave forecast data');
+  const limit = pLimit(20);
   await Promise.all(
     sites.map((site, idx) =>
       limit(async () => {
-        const { polygon } = site;
+        const waveData = waveResults[idx];
+        if (!waveData) {
+          return;
+        }
 
+        logger.log(`Saving wave forecast data for ${site.id}`);
+
+        await upsertForecastMetrics(
+          site,
+          [
+            {
+              metric: WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT,
+              source: SourceType.OPEN_METEO,
+              value: waveData.waveHeight!,
+            },
+            {
+              metric: WindWaveMetric.WAVE_MEAN_DIRECTION,
+              source: SourceType.OPEN_METEO,
+              value: waveData.waveDirection!,
+            },
+            {
+              metric: WindWaveMetric.WAVE_MEAN_PERIOD,
+              source: SourceType.OPEN_METEO,
+              value: waveData.wavePeriod!,
+            },
+          ].filter((entry) => !isNil(entry.value?.value)),
+          repositories,
+          today,
+        );
+      }),
+    ),
+  );
+  logger.log('Completed updating wave hindcast data');
+};
+
+/**
+ * Fetch wind forecast data from Sofar GFS and persist it to forecast_data.
+ * Dedupes Sofar requests by nearest available grid point — many sites share
+ * the same point, which keeps a full run under the Cloud Function timeout.
+ *
+ * @param siteIds The siteIds for which to perform the update. If empty,
+ *                all sites are updated.
+ */
+export const addWindData = async (
+  siteIds: number[],
+  repositories: Repositories,
+) => {
+  const sites = await fetchSites(siteIds, repositories);
+  const { today } = getTodayYesterdayDates();
+
+  logger.log(`Fetching wind data from Sofar for ${sites.length} sites`);
+
+  type WindResult = Awaited<ReturnType<typeof getWindData>>;
+  const windByGridPoint = new Map<string, Promise<WindResult>>();
+
+  const getCachedWindData = (latitude: number, longitude: number) => {
+    const key = `${latitude},${longitude}`;
+    const cached = windByGridPoint.get(key);
+    if (cached) {
+      return cached;
+    }
+    const request = getWindData(latitude, longitude);
+    windByGridPoint.set(key, request);
+    return request;
+  };
+
+  const limit = pLimit(10);
+  await Promise.all(
+    sites.map((site) =>
+      limit(async () => {
+        const { polygon } = site;
         const [sofarLongitude, sofarLatitude] = getSofarNearestAvailablePoint(
           polygon as Point,
         );
 
         logger.log(
-          `Saving wind & wave forecast data for ${site.id} at ${sofarLatitude} - ${sofarLongitude}`,
+          `Saving wind forecast data for ${site.id} at ${sofarLatitude} - ${sofarLongitude}`,
         );
 
-        const waveData = waveResults[idx];
-        const windData = await getWindData(sofarLatitude, sofarLongitude);
+        const windData = await getCachedWindData(sofarLatitude, sofarLongitude);
 
-        const combinedData: CombinedWindWaveData = {
-          significantWaveHeight: waveData?.waveHeight,
-          waveMeanDirection: waveData?.waveDirection,
-          waveMeanPeriod: waveData?.wavePeriod,
-          windSpeed: windData.windSpeed,
-          windDirection: windData.windDirection,
-        };
-
-        await Promise.all(
-          // eslint-disable-next-line array-callback-return, consistent-return
-          dataLabels.map(([dataLabel, metric, source]) => {
-            const value = combinedData[dataLabel];
-            if (!isNil(value?.value) && !Number.isNaN(value?.value)) {
-              return repositories.hindcastRepository
-                .createQueryBuilder('forecast_data')
-                .insert()
-                .values([
-                  {
-                    site,
-                    timestamp: DateTime.fromISO(value!.timestamp, {
-                      zone: 'utc',
-                    })
-                      .startOf('minute')
-                      .toJSDate(),
-                    metric,
-                    source,
-                    value: value!.value,
-                    updatedAt: today,
-                  },
-                ])
-                .onConflict(
-                  `ON CONSTRAINT "one_row_per_site_per_metric_per_source" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
-                )
-                .execute();
-            }
-          }),
+        await upsertForecastMetrics(
+          site,
+          [
+            {
+              metric: WindWaveMetric.WIND_SPEED,
+              source: SourceType.GFS,
+              value: windData.windSpeed!,
+            },
+            {
+              metric: WindWaveMetric.WIND_DIRECTION,
+              source: SourceType.GFS,
+              value: windData.windDirection!,
+            },
+          ].filter((entry) => !isNil(entry.value?.value)),
+          repositories,
+          today,
         );
       }),
     ),
   );
-  logger.log('Completed updating hindcast data');
+  logger.log(
+    `Completed updating wind hindcast data (${windByGridPoint.size} unique Sofar grid points)`,
+  );
+};
+
+/**
+ * Fetch wave and wind forecast data and persist both. Kept for the CLI
+ * script; scheduled Cloud Functions call addWaveData / addWindData separately
+ * so each stays under the 540s timeout.
+ */
+export const addWindWaveData = async (
+  siteIds: number[],
+  repositories: Repositories,
+) => {
+  await addWaveData(siteIds, repositories);
+  await addWindData(siteIds, repositories);
 };
