@@ -1,6 +1,6 @@
 try {
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  require('dotenv').config();
+  require('dotenv').config({ quiet: true });
 } catch {
   // Pass
 }
@@ -12,6 +12,9 @@ export const functionsConfig = {
   },
   sofar_api: {
     token: process.env.SOFAR_API_TOKEN,
+  },
+  open_meteo: {
+    api_key: process.env.OPEN_METEO_API_KEY,
   },
   front: {
     base_url: process.env.FRONT_END_BASE_URL,

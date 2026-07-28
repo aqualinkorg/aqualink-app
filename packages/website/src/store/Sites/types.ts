@@ -131,7 +131,8 @@ export type Sources =
   | 'metlog'
   | 'hui'
   | 'sheet_data'
-  | 'seaphox';
+  | 'seaphox'
+  | 'open_meteo';
 
 export type LatestDataASSofarValue = {
   [keys in Metrics]?: ValueWithTimestamp;

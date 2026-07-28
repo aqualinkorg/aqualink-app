@@ -5,7 +5,7 @@ import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { addSpotterData } from '../utils/spotter-time-series';
-import { addWindWaveData } from '../utils/hindcast-wind-wave';
+import { addWaveData, addWindData } from '../utils/hindcast-wind-wave';
 
 // since this is hourly run we want to only take the latest data.
 const DAYS_OF_SPOTTER_DATA = 1;
@@ -27,9 +27,15 @@ export function runSpotterTimeSeriesUpdate(
   );
 }
 
-export function runWindWaveTimeSeriesUpdate(dataSource: DataSource) {
-  return addWindWaveData([], {
-    siteRepository: dataSource.getRepository(Site),
-    hindcastRepository: dataSource.getRepository(ForecastData),
-  });
+const hindcastRepos = (dataSource: DataSource) => ({
+  siteRepository: dataSource.getRepository(Site),
+  hindcastRepository: dataSource.getRepository(ForecastData),
+});
+
+export function runWaveTimeSeriesUpdate(dataSource: DataSource) {
+  return addWaveData([], hindcastRepos(dataSource));
+}
+
+export function runWindTimeSeriesUpdate(dataSource: DataSource) {
+  return addWindData([], hindcastRepos(dataSource));
 }

@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       padding: 0,
       height: '100%',
+      minWidth: 58,
     },
   }),
 );
