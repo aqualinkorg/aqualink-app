@@ -46,6 +46,12 @@ export enum Metric {
   SILICATE = 'silicate',
   NNN = 'nitrate_plus_nitrite',
   AMMONIUM = 'ammonium',
+  // HWO Metrics
+  ENTEROCOCCUS = 'enterococcus',
+  TURBIDITY_1 = 'turbidity_1',
+  TURBIDITY_2 = 'turbidity_2',
+  TURBIDITY_3 = 'turbidity_3',
+  TURBIDITY_4 = 'turbidity_4',
   // SeapHOx Metrics
   DISSOLVED_OXYGEN = 'dissolved_oxygen',
   INTERNAL_PH = 'internal_ph',

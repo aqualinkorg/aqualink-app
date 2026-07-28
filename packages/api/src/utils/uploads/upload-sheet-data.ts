@@ -163,6 +163,16 @@ const rules: Rule[] = [
   { token: Metric.SILICATE, expression: /^Silicate$/ },
   { token: Metric.NNN, expression: /^NNN$/ },
   { token: Metric.AMMONIUM, expression: /^NH4$/ },
+  // HWO Metrics
+  { token: Metric.ENTEROCOCCUS, expression: /^Entero$/ },
+  { token: Metric.TURBIDITY_1, expression: /^T1$/ },
+  { token: Metric.TURBIDITY_2, expression: /^T2$/ },
+  { token: Metric.TURBIDITY_3, expression: /^T3$/ },
+  { token: Metric.TURBIDITY_4, expression: /^T4$/ },
+  { token: Metric.SALINITY, expression: /^Salinityn \(ppt\)$/ },
+  { token: Metric.NITROGEN_TOTAL, expression: /^TotalN \(mg\/L\)$/ },
+  { token: Metric.PHOSPHORUS_TOTAL, expression: /^TotalP \(mg\/L\)$/ },
+  { token: Metric.ENTEROCOCCUS, expression: /^Entero\.\s*$/ },
 ];
 
 export type Mimetype = (typeof ACCEPTED_FILE_TYPES)[number]['mimetype'];

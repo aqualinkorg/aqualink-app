@@ -77,8 +77,9 @@ function Waves({ data, hasSpotter }: WavesProps) {
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
   const now = Date.now();
 
-  // Only show as live Spotter data if site actually has a Spotter
-  // Otherwise it's model data regardless of timestamp
+  // Only show as live Spotter data if site actually has a Spotter.
+  // Wind and wave now come from different providers, so each is
+  // evaluated independently.
   const hasSpotterWindWaveData = Boolean(
     hasSpotter &&
     ((windSpeed?.timestamp &&
@@ -88,6 +89,11 @@ function Waves({ data, hasSpotter }: WavesProps) {
           spotterValidityLimit)),
   );
 
+  const windRelativeTime = hasSpotterWindWaveData
+    ? windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp)
+    : significantWaveHeight?.timestamp &&
+      toRelativeTime(significantWaveHeight.timestamp);
+
   // Make sure to get the direction the wind is COMING FROM.
   // use `numberUtils.invertDirection` if needed.
   const windDirectionFrom = windDirection?.value;
@@ -96,11 +102,6 @@ function Waves({ data, hasSpotter }: WavesProps) {
     windDirection: windDirectionFrom,
     wavesDirection: waveDirectionFrom,
   });
-
-  const windRelativeTime = hasSpotterWindWaveData
-    ? windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp)
-    : significantWaveHeight?.timestamp &&
-      toRelativeTime(significantWaveHeight.timestamp);
 
   return (
     <Card className={classes.root}>
@@ -289,7 +290,14 @@ function Waves({ data, hasSpotter }: WavesProps) {
             live={hasSpotterWindWaveData}
             frequency={hasSpotterWindWaveData ? 'hourly' : 'every 6 hours'}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-            imageText={hasSpotterWindWaveData ? undefined : 'SOFAR MODEL'}
+            imageText={hasSpotterWindWaveData ? undefined : 'WIND'}
+            chipWidth={hasSpotterWindWaveData ? undefined : 110}
+            secondaryHref={
+              hasSpotterWindWaveData
+                ? undefined
+                : 'https://open-meteo.com/en/docs/marine-weather-api'
+            }
+            secondaryImageText={hasSpotterWindWaveData ? undefined : 'WAVE'}
           />
         </Grid>
       </CardContent>
