@@ -22,6 +22,25 @@ export const SOFAR_SENSOR_DATA_URL =
 export const SOFAR_LATEST_DATA_URL =
   'https://api.sofarocean.com/api/latest-data';
 
+// Open-Meteo Marine API
+// https://open-meteo.com/en/docs/marine-weather-api
+// Free tier (default) requires no auth. Setting OPEN_METEO_API_KEY routes
+// requests to the customer endpoint. Setting OPEN_METEO_BASE_URL overrides both.
+export const OPEN_METEO_FREE_URL =
+  'https://marine-api.open-meteo.com/v1/marine';
+export const OPEN_METEO_CUSTOMER_URL =
+  'https://customer-marine-api.open-meteo.com/v1/marine';
+
+// Number of sites to bundle into a single multi-coordinate Marine API call.
+export const OPEN_METEO_BATCH_SIZE = 150;
+
+// Now on the paid Standard tier, which tolerates concurrent requests
+// without the free tier's rate limiting. This concurrency + batch size
+// keeps a full ~6,000 site run well under the 540s Cloud Function
+// timeout, versus the fully sequential free-tier-safe approach which
+// was completing less than half the site list per run before timing out.
+export const OPEN_METEO_CONCURRENCY = 5;
+
 export enum SofarModels {
   NOAACoralReefWatch = 'NOAACoralReefWatch',
   Wave = 'Wave',

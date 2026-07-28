@@ -134,6 +134,7 @@ export const SENSOR_TYPES: EnhancedSelectOption[] = [
   { id: 1, name: 'metlog', label: 'Meteorological data' },
   { id: 3, name: 'hobo', label: 'HOBO data' },
   { id: 4, name: 'hui', label: 'HUI data' },
+  { id: 6, name: 'hwo', label: 'HWO data' },
   { id: 2, name: 'spotter', label: 'Spotter data', disabled: true },
 ];
 

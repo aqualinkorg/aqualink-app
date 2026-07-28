@@ -3,6 +3,27 @@
 
 const { spawnSync } = require('node:child_process');
 
+// Advisories that cannot be fixed without a major framework upgrade and whose
+// impact does not apply to this codebase. Each entry must document why.
+const IGNORED_ADVISORY_IDS = [
+  // GHSA-qwww-vcr4-c8h2: react-router RSC CSRF bypass.
+  // The advisory explicitly states this only affects the *unstable* RSC APIs,
+  // which this project does not use.  The patched version (react-router >=8.3.0)
+  // requires upgrading to React 19 and react-router v8 — a separate major
+  // undertaking tracked in its own future PR.
+  'GHSA-qwww-vcr4-c8h2',
+
+  // GHSA-mh99-v99m-4gvg / CVE-2026-14257: brace-expansion OOM via unbounded expansion.
+  // Path: api > typeorm > glob > minimatch > brace-expansion.
+  // The glob patterns in that chain (entity/migration file discovery) are
+  // server-controlled constants defined in ormconfig.ts — not user-supplied
+  // input — so this DoS vector is not reachable in practice.
+  // The patched version (brace-expansion >=5.0.8) requires upgrading TypeORM to
+  // v1.x (which replaces glob with tinyglobby) — a separate migration tracked in
+  // its own future PR.
+  'GHSA-mh99-v99m-4gvg',
+];
+
 function getAuditOptions() {
   return {
     level: 'moderate',
@@ -22,7 +43,11 @@ function parseAuditLines(lines) {
     })
     .filter(Boolean)
     .filter((entry) => entry.type === 'auditAdvisory')
-    .map((entry) => entry.data);
+    .map((entry) => entry.data)
+    .filter((data) => {
+      const ghsaId = data?.advisory?.github_advisory_id;
+      return !ghsaId || !IGNORED_ADVISORY_IDS.includes(ghsaId);
+    });
 }
 
 function formatAuditFailureReport(lines) {

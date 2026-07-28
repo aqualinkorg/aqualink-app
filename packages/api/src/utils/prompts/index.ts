@@ -3,43 +3,50 @@
  *
  * Combines all prompt modules into the complete system prompt.
  * Handles prompt assembly and context injection.
- *
- * This file orchestrates how all prompts work together.
- * Usually doesn't need editing unless changing the prompt structure.
  */
 
-import { SYSTEM_PROMPT } from './system';
-import { GUARDRAILS } from './guardrails';
-import { SURVEY_GUIDE } from './survey-guide';
-import { BLEACHING_RESPONSE_GUIDE } from './bleaching-response';
-import { FAQ_KNOWLEDGE } from './faq';
-import { DATA_GUIDE } from './data-guide';
-import { INITIAL_GREETING } from './greeting';
-import { README_KNOWLEDGE } from './readme-knowledge';
+export interface PromptMap {
+  system: string;
+  guardrails: string;
+  'survey-guide': string;
+  'bleaching-response': string;
+  faq: string;
+  'data-guide': string;
+  greeting: string;
+  'readme-knowledge': string;
+}
 
-/**
- * Complete system prompt combining all modules
- */
-export const COMPLETE_SYSTEM_PROMPT = `
-${SYSTEM_PROMPT}
+export const PROMPT_KEYS = [
+  'system',
+  'guardrails',
+  'survey-guide',
+  'bleaching-response',
+  'faq',
+  'data-guide',
+  'greeting',
+  'readme-knowledge',
+] as const satisfies readonly (keyof PromptMap)[];
 
-${GUARDRAILS}
+export function assertPromptMap(
+  partial: Record<string, string | undefined>,
+): PromptMap {
+  const missing = PROMPT_KEYS.filter((key) => !partial[key]?.trim());
 
-${INITIAL_GREETING}
+  if (missing.length > 0) {
+    throw new Error(`Missing or empty AI prompts: ${missing.join(', ')}`);
+  }
 
-${DATA_GUIDE}
-
-${SURVEY_GUIDE}
-
-${BLEACHING_RESPONSE_GUIDE}
-
-${FAQ_KNOWLEDGE}
-
-${README_KNOWLEDGE}
-
-## CURRENT SITE CONTEXT:
-(This section will be populated with real-time data for each query)
-`;
+  return {
+    system: partial.system!.trim(),
+    guardrails: partial.guardrails!.trim(),
+    'survey-guide': partial['survey-guide']!.trim(),
+    'bleaching-response': partial['bleaching-response']!.trim(),
+    faq: partial.faq!.trim(),
+    'data-guide': partial['data-guide']!.trim(),
+    greeting: partial.greeting!.trim(),
+    'readme-knowledge': partial['readme-knowledge']!.trim(),
+  };
+}
 
 /**
  * Build a complete prompt with site context and conversation history
@@ -47,11 +54,30 @@ ${README_KNOWLEDGE}
 export function buildPromptWithContext(
   userMessage: string,
   siteContext: string,
+  prompts: PromptMap,
   conversationHistory?: Array<{ sender: string; text: string }>,
   isFirstMessage?: boolean,
 ): string {
-  const isOpeningMessage =
-    isFirstMessage || !conversationHistory || conversationHistory.length === 0;
+  const completeSystemPrompt = `
+${prompts.system}
+
+${prompts.guardrails}
+
+${prompts['data-guide']}
+
+${prompts['survey-guide']}
+
+${prompts['bleaching-response']}
+
+${prompts.faq}
+
+${prompts['readme-knowledge']}
+
+## CURRENT SITE CONTEXT:
+(This section will be populated with real-time data for each query)
+`;
+
+  const isOpeningMessage = isFirstMessage === true;
 
   const historySection =
     conversationHistory && conversationHistory.length > 0
@@ -63,9 +89,16 @@ export function buildPromptWithContext(
           .join('\n')}`
       : '';
 
+  const followUpSection = !isOpeningMessage
+    ? `\n\n## FOLLOW-UP RESPONSE RULES
+The user has already received the initial reef status greeting with environmental context.
+Do NOT repeat the greeting template, reef status summary, or "About your site" environmental context unless the user explicitly asks for it.
+Answer the current question directly and concisely.`
+    : '';
+
   const openingSection = isOpeningMessage
-    ? `\n\n## CRITICAL: THIS IS THE INITIAL GREETING
-You are responding to the opening of a new conversation. You MUST generate the contextual greeting exactly as specified in the "INITIAL GREETING FOR NEW CONVERSATIONS" section above.
+    ? `\n\n${prompts.greeting}\n\n## CRITICAL: THIS IS THE INITIAL GREETING
+You are responding to the opening of a new conversation. You MUST generate the contextual greeting exactly as specified in the initial greeting template above.
 
 DO NOT respond to the user message as a question. Instead, provide the greeting with the AI-generated site summary.
 
@@ -85,19 +118,5 @@ Use the site context provided above and web search if needed (max 2 searches) to
       ? `\n\n## CURRENT USER QUESTION:\n${userMessage}\n\nPlease provide a helpful, accurate response using the site data and context above.`
       : '';
 
-  return `${COMPLETE_SYSTEM_PROMPT}\n\n${siteContext}${historySection}${openingSection}${userMessageSection}`;
+  return `${completeSystemPrompt}\n\n${siteContext}${historySection}${followUpSection}${openingSection}${userMessageSection}`;
 }
-
-/**
- * Export individual modules for potential separate use
- */
-export {
-  SYSTEM_PROMPT,
-  GUARDRAILS,
-  SURVEY_GUIDE,
-  BLEACHING_RESPONSE_GUIDE,
-  FAQ_KNOWLEDGE,
-  DATA_GUIDE,
-  INITIAL_GREETING,
-  README_KNOWLEDGE,
-};

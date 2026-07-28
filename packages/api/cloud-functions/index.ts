@@ -6,7 +6,8 @@ import { DataSource } from 'typeorm';
 import { runDailyUpdate } from '../src/workers/dailyData';
 import {
   runSpotterTimeSeriesUpdate,
-  runWindWaveTimeSeriesUpdate,
+  runWaveTimeSeriesUpdate,
+  runWindTimeSeriesUpdate,
 } from '../src/workers/spotterTimeSeries';
 import { runSSTTimeSeriesUpdate } from '../src/workers/sstTimeSeries';
 import { checkVideoStreams } from '../src/workers/check-video-streams';
@@ -166,20 +167,42 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
     );
   });
 
-exports.scheduledWindWaveTimeSeriesUpdate = functions
+// Wave (Open-Meteo) and wind (Sofar GFS) run as separate scheduled
+// functions so each stays under the 540s Cloud Function timeout. The
+// previous combined job timed out mid Sofar-wind loop and left ~30% of
+// sites without a fresh open_meteo row. Wind is staggered +10 min.
+exports.scheduledWaveTimeSeriesUpdate = functions
   .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // Run spotter data update every hour
-  .pubsub.schedule('30 * * * *')
+  // Open-Meteo Marine updates every 6 hours (00/06/12/18 UTC). Schedule
+  // ~4x/day, timed after each model cycle typically finishes publishing.
+  .pubsub.schedule('20 4,10,16,22 * * *')
+  .timeZone('America/Los_Angeles')
+  .retryConfig({ retryCount: 2 })
+  .onRun(async () => {
+    process.env.OPEN_METEO_API_KEY = functions.config().open_meteo?.api_key;
+
+    await runWithDataSource(
+      'scheduledWaveTimeSeriesUpdate',
+      async (conn: DataSource) => {
+        await runWaveTimeSeriesUpdate(conn);
+        console.log(`Wave data update on ${new Date()}`);
+      },
+    );
+  });
+
+exports.scheduledWindTimeSeriesUpdate = functions
+  .runWith({ timeoutSeconds: 540, memory: '512MB' })
+  .pubsub.schedule('30 4,10,16,22 * * *')
   .timeZone('America/Los_Angeles')
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
 
     await runWithDataSource(
-      'scheduledWindWaveTimeSeriesUpdate',
+      'scheduledWindTimeSeriesUpdate',
       async (conn: DataSource) => {
-        await runWindWaveTimeSeriesUpdate(conn);
-        console.log(`Wind and Wave data hourly update on ${new Date()}`);
+        await runWindTimeSeriesUpdate(conn);
+        console.log(`Wind data update on ${new Date()}`);
       },
     );
   });
