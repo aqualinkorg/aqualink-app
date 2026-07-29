@@ -105,10 +105,11 @@ yarn config:cloud-functions:<project>
 
 where `<project>` can take one of the three following values:
 
-1. `prod`: production project
-2. `staging`: staging project
-3. `programize`: programize staging project
+1. `prod`: production project (`ocean-systems`, loads `.env.prod`)
+2. `staging`: staging project (`aqualink-dev`, loads `.env.staging`)
+3. `programize`: programize staging project (`aqualink-programize`, loads `.env.programize`)
 
+Each command loads the matching env file via `DOTENV_CONFIG_PATH` — do not rely on a copied `.env`. The script prints the env file path and database host to stderr before applying config so you can confirm the target.
 #### Deploy
 
 ##### API
