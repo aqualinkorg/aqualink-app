@@ -76,7 +76,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
         >
           <WMSTileLayer
             layers={def.layer}
-            styles="boxfill/x-sst"
+            styles="raster/x-Sst"
             transparent
             format="image/png"
             opacity={0.7}
