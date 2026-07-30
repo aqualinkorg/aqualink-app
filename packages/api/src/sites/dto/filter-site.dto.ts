@@ -37,4 +37,9 @@ export class FilterSiteDto {
   @IsOptional()
   @IsBooleanString()
   readonly hasSpotter?: string;
+
+  @ApiProperty({ example: '2024-03-01T00:00:00.000Z', required: false })
+  @IsOptional()
+  @IsString()
+  readonly at?: string;
 }

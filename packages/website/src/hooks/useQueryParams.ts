@@ -54,6 +54,12 @@ export const useQueryParam = (
   }, [value]);
 
   useEffect(() => {
+    const params = new URLSearchParams(search);
+    const nextValue = params.get(key) || undefined;
+    setValue((current) => (current === nextValue ? current : nextValue));
+  }, [key, search]);
+
+  useEffect(() => {
     processing = false;
     if (queue.length > 0) processStack();
   }, [search]);
