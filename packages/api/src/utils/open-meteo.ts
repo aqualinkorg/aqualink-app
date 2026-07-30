@@ -14,6 +14,15 @@ import { sendSlackMessage, SlackMessage } from './slack.utils';
 import { ValueWithTimestamp } from './sofar.types';
 
 /**
+ * Open-Meteo ingest is gated so non-prod can pause fetching (save quota).
+ * Enabled only when OPEN_METEO_ENABLED is true/1/yes.
+ */
+export function isOpenMeteoEnabled(): boolean {
+  const value = process.env.OPEN_METEO_ENABLED?.trim().toLowerCase();
+  return value === 'true' || value === '1' || value === 'yes';
+}
+
+/**
  * Resolve the Marine API endpoint based on env config.
  * Priority: OPEN_METEO_BASE_URL > customer URL (if API key set) > free URL.
  */
