@@ -7,6 +7,7 @@ import type { RootState } from '../configure';
 const homepageInitialState: HomePageState = {
   siteOnMap: null,
   siteFilter: 'All sites',
+  selectedDate: null,
 };
 
 const homepageSlice = createSlice({
@@ -35,6 +36,10 @@ const homepageSlice = createSlice({
       ...state,
       siteOnMap: null,
     }),
+    setSelectedDate: (state, action: PayloadAction<string | null>) => ({
+      ...state,
+      selectedDate: action.payload,
+    }),
   },
 });
 
@@ -53,11 +58,16 @@ export const siteFilterSelector = (
   state: RootState,
 ): HomePageState['siteFilter'] => state.homepage.siteFilter;
 
+export const selectedDateSelector = (
+  state: RootState,
+): HomePageState['selectedDate'] => state.homepage.selectedDate;
+
 export const {
   setSearchResult,
   setSiteOnMap,
   unsetSiteOnMap,
   setWithSpotterOnly,
+  setSelectedDate,
 } = homepageSlice.actions;
 
 export default homepageSlice.reducer;

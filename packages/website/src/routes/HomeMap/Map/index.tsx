@@ -26,6 +26,7 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
+  selectedDateSelector,
   siteOnMapSelector,
 } from 'store/Homepage/homepageSlice';
 import { CollectionDetails } from 'store/Collection/types';
@@ -40,6 +41,7 @@ import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
+import HistoricalDatePicker from './HistoricalDatePicker';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -103,6 +105,7 @@ function HomepageMap({
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
+  const selectedDate = useSelector(selectedDateSelector);
   const ref = useRef<L.Map>(null);
 
   useEffect(() => {
@@ -189,8 +192,8 @@ function HomepageMap({
 
   // Memoize the layers to prevent unnecessary re-renders
   const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} />,
-    [defaultLayerName],
+    () => <SofarLayers defaultLayerName={defaultLayerName} selectedDate={selectedDate} />,
+    [defaultLayerName, selectedDate],
   );
 
   const siteMarkers = useMemo(
@@ -293,6 +296,7 @@ function HomepageMap({
       )}
       <Legend legendName={legendName} bottom={legendBottom} left={legendLeft} />
       {showAlertLevelLegend && <AlertLevelLegend />}
+      <HistoricalDatePicker />
       {showWaterMark && <div className="mapbox-wordmark" />}
       {geolocationEnabled && (
         <div className={classes.locationIconButton}>

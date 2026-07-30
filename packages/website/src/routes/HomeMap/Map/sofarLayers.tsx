@@ -40,10 +40,15 @@ const WMS_LAYERS: WMSLayerDefinition[] = [
 
 const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 
-const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
-  `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
+const sofarUrlFromDef = (
+  { model, cmap, variableId }: SofarLayerDefinition,
+  date?: string | null,
+) => {
+  const base = `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
+  return date ? `${base}&timestamp=${date}T12:00:00Z` : base;
+};
 
-export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
+export function SofarLayers({ defaultLayerName, selectedDate }: SofarLayersProps) {
   return (
     <LayersControl position="topright">
       <LayersControl.BaseLayer
@@ -62,8 +67,8 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
           <TileLayer
             // Sofar tiles have a max native zoom of 9
             maxNativeZoom={9}
-            url={sofarUrlFromDef(def)}
-            key={def.variableId}
+            url={sofarUrlFromDef(def, selectedDate)}
+            key={`${def.variableId}-${selectedDate || 'live'}`}
             opacity={0.5}
           />
         </LayersControl.BaseLayer>
@@ -81,6 +86,9 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
             format="image/png"
             opacity={0.7}
             url={def.url}
+            // Pass TIME parameter for historical WMS data
+            {...(selectedDate ? { params: { TIME: `${selectedDate}T12:00:00.000Z` } } : {})}
+            key={`${def.layer}-${selectedDate || 'live'}`}
           />
         </LayersControl.BaseLayer>
       ))}
@@ -90,6 +98,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
 
 interface SofarLayersProps {
   defaultLayerName?: MapLayerName;
+  selectedDate?: string | null;
 }
 
 export default SofarLayers;
