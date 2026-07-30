@@ -180,6 +180,7 @@ exports.scheduledWaveTimeSeriesUpdate = functions
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
     process.env.OPEN_METEO_API_KEY = functions.config().open_meteo?.api_key;
+    process.env.OPEN_METEO_ENABLED = functions.config().open_meteo?.enabled;
 
     await runWithDataSource(
       'scheduledWaveTimeSeriesUpdate',
