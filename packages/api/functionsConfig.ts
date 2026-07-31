@@ -15,6 +15,8 @@ export const functionsConfig = {
   },
   open_meteo: {
     api_key: process.env.OPEN_METEO_API_KEY,
+    // Explicit enable; unset/false pauses fetch (use true on prod only).
+    enabled: process.env.OPEN_METEO_ENABLED,
   },
   front: {
     base_url: process.env.FRONT_END_BASE_URL,
