@@ -116,6 +116,7 @@ function Homepage({ classes }: HomepageProps) {
           <label className={classes.dateControl}>
             <span>Map date</span>
             <input
+              id="map-date"
               type="date"
               value={historicalDate || ''}
               max={new Date().toISOString().slice(0, 10)}
