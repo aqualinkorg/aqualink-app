@@ -15,7 +15,6 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
-import DatePicker from 'common/Datepicker';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -77,10 +76,6 @@ function Homepage({ classes }: HomepageProps) {
     dispatch(sitesRequest(historicalDate || undefined));
   }, [dispatch, historicalDate]);
 
-  const handleDateChange = (date: Date | null) => {
-    setHistoricalDate(date ? date.toISOString().slice(0, 10) : null);
-  };
-
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
       dispatch(siteRequest(initialSiteId));
@@ -118,12 +113,17 @@ function Homepage({ classes }: HomepageProps) {
       </div>
       <div className={classes.root}>
         <div className={classes.dateControls}>
-          <DatePicker
-            dateName="Map date"
-            value={historicalDate}
-            timeZone="UTC"
-            onChange={handleDateChange}
-          />
+          <label className={classes.dateControl}>
+            <span>Map date</span>
+            <input
+              type="date"
+              value={historicalDate || ''}
+              max={new Date().toISOString().slice(0, 10)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setHistoricalDate(event.target.value || null)
+              }
+            />
+          </label>
         </div>
         <Grid container>
           <Grid
@@ -181,6 +181,17 @@ const styles = () =>
       display: 'flex',
       justifyContent: 'flex-end',
       padding: '0.75rem 1rem',
+    },
+    dateControl: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      color: '#555',
+      fontSize: '0.875rem',
+      '& input': {
+        padding: '0.25rem',
+        font: 'inherit',
+      },
     },
     map: {
       display: 'flex',
