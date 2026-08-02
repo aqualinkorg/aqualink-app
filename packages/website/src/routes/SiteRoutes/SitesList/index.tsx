@@ -15,7 +15,7 @@ function SitesList({ classes }: SitesListProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(sitesRequest());
+    dispatch(sitesRequest(undefined));
   }, [dispatch]);
 
   return (
