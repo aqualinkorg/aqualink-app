@@ -35,13 +35,13 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  string | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (date, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(date);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +55,11 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: string | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, requestedDate },
       } = getState();
-      return !list;
+      return !list || arg !== requestedDate;
     },
   },
 );
@@ -105,9 +105,15 @@ const sitesListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
+      (
+        state,
+        action: PayloadAction<SitesRequestData> & {
+          meta: { arg: string | undefined };
+        },
+      ) => ({
         ...state,
         list: action.payload.list,
+        requestedDate: action.meta.arg,
         loading: false,
       }),
     );
