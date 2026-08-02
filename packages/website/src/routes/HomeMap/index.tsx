@@ -113,7 +113,7 @@ function Homepage({ classes }: HomepageProps) {
       </div>
       <div className={classes.root}>
         <div className={classes.dateControls}>
-          <label className={classes.dateControl}>
+          <label className={classes.dateControl} htmlFor="map-date">
             <span>Map date</span>
             <input
               id="map-date"
