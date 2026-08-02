@@ -18,6 +18,7 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
     >
       <label
         class="Homepage-dateControl-3"
+        for="map-date"
       >
         <span>
           Map date
