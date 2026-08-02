@@ -14,10 +14,27 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
     class="Homepage-root-1"
   >
     <div
+      class="Homepage-dateControls-2"
+    >
+      <label
+        class="Homepage-dateControl-3"
+      >
+        <span>
+          Map date
+        </span>
+        <input
+          id="map-date"
+          max="2026-08-02"
+          type="date"
+          value=""
+        />
+      </label>
+    </div>
+    <div
       class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-4 css-1fyyp8j-MuiGrid-root"
       >
         <mock-map
           initialcenter="LatLng(0, 121.3)"
@@ -29,7 +46,7 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
         mddown="true"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-3 css-1k7sk4d-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-5 css-1k7sk4d-MuiGrid-root"
         >
           <mock-sitetable />
         </div>
