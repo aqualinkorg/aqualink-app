@@ -31,6 +31,7 @@ import {
 import { CollectionDetails } from 'store/Collection/types';
 import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
+import DatePicker from 'common/Datepicker';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
@@ -40,7 +41,6 @@ import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
-import DatePicker from 'common/Datepicker';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 

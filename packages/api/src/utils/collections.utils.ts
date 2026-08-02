@@ -87,26 +87,24 @@ export const getHistoricalCollectionData = async (
     }
   });
 
-  return Array.from(snapshots.entries()).reduce<Record<number, CollectionDataDto>>(
-    (result, [siteId, row]) => {
-      result[siteId] = {
-        ...(row.degreeHeatingDays == null
-          ? {}
-          : { dhw: row.degreeHeatingDays / 7 }),
-        ...(row.satelliteTemperature == null
-          ? {}
-          : { satelliteTemperature: row.satelliteTemperature }),
-        ...(row.dailyAlertLevel == null
-          ? {}
-          : { tempAlert: row.dailyAlertLevel }),
-        ...(row.weeklyAlertLevel == null
-          ? {}
-          : { tempWeeklyAlert: row.weeklyAlertLevel }),
-      };
-      return result;
-    },
-    {},
-  );
+  const collectionData: Record<number, CollectionDataDto> = {};
+  for (const [siteId, row] of snapshots) {
+    collectionData[siteId] = {
+      ...(row.degreeHeatingDays == null
+        ? {}
+        : { dhw: row.degreeHeatingDays / 7 }),
+      ...(row.satelliteTemperature == null
+        ? {}
+        : { satelliteTemperature: row.satelliteTemperature }),
+      ...(row.dailyAlertLevel == null
+        ? {}
+        : { tempAlert: row.dailyAlertLevel }),
+      ...(row.weeklyAlertLevel == null
+        ? {}
+        : { tempWeeklyAlert: row.weeklyAlertLevel }),
+    };
+  }
+  return collectionData;
 };
 
 export const heatStressTracker: DynamicCollection = {

@@ -72,8 +72,12 @@ function Homepage({ classes }: HomepageProps) {
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
-  const { initialZoom, initialSiteId, initialCenter, initialDate }: MapQueryParams =
-    useQuery();
+  const {
+    initialZoom,
+    initialSiteId,
+    initialCenter,
+    initialDate,
+  }: MapQueryParams = useQuery();
   const [historicalDate, setHistoricalDate] = useState<string | null>(
     initialDate,
   );
