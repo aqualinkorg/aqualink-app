@@ -40,6 +40,7 @@ import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
+import DatePicker from 'common/Datepicker';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -91,6 +92,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  historicalDate,
+  onHistoricalDateChange,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -280,6 +283,21 @@ function HomepageMap({
         handleInfoClose={handleInfoClose}
       />
       {tileLayer}
+      {onHistoricalDateChange && (
+        <div
+          className={classes.historicalDatePicker}
+          onClick={(event) => event.stopPropagation()}
+          role="presentation"
+        >
+          <DatePicker
+            value={historicalDate || null}
+            dateName="Map date"
+            dateNameTextVariant="caption"
+            timeZone="UTC"
+            onChange={onHistoricalDateChange}
+          />
+        </div>
+      )}
       {sofarLayers}
       {siteMarkers}
       {currentLocation && (
@@ -358,6 +376,16 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    historicalDatePicker: {
+      position: 'absolute',
+      left: 10,
+      top: 10,
+      zIndex: 1000,
+      padding: '8px 12px',
+      borderRadius: 4,
+      backgroundColor: 'white',
+      boxShadow: '0 1px 5px rgba(0, 0, 0, 0.35)',
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -385,6 +413,8 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  historicalDate?: string | null;
+  onHistoricalDateChange?: (date: Date | null) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

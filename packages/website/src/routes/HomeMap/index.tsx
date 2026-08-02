@@ -21,12 +21,14 @@ import HomepageMap from './Map';
 enum QueryParamKeys {
   SITE_ID = 'site_id',
   ZOOM_LEVEL = 'zoom',
+  DATE = 'date',
 }
 
 interface MapQueryParams {
   initialCenter: LatLng;
   initialZoom: number;
   initialSiteId: string | undefined;
+  initialDate: string | null;
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
@@ -44,6 +46,7 @@ function useQuery() {
       findSiteById(sitesList, featuredSiteId)?.id.toString() ||
       ''
     : featuredSiteId;
+  const initialDate = urlParams.get(QueryParamKeys.DATE);
 
   // Focus on the site provided in the queryParamSiteId or the site with highest alert level.
   // const initialCenter =
@@ -59,6 +62,7 @@ function useQuery() {
     initialCenter,
     initialSiteId,
     initialZoom,
+    initialDate,
   };
 }
 
@@ -68,12 +72,38 @@ function Homepage({ classes }: HomepageProps) {
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
 
-  const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
+  const { initialZoom, initialSiteId, initialCenter, initialDate }: MapQueryParams =
     useQuery();
+  const [historicalDate, setHistoricalDate] = useState<string | null>(
+    initialDate,
+  );
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(initialDate ? { date: initialDate } : undefined));
+  }, [dispatch, initialDate]);
+
+  const handleHistoricalDateChange = (date: Date | null) => {
+    const nextDate = date
+      ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+          2,
+          '0',
+        )}-${String(date.getDate()).padStart(2, '0')}`
+      : null;
+
+    setHistoricalDate(nextDate);
+    const params = new URLSearchParams(window.location.search);
+    if (nextDate) {
+      params.set(QueryParamKeys.DATE, nextDate);
+    } else {
+      params.delete(QueryParamKeys.DATE);
+    }
+    window.history.replaceState(
+      null,
+      '',
+      `${window.location.pathname}${params.toString() ? `?${params}` : ''}`,
+    );
+    dispatch(sitesRequest(nextDate ? { date: nextDate } : undefined));
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,6 +154,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              historicalDate={historicalDate}
+              onHistoricalDateChange={handleHistoricalDateChange}
             />
           </Grid>
           {showSiteTable && (

@@ -5,6 +5,7 @@ import {
   IsInt,
   IsEnum,
   IsBooleanString,
+  IsISO8601,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -37,4 +38,14 @@ export class FilterSiteDto {
   @IsOptional()
   @IsBooleanString()
   readonly hasSpotter?: string;
+
+  @ApiProperty({
+    example: '2025-08-15',
+    required: false,
+    description:
+      'Return the latest available daily map data on or before this date',
+  })
+  @IsOptional()
+  @IsISO8601({ strict: true })
+  readonly date?: string;
 }

@@ -34,7 +34,7 @@ function DatePicker({
                 .toJSDate()}
               minDate={DateTime.fromMillis(0).toJSDate()}
               closeOnSelect={autoOk}
-              value={parseISO(value ?? '')}
+              value={value ? parseISO(value) : null}
               onChange={(v) => onChange(v)}
               slotProps={{
                 textField: {
