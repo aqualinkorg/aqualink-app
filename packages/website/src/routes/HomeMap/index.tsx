@@ -15,6 +15,7 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import DatePicker from 'common/Datepicker';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -70,10 +71,15 @@ function Homepage({ classes }: HomepageProps) {
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
+  const [historicalDate, setHistoricalDate] = useState<string | null>(null);
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(historicalDate || undefined));
+  }, [dispatch, historicalDate]);
+
+  const handleDateChange = (date: Date | null) => {
+    setHistoricalDate(date ? date.toISOString().slice(0, 10) : null);
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -111,6 +117,14 @@ function Homepage({ classes }: HomepageProps) {
         <HomepageNavBar searchLocation geocodingEnabled />
       </div>
       <div className={classes.root}>
+        <div className={classes.dateControls}>
+          <DatePicker
+            dateName="Map date"
+            value={historicalDate}
+            timeZone="UTC"
+            onChange={handleDateChange}
+          />
+        </div>
         <Grid container>
           <Grid
             className={classes.map}
@@ -159,8 +173,14 @@ const styles = () =>
   createStyles({
     root: {
       display: 'flex',
+      flexDirection: 'column',
       flexGrow: 1,
       userSelect: 'none',
+    },
+    dateControls: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      padding: '0.75rem 1rem',
     },
     map: {
       display: 'flex',
