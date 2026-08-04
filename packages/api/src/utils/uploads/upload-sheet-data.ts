@@ -206,6 +206,26 @@ const getJsDateFromExcel = (excelDate, timezone) => {
   return new Date(parsed);
 };
 
+const expandTwoDigitYear = (dateStr: string): string => {
+  const match = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
+  if (!match) return dateStr;
+  const year = parseInt(match[3], 10);
+  const fullYear = year <= 68 ? 2000 + year : 1900 + year;
+  return `${match[1]}/${match[2]}/${fullYear}`;
+};
+
+const normalizeTimeString = (timeStr: string): string => {
+  const match = timeStr.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)$/i);
+  if (!match) return timeStr;
+  let hours = parseInt(match[1], 10);
+  const minutes = match[2];
+  const seconds = match[3] ?? '00';
+  const period = match[4].toUpperCase();
+  if (period === 'AM' && hours === 12) hours = 0;
+  if (period === 'PM' && hours !== 12) hours += 12;
+  return `${String(hours).padStart(2, '0')}:${minutes}:${seconds}`;
+};
+
 const getTimeStamp = (
   index: number | number[],
   item: any[],
@@ -218,7 +238,9 @@ const getTimeStamp = (
     typeof item[index[0]] === 'string' &&
     typeof item[index[1]] === 'string'
   )
-    return new Date(`${item[index[0]]} ${item[index[1]]}`);
+    return new Date(
+      `${expandTwoDigitYear(item[index[0]])} ${normalizeTimeString(item[index[1]])}`,
+    );
   if (isArray) {
     const date = new Date(Date.UTC(1900, 0));
     // We get the date as days from 1900. We have to subtract 1 to exactly match the date
