@@ -10,7 +10,7 @@ import { ForecastData } from '../wind-wave-data/forecast-data.entity';
 import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
-import { openMeteoMarineBatch } from './open-meteo';
+import { isOpenMeteoEnabled, openMeteoMarineBatch } from './open-meteo';
 import { sofarHindcast } from './sofar';
 import { getSofarNearestAvailablePoint } from './sofar-availability';
 import { ValueWithTimestamp } from './sofar.types';
@@ -229,6 +229,13 @@ export const addWaveData = async (
   siteIds: number[],
   repositories: Repositories,
 ) => {
+  if (!isOpenMeteoEnabled()) {
+    logger.warn(
+      'Open-Meteo fetching paused (OPEN_METEO_ENABLED is not true). Skipping wave update.',
+    );
+    return;
+  }
+
   const sites = await fetchSites(siteIds, repositories);
   const { today } = getTodayYesterdayDates();
 
