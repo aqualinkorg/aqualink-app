@@ -20,7 +20,7 @@ import { SurveyListItem } from 'store/Survey/types';
 import { surveyDetailsSelector } from 'store/Survey/surveySlice';
 import { Range } from 'store/Sites/types';
 import { convertToLocalTime } from 'helpers/dates';
-import { useProcessedChartData } from './utils';
+import { filterDataToDateRange, useProcessedChartData } from './utils';
 
 // An interface that describes all the possible options for displaying a dataset on a chart.
 export interface Dataset {
@@ -46,13 +46,15 @@ export interface Dataset {
   metric?: Metrics;
   source?: Sources;
   decimalPlaces?: number;
-  yAxisDecimalPlaces?: number;
+  yAxisDecimalPlaces?: number; // decimal places for the y-axis tick labels specifically; falls back to 2 if unset
   yAxisStepSize?: number;
   yAxisPadding?: number;
   yAxisMin?: number;
   yAxisMax?: number;
   dohThreshold?: number; // HWO: static red dashed line for the site's DOH/HAR 11-54 threshold
   fixedYAxisWidth?: number; // forces a fixed pixel width for the y-axis, so multiple charts share an identical left margin regardless of tick label digit count
+  hitRadius?: number; // enlarges the invisible hit-test area around a point, independent of its visible size
+  pointHoverRadius?: number; // visible dot size when a point is hovered/active
 }
 
 export interface ChartProps {
@@ -72,7 +74,15 @@ export interface ChartProps {
   fill?: boolean;
   hideYAxisUnits?: boolean;
 
-  chartSettings?: {};
+  chartSettings?: {
+    plugins?: {
+      annotation?: {
+        annotations?: unknown[];
+      };
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
+  };
   chartRef?: MutableRefObject<any | null>;
 }
 
@@ -160,21 +170,25 @@ function Chart({
       return { min: configYMin, max: configYMax };
     }
 
-    // Calculate from raw data with padding
+    // Calculate from raw data with padding, scoped to the visible date range
     if (customPadding !== undefined && customStepSize && datasets?.[0]?.data) {
-      const values = datasets[0].data
+      const values = filterDataToDateRange(datasets[0].data, startDate, endDate)
         .map((d) => d.value)
         .filter((v) => v !== null && v !== undefined);
-      const rawMin = Math.min(...values);
-      const rawMax = Math.max(...values);
 
-      return {
-        min:
-          Math.floor((rawMin - customPadding) / customStepSize) *
-          customStepSize,
-        max:
-          Math.ceil((rawMax + customPadding) / customStepSize) * customStepSize,
-      };
+      if (values.length > 0) {
+        const rawMin = Math.min(...values);
+        const rawMax = Math.max(...values);
+
+        return {
+          min:
+            Math.floor((rawMin - customPadding) / customStepSize) *
+            customStepSize,
+          max:
+            Math.ceil((rawMax + customPadding) / customStepSize) *
+            customStepSize,
+        };
+      }
     }
 
     // Default: use processed bounds

@@ -102,6 +102,8 @@ type ChartItem = {
 // with short tick labels (e.g. Turbidity's "4") and long ones (e.g. Nitrogen's
 // "717") line up at the same horizontal start point.
 const HWO_Y_AXIS_WIDTH = 65;
+const HWO_TOOLTIP_MAX_HOURS_GAP = 24 * 20; // HWO is monthly; the shared 6-hour default is far too narrow, widen to ~20 days
+const HUI_TOOLTIP_MAX_HOURS_GAP = 24 * 20; // HUI is also monthly; same widening, kept as a separate constant in case the two cadences ever diverge
 
 function MultipleSensorsCharts({
   site,
@@ -297,7 +299,15 @@ function MultipleSensorsCharts({
       'HUI',
       getPublicHuiMetrics,
       getHuiConfig,
-    );
+    ).map((item) => ({
+      ...item,
+      dataset: {
+        ...item.dataset,
+        tooltipMaxHoursGap: HUI_TOOLTIP_MAX_HOURS_GAP,
+        hitRadius: 12,
+        pointHoverRadius: 6,
+      },
+    }));
 
   const hwoDatasets = () =>
     getDatesetFun(
@@ -317,6 +327,9 @@ function MultipleSensorsCharts({
           ...(dohThreshold ? { dohThreshold } : {}),
           metric: camelCase(item.key) as Metrics,
           fixedYAxisWidth: HWO_Y_AXIS_WIDTH,
+          tooltipMaxHoursGap: HWO_TOOLTIP_MAX_HOURS_GAP,
+          hitRadius: 12,
+          pointHoverRadius: 6,
         },
       };
     });
@@ -1047,8 +1060,13 @@ function MultipleSensorsCharts({
 
           if (dataset) {
             const isHwo = source === 'hwo';
+            const isHui = source === 'hui';
+            const dohLabel =
+              dataset.dohThreshold !== undefined
+                ? `DOH Threshold: ${dataset.dohThreshold} ${dataset.unit}`
+                : undefined;
             return (
-              <Box mt={isHwo ? 1 : 4} key={key}>
+              <Box mt={isHwo ? 1 : 4} key={`${source}-${key}`}>
                 <ChartWithCard
                   datasets={[dataset]}
                   id={key}
@@ -1068,12 +1086,8 @@ function MultipleSensorsCharts({
                   showRangeButtons={false}
                   chartWidth={isHwo ? 'hwoFixed' : 'large'}
                   compact={isHwo}
-                  crosshairSync={isHwo}
-                  dohThresholdLabel={
-                    isHwo && dataset.dohThreshold !== undefined
-                      ? `DOH Threshold: ${dataset.dohThreshold} ${dataset.unit}`
-                      : undefined
-                  }
+                  crosshairSync={isHwo || isHui}
+                  dohThresholdLabel={dohLabel}
                   site={site}
                   pickerStartDate={
                     pickerStartDate ||
@@ -1098,19 +1112,19 @@ function MultipleSensorsCharts({
           return null;
         };
 
-        const nonHwoItems: ChartItem[] = [
+        const nonSyncedItems: ChartItem[] = [
           ...spotterDatasets(),
           ...seaphoxDatasets(),
           ...mergedPHDatasets(),
           ...mergedSalinityDatasets(),
           ...sondeDatasets(),
-          ...huiDatasets(),
         ];
 
         return (
           <>
-            {nonHwoItems.map(renderChartItem)}
+            {nonSyncedItems.map(renderChartItem)}
             <HoveredDateProvider>
+              {huiDatasets().map(renderChartItem)}
               {hwoDatasets().map(renderChartItem)}
             </HoveredDateProvider>
             {metlogDatasets().map(renderChartItem)}
