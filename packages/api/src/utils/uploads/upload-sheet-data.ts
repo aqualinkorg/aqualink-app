@@ -173,6 +173,7 @@ const rules: Rule[] = [
   { token: Metric.NITROGEN_TOTAL, expression: /^TotalN \(mg\/L\)$/ },
   { token: Metric.PHOSPHORUS_TOTAL, expression: /^TotalP \(mg\/L\)$/ },
   { token: Metric.ENTEROCOCCUS, expression: /^Entero\.\s*$/ },
+  { token: Metric.TURBIDITY, expression: /^T avg$/ },
 ];
 
 export type Mimetype = (typeof ACCEPTED_FILE_TYPES)[number]['mimetype'];
