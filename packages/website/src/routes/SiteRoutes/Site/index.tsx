@@ -249,6 +249,7 @@ function Site({ classes }: SiteProps) {
             flexWrap="wrap"
           >
             <TextField
+              id="site-data-date"
               label="View data as of"
               type="date"
               size="small"

@@ -1407,8 +1407,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-wgcuqq-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for=":r4t:"
-          id=":r4t:-label"
+          for="site-data-date"
+          id="site-data-date-label"
         >
           View data as of
         </label>
@@ -1419,7 +1419,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             aria-invalid="false"
             aria-label="Site data date"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r4t:"
+            id="site-data-date"
             max="2026-05-28"
             type="date"
             value=""
@@ -4435,8 +4435,8 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-wgcuqq-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for=":r10:"
-          id=":r10:-label"
+          for="site-data-date"
+          id="site-data-date-label"
         >
           View data as of
         </label>
@@ -4447,7 +4447,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             aria-invalid="false"
             aria-label="Site data date"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-uiizfa-MuiInputBase-input-MuiOutlinedInput-input"
-            id=":r10:"
+            id="site-data-date"
             max="2026-05-28"
             type="date"
             value=""
