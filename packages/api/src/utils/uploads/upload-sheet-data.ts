@@ -218,12 +218,16 @@ const expandTwoDigitYear = (dateStr: string): string => {
 const normalizeTimeString = (timeStr: string): string => {
   const match = timeStr.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)$/i);
   if (!match) return timeStr;
-  let hours = parseInt(match[1], 10);
+  const rawHours = parseInt(match[1], 10);
   const minutes = match[2];
   const seconds = match[3] ?? '00';
   const period = match[4].toUpperCase();
-  if (period === 'AM' && hours === 12) hours = 0;
-  if (period === 'PM' && hours !== 12) hours += 12;
+  const hours =
+    period === 'AM' && rawHours === 12
+      ? 0
+      : period === 'PM' && rawHours !== 12
+        ? rawHours + 12
+        : rawHours;
   return `${String(hours).padStart(2, '0')}:${minutes}:${seconds}`;
 };
 
