@@ -13,6 +13,26 @@ const IGNORED_ADVISORY_IDS = [
   // undertaking tracked in its own future PR.
   'GHSA-qwww-vcr4-c8h2',
 
+  // GHSA-8j4g-w8fx-2239 / CVE-2026-69207: hono CORS middleware ReDoS.
+  // Only affects applications using hono/cors with default (empty) allowHeaders.
+  // packages/website/src/worker.ts uses plain Hono routing only — no cors()
+  // middleware is imported or applied.
+  // Fix: hono >=4.12.34 (pending upgrade).
+  'GHSA-8j4g-w8fx-2239',
+
+  // GHSA-f23p-vx2j-j53r / CVE-2026-71850: hono/jsx memo() data leakage.
+  // Only affects server-side rendering via hono/jsx when memo() wraps a
+  // component that reads ambient request context.  worker.ts uses c.html()
+  // with plain string templates — no hono/jsx, no memo().
+  // Fix: hono >=4.12.34 (pending upgrade).
+  'GHSA-f23p-vx2j-j53r',
+
+  // GHSA-54fx-42gc-7vw4 / CVE-2026-71848: hono languageDetector middleware ReDoS.
+  // Only affects applications that use the languageDetector() middleware.
+  // worker.ts registers no language detection middleware.
+  // Fix: hono >=4.12.34 (pending upgrade).
+  'GHSA-54fx-42gc-7vw4',
+
   // GHSA-mh99-v99m-4gvg / CVE-2026-14257: brace-expansion OOM via unbounded expansion.
   // Path: api > typeorm > glob > minimatch > brace-expansion.
   // The glob patterns in that chain (entity/migration file discovery) are
@@ -22,6 +42,21 @@ const IGNORED_ADVISORY_IDS = [
   // v1.x (which replaces glob with tinyglobby) — a separate migration tracked in
   // its own future PR.
   'GHSA-mh99-v99m-4gvg',
+
+  // GHSA-rgw5-rvv9-x895 / CVE-2026-69152: brace-expansion DoS (bypass of prior mitigation).
+  // Path: api > typeorm > glob > minimatch > brace-expansion.
+  // Same analysis as GHSA-mh99-v99m-4gvg above — patterns are server-controlled
+  // constants, not user input. Fix requires the same TypeORM major upgrade.
+  'GHSA-rgw5-rvv9-x895',
+
+  // GHSA-5p4m-2wfm-xmqj / js-yaml quadratic CPU in !!omap resolution.
+  // Path: api > @nestjs/swagger > js-yaml.
+  // The js-yaml usage in @nestjs/swagger parses developer-authored OpenAPI
+  // schema files at startup — not runtime user input — so this ReDoS vector
+  // is not reachable from external requests.
+  // The fix (js-yaml >=4.3.1) requires @nestjs/swagger to update its peer
+  // dependency — a separate upgrade tracked in its own future PR.
+  'GHSA-5p4m-2wfm-xmqj',
 ];
 
 function getAuditOptions() {
