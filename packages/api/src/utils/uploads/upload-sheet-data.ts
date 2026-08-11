@@ -222,12 +222,8 @@ const normalizeTimeString = (timeStr: string): string => {
   const minutes = match[2];
   const seconds = match[3] ?? '00';
   const period = match[4].toUpperCase();
-  const hours =
-    period === 'AM' && rawHours === 12
-      ? 0
-      : period === 'PM' && rawHours !== 12
-        ? rawHours + 12
-        : rawHours;
+  const amHours = period === 'AM' && rawHours === 12 ? 0 : rawHours;
+  const hours = period === 'PM' && rawHours !== 12 ? amHours + 12 : amHours;
   return `${String(hours).padStart(2, '0')}:${minutes}:${seconds}`;
 };
 
