@@ -475,8 +475,7 @@ export const uploadFileToGCloud = async (
   // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService();
 
-  // Note this may fail. It would still return a location, but the file may not have been uploaded
-  const fileLocation = googleCloudService.uploadFileAsync(
+  const fileLocation = await googleCloudService.uploadFileAsync(
     filePath,
     sources.length === 1 ? sources[0] : 'multi_source',
     GoogleCloudDir.DATA_UPLOADS,
