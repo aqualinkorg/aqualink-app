@@ -176,9 +176,21 @@ function Chart({
         .map((d) => d.value)
         .filter((v) => v !== null && v !== undefined);
 
-      if (values.length > 0) {
-        const rawMin = Math.min(...values);
-        const rawMax = Math.max(...values);
+      if (values.length > 0 || dohThreshold !== undefined) {
+        const rawMin =
+          values.length > 0
+            ? Math.min(
+                ...values,
+                ...(dohThreshold !== undefined ? [dohThreshold] : []),
+              )
+            : (dohThreshold as number);
+        const rawMax =
+          values.length > 0
+            ? Math.max(
+                ...values,
+                ...(dohThreshold !== undefined ? [dohThreshold] : []),
+              )
+            : (dohThreshold as number);
 
         return {
           min:

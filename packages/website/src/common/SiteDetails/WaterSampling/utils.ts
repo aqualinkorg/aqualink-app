@@ -283,9 +283,12 @@ export function getHwoDohThreshold(
 }
 
 function calculateGeometricMean(data: number[]): number | undefined {
-  if (data.length === 0) return undefined;
-  const lnSum = data.reduce((acc, curr) => acc + Math.log(curr), 0);
-  return Math.exp(lnSum / data.length);
+  const positive = data.filter((n) => n > 0);
+  if (positive.length === 0) {
+    return data.length > 0 ? 0 : undefined;
+  }
+  const lnSum = positive.reduce((acc, curr) => acc + Math.log(curr), 0);
+  return Math.exp(lnSum / positive.length);
 }
 
 function calculateMean(data: number[]): number | undefined {
@@ -509,7 +512,7 @@ export async function getCardData(
 
         const pointId = inLastYear[0]?.surveyPoint;
         const samePoint =
-          pointId !== null
+          pointId != null
             ? inLastYear.reduce(
                 (acc, curr) => acc && curr.surveyPoint?.id === pointId.id,
                 true,
@@ -554,7 +557,7 @@ export async function getCardData(
 
         const pointId = inLastYear[0]?.surveyPoint;
         const samePoint =
-          pointId !== null
+          pointId != null
             ? inLastYear.reduce(
                 (acc, curr) => acc && curr.surveyPoint?.id === pointId.id,
                 true,

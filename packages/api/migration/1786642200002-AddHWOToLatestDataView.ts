@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddHWOToLatestDataView1779844274412 implements MigrationInterface {
-  name = 'AddHWOToLatestDataView1779844274412';
+export class AddHWOToLatestDataView1786642200002 implements MigrationInterface {
+  name = 'AddHWOToLatestDataView1786642200002';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(

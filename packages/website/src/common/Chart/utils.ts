@@ -451,22 +451,34 @@ export const calculateAxisLimits = (
   const xAxisMin = startDate || datasetsXMin;
   const xAxisMax = endDate || datasetsXMax;
 
-  // y axis limits calculation
-  const datasetsYMin = Math.min(...accumulatedYAxisData);
-  const datasetsYMax = Math.max(...accumulatedYAxisData);
-  const ySpacing = Math.ceil(
-    Y_SPACING_PERCENTAGE * (datasetsYMax - datasetsYMin),
-  ); // Set ySpacing as a percentage of the data range
+  const extraThresholds = [
+    temperatureThreshold,
+    datasets?.[0]?.dohThreshold,
+  ].filter((t): t is number => typeof t === 'number');
+
+  const yExtent = (values: number[], fallback: [number, number]) =>
+    values.length > 0
+      ? ([Math.min(...values), Math.max(...values)] as const)
+      : fallback;
+
+  const [datasetsYMin, datasetsYMax] = yExtent(
+    accumulatedYAxisData,
+    extraThresholds.length > 0
+      ? [Math.min(...extraThresholds), Math.max(...extraThresholds)]
+      : [0, 1],
+  );
+  const yRange = Math.max(datasetsYMax - datasetsYMin, 1);
+  const ySpacing = Math.ceil(Y_SPACING_PERCENTAGE * yRange);
   const yAxisMinTemp = datasetsYMin - ySpacing;
   const yAxisMaxTemp = datasetsYMax + ySpacing;
   const yAxisMin = Math.round(
-    temperatureThreshold
-      ? Math.min(yAxisMinTemp, temperatureThreshold - ySpacing)
+    extraThresholds.length
+      ? Math.min(yAxisMinTemp, ...extraThresholds.map((t) => t - ySpacing))
       : yAxisMinTemp,
   );
   const yAxisMax = Math.round(
-    temperatureThreshold
-      ? Math.max(yAxisMaxTemp, temperatureThreshold + ySpacing)
+    extraThresholds.length
+      ? Math.max(yAxisMaxTemp, ...extraThresholds.map((t) => t + ySpacing))
       : yAxisMaxTemp,
   );
 

@@ -67,15 +67,27 @@ function AnalysisCard({
       decimalPlaces,
       metric,
     }) => {
+      const metricKey = metric
+        ? (snakeCase(metric) as HwoMetricsKeys)
+        : undefined;
+      const hwoMetric =
+        metricKey &&
+        [
+          'enterococcus',
+          'nitrogen_total',
+          'turbidity',
+          'salinity',
+          'phosphorus_total',
+        ].includes(metricKey)
+          ? metricKey
+          : undefined;
       const computedRows = calculateCardMetrics(
         chartStartDate,
         chartEndDate,
         data,
         label,
+        hwoMetric ? 'geometric' : 'arithmetic',
       );
-      const hwoMetric = metric
-        ? (snakeCase(metric) as HwoMetricsKeys)
-        : undefined;
 
       return {
         title: cardColumnName || label,

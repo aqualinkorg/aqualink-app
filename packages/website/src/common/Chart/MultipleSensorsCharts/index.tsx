@@ -882,6 +882,7 @@ function MultipleSensorsCharts({
       availableSources &&
       hasAdditionalSensorData &&
       !hasHuiData &&
+      !hasHwoData &&
       !hasSondeData &&
       !(startParam || endParam) &&
       site.id !== 1006 &&
@@ -895,6 +896,7 @@ function MultipleSensorsCharts({
     availableSources,
     hasAdditionalSensorData,
     hasHuiData,
+    hasHwoData,
     hasSondeData,
     initialPageLoad,
     startParam,

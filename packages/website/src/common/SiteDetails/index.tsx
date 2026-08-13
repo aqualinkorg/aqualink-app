@@ -242,11 +242,17 @@ function SiteDetails({
           timeSeriesRange,
         );
 
-      const hasHWO = latestData.some(
-        (x) =>
-          x.source === 'hwo' &&
-          acceptHUIInterval.contains(DateTime.fromISO(x.timestamp)),
-      );
+      const hasHWO =
+        latestData.some(
+          (x) =>
+            x.source === 'hwo' &&
+            acceptHUIInterval.contains(DateTime.fromISO(x.timestamp)),
+        ) ||
+        sourceWithinDataRangeInterval(
+          acceptHUIInterval,
+          'hwo',
+          timeSeriesRange,
+        );
 
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotterTemperature);

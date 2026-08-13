@@ -82,7 +82,7 @@ async function run() {
 
     if (siteIdIndex === -1) {
       throw new Error(
-        "No 'aqualink_site_id' or 'site_id' column found in the CSV. Please add a column with the Aqualink site ID for each row.",
+        "No 'aqualink_site_id' column found in the CSV. Please add a column with the Aqualink site ID for each row.",
       );
     }
 
@@ -113,7 +113,7 @@ async function run() {
           '',
           {} as Sources,
           headerToTokenMap,
-          null,
+          site?.timezone ?? null,
           'text/csv',
         );
 
@@ -125,6 +125,11 @@ async function run() {
       (acc, curr) => [...acc, ...curr.data],
       [] as NewData[],
     );
+
+    if (allData.length === 0) {
+      logger.warn('No valid HWO rows to upload. Aborting.');
+      return;
+    }
 
     const minDate = get(
       minBy(allData, (item) => new Date(get(item, 'timestamp')).getTime()),
