@@ -269,9 +269,10 @@ export function getHwoIconConfig(
 }
 
 function calculateGeometricMean(data: number[]): number | undefined {
-  if (data.length === 0) return undefined;
-  const lnSum = data.reduce((acc, curr) => acc + Math.log(curr), 0);
-  return Math.exp(lnSum / data.length);
+  const nonZero = data.filter((x) => x > 0);
+  if (nonZero.length === 0) return undefined;
+  const lnSum = nonZero.reduce((acc, curr) => acc + Math.log(curr), 0);
+  return Math.exp(lnSum / nonZero.length);
 }
 
 function calculateMean(data: number[]): number | undefined {

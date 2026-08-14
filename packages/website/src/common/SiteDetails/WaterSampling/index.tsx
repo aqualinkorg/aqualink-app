@@ -125,20 +125,27 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     const newMeans = Object.fromEntries(
       Object.entries(timeSeriesData || {})
         .map(([key, val]) => {
-          const values = val
-            .find(
-              (x) =>
-                // hui is specific type of sonde, look for hui as well when looking for sonde
-                x.type === source || (source === 'sonde' && x.type === 'hui'),
-            )
-            ?.data.map((x) => x.value);
-          if (!values) return [undefined, undefined];
-          return [key, getMeanCalculationFunction(source)(values)];
+          const seriesData = val.find(
+            (x) =>
+              x.type === source || (source === 'sonde' && x.type === 'hui'),
+          )?.data;
+          if (!seriesData || seriesData.length === 0)
+            return [undefined, undefined];
+          if (showHwoCard) {
+            const latest = seriesData.reduce((a, b) =>
+              new Date(a.timestamp) > new Date(b.timestamp) ? a : b,
+            );
+            return [key, latest.value];
+          }
+          return [
+            key,
+            getMeanCalculationFunction(source)(seriesData.map((x) => x.value)),
+          ];
         })
         .filter((x) => x && x[0]),
     ) as Partial<Record<Metrics, number>>;
     setMeanValues(newMeans);
-  }, [source, timeSeriesData]);
+  }, [source, showHwoCard, timeSeriesData]);
 
   return (
     <Card className={showHwoCard ? classes.hwoRoot : classes.root}>
