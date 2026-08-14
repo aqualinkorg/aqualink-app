@@ -145,6 +145,7 @@ function SiteDetails({
   const [hasSpotterWindWaveData, setHasSpotterWindWaveData] =
     useState<boolean>(false);
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
+  const [hasHWOData, setHasHWOData] = useState<boolean>(false);
   const [hasSeapHOxData, setHasSeapHOxData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
@@ -241,10 +242,23 @@ function SiteDetails({
           timeSeriesRange,
         );
 
+      const hasHWO =
+        latestData.some(
+          (x) =>
+            x.source === 'hwo' &&
+            acceptHUIInterval.contains(DateTime.fromISO(x.timestamp)),
+        ) ||
+        sourceWithinDataRangeInterval(
+          acceptHUIInterval,
+          'hwo',
+          timeSeriesRange,
+        );
+
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotterTemperature);
       setHasSpotterWindWaveData(hasSpotterWindWave);
       setHasHUIData(hasHUI);
+      setHasHWOData(hasHWO);
 
       const seapHOxInterval = Interval.fromDateTimes(
         DateTime.now().minus({ days: 7 }), // Only show if data within last 7 days
@@ -297,7 +311,7 @@ function SiteDetails({
           // CARD 2: Sensor/CoralBleaching/TemperatureChange (conditional)
           (() => {
             if (
-              (hasHUIData || hasSondeData || hasSeapHOxData) &&
+              (hasHUIData || hasSondeData || hasSeapHOxData || hasHWOData) &&
               !hasSpotterData
             ) {
               return <CoralBleaching data={latestDataAsSofarValues} />;
@@ -326,6 +340,12 @@ function SiteDetails({
                   depth={site.depth}
                   data={latestDataAsSofarValues}
                 />
+              );
+            }
+
+            if (hasHWOData) {
+              return (
+                <WaterSamplingCard siteId={site.id.toString()} source="hwo" />
               );
             }
 
@@ -510,7 +530,7 @@ function SiteDetails({
           site={site}
           selectedSurveyPointId={selectedSurveyPointId}
           surveys={surveys}
-          hasAdditionalSensorData={hasHUIData || hasSondeData}
+          hasAdditionalSensorData={hasHUIData || hasSondeData || hasHWOData}
         />
         {site?.iframe && (
           <iframe

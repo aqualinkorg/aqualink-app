@@ -40,6 +40,9 @@ import { Metric } from './metrics.enum';
       .orWhere(
         "type IN ('sheet_data') AND (timestamp >= current_date - INTERVAL '2 years')",
       )
+      .orWhere(
+        "type IN ('hwo') AND (timestamp >= current_date - INTERVAL '2 years')",
+      )
       .orderBy('metric, type, site_id, survey_point_id, timestamp', 'DESC'),
   materialized: true,
 })

@@ -54,14 +54,14 @@ export class GoogleCloudService {
     return getRandomName(folder, prefix, basename, type);
   }
 
-  public uploadFileAsync(
+  public async uploadFileAsync(
     filePath: string,
     type: string,
     dir: string = 'surveys',
     prefix: string = 'site_hobo_image',
-  ): string {
+  ): Promise<string> {
     const dest = this.getDestination(filePath, type, dir, prefix);
-    this.uploadFile(filePath, dest);
+    await this.uploadFile(filePath, dest);
     return dest;
   }
 
@@ -83,17 +83,22 @@ export class GoogleCloudService {
       this.logger.error('GCS_BUCKET variable has not been initialized');
       throw new InternalServerErrorException();
     }
-    const response = await this.storage
-      .bucket(this.GCS_BUCKET)
-      .upload(filePath, {
-        destination,
-        public: true,
-        gzip: true,
-      });
+    try {
+      const response = await this.storage
+        .bucket(this.GCS_BUCKET)
+        .upload(filePath, {
+          destination,
+          public: true,
+          gzip: true,
+        });
 
-    const publicUrl = response[0].name;
+      const publicUrl = response[0].name;
 
-    return `https://storage.googleapis.com/${this.GCS_BUCKET}/${publicUrl}`;
+      return `https://storage.googleapis.com/${this.GCS_BUCKET}/${publicUrl}`;
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException();
+    }
   }
 
   public uploadBuffer(

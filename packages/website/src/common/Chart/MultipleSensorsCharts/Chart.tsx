@@ -40,6 +40,8 @@ function Chart({
   pickerErrored,
   showDatePickers = true,
   source,
+  compact,
+  crosshairSync,
   onStartDateChange,
   onEndDateChange,
   classes,
@@ -143,7 +145,7 @@ function Chart({
       )}
       {success && (
         <ChartWithTooltip
-          className={classes.chart}
+          className={compact ? classes.compactChart : classes.chart}
           datasets={datasets}
           siteId={site.id}
           hideYAxisUnits={hideYAxisUnits}
@@ -157,6 +159,7 @@ function Chart({
           endDate={convertToLocalTime(endDate, site.timezone)}
           showYearInTicks={moreThanOneYear(startDate, endDate)}
           fill={false}
+          crosshairSync={crosshairSync}
         />
       )}
       {!isTimeSeriesDataRangeLoading && showDatePickers && (
@@ -202,6 +205,10 @@ const styles = (theme: Theme) =>
       height: 279,
       margin: `${theme.spacing(1)} 0`,
     },
+    compactChart: {
+      height: 160,
+      margin: `${theme.spacing(0.5)} 0`,
+    },
 
     datePickersWrapper: {
       margin: '0 7px 0 27px',
@@ -221,6 +228,8 @@ interface ChartIncomingProps {
   surveysFiltered?: boolean;
   showDatePickers?: boolean;
   source?: Sources;
+  compact?: boolean;
+  crosshairSync?: boolean;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
 }
