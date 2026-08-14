@@ -15,6 +15,7 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import isEmpty from 'lodash/isEmpty';
 import { TimeSeriesSurveyPoint } from 'store/Sites/types';
+import classnames from 'classnames';
 
 import { grey } from '@mui/material/colors';
 import { AvailableRange, RangeButton, RangeValue } from './types';
@@ -31,6 +32,8 @@ function Header({
   timeZone,
   showRangeButtons = true,
   surveyPoint,
+  compact,
+  dohThresholdLabel,
 }: HeaderProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -69,7 +72,10 @@ function Header({
         spacing={2}
       >
         <Grid item>
-          <Box ml={isMobile ? 0 : 4}>
+          <Box
+            ml={isMobile ? 0 : 4}
+            className={compact ? classes.compactTitleWrapper : undefined}
+          >
             <Typography
               className={classes.title}
               variant="h6"
@@ -82,9 +88,12 @@ function Header({
                 Survey point: {surveyPoint.name}
               </Typography>
             )}
-            {!isEmpty(availableRanges) && (
+            {(!isEmpty(availableRanges) || dohThresholdLabel) && (
               <Grid
-                className={classes.rangesWrapper}
+                className={classnames(
+                  classes.rangesWrapper,
+                  compact && classes.compactRangesWrapper,
+                )}
                 container
                 alignItems="center"
                 spacing={2}
@@ -116,6 +125,27 @@ function Header({
                     </Grid>
                   );
                 })}
+                {dohThresholdLabel && (
+                  <Grid item>
+                    <Tooltip
+                      arrow
+                      placement="top"
+                      title="Hawai'i State Department of Health"
+                    >
+                      <Alert
+                        classes={{
+                          icon: classes.rangeIcon,
+                          root: classes.rangeItem,
+                        }}
+                        severity="info"
+                      >
+                        <Typography variant="subtitle2">
+                          {dohThresholdLabel}
+                        </Typography>
+                      </Alert>
+                    </Tooltip>
+                  </Grid>
+                )}
               </Grid>
             )}
           </Box>
@@ -178,6 +208,16 @@ const styles = (theme: Theme) =>
     rangesWrapper: {
       marginTop: 0,
     },
+    compactTitleWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+    },
+    compactRangesWrapper: {
+      marginTop: 0,
+      marginLeft: theme.spacing(1.5),
+      width: 'auto',
+    },
     rangeItem: {
       height: 28,
       display: 'flex',
@@ -212,6 +252,8 @@ interface HeaderIncomingProps {
   timeZone?: string | null;
   showRangeButtons?: boolean;
   surveyPoint?: TimeSeriesSurveyPoint;
+  compact?: boolean;
+  dohThresholdLabel?: string;
 }
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;

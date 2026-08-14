@@ -11,6 +11,7 @@ export interface BaseSourceConfig {
   order: number;
   convert?: number;
   decimalPlaces?: number;
+  yAxisDecimalPlaces?: number;
   yAxisStepSize?: number;
   yAxisPadding?: number;
   yAxisMin?: number;
