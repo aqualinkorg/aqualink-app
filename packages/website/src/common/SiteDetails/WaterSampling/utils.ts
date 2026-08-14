@@ -283,12 +283,10 @@ export function getHwoDohThreshold(
 }
 
 function calculateGeometricMean(data: number[]): number | undefined {
-  const positive = data.filter((n) => n > 0);
-  if (positive.length === 0) {
-    return data.length > 0 ? 0 : undefined;
-  }
-  const lnSum = positive.reduce((acc, curr) => acc + Math.log(curr), 0);
-  return Math.exp(lnSum / positive.length);
+  const nonZero = data.filter((x) => x > 0);
+  if (nonZero.length === 0) return undefined;
+  const lnSum = nonZero.reduce((acc, curr) => acc + Math.log(curr), 0);
+  return Math.exp(lnSum / nonZero.length);
 }
 
 function calculateMean(data: number[]): number | undefined {
