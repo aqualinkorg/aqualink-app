@@ -163,6 +163,18 @@ const rules: Rule[] = [
   { token: Metric.SILICATE, expression: /^Silicate$/ },
   { token: Metric.NNN, expression: /^NNN$/ },
   { token: Metric.AMMONIUM, expression: /^NH4$/ },
+  // HWO Metrics
+  { token: Metric.ENTEROCOCCUS, expression: /^Entero$/ },
+  { token: Metric.TURBIDITY_1, expression: /^T1$/ },
+  { token: Metric.TURBIDITY_2, expression: /^T2$/ },
+  { token: Metric.TURBIDITY_3, expression: /^T3$/ },
+  { token: Metric.TURBIDITY_4, expression: /^T4$/ },
+  { token: Metric.SALINITY, expression: /^Salinityn \(ppt\)$/ },
+  { token: Metric.SALINITY, expression: /^Salinity \(ppt\)$/ },
+  { token: Metric.NITROGEN_TOTAL, expression: /^TotalN \(mg\/L\)$/ },
+  { token: Metric.PHOSPHORUS_TOTAL, expression: /^TotalP \(mg\/L\)$/ },
+  { token: Metric.ENTEROCOCCUS, expression: /^Entero\.\s*$/ },
+  { token: Metric.TURBIDITY, expression: /^T avg$/ },
 ];
 
 export type Mimetype = (typeof ACCEPTED_FILE_TYPES)[number]['mimetype'];
@@ -196,6 +208,26 @@ const getJsDateFromExcel = (excelDate, timezone) => {
   return new Date(parsed);
 };
 
+const expandTwoDigitYear = (dateStr: string): string => {
+  const match = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
+  if (!match) return dateStr;
+  const year = parseInt(match[3], 10);
+  const fullYear = year <= 68 ? 2000 + year : 1900 + year;
+  return `${match[1]}/${match[2]}/${fullYear}`;
+};
+
+const normalizeTimeString = (timeStr: string): string => {
+  const match = timeStr.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)$/i);
+  if (!match) return timeStr;
+  const rawHours = parseInt(match[1], 10);
+  const minutes = match[2];
+  const seconds = match[3] ?? '00';
+  const period = match[4].toUpperCase();
+  const amHours = period === 'AM' && rawHours === 12 ? 0 : rawHours;
+  const hours = period === 'PM' && rawHours !== 12 ? amHours + 12 : amHours;
+  return `${String(hours).padStart(2, '0')}:${minutes}:${seconds}`;
+};
+
 const getTimeStamp = (
   index: number | number[],
   item: any[],
@@ -208,7 +240,9 @@ const getTimeStamp = (
     typeof item[index[0]] === 'string' &&
     typeof item[index[1]] === 'string'
   )
-    return new Date(`${item[index[0]]} ${item[index[1]]}`);
+    return new Date(
+      `${expandTwoDigitYear(item[index[0]])} ${normalizeTimeString(item[index[1]])}`,
+    );
   if (isArray) {
     const date = new Date(Date.UTC(1900, 0));
     // We get the date as days from 1900. We have to subtract 1 to exactly match the date
@@ -260,6 +294,16 @@ export const getFilePathData = async (filePath: string) => {
   const importedMetrics = headerToTokenMap.filter(
     (x): x is Metric => x !== undefined && !nonMetric.includes(x as NonMetric),
   );
+  const hasTurbidityReplicates = [
+    Metric.TURBIDITY_1,
+    Metric.TURBIDITY_2,
+    Metric.TURBIDITY_3,
+    Metric.TURBIDITY_4,
+  ].some((metric) => importedMetrics.includes(metric));
+  const metricsWithTurbidityAvg =
+    hasTurbidityReplicates && !importedMetrics.includes(Metric.TURBIDITY)
+      ? [...importedMetrics, Metric.TURBIDITY]
+      : importedMetrics;
   const ignoredHeaders = headers.filter(
     (x, i) => headerToTokenMap[i] === undefined,
   );
@@ -269,7 +313,7 @@ export const getFilePathData = async (filePath: string) => {
     workSheetData,
     signature,
     ignoredHeaders,
-    importedMetrics,
+    importedMetrics: metricsWithTurbidityAvg,
     headers,
     headerIndex,
     headerToTokenMap,
@@ -373,6 +417,10 @@ export const convertData = (
 
   workSheetData.forEach((row) => {
     const timestampDate = getTimeStamp(timestampIndex, row, mimetype, timezone);
+    if (Number.isNaN(timestampDate.getTime())) {
+      logger.warn(`Skipping row with invalid timestamp in ${fileName}`);
+      return;
+    }
 
     // This need to be done for each row to take into account daylight savings
     // and other things that may affect timezone offset in that exact date
@@ -414,7 +462,42 @@ export const convertData = (
   );
   console.timeEnd(`Remove duplicates and empty values ${fileName}`);
 
-  return data;
+  const turbidityReplicates = [
+    Metric.TURBIDITY_1,
+    Metric.TURBIDITY_2,
+    Metric.TURBIDITY_3,
+    Metric.TURBIDITY_4,
+  ];
+  const replicatesByTimestamp = groupBy(
+    data.filter((row) => turbidityReplicates.includes(row.metric)),
+    'timestamp',
+  );
+  const turbidityAverages = Object.entries(replicatesByTimestamp).flatMap(
+    ([timestamp, rows]) => {
+      if (
+        data.some(
+          (row) =>
+            row.timestamp === timestamp && row.metric === Metric.TURBIDITY,
+        )
+      ) {
+        return [];
+      }
+      const values = rows.map((row) => row.value);
+      if (values.length === 0) {
+        return [];
+      }
+      return [
+        {
+          timestamp,
+          value: values.reduce((sum, value) => sum + value, 0) / values.length,
+          metric: Metric.TURBIDITY,
+          source: rows[0].source,
+        },
+      ];
+    },
+  );
+
+  return turbidityAverages.length > 0 ? [...data, ...turbidityAverages] : data;
 };
 
 export const uploadFileToGCloud = async (
@@ -443,8 +526,7 @@ export const uploadFileToGCloud = async (
   // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService();
 
-  // Note this may fail. It would still return a location, but the file may not have been uploaded
-  const fileLocation = googleCloudService.uploadFileAsync(
+  const fileLocation = await googleCloudService.uploadFileAsync(
     filePath,
     sources.length === 1 ? sources[0] : 'multi_source',
     GoogleCloudDir.DATA_UPLOADS,

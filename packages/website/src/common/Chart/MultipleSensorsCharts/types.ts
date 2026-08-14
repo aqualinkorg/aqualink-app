@@ -13,7 +13,12 @@ export interface CardColumn {
   title: string;
   key: string;
   color: string;
-  rows: { key: string; value: number | undefined }[];
+  rows: {
+    key: string;
+    value: number | undefined;
+    iconType?: 'check' | 'warning';
+    iconColor?: string;
+  }[];
   tooltip?: string;
   display: boolean;
   unit: string;

@@ -95,6 +95,9 @@ export const metricsKeysList = [
   'nitrate_plus_nitrite',
   'surface_temperature',
   'dissolved_oxygen',
+  'enterococcus',
+  'nitrogen_total',
+  'phosphorus_total',
 ] as const;
 
 export type MetricsKeys = (typeof metricsKeysList)[number];
@@ -132,6 +135,7 @@ export type Sources =
   | 'hui'
   | 'sheet_data'
   | 'seaphox'
+  | 'hwo'
   | 'open_meteo';
 
 export type LatestDataASSofarValue = {
