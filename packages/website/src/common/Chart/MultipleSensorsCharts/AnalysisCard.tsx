@@ -86,7 +86,6 @@ function AnalysisCard({
         chartEndDate,
         data,
         label,
-        hwoMetric ? 'geometric' : 'arithmetic',
       );
 
       return {

@@ -23,7 +23,7 @@ test('empty visible range does not produce Infinity y-axis', () => {
   expect(yAxisMax).toBeGreaterThan(yAxisMin);
 });
 
-test('y-axis expands to include dohThreshold', () => {
+test('y-axis does not expand to include dohThreshold', () => {
   const { yAxisMax } = calculateAxisLimits(
     [
       {
@@ -42,5 +42,6 @@ test('y-axis expands to include dohThreshold', () => {
     null,
   );
 
-  expect(yAxisMax).toBeGreaterThanOrEqual(130);
+  // Healthy-site data stays zoomed; DOH value is shown via the header badge.
+  expect(yAxisMax).toBeLessThan(130);
 });

@@ -131,7 +131,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
           )?.data;
           if (!seriesData || seriesData.length === 0)
             return [undefined, undefined];
-          if (showHwoCard) {
+          if (source === 'hwo') {
             const latest = seriesData.reduce((a, b) =>
               new Date(a.timestamp) > new Date(b.timestamp) ? a : b,
             );
@@ -145,7 +145,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
         .filter((x) => x && x[0]),
     ) as Partial<Record<Metrics, number>>;
     setMeanValues(newMeans);
-  }, [source, showHwoCard, timeSeriesData]);
+  }, [source, timeSeriesData]);
 
   return (
     <Card className={showHwoCard ? classes.hwoRoot : classes.root}>

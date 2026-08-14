@@ -296,11 +296,10 @@ function calculateMean(data: number[]): number | undefined {
 }
 
 export function getMeanCalculationFunction(
-  source: Extract<Sources, 'hui' | 'sonde' | 'hwo'>,
+  source: Extract<Sources, 'hui' | 'sonde'>,
 ): (a: number[]) => number | undefined {
   switch (source) {
     case 'hui':
-    case 'hwo':
       return calculateGeometricMean;
     case 'sonde':
       return calculateMean;

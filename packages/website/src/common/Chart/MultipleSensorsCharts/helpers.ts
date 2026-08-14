@@ -47,42 +47,30 @@ const filterSofarData =
     );
   };
 
-function geometricMean(values: number[]): number | undefined {
-  const positive = values.filter((n) => n > 0);
-  if (positive.length === 0) {
-    return values.length > 0 ? 0 : undefined;
-  }
-  const lnSum = positive.reduce((acc, curr) => acc + Math.log(curr), 0);
-  return Math.exp(lnSum / positive.length);
-}
-
 export const calculateCardMetrics = (
   from: string,
   to: string,
   data?: ValueWithTimestamp[],
   keyPrefix?: string,
-  meanFn: 'arithmetic' | 'geometric' = 'arithmetic',
 ): CardColumn['rows'] => {
   const filteredData = filterSofarData(from, to)(data);
-  const hasPoints = Boolean(filteredData?.[0]);
-  const values = filteredData?.map((d) => d.value) ?? [];
 
   return [
     {
       key: `${keyPrefix}-max`,
-      value: hasPoints ? maxBy(filteredData, 'value')?.value : undefined,
+      value: filteredData?.[0]
+        ? maxBy(filteredData, 'value')?.value
+        : undefined,
     },
     {
       key: `${keyPrefix}-mean`,
-      value: (() => {
-        if (!hasPoints) return undefined;
-        if (meanFn === 'geometric') return geometricMean(values);
-        return meanBy(filteredData, 'value');
-      })(),
+      value: filteredData?.[0] ? meanBy(filteredData, 'value') : undefined,
     },
     {
       key: `${keyPrefix}-min`,
-      value: hasPoints ? minBy(filteredData, 'value')?.value : undefined,
+      value: filteredData?.[0]
+        ? minBy(filteredData, 'value')?.value
+        : undefined,
     },
   ];
 };
