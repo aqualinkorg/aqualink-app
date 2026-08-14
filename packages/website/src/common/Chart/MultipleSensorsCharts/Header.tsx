@@ -127,17 +127,23 @@ function Header({
                 })}
                 {dohThresholdLabel && (
                   <Grid item>
-                    <Alert
-                      classes={{
-                        icon: classes.rangeIcon,
-                        root: classes.rangeItem,
-                      }}
-                      severity="info"
+                    <Tooltip
+                      arrow
+                      placement="top"
+                      title="Hawai'i State Department of Health"
                     >
-                      <Typography variant="subtitle2">
-                        {dohThresholdLabel}
-                      </Typography>
-                    </Alert>
+                      <Alert
+                        classes={{
+                          icon: classes.rangeIcon,
+                          root: classes.rangeItem,
+                        }}
+                        severity="info"
+                      >
+                        <Typography variant="subtitle2">
+                          {dohThresholdLabel}
+                        </Typography>
+                      </Alert>
+                    </Tooltip>
                   </Grid>
                 )}
               </Grid>

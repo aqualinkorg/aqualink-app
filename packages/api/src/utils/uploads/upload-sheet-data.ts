@@ -169,6 +169,7 @@ const rules: Rule[] = [
   { token: Metric.TURBIDITY_2, expression: /^T2$/ },
   { token: Metric.TURBIDITY_3, expression: /^T3$/ },
   { token: Metric.TURBIDITY_4, expression: /^T4$/ },
+  { token: Metric.SALINITY, expression: /^Salinityn \(ppt\)$/ },
   { token: Metric.SALINITY, expression: /^Salinity \(ppt\)$/ },
   { token: Metric.NITROGEN_TOTAL, expression: /^TotalN \(mg\/L\)$/ },
   { token: Metric.PHOSPHORUS_TOTAL, expression: /^TotalP \(mg\/L\)$/ },

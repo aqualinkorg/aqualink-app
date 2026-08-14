@@ -451,10 +451,9 @@ export const calculateAxisLimits = (
   const xAxisMin = startDate || datasetsXMin;
   const xAxisMax = endDate || datasetsXMax;
 
-  const extraThresholds = [
-    temperatureThreshold,
-    datasets?.[0]?.dohThreshold,
-  ].filter((t): t is number => typeof t === 'number');
+  const extraThresholds = [temperatureThreshold].filter(
+    (t): t is number => typeof t === 'number',
+  );
 
   const yExtent = (values: number[], fallback: [number, number]) =>
     values.length > 0
