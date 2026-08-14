@@ -5,7 +5,7 @@ import siteServices from 'services/siteServices';
 import { timeSeriesRequest } from 'store/Sites/helpers';
 import { getSondeConfig } from 'constants/chartConfigs/sondeConfig';
 
-type HwoMetricsKeys = Extract<
+export type HwoMetricsKeys = Extract<
   MetricsKeys,
   | 'enterococcus'
   | 'nitrogen_total'
@@ -268,6 +268,20 @@ export function getHwoIconConfig(
   return { iconType, iconColor };
 }
 
+const DOH_THRESHOLD_METRICS: HwoMetricsKeys[] = [
+  'enterococcus',
+  'nitrogen_total',
+  'phosphorus_total',
+];
+
+export function getHwoDohThreshold(
+  siteId: number,
+  metric: HwoMetricsKeys,
+): number | undefined {
+  if (!DOH_THRESHOLD_METRICS.includes(metric)) return undefined;
+  return hwoThresholds[siteId]?.[metric]?.moderatelyImpaired[0];
+}
+
 function calculateGeometricMean(data: number[]): number | undefined {
   const nonZero = data.filter((x) => x > 0);
   if (nonZero.length === 0) return undefined;
@@ -282,11 +296,10 @@ function calculateMean(data: number[]): number | undefined {
 }
 
 export function getMeanCalculationFunction(
-  source: Extract<Sources, 'hui' | 'sonde' | 'hwo'>,
+  source: Extract<Sources, 'hui' | 'sonde'>,
 ): (a: number[]) => number | undefined {
   switch (source) {
     case 'hui':
-    case 'hwo':
       return calculateGeometricMean;
     case 'sonde':
       return calculateMean;
@@ -496,7 +509,7 @@ export async function getCardData(
 
         const pointId = inLastYear[0]?.surveyPoint;
         const samePoint =
-          pointId !== null
+          pointId != null
             ? inLastYear.reduce(
                 (acc, curr) => acc && curr.surveyPoint?.id === pointId.id,
                 true,
@@ -541,7 +554,7 @@ export async function getCardData(
 
         const pointId = inLastYear[0]?.surveyPoint;
         const samePoint =
-          pointId !== null
+          pointId != null
             ? inLastYear.reduce(
                 (acc, curr) => acc && curr.surveyPoint?.id === pointId.id,
                 true,

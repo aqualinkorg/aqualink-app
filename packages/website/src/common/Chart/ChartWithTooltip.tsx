@@ -13,10 +13,12 @@ import {
   getDatasetsTimestamps,
   getTooltipClosestData,
 } from './utils';
+import { useHoveredDate } from './HoveredDateContext';
 
 export interface ChartWithTooltipProps extends ChartProps {
   className?: string;
   style?: CSSProperties;
+  crosshairSync?: boolean;
 }
 
 function ChartWithTooltip({
@@ -24,10 +26,12 @@ function ChartWithTooltip({
   children,
   className,
   style,
+  crosshairSync,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
   const { siteId, surveys, timeZone, startDate, endDate, datasets } = rest;
   const chartDataRef = useRef<any>(null);
+  const { hoveredDate, setHoveredDate } = useHoveredDate();
 
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
@@ -90,12 +94,32 @@ function ChartWithTooltip({
         datasets: closestDatasetData,
       });
       setShowTooltip(true);
+      if (crosshairSync) {
+        setHoveredDate(date);
+      }
     }
   };
 
   const hideTooltip = () => {
     setShowTooltip(false);
+    if (crosshairSync) {
+      setHoveredDate(null);
+    }
   };
+
+  const crosshairAnnotations =
+    crosshairSync && hoveredDate
+      ? [
+          {
+            type: 'line' as const,
+            scaleID: 'x',
+            value: hoveredDate,
+            borderColor: 'rgba(120, 120, 120, 0.6)',
+            borderWidth: 1,
+            borderDash: [4, 4],
+          },
+        ]
+      : [];
 
   // Hide tooltip on scroll to avoid dragging it on the page.
   if (showTooltip) {
@@ -113,6 +137,9 @@ function ChartWithTooltip({
             tooltip: {
               enabled: false,
               external: customTooltip,
+            },
+            annotation: {
+              annotations: crosshairAnnotations,
             },
           },
           interaction: {

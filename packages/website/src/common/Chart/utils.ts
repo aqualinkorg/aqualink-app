@@ -284,6 +284,8 @@ export const createDatasets = (
         fillColorAboveThreshold,
         fillColorBelowThreshold,
         maxHoursGap,
+        hitRadius,
+        pointHoverRadius,
       }) => {
         const processedData = data
           .filter(({ value }) => !isNil(value))
@@ -318,6 +320,8 @@ export const createDatasets = (
                 )
               : fillColor,
           data: chartData,
+          ...(hitRadius !== undefined ? { hitRadius } : {}),
+          ...(pointHoverRadius !== undefined ? { pointHoverRadius } : {}),
         };
       },
     );
@@ -381,6 +385,32 @@ export const getTooltipClosestData = (date: Date, datasets?: Dataset[]) =>
   }) || []) as Dataset[];
 
 /**
+ * Filters a dataset's values down to only the points within the chart's
+ * currently visible date range. Falls back to the full dataset if no range
+ * is set, so callers without a start/end (e.g. CombinedCharts' heat stress
+ * chart) are unaffected.
+ * @param data The input data
+ * @param startDate The chart's visible start date
+ * @param endDate The chart's visible end date
+ * @returns The filtered data
+ */
+export const filterDataToDateRange = (
+  data: ValueWithTimestamp[],
+  startDate?: string,
+  endDate?: string,
+): ValueWithTimestamp[] => {
+  if (!startDate || !endDate) {
+    return data;
+  }
+  const start = DateTime.fromISO(startDate).valueOf();
+  const end = DateTime.fromISO(endDate).valueOf();
+  return data.filter(({ timestamp }) => {
+    const value = DateTime.fromISO(timestamp).valueOf();
+    return value >= start && value <= end;
+  });
+};
+
+/**
  * Util function used to calculate the chart's horizontal and vertical limits
  * @param datasets The input datasets
  * @param startDate Optional date to use as the chart's left limit
@@ -400,7 +430,10 @@ export const calculateAxisLimits = (
   const accumulatedYAxisData = flatten(
     map(datasets, ({ data }) =>
       map(
-        filter(data, ({ value }) => !isNil(value)),
+        filter(
+          filterDataToDateRange(data, startDate, endDate),
+          ({ value }) => !isNil(value),
+        ),
         ({ value }) => value,
       ),
     ),
@@ -418,22 +451,33 @@ export const calculateAxisLimits = (
   const xAxisMin = startDate || datasetsXMin;
   const xAxisMax = endDate || datasetsXMax;
 
-  // y axis limits calculation
-  const datasetsYMin = Math.min(...accumulatedYAxisData);
-  const datasetsYMax = Math.max(...accumulatedYAxisData);
-  const ySpacing = Math.ceil(
-    Y_SPACING_PERCENTAGE * (datasetsYMax - datasetsYMin),
-  ); // Set ySpacing as a percentage of the data range
+  const extraThresholds = [temperatureThreshold].filter(
+    (t): t is number => typeof t === 'number',
+  );
+
+  const yExtent = (values: number[], fallback: [number, number]) =>
+    values.length > 0
+      ? ([Math.min(...values), Math.max(...values)] as const)
+      : fallback;
+
+  const [datasetsYMin, datasetsYMax] = yExtent(
+    accumulatedYAxisData,
+    extraThresholds.length > 0
+      ? [Math.min(...extraThresholds), Math.max(...extraThresholds)]
+      : [0, 1],
+  );
+  const yRange = Math.max(datasetsYMax - datasetsYMin, 1);
+  const ySpacing = Math.ceil(Y_SPACING_PERCENTAGE * yRange);
   const yAxisMinTemp = datasetsYMin - ySpacing;
   const yAxisMaxTemp = datasetsYMax + ySpacing;
   const yAxisMin = Math.round(
-    temperatureThreshold
-      ? Math.min(yAxisMinTemp, temperatureThreshold - ySpacing)
+    extraThresholds.length
+      ? Math.min(yAxisMinTemp, ...extraThresholds.map((t) => t - ySpacing))
       : yAxisMinTemp,
   );
   const yAxisMax = Math.round(
-    temperatureThreshold
-      ? Math.max(yAxisMaxTemp, temperatureThreshold + ySpacing)
+    extraThresholds.length
+      ? Math.max(yAxisMaxTemp, ...extraThresholds.map((t) => t + ySpacing))
       : yAxisMaxTemp,
   );
 

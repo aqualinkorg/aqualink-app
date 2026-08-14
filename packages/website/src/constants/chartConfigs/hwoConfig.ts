@@ -3,44 +3,53 @@ import { BaseSourceConfig } from '../../utils/types';
 
 export type HwoMetricsKeys = Extract<
   MetricsKeys,
-  'enterococcus' | 'total_n' | 'turbidity' | 'salinity' | 'total_p'
+  | 'enterococcus'
+  | 'nitrogen_total'
+  | 'turbidity'
+  | 'salinity'
+  | 'phosphorus_total'
 >;
 
 export const hwoConfig: Record<HwoMetricsKeys, BaseSourceConfig> = {
   enterococcus: {
     title: 'Bacteria (Enterococcus)',
-    units: 'µg/L',
+    units: 'CFU/100 mL',
     description: '',
     visibility: 'public',
     order: 1,
+    yAxisStepSize: 10,
+    yAxisPadding: 2,
   },
-  total_n: {
+  nitrogen_total: {
     title: 'Nitrogen*',
     units: 'µg/L',
     description: '',
     visibility: 'public',
     order: 2,
+    yAxisDecimalPlaces: 0,
   },
   turbidity: {
     title: 'Turbidity',
     units: 'NTU',
     description: '',
     visibility: 'public',
-    order: 3,
+    order: 4,
   },
   salinity: {
     title: 'Salinity',
     units: 'PPT',
     description: '',
     visibility: 'public',
-    order: 4,
+    order: 5,
+    yAxisStepSize: 2,
+    yAxisPadding: 1,
   },
-  total_p: {
+  phosphorus_total: {
     title: 'Phosphorus*',
-    units: 'MTN',
+    units: 'µg/L',
     description: '',
     visibility: 'public',
-    order: 5,
+    order: 3,
   },
 };
 

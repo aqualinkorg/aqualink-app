@@ -14,6 +14,7 @@ import {
   SPOTTER_METRIC_DATA_COLOR,
   HUI_DATA_COLOR,
   SEAPHOX_DATA_COLOR,
+  HWO_DATA_COLOR,
 } from 'constants/charts';
 import {
   siteGranularDailyDataSelector,
@@ -55,6 +56,7 @@ import {
   getPublicSeapHOxMetrics,
   getSeapHOxConfig,
 } from 'constants/chartConfigs/seaphoxConfig';
+import { getHwoDohThreshold } from 'common/SiteDetails/WaterSampling/utils';
 import {
   constructOceanSenseDatasets,
   findChartWidth,
@@ -68,8 +70,13 @@ import {
   getHuiConfig,
   getPublicHuiMetrics,
 } from '../../../constants/chartConfigs/huiConfig';
+import {
+  getHwoConfig,
+  getPublicHwoMetrics,
+} from '../../../constants/chartConfigs/hwoConfig';
 import ChartWithCard from './ChartWithCard';
 import type { Dataset } from '..';
+import { HoveredDateProvider } from '../HoveredDateContext';
 
 const useStyles = makeStyles((theme: Theme) => ({
   chartWithRange: {
@@ -90,6 +97,13 @@ type ChartItem = {
   datasets?: Dataset[];
   dataset?: Dataset;
 };
+
+// Fixed left-margin width (px) shared by every HWO chart's y-axis, so charts
+// with short tick labels (e.g. Turbidity's "4") and long ones (e.g. Nitrogen's
+// "717") line up at the same horizontal start point.
+const HWO_Y_AXIS_WIDTH = 65;
+const HWO_TOOLTIP_MAX_HOURS_GAP = 24 * 20; // HWO is monthly; the shared 6-hour default is far too narrow, widen to ~20 days
+const HUI_TOOLTIP_MAX_HOURS_GAP = 24 * 20; // HUI is also monthly; same widening, kept as a separate constant in case the two cadences ever diverge
 
 function MultipleSensorsCharts({
   site,
@@ -136,6 +150,8 @@ function MultipleSensorsCharts({
   const hasMetlogData = availableSources.includes('metlog');
 
   const hasHuiData = availableSources.includes('hui');
+
+  const hasHwoData = availableSources.includes('hwo');
 
   const hasSeapHOxData = availableSources.includes('seaphox');
 
@@ -196,6 +212,7 @@ function MultipleSensorsCharts({
               units,
               convert,
               decimalPlaces,
+              yAxisDecimalPlaces,
               yAxisStepSize,
               yAxisPadding,
               yAxisMin: configYMin,
@@ -223,6 +240,7 @@ function MultipleSensorsCharts({
                   site.timezone || undefined,
                 ),
                 decimalPlaces,
+                yAxisDecimalPlaces,
                 yAxisStepSize,
                 yAxisPadding,
                 yAxisMin: configYMin,
@@ -281,7 +299,40 @@ function MultipleSensorsCharts({
       'HUI',
       getPublicHuiMetrics,
       getHuiConfig,
-    );
+    ).map((item) => ({
+      ...item,
+      dataset: {
+        ...item.dataset,
+        tooltipMaxHoursGap: HUI_TOOLTIP_MAX_HOURS_GAP,
+        hitRadius: 12,
+        pointHoverRadius: 6,
+      },
+    }));
+
+  const hwoDatasets = () =>
+    getDatesetFun(
+      hasHwoData,
+      HWO_DATA_COLOR,
+      'hwo',
+      'HWO',
+      'HWO',
+      getPublicHwoMetrics,
+      getHwoConfig,
+    ).map((item) => {
+      const dohThreshold = getHwoDohThreshold(site.id, item.key);
+      return {
+        ...item,
+        dataset: {
+          ...item.dataset,
+          ...(dohThreshold ? { dohThreshold } : {}),
+          metric: camelCase(item.key) as Metrics,
+          fixedYAxisWidth: HWO_Y_AXIS_WIDTH,
+          tooltipMaxHoursGap: HWO_TOOLTIP_MAX_HOURS_GAP,
+          hitRadius: 12,
+          pointHoverRadius: 6,
+        },
+      };
+    });
 
   const seaphoxDatasets = () => {
     const allSeaphoxMetrics = getPublicSeapHOxMetrics();
@@ -572,6 +623,7 @@ function MultipleSensorsCharts({
         'metlog',
         'hui',
         'seaphox',
+        'hwo',
       ];
       const [
         spotterRanges,
@@ -579,6 +631,7 @@ function MultipleSensorsCharts({
         metlogRanges,
         huiRanges,
         seaphoxRanges,
+        hwoRanges,
       ] = sources.map((source) =>
         getSourceRanges(timeSeriesDataRanges, source).filter((x) =>
           rangeOverlapWithRange(
@@ -598,6 +651,7 @@ function MultipleSensorsCharts({
         ...(seaphoxRanges.length > 0 ? [...getPublicSeapHOxMetrics()] : []),
       ];
       const huiMetrics = huiRanges.map((x) => x.metric);
+      const hwoMetrics = hwoRanges.map((x) => x.metric);
 
       const uniqueMetrics = [...new Map(allMetrics.map((x) => [x, x])).keys()];
 
@@ -608,6 +662,7 @@ function MultipleSensorsCharts({
           metlogRanges.length > 0 && 'metlog',
           huiRanges.length > 0 && 'hui',
           seaphoxRanges.length > 0 && 'seaphox',
+          hwoRanges.length > 0 && 'hwo',
         ].filter((x): x is Sources => x !== false),
       );
 
@@ -644,6 +699,18 @@ function MultipleSensorsCharts({
             start: siteLocalStartDate,
             end: siteLocalEndDate,
             metrics: huiMetrics,
+            hourly: false,
+          }),
+        );
+
+      if (hwoMetrics.length > 0)
+        dispatch(
+          siteTimeSeriesDataRequest({
+            siteId: `${site.id}`,
+            pointId,
+            start: siteLocalStartDate,
+            end: siteLocalEndDate,
+            metrics: hwoMetrics,
             hourly: false,
           }),
         );
@@ -751,6 +818,14 @@ function MultipleSensorsCharts({
       name: snakeCase(`${title}_${dataset.label}`),
       values: dataset.data,
     })),
+    ...huiDatasets().map(({ title, dataset }) => ({
+      name: snakeCase(`${title}_${dataset.label}`),
+      values: dataset.data,
+    })),
+    ...hwoDatasets().map(({ title, dataset }) => ({
+      name: snakeCase(`${title}_${dataset.label}`),
+      values: dataset.data,
+    })),
   ].filter((x) => x.values.length > 0);
 
   const onRangeChange = (value: RangeValue) => {
@@ -805,9 +880,8 @@ function MultipleSensorsCharts({
     if (
       initialPageLoad &&
       availableSources &&
-      hasAdditionalSensorData &&
-      !hasHuiData &&
-      !hasSondeData &&
+      (hasHwoData ||
+        (hasAdditionalSensorData && !hasHuiData && !hasSondeData)) &&
       !(startParam || endParam) &&
       site.id !== 1006 &&
       site.id !== 217
@@ -820,6 +894,7 @@ function MultipleSensorsCharts({
     availableSources,
     hasAdditionalSensorData,
     hasHuiData,
+    hasHwoData,
     hasSondeData,
     initialPageLoad,
     startParam,
@@ -918,124 +993,144 @@ function MultipleSensorsCharts({
         areSurveysFiltered={surveysFiltered}
         source="spotter"
       />
-      {(
-        [
+      {(() => {
+        const renderChartItem = (item: ChartItem) => {
+          const {
+            key,
+            title,
+            datasets,
+            surveyPoint,
+            source,
+            rangeLabel,
+            dataset,
+          } = item;
+
+          if (datasets && Array.isArray(datasets)) {
+            return (
+              <Box mt={4} key={key}>
+                <ChartWithCard
+                  datasets={datasets}
+                  id={key}
+                  range={range}
+                  onRangeChange={onRangeChange}
+                  disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+                  chartTitle={title}
+                  availableRanges={[
+                    {
+                      name: 'SEAPHOX',
+                      data: timeSeriesDataRanges?.[
+                        camelCase(key.replace('merged_', '')) as Metrics
+                      ]?.find((x) => x.type === 'seaphox')?.data,
+                    },
+                    {
+                      name: getSensorLabel(
+                        timeSeriesData?.[
+                          camelCase(key.replace('merged_', '')) as Metrics
+                        ]?.find((x) => x.type === 'sonde')?.surveyPoint?.name ??
+                          undefined,
+                        true,
+                      ),
+                      data: timeSeriesDataRanges?.[
+                        camelCase(key.replace('merged_', '')) as Metrics
+                      ]?.find((x) => x.type === 'sonde')?.data,
+                    },
+                  ]}
+                  timeZone={site.timezone}
+                  showRangeButtons={false}
+                  chartWidth="extraSmall"
+                  site={site}
+                  pickerStartDate={
+                    pickerStartDate ||
+                    DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
+                  }
+                  pickerEndDate={pickerEndDate || today}
+                  chartStartDate={chartStartDate}
+                  chartEndDate={chartEndDate}
+                  onStartDateChange={onPickerDateChange('start')}
+                  onEndDateChange={onPickerDateChange('end')}
+                  isPickerErrored={pickerErrored}
+                  showDatePickers={false}
+                  hideYAxisUnits
+                  cardColumnJustification="flex-start"
+                  source={source}
+                />
+              </Box>
+            );
+          }
+
+          if (dataset) {
+            const isHwo = source === 'hwo';
+            const isHui = source === 'hui';
+            const dohLabel =
+              dataset.dohThreshold !== undefined
+                ? `DOH Threshold: ${dataset.dohThreshold} ${dataset.unit}`
+                : undefined;
+            return (
+              <Box mt={isHwo ? 1 : 4} key={`${source}-${key}`}>
+                <ChartWithCard
+                  datasets={[dataset]}
+                  id={key}
+                  range={range}
+                  onRangeChange={onRangeChange}
+                  disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+                  chartTitle={title}
+                  availableRanges={[
+                    {
+                      name: rangeLabel,
+                      data: timeSeriesDataRanges?.[
+                        camelCase(key) as Metrics
+                      ]?.find((x) => x.type === source)?.data,
+                    },
+                  ]}
+                  timeZone={site.timezone}
+                  showRangeButtons={false}
+                  chartWidth={isHwo ? 'hwoFixed' : 'large'}
+                  compact={isHwo}
+                  crosshairSync={isHwo || isHui}
+                  dohThresholdLabel={dohLabel}
+                  site={site}
+                  pickerStartDate={
+                    pickerStartDate ||
+                    DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
+                  }
+                  pickerEndDate={pickerEndDate || today}
+                  chartStartDate={chartStartDate}
+                  chartEndDate={chartEndDate}
+                  onStartDateChange={onPickerDateChange('start')}
+                  onEndDateChange={onPickerDateChange('end')}
+                  isPickerErrored={pickerErrored}
+                  showDatePickers={false}
+                  surveyPoint={surveyPoint}
+                  hideYAxisUnits
+                  cardColumnJustification="flex-start"
+                  source={source}
+                />
+              </Box>
+            );
+          }
+
+          return null;
+        };
+
+        const nonSyncedItems: ChartItem[] = [
           ...spotterDatasets(),
           ...seaphoxDatasets(),
           ...mergedPHDatasets(),
           ...mergedSalinityDatasets(),
           ...sondeDatasets(),
-          ...huiDatasets(),
-          ...metlogDatasets(),
-        ] as ChartItem[]
-      ).map((item) => {
-        const {
-          key,
-          title,
-          datasets,
-          surveyPoint,
-          source,
-          rangeLabel,
-          dataset,
-        } = item;
+        ];
 
-        if (datasets && Array.isArray(datasets)) {
-          return (
-            <Box mt={4} key={key}>
-              <ChartWithCard
-                datasets={datasets}
-                id={key}
-                range={range}
-                onRangeChange={onRangeChange}
-                disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-                chartTitle={title}
-                availableRanges={[
-                  {
-                    name: 'SEAPHOX',
-                    data: timeSeriesDataRanges?.[
-                      camelCase(key.replace('merged_', '')) as Metrics
-                    ]?.find((x) => x.type === 'seaphox')?.data,
-                  },
-                  {
-                    name: getSensorLabel(
-                      timeSeriesData?.[
-                        camelCase(key.replace('merged_', '')) as Metrics
-                      ]?.find((x) => x.type === 'sonde')?.surveyPoint?.name ??
-                        undefined,
-                      true,
-                    ),
-                    data: timeSeriesDataRanges?.[
-                      camelCase(key.replace('merged_', '')) as Metrics
-                    ]?.find((x) => x.type === 'sonde')?.data,
-                  },
-                ]}
-                timeZone={site.timezone}
-                showRangeButtons={false}
-                chartWidth="small"
-                site={site}
-                pickerStartDate={
-                  pickerStartDate ||
-                  DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
-                }
-                pickerEndDate={pickerEndDate || today}
-                chartStartDate={chartStartDate}
-                chartEndDate={chartEndDate}
-                onStartDateChange={onPickerDateChange('start')}
-                onEndDateChange={onPickerDateChange('end')}
-                isPickerErrored={pickerErrored}
-                showDatePickers={false}
-                hideYAxisUnits
-                cardColumnJustification="flex-start"
-                source={source}
-              />
-            </Box>
-          );
-        }
-
-        if (dataset) {
-          return (
-            <Box mt={4} key={key}>
-              <ChartWithCard
-                datasets={[dataset]}
-                id={key}
-                range={range}
-                onRangeChange={onRangeChange}
-                disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-                chartTitle={title}
-                availableRanges={[
-                  {
-                    name: rangeLabel,
-                    data: timeSeriesDataRanges?.[
-                      camelCase(key) as Metrics
-                    ]?.find((x) => x.type === source)?.data,
-                  },
-                ]}
-                timeZone={site.timezone}
-                showRangeButtons={false}
-                chartWidth="large"
-                site={site}
-                pickerStartDate={
-                  pickerStartDate ||
-                  DateTime.fromISO(today).minus({ weeks: 1 }).toISOString()
-                }
-                pickerEndDate={pickerEndDate || today}
-                chartStartDate={chartStartDate}
-                chartEndDate={chartEndDate}
-                onStartDateChange={onPickerDateChange('start')}
-                onEndDateChange={onPickerDateChange('end')}
-                isPickerErrored={pickerErrored}
-                showDatePickers={false}
-                surveyPoint={surveyPoint}
-                hideYAxisUnits
-                cardColumnJustification="flex-start"
-                source={source}
-              />
-            </Box>
-          );
-        }
-
-        return null;
-      })}
+        return (
+          <>
+            {nonSyncedItems.map(renderChartItem)}
+            <HoveredDateProvider>
+              {huiDatasets().map(renderChartItem)}
+              {hwoDatasets().map(renderChartItem)}
+            </HoveredDateProvider>
+            {metlogDatasets().map(renderChartItem)}
+          </>
+        );
+      })()}
       {displayOceanSenseCharts &&
         hasOceanSenseId &&
         Object.entries(constructOceanSenseDatasets(oceanSenseData)).map(
