@@ -170,6 +170,7 @@ const rules: Rule[] = [
   { token: Metric.TURBIDITY_3, expression: /^T3$/ },
   { token: Metric.TURBIDITY_4, expression: /^T4$/ },
   { token: Metric.SALINITY, expression: /^Salinityn \(ppt\)$/ },
+  { token: Metric.SALINITY, expression: /^Salinity \(ppt\)$/ },
   { token: Metric.NITROGEN_TOTAL, expression: /^TotalN \(mg\/L\)$/ },
   { token: Metric.PHOSPHORUS_TOTAL, expression: /^TotalP \(mg\/L\)$/ },
   { token: Metric.ENTEROCOCCUS, expression: /^Entero\.\s*$/ },
@@ -293,6 +294,16 @@ export const getFilePathData = async (filePath: string) => {
   const importedMetrics = headerToTokenMap.filter(
     (x): x is Metric => x !== undefined && !nonMetric.includes(x as NonMetric),
   );
+  const hasTurbidityReplicates = [
+    Metric.TURBIDITY_1,
+    Metric.TURBIDITY_2,
+    Metric.TURBIDITY_3,
+    Metric.TURBIDITY_4,
+  ].some((metric) => importedMetrics.includes(metric));
+  const metricsWithTurbidityAvg =
+    hasTurbidityReplicates && !importedMetrics.includes(Metric.TURBIDITY)
+      ? [...importedMetrics, Metric.TURBIDITY]
+      : importedMetrics;
   const ignoredHeaders = headers.filter(
     (x, i) => headerToTokenMap[i] === undefined,
   );
@@ -302,7 +313,7 @@ export const getFilePathData = async (filePath: string) => {
     workSheetData,
     signature,
     ignoredHeaders,
-    importedMetrics,
+    importedMetrics: metricsWithTurbidityAvg,
     headers,
     headerIndex,
     headerToTokenMap,
@@ -406,6 +417,10 @@ export const convertData = (
 
   workSheetData.forEach((row) => {
     const timestampDate = getTimeStamp(timestampIndex, row, mimetype, timezone);
+    if (Number.isNaN(timestampDate.getTime())) {
+      logger.warn(`Skipping row with invalid timestamp in ${fileName}`);
+      return;
+    }
 
     // This need to be done for each row to take into account daylight savings
     // and other things that may affect timezone offset in that exact date
@@ -447,7 +462,42 @@ export const convertData = (
   );
   console.timeEnd(`Remove duplicates and empty values ${fileName}`);
 
-  return data;
+  const turbidityReplicates = [
+    Metric.TURBIDITY_1,
+    Metric.TURBIDITY_2,
+    Metric.TURBIDITY_3,
+    Metric.TURBIDITY_4,
+  ];
+  const replicatesByTimestamp = groupBy(
+    data.filter((row) => turbidityReplicates.includes(row.metric)),
+    'timestamp',
+  );
+  const turbidityAverages = Object.entries(replicatesByTimestamp).flatMap(
+    ([timestamp, rows]) => {
+      if (
+        data.some(
+          (row) =>
+            row.timestamp === timestamp && row.metric === Metric.TURBIDITY,
+        )
+      ) {
+        return [];
+      }
+      const values = rows.map((row) => row.value);
+      if (values.length === 0) {
+        return [];
+      }
+      return [
+        {
+          timestamp,
+          value: values.reduce((sum, value) => sum + value, 0) / values.length,
+          metric: Metric.TURBIDITY,
+          source: rows[0].source,
+        },
+      ];
+    },
+  );
+
+  return turbidityAverages.length > 0 ? [...data, ...turbidityAverages] : data;
 };
 
 export const uploadFileToGCloud = async (
@@ -476,8 +526,7 @@ export const uploadFileToGCloud = async (
   // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService();
 
-  // Note this may fail. It would still return a location, but the file may not have been uploaded
-  const fileLocation = googleCloudService.uploadFileAsync(
+  const fileLocation = await googleCloudService.uploadFileAsync(
     filePath,
     sources.length === 1 ? sources[0] : 'multi_source',
     GoogleCloudDir.DATA_UPLOADS,
