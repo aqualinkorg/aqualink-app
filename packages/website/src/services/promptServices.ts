@@ -10,6 +10,7 @@ export interface AIPrompt {
   updatedAt: string;
   updatedBy?: string;
   isActive: boolean;
+  changeNotes?: string | null;
 }
 
 export interface AIPromptHistory {
