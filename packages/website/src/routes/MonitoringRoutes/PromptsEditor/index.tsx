@@ -680,6 +680,15 @@ function PromptsEditor() {
                     className={classes.metadataChip}
                   />
                 </div>
+                {selectedPrompt.changeNotes && (
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{ marginTop: '8px', fontStyle: 'italic' }}
+                  >
+                    Note: {selectedPrompt.changeNotes}
+                  </Typography>
+                )}
 
                 <TextField
                   fullWidth
