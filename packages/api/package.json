@@ -67,6 +67,7 @@
     "reef-check": "ts-node -r dotenv/config scripts/reef-check.ts",
     "backfill:seaphox": "ts-node -r dotenv/config scripts/backfill-seaphox-monthly.ts",
     "backfill:sst": "ts-node -r dotenv/config scripts/sst-backfill.ts",
+    "backfill:mmm": "ts-node -r dotenv/config scripts/backfill-mmm.ts",
     "backfill:sofar": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts",
     "audit": "yarn --cwd ../.. run audit"
   },
