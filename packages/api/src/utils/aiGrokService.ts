@@ -2,7 +2,7 @@ import axios from 'axios';
 import { buildPromptWithContext, PromptMap } from './prompts';
 
 const GROK_API_URL = 'https://api.x.ai/v1/chat/completions';
-const GROK_MODEL = 'grok-4.6'; // Fast and cost-effective
+const GROK_MODEL = 'grok-4.6';
 
 interface GrokMessage {
   role: 'system' | 'user' | 'assistant' | 'tool';
@@ -209,7 +209,7 @@ async function callGrokRaw(
         temperature: 0.1,
         max_tokens: 2500, // Accommodate reasoning + output
         stream: false,
-        reasoning_effort: 'low',
+        reasoning_effort: 'low', // Low effort for faster responses
         ...toolParams,
       },
       {
