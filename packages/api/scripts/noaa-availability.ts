@@ -21,17 +21,6 @@ type Argv = {
   u: boolean;
 };
 
-let netcdf4: any;
-try {
-  // eslint-disable-next-line global-require, fp/no-mutation, import/no-unresolved
-  netcdf4 = require('netcdf4');
-} catch {
-  Logger.error(
-    'NetCDF is not installed. Please install NetCDF before continuing.',
-  );
-  process.exit();
-}
-
 // List of some available files https://www.star.nesdis.noaa.gov/pub/sod/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/sst/2022/
 const FILE_URL =
   'https://www.star.nesdis.noaa.gov/pub/sod/mecb/crw/data/5km/v3.1_op/nc/v1.0/daily/sst/2022/coraltemp_v3.1_20221024.nc';
@@ -61,6 +50,18 @@ const { argv } = yargs
   .help();
 
 async function getAvailabilityMapFromNetCDF4() {
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+  let netcdf4: any;
+  try {
+    // eslint-disable-next-line global-require, fp/no-mutation, import/no-unresolved
+    netcdf4 = require('netcdf4');
+  } catch {
+    Logger.error(
+      'NetCDF is not installed. Please install NetCDF before continuing.',
+    );
+    process.exit();
+  }
+
   Logger.log('Fetching NetCDF4 file...');
 
   const tempFileName = './noaa_data.nc';

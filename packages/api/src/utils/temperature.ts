@@ -13,6 +13,39 @@ async function getTiffFromCache(url: string) {
   return tiffCache.get(url)!;
 }
 
+// Progressively widen the read window if the initial window is fully masked
+// (small islands, narrow channels, sites close to shore). Sizes are in raster
+// pixels, not degrees or km - check this TIFF's actual resolution
+// (boundingBox / width / height) before trusting these specific numbers.
+const WINDOW_SIZES = [10, 30, 60, 100];
+
+async function readWindowValue(
+  image: any,
+  gdalNoData: number,
+  pixelX: number,
+  pixelY: number,
+  size: number,
+  width: number,
+  height: number,
+) {
+  // Clamp the window to the raster's actual dimensions - readRasters can
+  // reject an out-of-bounds window outright for a site near the edge.
+  const startX = Math.max(Math.min(pixelX, width - size), 0);
+  const startY = Math.max(Math.min(pixelY, height - size), 0);
+  const endX = Math.min(startX + size, width);
+  const endY = Math.min(startY + size, height);
+
+  const data: number[][] = await image.readRasters({
+    window: [startX, startY, endX, endY],
+  });
+
+  const filteredData = data.map((row) =>
+    row.filter((value) => value !== gdalNoData),
+  );
+
+  return filteredData[0][0];
+}
+
 async function getValueFromTiff(tiff: any, long: number, lat: number) {
   const image = await tiff.getImage();
 
@@ -29,15 +62,25 @@ async function getValueFromTiff(tiff: any, long: number, lat: number) {
     height,
   );
 
-  const data: number[][] = await image.readRasters({
-    window: [pixelX, pixelY, pixelX + 10, pixelY + 10],
-  });
-
-  const filteredData = data.map((row) =>
-    row.filter((value) => value !== gdalNoData),
+  const value = await WINDOW_SIZES.reduce<Promise<number | undefined>>(
+    async (accPromise, size) => {
+      const acc = await accPromise;
+      return acc !== undefined
+        ? acc
+        : readWindowValue(
+            image,
+            gdalNoData,
+            pixelX,
+            pixelY,
+            size,
+            width,
+            height,
+          );
+    },
+    Promise.resolve(undefined),
   );
 
-  return filteredData[0][0] ? filteredData[0][0] / 100 : undefined;
+  return value !== undefined ? value / 100 : undefined;
 }
 
 /**

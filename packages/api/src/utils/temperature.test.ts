@@ -45,6 +45,15 @@ test('Get MMM as expected.', async () => {
   await getMMM(-108.0, -53.1).then((data) => expect(data).toEqual(7.94));
 });
 
+test('Get MMM for a site with a fully masked default window.', async () => {
+  jest.setTimeout(60000);
+  // Site 9098 (-155.82877, 19.98166) previously returned undefined here
+  // because its 10x10 pixel window was fully masked (no_data).
+  await getMMM(-155.82877, 19.98166).then((data) => {
+    expect(data).toEqual(26.76);
+  });
+});
+
 test('Get HistoricalMonthlyMeans as expected.', async () => {
   jest.setTimeout(60000);
   await getHistoricalMonthlyMeans(0, 0).then((data) =>
