@@ -225,7 +225,7 @@ export const updateSST = async (
                     // Calculate degree heating days
                     dhw && dhw.value * 7,
                   );
-                  if (!alert) return undefined;
+                  if (isNil(alert)) return undefined;
                   if (!latest) return undefined;
                   return {
                     value: alert,
