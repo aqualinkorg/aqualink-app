@@ -209,6 +209,7 @@ async function callGrokRaw(
         temperature: 0.1,
         max_tokens: 2500, // Accommodate reasoning + output
         stream: false,
+        reasoning_effort: 'low',
         ...toolParams,
       },
       {
