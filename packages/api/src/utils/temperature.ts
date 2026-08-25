@@ -25,9 +25,18 @@ async function readWindowValue(
   pixelX: number,
   pixelY: number,
   size: number,
+  width: number,
+  height: number,
 ) {
+  // Clamp the window to the raster's actual dimensions - readRasters can
+  // reject an out-of-bounds window outright for a site near the edge.
+  const startX = Math.min(Math.max(pixelX, 0), width - 1);
+  const startY = Math.min(Math.max(pixelY, 0), height - 1);
+  const endX = Math.min(pixelX + size, width);
+  const endY = Math.min(pixelY + size, height);
+
   const data: number[][] = await image.readRasters({
-    window: [pixelX, pixelY, pixelX + size, pixelY + size],
+    window: [startX, startY, endX, endY],
   });
 
   const filteredData = data.map((row) =>
@@ -58,12 +67,20 @@ async function getValueFromTiff(tiff: any, long: number, lat: number) {
       const acc = await accPromise;
       return acc !== undefined
         ? acc
-        : readWindowValue(image, gdalNoData, pixelX, pixelY, size);
+        : readWindowValue(
+            image,
+            gdalNoData,
+            pixelX,
+            pixelY,
+            size,
+            width,
+            height,
+          );
     },
     Promise.resolve(undefined),
   );
 
-  return value ? value / 100 : undefined;
+  return value !== undefined ? value / 100 : undefined;
 }
 
 /**

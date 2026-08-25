@@ -1,6 +1,7 @@
 import { isNil, omitBy } from 'lodash';
 import pLimit from 'p-limit';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
+import yargs from 'yargs/yargs';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
 import { Site } from '../src/sites/sites.entity';
@@ -38,13 +39,25 @@ async function getAugmentedData(
   );
 }
 
-async function augmentSites(connection: DataSource) {
+const argv = yargs(process.argv.slice(2))
+  .options({
+    siteIds: {
+      alias: 's',
+      type: 'array',
+      describe: 'Specific site IDs to augment (defaults to every site)',
+    },
+  })
+  .parseSync();
+
+async function augmentSites(connection: DataSource, siteIds?: number[]) {
   const siteRepository = connection.getRepository(Site);
   const regionRepository = connection.getRepository(Region);
   const HistoricalMonthlyMeanRepository = connection.getRepository(
     HistoricalMonthlyMean,
   );
-  const allSites = await siteRepository.find();
+  const allSites = await siteRepository.find({
+    where: siteIds && siteIds.length > 0 ? { id: In(siteIds) } : {},
+  });
 
   const start = new Date();
   console.log(`Augmenting ${allSites.length} sites...`);
@@ -89,7 +102,8 @@ async function augmentSites(connection: DataSource) {
 
 async function run() {
   const connection = await AqualinkDataSource.initialize();
-  await augmentSites(connection);
+  const siteIds = argv.siteIds?.map((id) => Number(id));
+  await augmentSites(connection, siteIds);
 }
 
 run();

@@ -50,9 +50,7 @@ test('Get MMM for a site with a fully masked default window.', async () => {
   // Site 9098 (-155.82877, 19.98166) previously returned undefined here
   // because its 10x10 pixel window was fully masked (no_data).
   await getMMM(-155.82877, 19.98166).then((data) => {
-    expect(data).toBeDefined();
-    // TODO: fill in the actual value once you run this locally
-    // expect(data).toEqual(<value>);
+    expect(data).toEqual(26.76);
   });
 });
 
