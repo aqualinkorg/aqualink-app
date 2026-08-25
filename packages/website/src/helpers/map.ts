@@ -296,7 +296,7 @@ export const planSiteMapFocus = ({
 };
 
 export const focusMapOnSite = (map: L.Map, latLng: [number, number]) => {
-  const zoom = map.getZoom() || 6;
+  const zoom = map.getZoom() ?? 6;
   const target = L.latLng(latLng);
   const paddingOffset = L.point(0, 0)
     .subtract(SITE_FOCUS_PADDING_TOP_LEFT)
