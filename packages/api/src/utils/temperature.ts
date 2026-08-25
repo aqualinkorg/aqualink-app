@@ -30,10 +30,10 @@ async function readWindowValue(
 ) {
   // Clamp the window to the raster's actual dimensions - readRasters can
   // reject an out-of-bounds window outright for a site near the edge.
-  const startX = Math.min(Math.max(pixelX, 0), width - 1);
-  const startY = Math.min(Math.max(pixelY, 0), height - 1);
-  const endX = Math.min(pixelX + size, width);
-  const endY = Math.min(pixelY + size, height);
+  const startX = Math.max(Math.min(pixelX, width - size), 0);
+  const startY = Math.max(Math.min(pixelY, height - size), 0);
+  const endX = Math.min(startX + size, width);
+  const endY = Math.min(startY + size, height);
 
   const data: number[][] = await image.readRasters({
     window: [startX, startY, endX, endY],
