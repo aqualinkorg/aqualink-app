@@ -47,22 +47,35 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
 
   useEffect(() => {
     if (
-      map &&
-      popupRef?.current &&
-      siteOnMap?.id === site.id &&
-      siteOnMap?.polygon.type === 'Point' &&
-      autoOpen
+      !map ||
+      siteOnMap?.id !== site.id ||
+      siteOnMap?.polygon.type !== 'Point' ||
+      !autoOpen
     ) {
-      const popup = popupRef.current;
-      const [_lng, lat] = siteOnMap.polygon.coordinates; // Original lng not needed here
-
-      // Use displayLng from state if available, fall back to original lng
-      const popupLng = siteOnMap.displayLng ?? _lng;
-
-      const targetPoint: LatLngTuple = [lat, popupLng];
-      popup.setLatLng(targetPoint).openOn(map);
+      return undefined;
     }
-    // No need for cleanup function or moveend listener anymore
+
+    const [_lng, lat] = siteOnMap.polygon.coordinates;
+    const popupLng = siteOnMap.displayLng ?? _lng;
+    const targetPoint: LatLngTuple = [lat, popupLng];
+
+    const openPopup = () => {
+      const popup = popupRef.current;
+      if (!popup) {
+        return;
+      }
+      popup.setLatLng(targetPoint).openOn(map);
+    };
+
+    // flyToBounds in HomepageMap starts after this effect and drops the
+    // popup mid-animation. Open now, then again after each moveend so a
+    // stopped previous fly (map._stop) cannot swallow a one-shot listener.
+    openPopup();
+    map.on('moveend', openPopup);
+
+    return () => {
+      map.off('moveend', openPopup);
+    };
   }, [autoOpen, map, site.id, siteOnMap]);
 
   return (
