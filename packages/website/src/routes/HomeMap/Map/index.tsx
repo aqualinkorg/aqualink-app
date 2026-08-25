@@ -31,6 +31,7 @@ import {
 import { CollectionDetails } from 'store/Collection/types';
 import { MapLayerName } from 'store/Homepage/types';
 import { mapConstants } from 'constants/maps';
+import { focusMapOnSite } from 'helpers/map';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
@@ -165,15 +166,7 @@ function HomepageMap({
       // Use the pre-calculated displayLng if available, otherwise use original lng
       const finalLng = siteOnMap.displayLng ?? lng;
 
-      const latLng = [lat, finalLng] as [number, number];
-      const pointBounds = L.latLngBounds(latLng, latLng);
-      const maxZoom = Math.max(map.getZoom() || 6);
-      map.flyToBounds(pointBounds, {
-        duration: 3,
-        maxZoom,
-        paddingTopLeft: L.point(0, 200),
-        noMoveStart: true,
-      });
+      focusMapOnSite(map, [lat, finalLng]);
     }
   }, [siteOnMap, mapReady]);
 
@@ -329,6 +322,8 @@ const styles = (theme: Theme) =>
     map: {
       flex: 1,
       width: '100%',
+      // Gaps between tiles during pan/zoom otherwise flash #ddd
+      backgroundColor: '#0b1d2a',
     },
     loading: {
       height: '100%',

@@ -251,3 +251,85 @@ export const calculateAdjustedLng = (
 
   return adjustedLng;
 };
+
+export type SiteMapFocusPlan = {
+  mode: 'none' | 'pan' | 'fly';
+  duration: number;
+};
+
+const SITE_FOCUS_PADDING_TOP_LEFT = L.point(0, 200);
+
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value));
+
+/**
+ * flyTo always zooms out then in, even at the same zoom. That shake + tile
+ * seams is ugly on short hops, so nearby same-zoom moves pan instead.
+ */
+export const planSiteMapFocus = ({
+  distancePx,
+  viewportWidth,
+  viewportHeight,
+  zoomDelta = 0,
+}: {
+  distancePx: number;
+  viewportWidth: number;
+  viewportHeight: number;
+  zoomDelta?: number;
+}): SiteMapFocusPlan => {
+  if (distancePx < 8 && zoomDelta < 0.05) {
+    return { mode: 'none', duration: 0 };
+  }
+
+  const viewportDiag = Math.hypot(viewportWidth, viewportHeight);
+  if (zoomDelta < 0.05 && distancePx < viewportDiag * 0.85) {
+    return {
+      mode: 'pan',
+      duration: clamp(distancePx / 450, 1, 2.2),
+    };
+  }
+
+  return {
+    mode: 'fly',
+    duration: clamp(1.8 + distancePx / 3000 + zoomDelta * 0.35, 2.2, 3.2),
+  };
+};
+
+export const focusMapOnSite = (map: L.Map, latLng: [number, number]) => {
+  const zoom = map.getZoom() || 6;
+  const target = L.latLng(latLng);
+  const paddingOffset = L.point(0, 0)
+    .subtract(SITE_FOCUS_PADDING_TOP_LEFT)
+    .divideBy(2);
+  const center = map.unproject(
+    map.project(target, zoom).add(paddingOffset),
+    zoom,
+  );
+  const size = map.getSize();
+  const plan = planSiteMapFocus({
+    distancePx: map
+      .latLngToContainerPoint(map.getCenter())
+      .distanceTo(map.latLngToContainerPoint(center)),
+    viewportWidth: size.x,
+    viewportHeight: size.y,
+  });
+
+  if (plan.mode === 'none') {
+    return;
+  }
+
+  if (plan.mode === 'pan') {
+    map.panTo(center, {
+      animate: true,
+      duration: plan.duration,
+      easeLinearity: 0.4,
+      noMoveStart: true,
+    });
+    return;
+  }
+
+  map.flyTo(center, zoom, {
+    duration: plan.duration,
+    noMoveStart: true,
+  });
+};
