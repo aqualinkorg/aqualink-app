@@ -20,7 +20,7 @@ import { Metric } from './metrics.enum';
 @Index('IDX_time_series_metric_source_timestamp_DESC', { synchronize: false })
 export class TimeSeries {
   @ApiProperty({ example: 1 })
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Index()
