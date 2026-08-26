@@ -48,7 +48,7 @@ import { Metric } from './metrics.enum';
 })
 export class LatestData {
   @ApiProperty({ example: 1 })
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Column({ nullable: false })
