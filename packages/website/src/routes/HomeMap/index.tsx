@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Grid, Hidden, Box, Typography } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -67,13 +67,14 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [asOfDate, setAsOfDate] = React.useState<string>('');
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(asOfDate || undefined));
+  }, [dispatch, asOfDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -112,6 +113,27 @@ function Homepage({ classes }: HomepageProps) {
       </div>
       <div className={classes.root}>
         <Grid container>
+          <Grid item xs={12}>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+              px={1}
+              py={0.5}
+            >
+              <Typography variant="caption" color="textSecondary">
+                View map as of date (leave blank for latest):
+              </Typography>
+              <input
+                aria-label="Historical map date"
+                type="date"
+                max={new Date().toISOString().slice(0, 10)}
+                value={asOfDate}
+                onChange={(event) => setAsOfDate(event.target.value)}
+                style={{ marginLeft: 8 }}
+              />
+            </Box>
+          </Grid>
           <Grid
             className={classes.map}
             item
