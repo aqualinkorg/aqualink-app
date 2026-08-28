@@ -113,6 +113,57 @@ export const siteTests = () => {
     expect(rsp.body.maskedSpotterApiToken).toBeUndefined();
   });
 
+  it('GET / returns historical collection data for a provided date', async () => {
+    const historicalData = californiaDailyData[3];
+    const date = DateTime.fromISO(historicalData.date as string);
+
+    const rsp = await request(app.getHttpServer())
+      .get('/sites')
+      .query({
+        date: date.toFormat('yyyy-MM-dd'),
+      });
+
+    expect(rsp.status).toBe(200);
+
+    const site = rsp.body.find(
+      ({ id }: { id: number }) => id === californiaSite.id,
+    );
+
+    expect(site.collectionData).toMatchObject({
+      dhw: Number(historicalData.degreeHeatingDays) / 7,
+      satelliteTemperature: historicalData.satelliteTemperature,
+      tempAlert: historicalData.dailyAlertLevel,
+    });
+  });
+
+  it('GET /:id returns historical collection data for a provided date', async () => {
+    const historicalData = californiaDailyData[3];
+    const date = DateTime.fromISO(historicalData.date as string);
+
+    const rsp = await request(app.getHttpServer())
+      .get(`/sites/${californiaSite.id}`)
+      .query({
+        date: date.toFormat('yyyy-MM-dd'),
+      });
+
+    expect(rsp.status).toBe(200);
+    expect(rsp.body.collectionData).toMatchObject({
+      dhw: Number(historicalData.degreeHeatingDays) / 7,
+      satelliteTemperature: historicalData.satelliteTemperature,
+      tempAlert: historicalData.dailyAlertLevel,
+    });
+  });
+
+  it('GET /:id rejects an invalid historical date', async () => {
+    const rsp = await request(app.getHttpServer())
+      .get(`/sites/${californiaSite.id}`)
+      .query({
+        date: 'not-a-date',
+      });
+
+    expect(rsp.status).toBe(400);
+  });
+
   it('GET /:id/daily_data', async () => {
     const rsp = await request(app.getHttpServer())
       .get(`/sites/${californiaSite.id}/daily_data`)
