@@ -354,10 +354,7 @@ function SiteDetails({
           (() => {
             if (
               isHistoricalView ||
-              ((hasHUIData ||
-                hasSondeData ||
-                hasSeapHOxData ||
-                hasHWOData) &&
+              ((hasHUIData || hasSondeData || hasSeapHOxData || hasHWOData) &&
                 !hasSpotterData)
             ) {
               return <CoralBleaching data={cardData} />;
