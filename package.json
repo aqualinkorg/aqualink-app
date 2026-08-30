@@ -43,6 +43,7 @@
     "protocol-buffers-schema": "^3.6.1",
     "protobufjs": "^7.6.3",
     "qs": "^6.15.2",
+    "re2": "1.26.1",
     "svgo": "^3.3.4",
     "tar": "^7.5.22",
     "uuid": "^11.1.1",
@@ -73,7 +74,7 @@
     "typescript": "^5.7.3"
   },
   "engines": {
-    "node": "20",
+    "node": "24",
     "yarn": "^1.22"
   },
   "version": "0.0.0",

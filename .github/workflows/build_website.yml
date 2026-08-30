@@ -28,10 +28,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js 20.x
+      - name: Use Node.js 24.x
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Enable Corepack
         run: |
@@ -49,9 +49,9 @@ jobs:
             **/node_modules
             .yarn/cache
             .yarn/install-state.gz
-          key: ${{ runner.os }}-yarn-v4-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-yarn-v4-node24-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-v4-
+            ${{ runner.os }}-yarn-v4-node24-
 
       - name: Install dependencies if needed.
         id: install
