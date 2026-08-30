@@ -198,9 +198,13 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
+    const dataDate = filter.dataDate ? new Date(filter.dataDate) : undefined;
+
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      dataDate,
+      this.timeSeriesRepository,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
