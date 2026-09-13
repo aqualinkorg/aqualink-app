@@ -67,6 +67,7 @@ function Homepage({ classes }: HomepageProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [historicalDate, setHistoricalDate] = useState<string | null>(null);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
@@ -124,12 +125,14 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              historicalDate={historicalDate}
+              onHistoricalDateChange={setHistoricalDate}
             />
           </Grid>
           {showSiteTable && (
             <Hidden mdDown>
               <Grid className={classes.siteTable} item md={6}>
-                <SiteTable map={mapInstance} />
+                <SiteTable map={mapInstance} historicalDate={historicalDate} />
               </Grid>
             </Hidden>
           )}
@@ -145,7 +148,11 @@ function Homepage({ classes }: HomepageProps) {
               open={isDrawerOpen}
             >
               <div role="presentation" onClick={toggleDrawer}>
-                <SiteTable map={mapInstance} isDrawerOpen={isDrawerOpen} />
+                <SiteTable
+                  map={mapInstance}
+                  isDrawerOpen={isDrawerOpen}
+                  historicalDate={historicalDate}
+                />
               </div>
             </SwipeableBottomSheet>
           </Hidden>

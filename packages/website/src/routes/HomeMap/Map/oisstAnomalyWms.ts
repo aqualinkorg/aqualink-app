@@ -16,6 +16,23 @@ export function buildOisstAnomalyWmsUrl(datasetPath: string): string {
   return `${NCEI_THREDDS_BASE}/wms/${datasetPath}?COLORSCALERANGE=-5,5`;
 }
 
+/**
+ * Daily preliminary files follow a deterministic naming scheme, so the
+ * dataset path for a past date can be built without querying the catalog:
+ * `files/YYYYMM/oisst-avhrr-v02r01.YYYYMMDD_preliminary.nc`.
+ * Returns null when `date` is not an ISO `yyyy-MM-dd` string.
+ */
+export function oisstPreliminaryDatasetPathForDate(
+  date: string,
+): string | null {
+  const compact = date.replace(/-/g, '');
+  if (!/^\d{8}$/.test(compact)) {
+    return null;
+  }
+  const yearMonth = compact.slice(0, 6);
+  return `ncFC/fc-oisst-daily-avhrr-only-dly-prelim/files/${yearMonth}/oisst-avhrr-v02r01.${compact}_preliminary.nc`;
+}
+
 export async function fetchLatestOisstAnomalyWmsUrl(
   signal?: AbortSignal,
 ): Promise<string | null> {
