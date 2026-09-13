@@ -39,6 +39,7 @@ import { mapIconSize } from 'layout/App/theme';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
+import MapDateControl from './MapDateControl';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
 
@@ -90,6 +91,8 @@ function HomepageMap({
   defaultLayerName,
   legendBottom,
   legendLeft,
+  historicalDate,
+  onHistoricalDateChange,
   classes,
   onMapLoad,
 }: HomepageMapProps) {
@@ -182,8 +185,13 @@ function HomepageMap({
 
   // Memoize the layers to prevent unnecessary re-renders
   const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} />,
-    [defaultLayerName],
+    () => (
+      <SofarLayers
+        defaultLayerName={defaultLayerName}
+        historicalDate={historicalDate}
+      />
+    ),
+    [defaultLayerName, historicalDate],
   );
 
   const siteMarkers = useMemo(
@@ -268,6 +276,14 @@ function HomepageMap({
           <InfoIcon color="primary" />
         </IconButton>
       </div>
+      {onHistoricalDateChange && (
+        <div className={classes.dateIconButton}>
+          <MapDateControl
+            historicalDate={historicalDate}
+            onDateChange={onHistoricalDateChange}
+          />
+        </div>
+      )}
       <InfoDialog
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
@@ -353,6 +369,15 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    dateIconButton: {
+      ...mapButtonStyles,
+      right: 0,
+      top: 150,
+      zIndex: 400,
+      [theme.breakpoints.down('lg')]: {
+        top: 100,
+      },
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -379,6 +404,10 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  /** ISO date (yyyy-MM-dd). When set, satellite layers serve that date. */
+  historicalDate?: string | null;
+  /** When provided, renders the historical date control on the map. */
+  onHistoricalDateChange?: (date: string | null) => void;
   onMapLoad?: (map: L.Map) => void;
 }
 

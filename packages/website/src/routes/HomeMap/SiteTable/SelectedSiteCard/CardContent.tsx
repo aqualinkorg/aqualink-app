@@ -16,9 +16,11 @@ import { isNumber } from 'lodash';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { Site } from 'store/Sites/types';
+import { Site, DailyData } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { formatNumber } from 'helpers/numberUtils';
+import { degreeHeatingWeeksCalculator } from 'helpers/degreeHeatingWeeks';
+import { format, parseISO } from 'date-fns';
 import Chart from 'common/Chart';
 import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
 import Chip from 'common/Chip';
@@ -108,11 +110,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+export interface HistoricalDailyData {
+  data: DailyData | null;
+  loading: boolean;
+}
+
 function SelectedSiteCardContent({
   site,
   loading,
   error,
   imageUrl = null,
+  historicalDate,
+  historicalDailyData,
 }: SelectedSiteCardContentProps) {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
@@ -123,28 +132,71 @@ function SelectedSiteCardContent({
     satelliteTemperature,
     dhw: degreeHeatingWeek,
   } = site?.collectionData || {};
-  const useCardWithImageLayout = Boolean(loading || imageUrl);
+
+  const historicalDay = historicalDate ? historicalDailyData : undefined;
+  const historicalData = historicalDay?.data ?? null;
+  const formattedHistoricalDate = historicalDate
+    ? format(parseISO(historicalDate), 'MMM d, yyyy')
+    : null;
+
+  const getHistoricalDataLabel = () => {
+    if (!formattedHistoricalDate) {
+      return null;
+    }
+    if (historicalDay?.loading) {
+      return `Loading ${formattedHistoricalDate} data...`;
+    }
+    return historicalData
+      ? `Data for ${formattedHistoricalDate}`
+      : `No daily data recorded on ${formattedHistoricalDate}`;
+  };
 
   const metrics = [
     {
       label: 'SURFACE TEMP',
-      value: formatNumber(satelliteTemperature, 1),
+      value: formatNumber(
+        historicalData
+          ? historicalData.satelliteTemperature
+          : satelliteTemperature,
+        1,
+      ),
       unit: ' °C',
-      display: isNumber(satelliteTemperature),
+      display: historicalDate
+        ? isNumber(historicalData?.satelliteTemperature)
+        : isNumber(satelliteTemperature),
     },
     {
       label: 'HEAT STRESS',
-      value: formatNumber(degreeHeatingWeek, 1),
+      value: formatNumber(
+        historicalData
+          ? degreeHeatingWeeksCalculator(historicalData.degreeHeatingDays)
+          : degreeHeatingWeek,
+        1,
+      ),
       unit: ' DHW',
-      display: isNumber(degreeHeatingWeek),
+      display: historicalDate
+        ? isNumber(
+            degreeHeatingWeeksCalculator(historicalData?.degreeHeatingDays),
+          )
+        : isNumber(degreeHeatingWeek),
     },
     {
       label: `TEMP AT ${site?.depth}m`,
-      value: formatNumber(bottomTemperature, 1),
+      value: formatNumber(
+        historicalData
+          ? historicalData.avgBottomTemperature
+          : bottomTemperature,
+        1,
+      ),
       unit: ' °C',
-      display: isNumber(bottomTemperature) && isNumber(site?.depth),
+      display: historicalDate
+        ? isNumber(historicalData?.avgBottomTemperature) &&
+          isNumber(site?.depth)
+        : isNumber(bottomTemperature) && isNumber(site?.depth),
     },
   ];
+
+  const useCardWithImageLayout = Boolean(loading || imageUrl);
 
   const { name, region: regionName } = site
     ? getSiteNameAndRegion(site)
@@ -377,6 +429,17 @@ function SelectedSiteCardContent({
         </Hidden>
       </Grid>
       <Grid item xs={12} lg={2} container>
+        {historicalDate && (
+          <Box
+            width="100%"
+            textAlign={{ xs: 'center', lg: 'left' }}
+            mb="0.5rem"
+          >
+            <Typography variant="caption" color="textSecondary">
+              {getHistoricalDataLabel()}
+            </Typography>
+          </Box>
+        )}
         <div className={classes.metricsContainer}>
           {metrics.map(({ label, value, unit, display }) => (
             <div key={label} className={classes.metric}>
@@ -422,6 +485,9 @@ interface SelectedSiteCardContentProps {
   loading: boolean;
   error?: string | null;
   imageUrl?: string | null;
+  /** ISO date (yyyy-MM-dd). When set, metrics show that date's daily data. */
+  historicalDate?: string | null;
+  historicalDailyData?: HistoricalDailyData;
 }
 
 type SelectedSiteCardContentStyleProps = Pick<
