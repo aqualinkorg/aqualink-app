@@ -6,6 +6,16 @@ const { spawnSync } = require('node:child_process');
 // Advisories that cannot be fixed without a major framework upgrade and whose
 // impact does not apply to this codebase. Each entry must document why.
 const IGNORED_ADVISORY_IDS = [
+  // GHSA-vcc3-ghjq-m6fr: malformed-input DoS in decode-uri-component.
+  // The only production path is Google Maps > query-string. Google Maps uses
+  // query-string.stringify exclusively (dist/serialize.js), never parse or
+  // decodeUriComponent. The compatibility test run before this audit replaces
+  // the decoder with a throwing probe and verifies Maps serialization still
+  // succeeds; its positive control verifies parsing trips the probe.
+  // decode-uri-component 0.5 is ESM-only and cannot replace query-string 7's
+  // CommonJS callable import. Remove this exception when Google Maps upgrades.
+  'GHSA-vcc3-ghjq-m6fr',
+
   // GHSA-qwww-vcr4-c8h2: react-router RSC CSRF bypass.
   // The advisory explicitly states this only affects the *unstable* RSC APIs,
   // which this project does not use.  The patched version (react-router >=8.3.0)

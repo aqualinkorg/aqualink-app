@@ -20,9 +20,12 @@
     "test:watch": "yarn workspaces foreach --all --parallel run test:watch",
     "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish",
     "prepare": "husky",
-    "audit": "node scripts/yarn-audit-summary.js"
+    "audit": "node --test scripts/dependency-compatibility.test.js && node scripts/yarn-audit-summary.js"
   },
   "resolutions": {
+    "baseline-browser-mapping": "^2.11.0",
+    "browserslist": "^4.28.7",
+    "csv": "^6.6.3",
     "@babel/runtime": "^7.26.10",
     "axios": "^1.20.0",
     "baseline-browser-mapping": "^2.11.21",

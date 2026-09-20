@@ -12,7 +12,9 @@ import { Point, GeoJSON } from 'geojson';
 import Bluebird from 'bluebird';
 import pLimit from 'p-limit';
 import { ExifParserFactory } from 'ts-exif-parser';
-import { parse } from 'csv-parse/lib/sync';
+// csv-parse exposes this entry via package exports, like csv-stringify/sync.
+// eslint-disable-next-line import/no-unresolved
+import { parse } from 'csv-parse/sync';
 
 import { DateTime } from '../../luxon-extensions';
 import { Site, SiteStatus } from '../../sites/sites.entity';
