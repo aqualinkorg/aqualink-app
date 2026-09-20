@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { LayersControl, TileLayer, WMSTileLayer } from 'react-leaflet';
 import { MapLayerName } from 'store/Homepage/types';
-import { fetchLatestOisstAnomalyWmsUrl } from './oisstAnomalyWms';
+import {
+  buildHistoricalOisstDatasetPath,
+  buildOisstAnomalyWmsUrl,
+  fetchLatestOisstAnomalyWmsUrl,
+} from './oisstAnomalyWms';
 
 type SofarLayerDefinition = {
   name: MapLayerName;
@@ -57,8 +61,18 @@ function useLatestOisstAnomalyWmsUrl() {
   return url;
 }
 
-export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
+export function SofarLayers({ defaultLayerName, asOfDate }: SofarLayersProps) {
   const sstAnomalyWmsUrl = useLatestOisstAnomalyWmsUrl();
+
+  // When a historical date is selected, serve the SST anomaly layer from that
+  // day's OISST file. The dated path is deterministic; a missing file simply
+  // renders no tiles.
+  const historicalDatasetPath = asOfDate
+    ? buildHistoricalOisstDatasetPath(asOfDate)
+    : null;
+  const anomalyWmsUrl = historicalDatasetPath
+    ? buildOisstAnomalyWmsUrl(historicalDatasetPath)
+    : sstAnomalyWmsUrl;
 
   return (
     <LayersControl position="topright">
@@ -84,7 +98,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
           />
         </LayersControl.BaseLayer>
       ))}
-      {sstAnomalyWmsUrl && (
+      {anomalyWmsUrl && (
         <LayersControl.BaseLayer
           checked={SST_ANOMALY_LAYER.name === defaultLayerName}
           name={SST_ANOMALY_LAYER.name}
@@ -96,7 +110,8 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
             transparent
             format="image/png"
             opacity={0.7}
-            url={sstAnomalyWmsUrl}
+            url={anomalyWmsUrl}
+            key={anomalyWmsUrl}
           />
         </LayersControl.BaseLayer>
       )}
@@ -106,6 +121,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
 
 interface SofarLayersProps {
   defaultLayerName?: MapLayerName;
+  asOfDate?: string;
 }
 
 export default SofarLayers;
