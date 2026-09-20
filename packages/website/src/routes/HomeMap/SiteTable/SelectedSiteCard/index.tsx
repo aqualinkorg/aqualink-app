@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Card, Theme, Typography } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import makeStyles from '@mui/styles/makeStyles';
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function SelectedSiteCard() {
   const classes = useStyles();
+  const location = useLocation();
   const site = useSelector(siteDetailsSelector);
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
@@ -71,7 +72,7 @@ function SelectedSiteCard() {
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
               {!hasMedia && (
-                <Link to={`/sites/${site?.id}`}>
+                <Link to={`/sites/${site?.id}${location.search}`}>
                   <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}

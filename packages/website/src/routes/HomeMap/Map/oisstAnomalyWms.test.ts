@@ -1,4 +1,6 @@
+import { DateTime } from 'luxon-extensions';
 import {
+  buildHistoricalOisstDatasetPath,
   buildOisstAnomalyWmsUrl,
   parseLatestOisstDatasetPath,
 } from './oisstAnomalyWms';
@@ -32,5 +34,28 @@ describe('buildOisstAnomalyWmsUrl', () => {
     ).toBe(
       'https://www.ncei.noaa.gov/thredds/wms/ncFC/fc-oisst-daily-avhrr-only-dly-prelim/files/202607/oisst-avhrr-v02r01.20260728_preliminary.nc?COLORSCALERANGE=-5,5',
     );
+  });
+});
+
+describe('buildHistoricalOisstDatasetPath', () => {
+  it('uses the final archive for dates older than the preliminary window', () => {
+    expect(buildHistoricalOisstDatasetPath('2020-01-15')).toBe(
+      'ncFC/fc-oisst-daily-avhrr-only-dly/files/202001/oisst-avhrr-v02r01.20200115.nc',
+    );
+  });
+
+  it('uses the preliminary catalog for recent dates', () => {
+    const yesterday = DateTime.utc().minus({ days: 1 });
+    expect(
+      buildHistoricalOisstDatasetPath(yesterday.toFormat('yyyy-MM-dd')),
+    ).toBe(
+      `ncFC/fc-oisst-daily-avhrr-only-dly-prelim/files/${yesterday.toFormat(
+        'yyyyLL',
+      )}/oisst-avhrr-v02r01.${yesterday.toFormat('yyyyLLdd')}_preliminary.nc`,
+    );
+  });
+
+  it('returns null for an invalid date', () => {
+    expect(buildHistoricalOisstDatasetPath('not-a-date')).toBeNull();
   });
 });

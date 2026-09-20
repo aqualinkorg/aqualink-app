@@ -30,6 +30,7 @@ import {
   unsetSpotterPosition,
 } from 'store/Sites/selectedSiteSlice';
 import { parseLatestData } from 'store/Sites/helpers';
+import { getHistoricalCardData } from 'helpers/historicalDate';
 import { getMiddlePoint } from 'helpers/map';
 import { formatNumber } from 'helpers/numberUtils';
 import { displayTimeInLocalTimezone } from 'helpers/dates';
@@ -133,6 +134,7 @@ function SiteDetails({
   featuredSurveyId = null,
   featuredSurveyPoint = null,
   surveyDiveDate = null,
+  asOfDate,
 }: SiteDetailsProps) {
   const classes = useStyles();
   const theme = useTheme();
@@ -299,37 +301,37 @@ function SiteDetails({
 
   const { videoStream } = site || {};
 
+  // When browsing a past date, cards show the site's stored daily data as of
+  // that date instead of live sensor values.
+  const historicalData = asOfDate
+    ? getHistoricalCardData(site?.collectionData)
+    : undefined;
+  const cardData = historicalData || latestDataAsSofarValues;
+  const hasSpotterTempData = hasSpotterData && !asOfDate;
+  const hasSpotterWindWave = hasSpotterWindWaveData && !asOfDate;
+
   const cards =
-    site && latestDataAsSofarValues
+    site && cardData
       ? [
           // CARD 1: Satellite (always shown)
-          <Satellite
-            data={latestDataAsSofarValues}
-            maxMonthlyMean={site.maxMonthlyMean}
-          />,
+          <Satellite data={cardData} maxMonthlyMean={site.maxMonthlyMean} />,
 
           // CARD 2: Sensor/CoralBleaching/TemperatureChange (conditional)
           (() => {
             if (
               (hasHUIData || hasSondeData || hasSeapHOxData || hasHWOData) &&
-              !hasSpotterData
+              !hasSpotterTempData
             ) {
-              return <CoralBleaching data={latestDataAsSofarValues} />;
+              return <CoralBleaching data={cardData} />;
             }
 
-            if (!hasSpotterData) {
+            if (!hasSpotterTempData) {
               return (
                 <TemperatureChange dailyData={siteDetails?.dailyData ?? []} />
               );
             }
 
-            return (
-              <Sensor
-                depth={site.depth}
-                id={site.id}
-                data={latestDataAsSofarValues}
-              />
-            );
+            return <Sensor depth={site.depth} id={site.id} data={cardData} />;
           })(),
 
           // CARD 3: SeapHOx (priority) or WaterSampling/CoralBleaching (fallback)
@@ -360,14 +362,11 @@ function SiteDetails({
                 <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
               );
             }
-            return <CoralBleaching data={latestDataAsSofarValues} />;
+            return <CoralBleaching data={cardData} />;
           })(),
 
           // CARD 4: Waves (always shown)
-          <Waves
-            data={latestDataAsSofarValues}
-            hasSpotter={hasSpotterWindWaveData}
-          />,
+          <Waves data={cardData} hasSpotter={hasSpotterWindWave} />,
         ]
       : times(4, () => null);
 
@@ -556,6 +555,8 @@ interface SiteDetailsProps {
   surveys: SurveyListItem[];
   featuredSurveyPoint?: SurveyPoint | null;
   surveyDiveDate?: string | null;
+  /** YYYY-MM-DD; when set, metric cards show daily data as of this date. */
+  asOfDate?: string;
 }
 
 export default SiteDetails;

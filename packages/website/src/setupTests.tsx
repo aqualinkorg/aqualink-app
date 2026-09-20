@@ -17,6 +17,7 @@ Object.defineProperties(globalThis, {
 vi.mock('@mui/icons-material', () => ({
   ArrowBack: 'mock-ArrowBack',
   Build: 'mock-Build',
+  CalendarToday: 'mock-CalendarToday',
   Cancel: 'mock-Cancel',
   Clear: 'mock-Clear',
   CloseOutlined: 'mock-CloseOutlined',

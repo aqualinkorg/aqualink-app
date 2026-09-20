@@ -22,6 +22,7 @@ import type {
   SiteFilters,
   SitesListState,
   SitesRequestData,
+  SitesRequestParams,
   UpdateSiteNameFromListArgs,
 } from './types';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
@@ -35,13 +36,14 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestParams | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { date } = arg || {};
+      const { data } = await siteServices.getSites({ date });
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,17 +51,22 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        date,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: SitesRequestParams | undefined, { getState }) {
+      const { date } = arg || {};
       const {
-        sitesList: { list },
+        sitesList: { list, date: currentDate, currentRequestId },
       } = getState();
-      return !list;
+      // Refetch when the requested date changed, and allow superseding an
+      // in-flight request (the pending reducer keeps only the newest id, so a
+      // late response from an older request is discarded below).
+      return Boolean(currentRequestId) || !list || currentDate !== date;
     },
   },
 );
@@ -103,27 +110,36 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
+    builder.addCase(sitesRequest.fulfilled, (state, action) =>
+      state.currentRequestId !== action.meta.requestId
+        ? state
+        : {
+            ...state,
+            list: action.payload.list,
+            date: action.payload.date,
+            loading: false,
+            currentRequestId: undefined,
+          },
     );
 
-    builder.addCase(sitesRequest.rejected, (state, action) => ({
-      ...state,
-      error: action.error.message
-        ? action.error.message
-        : action.error.toString(),
-      loading: false,
-    }));
+    builder.addCase(sitesRequest.rejected, (state, action) =>
+      state.currentRequestId !== action.meta.requestId
+        ? state
+        : {
+            ...state,
+            error: action.error.message
+              ? action.error.message
+              : action.error.toString(),
+            loading: false,
+            currentRequestId: undefined,
+          },
+    );
 
-    builder.addCase(sitesRequest.pending, (state) => ({
+    builder.addCase(sitesRequest.pending, (state, action) => ({
       ...state,
       loading: true,
       error: null,
+      currentRequestId: action.meta.requestId,
     }));
   },
 });
