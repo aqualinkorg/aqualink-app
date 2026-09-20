@@ -20,9 +20,12 @@
     "test:watch": "yarn workspaces foreach --all --parallel run test:watch",
     "publish:release": "yarn workspaces foreach --topological npm publish --tolerate-republish",
     "prepare": "husky",
-    "audit": "node scripts/yarn-audit-summary.js"
+    "audit": "node --test scripts/dependency-compatibility.test.js && node scripts/yarn-audit-summary.js"
   },
   "resolutions": {
+    "baseline-browser-mapping": "^2.11.0",
+    "browserslist": "^4.28.7",
+    "csv": "^6.6.3",
     "@babel/runtime": "^7.26.10",
     "axios": "^1.15.0",
     "basic-ftp": "^5.2.0",
@@ -43,6 +46,7 @@
     "protocol-buffers-schema": "^3.6.1",
     "protobufjs": "^7.6.3",
     "qs": "^6.15.2",
+    "sharp": "^0.35.4",
     "svgo": "^3.3.4",
     "tar": "^7.5.22",
     "uuid": "^11.1.1",

@@ -89,7 +89,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cross-env": "^7.0.3",
-    "csv-parse": "^4.15.1",
+    "csv-parse": "^7.0.2",
     "csv-parser": "^3.2.0",
     "csv-stringify": "^6.4.0",
     "dotenv": "^17.2.3",
