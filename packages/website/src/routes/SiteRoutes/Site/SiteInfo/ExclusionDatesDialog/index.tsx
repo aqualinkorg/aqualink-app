@@ -12,6 +12,8 @@ import {
   siteRequest,
 } from 'store/Sites/selectedSiteSlice';
 import { setTimeZone } from 'helpers/dates';
+import { isHistoricalDateParam } from 'helpers/historicalDate';
+import { useQueryParam } from 'hooks/useQueryParams';
 import Dialog, { Action } from 'common/Dialog';
 import siteServices from 'services/siteServices';
 import {
@@ -32,6 +34,7 @@ function ExclusionDatesDialog({
   classes,
 }: ExclusionDatesDialogProps) {
   const dispatch = useAppDispatch();
+  const [asOfDate] = useQueryParam('date', isHistoricalDateParam);
 
   // State variables for deploy dialog
   const [deployDateTime, setDeployDateTime] = useState<Date | null>(null);
@@ -101,7 +104,7 @@ function ExclusionDatesDialog({
         .then(() => {
           setPickerError('');
           onDeployDialogClose();
-          dispatch(siteRequest(`${siteId}`));
+          dispatch(siteRequest({ id: `${siteId}`, date: asOfDate }));
         })
         .catch((err) =>
           setDeployError(
@@ -144,7 +147,7 @@ function ExclusionDatesDialog({
           dispatch(clearTimeSeriesData());
           dispatch(clearTimeSeriesDataRange());
           dispatch(setSelectedSite(undefined));
-          dispatch(siteRequest(`${siteId}`));
+          dispatch(siteRequest({ id: `${siteId}`, date: asOfDate }));
         })
         .catch((err) =>
           setMaintainError(

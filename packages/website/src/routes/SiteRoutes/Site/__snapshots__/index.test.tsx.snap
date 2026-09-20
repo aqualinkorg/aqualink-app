@@ -1424,7 +1424,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               aria-label="Site data date"
               class="MuiInputBase-input MuiInput-input css-60swwn-MuiInputBase-input-MuiInput-input"
               id=":r50:"
-              max="2026-09-20"
+              max="2024-01-15"
               type="date"
               value=""
             />
@@ -4492,7 +4492,7 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
               aria-label="Site data date"
               class="MuiInputBase-input MuiInput-input css-60swwn-MuiInputBase-input-MuiInput-input"
               id=":r10:"
-              max="2026-09-20"
+              max="2024-01-15"
               type="date"
               value=""
             />

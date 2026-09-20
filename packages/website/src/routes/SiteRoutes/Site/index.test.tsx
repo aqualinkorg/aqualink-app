@@ -27,6 +27,17 @@ vi.mock('common/Chart/MultipleSensorsCharts', () => ({
   default: 'Mock-MultipleSensorsCharts',
 }));
 
+vi.mock('helpers/historicalDate', async () => {
+  const actual = await vi.importActual<typeof import('helpers/historicalDate')>(
+    'helpers/historicalDate',
+  );
+  return {
+    ...actual,
+    // Keep the date picker's `max` attribute deterministic in snapshots.
+    todayDateParam: () => '2024-01-15',
+  };
+});
+
 describe('Site Detail Page', () => {
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;
