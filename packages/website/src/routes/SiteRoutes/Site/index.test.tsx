@@ -34,6 +34,8 @@ vi.mock('helpers/historicalDate', async () => {
   return {
     ...actual,
     // Keep the date picker's `max` attribute deterministic in snapshots.
+    // Freezing the clock instead would desync the rendered relative-time
+    // fields from the fixture timestamps, which are computed at import time.
     todayDateParam: () => '2024-01-15',
   };
 });
