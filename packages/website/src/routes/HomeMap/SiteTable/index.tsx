@@ -74,6 +74,7 @@ function SiteTable({
   scrollTableOnSelection = true,
   scrollPageOnSelection,
   map,
+  historicalDate,
   classes,
 }: SiteTableProps) {
   const loading = useSelector(sitesListLoadingSelector);
@@ -135,7 +136,7 @@ function SiteTable({
           </Box>
         </Hidden>
       )}
-      {showCard && <SelectedSiteCard />}
+      {showCard && <SelectedSiteCard historicalDate={historicalDate} />}
       {showSiteFiltersDropdown && (
         <Box className={classes.dropdownWrapper}>
           <SitesFilterModal />
@@ -278,6 +279,8 @@ interface SiteTableIncomingProps {
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
   map?: L.Map | null; // Add map prop type
+  /** ISO date (yyyy-MM-dd). When set, the selected site card shows that date's data. */
+  historicalDate?: string | null;
 }
 
 export default withStyles(styles)(SiteTable);

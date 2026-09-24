@@ -1,5 +1,6 @@
 import {
   buildOisstAnomalyWmsUrl,
+  oisstPreliminaryDatasetPathForDate,
   parseLatestOisstDatasetPath,
 } from './oisstAnomalyWms';
 
@@ -32,5 +33,19 @@ describe('buildOisstAnomalyWmsUrl', () => {
     ).toBe(
       'https://www.ncei.noaa.gov/thredds/wms/ncFC/fc-oisst-daily-avhrr-only-dly-prelim/files/202607/oisst-avhrr-v02r01.20260728_preliminary.nc?COLORSCALERANGE=-5,5',
     );
+  });
+});
+
+describe('oisstPreliminaryDatasetPathForDate', () => {
+  it('builds the dataset path for an ISO date', () => {
+    expect(oisstPreliminaryDatasetPathForDate('2022-09-01')).toBe(
+      'ncFC/fc-oisst-daily-avhrr-only-dly-prelim/files/202209/oisst-avhrr-v02r01.20220901_preliminary.nc',
+    );
+  });
+
+  it('returns null for invalid dates', () => {
+    expect(oisstPreliminaryDatasetPathForDate('not-a-date')).toBeNull();
+    expect(oisstPreliminaryDatasetPathForDate('2022-9-1')).toBeNull();
+    expect(oisstPreliminaryDatasetPathForDate('')).toBeNull();
   });
 });
