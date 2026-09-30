@@ -5,6 +5,8 @@ import {
   Routes,
   Navigate,
   Route,
+  useLocation,
+  useParams,
 } from 'react-router-dom';
 import { useAppDispatch } from 'store/hooks';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -35,6 +37,24 @@ import 'leaflet/dist/leaflet.css';
 import './App.css';
 import '../../assets/css/bootstrap.css';
 import '../../assets/css/leaflet.css';
+
+// Redirects legacy /reefs/:id URLs to /sites/:id, preserving any deeper path,
+// query string, and hash.
+function ReefRedirect() {
+  const { id, '*': rest } = useParams();
+  const { search, hash } = useLocation();
+
+  return (
+    <Navigate
+      to={{
+        pathname: `/sites/${id}${rest ? `/${rest}` : ''}`,
+        search,
+        hash,
+      }}
+      replace
+    />
+  );
+}
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
@@ -75,10 +95,7 @@ function App() {
                   <Route path="/drones" element={<Drones />} />
                   <Route path="/faq" element={<Faq />} />
                   <Route path="/terms" element={<Terms />} />
-                  <Route
-                    path="/reefs/:id"
-                    element={<Navigate to="/" replace />}
-                  />
+                  <Route path="/reefs/:id/*" element={<ReefRedirect />} />
                   <Route path="/sites/*" element={<SiteRoutes />} />
                   <Route path="/uploads" element={<Uploads />} />
                   <Route path="/dashboard" element={<Dashboard />} />
