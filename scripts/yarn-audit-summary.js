@@ -57,6 +57,17 @@ const IGNORED_ADVISORY_IDS = [
   // The fix (js-yaml >=4.3.1) requires @nestjs/swagger to update its peer
   // dependency — a separate upgrade tracked in its own future PR.
   'GHSA-5p4m-2wfm-xmqj',
+
+  // GHSA-vcc3-ghjq-m6fr / CVE-2026-45822: decode-uri-component DoS via
+  // malformed percent-encoded input.
+  // Path: api > @googlemaps/google-maps-services-js > query-string >
+  // decode-uri-component.
+  // Patched 0.5.0 is ESM-only and breaks Jest + the CJS google-maps /
+  // query-string@7 stack (which pins decode-uri-component ^0.2.2).
+  // Input here is Google Maps API response/query serialization, not
+  // untrusted end-user URL decoding. Pin stays at 0.2.2 until query-string
+  // / google-maps-services-js ship an ESM-compatible upgrade.
+  'GHSA-vcc3-ghjq-m6fr',
 ];
 
 function getAuditOptions() {
