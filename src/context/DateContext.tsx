@@ -4,17 +4,26 @@ interface DateContextType {
   selectedDate: Date;
   setSelectedDate: (date: Date) => void;
   isHistoricalView: boolean;
+  resetToToday: () => void;
 }
 
 const DateContext = createContext<DateContextType | undefined>(undefined);
 
 export const DateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDateState] = useState(new Date());
+
+  const setSelectedDate = (date: Date) => {
+    setSelectedDateState(date);
+  };
+
+  const resetToToday = () => {
+    setSelectedDateState(new Date());
+  };
 
   const isHistoricalView = selectedDate.toDateString() !== new Date().toDateString();
 
   return (
-    <DateContext.Provider value={{ selectedDate, setSelectedDate, isHistoricalView }}>
+    <DateContext.Provider value={{ selectedDate, setSelectedDate, isHistoricalView, resetToToday }}>
       {children}
     </DateContext.Provider>
   );
