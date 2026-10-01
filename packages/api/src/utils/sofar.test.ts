@@ -60,17 +60,16 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
 
 test('it process Sofar Wave Date API for surface temperature', async () => {
   jest.setTimeout(30000);
-  const now = new Date();
-  const yesterdayDate = new Date(now);
-  yesterdayDate.setDate(now.getDate() - 1);
-  const today = now.toISOString();
-  const yesterday = yesterdayDate.toISOString();
+  // Fixed historical window — rolling "yesterday→today" flakes when the
+  // spotter has a data gap. Same spotter/date as getSpotterData coverage.
+  const start = new Date('2020-09-02T00:00:00.000Z').toISOString();
+  const end = new Date('2020-09-03T00:00:00.000Z').toISOString();
 
   const response = await sofarWaveData(
-    'SPOT-1644',
+    'SPOT-300434063450120',
     process.env.SOFAR_API_TOKEN,
-    yesterday,
-    today,
+    start,
+    end,
   );
 
   expect(response).toBeDefined();
