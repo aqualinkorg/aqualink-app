@@ -31,17 +31,18 @@ const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
   filters: {},
+  asOfDate: undefined,
 };
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  string | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (date, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(date);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +56,12 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: string | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, asOfDate },
       } = getState();
-      return !list;
+      // Refetch only when the requested as-of date differs from the loaded one.
+      return (arg || undefined) !== (asOfDate || undefined) || !list;
     },
   },
 );
@@ -105,10 +107,11 @@ const sitesListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
+      (state, action: PayloadAction<SitesRequestData, string, { arg?: string }>) => ({
         ...state,
         list: action.payload.list,
         loading: false,
+        asOfDate: action.meta.arg || undefined,
       }),
     );
 
