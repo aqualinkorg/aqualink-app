@@ -39,7 +39,7 @@ const sofarToken = process.env.SOFAR_API_TOKEN;
   expect(values.topTemperature.length).toEqual(144);
 });
 
-test('it process Sofar Hindcast API for wind-wave data', async () => {
+(sofarToken ? test : test.skip)('it process Sofar Hindcast API for wind-wave data', async () => {
   jest.setTimeout(30000);
   const now = new Date();
   const yesterdayDate = new Date(now);
