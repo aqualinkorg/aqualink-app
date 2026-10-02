@@ -68,6 +68,16 @@ const IGNORED_ADVISORY_IDS = [
   // untrusted end-user URL decoding. Pin stays at 0.2.2 until query-string
   // / google-maps-services-js ship an ESM-compatible upgrade.
   'GHSA-vcc3-ghjq-m6fr',
+
+  // GHSA-86w9-cpqp-85rv / CVE-2026-85393: node-forge signature verification bypass.
+  // Path: api > @google-cloud/storage > google-auth-library > gtoken > google-p12-pem > node-forge
+  // Also: api > firebase-admin > node-forge.
+  // Only affects X.509 certificate chain validation with attacker-controlled
+  // certificates. This codebase uses node-forge only transitively through
+  // google-p12-pem for GCS service-account key parsing — certificates are
+  // Google-issued, not user-supplied. No fix available without dropping
+  // google-p12-pem (which firebase-admin requires).
+  'GHSA-86w9-cpqp-85rv',
 ];
 
 function getAuditOptions() {

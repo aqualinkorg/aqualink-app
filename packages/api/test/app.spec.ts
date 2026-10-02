@@ -1,3 +1,8 @@
+// Set required env vars before any module imports that trigger ConfigService
+if (!process.env.BACKEND_BASE_URL) {
+  process.env.BACKEND_BASE_URL = 'http://localhost:3000';
+}
+
 import { INestApplication } from '@nestjs/common';
 import { TestService } from './test.service';
 import { healthCheckTests } from '../src/health-check/health-check.spec';

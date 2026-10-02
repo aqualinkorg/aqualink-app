@@ -22,11 +22,12 @@ test('It processes Sofar API for daily data.', async () => {
   ]);
 });
 
-test('It processes Sofar Spotter API for daily data.', async () => {
+const sofarToken = process.env.SOFAR_API_TOKEN;
+(sofarToken ? test : test.skip)('It processes Sofar Spotter API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSpotterData(
     'SPOT-300434063450120',
-    process.env.SOFAR_API_TOKEN,
+    sofarToken,
     new Date('2020-09-02'),
   );
 
@@ -58,7 +59,7 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
   );
 });
 
-test('it process Sofar Wave Date API for surface temperature', async () => {
+(sofarToken ? test : test.skip)('it process Sofar Wave Date API for surface temperature', async () => {
   jest.setTimeout(30000);
   // Fixed historical window — rolling "yesterday→today" flakes when the
   // spotter has a data gap. Same spotter/date as getSpotterData coverage.
@@ -67,7 +68,7 @@ test('it process Sofar Wave Date API for surface temperature', async () => {
 
   const response = await sofarWaveData(
     'SPOT-300434063450120',
-    process.env.SOFAR_API_TOKEN,
+    sofarToken,
     start,
     end,
   );
