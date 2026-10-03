@@ -1,3 +1,12 @@
+/* eslint-disable import/first */
+// Set required env vars before any module imports that trigger ConfigService.
+// TypeScript/ES module imports are hoisted at runtime, but ts-jest compiles to
+// CommonJS which evaluates top-to-bottom — so the env block MUST precede the
+// imports that transitively load ConfigService.
+if (!process.env.BACKEND_BASE_URL) {
+  process.env.BACKEND_BASE_URL = 'http://localhost:3000';
+}
+
 import { INestApplication } from '@nestjs/common';
 import { TestService } from './test.service';
 import { healthCheckTests } from '../src/health-check/health-check.spec';
@@ -11,11 +20,7 @@ import { surveyTests } from '../src/surveys/surveys.spec';
 import { siteTests } from '../src/sites/sites.spec';
 import { sensorTests } from '../src/sensors/sensors.spec';
 import { monitoringTests } from '../src/monitoring/monitoring.spec';
-
-// Set required env vars before any module imports that trigger ConfigService
-if (!process.env.BACKEND_BASE_URL) {
-  process.env.BACKEND_BASE_URL = 'http://localhost:3000';
-}
+/* eslint-enable import/first */
 
 describe('AppController (e2e)', () => {
   const testService = TestService.getInstance();
