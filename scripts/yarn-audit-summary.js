@@ -78,6 +78,20 @@ const IGNORED_ADVISORY_IDS = [
   // untrusted end-user URL decoding. Pin stays at 0.2.2 until query-string
   // / google-maps-services-js ship an ESM-compatible upgrade.
   'GHSA-vcc3-ghjq-m6fr',
+
+  // GHSA-86w9-cpqp-85rv / CVE-2026-85393: node-forge accepts extra nested
+  // DigestAlgorithm elements when verifying RSA PKCS#1 v1.5 signatures.
+  // Path: api > firebase-admin > node-forge and
+  // api > @google-cloud/storage > google-auth-library > gtoken >
+  // google-p12-pem > node-forge.
+  // Both chains use node-forge to SIGN requests with our own service-account
+  // private key and to PARSE that trusted developer-provisioned key file.
+  // Neither chain ever verifies an untrusted third-party signature, which is
+  // the only reachable vector for this advisory; verification of our tokens
+  // happens on Google's servers.
+  // As of this entry no patched release exists (advisory covers <= 1.4.0,
+  // fix: None). Remove this exception when node-forge ships a fix.
+  'GHSA-86w9-cpqp-85rv',
 ];
 
 function getAuditOptions() {

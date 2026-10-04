@@ -28,6 +28,7 @@
     "csv": "^6.6.3",
     "@babel/runtime": "^7.26.10",
     "axios": "^1.20.0",
+    "@fastify/busboy": "^3.2.1",
     "baseline-browser-mapping": "^2.11.21",
     "basic-ftp": "^5.2.0",
     "brace-expansion": "^2.1.7",
