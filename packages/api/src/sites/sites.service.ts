@@ -40,7 +40,10 @@ import { backfillSiteData } from '../workers/backfill-site-data';
 import { SiteApplication } from '../site-applications/site-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
-import { getCollectionData } from '../utils/collections.utils';
+import {
+  getCollectionData,
+  getCollectionDataAsOf,
+} from '../utils/collections.utils';
 import { LatestData } from '../time-series/latest-data.entity';
 import { getYouTubeVideoId } from '../utils/urls';
 import {
@@ -158,6 +161,12 @@ export class SitesService {
   async find(filter: FilterSiteDto): Promise<Site[]> {
     const query = this.sitesRepository.createQueryBuilder('site');
 
+    if (filter.date) {
+      if (!DateTime.fromISO(filter.date).isValid) {
+        throw new BadRequestException('Date is not a valid ISO date');
+      }
+    }
+
     if (filter.name) {
       query.andWhere('(lower(site.name) LIKE :name)', {
         name: `%${filter.name.toLowerCase()}%`,
@@ -198,10 +207,13 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    const mappedSiteData = filter.date
+      ? await getCollectionDataAsOf(
+          res,
+          this.dailyDataRepository,
+          filter.date,
+        )
+      : await getCollectionData(res, this.latestDataRepository);
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
