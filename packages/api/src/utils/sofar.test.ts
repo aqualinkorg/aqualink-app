@@ -70,17 +70,15 @@ sofarIntegrationTest(
   'it process Sofar Wave Date API for surface temperature',
   async () => {
     jest.setTimeout(30000);
-    const now = new Date();
-    const yesterdayDate = new Date(now);
-    yesterdayDate.setDate(now.getDate() - 1);
-    const today = now.toISOString();
-    const yesterday = yesterdayDate.toISOString();
+    // Use the fixed window from the Spotter coverage to avoid live data gaps.
+    const start = new Date('2020-09-02T00:00:00.000Z').toISOString();
+    const end = new Date('2020-09-03T00:00:00.000Z').toISOString();
 
     const response = await sofarWaveData(
-      'SPOT-1644',
+      'SPOT-300434063450120',
       process.env.SOFAR_API_TOKEN,
-      yesterday,
-      today,
+      start,
+      end,
     );
 
     expect(response).toBeDefined();
