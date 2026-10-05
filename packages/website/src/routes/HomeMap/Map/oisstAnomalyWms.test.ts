@@ -97,14 +97,16 @@ describe('fetchOisstAnomalyWmsUrlForDate', () => {
       .mockResolvedValue({ ok: false } as unknown as Response);
     vi.stubGlobal('fetch', fetchMock);
 
-    await expect(fetchOisstAnomalyWmsUrlForDate('2022-09-01')).resolves.toBeNull();
+    const url = await fetchOisstAnomalyWmsUrlForDate('2022-09-01');
+    expect(url).toBeNull();
   });
 
   it('does not probe when the date is not an ISO day', async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
 
-    await expect(fetchOisstAnomalyWmsUrlForDate('2022-9-1')).resolves.toBeNull();
+    const url = await fetchOisstAnomalyWmsUrlForDate('2022-9-1');
+    expect(url).toBeNull();
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });
