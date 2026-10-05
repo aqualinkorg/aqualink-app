@@ -6,6 +6,16 @@ const { spawnSync } = require('node:child_process');
 // Advisories that cannot be fixed without a major framework upgrade and whose
 // impact does not apply to this codebase. Each entry must document why.
 const IGNORED_ADVISORY_IDS = [
+  // GHSA-vcc3-ghjq-m6fr: malformed-input DoS in decode-uri-component.
+  // The only production path is Google Maps > query-string. Google Maps uses
+  // query-string.stringify exclusively (dist/serialize.js), never parse or
+  // decodeUriComponent. The compatibility test run before this audit replaces
+  // the decoder with a throwing probe and verifies Maps serialization still
+  // succeeds; its positive control verifies parsing trips the probe.
+  // decode-uri-component 0.5 is ESM-only and cannot replace query-string 7's
+  // CommonJS callable import. Remove this exception when Google Maps upgrades.
+  'GHSA-vcc3-ghjq-m6fr',
+
   // GHSA-qwww-vcr4-c8h2: react-router RSC CSRF bypass.
   // The advisory explicitly states this only affects the *unstable* RSC APIs,
   // which this project does not use.  The patched version (react-router >=8.3.0)
@@ -68,6 +78,20 @@ const IGNORED_ADVISORY_IDS = [
   // untrusted end-user URL decoding. Pin stays at 0.2.2 until query-string
   // / google-maps-services-js ship an ESM-compatible upgrade.
   'GHSA-vcc3-ghjq-m6fr',
+
+  // GHSA-86w9-cpqp-85rv / CVE-2026-85393: node-forge accepts extra nested
+  // DigestAlgorithm elements when verifying RSA PKCS#1 v1.5 signatures.
+  // Path: api > firebase-admin > node-forge and
+  // api > @google-cloud/storage > google-auth-library > gtoken >
+  // google-p12-pem > node-forge.
+  // Both chains use node-forge to SIGN requests with our own service-account
+  // private key and to PARSE that trusted developer-provisioned key file.
+  // Neither chain ever verifies an untrusted third-party signature, which is
+  // the only reachable vector for this advisory; verification of our tokens
+  // happens on Google's servers.
+  // As of this entry no patched release exists (advisory covers <= 1.4.0,
+  // fix: None). Remove this exception when node-forge ships a fix.
+  'GHSA-86w9-cpqp-85rv',
 ];
 
 function getAuditOptions() {
