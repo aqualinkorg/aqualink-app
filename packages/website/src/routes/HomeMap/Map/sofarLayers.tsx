@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { LayersControl, TileLayer, WMSTileLayer } from 'react-leaflet';
 import { MapLayerName } from 'store/Homepage/types';
 import {
-  buildOisstAnomalyWmsUrl,
   fetchLatestOisstAnomalyWmsUrl,
-  oisstPreliminaryDatasetPathForDate,
+  fetchOisstAnomalyWmsUrlForDate,
 } from './oisstAnomalyWms';
 
 type SofarLayerDefinition = {
@@ -41,16 +40,29 @@ const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
 
 function useOisstAnomalyWmsUrl(historicalDate?: string | null) {
   const [url, setUrl] = useState<string | null>(null);
+  const [checking, setChecking] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
 
     if (historicalDate) {
-      // Daily files are named deterministically, so the WMS URL for the
-      // selected date can be built directly. If NCEI no longer serves that
-      // file, its tiles fail to load and the layer stays blank.
-      const datasetPath = oisstPreliminaryDatasetPathForDate(historicalDate);
-      setUrl(datasetPath ? buildOisstAnomalyWmsUrl(datasetPath) : null);
+      // NCEI prunes daily preliminary files after ~two weeks, so the date has
+      // to be probed: a path that is no longer served would render a blank
+      // layer with nothing to tell the user.
+      setChecking(true);
+      fetchOisstAnomalyWmsUrlForDate(historicalDate, controller.signal)
+        .then((resolved) => {
+          if (!controller.signal.aborted) {
+            setUrl(resolved);
+            setChecking(false);
+          }
+        })
+        .catch(() => {
+          if (!controller.signal.aborted) {
+            setUrl(null);
+            setChecking(false);
+          }
+        });
       return () => controller.abort();
     }
 
@@ -68,15 +80,16 @@ function useOisstAnomalyWmsUrl(historicalDate?: string | null) {
     return () => controller.abort();
   }, [historicalDate]);
 
-  return url;
+  return { url, checking };
 }
+
+export { useOisstAnomalyWmsUrl };
 
 export function SofarLayers({
   defaultLayerName,
   historicalDate,
+  sstAnomalyWmsUrl,
 }: SofarLayersProps) {
-  const sstAnomalyWmsUrl = useOisstAnomalyWmsUrl(historicalDate);
-
   return (
     <LayersControl position="topright">
       <LayersControl.BaseLayer
@@ -123,8 +136,10 @@ export function SofarLayers({
 
 interface SofarLayersProps {
   defaultLayerName?: MapLayerName;
-  /** ISO date (yyyy-MM-dd). When set, the SST Anomaly layer serves that date. */
+  /** ISO date (yyyy-MM-dd). Only used to re-mount the anomaly layer per date. */
   historicalDate?: string | null;
+  /** WMS url of the anomaly layer for the current (or selected) date. */
+  sstAnomalyWmsUrl: string | null;
 }
 
 export default SofarLayers;

@@ -44,3 +44,43 @@ export async function fetchLatestOisstAnomalyWmsUrl(
   const datasetPath = parseLatestOisstDatasetPath(catalogXml);
   return datasetPath ? buildOisstAnomalyWmsUrl(datasetPath) : null;
 }
+
+/**
+ * A 1x1 GetMap against the same layer and style the map requests. NCEI only
+ * keeps the most recent daily preliminary files, so this is how a date that is
+ * no longer served is told apart from one that is.
+ */
+export function buildOisstAnomalyProbeUrl(
+  datasetPath: string,
+  date: string,
+): string {
+  const params = new URLSearchParams({
+    service: 'WMS',
+    version: '1.3.0',
+    request: 'GetMap',
+    layers: 'anom',
+    styles: 'raster/x-Sst',
+    crs: 'EPSG:4326',
+    bbox: '0,0,1,1',
+    width: '1',
+    height: '1',
+    format: 'image/png',
+    time: `${date}T12:00:00Z`,
+  });
+  return `${NCEI_THREDDS_BASE}/wms/${datasetPath}?${params.toString()}`;
+}
+
+export async function fetchOisstAnomalyWmsUrlForDate(
+  date: string,
+  signal?: AbortSignal,
+): Promise<string | null> {
+  const datasetPath = oisstPreliminaryDatasetPathForDate(date);
+  if (!datasetPath) {
+    return null;
+  }
+
+  const response = await fetch(buildOisstAnomalyProbeUrl(datasetPath, date), {
+    signal,
+  });
+  return response.ok ? buildOisstAnomalyWmsUrl(datasetPath) : null;
+}

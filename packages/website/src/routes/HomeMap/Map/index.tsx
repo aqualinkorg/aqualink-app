@@ -37,7 +37,7 @@ import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
 import { mapIconSize } from 'layout/App/theme';
 import { SiteMarkers } from './Markers';
-import { SofarLayers } from './sofarLayers';
+import { SofarLayers, useOisstAnomalyWmsUrl } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import MapDateControl from './MapDateControl';
 import Legend from './Legend';
@@ -104,6 +104,8 @@ function HomepageMap({
   const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
     useState<string>();
   const [mapReady, setMapReady] = useState(false);
+  const { url: sstAnomalyWmsUrl, checking: anomalyChecking } =
+    useOisstAnomalyWmsUrl(historicalDate);
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
@@ -189,9 +191,10 @@ function HomepageMap({
       <SofarLayers
         defaultLayerName={defaultLayerName}
         historicalDate={historicalDate}
+        sstAnomalyWmsUrl={sstAnomalyWmsUrl}
       />
     ),
-    [defaultLayerName, historicalDate],
+    [defaultLayerName, historicalDate, sstAnomalyWmsUrl],
   );
 
   const siteMarkers = useMemo(
@@ -281,6 +284,8 @@ function HomepageMap({
           <MapDateControl
             historicalDate={historicalDate}
             onDateChange={onHistoricalDateChange}
+            anomalyChecking={anomalyChecking}
+            anomalyAvailable={Boolean(sstAnomalyWmsUrl)}
           />
         </div>
       )}
