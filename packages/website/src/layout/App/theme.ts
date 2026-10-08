@@ -1,18 +1,16 @@
 import { pink } from '@mui/material/colors';
-import { createTheme, Theme } from '@mui/material/styles';
+import { createTheme, hexToRgb, Theme } from '@mui/material/styles';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 import layoutTokens from '../../styles/tokens.json';
 
-const skyBlue = '#009ee0';
-const lightBlue = '#168dbd';
-const lighterBlue = '#c0e1f0';
-const darkGreyBlue = '#2d3436';
-const black = '#2f2f2f';
-const white = '#ffffff';
-const lightGray = '#939393';
+const ocean = '#082D3C';
+const aqualink = '#168DBD';
+const sky = '#8AC6DE';
+const mist = '#E8F1F3';
+const paper = '#F5F8F8';
+const text = '#536F79';
 const specialSensorColor = '#f78c21';
 const greenCardColor = '#37a692';
-const backgroundGray = '#f5f5f5';
 
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
@@ -31,14 +29,14 @@ export const randomColors = [
 ];
 
 export const colors = {
-  skyBlue,
-  lightBlue,
-  lighterBlue,
-  darkGreyBlue,
-  black,
+  ocean,
+  aqualink,
+  sky,
+  mist,
+  paper,
+  text,
   specialSensorColor,
   greenCardColor,
-  backgroundGray,
 };
 
 export const mapIconSize = '2rem';
@@ -47,19 +45,19 @@ const theme: Theme = createTheme({
   breakpoints: { values: layoutTokens.breakpoints },
   palette: {
     primary: {
-      main: lightBlue,
-      dark: darkGreyBlue,
-      light: white,
+      main: aqualink,
+      dark: ocean,
+      light: paper,
     },
     secondary: {
       main: pink[500],
     },
     text: {
-      primary: white,
-      secondary: black,
+      primary: mist,
+      secondary: text,
     },
     grey: {
-      500: lightGray,
+      500: mist,
     },
   },
 });
@@ -94,7 +92,7 @@ theme.components = {
       root: {
         height: 122,
         justifyContent: 'center',
-        backgroundColor: lightBlue,
+        backgroundColor: aqualink,
       },
     },
   },
@@ -183,10 +181,10 @@ theme.components = {
         borderRadius: 5,
       },
       containedPrimary: {
-        backgroundColor: lightBlue,
+        backgroundColor: aqualink,
       },
       containedSecondary: {
-        backgroundColor: darkGreyBlue,
+        backgroundColor: ocean,
       },
     },
   },
@@ -211,7 +209,7 @@ theme.components = {
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        color: lightGray,
+        color: mist,
       },
     },
   },
@@ -219,9 +217,9 @@ theme.components = {
     styleOverrides: {
       root: {
         height: '100%',
-        color: black,
+        color: text,
         '& .Mui-disabled': {
-          backgroundColor: backgroundGray,
+          backgroundColor: text,
         },
       },
     },
@@ -229,42 +227,42 @@ theme.components = {
   MuiDateCalendar: {
     styleOverrides: {
       root: {
-        color: black,
+        color: text,
       },
     },
   },
   MuiPickersLayout: {
     styleOverrides: {
       root: {
-        color: black,
+        color: text,
       },
     },
   },
   MuiPickersDay: {
     styleOverrides: {
       root: {
-        color: 'black',
+        color: 'text',
       },
     },
   },
   MuiPickersCalendarHeader: {
     styleOverrides: {
       root: {
-        color: 'black',
+        color: 'text',
       },
     },
   },
   MuiClockNumber: {
     styleOverrides: {
       root: {
-        color: 'black',
+        color: 'text',
       },
     },
   },
   MuiYearCalendar: {
     styleOverrides: {
       root: {
-        color: 'black',
+        color: 'text',
       },
     },
   },
@@ -272,12 +270,12 @@ theme.components = {
   MuiOutlinedInput: {
     styleOverrides: {
       root: {
-        color: 'black',
+        color: 'text',
         '&:not(.MuiInputBase-multiline):not(.MuiInputBase-adornedEnd)': {
           padding: 0,
         },
         '&.Mui-focused': {
-          borderColor: lightBlue,
+          borderColor: aqualink,
         },
       },
     },
@@ -285,22 +283,22 @@ theme.components = {
   MuiTableCell: {
     styleOverrides: {
       root: {
-        color: black,
+        color: text,
       },
       head: {
-        color: black,
+        color: text,
       },
       body: {
-        color: black,
+        color: text,
       },
     },
   },
   MuiTableSortLabel: {
     styleOverrides: {
       root: {
-        color: black,
+        color: text,
         '&.Mui-active': {
-          color: `${black} !important`,
+          color: `${text} !important`,
         },
       },
     },
@@ -308,21 +306,31 @@ theme.components = {
   MuiTablePagination: {
     styleOverrides: {
       root: {
-        color: black,
-        backgroundColor: backgroundGray,
+        color: text,
+        backgroundColor: text,
       },
       menuItem: {
-        color: black,
+        color: text,
       },
     },
   },
   MuiPaper: {
     styleOverrides: {
       root: {
-        color: black,
+        color: text,
       },
     },
   },
 };
+
+// Sass consumes the same colors as MUI, including RGB channels for transparency.
+export const themeCssVariables = Object.fromEntries(
+  Object.entries({ ...colors, ...theme.palette.common }).flatMap(
+    ([name, value]) => [
+      [`--color-${name}`, value],
+      [`--color-${name}-rgb`, hexToRgb(value).slice(4, -1)],
+    ],
+  ),
+);
 
 export default theme;

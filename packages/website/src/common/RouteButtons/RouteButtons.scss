@@ -1,0 +1,14 @@
+.route-buttons {
+  display: flex;
+  gap: 32px;
+
+  .MuiButton-root {
+    color: var(--color-white);
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: none;
+    min-width: 0;
+    padding: 8px;
+    white-space: nowrap;
+  }
+}

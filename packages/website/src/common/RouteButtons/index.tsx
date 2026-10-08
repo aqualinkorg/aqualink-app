@@ -1,36 +1,33 @@
 import React from 'react';
-import { Grid, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import './RouteButtons.scss';
 
 const links = [
   { title: 'Map', to: '/map' },
-  { title: 'Register your Site', to: '/register' },
-  { title: 'Highlighted Sites', href: 'https://highlights.aqualink.org/' },
+  { title: 'Highlighted sites', href: 'https://highlights.aqualink.org/' },
   { title: 'Heatwave', to: '/tracker' },
-  {
-    title: 'Bristlemouth',
-    href: 'https://bristlemouth.aqualink.org',
-  },
+  { title: 'Bristlemouth', href: 'https://bristlemouth.aqualink.org' },
 ];
 
-function RouteButtons() {
+function RouteButtons({ compact = false }: { compact?: boolean }) {
   return (
-    <Grid container justifyContent="space-evenly" item xs={12} sm={7} md={6}>
-      {links.map(({ title, to, href }) => (
-        <Grid item key={title}>
+    <nav className="route-buttons" aria-label="Main navigation">
+      {links
+        .filter(({ title }) => !compact || title !== 'Bristlemouth')
+        .map(({ title, to, href }) => (
           <Button
-            style={{ color: 'white' }}
+            key={title}
             component={to ? Link : 'a'}
-            to={to || ''}
-            href={href || to}
+            to={to}
+            href={href}
             target={href ? '_blank' : undefined}
-            rel={href ? 'noopener' : undefined}
+            rel={href ? 'noopener noreferrer' : undefined}
           >
             {title}
           </Button>
-        </Grid>
-      ))}
-    </Grid>
+        ))}
+    </nav>
   );
 }
 

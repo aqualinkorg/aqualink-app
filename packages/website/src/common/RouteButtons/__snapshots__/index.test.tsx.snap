@@ -2,78 +2,44 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-6 css-x4nn4l-MuiGrid-root"
+  <nav
+    aria-label="Main navigation"
+    class="route-buttons"
   >
-    <div
-      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    <a
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
+      data-discover="true"
+      href="/map"
+      tabindex="0"
     >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
-        data-discover="true"
-        href="/map"
-        style="color: white;"
-        tabindex="0"
-      >
-        Map
-      </a>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      Map
+    </a>
+    <a
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
+      href="https://highlights.aqualink.org/"
+      rel="noopener noreferrer"
+      tabindex="0"
+      target="_blank"
     >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
-        data-discover="true"
-        href="/register"
-        style="color: white;"
-        tabindex="0"
-      >
-        Register your Site
-      </a>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      Highlighted sites
+    </a>
+    <a
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
+      data-discover="true"
+      href="/tracker"
+      tabindex="0"
     >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
-        href="https://highlights.aqualink.org/"
-        rel="noopener"
-        style="color: white;"
-        tabindex="0"
-        target="_blank"
-        to=""
-      >
-        Highlighted Sites
-      </a>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      Heatwave
+    </a>
+    <a
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
+      href="https://bristlemouth.aqualink.org"
+      rel="noopener noreferrer"
+      tabindex="0"
+      target="_blank"
     >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
-        data-discover="true"
-        href="/tracker"
-        style="color: white;"
-        tabindex="0"
-      >
-        Heatwave
-      </a>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-    >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
-        href="https://bristlemouth.aqualink.org"
-        rel="noopener"
-        style="color: white;"
-        tabindex="0"
-        target="_blank"
-        to=""
-      >
-        Bristlemouth
-      </a>
-    </div>
-  </div>
+      Bristlemouth
+    </a>
+  </nav>
 </div>
 `;

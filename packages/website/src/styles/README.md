@@ -3,9 +3,7 @@
 `tokens.json` is the shared source for MUI and SCSS. Rsbuild and Vitest expose
 these values through the virtual `aqualink:tokens` Sass module. Use the
 `responsive.up(name)` and `responsive.down(name)` mixins in SCSS and
-`theme.breakpoints` in React; do not add literal screen-width queries. Restart
-the dev server after changing `tokens.json`, since Sass tokens load with the
-build configuration.
+`theme.breakpoints` in React; do not add literal screen-width queries. Changes to `tokens.json` are watched by the build tools and reloaded by Sass.
 
 | Token | Starts at | Purpose                            |
 | ----- | --------: | ---------------------------------- |
