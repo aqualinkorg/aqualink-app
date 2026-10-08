@@ -65,7 +65,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
     class="MuiGrid-root MuiGrid-container css-1k22pih-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-174grhv-MuiGrid-root"
@@ -96,10 +96,10 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 SiteInfo-headerWrapper-4 css-1accxqv-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 css-1f6br5b-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 css-5tijto-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container css-eiox0h-MuiGrid-root"
@@ -137,7 +137,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
             >
               <mock-typography
                 variant="h6"
@@ -146,7 +146,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
               </mock-typography>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
             >
               <mock-typography
                 variant="subtitle1"
@@ -156,7 +156,7 @@ exports[`SiteInfo > should render with given state from Redux store 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-3m2mgt-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-aa1wla-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"

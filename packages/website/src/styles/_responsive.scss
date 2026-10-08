@@ -1,0 +1,23 @@
+@use 'sass:map';
+@use 'aqualink:tokens' as tokens;
+@forward 'aqualink:tokens';
+
+// Values come from the virtual tokens.json module in Rsbuild and Vitest.
+@mixin up($name) {
+  @media (min-width: map.get(tokens.$breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin down($name) {
+  @media (max-width: (map.get(tokens.$breakpoints, $name) - 0.05px)) {
+    @content;
+  }
+}
+
+@mixin content-container {
+  width: 100%;
+  max-width: calc(var(--content-max-width) + 2 * var(--page-gutter));
+  padding-inline: var(--page-gutter);
+  margin-inline: auto;
+}

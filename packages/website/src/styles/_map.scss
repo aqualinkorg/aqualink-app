@@ -1,100 +1,40 @@
-html,
-body {
-  height: 100%;
-  min-height: 100%;
-}
+@use 'responsive';
 
-#root {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-#app {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-#mapid {
-  height: 180px;
-}
-
-.tooltip-arrow {
-  width: 0px;
-  height: 0px;
-  border-style: solid;
-  margin: auto;
-  border-width: 10px 10px 0 10px;
-  border-color: #404b6b transparent transparent transparent;
-  opacity: 0.9;
-  line-height: 0px;
-}
-
+// Leaflet generates these classes at runtime; keep its overrides separate.
 .leaflet-popup-content-wrapper {
   border-radius: 4px;
-  padding: 0px;
+  padding: 0;
 }
-
 .leaflet-popup-content {
   width: 100% !important;
   border-radius: 4px;
-  margin: 0px;
+  margin: 0;
 }
-
 .leaflet-popup-tip {
   height: 12px;
   width: 12px;
 }
-
-.MuiAutocomplete-hasPopupIcon .MuiOutlinedInput-root {
-  padding: 0;
+.leaflet-control-layers label {
+  cursor: pointer;
 }
-
-.MuiAutocomplete-option {
-  color: #168dbd;
+.leaflet-control-layers:not(:hover) {
+  height: var(--map-icons-size) !important;
+  width: var(--map-icons-size) !important;
 }
-
-.marker-icon {
-  background-color: transparent;
+.leaflet-control-layers-toggle {
+  height: 1.8rem !important;
+  width: 1.8rem !important;
 }
-
-.custom-cluster-icon {
-  background-color: rgba(255, 255, 255, 0.4);
+.leaflet-control-zoom {
+  width: var(--map-icons-size) !important;
 }
-
-/* Change defauly react-slick arrows */
-.slick-arrow:hover {
-  border-radius: 40px;
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1;
+  text-decoration: none !important;
 }
-
-.slick-arrow.slick-prev,
-.slick-arrow.slick-next {
-  height: 64px;
-  width: 64px;
-  top: 43%;
-}
-
-.slick-arrow.slick-prev {
-  left: -60px;
-}
-
-.slick-arrow.slick-next {
-  right: -60px;
-}
-
-.slick-arrow.slick-next::before,
-.slick-arrow.slick-prev::before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  color: #168dbd;
-  font-family: inherit;
-  font-weight: bold;
-  font-size: 64px;
-}
-
 .mapbox-wordmark {
   position: absolute;
   display: block;
@@ -113,44 +53,26 @@ body {
   background-size: 65px 20px;
 }
 
-iframe {
-  border: none;
-}
-
-.current-position-marker {
-  background-color: #4285F4;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-@media screen and (max-width: 599px) {
+@include responsive.down(sm) {
   .mapbox-wordmark {
     bottom: 55px;
   }
 }
-
+.current-position-marker {
+  background-color: #4285f4;
+  border-radius: 50%;
+  border: 2px solid white;
+}
 @keyframes pulse {
-  0%  { opacity: 1; }
-  50% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(3); }
-}
-
-@-webkit-keyframes pulse {
-  0%  { opacity: 1; }
-  50% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(3); }
-}
-
-/* Hide input type "number" increase/decrease arrows */
-
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
 }

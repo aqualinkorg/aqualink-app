@@ -1,0 +1,42 @@
+@use 'responsive';
+
+/* Override react-slick arrows */
+.slick-arrow:hover {
+  border-radius: 40px;
+}
+
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+  height: 64px;
+  width: 64px;
+  top: 43%;
+}
+
+.slick-arrow.slick-prev {
+  left: -60px;
+}
+
+.slick-arrow.slick-next {
+  right: -60px;
+}
+
+.slick-arrow.slick-next::before,
+.slick-arrow.slick-prev::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  color: #168dbd;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 64px;
+}
+
+@include responsive.down(sm) {
+  .slick-arrow.slick-prev {
+    left: 0;
+  }
+  .slick-arrow.slick-next {
+    right: 0;
+  }
+}

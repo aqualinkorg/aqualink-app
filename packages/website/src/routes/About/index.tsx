@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Button, CardMedia } from '@mui/material';
+import { Typography, Button, CardMedia, Theme } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -458,7 +458,7 @@ function About({ classes }: AboutProps) {
   );
 }
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
       marginTop: '1rem',
@@ -484,10 +484,10 @@ const styles = () =>
       justifyContent: 'center',
       flexWrap: 'wrap',
       gap: '10rem',
-      '@media (max-width: 992px)': {
+      [theme.breakpoints.down('md')]: {
         gap: '5rem',
       },
-      '@media (max-width: 768px)': {
+      [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
         alignItems: 'center',
         gap: '1rem',

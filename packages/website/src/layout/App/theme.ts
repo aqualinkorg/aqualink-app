@@ -1,6 +1,7 @@
 import { pink } from '@mui/material/colors';
 import { createTheme, Theme } from '@mui/material/styles';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
+import layoutTokens from '../../styles/tokens.json';
 
 const skyBlue = '#009ee0';
 const lightBlue = '#168dbd';
@@ -43,6 +44,7 @@ export const colors = {
 export const mapIconSize = '2rem';
 
 const theme: Theme = createTheme({
+  breakpoints: { values: layoutTokens.breakpoints },
   palette: {
     primary: {
       main: lightBlue,
@@ -63,6 +65,30 @@ const theme: Theme = createTheme({
 });
 
 theme.components = {
+  MuiContainer: {
+    styleOverrides: {
+      root: {
+        width: '100%',
+        maxWidth: 'calc(var(--content-max-width) + 2 * var(--page-gutter))',
+        paddingLeft: 'var(--page-gutter)',
+        paddingRight: 'var(--page-gutter)',
+        [theme.breakpoints.up('sm')]: {
+          paddingLeft: 'var(--page-gutter)',
+          paddingRight: 'var(--page-gutter)',
+        },
+      },
+      maxWidthLg: {
+        [theme.breakpoints.up('lg')]: {
+          maxWidth: 'calc(var(--content-max-width) + 2 * var(--page-gutter))',
+        },
+      },
+      maxWidthXl: {
+        [theme.breakpoints.up('xl')]: {
+          maxWidth: 'calc(var(--content-max-width) + 2 * var(--page-gutter))',
+        },
+      },
+    },
+  },
   MuiAppBar: {
     styleOverrides: {
       root: {
@@ -88,7 +114,7 @@ theme.components = {
         fontSize: 52,
         fontFamily,
         fontWeight: 300,
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
           fontSize: 34,
         },
       },
@@ -96,7 +122,7 @@ theme.components = {
         fontSize: 48,
         fontFamily,
         fontWeight: 300,
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
           fontSize: 30,
         },
       },

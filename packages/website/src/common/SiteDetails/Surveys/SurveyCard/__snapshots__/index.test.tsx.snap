@@ -11,7 +11,7 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
       style="height: 100%;"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-9 css-1ej0ikx-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-9 css-2zdehq-MuiGrid-root"
       >
         <a
           data-discover="true"
@@ -25,13 +25,13 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
         </a>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-10 css-14c8q5g-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-10 css-1q87yqd-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-15 css-aksm9b-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-15 css-rbec10-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-cxoi9y-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-cardFields-7"
@@ -47,10 +47,10 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-11 css-otecwo-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-11 css-1cpf6b1-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
               style="height: 80%;"
             >
               <mock-typography
@@ -68,7 +68,7 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-cxoi9y-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-cardFields-7"
@@ -84,10 +84,10 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-q4md4f-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-121mkti-MuiGrid-root"
             >
               <a
                 data-discover="true"
@@ -104,7 +104,7 @@ exports[`Survey Card > should render with given state from Redux store 1`] = `
               </a>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-2 css-1sw4uu7-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-2 css-1w1uigl-MuiGrid-root"
             >
               <mock-iconbutton
                 size="large"

@@ -214,7 +214,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ytge4g-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-150rfs1-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-1ce9qby-MuiGrid-root"
         >
           <mock-box
             alignitems="center"
@@ -259,7 +259,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-13 css-kdnu70-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-13 css-1tn8gzp-MuiGrid-root"
         >
           <mock-tooltip
             title="Translate"
@@ -452,10 +452,10 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-b9er98-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-20 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-20 css-6wnu60-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
@@ -469,13 +469,13 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-6wnu60-MuiGrid-root"
           >
             <form
               class="RegisterDialog-form-21"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -516,7 +516,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -557,7 +557,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -598,7 +598,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -639,7 +639,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-22 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -680,10 +680,10 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-16uec2a-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-127etx4-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
                 >
                   <mock-checkbox
                     checked="false"
@@ -692,7 +692,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                   />
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-1ow5ctt-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-c4g3zq-MuiGrid-root"
                 >
                   <mock-box>
                     <mock-typography
@@ -714,7 +714,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-25 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-25 css-sgz297-MuiGrid-root"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
@@ -726,7 +726,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
               >
                 <mock-typography
                   classname="RegisterDialog-formText-24"
@@ -875,10 +875,10 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-b9er98-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-31 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-31 css-6wnu60-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
@@ -892,13 +892,13 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-6wnu60-MuiGrid-root"
           >
             <form
               class="SignInDialog-form-32"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-33 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-33 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -939,7 +939,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-33 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-33 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -980,7 +980,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-37 css-1ysap08-MuiButtonBase-root-MuiButton-root"
@@ -996,7 +996,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-36 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-36 css-sgz297-MuiGrid-root"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
@@ -1007,7 +1007,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
               >
                 <mock-typography
                   classname="SignInDialog-formText-35"
@@ -1032,7 +1032,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiContainer-root MuiContainer-maxWidthLg Terms-root-1 css-5c1adp-MuiContainer-root"
+    class="MuiContainer-root MuiContainer-maxWidthLg Terms-root-1 css-izh0vu-MuiContainer-root"
   >
     <h1>
       Terms and Conditions
@@ -1327,7 +1327,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-6wnu60-MuiGrid-root"
         >
           <mock-link
             classname="Footer-navBarLink-39"

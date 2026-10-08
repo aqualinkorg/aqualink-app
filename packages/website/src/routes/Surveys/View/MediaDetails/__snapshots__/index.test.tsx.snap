@@ -103,7 +103,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                   class="MuiGrid-root MuiGrid-container SliderCard-fullHeight-12 css-1dphqhe-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 SliderCard-imageWrapper-13 css-r9w7kf-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 SliderCard-imageWrapper-13 css-1s98fg-MuiGrid-root"
                   >
                     <div
                       class="MuiCardMedia-root SliderCard-cardImage-14 css-utntyq-MuiCardMedia-root"
@@ -112,13 +112,13 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                     />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 SliderCard-mediaInfoWrapper-15 css-xwivmn-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 SliderCard-mediaInfoWrapper-15 css-fsx8b2-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-grid-xs-10 css-ea6zgh-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-grid-xs-10 css-bfkkj0-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
                       >
                         <mock-typography
                           variant="h6"
@@ -132,7 +132,7 @@ exports[`Terms page > should render with given state from Redux store 1`] = `
                         </mock-typography>
                       </div>
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
                       >
                         <mock-typography
                           variant="h6"

@@ -17,7 +17,7 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ytge4g-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-2 css-3nmqko-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-2 css-54sd0b-MuiGrid-root"
         >
           <mock-box
             alignitems="center"
@@ -62,7 +62,7 @@ exports[`NavBar with routeButtons > should render with given state from Redux st
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-12 css-kdnu70-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-12 css-1tn8gzp-MuiGrid-root"
         >
           <mock-tooltip
             title="Translate"
@@ -217,7 +217,7 @@ exports[`NavBar without routeButtons > should render with given state from Redux
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ytge4g-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-150rfs1-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-1ce9qby-MuiGrid-root"
         >
           <mock-box
             alignitems="center"
@@ -262,7 +262,7 @@ exports[`NavBar without routeButtons > should render with given state from Redux
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-24 css-kdnu70-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-24 css-1tn8gzp-MuiGrid-root"
         >
           <mock-tooltip
             title="Translate"

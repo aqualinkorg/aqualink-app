@@ -175,7 +175,9 @@ function MonitoringTable<
           </Button>
         </Toolbar>
       )}
-      <TableContainer style={{ maxHeight: '80vh' }}>
+      <TableContainer
+        style={{ maxHeight: 'calc(var(--viewport-height) * 0.8)' }}
+      >
         <Table>
           <TableHead>
             <TableRow style={{ backgroundColor: colors.backgroundGray }}>

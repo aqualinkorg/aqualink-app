@@ -50,7 +50,7 @@ function LandingPage({ classes }: LandingPageProps) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const firstCard = useRef<HTMLDivElement>(null);
 
   const seeMore = () => {
@@ -89,7 +89,11 @@ function LandingPage({ classes }: LandingPageProps) {
         </Box>
       )}
       <div>
-        <Box display="flex" alignItems="top" className={classes.landingImage}>
+        <Box
+          display="flex"
+          alignItems="flex-start"
+          className={classes.landingImage}
+        >
           <Container className={classes.container}>
             <Grid container item xs={9}>
               <Box display="flex">
@@ -176,19 +180,14 @@ const styles = (theme: Theme) =>
     landingImage: {
       backgroundImage: `url("${landingPageImage}")`,
       backgroundSize: 'cover',
-      left: 160,
-      minHeight: 864,
-      height: 'calc(100vh - 64px)', // subtract height of the navbar
+      minHeight: 'max(640px, calc(var(--viewport-height) - var(--nav-height)))',
+      backgroundPosition: 'center',
       [theme.breakpoints.down('sm')]: {
-        minHeight: 576,
+        minHeight: 'max(576px, calc(100svh - var(--nav-height)))',
       },
     },
     container: {
-      [theme.breakpoints.up('sm')]: {
-        paddingLeft: 60,
-        paddingRight: 40,
-      },
-      paddingTop: 60,
+      paddingBlock: 'clamp(32px, 4.444444vw, 64px)',
     },
     aqualinkSecondPart: {
       opacity: 0.5,

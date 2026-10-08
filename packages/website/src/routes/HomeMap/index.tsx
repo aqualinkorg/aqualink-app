@@ -139,7 +139,7 @@ function Homepage({ classes }: HomepageProps) {
               bodyStyle={{
                 borderTopLeftRadius: '25px',
                 borderTopRightRadius: '25px',
-                maxHeight: '80vh',
+                maxHeight: 'calc(var(--viewport-height) * 0.8)',
               }}
               onChange={setDrawerOpen}
               open={isDrawerOpen}
@@ -169,7 +169,7 @@ const styles = () =>
     siteTable: {
       display: 'flex',
       flexDirection: 'column',
-      height: 'calc(100vh - 64px);', // subtract height of the navbar
+      height: 'calc(var(--viewport-height) - var(--map-nav-height))',
       overflowY: 'auto',
     },
   });

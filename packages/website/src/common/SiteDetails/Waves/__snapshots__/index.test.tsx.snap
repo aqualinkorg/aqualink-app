@@ -9,10 +9,10 @@ exports[`renders as expected 1`] = `
       classname="makeStyles-contentWrapper-12"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-content-13 css-182mpp5-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-content-13 css-9w3y0g-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-wcmnoq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-24a33v-MuiGrid-root"
         >
           <mock-typography
             classname="makeStyles-cardTitle-2 makeStyles-coloredText-9"
@@ -27,10 +27,10 @@ exports[`renders as expected 1`] = `
           />
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-wcmnoq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-24a33v-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-ntq1g0-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -59,7 +59,7 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-ntq1g0-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -87,7 +87,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-wcmnoq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-24a33v-MuiGrid-root"
         >
           <mock-typography
             classname="makeStyles-cardTitle-2 makeStyles-coloredText-9"
@@ -102,10 +102,10 @@ exports[`renders as expected 1`] = `
           />
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-mi7qmn-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-paddingContainer-11 css-1q6nb63-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4 css-119abwu-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4 css-1g7fi4b-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -127,7 +127,7 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3 css-q8d82a-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3 css-41g2i5-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"
@@ -149,7 +149,7 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5 css-7v7ljq-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5 css-19fdnlq-MuiGrid-root"
           >
             <mock-typography
               classname="makeStyles-contentTextTitles-4"

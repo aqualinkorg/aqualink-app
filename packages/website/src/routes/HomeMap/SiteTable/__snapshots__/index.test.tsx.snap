@@ -10,7 +10,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
       justifycontent="center"
       marginbottom="3"
       margintop="2"
-      width="100vw"
+      width="100%"
     >
       <mock-box
         classname="SiteTable-topHandle-6"

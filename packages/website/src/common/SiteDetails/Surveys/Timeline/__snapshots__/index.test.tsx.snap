@@ -16,7 +16,7 @@ exports[`SiteRoutes Surveys > should render with given state from Redux store 1`
       lgup="true"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
       />
     </mock-hidden>
   </div>

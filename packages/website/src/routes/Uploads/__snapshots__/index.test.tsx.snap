@@ -372,7 +372,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ytge4g-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-150rfs1-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-4 css-1ce9qby-MuiGrid-root"
         >
           <mock-box
             alignitems="center"
@@ -417,7 +417,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-26 css-kdnu70-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-26 css-1tn8gzp-MuiGrid-root"
         >
           <mock-tooltip
             title="Translate"
@@ -621,10 +621,10 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-b9er98-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-33 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-33 css-6wnu60-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
@@ -638,13 +638,13 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-6wnu60-MuiGrid-root"
           >
             <form
               class="RegisterDialog-form-34"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -685,7 +685,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -726,7 +726,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -767,7 +767,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -808,7 +808,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-35 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -849,10 +849,10 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-16uec2a-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-127etx4-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
                 >
                   <mock-checkbox
                     checked="false"
@@ -861,7 +861,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                   />
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-1ow5ctt-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-c4g3zq-MuiGrid-root"
                 >
                   <mock-box>
                     <mock-typography
@@ -883,7 +883,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-38 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-38 css-sgz297-MuiGrid-root"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
@@ -895,7 +895,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
               >
                 <mock-typography
                   classname="RegisterDialog-formText-37"
@@ -1044,10 +1044,10 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-b9er98-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-44 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-44 css-6wnu60-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
@@ -1061,13 +1061,13 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-6wnu60-MuiGrid-root"
           >
             <form
               class="SignInDialog-form-45"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-46 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-46 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -1108,7 +1108,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-46 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-46 css-sgz297-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -1149,7 +1149,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-50 css-1ysap08-MuiButtonBase-root-MuiButton-root"
@@ -1165,7 +1165,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-49 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-49 css-sgz297-MuiGrid-root"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
@@ -1176,7 +1176,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
               >
                 <mock-typography
                   classname="SignInDialog-formText-48"
@@ -1201,7 +1201,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-root-1 css-5c1adp-MuiContainer-root"
+    class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-root-1 css-izh0vu-MuiContainer-root"
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-174grhv-MuiGrid-root"
@@ -1216,7 +1216,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
       >
         <mock-typography
           variant="h6"
@@ -1256,7 +1256,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-1bf5qai-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-cp8kf4-MuiGrid-root"
       >
         <div
           class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -1323,7 +1323,7 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 css-1deaqy1-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 css-pgvsof-MuiGrid-root"
       >
         <label
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"

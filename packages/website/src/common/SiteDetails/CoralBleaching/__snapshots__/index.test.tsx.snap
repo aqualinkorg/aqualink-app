@@ -18,7 +18,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
             >
               <mock-typography
                 classname="Bleaching-cardTitle-2"
@@ -36,7 +36,7 @@ exports[`renders as expected 1`] = `
       classname="Bleaching-contentWrapper-9"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 Bleaching-content-10 css-ci9zny-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 Bleaching-content-10 css-1n3owd3-MuiGrid-root"
       >
         <img
           alt="alert-level"

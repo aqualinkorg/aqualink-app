@@ -152,7 +152,7 @@ const styles = (theme: Theme) =>
       padding: 12,
       borderRadius: 8,
       border: '1px solid #E0E0E0',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
       },
     },

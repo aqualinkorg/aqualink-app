@@ -235,7 +235,7 @@ function SurveyViewPage({ site, surveyId, classes }: SurveyViewPageProps) {
 const styles = (theme: Theme) =>
   createStyles({
     loading: {
-      marginBottom: '100vh',
+      minHeight: 'calc(var(--viewport-height) - var(--nav-height))',
     },
     infoWrapper: {
       marginTop: 64,

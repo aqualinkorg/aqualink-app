@@ -1,8 +1,6 @@
 import theme from 'layout/App/theme';
 
-const MD_MID_POINT = 1100;
-const SM_MID_POINT = 780;
-const MOBILE = 350;
+// Dense metric cards shrink in the desktop grid and stack below md.
 
 export const styles = {
   card: {
@@ -21,45 +19,27 @@ export const styles = {
   contentTextTitles: {
     lineHeight: 1.33,
     fontSize: 10,
-    [theme.breakpoints.between(MD_MID_POINT, 'lg')]: {
+    [theme.breakpoints.between('md', 'lg')]: {
       fontSize: 8,
     },
-    [theme.breakpoints.between('md', MD_MID_POINT)]: {
-      fontSize: 7,
-    },
-    [theme.breakpoints.between('sm', SM_MID_POINT)]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: 9,
-    },
-    [theme.breakpoints.down(MOBILE)]: {
-      fontSize: 8,
     },
   },
   contentTextValues: {
     fontWeight: 300,
-    [theme.breakpoints.between(MD_MID_POINT, 'lg')]: {
+    [theme.breakpoints.between('md', 'lg')]: {
       fontSize: 28,
     },
-    [theme.breakpoints.between('md', MD_MID_POINT)]: {
-      fontSize: 24,
-    },
-    [theme.breakpoints.between('sm', SM_MID_POINT)]: {
-      fontSize: 26,
-    },
-    [theme.breakpoints.down(MOBILE)]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: 28,
     },
   },
   contentUnits: {
-    [theme.breakpoints.between(MD_MID_POINT, 'lg')]: {
+    [theme.breakpoints.between('md', 'lg')]: {
       fontSize: 14,
     },
-    [theme.breakpoints.between('md', MD_MID_POINT)]: {
-      fontSize: 12,
-    },
-    [theme.breakpoints.between('sm', SM_MID_POINT)]: {
-      fontSize: 14,
-    },
-    [theme.breakpoints.down(MOBILE)]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: 14,
     },
   },

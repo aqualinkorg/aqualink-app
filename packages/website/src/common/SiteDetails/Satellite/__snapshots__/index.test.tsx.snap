@@ -44,7 +44,7 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-ntq1g0-MuiGrid-root"
           >
             <mock-typography
               classname="Satellite-contentTextTitles-4"
@@ -64,7 +64,7 @@ exports[`renders as expected 1`] = `
             </mock-tooltip>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-ntq1g0-MuiGrid-root"
           >
             <mock-typography
               classname="Satellite-contentTextTitles-4"
@@ -84,7 +84,7 @@ exports[`renders as expected 1`] = `
             </mock-tooltip>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-ntq1g0-MuiGrid-root"
           >
             <mock-typography
               classname="Satellite-contentTextTitles-4"
@@ -104,7 +104,7 @@ exports[`renders as expected 1`] = `
             </mock-tooltip>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-ntq1g0-MuiGrid-root"
           >
             <mock-typography
               classname="Satellite-contentTextTitles-4"
@@ -129,7 +129,7 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(8, 91, 163); height: 2rem;"
         >
           <mock-box
@@ -144,7 +144,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(12, 157, 165); height: 2rem;"
         >
           <mock-box
@@ -159,7 +159,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(117, 180, 114); height: 2rem;"
         >
           <mock-box
@@ -174,7 +174,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(123, 217, 37); height: 2rem;"
         >
           <mock-box
@@ -189,7 +189,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(193, 229, 34); height: 2rem;"
         >
           <mock-box
@@ -204,7 +204,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(229, 187, 43); height: 2rem;"
         >
           <mock-box
@@ -219,7 +219,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(230, 121, 40); height: 2rem;"
         >
           <mock-box
@@ -234,7 +234,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(232, 79, 46); height: 2rem;"
         >
           <mock-box
@@ -249,7 +249,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(216, 69, 36); height: 2rem;"
         >
           <mock-box
@@ -264,7 +264,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(128, 58, 32); height: 2rem;"
         >
           <mock-box
@@ -279,7 +279,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(185, 41, 68); height: 2rem;"
         >
           <mock-box
@@ -294,7 +294,7 @@ exports[`renders as expected 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-k5xk9v-MuiGrid-root"
           style="background-color: rgb(128, 48, 126); height: 2rem;"
         >
           <mock-box

@@ -534,7 +534,10 @@ function SiteDetails({
         />
         {site?.iframe && (
           <iframe
-            style={{ width: '100%', height: '50vh' }}
+            style={{
+              width: '100%',
+              height: 'calc(var(--viewport-height) * 0.5)',
+            }}
             src={site.iframe}
             title="external-content"
             // TODO: update constraints when we actually have the content that will appear here
