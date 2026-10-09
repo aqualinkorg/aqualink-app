@@ -29,6 +29,7 @@ export class Collection {
   @Column({ nullable: false })
   name: string;
 
+  @ApiProperty({ example: true })
   @Column({ nullable: false, default: false })
   isPublic: boolean;
 
@@ -40,6 +41,7 @@ export class Collection {
   @RelationId((collection: Collection) => collection.user)
   userId: number;
 
+  @ApiProperty({ type: () => [Site] })
   @ManyToMany(() => Site)
   @JoinTable()
   sites: Site[];
