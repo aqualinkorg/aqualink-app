@@ -14,12 +14,15 @@ import {
 import {
   ApiBearerAuth,
   ApiOperation,
+  ApiOkResponse,
+  ApiCreatedResponse,
   ApiParam,
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { SitesService } from './sites.service';
 import { Site } from './sites.entity';
+import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
 import { AdminLevel } from '../users/users.entity';
@@ -50,6 +53,7 @@ export class SitesController {
 
   @ApiBearerAuth()
   @ApiCreateSiteBody()
+  @ApiCreatedResponse({ type: SiteApplication })
   @ApiOperation({ summary: 'Creates a new site and its site application' })
   @OverrideLevelAccess()
   @Post()
@@ -62,6 +66,7 @@ export class SitesController {
   }
 
   @ApiOperation({ summary: 'Returns sites filtered by provided filters' })
+  @ApiOkResponse({ type: Site, isArray: true })
   @Public()
   @Get()
   find(@Query() filterSiteDto: FilterSiteDto): Promise<Site[]> {
@@ -70,6 +75,7 @@ export class SitesController {
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Returns specified site' })
+  @ApiOkResponse({ type: Site })
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id')
@@ -80,6 +86,7 @@ export class SitesController {
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiNestBadRequestResponse('Start or end is not a valid date')
   @ApiOperation({ summary: 'Returns daily data for the specified site' })
+  @ApiOkResponse({ type: DailyData, isArray: true })
   @ApiParam({ name: 'id', example: 1 })
   @ApiQuery({ name: 'start', example: '2021-04-18T08:45:35.780Z' })
   @ApiQuery({ name: 'end', example: '2021-05-18T08:45:35.780Z' })
@@ -95,6 +102,24 @@ export class SitesController {
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Returns spotter position for the specified site' })
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      required: ['isDeployed'],
+      properties: {
+        isDeployed: { type: 'boolean' },
+        timestamp: { type: 'string', format: 'date-time' },
+        position: {
+          type: 'object',
+          required: ['longitude', 'latitude'],
+          properties: {
+            longitude: { type: 'number' },
+            latitude: { type: 'number' },
+          },
+        },
+      },
+    },
+  })
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id/spotter_position')
@@ -104,6 +129,7 @@ export class SitesController {
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Returns latest data for the specified site' })
+  @ApiOkResponse({ type: SofarLatestDataDto })
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id/latest_data')
@@ -116,6 +142,7 @@ export class SitesController {
 
   @ApiNestNotFoundResponse('No site was found or found site had no spotter')
   @ApiOperation({ summary: 'Returns spotter data for the specified site' })
+  @ApiOkResponse({ type: SpotterDataDto })
   @ApiParam({ name: 'id', example: 1 })
   @ApiQuery({ name: 'startDate', example: '2021-04-18T08:45:35.780Z' })
   @ApiQuery({ name: 'endDate', example: '2021-05-18T08:45:35.780Z' })
@@ -132,6 +159,7 @@ export class SitesController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Updates specified site' })
+  @ApiOkResponse({ type: Site })
   @ApiParam({ name: 'siteId', example: 1 })
   @UseGuards(IsSiteAdminGuard)
   @Put(':siteId')
@@ -189,6 +217,7 @@ export class SitesController {
   @ApiOperation({
     summary: "Returns exclusion dates of specified site's spotter",
   })
+  @ApiOkResponse({ type: ExclusionDates, isArray: true })
   @ApiParam({ name: 'siteId', example: 1 })
   @UseGuards(IsSiteAdminGuard)
   @Get(':siteId/exclusion_dates')
@@ -201,6 +230,12 @@ export class SitesController {
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'Returns sites contact information notes',
+  })
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      properties: { contactInformation: { type: 'string', nullable: true } },
+    },
   })
   @ApiParam({ name: 'siteId', example: 1 })
   @Auth(AdminLevel.SuperAdmin)

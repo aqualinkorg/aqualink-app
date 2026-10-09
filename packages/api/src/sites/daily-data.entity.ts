@@ -18,6 +18,7 @@ export class DailyData {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({ example: '2026-10-09T00:00:00.000Z', type: String, format: 'date-time' })
   @Column()
   date: Date;
 
