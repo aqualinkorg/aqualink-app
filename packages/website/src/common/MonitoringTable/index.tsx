@@ -1,5 +1,4 @@
 import {
-  Button,
   Link,
   Paper,
   Table,
@@ -14,6 +13,7 @@ import {
   Toolbar,
   Tooltip,
 } from '@mui/material';
+import Button from 'common/Button';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import { colors } from 'layout/App/theme';
@@ -175,10 +175,12 @@ function MonitoringTable<
           </Button>
         </Toolbar>
       )}
-      <TableContainer style={{ maxHeight: '80vh' }}>
+      <TableContainer
+        style={{ maxHeight: 'calc(var(--viewport-height) * 0.8)' }}
+      >
         <Table>
           <TableHead>
-            <TableRow style={{ backgroundColor: colors.backgroundGray }}>
+            <TableRow style={{ backgroundColor: colors.paper }}>
               {headCells.map((cell) => (
                 <TableCell
                   key={cell.id as React.Key}

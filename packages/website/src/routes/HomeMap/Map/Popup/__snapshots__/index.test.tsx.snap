@@ -25,13 +25,13 @@ exports[`Popup > should render with given state from Redux store 1`] = `
       </div>
       <mock-cardcontent>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-ntq1g0-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -41,11 +41,11 @@ exports[`Popup > should render with given state from Redux store 1`] = `
               </mock-typography>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
-                style="color: rgb(22, 141, 189);"
+                style="color: rgb(83, 111, 121);"
                 variant="h5"
               >
                 15.9  °C
@@ -53,10 +53,10 @@ exports[`Popup > should render with given state from Redux store 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-13kechv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-ntq1g0-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -66,7 +66,7 @@ exports[`Popup > should render with given state from Redux store 1`] = `
               </mock-typography>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1d4pq44-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1fski4q-MuiGrid-root"
             >
               <mock-typography
                 color="textSecondary"
@@ -91,7 +91,7 @@ exports[`Popup > should render with given state from Redux store 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
           style="margin: 1rem 0px 1rem 0px;"
         >
           <div
@@ -103,7 +103,7 @@ exports[`Popup > should render with given state from Redux store 1`] = `
               style="color: inherit; text-decoration: none;"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-11hg6ws-MuiButtonBase-root-MuiButton-root"
                 tabindex="0"
                 type="button"
               >

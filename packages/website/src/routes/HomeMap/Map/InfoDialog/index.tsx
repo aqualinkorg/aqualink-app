@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Typography,
   Box,
   Grid,
@@ -9,6 +8,7 @@ import {
   DialogTitle,
   DialogContent,
 } from '@mui/material';
+import Button from 'common/Button';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import Tune from '@mui/icons-material/Tune';

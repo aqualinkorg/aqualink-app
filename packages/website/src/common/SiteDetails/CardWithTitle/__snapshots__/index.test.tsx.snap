@@ -3,10 +3,10 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-row-2 css-1d4pq44-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-row-2 css-1fski4q-MuiGrid-root"
     >
       <mock-box
         classname="Title-root-11"
@@ -29,7 +29,7 @@ exports[`renders as expected 1`] = `
       </mock-box>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
     >
       <div
         class="makeStyles-container-3"

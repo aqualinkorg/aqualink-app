@@ -5,7 +5,6 @@ import {
   CardContent,
   Typography,
   TextField,
-  Button,
   Select,
   MenuItem,
   FormControl,
@@ -27,6 +26,7 @@ import {
   InputAdornment,
   CircularProgress,
 } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import {
   ExpandMore as ExpandMoreIcon,
@@ -183,7 +183,7 @@ const useStyles = makeStyles(() => ({
   searchResultCard: {
     marginBottom: '1rem',
     '&:hover': {
-      backgroundColor: colors.backgroundGray,
+      backgroundColor: colors.paper,
     },
   },
   highlight: {
@@ -207,7 +207,7 @@ const useStyles = makeStyles(() => ({
     minHeight: '400px',
   },
   selectedToggle: {
-    backgroundColor: `${colors.lightBlue} !important`,
+    backgroundColor: `${colors.action} !important`,
     color: '#ffffff !important',
   },
   metadataChip: {
@@ -216,7 +216,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 500,
   },
   categoryChip: {
-    backgroundColor: colors.lightBlue,
+    backgroundColor: colors.action,
     color: '#ffffff',
     fontWeight: 500,
     verticalAlign: 'middle',

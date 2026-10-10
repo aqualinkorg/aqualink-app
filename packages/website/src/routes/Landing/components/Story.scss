@@ -1,0 +1,62 @@
+@use '../../../styles/responsive';
+.landing-page__story {
+  padding-block: 80px;
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.48;
+    object-fit: cover;
+  }
+  figcaption {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--color-text);
+    margin-top: 14px;
+  }
+  .landing-page__hardware img {
+    object-fit: contain;
+    background: var(--color-paper);
+    padding: 24px;
+  }
+}
+.landing-page__story-copy {
+  > p:not(.landing-page__label) {
+    max-width: 460px;
+    margin-top: 40px;
+  }
+  > a {
+    margin-top: 32px;
+  }
+}
+.landing-page .landing-page__label {
+  font-size: 13px;
+  color: #10739c;
+  margin-bottom: 24px;
+}
+.landing-page__story--reverse figure {
+  order: 1;
+}
+.landing-page__story--mist {
+  background: var(--color-paper);
+}
+@include responsive.down(sm) {
+  .landing-page__story {
+    padding-block: 48px;
+  }
+  .landing-page__story-copy > p:not(.landing-page__label) {
+    margin-top: 24px;
+  }
+  .landing-page__story-copy > a {
+    margin-top: 20px;
+  }
+  .landing-page__story .landing-page__story-copy {
+    order: 1;
+  }
+  .landing-page__story figure {
+    order: 0;
+  }
+  .landing-page .landing-page__label {
+    margin-bottom: 16px;
+  }
+}

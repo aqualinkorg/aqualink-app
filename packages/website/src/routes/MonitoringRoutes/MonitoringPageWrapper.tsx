@@ -1,4 +1,5 @@
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { Link } from 'react-router-dom';

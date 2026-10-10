@@ -60,7 +60,7 @@ const useStyles = makeStyles(() => ({
     height: '7rem',
     boxShadow: '7rem',
     '&:hover': {
-      backgroundColor: colors.backgroundGray,
+      backgroundColor: colors.paper,
     },
   },
   title: {

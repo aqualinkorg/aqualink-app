@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 22,
       marginRight: '0.5rem',
       marginBottom: 10,
-      [theme.breakpoints.between('md', 1350)]: {
+      [theme.breakpoints.between('md', 'lg')]: {
         width: 15,
         height: 15,
       },

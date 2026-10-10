@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Grid,
-  Typography,
-  Button,
-} from '@mui/material';
+import { Card, CardHeader, CardContent, Grid, Typography } from '@mui/material';
+import Button from 'common/Button';
 import { WithStyles, styled } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -109,7 +103,7 @@ function Tooltip({
           className={classes.tooltipHeader}
           title={
             <Typography
-              color="textPrimary"
+              color="inherit"
               variant="caption"
               style={{ whiteSpace: 'nowrap' }}
             >
@@ -182,6 +176,7 @@ const styles = () =>
       display: 'flex',
       flexFlow: 'column',
       backgroundColor: '#095877',
+      color: '#E6F3F7',
       borderRadius: 8,
       paddingBottom: '0.5rem',
     },

@@ -1,10 +1,10 @@
 import {
-  Button,
   TextField,
   Typography,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
+import Button from 'common/Button';
 import Footer from 'common/Footer';
 import NavBar from 'common/NavBar';
 import React from 'react';

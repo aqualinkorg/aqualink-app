@@ -1,0 +1,35 @@
+@use '../../../styles/responsive';
+.landing-page__reach {
+  background: var(--color-paper);
+  padding-block: 40px;
+  dl {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  dt {
+    font-size: 42px;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+  dd {
+    color: var(--color-text);
+    font-size: 14px;
+    margin-top: 10px;
+  }
+}
+@include responsive.down(sm) {
+  .landing-page__reach {
+    padding-block: 32px;
+    dl {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    dt {
+      font-size: 34px;
+    }
+    dd {
+      margin-top: 6px;
+    }
+  }
+}

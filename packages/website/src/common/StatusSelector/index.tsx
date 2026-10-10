@@ -17,7 +17,7 @@ const options: Status[] = [
 
 const useStyles = makeStyles(() => ({
   menuItem: {
-    color: colors.black,
+    color: colors.ocean,
     height: '2rem',
   },
 }));

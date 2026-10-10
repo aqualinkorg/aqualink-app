@@ -112,7 +112,7 @@ function SiteTable({
       {showCard && (
         <Hidden mdUp>
           <Box
-            width="100vw"
+            width="100%"
             display="flex"
             justifyContent="center"
             marginTop={2}
@@ -256,7 +256,7 @@ const styles = (theme: Theme) =>
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
-      maxWidth: '90vw',
+      maxWidth: '90%',
     },
     bounce: { animation: '$bounce 1s infinite alternate' },
     '@keyframes bounce': {

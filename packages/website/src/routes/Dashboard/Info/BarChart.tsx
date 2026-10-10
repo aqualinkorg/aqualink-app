@@ -27,7 +27,7 @@ function BarChart({ collection, classes }: BarChartProps) {
 
   return (
     <>
-      <Box color={theme.palette.grey[500]} margin="0 0 14px 97px">
+      <Box color={theme.palette.text.secondary} margin="0 0 14px 97px">
         <Typography variant="subtitle2">Sites by Alert Level</Typography>
       </Box>
       <Box flexGrow={1} width="100%">

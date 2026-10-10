@@ -6,7 +6,7 @@ on:
     paths:
       - "packages/api/**"
       - "yarn.lock"
-      - "scripts/yarn-audit-summary.js"
+      - "scripts/yarn-audit-summary*.js"
       - "package.json"
   push:
     branches:
@@ -18,7 +18,8 @@ jobs:
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
       TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
-      BACKEND_BASE_URL: ${{ vars.BACKEND_BASE_URL }}
+      # Tests initialize the API without a deployed backend URL.
+      BACKEND_BASE_URL: ${{ vars.BACKEND_BASE_URL || 'http://localhost:3000' }}
       STORAGE_MAX_FILE_SIZE_MB: ${{ vars.STORAGE_MAX_FILE_SIZE_MB }}
 
       GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
@@ -62,7 +63,9 @@ jobs:
 
       - name: Security audit
         if: success() || steps.install.conclusion == 'skipped' || steps.install.conclusion == 'success'
-        run: yarn run audit
+        run: |
+          node --test scripts/yarn-audit-summary.test.js
+          yarn run audit
 
       - name: Run API lint
         if: success() || steps.install.conclusion == 'skipped'

@@ -60,7 +60,7 @@ function RowNameCell({
 }
 
 function RowNumberCell({
-  color = colors.black,
+  color = colors.ocean,
   unit = '',
   decimalPlaces = 1,
   value,
@@ -241,9 +241,7 @@ function SiteTableBody({
               className={classes.tableRow}
               style={{
                 backgroundColor:
-                  site.tableData.id === selectedRow
-                    ? colors.lighterBlue
-                    : 'white',
+                  site.tableData.id === selectedRow ? colors.mist : 'white',
               }}
               onClick={(event) => handleClick(event, site)}
               role="button"
@@ -263,7 +261,7 @@ function SiteTableBody({
                 isExtended={isExtended}
                 classes={classes}
                 value={site.sst}
-                color={isExtended ? colors.black : colors.lightBlue}
+                color={isExtended ? colors.ocean : colors.action}
                 unit="°C"
               />
               {isExtended && (
@@ -271,7 +269,7 @@ function SiteTableBody({
                   isExtended={isExtended}
                   classes={classes}
                   value={site.historicMax}
-                  color={colors.black}
+                  color={colors.ocean}
                   unit="°C"
                 />
               )}
@@ -280,7 +278,7 @@ function SiteTableBody({
                   isExtended={isExtended}
                   classes={classes}
                   value={site.sstAnomaly}
-                  color={colors.black}
+                  color={colors.ocean}
                   unit="°C"
                 />
               )}
@@ -296,7 +294,7 @@ function SiteTableBody({
                   isExtended={isExtended}
                   classes={classes}
                   value={site.buoyTop}
-                  color={colors.black}
+                  color={colors.ocean}
                   unit="°C"
                 />
               )}
@@ -305,7 +303,7 @@ function SiteTableBody({
                   isExtended={isExtended}
                   classes={classes}
                   value={site.buoyBottom}
-                  color={colors.black}
+                  color={colors.ocean}
                   unit="°C"
                 />
               )}

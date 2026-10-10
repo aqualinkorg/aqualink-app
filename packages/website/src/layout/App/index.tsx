@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GlobalStyles } from '@mui/material';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import {
   BrowserRouter as Router,
@@ -29,12 +30,10 @@ import Spotter from 'routes/Spotter';
 import Tracker from 'routes/Tracker';
 import app from '../../firebase';
 import ErrorBoundary from './ErrorBoundary';
-import theme from './theme';
+import theme, { themeCssVariables } from './theme';
 
 import 'leaflet/dist/leaflet.css';
-import './App.css';
-import '../../assets/css/bootstrap.css';
-import '../../assets/css/leaflet.css';
+import './App.scss';
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
@@ -62,6 +61,7 @@ function App() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
+        <GlobalStyles styles={{ ':root': themeCssVariables }} />
         <Router>
           <ErrorBoundary>
             <div id="app">

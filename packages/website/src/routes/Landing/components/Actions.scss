@@ -1,0 +1,54 @@
+@use '../../../styles/responsive';
+.landing-page .landing-page__button.MuiButton-root {
+  justify-content: space-between;
+  min-width: 212px;
+  min-height: 56px;
+  padding: 14px 22px;
+  border-radius: 5px;
+  font:
+    400 16px/1.5 'Inter',
+    sans-serif;
+  text-transform: none;
+  color: var(--color-white);
+  gap: 24px;
+
+  &.MuiButton-outlined {
+    background: transparent;
+    border-color: var(--color-sky);
+  }
+  .MuiButton-endIcon {
+    margin: 0;
+  }
+}
+.landing-page__text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 44px;
+  color: #10739c;
+  font-size: 15px;
+  line-height: 1.5;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+  svg {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .landing-page__text-link svg {
+    transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .landing-page__text-link:focus-visible svg {
+    transform: translateX(3px);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .landing-page__text-link:hover svg {
+      transform: translateX(3px);
+    }
+  }
+}

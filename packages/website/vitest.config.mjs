@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath, URL } from 'node:url';
+import { sassTokenImporter } from './config/sass-tokens.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const srcPath = path.resolve(__dirname, 'src');
@@ -15,6 +16,11 @@ const aliases = Object.fromEntries(
 
 export default defineConfig({
   plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: { api: 'modern', importers: [sassTokenImporter] },
+    },
+  },
   esbuild: {
     target: 'node18',
   },

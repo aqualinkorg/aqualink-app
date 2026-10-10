@@ -11,15 +11,16 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-6wnu60-MuiGrid-root"
         >
           <mock-link
             classname="Footer-navBarLink-2"
+            color="inherit"
             href="/map"
             underline="hover"
           >
             <mock-typography
-              color="textPrimary"
+              color="inherit"
               variant="h4"
             >
               Aqua
