@@ -1,5 +1,5 @@
 import { LinearProgress } from '@mui/material';
-import Button from '@mui/material/Button';
+import Button from 'common/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';

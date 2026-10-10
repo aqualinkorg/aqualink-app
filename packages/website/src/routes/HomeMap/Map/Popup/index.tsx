@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -9,6 +8,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import Button from 'common/Button';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';

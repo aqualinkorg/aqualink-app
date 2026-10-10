@@ -1,0 +1,82 @@
+@use '../../styles/responsive';
+@use 'sass:meta';
+@font-face {
+  font-family: 'Inter';
+  src: url('../../assets/fonts/inter/Inter.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+.landing-page {
+  color: var(--color-ocean);
+  background: var(--color-white);
+  font-family: 'Inter', var(--font-family-sans-serif);
+
+  h1,
+  h2,
+  h3,
+  p,
+  figure,
+  dl,
+  dd {
+    margin: 0;
+  }
+  h1,
+  h2,
+  h3 {
+    font-weight: 400;
+  }
+  h2 {
+    font-size: clamp(32px, 3.34vw, 48px);
+    line-height: 1.16;
+    letter-spacing: -0.025em;
+  }
+  h3 {
+    font-size: 24px;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+  p {
+    color: var(--color-text);
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  a:not(.MuiButton-root):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 5px;
+  }
+  section[id] {
+    scroll-margin-top: 88px;
+  }
+}
+.landing-page__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(48px, 8vw, 120px);
+}
+@include meta.load-css('components/Actions');
+@include meta.load-css('sections/Hero');
+@include meta.load-css('sections/Reach');
+@include meta.load-css('sections/Connections');
+@include meta.load-css('components/Story');
+@include meta.load-css('sections/Science');
+@include meta.load-css('sections/Registration');
+@include meta.load-css('sections/Footer');
+@include responsive.down(md) {
+  .landing-page__split {
+    gap: 48px;
+  }
+}
+@include responsive.down(sm) {
+  .landing-page__split {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .landing-page h2 {
+    font-size: 32px;
+  }
+  .landing-page p {
+    font-size: 16px;
+  }
+}

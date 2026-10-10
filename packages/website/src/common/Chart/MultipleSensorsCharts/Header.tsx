@@ -3,13 +3,13 @@ import {
   Grid,
   Box,
   Typography,
-  Button,
   useTheme,
   useMediaQuery,
   Tooltip,
   Theme,
   Alert,
 } from '@mui/material';
+import Button from 'common/Button';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';

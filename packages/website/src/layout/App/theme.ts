@@ -9,6 +9,7 @@ const sky = '#8AC6DE';
 const mist = '#E8F1F3';
 const paper = '#F5F8F8';
 const text = '#536F79';
+const onOcean = '#E6F3F7';
 const specialSensorColor = '#f78c21';
 const greenCardColor = '#37a692';
 
@@ -35,6 +36,7 @@ export const colors = {
   mist,
   paper,
   text,
+  onOcean,
   specialSensorColor,
   greenCardColor,
 };
@@ -324,13 +326,16 @@ theme.components = {
 };
 
 // Sass consumes the same colors as MUI, including RGB channels for transparency.
-export const themeCssVariables = Object.fromEntries(
-  Object.entries({ ...colors, ...theme.palette.common }).flatMap(
-    ([name, value]) => [
-      [`--color-${name}`, value],
-      [`--color-${name}-rgb`, hexToRgb(value).slice(4, -1)],
-    ],
+export const themeCssVariables = {
+  ...Object.fromEntries(
+    Object.entries({ ...colors, ...theme.palette.common }).flatMap(
+      ([name, value]) => [
+        [`--color-${name}`, value],
+        [`--color-${name}-rgb`, hexToRgb(value).slice(4, -1)],
+      ],
+    ),
   ),
-);
+  '--z-index-appbar': theme.zIndex.appBar,
+};
 
 export default theme;

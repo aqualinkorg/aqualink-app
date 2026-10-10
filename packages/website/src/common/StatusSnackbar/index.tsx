@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Button,
   Snackbar,
   Theme,
   Alert,
   SnackbarCloseReason,
   AlertProps,
 } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles<Theme, { hasMessage: boolean }>(

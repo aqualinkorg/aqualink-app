@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Box,
-  Button,
   Link as ExternalLink,
   ButtonGroup,
   Drawer,
@@ -10,6 +9,7 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
+import Button from 'common/Button';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';

@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Grid,
-  Typography,
-  Button,
-} from '@mui/material';
+import { Card, CardHeader, CardContent, Grid, Typography } from '@mui/material';
+import Button from 'common/Button';
 import { WithStyles, styled } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';

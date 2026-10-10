@@ -8,9 +8,9 @@ import {
   CardMedia,
   Hidden,
   Typography,
-  Button,
   Alert,
 } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import { isNumber } from 'lodash';
 import { Link, useLocation } from 'react-router-dom';

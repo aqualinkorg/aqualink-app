@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Box,
-  Button,
   Paper,
   Table,
   TableBody,
@@ -12,6 +11,7 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
+import Button from 'common/Button';
 import { createStyles, WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import { groupBy, times } from 'lodash';

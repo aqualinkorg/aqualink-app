@@ -16,14 +16,14 @@
 }
 
 .navbar.MuiAppBar-root {
+  z-index: var(--z-index-appbar);
   height: responsive.$nav-height;
   background-color: var(--color-ocean);
   color: var(--color-white);
   box-shadow: none;
 
-  .MuiButton-root,
   .MuiIconButton-root,
-  a {
+  a:not(.MuiButton-root) {
     &:focus-visible {
       outline: 2px solid var(--color-aqualink);
       outline-offset: 4px;
@@ -176,7 +176,7 @@
     right: auto;
     transform: translateX(-50%);
     isolation: isolate;
-    @include scroll-morph(navbar-liquid-position);
+    @include scroll-morph(navbar-pill-position);
     width: max-content;
     max-width: calc(100% - 24px);
     height: 52px;
@@ -190,17 +190,27 @@
       z-index: -1;
       pointer-events: none;
       border-radius: inherit;
-      background-color: rgba(var(--color-ocean-rgb), 0.45);
-      backdrop-filter: blur(16px);
+      background-color: rgba(var(--color-ocean-rgb), 0.88);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      backdrop-filter: blur(20px) saturate(140%);
       border: 1px solid rgba(var(--color-white-rgb), 0.18);
-      box-shadow: 0 4px 20px rgba(var(--color-ocean-rgb), 0.12);
-      transform-origin: center top;
-      @include scroll-morph(navbar-liquid-shell);
+      box-shadow:
+        inset 0 1px 0 rgba(var(--color-white-rgb), 0.08),
+        0 2px 4px rgba(var(--color-ocean-rgb), 0.08),
+        0 8px 24px rgba(var(--color-ocean-rgb), 0.18);
+      transform-origin: center;
+      @include scroll-morph(navbar-pill-shell);
+
+      @supports (backdrop-filter: blur(20px)) or
+        (-webkit-backdrop-filter: blur(20px)) {
+        background-color: rgba(var(--color-ocean-rgb), 0.78);
+      }
     }
 
     .navbar__toolbar {
       padding-inline: 12px;
-      min-height: 50px;
+      height: 52px;
+      min-height: 52px;
     }
     .navbar__brand {
       min-width: auto;
@@ -219,11 +229,20 @@
     .navbar__content {
       flex-wrap: nowrap;
       gap: 12px;
-      @include scroll-morph(navbar-liquid-content);
     }
     .route-buttons {
       margin: 0;
-      gap: 8px;
+      gap: 4px;
+
+      .MuiButton-root {
+        min-height: 44px;
+        padding-inline: 12px;
+        border-radius: 999px;
+        font-weight: 500;
+        &:hover {
+          background-color: rgba(var(--color-white-rgb), 0.1);
+        }
+      }
     }
     .navbar__actions {
       gap: 0;
@@ -231,7 +250,8 @@
     }
     .navbar__register {
       display: inline-flex;
-      height: 36px;
+      height: 44px;
+      min-height: 44px;
       padding-inline: 14px;
       font-size: 14px;
       border-radius: 999px;
@@ -241,6 +261,8 @@
     }
     .navbar__menu-toggle {
       margin: 0;
+      width: 44px;
+      height: 44px;
     }
     @media (prefers-reduced-motion: reduce) {
       &,
@@ -250,11 +272,12 @@
       }
     }
     @include responsive.down(sm) {
-      top: 8px;
-      height: 48px;
+      top: 12px;
+      width: calc(100% - 24px);
+      height: 52px;
       .navbar__toolbar {
-        min-height: 46px;
-        padding-inline: 8px;
+        min-height: 52px;
+        padding-inline: 4px;
       }
       .navbar__content {
         gap: 8px;
@@ -263,67 +286,21 @@
   }
 }
 
-@keyframes navbar-liquid-position {
+@keyframes navbar-pill-position {
   0% {
-    transform: translate(-50%, -32px);
-    opacity: 0;
-  }
-  25% {
-    opacity: 1;
-  }
-  55% {
-    transform: translate(-50%, 4px);
-  }
-  75% {
-    transform: translate(-50%, -1px);
+    transform: translate(-50%, -8px);
   }
   100% {
     transform: translate(-50%, 0);
-    opacity: 1;
   }
 }
 
-@keyframes navbar-liquid-shell {
+@keyframes navbar-pill-shell {
   0% {
-    transform: scale(1.45, 0.5);
-    border-radius: 12% 24% 44% 36% / 20% 30% 80% 70%;
-    filter: blur(6px);
-  }
-  40% {
-    transform: scale(1.24, 0.82);
-    border-radius: 26% 38% 42% 30% / 36% 42% 68% 74%;
-    filter: blur(3px);
-  }
-  58% {
-    transform: scale(0.975, 1.1);
-    border-radius: 42% 48% 46% 44% / 60% 50% 56% 62%;
-    filter: blur(0.5px);
-  }
-  76% {
-    transform: scale(1.012, 0.98);
-    border-radius: 999px;
-    filter: blur(0);
+    transform: scale(1.045, 0.96);
   }
   100% {
     transform: scale(1);
-    border-radius: 999px;
-    filter: blur(0);
-  }
-}
-
-@keyframes navbar-liquid-content {
-  0% {
-    opacity: 0;
-    filter: blur(2px);
-  }
-  35% {
-    opacity: 0.65;
-    filter: blur(0.5px);
-  }
-  65%,
-  100% {
-    opacity: 1;
-    filter: blur(0);
   }
 }
 

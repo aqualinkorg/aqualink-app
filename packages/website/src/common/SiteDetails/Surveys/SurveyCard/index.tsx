@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Theme,
-  Paper,
-  Grid,
-  CardMedia,
-  Typography,
-  Button,
-} from '@mui/material';
+import { Theme, Paper, Grid, CardMedia, Typography } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';

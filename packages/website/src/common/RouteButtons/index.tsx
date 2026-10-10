@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import Button from 'common/Button';
 import { Link } from 'react-router-dom';
 import './RouteButtons.scss';
 

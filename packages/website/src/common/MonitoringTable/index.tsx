@@ -1,5 +1,4 @@
 import {
-  Button,
   Link,
   Paper,
   Table,
@@ -14,6 +13,7 @@ import {
   Toolbar,
   Tooltip,
 } from '@mui/material';
+import Button from 'common/Button';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import { colors } from 'layout/App/theme';

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Divider, IconButton, Menu, MenuItem } from '@mui/material';
+import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
+import Button from 'common/Button';
 import { Link } from 'react-router-dom';
 import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
 import PublishIcon from '@mui/icons-material/Publish';
