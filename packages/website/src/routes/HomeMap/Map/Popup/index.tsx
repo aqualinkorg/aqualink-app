@@ -111,7 +111,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
               </Grid>
               <Grid container item xs={12}>
                 <Typography
-                  style={{ color: colors.lightBlue }}
+                  style={{ color: colors.sky }}
                   variant="h5"
                   color="textSecondary"
                 >
