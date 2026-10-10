@@ -4,9 +4,10 @@
     outline-offset: 4px;
   }
   &.MuiButton-containedPrimary:not(.Mui-disabled) {
-    background-color: var(--color-aqualink);
+    background-color: var(--color-action);
+    color: var(--color-white);
     &:hover {
-      background-color: #10739c;
+      background-color: #0d5f80;
     }
   }
   &.MuiButton-outlinedPrimary:not(.Mui-disabled):hover {

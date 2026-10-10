@@ -180,7 +180,7 @@ function MonitoringTable<
       >
         <Table>
           <TableHead>
-            <TableRow style={{ backgroundColor: colors.backgroundGray }}>
+            <TableRow style={{ backgroundColor: colors.paper }}>
               {headCells.map((cell) => (
                 <TableCell
                   key={cell.id as React.Key}

@@ -83,7 +83,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                     class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-pjq742-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-11bw6oq-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <input
                         aria-autocomplete="list"
@@ -91,7 +91,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                         aria-invalid="false"
                         autocapitalize="none"
                         autocomplete="off"
-                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
+                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1rrse87-MuiInputBase-input-MuiOutlinedInput-input"
                         id="location"
                         placeholder="Search"
                         role="combobox"
@@ -104,7 +104,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                       >
                         <button
                           aria-label="Open"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-154b54e-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-t2ivig-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                           tabindex="-1"
                           title="Open"
                           type="button"
@@ -330,7 +330,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                           >
                             <label
-                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-8bqvyi-MuiFormLabel-root-MuiInputLabel-root"
+                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-hd78sk-MuiFormLabel-root-MuiInputLabel-root"
                               data-shrink="false"
                               for="firstName"
                               id="firstName-label"
@@ -338,11 +338,11 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                               First Name
                             </label>
                             <div
-                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ysyqd7-MuiInputBase-root-MuiOutlinedInput-root"
+                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1gw6xcy-MuiInputBase-root-MuiOutlinedInput-root"
                             >
                               <input
                                 aria-invalid="false"
-                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-k4suvc-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="firstName"
                                 name="firstName"
                                 placeholder="First Name"
@@ -371,7 +371,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                           >
                             <label
-                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-8bqvyi-MuiFormLabel-root-MuiInputLabel-root"
+                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-hd78sk-MuiFormLabel-root-MuiInputLabel-root"
                               data-shrink="false"
                               for="lastName"
                               id="lastName-label"
@@ -379,11 +379,11 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                               Last Name
                             </label>
                             <div
-                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ysyqd7-MuiInputBase-root-MuiOutlinedInput-root"
+                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1gw6xcy-MuiInputBase-root-MuiOutlinedInput-root"
                             >
                               <input
                                 aria-invalid="false"
-                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-k4suvc-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="lastName"
                                 name="lastName"
                                 placeholder="Last Name"
@@ -412,7 +412,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                           >
                             <label
-                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-8bqvyi-MuiFormLabel-root-MuiInputLabel-root"
+                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-hd78sk-MuiFormLabel-root-MuiInputLabel-root"
                               data-shrink="false"
                               for="organization"
                               id="organization-label"
@@ -420,11 +420,11 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                               Organization
                             </label>
                             <div
-                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ysyqd7-MuiInputBase-root-MuiOutlinedInput-root"
+                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1gw6xcy-MuiInputBase-root-MuiOutlinedInput-root"
                             >
                               <input
                                 aria-invalid="false"
-                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-k4suvc-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="organization"
                                 name="organization"
                                 placeholder="Organization"
@@ -453,7 +453,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                           >
                             <label
-                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-8bqvyi-MuiFormLabel-root-MuiInputLabel-root"
+                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-hd78sk-MuiFormLabel-root-MuiInputLabel-root"
                               data-shrink="false"
                               for="emailAddress"
                               id="emailAddress-label"
@@ -461,11 +461,11 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                               Email Address
                             </label>
                             <div
-                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ysyqd7-MuiInputBase-root-MuiOutlinedInput-root"
+                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1gw6xcy-MuiInputBase-root-MuiOutlinedInput-root"
                             >
                               <input
                                 aria-invalid="false"
-                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-k4suvc-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="emailAddress"
                                 name="emailAddress"
                                 placeholder="Email Address"
@@ -494,7 +494,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                           >
                             <label
-                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-8bqvyi-MuiFormLabel-root-MuiInputLabel-root"
+                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-hd78sk-MuiFormLabel-root-MuiInputLabel-root"
                               data-shrink="false"
                               for="password"
                               id="password-label"
@@ -502,11 +502,11 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                               Password
                             </label>
                             <div
-                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ysyqd7-MuiInputBase-root-MuiOutlinedInput-root"
+                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1gw6xcy-MuiInputBase-root-MuiOutlinedInput-root"
                             >
                               <input
                                 aria-invalid="false"
-                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                                class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-13 css-k4suvc-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="password"
                                 name="password"
                                 placeholder="Password"
@@ -566,7 +566,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-15 css-sgz297-MuiGrid-root"
                         >
                           <button
-                            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1fuw3qe-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1ljc9aq-MuiButtonBase-root-MuiButton-root"
                             disabled=""
                             tabindex="-1"
                             type="submit"
@@ -585,7 +585,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             Have an account?
                              
                             <button
-                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-4pqc1o-MuiButtonBase-root-MuiButton-root"
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-12bms93-MuiButtonBase-root-MuiButton-root"
                               tabindex="0"
                               type="button"
                             >
@@ -673,7 +673,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                       class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                     >
                       <div
-                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1svpauh-MuiPaper-root-MuiAlert-root"
+                        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-38xou6-MuiPaper-root-MuiAlert-root"
                         role="alert"
                         style="--Paper-shadow: none;"
                       >
@@ -753,7 +753,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                           >
                             <label
-                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-8bqvyi-MuiFormLabel-root-MuiInputLabel-root"
+                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-hd78sk-MuiFormLabel-root-MuiInputLabel-root"
                               data-shrink="false"
                               for="emailAddress"
                               id="emailAddress-label"
@@ -761,11 +761,11 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                               Email Address
                             </label>
                             <div
-                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ysyqd7-MuiInputBase-root-MuiOutlinedInput-root"
+                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1gw6xcy-MuiInputBase-root-MuiOutlinedInput-root"
                             >
                               <input
                                 aria-invalid="false"
-                                class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-24 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                                class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-24 css-k4suvc-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="emailAddress"
                                 name="emailAddress"
                                 placeholder="Email Address"
@@ -794,7 +794,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                           >
                             <label
-                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-8bqvyi-MuiFormLabel-root-MuiInputLabel-root"
+                              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-hd78sk-MuiFormLabel-root-MuiInputLabel-root"
                               data-shrink="false"
                               for="password"
                               id="password-label"
@@ -802,11 +802,11 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                               Password
                             </label>
                             <div
-                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ysyqd7-MuiInputBase-root-MuiOutlinedInput-root"
+                              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1gw6xcy-MuiInputBase-root-MuiOutlinedInput-root"
                             >
                               <input
                                 aria-invalid="false"
-                                class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-24 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                                class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-24 css-k4suvc-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="password"
                                 name="password"
                                 placeholder="Password"
@@ -832,7 +832,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
                         >
                           <button
-                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-27 css-4pqc1o-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-27 css-12bms93-MuiButtonBase-root-MuiButton-root"
                             tabindex="0"
                             type="button"
                           >
@@ -848,7 +848,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-26 css-sgz297-MuiGrid-root"
                         >
                           <button
-                            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1fuw3qe-MuiButtonBase-root-MuiButton-root"
+                            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-1ljc9aq-MuiButtonBase-root-MuiButton-root"
                             tabindex="0"
                             type="submit"
                           >
@@ -866,7 +866,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                             Don't have an account?
                              
                             <button
-                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-4pqc1o-MuiButtonBase-root-MuiButton-root"
+                              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-12bms93-MuiButtonBase-root-MuiButton-root"
                               tabindex="0"
                               type="button"
                             >
@@ -881,7 +881,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
               </mock-card>
             </mock-dialog>
             <a
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation navbar__register css-1n2lvw3-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation navbar__register css-1tasclv-MuiButtonBase-root-MuiButton-root"
               data-discover="true"
               href="/register"
               tabindex="0"
@@ -939,7 +939,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                     class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-pjq742-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-11bw6oq-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <input
                         aria-autocomplete="list"
@@ -947,7 +947,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                         aria-invalid="false"
                         autocapitalize="none"
                         autocomplete="off"
-                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-169ghzl-MuiInputBase-input-MuiOutlinedInput-input"
+                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1rrse87-MuiInputBase-input-MuiOutlinedInput-input"
                         id="location"
                         placeholder="Search"
                         role="combobox"
@@ -960,7 +960,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
                       >
                         <button
                           aria-label="Open"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-154b54e-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-t2ivig-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                           tabindex="-1"
                           title="Open"
                           type="button"
@@ -1015,7 +1015,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       <mock-clear />
     </mock-iconbutton>
     <a
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       data-discover="true"
       href="/"
       tabindex="0"
@@ -1028,7 +1028,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </a>
     <a
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       data-discover="true"
       href="/map"
       tabindex="0"
@@ -1041,7 +1041,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </a>
     <a
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       data-discover="true"
       href="/register"
       tabindex="0"
@@ -1054,7 +1054,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </a>
     <mock-link
-      classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       href="https://highlights.aqualink.org"
       tabindex="0"
       target="_blank"
@@ -1068,7 +1068,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </mock-link>
     <mock-link
-      classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       href="https://bristlemouth.aqualink.org"
       tabindex="0"
       target="_blank"
@@ -1082,7 +1082,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </mock-link>
     <a
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       data-discover="true"
       href="/tracker"
       tabindex="0"
@@ -1095,7 +1095,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </a>
     <a
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       data-discover="true"
       href="/about"
       tabindex="0"
@@ -1108,7 +1108,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </a>
     <a
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       data-discover="true"
       href="/faq"
       tabindex="0"
@@ -1121,7 +1121,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </a>
     <a
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       data-discover="true"
       href="/buoy"
       tabindex="0"
@@ -1134,7 +1134,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </a>
     <a
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       data-discover="true"
       href="/drones"
       tabindex="0"
@@ -1147,7 +1147,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
       </mock-typography>
     </a>
     <mock-link
-      classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-w2t8vn-MuiButtonBase-root-MuiButton-root"
+      classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-30 css-18f2j7a-MuiButtonBase-root-MuiButton-root"
       href="https://highlights.aqualink.org/contact-us"
       tabindex="0"
       target="_blank"
@@ -1173,11 +1173,11 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
         Join us and contribute!
       </mock-typography>
       <div
-        class="MuiButtonGroup-root MuiButtonGroup-contained MuiButtonGroup-horizontal MuiButtonGroup-colorPrimary css-1kxzpwa-MuiButtonGroup-root"
+        class="MuiButtonGroup-root MuiButtonGroup-contained MuiButtonGroup-horizontal MuiButtonGroup-colorPrimary css-1r1iafo-MuiButtonGroup-root"
         role="group"
       >
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-29 MuiButtonGroup-firstButton css-1frd4k7-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-29 MuiButtonGroup-firstButton css-ryxv4k-MuiButtonBase-root-MuiButton-root"
           href="https://github.com/aqualinkorg/aqualink-app"
           tabindex="0"
           target="_blank"
@@ -1190,7 +1190,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
           GitHub
         </a>
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-29 MuiButtonGroup-lastButton css-1frd4k7-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-29 MuiButtonGroup-lastButton css-ryxv4k-MuiButtonBase-root-MuiButton-root"
           href="https://ovio.org/project/aqualinkorg/aqualink-app"
           tabindex="0"
           target="_blank"
@@ -1213,7 +1213,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
         class="MuiGrid-root MuiGrid-container BackButton-backButtonWrapper-31 css-1dphqhe-MuiGrid-root"
       >
         <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-4pqc1o-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-12bms93-MuiButtonBase-root-MuiButton-root"
           data-discover="true"
           href="/sites/1"
           tabindex="0"
@@ -1249,7 +1249,7 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1svpauh-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-38xou6-MuiPaper-root-MuiAlert-root"
               role="alert"
               style="--Paper-shadow: none;"
             >
@@ -1482,11 +1482,12 @@ exports[`Survey Point Detail Page > should render with given state from Redux st
         >
           <mock-link
             classname="Footer-navBarLink-69"
+            color="inherit"
             href="/map"
             underline="hover"
           >
             <mock-typography
-              color="textPrimary"
+              color="inherit"
               variant="h4"
             >
               Aqua

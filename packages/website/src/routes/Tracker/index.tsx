@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
     }),
     heroTitle: {
+      color: theme.palette.common.white,
       fontWeight: 700,
     },
     header: {
@@ -152,7 +153,7 @@ function Tracker({
           <Typography
             className={classes.heroTitle}
             variant="h1"
-            color="textPrimary"
+            color="inherit"
           >
             Tracking Heatwaves
           </Typography>

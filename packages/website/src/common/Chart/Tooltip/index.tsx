@@ -103,7 +103,7 @@ function Tooltip({
           className={classes.tooltipHeader}
           title={
             <Typography
-              color="textPrimary"
+              color="inherit"
               variant="caption"
               style={{ whiteSpace: 'nowrap' }}
             >
@@ -176,6 +176,7 @@ const styles = () =>
       display: 'flex',
       flexFlow: 'column',
       backgroundColor: '#095877',
+      color: '#E6F3F7',
       borderRadius: 8,
       paddingBottom: '0.5rem',
     },

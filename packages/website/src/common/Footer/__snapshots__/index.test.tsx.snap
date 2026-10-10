@@ -15,11 +15,12 @@ exports[`renders as expected 1`] = `
         >
           <mock-link
             classname="Footer-navBarLink-2"
+            color="inherit"
             href="/map"
             underline="hover"
           >
             <mock-typography
-              color="textPrimary"
+              color="inherit"
               variant="h4"
             >
               Aqua

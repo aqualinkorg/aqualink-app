@@ -11,8 +11,13 @@ function Footer({ classes }: FooterProps) {
       <Toolbar>
         <Grid container justifyContent="center">
           <Grid item xs={10} container>
-            <Link className={classes.navBarLink} href="/map" underline="hover">
-              <Typography color="textPrimary" variant="h4">
+            <Link
+              className={classes.navBarLink}
+              href="/map"
+              underline="hover"
+              color="inherit"
+            >
+              <Typography color="inherit" variant="h4">
                 Aqua
               </Typography>
               <Typography style={{ color: '#8AC6DE' }} variant="h4">
@@ -30,7 +35,7 @@ const styles = (theme: Theme) =>
   createStyles({
     appBar: {
       '&.MuiPaper-root': {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.dark,
         color: 'white',
       },
     },

@@ -3,6 +3,7 @@
 @use '../../styles/legacy-layout';
 @use '../../styles/map';
 @use '../../styles/carousel';
+@use './Controls';
 
 :root {
   --content-max-width: #{responsive.$content-max-width};
@@ -55,7 +56,7 @@ iframe {
   padding: 0;
 }
 .MuiAutocomplete-option {
-  color: #168dbd;
+  color: var(--color-ocean);
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

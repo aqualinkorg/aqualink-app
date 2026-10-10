@@ -10,6 +10,8 @@ const mist = '#E8F1F3';
 const paper = '#F5F8F8';
 const text = '#536F79';
 const onOcean = '#E6F3F7';
+const action = '#10739C';
+const border = '#8098A1';
 const specialSensorColor = '#f78c21';
 const greenCardColor = '#37a692';
 
@@ -37,6 +39,8 @@ export const colors = {
   paper,
   text,
   onOcean,
+  action,
+  border,
   specialSensorColor,
   greenCardColor,
 };
@@ -47,7 +51,7 @@ const theme: Theme = createTheme({
   breakpoints: { values: layoutTokens.breakpoints },
   palette: {
     primary: {
-      main: aqualink,
+      main: action,
       dark: ocean,
       light: paper,
     },
@@ -55,12 +59,12 @@ const theme: Theme = createTheme({
       main: pink[500],
     },
     text: {
-      primary: mist,
+      primary: ocean,
       secondary: text,
+      disabled: text,
     },
-    grey: {
-      500: mist,
-    },
+    background: { default: paper, paper: '#FFFFFF' },
+    action: { disabled: text, disabledBackground: mist },
   },
 });
 
@@ -183,7 +187,8 @@ theme.components = {
         borderRadius: 5,
       },
       containedPrimary: {
-        backgroundColor: aqualink,
+        backgroundColor: action,
+        color: '#FFFFFF',
       },
       containedSecondary: {
         backgroundColor: ocean,
@@ -208,76 +213,14 @@ theme.components = {
       },
     },
   },
-  MuiInputLabel: {
-    styleOverrides: {
-      root: {
-        color: mist,
-      },
-    },
-  },
   MuiInputBase: {
-    styleOverrides: {
-      root: {
-        height: '100%',
-        color: text,
-        '& .Mui-disabled': {
-          backgroundColor: text,
-        },
-      },
-    },
+    styleOverrides: { root: { height: '100%' } },
   },
-  MuiDateCalendar: {
-    styleOverrides: {
-      root: {
-        color: text,
-      },
-    },
-  },
-  MuiPickersLayout: {
-    styleOverrides: {
-      root: {
-        color: text,
-      },
-    },
-  },
-  MuiPickersDay: {
-    styleOverrides: {
-      root: {
-        color: 'text',
-      },
-    },
-  },
-  MuiPickersCalendarHeader: {
-    styleOverrides: {
-      root: {
-        color: 'text',
-      },
-    },
-  },
-  MuiClockNumber: {
-    styleOverrides: {
-      root: {
-        color: 'text',
-      },
-    },
-  },
-  MuiYearCalendar: {
-    styleOverrides: {
-      root: {
-        color: 'text',
-      },
-    },
-  },
-
   MuiOutlinedInput: {
     styleOverrides: {
       root: {
-        color: 'text',
         '&:not(.MuiInputBase-multiline):not(.MuiInputBase-adornedEnd)': {
           padding: 0,
-        },
-        '&.Mui-focused': {
-          borderColor: aqualink,
         },
       },
     },
@@ -285,22 +228,22 @@ theme.components = {
   MuiTableCell: {
     styleOverrides: {
       root: {
-        color: text,
+        color: ocean,
       },
       head: {
-        color: text,
+        color: ocean,
       },
       body: {
-        color: text,
+        color: ocean,
       },
     },
   },
   MuiTableSortLabel: {
     styleOverrides: {
       root: {
-        color: text,
+        color: ocean,
         '&.Mui-active': {
-          color: `${text} !important`,
+          color: `${ocean} !important`,
         },
       },
     },
@@ -308,18 +251,18 @@ theme.components = {
   MuiTablePagination: {
     styleOverrides: {
       root: {
-        color: text,
-        backgroundColor: text,
+        color: ocean,
+        backgroundColor: paper,
       },
       menuItem: {
-        color: text,
+        color: ocean,
       },
     },
   },
   MuiPaper: {
     styleOverrides: {
       root: {
-        color: text,
+        color: ocean,
       },
     },
   },

@@ -29,7 +29,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
     classname="SiteTable-dropdownWrapper-5"
   >
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-z31nbn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-ryxv4k-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >
@@ -62,7 +62,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
           class="MuiBox-root css-gajhq5"
         >
           <label
-            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd SitesFilterModalComponent-allSites-12 css-19opgx6-MuiFormControlLabel-root"
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd SitesFilterModalComponent-allSites-12 css-jopphw-MuiFormControlLabel-root"
           >
             <mock-checkbox
               checked="true"
@@ -90,7 +90,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
               class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
             >
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -102,7 +102,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -114,7 +114,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -126,7 +126,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -138,7 +138,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -168,7 +168,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
               class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
             >
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -180,7 +180,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -192,7 +192,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -204,7 +204,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -216,7 +216,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -228,7 +228,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -264,7 +264,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
               class="MuiBox-root css-xm7yc3"
             >
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -276,7 +276,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -288,7 +288,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -300,7 +300,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -312,7 +312,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -324,7 +324,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -336,7 +336,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -348,7 +348,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -360,7 +360,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -372,7 +372,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -384,7 +384,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -396,7 +396,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -408,7 +408,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -420,7 +420,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -432,7 +432,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -454,7 +454,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
               class="MuiBox-root css-xm7yc3"
             >
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -466,7 +466,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -478,7 +478,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -490,7 +490,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -502,7 +502,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -514,7 +514,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -526,7 +526,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -538,7 +538,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -550,7 +550,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -562,7 +562,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -574,7 +574,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -586,7 +586,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -598,7 +598,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -610,7 +610,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -622,7 +622,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -634,7 +634,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -656,7 +656,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
               class="MuiBox-root css-xm7yc3"
             >
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -668,7 +668,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -680,7 +680,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -692,7 +692,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-c2x50n-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fy6pt-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -722,7 +722,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
               class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
             >
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -734,7 +734,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -746,7 +746,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -758,7 +758,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -770,7 +770,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -782,7 +782,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -794,7 +794,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -806,7 +806,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -818,7 +818,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -830,7 +830,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -842,7 +842,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -854,7 +854,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -866,7 +866,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -896,7 +896,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
               class="MuiFormGroup-root css-1mac7pt-MuiFormGroup-root"
             >
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -908,7 +908,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -920,7 +920,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -932,7 +932,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
                 </span>
               </label>
               <label
-                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-jopphw-MuiFormControlLabel-root"
               >
                 <mock-checkbox
                   checked="false"
@@ -952,7 +952,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
           class="MuiBox-root css-z7mtfw"
         >
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-12bms93-MuiButtonBase-root-MuiButton-root"
             disabled=""
             tabindex="-1"
             type="button"
@@ -960,7 +960,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
             CLEAR ALL
           </button>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-z31nbn-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-ryxv4k-MuiButtonBase-root-MuiButton-root"
             tabindex="0"
             type="button"
           >
@@ -987,12 +987,12 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
         Sort By: 
       </mock-typography>
       <div
-        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 MuiSelect-root css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary SiteTable-mobileSortSelect-7 MuiSelect-root css-9i34u4-MuiInputBase-root-MuiInput-root-MuiSelect-root"
       >
         <div
           aria-expanded="false"
           aria-haspopup="listbox"
-          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1xox9bl-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
           role="combobox"
           tabindex="0"
         >
@@ -1016,7 +1016,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
         />
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-vhc0qt-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
           data-testid="ArrowDropDownIcon"
           focusable="false"
           viewBox="0 0 24 24"
@@ -1166,7 +1166,7 @@ exports[`SiteTable > should render with given state from Redux store 1`] = `
             >
               <mock-typography
                 classname="SiteTableBody-numberCellsTitle-19"
-                style="color: rgb(22, 141, 189);"
+                style="color: rgb(16, 115, 156);"
                 variant="h6"
               >
                 15.9

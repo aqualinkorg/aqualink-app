@@ -23,13 +23,14 @@ const YELLOW = yellow[600];
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialogTitle: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.common.white,
   },
   closeButton: {
     position: 'absolute',
     right: theme.spacing(1),
     top: theme.spacing(1),
-    color: theme.palette.text.primary,
+    color: theme.palette.common.white,
   },
   avatar: {
     backgroundColor: YELLOW,

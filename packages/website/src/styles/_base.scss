@@ -37,7 +37,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #212529;
+  color: var(--color-ocean);
   text-align: left;
   background-color: #fff;
 }
@@ -136,13 +136,13 @@ sup {
 }
 
 a {
-  color: #007bff;
+  color: var(--color-action);
   text-decoration: none;
   background-color: transparent;
 }
 
 a:hover {
-  color: #0056b3;
+  color: var(--color-ocean);
   text-decoration: underline;
 }
 
@@ -407,7 +407,7 @@ kbd {
   padding: 0.2rem 0.4rem;
   font-size: 87.5%;
   color: #fff;
-  background-color: #212529;
+  background-color: var(--color-ocean);
   border-radius: 0.2rem;
 }
 
@@ -420,7 +420,7 @@ kbd kbd {
 pre {
   display: block;
   font-size: 87.5%;
-  color: #212529;
+  color: var(--color-ocean);
 }
 
 pre code {
