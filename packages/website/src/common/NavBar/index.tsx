@@ -35,82 +35,29 @@ export default function NavBar({
 }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [compact, setCompact] = useState(false);
+  const compact = progress > 0;
   const slot = useRef<HTMLDivElement>(null);
-  const motion = useRef({
-    value: 0,
-    velocity: 0,
-    target: 0,
-    time: 0,
-    frame: 0,
-  });
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const animate = (time: number) => {
-      const { current } = motion;
-      const delta = Math.min((time - current.time) / 1000, 0.064);
-      // A critically damped spring settles quickly without bouncing the links.
-      const frequency = 30;
-      const offset = current.value - current.target;
-      const impulse = current.velocity + frequency * offset;
-      const decay = Math.exp(-frequency * delta);
-      const value = current.target + (offset + impulse * delta) * decay;
-      const velocity = (current.velocity - frequency * impulse * delta) * decay;
-      const settled =
-        Math.abs(value - current.target) < 0.001 && Math.abs(velocity) < 0.01;
-      motion.current = {
-        ...current,
-        value: settled ? current.target : value,
-        velocity: settled ? 0 : velocity,
-        time,
-        frame: settled ? 0 : window.requestAnimationFrame(animate),
-      };
-      setProgress(Math.min(1, Math.max(0, motion.current.value)));
-    };
     const updateHeader = () => {
-      // Keep the full header in its slot until it is entirely above the viewport.
-      // Restore it immediately on the way up, independently of spring settling.
-      const start = (slot.current?.offsetHeight || layoutTokens.navHeight) + 16;
+      const bounds = slot.current?.getBoundingClientRect();
+      const bottom = bounds?.height
+        ? bounds.bottom + window.scrollY
+        : layoutTokens.navHeight;
+      const start = bottom + 16;
       const distance = layoutTokens.navHeight * 0.5;
-      const target = Math.min(
-        1,
-        Math.max(0, (window.scrollY - start) / distance),
+      setProgress(
+        Math.min(1, Math.max(0, (window.scrollY - start) / distance)),
       );
-      setCompact(window.scrollY > start);
-      if (reducedMotion.matches) {
-        window.cancelAnimationFrame(motion.current.frame);
-        motion.current = {
-          value: target,
-          velocity: 0,
-          target,
-          time: 0,
-          frame: 0,
-        };
-        setProgress(target);
-      } else {
-        motion.current = { ...motion.current, target };
-        if (!motion.current.frame && target !== motion.current.value) {
-          motion.current = {
-            ...motion.current,
-            time: performance.now(),
-            frame: window.requestAnimationFrame(animate),
-          };
-        }
-      }
     };
     updateHeader();
     window.addEventListener('scroll', updateHeader, { passive: true });
     window.addEventListener('resize', updateHeader);
-    reducedMotion.addEventListener('change', updateHeader);
     return () => {
       window.removeEventListener('scroll', updateHeader);
       window.removeEventListener('resize', updateHeader);
-      reducedMotion.removeEventListener('change', updateHeader);
-      window.cancelAnimationFrame(motion.current.frame);
-      motion.current = { ...motion.current, frame: 0 };
     };
-  }, []);
+  }, [searchLocation]);
   const [, setTranslationOpen] = useGoogleTranslation();
 
   return (

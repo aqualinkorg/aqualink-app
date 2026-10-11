@@ -122,7 +122,7 @@ describe('NavBar without routeButtons', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('settles at the latest scroll position when direction changes mid-animation', async () => {
+  it('uses the latest scroll position when direction changes rapidly', async () => {
     const header = element.querySelector('mock-appbar') as HTMLElement;
     fireEvent.scroll(window, { target: { scrollY: 160 } });
     await waitFor(
@@ -148,6 +148,42 @@ describe('NavBar without routeButtons', () => {
       },
       { timeout: 3000 },
     );
+  });
+
+  it('keeps compact mode and visual progress aligned with the measured slot on scroll and resize', () => {
+    const header = element.querySelector('mock-appbar') as HTMLElement;
+    const slot = element.querySelector('.navbar-slot') as HTMLElement;
+    let height = 96;
+    const bounds = vi
+      .spyOn(slot, 'getBoundingClientRect')
+      .mockImplementation(() => ({
+        top: 40 - window.scrollY,
+        bottom: 40 + height - window.scrollY,
+        height,
+        width: 1000,
+        x: 0,
+        y: 40 - window.scrollY,
+        left: 0,
+        right: 1000,
+        toJSON: () => ({}),
+      }));
+    [151, 152, 153, 176, 152, 151].forEach((scrollY) => {
+      fireEvent.scroll(window, { target: { scrollY } });
+      const progress = Number(
+        header.style.getPropertyValue('--navbar-progress'),
+      );
+      expect(progress).toBe(Math.max(0, (scrollY - 152) / 48));
+      expect(
+        header.getAttribute('classname')?.includes('navbar--compact'),
+      ).toBe(progress > 0);
+    });
+    fireEvent.scroll(window, { target: { scrollY: 176 } });
+    height = 122;
+    fireEvent.resize(window);
+    expect(header.style.getPropertyValue('--navbar-progress')).toBe('0');
+    expect(header.getAttribute('classname')).not.toContain('navbar--compact');
+    bounds.mockRestore();
+    fireEvent.scroll(window, { target: { scrollY: 0 } });
   });
 
   it('keeps the full header until it leaves the viewport and restores it before its slot reappears', () => {

@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import Button from 'common/Button';
 import { Link } from 'react-router-dom';
@@ -49,20 +55,39 @@ export default function AccountControls() {
     setAnchor(null);
   }, [dispatch, collection?.id, user?.collection?.id]);
 
+  const latestSignOut = useRef(signOut);
+  const authFailureHandled = useRef(false);
+  useLayoutEffect(() => {
+    latestSignOut.current = signOut;
+  }, [signOut]);
+  useLayoutEffect(() => {
+    // A new authenticated session can fail independently of the previous one.
+    if (user?.id !== undefined) authFailureHandled.current = false;
+  }, [user?.id, user?.token]);
+
   useEffect(() => {
+    const lifecycle = { current: true };
     const interceptor = requests.axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
-        if ([401, 403].includes(error?.response?.status)) {
-          signOut();
+        if (
+          lifecycle.current &&
+          !authFailureHandled.current &&
+          [401, 403].includes(error?.response?.status)
+        ) {
+          authFailureHandled.current = true;
+          latestSignOut.current();
           setSignInOpen(true);
         }
         return Promise.reject(error);
       },
     );
-    return () =>
+    return () => {
+      // Axios keeps a captured handler for requests already in flight.
+      lifecycle.current = false;
       requests.axiosInstance.interceptors.response.eject(interceptor);
-  }, [signOut]);
+    };
+  }, []);
 
   const selectSite = () => {
     dispatch(unsetSelectedSite());
