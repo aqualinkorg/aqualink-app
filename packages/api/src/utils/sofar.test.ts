@@ -1,80 +1,181 @@
-import { SofarModels, sofarVariableIDs } from './constants';
+import {
+  SOFAR_MARINE_URL,
+  SOFAR_SENSOR_DATA_URL,
+  SOFAR_WAVE_DATA_URL,
+  SofarModels,
+  sofarVariableIDs,
+} from './constants';
+import axios from './retry-axios';
 import {
   getSofarHindcastData,
   getSpotterData,
   sofarHindcast,
   sofarWaveData,
 } from './sofar';
-import { ValueWithTimestamp } from './sofar.types';
 
-test('It processes Sofar API for daily data.', async () => {
-  jest.setTimeout(30000);
+jest.mock('./retry-axios', () => ({
+  __esModule: true,
+  default: { get: jest.fn() },
+}));
+jest.mock('./slack.utils', () => ({ sendSlackMessage: jest.fn() }));
+
+const mockGet = jest.mocked(axios.get);
+const timestamp = '2024-08-30T12:00:00.000Z';
+const sensorId = 'SPOT-test';
+const token = 'test-token';
+
+beforeEach(() => {
+  mockGet.mockReset();
+});
+
+test('It processes Sofar API for daily data and filters missing readings.', async () => {
+  mockGet.mockResolvedValueOnce({
+    data: {
+      hindcastVariables: [
+        {
+          values: [
+            { timestamp, value: 29.5 },
+            { timestamp, value: null },
+            { timestamp, value: 9999 },
+            { timestamp, value: 0 },
+          ],
+        },
+      ],
+    },
+  });
   const values = await getSofarHindcastData(
-    'NOAACoralReefWatch',
+    SofarModels.NOAACoralReefWatch,
     'analysedSeaSurfaceTemperature',
     -3.5976336810301888,
     -178.0000002552476,
-    new Date('2024-08-31'),
+    new Date('2024-08-31T00:00:00.000Z'),
   );
-
   expect(values).toEqual([
-    { timestamp: '2024-08-30T12:00:00.000Z', value: 29.509984820290786 },
+    { timestamp, value: 29.5 },
+    { timestamp, value: 0 },
   ]);
+  expect(mockGet).toHaveBeenCalledWith(
+    `${SOFAR_MARINE_URL}${SofarModels.NOAACoralReefWatch}/hindcast/point`,
+    expect.objectContaining({
+      params: expect.objectContaining({
+        variableIDs: ['analysedSeaSurfaceTemperature'],
+        latitude: -3.5976336810301888,
+        longitude: -178.0000002552476,
+        start: '2024-08-30T00:00:00.000Z',
+        end: '2024-08-31T00:00:00.000Z',
+      }),
+    }),
+  );
 });
 
-test('It processes Sofar Spotter API for daily data.', async () => {
-  jest.setTimeout(30000);
+test('It processes Spotter temperatures, waves and pressure readings.', async () => {
+  mockGet.mockResolvedValueOnce({
+    data: {
+      data: {
+        waves: [
+          {
+            timestamp,
+            significantWaveHeight: 1.2,
+            meanPeriod: 5,
+            meanDirection: 90,
+            latitude: 1,
+            longitude: 2,
+          },
+        ],
+        surfaceTemp: [{ timestamp, degrees: 28 }],
+      },
+    },
+  });
+  mockGet.mockResolvedValueOnce({
+    data: {
+      data: [
+        { timestamp, sensorPosition: 1, unit_type: 'temperature', value: 27 },
+        { timestamp, sensorPosition: 2, unit_type: 'temperature', value: 26 },
+        { timestamp, sensorPosition: 2, unit_type: 'temperature', value: null },
+        { timestamp, sensorPosition: 2, unit_type: 'pressure', value: 1013000 },
+        { timestamp, sensorPosition: 3, unit_type: 'temperature', value: 99 },
+      ],
+    },
+  });
   const values = await getSpotterData(
-    'SPOT-300434063450120',
-    process.env.SOFAR_API_TOKEN,
-    new Date('2020-09-02'),
+    sensorId,
+    token,
+    new Date('2024-08-31T00:00:00.000Z'),
   );
-
-  expect(values.bottomTemperature.length).toEqual(144);
-  expect(values.topTemperature.length).toEqual(144);
+  expect(values.topTemperature).toEqual([{ timestamp, value: 27 }]);
+  expect(values.bottomTemperature).toEqual([{ timestamp, value: 26 }]);
+  expect(values.barometerBottom).toEqual([{ timestamp, value: 1013 }]);
+  expect(values.surfaceTemperature).toEqual([{ timestamp, value: 28 }]);
+  expect(values.significantWaveHeight).toEqual([{ timestamp, value: 1.2 }]);
+  expect(mockGet).toHaveBeenNthCalledWith(2, SOFAR_SENSOR_DATA_URL, {
+    params: {
+      spotterId: sensorId,
+      token,
+      startDate: '2024-08-30T00:00:00.000Z',
+      endDate: '2024-08-31T00:00:00.000Z',
+    },
+  });
 });
 
-test('it process Sofar Hindcast API for wind-wave data', async () => {
-  jest.setTimeout(30000);
-  const now = new Date();
-  const yesterdayDate = new Date(now);
-  yesterdayDate.setDate(now.getDate() - 1);
-  const today = now.toISOString();
-  const yesterday = yesterdayDate.toISOString();
-
-  const response = await sofarHindcast(
-    SofarModels.Wave,
-    sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
-    -3.5976336810301888,
-    -178.0000002552476,
-    yesterday,
-    today,
-  );
-
-  const values = response?.values[0] as ValueWithTimestamp;
-
-  expect(new Date(values?.timestamp).getTime()).toBeLessThanOrEqual(
-    now.getTime(),
-  );
+test('It extracts the requested wind-wave hindcast response.', async () => {
+  const hindcast = { values: [{ timestamp, value: 1.2 }] };
+  mockGet.mockResolvedValueOnce({ data: { hindcastVariables: [hindcast] } });
+  expect(
+    await sofarHindcast(
+      SofarModels.Wave,
+      sofarVariableIDs[SofarModels.Wave].significantWaveHeight,
+      1,
+      2,
+      '2024-08-30T00:00:00.000Z',
+      '2024-08-31T00:00:00.000Z',
+    ),
+  ).toEqual(hindcast);
 });
 
-test('it process Sofar Wave Date API for surface temperature', async () => {
-  jest.setTimeout(30000);
-  // Fixed historical window — rolling "yesterday→today" flakes when the
-  // spotter has a data gap. Same spotter/date as getSpotterData coverage.
-  const start = new Date('2020-09-02T00:00:00.000Z').toISOString();
-  const end = new Date('2020-09-03T00:00:00.000Z').toISOString();
+test.each([true, false])(
+  'It accepts wave data with a nested API envelope: %s.',
+  async (nested) => {
+    const waveData = {
+      spotterId: sensorId,
+      waves: [{ timestamp, significantWaveHeight: 1.2 }],
+    };
+    mockGet.mockResolvedValueOnce({
+      data: nested ? { data: waveData } : waveData,
+    });
+    expect(
+      await sofarWaveData(
+        sensorId,
+        token,
+        '2024-08-30T00:00:00.000Z',
+        '2024-08-31T00:00:00.000Z',
+      ),
+    ).toEqual({ data: waveData });
+    expect(mockGet).toHaveBeenCalledWith(SOFAR_WAVE_DATA_URL, {
+      params: {
+        spotterId: sensorId,
+        token,
+        startDate: '2024-08-30T00:00:00.000Z',
+        endDate: '2024-08-31T00:00:00.000Z',
+        limit: 500,
+        includeSurfaceTempData: true,
+        includeWindData: true,
+        includeBarometerData: true,
+      },
+    });
+  },
+);
 
-  const response = await sofarWaveData(
-    'SPOT-300434063450120',
-    process.env.SOFAR_API_TOKEN,
-    start,
-    end,
-  );
-
-  expect(response).toBeDefined();
-  expect(response?.data).toBeDefined();
-  expect(response?.data.waves).toBeDefined();
-  expect(Array.isArray(response?.data.waves)).toBe(true);
-  expect(response?.data.waves.length).toBeGreaterThan(0);
+test('It returns no hindcast readings when the API has a data gap.', async () => {
+  mockGet.mockResolvedValueOnce({
+    data: { hindcastVariables: [{ values: [] }] },
+  });
+  expect(
+    await getSofarHindcastData(
+      'model',
+      'variable',
+      1,
+      2,
+      new Date('2024-08-31T00:00:00.000Z'),
+    ),
+  ).toEqual([]);
 });
