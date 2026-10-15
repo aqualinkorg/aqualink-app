@@ -186,6 +186,7 @@ export interface DailyData {
   waveMeanDirection: number;
   waveMeanPeriod: number;
 
+  dailyAlertLevel?: number;
   weeklyAlertLevel?: number;
 }
 
@@ -401,13 +402,24 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  date: string | null;
 }
+
+/**
+ * `date` (YYYY-MM-DD) loads every site's data as it was on that day, `null` loads the latest data.
+ * Omitting the argument keeps whatever list is already loaded.
+ */
+export type SitesRequestArgs = { date: string | null } | undefined;
 
 export interface SitesListState {
   list?: Site[];
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
+  /** The day the loaded list describes, or `null` for the latest data. */
+  date: string | null;
+  /** The day of the most recent request, used to drop responses that arrive out of order. */
+  requestedDate: string | null;
 }
 
 export interface SelectedSiteState {

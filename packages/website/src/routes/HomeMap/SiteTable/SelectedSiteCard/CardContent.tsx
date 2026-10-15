@@ -14,11 +14,14 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import { isNumber } from 'lodash';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { Site } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { formatNumber } from 'helpers/numberUtils';
+import { siteLinkForDay } from 'helpers/historicalDay';
+import { sitesListDateSelector } from 'store/Sites/sitesListSlice';
 import Chart from 'common/Chart';
 import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
 import Chip from 'common/Chip';
@@ -117,6 +120,7 @@ function SelectedSiteCardContent({
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
   const location = useLocation();
+  const historicalDay = useSelector(sitesListDateSelector);
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const {
     bottomTemperature,
@@ -208,7 +212,7 @@ function SelectedSiteCardContent({
             >
               {site && imageUrl && (
                 <Link
-                  to={`/sites/${site.id}`}
+                  to={siteLinkForDay(site.id, historicalDay)}
                   state={{ from: location.pathname }}
                 >
                   <CardMedia
@@ -259,7 +263,7 @@ function SelectedSiteCardContent({
                       <Chip
                         live
                         liveText="LIVE VIDEO"
-                        to={`/sites/${site.id}`}
+                        to={siteLinkForDay(site.id, historicalDay)}
                         state={{ from: location.pathname }}
                         width={80}
                       />
@@ -268,7 +272,7 @@ function SelectedSiteCardContent({
                       <Button
                         className={classes.exploreButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        to={siteLinkForDay(site.id, historicalDay)}
                         state={{ from: location.pathname }}
                         onClick={onExploreButtonClick}
                         size="small"
@@ -315,7 +319,7 @@ function SelectedSiteCardContent({
                   <Chip
                     live
                     liveText="LIVE VIDEO"
-                    to={`/sites/${site.id}`}
+                    to={siteLinkForDay(site.id, historicalDay)}
                     state={{ from: location.pathname }}
                     width={80}
                   />
