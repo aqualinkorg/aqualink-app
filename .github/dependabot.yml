@@ -6,6 +6,11 @@ updates:
       interval: monthly
     groups:
       minor-and-patch:
+        applies-to: version-updates
         update-types:
           - minor
           - patch
+      security:
+        applies-to: security-updates
+        patterns:
+          - "*"
