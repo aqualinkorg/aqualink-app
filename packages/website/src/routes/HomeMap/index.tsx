@@ -15,6 +15,7 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import { useDrawerScrollGuard } from 'hooks/useDrawerScrollGuard';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -86,6 +87,7 @@ function Homepage({ classes }: HomepageProps) {
   }, [dispatch, initialSiteId, siteOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const drawerContentRef = useDrawerScrollGuard();
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
@@ -144,7 +146,11 @@ function Homepage({ classes }: HomepageProps) {
               onChange={setDrawerOpen}
               open={isDrawerOpen}
             >
-              <div role="presentation" onClick={toggleDrawer}>
+              <div
+                ref={drawerContentRef}
+                role="presentation"
+                onClick={toggleDrawer}
+              >
                 <SiteTable map={mapInstance} isDrawerOpen={isDrawerOpen} />
               </div>
             </SwipeableBottomSheet>
