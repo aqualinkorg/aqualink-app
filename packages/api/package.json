@@ -140,7 +140,7 @@
     "@types/unist": "^3.0.3",
     "faker": "^4.1.0",
     "firebase-functions": "^6.2.0",
-    "glob": "^7.1.6",
+    "glob": "^13.0.6",
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "rimraf": "^3.0.2",
