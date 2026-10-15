@@ -95,7 +95,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "firebase-admin": "^13.0.2",
-    "geo-tz": "^6.0.0",
+    "geo-tz": "^8.1.10",
     "geojson": "^0.5.0",
     "geotiff": "^1.0.4",
     "hashids": "^2.2.1",
