@@ -41,6 +41,7 @@ describe('Popup', () => {
 
   it('should render with given state from Redux store', () => {
     const store = mockStore({
+      sitesList: { list: [], date: null, requestedDate: null, loading: false },
       homepage: {
         siteOnMap: mockSite,
       },
@@ -55,6 +56,7 @@ describe('Popup', () => {
 
   it('opens the popup when the site is selected and reopens it after flyToBounds moveend', () => {
     const store = mockStore({
+      sitesList: { list: [], date: null, requestedDate: null, loading: false },
       homepage: {
         siteOnMap: { ...mockSite, displayLng: 12.5 },
       },
@@ -93,6 +95,7 @@ describe('Popup', () => {
 
   it('does not auto-open when autoOpen is false', () => {
     const store = mockStore({
+      sitesList: { list: [], date: null, requestedDate: null, loading: false },
       homepage: {
         siteOnMap: mockSite,
       },

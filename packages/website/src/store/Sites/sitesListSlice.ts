@@ -21,6 +21,7 @@ import type {
   PatchSiteFiltersPayload,
   SiteFilters,
   SitesListState,
+  SitesRequestArgs,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
 } from './types';
@@ -31,17 +32,20 @@ const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
   filters: {},
+  date: null,
+  requestedDate: null,
 };
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestArgs,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (arg, { getState, rejectWithValue }) => {
+    const date = arg ? arg.date : getState().sitesList.requestedDate;
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(date ?? undefined);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,17 +53,20 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        date,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, requestedDate },
       } = getState();
-      return !list;
+      // Callers that don't care about the date (search, sites list) reuse any loaded list
+      if (!arg) return !list;
+      return !list || arg.date !== requestedDate;
     },
   },
 );
@@ -103,25 +110,38 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
+    builder.addCase(sitesRequest.fulfilled, (state, action) => {
+      // A newer request for another date is in flight, this response is stale
+      if (action.payload.date !== state.requestedDate) return state;
+      return {
         ...state,
         list: action.payload.list,
+        date: action.payload.date,
         loading: false,
-      }),
-    );
+      };
+    });
 
-    builder.addCase(sitesRequest.rejected, (state, action) => ({
-      ...state,
-      error: action.error.message
-        ? action.error.message
-        : action.error.toString(),
-      loading: false,
-    }));
+    builder.addCase(sitesRequest.rejected, (state, action) => {
+      const requestDate = action.meta.arg
+        ? action.meta.arg.date
+        : state.requestedDate;
+      if (requestDate !== state.requestedDate) return state;
+      return {
+        ...state,
+        // Fall back to the date of the list that is still displayed
+        requestedDate: state.list ? state.date : state.requestedDate,
+        error: action.error.message
+          ? action.error.message
+          : action.error.toString(),
+        loading: false,
+      };
+    });
 
-    builder.addCase(sitesRequest.pending, (state) => ({
+    builder.addCase(sitesRequest.pending, (state, action) => ({
       ...state,
+      requestedDate: action.meta.arg
+        ? action.meta.arg.date
+        : state.requestedDate,
       loading: true,
       error: null,
     }));
@@ -174,6 +194,10 @@ export const sitesListFiltersSelector = (
 export const sitesListLoadingSelector = (
   state: RootState,
 ): SitesListState['loading'] => state.sitesList.loading;
+
+export const sitesListDateSelector = (
+  state: RootState,
+): SitesListState['date'] => state.sitesList.date;
 
 export const sitesListErrorSelector = (
   state: RootState,

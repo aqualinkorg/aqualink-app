@@ -23,6 +23,8 @@ import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { maxLengths } from 'constants/names';
 import { formatNumber } from 'helpers/numberUtils';
+import { siteLinkForDay } from 'helpers/historicalDay';
+import { sitesListDateSelector } from 'store/Sites/sitesListSlice';
 import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
@@ -30,6 +32,7 @@ import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 function Popup({ site, classes, autoOpen = true }: PopupProps) {
   const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
+  const historicalDay = useSelector(sitesListDateSelector);
   const popupRef = useRef<L.Popup>(null);
   const location = useLocation();
   const { name, region } = getSiteNameAndRegion(site);
@@ -156,7 +159,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                to={siteLinkForDay(site.id, historicalDay)}
                 state={{ from: location.pathname }}
               >
                 <Button
