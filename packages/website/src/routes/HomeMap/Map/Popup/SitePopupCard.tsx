@@ -10,11 +10,14 @@ import {
   Typography,
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import type { Site } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { maxLengths } from 'constants/names';
 import { formatNumber } from 'helpers/numberUtils';
+import { siteLinkForDay } from 'helpers/historicalDay';
+import { sitesListDateSelector } from 'store/Sites/sitesListSlice';
 import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
@@ -54,6 +57,7 @@ function SitePopupCard({
   classes: SitePopupCardClasses;
 }) {
   const location = useLocation();
+  const historicalDay = useSelector(sitesListDateSelector);
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
   const { dhw, satelliteTemperature } = site.collectionData || {};
@@ -138,7 +142,7 @@ function SitePopupCard({
           <Grid item>
             <Link
               style={{ color: 'inherit', textDecoration: 'none' }}
-              to={`/sites/${site.id}`}
+              to={siteLinkForDay(site.id, historicalDay)}
               state={{ from: location.pathname }}
             >
               <Button

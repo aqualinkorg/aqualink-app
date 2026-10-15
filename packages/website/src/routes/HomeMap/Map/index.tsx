@@ -36,7 +36,10 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
-import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
+import {
+  sitesListLoadingSelector,
+  sitesListSelector,
+} from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
   siteOnMapSelector,
@@ -107,7 +110,9 @@ function HomepageMap({
   const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
     useState<string>();
   const [mapReady, setMapReady] = useState(false);
-  const loading = useSelector(sitesListLoadingSelector);
+  const sitesList = useSelector(sitesListSelector);
+  // Keep the map mounted (and its position) while the list is refetched for another date
+  const loading = useSelector(sitesListLoadingSelector) && !sitesList;
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const mapRef = useRef<MapRef>(null);

@@ -297,6 +297,46 @@ export const siteTests = () => {
       expect(rsp.body.length).toBe(2);
     });
 
+    it('GET / returns collection data for a past date from daily_data', async () => {
+      const daysAgo = 3;
+      const date = DateTime.now()
+        .minus({ days: daysAgo })
+        .toISODate() as string;
+      const rsp = await request(app.getHttpServer()).get('/sites').query({
+        date,
+      });
+
+      expect(rsp.status).toBe(200);
+      const california = rsp.body.find(
+        (site: Site) => site.name === californiaSite.name,
+      );
+      const expected = californiaDailyData[daysAgo];
+      expect(california.collectionData).toMatchObject({
+        satelliteTemperature: expected.satelliteTemperature,
+        dhw: (expected.degreeHeatingDays as number) / 7,
+        tempAlert: expected.dailyAlertLevel,
+      });
+    });
+
+    it('GET / returns no collection data for a date without daily_data', async () => {
+      const rsp = await request(app.getHttpServer()).get('/sites').query({
+        date: '2000-01-01',
+      });
+
+      expect(rsp.status).toBe(200);
+      rsp.body.forEach((site: Site) => {
+        expect(site.collectionData ?? {}).toEqual({});
+      });
+    });
+
+    it('GET / rejects a malformed date', async () => {
+      const rsp = await request(app.getHttpServer()).get('/sites').query({
+        date: '2024-13-40',
+      });
+
+      expect(rsp.status).toBe(400);
+    });
+
     it('GET / filter sites by adminId', async () => {
       const rsp = await request(app.getHttpServer()).get('/sites').query({
         adminId: siteManagerUserMock.id,

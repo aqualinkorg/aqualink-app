@@ -11,7 +11,13 @@ import {
   siteErrorSelector,
   siteLoadingSelector,
 } from 'store/Sites/selectedSiteSlice';
+import {
+  sitesListDateSelector,
+  sitesListSelector,
+} from 'store/Sites/sitesListSlice';
 import { surveyListSelector } from 'store/Survey/surveyListSlice';
+import { formatDay, siteLinkForDay } from 'helpers/historicalDay';
+import { useHistoricalDailyData } from 'hooks/useHistoricalDailyData';
 import { sortByDate } from 'helpers/dates';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import SelectedSiteCardContent from './CardContent';
@@ -41,6 +47,27 @@ function SelectedSiteCard() {
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
+  const sitesList = useSelector(sitesListSelector);
+  const historicalDay = useSelector(sitesListDateSelector);
+
+  // The card chart shows the month leading up to the selected day
+  const historicalDailyData = useHistoricalDailyData(
+    site?.id,
+    historicalDay,
+    30,
+  );
+
+  // On a past day, show the values the map shows for that day instead of the latest ones
+  const displayedSite =
+    site && historicalDay
+      ? {
+          ...site,
+          collectionData:
+            sitesList?.find((item) => item.id === site.id)?.collectionData ||
+            {},
+          dailyData: historicalDailyData ?? [],
+        }
+      : site;
 
   const isFeatured = (site?.id || '').toString() === featuredSiteId;
 
@@ -70,8 +97,9 @@ function SelectedSiteCard() {
           {site && (
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
+              {historicalDay && ` · ${formatDay(historicalDay)}`}
               {!hasMedia && (
-                <Link to={`/sites/${site?.id}`}>
+                <Link to={siteLinkForDay(site.id, historicalDay)}>
                   <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}
@@ -82,8 +110,8 @@ function SelectedSiteCard() {
 
       <Card>
         <SelectedSiteCardContent
-          site={site}
-          loading={loading}
+          site={displayedSite}
+          loading={loading || (!!historicalDay && !historicalDailyData)}
           error={error}
           imageUrl={
             featuredSurveyMedia?.thumbnailUrl || featuredSurveyMedia?.url

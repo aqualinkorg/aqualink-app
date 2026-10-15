@@ -15,9 +15,12 @@ import type { HomepageMapHandle } from 'helpers/homepageMapHandle';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
+import { isPastOrTodayDay } from 'helpers/historicalDay';
+import { useQueryParam } from 'hooks/useQueryParams';
 import HomepageNavBar from 'common/NavBar';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
+import HistoricalDateControl from './HistoricalDateControl';
 
 enum QueryParamKeys {
   SITE_ID = 'site_id',
@@ -74,9 +77,15 @@ function Homepage({ classes }: HomepageProps) {
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
+  // `?date=YYYY-MM-DD` shows every site as it was on that day
+  const [historicalDay, setHistoricalDay] = useQueryParam(
+    'date',
+    isPastOrTodayDay,
+  );
+
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest({ date: historicalDay ?? null }));
+  }, [dispatch, historicalDay]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -121,6 +130,10 @@ function Homepage({ classes }: HomepageProps) {
             xs={12}
             md={showSiteTable ? 6 : 12}
           >
+            <HistoricalDateControl
+              value={historicalDay}
+              onChange={setHistoricalDay}
+            />
             <HomepageMap
               onMapLoad={setMapInstance}
               setShowSiteTable={setShowSiteTable}
@@ -168,6 +181,7 @@ const styles = () =>
     map: {
       display: 'flex',
       zIndex: 0,
+      position: 'relative',
     },
     siteTable: {
       display: 'flex',
