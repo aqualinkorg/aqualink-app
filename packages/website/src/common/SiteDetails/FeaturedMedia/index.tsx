@@ -129,7 +129,7 @@ const styles = (theme: Theme) =>
     },
     noVideoCardHeaderText: {
       color: 'white',
-      [theme.breakpoints.between('md', 1350)]: {
+      [theme.breakpoints.between('md', 'lg')]: {
         fontSize: 15,
       },
     },

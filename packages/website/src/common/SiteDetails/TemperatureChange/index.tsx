@@ -108,7 +108,7 @@ const styles = (theme: Theme) =>
       height: '100%',
       display: 'flex',
       flexDirection: 'column',
-      backgroundColor: colors.backgroundGray,
+      backgroundColor: colors.paper,
     },
     content: {
       display: 'flex',

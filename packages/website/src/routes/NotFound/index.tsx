@@ -20,7 +20,7 @@ const styles = () =>
   createStyles({
     background: {
       backgroundImage: `url("${NotFoundBG}")`,
-      height: '100vh',
+      minHeight: 'var(--viewport-height)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

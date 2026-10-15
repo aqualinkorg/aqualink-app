@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   Typography,
 } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import { grey } from '@mui/material/colors';
 import { DateTime } from 'luxon-extensions';

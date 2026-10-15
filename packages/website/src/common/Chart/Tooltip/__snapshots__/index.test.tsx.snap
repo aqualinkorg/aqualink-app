@@ -18,7 +18,7 @@ exports[`renders as expected 1`] = `
             class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-16xl4zq-MuiTypography-root"
           >
             <mock-typography
-              color="textPrimary"
+              color="inherit"
               style="white-space: nowrap;"
               variant="caption"
             >

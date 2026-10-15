@@ -1,11 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
-import {
-  Button,
-  Grid,
-  Typography,
-  Checkbox,
-  FormControlLabel,
-} from '@mui/material';
+import { Grid, Typography, Checkbox, FormControlLabel } from '@mui/material';
+import Button from 'common/Button';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';

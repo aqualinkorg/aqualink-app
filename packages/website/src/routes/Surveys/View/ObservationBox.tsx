@@ -56,15 +56,15 @@ function ObservationBox({
           <Grid container item direction="column" spacing={4}>
             <Grid container item direction="column" spacing={1}>
               <Grid item>
-                <Typography color="textPrimary" variant="subtitle1">
+                <Typography color="inherit" variant="subtitle1">
                   SATELLITE OBSERVATION
                 </Typography>
               </Grid>
               <Grid container item direction="column">
-                <Typography color="textPrimary" variant="overline">
+                <Typography color="inherit" variant="overline">
                   SURFACE TEMP
                 </Typography>
-                <Typography color="textPrimary" variant="h4">
+                <Typography color="inherit" variant="h4">
                   {`${formatNumber(satelliteTemperature, 1)} °C`}
                 </Typography>
               </Grid>
@@ -72,24 +72,24 @@ function ObservationBox({
             {some([hoboBottom, hoboSurface, spotterBottom, spotterTop]) && (
               <Grid container item direction="column" spacing={1}>
                 <Grid item>
-                  <Typography color="textPrimary" variant="subtitle1">
+                  <Typography color="inherit" variant="subtitle1">
                     SENSOR OBSERVATION
                   </Typography>
                 </Grid>
                 <Grid container item spacing={2}>
                   <Grid container item direction="column" xs={6}>
-                    <Typography color="textPrimary" variant="overline">
+                    <Typography color="inherit" variant="overline">
                       TEMP AT 1m
                     </Typography>
-                    <Typography color="textPrimary" variant="h4">
+                    <Typography color="inherit" variant="h4">
                       {`${formatNumber(spotterTop || hoboSurface, 1)} °C`}
                     </Typography>
                   </Grid>
                   <Grid container item direction="column" xs={6}>
-                    <Typography color="textPrimary" variant="overline">
+                    <Typography color="inherit" variant="overline">
                       TEMP AT {depth ? `${depth}m` : 'DEPTH'}
                     </Typography>
-                    <Typography color="textPrimary" variant="h4">
+                    <Typography color="inherit" variant="h4">
                       {`${formatNumber(spotterBottom || hoboBottom, 1)} °C`}
                     </Typography>
                   </Grid>
@@ -106,7 +106,8 @@ function ObservationBox({
 const styles = () =>
   createStyles({
     outerDiv: {
-      backgroundColor: '#128cc0',
+      backgroundColor: 'var(--color-ocean)',
+      color: 'var(--color-onOcean)',
       borderRadius: '0.4rem',
       display: 'flex',
       padding: '1rem',

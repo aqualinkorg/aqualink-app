@@ -1,0 +1,35 @@
+.MuiButtonBase-root.MuiButton-root {
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+  &.MuiButton-containedPrimary:not(.Mui-disabled) {
+    background-color: var(--color-action);
+    color: var(--color-white);
+    &:hover {
+      background-color: #0d5f80;
+    }
+  }
+  &.MuiButton-outlinedPrimary:not(.Mui-disabled):hover {
+    background-color: rgba(var(--color-aqualink-rgb), 0.1);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      transform 160ms ease-out,
+      background-color 160ms ease-out;
+    &:active:not(.Mui-disabled) {
+      transform: scale(0.98);
+    }
+    .MuiButton-endIcon {
+      transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    &:focus-visible .MuiButton-endIcon {
+      transform: translateX(3px);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover:not(.Mui-disabled) .MuiButton-endIcon {
+        transform: translateX(3px);
+      }
+    }
+  }
+}

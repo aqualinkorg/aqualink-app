@@ -4,11 +4,11 @@ import {
   TextField,
   Theme,
   MenuItem,
-  Button,
   ButtonProps,
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';

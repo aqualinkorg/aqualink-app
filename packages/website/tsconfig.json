@@ -1,11 +1,7 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "src"
-  ],
-  "files": [
-    "src/custom.d.ts"
-  ],
+  "include": ["src"],
+  "files": ["src/custom.d.ts"],
   "compilerOptions": {
     "types": ["vitest/globals"],
     "noFallthroughCasesInSwitch": true,

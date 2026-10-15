@@ -4,7 +4,6 @@ import {
   AccordionDetails,
   AccordionProps,
   AccordionSummary,
-  Button,
   Checkbox,
   Dialog,
   DialogActions,
@@ -15,6 +14,7 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import Button from 'common/Button';
 import { createStyles, WithStyles, withStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import { sum } from 'lodash';

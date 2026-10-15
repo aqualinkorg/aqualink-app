@@ -1,12 +1,5 @@
-import {
-  Box,
-  Link,
-  Paper,
-  Theme,
-  Typography,
-  Skeleton,
-  Button,
-} from '@mui/material';
+import { Box, Link, Paper, Theme, Typography, Skeleton } from '@mui/material';
+import Button from 'common/Button';
 import { createStyles, WithStyles } from '@mui/styles';
 import { OpenInNew } from '@mui/icons-material';
 import withStyles from '@mui/styles/withStyles';
@@ -152,7 +145,7 @@ const styles = (theme: Theme) =>
       padding: 12,
       borderRadius: 8,
       border: '1px solid #E0E0E0',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
       },
     },

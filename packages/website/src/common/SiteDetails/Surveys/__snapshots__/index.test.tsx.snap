@@ -26,14 +26,14 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
     </mock-dialogcontent>
     <mock-dialogactions>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-14iezcd-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorSecondary css-xfth16-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
         No
       </button>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary css-1ishezr-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorPrimary css-1sx2eue-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
@@ -52,10 +52,10 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
       zindex="-1"
     />
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 MuiGrid-grid-lg-12 makeStyles-surveyWrapper-2 css-wdlm1q-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 MuiGrid-grid-lg-12 makeStyles-surveyWrapper-2 css-101d2vv-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-3 css-ku179n-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-3 css-1rtos9r-MuiGrid-root"
       >
         <mock-typography
           classname="makeStyles-title-3"
@@ -64,7 +64,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-md-12 MuiGrid-grid-lg-5 css-n47sv5-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-md-12 MuiGrid-grid-lg-5 css-1379vz8-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
@@ -86,13 +86,13 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
             >
               <div
-                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-14 MuiSelect-root css-r2nq11-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary makeStyles-selector-14 MuiSelect-root css-9i34u4-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-labelledby="survey-point survey-point"
-                  class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                  class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1xox9bl-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                   id="survey-point"
                   role="combobox"
                   tabindex="0"
@@ -109,7 +109,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                 />
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-vhc0qt-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
                   data-testid="ArrowDropDownIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -124,7 +124,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-md-12 MuiGrid-grid-lg-4 css-1a4r04v-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-md-12 MuiGrid-grid-lg-4 css-1pglba9-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
@@ -143,13 +143,13 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
             class="MuiFormControl-root makeStyles-formControl-6 css-1iw3t7y-MuiFormControl-root"
           >
             <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-7 MuiSelect-root css-qzew0s-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl makeStyles-selectedItem-7 MuiSelect-root css-4xxghs-MuiInputBase-root-MuiInput-root-MuiSelect-root"
             >
               <div
                 aria-expanded="false"
                 aria-haspopup="listbox"
                 aria-labelledby="survey-observation survey-observation"
-                class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-9 css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input makeStyles-textField-9 css-1xox9bl-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                 id="survey-observation"
                 role="combobox"
                 tabindex="0"
@@ -171,7 +171,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
               />
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-ug7h84-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-vhc0qt-MuiSvgIcon-root-MuiNativeSelect-root-MuiSelect-icon"
                 data-testid="ArrowDropDownIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -186,7 +186,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-12 css-fgj1s9-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-12 css-117m2bq-MuiGrid-root"
     >
       <div
         class="SurveyTimeline-root-21"
@@ -227,7 +227,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                 class="MuiTypography-root MuiTypography-body1 MuiTimelineContent-root MuiTimelineContent-positionRight makeStyles-surveyCardWrapper-25 css-1qq9j0n-MuiTypography-root-MuiTimelineContent-root"
               >
                 <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-14gemme-MuiPaper-root"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-xk5z28-MuiPaper-root"
                   style="--Paper-shadow: none;"
                 >
                   <div
@@ -235,7 +235,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                     style="height: 100%;"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-51 css-1ej0ikx-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-51 css-2zdehq-MuiGrid-root"
                     >
                       <a
                         data-discover="true"
@@ -249,13 +249,13 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                       </a>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-52 css-14c8q5g-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-52 css-1q87yqd-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-57 css-aksm9b-MuiGrid-root"
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-57 css-rbec10-MuiGrid-root"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-cxoi9y-MuiGrid-root"
                         >
                           <mock-typography
                             classname="makeStyles-cardFields-49"
@@ -271,10 +271,10 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-53 css-otecwo-MuiGrid-root"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-53 css-1cpf6b1-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
                             style="height: 80%;"
                           >
                             <mock-typography
@@ -292,7 +292,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-cxoi9y-MuiGrid-root"
                         >
                           <mock-typography
                             classname="makeStyles-cardFields-49"
@@ -308,10 +308,10 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-q4md4f-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-121mkti-MuiGrid-root"
                           >
                             <a
                               data-discover="true"
@@ -319,7 +319,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                               style="color: inherit; text-decoration: none;"
                             >
                               <button
-                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
+                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-11hg6ws-MuiButtonBase-root-MuiButton-root"
                                 tabindex="0"
                                 type="button"
                               >
@@ -340,13 +340,13 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
           lgup="true"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-24a33v-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyWrapper-71 css-ldi2p4-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyWrapper-71 css-b9er98-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 makeStyles-dateWrapper-62 css-tideur-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 makeStyles-dateWrapper-62 css-15c44of-MuiGrid-root"
               >
                 <mock-typography
                   classname="makeStyles-dates-63"
@@ -356,10 +356,10 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyCardWrapper-65 css-wcmnoq-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-surveyCardWrapper-65 css-24a33v-MuiGrid-root"
               >
                 <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-14gemme-MuiPaper-root"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-surveyCard-47 css-xk5z28-MuiPaper-root"
                   style="--Paper-shadow: none;"
                 >
                   <div
@@ -367,7 +367,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                     style="height: 100%;"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-51 css-1ej0ikx-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-cardImageWrapper-51 css-2zdehq-MuiGrid-root"
                     >
                       <a
                         data-discover="true"
@@ -381,13 +381,13 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                       </a>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-52 css-14c8q5g-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 makeStyles-infoWrapper-52 css-1q87yqd-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-57 css-aksm9b-MuiGrid-root"
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-info-57 css-rbec10-MuiGrid-root"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-cxoi9y-MuiGrid-root"
                         >
                           <mock-typography
                             classname="makeStyles-cardFields-49"
@@ -403,10 +403,10 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-53 css-otecwo-MuiGrid-root"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-commentsWrapper-53 css-1cpf6b1-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-z4k4cw-MuiGrid-root"
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-sgz297-MuiGrid-root"
                             style="height: 80%;"
                           >
                             <mock-typography
@@ -424,7 +424,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1rc1zen-MuiGrid-root"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-cxoi9y-MuiGrid-root"
                         >
                           <mock-typography
                             classname="makeStyles-cardFields-49"
@@ -440,10 +440,10 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-m9pgna-MuiGrid-root"
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-q4md4f-MuiGrid-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-8y04zb-MuiGrid-root"
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-121mkti-MuiGrid-root"
                           >
                             <a
                               data-discover="true"
@@ -451,7 +451,7 @@ exports[`Surveys > should render with given state from Redux store 1`] = `
                               style="color: inherit; text-decoration: none;"
                             >
                               <button
-                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-1vo8bh3-MuiButtonBase-root-MuiButton-root"
+                                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-11hg6ws-MuiButtonBase-root-MuiButton-root"
                                 tabindex="0"
                                 type="button"
                               >

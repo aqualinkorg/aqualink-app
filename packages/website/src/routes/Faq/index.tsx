@@ -518,17 +518,6 @@ const styles = () =>
       marginBottom: '1rem',
       fontWeight: 'bold',
     },
-    root: {
-      top: 10,
-      height: '100%',
-    },
-    map: {
-      height: '100%',
-    },
-    siteTable: {
-      height: 'calc(100vh - 64px)',
-      overflowY: 'auto',
-    },
     videoWrapper: {
       position: 'relative',
       paddingTop: 'calc(100% / 16 * 9)',

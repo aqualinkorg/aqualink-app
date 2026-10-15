@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Typography, Box, Button, useTheme } from '@mui/material';
+import { Grid, Typography, Box, useTheme } from '@mui/material';
+import Button from 'common/Button';
 import { useLocation, Link } from 'react-router-dom';
 
 import NavBar from '../NavBar';

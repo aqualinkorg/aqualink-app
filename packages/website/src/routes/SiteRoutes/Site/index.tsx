@@ -266,7 +266,7 @@ const styles = () =>
     noData: {
       display: 'flex',
       alignItems: 'center',
-      height: '80vh',
+      minHeight: 'calc(var(--viewport-height) * 0.8)',
     },
     noDataWrapper: {
       height: '100%',

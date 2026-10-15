@@ -64,6 +64,6 @@ Runs the app in development mode and scans the application for performance issue
 We use Cloudflare Worker to server render site's meta in header tags for SEO purposes, but the site is still running as a single-page-application(SPA). This is how it works:
 
 - On first page load, Cloudflare Worker will return all static assets, with meta header injected;
-- On user's subsequent navigation, site will behave as regular SPA. 
+- On user's subsequent navigation, site will behave as regular SPA.
 
 To test server render, run `yarn start:worker`. This will also run `yarn build` first to have static assets ready to be used by worker.

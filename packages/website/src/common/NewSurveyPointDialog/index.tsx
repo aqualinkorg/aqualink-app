@@ -6,11 +6,11 @@ import {
   DialogTitle,
   TextField,
   Typography,
-  Button,
   TextFieldProps,
   Theme,
   IconButton,
 } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import { grey } from '@mui/material/colors';
 import CloseIcon from '@mui/icons-material/Close';

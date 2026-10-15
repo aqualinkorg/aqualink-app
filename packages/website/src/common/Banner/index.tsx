@@ -30,7 +30,7 @@ const styles = (theme: Theme) =>
       alignItems: 'center',
     },
     text: {
-      color: theme.palette.text.primary,
+      color: theme.palette.common.white,
     },
   });
 

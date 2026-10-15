@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Theme,
   Typography,
   Table,
@@ -11,6 +10,7 @@ import {
   TableRow,
   TypographyProps,
 } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import { grey } from '@mui/material/colors';
 import { startCase } from 'lodash';

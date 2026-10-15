@@ -1,0 +1,338 @@
+@use '../../styles/responsive';
+
+@mixin scroll-morph($name) {
+  animation: $name 1s linear both paused;
+  animation-delay: calc(var(--navbar-progress, 0) * -1s);
+}
+
+.navbar-slot {
+  height: responsive.$nav-height;
+  flex-shrink: 0;
+  &--search {
+    @include responsive.down(sm) {
+      height: responsive.$map-nav-height-mobile;
+    }
+  }
+}
+
+.navbar.MuiAppBar-root {
+  z-index: var(--z-index-appbar);
+  height: responsive.$nav-height;
+  background-color: var(--color-ocean);
+  color: var(--color-white);
+  box-shadow: none;
+
+  .MuiIconButton-root,
+  a:not(.MuiButton-root) {
+    &:focus-visible {
+      outline: 2px solid var(--color-aqualink);
+      outline-offset: 4px;
+    }
+  }
+
+  &.navbar--search {
+    @include responsive.down(sm) {
+      height: responsive.$map-nav-height-mobile;
+    }
+  }
+
+  .navbar__toolbar {
+    @include responsive.content-container;
+  }
+
+  .navbar__content,
+  .navbar__brand,
+  .navbar__actions,
+  .navbar__account {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar__content {
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .navbar__brand {
+    gap: 8px;
+    @include responsive.up(lg) {
+      min-width: 176px;
+    }
+  }
+
+  .navbar__menu-toggle {
+    margin-left: -8px;
+    &--mobile {
+      @include responsive.up(lg) {
+        display: none;
+      }
+    }
+  }
+
+  .navbar__logo {
+    display: flex;
+    flex-shrink: 0;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--color-white);
+    text-decoration: none;
+    span {
+      color: var(--color-sky);
+    }
+  }
+
+  .route-buttons {
+    margin-inline: auto;
+    @include responsive.down(lg) {
+      display: none;
+    }
+  }
+
+  .navbar__desktop-search {
+    width: min(32%, 400px);
+    margin-left: auto;
+  }
+
+  .navbar__mobile-search {
+    width: 100%;
+    @include responsive.up(sm) {
+      display: none;
+    }
+  }
+
+  .navbar__actions {
+    flex-wrap: nowrap;
+    gap: 24px;
+    @include responsive.down(lg) {
+      margin-left: auto;
+      gap: 12px;
+    }
+  }
+
+  .navbar__language {
+    color: var(--color-white);
+  }
+
+  .navbar__sign-in,
+  .navbar__register {
+    color: var(--color-white);
+    font-weight: 400;
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .navbar__sign-in {
+    font-size: 14px;
+  }
+
+  .navbar__register {
+    height: 56px;
+    padding-inline: 24px;
+    font-size: 16px;
+    .MuiButton-endIcon {
+      margin-left: 20px;
+    }
+  }
+
+  .navbar__account-toggle {
+    padding: 8px;
+    margin-left: 4px;
+    color: var(--color-white);
+  }
+
+  .navbar__user-name {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include responsive.down(sm) {
+    .navbar__content {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .navbar__logo {
+      font-size: 24px;
+    }
+    .navbar__desktop-search,
+    .navbar__register {
+      display: none;
+    }
+    .navbar__actions {
+      gap: 4px;
+    }
+    .navbar__user-name {
+      max-width: 80px;
+    }
+  }
+
+  &.navbar--compact {
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    isolation: isolate;
+    @include scroll-morph(navbar-pill-position);
+    width: max-content;
+    max-width: calc(100% - 24px);
+    height: 52px;
+    border-radius: 999px;
+    background-color: transparent;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      border-radius: inherit;
+      background-color: rgba(var(--color-ocean-rgb), 0.88);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      backdrop-filter: blur(20px) saturate(140%);
+      border: 1px solid rgba(var(--color-white-rgb), 0.18);
+      box-shadow:
+        inset 0 1px 0 rgba(var(--color-white-rgb), 0.08),
+        0 2px 4px rgba(var(--color-ocean-rgb), 0.08),
+        0 8px 24px rgba(var(--color-ocean-rgb), 0.18);
+      transform-origin: center;
+      @include scroll-morph(navbar-pill-shell);
+
+      @supports (backdrop-filter: blur(20px)) or
+        (-webkit-backdrop-filter: blur(20px)) {
+        background-color: rgba(var(--color-ocean-rgb), 0.78);
+      }
+    }
+
+    .navbar__toolbar {
+      padding-inline: 12px;
+      height: 52px;
+      min-height: 52px;
+    }
+    .navbar__brand {
+      min-width: auto;
+      @include responsive.up(lg) {
+        display: none;
+      }
+    }
+    .navbar__logo,
+    .navbar__language,
+    .navbar__desktop-search,
+    .navbar__mobile-search,
+    .navbar__account,
+    .navbar__sign-in {
+      display: none;
+    }
+    .navbar__content {
+      flex-wrap: nowrap;
+      gap: 12px;
+    }
+    .route-buttons {
+      margin: 0;
+      gap: 4px;
+
+      .MuiButton-root {
+        min-height: 44px;
+        padding-inline: 12px;
+        border-radius: 999px;
+        font-weight: 500;
+        &:hover {
+          background-color: rgba(var(--color-white-rgb), 0.1);
+        }
+      }
+    }
+    .navbar__actions {
+      gap: 0;
+      margin: 0;
+    }
+    .navbar__register {
+      display: inline-flex;
+      height: 44px;
+      min-height: 44px;
+      padding-inline: 14px;
+      font-size: 14px;
+      border-radius: 999px;
+      .MuiButton-endIcon {
+        margin-left: 8px;
+      }
+    }
+    .navbar__menu-toggle {
+      margin: 0;
+      width: 44px;
+      height: 44px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      &,
+      &::before,
+      .navbar__content {
+        animation: none;
+      }
+    }
+    @include responsive.down(sm) {
+      top: 12px;
+      width: calc(100% - 24px);
+      height: 52px;
+      .navbar__toolbar {
+        min-height: 52px;
+        padding-inline: 4px;
+      }
+      .navbar__content {
+        gap: 8px;
+      }
+    }
+  }
+}
+
+@keyframes navbar-pill-position {
+  0% {
+    transform: translate(-50%, -8px);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes navbar-pill-shell {
+  0% {
+    transform: scale(1.045, 0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.navbar-account-menu.MuiPaper-root {
+  margin-top: 8px;
+  border: 1px solid rgba(var(--color-black-rgb), 0.12);
+  max-width: 275px;
+
+  .navbar-account-menu__list {
+    padding: 4px 0;
+  }
+
+  .MuiDivider-root {
+    margin: 4px 0;
+  }
+
+  .MuiMenuItem-root {
+    margin: 0;
+    display: flex;
+    gap: 8px;
+    min-height: auto;
+    font-size: 14px;
+    color: var(--color-text);
+    overflow-wrap: break-word;
+    white-space: normal;
+    text-decoration: none;
+    .MuiSvgIcon-root {
+      flex-shrink: 0;
+    }
+    &:hover {
+      background-color: rgba(var(--color-aqualink-rgb), 0.8);
+      color: var(--color-mist);
+    }
+  }
+}

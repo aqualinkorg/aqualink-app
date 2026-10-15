@@ -8,7 +8,7 @@ exports[`renders as expected 1`] = `
     open="true"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-filledSuccess MuiAlert-filled makeStyles-alert-2 css-d55hu6-MuiPaper-root-MuiAlert-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-filledSuccess MuiAlert-filled makeStyles-alert-2 css-1j91j13-MuiPaper-root-MuiAlert-root"
       role="alert"
       style="--Paper-shadow: none;"
     >
@@ -37,7 +37,7 @@ exports[`renders as expected 1`] = `
       >
         <button
           aria-label="Close"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-ww7hxw-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeSmall css-1797oyk-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           title="Close"
           type="button"

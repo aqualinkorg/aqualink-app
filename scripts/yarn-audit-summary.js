@@ -3,8 +3,8 @@
 
 const { spawnSync } = require('node:child_process');
 
-// Advisories that cannot be fixed without a major framework upgrade and whose
-// impact does not apply to this codebase. Each entry must document why.
+// Advisories whose impact does not apply to this codebase and which cannot
+// currently be fixed compatibly. Each entry must document why.
 const IGNORED_ADVISORY_IDS = [
   // GHSA-qwww-vcr4-c8h2: react-router RSC CSRF bypass.
   // The advisory explicitly states this only affects the *unstable* RSC APIs,
@@ -70,6 +70,28 @@ const IGNORED_ADVISORY_IDS = [
   'GHSA-vcc3-ghjq-m6fr',
 ];
 
+// GHSA-86w9-cpqp-85rv / CVE-2026-85393 affects forge RSA signature verification.
+// No patched release is listed: https://github.com/advisories/GHSA-86w9-cpqp-85rv
+// The locked firebase-admin uses forge only for privateKeyFromPem; google-p12-pem
+// uses it only to decode PKCS#12 credentials and export private keys. Firebase
+// JWT verification (jsonwebtoken/jwa) and Google auth use Node's crypto instead.
+// Limit this exception to these reviewed paths; new consumers must be reviewed.
+// Remove it when a patched release is available, and revisit on dependency changes.
+const FORGE_CREDENTIAL_PATHS = [
+  'api>firebase-admin>node-forge',
+  'api>@google-cloud/storage>google-auth-library>gtoken>google-p12-pem>node-forge',
+];
+
+function isIgnoredAdvisory(data) {
+  const advisory = data?.advisory;
+  return (
+    IGNORED_ADVISORY_IDS.includes(advisory?.github_advisory_id) ||
+    (advisory?.github_advisory_id === 'GHSA-86w9-cpqp-85rv' &&
+      advisory.module_name === 'node-forge' &&
+      FORGE_CREDENTIAL_PATHS.includes(data.resolution?.path))
+  );
+}
+
 function getAuditOptions() {
   return {
     level: 'moderate',
@@ -90,10 +112,46 @@ function parseAuditLines(lines) {
     .filter(Boolean)
     .filter((entry) => entry.type === 'auditAdvisory')
     .map((entry) => entry.data)
-    .filter((data) => {
-      const ghsaId = data?.advisory?.github_advisory_id;
-      return !ghsaId || !IGNORED_ADVISORY_IDS.includes(ghsaId);
-    });
+    .filter((data) => !isIgnoredAdvisory(data));
+}
+
+function getAuditResultError(result, lines) {
+  if (result.error) return result.error.message;
+  // Yarn uses a severity bitmask (0-31) as its audit exit code. Nonzero is
+  // expected even when every reported advisory has a documented exception.
+  if (
+    result.signal ||
+    !Number.isInteger(result.status) ||
+    result.status < 0 ||
+    result.status > 31
+  ) {
+    return 'Yarn audit did not complete normally.';
+  }
+
+  let entries;
+  try {
+    entries = lines.map((line) => JSON.parse(line));
+  } catch {
+    return 'Failed to parse yarn audit output.';
+  }
+  if (entries.some((entry) => !entry || entry.type === 'error')) {
+    return 'Yarn audit returned an error.';
+  }
+  if (
+    entries.some(
+      (entry) => entry.type === 'auditAdvisory' && !entry.data?.advisory,
+    )
+  ) {
+    return 'Yarn audit returned an invalid advisory.';
+  }
+  if (
+    !entries.some(
+      (entry) => entry.type === 'auditSummary' && entry.data?.vulnerabilities,
+    )
+  ) {
+    return 'Yarn audit returned no summary; the security check is incomplete.';
+  }
+  return null;
 }
 
 function formatAuditFailureReport(lines) {
@@ -163,22 +221,15 @@ function run() {
     .map((line) => line.trim())
     .filter(Boolean);
 
-  let advisories = [];
-  try {
-    advisories = parseAuditLines(lines);
-  } catch (error) {
+  const auditError = getAuditResultError(result, lines);
+  if (auditError) {
     if (stdout) process.stdout.write(stdout);
     if (stderr) process.stderr.write(stderr);
-    console.error(`Failed to parse yarn audit output: ${error.message}`);
-    process.exit(result.status || 1);
-  }
-
-  if (result.error) {
-    if (stdout) process.stdout.write(stdout);
-    if (stderr) process.stderr.write(stderr);
-    console.error(result.error.message);
+    console.error(auditError);
     process.exit(1);
   }
+
+  const advisories = parseAuditLines(lines);
 
   if (advisories.length === 0) {
     console.log('Passed yarn security audit.');
@@ -196,4 +247,5 @@ if (require.main === module) {
 module.exports = {
   formatAuditFailureReport,
   getAuditOptions,
+  getAuditResultError,
 };

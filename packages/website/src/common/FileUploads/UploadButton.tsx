@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Button, CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
+import Button from 'common/Button';
 
 import makeStyles from '@mui/styles/makeStyles';
 

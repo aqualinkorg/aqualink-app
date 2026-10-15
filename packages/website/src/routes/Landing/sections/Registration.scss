@@ -1,0 +1,31 @@
+@use '../../../styles/responsive';
+.landing-page__register {
+  background: var(--color-sky);
+  padding-block: 80px;
+  .landing-page__split {
+    grid-template-columns: 2fr 1fr;
+  }
+  h2 {
+    font-size: clamp(30px, 3vw, 42px);
+  }
+  p {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--color-ocean);
+  }
+}
+.landing-page__register-action {
+  justify-self: end;
+}
+@include responsive.down(sm) {
+  .landing-page__register .landing-page__split {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .landing-page__register-action {
+    justify-self: stretch;
+    .MuiButton-root {
+      width: 100%;
+    }
+  }
+}

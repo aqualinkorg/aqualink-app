@@ -3,7 +3,8 @@ import classNames from 'classnames';
 import DefaultDropzone, {
   DropzoneProps as DefaultDropzoneProps,
 } from 'react-dropzone';
-import { Theme, Grid, Typography, Button } from '@mui/material';
+import { Theme, Grid, Typography } from '@mui/material';
+import Button from 'common/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import { alpha } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';

@@ -1,4 +1,5 @@
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import Button from 'common/Button';
 import React from 'react';
 
 interface InfoWithActionProps {

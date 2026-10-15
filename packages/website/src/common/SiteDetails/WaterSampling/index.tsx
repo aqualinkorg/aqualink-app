@@ -45,8 +45,8 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    backgroundColor: colors.backgroundGray,
-    color: colors.black,
+    backgroundColor: colors.paper,
+    color: colors.ocean,
   },
   content: {
     display: 'flex',
@@ -56,7 +56,7 @@ const useStyles = makeStyles(() => ({
     padding: 0,
   },
   hwoCardTitle: {
-    color: colors.black,
+    color: colors.ocean,
   },
   metricTile: {
     backgroundColor: 'white',
@@ -339,7 +339,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
         </Box>
         {showHwoCard && (
           <Box px="0.75rem" pb="0.25rem">
-            <Typography variant="caption" style={{ color: colors.black }}>
+            <Typography variant="caption" style={{ color: colors.ocean }}>
               * Total dissolved
             </Typography>
           </Box>

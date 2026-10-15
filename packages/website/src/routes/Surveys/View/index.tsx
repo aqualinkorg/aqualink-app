@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import {
   Box,
-  Button,
   Container,
   Grid,
   LinearProgress,
@@ -11,6 +10,7 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
+import Button from 'common/Button';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -235,7 +235,7 @@ function SurveyViewPage({ site, surveyId, classes }: SurveyViewPageProps) {
 const styles = (theme: Theme) =>
   createStyles({
     loading: {
-      marginBottom: '100vh',
+      minHeight: 'calc(var(--viewport-height) - var(--nav-height))',
     },
     infoWrapper: {
       marginTop: 64,

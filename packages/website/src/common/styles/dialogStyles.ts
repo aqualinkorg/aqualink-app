@@ -5,7 +5,7 @@ const styles = {
     color: theme.palette.primary.light,
   },
   dialogHeader: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
     color: 'white',
   },
   dialogHeaderSecondPart: {
@@ -24,7 +24,7 @@ const styles = {
     color: 'black',
   },
   formText: {
-    color: theme.palette.grey[500],
+    color: theme.palette.text.secondary,
     fontWeight: 400,
     marginBottom: '1rem',
   },

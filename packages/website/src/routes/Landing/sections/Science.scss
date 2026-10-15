@@ -1,0 +1,13 @@
+@use '../../../styles/responsive';
+.landing-page__science {
+  padding-block: 112px;
+  a {
+    margin-top: 24px;
+  }
+}
+@include responsive.down(sm) {
+  .landing-page__science,
+  .landing-page__register {
+    padding-block: 56px;
+  }
+}

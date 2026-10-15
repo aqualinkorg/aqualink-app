@@ -3,6 +3,8 @@ declare module '*.jpg';
 declare module '*.svg';
 
 // Generic CSS import definition
+declare module '*.scss';
+
 declare module '*.css' {
   interface IClassNames {
     [className: string]: string;
