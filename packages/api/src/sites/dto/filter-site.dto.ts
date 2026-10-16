@@ -37,4 +37,13 @@ export class FilterSiteDto {
   @IsOptional()
   @IsBooleanString()
   readonly hasSpotter?: string;
+
+  @ApiProperty({
+    example: '2025-06-01',
+    description:
+      'Optional ISO date. When set, collectionData uses the most recent daily data on or before this date.',
+  })
+  @IsOptional()
+  @IsString()
+  readonly date?: string;
 }

@@ -83,9 +83,9 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (date?: string) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: `sites${date ? `?date=${encodeURIComponent(date)}` : ''}`,
     method: 'GET',
   });
 
