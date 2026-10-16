@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { omit, sortBy } from 'lodash';
-import { DataSource } from 'typeorm';
+import { DataSource, In } from 'typeorm';
 import { DateTime } from '../luxon-extensions';
 import { TestService } from '../../test/test.service';
 import {
@@ -25,6 +25,10 @@ import {
   floridaSite,
 } from '../../test/mock/site.mock';
 import { californiaDailyData } from '../../test/mock/daily-data.mock';
+import { Sources } from './sources.entity';
+import { SourceType } from './schemas/source-type.enum';
+import { TimeSeries } from '../time-series/time-series.entity';
+import { Metric } from '../time-series/metrics.enum';
 
 export const siteTests = () => {
   const testService = TestService.getInstance();
@@ -494,6 +498,192 @@ export const siteTests = () => {
       );
 
       expect(rsp2.status).toBe(200);
+    });
+  });
+
+  describe('historical collection data (?date=)', () => {
+    let californiaId: number;
+    let insertedSourceIds: number[] = [];
+    let insertedTimeSeriesIds: number[] = [];
+
+    const findCalifornia = (body: any[]) =>
+      body.find((site) => site.id === californiaId);
+
+    beforeAll(async () => {
+      const california = await dataSource
+        .getRepository(Site)
+        .findOneByOrFail({ name: californiaSite.name as string });
+      californiaId = california.id;
+
+      const sourcesRepository = dataSource.getRepository(Sources);
+      const noaaSource = await sourcesRepository.findOneOrFail({
+        where: { site: { id: californiaId }, type: SourceType.NOAA },
+      });
+      const spotterSource = await sourcesRepository.findOneOrFail({
+        where: { site: { id: californiaId }, type: SourceType.SPOTTER },
+      });
+      const sondeSource = await sourcesRepository.save({
+        site: { id: californiaId },
+        type: SourceType.SONDE,
+      });
+      insertedSourceIds = [sondeSource.id];
+
+      const saved = await dataSource.getRepository(TimeSeries).save([
+        // Older NOAA value, superseded by the 2020-01-15 one
+        {
+          source: noaaSource,
+          metric: Metric.DHW,
+          value: 3.1,
+          timestamp: new Date('2020-01-13T12:00:00Z'),
+        },
+        {
+          source: noaaSource,
+          metric: Metric.DHW,
+          value: 4.2,
+          timestamp: new Date('2020-01-15T23:30:00Z'),
+        },
+        {
+          source: noaaSource,
+          metric: Metric.SATELLITE_TEMPERATURE,
+          value: 28.5,
+          timestamp: new Date('2020-01-15T12:00:00Z'),
+        },
+        // Recorded the day after: must never show up for 2020-01-15
+        {
+          source: noaaSource,
+          metric: Metric.SATELLITE_TEMPERATURE,
+          value: 99,
+          timestamp: new Date('2020-01-16T00:00:00Z'),
+        },
+        {
+          source: spotterSource,
+          metric: Metric.TOP_TEMPERATURE,
+          value: 26,
+          timestamp: new Date('2020-01-10T08:00:00Z'),
+        },
+        // Sonde data uses the extended (2 years) look-back window
+        {
+          source: sondeSource,
+          metric: Metric.SALINITY,
+          value: 35.1,
+          timestamp: new Date('2019-06-01T00:00:00Z'),
+        },
+      ]);
+      insertedTimeSeriesIds = saved.map((row) => row.id);
+    });
+
+    afterAll(async () => {
+      await dataSource
+        .getRepository(TimeSeries)
+        .delete({ id: In(insertedTimeSeriesIds) });
+      await dataSource
+        .getRepository(Sources)
+        .delete({ id: In(insertedSourceIds) });
+    });
+
+    it('GET / returns the latest values available at the end of a past day', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ date: '2020-01-15' });
+
+      expect(rsp.status).toBe(200);
+      expect(findCalifornia(rsp.body).collectionData).toStrictEqual({
+        dhw: 4.2,
+        satelliteTemperature: 28.5,
+        topTemperature: 26,
+        salinity: 35.1,
+      });
+    });
+
+    it('GET / ignores values recorded after the requested day', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ date: '2020-01-12' });
+
+      expect(rsp.status).toBe(200);
+      expect(findCalifornia(rsp.body).collectionData).toStrictEqual({
+        topTemperature: 26,
+        salinity: 35.1,
+      });
+    });
+
+    it('GET / only looks back one week for regular sources', async () => {
+      // Window for 2020-01-22 starts on 2020-01-15: the 2020-01-10 spotter
+      // value and the 2020-01-13 NOAA value are too old to be shown.
+      const rsp = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ date: '2020-01-22' });
+
+      expect(rsp.status).toBe(200);
+      expect(findCalifornia(rsp.body).collectionData).toStrictEqual({
+        dhw: 4.2,
+        satelliteTemperature: 99,
+        salinity: 35.1,
+      });
+
+      const rsp2 = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ date: '2020-01-25' });
+
+      expect(rsp2.status).toBe(200);
+      expect(findCalifornia(rsp2.body).collectionData).toStrictEqual({
+        salinity: 35.1,
+      });
+    });
+
+    it('GET / returns no collection data for a site without data at that date', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ date: '2010-01-01' });
+
+      expect(rsp.status).toBe(200);
+      expect(rsp.body.length).toBeGreaterThan(0);
+      rsp.body.forEach((site) => expect(site.collectionData).toBeUndefined());
+    });
+
+    it("GET / with today's date returns the live data", async () => {
+      const live = await request(app.getHttpServer()).get('/sites');
+      const today = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ date: DateTime.now().setZone('utc').toISODate() });
+
+      expect(today.status).toBe(200);
+      expect(findCalifornia(today.body).collectionData).toStrictEqual(
+        findCalifornia(live.body).collectionData,
+      );
+    });
+
+    it('GET /:id returns the collection data of a past day', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaId}`)
+        .query({ date: '2020-01-15' });
+
+      expect(rsp.status).toBe(200);
+      expect(rsp.body.collectionData).toStrictEqual({
+        dhw: 4.2,
+        satelliteTemperature: 28.5,
+        topTemperature: 26,
+        salinity: 35.1,
+      });
+    });
+
+    it.each(['2020-13-01', '15-01-2020', '2020-01-15T00:00:00Z', 'yesterday'])(
+      'GET / rejects invalid date %s',
+      async (date) => {
+        const rsp = await request(app.getHttpServer())
+          .get('/sites')
+          .query({ date });
+
+        expect(rsp.status).toBe(400);
+      },
+    );
+
+    it('GET /:id rejects an invalid date', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaId}`)
+        .query({ date: '2020-02-30' });
+
+      expect(rsp.status).toBe(400);
     });
   });
 };

@@ -401,6 +401,7 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  date: string | null;
 }
 
 export interface SitesListState {
@@ -408,6 +409,12 @@ export interface SitesListState {
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
+  /** Past UTC day (YYYY-MM-DD) to display site data for, null for live data */
+  date: string | null;
+  /** Day the loaded `list` data corresponds to, null for live data */
+  listDate?: string | null;
+  /** A new list is being fetched while the current one is still displayed */
+  refreshing?: boolean;
 }
 
 export interface SelectedSiteState {

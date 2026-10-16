@@ -53,6 +53,21 @@ import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { ScheduledUpdate } from './scheduled-updates.entity';
 
+// Validated here as well as in SiteDataDateDto so that the service never
+// silently falls back to live data for a malformed date.
+const assertValidDataDate = (date?: unknown) => {
+  if (date === undefined) return;
+  if (
+    typeof date !== 'string' ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
+    !DateTime.fromISO(date, { zone: 'utc' }).isValid
+  ) {
+    throw new BadRequestException(
+      'Query parameter date must be a valid YYYY-MM-DD date',
+    );
+  }
+};
+
 @Injectable()
 export class SitesService {
   private readonly logger = new Logger(SitesService.name);
@@ -156,6 +171,7 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    assertValidDataDate(filter.date);
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -201,6 +217,7 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      filter.date,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -223,7 +240,8 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, date?: string): Promise<Site> {
+    assertValidDataDate(date);
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -249,6 +267,7 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       [site],
       this.latestDataRepository,
+      date,
     );
 
     const maskedSpotterApiToken = site.spotterApiToken

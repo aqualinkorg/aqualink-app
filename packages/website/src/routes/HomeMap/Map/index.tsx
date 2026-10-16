@@ -41,6 +41,7 @@ import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
+import HistoricalDateControl from './HistoricalDateControl';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -90,6 +91,7 @@ function HomepageMap({
   defaultLayerName,
   legendBottom,
   legendLeft,
+  showDateSelector = false,
   classes,
   onMapLoad,
 }: HomepageMapProps) {
@@ -286,6 +288,7 @@ function HomepageMap({
       )}
       <Legend legendName={legendName} bottom={legendBottom} left={legendLeft} />
       {showAlertLevelLegend && <AlertLevelLegend />}
+      {showDateSelector && <HistoricalDateControl />}
       {showWaterMark && <div className="mapbox-wordmark" />}
       {geolocationEnabled && (
         <div className={classes.locationIconButton}>
@@ -379,6 +382,7 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
+  showDateSelector?: boolean;
   onMapLoad?: (map: L.Map) => void;
 }
 
