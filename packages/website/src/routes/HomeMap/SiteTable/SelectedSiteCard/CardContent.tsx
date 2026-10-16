@@ -208,7 +208,7 @@ function SelectedSiteCardContent({
             >
               {site && imageUrl && (
                 <Link
-                  to={`/sites/${site.id}`}
+                  to={`/sites/${site.id}${location.search}`}
                   state={{ from: location.pathname }}
                 >
                   <CardMedia
@@ -259,7 +259,7 @@ function SelectedSiteCardContent({
                       <Chip
                         live
                         liveText="LIVE VIDEO"
-                        to={`/sites/${site.id}`}
+                        to={`/sites/${site.id}${location.search}`}
                         state={{ from: location.pathname }}
                         width={80}
                       />
@@ -268,7 +268,7 @@ function SelectedSiteCardContent({
                       <Button
                         className={classes.exploreButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        to={`/sites/${site.id}${location.search}`}
                         state={{ from: location.pathname }}
                         onClick={onExploreButtonClick}
                         size="small"
@@ -315,7 +315,7 @@ function SelectedSiteCardContent({
                   <Chip
                     live
                     liveText="LIVE VIDEO"
-                    to={`/sites/${site.id}`}
+                    to={`/sites/${site.id}${location.search}`}
                     state={{ from: location.pathname }}
                     width={80}
                   />

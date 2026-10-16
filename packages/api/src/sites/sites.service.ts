@@ -40,7 +40,10 @@ import { backfillSiteData } from '../workers/backfill-site-data';
 import { SiteApplication } from '../site-applications/site-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
-import { getCollectionData } from '../utils/collections.utils';
+import {
+  getCollectionData,
+  getHistoricalCollectionData,
+} from '../utils/collections.utils';
 import { LatestData } from '../time-series/latest-data.entity';
 import { getYouTubeVideoId } from '../utils/urls';
 import {
@@ -156,6 +159,10 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    if (filter.date && !DateTime.fromISO(filter.date).isValid) {
+      throw new BadRequestException('Date is not a valid date');
+    }
+
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -198,10 +205,13 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    const mappedSiteData = filter.date
+      ? await getHistoricalCollectionData(
+          res,
+          this.dailyDataRepository,
+          filter.date,
+        )
+      : await getCollectionData(res, this.latestDataRepository);
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
@@ -223,7 +233,11 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, date?: string): Promise<Site> {
+    if (date && !DateTime.fromISO(date).isValid) {
+      throw new BadRequestException('Date is not a valid date');
+    }
+
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -246,10 +260,13 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
-    const mappedSiteData = await getCollectionData(
-      [site],
-      this.latestDataRepository,
-    );
+    const mappedSiteData = date
+      ? await getHistoricalCollectionData(
+          [site],
+          this.dailyDataRepository,
+          date,
+        )
+      : await getCollectionData([site], this.latestDataRepository);
 
     const maskedSpotterApiToken = site.spotterApiToken
       ? `****${site.spotterApiToken?.slice(-4)}`

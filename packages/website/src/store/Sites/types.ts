@@ -270,7 +270,9 @@ export interface CollectionMetrics {
   sstAnomaly?: number;
 }
 
-export type CollectionDataResponse = Partial<Record<Metrics, number>>;
+export type CollectionDataResponse = Partial<Record<Metrics, number>> & {
+  observationDate?: string;
+};
 
 export type CollectionData = CollectionDataResponse;
 
@@ -401,18 +403,32 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  date?: string;
+}
+
+export interface SitesRequestParams {
+  date?: string;
+}
+
+export interface SiteRequestParams {
+  id: string;
+  date?: string;
 }
 
 export interface SitesListState {
+  currentRequestId?: string;
   list?: Site[];
+  date?: string;
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
 }
 
 export interface SelectedSiteState {
+  currentRequestId?: string;
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  date?: string;
   spotterPosition?: {
     position?: {
       longitude: number;

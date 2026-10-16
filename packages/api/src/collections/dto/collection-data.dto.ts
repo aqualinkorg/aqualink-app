@@ -24,6 +24,13 @@ type CollectionDataDtoType = Partial<
 >;
 
 export class CollectionDataDto implements CollectionDataDtoType {
+  @ApiPropertyOptional({
+    description:
+      'Timestamp of the daily observation selected for a historical request',
+    example: '2024-04-10T23:59:59.999Z',
+  })
+  observationDate?: Date;
+
   @ApiPropertyOptional({ example: 28.05 })
   bottomTemperature?: number;
 

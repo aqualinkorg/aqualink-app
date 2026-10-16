@@ -30,7 +30,19 @@ vi.mock('common/Chart/MultipleSensorsCharts', () => ({
 describe('Site Detail Page', () => {
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;
+
   beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-05-28T12:00:00Z'));
+
+    const datedMockSite = {
+      ...mockSite,
+      dailyData: mockSite.dailyData.map((dailyData) => ({
+        ...dailyData,
+        date: '2026-05-28T11:55:00.000Z',
+      })),
+    };
+
     const emptyStore = mockStore({
       selectedSite: {
         details: { ...mockSite, dailyData: [] },
@@ -73,7 +85,7 @@ describe('Site Detail Page', () => {
 
     const fullStore = mockStore({
       selectedSite: {
-        details: mockSite,
+        details: datedMockSite,
         timeSeriesDataRange: mockDataRange,
         loading: false,
         error: null,
@@ -84,10 +96,10 @@ describe('Site Detail Page', () => {
         loading: false,
       },
       homepage: {
-        siteOnMap: mockSite,
+        siteOnMap: datedMockSite,
       },
       sitesList: {
-        list: [mockSite],
+        list: [datedMockSite],
         loading: false,
         error: null,
       },
@@ -137,6 +149,10 @@ describe('Site Detail Page', () => {
         </Provider>
       </ThemeProvider>,
     ).container;
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('should render with given state from Redux store', () => {
