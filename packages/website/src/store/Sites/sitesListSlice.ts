@@ -33,15 +33,22 @@ const sitesListInitialState: SitesListState = {
   filters: {},
 };
 
+interface SitesRequestArg {
+  /** When set, collection data is computed as of this ISO date. */
+  asOf?: string;
+  /** Bypass the cached-list condition. */
+  force?: boolean;
+}
+
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestArg | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(arg?.asOf);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +62,14 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: SitesRequestArg | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, asOf },
       } = getState();
-      return !list;
+      if (arg?.force) return true;
+      const currentAsOf = asOf ?? undefined;
+      const requestedAsOf = arg?.asOf ?? undefined;
+      return !list || currentAsOf !== requestedAsOf;
     },
   },
 );
@@ -101,16 +111,18 @@ const sitesListSlice = createSlice({
       ...state,
       list: setSiteNameFromList(action.payload),
     }),
+    setSitesAsOf: (state, action: PayloadAction<string | null>) => ({
+      ...state,
+      asOf: action.payload,
+    }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
-    );
+    builder.addCase(sitesRequest.fulfilled, (state, action) => ({
+      ...state,
+      list: action.payload.list,
+      asOf: action.meta.arg?.asOf ?? null,
+      loading: false,
+    }));
 
     builder.addCase(sitesRequest.rejected, (state, action) => ({
       ...state,
@@ -171,6 +183,10 @@ export const sitesListFiltersSelector = (
   state: RootState,
 ): SitesListState['filters'] => state.sitesList.filters;
 
+export const sitesListAsOfSelector = (
+  state: RootState,
+): SitesListState['asOf'] => state.sitesList.asOf;
+
 export const sitesListLoadingSelector = (
   state: RootState,
 ): SitesListState['loading'] => state.sitesList.loading;
@@ -179,7 +195,8 @@ export const sitesListErrorSelector = (
   state: RootState,
 ): SitesListState['error'] => state.sitesList.error;
 
-export const { clearSiteFilters, setSiteName } = sitesListSlice.actions;
+export const { clearSiteFilters, setSiteName, setSitesAsOf } =
+  sitesListSlice.actions;
 
 // Re-export to keep function as generic
 export const patchSiteFilters = sitesListSlice.actions.patchSiteFilters as <

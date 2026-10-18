@@ -19,6 +19,13 @@ const mockStore = configureStore([]);
 window.scrollTo = vi.fn();
 
 vi.mock('common/SiteDetails/Map', () => ({ default: 'Mock-Map' }));
+// Stabilize relative timestamps ("Last data received X sec. ago") which
+// depend on wall-clock time through live mocks.
+vi.mock('helpers/dates', async () => {
+  const actual =
+    await vi.importActual<typeof import('helpers/dates')>('helpers/dates');
+  return { ...actual, toRelativeTime: () => '1 day ago' };
+});
 vi.mock('common/SiteDetails/FeaturedMedia', () => ({
   default: 'Mock-FeaturedMedia',
 }));
@@ -28,6 +35,15 @@ vi.mock('common/Chart/MultipleSensorsCharts', () => ({
 }));
 
 describe('Site Detail Page', () => {
+  beforeAll(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2023-06-28T21:00:00.000Z'));
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;
   beforeEach(() => {

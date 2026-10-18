@@ -5,10 +5,17 @@ import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
+import { TimeSeries } from '../time-series/time-series.entity';
+
+interface GetCollectionDataOptions {
+  asOf?: Date;
+  timeSeriesRepository?: Repository<TimeSeries>;
+}
 
 export const getCollectionData = async (
   sites: Site[],
   latestDataRepository: Repository<LatestData>,
+  options?: GetCollectionDataOptions,
 ): Promise<Record<number, CollectionDataDto>> => {
   const siteIds = sites.map((site) => site.id);
 
@@ -16,19 +23,67 @@ export const getCollectionData = async (
     return {};
   }
 
-  // Get latest data
-  const latestData: LatestData[] = await latestDataRepository
-    .createQueryBuilder('latest_data')
-    .select('id')
-    .addSelect('timestamp')
-    .addSelect('value')
-    .addSelect('site_id', 'siteId')
-    .addSelect('survey_point_id', 'surveyPointId')
-    .addSelect('metric')
-    .addSelect('source')
-    .where('site_id IN (:...siteIds)', { siteIds })
-    .andWhere('source != :hoboSource', { hoboSource: SourceType.HOBO })
-    .getRawMany();
+  const { asOf, timeSeriesRepository } = options || {};
+
+  // Get latest data, or the most recent data at or before the requested date.
+  // Low-frequency sources (sonde, hui, sheet data) get a wider lookback window
+  // because their measurements are months apart.
+  const latestData: Array<{
+    siteId: number;
+    metric: string;
+    value: number;
+  }> =
+    asOf && timeSeriesRepository
+      ? await timeSeriesRepository
+          .createQueryBuilder('time_series')
+          .select(
+            'DISTINCT ON (time_series.metric, sources.type, sources.site_id, sources.survey_point_id) time_series.id',
+            'id',
+          )
+          .addSelect('time_series.metric', 'metric')
+          .addSelect('time_series.timestamp', 'timestamp')
+          .addSelect('time_series.value', 'value')
+          .addSelect('sources.type', 'source')
+          .addSelect('sources.site_id', 'siteId')
+          .addSelect('sources.survey_point_id', 'surveyPointId')
+          .innerJoin('sources', 'sources', 'sources.id = time_series.source_id')
+          .where('sources.site_id IN (:...siteIds)', { siteIds })
+          .andWhere('sources.type != :hoboSource', {
+            hoboSource: SourceType.HOBO,
+          })
+          .andWhere('time_series.timestamp <= :asOf', { asOf })
+          .andWhere(
+            `(
+              time_series.timestamp >= :weekAgo
+              OR (
+                sources.type IN ('sonde', 'hui', 'sheet_data')
+                AND time_series.timestamp >= :twoYearsAgo
+              )
+            )`,
+            {
+              weekAgo: new Date(asOf.getTime() - 7 * 24 * 60 * 60 * 1000),
+              twoYearsAgo: new Date(
+                asOf.getTime() - 2 * 365 * 24 * 60 * 60 * 1000,
+              ),
+            },
+          )
+          .orderBy(
+            'time_series.metric, sources.type, sources.site_id, sources.survey_point_id, time_series.timestamp',
+            'DESC',
+          )
+          .getRawMany()
+      : await latestDataRepository
+          .createQueryBuilder('latest_data')
+          .select('id')
+          .addSelect('timestamp')
+          .addSelect('value')
+          .addSelect('site_id', 'siteId')
+          .addSelect('survey_point_id', 'surveyPointId')
+          .addSelect('metric')
+          .addSelect('source')
+          .where('site_id IN (:...siteIds)', { siteIds })
+          .andWhere('source != :hoboSource', { hoboSource: SourceType.HOBO })
+          .getRawMany();
 
   // Map data to each site and map each site's data to the CollectionDataDto
   return _(latestData)

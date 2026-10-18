@@ -408,10 +408,14 @@ export interface SitesListState {
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
+  /** ISO date the sites list collection data is viewed "as of". Null = latest. */
+  asOf?: string | null;
 }
 
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
+  /** ISO date the current site details were fetched "as of". Null = latest. */
+  detailsAsOf?: string | null;
   details?: Site | null;
   spotterPosition?: {
     position?: {

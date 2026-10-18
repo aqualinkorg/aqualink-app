@@ -88,15 +88,23 @@ export const latestDataRequest = createAsyncThunk<
   }
 });
 
+export interface SiteRequestArg {
+  id: string;
+  /** When set, site details (collection data) are fetched as of this ISO date. */
+  asOf?: string;
+}
+
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  string | SiteRequestArg,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg: string | SiteRequestArg, { rejectWithValue }) => {
+    const id = typeof arg === 'string' ? arg : arg.id;
+    const asOf = typeof arg === 'string' ? undefined : arg.asOf;
     try {
-      const { data } = await siteServices.getSite(id);
+      const { data } = await siteServices.getSite(id, asOf);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
@@ -123,11 +131,13 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(arg: string | SiteRequestArg, { getState }) {
+      const id = typeof arg === 'string' ? arg : arg.id;
+      const asOf = typeof arg === 'string' ? null : (arg.asOf ?? null);
       const {
-        selectedSite: { details },
+        selectedSite: { details, detailsAsOf },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || (detailsAsOf ?? null) !== asOf;
     },
   },
 );
@@ -334,14 +344,15 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
-        ...state,
-        details: action.payload,
-        loading: false,
-      }),
-    );
+    builder.addCase(siteRequest.fulfilled, (state, action) => ({
+      ...state,
+      details: action.payload,
+      detailsAsOf:
+        typeof action.meta.arg === 'string'
+          ? null
+          : (action.meta.arg.asOf ?? null),
+      loading: false,
+    }));
 
     builder.addCase(
       siteRequest.rejected,
