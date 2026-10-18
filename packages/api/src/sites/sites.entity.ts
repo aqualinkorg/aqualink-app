@@ -171,8 +171,10 @@ export class Site {
   })
   hasSeaphox?: boolean;
 
+  @ApiPropertyOptional({ example: true })
   hasHobo?: boolean;
 
+  @ApiPropertyOptional({ type: () => CollectionDataDto })
   collectionData?: CollectionDataDto;
 
   maskedSpotterApiToken?: string;
