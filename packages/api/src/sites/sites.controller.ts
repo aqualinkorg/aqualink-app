@@ -71,10 +71,20 @@ export class SitesController {
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Returns specified site' })
   @ApiParam({ name: 'id', example: 1 })
+  @ApiQuery({
+    name: 'asOf',
+    required: false,
+    example: '2024-03-01T00:00:00.000Z',
+    description:
+      'Optional ISO-8601 timestamp. When provided, collectionData is computed from time series data available at that date instead of the latest data.',
+  })
   @Public()
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Site> {
-    return this.sitesService.findOne(id);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('asOf', ParseDatePipe) asOf?: string,
+  ): Promise<Site> {
+    return this.sitesService.findOne(id, asOf);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')

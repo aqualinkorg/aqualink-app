@@ -14,22 +14,53 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
     class="Homepage-root-1"
   >
     <div
-      class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-154kc58-MuiGrid-root"
       >
         <mock-map
           initialcenter="LatLng(0, 121.3)"
           initialzoom="4"
           showsitetable="true"
         />
+        <mock-box
+          classname="Homepage-asOfControl-3"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
+          >
+            <mock-box
+              alignitems="flex-end"
+              display="flex"
+            >
+              <mock-typography
+                color="textSecondary"
+                variant="h6"
+              >
+                View data as of:
+              </mock-typography>
+              <div
+                class="DatePicker-datePicker-6"
+              >
+                <mock-date-picker
+                  classname="DatePicker-textField-7"
+                  closeonselect="true"
+                  format="MM/dd/yyyy"
+                  maxdate="Wed Jun 28 2023 21:00:00 GMT+0000 (Coordinated Universal Time)"
+                  mindate="Thu Jan 01 1970 00:00:00 GMT+0000 (Coordinated Universal Time)"
+                  slotprops="[object Object]"
+                />
+              </div>
+            </mock-box>
+          </div>
+        </mock-box>
       </div>
       <mock-hidden
         mddown="true"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-3 css-1k7sk4d-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-5 css-1lildix-MuiGrid-root"
         >
           <mock-sitetable />
         </div>

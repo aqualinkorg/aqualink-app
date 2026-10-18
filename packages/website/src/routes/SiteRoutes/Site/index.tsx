@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert, Container, Box } from '@mui/material';
+import { Alert, Container, Box, Button } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -34,6 +34,7 @@ import { sortByDate } from 'helpers/dates';
 import { findSurveyPointFromList } from 'helpers/siteUtils';
 import SiteNavBar from 'common/NavBar';
 import SiteFooter from 'common/Footer';
+import Datepicker from 'common/Datepicker';
 import SiteDetails from 'common/SiteDetails';
 import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
 import LoadingSkeleton from 'common/LoadingSkeleton';
@@ -122,6 +123,9 @@ function Site({ classes }: SiteProps) {
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
+  const [asOf, setAsOf] = useQueryParam('asOf');
+  const [, setStartParam] = useQueryParam('start');
+  const [, setEndParam] = useQueryParam('end');
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -154,6 +158,24 @@ function Site({ classes }: SiteProps) {
 
   const isLoading = !siteWithFeaturedImage;
 
+  const onAsOfChange = (value: Date | null) => {
+    if (!value || Number.isNaN(value.getTime())) return;
+    const asOfDate = DateTime.fromJSDate(value);
+    const asOfIso = asOfDate.endOf('day').toUTC().toISOString();
+    const endIso = asOfDate.endOf('day').toISOString();
+    const startIso = asOfDate.minus({ months: 1 }).startOf('day').toISOString();
+    if (!asOfIso || !endIso || !startIso) return;
+    setStartParam(startIso);
+    setEndParam(endIso);
+    setAsOf(asOfIso);
+  };
+
+  const onAsOfReset = () => {
+    setStartParam(undefined);
+    setEndParam(undefined);
+    setAsOf(undefined);
+  };
+
   useEffect(() => {
     if (refresh === 'true') {
       setRefresh(undefined);
@@ -171,7 +193,9 @@ function Site({ classes }: SiteProps) {
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
+    dispatch(clearTimeSeriesDataRange());
+    dispatch(clearTimeSeriesData());
+    dispatch(siteRequest(asOf ? { id: siteId, asOf } : siteId));
     dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
@@ -180,7 +204,8 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
     };
-  }, [dispatch, siteId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, siteId, asOf]);
 
   // Fetch reef check surveys
   useEffect(() => {
@@ -235,6 +260,19 @@ function Site({ classes }: SiteProps) {
                 />
               )}
             </LoadingSkeleton>
+            <Box display="flex" alignItems="center" mt={1}>
+              <Datepicker
+                value={asOf ?? null}
+                dateName="View data as of"
+                timeZone={siteDetails?.timezone}
+                onChange={onAsOfChange}
+              />
+              {asOf && (
+                <Button size="small" variant="outlined" onClick={onAsOfReset}>
+                  Latest
+                </Button>
+              )}
+            </Box>
           </Box>
           {/* Only show alert message when data is loading */}
           {!hasSpotterData && !isLoading && !hasDailyData && (
@@ -244,7 +282,7 @@ function Site({ classes }: SiteProps) {
               </Alert>
             </Box>
           )}
-          <div key={siteId}>
+          <div key={`${siteId}-${asOf || 'latest'}`}>
             <SiteDetails
               site={siteWithFeaturedImage}
               selectedSurveyPointId={selectedSurveyPointId}

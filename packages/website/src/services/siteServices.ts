@@ -27,9 +27,9 @@ import {
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
-const getSite = (id: string) =>
+const getSite = (id: string, asOf?: string) =>
   requests.send<Site>({
-    url: `sites/${id}`,
+    url: `sites/${id}${asOf ? `?asOf=${encodeURIComponent(asOf)}` : ''}`,
     method: 'GET',
   });
 
@@ -83,9 +83,9 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (asOf?: string) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: `sites${asOf ? `?asOf=${encodeURIComponent(asOf)}` : ''}`,
     method: 'GET',
   });
 

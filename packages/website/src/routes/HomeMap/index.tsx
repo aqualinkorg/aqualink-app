@@ -3,18 +3,26 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
-import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
+import {
+  sitesRequest,
+  sitesListSelector,
+  sitesListAsOfSelector,
+  setSitesAsOf,
+} from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import Datepicker from 'common/Datepicker';
+import { Box, Button, Grid, Hidden } from '@mui/material';
+import { DateTime } from 'luxon-extensions';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -71,9 +79,24 @@ function Homepage({ classes }: HomepageProps) {
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
+  const sitesAsOf = useSelector(sitesListAsOfSelector);
+
   useEffect(() => {
     dispatch(sitesRequest());
   }, [dispatch]);
+
+  const onAsOfChange = (value: Date | null) => {
+    if (!value || Number.isNaN(value.getTime())) return;
+    const asOf = DateTime.fromJSDate(value).endOf('day').toUTC().toISOString();
+    if (!asOf) return;
+    dispatch(setSitesAsOf(asOf));
+    dispatch(sitesRequest({ asOf, force: true }));
+  };
+
+  const onAsOfReset = () => {
+    dispatch(setSitesAsOf(null));
+    dispatch(sitesRequest({ force: true }));
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -125,6 +148,24 @@ function Homepage({ classes }: HomepageProps) {
               initialZoom={initialZoom}
               initialCenter={initialCenter}
             />
+            <Box className={classes.asOfControl}>
+              <Datepicker
+                value={sitesAsOf ?? null}
+                dateName="View data as of"
+                timeZone="UTC"
+                onChange={onAsOfChange}
+              />
+              {sitesAsOf && (
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={onAsOfReset}
+                  className={classes.asOfReset}
+                >
+                  Latest
+                </Button>
+              )}
+            </Box>
           </Grid>
           {showSiteTable && (
             <Hidden mdDown>
@@ -165,6 +206,22 @@ const styles = () =>
     map: {
       display: 'flex',
       zIndex: 0,
+      position: 'relative',
+    },
+    asOfControl: {
+      position: 'absolute',
+      top: 10,
+      right: 10,
+      zIndex: 1000,
+      backgroundColor: 'white',
+      borderRadius: 4,
+      padding: '4px 12px',
+      display: 'flex',
+      alignItems: 'center',
+      boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+    },
+    asOfReset: {
+      marginLeft: 8,
     },
     siteTable: {
       display: 'flex',
