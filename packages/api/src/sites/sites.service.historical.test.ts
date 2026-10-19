@@ -1,4 +1,4 @@
-import type { DataSource, Repository } from 'typeorm';
+import type { DataSource, ObjectLiteral, Repository } from 'typeorm';
 import type { ReefCheckSurvey } from 'reef-check-surveys/reef-check-surveys.entity';
 import type { Region } from '../regions/regions.entity';
 import type { SiteApplication } from '../site-applications/site-applications.entity';
@@ -70,7 +70,7 @@ describe('SitesService historical date cutoff', () => {
     return builder;
   };
 
-  const emptyRepository = <T>(): Repository<T> =>
+  const emptyRepository = <T extends ObjectLiteral>(): Repository<T> =>
     ({}) as unknown as Repository<T>;
 
   const createService = (
