@@ -156,6 +156,11 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    const today = DateTime.utc().toISODate();
+    if (filter.date && today && filter.date > today) {
+      throw new BadRequestException('Date cannot be in the future');
+    }
+
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -203,6 +208,39 @@ export class SitesService {
       this.latestDataRepository,
     );
 
+    const historicalDailyData = filter.date && res.length
+      ? await this.dailyDataRepository
+          .createQueryBuilder('daily_data')
+          .leftJoinAndSelect('daily_data.site', 'site')
+          .where('site.id IN (:...siteIds)', {
+            siteIds: res.map(({ id }) => id),
+          })
+          .andWhere('daily_data.date <= :date', {
+            date: new Date(`${filter.date}T23:59:59.999Z`),
+          })
+          .distinctOn(['site.id'])
+          .orderBy('site.id', 'ASC')
+          .addOrderBy('daily_data.date', 'DESC')
+          .getMany()
+      : [];
+
+    const historicalDataBySite = historicalDailyData.reduce(
+      (dataBySite, snapshot) => {
+        const collectionData: NonNullable<Site['collectionData']> = {};
+        if (snapshot.degreeHeatingDays !== null)
+          collectionData.dhw = snapshot.degreeHeatingDays;
+        if (snapshot.satelliteTemperature !== null)
+          collectionData.satelliteTemperature = snapshot.satelliteTemperature;
+        if (snapshot.weeklyAlertLevel !== null)
+          collectionData.tempWeeklyAlert = snapshot.weeklyAlertLevel;
+        return {
+          ...dataBySite,
+          [snapshot.site.id]: collectionData,
+        };
+      },
+      {} as Record<number, NonNullable<Site['collectionData']>>,
+    );
+
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
     const waterQualityDataSet = await getWaterQualityDataSubQuery(
@@ -216,7 +254,9 @@ export class SitesService {
     return res.map((site) => ({
       ...site,
       applied: site.applied,
-      collectionData: mappedSiteData[site.id],
+      collectionData: filter.date
+        ? historicalDataBySite[site.id] || {}
+        : mappedSiteData[site.id],
       hasHobo: hasHoboDataSet.has(site.id),
       waterQualitySources: waterQualityDataSet.get(site.id),
       reefCheckData: reefCheckDataSet[site.id],

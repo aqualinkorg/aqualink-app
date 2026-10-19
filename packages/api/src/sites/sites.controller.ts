@@ -62,6 +62,13 @@ export class SitesController {
   }
 
   @ApiOperation({ summary: 'Returns sites filtered by provided filters' })
+  @ApiQuery({
+    name: 'date',
+    required: false,
+    example: '2025-01-15',
+    description:
+      'Return map metrics from the latest daily snapshot on or before this UTC date.',
+  })
   @Public()
   @Get()
   find(@Query() filterSiteDto: FilterSiteDto): Promise<Site[]> {

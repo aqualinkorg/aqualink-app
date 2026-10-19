@@ -5,12 +5,18 @@ import {
   IsInt,
   IsEnum,
   IsBooleanString,
+  IsDateString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { SiteStatus } from '../sites.entity';
 
 export class FilterSiteDto {
+  @ApiProperty({ example: '2025-01-15', required: false })
+  @IsOptional()
+  @IsDateString({ strict: true })
+  readonly date?: string;
+
   @ApiProperty({ example: 'Duxbury Site' })
   @IsOptional()
   @IsString()

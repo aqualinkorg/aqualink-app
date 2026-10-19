@@ -35,13 +35,13 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  string | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (date, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(date);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +55,12 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(date: string | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, currentDate, requestDate },
       } = getState();
-      return !list;
+      if (date) return date !== currentDate && date !== requestDate;
+      return !list || Boolean(currentDate) || Boolean(requestDate);
     },
   },
 );
@@ -105,25 +106,38 @@ const sitesListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
+      (state, action) => {
+        if (state.requestId !== action.meta.requestId) return;
+        return {
+          ...state,
+          list: action.payload.list,
+          loading: false,
+          requestId: undefined,
+          requestDate: undefined,
+          currentDate: action.meta.arg,
+        };
+      },
     );
 
-    builder.addCase(sitesRequest.rejected, (state, action) => ({
-      ...state,
-      error: action.error.message
-        ? action.error.message
-        : action.error.toString(),
-      loading: false,
-    }));
+    builder.addCase(sitesRequest.rejected, (state, action) => {
+      if (state.requestId !== action.meta.requestId) return;
+      return {
+        ...state,
+        error: action.error.message
+          ? action.error.message
+          : action.error.toString(),
+        loading: false,
+        requestId: undefined,
+        requestDate: undefined,
+      };
+    });
 
-    builder.addCase(sitesRequest.pending, (state) => ({
+    builder.addCase(sitesRequest.pending, (state, action) => ({
       ...state,
       loading: true,
       error: null,
+      requestId: action.meta.requestId,
+      requestDate: action.meta.arg,
     }));
   },
 });

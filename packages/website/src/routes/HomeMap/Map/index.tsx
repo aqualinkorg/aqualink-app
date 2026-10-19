@@ -92,6 +92,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  historicalDate,
+  onHistoricalDateChange,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -272,6 +274,29 @@ function HomepageMap({
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
       />
+      {onHistoricalDateChange && (
+        <div className={classes.historicalDateControl}>
+          <label htmlFor="map-historical-date">Map data date</label>
+          <input
+            id="map-historical-date"
+            aria-label="Map data date"
+            type="date"
+            value={historicalDate || ''}
+            max={new Date().toISOString().slice(0, 10)}
+            onChange={(event) =>
+              onHistoricalDateChange(event.currentTarget.value)
+            }
+          />
+          {historicalDate && (
+            <button
+              type="button"
+              onClick={() => onHistoricalDateChange('')}
+            >
+              Latest
+            </button>
+          )}
+        </div>
+      )}
       {tileLayer}
       {sofarLayers}
       {siteMarkers}
@@ -353,6 +378,47 @@ const styles = (theme: Theme) =>
         top: 50,
       },
     },
+    historicalDateControl: {
+      position: 'absolute',
+      top: 10,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 1000,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      padding: '8px 10px',
+      borderRadius: 5,
+      backgroundColor: 'white',
+      boxShadow: '0 1px 5px rgba(0,0,0,0.45)',
+      '& label': {
+        color: '#333',
+        fontSize: 14,
+        whiteSpace: 'nowrap',
+      },
+      '& input': {
+        border: '1px solid #aaa',
+        borderRadius: 3,
+        padding: '4px 6px',
+        font: 'inherit',
+      },
+      '& button': {
+        cursor: 'pointer',
+        background: 'transparent',
+        border: 0,
+        color: theme.palette.primary.main,
+        font: 'inherit',
+        padding: '4px 2px',
+      },
+      [theme.breakpoints.down('sm')]: {
+        top: 54,
+        left: '50%',
+        gap: 5,
+        padding: '6px 8px',
+        '& label': { fontSize: 12 },
+        '& input': { maxWidth: 135, fontSize: 12 },
+      },
+    },
     expandIcon: {
       fontSize: '34px',
     },
@@ -380,6 +446,8 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  historicalDate?: string;
+  onHistoricalDateChange?: (date: string) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

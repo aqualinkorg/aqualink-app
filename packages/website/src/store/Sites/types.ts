@@ -408,6 +408,9 @@ export interface SitesListState {
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
+  requestId?: string;
+  requestDate?: string;
+  currentDate?: string;
 }
 
 export interface SelectedSiteState {

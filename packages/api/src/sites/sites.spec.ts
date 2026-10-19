@@ -99,6 +99,44 @@ export const siteTests = () => {
     siteId = sortedSites[sortedSites.length - 1].id;
   });
 
+  it('GET / returns map metrics as of the requested date', async () => {
+    const date = DateTime.now().minus({ days: 5 }).toISODate() || '';
+    const expected = californiaDailyData[5];
+    const rsp = await request(app.getHttpServer())
+      .get('/sites')
+      .query({ date });
+
+    expect(rsp.status).toBe(200);
+    const california = rsp.body.find(
+      (site: Site) => site.name === californiaSite.name,
+    );
+    expect(california.collectionData).toMatchObject({
+      dhw: expected.degreeHeatingDays,
+      satelliteTemperature: expected.satelliteTemperature,
+    });
+    const florida = rsp.body.find(
+      (site: Site) => site.name === floridaSite.name,
+    );
+    expect(florida.collectionData).toEqual({});
+  });
+
+  it('GET / rejects an invalid historical date', async () => {
+    const rsp = await request(app.getHttpServer())
+      .get('/sites')
+      .query({ date: 'not-a-date' });
+
+    expect(rsp.status).toBe(400);
+  });
+
+  it('GET / rejects a future historical date', async () => {
+    const date = DateTime.utc().plus({ days: 1 }).toISODate() || '';
+    const rsp = await request(app.getHttpServer())
+      .get('/sites')
+      .query({ date });
+
+    expect(rsp.status).toBe(400);
+  });
+
   it('GET /:id retrieve one site', async () => {
     const rsp = await request(app.getHttpServer()).get(`/sites/${siteId}`);
 
