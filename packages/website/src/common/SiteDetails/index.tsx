@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Theme, Box, useTheme, useMediaQuery } from '@mui/material';
+import {
+  Alert,
+  Grid,
+  Theme,
+  Box,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
@@ -128,6 +135,7 @@ const MINIMUM_SONDE_METRICS_TO_SHOW_CARD = 3;
 
 function SiteDetails({
   site,
+  historicalDate,
   selectedSurveyPointId,
   surveys,
   featuredSurveyId = null,
@@ -156,16 +164,23 @@ function SiteDetails({
   const isLoading = !site;
 
   useEffect(() => {
-    if (site && !spotterPosition) {
+    if (site && !historicalDate && !spotterPosition) {
       dispatch(spotterPositionRequest(String(site.id)));
     }
-    if (site && !latestData) {
+    if (site && !historicalDate && !latestData) {
       dispatch(latestDataRequest(String(site.id)));
     }
-    if (site && !forecastData) {
+    if (site && !historicalDate && !forecastData) {
       dispatch(forecastDataRequest(String(site.id)));
     }
-  }, [dispatch, site, spotterPosition, latestData, forecastData]);
+  }, [
+    dispatch,
+    site,
+    historicalDate,
+    spotterPosition,
+    latestData,
+    forecastData,
+  ]);
 
   useEffect(
     () => () => {
@@ -297,79 +312,107 @@ function SiteDetails({
     }
   }, [forecastData, latestData, timeSeriesRange]);
 
-  const { videoStream } = site || {};
+  const videoStream = historicalDate ? undefined : site?.videoStream;
 
-  const cards =
-    site && latestDataAsSofarValues
-      ? [
-          // CARD 1: Satellite (always shown)
+  const snapshotTimestamp = `${site?.historicalDataDate || historicalDate || ''}T00:00:00.000Z`;
+  const historicalSatelliteValues: LatestDataASSofarValue = {
+    dhw:
+      site?.collectionData?.dhw !== undefined
+        ? { value: site.collectionData.dhw, timestamp: snapshotTimestamp }
+        : undefined,
+    satelliteTemperature:
+      site?.collectionData?.satelliteTemperature !== undefined
+        ? {
+            value: site.collectionData.satelliteTemperature,
+            timestamp: snapshotTimestamp,
+          }
+        : undefined,
+  };
+
+  const cards = (() => {
+    if (!site) return times(4, () => null);
+
+    if (historicalDate) {
+      const hasHistoricalSnapshot =
+        site.historicalDataDate &&
+        (site.collectionData?.satelliteTemperature !== undefined ||
+          site.collectionData?.dhw !== undefined);
+      return [
+        hasHistoricalSnapshot ? (
           <Satellite
-            data={latestDataAsSofarValues}
+            data={historicalSatelliteValues}
             maxMonthlyMean={site.maxMonthlyMean}
-          />,
+            historicalDataDate={site.historicalDataDate}
+          />
+        ) : (
+          <Alert severity="warning">
+            No daily snapshot is available on or before {historicalDate}.
+          </Alert>
+        ),
+        <TemperatureChange dailyData={site.dailyData || []} />,
+      ];
+    }
 
-          // CARD 2: Sensor/CoralBleaching/TemperatureChange (conditional)
-          (() => {
-            if (
-              (hasHUIData || hasSondeData || hasSeapHOxData || hasHWOData) &&
-              !hasSpotterData
-            ) {
-              return <CoralBleaching data={latestDataAsSofarValues} />;
-            }
+    return [
+      // CARD 1: Satellite (always shown)
+      <Satellite
+        data={latestDataAsSofarValues}
+        maxMonthlyMean={site.maxMonthlyMean}
+      />,
 
-            if (!hasSpotterData) {
-              return (
-                <TemperatureChange dailyData={siteDetails?.dailyData ?? []} />
-              );
-            }
+      // CARD 2: Sensor/CoralBleaching/TemperatureChange (conditional)
+      (() => {
+        if (
+          (hasHUIData || hasSondeData || hasSeapHOxData || hasHWOData) &&
+          !hasSpotterData
+        ) {
+          return <CoralBleaching data={latestDataAsSofarValues} />;
+        }
 
-            return (
-              <Sensor
-                depth={site.depth}
-                id={site.id}
-                data={latestDataAsSofarValues}
-              />
-            );
-          })(),
+        if (!hasSpotterData) {
+          return <TemperatureChange dailyData={siteDetails?.dailyData ?? []} />;
+        }
 
-          // CARD 3: SeapHOx (priority) or WaterSampling/CoralBleaching (fallback)
-          (() => {
-            if (hasSeapHOxData) {
-              return (
-                <SeapHOxCard
-                  depth={site.depth}
-                  data={latestDataAsSofarValues}
-                />
-              );
-            }
-
-            if (hasHWOData) {
-              return (
-                <WaterSamplingCard siteId={site.id.toString()} source="hwo" />
-              );
-            }
-
-            // FALLBACK: Original Card 3 logic
-            if (hasHUIData) {
-              return (
-                <WaterSamplingCard siteId={site.id.toString()} source="hui" />
-              );
-            }
-            if (hasSondeData) {
-              return (
-                <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
-              );
-            }
-            return <CoralBleaching data={latestDataAsSofarValues} />;
-          })(),
-
-          // CARD 4: Waves (always shown)
-          <Waves
+        return (
+          <Sensor
+            depth={site.depth}
+            id={site.id}
             data={latestDataAsSofarValues}
-            hasSpotter={hasSpotterWindWaveData}
-          />,
-        ]
-      : times(4, () => null);
+          />
+        );
+      })(),
+
+      // CARD 3: SeapHOx (priority) or WaterSampling/CoralBleaching (fallback)
+      (() => {
+        if (hasSeapHOxData) {
+          return (
+            <SeapHOxCard depth={site.depth} data={latestDataAsSofarValues} />
+          );
+        }
+
+        if (hasHWOData) {
+          return <WaterSamplingCard siteId={site.id.toString()} source="hwo" />;
+        }
+
+        // FALLBACK: Original Card 3 logic
+        if (hasHUIData) {
+          return <WaterSamplingCard siteId={site.id.toString()} source="hui" />;
+        }
+        if (hasSondeData) {
+          return (
+            <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
+          );
+        }
+        return <CoralBleaching data={latestDataAsSofarValues} />;
+      })(),
+
+      // CARD 4: Waves (always shown)
+      <Waves
+        data={latestDataAsSofarValues}
+        hasSpotter={hasSpotterWindWaveData}
+      />,
+    ];
+  })();
 
   const mapTitleItems: Value[] = [
     {
@@ -453,6 +496,7 @@ function SiteDetails({
           })}
           titleItems={mapTitleItems}
           rightHeaderItem={
+            !historicalDate &&
             !showFeatureMediaCard &&
             site && <ReefCheckDataIndicator siteId={site?.id} />
           }
@@ -463,7 +507,9 @@ function SiteDetails({
             <Map
               siteId={site.id}
               spotterPosition={
-                hasSpotterData ? spotterPosition?.position : null
+                !historicalDate && hasSpotterData
+                  ? spotterPosition?.position
+                  : null
               }
               polygon={site.polygon}
               surveyPoints={site.surveyPoints}
@@ -479,6 +525,7 @@ function SiteDetails({
             })}
             titleItems={featuredMediaTitleItems()}
             rightHeaderItem={
+              !historicalDate &&
               showFeatureMediaCard &&
               site && <ReefCheckDataIndicator siteId={site?.id} />
             }
@@ -523,7 +570,9 @@ function SiteDetails({
         ))}
       </Grid>
 
-      {site && oceanSenseConfig?.[site.id] && <OceanSenseMetrics />}
+      {!historicalDate && site && oceanSenseConfig?.[site.id] && (
+        <OceanSenseMetrics />
+      )}
 
       <Box mt="2rem">
         <CombinedCharts
@@ -532,7 +581,7 @@ function SiteDetails({
           surveys={surveys}
           hasAdditionalSensorData={hasHUIData || hasSondeData || hasHWOData}
         />
-        {site?.iframe && (
+        {!historicalDate && site?.iframe && (
           <iframe
             style={{ width: '100%', height: '50vh' }}
             src={site.iframe}
@@ -541,16 +590,17 @@ function SiteDetails({
             // sandbox=""
           />
         )}
-        <Surveys site={site} />
+        <Surveys site={site} historicalDate={historicalDate} />
       </Box>
       {/* AI Chat Widget */}
-      {site && <AiChatWidget siteId={site.id} />}
+      {!historicalDate && site && <AiChatWidget siteId={site.id} />}
     </Box>
   );
 }
 
 interface SiteDetailsProps {
   site?: Site;
+  historicalDate?: string;
   selectedSurveyPointId?: string;
   featuredSurveyId?: number | null;
   surveys: SurveyListItem[];

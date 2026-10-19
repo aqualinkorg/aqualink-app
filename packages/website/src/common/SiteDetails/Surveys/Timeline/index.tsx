@@ -24,6 +24,7 @@ function SurveyTimeline({
   observation,
   pointName,
   pointId,
+  historicalDate,
   classes,
 }: SurveyTimelineProps) {
   const surveyList = useSelector(surveyListSelector);
@@ -38,16 +39,28 @@ function SurveyTimeline({
   // Combine surveys and reef check surveys into a single list
   const mergedSurveys: TimelineProps['surveys'] = sortByDate(
     [
-      ...filterSurveys(surveyList, observation, pointId).map((s) => ({
-        ...s,
-        date: s.diveDate ?? '',
-        type: 'survey' as const,
-      })),
-      ...(reefCheckSurveyList?.map((s) => ({
-        ...s,
-        date: s.date ?? '',
-        type: 'reefCheckSurvey' as const,
-      })) || []),
+      ...filterSurveys(surveyList, observation, pointId)
+        .filter(
+          (survey) =>
+            !historicalDate ||
+            (survey.diveDate && survey.diveDate.slice(0, 10) <= historicalDate),
+        )
+        .map((s) => ({
+          ...s,
+          date: s.diveDate ?? '',
+          type: 'survey' as const,
+        })),
+      ...(reefCheckSurveyList
+        ?.filter(
+          (survey) =>
+            !historicalDate ||
+            (survey.date && survey.date.slice(0, 10) <= historicalDate),
+        )
+        .map((s) => ({
+          ...s,
+          date: s.date ?? '',
+          type: 'reefCheckSurvey' as const,
+        })) || []),
     ],
     'date',
     'desc',
@@ -92,6 +105,7 @@ interface SurveyTimelineIncomingProps {
   observation: SurveyMedia['observations'] | 'any';
   pointName: string | null;
   pointId: number;
+  historicalDate?: string;
 }
 
 type SurveyTimelineProps = SurveyTimelineIncomingProps &

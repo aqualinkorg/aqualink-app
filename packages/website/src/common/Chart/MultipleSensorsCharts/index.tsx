@@ -33,7 +33,12 @@ import {
   TimeSeriesSurveyPoint,
 } from 'store/Sites/types';
 import { useQueryParam } from 'hooks/useQueryParams';
-import { rangeOverlapWithRange, isBefore, setTimeZone } from 'helpers/dates';
+import {
+  rangeOverlapWithRange,
+  isBefore,
+  setTimeZone,
+  convertToLocalTime,
+} from 'helpers/dates';
 import { getSourceRanges } from 'helpers/siteUtils';
 import { BaseSourceConfig, MonitoringMetric } from 'utils/types';
 import {
@@ -62,6 +67,8 @@ import {
   findChartWidth,
   generateMetricDataset,
   generateTempAnalysisDatasets,
+  getHistoricalRangeStartDate,
+  getZonedDateBounds,
   localizedEndOfDay,
 } from './helpers';
 import { RangeValue } from './types';
@@ -117,6 +124,7 @@ function MultipleSensorsCharts({
   const dispatch = useAppDispatch();
   const [startParam, setStartParam] = useQueryParam('start', isISODate);
   const [endParam, setEndParam] = useQueryParam('end', isISODate);
+  const [historicalDate] = useQueryParam('date', isISODate);
   const [chartParam] = useQueryParam('chart');
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
@@ -142,6 +150,35 @@ function MultipleSensorsCharts({
   );
 
   const today = localizedEndOfDay(undefined, site.timezone);
+  const historicalEndDate =
+    historicalDate && endParam && endParam < historicalDate
+      ? endParam
+      : historicalDate;
+  const historicalStartDate = historicalDate
+    ? startParam ||
+      getHistoricalRangeStartDate(
+        historicalEndDate || historicalDate,
+        range,
+        hoboBottomTemperatureRange?.data?.[0]?.minDate,
+        site.timezone,
+      )
+    : undefined;
+  const historicalDateBounds =
+    historicalStartDate && historicalEndDate
+      ? getZonedDateBounds(
+          historicalStartDate,
+          historicalEndDate,
+          site.timezone,
+        )
+      : undefined;
+  const historicalRequestStartDate = historicalDateBounds?.start;
+  const historicalRequestEndDate = historicalDateBounds?.end;
+  const historicalChartStartDate = historicalDateBounds
+    ? convertToLocalTime(historicalDateBounds.start, site.timezone)
+    : undefined;
+  const historicalChartEndDate = historicalDateBounds
+    ? convertToLocalTime(historicalDateBounds.end, site.timezone)
+    : undefined;
 
   const hasSpotterData = availableSources.includes('spotter');
 
@@ -156,7 +193,9 @@ function MultipleSensorsCharts({
   const hasSeapHOxData = availableSources.includes('seaphox');
 
   const chartStartDate =
-    startDate || DateTime.fromISO(today).minus({ weeks: 1 }).toISOString();
+    historicalChartStartDate ||
+    startDate ||
+    DateTime.fromISO(today).minus({ weeks: 1 }).toISOString();
   const now = DateTime.now();
   const end =
     endDate !== undefined
@@ -164,9 +203,9 @@ function MultipleSensorsCharts({
           .setZone(site.timezone || 'UTC')
           .endOf('day')
       : now;
-  const chartEndDate = (
-    now.valueOf() < end.valueOf() ? now : end
-  ).toISOString();
+  const chartEndDate =
+    historicalChartEndDate ||
+    (now.valueOf() < end.valueOf() ? now : end).toISOString();
 
   const hasOceanSenseId = Boolean(oceanSenseConfig?.[site.id]);
 
@@ -577,6 +616,22 @@ function MultipleSensorsCharts({
   // Set pickers initial values once the range request is completed
   useEffect(() => {
     if (!rangesLoading && !pickerStartDate && !pickerEndDate) {
+      if (historicalStartDate && historicalEndDate) {
+        const browserTimezone =
+          Intl.DateTimeFormat().resolvedOptions().timeZone;
+        setPickerStartDate(
+          DateTime.fromISO(historicalStartDate, {
+            zone: browserTimezone,
+          }).toISOString(),
+        );
+        setPickerEndDate(
+          DateTime.fromISO(historicalEndDate, {
+            zone: browserTimezone,
+          }).toISOString(),
+        );
+        return;
+      }
+
       const { maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
       const localizedMaxDate = localizedEndOfDay(maxDate, site.timezone);
       const pastOneMonth = DateTime.fromISO(localizedMaxDate || today)
@@ -605,6 +660,8 @@ function MultipleSensorsCharts({
     pickerStartDate,
     pickerEndDate,
     rangesLoading,
+    historicalStartDate,
+    historicalEndDate,
     site.timezone,
     today,
   ]);
@@ -617,6 +674,8 @@ function MultipleSensorsCharts({
       isBefore(pickerStartDate, pickerEndDate) &&
       timeSeriesDataRanges
     ) {
+      const requestStartDate = historicalRequestStartDate || pickerStartDate;
+      const requestEndDate = historicalRequestEndDate || pickerEndDate;
       const sources: Sources[] = [
         'spotter',
         'sonde',
@@ -637,8 +696,8 @@ function MultipleSensorsCharts({
           rangeOverlapWithRange(
             x.minDate,
             x.maxDate,
-            pickerStartDate,
-            pickerEndDate,
+            requestStartDate,
+            requestEndDate,
           ),
         ),
       );
@@ -666,15 +725,13 @@ function MultipleSensorsCharts({
         ].filter((x): x is Sources => x !== false),
       );
 
-      const siteLocalStartDate = setTimeZone(
-        new Date(pickerStartDate),
-        site.timezone,
-      );
+      const siteLocalStartDate =
+        historicalRequestStartDate ||
+        setTimeZone(new Date(pickerStartDate), site.timezone);
 
-      const siteLocalEndDate = setTimeZone(
-        new Date(pickerEndDate),
-        site.timezone,
-      );
+      const siteLocalEndDate =
+        historicalRequestEndDate ||
+        setTimeZone(new Date(pickerEndDate), site.timezone);
 
       dispatch(
         siteTimeSeriesDataRequest({
@@ -734,11 +791,19 @@ function MultipleSensorsCharts({
     pointId,
     site.id,
     site.timezone,
+    historicalRequestEndDate,
+    historicalRequestStartDate,
     timeSeriesDataRanges,
   ]);
 
   // Set chart start/end dates based on data received
   useEffect(() => {
+    if (historicalChartStartDate && historicalChartEndDate) {
+      setStartDate(historicalChartStartDate);
+      setEndDate(historicalChartEndDate);
+      return;
+    }
+
     const pickerLocalEndDate = new Date(
       setTimeZone(
         (pickerEndDate ? DateTime.fromISO(pickerEndDate) : DateTime.now())
@@ -759,21 +824,38 @@ function MultipleSensorsCharts({
     setStartDate(pickerLocalStartDate);
 
     setEndDate(DateTime.fromISO(pickerLocalEndDate).endOf('day').toISOString());
-  }, [pickerEndDate, pickerStartDate, site?.timezone]);
+  }, [
+    historicalChartEndDate,
+    historicalChartStartDate,
+    pickerEndDate,
+    pickerStartDate,
+    site?.timezone,
+  ]);
 
   useEffect(() => {
     if (pickerStartDate && pickerEndDate && range === 'custom') {
-      const newStartParam = DateTime.fromJSDate(
-        utcToZonedTime(pickerStartDate, site.timezone || 'UTC'),
-      ).toFormat('yyyy-MM-dd');
-      const newEndParam = DateTime.fromJSDate(
-        utcToZonedTime(pickerEndDate, site.timezone || 'UTC'),
-      ).toFormat('yyyy-MM-dd');
+      const newStartParam = historicalDate
+        ? DateTime.fromISO(pickerStartDate).toFormat('yyyy-MM-dd')
+        : DateTime.fromJSDate(
+            utcToZonedTime(pickerStartDate, site.timezone || 'UTC'),
+          ).toFormat('yyyy-MM-dd');
+      const newEndParam = historicalDate
+        ? DateTime.fromISO(pickerEndDate).toFormat('yyyy-MM-dd')
+        : DateTime.fromJSDate(
+            utcToZonedTime(pickerEndDate, site.timezone || 'UTC'),
+          ).toFormat('yyyy-MM-dd');
       setStartParam(newStartParam);
       setEndParam(newEndParam);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pickerEndDate, pickerStartDate, range, setEndParam, setStartParam]);
+  }, [
+    historicalDate,
+    pickerEndDate,
+    pickerStartDate,
+    range,
+    setEndParam,
+    setStartParam,
+  ]);
 
   // Set picker error
   useEffect(() => {
@@ -842,6 +924,33 @@ function MultipleSensorsCharts({
       .setZone(site.timezone || 'UTC')
       .startOf('day')
       .toISOString();
+
+    if (historicalDate) {
+      const endDateForRange = historicalDate;
+      const startDateForRange = getHistoricalRangeStartDate(
+        endDateForRange,
+        value,
+        minDate,
+        site.timezone,
+      );
+      const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      setPickerEndDate(
+        DateTime.fromISO(endDateForRange, {
+          zone: browserTimezone,
+        }).toISOString(),
+      );
+      setPickerStartDate(
+        DateTime.fromISO(startDateForRange, {
+          zone: browserTimezone,
+        }).toISOString(),
+      );
+      setRange(value);
+      if (value !== 'custom') {
+        setStartParam(undefined);
+        setEndParam(undefined);
+      }
+      return;
+    }
 
     setRange(value);
     if (value !== 'custom') {

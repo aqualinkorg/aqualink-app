@@ -12,6 +12,11 @@ const site = {
 const mockStore = configureStore([]);
 
 const store = mockStore({
+  sitesList: {
+    list: [],
+    loading: false,
+    error: null,
+  },
   selectedSite: site,
   homepage: {
     siteOnMap: site,

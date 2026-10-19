@@ -295,6 +295,7 @@ export interface Site {
   hasHobo: boolean;
   hasSeaphox: boolean;
   collectionData?: CollectionData;
+  historicalDataDate?: string;
   sketchFab?: SiteSketchFab;
   display: boolean;
   contactInformation?: string;
@@ -416,6 +417,10 @@ export interface SitesListState {
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  currentDate?: string;
+  detailsRequestId?: string;
+  requestedSiteId?: string;
+  requestedDate?: string;
   spotterPosition?: {
     position?: {
       longitude: number;

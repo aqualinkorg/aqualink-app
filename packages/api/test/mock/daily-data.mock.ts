@@ -11,6 +11,7 @@ const getMockDailyData = (
   site: DeepPartial<Site>,
 ): DeepPartial<DailyData> => ({
   dailyAlertLevel: random(4),
+  weeklyAlertLevel: random(4),
   degreeHeatingDays: random(70, true),
   date,
   site,
@@ -79,12 +80,12 @@ export const getMockSpotterData = (
 };
 
 export const californiaDailyData: DeepPartial<DailyData>[] = times(10, (i) => {
-  const dataDate = DateTime.now().minus({ days: i }).endOf('day').toISOString();
+  const dataDate = DateTime.utc().minus({ days: i }).endOf('day').toISOString();
   return getMockDailyData(dataDate, californiaSite);
 });
 
 export const athensDailyData: DeepPartial<DailyData>[] = times(10, (i) => {
-  const dataDate = DateTime.now().minus({ days: i }).endOf('day').toISOString();
+  const dataDate = DateTime.utc().minus({ days: i }).endOf('day').toISOString();
   return getMockDailyData(dataDate, athensSite);
 });
 

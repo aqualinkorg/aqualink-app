@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsBooleanString,
   IsDateString,
+  Matches,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -15,6 +16,7 @@ export class FilterSiteDto {
   @ApiProperty({ example: '2025-01-15', required: false })
   @IsOptional()
   @IsDateString({ strict: true })
+  @Matches(/^\d{4}-\d{2}-\d{2}$/)
   readonly date?: string;
 
   @ApiProperty({ example: 'Duxbury Site' })

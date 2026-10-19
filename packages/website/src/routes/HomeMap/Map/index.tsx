@@ -189,8 +189,10 @@ function HomepageMap({
   );
 
   const siteMarkers = useMemo(
-    () => <SiteMarkers collection={collection} />,
-    [collection],
+    () => (
+      <SiteMarkers collection={collection} historicalDate={historicalDate} />
+    ),
+    [collection, historicalDate],
   );
 
   // Memoize the TileLayer to prevent unnecessary redraws
@@ -276,10 +278,10 @@ function HomepageMap({
       />
       {onHistoricalDateChange && (
         <div className={classes.historicalDateControl}>
-          <label htmlFor="map-historical-date">Map data date</label>
+          <span id="map-historical-date-label">Map data date</span>
           <input
             id="map-historical-date"
-            aria-label="Map data date"
+            aria-labelledby="map-historical-date-label"
             type="date"
             value={historicalDate || ''}
             max={new Date().toISOString().slice(0, 10)}
@@ -288,10 +290,7 @@ function HomepageMap({
             }
           />
           {historicalDate && (
-            <button
-              type="button"
-              onClick={() => onHistoricalDateChange('')}
-            >
+            <button type="button" onClick={() => onHistoricalDateChange('')}>
               Latest
             </button>
           )}

@@ -208,37 +208,49 @@ export class SitesService {
       this.latestDataRepository,
     );
 
-    const historicalDailyData = filter.date && res.length
-      ? await this.dailyDataRepository
-          .createQueryBuilder('daily_data')
-          .leftJoinAndSelect('daily_data.site', 'site')
-          .where('site.id IN (:...siteIds)', {
-            siteIds: res.map(({ id }) => id),
-          })
-          .andWhere('daily_data.date <= :date', {
-            date: new Date(`${filter.date}T23:59:59.999Z`),
-          })
-          .distinctOn(['site.id'])
-          .orderBy('site.id', 'ASC')
-          .addOrderBy('daily_data.date', 'DESC')
-          .getMany()
-      : [];
+    const historicalDailyData =
+      filter.date && res.length
+        ? await this.dailyDataRepository
+            .createQueryBuilder('daily_data')
+            .leftJoinAndSelect('daily_data.site', 'site')
+            .where('site.id IN (:...siteIds)', {
+              siteIds: res.map(({ id }) => id),
+            })
+            .andWhere('daily_data.date <= :date', {
+              date: new Date(`${filter.date}T23:59:59.999Z`),
+            })
+            .distinctOn(['site.id'])
+            .orderBy('site.id', 'ASC')
+            .addOrderBy('daily_data.date', 'DESC')
+            .getMany()
+        : [];
 
     const historicalDataBySite = historicalDailyData.reduce(
       (dataBySite, snapshot) => {
-        const collectionData: NonNullable<Site['collectionData']> = {};
-        if (snapshot.degreeHeatingDays !== null)
-          collectionData.dhw = snapshot.degreeHeatingDays;
-        if (snapshot.satelliteTemperature !== null)
-          collectionData.satelliteTemperature = snapshot.satelliteTemperature;
-        if (snapshot.weeklyAlertLevel !== null)
-          collectionData.tempWeeklyAlert = snapshot.weeklyAlertLevel;
+        const collectionData: NonNullable<Site['collectionData']> = {
+          ...(snapshot.degreeHeatingDays !== null && {
+            // The map's `dhw` field is in weeks; daily_data stores degree days.
+            dhw: snapshot.degreeHeatingDays / 7,
+          }),
+          ...(snapshot.satelliteTemperature !== null && {
+            satelliteTemperature: snapshot.satelliteTemperature,
+          }),
+          ...(snapshot.weeklyAlertLevel !== null && {
+            tempWeeklyAlert: snapshot.weeklyAlertLevel,
+          }),
+        };
         return {
           ...dataBySite,
-          [snapshot.site.id]: collectionData,
+          [snapshot.site.id]: {
+            collectionData,
+            date: snapshot.date,
+          },
         };
       },
-      {} as Record<number, NonNullable<Site['collectionData']>>,
+      {} as Record<
+        number,
+        { collectionData: NonNullable<Site['collectionData']>; date: Date }
+      >,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -255,15 +267,23 @@ export class SitesService {
       ...site,
       applied: site.applied,
       collectionData: filter.date
-        ? historicalDataBySite[site.id] || {}
+        ? historicalDataBySite[site.id]?.collectionData || {}
         : mappedSiteData[site.id],
+      historicalDataDate: filter.date
+        ? historicalDataBySite[site.id]?.date.toISOString().slice(0, 10)
+        : undefined,
       hasHobo: hasHoboDataSet.has(site.id),
       waterQualitySources: waterQualityDataSet.get(site.id),
       reefCheckData: reefCheckDataSet[site.id],
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, date?: string): Promise<Site> {
+    const today = DateTime.utc().toISODate();
+    if (date && today && date > today) {
+      throw new BadRequestException('Date cannot be in the future');
+    }
+
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -290,6 +310,30 @@ export class SitesService {
       [site],
       this.latestDataRepository,
     );
+
+    const historicalSnapshot = date
+      ? await this.dailyDataRepository
+          .createQueryBuilder('daily_data')
+          .where('site_id = :id', { id })
+          .andWhere('daily_data.date <= :date', {
+            date: new Date(`${date}T23:59:59.999Z`),
+          })
+          .orderBy('daily_data.date', 'DESC')
+          .getOne()
+      : undefined;
+    const historicalCollectionData = historicalSnapshot
+      ? {
+          ...(historicalSnapshot.degreeHeatingDays !== null && {
+            dhw: historicalSnapshot.degreeHeatingDays / 7,
+          }),
+          ...(historicalSnapshot.satelliteTemperature !== null && {
+            satelliteTemperature: historicalSnapshot.satelliteTemperature,
+          }),
+          ...(historicalSnapshot.weeklyAlertLevel !== null && {
+            tempWeeklyAlert: historicalSnapshot.weeklyAlertLevel,
+          }),
+        }
+      : {};
 
     const maskedSpotterApiToken = site.spotterApiToken
       ? `****${site.spotterApiToken?.slice(-4)}`
@@ -320,7 +364,8 @@ export class SitesService {
       historicalMonthlyMean,
       videoStream,
       applied: site.applied,
-      collectionData: mappedSiteData[site.id],
+      collectionData: date ? historicalCollectionData : mappedSiteData[site.id],
+      historicalDataDate: historicalSnapshot?.date.toISOString().slice(0, 10),
     };
   }
 

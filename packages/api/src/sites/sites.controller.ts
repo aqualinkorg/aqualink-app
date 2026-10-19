@@ -76,12 +76,22 @@ export class SitesController {
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
-  @ApiOperation({ summary: 'Returns specified site' })
+  @ApiOperation({ summary: 'Returns specified site, optionally as of a date' })
   @ApiParam({ name: 'id', example: 1 })
+  @ApiQuery({
+    name: 'date',
+    required: false,
+    example: '2025-01-15',
+    description:
+      'Return map metrics from the latest daily snapshot on or before this UTC date.',
+  })
   @Public()
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Site> {
-    return this.sitesService.findOne(id);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() filterSiteDto: FilterSiteDto,
+  ): Promise<Site> {
+    return this.sitesService.findOne(id, filterSiteDto.date);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')

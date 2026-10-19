@@ -152,7 +152,10 @@ function Homepage({ classes }: HomepageProps) {
           {showSiteTable && (
             <Hidden mdDown>
               <Grid className={classes.siteTable} item md={6}>
-                <SiteTable map={mapInstance} />
+                <SiteTable
+                  map={mapInstance}
+                  historicalDate={historicalDate || undefined}
+                />
               </Grid>
             </Hidden>
           )}
@@ -168,7 +171,11 @@ function Homepage({ classes }: HomepageProps) {
               open={isDrawerOpen}
             >
               <div role="presentation" onClick={toggleDrawer}>
-                <SiteTable map={mapInstance} isDrawerOpen={isDrawerOpen} />
+                <SiteTable
+                  map={mapInstance}
+                  isDrawerOpen={isDrawerOpen}
+                  historicalDate={historicalDate || undefined}
+                />
               </div>
             </SwipeableBottomSheet>
           </Hidden>

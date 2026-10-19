@@ -38,6 +38,29 @@ const selectedSiteInitialState: SelectedSiteState = {
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
 
+type SiteRequestParams = string | { id: string; date?: string };
+
+const normalizeSiteRequestParams = (params: SiteRequestParams) =>
+  typeof params === 'string' ? { id: params, date: undefined } : params;
+
+export const shouldFetchSiteRequest = (
+  id: string,
+  date: string | undefined,
+  state: Pick<
+    SelectedSiteState,
+    'details' | 'currentDate' | 'loading' | 'requestedSiteId' | 'requestedDate'
+  >,
+) => {
+  const sameDetails =
+    `${state.details?.id}` === id && state.currentDate === date;
+  const sameDetailsAndIdle = sameDetails && !state.loading;
+  const sameRequestInFlight =
+    state.loading &&
+    state.requestedSiteId === id &&
+    state.requestedDate === date;
+  return !sameDetailsAndIdle && !sameRequestInFlight;
+};
+
 export const forecastDataRequest = createAsyncThunk<
   SelectedSiteState['forecastData'],
   string,
@@ -90,14 +113,20 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  SiteRequestParams,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (params: SiteRequestParams, { rejectWithValue }) => {
+    const { id, date } = normalizeSiteRequestParams(params);
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { data } = await siteServices.getSite(id, date);
+      const dailyDataEnd = date ? `${date}T23:59:59.999Z` : undefined;
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        undefined,
+        dailyDataEnd,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,11 +152,9 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
-      const {
-        selectedSite: { details },
-      } = getState();
-      return `${details?.id}` !== id;
+    condition(params: SiteRequestParams, { getState }) {
+      const { id, date } = normalizeSiteRequestParams(params);
+      return shouldFetchSiteRequest(id, date, getState().selectedSite);
     },
   },
 );
@@ -334,29 +361,43 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
+    builder.addCase(siteRequest.fulfilled, (state, action) => {
+      if (state.detailsRequestId !== action.meta.requestId) return state;
+      const { date } = normalizeSiteRequestParams(action.meta.arg);
+      return {
         ...state,
         details: action.payload,
         loading: false,
-      }),
-    );
+        currentDate: date,
+        detailsRequestId: undefined,
+        requestedSiteId: undefined,
+        requestedDate: undefined,
+      };
+    });
 
-    builder.addCase(
-      siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+    builder.addCase(siteRequest.rejected, (state, action) => {
+      if (state.detailsRequestId !== action.meta.requestId) return state;
+      return {
         ...state,
-        error: action.payload,
+        error: action.payload || action.error.message,
         loading: false,
-      }),
-    );
+        detailsRequestId: undefined,
+        requestedSiteId: undefined,
+        requestedDate: undefined,
+      };
+    });
 
-    builder.addCase(siteRequest.pending, (state) => ({
-      ...state,
-      loading: true,
-      error: null,
-    }));
+    builder.addCase(siteRequest.pending, (state, action) => {
+      const { id, date } = normalizeSiteRequestParams(action.meta.arg);
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        detailsRequestId: action.meta.requestId,
+        requestedSiteId: id,
+        requestedDate: date,
+      };
+    });
 
     builder.addCase(
       forecastDataRequest.fulfilled,
@@ -608,6 +649,10 @@ const selectedSiteSlice = createSlice({
 export const siteDetailsSelector = (
   state: RootState,
 ): SelectedSiteState['details'] => state.selectedSite.details;
+
+export const siteCurrentDateSelector = (
+  state: RootState,
+): SelectedSiteState['currentDate'] => state.selectedSite.currentDate;
 
 export const spotterPositionSelector = (
   state: RootState,

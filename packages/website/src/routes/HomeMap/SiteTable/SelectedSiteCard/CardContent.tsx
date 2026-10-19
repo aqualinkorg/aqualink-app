@@ -24,6 +24,7 @@ import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/hel
 import Chip from 'common/Chip';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
+import { getSiteDetailPath } from '../../helpers';
 import featuredImageLoading from '../../../../assets/img/loading-image.svg';
 import chartLoading from '../../../../assets/img/chart_skeleton.png';
 
@@ -113,6 +114,7 @@ function SelectedSiteCardContent({
   loading,
   error,
   imageUrl = null,
+  historicalDate,
 }: SelectedSiteCardContentProps) {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
@@ -142,7 +144,8 @@ function SelectedSiteCardContent({
       label: `TEMP AT ${site?.depth}m`,
       value: formatNumber(bottomTemperature, 1),
       unit: ' °C',
-      display: isNumber(bottomTemperature) && isNumber(site?.depth),
+      display:
+        !historicalDate && isNumber(bottomTemperature) && isNumber(site?.depth),
     },
   ];
 
@@ -150,14 +153,15 @@ function SelectedSiteCardContent({
     ? getSiteNameAndRegion(site)
     : { name: null, region: null };
 
-  const chartDataset = site
-    ? standardDailyDataDataset(
-        site.dailyData,
-        site.maxMonthlyMean,
-        false,
-        site.timezone,
-      )
-    : undefined;
+  const chartDataset =
+    site && !historicalDate
+      ? standardDailyDataDataset(
+          site.dailyData,
+          site.maxMonthlyMean,
+          false,
+          site.timezone,
+        )
+      : undefined;
 
   const ChartComponent =
     site && chartDataset ? (
@@ -208,7 +212,7 @@ function SelectedSiteCardContent({
             >
               {site && imageUrl && (
                 <Link
-                  to={`/sites/${site.id}`}
+                  to={getSiteDetailPath(site.id, historicalDate)}
                   state={{ from: location.pathname }}
                 >
                   <CardMedia
@@ -255,11 +259,11 @@ function SelectedSiteCardContent({
                         : 'flex-end'
                     }
                   >
-                    {site.videoStream && isTablet && (
+                    {site.videoStream && isTablet && !historicalDate && (
                       <Chip
                         live
                         liveText="LIVE VIDEO"
-                        to={`/sites/${site.id}`}
+                        to={getSiteDetailPath(site.id, historicalDate)}
                         state={{ from: location.pathname }}
                         width={80}
                       />
@@ -268,14 +272,14 @@ function SelectedSiteCardContent({
                       <Button
                         className={classes.exploreButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        to={getSiteDetailPath(site.id, historicalDate)}
                         state={{ from: location.pathname }}
                         onClick={onExploreButtonClick}
                         size="small"
                         variant="contained"
                         color="primary"
                       >
-                        EXPLORE
+                        {historicalDate ? 'EXPLORE HISTORICAL SITE' : 'EXPLORE'}
                       </Button>
                     </Grid>
                   </Grid>
@@ -311,7 +315,7 @@ function SelectedSiteCardContent({
                     <span title={name || ''}>{name}</span>
                   </Typography>
                 </Grid>
-                {site?.videoStream && (
+                {site?.videoStream && !historicalDate && (
                   <Chip
                     live
                     liveText="LIVE VIDEO"
@@ -348,33 +352,46 @@ function SelectedSiteCardContent({
             textHeight={12}
           >
             <Typography color="textSecondary" variant="caption">
-              DAILY SURFACE TEMP. (°C)
+              {historicalDate
+                ? 'HISTORICAL MAP SNAPSHOT'
+                : 'DAILY SURFACE TEMP. (°C)'}
             </Typography>
           </LoadingSkeleton>
+          {historicalDate && (
+            <Alert severity={site?.historicalDataDate ? 'info' : 'warning'}>
+              {site?.historicalDataDate
+                ? `Map metrics use the daily snapshot from ${site.historicalDataDate}, on or before ${historicalDate}. Explore opens historical site data.`
+                : `No daily snapshot is available on or before ${historicalDate}. Explore opens site data through ${historicalDate}.`}
+            </Alert>
+          )}
         </Box>
-        <Hidden mdDown>
-          <LoadingSkeleton
-            image={chartLoading}
-            loading={loading}
-            variant="rectangular"
-            width="98%"
-            height={180}
-          >
-            <div>{ChartComponent}</div>
-          </LoadingSkeleton>
-        </Hidden>
-        <Hidden mdUp>
-          <LoadingSkeleton
-            className={classes.mobileChartLoading}
-            image={chartLoading}
-            loading={loading}
-            variant="rectangular"
-            width="98%"
-            height={200}
-          >
-            {ChartComponent}
-          </LoadingSkeleton>
-        </Hidden>
+        {!historicalDate && (
+          <Hidden mdDown>
+            <LoadingSkeleton
+              image={chartLoading}
+              loading={loading}
+              variant="rectangular"
+              width="98%"
+              height={180}
+            >
+              <div>{ChartComponent}</div>
+            </LoadingSkeleton>
+          </Hidden>
+        )}
+        {!historicalDate && (
+          <Hidden mdUp>
+            <LoadingSkeleton
+              className={classes.mobileChartLoading}
+              image={chartLoading}
+              loading={loading}
+              variant="rectangular"
+              width="98%"
+              height={200}
+            >
+              {ChartComponent}
+            </LoadingSkeleton>
+          </Hidden>
+        )}
       </Grid>
       <Grid item xs={12} lg={2} container>
         <div className={classes.metricsContainer}>
@@ -422,6 +439,7 @@ interface SelectedSiteCardContentProps {
   loading: boolean;
   error?: string | null;
   imageUrl?: string | null;
+  historicalDate?: string;
 }
 
 type SelectedSiteCardContentStyleProps = Pick<
