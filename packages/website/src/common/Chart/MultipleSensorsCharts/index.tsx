@@ -1052,8 +1052,8 @@ function MultipleSensorsCharts({
       <div className={classes.buttonWrapper}>
         <DownloadCSVButton
           data={dataForCsv}
-          startDate={pickerStartDate}
-          endDate={pickerEndDate}
+          startDate={historicalRequestStartDate || pickerStartDate}
+          endDate={historicalRequestEndDate || pickerEndDate}
           siteId={site.id}
           defaultMetrics={DEFAULT_METRICS}
         />
