@@ -157,12 +157,13 @@ describe('independent HTTP-boundary red-team', () => {
       metrics: ['bottom_temperature'],
     };
     const temperature = store.dispatch(
-      siteTimeSeriesDataRequest(params as any) as any,
+      siteTimeSeriesDataRequest({ ...params, hourly: true } as any) as any,
     );
     const salinity = store.dispatch(
       siteTimeSeriesDataRequest({
         ...params,
         metrics: ['salinity'],
+        hourly: false,
       } as any) as any,
     );
     calls[1].resolve({
@@ -244,6 +245,137 @@ describe('independent HTTP-boundary red-team', () => {
     await flush();
     calls[2].resolve([]);
     await current;
+  });
+
+  it.each(['fulfill', 'reject'])(
+    'ignores old range-selection %s without route cleanup',
+    async (outcome) => {
+      intercept();
+      const store = makeStore();
+      const params = {
+        siteId: '1',
+        pointId: '1',
+        start: '2025-01-01',
+        end: '2025-02-01',
+        metrics: ['bottom_temperature'],
+      };
+      const old = store.dispatch(
+        siteTimeSeriesDataRequest(params as any) as any,
+      );
+      const current = store.dispatch(
+        siteTimeSeriesDataRequest({
+          ...params,
+          start: '2024-12-01',
+        } as any) as any,
+      );
+      calls[1].resolve({
+        bottom_temperature: [
+          { type: 'sonde', data: [{ timestamp: '2025-01-15', value: 21 }] },
+        ],
+      });
+      await flush();
+      calls[2].resolve([]);
+      await current;
+      if (outcome === 'fulfill') {
+        calls[0].resolve({
+          bottom_temperature: [
+            { type: 'sonde', data: [{ timestamp: '2025-01-15', value: 99 }] },
+          ],
+        });
+        await flush();
+        calls[3].resolve([]);
+      } else calls[0].reject(new Error('offline'));
+      await old;
+      expect(
+        store.getState().selectedSite.timeSeriesData?.bottomTemperature?.[0]
+          .data[0].value,
+      ).toBe(21);
+      expect(store.getState().selectedSite.timeSeriesMinRequestDate).toBe(
+        '2024-12-01',
+      );
+      expect(store.getState().selectedSite.error).toBeNull();
+    },
+  );
+
+  it('refetches when switching survey point inside a cached date interval', async () => {
+    intercept();
+    const store = makeStore();
+    const params = {
+      siteId: '1',
+      pointId: '1',
+      start: '2025-01-01',
+      end: '2025-03-01',
+      metrics: ['bottom_temperature'],
+    };
+    const first = store.dispatch(
+      siteTimeSeriesDataRequest(params as any) as any,
+    );
+    calls[0].resolve({
+      bottom_temperature: [
+        {
+          type: 'sonde',
+          surveyPoint: { id: 1, name: 'Old point' },
+          data: [{ timestamp: '2025-01-15', value: 99 }],
+        },
+      ],
+    });
+    await flush();
+    calls[1].resolve([]);
+    await first;
+    const current = store.dispatch(
+      siteTimeSeriesDataRequest({
+        ...params,
+        pointId: '2',
+        start: '2025-01-10',
+        end: '2025-02-01',
+      } as any) as any,
+    );
+    await flush();
+    expect(calls).toHaveLength(3);
+    expect(calls[2].url).toContain('/site-survey-points/2');
+    calls[2].resolve({
+      bottom_temperature: [
+        {
+          type: 'sonde',
+          surveyPoint: { id: 2, name: 'New point' },
+          data: [{ timestamp: '2025-01-15', value: 21 }],
+        },
+      ],
+    });
+    await flush();
+    calls[3].resolve([]);
+    await current;
+    expect(
+      store.getState().selectedSite.timeSeriesData?.bottomTemperature?.[0]
+        .surveyPoint?.id,
+    ).toBe(2);
+    expect(
+      store.getState().selectedSite.timeSeriesData?.bottomTemperature?.[0]
+        .data[0].value,
+    ).toBe(21);
+  });
+
+  it('ignores a prior survey-point range response without route cleanup', async () => {
+    intercept();
+    const store = makeStore();
+    const old = store.dispatch(
+      siteTimeSeriesDataRangeRequest({ siteId: '1', pointId: '1' }) as any,
+    );
+    const current = store.dispatch(
+      siteTimeSeriesDataRangeRequest({ siteId: '1', pointId: '2' }) as any,
+    );
+    calls[1].resolve({});
+    await current;
+    calls[0].resolve({
+      bottom_temperature: [
+        {
+          type: 'sonde',
+          data: [{ minDate: '2020-01-01', maxDate: '2026-01-01' }],
+        },
+      ],
+    });
+    await old;
+    expect(store.getState().selectedSite.timeSeriesDataRange).toEqual({});
   });
 
   it('chart: old live response must not overwrite a new historical selection', async () => {

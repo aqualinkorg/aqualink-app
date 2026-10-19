@@ -38,6 +38,20 @@ const selectedSiteInitialState: SelectedSiteState = {
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
 
+const getTimeSeriesDataKey = ({
+  siteId,
+  pointId,
+}: TimeSeriesDataRangeRequestParams) =>
+  JSON.stringify([siteId, pointId || null]);
+
+// Metrics and hourly resolution can differ between concurrent sensor requests.
+const getTimeSeriesRequestKey = (params: TimeSeriesDataRequestParams) =>
+  JSON.stringify([
+    getTimeSeriesDataKey(params),
+    params.start || null,
+    params.end || null,
+  ]);
+
 type SiteRequestParams = string | { id: string; date?: string };
 
 const normalizeSiteRequestParams = (params: SiteRequestParams) =>
@@ -346,12 +360,15 @@ const selectedSiteSlice = createSlice({
       timeSeriesMaxRequestDate: undefined,
       timeSeriesMinRequestDate: undefined,
       timeSeriesRequestIds: [],
+      timeSeriesRequestKey: undefined,
+      timeSeriesDataKey: undefined,
       timeSeriesDataLoading: false,
     }),
     clearTimeSeriesDataRange: (state) => ({
       ...state,
       timeSeriesDataRange: undefined,
       timeSeriesRangeRequestIds: [],
+      timeSeriesRangeRequestKey: undefined,
       timeSeriesDataRangeLoading: false,
     }),
     clearGranularDailyData: (state) => ({
@@ -583,15 +600,31 @@ const selectedSiteSlice = createSlice({
       };
     });
 
-    builder.addCase(siteTimeSeriesDataRequest.pending, (state, action) => ({
-      ...state,
-      timeSeriesRequestIds: [
-        ...(state.timeSeriesRequestIds || []),
-        action.meta.requestId,
-      ],
-      timeSeriesDataLoading: true,
-      error: null,
-    }));
+    builder.addCase(siteTimeSeriesDataRequest.pending, (state, action) => {
+      const dataKey = getTimeSeriesDataKey(action.meta.arg);
+      const requestKey = getTimeSeriesRequestKey(action.meta.arg);
+      const sameData = state.timeSeriesDataKey === dataKey;
+      const sameRequest = state.timeSeriesRequestKey === requestKey;
+      return {
+        ...state,
+        timeSeriesDataKey: dataKey,
+        timeSeriesRequestKey: requestKey,
+        timeSeriesRequestIds: [
+          ...(sameRequest ? state.timeSeriesRequestIds || [] : []),
+          action.meta.requestId,
+        ],
+        timeSeriesData: sameData ? state.timeSeriesData : undefined,
+        granularDailyData: sameData ? state.granularDailyData : undefined,
+        timeSeriesMinRequestDate: sameData
+          ? state.timeSeriesMinRequestDate
+          : undefined,
+        timeSeriesMaxRequestDate: sameData
+          ? state.timeSeriesMaxRequestDate
+          : undefined,
+        timeSeriesDataLoading: true,
+        error: null,
+      };
+    });
 
     builder.addCase(
       siteTimeSeriesDataRangeRequest.fulfilled,
@@ -629,18 +662,23 @@ const selectedSiteSlice = createSlice({
       },
     );
 
-    builder.addCase(
-      siteTimeSeriesDataRangeRequest.pending,
-      (state, action) => ({
+    builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state, action) => {
+      const requestKey = getTimeSeriesDataKey(action.meta.arg);
+      const sameRequest = state.timeSeriesRangeRequestKey === requestKey;
+      return {
         ...state,
+        timeSeriesRangeRequestKey: requestKey,
         timeSeriesRangeRequestIds: [
-          ...(state.timeSeriesRangeRequestIds || []),
+          ...(sameRequest ? state.timeSeriesRangeRequestIds || [] : []),
           action.meta.requestId,
         ],
+        timeSeriesDataRange: sameRequest
+          ? state.timeSeriesDataRange
+          : undefined,
         timeSeriesDataRangeLoading: true,
         error: null,
-      }),
-    );
+      };
+    });
 
     builder.addCase(
       siteContactInfoRequest.fulfilled,

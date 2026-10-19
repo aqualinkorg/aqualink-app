@@ -442,9 +442,12 @@ export interface SelectedSiteState {
   timeSeriesData?: TimeSeriesData;
   timeSeriesDataLoading: boolean;
   timeSeriesRequestIds?: string[];
+  timeSeriesRequestKey?: string;
+  timeSeriesDataKey?: string;
   timeSeriesDataRange?: TimeSeriesDataRange;
   timeSeriesDataRangeLoading: boolean;
   timeSeriesRangeRequestIds?: string[];
+  timeSeriesRangeRequestKey?: string;
   timeSeriesMinRequestDate?: string;
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
