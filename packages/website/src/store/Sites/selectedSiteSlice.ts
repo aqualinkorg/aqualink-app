@@ -345,10 +345,14 @@ const selectedSiteSlice = createSlice({
       timeSeriesData: undefined,
       timeSeriesMaxRequestDate: undefined,
       timeSeriesMinRequestDate: undefined,
+      timeSeriesRequestIds: [],
+      timeSeriesDataLoading: false,
     }),
     clearTimeSeriesDataRange: (state) => ({
       ...state,
       timeSeriesDataRange: undefined,
+      timeSeriesRangeRequestIds: [],
+      timeSeriesDataRangeLoading: false,
     }),
     clearGranularDailyData: (state) => ({
       ...state,
@@ -519,96 +523,124 @@ const selectedSiteSlice = createSlice({
         : state.oceanSenseDataError,
     }));
 
-    builder.addCase(
-      siteTimeSeriesDataRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<{
-          granularDailyData: SelectedSiteState['granularDailyData'];
-          timeSeriesData: SelectedSiteState['timeSeriesData'];
-          timeSeriesMinRequestDate: SelectedSiteState['timeSeriesMinRequestDate'];
-          timeSeriesMaxRequestDate: SelectedSiteState['timeSeriesMaxRequestDate'];
-        }>,
-      ) => {
-        const oldTimeSeries = state.timeSeriesData || {};
-        const newTimeSeries = action.payload.timeSeriesData || {};
-        const keys = [
-          ...new Set([
-            ...Object.keys(oldTimeSeries),
-            ...Object.keys(newTimeSeries),
-          ]),
-        ] as Metrics[];
-        const merged = {} as Partial<Record<Metrics, TimeSeries>>;
-        keys.forEach((key) => {
-          // If key exists in both objects, merge arrays
-          if (key in oldTimeSeries && key in newTimeSeries) {
-            const newTypes = newTimeSeries[key]?.map((x) => x.type);
-            const oldValues = oldTimeSeries[key]?.filter(
-              (x) => !newTypes?.includes(x.type),
-            );
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
-          } else if (key in oldTimeSeries) {
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = oldTimeSeries[key];
-          } else {
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = newTimeSeries[key];
-          }
-        });
+    builder.addCase(siteTimeSeriesDataRequest.fulfilled, (state, action) => {
+      if (!state.timeSeriesRequestIds?.includes(action.meta.requestId)) {
+        return state;
+      }
+      const requestIds = state.timeSeriesRequestIds.filter(
+        (requestId) => requestId !== action.meta.requestId,
+      );
+      const oldTimeSeries = state.timeSeriesData || {};
+      const newTimeSeries = action.payload.timeSeriesData || {};
+      const keys = [
+        ...new Set([
+          ...Object.keys(oldTimeSeries),
+          ...Object.keys(newTimeSeries),
+        ]),
+      ] as Metrics[];
+      const merged = {} as Partial<Record<Metrics, TimeSeries>>;
+      keys.forEach((key) => {
+        // If key exists in both objects, merge arrays
+        if (key in oldTimeSeries && key in newTimeSeries) {
+          const newTypes = newTimeSeries[key]?.map((x) => x.type);
+          const oldValues = oldTimeSeries[key]?.filter(
+            (x) => !newTypes?.includes(x.type),
+          );
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
+        } else if (key in oldTimeSeries) {
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = oldTimeSeries[key];
+        } else {
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = newTimeSeries[key];
+        }
+      });
 
-        return {
-          ...state,
-          granularDailyData: action.payload.granularDailyData,
-          timeSeriesData: merged,
-          timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
-          timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
-          timeSeriesDataLoading: false,
-        };
-      },
-    );
-
-    builder.addCase(
-      siteTimeSeriesDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      return {
         ...state,
-        error: action.payload,
-        timeSeriesDataLoading: false,
-      }),
-    );
+        granularDailyData: action.payload.granularDailyData,
+        timeSeriesData: merged,
+        timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
+        timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
+        timeSeriesRequestIds: requestIds,
+        timeSeriesDataLoading: requestIds.length > 0,
+      };
+    });
 
-    builder.addCase(siteTimeSeriesDataRequest.pending, (state) => ({
+    builder.addCase(siteTimeSeriesDataRequest.rejected, (state, action) => {
+      if (!state.timeSeriesRequestIds?.includes(action.meta.requestId)) {
+        return state;
+      }
+      const requestIds = state.timeSeriesRequestIds.filter(
+        (requestId) => requestId !== action.meta.requestId,
+      );
+      return {
+        ...state,
+        error: action.payload || action.error.message,
+        timeSeriesRequestIds: requestIds,
+        timeSeriesDataLoading: requestIds.length > 0,
+      };
+    });
+
+    builder.addCase(siteTimeSeriesDataRequest.pending, (state, action) => ({
       ...state,
+      timeSeriesRequestIds: [
+        ...(state.timeSeriesRequestIds || []),
+        action.meta.requestId,
+      ],
       timeSeriesDataLoading: true,
       error: null,
     }));
 
     builder.addCase(
       siteTimeSeriesDataRangeRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<SelectedSiteState['timeSeriesDataRange']>,
-      ) => ({
-        ...state,
-        timeSeriesDataRange: action.payload,
-        timeSeriesDataRangeLoading: false,
-      }),
+      (state, action) => {
+        if (!state.timeSeriesRangeRequestIds?.includes(action.meta.requestId)) {
+          return state;
+        }
+        const requestIds = state.timeSeriesRangeRequestIds.filter(
+          (requestId) => requestId !== action.meta.requestId,
+        );
+        return {
+          ...state,
+          timeSeriesDataRange: action.payload,
+          timeSeriesRangeRequestIds: requestIds,
+          timeSeriesDataRangeLoading: requestIds.length > 0,
+        };
+      },
     );
 
     builder.addCase(
       siteTimeSeriesDataRangeRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        timeSeriesDataRangeLoading: false,
-      }),
+      (state, action) => {
+        if (!state.timeSeriesRangeRequestIds?.includes(action.meta.requestId)) {
+          return state;
+        }
+        const requestIds = state.timeSeriesRangeRequestIds.filter(
+          (requestId) => requestId !== action.meta.requestId,
+        );
+        return {
+          ...state,
+          error: action.payload || action.error.message,
+          timeSeriesRangeRequestIds: requestIds,
+          timeSeriesDataRangeLoading: requestIds.length > 0,
+        };
+      },
     );
 
-    builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state) => ({
-      ...state,
-      timeSeriesDataRangeLoading: true,
-      error: null,
-    }));
+    builder.addCase(
+      siteTimeSeriesDataRangeRequest.pending,
+      (state, action) => ({
+        ...state,
+        timeSeriesRangeRequestIds: [
+          ...(state.timeSeriesRangeRequestIds || []),
+          action.meta.requestId,
+        ],
+        timeSeriesDataRangeLoading: true,
+        error: null,
+      }),
+    );
 
     builder.addCase(
       siteContactInfoRequest.fulfilled,

@@ -441,8 +441,10 @@ export interface SelectedSiteState {
   granularDailyData?: DailyData[];
   timeSeriesData?: TimeSeriesData;
   timeSeriesDataLoading: boolean;
+  timeSeriesRequestIds?: string[];
   timeSeriesDataRange?: TimeSeriesDataRange;
   timeSeriesDataRangeLoading: boolean;
+  timeSeriesRangeRequestIds?: string[];
   timeSeriesMinRequestDate?: string;
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
