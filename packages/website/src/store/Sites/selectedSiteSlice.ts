@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { sortBy } from 'lodash';
+import { camelCase, pick, sortBy } from 'lodash';
 import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import type {
@@ -548,7 +548,13 @@ const selectedSiteSlice = createSlice({
         (requestId) => requestId !== action.meta.requestId,
       );
       const oldTimeSeries = state.timeSeriesData || {};
-      const newTimeSeries = action.payload.timeSeriesData || {};
+      // Cached results can include sibling metrics from an earlier snapshot.
+      const newTimeSeries = action.meta.arg.metrics
+        ? pick(
+            action.payload.timeSeriesData || {},
+            action.meta.arg.metrics.map((metric) => camelCase(metric)),
+          )
+        : action.payload.timeSeriesData || {};
       const keys = [
         ...new Set([
           ...Object.keys(oldTimeSeries),

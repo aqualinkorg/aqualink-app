@@ -378,6 +378,80 @@ describe('independent HTTP-boundary red-team', () => {
     expect(store.getState().selectedSite.timeSeriesDataRange).toEqual({});
   });
 
+  it('retains both metric extensions when parallel requests start from a warm cache', async () => {
+    intercept();
+    const store = makeStore();
+    const params = {
+      siteId: '1',
+      pointId: '1',
+      start: '2025-01-01',
+      end: '2025-02-01',
+      metrics: ['bottom_temperature'],
+    };
+    const temperature = store.dispatch(
+      siteTimeSeriesDataRequest({ ...params, hourly: true } as any) as any,
+    );
+    const salinity = store.dispatch(
+      siteTimeSeriesDataRequest({
+        ...params,
+        metrics: ['salinity'],
+        hourly: false,
+      } as any) as any,
+    );
+    calls[0].resolve({
+      bottom_temperature: [
+        { type: 'sonde', data: [{ timestamp: '2025-01-15', value: 21 }] },
+      ],
+    });
+    await flush();
+    calls[2].resolve([]);
+    await temperature;
+    calls[1].resolve({
+      salinity: [
+        { type: 'sonde', data: [{ timestamp: '2025-01-15', value: 35 }] },
+      ],
+    });
+    await flush();
+    calls[3].resolve([]);
+    await salinity;
+    const extended = { ...params, start: '2024-12-01' };
+    const temperatureExtension = store.dispatch(
+      siteTimeSeriesDataRequest({ ...extended, hourly: true } as any) as any,
+    );
+    const salinityExtension = store.dispatch(
+      siteTimeSeriesDataRequest({
+        ...extended,
+        metrics: ['salinity'],
+        hourly: false,
+      } as any) as any,
+    );
+    calls[4].resolve({
+      bottom_temperature: [
+        { type: 'sonde', data: [{ timestamp: '2024-12-15', value: 20 }] },
+      ],
+    });
+    await flush();
+    calls[6].resolve([]);
+    await temperatureExtension;
+    expect(
+      store.getState().selectedSite.timeSeriesData?.bottomTemperature?.[0].data,
+    ).toHaveLength(2);
+    calls[5].resolve({
+      salinity: [
+        { type: 'sonde', data: [{ timestamp: '2024-12-15', value: 34 }] },
+      ],
+    });
+    await flush();
+    calls[7].resolve([]);
+    await salinityExtension;
+    expect(
+      store.getState().selectedSite.timeSeriesData?.bottomTemperature?.[0].data,
+    ).toHaveLength(2);
+    expect(
+      store.getState().selectedSite.timeSeriesData?.salinity?.[0].data,
+    ).toHaveLength(2);
+  });
+
   it('chart: old live response must not overwrite a new historical selection', async () => {
     intercept();
     const store = makeStore();
