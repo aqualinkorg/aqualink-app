@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { randomBytes } from 'crypto';
 import { join } from 'path';
+import { Socket } from 'net';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -32,8 +33,34 @@ integration('historical sites through PostgreSQL and HTTP', () => {
   const schema = `historical_test_${randomBytes(8).toString('hex')}`;
   let dataSource: DataSource;
   let app: INestApplication;
+  const originalConnect = Socket.prototype.connect;
 
   beforeAll(async () => {
+    // Fail closed before DNS or TCP egress, including HTTP clients imported by
+    // the real service. Local HTTP and the local test database remain usable.
+    jest
+      .spyOn(Socket.prototype, 'connect')
+      .mockImplementation(function localConnect(
+        this: Socket,
+        ...args: unknown[]
+      ) {
+        const first = Array.isArray(args[0]) ? args[0][0] : args[0];
+        const options =
+          typeof first === 'object' && first !== null
+            ? (first as { host?: string; path?: string })
+            : { host: typeof args[1] === 'string' ? args[1] : 'localhost' };
+        if (
+          options.path ||
+          !['localhost', '127.0.0.1', '::1'].includes(
+            options.host || 'localhost',
+          )
+        ) {
+          throw new Error(
+            'Historical integration tests allow only loopback TCP',
+          );
+        }
+        return Reflect.apply(originalConnect, this, args);
+      });
     dataSource = new DataSource({
       type: 'postgres',
       url: databaseUrl,
@@ -118,6 +145,15 @@ integration('historical sites through PostgreSQL and HTTP', () => {
       await dataSource.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`);
       await dataSource.destroy();
     }
+    jest.restoreAllMocks();
+  });
+
+  it('blocks nonlocal network requests before connecting', () => {
+    const socket = new Socket();
+    expect(() => socket.connect(443, 'example.com')).toThrow(
+      'Historical integration tests allow only loopback TCP',
+    );
+    socket.destroy();
   });
 
   it('selects the latest eligible snapshot per visible site using the UTC calendar date', async () => {
@@ -216,5 +252,22 @@ integration('historical sites through PostgreSQL and HTTP', () => {
     await request(app.getHttpServer())
       .get('/api/sites?date=2024-03-15&date=2024-03-16')
       .expect(400);
+  });
+
+  it('returns historical detail while the live materialized view is unavailable', async () => {
+    await dataSource.query(
+      'ALTER MATERIALIZED VIEW latest_data RENAME TO latest_data_unavailable',
+    );
+    try {
+      const { body } = await request(app.getHttpServer())
+        .get('/api/sites/1?date=2024-03-15')
+        .expect(200);
+      expect(body.collectionData.satelliteTemperature).toBe(15);
+      expect(body.historicalDataDate).toBe('2024-03-15');
+    } finally {
+      await dataSource.query(
+        'ALTER MATERIALIZED VIEW latest_data_unavailable RENAME TO latest_data',
+      );
+    }
   });
 });

@@ -140,4 +140,27 @@ describe('SitesService historical date cutoff', () => {
     });
     expect(result.historicalDataDate).toBe(selectedDate);
   });
+
+  it.each(['list', 'detail'])(
+    'returns historical %s metrics when the live collection helper is unavailable',
+    async (endpoint) => {
+      jest
+        .spyOn(collectionUtils, 'getCollectionData')
+        .mockRejectedValue(new Error('Live data unavailable'));
+      const service = createService(createHistoricalBuilder());
+      const result =
+        endpoint === 'list'
+          ? (await service.find({ date: selectedDate }))[0]
+          : await service.findOne(site.id, selectedDate);
+      expect(result.collectionData?.satelliteTemperature).toBe(27.5);
+    },
+  );
+
+  it('still returns live collection metrics when no date is selected', async () => {
+    const service = createService(createHistoricalBuilder());
+    const [listSite] = await service.find({});
+    const detailSite = await service.findOne(site.id);
+    expect(listSite.collectionData?.satelliteTemperature).toBe(18);
+    expect(detailSite.collectionData?.satelliteTemperature).toBe(18);
+  });
 });

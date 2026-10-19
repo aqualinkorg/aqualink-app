@@ -91,10 +91,12 @@ $ yarn test:cov
 
 The historical-site integration tests use real PostgreSQL/PostGIS queries and
 public HTTP handlers with dummy data. Set `HISTORICAL_TEST_DATABASE_URL` to a
-disposable test database; the tests create and remove a randomly named schema
+disposable local test database; the tests create and remove a randomly named schema
 and skip when this variable is absent. The database user needs permission to
 create schemas, and PostGIS must already be installed. These tests synchronize
 entity metadata rather than running the full migration history.
+The test process blocks TCP connections outside loopback, including HTTP clients
+reachable from the real service.
 
 Run from `packages/api`, starting a separate process for each timezone. This
 configuration deliberately omits the default test setup that forces UTC:

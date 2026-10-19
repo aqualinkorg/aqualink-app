@@ -208,10 +208,9 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    const mappedSiteData = filter.date
+      ? {}
+      : await getCollectionData(res, this.latestDataRepository);
 
     const historicalDailyData =
       filter.date && res.length
@@ -328,10 +327,9 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
-    const mappedSiteData = await getCollectionData(
-      [site],
-      this.latestDataRepository,
-    );
+    const mappedSiteData = date
+      ? {}
+      : await getCollectionData([site], this.latestDataRepository);
 
     const historicalDailyData = date
       ? await this.dailyDataRepository
