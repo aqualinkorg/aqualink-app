@@ -96,10 +96,14 @@ describe('historical map markers', () => {
     );
     const store = configureStore([])({ sitesList: state });
 
-    renderWithProviders(<SiteMarkers collection={mockCollection} />, { store });
+    const collection = {
+      ...mockCollection,
+      sites: [{ ...mockCollection.sites[0], name: 'Collection marker' }],
+    };
+    renderWithProviders(<SiteMarkers collection={collection} />, { store });
 
     expect(screen.getByTestId('map-marker')).toHaveTextContent(
-      mockCollection.sites[0].name,
+      'Collection marker',
     );
   });
 });
