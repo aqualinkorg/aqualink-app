@@ -219,11 +219,7 @@ function HomepageMap({
     setInfoDialogOpen(false);
   };
 
-  return loading ? (
-    <div className={classes.loading}>
-      <CircularProgress size="4rem" thickness={1} />
-    </div>
-  ) : (
+  return (
     <MapContainer
       id="sites-map"
       ref={ref}
@@ -238,6 +234,15 @@ function HomepageMap({
       bounds={initialBounds}
       maxBounds={mapConstants.MAX_BOUNDS}
     >
+      {loading && (
+        <div
+          className={classes.loading}
+          role="status"
+          aria-label="Loading map data"
+        >
+          <CircularProgress size="4rem" thickness={1} />
+        </div>
+      )}
       <Snackbar
         open={Boolean(currentLocationErrorMessage)}
         autoHideDuration={5000}
@@ -350,6 +355,10 @@ const styles = (theme: Theme) =>
       backgroundColor: '#0b1d2a',
     },
     loading: {
+      position: 'absolute',
+      inset: 0,
+      zIndex: 999,
+      pointerEvents: 'none',
       height: '100%',
       width: '100%',
       display: 'flex',
