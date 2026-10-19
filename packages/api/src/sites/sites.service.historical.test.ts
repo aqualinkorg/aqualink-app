@@ -27,44 +27,32 @@ describe('SitesService historical date cutoff', () => {
     satelliteTemperature: 27.5,
     weeklyAlertLevel: 3,
   } as DailyData;
-  const nextDaySnapshot = {
-    ...boundarySnapshot,
-    id: 2,
-    date: new Date('2024-03-16T00:00:00.000Z'),
-    satelliteTemperature: 99,
-  } as DailyData;
-
   const createHistoricalBuilder = () => {
-    let requestedCutoff: Date | undefined;
-    const latestEligibleSnapshot = () =>
-      [boundarySnapshot, nextDaySnapshot].reduce<DailyData | undefined>(
-        (latest, snapshot) =>
-          snapshot.date.getTime() <= requestedCutoff!.getTime() &&
-          (!latest || snapshot.date.getTime() > latest.date.getTime())
-            ? snapshot
-            : latest,
-        undefined,
-      );
+    let requestedDate: string | undefined;
     const builder = {
       leftJoinAndSelect: jest.fn().mockReturnThis(),
+      addSelect: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockImplementation((condition, parameters) => {
-        if (condition === 'daily_data.date <= :date') {
-          requestedCutoff = parameters.date;
+        if (condition.includes('CAST(:date AS date)')) {
+          requestedDate = parameters.date;
         }
         return builder;
       }),
       distinctOn: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
       addOrderBy: jest.fn().mockReturnThis(),
-      getMany: jest.fn().mockImplementation(async () => {
-        const snapshot = latestEligibleSnapshot();
-        return snapshot ? [snapshot] : [];
+      limit: jest.fn().mockReturnThis(),
+      getRawAndEntities: jest.fn().mockResolvedValue({
+        entities: [boundarySnapshot],
+        raw: [
+          {
+            daily_data_id: boundarySnapshot.id,
+            historical_data_date: selectedDate,
+          },
+        ],
       }),
-      getOne: jest
-        .fn()
-        .mockImplementation(async () => latestEligibleSnapshot()),
-      requestedCutoff: () => requestedCutoff,
+      requestedDate: () => requestedDate,
     };
 
     return builder;
@@ -108,7 +96,6 @@ describe('SitesService historical date cutoff', () => {
   };
 
   beforeEach(() => {
-    process.env.TZ = 'Asia/Tokyo';
     jest.spyOn(collectionUtils, 'getCollectionData').mockResolvedValue({
       [site.id]: { satelliteTemperature: 18 },
     });
@@ -122,17 +109,15 @@ describe('SitesService historical date cutoff', () => {
 
   afterEach(() => {
     jest.restoreAllMocks();
-    process.env.TZ = 'UTC';
   });
 
-  it('uses the inclusive UTC end of day for the site-list service query', async () => {
+  it('passes a calendar string to the site-list query and uses its SQL date projection', async () => {
     const historicalBuilder = createHistoricalBuilder();
     const service = createService(historicalBuilder);
 
     const [result] = await service.find({ date: selectedDate });
 
-    expect(historicalBuilder.requestedCutoff()).toEqual(cutoff);
-    expect(nextDaySnapshot.date.getTime()).toBeGreaterThan(cutoff.getTime());
+    expect(historicalBuilder.requestedDate()).toBe(selectedDate);
     expect(result.collectionData).toEqual({
       dhw: 2,
       satelliteTemperature: 27.5,
@@ -141,14 +126,13 @@ describe('SitesService historical date cutoff', () => {
     expect(result.historicalDataDate).toBe(selectedDate);
   });
 
-  it('uses the same inclusive UTC end of day for the site-detail service query', async () => {
+  it('passes a calendar string to the site-detail query and uses its SQL date projection', async () => {
     const historicalBuilder = createHistoricalBuilder();
     const service = createService(historicalBuilder);
 
     const result = await service.findOne(site.id, selectedDate);
 
-    expect(historicalBuilder.requestedCutoff()).toEqual(cutoff);
-    expect(nextDaySnapshot.date.getTime()).toBeGreaterThan(cutoff.getTime());
+    expect(historicalBuilder.requestedDate()).toBe(selectedDate);
     expect(result.collectionData).toEqual({
       dhw: 2,
       satelliteTemperature: 27.5,

@@ -53,6 +53,11 @@ import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { ScheduledUpdate } from './scheduled-updates.entity';
 
+type HistoricalSnapshotRow = {
+  daily_data_id: number;
+  historical_data_date: string;
+};
+
 @Injectable()
 export class SitesService {
   private readonly logger = new Logger(SitesService.name);
@@ -213,19 +218,33 @@ export class SitesService {
         ? await this.dailyDataRepository
             .createQueryBuilder('daily_data')
             .leftJoinAndSelect('daily_data.site', 'site')
+            .addSelect(
+              "TO_CHAR(daily_data.date, 'YYYY-MM-DD')",
+              'historical_data_date',
+            )
             .where('site.id IN (:...siteIds)', {
               siteIds: res.map(({ id }) => id),
             })
-            .andWhere('daily_data.date <= :date', {
-              date: new Date(`${filter.date}T23:59:59.999Z`),
-            })
+            // daily_data.date is a timestamp without time zone. Keep the
+            // calendar date in SQL rather than serializing a local JS Date.
+            .andWhere(
+              "daily_data.date < CAST(:date AS date) + INTERVAL '1 day'",
+              { date: filter.date },
+            )
             .distinctOn(['site.id'])
             .orderBy('site.id', 'ASC')
             .addOrderBy('daily_data.date', 'DESC')
-            .getMany()
-        : [];
+            .getRawAndEntities<HistoricalSnapshotRow>()
+        : { entities: [], raw: [] };
 
-    const historicalDataBySite = historicalDailyData.reduce(
+    const historicalDates = new Map(
+      historicalDailyData.raw.map((row) => [
+        row.daily_data_id,
+        row.historical_data_date,
+      ]),
+    );
+
+    const historicalDataBySite = historicalDailyData.entities.reduce(
       (dataBySite, snapshot) => {
         const collectionData: NonNullable<Site['collectionData']> = {
           ...(snapshot.degreeHeatingDays !== null && {
@@ -243,13 +262,16 @@ export class SitesService {
           ...dataBySite,
           [snapshot.site.id]: {
             collectionData,
-            date: snapshot.date,
+            date: historicalDates.get(snapshot.id),
           },
         };
       },
       {} as Record<
         number,
-        { collectionData: NonNullable<Site['collectionData']>; date: Date }
+        {
+          collectionData: NonNullable<Site['collectionData']>;
+          date: string | undefined;
+        }
       >,
     );
 
@@ -270,7 +292,7 @@ export class SitesService {
         ? historicalDataBySite[site.id]?.collectionData || {}
         : mappedSiteData[site.id],
       historicalDataDate: filter.date
-        ? historicalDataBySite[site.id]?.date.toISOString().slice(0, 10)
+        ? historicalDataBySite[site.id]?.date
         : undefined,
       hasHobo: hasHoboDataSet.has(site.id),
       waterQualitySources: waterQualityDataSet.get(site.id),
@@ -311,16 +333,23 @@ export class SitesService {
       this.latestDataRepository,
     );
 
-    const historicalSnapshot = date
+    const historicalDailyData = date
       ? await this.dailyDataRepository
           .createQueryBuilder('daily_data')
+          .addSelect(
+            "TO_CHAR(daily_data.date, 'YYYY-MM-DD')",
+            'historical_data_date',
+          )
           .where('site_id = :id', { id })
-          .andWhere('daily_data.date <= :date', {
-            date: new Date(`${date}T23:59:59.999Z`),
-          })
+          .andWhere(
+            "daily_data.date < CAST(:date AS date) + INTERVAL '1 day'",
+            { date },
+          )
           .orderBy('daily_data.date', 'DESC')
-          .getOne()
+          .limit(1)
+          .getRawAndEntities<HistoricalSnapshotRow>()
       : undefined;
+    const historicalSnapshot = historicalDailyData?.entities[0];
     const historicalCollectionData = historicalSnapshot
       ? {
           ...(historicalSnapshot.degreeHeatingDays !== null && {
@@ -365,7 +394,9 @@ export class SitesService {
       videoStream,
       applied: site.applied,
       collectionData: date ? historicalCollectionData : mappedSiteData[site.id],
-      historicalDataDate: historicalSnapshot?.date.toISOString().slice(0, 10),
+      historicalDataDate: historicalDailyData?.raw.find(
+        (row) => row.daily_data_id === historicalSnapshot?.id,
+      )?.historical_data_date,
     };
   }
 
