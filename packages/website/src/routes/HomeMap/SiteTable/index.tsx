@@ -89,7 +89,9 @@ function SiteTable({
   const currentDate = useSelector(sitesListCurrentDateSelector);
   const dispatch = useAppDispatch();
   const historicalDataReady =
-    !loading && !requestError && currentDate === historicalDate;
+    Boolean(collection) ||
+    (!loading && !requestError && currentDate === historicalDate);
+  const tableLoading = !collection && loading;
   const siteOnMap = useSelector(siteOnMapSelector);
   const { height } = useWindowSize() || {};
 
@@ -233,7 +235,7 @@ function SiteTable({
             )}
           </Box>
         )}
-        {loading && (
+        {tableLoading && (
           <Box
             display="flex"
             flex={1}
