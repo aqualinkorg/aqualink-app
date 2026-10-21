@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { onOrBeforeHistoricalDate } from 'helpers/historicalDate';
 import { useSelector } from 'react-redux';
 import { Hidden } from '@mui/material';
 
@@ -26,6 +28,7 @@ function SurveyTimeline({
   pointId,
   classes,
 }: SurveyTimelineProps) {
+  const asOf = useHistoricalDate();
   const surveyList = useSelector(surveyListSelector);
   const { list: reefCheckSurveyList = [] } =
     useSelector(reefCheckSurveyListSelector) ?? {};
@@ -48,7 +51,7 @@ function SurveyTimeline({
         date: s.date ?? '',
         type: 'reefCheckSurvey' as const,
       })) || []),
-    ],
+    ].filter((survey) => onOrBeforeHistoricalDate(survey.date, asOf)),
     'date',
     'desc',
   );

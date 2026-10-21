@@ -1,3 +1,5 @@
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { withHistoricalDate } from 'helpers/historicalDate';
 import React, { useState } from 'react';
 import {
   Grid,
@@ -46,6 +48,7 @@ function SiteInfo({
   isAdmin,
   classes,
 }: SiteInfoProps) {
+  const asOf = useHistoricalDate();
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -76,7 +79,7 @@ function SiteInfo({
         ? previousPath
         : '/map';
 
-    navigate(targetPath);
+    navigate(withHistoricalDate(targetPath, asOf));
   };
 
   const onCloseForm = () => {

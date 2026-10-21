@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { LayersControl, TileLayer, WMSTileLayer } from 'react-leaflet';
 import { MapLayerName } from 'store/Homepage/types';
-import { fetchLatestOisstAnomalyWmsUrl } from './oisstAnomalyWms';
+import {
+  fetchLatestOisstAnomalyWmsUrl,
+  fetchHistoricalOisstWmsUrl,
+} from './oisstAnomalyWms';
 
 type SofarLayerDefinition = {
   name: MapLayerName;
@@ -35,12 +38,15 @@ const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
   `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
 
-function useLatestOisstAnomalyWmsUrl() {
+function useLatestOisstAnomalyWmsUrl(asOf?: string) {
   const [url, setUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
-    fetchLatestOisstAnomalyWmsUrl(controller.signal)
+    (asOf
+      ? fetchHistoricalOisstWmsUrl(asOf, controller.signal)
+      : fetchLatestOisstAnomalyWmsUrl(controller.signal)
+    )
       .then((resolved) => {
         if (!controller.signal.aborted) {
           setUrl(resolved);
@@ -52,13 +58,46 @@ function useLatestOisstAnomalyWmsUrl() {
         }
       });
     return () => controller.abort();
-  }, []);
+  }, [asOf]);
 
   return url;
 }
 
-export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
-  const sstAnomalyWmsUrl = useLatestOisstAnomalyWmsUrl();
+export function SofarLayers({ defaultLayerName, asOf }: SofarLayersProps) {
+  const sstAnomalyWmsUrl = useLatestOisstAnomalyWmsUrl(asOf);
+
+  if (asOf) {
+    return (
+      <LayersControl position="topright">
+        <LayersControl.BaseLayer
+          checked={!defaultLayerName || defaultLayerName === 'Heat Stress'}
+          name="Satellite Imagery"
+        >
+          <TileLayer url="" />
+        </LayersControl.BaseLayer>
+        {sstAnomalyWmsUrl &&
+          [
+            { name: 'Sea Surface Temperature', layer: 'sst', scale: '0,35' },
+            { name: 'SST Anomaly', layer: 'anom', scale: '-5,5' },
+          ].map(({ name, layer, scale }) => (
+            <LayersControl.BaseLayer
+              key={layer}
+              checked={defaultLayerName === name}
+              name={name}
+            >
+              <WMSTileLayer
+                layers={layer}
+                styles="raster/default"
+                transparent
+                format="image/png"
+                opacity={0.7}
+                url={`${sstAnomalyWmsUrl}?COLORSCALERANGE=${scale}`}
+              />
+            </LayersControl.BaseLayer>
+          ))}
+      </LayersControl>
+    );
+  }
 
   return (
     <LayersControl position="topright">
@@ -105,6 +144,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
 }
 
 interface SofarLayersProps {
+  asOf?: string;
   defaultLayerName?: MapLayerName;
 }
 

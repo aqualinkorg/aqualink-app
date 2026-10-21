@@ -1,3 +1,4 @@
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -93,6 +94,7 @@ function HomepageMap({
   classes,
   onMapLoad,
 }: HomepageMapProps) {
+  const asOf = useHistoricalDate();
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
@@ -182,9 +184,21 @@ function HomepageMap({
 
   // Memoize the layers to prevent unnecessary re-renders
   const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} />,
-    [defaultLayerName],
+    () => (
+      <SofarLayers
+        key={asOf || 'current'}
+        asOf={asOf}
+        defaultLayerName={defaultLayerName}
+      />
+    ),
+    [defaultLayerName, asOf],
   );
+
+  useEffect(() => {
+    setLegendName(
+      asOf && defaultLayerName === 'Heat Stress' ? '' : defaultLayerName || '',
+    );
+  }, [asOf, defaultLayerName]);
 
   const siteMarkers = useMemo(
     () => <SiteMarkers collection={collection} />,

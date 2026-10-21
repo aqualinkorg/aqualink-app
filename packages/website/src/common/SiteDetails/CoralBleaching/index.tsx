@@ -46,11 +46,15 @@ function Bleaching({ data, classes }: BleachingProps) {
           item
           xs={12}
         >
-          <img
-            className={classes.alertImage}
-            src={findIntervalByLevel(tempWeeklyAlertValue).image}
-            alt="alert-level"
-          />
+          {data.tempWeeklyAlert ? (
+            <img
+              className={classes.alertImage}
+              src={findIntervalByLevel(tempWeeklyAlertValue).image}
+              alt="alert-level"
+            />
+          ) : (
+            <Typography>No observations available</Typography>
+          )}
           <UpdateInfo
             relativeTime={relativeTime}
             timeText="Last data received"

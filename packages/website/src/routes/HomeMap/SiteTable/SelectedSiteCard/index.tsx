@@ -1,3 +1,8 @@
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import {
+  withHistoricalDate,
+  onOrBeforeHistoricalDate,
+} from 'helpers/historicalDate';
 import React from 'react';
 import { Box, Card, Theme, Typography } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -36,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function SelectedSiteCard() {
+  const asOf = useHistoricalDate();
   const classes = useStyles();
   const site = useSelector(siteDetailsSelector);
   const loading = useSelector(siteLoadingSelector);
@@ -47,6 +53,7 @@ function SelectedSiteCard() {
   const { featuredSurveyMedia } =
     sortByDate(surveyList, 'diveDate', 'desc').find(
       (survey) =>
+        onOrBeforeHistoricalDate(survey.diveDate, asOf) &&
         survey.featuredSurveyMedia &&
         survey.featuredSurveyMedia.type === 'image',
     ) || {};
@@ -71,7 +78,7 @@ function SelectedSiteCard() {
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
               {!hasMedia && (
-                <Link to={`/sites/${site?.id}`}>
+                <Link to={withHistoricalDate(`/sites/${site?.id}`, asOf)}>
                   <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}

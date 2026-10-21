@@ -1,3 +1,5 @@
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { withHistoricalDate } from 'helpers/historicalDate';
 import React from 'react';
 import {
   Theme,
@@ -114,6 +116,7 @@ function SelectedSiteCardContent({
   error,
   imageUrl = null,
 }: SelectedSiteCardContentProps) {
+  const asOf = useHistoricalDate();
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
   const location = useLocation();
@@ -159,8 +162,11 @@ function SelectedSiteCardContent({
       )
     : undefined;
 
+  const emptyChart = asOf ? (
+    <Typography>No daily observations in this period.</Typography>
+  ) : null;
   const ChartComponent =
-    site && chartDataset ? (
+    site && chartDataset && (!asOf || chartDataset.data.length > 0) ? (
       <Chart
         siteId={site.id}
         datasets={[chartDataset]}
@@ -171,7 +177,9 @@ function SelectedSiteCardContent({
         maxMonthlyMean={site.maxMonthlyMean || null}
         background
       />
-    ) : null;
+    ) : (
+      emptyChart
+    );
 
   const onExploreButtonClick = () => {
     trackButtonClick(
@@ -208,7 +216,7 @@ function SelectedSiteCardContent({
             >
               {site && imageUrl && (
                 <Link
-                  to={`/sites/${site.id}`}
+                  to={withHistoricalDate(`/sites/${site.id}`, asOf)}
                   state={{ from: location.pathname }}
                 >
                   <CardMedia
@@ -250,16 +258,16 @@ function SelectedSiteCardContent({
                     container
                     alignItems="center"
                     justifyContent={
-                      site.videoStream && isTablet
+                      (asOf ? null : site.videoStream) && isTablet
                         ? 'space-between'
                         : 'flex-end'
                     }
                   >
-                    {site.videoStream && isTablet && (
+                    {(asOf ? null : site.videoStream) && isTablet && (
                       <Chip
                         live
                         liveText="LIVE VIDEO"
-                        to={`/sites/${site.id}`}
+                        to={withHistoricalDate(`/sites/${site.id}`, asOf)}
                         state={{ from: location.pathname }}
                         width={80}
                       />
@@ -268,7 +276,7 @@ function SelectedSiteCardContent({
                       <Button
                         className={classes.exploreButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        to={withHistoricalDate(`/sites/${site.id}`, asOf)}
                         state={{ from: location.pathname }}
                         onClick={onExploreButtonClick}
                         size="small"
@@ -311,11 +319,11 @@ function SelectedSiteCardContent({
                     <span title={name || ''}>{name}</span>
                   </Typography>
                 </Grid>
-                {site?.videoStream && (
+                {!asOf && site?.videoStream && (
                   <Chip
                     live
                     liveText="LIVE VIDEO"
-                    to={`/sites/${site.id}`}
+                    to={withHistoricalDate(`/sites/${site.id}`, asOf)}
                     state={{ from: location.pathname }}
                     width={80}
                   />

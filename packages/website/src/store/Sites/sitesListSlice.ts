@@ -35,13 +35,13 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  string | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (asOf, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(asOf);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +55,11 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(asOf, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, loading, asOf: previousDate },
       } = getState();
-      return !list;
+      return previousDate !== asOf || (!list && !loading);
     },
   },
 );
@@ -103,25 +103,23 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
+    builder.addCase(sitesRequest.fulfilled, (state, action) => {
+      if (state.currentRequestId !== action.meta.requestId) return state;
+      return { ...state, list: action.payload.list, loading: false };
+    });
+    builder.addCase(sitesRequest.rejected, (state, action) => {
+      if (state.currentRequestId !== action.meta.requestId) return state;
+      return {
         ...state,
-        list: action.payload.list,
+        error: action.payload || action.error.message,
         loading: false,
-      }),
-    );
-
-    builder.addCase(sitesRequest.rejected, (state, action) => ({
+      };
+    });
+    builder.addCase(sitesRequest.pending, (state, action) => ({
       ...state,
-      error: action.error.message
-        ? action.error.message
-        : action.error.toString(),
-      loading: false,
-    }));
-
-    builder.addCase(sitesRequest.pending, (state) => ({
-      ...state,
+      asOf: action.meta.arg,
+      currentRequestId: action.meta.requestId,
+      list: undefined,
       loading: true,
       error: null,
     }));

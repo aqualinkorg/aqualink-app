@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import { Box, Typography } from '@mui/material';
 
 import createStyles from '@mui/styles/createStyles';
@@ -35,6 +36,7 @@ function CombinedCharts({
   surveys,
   hasAdditionalSensorData,
 }: CombinedChartsProps) {
+  const asOf = useHistoricalDate();
   const classes = useStyles();
   const isLoading = !site;
   const heatStressDataset = site
@@ -64,20 +66,24 @@ function CombinedCharts({
       >
         {site && heatStressDataset && (
           <>
-            <ChartWithTooltip
-              className={classes.chart}
-              siteId={site.id}
-              datasets={[heatStressDataset]}
-              surveys={convertSurveyDataToLocalTime(surveys, site.timezone)}
-              temperatureThreshold={
-                typeof site.maxMonthlyMean === 'number'
-                  ? site.maxMonthlyMean + 1
-                  : null
-              }
-              maxMonthlyMean={site.maxMonthlyMean || null}
-              background
-              timeZone={site.timezone}
-            />
+            {asOf && !heatStressDataset.data.length ? (
+              <Typography>No daily observations in this period.</Typography>
+            ) : (
+              <ChartWithTooltip
+                className={classes.chart}
+                siteId={site.id}
+                datasets={[heatStressDataset]}
+                surveys={convertSurveyDataToLocalTime(surveys, site.timezone)}
+                temperatureThreshold={
+                  typeof site.maxMonthlyMean === 'number'
+                    ? site.maxMonthlyMean + 1
+                    : null
+                }
+                maxMonthlyMean={site.maxMonthlyMean || null}
+                background
+                timeZone={site.timezone}
+              />
+            )}
             <MultipleSensorsCharts
               site={site}
               pointId={selectedSurveyPointId}

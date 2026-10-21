@@ -404,13 +404,21 @@ export interface SitesRequestData {
 }
 
 export interface SitesListState {
+  asOf?: string;
+  currentRequestId?: string;
   list?: Site[];
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
 }
 
+export type SiteRequestArgs = string | { id: string; asOf?: string };
+
 export interface SelectedSiteState {
+  requestIds?: Record<string, string>;
+  asOf?: string;
+  currentRequestId?: string;
+  latestRequestId?: string;
   draft: SiteUpdateParams | null;
   details?: Site | null;
   spotterPosition?: {

@@ -1,8 +1,15 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
+import { DateTime } from 'luxon-extensions';
+import {
+  historicalEnd,
+  historicalRanges,
+  historicalRequestEnd,
+} from 'helpers/historicalDate';
 import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import type {
+  SiteRequestArgs,
   OceanSenseData,
   OceanSenseDataRequestParams,
   SurveyPoints,
@@ -35,6 +42,9 @@ const selectedSiteInitialState: SelectedSiteState = {
   oceanSenseDataError: null,
   error: null,
 };
+
+const siteArgs = (args: SiteRequestArgs) =>
+  typeof args === 'string' ? { id: args, asOf: undefined } : args;
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
 
@@ -77,11 +87,12 @@ export const spotterPositionRequest = createAsyncThunk<
 
 export const latestDataRequest = createAsyncThunk<
   SelectedSiteState['latestData'],
-  string,
+  SiteRequestArgs,
   CreateAsyncThunkTypes
->('selectedSite/requestLatestData', async (id: string, { rejectWithValue }) => {
+>('selectedSite/requestLatestData', async (args, { rejectWithValue }) => {
+  const { id, asOf } = siteArgs(args);
   try {
-    const { data: latestData } = await siteServices.getSiteLatestData(id);
+    const { data: latestData } = await siteServices.getSiteLatestData(id, asOf);
     return latestData.latestData;
   } catch (err) {
     return rejectWithValue(getAxiosErrorMessage(err));
@@ -90,14 +101,23 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  SiteRequestArgs,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (args, { rejectWithValue }) => {
+    const { id, asOf } = siteArgs(args);
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { data } = await siteServices.getSite(id, asOf);
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        asOf
+          ? DateTime.fromISO(asOf, { zone: 'utc' })
+              .minus({ days: 89 })
+              .toISOString()
+          : undefined,
+        asOf ? historicalEnd(asOf) : undefined,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,11 +143,12 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(args, { getState }) {
+      const { id, asOf } = siteArgs(args);
       const {
-        selectedSite: { details },
+        selectedSite: { details, asOf: previousDate },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || previousDate !== asOf;
     },
   },
 );
@@ -138,9 +159,15 @@ export const siteOceanSenseDataRequest = createAsyncThunk<
   CreateAsyncThunkTypes
 >(
   'selectedSite/oceanSenseDataRequest',
-  async ({ latest, ...params }, { rejectWithValue }) => {
+  async ({ latest, ...params }, { rejectWithValue, getState }) => {
     try {
-      const { data } = await siteServices.getOceanSenseData(params);
+      const { data } = await siteServices.getOceanSenseData({
+        ...params,
+        endDate: historicalRequestEnd(
+          params.endDate,
+          getState().selectedSite.asOf,
+        )!,
+      });
       return { data: mapOceanSenseData(data), latest };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
@@ -176,7 +203,10 @@ export const siteTimeSeriesDataRequest = createAsyncThunk<
         timeSeriesMinRequestDate,
         timeSeriesMaxRequestDate,
       ] = await timeSeriesRequest(
-        params,
+        {
+          ...params,
+          end: historicalRequestEnd(params.end, getState().selectedSite.asOf),
+        },
         storedTimeSeries,
         storedDailyData,
         storedStart,
@@ -201,10 +231,14 @@ export const siteTimeSeriesDataRangeRequest = createAsyncThunk<
   CreateAsyncThunkTypes
 >(
   'selectedSite/timeSeriesDataRangeRequest',
-  async (params: TimeSeriesDataRangeRequestParams, { rejectWithValue }) => {
+  async (
+    params: TimeSeriesDataRangeRequestParams,
+    { rejectWithValue, getState },
+  ) => {
+    const { asOf } = getState().selectedSite;
     try {
       const { data } = await siteServices.getSiteTimeSeriesDataRange(params);
-      return mapTimeSeriesDataRanges(data);
+      return historicalRanges(mapTimeSeriesDataRanges(data), asOf);
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
@@ -334,102 +368,98 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
-        ...state,
-        details: action.payload,
-        loading: false,
-      }),
-    );
-
-    builder.addCase(
-      siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        loading: false,
-      }),
-    );
-
-    builder.addCase(siteRequest.pending, (state) => ({
-      ...state,
+    builder.addCase(siteRequest.fulfilled, (state, action) => {
+      if (state.currentRequestId !== action.meta.requestId) return state;
+      return { ...state, details: action.payload, loading: false };
+    });
+    builder.addCase(siteRequest.rejected, (state, action) => {
+      if (state.currentRequestId !== action.meta.requestId) return state;
+      return { ...state, error: action.payload, loading: false };
+    });
+    builder.addCase(siteRequest.pending, (state, action) => ({
+      ...selectedSiteInitialState,
+      draft: state.draft,
+      asOf: siteArgs(action.meta.arg).asOf,
+      currentRequestId: action.meta.requestId,
       loading: true,
-      error: null,
     }));
 
-    builder.addCase(
-      forecastDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['forecastData']>) => ({
+    builder.addCase(forecastDataRequest.fulfilled, (state, action) => {
+      if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+        return state;
+      return {
         ...state,
         forecastData: action.payload,
-      }),
-    );
+      };
+    });
 
-    builder.addCase(
-      forecastDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+    builder.addCase(forecastDataRequest.rejected, (state, action) => {
+      if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+        return state;
+      return {
         ...state,
         error: action.payload,
-      }),
-    );
+      };
+    });
 
-    builder.addCase(forecastDataRequest.pending, (state) => ({
+    builder.addCase(forecastDataRequest.pending, (state, action) => ({
       ...state,
+      requestIds: {
+        ...state.requestIds,
+        [action.meta.requestId]: action.meta.requestId,
+      },
       error: null,
     }));
-    builder.addCase(
-      spotterPositionRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['spotterPosition']>) => ({
+    builder.addCase(spotterPositionRequest.fulfilled, (state, action) => {
+      if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+        return state;
+      return {
         ...state,
         spotterPosition: action.payload,
         loadingSpotterPosition: state.loadingSpotterPosition - 1,
-      }),
-    );
+      };
+    });
 
-    builder.addCase(
-      spotterPositionRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+    builder.addCase(spotterPositionRequest.rejected, (state, action) => {
+      if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+        return state;
+      return {
         ...state,
         error:
           action.payload === AlreadyLoadingErrorMessage ? null : action.payload,
         loadingSpotterPosition: state.loadingSpotterPosition - 1,
-      }),
-    );
+      };
+    });
 
-    builder.addCase(spotterPositionRequest.pending, (state) => ({
+    builder.addCase(spotterPositionRequest.pending, (state, action) => ({
       ...state,
+      requestIds: {
+        ...state.requestIds,
+        [action.meta.requestId]: action.meta.requestId,
+      },
       loadingSpotterPosition: state.loadingSpotterPosition + 1,
       error: null,
     }));
 
-    builder.addCase(
-      latestDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['latestData']>) => ({
-        ...state,
-        latestData: action.payload,
-      }),
-    );
-
-    builder.addCase(
-      latestDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-      }),
-    );
-
-    builder.addCase(latestDataRequest.pending, (state) => ({
+    builder.addCase(latestDataRequest.fulfilled, (state, action) => {
+      if (state.latestRequestId !== action.meta.requestId) return state;
+      return { ...state, latestData: action.payload };
+    });
+    builder.addCase(latestDataRequest.rejected, (state, action) => {
+      if (state.latestRequestId !== action.meta.requestId) return state;
+      return { ...state, error: action.payload };
+    });
+    builder.addCase(latestDataRequest.pending, (state, action) => ({
       ...state,
+      latestData: null,
+      latestRequestId: action.meta.requestId,
       error: null,
     }));
 
-    builder.addCase(
-      siteOceanSenseDataRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<{ data: OceanSenseData; latest?: boolean }>,
-      ) => ({
+    builder.addCase(siteOceanSenseDataRequest.fulfilled, (state, action) => {
+      if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+        return state;
+      return {
         ...state,
         latestOceanSenseData: action.payload.latest
           ? action.payload.data
@@ -443,27 +473,35 @@ const selectedSiteSlice = createSlice({
         oceanSenseDataLoading: !action.payload.latest
           ? false
           : state.oceanSenseDataLoading,
-      }),
-    );
+      };
+    });
 
-    builder.addCase(siteOceanSenseDataRequest.rejected, (state, action) => ({
-      ...state,
-      latestOceanSenseDataError: action.meta.arg.latest
-        ? action.error.message
-        : state.latestOceanSenseDataError,
-      latestOceanSenseDataLoading: action.meta.arg.latest
-        ? false
-        : state.latestOceanSenseDataLoading,
-      oceanSenseDataError: !action.meta.arg.latest
-        ? action.error.message
-        : state.oceanSenseDataError,
-      oceanSenseDataLoading: !action.meta.arg.latest
-        ? false
-        : state.oceanSenseDataLoading,
-    }));
+    builder.addCase(siteOceanSenseDataRequest.rejected, (state, action) => {
+      if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+        return state;
+      return {
+        ...state,
+        latestOceanSenseDataError: action.meta.arg.latest
+          ? action.error.message
+          : state.latestOceanSenseDataError,
+        latestOceanSenseDataLoading: action.meta.arg.latest
+          ? false
+          : state.latestOceanSenseDataLoading,
+        oceanSenseDataError: !action.meta.arg.latest
+          ? action.error.message
+          : state.oceanSenseDataError,
+        oceanSenseDataLoading: !action.meta.arg.latest
+          ? false
+          : state.oceanSenseDataLoading,
+      };
+    });
 
     builder.addCase(siteOceanSenseDataRequest.pending, (state, action) => ({
       ...state,
+      requestIds: {
+        ...state.requestIds,
+        [action.meta.requestId]: action.meta.requestId,
+      },
       latestOceanSenseDataLoading: action.meta.arg.latest
         ? true
         : state.latestOceanSenseDataLoading,
@@ -478,96 +516,104 @@ const selectedSiteSlice = createSlice({
         : state.oceanSenseDataError,
     }));
 
-    builder.addCase(
-      siteTimeSeriesDataRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<{
-          granularDailyData: SelectedSiteState['granularDailyData'];
-          timeSeriesData: SelectedSiteState['timeSeriesData'];
-          timeSeriesMinRequestDate: SelectedSiteState['timeSeriesMinRequestDate'];
-          timeSeriesMaxRequestDate: SelectedSiteState['timeSeriesMaxRequestDate'];
-        }>,
-      ) => {
-        const oldTimeSeries = state.timeSeriesData || {};
-        const newTimeSeries = action.payload.timeSeriesData || {};
-        const keys = [
-          ...new Set([
-            ...Object.keys(oldTimeSeries),
-            ...Object.keys(newTimeSeries),
-          ]),
-        ] as Metrics[];
-        const merged = {} as Partial<Record<Metrics, TimeSeries>>;
-        keys.forEach((key) => {
-          // If key exists in both objects, merge arrays
-          if (key in oldTimeSeries && key in newTimeSeries) {
-            const newTypes = newTimeSeries[key]?.map((x) => x.type);
-            const oldValues = oldTimeSeries[key]?.filter(
-              (x) => !newTypes?.includes(x.type),
-            );
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
-          } else if (key in oldTimeSeries) {
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = oldTimeSeries[key];
-          } else {
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = newTimeSeries[key];
-          }
-        });
+    builder.addCase(siteTimeSeriesDataRequest.fulfilled, (state, action) => {
+      if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+        return state;
+      const oldTimeSeries = state.timeSeriesData || {};
+      const newTimeSeries = action.payload.timeSeriesData || {};
+      const keys = [
+        ...new Set([
+          ...Object.keys(oldTimeSeries),
+          ...Object.keys(newTimeSeries),
+        ]),
+      ] as Metrics[];
+      const merged = {} as Partial<Record<Metrics, TimeSeries>>;
+      keys.forEach((key) => {
+        // If key exists in both objects, merge arrays
+        if (key in oldTimeSeries && key in newTimeSeries) {
+          const newTypes = newTimeSeries[key]?.map((x) => x.type);
+          const oldValues = oldTimeSeries[key]?.filter(
+            (x) => !newTypes?.includes(x.type),
+          );
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
+        } else if (key in oldTimeSeries) {
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = oldTimeSeries[key];
+        } else {
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = newTimeSeries[key];
+        }
+      });
 
-        return {
-          ...state,
-          granularDailyData: action.payload.granularDailyData,
-          timeSeriesData: merged,
-          timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
-          timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
-          timeSeriesDataLoading: false,
-        };
-      },
-    );
+      return {
+        ...state,
+        granularDailyData: action.payload.granularDailyData,
+        timeSeriesData: merged,
+        timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
+        timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
+        timeSeriesDataLoading: false,
+      };
+    });
 
-    builder.addCase(
-      siteTimeSeriesDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+    builder.addCase(siteTimeSeriesDataRequest.rejected, (state, action) => {
+      if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+        return state;
+      return {
         ...state,
         error: action.payload,
         timeSeriesDataLoading: false,
-      }),
-    );
+      };
+    });
 
-    builder.addCase(siteTimeSeriesDataRequest.pending, (state) => ({
+    builder.addCase(siteTimeSeriesDataRequest.pending, (state, action) => ({
       ...state,
+      requestIds: {
+        ...state.requestIds,
+        [action.meta.requestId]: action.meta.requestId,
+      },
       timeSeriesDataLoading: true,
       error: null,
     }));
 
     builder.addCase(
       siteTimeSeriesDataRangeRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<SelectedSiteState['timeSeriesDataRange']>,
-      ) => ({
-        ...state,
-        timeSeriesDataRange: action.payload,
-        timeSeriesDataRangeLoading: false,
-      }),
+      (state, action) => {
+        if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+          return state;
+        return {
+          ...state,
+          timeSeriesDataRange: action.payload,
+          timeSeriesDataRangeLoading: false,
+        };
+      },
     );
 
     builder.addCase(
       siteTimeSeriesDataRangeRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        timeSeriesDataRangeLoading: false,
-      }),
+      (state, action) => {
+        if (state.requestIds?.[action.meta.requestId] !== action.meta.requestId)
+          return state;
+        return {
+          ...state,
+          error: action.payload,
+          timeSeriesDataRangeLoading: false,
+        };
+      },
     );
 
-    builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state) => ({
-      ...state,
-      timeSeriesDataRangeLoading: true,
-      error: null,
-    }));
+    builder.addCase(
+      siteTimeSeriesDataRangeRequest.pending,
+      (state, action) => ({
+        ...state,
+        requestIds: {
+          ...state.requestIds,
+          [action.meta.requestId]: action.meta.requestId,
+        },
+        timeSeriesDataRangeLoading: true,
+        error: null,
+      }),
+    );
 
     builder.addCase(
       siteContactInfoRequest.fulfilled,
