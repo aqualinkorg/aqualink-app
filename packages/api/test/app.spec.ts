@@ -1,4 +1,5 @@
 import { INestApplication } from '@nestjs/common';
+import { historicalDataTests } from '../src/utils/historical-data.spec';
 import { TestService } from './test.service';
 import { healthCheckTests } from '../src/health-check/health-check.spec';
 import { userTests } from '../src/users/users.spec';
@@ -50,6 +51,8 @@ describe('AppController (e2e)', () => {
   describe('Sensors (e2e) /sensors', sensorTests);
 
   describe('Monitoring (e2e) /monitoring', monitoringTests);
+
+  describe('Historical site observations (e2e)', historicalDataTests);
 
   afterAll(async () => {
     await testService.cleanUpApp();
