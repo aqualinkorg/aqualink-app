@@ -86,7 +86,7 @@
     ]
   },
   "engines": {
-    "node": "20"
+    "node": "24"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250913.0",
