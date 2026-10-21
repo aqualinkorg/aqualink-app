@@ -23,6 +23,18 @@ export const COLLECTIONS: Record<string, number> = {
   jamaica: 862,
   'bleach-watch': 864,
   'saint-lucia': 865,
+  maldives: 867,
+  reunion: 868,
+  oman: 873,
+  colombia: 875,
+  egypt: 880,
+  'saudi-arabia': 881,
+  jordan: 882,
+  yemen: 883,
+  djibouti: 884,
+  sudan: 885,
+  vietnam: 904,
+  hwo: 916,
 } as const;
 
 // Type for collection names

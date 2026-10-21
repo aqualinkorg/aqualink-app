@@ -10,6 +10,10 @@ const instance = axios.create({
     Accept: 'application/json, text/html',
     crossDomain: true,
   },
+  // axios 1.20.0 sets fetch Request cache: 'default', which Cloudflare
+  // Workers reject (Unsupported cache mode). Force a Workers-safe mode.
+  // See https://github.com/axios/axios/issues/11192
+  fetchOptions: { cache: 'no-store' },
 });
 
 let cachedInstance: ReturnType<typeof setupCache> | undefined;

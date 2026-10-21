@@ -32,10 +32,16 @@ function DeleteButton({
   };
 
   const onDelete = async () => {
+    // Guard against a second request being fired while the first is still in
+    // flight, which would delete an already deleted resource and fail with a 404.
+    if (loading) {
+      return;
+    }
     setLoading(true);
     try {
       await onConfirm();
       onSuccess?.();
+      handleClose();
     } catch (error) {
       onError?.();
       setAlertOpen(true);
@@ -51,6 +57,7 @@ function DeleteButton({
       color: 'secondary',
       text: 'Cancel',
       action: handleClose,
+      disabled: loading,
     },
     {
       size: 'small',
@@ -58,6 +65,7 @@ function DeleteButton({
       color: 'primary',
       text: 'Yes',
       action: onDelete,
+      disabled: loading,
     },
   ];
 

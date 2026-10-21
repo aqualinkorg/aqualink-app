@@ -29,6 +29,9 @@ export class AIPrompt {
   @Column({ default: 1 })
   version: number;
 
+  @Column({ type: 'timestamp without time zone' })
+  versionCreatedAt: Date;
+
   @Column({ default: true })
   isActive: boolean;
 
