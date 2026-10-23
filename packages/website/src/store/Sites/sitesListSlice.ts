@@ -153,10 +153,11 @@ export const sitesListSelector = (state: RootState): SitesListState['list'] =>
 export const sitesToDisplayListSelector = createSelector(
   sitesListSelector,
   (state: RootState) => state.sitesList.filters,
-  (list, filters) =>
+  (state: RootState) => state.sitesList.asOf,
+  (list, filters, asOf) =>
     list?.filter((s) =>
       [
-        filterSiteByHeatStress(s, filters),
+        filterSiteByHeatStress(s, filters, Boolean(asOf)),
         filterSiteBySiteOptions(s, filters),
         filterSiteBySpecies(s, filters),
         filterSiteByReefComposition(s, filters),

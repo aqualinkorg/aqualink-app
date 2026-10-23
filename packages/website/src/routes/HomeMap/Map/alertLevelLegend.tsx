@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { noDataInterval } from 'helpers/bleachingAlertIntervals';
 import { Theme } from '@mui/material';
 
 import { WithStyles } from '@mui/styles';
@@ -8,14 +10,21 @@ import createStyles from '@mui/styles/createStyles';
 import { alertLevelColorCode } from '../../../assets/colorCode';
 
 function AlertLevelLegendItems({ classes }: AlertLevelLegendItemsProps) {
+  const asOf = useHistoricalDate();
+  const items = asOf
+    ? [
+        { value: noDataInterval.label, color: noDataInterval.color },
+        ...alertLevelColorCode,
+      ]
+    : alertLevelColorCode;
   return (
     <>
-      {alertLevelColorCode.map((item, index) => (
+      {items.map((item, index) => (
         <div
           key={item.value}
           style={{ backgroundColor: item.color }}
           className={
-            index === alertLevelColorCode.length - 1
+            index === items.length - 1
               ? `${classes.legendItem} ${classes.lastChild}`
               : `${classes.legendItem}`
           }

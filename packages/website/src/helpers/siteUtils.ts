@@ -1,5 +1,5 @@
 import { LatLng } from 'leaflet';
-import { isEmpty, keyBy, maxBy, meanBy, snakeCase } from 'lodash';
+import { isEmpty, isNil, keyBy, maxBy, meanBy, snakeCase } from 'lodash';
 
 import {
   DataRangeWithMetric,
@@ -172,11 +172,13 @@ export const filterOutFalsy = <T extends Record<string, boolean>>(
 export const filterSiteByHeatStress = (
   site: Site,
   { heatStress }: SiteFilters,
+  historical = false,
 ) => {
   if (isEmpty(heatStress)) {
     return true;
   }
   const { tempWeeklyAlert } = site.collectionData || {};
+  if (historical && isNil(tempWeeklyAlert)) return false;
   return heatStress[tempWeeklyAlert ?? 0];
 };
 

@@ -1,3 +1,5 @@
+import noData from '../assets/alerts/alert_nodata.svg';
+import pinNoData from '../assets/alerts/pin_nodata.svg';
 import noStress from '../assets/alerts/alert_nostress.svg';
 import warning from '../assets/alerts/alert_warning.svg';
 import watch from '../assets/alerts/alert_watch.svg';
@@ -13,21 +15,33 @@ export type Interval = {
   image: string;
   color: string;
   icon: string;
-  level: number;
+  level: number | null;
   label: string;
+};
+
+export const noDataInterval: Interval = {
+  label: 'no data',
+  image: noData,
+  color: '#767676',
+  icon: pinNoData,
+  level: null,
 };
 
 /**
  * Calculating bleaching alert level based on NOAA defintions:
  * available at https://coralreefwatch.noaa.gov/subscriptions/vs.php
  * @param weeklyAlertLevel
+ * @param historical Keep missing observations distinct only in historical views.
  */
 export const findIntervalByLevel = (
   weeklyAlertLevel?: number | null,
+  historical = false,
 ): Interval => {
   switch (weeklyAlertLevel) {
     case null:
     case undefined:
+      return historical ? noDataInterval : findIntervalByLevel(0);
+
     case 0:
       return {
         label: 'no alert',
@@ -87,10 +101,14 @@ export const findIntervalByLevel = (
 export const getColorByLevel = (level: number): string =>
   findIntervalByLevel(level).color;
 
-export const alertIconFinder = (weeklyAlertLevel?: number | null): string =>
-  findIntervalByLevel(weeklyAlertLevel).icon;
+export const alertIconFinder = (
+  weeklyAlertLevel?: number | null,
+  historical = false,
+): string => findIntervalByLevel(weeklyAlertLevel, historical).icon;
 
-export const alertColorFinder = (weeklyAlertLevel?: number | null): string =>
-  findIntervalByLevel(weeklyAlertLevel).color;
+export const alertColorFinder = (
+  weeklyAlertLevel?: number | null,
+  historical = false,
+): string => findIntervalByLevel(weeklyAlertLevel, historical).color;
 
 export default { findIntervalByLevel, alertColorFinder, alertIconFinder };
