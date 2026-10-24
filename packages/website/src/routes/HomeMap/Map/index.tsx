@@ -23,7 +23,10 @@ import withStyles, {
   CSSProperties,
 } from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
+import {
+  sitesListLoadingSelector,
+  sitesListSelector,
+} from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
   siteOnMapSelector,
@@ -41,6 +44,7 @@ import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
+import HistoricalDateControl from './HistoricalDateControl';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -92,6 +96,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  historicalDate,
+  onHistoricalDateChange,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -102,6 +108,13 @@ function HomepageMap({
     useState<string>();
   const [mapReady, setMapReady] = useState(false);
   const loading = useSelector(sitesListLoadingSelector);
+  const hasSitesList = Boolean(useSelector(sitesListSelector));
+  // Keep the map mounted (and its position) while refetching the sites,
+  // e.g. when a historical date is selected. Only block the first load.
+  const initialLoading = loading && (!hasSitesList || Boolean(collection));
+  // Overlay layers are not time-enabled: hide them for historical dates so
+  // they never show data from a different date than the site markers.
+  const showOverlays = !historicalDate;
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<L.Map>(null);
@@ -182,8 +195,9 @@ function HomepageMap({
 
   // Memoize the layers to prevent unnecessary re-renders
   const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} />,
-    [defaultLayerName],
+    () =>
+      showOverlays ? <SofarLayers defaultLayerName={defaultLayerName} /> : null,
+    [defaultLayerName, showOverlays],
   );
 
   const siteMarkers = useMemo(
@@ -215,7 +229,7 @@ function HomepageMap({
     setInfoDialogOpen(false);
   };
 
-  return loading ? (
+  return initialLoading ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
     </div>
@@ -284,7 +298,11 @@ function HomepageMap({
           radius={currentLocationAccuracy}
         />
       )}
-      <Legend legendName={legendName} bottom={legendBottom} left={legendLeft} />
+      <Legend
+        legendName={showOverlays ? legendName : ''}
+        bottom={legendBottom}
+        left={legendLeft}
+      />
       {showAlertLevelLegend && <AlertLevelLegend />}
       {showWaterMark && <div className="mapbox-wordmark" />}
       {geolocationEnabled && (
@@ -292,6 +310,18 @@ function HomepageMap({
           <IconButton onClick={onLocationSearch} size="large">
             <MyLocationIcon color="primary" />
           </IconButton>
+        </div>
+      )}
+      {onHistoricalDateChange && (
+        <HistoricalDateControl
+          date={historicalDate}
+          loading={loading}
+          onChange={onHistoricalDateChange}
+        />
+      )}
+      {loading && (
+        <div className={classes.refetching}>
+          <CircularProgress size="2rem" thickness={3} />
         </div>
       )}
       <MapEventsHandler
@@ -331,6 +361,14 @@ const styles = (theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    refetching: {
+      position: 'absolute',
+      bottom: 40,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 1000,
+      pointerEvents: 'none',
     },
     locationIconButton: {
       ...mapButtonStyles,
@@ -380,6 +418,10 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  /** Historical date (YYYY-MM-DD) displayed, undefined for the latest data */
+  historicalDate?: string;
+  /** Enables the historical date control when provided */
+  onHistoricalDateChange?: (date: string | undefined) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

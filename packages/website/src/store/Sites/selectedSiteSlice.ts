@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
+import { getHistoricalDailyDataRange } from 'helpers/historicalDate';
 import type {
   OceanSenseData,
   OceanSenseDataRequestParams,
@@ -75,29 +76,57 @@ export const spotterPositionRequest = createAsyncThunk<
   },
 );
 
+export interface SiteRequestArgs {
+  id: string;
+  /** Historical date (YYYY-MM-DD), `null`/undefined for the latest data. */
+  date?: string | null;
+}
+
+export const normalizeSiteRequestArgs = (
+  arg: string | SiteRequestArgs,
+): Required<SiteRequestArgs> =>
+  typeof arg === 'string'
+    ? { id: arg, date: null }
+    : { id: arg.id, date: arg.date ?? null };
+
+/**
+ * Fetches a site's latest data. Accepts a site id or `{ id, date }` to fetch
+ * the values that were the latest at the end of a historical date.
+ */
 export const latestDataRequest = createAsyncThunk<
   SelectedSiteState['latestData'],
-  string,
+  string | SiteRequestArgs,
   CreateAsyncThunkTypes
->('selectedSite/requestLatestData', async (id: string, { rejectWithValue }) => {
+>('selectedSite/requestLatestData', async (arg, { rejectWithValue }) => {
+  const { id, date } = normalizeSiteRequestArgs(arg);
   try {
-    const { data: latestData } = await siteServices.getSiteLatestData(id);
+    const { data: latestData } = await siteServices.getSiteLatestData(id, date);
     return latestData.latestData;
   } catch (err) {
     return rejectWithValue(getAxiosErrorMessage(err));
   }
 });
 
+/**
+ * Fetches a site's details. Accepts a site id (latest data) or
+ * `{ id, date }` to fetch the site's state as of a historical date.
+ */
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  string | SiteRequestArgs,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
+    const { id, date } = normalizeSiteRequestArgs(arg);
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const range = date ? getHistoricalDailyDataRange(date) : undefined;
+      const { data } = await siteServices.getSite(id, date);
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        range?.start,
+        range?.end,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,14 +152,18 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(arg, { getState }) {
+      const { id, date } = normalizeSiteRequestArgs(arg);
       const {
-        selectedSite: { details },
+        selectedSite: { details, detailsDate = null },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || detailsDate !== date;
     },
   },
 );
+
+export const siteDetailsDateSelector = (state: RootState): string | null =>
+  state.selectedSite.detailsDate ?? null;
 
 export const siteOceanSenseDataRequest = createAsyncThunk<
   { data: OceanSenseData; latest?: boolean },
@@ -248,6 +281,7 @@ const selectedSiteSlice = createSlice({
     unsetSelectedSite: (state) => ({
       ...state,
       details: null,
+      detailsDate: null,
     }),
     unsetSpotterPosition: (state) => ({
       ...state,
@@ -334,28 +368,33 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
-        ...state,
-        details: action.payload,
-        loading: false,
-      }),
+    builder.addCase(siteRequest.fulfilled, (state, action) =>
+      // Ignore responses of outdated requests (e.g. previous site or date)
+      action.meta.requestId !== state.siteRequestId
+        ? state
+        : {
+            ...state,
+            details: action.payload,
+            detailsDate: normalizeSiteRequestArgs(action.meta.arg).date,
+            loading: false,
+          },
     );
 
-    builder.addCase(
-      siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        loading: false,
-      }),
+    builder.addCase(siteRequest.rejected, (state, action) =>
+      action.meta.requestId !== state.siteRequestId
+        ? state
+        : {
+            ...state,
+            error: action.payload as SelectedSiteState['error'],
+            loading: false,
+          },
     );
 
-    builder.addCase(siteRequest.pending, (state) => ({
+    builder.addCase(siteRequest.pending, (state, action) => ({
       ...state,
       loading: true,
       error: null,
+      siteRequestId: action.meta.requestId,
     }));
 
     builder.addCase(

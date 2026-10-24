@@ -13,6 +13,8 @@ import {
 } from 'store/Sites/selectedSiteSlice';
 import { surveyListSelector } from 'store/Survey/surveyListSlice';
 import { sortByDate } from 'helpers/dates';
+import { getSiteUrl } from 'helpers/historicalDate';
+import { sitesListDateSelector } from 'store/Sites/sitesListSlice';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import SelectedSiteCardContent from './CardContent';
 
@@ -41,6 +43,7 @@ function SelectedSiteCard() {
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
+  const historicalDate = useSelector(sitesListDateSelector);
 
   const isFeatured = (site?.id || '').toString() === featuredSiteId;
 
@@ -71,7 +74,7 @@ function SelectedSiteCard() {
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
               {!hasMedia && (
-                <Link to={`/sites/${site?.id}`}>
+                <Link to={getSiteUrl(site.id, historicalDate)}>
                   <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}

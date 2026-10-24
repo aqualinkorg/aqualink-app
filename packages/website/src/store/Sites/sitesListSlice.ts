@@ -21,6 +21,7 @@ import type {
   PatchSiteFiltersPayload,
   SiteFilters,
   SitesListState,
+  SitesRequestArgs,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
 } from './types';
@@ -33,15 +34,24 @@ const sitesListInitialState: SitesListState = {
   filters: {},
 };
 
+const requestedDate = (arg?: SitesRequestArgs) => arg?.date ?? null;
+
+/**
+ * Fetches the sites list.
+ * - Without arguments, it only makes sure a list is loaded (any date).
+ * - With `{ date }`, it makes sure the list holds the data of that date
+ *   (`null` for the latest data), refetching if needed. When several dates
+ *   are requested in a row, only the last request's response is kept.
+ */
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestArgs | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(requestedDate(arg));
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +65,18 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, loading, date = null, pendingDate = null },
       } = getState();
-      return !list;
+      if (!arg) {
+        return !list && !loading;
+      }
+      const wantedDate = requestedDate(arg);
+      if (loading) {
+        return pendingDate !== wantedDate;
+      }
+      return !list || date !== wantedDate;
     },
   },
 );
@@ -103,27 +120,40 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
+    builder.addCase(sitesRequest.fulfilled, (state, action) =>
+      // Ignore responses of outdated requests (e.g. a previous date)
+      action.meta.requestId !== state.currentRequestId
+        ? state
+        : {
+            ...state,
+            list: action.payload.list,
+            date: requestedDate(action.meta.arg),
+            pendingDate: undefined,
+            currentRequestId: undefined,
+            loading: false,
+          },
     );
 
-    builder.addCase(sitesRequest.rejected, (state, action) => ({
-      ...state,
-      error: action.error.message
-        ? action.error.message
-        : action.error.toString(),
-      loading: false,
-    }));
+    builder.addCase(sitesRequest.rejected, (state, action) =>
+      action.meta.requestId !== state.currentRequestId
+        ? state
+        : {
+            ...state,
+            error: action.error.message
+              ? action.error.message
+              : action.error.toString(),
+            pendingDate: undefined,
+            currentRequestId: undefined,
+            loading: false,
+          },
+    );
 
-    builder.addCase(sitesRequest.pending, (state) => ({
+    builder.addCase(sitesRequest.pending, (state, action) => ({
       ...state,
       loading: true,
       error: null,
+      pendingDate: requestedDate(action.meta.arg),
+      currentRequestId: action.meta.requestId,
     }));
   },
 });
@@ -166,6 +196,10 @@ export const sitesToDisplayListSelector = createSelector(
       ].every(Boolean),
     ),
 );
+
+/** Historical date of the displayed sites data, `null` for the latest. */
+export const sitesListDateSelector = (state: RootState): string | null =>
+  state.sitesList?.date ?? null;
 
 export const sitesListFiltersSelector = (
   state: RootState,

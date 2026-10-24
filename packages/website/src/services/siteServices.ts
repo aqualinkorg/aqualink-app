@@ -27,9 +27,12 @@ import {
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
-const getSite = (id: string) =>
+const historicalDateQuery = (date?: string | null) =>
+  date ? `?date=${encodeURIComponent(date)}` : '';
+
+const getSite = (id: string, date?: string | null) =>
   requests.send<Site>({
-    url: `sites/${id}`,
+    url: `sites/${id}${historicalDateQuery(date)}`,
     method: 'GET',
   });
 
@@ -47,9 +50,9 @@ const getSiteForecastData = (id: string) =>
     method: 'GET',
   });
 
-const getSiteLatestData = (id: string) =>
+const getSiteLatestData = (id: string, date?: string | null) =>
   requests.send<{ latestData: LatestData[] }>({
-    url: `sites/${id}/latest_data`,
+    url: `sites/${id}/latest_data${historicalDateQuery(date)}`,
     method: 'GET',
   });
 
@@ -83,9 +86,9 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (date?: string | null) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: `sites${historicalDateQuery(date)}`,
     method: 'GET',
   });
 
