@@ -89,6 +89,24 @@ $ yarn test
 $ yarn test:cov
 ```
 
+The historical-site integration tests use real PostgreSQL/PostGIS queries and
+public HTTP handlers with dummy data. Set `HISTORICAL_TEST_DATABASE_URL` to a
+disposable local test database; the tests create and remove a randomly named schema
+and skip when this variable is absent. The database user needs permission to
+create schemas, and PostGIS must already be installed. These tests synchronize
+entity metadata rather than running the full migration history.
+The test process blocks TCP connections outside loopback, including HTTP clients
+reachable from the real service.
+
+Run from `packages/api`, starting a separate process for each timezone. This
+configuration deliberately omits the default test setup that forces UTC:
+
+```bash
+for zone in UTC Asia/Tokyo America/Los_Angeles; do
+  TZ="$zone" NODE_ENV=test yarn jest --config test/jest.historical.json --runInBand
+done
+```
+
 ### Daily Updates
 
 We run daily updates using Firebase Cloud Functions.

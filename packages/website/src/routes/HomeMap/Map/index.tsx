@@ -92,6 +92,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  historicalDate,
+  onHistoricalDateChange,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -187,8 +189,10 @@ function HomepageMap({
   );
 
   const siteMarkers = useMemo(
-    () => <SiteMarkers collection={collection} />,
-    [collection],
+    () => (
+      <SiteMarkers collection={collection} historicalDate={historicalDate} />
+    ),
+    [collection, historicalDate],
   );
 
   // Memoize the TileLayer to prevent unnecessary redraws
@@ -215,11 +219,7 @@ function HomepageMap({
     setInfoDialogOpen(false);
   };
 
-  return loading ? (
-    <div className={classes.loading}>
-      <CircularProgress size="4rem" thickness={1} />
-    </div>
-  ) : (
+  return (
     <MapContainer
       id="sites-map"
       ref={ref}
@@ -234,6 +234,15 @@ function HomepageMap({
       bounds={initialBounds}
       maxBounds={mapConstants.MAX_BOUNDS}
     >
+      {loading && (
+        <div
+          className={classes.loading}
+          role="status"
+          aria-label="Loading map data"
+        >
+          <CircularProgress size="4rem" thickness={1} />
+        </div>
+      )}
       <Snackbar
         open={Boolean(currentLocationErrorMessage)}
         autoHideDuration={5000}
@@ -272,6 +281,31 @@ function HomepageMap({
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
       />
+      {onHistoricalDateChange && (
+        <div className={classes.historicalDateControl}>
+          <span id="map-historical-date-label">Site observations date</span>
+          <input
+            id="map-historical-date"
+            aria-labelledby="map-historical-date-label"
+            type="date"
+            value={historicalDate || ''}
+            max={new Date().toISOString().slice(0, 10)}
+            onChange={(event) =>
+              onHistoricalDateChange(event.currentTarget.value)
+            }
+          />
+          {historicalDate && (
+            <>
+              <button type="button" onClick={() => onHistoricalDateChange('')}>
+                Latest
+              </button>
+              <small className={classes.historicalLayerNotice}>
+                Ocean layers show latest data.
+              </small>
+            </>
+          )}
+        </div>
+      )}
       {tileLayer}
       {sofarLayers}
       {siteMarkers}
@@ -326,6 +360,10 @@ const styles = (theme: Theme) =>
       backgroundColor: '#0b1d2a',
     },
     loading: {
+      position: 'absolute',
+      inset: 0,
+      zIndex: 999,
+      pointerEvents: 'none',
       height: '100%',
       width: '100%',
       display: 'flex',
@@ -352,6 +390,52 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down('lg')]: {
         top: 50,
       },
+    },
+    historicalDateControl: {
+      position: 'absolute',
+      top: 10,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 1000,
+      display: 'flex',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+      gap: 8,
+      padding: '8px 10px',
+      borderRadius: 5,
+      backgroundColor: 'white',
+      boxShadow: '0 1px 5px rgba(0,0,0,0.45)',
+      '& span': {
+        color: '#333',
+        fontSize: 14,
+        whiteSpace: 'nowrap',
+      },
+      '& input': {
+        border: '1px solid #aaa',
+        borderRadius: 3,
+        padding: '4px 6px',
+        font: 'inherit',
+      },
+      '& button': {
+        cursor: 'pointer',
+        background: 'transparent',
+        border: 0,
+        color: theme.palette.primary.main,
+        font: 'inherit',
+        padding: '4px 2px',
+      },
+      [theme.breakpoints.down('sm')]: {
+        top: 54,
+        left: '50%',
+        gap: 5,
+        padding: '6px 8px',
+        '& span': { fontSize: 12 },
+        '& input': { maxWidth: 135, fontSize: 12 },
+      },
+    },
+    historicalLayerNotice: {
+      flexBasis: '100%',
+      color: '#333',
     },
     expandIcon: {
       fontSize: '34px',
@@ -380,6 +464,8 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  historicalDate?: string;
+  onHistoricalDateChange?: (date: string) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

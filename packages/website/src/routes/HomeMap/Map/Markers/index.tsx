@@ -1,6 +1,11 @@
 import { useSelector } from 'react-redux';
 import React, { useMemo } from 'react';
-import { sitesToDisplayListSelector } from 'store/Sites/sitesListSlice';
+import {
+  sitesListCurrentDateSelector,
+  sitesListErrorSelector,
+  sitesListLoadingSelector,
+  sitesToDisplayListSelector,
+} from 'store/Sites/sitesListSlice';
 import { Site } from 'store/Sites/types';
 import 'leaflet/dist/leaflet.css';
 import { CollectionDetails } from 'store/Collection/types';
@@ -9,12 +14,18 @@ import { CircleSiteMarker, SensorSiteMarker } from './SiteMarker';
 
 const hasSpotter = (site: Site) => site.hasHobo || hasDeployedSpotter(site);
 
-export function SiteMarkers({ collection }: SiteMarkersProps) {
+export function SiteMarkers({ collection, historicalDate }: SiteMarkersProps) {
   const storedSites = useSelector(sitesToDisplayListSelector);
-  const sitesList = useMemo(
-    () => collection?.sites || storedSites || [],
-    [collection?.sites, storedSites],
-  );
+  const currentDate = useSelector(sitesListCurrentDateSelector);
+  const loading = useSelector(sitesListLoadingSelector);
+  const error = useSelector(sitesListErrorSelector);
+  const sitesReady = collection
+    ? true
+    : !loading && !error && currentDate === (historicalDate || undefined);
+  const sitesList = useMemo(() => {
+    if (collection) return collection.sites;
+    return sitesReady ? storedSites || [] : [];
+  }, [collection, sitesReady, storedSites]);
 
   return (
     <>
@@ -31,6 +42,7 @@ export function SiteMarkers({ collection }: SiteMarkersProps) {
 
 interface SiteMarkersProps {
   collection?: CollectionDetails;
+  historicalDate?: string;
 }
 
 export default SiteMarkers;

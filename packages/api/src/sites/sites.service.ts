@@ -53,6 +53,11 @@ import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { ScheduledUpdate } from './scheduled-updates.entity';
 
+type HistoricalSnapshotRow = {
+  daily_data_id: number;
+  historical_data_date: string;
+};
+
 @Injectable()
 export class SitesService {
   private readonly logger = new Logger(SitesService.name);
@@ -156,6 +161,11 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    const today = DateTime.utc().toISODate();
+    if (filter.date && today && filter.date > today) {
+      throw new BadRequestException('Date cannot be in the future');
+    }
+
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -198,9 +208,70 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
+    const mappedSiteData = filter.date
+      ? {}
+      : await getCollectionData(res, this.latestDataRepository);
+
+    const historicalDailyData =
+      filter.date && res.length
+        ? await this.dailyDataRepository
+            .createQueryBuilder('daily_data')
+            .leftJoinAndSelect('daily_data.site', 'site')
+            .addSelect(
+              "TO_CHAR(daily_data.date, 'YYYY-MM-DD')",
+              'historical_data_date',
+            )
+            .where('site.id IN (:...siteIds)', {
+              siteIds: res.map(({ id }) => id),
+            })
+            // daily_data.date is a timestamp without time zone. Keep the
+            // calendar date in SQL rather than serializing a local JS Date.
+            .andWhere(
+              "daily_data.date < CAST(:date AS date) + INTERVAL '1 day'",
+              { date: filter.date },
+            )
+            .distinctOn(['site.id'])
+            .orderBy('site.id', 'ASC')
+            .addOrderBy('daily_data.date', 'DESC')
+            .getRawAndEntities<HistoricalSnapshotRow>()
+        : { entities: [], raw: [] };
+
+    const historicalDates = new Map(
+      historicalDailyData.raw.map((row) => [
+        row.daily_data_id,
+        row.historical_data_date,
+      ]),
+    );
+
+    const historicalDataBySite = historicalDailyData.entities.reduce(
+      (dataBySite, snapshot) => {
+        const collectionData: NonNullable<Site['collectionData']> = {
+          ...(snapshot.degreeHeatingDays !== null && {
+            // The map's `dhw` field is in weeks; daily_data stores degree days.
+            dhw: snapshot.degreeHeatingDays / 7,
+          }),
+          ...(snapshot.satelliteTemperature !== null && {
+            satelliteTemperature: snapshot.satelliteTemperature,
+          }),
+          ...(snapshot.weeklyAlertLevel !== null && {
+            tempWeeklyAlert: snapshot.weeklyAlertLevel,
+          }),
+        };
+        return {
+          ...dataBySite,
+          [snapshot.site.id]: {
+            collectionData,
+            date: historicalDates.get(snapshot.id),
+          },
+        };
+      },
+      {} as Record<
+        number,
+        {
+          collectionData: NonNullable<Site['collectionData']>;
+          date: string | undefined;
+        }
+      >,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -216,14 +287,24 @@ export class SitesService {
     return res.map((site) => ({
       ...site,
       applied: site.applied,
-      collectionData: mappedSiteData[site.id],
+      collectionData: filter.date
+        ? historicalDataBySite[site.id]?.collectionData || {}
+        : mappedSiteData[site.id],
+      historicalDataDate: filter.date
+        ? historicalDataBySite[site.id]?.date
+        : undefined,
       hasHobo: hasHoboDataSet.has(site.id),
       waterQualitySources: waterQualityDataSet.get(site.id),
       reefCheckData: reefCheckDataSet[site.id],
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, date?: string): Promise<Site> {
+    const today = DateTime.utc().toISODate();
+    if (date && today && date > today) {
+      throw new BadRequestException('Date cannot be in the future');
+    }
+
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -246,10 +327,40 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
-    const mappedSiteData = await getCollectionData(
-      [site],
-      this.latestDataRepository,
-    );
+    const mappedSiteData = date
+      ? {}
+      : await getCollectionData([site], this.latestDataRepository);
+
+    const historicalDailyData = date
+      ? await this.dailyDataRepository
+          .createQueryBuilder('daily_data')
+          .addSelect(
+            "TO_CHAR(daily_data.date, 'YYYY-MM-DD')",
+            'historical_data_date',
+          )
+          .where('site_id = :id', { id })
+          .andWhere(
+            "daily_data.date < CAST(:date AS date) + INTERVAL '1 day'",
+            { date },
+          )
+          .orderBy('daily_data.date', 'DESC')
+          .limit(1)
+          .getRawAndEntities<HistoricalSnapshotRow>()
+      : undefined;
+    const historicalSnapshot = historicalDailyData?.entities[0];
+    const historicalCollectionData = historicalSnapshot
+      ? {
+          ...(historicalSnapshot.degreeHeatingDays !== null && {
+            dhw: historicalSnapshot.degreeHeatingDays / 7,
+          }),
+          ...(historicalSnapshot.satelliteTemperature !== null && {
+            satelliteTemperature: historicalSnapshot.satelliteTemperature,
+          }),
+          ...(historicalSnapshot.weeklyAlertLevel !== null && {
+            tempWeeklyAlert: historicalSnapshot.weeklyAlertLevel,
+          }),
+        }
+      : {};
 
     const maskedSpotterApiToken = site.spotterApiToken
       ? `****${site.spotterApiToken?.slice(-4)}`
@@ -280,7 +391,10 @@ export class SitesService {
       historicalMonthlyMean,
       videoStream,
       applied: site.applied,
-      collectionData: mappedSiteData[site.id],
+      collectionData: date ? historicalCollectionData : mappedSiteData[site.id],
+      historicalDataDate: historicalDailyData?.raw.find(
+        (row) => row.daily_data_id === historicalSnapshot?.id,
+      )?.historical_data_date,
     };
   }
 

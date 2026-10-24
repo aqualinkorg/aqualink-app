@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function Surveys({ site }: SurveysProps) {
+function Surveys({ site, historicalDate }: SurveysProps) {
   const classes = useStyles();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
@@ -355,6 +355,7 @@ function Surveys({ site }: SurveysProps) {
             addNewButton
             siteId={site?.id}
             timeZone={site?.timezone}
+            historicalDate={historicalDate}
             observation={observation}
             pointName={point}
             pointId={pointIdFinder(point)}
@@ -367,6 +368,7 @@ function Surveys({ site }: SurveysProps) {
 
 interface SurveysProps {
   site?: Site;
+  historicalDate?: string;
 }
 
 export default Surveys;

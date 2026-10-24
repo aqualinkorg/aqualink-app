@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { sortBy } from 'lodash';
+import { camelCase, pick, sortBy } from 'lodash';
 import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import type {
@@ -37,6 +37,43 @@ const selectedSiteInitialState: SelectedSiteState = {
 };
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
+
+const getTimeSeriesDataKey = ({
+  siteId,
+  pointId,
+}: TimeSeriesDataRangeRequestParams) =>
+  JSON.stringify([siteId, pointId || null]);
+
+// Metrics and hourly resolution can differ between concurrent sensor requests.
+const getTimeSeriesRequestKey = (params: TimeSeriesDataRequestParams) =>
+  JSON.stringify([
+    getTimeSeriesDataKey(params),
+    params.start || null,
+    params.end || null,
+  ]);
+
+type SiteRequestParams = string | { id: string; date?: string };
+
+const normalizeSiteRequestParams = (params: SiteRequestParams) =>
+  typeof params === 'string' ? { id: params, date: undefined } : params;
+
+export const shouldFetchSiteRequest = (
+  id: string,
+  date: string | undefined,
+  state: Pick<
+    SelectedSiteState,
+    'details' | 'currentDate' | 'loading' | 'requestedSiteId' | 'requestedDate'
+  >,
+) => {
+  const sameDetails =
+    `${state.details?.id}` === id && state.currentDate === date;
+  const sameDetailsAndIdle = sameDetails && !state.loading;
+  const sameRequestInFlight =
+    state.loading &&
+    state.requestedSiteId === id &&
+    state.requestedDate === date;
+  return !sameDetailsAndIdle && !sameRequestInFlight;
+};
 
 export const forecastDataRequest = createAsyncThunk<
   SelectedSiteState['forecastData'],
@@ -90,14 +127,20 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  SiteRequestParams,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (params: SiteRequestParams, { rejectWithValue }) => {
+    const { id, date } = normalizeSiteRequestParams(params);
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { data } = await siteServices.getSite(id, date);
+      const dailyDataEnd = date ? `${date}T23:59:59.999Z` : undefined;
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        undefined,
+        dailyDataEnd,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,11 +166,9 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
-      const {
-        selectedSite: { details },
-      } = getState();
-      return `${details?.id}` !== id;
+    condition(params: SiteRequestParams, { getState }) {
+      const { id, date } = normalizeSiteRequestParams(params);
+      return shouldFetchSiteRequest(id, date, getState().selectedSite);
     },
   },
 );
@@ -318,10 +359,17 @@ const selectedSiteSlice = createSlice({
       timeSeriesData: undefined,
       timeSeriesMaxRequestDate: undefined,
       timeSeriesMinRequestDate: undefined,
+      timeSeriesRequestIds: [],
+      timeSeriesRequestKey: undefined,
+      timeSeriesDataKey: undefined,
+      timeSeriesDataLoading: false,
     }),
     clearTimeSeriesDataRange: (state) => ({
       ...state,
       timeSeriesDataRange: undefined,
+      timeSeriesRangeRequestIds: [],
+      timeSeriesRangeRequestKey: undefined,
+      timeSeriesDataRangeLoading: false,
     }),
     clearGranularDailyData: (state) => ({
       ...state,
@@ -334,29 +382,43 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
+    builder.addCase(siteRequest.fulfilled, (state, action) => {
+      if (state.detailsRequestId !== action.meta.requestId) return state;
+      const { date } = normalizeSiteRequestParams(action.meta.arg);
+      return {
         ...state,
         details: action.payload,
         loading: false,
-      }),
-    );
+        currentDate: date,
+        detailsRequestId: undefined,
+        requestedSiteId: undefined,
+        requestedDate: undefined,
+      };
+    });
 
-    builder.addCase(
-      siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+    builder.addCase(siteRequest.rejected, (state, action) => {
+      if (state.detailsRequestId !== action.meta.requestId) return state;
+      return {
         ...state,
-        error: action.payload,
+        error: action.payload || action.error.message,
         loading: false,
-      }),
-    );
+        detailsRequestId: undefined,
+        requestedSiteId: undefined,
+        requestedDate: undefined,
+      };
+    });
 
-    builder.addCase(siteRequest.pending, (state) => ({
-      ...state,
-      loading: true,
-      error: null,
-    }));
+    builder.addCase(siteRequest.pending, (state, action) => {
+      const { id, date } = normalizeSiteRequestParams(action.meta.arg);
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        detailsRequestId: action.meta.requestId,
+        requestedSiteId: id,
+        requestedDate: date,
+      };
+    });
 
     builder.addCase(
       forecastDataRequest.fulfilled,
@@ -478,96 +540,151 @@ const selectedSiteSlice = createSlice({
         : state.oceanSenseDataError,
     }));
 
-    builder.addCase(
-      siteTimeSeriesDataRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<{
-          granularDailyData: SelectedSiteState['granularDailyData'];
-          timeSeriesData: SelectedSiteState['timeSeriesData'];
-          timeSeriesMinRequestDate: SelectedSiteState['timeSeriesMinRequestDate'];
-          timeSeriesMaxRequestDate: SelectedSiteState['timeSeriesMaxRequestDate'];
-        }>,
-      ) => {
-        const oldTimeSeries = state.timeSeriesData || {};
-        const newTimeSeries = action.payload.timeSeriesData || {};
-        const keys = [
-          ...new Set([
-            ...Object.keys(oldTimeSeries),
-            ...Object.keys(newTimeSeries),
-          ]),
-        ] as Metrics[];
-        const merged = {} as Partial<Record<Metrics, TimeSeries>>;
-        keys.forEach((key) => {
-          // If key exists in both objects, merge arrays
-          if (key in oldTimeSeries && key in newTimeSeries) {
-            const newTypes = newTimeSeries[key]?.map((x) => x.type);
-            const oldValues = oldTimeSeries[key]?.filter(
-              (x) => !newTypes?.includes(x.type),
-            );
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
-          } else if (key in oldTimeSeries) {
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = oldTimeSeries[key];
-          } else {
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = newTimeSeries[key];
-          }
-        });
+    builder.addCase(siteTimeSeriesDataRequest.fulfilled, (state, action) => {
+      if (!state.timeSeriesRequestIds?.includes(action.meta.requestId)) {
+        return state;
+      }
+      const requestIds = state.timeSeriesRequestIds.filter(
+        (requestId) => requestId !== action.meta.requestId,
+      );
+      const oldTimeSeries = state.timeSeriesData || {};
+      // Cached results can include sibling metrics from an earlier snapshot.
+      const newTimeSeries = action.meta.arg.metrics
+        ? pick(
+            action.payload.timeSeriesData || {},
+            action.meta.arg.metrics.map((metric) => camelCase(metric)),
+          )
+        : action.payload.timeSeriesData || {};
+      const keys = [
+        ...new Set([
+          ...Object.keys(oldTimeSeries),
+          ...Object.keys(newTimeSeries),
+        ]),
+      ] as Metrics[];
+      const merged = {} as Partial<Record<Metrics, TimeSeries>>;
+      keys.forEach((key) => {
+        // If key exists in both objects, merge arrays
+        if (key in oldTimeSeries && key in newTimeSeries) {
+          const newTypes = newTimeSeries[key]?.map((x) => x.type);
+          const oldValues = oldTimeSeries[key]?.filter(
+            (x) => !newTypes?.includes(x.type),
+          );
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
+        } else if (key in oldTimeSeries) {
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = oldTimeSeries[key];
+        } else {
+          // eslint-disable-next-line fp/no-mutation
+          merged[key] = newTimeSeries[key];
+        }
+      });
 
+      return {
+        ...state,
+        granularDailyData: action.payload.granularDailyData,
+        timeSeriesData: merged,
+        timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
+        timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
+        timeSeriesRequestIds: requestIds,
+        timeSeriesDataLoading: requestIds.length > 0,
+      };
+    });
+
+    builder.addCase(siteTimeSeriesDataRequest.rejected, (state, action) => {
+      if (!state.timeSeriesRequestIds?.includes(action.meta.requestId)) {
+        return state;
+      }
+      const requestIds = state.timeSeriesRequestIds.filter(
+        (requestId) => requestId !== action.meta.requestId,
+      );
+      return {
+        ...state,
+        error: action.payload || action.error.message,
+        timeSeriesRequestIds: requestIds,
+        timeSeriesDataLoading: requestIds.length > 0,
+      };
+    });
+
+    builder.addCase(siteTimeSeriesDataRequest.pending, (state, action) => {
+      const dataKey = getTimeSeriesDataKey(action.meta.arg);
+      const requestKey = getTimeSeriesRequestKey(action.meta.arg);
+      const sameData = state.timeSeriesDataKey === dataKey;
+      const sameRequest = state.timeSeriesRequestKey === requestKey;
+      return {
+        ...state,
+        timeSeriesDataKey: dataKey,
+        timeSeriesRequestKey: requestKey,
+        timeSeriesRequestIds: [
+          ...(sameRequest ? state.timeSeriesRequestIds || [] : []),
+          action.meta.requestId,
+        ],
+        timeSeriesData: sameData ? state.timeSeriesData : undefined,
+        granularDailyData: sameData ? state.granularDailyData : undefined,
+        timeSeriesMinRequestDate: sameData
+          ? state.timeSeriesMinRequestDate
+          : undefined,
+        timeSeriesMaxRequestDate: sameData
+          ? state.timeSeriesMaxRequestDate
+          : undefined,
+        timeSeriesDataLoading: true,
+        error: null,
+      };
+    });
+
+    builder.addCase(
+      siteTimeSeriesDataRangeRequest.fulfilled,
+      (state, action) => {
+        if (!state.timeSeriesRangeRequestIds?.includes(action.meta.requestId)) {
+          return state;
+        }
+        const requestIds = state.timeSeriesRangeRequestIds.filter(
+          (requestId) => requestId !== action.meta.requestId,
+        );
         return {
           ...state,
-          granularDailyData: action.payload.granularDailyData,
-          timeSeriesData: merged,
-          timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
-          timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
-          timeSeriesDataLoading: false,
+          timeSeriesDataRange: action.payload,
+          timeSeriesRangeRequestIds: requestIds,
+          timeSeriesDataRangeLoading: requestIds.length > 0,
         };
       },
     );
 
     builder.addCase(
-      siteTimeSeriesDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        timeSeriesDataLoading: false,
-      }),
-    );
-
-    builder.addCase(siteTimeSeriesDataRequest.pending, (state) => ({
-      ...state,
-      timeSeriesDataLoading: true,
-      error: null,
-    }));
-
-    builder.addCase(
-      siteTimeSeriesDataRangeRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<SelectedSiteState['timeSeriesDataRange']>,
-      ) => ({
-        ...state,
-        timeSeriesDataRange: action.payload,
-        timeSeriesDataRangeLoading: false,
-      }),
-    );
-
-    builder.addCase(
       siteTimeSeriesDataRangeRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        timeSeriesDataRangeLoading: false,
-      }),
+      (state, action) => {
+        if (!state.timeSeriesRangeRequestIds?.includes(action.meta.requestId)) {
+          return state;
+        }
+        const requestIds = state.timeSeriesRangeRequestIds.filter(
+          (requestId) => requestId !== action.meta.requestId,
+        );
+        return {
+          ...state,
+          error: action.payload || action.error.message,
+          timeSeriesRangeRequestIds: requestIds,
+          timeSeriesDataRangeLoading: requestIds.length > 0,
+        };
+      },
     );
 
-    builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state) => ({
-      ...state,
-      timeSeriesDataRangeLoading: true,
-      error: null,
-    }));
+    builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state, action) => {
+      const requestKey = getTimeSeriesDataKey(action.meta.arg);
+      const sameRequest = state.timeSeriesRangeRequestKey === requestKey;
+      return {
+        ...state,
+        timeSeriesRangeRequestKey: requestKey,
+        timeSeriesRangeRequestIds: [
+          ...(sameRequest ? state.timeSeriesRangeRequestIds || [] : []),
+          action.meta.requestId,
+        ],
+        timeSeriesDataRange: sameRequest
+          ? state.timeSeriesDataRange
+          : undefined,
+        timeSeriesDataRangeLoading: true,
+        error: null,
+      };
+    });
 
     builder.addCase(
       siteContactInfoRequest.fulfilled,
@@ -608,6 +725,10 @@ const selectedSiteSlice = createSlice({
 export const siteDetailsSelector = (
   state: RootState,
 ): SelectedSiteState['details'] => state.selectedSite.details;
+
+export const siteCurrentDateSelector = (
+  state: RootState,
+): SelectedSiteState['currentDate'] => state.selectedSite.currentDate;
 
 export const spotterPositionSelector = (
   state: RootState,

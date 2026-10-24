@@ -2,7 +2,7 @@ import L, { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -64,16 +64,37 @@ function useQuery() {
 
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [historicalDate, setHistoricalDate] = useState(
+    () => new URLSearchParams(location.search).get('date') || '',
+  );
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    const dateFromUrl = new URLSearchParams(location.search).get('date') || '';
+    setHistoricalDate(dateFromUrl);
+  }, [location.search]);
+
+  useEffect(() => {
+    dispatch(sitesRequest(historicalDate || undefined));
+  }, [dispatch, historicalDate]);
+
+  const onHistoricalDateChange = (date: string) => {
+    setHistoricalDate(date);
+    const params = new URLSearchParams(location.search);
+    if (date) params.set('date', date);
+    else params.delete('date');
+    navigate(
+      { pathname: location.pathname, search: params.toString() },
+      { replace: true },
+    );
+  };
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,12 +145,17 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              historicalDate={historicalDate}
+              onHistoricalDateChange={onHistoricalDateChange}
             />
           </Grid>
           {showSiteTable && (
             <Hidden mdDown>
               <Grid className={classes.siteTable} item md={6}>
-                <SiteTable map={mapInstance} />
+                <SiteTable
+                  map={mapInstance}
+                  historicalDate={historicalDate || undefined}
+                />
               </Grid>
             </Hidden>
           )}
@@ -145,7 +171,11 @@ function Homepage({ classes }: HomepageProps) {
               open={isDrawerOpen}
             >
               <div role="presentation" onClick={toggleDrawer}>
-                <SiteTable map={mapInstance} isDrawerOpen={isDrawerOpen} />
+                <SiteTable
+                  map={mapInstance}
+                  isDrawerOpen={isDrawerOpen}
+                  historicalDate={historicalDate || undefined}
+                />
               </div>
             </SwipeableBottomSheet>
           </Hidden>

@@ -25,7 +25,7 @@ import {
 } from 'helpers/dates';
 import { DateTime } from 'luxon-extensions';
 import { randomColors } from 'layout/App/theme';
-import { CardColumn, OceanSenseDataset } from './types';
+import { CardColumn, OceanSenseDataset, RangeValue } from './types';
 import type { Dataset } from '../index';
 import {
   convertDailyToSofar,
@@ -112,6 +112,41 @@ export const findChartWidth = (
     default:
       return 'extraSmall';
   }
+};
+
+export const getZonedDateBounds = (
+  startDate: string,
+  endDate: string,
+  timeZone?: string | null,
+) => {
+  const zone = timeZone || 'UTC';
+
+  return {
+    start: DateTime.fromISO(startDate, { zone }).startOf('day').toISOString(),
+    end: DateTime.fromISO(endDate, { zone }).endOf('day').toISOString(),
+  };
+};
+
+export const getHistoricalRangeStartDate = (
+  endDate: string,
+  range: RangeValue,
+  minDate?: string,
+  timeZone?: string | null,
+) => {
+  const zone = timeZone || 'UTC';
+  const end = DateTime.fromISO(endDate, { zone });
+  const oneMonthBefore = end.minus({ months: 1 }).toISODate() || endDate;
+
+  if (range === 'one_year') {
+    return end.minus({ years: 1 }).toISODate() || oneMonthBefore;
+  }
+
+  if (range === 'max' && minDate) {
+    const earliestDate = DateTime.fromISO(minDate).setZone(zone).toISODate();
+    if (earliestDate && earliestDate < endDate) return earliestDate;
+  }
+
+  return oneMonthBefore;
 };
 
 export const availableRangeString = (

@@ -26,12 +26,14 @@ import { formatNumber } from 'helpers/numberUtils';
 import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
+import { getSiteDetailPath } from '../../helpers';
 
 function Popup({ site, classes, autoOpen = true }: PopupProps) {
   const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<L.Popup>(null);
   const location = useLocation();
+  const historicalDate = new URLSearchParams(location.search).get('date');
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
 
@@ -102,6 +104,13 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
           subheader={region}
         />
         <CardContent>
+          {historicalDate && (
+            <Typography display="block" variant="caption" color="textSecondary">
+              {site.historicalDataDate
+                ? `Daily snapshot: ${site.historicalDataDate} (as of ${historicalDate})`
+                : `No daily snapshot available on or before ${historicalDate}`}
+            </Typography>
+          )}
           <Grid container item xs={12}>
             <Grid item xs={6}>
               <Grid container item xs={12}>
@@ -156,7 +165,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                to={getSiteDetailPath(site.id, historicalDate || undefined)}
                 state={{ from: location.pathname }}
               >
                 <Button
@@ -165,7 +174,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
                   variant="outlined"
                   color="primary"
                 >
-                  EXPLORE
+                  {historicalDate ? 'EXPLORE HISTORICAL SITE' : 'EXPLORE'}
                 </Button>
               </Link>
             </Grid>

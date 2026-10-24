@@ -8,7 +8,7 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
 import type { Site } from 'store/Sites/types';
@@ -31,6 +31,7 @@ const siteAugmentedName = (site: Site) => {
 
 function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState('');
@@ -47,8 +48,9 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
 
   // Fetch sites for the search bar
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    const date = new URLSearchParams(location.search).get('date') || undefined;
+    dispatch(sitesRequest(date));
+  }, [dispatch, location.search]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,

@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import { times } from 'lodash';
 import {
   Box,
+  Button,
   CircularProgress,
   Hidden,
   MenuItem,
@@ -16,6 +17,7 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'store/hooks';
 import classNames from 'classnames';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 import L from 'leaflet';
@@ -23,7 +25,12 @@ import L from 'leaflet';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
+import {
+  sitesRequest,
+  sitesListCurrentDateSelector,
+  sitesListErrorSelector,
+  sitesListLoadingSelector,
+} from 'store/Sites/sitesListSlice';
 import SelectedSiteCard from './SelectedSiteCard';
 import SiteTableBody from './body';
 import { getOrderKeysFriendlyString, Order, OrderKeys } from './utils';
@@ -74,9 +81,17 @@ function SiteTable({
   scrollTableOnSelection = true,
   scrollPageOnSelection,
   map,
+  historicalDate,
   classes,
 }: SiteTableProps) {
   const loading = useSelector(sitesListLoadingSelector);
+  const requestError = useSelector(sitesListErrorSelector);
+  const currentDate = useSelector(sitesListCurrentDateSelector);
+  const dispatch = useAppDispatch();
+  const historicalDataReady =
+    Boolean(collection) ||
+    (!loading && !requestError && currentDate === historicalDate);
+  const tableLoading = !collection && loading;
   const siteOnMap = useSelector(siteOnMapSelector);
   const { height } = useWindowSize() || {};
 
@@ -135,7 +150,7 @@ function SiteTable({
           </Box>
         </Hidden>
       )}
-      {showCard && <SelectedSiteCard />}
+      {showCard && <SelectedSiteCard historicalDate={historicalDate} />}
       {showSiteFiltersDropdown && (
         <Box className={classes.dropdownWrapper}>
           <SitesFilterModal />
@@ -187,19 +202,40 @@ function SiteTable({
                 emptyColumns={emptyColumns}
               />
             </Hidden>
-            <SiteTableBody
-              order={order}
-              orderBy={orderBy}
-              isExtended={isExtended}
-              collection={collection}
-              scrollTableOnSelection={scrollTableOnSelection}
-              scrollPageOnSelection={scrollPageOnSelection}
-              map={map}
-              onEmptyColumnsChange={setEmptyColumns}
-            />
+            {historicalDataReady ? (
+              <SiteTableBody
+                order={order}
+                orderBy={orderBy}
+                isExtended={isExtended}
+                collection={collection}
+                scrollTableOnSelection={scrollTableOnSelection}
+                scrollPageOnSelection={scrollPageOnSelection}
+                map={map}
+                onEmptyColumnsChange={setEmptyColumns}
+              />
+            ) : null}
           </Table>
         </TableContainer>
-        {loading && (
+        {!historicalDataReady && (
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <Typography color={requestError ? 'error' : 'textSecondary'}>
+              {requestError ||
+                `Loading map data${historicalDate ? ` for ${historicalDate}` : ''}…`}
+            </Typography>
+            {requestError && (
+              <Button
+                color="primary"
+                size="small"
+                onClick={() =>
+                  dispatch(sitesRequest(historicalDate || undefined))
+                }
+              >
+                Retry
+              </Button>
+            )}
+          </Box>
+        )}
+        {tableLoading && (
           <Box
             display="flex"
             flex={1}
@@ -278,6 +314,7 @@ interface SiteTableIncomingProps {
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
   map?: L.Map | null; // Add map prop type
+  historicalDate?: string;
 }
 
 export default withStyles(styles)(SiteTable);

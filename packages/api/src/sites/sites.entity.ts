@@ -175,6 +175,12 @@ export class Site {
 
   collectionData?: CollectionDataDto;
 
+  @ApiPropertyOptional({
+    example: '2025-01-15',
+    description: 'Actual daily snapshot date used for an as-of map request.',
+  })
+  historicalDataDate?: string;
+
   maskedSpotterApiToken?: string;
 
   waterQualitySources?: string[];

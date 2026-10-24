@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
-import { Alert, Container, Box } from '@mui/material';
+import { Alert, Container, Box, Button } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import {
   siteDetailsSelector,
+  siteCurrentDateSelector,
+  siteErrorSelector,
   siteRequest,
   siteTimeSeriesDataRangeRequest,
   clearTimeSeriesData,
@@ -113,19 +115,36 @@ const getAlertMessage = (
 
 function Site({ classes }: SiteProps) {
   const siteDetails = useSelector(siteDetailsSelector);
+  const siteCurrentDate = useSelector(siteCurrentDateSelector);
   const siteLoading = useSelector(siteLoadingSelector);
+  const siteError = useSelector(siteErrorSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
   const spotterPosition = useSelector(spotterPositionSelector);
   const dispatch = useAppDispatch();
   const { id: siteId = '' } = useParams<{ id: string }>();
-  const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
+  const location = useLocation();
+  const historicalDate =
+    new URLSearchParams(location.search).get('date') || undefined;
+  const historicalDataReady =
+    !siteLoading &&
+    `${siteDetails?.id}` === siteId &&
+    siteCurrentDate === historicalDate;
+  const displayedSiteDetails = historicalDataReady ? siteDetails : undefined;
+  const { id, dailyData, surveyPoints, timezone } = displayedSiteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
-  const featuredMedia = sortByDate(surveyList, 'diveDate', 'desc').find(
+  const siteSurveys = historicalDate
+    ? surveyList.filter(
+        (survey) =>
+          survey.diveDate && survey.diveDate.slice(0, 10) <= historicalDate,
+      )
+    : surveyList;
+
+  const featuredMedia = sortByDate(siteSurveys, 'diveDate', 'desc').find(
     (survey) =>
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === 'image',
   );
@@ -141,15 +160,17 @@ function Site({ classes }: SiteProps) {
     thumbnailUrl,
   } = featuredSurveyMedia || {};
 
-  const hasSpotterData = Boolean(spotterPosition?.isDeployed);
+  const hasSpotterData =
+    !historicalDate && Boolean(spotterPosition?.isDeployed);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
   const today = localizedEndOfDay(undefined, timezone);
 
   const siteWithFeaturedImage: SiteType | undefined =
-    siteDetails && (siteId === siteDetails.id.toString() || !siteId)
-      ? { ...siteDetails, featuredImage: thumbnailUrl || url }
+    displayedSiteDetails &&
+    (siteId === displayedSiteDetails.id.toString() || !siteId)
+      ? { ...displayedSiteDetails, featuredImage: thumbnailUrl || url }
       : undefined;
 
   const isLoading = !siteWithFeaturedImage;
@@ -162,8 +183,8 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
-      dispatch(spotterPositionRequest(siteId));
+      dispatch(siteRequest({ id: siteId, date: historicalDate }));
+      if (!historicalDate) dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,8 +192,8 @@ function Site({ classes }: SiteProps) {
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
-    dispatch(spotterPositionRequest(siteId));
+    dispatch(siteRequest({ id: siteId, date: historicalDate }));
+    if (!historicalDate) dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
     return () => {
@@ -180,14 +201,21 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
     };
-  }, [dispatch, siteId]);
+  }, [dispatch, historicalDate, siteId]);
 
   // Fetch reef check surveys
   useEffect(() => {
-    if (siteDetails?.reefCheckSites && siteDetails.reefCheckSites.length > 0) {
-      dispatch(reefCheckSurveysRequest(siteDetails.id));
+    if (
+      displayedSiteDetails?.reefCheckSites &&
+      displayedSiteDetails.reefCheckSites.length > 0
+    ) {
+      dispatch(reefCheckSurveysRequest(displayedSiteDetails.id));
     }
-  }, [dispatch, siteDetails?.reefCheckSites, siteDetails?.id]);
+  }, [
+    dispatch,
+    displayedSiteDetails?.reefCheckSites,
+    displayedSiteDetails?.id,
+  ]);
 
   // Fetch time series data range for the site's closest survey point
   // once the survey points are successfully fetched
@@ -203,7 +231,12 @@ function Site({ classes }: SiteProps) {
   }, [dispatch, id, selectedSurveyPointId, siteId]);
 
   useEffect(() => {
-    if (id && oceanSenseConfig?.[id] && siteId === id.toString()) {
+    if (
+      !historicalDate &&
+      id &&
+      oceanSenseConfig?.[id] &&
+      siteId === id.toString()
+    ) {
       dispatch(
         siteOceanSenseDataRequest({
           sensorID: 'oceansense-2',
@@ -213,45 +246,78 @@ function Site({ classes }: SiteProps) {
         }),
       );
     }
-  }, [dispatch, id, siteId, today]);
+  }, [dispatch, historicalDate, id, siteId, today]);
 
   return (
     <>
       <SiteNavBar searchLocation />
-      {!siteLoading && !siteDetails ? (
+      {!siteLoading && !displayedSiteDetails && !historicalDate ? (
         <NotFoundPage />
       ) : (
         <Container
           className={classNames({ [classes.noDataWrapper]: !hasDailyData })}
         >
+          {historicalDate && !historicalDataReady && siteError && (
+            <Alert
+              severity="error"
+              action={
+                <Button
+                  color="inherit"
+                  size="small"
+                  onClick={() =>
+                    dispatch(siteRequest({ id: siteId, date: historicalDate }))
+                  }
+                >
+                  Retry
+                </Button>
+              }
+            >
+              {siteError}
+            </Alert>
+          )}
+          {historicalDate && historicalDataReady && (
+            <Alert
+              severity={
+                displayedSiteDetails?.historicalDataDate ? 'info' : 'warning'
+              }
+            >
+              {displayedSiteDetails?.historicalDataDate
+                ? `Showing data as of ${historicalDate}. The latest available daily snapshot is ${displayedSiteDetails.historicalDataDate}.`
+                : `No daily snapshot is available on or before ${historicalDate}. Historical charts use data through that date where available.`}
+            </Alert>
+          )}
           <Box marginTop="2rem">
             <LoadingSkeleton loading={isLoading} variant="text" lines={3}>
-              {siteDetails && (
+              {displayedSiteDetails && (
                 <SiteInfo
                   hasDailyData={hasDailyData}
-                  site={siteDetails}
-                  lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
+                  site={displayedSiteDetails}
+                  lastSurvey={siteSurveys[siteSurveys.length - 1]?.diveDate}
                   isAdmin={isAdmin(user, parseInt(siteId, 10))}
                 />
               )}
             </LoadingSkeleton>
           </Box>
           {/* Only show alert message when data is loading */}
-          {!hasSpotterData && !isLoading && !hasDailyData && (
-            <Box mt="1.3rem">
-              <Alert severity="info">
-                {getAlertMessage(user, siteId, hasDailyData)}
-              </Alert>
-            </Box>
-          )}
+          {!historicalDate &&
+            !hasSpotterData &&
+            !isLoading &&
+            !hasDailyData && (
+              <Box mt="1.3rem">
+                <Alert severity="info">
+                  {getAlertMessage(user, siteId, hasDailyData)}
+                </Alert>
+              </Box>
+            )}
           <div key={siteId}>
             <SiteDetails
               site={siteWithFeaturedImage}
               selectedSurveyPointId={selectedSurveyPointId}
               featuredSurveyId={featuredSurveyId}
-              surveys={surveyList}
+              surveys={siteSurveys}
               featuredSurveyPoint={featuredSurveyPoint}
               surveyDiveDate={diveDate}
+              historicalDate={historicalDate}
             />
           </div>
         </Container>

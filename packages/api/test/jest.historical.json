@@ -1,0 +1,13 @@
+{
+  "rootDir": "../",
+  "testEnvironment": "node",
+  "testRegex": "historical.integration.test.ts$",
+  "testTimeout": 30000,
+  "moduleDirectories": ["node_modules", "src"],
+  "transform": { "\\.ts$": "ts-jest" },
+  "moduleNameMapper": {
+    "^csv-stringify/sync": "<rootDir>/../../node_modules/csv-stringify/dist/cjs/sync.cjs",
+    "^typeorm$": "<rootDir>/../../node_modules/typeorm",
+    "^p-limit$": "<rootDir>/test/mock/p-limit.mock.js"
+  }
+}

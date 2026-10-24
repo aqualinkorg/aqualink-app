@@ -295,6 +295,7 @@ export interface Site {
   hasHobo: boolean;
   hasSeaphox: boolean;
   collectionData?: CollectionData;
+  historicalDataDate?: string;
   sketchFab?: SiteSketchFab;
   display: boolean;
   contactInformation?: string;
@@ -408,11 +409,18 @@ export interface SitesListState {
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
+  requestId?: string;
+  requestDate?: string;
+  currentDate?: string;
 }
 
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  currentDate?: string;
+  detailsRequestId?: string;
+  requestedSiteId?: string;
+  requestedDate?: string;
   spotterPosition?: {
     position?: {
       longitude: number;
@@ -433,8 +441,13 @@ export interface SelectedSiteState {
   granularDailyData?: DailyData[];
   timeSeriesData?: TimeSeriesData;
   timeSeriesDataLoading: boolean;
+  timeSeriesRequestIds?: string[];
+  timeSeriesRequestKey?: string;
+  timeSeriesDataKey?: string;
   timeSeriesDataRange?: TimeSeriesDataRange;
   timeSeriesDataRangeLoading: boolean;
+  timeSeriesRangeRequestIds?: string[];
+  timeSeriesRangeRequestKey?: string;
   timeSeriesMinRequestDate?: string;
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
