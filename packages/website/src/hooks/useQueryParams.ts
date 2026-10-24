@@ -34,11 +34,13 @@ export const useQueryParam = (
     if (!item) return;
     const { key: k, value: v } = item;
     const params = new URLSearchParams(search);
-    const hasKey = params.has(k);
-    if (hasKey) params.delete(k);
-    if (v !== undefined) params.set(k, v);
+    // Skip no-op updates so they don't add duplicate history entries.
+    const unchanged = (params.get(k) ?? undefined) === v;
+    // `set` keeps the parameter in place, so its order doesn't change.
+    if (v === undefined) params.delete(k);
+    else params.set(k, v);
     const newSearch = params.toString();
-    if (search === newSearch) {
+    if (unchanged || search === newSearch || `?${newSearch}` === search) {
       processing = false;
       processStack();
       return;
