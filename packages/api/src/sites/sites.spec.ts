@@ -129,6 +129,99 @@ export const siteTests = () => {
     expect(rsp.body).toMatchObject(data);
   });
 
+  describe('historical date', () => {
+    // Daily data date (UTC) of the n-th most recent mocked california entry
+    const californiaDate = (index: number) =>
+      DateTime.fromISO(californiaDailyData[index].date as string)
+        .toUTC()
+        .toISODate();
+
+    const expectedCollectionData = (index: number) => {
+      const entry = californiaDailyData[index];
+      return {
+        satelliteTemperature: entry.satelliteTemperature,
+        dhw: (entry.degreeHeatingDays as number) / 7,
+        tempAlert: entry.dailyAlertLevel,
+      };
+    };
+
+    it('GET / returns collection data from daily_data for the given date', async () => {
+      const date = californiaDate(3);
+      const rsp = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ date });
+
+      expect(rsp.status).toBe(200);
+      const california = rsp.body.find(
+        (site: Site) => site.name === californiaSite.name,
+      );
+      expect(california.collectionData).toMatchObject(
+        expectedCollectionData(3),
+      );
+      expect(
+        DateTime.fromISO(california.collectionData.historicalDate)
+          .toUTC()
+          .toISODate(),
+      ).toBe(date);
+      // Latest-only metrics must not leak into historical data
+      expect(california.collectionData.bottomTemperature).toBeUndefined();
+    });
+
+    it('GET / without date keeps returning the latest data', async () => {
+      const rsp = await request(app.getHttpServer()).get('/sites');
+
+      expect(rsp.status).toBe(200);
+      rsp.body.forEach((site: Site & { collectionData?: any }) => {
+        expect(site.collectionData?.historicalDate).toBeUndefined();
+      });
+    });
+
+    it('GET / ignores daily data older than the staleness window', async () => {
+      const date = DateTime.fromISO(californiaDailyData[9].date as string)
+        .toUTC()
+        .minus({ days: 30 })
+        .toISODate();
+      const rsp = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ date });
+
+      expect(rsp.status).toBe(200);
+      const california = rsp.body.find(
+        (site: Site) => site.name === californiaSite.name,
+      );
+      expect(california.collectionData).toBeUndefined();
+    });
+
+    it('GET /:id returns collection data for the given date', async () => {
+      const date = californiaDate(5);
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}`)
+        .query({ date });
+
+      expect(rsp.status).toBe(200);
+      expect(rsp.body.collectionData).toMatchObject(expectedCollectionData(5));
+    });
+
+    it.each(['2024-13-01', '2024-02-30', 'yesterday', '2024-04-01T00:00:00Z'])(
+      'GET / rejects invalid date %s',
+      async (date) => {
+        const rsp = await request(app.getHttpServer())
+          .get('/sites')
+          .query({ date });
+
+        expect(rsp.status).toBe(400);
+      },
+    );
+
+    it('GET /:id rejects an invalid date', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}`)
+        .query({ date: 'not-a-date' });
+
+      expect(rsp.status).toBe(400);
+    });
+  });
+
   it('PUT /:id update a site', async () => {
     const updatedSiteName = 'India site';
     mockExtractAndVerifyToken(defaultFirebaseUserMock);

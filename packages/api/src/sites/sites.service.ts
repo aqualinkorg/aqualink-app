@@ -40,7 +40,12 @@ import { backfillSiteData } from '../workers/backfill-site-data';
 import { SiteApplication } from '../site-applications/site-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
-import { getCollectionData } from '../utils/collections.utils';
+import {
+  getCollectionData,
+  getHistoricalCollectionData,
+} from '../utils/collections.utils';
+import { parseHistoricalDate } from '../utils/historical-date.utils';
+import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 import { LatestData } from '../time-series/latest-data.entity';
 import { getYouTubeVideoId } from '../utils/urls';
 import {
@@ -156,6 +161,8 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    const until =
+      filter.date !== undefined ? parseHistoricalDate(filter.date) : undefined;
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -198,10 +205,7 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    const mappedSiteData = await this.getSitesCollectionData(res, until);
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
@@ -223,7 +227,23 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  /**
+   * Returns the collection data (values used for the map markers and site
+   * cards) for the given sites. Without a date, the latest data is used.
+   * With a historical date, the daily data as of `until` is used.
+   */
+  private getSitesCollectionData(
+    sites: Site[],
+    until?: Date,
+  ): Promise<Record<number, CollectionDataDto>> {
+    if (!until) {
+      return getCollectionData(sites, this.latestDataRepository);
+    }
+    return getHistoricalCollectionData(sites, this.dailyDataRepository, until);
+  }
+
+  async findOne(id: number, date?: string): Promise<Site> {
+    const until = date !== undefined ? parseHistoricalDate(date) : undefined;
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -246,10 +266,7 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
-    const mappedSiteData = await getCollectionData(
-      [site],
-      this.latestDataRepository,
-    );
+    const mappedSiteData = await this.getSitesCollectionData([site], until);
 
     const maskedSpotterApiToken = site.spotterApiToken
       ? `****${site.spotterApiToken?.slice(-4)}`
