@@ -14,6 +14,7 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import HomepageNavBar from 'common/NavBar';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
@@ -71,19 +72,22 @@ function Homepage({ classes }: HomepageProps) {
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
-  useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+  const [historicalDate, setHistoricalDate] = useHistoricalDate();
 
   useEffect(() => {
+    dispatch(sitesRequest({ date: historicalDate ?? null }));
+  }, [dispatch, historicalDate]);
+
+  useEffect(() => {
+    const date = historicalDate ?? null;
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, date }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(siteRequest({ id: `${siteOnMap.id}`, date }));
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dispatch, initialSiteId, siteOnMap, historicalDate]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -124,6 +128,8 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              historicalDate={historicalDate}
+              onHistoricalDateChange={setHistoricalDate}
             />
           </Grid>
           {showSiteTable && (

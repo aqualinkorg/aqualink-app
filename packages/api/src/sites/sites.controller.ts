@@ -21,6 +21,7 @@ import {
 import { SitesService } from './sites.service';
 import { Site } from './sites.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
+import { SiteDateDto } from './dto/site-date.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
@@ -73,8 +74,11 @@ export class SitesController {
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Site> {
-    return this.sitesService.findOne(id);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() { date }: SiteDateDto,
+  ): Promise<Site> {
+    return this.sitesService.findOne(id, date);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
@@ -109,8 +113,9 @@ export class SitesController {
   @Get(':id/latest_data')
   async findLatestData(
     @Param('id', ParseIntPipe) id: number,
+    @Query() { date }: SiteDateDto,
   ): Promise<SofarLatestDataDto> {
-    const latestData = await this.sitesService.findLatestData(id);
+    const latestData = await this.sitesService.findLatestData(id, date);
     return { latestData };
   }
 

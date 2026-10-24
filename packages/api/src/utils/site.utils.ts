@@ -9,9 +9,10 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { ObjectLiteral, Repository } from 'typeorm';
+import { Brackets, ObjectLiteral, Repository } from 'typeorm';
 import { Dictionary, groupBy, keyBy, mapValues, merge, some } from 'lodash';
 import geoTz from 'geo-tz';
+import { DateTime } from '../luxon-extensions';
 import { ReefCheckSurvey } from '../reef-check-surveys/reef-check-surveys.entity';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
@@ -25,6 +26,7 @@ import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity
 import { getHistoricalMonthlyMeans, getMMM } from './temperature';
 import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
 import { Metric } from '../time-series/metrics.enum';
+import { TimeSeries } from '../time-series/time-series.entity';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Site Utils');
@@ -375,6 +377,82 @@ export const getLatestData = async (
   latestDataRepository.findBy({
     site: { id: site.id },
   });
+
+// Sources that report infrequently, mirroring the latest_data view windows
+const LONG_LIVED_SOURCES = [
+  SourceType.SONDE,
+  SourceType.HUI,
+  SourceType.SHEET_DATA,
+  SourceType.HWO,
+];
+
+/**
+ * Builds the equivalent of the `latest_data` materialized view as it would
+ * have looked at the end of `until`, straight from `time_series`.
+ */
+export const getHistoricalLatestData = async (
+  site: Site,
+  timeSeriesRepository: Repository<TimeSeries>,
+  until: Date,
+): Promise<LatestData[]> => {
+  const untilDate = DateTime.fromJSDate(until, { zone: 'utc' });
+  const weekAgo = untilDate.minus({ days: 7 }).startOf('day').toJSDate();
+  const twoYearsAgo = untilDate.minus({ years: 2 }).startOf('day').toJSDate();
+
+  const rows: {
+    id: string;
+    metric: Metric;
+    timestamp: Date;
+    value: number;
+    source: SourceType;
+    site_id: number;
+    survey_point_id: number | null;
+  }[] = await timeSeriesRepository
+    .createQueryBuilder('time_series')
+    .select('time_series.id', 'id')
+    .addSelect('time_series.metric', 'metric')
+    .addSelect('time_series.timestamp', 'timestamp')
+    .addSelect('time_series.value', 'value')
+    .addSelect('sources.type', 'source')
+    .addSelect('sources.site_id', 'site_id')
+    .addSelect('sources.survey_point_id', 'survey_point_id')
+    .distinctOn([
+      'time_series.metric',
+      'sources.type',
+      'sources.survey_point_id',
+    ])
+    .innerJoin('time_series.source', 'sources')
+    .where('sources.site_id = :siteId', { siteId: site.id })
+    .andWhere('time_series.timestamp <= :until', { until })
+    .andWhere(
+      new Brackets((qb) => {
+        qb.where('time_series.timestamp >= :weekAgo', { weekAgo }).orWhere(
+          'sources.type IN (:...longLived) AND time_series.timestamp >= :twoYearsAgo',
+          { longLived: LONG_LIVED_SOURCES, twoYearsAgo },
+        );
+      }),
+    )
+    .orderBy('time_series.metric')
+    .addOrderBy('sources.type')
+    .addOrderBy('sources.survey_point_id')
+    .addOrderBy('time_series.timestamp', 'DESC')
+    .getRawMany();
+
+  return rows.map(
+    (row) =>
+      ({
+        id: Number(row.id),
+        metric: row.metric,
+        timestamp: row.timestamp,
+        value: row.value,
+        source: row.source,
+        siteId: row.site_id,
+        ...(row.survey_point_id
+          ? { surveyPoint: { id: row.survey_point_id } }
+          : {}),
+      }) as LatestData,
+  );
+};
 
 export const createSite = async (
   name: string,

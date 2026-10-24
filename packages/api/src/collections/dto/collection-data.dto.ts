@@ -62,4 +62,11 @@ export class CollectionDataDto implements CollectionDataDtoType {
 
   @ApiPropertyOptional({ example: 10.4 })
   windSpeed?: number;
+
+  @ApiPropertyOptional({
+    example: '2024-04-01T23:59:59.999Z',
+    description:
+      'Only present when a historical date was requested: the date of the daily data the values come from.',
+  })
+  historicalDate?: Date;
 }

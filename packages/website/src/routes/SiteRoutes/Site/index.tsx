@@ -32,6 +32,8 @@ import { isAdmin } from 'helpers/user';
 import { findAdministeredSite } from 'helpers/findAdministeredSite';
 import { sortByDate } from 'helpers/dates';
 import { findSurveyPointFromList } from 'helpers/siteUtils';
+import { formatHistoricalDate } from 'helpers/historicalDate';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import SiteNavBar from 'common/NavBar';
 import SiteFooter from 'common/Footer';
 import SiteDetails from 'common/SiteDetails';
@@ -122,6 +124,8 @@ function Site({ classes }: SiteProps) {
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
+  const [historicalDate] = useHistoricalDate();
+  const date = historicalDate ?? null;
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -162,7 +166,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
+      dispatch(siteRequest({ id: siteId, date }));
       dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
@@ -171,7 +175,10 @@ function Site({ classes }: SiteProps) {
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
+    dispatch(siteRequest({ id: siteId, date }));
+  }, [dispatch, siteId, date]);
+
+  useEffect(() => {
     dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
@@ -236,6 +243,27 @@ function Site({ classes }: SiteProps) {
               )}
             </LoadingSkeleton>
           </Box>
+          {historicalDate && (
+            <Box mt="1.3rem">
+              <Alert
+                severity="info"
+                data-testid="historical-date-alert"
+                action={
+                  <Link
+                    style={{ whiteSpace: 'nowrap', alignSelf: 'center' }}
+                    to={`/sites/${siteId}`}
+                  >
+                    View latest
+                  </Link>
+                }
+              >
+                Viewing historical data as of{' '}
+                <strong>{formatHistoricalDate(historicalDate)}</strong>. Values
+                and charts reflect the data available at the end of that day
+                (UTC).
+              </Alert>
+            </Box>
+          )}
           {/* Only show alert message when data is loading */}
           {!hasSpotterData && !isLoading && !hasDailyData && (
             <Box mt="1.3rem">
@@ -244,8 +272,9 @@ function Site({ classes }: SiteProps) {
               </Alert>
             </Box>
           )}
-          <div key={siteId}>
+          <div key={`${siteId}-${date ?? 'latest'}`}>
             <SiteDetails
+              historicalDate={date}
               site={siteWithFeaturedImage}
               selectedSurveyPointId={selectedSurveyPointId}
               featuredSurveyId={featuredSurveyId}

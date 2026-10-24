@@ -403,16 +403,34 @@ export interface SitesRequestData {
   list: Site[];
 }
 
+export interface SitesRequestArgs {
+  /**
+   * Historical date (YYYY-MM-DD) to fetch the sites' data for.
+   * `null` means the latest data.
+   */
+  date: string | null;
+}
+
 export interface SitesListState {
   list?: Site[];
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
+  /** Historical date of the data in `list`, `null` for the latest data. */
+  date?: string | null;
+  /** Historical date of the in-flight request. */
+  pendingDate?: string | null;
+  /** Id of the latest dispatched request; older responses are ignored. */
+  currentRequestId?: string;
 }
 
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  /** Historical date of `details`, `null` for the latest data. */
+  detailsDate?: string | null;
+  /** Id of the latest site request; older responses are ignored. */
+  siteRequestId?: string;
   spotterPosition?: {
     position?: {
       longitude: number;
