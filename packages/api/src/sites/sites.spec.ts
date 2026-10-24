@@ -202,6 +202,51 @@ export const siteTests = () => {
       expect(rsp.body.collectionData).toMatchObject(expectedCollectionData(5));
     });
 
+    it('GET /:id/latest_data returns the latest values as of the given date', async () => {
+      const date = DateTime.now().toUTC().minus({ days: 3 }).toISODate();
+      const until = DateTime.fromISO(date as string, { zone: 'utc' }).endOf(
+        'day',
+      );
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}/latest_data`)
+        .query({ date });
+
+      expect(rsp.status).toBe(200);
+      const { latestData } = rsp.body;
+      expect(latestData.length).toBeGreaterThan(0);
+      latestData.forEach((entry: any) => {
+        expect(entry.siteId).toBe(californiaSite.id);
+        expect(DateTime.fromISO(entry.timestamp) <= until).toBe(true);
+      });
+      // One value per metric and source
+      const keys = latestData.map((x: any) => `${x.metric}-${x.source}`);
+      expect(new Set(keys).size).toBe(keys.length);
+      expect(keys).toEqual(
+        expect.arrayContaining([
+          'satellite_temperature-noaa',
+          'bottom_temperature-spotter',
+        ]),
+      );
+    });
+
+    it('GET /:id/latest_data ignores data older than a week before the date', async () => {
+      const date = DateTime.now().toUTC().minus({ days: 60 }).toISODate();
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}/latest_data`)
+        .query({ date });
+
+      expect(rsp.status).toBe(200);
+      expect(rsp.body.latestData).toEqual([]);
+    });
+
+    it('GET /:id/latest_data rejects an invalid date', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}/latest_data`)
+        .query({ date: '2024-02-30' });
+
+      expect(rsp.status).toBe(400);
+    });
+
     it.each(['2024-13-01', '2024-02-30', 'yesterday', '2024-04-01T00:00:00Z'])(
       'GET / rejects invalid date %s',
       async (date) => {

@@ -28,6 +28,7 @@ import {
   hasHoboDataSubQuery,
   getWaterQualityDataSubQuery,
   getLatestData,
+  getHistoricalLatestData,
   getSite,
   createSite,
   getReefCheckDataSubQuery,
@@ -475,12 +476,15 @@ export class SitesService {
     };
   }
 
-  async findLatestData(id: number): Promise<LatestData[]> {
+  async findLatestData(id: number, date?: string): Promise<LatestData[]> {
+    const until = date ? parseHistoricalDate(date) : undefined;
     const site = await getSite(id, this.sitesRepository, [
       'historicalMonthlyMean',
     ]);
 
-    return getLatestData(site, this.latestDataRepository);
+    return until
+      ? getHistoricalLatestData(site, this.timeSeriesRepository, until)
+      : getLatestData(site, this.latestDataRepository);
   }
 
   async getSpotterData(id: number, start?: string, end?: string) {

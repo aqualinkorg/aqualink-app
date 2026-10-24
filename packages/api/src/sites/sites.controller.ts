@@ -113,8 +113,9 @@ export class SitesController {
   @Get(':id/latest_data')
   async findLatestData(
     @Param('id', ParseIntPipe) id: number,
+    @Query() { date }: SiteDateDto,
   ): Promise<SofarLatestDataDto> {
-    const latestData = await this.sitesService.findLatestData(id);
+    const latestData = await this.sitesService.findLatestData(id, date);
     return { latestData };
   }
 
