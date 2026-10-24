@@ -72,14 +72,19 @@ describe('historical map markers', () => {
     );
   });
 
-  it('continues rendering current markers without a historical date', () => {
-    const currentState = { ...initial, currentDate: undefined };
-    const store = configureStore([])({ sitesList: currentState });
-    renderWithProviders(<SiteMarkers />, { store });
-    expect(screen.getByTestId('map-marker')).toHaveTextContent(
-      'Old date marker',
-    );
-  });
+  it.each([undefined, ''])(
+    'continues rendering current markers with date %j',
+    (historicalDate) => {
+      const currentState = { ...initial, currentDate: undefined };
+      const store = configureStore([])({ sitesList: currentState });
+      renderWithProviders(<SiteMarkers historicalDate={historicalDate} />, {
+        store,
+      });
+      expect(screen.getByTestId('map-marker')).toHaveTextContent(
+        'Old date marker',
+      );
+    },
+  );
 
   it('renders collection sites independently of the global sites-list date', () => {
     let state = sitesListReducer(

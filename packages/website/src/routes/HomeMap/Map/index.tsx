@@ -283,7 +283,7 @@ function HomepageMap({
       />
       {onHistoricalDateChange && (
         <div className={classes.historicalDateControl}>
-          <span id="map-historical-date-label">Map data date</span>
+          <span id="map-historical-date-label">Site observations date</span>
           <input
             id="map-historical-date"
             aria-labelledby="map-historical-date-label"
@@ -295,9 +295,14 @@ function HomepageMap({
             }
           />
           {historicalDate && (
-            <button type="button" onClick={() => onHistoricalDateChange('')}>
-              Latest
-            </button>
+            <>
+              <button type="button" onClick={() => onHistoricalDateChange('')}>
+                Latest
+              </button>
+              <small className={classes.historicalLayerNotice}>
+                Ocean layers show latest data.
+              </small>
+            </>
           )}
         </div>
       )}
@@ -393,13 +398,14 @@ const styles = (theme: Theme) =>
       transform: 'translateX(-50%)',
       zIndex: 1000,
       display: 'flex',
+      flexWrap: 'wrap',
       alignItems: 'center',
       gap: 8,
       padding: '8px 10px',
       borderRadius: 5,
       backgroundColor: 'white',
       boxShadow: '0 1px 5px rgba(0,0,0,0.45)',
-      '& label': {
+      '& span': {
         color: '#333',
         fontSize: 14,
         whiteSpace: 'nowrap',
@@ -423,9 +429,13 @@ const styles = (theme: Theme) =>
         left: '50%',
         gap: 5,
         padding: '6px 8px',
-        '& label': { fontSize: 12 },
+        '& span': { fontSize: 12 },
         '& input': { maxWidth: 135, fontSize: 12 },
       },
+    },
+    historicalLayerNotice: {
+      flexBasis: '100%',
+      color: '#333',
     },
     expandIcon: {
       fontSize: '34px',

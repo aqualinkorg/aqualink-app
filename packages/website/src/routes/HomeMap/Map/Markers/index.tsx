@@ -21,7 +21,7 @@ export function SiteMarkers({ collection, historicalDate }: SiteMarkersProps) {
   const error = useSelector(sitesListErrorSelector);
   const sitesReady = collection
     ? true
-    : !loading && !error && currentDate === historicalDate;
+    : !loading && !error && currentDate === (historicalDate || undefined);
   const sitesList = useMemo(() => {
     if (collection) return collection.sites;
     return sitesReady ? storedSites || [] : [];

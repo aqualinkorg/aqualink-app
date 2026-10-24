@@ -32,14 +32,13 @@ function Satellite({
   classes,
 }: SatelliteProps) {
   const { dhw, satelliteTemperature, sstAnomaly } = data;
-  const degreeHeatingDays = { ...dhw, value: (dhw?.value || 0) * 7 };
+  const degreeHeatingDays =
+    dhw?.value === undefined ? undefined : dhw.value * 7;
   const relativeTime =
     satelliteTemperature?.timestamp &&
     toRelativeTime(satelliteTemperature.timestamp);
 
-  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
-    degreeHeatingDays?.value,
-  );
+  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
   const metrics = [
     {
