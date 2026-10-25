@@ -71,10 +71,14 @@ export class SitesController {
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Returns specified site' })
   @ApiParam({ name: 'id', example: 1 })
+  @ApiQuery({ name: 'date', required: false, example: '2021-04-18T08:45:35.780Z' })
   @Public()
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Site> {
-    return this.sitesService.findOne(id);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('date', ParseDatePipe) date?: string,
+  ): Promise<Site> {
+    return this.sitesService.findOne(id, date);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
@@ -114,7 +118,7 @@ export class SitesController {
     return { latestData };
   }
 
-  @ApiNestNotFoundResponse('No site was found or found site had no spotter')
+  @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Returns spotter data for the specified site' })
   @ApiParam({ name: 'id', example: 1 })
   @ApiQuery({ name: 'startDate', example: '2021-04-18T08:45:35.780Z' })
