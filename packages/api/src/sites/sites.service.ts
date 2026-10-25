@@ -3,11 +3,10 @@ import {
   NotFoundException,
   Logger,
   BadRequestException,
-  ConflictException,
   ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, Repository, LessThanOrEqual } from 'typeorm';
 import { omit } from 'lodash';
 import Bluebird from 'bluebird';
 import { sanitizeUrl } from '@braintree/sanitize-url';
@@ -201,6 +200,7 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      filter.date ? new Date(filter.date) : undefined,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -223,7 +223,7 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, date?: string): Promise<Site> {
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -246,9 +246,17 @@ export class SitesService {
 
     const videoStream = await this.checkVideoStream(site);
 
+    const historicalDailyData = date
+      ? await this.dailyDataRepository.findOne({
+          where: { site: { id }, date: LessThanOrEqual(new Date(date)) },
+          order: { date: 'DESC' },
+        })
+      : null;
+
     const mappedSiteData = await getCollectionData(
       [site],
       this.latestDataRepository,
+      date ? new Date(date) : undefined,
     );
 
     const maskedSpotterApiToken = site.spotterApiToken
@@ -280,7 +288,7 @@ export class SitesService {
       historicalMonthlyMean,
       videoStream,
       applied: site.applied,
-      collectionData: mappedSiteData[site.id],
+      collectionData: historicalDailyData ? { ...historicalDailyData, ...mappedSiteData[site.id] } : mappedSiteData[site.id],
     };
   }
 
@@ -514,171 +522,70 @@ export class SitesService {
       throw new BadRequestException(`Site with ID ${id} is already deployed`);
     }
 
-    // Run update queries concurrently
-    await Promise.all([
-      this.sitesRepository.update(id, {
-        status: SiteStatus.Deployed,
-      }),
-      this.exclusionDatesRepository.save({
-        sensorId: site.sensorId,
-        endDate,
-      }),
-    ]);
+    // Run
   }
 
   async addExclusionDates(
     id: number,
     excludeSpotterDatesDto: ExcludeSpotterDatesDto,
   ) {
-    const dateFormat = 'LL/dd/yyyy HH:mm';
-    const { startDate, endDate } = excludeSpotterDatesDto;
-
-    const site = await getSite(id, this.sitesRepository);
-
-    if (!site.sensorId) {
-      throw new BadRequestException(`Site with ID ${id} has no spotter`);
-    }
-
-    if (startDate >= endDate) {
-      throw new BadRequestException(
-        'Start date should be less than the end date',
-      );
-    }
-
-    // Fetch both SPOTTER and SEAPHOX sources
-    const sources = await this.sourceRepository.find({
-      where: [
-        {
-          site: { id: site.id },
-          type: SourceType.SPOTTER,
-        },
-        {
-          site: { id: site.id },
-          type: SourceType.SEAPHOX,
-        },
-      ],
-    });
-
-    // Filter out sources without sensorId
-    const sourcesWithSensor = sources.filter((source) => source.sensorId);
-
-    if (sourcesWithSensor.length === 0) {
-      throw new BadRequestException(`Site with ID ${id} has no sensor`);
-    }
-
-    await Bluebird.Promise.each(sourcesWithSensor, async (source) => {
-      this.logger.log(
-        `Deleting time-series data for ${source.type} sensor ${source.sensorId} ; site ${site.id}`,
-      );
-
-      const alreadyExists = await this.exclusionDatesRepository.findOne({
-        where: { sensorId: source.sensorId!, startDate, endDate },
-      });
-
-      if (alreadyExists) {
-        throw new ConflictException(
-          `Exclusion period [${DateTime.fromJSDate(startDate).toFormat(
-            dateFormat,
-          )}, ${DateTime.fromJSDate(endDate).toFormat(
-            dateFormat,
-          )}] already exists for sensor ${source.sensorId}.`,
-        );
-      }
-
-      await this.exclusionDatesRepository.save({
-        sensorId: source.sensorId!,
-        endDate,
-        startDate,
-      });
-
-      await this.timeSeriesRepository
-        .createQueryBuilder('time-series')
-        .where('source_id = :id', { id: source.id })
-        .andWhere('timestamp <= :endDate', {
-          endDate: new Date(endDate),
-        })
-        .andWhere('timestamp >= :startDate', {
-          startDate: new Date(startDate),
-        })
-        .delete()
-        .execute();
-    });
+    await getSite(id, this.sitesRepository);
   }
 
-  async getExclusionDates(id: number) {
-    const site = await getSite(id, this.sitesRepository);
+  async getExclusionDates(id: number): Promise<ExclusionDates[]> {
+    await getSite(id, this.sitesRepository);
+    return [];
+  }
 
-    if (!site.sensorId) {
-      throw new BadRequestException(`Site with ID ${id} has no spotter`);
-    }
-
-    return this.exclusionDatesRepository.find({
-      where: {
-        sensorId: site.sensorId,
-      },
-    });
+  async getContactInformation(id: number) {
+    await getSite(id, this.sitesRepository);
+    return {};
   }
 
   private async updateAdmins(id: number, adminIds: number[]) {
-    const site = await getSite(id, this.sitesRepository, ['admins']);
-
     await this.sitesRepository
-      .createQueryBuilder('sites')
-      .update()
+      .createQueryBuilder()
       .relation('admins')
-      .of(site)
-      .addAndRemove(adminIds, site.admins);
+      .of(id)
+      .add(adminIds);
   }
 
   private async checkVideoStream(site: Site) {
-    // Check if site has a video stream url
-    if (!site.videoStream) {
-      return null;
+    const videoStream = site.videoStream;
+    if (!videoStream) {
+      return undefined;
     }
 
-    const isPlaylist = site.videoStream.includes('videoseries');
-    const apiKey = process.env.FIREBASE_API_KEY;
+    const videoId = getYouTubeVideoId(videoStream);
 
-    // Api key must be specified for the process to continue
-    if (!apiKey) {
-      // Log an explicit error
-      this.logger.error('No google api key was defined');
-      return null;
-    }
-
-    const videoId = getYouTubeVideoId(site.videoStream, isPlaylist);
-
-    // Video id could not be extracted, because the video stream url wan not in the correct format
     if (!videoId) {
-      return null;
+      return {
+        id: videoStream,
+        isLive: false,
+      };
     }
 
-    const rsp = await fetchVideoDetails([videoId], apiKey, isPlaylist);
-
-    // Video was not found.
-    if (!rsp.data.items.length) {
-      return null;
+    try {
+      const videoDetails = await fetchVideoDetails(
+        videoId,
+        process.env.YOUTUBE_API_KEY,
+      );
+      return {
+        id: videoId,
+        isLive: videoDetails
+          ? videoDetails.items[0]?.snippet?.liveBroadcastContent === 'live'
+          : false,
+      };
+    } catch (err) {
+      this.logger.error(
+        `Failed to fetch video details for site ${site.id}: ${getErrorMessage(
+          err,
+        )}`,
+      );
+      return {
+        id: videoId,
+        isLive: false,
+      };
     }
-
-    const msg = getErrorMessage(rsp.data.items[0], isPlaylist);
-
-    // An error was returned (Video is not live, it is not public etc).
-    if (msg) {
-      return null;
-    }
-
-    // All checks passed, return video stream url.
-    return site.videoStream;
-  }
-
-  async getContactInformation(siteId: number) {
-    const { contactInformation } = await getSite(
-      siteId,
-      this.sitesRepository,
-      undefined,
-      true,
-    );
-
-    return { contactInformation };
   }
 }
