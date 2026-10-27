@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { getAxiosErrorMessage } from 'helpers/errors';
+import { historicalDayRange } from 'helpers/historicalDate';
 import siteServices from 'services/siteServices';
 import type {
   OceanSenseData,
@@ -88,18 +89,31 @@ export const latestDataRequest = createAsyncThunk<
   }
 });
 
+export type SiteRequest = string | { id: string; date?: string };
+export const siteRequestParams = (arg: SiteRequest) =>
+  typeof arg === 'string' ? { id: arg, date: undefined } : arg;
+export const siteRequestKey = (arg: SiteRequest) => {
+  const { id, date } = siteRequestParams(arg);
+  return `${id}:${date || 'live'}`;
+};
+
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  SiteRequest,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
+    const { id, date } = siteRequestParams(arg);
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { data } = await siteServices.getSite(id, date);
+      const range = date ? historicalDayRange(date) : undefined;
+      const { data: dailyData } = await siteServices.getSiteDailyData(
+        id,
+        range?.start,
+        range?.end,
+      );
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
-
       return {
         ...data,
         collectionData: data.collectionData || {},
@@ -123,11 +137,16 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(arg, { getState }) {
       const {
-        selectedSite: { details },
+        selectedSite: { details, requestKey, loading },
       } = getState();
-      return `${details?.id}` !== id;
+      const key = siteRequestKey(arg);
+      const params = siteRequestParams(arg);
+      return (
+        requestKey !== key ||
+        (!loading && (!details || `${details.id}` !== params.id))
+      );
     },
   },
 );
@@ -334,26 +353,29 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
-        ...state,
-        details: action.payload,
-        loading: false,
-      }),
+    builder.addCase(siteRequest.fulfilled, (state, action) =>
+      state.requestId !== action.meta.requestId
+        ? state
+        : {
+            ...state,
+            details: action.payload,
+            loading: false,
+          },
     );
-
-    builder.addCase(
-      siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        loading: false,
-      }),
+    builder.addCase(siteRequest.rejected, (state, action) =>
+      state.requestId !== action.meta.requestId
+        ? state
+        : {
+            ...state,
+            error: action.payload || action.error.message,
+            loading: false,
+          },
     );
-
-    builder.addCase(siteRequest.pending, (state) => ({
+    builder.addCase(siteRequest.pending, (state, action) => ({
       ...state,
+      details: undefined,
+      requestKey: siteRequestKey(action.meta.arg),
+      requestId: action.meta.requestId,
       loading: true,
       error: null,
     }));
