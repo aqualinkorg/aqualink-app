@@ -35,13 +35,13 @@ const sitesListInitialState: SitesListState = {
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  string | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(arg);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -55,11 +55,11 @@ export const sitesRequest = createAsyncThunk<
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, date, loading },
       } = getState();
-      return !list;
+      return date !== arg || (!list && !loading);
     },
   },
 );
@@ -103,25 +103,30 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
+    builder.addCase(sitesRequest.fulfilled, (state, action) =>
+      state.requestId !== action.meta.requestId
+        ? state
+        : {
+            ...state,
+            list: action.payload.list,
+            loading: false,
+          },
     );
-
-    builder.addCase(sitesRequest.rejected, (state, action) => ({
+    builder.addCase(sitesRequest.rejected, (state, action) =>
+      state.requestId !== action.meta.requestId
+        ? state
+        : {
+            ...state,
+            error:
+              action.payload || action.error.message || 'Unable to load sites',
+            loading: false,
+          },
+    );
+    builder.addCase(sitesRequest.pending, (state, action) => ({
       ...state,
-      error: action.error.message
-        ? action.error.message
-        : action.error.toString(),
-      loading: false,
-    }));
-
-    builder.addCase(sitesRequest.pending, (state) => ({
-      ...state,
+      list: undefined,
+      date: action.meta.arg,
+      requestId: action.meta.requestId,
       loading: true,
       error: null,
     }));
