@@ -14,6 +14,9 @@ import {
 import { surveyListSelector } from 'store/Survey/surveyListSlice';
 import { sortByDate } from 'helpers/dates';
 import LoadingSkeleton from 'common/LoadingSkeleton';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import { withHistoricalDate } from 'helpers/historicalDate';
 import SelectedSiteCardContent from './CardContent';
 
 const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
@@ -37,15 +40,23 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function SelectedSiteCard() {
   const classes = useStyles();
-  const site = useSelector(siteDetailsSelector);
-  const loading = useSelector(siteLoadingSelector);
+  const { date } = useHistoricalDate();
+  const storedSite = useSelector(siteDetailsSelector);
+  const siteOnMap = useSelector(siteOnMapSelector);
+  const site =
+    storedSite?.historicalDate === date &&
+    (!siteOnMap || storedSite?.id === siteOnMap.id)
+      ? storedSite
+      : undefined;
   const error = useSelector(siteErrorSelector);
+  const siteLoading = useSelector(siteLoadingSelector);
+  const loading = siteLoading || (!site && !error);
   const surveyList = useSelector(surveyListSelector);
 
   const isFeatured = (site?.id || '').toString() === featuredSiteId;
 
   const { featuredSurveyMedia } =
-    sortByDate(surveyList, 'diveDate', 'desc').find(
+    sortByDate(date ? [] : surveyList, 'diveDate', 'desc').find(
       (survey) =>
         survey.featuredSurveyMedia &&
         survey.featuredSurveyMedia.type === 'image',
@@ -71,7 +82,7 @@ function SelectedSiteCard() {
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
               {!hasMedia && (
-                <Link to={`/sites/${site?.id}`}>
+                <Link to={withHistoricalDate(`/sites/${site?.id}`, date)}>
                   <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}
