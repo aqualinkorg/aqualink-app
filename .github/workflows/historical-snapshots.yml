@@ -51,7 +51,7 @@ jobs:
         run: ../../node_modules/.bin/tsc --noEmit
       - name: Test historical website flows
         working-directory: packages/website
-        run: ../../node_modules/.bin/vitest run src/helpers/historicalDate.test.ts src/store/Sites/historicalRequests.test.ts src/common/HistoricalDateControl/index.test.tsx src/routes/HomeMap/index.test.tsx src/routes/SiteRoutes/Site/index.test.tsx src/routes/SiteRoutes/Site/historical.test.tsx src/common/HistoricalSiteSummary/historical-chart.test.tsx src/routes/HomeMap/Map/Popup/historical-navigation.test.tsx --maxWorkers=2
+        run: ../../node_modules/.bin/vitest run src/helpers/historicalDate.test.ts src/store/Sites/historicalRequests.test.ts src/common/HistoricalDateControl/index.test.tsx src/routes/HomeMap/index.test.tsx src/routes/SiteRoutes/Site/index.test.tsx src/routes/SiteRoutes/Site/historical.test.tsx src/common/HistoricalSiteSummary/historical-chart.test.tsx src/routes/HomeMap/Map/Popup/historical-navigation.test.tsx src/routes/HomeMap/SiteTable/SelectedSiteCard/index.test.tsx --maxWorkers=2
       - name: Build website
         working-directory: packages/website
         run: ../../node_modules/.bin/rsbuild build
