@@ -20,6 +20,8 @@ import {
   unsetSelectedSite,
 } from 'store/Sites/selectedSiteSlice';
 import mapServices from 'services/mapServices';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { withHistoricalDate } from 'helpers/historicalDate';
 
 const siteAugmentedName = (site: Site) => {
   const { name, region } = getSiteNameAndRegion(site);
@@ -31,6 +33,7 @@ const siteAugmentedName = (site: Site) => {
 
 function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const navigate = useNavigate();
+  const asOf = useHistoricalDate();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState('');
@@ -47,8 +50,8 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
 
   // Fetch sites for the search bar
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(asOf));
+  }, [dispatch, asOf]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -78,7 +81,7 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       if (!geocodingEnabled) {
-        navigate(`/sites/${value.id}`);
+        navigate(withHistoricalDate(`/sites/${value.id}`, asOf));
       }
     }
   };
@@ -86,7 +89,7 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const onSearchSubmit = () => {
     if (searchedSite) {
       if (!geocodingEnabled) {
-        navigate(`/sites/${searchedSite.id}`);
+        navigate(withHistoricalDate(`/sites/${searchedSite.id}`, asOf));
       }
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());

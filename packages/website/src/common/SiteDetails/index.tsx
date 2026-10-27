@@ -1,3 +1,5 @@
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { historicalEnd } from 'helpers/historicalDate';
 import React, { useEffect, useState } from 'react';
 import { Grid, Theme, Box, useTheme, useMediaQuery } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
@@ -75,12 +77,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-/**  Show only the last year of HUI data, should match with {@link getCardData} */
-const acceptHUIInterval = Interval.fromDateTimes(
-  DateTime.now().minus({ years: 1 }),
-  DateTime.now(),
-);
-
 function dateRangeWithinInterval(
   interval: Interval,
   dataRange: DataRange[],
@@ -134,6 +130,7 @@ function SiteDetails({
   featuredSurveyPoint = null,
   surveyDiveDate = null,
 }: SiteDetailsProps) {
+  const asOf = useHistoricalDate();
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useAppDispatch();
@@ -156,16 +153,16 @@ function SiteDetails({
   const isLoading = !site;
 
   useEffect(() => {
-    if (site && !spotterPosition) {
+    if (site && !asOf && !spotterPosition) {
       dispatch(spotterPositionRequest(String(site.id)));
     }
     if (site && !latestData) {
-      dispatch(latestDataRequest(String(site.id)));
+      dispatch(latestDataRequest({ id: String(site.id), asOf }));
     }
-    if (site && !forecastData) {
+    if (site && !asOf && !forecastData) {
       dispatch(forecastDataRequest(String(site.id)));
     }
-  }, [dispatch, site, spotterPosition, latestData, forecastData]);
+  }, [dispatch, site, spotterPosition, latestData, forecastData, asOf]);
 
   useEffect(
     () => () => {
@@ -177,14 +174,24 @@ function SiteDetails({
   );
 
   useEffect(() => {
-    if (forecastData && latestData) {
-      const combinedArray = [...forecastData, ...latestData];
+    if ((asOf || forecastData) && latestData) {
+      const combinedArray = [
+        ...(asOf ? [] : forecastData || []),
+        ...latestData,
+      ];
+      const reference = asOf
+        ? DateTime.fromISO(historicalEnd(asOf))
+        : DateTime.now();
+      const acceptHUIInterval = Interval.fromDateTimes(
+        reference.minus({ years: 1 }),
+        reference,
+      );
       const parsedData = parseLatestData(combinedArray);
 
       // Check for Spotter TEMPERATURE data (for BUOY OBSERVATION card)
       // Excludes seaphox source AND checks if data is recent (within 12 hours)
       const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
-      const now = Date.now();
+      const now = reference.toMillis();
 
       const hasRecentSpotterTemperature = latestData.some((x) => {
         if (x.source === 'seaphox') return false;
@@ -261,8 +268,8 @@ function SiteDetails({
       setHasHWOData(hasHWO);
 
       const seapHOxInterval = Interval.fromDateTimes(
-        DateTime.now().minus({ days: 7 }), // Only show if data within last 7 days
-        DateTime.now(),
+        reference.minus({ days: 7 }),
+        reference,
       );
 
       // Check if there's seaphox data in latestData (any timestamp) or in timeSeriesRange
@@ -295,9 +302,9 @@ function SiteDetails({
       setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);
     }
-  }, [forecastData, latestData, timeSeriesRange]);
+  }, [forecastData, latestData, timeSeriesRange, asOf]);
 
-  const { videoStream } = site || {};
+  const videoStream = asOf ? undefined : site?.videoStream;
 
   const cards =
     site && latestDataAsSofarValues
@@ -365,6 +372,7 @@ function SiteDetails({
 
           // CARD 4: Waves (always shown)
           <Waves
+            asOf={asOf}
             data={latestDataAsSofarValues}
             hasSpotter={hasSpotterWindWaveData}
           />,
@@ -463,7 +471,7 @@ function SiteDetails({
             <Map
               siteId={site.id}
               spotterPosition={
-                hasSpotterData ? spotterPosition?.position : null
+                hasSpotterData && !asOf ? spotterPosition?.position : null
               }
               polygon={site.polygon}
               surveyPoints={site.surveyPoints}
@@ -532,7 +540,7 @@ function SiteDetails({
           surveys={surveys}
           hasAdditionalSensorData={hasHUIData || hasSondeData || hasHWOData}
         />
-        {site?.iframe && (
+        {!asOf && site?.iframe && (
           <iframe
             style={{ width: '100%', height: '50vh' }}
             src={site.iframe}
@@ -544,7 +552,7 @@ function SiteDetails({
         <Surveys site={site} />
       </Box>
       {/* AI Chat Widget */}
-      {site && <AiChatWidget siteId={site.id} />}
+      {site && !asOf && <AiChatWidget siteId={site.id} />}
     </Box>
   );
 }

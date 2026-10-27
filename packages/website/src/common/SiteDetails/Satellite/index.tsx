@@ -27,7 +27,7 @@ import UpdateInfo from '../../UpdateInfo';
 
 function Satellite({ maxMonthlyMean, data, classes }: SatelliteProps) {
   const { dhw, satelliteTemperature, sstAnomaly } = data;
-  const degreeHeatingDays = { ...dhw, value: (dhw?.value || 0) * 7 };
+  const degreeHeatingDays = dhw ? { ...dhw, value: dhw.value * 7 } : undefined;
   const relativeTime =
     satelliteTemperature?.timestamp &&
     toRelativeTime(satelliteTemperature.timestamp);

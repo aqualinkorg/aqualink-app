@@ -25,11 +25,12 @@ import {
   GetSiteContactInfoResponse,
 } from 'store/Sites/types';
 import requests from 'helpers/requests';
+import { withHistoricalDate } from 'helpers/historicalDate';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
-const getSite = (id: string) =>
+const getSite = (id: string, asOf?: string) =>
   requests.send<Site>({
-    url: `sites/${id}`,
+    url: withHistoricalDate(`/sites/${id}`, asOf).slice(1),
     method: 'GET',
   });
 
@@ -47,9 +48,9 @@ const getSiteForecastData = (id: string) =>
     method: 'GET',
   });
 
-const getSiteLatestData = (id: string) =>
+const getSiteLatestData = (id: string, asOf?: string) =>
   requests.send<{ latestData: LatestData[] }>({
-    url: `sites/${id}/latest_data`,
+    url: withHistoricalDate(`/sites/${id}/latest_data`, asOf).slice(1),
     method: 'GET',
   });
 
@@ -83,9 +84,9 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (asOf?: string) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: withHistoricalDate('/sites', asOf).slice(1),
     method: 'GET',
   });
 

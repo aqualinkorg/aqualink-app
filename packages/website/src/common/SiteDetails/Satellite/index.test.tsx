@@ -13,3 +13,12 @@ test('renders as expected', () => {
   );
   expect(container).toMatchSnapshot();
 });
+
+test('does not report zero heat stress when observations are missing', () => {
+  const { getByText } = renderWithProviders(
+    <Satellite maxMonthlyMean={24} data={{}} />,
+  );
+  expect(getByText('DEGREE HEATING WEEKS').parentElement).toHaveTextContent(
+    '- -',
+  );
+});

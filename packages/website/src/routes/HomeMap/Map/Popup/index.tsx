@@ -1,3 +1,5 @@
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { withHistoricalDate } from 'helpers/historicalDate';
 import React, { useEffect, useRef } from 'react';
 import {
   Button,
@@ -28,6 +30,7 @@ import { colors } from 'layout/App/theme';
 import { GaCategory, GaAction, trackButtonClick } from 'utils/google-analytics';
 
 function Popup({ site, classes, autoOpen = true }: PopupProps) {
+  const asOf = useHistoricalDate();
   const map = useMap();
   const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<L.Popup>(null);
@@ -156,7 +159,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                to={withHistoricalDate(`/sites/${site.id}`, asOf)}
                 state={{ from: location.pathname }}
               >
                 <Button

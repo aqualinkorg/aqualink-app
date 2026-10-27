@@ -3,78 +3,132 @@
 exports[`Homepage > should render with given state from Redux store 1`] = `
 <div>
   <div
-    role="presentation"
-  >
-    <mock-navbar
-      geocodingenabled="true"
-      searchlocation="true"
-    />
-  </div>
-  <div
-    class="Homepage-root-1"
+    class="Homepage-page-1"
   >
     <div
-      class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+      role="presentation"
+    >
+      <mock-navbar
+        geocodingenabled="true"
+        searchlocation="true"
+      />
+    </div>
+    <mock-box
+      alignitems="center"
+      display="flex"
+      flexwrap="wrap"
+      gap="2"
+      px="2"
+      py="1"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-2 css-1fyyp8j-MuiGrid-root"
+        class="MuiFormControl-root MuiTextField-root css-1xp5r68-MuiFormControl-root-MuiTextField-root"
       >
-        <mock-map
-          initialcenter="LatLng(0, 121.3)"
-          initialzoom="4"
-          showsitetable="true"
-        />
-      </div>
-      <mock-hidden
-        mddown="true"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-3 css-1k7sk4d-MuiGrid-root"
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-hvjq6j-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for=":r0:"
+          id=":r0:-label"
         >
-          <mock-sitetable />
-        </div>
-      </mock-hidden>
-      <mock-hidden
-        mdup="true"
-      >
+          Data date (UTC)
+        </label>
         <div
-          style="height: 60px; position: fixed; bottom: 0px; right: 0px; left: 0px;"
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-quhxjy-MuiInputBase-root-MuiOutlinedInput-root"
         >
-          <div
-            style="position: fixed; top: 0px; right: 0px; left: 0px; height: 768px; transition: opacity 450ms; pointer-events: none; background-color: black; opacity: 0;"
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-1pzfmz2-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r0:"
+            max="2026-01-15"
+            type="date"
+            value=""
           />
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-ex8a5f-MuiNotchedOutlined-root"
+            >
+              <span>
+                Data date (UTC)
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <mock-typography
+        variant="body2"
+      >
+        Current data
+      </mock-typography>
+    </mock-box>
+    <div
+      class="Homepage-root-2"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 Homepage-map-3 css-1fyyp8j-MuiGrid-root"
+        >
+          <mock-map
+            initialcenter="LatLng(0, 121.3)"
+            initialzoom="4"
+            showsitetable="true"
+          />
+        </div>
+        <mock-hidden
+          mddown="true"
+        >
           <div
-            style="overflow-y: initial; box-sizing: border-box;"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-6 Homepage-siteTable-4 css-1k7sk4d-MuiGrid-root"
+          >
+            <mock-sitetable />
+          </div>
+        </mock-hidden>
+        <mock-hidden
+          mdup="true"
+        >
+          <div
+            style="height: 60px; position: fixed; bottom: 0px; right: 0px; left: 0px;"
           >
             <div
-              class="react-swipeable-view-container"
-              style="flex-direction: column; transition: all 0s ease 0s; direction: ltr; display: flex; will-change: transform; box-sizing: border-box; box-shadow: rgba(0, 0, 0, 0.156863) 0px -6px 5px;"
+              style="position: fixed; top: 0px; right: 0px; left: 0px; height: 768px; transition: opacity 450ms; pointer-events: none; background-color: black; opacity: 0;"
+            />
+            <div
+              style="overflow-y: initial; box-sizing: border-box;"
             >
               <div
-                aria-hidden="false"
-                data-swipeable="true"
-                style="width: 100%; flex-shrink: 0; overflow: visible; box-sizing: border-box; margin-bottom: -60px;"
+                class="react-swipeable-view-container"
+                style="flex-direction: column; transition: all 0s ease 0s; direction: ltr; display: flex; will-change: transform; box-sizing: border-box; box-shadow: rgba(0, 0, 0, 0.156863) 0px -6px 5px;"
               >
                 <div
-                  class="ReactSwipeableBottomSheet--closed"
-                  style="overflow: hidden; background-color: white; height: initial; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
+                  aria-hidden="false"
+                  data-swipeable="true"
+                  style="width: 100%; flex-shrink: 0; overflow: visible; box-sizing: border-box; margin-bottom: -60px;"
                 >
                   <div
-                    role="presentation"
+                    class="ReactSwipeableBottomSheet--closed"
+                    style="overflow: hidden; background-color: white; height: initial; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
                   >
-                    <mock-sitetable
-                      isdraweropen="false"
-                    />
+                    <div
+                      role="presentation"
+                    >
+                      <mock-sitetable
+                        isdraweropen="false"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div
+              style="position: fixed; height: 60px; width: 200%; bottom: -60px; left: -50%; box-shadow: rgba(0, 0, 0, 0.7) 0px 0px 30px; transition: transform 450ms; transform: translateY(0);"
+            />
           </div>
-          <div
-            style="position: fixed; height: 60px; width: 200%; bottom: -60px; left: -50%; box-shadow: rgba(0, 0, 0, 0.7) 0px 0px 30px; transition: transform 450ms; transform: translateY(0);"
-          />
-        </div>
-      </mock-hidden>
+        </mock-hidden>
+      </div>
     </div>
   </div>
 </div>

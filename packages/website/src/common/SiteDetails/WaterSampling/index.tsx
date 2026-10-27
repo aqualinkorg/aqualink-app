@@ -1,3 +1,4 @@
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import {
   Box,
   Card,
@@ -77,6 +78,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
+  const asOf = useHistoricalDate();
   const classes = useStyles();
 
   const [minDate, setMinDate] = React.useState<string>();
@@ -97,6 +99,7 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
   }`;
   const viewUploadButtonLink = `/sites/${siteId}${requests.generateUrlQueryParams(
     {
+      asOf,
       start: minDate,
       end: maxDate,
       surveyPoint: point?.id,
@@ -107,19 +110,22 @@ function WaterSamplingCard({ siteId, source }: WaterSamplingCardProps) {
     : undefined;
 
   React.useEffect(() => {
+    const controller = new AbortController();
     (async () => {
       const {
         data,
         maxDate: max,
         minDate: min,
         point: p,
-      } = await getCardData(siteId, source);
+      } = await getCardData(siteId, source, asOf);
+      if (controller.signal.aborted) return;
       setMinDate(min);
       setMaxDate(max);
       setTimeSeriesData(data);
       setPoint(p ?? undefined);
     })();
-  }, [siteId, source]);
+    return () => controller.abort();
+  }, [siteId, source, asOf]);
 
   React.useEffect(() => {
     const newMeans = Object.fromEntries(

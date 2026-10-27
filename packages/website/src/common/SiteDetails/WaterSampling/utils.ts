@@ -1,3 +1,4 @@
+import { historicalEnd, historicalRequestEnd } from 'helpers/historicalDate';
 import { formatNumber } from 'helpers/numberUtils';
 import { Metrics, MetricsKeys, Sources } from 'store/Sites/types';
 import { GridProps } from '@mui/material';
@@ -460,14 +461,35 @@ export function metricFields(
 export async function getCardData(
   siteId: string,
   source: Extract<Sources, 'hui' | 'sonde' | 'hwo'>,
+  asOf?: string,
 ) {
+  const reference = asOf ? new Date(historicalEnd(asOf)) : new Date();
   try {
     const { data: uploadHistory } = await siteServices.getSiteUploadHistory(
       parseInt(siteId, 10),
     );
 
+    const history = asOf
+      ? uploadHistory
+          .filter(
+            (upload) =>
+              new Date(upload.minDate || upload.dataUpload.minDate) <=
+              reference,
+          )
+          .map((upload) => ({
+            ...upload,
+            maxDate: historicalRequestEnd(
+              upload.maxDate || upload.dataUpload.maxDate,
+              asOf,
+            ),
+            dataUpload: {
+              ...upload.dataUpload,
+              maxDate: historicalRequestEnd(upload.dataUpload.maxDate, asOf)!,
+            },
+          }))
+      : uploadHistory;
     const uploads =
-      uploadHistory.filter(
+      history.filter(
         (x) =>
           x.dataUpload.sensorTypes.includes(source) ||
           // hui is specific type of sonde, look for hui as well when looking for sonde
@@ -479,7 +501,7 @@ export async function getCardData(
 
     switch (source) {
       case 'hui': {
-        const now = new Date();
+        const now = new Date(reference);
         const lastYear = now.setFullYear(now.getFullYear() - 1);
         const inLastYear = uploads.filter(
           ({ dataUpload: { maxDate } }) =>
@@ -489,7 +511,7 @@ export async function getCardData(
         const minDate = inLastYear.reduce((min, curr) => {
           const currMin = curr.minDate || curr.dataUpload.minDate;
           return currMin < min ? currMin : min;
-        }, new Date().toISOString());
+        }, reference.toISOString());
 
         const maxDate =
           inLastYear.length > 0
@@ -497,7 +519,7 @@ export async function getCardData(
                 const currMax = curr.maxDate || curr.dataUpload.maxDate;
                 return currMax > max ? currMax : max;
               }, new Date(0).toISOString())
-            : new Date().toISOString();
+            : reference.toISOString();
 
         const [data] = await timeSeriesRequest({
           siteId,
@@ -524,7 +546,7 @@ export async function getCardData(
         };
       }
       case 'hwo': {
-        const now = new Date();
+        const now = new Date(reference);
         const lastYear = now.setFullYear(now.getFullYear() - 1);
         const inLastYear = uploads.filter(
           ({ dataUpload: { maxDate } }) =>
@@ -534,7 +556,7 @@ export async function getCardData(
         const minDate = inLastYear.reduce((min, curr) => {
           const currMin = curr.minDate || curr.dataUpload.minDate;
           return currMin < min ? currMin : min;
-        }, new Date().toISOString());
+        }, reference.toISOString());
 
         const maxDate =
           inLastYear.length > 0
@@ -542,7 +564,7 @@ export async function getCardData(
                 const currMax = curr.maxDate || curr.dataUpload.maxDate;
                 return currMax > max ? currMax : max;
               }, new Date(0).toISOString())
-            : new Date().toISOString();
+            : reference.toISOString();
 
         const [data] = await timeSeriesRequest({
           siteId,

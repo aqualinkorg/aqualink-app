@@ -15,6 +15,8 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import HistoricalDate from 'common/HistoricalDate';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -64,6 +66,7 @@ function useQuery() {
 
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const asOf = useHistoricalDate();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
@@ -72,18 +75,18 @@ function Homepage({ classes }: HomepageProps) {
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    dispatch(sitesRequest(asOf));
+  }, [dispatch, asOf]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, asOf }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(siteRequest({ id: `${siteOnMap.id}`, asOf }));
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dispatch, initialSiteId, siteOnMap, asOf]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -106,10 +109,11 @@ function Homepage({ classes }: HomepageProps) {
   });
 
   return (
-    <>
+    <div className={classes.page}>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation geocodingEnabled />
       </div>
+      <HistoricalDate />
       <div className={classes.root}>
         <Grid container>
           <Grid
@@ -151,15 +155,18 @@ function Homepage({ classes }: HomepageProps) {
           </Hidden>
         </Grid>
       </div>
-    </>
+    </div>
   );
 }
 
 const styles = () =>
   createStyles({
+    page: { display: 'flex', flexDirection: 'column', height: '100dvh' },
     root: {
       display: 'flex',
       flexGrow: 1,
+      minHeight: 0,
+      '& > .MuiGrid-root': { minHeight: 0, height: '100%' },
       userSelect: 'none',
     },
     map: {
@@ -169,7 +176,7 @@ const styles = () =>
     siteTable: {
       display: 'flex',
       flexDirection: 'column',
-      height: 'calc(100vh - 64px);', // subtract height of the navbar
+      height: '100%',
       overflowY: 'auto',
     },
   });

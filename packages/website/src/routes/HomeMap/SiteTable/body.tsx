@@ -1,3 +1,4 @@
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import {
   Hidden,
   TableBody,
@@ -104,11 +105,12 @@ function RowAlertCell({
   site: Row;
   classes: SiteTableBodyProps['classes'];
 }) {
+  const historical = Boolean(useHistoricalDate());
   return (
     <TableCell className={classes.cellTextAlign}>
       <ErrorIcon
         style={{
-          color: alertColorFinder(alertLevel),
+          color: alertColorFinder(alertLevel, historical),
         }}
       />
     </TableCell>

@@ -14,3 +14,11 @@ test('renders as expected', () => {
   );
   expect(container).toMatchSnapshot();
 });
+
+test('does not show a no-alert badge for missing observations', () => {
+  const { queryByAltText, getByText } = renderWithProviders(
+    <Bleaching data={{}} />,
+  );
+  expect(queryByAltText('alert-level')).toBeNull();
+  expect(getByText('No observations available')).toBeInTheDocument();
+});

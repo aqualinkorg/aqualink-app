@@ -1,5 +1,6 @@
 /* eslint-disable fp/no-mutation */
 import React from 'react';
+import { Settings } from 'luxon';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
@@ -30,7 +31,10 @@ vi.mock('common/Chart/MultipleSensorsCharts', () => ({
 describe('Site Detail Page', () => {
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;
+  const originalNow = Settings.now;
   beforeEach(() => {
+    // eslint-disable-next-line fp/no-mutation
+    Settings.now = () => Date.UTC(2026, 0, 15);
     const emptyStore = mockStore({
       selectedSite: {
         details: { ...mockSite, dailyData: [] },
@@ -137,6 +141,11 @@ describe('Site Detail Page', () => {
         </Provider>
       </ThemeProvider>,
     ).container;
+  });
+
+  afterEach(() => {
+    // eslint-disable-next-line fp/no-mutation
+    Settings.now = originalNow;
   });
 
   it('should render with given state from Redux store', () => {

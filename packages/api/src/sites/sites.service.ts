@@ -12,6 +12,10 @@ import { omit } from 'lodash';
 import Bluebird from 'bluebird';
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import { ReefCheckSurvey } from 'reef-check-surveys/reef-check-surveys.entity';
+import {
+  getHistoricalData,
+  historicalDateBounds,
+} from '../utils/historical-data';
 import { DateTime } from '../luxon-extensions';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
@@ -156,6 +160,7 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    if (filter.asOf) historicalDateBounds(filter.asOf);
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -201,6 +206,7 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      filter.asOf,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -223,7 +229,8 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, asOf?: string): Promise<Site> {
+    if (asOf) historicalDateBounds(asOf);
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -249,6 +256,7 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       [site],
       this.latestDataRepository,
+      asOf,
     );
 
     const maskedSpotterApiToken = site.spotterApiToken
@@ -458,12 +466,15 @@ export class SitesService {
     };
   }
 
-  async findLatestData(id: number): Promise<LatestData[]> {
+  async findLatestData(id: number, asOf?: string): Promise<LatestData[]> {
+    if (asOf) historicalDateBounds(asOf);
     const site = await getSite(id, this.sitesRepository, [
       'historicalMonthlyMean',
     ]);
 
-    return getLatestData(site, this.latestDataRepository);
+    return asOf
+      ? getHistoricalData([id], this.latestDataRepository, asOf)
+      : getLatestData(site, this.latestDataRepository);
   }
 
   async getSpotterData(id: number, start?: string, end?: string) {

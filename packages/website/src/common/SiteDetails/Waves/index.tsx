@@ -1,3 +1,4 @@
+import { historicalEnd } from 'helpers/historicalDate';
 import React from 'react';
 import { Theme, Card, CardContent, Typography, Grid } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function Waves({ data, hasSpotter }: WavesProps) {
+function Waves({ data, hasSpotter, asOf }: WavesProps) {
   const {
     significantWaveHeight,
     waveMeanDirection,
@@ -75,7 +76,7 @@ function Waves({ data, hasSpotter }: WavesProps) {
   // Check if we have actual Spotter wind/wave data (not just temperature)
   // Spotter data is updated hourly, model data every 6+ hours
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
-  const now = Date.now();
+  const now = asOf ? new Date(historicalEnd(asOf)).getTime() : Date.now();
 
   // Only show as live Spotter data if site actually has a Spotter.
   // Wind and wave now come from different providers, so each is
@@ -287,7 +288,7 @@ function Waves({ data, hasSpotter }: WavesProps) {
           <UpdateInfo
             relativeTime={windRelativeTime}
             timeText={hasSpotterWindWaveData ? 'Last data received' : 'Valid'}
-            live={hasSpotterWindWaveData}
+            live={hasSpotterWindWaveData && !asOf}
             frequency={hasSpotterWindWaveData ? 'hourly' : 'every 6 hours'}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
             imageText={hasSpotterWindWaveData ? undefined : 'WIND'}
@@ -306,6 +307,7 @@ function Waves({ data, hasSpotter }: WavesProps) {
 }
 
 interface WavesProps {
+  asOf?: string;
   data: LatestDataASSofarValue;
   hasSpotter: boolean;
 }

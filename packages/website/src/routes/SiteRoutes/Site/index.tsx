@@ -33,6 +33,12 @@ import { findAdministeredSite } from 'helpers/findAdministeredSite';
 import { sortByDate } from 'helpers/dates';
 import { findSurveyPointFromList } from 'helpers/siteUtils';
 import SiteNavBar from 'common/NavBar';
+import HistoricalDate from 'common/HistoricalDate';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import {
+  historicalEnd,
+  onOrBeforeHistoricalDate,
+} from 'helpers/historicalDate';
 import SiteFooter from 'common/Footer';
 import SiteDetails from 'common/SiteDetails';
 import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
@@ -112,10 +118,14 @@ const getAlertMessage = (
 };
 
 function Site({ classes }: SiteProps) {
+  const asOf = useHistoricalDate();
   const siteDetails = useSelector(siteDetailsSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
-  const surveyList = useSelector(surveyListSelector);
+  const allSurveys = useSelector(surveyListSelector);
+  const surveyList = allSurveys.filter((survey) =>
+    onOrBeforeHistoricalDate(survey.diveDate, asOf),
+  );
   const spotterPosition = useSelector(spotterPositionSelector);
   const dispatch = useAppDispatch();
   const { id: siteId = '' } = useParams<{ id: string }>();
@@ -145,14 +155,16 @@ function Site({ classes }: SiteProps) {
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
-  const today = localizedEndOfDay(undefined, timezone);
+  const today = asOf
+    ? historicalEnd(asOf)
+    : localizedEndOfDay(undefined, timezone);
 
   const siteWithFeaturedImage: SiteType | undefined =
     siteDetails && (siteId === siteDetails.id.toString() || !siteId)
       ? { ...siteDetails, featuredImage: thumbnailUrl || url }
       : undefined;
 
-  const isLoading = !siteWithFeaturedImage;
+  const isLoading = siteLoading || !siteWithFeaturedImage;
 
   useEffect(() => {
     if (refresh === 'true') {
@@ -162,8 +174,8 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
-      dispatch(spotterPositionRequest(siteId));
+      dispatch(siteRequest({ id: siteId, asOf }));
+      if (!asOf) dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,8 +183,8 @@ function Site({ classes }: SiteProps) {
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
-    dispatch(spotterPositionRequest(siteId));
+    dispatch(siteRequest({ id: siteId, asOf }));
+    if (!asOf) dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
     return () => {
@@ -180,7 +192,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
     };
-  }, [dispatch, siteId]);
+  }, [dispatch, siteId, asOf]);
 
   // Fetch reef check surveys
   useEffect(() => {
@@ -218,6 +230,7 @@ function Site({ classes }: SiteProps) {
   return (
     <>
       <SiteNavBar searchLocation />
+      <HistoricalDate />
       {!siteLoading && !siteDetails ? (
         <NotFoundPage />
       ) : (
@@ -237,16 +250,21 @@ function Site({ classes }: SiteProps) {
             </LoadingSkeleton>
           </Box>
           {/* Only show alert message when data is loading */}
-          {!hasSpotterData && !isLoading && !hasDailyData && (
+          {!asOf && !hasSpotterData && !isLoading && !hasDailyData && (
             <Box mt="1.3rem">
               <Alert severity="info">
                 {getAlertMessage(user, siteId, hasDailyData)}
               </Alert>
             </Box>
           )}
-          <div key={siteId}>
+          {asOf && !siteLoading && !hasDailyData && (
+            <Alert severity="info">
+              No daily observations are available for this date.
+            </Alert>
+          )}
+          <div key={`${siteId}:${asOf || 'current'}`}>
             <SiteDetails
-              site={siteWithFeaturedImage}
+              site={siteLoading ? undefined : siteWithFeaturedImage}
               selectedSurveyPointId={selectedSurveyPointId}
               featuredSurveyId={featuredSurveyId}
               surveys={surveyList}

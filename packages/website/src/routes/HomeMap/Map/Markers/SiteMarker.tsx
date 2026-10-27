@@ -14,6 +14,7 @@ import {
 } from 'helpers/bleachingAlertIntervals';
 import { useMarkerIcon, calculateAdjustedLng } from 'helpers/map';
 import { hasDeployedSpotter } from 'helpers/siteUtils';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import Popup from '../Popup';
 
 // To make sure we can see all the sites all the time, and especially
@@ -29,6 +30,7 @@ interface SiteMarkerProps {
  */
 export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
   const map = useMap();
+  const historical = Boolean(useHistoricalDate());
   const isSelected = useSelector(isSelectedOnMapSelector(site.id));
   const dispatch = useAppDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
@@ -51,7 +53,9 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
           key={`${site.id}-${offset}`}
           center={[lat, lng + offset]}
           radius={5}
-          fillColor={alertColorFinder(tempWeeklyAlert)}
+          pathOptions={{
+            fillColor: alertColorFinder(tempWeeklyAlert, historical),
+          }}
           fillOpacity={1}
           color="black"
           weight={1}
@@ -66,6 +70,7 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
 
 export const SensorSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
   const map = useMap();
+  const historical = Boolean(useHistoricalDate());
   const isSelected = useSelector(isSelectedOnMapSelector(site.id));
   const dispatch = useAppDispatch();
   const { tempWeeklyAlert } = site.collectionData || {};
@@ -73,8 +78,8 @@ export const SensorSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
     hasDeployedSpotter(site),
     site.hasHobo,
     isSelected,
-    alertColorFinder(tempWeeklyAlert),
-    alertIconFinder(tempWeeklyAlert),
+    alertColorFinder(tempWeeklyAlert, historical),
+    alertIconFinder(tempWeeklyAlert, historical),
   );
 
   if (site.polygon.type !== 'Point') return null;
