@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 import { useLocation } from 'react-router-dom';
-import { Grid, Hidden } from '@mui/material';
+import { Alert, Grid, Hidden } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
@@ -15,6 +15,8 @@ import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
 import HomepageNavBar from 'common/NavBar';
+import HistoricalDateControl from 'common/HistoricalDateControl';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import SiteTable from './SiteTable';
 import HomepageMap from './Map';
 
@@ -64,6 +66,10 @@ function useQuery() {
 
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const { date, error: dateError } = useHistoricalDate();
+  const sitesError = useSelector(
+    (state: import('store/configure').RootState) => state.sitesList.error,
+  );
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
@@ -72,18 +78,19 @@ function Homepage({ classes }: HomepageProps) {
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    if (!dateError) dispatch(sitesRequest(date));
+  }, [dispatch, date, dateError]);
 
   useEffect(() => {
+    if (dateError) return;
     if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
+      dispatch(siteRequest({ id: initialSiteId, date }));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(siteRequest({ id: `${siteOnMap.id}`, date }));
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialSiteId, siteOnMap]);
+  }, [dispatch, initialSiteId, siteOnMap, date, dateError]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -110,47 +117,52 @@ function Homepage({ classes }: HomepageProps) {
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation geocodingEnabled />
       </div>
-      <div className={classes.root}>
-        <Grid container>
-          <Grid
-            className={classes.map}
-            item
-            xs={12}
-            md={showSiteTable ? 6 : 12}
-          >
-            <HomepageMap
-              onMapLoad={setMapInstance}
-              setShowSiteTable={setShowSiteTable}
-              showSiteTable={showSiteTable}
-              initialZoom={initialZoom}
-              initialCenter={initialCenter}
-            />
-          </Grid>
-          {showSiteTable && (
-            <Hidden mdDown>
-              <Grid className={classes.siteTable} item md={6}>
-                <SiteTable map={mapInstance} />
-              </Grid>
-            </Hidden>
-          )}
-          <Hidden mdUp>
-            <SwipeableBottomSheet
-              overflowHeight={60}
-              bodyStyle={{
-                borderTopLeftRadius: '25px',
-                borderTopRightRadius: '25px',
-                maxHeight: '80vh',
-              }}
-              onChange={setDrawerOpen}
-              open={isDrawerOpen}
+      <HistoricalDateControl />
+      {sitesError && <Alert severity="error">{sitesError}</Alert>}
+      {!dateError && (
+        <div className={classes.root}>
+          <Grid container>
+            <Grid
+              className={classes.map}
+              item
+              xs={12}
+              md={showSiteTable ? 6 : 12}
             >
-              <div role="presentation" onClick={toggleDrawer}>
-                <SiteTable map={mapInstance} isDrawerOpen={isDrawerOpen} />
-              </div>
-            </SwipeableBottomSheet>
-          </Hidden>
-        </Grid>
-      </div>
+              <HomepageMap
+                historicalDate={date}
+                onMapLoad={setMapInstance}
+                setShowSiteTable={setShowSiteTable}
+                showSiteTable={showSiteTable}
+                initialZoom={initialZoom}
+                initialCenter={initialCenter}
+              />
+            </Grid>
+            {showSiteTable && (
+              <Hidden mdDown>
+                <Grid className={classes.siteTable} item md={6}>
+                  <SiteTable map={mapInstance} />
+                </Grid>
+              </Hidden>
+            )}
+            <Hidden mdUp>
+              <SwipeableBottomSheet
+                overflowHeight={60}
+                bodyStyle={{
+                  borderTopLeftRadius: '25px',
+                  borderTopRightRadius: '25px',
+                  maxHeight: '80vh',
+                }}
+                onChange={setDrawerOpen}
+                open={isDrawerOpen}
+              >
+                <div role="presentation" onClick={toggleDrawer}>
+                  <SiteTable map={mapInstance} isDrawerOpen={isDrawerOpen} />
+                </div>
+              </SwipeableBottomSheet>
+            </Hidden>
+          </Grid>
+        </div>
+      )}
     </>
   );
 }
