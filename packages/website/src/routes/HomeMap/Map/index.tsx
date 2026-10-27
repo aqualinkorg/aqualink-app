@@ -92,6 +92,7 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  historicalDate,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -215,11 +216,7 @@ function HomepageMap({
     setInfoDialogOpen(false);
   };
 
-  return loading ? (
-    <div className={classes.loading}>
-      <CircularProgress size="4rem" thickness={1} />
-    </div>
-  ) : (
+  return (
     <MapContainer
       id="sites-map"
       ref={ref}
@@ -273,7 +270,21 @@ function HomepageMap({
         handleInfoClose={handleInfoClose}
       />
       {tileLayer}
-      {sofarLayers}
+      {loading && (
+        <div
+          role="status"
+          aria-label="Loading observations"
+          style={{
+            position: 'absolute',
+            zIndex: 1000,
+            left: '50%',
+            top: '50%',
+          }}
+        >
+          <CircularProgress />
+        </div>
+      )}
+      {!historicalDate && sofarLayers}
       {siteMarkers}
       {currentLocation && (
         <Marker icon={currentLocationMarker} position={currentLocation} />
@@ -284,7 +295,13 @@ function HomepageMap({
           radius={currentLocationAccuracy}
         />
       )}
-      <Legend legendName={legendName} bottom={legendBottom} left={legendLeft} />
+      {!historicalDate && (
+        <Legend
+          legendName={legendName}
+          bottom={legendBottom}
+          left={legendLeft}
+        />
+      )}
       {showAlertLevelLegend && <AlertLevelLegend />}
       {showWaterMark && <div className="mapbox-wordmark" />}
       {geolocationEnabled && (
@@ -367,6 +384,7 @@ const styles = (theme: Theme) =>
   });
 
 interface HomepageMapIncomingProps {
+  historicalDate?: string;
   initialCenter: LatLng;
   initialZoom?: number;
   showSiteTable?: boolean;
