@@ -285,6 +285,7 @@ export const createDatasets = (
         fillColorBelowThreshold,
         maxHoursGap,
         hitRadius,
+        pointRadius,
         pointHoverRadius,
       }) => {
         const processedData = data
@@ -307,7 +308,7 @@ export const createDatasets = (
             !!fillColorBelowThreshold,
           borderColor: curveColor,
           borderWidth: 2,
-          pointRadius: 0,
+          pointRadius: pointRadius ?? 0,
           cubicInterpolationMode: 'monotone',
           backgroundColor:
             isNumber(threshold) &&

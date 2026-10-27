@@ -9,6 +9,8 @@ import createStyles from '@mui/styles/createStyles';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
+import { withHistoricalDate } from 'helpers/historicalDate';
 
 import { setSiteOnMap, setSearchResult } from 'store/Homepage/homepageSlice';
 import type { Site } from 'store/Sites/types';
@@ -31,6 +33,7 @@ const siteAugmentedName = (site: Site) => {
 
 function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const navigate = useNavigate();
+  const { date, error: dateError } = useHistoricalDate();
   const { id = '' } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState('');
@@ -47,8 +50,8 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
 
   // Fetch sites for the search bar
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    if (!dateError) dispatch(sitesRequest(date));
+  }, [dispatch, date, dateError]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -78,7 +81,7 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());
       if (!geocodingEnabled) {
-        navigate(`/sites/${value.id}`);
+        navigate(withHistoricalDate(`/sites/${value.id}`, date));
       }
     }
   };
@@ -86,7 +89,7 @@ function Search({ geocodingEnabled = false, classes }: SearchProps) {
   const onSearchSubmit = () => {
     if (searchedSite) {
       if (!geocodingEnabled) {
-        navigate(`/sites/${searchedSite.id}`);
+        navigate(withHistoricalDate(`/sites/${searchedSite.id}`, date));
       }
       dispatch(unsetSpotterPosition());
       dispatch(unsetLatestData());

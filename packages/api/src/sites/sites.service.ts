@@ -52,6 +52,10 @@ import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { ScheduledUpdate } from './scheduled-updates.entity';
+import {
+  getHistoricalSiteData,
+  parseHistoricalDay,
+} from '../utils/historical-site-data';
 
 @Injectable()
 export class SitesService {
@@ -156,6 +160,7 @@ export class SitesService {
   }
 
   async find(filter: FilterSiteDto): Promise<Site[]> {
+    const historicalDay = parseHistoricalDay(filter.date);
     const query = this.sitesRepository.createQueryBuilder('site');
 
     if (filter.name) {
@@ -198,10 +203,16 @@ export class SitesService {
       .andWhere('display = true')
       .getMany();
 
-    const mappedSiteData = await getCollectionData(
-      res,
-      this.latestDataRepository,
-    );
+    const historicalData = historicalDay
+      ? await getHistoricalSiteData(
+          res.map((site) => site.id),
+          historicalDay,
+          this.dailyDataRepository,
+        )
+      : undefined;
+    const mappedSiteData = historicalDay
+      ? {}
+      : await getCollectionData(res, this.latestDataRepository);
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
@@ -216,14 +227,21 @@ export class SitesService {
     return res.map((site) => ({
       ...site,
       applied: site.applied,
-      collectionData: mappedSiteData[site.id],
+      collectionData: historicalDay
+        ? (historicalData?.[site.id]?.collectionData ?? {})
+        : mappedSiteData[site.id],
+      ...(historicalDay && {
+        historicalDate: historicalDay.date,
+        historicalObservedAt: historicalData?.[site.id]?.observedAt ?? null,
+      }),
       hasHobo: hasHoboDataSet.has(site.id),
       waterQualitySources: waterQualityDataSet.get(site.id),
       reefCheckData: reefCheckDataSet[site.id],
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, date?: string): Promise<Site> {
+    const historicalDay = parseHistoricalDay(date);
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -244,12 +262,20 @@ export class SitesService {
     const surveys = site.surveys || [];
     const historicalMonthlyMean = site.historicalMonthlyMean || [];
 
-    const videoStream = await this.checkVideoStream(site);
+    const videoStream = historicalDay
+      ? null
+      : await this.checkVideoStream(site);
 
-    const mappedSiteData = await getCollectionData(
-      [site],
-      this.latestDataRepository,
-    );
+    const historicalData = historicalDay
+      ? await getHistoricalSiteData(
+          [site.id],
+          historicalDay,
+          this.dailyDataRepository,
+        )
+      : undefined;
+    const mappedSiteData = historicalDay
+      ? {}
+      : await getCollectionData([site], this.latestDataRepository);
 
     const maskedSpotterApiToken = site.spotterApiToken
       ? `****${site.spotterApiToken?.slice(-4)}`
@@ -280,7 +306,13 @@ export class SitesService {
       historicalMonthlyMean,
       videoStream,
       applied: site.applied,
-      collectionData: mappedSiteData[site.id],
+      collectionData: historicalDay
+        ? (historicalData?.[site.id]?.collectionData ?? {})
+        : mappedSiteData[site.id],
+      ...(historicalDay && {
+        historicalDate: historicalDay.date,
+        historicalObservedAt: historicalData?.[site.id]?.observedAt ?? null,
+      }),
     };
   }
 

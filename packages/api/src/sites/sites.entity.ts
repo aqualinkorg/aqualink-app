@@ -175,6 +175,20 @@ export class Site {
 
   collectionData?: CollectionDataDto;
 
+  @ApiPropertyOptional({
+    example: '2024-01-02',
+    description: 'Requested UTC day. Present only for historical snapshots.',
+  })
+  historicalDate?: string;
+
+  @ApiPropertyOptional({
+    example: '2024-01-02T23:59:59.999Z',
+    nullable: true,
+    description:
+      'Actual daily snapshot timestamp, or null if that day has no record.',
+  })
+  historicalObservedAt?: string | null;
+
   maskedSpotterApiToken?: string;
 
   waterQualitySources?: string[];

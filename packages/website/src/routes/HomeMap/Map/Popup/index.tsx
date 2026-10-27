@@ -22,6 +22,7 @@ import type { Site } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { maxLengths } from 'constants/names';
+import { withHistoricalDate } from 'helpers/historicalDate';
 import { formatNumber } from 'helpers/numberUtils';
 import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { colors } from 'layout/App/theme';
@@ -102,6 +103,12 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
           subheader={region}
         />
         <CardContent>
+          {site.historicalDate && (
+            <Typography variant="caption">
+              {site.historicalDate} (UTC)
+              {!site.historicalObservedAt && ' — No daily data'}
+            </Typography>
+          )}
           <Grid container item xs={12}>
             <Grid item xs={6}>
               <Grid container item xs={12}>
@@ -156,7 +163,10 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                to={withHistoricalDate(
+                  `/sites/${site.id}`,
+                  site.historicalDate,
+                )}
                 state={{ from: location.pathname }}
               >
                 <Button

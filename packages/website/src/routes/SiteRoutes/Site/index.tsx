@@ -18,6 +18,7 @@ import {
   spotterPositionRequest,
   spotterPositionSelector,
   siteLoadingSelector,
+  siteErrorSelector,
 } from 'store/Sites/selectedSiteSlice';
 import {
   surveysRequest,
@@ -35,6 +36,9 @@ import { findSurveyPointFromList } from 'helpers/siteUtils';
 import SiteNavBar from 'common/NavBar';
 import SiteFooter from 'common/Footer';
 import SiteDetails from 'common/SiteDetails';
+import HistoricalDateControl from 'common/HistoricalDateControl';
+import HistoricalSiteSummary from 'common/HistoricalSiteSummary';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import { localizedEndOfDay } from 'common/Chart/MultipleSensorsCharts/helpers';
 import LoadingSkeleton from 'common/LoadingSkeleton';
 import { DateTime } from 'luxon-extensions';
@@ -112,13 +116,19 @@ const getAlertMessage = (
 };
 
 function Site({ classes }: SiteProps) {
-  const siteDetails = useSelector(siteDetailsSelector);
+  const { id: siteId = '' } = useParams<{ id: string }>();
+  const { date, error: dateError } = useHistoricalDate();
+  const siteError = useSelector(siteErrorSelector);
+  const storedSite = useSelector(siteDetailsSelector);
+  const siteDetails =
+    storedSite?.historicalDate === date && `${storedSite?.id}` === siteId
+      ? storedSite
+      : undefined;
   const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
   const spotterPosition = useSelector(spotterPositionSelector);
   const dispatch = useAppDispatch();
-  const { id: siteId = '' } = useParams<{ id: string }>();
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
@@ -162,37 +172,45 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
-      dispatch(spotterPositionRequest(siteId));
-      dispatch(surveysRequest(siteId));
+      if (!dateError) dispatch(siteRequest({ id: siteId, date }));
+      if (!date) {
+        dispatch(spotterPositionRequest(siteId));
+        dispatch(surveysRequest(siteId));
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
-    dispatch(spotterPositionRequest(siteId));
-    dispatch(surveysRequest(siteId));
+    if (!dateError) dispatch(siteRequest({ id: siteId, date }));
+    if (!date) {
+      dispatch(spotterPositionRequest(siteId));
+      dispatch(surveysRequest(siteId));
+    }
 
     return () => {
       dispatch(clearTimeSeriesDataRange());
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
     };
-  }, [dispatch, siteId]);
+  }, [dispatch, siteId, date, dateError]);
 
   // Fetch reef check surveys
   useEffect(() => {
-    if (siteDetails?.reefCheckSites && siteDetails.reefCheckSites.length > 0) {
+    if (
+      !date &&
+      siteDetails?.reefCheckSites &&
+      siteDetails.reefCheckSites.length > 0
+    ) {
       dispatch(reefCheckSurveysRequest(siteDetails.id));
     }
-  }, [dispatch, siteDetails?.reefCheckSites, siteDetails?.id]);
+  }, [dispatch, siteDetails?.reefCheckSites, siteDetails?.id, date]);
 
   // Fetch time series data range for the site's closest survey point
   // once the survey points are successfully fetched
   useEffect(() => {
-    if (siteId === id?.toString()) {
+    if (!date && siteId === id?.toString()) {
       dispatch(
         siteTimeSeriesDataRangeRequest({
           siteId,
@@ -200,10 +218,10 @@ function Site({ classes }: SiteProps) {
         }),
       );
     }
-  }, [dispatch, id, selectedSurveyPointId, siteId]);
+  }, [dispatch, id, selectedSurveyPointId, siteId, date]);
 
   useEffect(() => {
-    if (id && oceanSenseConfig?.[id] && siteId === id.toString()) {
+    if (!date && id && oceanSenseConfig?.[id] && siteId === id.toString()) {
       dispatch(
         siteOceanSenseDataRequest({
           sensorID: 'oceansense-2',
@@ -213,49 +231,68 @@ function Site({ classes }: SiteProps) {
         }),
       );
     }
-  }, [dispatch, id, siteId, today]);
+  }, [dispatch, id, siteId, today, date]);
+
+  const isHistoricalView = date !== undefined || Boolean(dateError);
 
   return (
     <>
       <SiteNavBar searchLocation />
-      {!siteLoading && !siteDetails ? (
-        <NotFoundPage />
-      ) : (
-        <Container
-          className={classNames({ [classes.noDataWrapper]: !hasDailyData })}
-        >
-          <Box marginTop="2rem">
-            <LoadingSkeleton loading={isLoading} variant="text" lines={3}>
-              {siteDetails && (
-                <SiteInfo
-                  hasDailyData={hasDailyData}
-                  site={siteDetails}
-                  lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
-                  isAdmin={isAdmin(user, parseInt(siteId, 10))}
-                />
-              )}
-            </LoadingSkeleton>
-          </Box>
-          {/* Only show alert message when data is loading */}
-          {!hasSpotterData && !isLoading && !hasDailyData && (
-            <Box mt="1.3rem">
-              <Alert severity="info">
-                {getAlertMessage(user, siteId, hasDailyData)}
-              </Alert>
-            </Box>
-          )}
-          <div key={siteId}>
-            <SiteDetails
-              site={siteWithFeaturedImage}
-              selectedSurveyPointId={selectedSurveyPointId}
-              featuredSurveyId={featuredSurveyId}
-              surveys={surveyList}
-              featuredSurveyPoint={featuredSurveyPoint}
-              surveyDiveDate={diveDate}
-            />
-          </div>
+      <HistoricalDateControl />
+      {isHistoricalView && (
+        <Container>
+          {siteError && <Alert severity="error">{siteError}</Alert>}
+          {!dateError &&
+            (siteDetails ? (
+              <HistoricalSiteSummary site={siteDetails} />
+            ) : (
+              !siteError && (
+                <Box my={3} role="status">
+                  Loading historical observations…
+                </Box>
+              )
+            ))}
         </Container>
       )}
+      {!isHistoricalView &&
+        (!siteLoading && !siteDetails ? (
+          <NotFoundPage />
+        ) : (
+          <Container
+            className={classNames({ [classes.noDataWrapper]: !hasDailyData })}
+          >
+            <Box marginTop="2rem">
+              <LoadingSkeleton loading={isLoading} variant="text" lines={3}>
+                {siteDetails && (
+                  <SiteInfo
+                    hasDailyData={hasDailyData}
+                    site={siteDetails}
+                    lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
+                    isAdmin={isAdmin(user, parseInt(siteId, 10))}
+                  />
+                )}
+              </LoadingSkeleton>
+            </Box>
+            {/* Only show alert message when data is loading */}
+            {!hasSpotterData && !isLoading && !hasDailyData && (
+              <Box mt="1.3rem">
+                <Alert severity="info">
+                  {getAlertMessage(user, siteId, hasDailyData)}
+                </Alert>
+              </Box>
+            )}
+            <div key={siteId}>
+              <SiteDetails
+                site={siteWithFeaturedImage}
+                selectedSurveyPointId={selectedSurveyPointId}
+                featuredSurveyId={featuredSurveyId}
+                surveys={surveyList}
+                featuredSurveyPoint={featuredSurveyPoint}
+                surveyDiveDate={diveDate}
+              />
+            </div>
+          </Container>
+        ))}
       <SiteFooter />
     </>
   );

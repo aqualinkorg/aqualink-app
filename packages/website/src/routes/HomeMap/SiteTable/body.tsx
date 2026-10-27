@@ -29,6 +29,7 @@ import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { formatNumber } from 'helpers/numberUtils';
 import { alertColorFinder } from 'helpers/bleachingAlertIntervals';
 import { colors } from 'layout/App/theme';
+import { useHistoricalDate } from 'hooks/useHistoricalDate';
 import { calculateAdjustedLng } from 'helpers/map';
 import L from 'leaflet';
 import { getComparator, Order, OrderKeys, stableSort } from './utils';
@@ -104,11 +105,14 @@ function RowAlertCell({
   site: Row;
   classes: SiteTableBodyProps['classes'];
 }) {
+  const { date } = useHistoricalDate();
+  const noData = Boolean(date) && alertLevel == null;
   return (
     <TableCell className={classes.cellTextAlign}>
       <ErrorIcon
+        titleAccess={noData ? 'No alert observation' : undefined}
         style={{
-          color: alertColorFinder(alertLevel),
+          color: noData ? '#808080' : alertColorFinder(alertLevel),
         }}
       />
     </TableCell>

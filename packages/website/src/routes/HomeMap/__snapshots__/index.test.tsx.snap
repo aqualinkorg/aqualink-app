@@ -10,6 +10,60 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
       searchlocation="true"
     />
   </div>
+  <mock-box
+    bgcolor="background.paper"
+    p="2"
+  >
+    <mock-box
+      alignitems="center"
+      display="flex"
+      flexwrap="wrap"
+      gap="2"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root css-1xp5r68-MuiFormControl-root-MuiTextField-root"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined css-hvjq6j-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for=":r0:"
+          id=":r0:-label"
+        >
+          Daily snapshot (UTC)
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-quhxjy-MuiInputBase-root-MuiOutlinedInput-root"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-1pzfmz2-MuiInputBase-input-MuiOutlinedInput-input"
+            id=":r0:"
+            max="2026-10-27"
+            min="0001-01-01"
+            type="date"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-ex8a5f-MuiNotchedOutlined-root"
+            >
+              <span>
+                Daily snapshot (UTC)
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <mock-typography
+        variant="body2"
+      >
+        Viewing live data. Choose a date to view past daily observations.
+      </mock-typography>
+    </mock-box>
+  </mock-box>
   <div
     class="Homepage-root-1"
   >

@@ -1,0 +1,57 @@
+name: Historical daily snapshots
+on:
+  push:
+    branches: [feat/historical-daily-snapshot-1162]
+  pull_request:
+    paths:
+      - 'packages/api/**'
+      - 'packages/website/**'
+      - '.github/workflows/historical-snapshots.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fixture-baseline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NODE_ENV: test
+      TZ: UTC
+      AQUALINK_PREFLIGHT: '1'
+      TEST_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/aqualink_preflight_fixture
+    services:
+      postgres:
+        image: postgis/postgis:16-3.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: aqualink_preflight_fixture
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres -d aqualink_preflight_fixture"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Use pinned package manager
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.21 --activate
+      - name: Install locked dependencies without lifecycle scripts
+        env:
+          NODE_ENV: development
+        run: yarn install --frozen-lockfile --ignore-scripts --ignore-engines --non-interactive
+      - name: Run real migrations and historical HTTP regressions
+        working-directory: packages/api
+        run: ../../node_modules/.bin/jest --config test/jest.json --runInBand --runTestsByPath test/aqualink-preflight.test.ts --coverage=false
+      - name: Type check API source
+        working-directory: packages/api
+        run: ../../node_modules/.bin/tsc --noEmit
+      - name: Test historical website flows
+        working-directory: packages/website
+        run: ../../node_modules/.bin/vitest run src/helpers/historicalDate.test.ts src/store/Sites/historicalRequests.test.ts src/common/HistoricalDateControl/index.test.tsx src/routes/HomeMap/index.test.tsx src/routes/SiteRoutes/Site/index.test.tsx src/routes/SiteRoutes/Site/historical.test.tsx src/common/HistoricalSiteSummary/historical-chart.test.tsx src/routes/HomeMap/Map/Popup/historical-navigation.test.tsx src/routes/HomeMap/SiteTable/SelectedSiteCard/index.test.tsx --maxWorkers=2
+      - name: Build website
+        working-directory: packages/website
+        run: ../../node_modules/.bin/rsbuild build

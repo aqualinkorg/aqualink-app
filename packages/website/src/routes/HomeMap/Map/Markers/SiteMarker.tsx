@@ -14,6 +14,7 @@ import {
 } from 'helpers/bleachingAlertIntervals';
 import { useMarkerIcon, calculateAdjustedLng } from 'helpers/map';
 import { hasDeployedSpotter } from 'helpers/siteUtils';
+import { historicalAlertColor } from 'helpers/historicalDate';
 import Popup from '../Popup';
 
 // To make sure we can see all the sites all the time, and especially
@@ -51,10 +52,12 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
           key={`${site.id}-${offset}`}
           center={[lat, lng + offset]}
           radius={5}
-          fillColor={alertColorFinder(tempWeeklyAlert)}
-          fillOpacity={1}
-          color="black"
-          weight={1}
+          pathOptions={{
+            fillColor: historicalAlertColor(site),
+            fillOpacity: 1,
+            color: 'black',
+            weight: 1,
+          }}
           data-alert={tempWeeklyAlert}
         >
           {isSelected && <Popup site={site} autoOpen={offset === 0} />}

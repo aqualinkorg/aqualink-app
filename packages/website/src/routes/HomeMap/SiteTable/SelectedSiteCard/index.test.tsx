@@ -14,7 +14,7 @@ const mockStore = configureStore([]);
 const store = mockStore({
   selectedSite: site,
   homepage: {
-    siteOnMap: site,
+    siteOnMap: mockSite,
   },
   surveyList: {
     list: [],

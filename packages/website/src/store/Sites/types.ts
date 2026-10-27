@@ -275,6 +275,8 @@ export type CollectionDataResponse = Partial<Record<Metrics, number>>;
 export type CollectionData = CollectionDataResponse;
 
 export interface Site {
+  historicalDate?: string;
+  historicalObservedAt?: string | null;
   id: number;
   name: string | null;
   polygon: Polygon | Point;
@@ -404,6 +406,8 @@ export interface SitesRequestData {
 }
 
 export interface SitesListState {
+  date?: string;
+  requestId?: string;
   list?: Site[];
   filters: SiteFilters;
   loading: boolean;
@@ -411,6 +415,8 @@ export interface SitesListState {
 }
 
 export interface SelectedSiteState {
+  requestKey?: string;
+  requestId?: string;
   draft: SiteUpdateParams | null;
   details?: Site | null;
   spotterPosition?: {

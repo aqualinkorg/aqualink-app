@@ -21,6 +21,7 @@ import {
 import { SitesService } from './sites.service';
 import { Site } from './sites.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
+import { HistoricalDateDto } from './dto/historical-date.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
@@ -28,6 +29,7 @@ import { Public } from '../auth/public.decorator';
 import { CreateSiteApplicationDto, CreateSiteDto } from './dto/create-site.dto';
 import { IsSiteAdminGuard } from '../auth/is-site-admin.guard';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
+import { HistoricalDateQueryPipe } from '../pipes/historical-date-query.pipe';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 import { ExclusionDates } from './exclusion-dates.entity';
@@ -64,7 +66,9 @@ export class SitesController {
   @ApiOperation({ summary: 'Returns sites filtered by provided filters' })
   @Public()
   @Get()
-  find(@Query() filterSiteDto: FilterSiteDto): Promise<Site[]> {
+  find(
+    @Query(HistoricalDateQueryPipe) filterSiteDto: FilterSiteDto,
+  ): Promise<Site[]> {
     return this.sitesService.find(filterSiteDto);
   }
 
@@ -73,8 +77,11 @@ export class SitesController {
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Site> {
-    return this.sitesService.findOne(id);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Query(HistoricalDateQueryPipe) historicalDate: HistoricalDateDto,
+  ): Promise<Site> {
+    return this.sitesService.findOne(id, historicalDate.date);
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')

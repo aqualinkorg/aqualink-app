@@ -54,6 +54,7 @@ export interface Dataset {
   dohThreshold?: number; // HWO: static red dashed line for the site's DOH/HAR 11-54 threshold
   fixedYAxisWidth?: number; // forces a fixed pixel width for the y-axis, so multiple charts share an identical left margin regardless of tick label digit count
   hitRadius?: number; // enlarges the invisible hit-test area around a point, independent of its visible size
+  pointRadius?: number;
   pointHoverRadius?: number; // visible dot size when a point is hovered/active
 }
 

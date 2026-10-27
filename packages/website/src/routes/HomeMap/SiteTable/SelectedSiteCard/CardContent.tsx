@@ -20,6 +20,10 @@ import { Site } from 'store/Sites/types';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
 import { formatNumber } from 'helpers/numberUtils';
 import Chart from 'common/Chart';
+import {
+  historicalChartRange,
+  withHistoricalDate,
+} from 'helpers/historicalDate';
 import { standardDailyDataDataset } from 'common/Chart/MultipleSensorsCharts/helpers';
 import Chip from 'common/Chip';
 import LoadingSkeleton from 'common/LoadingSkeleton';
@@ -155,7 +159,7 @@ function SelectedSiteCardContent({
         site.dailyData,
         site.maxMonthlyMean,
         false,
-        site.timezone,
+        site.historicalDate ? 'UTC' : site.timezone,
       )
     : undefined;
 
@@ -163,7 +167,20 @@ function SelectedSiteCardContent({
     site && chartDataset ? (
       <Chart
         siteId={site.id}
-        datasets={[chartDataset]}
+        startDate={
+          site.historicalDate
+            ? historicalChartRange(site.historicalDate).start
+            : undefined
+        }
+        endDate={
+          site.historicalDate
+            ? historicalChartRange(site.historicalDate).end
+            : undefined
+        }
+        timeZone={site.historicalDate ? 'UTC' : site.timezone}
+        datasets={[
+          { ...chartDataset, pointRadius: site.historicalDate ? 3 : undefined },
+        ]}
         surveys={[]}
         temperatureThreshold={
           site.maxMonthlyMean ? site.maxMonthlyMean + 1 : null
@@ -196,6 +213,15 @@ function SelectedSiteCardContent({
       justifyContent="space-between"
       spacing={1}
     >
+      {site?.historicalDate && (
+        <Grid item xs={12}>
+          <Alert severity="info">
+            {site.historicalDate} (UTC)
+            {!site.historicalObservedAt &&
+              ' — No daily observation for this date.'}
+          </Alert>
+        </Grid>
+      )}
       {useCardWithImageLayout && (
         <Grid item xs={12} md={6} lg={4}>
           <Box position="relative" height="100%" minHeight={300}>
@@ -208,7 +234,10 @@ function SelectedSiteCardContent({
             >
               {site && imageUrl && (
                 <Link
-                  to={`/sites/${site.id}`}
+                  to={withHistoricalDate(
+                    `/sites/${site.id}`,
+                    site.historicalDate,
+                  )}
                   state={{ from: location.pathname }}
                 >
                   <CardMedia
@@ -250,16 +279,19 @@ function SelectedSiteCardContent({
                     container
                     alignItems="center"
                     justifyContent={
-                      site.videoStream && isTablet
+                      !site.historicalDate && site.videoStream && isTablet
                         ? 'space-between'
                         : 'flex-end'
                     }
                   >
-                    {site.videoStream && isTablet && (
+                    {!site.historicalDate && site.videoStream && isTablet && (
                       <Chip
                         live
                         liveText="LIVE VIDEO"
-                        to={`/sites/${site.id}`}
+                        to={withHistoricalDate(
+                          `/sites/${site.id}`,
+                          site.historicalDate,
+                        )}
                         state={{ from: location.pathname }}
                         width={80}
                       />
@@ -268,7 +300,10 @@ function SelectedSiteCardContent({
                       <Button
                         className={classes.exploreButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        to={withHistoricalDate(
+                          `/sites/${site.id}`,
+                          site.historicalDate,
+                        )}
                         state={{ from: location.pathname }}
                         onClick={onExploreButtonClick}
                         size="small"
@@ -311,11 +346,14 @@ function SelectedSiteCardContent({
                     <span title={name || ''}>{name}</span>
                   </Typography>
                 </Grid>
-                {site?.videoStream && (
+                {!site?.historicalDate && site?.videoStream && (
                   <Chip
                     live
                     liveText="LIVE VIDEO"
-                    to={`/sites/${site.id}`}
+                    to={withHistoricalDate(
+                      `/sites/${site.id}`,
+                      site.historicalDate,
+                    )}
                     state={{ from: location.pathname }}
                     width={80}
                   />
