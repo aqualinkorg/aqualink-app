@@ -23,7 +23,10 @@ import withStyles, {
   CSSProperties,
 } from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
+import {
+  sitesListLoadingSelector,
+  sitesListSelector,
+} from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
   siteOnMapSelector,
@@ -41,6 +44,7 @@ import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
+import HistoricalDateControl from './HistoricalDateControl';
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -92,6 +96,8 @@ function HomepageMap({
   legendLeft,
   classes,
   onMapLoad,
+  historicalDate,
+  onHistoricalDateChange,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
@@ -102,6 +108,7 @@ function HomepageMap({
     useState<string>();
   const [mapReady, setMapReady] = useState(false);
   const loading = useSelector(sitesListLoadingSelector);
+  const sitesList = useSelector(sitesListSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<L.Map>(null);
@@ -215,7 +222,8 @@ function HomepageMap({
     setInfoDialogOpen(false);
   };
 
-  return loading ? (
+  // Keep the map mounted (and its position) while reloading sites for another date.
+  return loading && !sitesList ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
     </div>
@@ -268,6 +276,17 @@ function HomepageMap({
           <InfoIcon color="primary" />
         </IconButton>
       </div>
+      {onHistoricalDateChange && (
+        <HistoricalDateControl
+          date={historicalDate}
+          onChange={onHistoricalDateChange}
+        />
+      )}
+      {loading && (
+        <div className={classes.reloading}>
+          <CircularProgress size="2rem" />
+        </div>
+      )}
       <InfoDialog
         infoDialogOpen={infoDialogOpen}
         handleInfoClose={handleInfoClose}
@@ -332,6 +351,13 @@ const styles = (theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
+    reloading: {
+      position: 'absolute',
+      bottom: 40,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 400,
+    },
     locationIconButton: {
       ...mapButtonStyles,
       left: 0,
@@ -380,6 +406,10 @@ interface HomepageMapIncomingProps {
   legendBottom?: number;
   legendLeft?: number;
   onMapLoad?: (map: L.Map) => void;
+  /** Day shown on the map (YYYY-MM-DD), undefined for the latest data. */
+  historicalDate?: string;
+  /** Enables the date control when provided. */
+  onHistoricalDateChange?: (date?: string) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

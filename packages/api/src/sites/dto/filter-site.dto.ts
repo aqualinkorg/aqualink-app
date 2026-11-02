@@ -5,6 +5,8 @@ import {
   IsInt,
   IsEnum,
   IsBooleanString,
+  Matches,
+  IsISO8601,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -37,4 +39,15 @@ export class FilterSiteDto {
   @IsOptional()
   @IsBooleanString()
   readonly hasSpotter?: string;
+
+  @ApiProperty({
+    example: '2024-03-15',
+    description:
+      'Optional UTC date (YYYY-MM-DD). When set, collectionData holds the latest values recorded on or before that day instead of the current ones.',
+    required: false,
+  })
+  @IsOptional()
+  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  @IsISO8601({ strict: true })
+  readonly until?: string;
 }

@@ -27,9 +27,9 @@ import {
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
-const getSite = (id: string) =>
+const getSite = (id: string, until?: string) =>
   requests.send<Site>({
-    url: `sites/${id}`,
+    url: `sites/${id}${until ? `?until=${until}` : ''}`,
     method: 'GET',
   });
 
@@ -47,9 +47,9 @@ const getSiteForecastData = (id: string) =>
     method: 'GET',
   });
 
-const getSiteLatestData = (id: string) =>
+const getSiteLatestData = (id: string, until?: string) =>
   requests.send<{ latestData: LatestData[] }>({
-    url: `sites/${id}/latest_data`,
+    url: `sites/${id}/latest_data${until ? `?until=${until}` : ''}`,
     method: 'GET',
   });
 
@@ -83,9 +83,9 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (until?: string) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: `sites${until ? `?until=${until}` : ''}`,
     method: 'GET',
   });
 

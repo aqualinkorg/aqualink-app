@@ -40,7 +40,10 @@ import { backfillSiteData } from '../workers/backfill-site-data';
 import { SiteApplication } from '../site-applications/site-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
-import { getCollectionData } from '../utils/collections.utils';
+import {
+  getCollectionData,
+  getHistoricalLatestData,
+} from '../utils/collections.utils';
 import { LatestData } from '../time-series/latest-data.entity';
 import { getYouTubeVideoId } from '../utils/urls';
 import {
@@ -201,6 +204,7 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       res,
       this.latestDataRepository,
+      filter.until,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
@@ -223,7 +227,7 @@ export class SitesService {
     }));
   }
 
-  async findOne(id: number): Promise<Site> {
+  async findOne(id: number, until?: string): Promise<Site> {
     const site = await getSite(
       id,
       this.sitesRepository,
@@ -249,6 +253,7 @@ export class SitesService {
     const mappedSiteData = await getCollectionData(
       [site],
       this.latestDataRepository,
+      until,
     );
 
     const maskedSpotterApiToken = site.spotterApiToken
@@ -458,10 +463,19 @@ export class SitesService {
     };
   }
 
-  async findLatestData(id: number): Promise<LatestData[]> {
+  async findLatestData(id: number, until?: string): Promise<LatestData[]> {
     const site = await getSite(id, this.sitesRepository, [
       'historicalMonthlyMean',
     ]);
+
+    if (until) {
+      return getHistoricalLatestData(
+        [site.id],
+        this.latestDataRepository,
+        until,
+        { perSource: true, excludeHobo: false },
+      );
+    }
 
     return getLatestData(site, this.latestDataRepository);
   }

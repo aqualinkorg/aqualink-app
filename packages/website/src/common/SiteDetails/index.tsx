@@ -21,6 +21,8 @@ import {
   forecastDataSelector,
   latestDataRequest,
   latestDataSelector,
+  latestDataUntilSelector,
+  siteDetailsUntilSelector,
   siteDetailsSelector,
   siteTimeSeriesDataRangeSelector,
   spotterPositionRequest,
@@ -151,6 +153,9 @@ function SiteDetails({
   const forecastData = useSelector(forecastDataSelector);
   const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
   const siteDetails = useSelector(siteDetailsSelector);
+  // Day the site is viewed on (YYYY-MM-DD), null for the latest data.
+  const until = useSelector(siteDetailsUntilSelector) ?? null;
+  const latestDataUntil = useSelector(latestDataUntilSelector) ?? null;
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -159,13 +164,21 @@ function SiteDetails({
     if (site && !spotterPosition) {
       dispatch(spotterPositionRequest(String(site.id)));
     }
-    if (site && !latestData) {
-      dispatch(latestDataRequest(String(site.id)));
+    if (site && (!latestData || latestDataUntil !== until)) {
+      dispatch(latestDataRequest({ id: String(site.id), until }));
     }
     if (site && !forecastData) {
       dispatch(forecastDataRequest(String(site.id)));
     }
-  }, [dispatch, site, spotterPosition, latestData, forecastData]);
+  }, [
+    dispatch,
+    site,
+    spotterPosition,
+    latestData,
+    latestDataUntil,
+    until,
+    forecastData,
+  ]);
 
   useEffect(
     () => () => {
@@ -178,13 +191,18 @@ function SiteDetails({
 
   useEffect(() => {
     if (forecastData && latestData) {
-      const combinedArray = [...forecastData, ...latestData];
+      // The wind and wave forecast is only meaningful for the latest data.
+      const combinedArray = until
+        ? latestData
+        : [...forecastData, ...latestData];
       const parsedData = parseLatestData(combinedArray);
 
       // Check for Spotter TEMPERATURE data (for BUOY OBSERVATION card)
       // Excludes seaphox source AND checks if data is recent (within 12 hours)
       const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
-      const now = Date.now();
+      const now = until
+        ? DateTime.fromISO(until, { zone: 'utc' }).endOf('day').toMillis()
+        : Date.now();
 
       const hasRecentSpotterTemperature = latestData.some((x) => {
         if (x.source === 'seaphox') return false;
@@ -295,7 +313,7 @@ function SiteDetails({
       setHasSeapHOxData(hasSeapHOx);
       setLatestDataAsSofarValues(parsedData);
     }
-  }, [forecastData, latestData, timeSeriesRange]);
+  }, [forecastData, latestData, timeSeriesRange, until]);
 
   const { videoStream } = site || {};
 

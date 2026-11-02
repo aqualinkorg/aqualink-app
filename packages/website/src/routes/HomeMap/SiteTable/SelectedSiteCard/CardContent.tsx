@@ -14,6 +14,10 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import { isNumber } from 'lodash';
 import { Link, useLocation } from 'react-router-dom';
+import {
+  getHistoricalDateFromSearch,
+  withHistoricalDate,
+} from 'helpers/historicalDate';
 import classNames from 'classnames';
 
 import { Site } from 'store/Sites/types';
@@ -117,6 +121,7 @@ function SelectedSiteCardContent({
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
   const location = useLocation();
+  const historicalDate = getHistoricalDateFromSearch(location.search);
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const {
     bottomTemperature,
@@ -208,7 +213,7 @@ function SelectedSiteCardContent({
             >
               {site && imageUrl && (
                 <Link
-                  to={`/sites/${site.id}`}
+                  to={withHistoricalDate(`/sites/${site.id}`, historicalDate)}
                   state={{ from: location.pathname }}
                 >
                   <CardMedia
@@ -268,7 +273,10 @@ function SelectedSiteCardContent({
                       <Button
                         className={classes.exploreButton}
                         component={Link}
-                        to={`/sites/${site.id}`}
+                        to={withHistoricalDate(
+                          `/sites/${site.id}`,
+                          historicalDate,
+                        )}
                         state={{ from: location.pathname }}
                         onClick={onExploreButtonClick}
                         size="small"

@@ -238,6 +238,79 @@ export const siteTests = () => {
     });
   });
 
+  describe('Find sites with a historical date', () => {
+    const today = DateTime.now().toUTC().toISODate();
+
+    it('GET / returns collection data recorded on or before `until`', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ until: today });
+
+      expect(rsp.status).toBe(200);
+      const site = rsp.body.find((s: Site) => s.id === californiaSite.id);
+      expect(site.collectionData).toBeDefined();
+      expect(Object.keys(site.collectionData).length).toBeGreaterThan(0);
+    });
+
+    it('GET / returns no collection data for a date without recent data', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get('/sites')
+        .query({ until: '2000-01-01' });
+
+      expect(rsp.status).toBe(200);
+      expect(rsp.body.length).toBeGreaterThan(0);
+      rsp.body.forEach((s: Site) => expect(s.collectionData).toBeUndefined());
+    });
+
+    it('GET /:id accepts `until`', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}`)
+        .query({ until: '2000-01-01' });
+
+      expect(rsp.status).toBe(200);
+      expect(rsp.body.id).toBe(californiaSite.id);
+      expect(rsp.body.collectionData).toBeUndefined();
+    });
+
+    it('GET /:id/latest_data returns the values recorded on or before `until`', async () => {
+      const until = DateTime.now().toUTC().minus({ days: 2 }).toISODate();
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}/latest_data`)
+        .query({ until });
+
+      expect(rsp.status).toBe(200);
+      expect(rsp.body.latestData.length).toBeGreaterThan(0);
+      const endOfDay = DateTime.fromISO(until as string, { zone: 'utc' })
+        .endOf('day')
+        .toMillis();
+      rsp.body.latestData.forEach((item: { timestamp: string }) =>
+        expect(DateTime.fromISO(item.timestamp).toMillis()).toBeLessThanOrEqual(
+          endOfDay,
+        ),
+      );
+    });
+
+    it('GET /:id/latest_data returns nothing for a date without data', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get(`/sites/${californiaSite.id}/latest_data`)
+        .query({ until: '2000-01-01' });
+
+      expect(rsp.status).toBe(200);
+      expect(rsp.body.latestData).toEqual([]);
+    });
+
+    it.each(['yesterday', '2024-13-01', '2024-01-01T00:00:00Z'])(
+      'GET / rejects invalid `until` %s',
+      async (until) => {
+        const rsp = await request(app.getHttpServer())
+          .get('/sites')
+          .query({ until });
+
+        expect(rsp.status).toBe(400);
+      },
+    );
+  });
+
   describe('Find sites with filters', () => {
     it('GET / filter sites by name', async () => {
       const rsp = await request(app.getHttpServer()).get('/sites').query({

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert, Container, Box } from '@mui/material';
+import { Alert, Button, Container, Box } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
@@ -28,6 +28,12 @@ import { User } from 'store/User/types';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
 import { Site as SiteType } from 'store/Sites/types';
 import { useQueryParam } from 'hooks/useQueryParams';
+import {
+  HISTORICAL_DATE_PARAM,
+  formatHistoricalDate,
+  isValidHistoricalDate,
+  withHistoricalDate,
+} from 'helpers/historicalDate';
 import { isAdmin } from 'helpers/user';
 import { findAdministeredSite } from 'helpers/findAdministeredSite';
 import { sortByDate } from 'helpers/dates';
@@ -122,6 +128,11 @@ function Site({ classes }: SiteProps) {
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
+  const [historicalDate, setHistoricalDate] = useQueryParam(
+    HISTORICAL_DATE_PARAM,
+    isValidHistoricalDate,
+  );
+  const until = historicalDate ?? null;
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -162,7 +173,7 @@ function Site({ classes }: SiteProps) {
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
 
-      dispatch(siteRequest(siteId));
+      dispatch(siteRequest({ id: siteId, until }));
       dispatch(spotterPositionRequest(siteId));
       dispatch(surveysRequest(siteId));
     }
@@ -171,7 +182,10 @@ function Site({ classes }: SiteProps) {
 
   // Fetch site and surveys
   useEffect(() => {
-    dispatch(siteRequest(siteId));
+    dispatch(siteRequest({ id: siteId, until }));
+  }, [dispatch, siteId, until]);
+
+  useEffect(() => {
     dispatch(spotterPositionRequest(siteId));
     dispatch(surveysRequest(siteId));
 
@@ -236,14 +250,39 @@ function Site({ classes }: SiteProps) {
               )}
             </LoadingSkeleton>
           </Box>
-          {/* Only show alert message when data is loading */}
-          {!hasSpotterData && !isLoading && !hasDailyData && (
+          {historicalDate && (
             <Box mt="1.3rem">
-              <Alert severity="info">
-                {getAlertMessage(user, siteId, hasDailyData)}
+              <Alert
+                severity="info"
+                action={
+                  <Button
+                    color="inherit"
+                    size="small"
+                    onClick={() => setHistoricalDate(undefined)}
+                  >
+                    Show latest data
+                  </Button>
+                }
+              >
+                Showing data recorded up to{' '}
+                {formatHistoricalDate(historicalDate)} (UTC).{' '}
+                <Link to={withHistoricalDate('/map', historicalDate)}>
+                  View the map on this date
+                </Link>
               </Alert>
             </Box>
           )}
+          {/* Only show alert message when data is loading */}
+          {!hasSpotterData &&
+            !isLoading &&
+            !hasDailyData &&
+            !historicalDate && (
+              <Box mt="1.3rem">
+                <Alert severity="info">
+                  {getAlertMessage(user, siteId, hasDailyData)}
+                </Alert>
+              </Box>
+            )}
           <div key={siteId}>
             <SiteDetails
               site={siteWithFeaturedImage}

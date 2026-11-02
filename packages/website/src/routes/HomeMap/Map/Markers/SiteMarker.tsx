@@ -51,10 +51,14 @@ export const CircleSiteMarker = React.memo(({ site }: SiteMarkerProps) => {
           key={`${site.id}-${offset}`}
           center={[lat, lng + offset]}
           radius={5}
-          fillColor={alertColorFinder(tempWeeklyAlert)}
-          fillOpacity={1}
-          color="black"
-          weight={1}
+          // react-leaflet only updates the style of an existing marker
+          // through pathOptions, which is needed when the alert level changes.
+          pathOptions={{
+            fillColor: alertColorFinder(tempWeeklyAlert),
+            fillOpacity: 1,
+            color: 'black',
+            weight: 1,
+          }}
           data-alert={tempWeeklyAlert}
         >
           {isSelected && <Popup site={site} autoOpen={offset === 0} />}

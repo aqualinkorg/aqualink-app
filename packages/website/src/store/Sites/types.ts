@@ -401,10 +401,20 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  until: string | null;
+}
+
+export interface SitesRequestArgs {
+  /** YYYY-MM-DD day to load collection data for, or null for the latest data. */
+  until: string | null;
 }
 
 export interface SitesListState {
   list?: Site[];
+  /** Day the list's collection data refers to, null when it is the latest data. */
+  until?: string | null;
+  /** Id of the most recent request, so that older responses are ignored. */
+  requestId?: string;
   filters: SiteFilters;
   loading: boolean;
   error?: string | null;
@@ -413,6 +423,10 @@ export interface SitesListState {
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  /** Day the details refer to (YYYY-MM-DD), null when they are the latest data. */
+  detailsUntil?: string | null;
+  /** Id of the most recent site request, so that older responses are ignored. */
+  siteRequestId?: string;
   spotterPosition?: {
     position?: {
       longitude: number;
@@ -422,6 +436,9 @@ export interface SelectedSiteState {
     timestamp?: string;
   } | null;
   latestData?: LatestData[] | null;
+  /** Day latestData refers to (YYYY-MM-DD), null when it is the latest data. */
+  latestDataUntil?: string | null;
+  latestDataRequestId?: string;
   forecastData?: ForecastData[] | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;

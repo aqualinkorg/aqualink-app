@@ -21,6 +21,7 @@ import type {
   PatchSiteFiltersPayload,
   SiteFilters,
   SitesListState,
+  SitesRequestArgs,
   SitesRequestData,
   UpdateSiteNameFromListArgs,
 } from './types';
@@ -33,15 +34,21 @@ const sitesListInitialState: SitesListState = {
   filters: {},
 };
 
+/**
+ * Loads the sites list. Without arguments it only loads the list if it is not
+ * loaded yet, whatever date it refers to. With `{ until }` it makes sure the
+ * list holds the collection data for that day (or the latest data for null).
+ */
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  SitesRequestArgs | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
   async (arg, { rejectWithValue }) => {
+    const until = arg?.until ?? null;
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(until ?? undefined);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,17 +56,19 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        until,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, until, loading },
       } = getState();
-      return !list;
+      if (!arg) return !list && !loading;
+      return !list || (until ?? null) !== arg.until || loading;
     },
   },
 );
@@ -103,25 +112,34 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
+    // Only the most recent request may update the list, so a slow response
+    // for a previous date never replaces the data of the selected one.
+    builder.addCase(sitesRequest.fulfilled, (state, action) =>
+      action.meta.requestId !== state.requestId
+        ? state
+        : {
+            ...state,
+            list: action.payload.list,
+            until: action.payload.until,
+            loading: false,
+          },
     );
 
-    builder.addCase(sitesRequest.rejected, (state, action) => ({
-      ...state,
-      error: action.error.message
-        ? action.error.message
-        : action.error.toString(),
-      loading: false,
-    }));
+    builder.addCase(sitesRequest.rejected, (state, action) =>
+      action.meta.requestId !== state.requestId
+        ? state
+        : {
+            ...state,
+            error: action.error.message
+              ? action.error.message
+              : action.error.toString(),
+            loading: false,
+          },
+    );
 
-    builder.addCase(sitesRequest.pending, (state) => ({
+    builder.addCase(sitesRequest.pending, (state, action) => ({
       ...state,
+      requestId: action.meta.requestId,
       loading: true,
       error: null,
     }));
@@ -170,6 +188,10 @@ export const sitesToDisplayListSelector = createSelector(
 export const sitesListFiltersSelector = (
   state: RootState,
 ): SitesListState['filters'] => state.sitesList.filters;
+
+export const sitesListUntilSelector = (
+  state: RootState,
+): SitesListState['until'] => state.sitesList.until;
 
 export const sitesListLoadingSelector = (
   state: RootState,

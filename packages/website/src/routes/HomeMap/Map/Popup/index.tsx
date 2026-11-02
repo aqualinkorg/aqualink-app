@@ -13,6 +13,10 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import { Link, useLocation } from 'react-router-dom';
+import {
+  getHistoricalDateFromSearch,
+  withHistoricalDate,
+} from 'helpers/historicalDate';
 import { Popup as LeafletPopup, useMap } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
@@ -32,6 +36,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<L.Popup>(null);
   const location = useLocation();
+  const historicalDate = getHistoricalDateFromSearch(location.search);
   const { name, region } = getSiteNameAndRegion(site);
   const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
 
@@ -156,7 +161,7 @@ function Popup({ site, classes, autoOpen = true }: PopupProps) {
             <Grid item>
               <Link
                 style={{ color: 'inherit', textDecoration: 'none' }}
-                to={`/sites/${site.id}`}
+                to={withHistoricalDate(`/sites/${site.id}`, historicalDate)}
                 state={{ from: location.pathname }}
               >
                 <Button

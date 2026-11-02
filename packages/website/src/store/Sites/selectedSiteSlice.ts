@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
+import { DateTime } from 'luxon-extensions';
 import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import type {
@@ -75,29 +76,53 @@ export const spotterPositionRequest = createAsyncThunk<
   },
 );
 
+type SiteRequestArgs = string | { id: string; until?: string | null };
+
+const parseSiteRequestArgs = (arg: SiteRequestArgs) =>
+  typeof arg === 'string'
+    ? { id: arg, until: null }
+    : { id: arg.id, until: arg.until ?? null };
+
+/** Pass `{ id, until }` to load the values recorded up to the `until` day. */
 export const latestDataRequest = createAsyncThunk<
   SelectedSiteState['latestData'],
-  string,
+  SiteRequestArgs,
   CreateAsyncThunkTypes
->('selectedSite/requestLatestData', async (id: string, { rejectWithValue }) => {
+>('selectedSite/requestLatestData', async (arg, { rejectWithValue }) => {
+  const { id, until } = parseSiteRequestArgs(arg);
   try {
-    const { data: latestData } = await siteServices.getSiteLatestData(id);
+    const { data: latestData } = await siteServices.getSiteLatestData(
+      id,
+      until ?? undefined,
+    );
     return latestData.latestData;
   } catch (err) {
     return rejectWithValue(getAxiosErrorMessage(err));
   }
 });
 
+/**
+ * Loads a site. Pass `{ id, until }` to load its collection data and daily
+ * data as they were on the `until` day (YYYY-MM-DD, UTC).
+ */
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  SiteRequestArgs,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
+    const { id, until } = parseSiteRequestArgs(arg);
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
+      const { data } = await siteServices.getSite(id, until ?? undefined);
+      const { data: dailyData } = until
+        ? await siteServices.getSiteDailyData(
+            id,
+            DateTime.fromMillis(0).toUTC().toISO() ?? undefined,
+            DateTime.fromISO(until, { zone: 'utc' }).endOf('day').toISO() ??
+              undefined,
+          )
+        : await siteServices.getSiteDailyData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
@@ -123,11 +148,12 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(arg, { getState }) {
+      const { id, until } = parseSiteRequestArgs(arg);
       const {
-        selectedSite: { details },
+        selectedSite: { details, detailsUntil },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || (detailsUntil ?? null) !== until;
     },
   },
 );
@@ -334,26 +360,32 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
-        ...state,
-        details: action.payload,
-        loading: false,
-      }),
+    // Ignore responses of requests that were superseded by a newer one,
+    // e.g. after switching to another site or date while loading.
+    builder.addCase(siteRequest.fulfilled, (state, action) =>
+      action.meta.requestId !== state.siteRequestId
+        ? state
+        : {
+            ...state,
+            details: action.payload,
+            detailsUntil: parseSiteRequestArgs(action.meta.arg).until,
+            loading: false,
+          },
     );
 
-    builder.addCase(
-      siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        loading: false,
-      }),
+    builder.addCase(siteRequest.rejected, (state, action) =>
+      action.meta.requestId !== state.siteRequestId
+        ? state
+        : {
+            ...state,
+            error: action.payload as SelectedSiteState['error'],
+            loading: false,
+          },
     );
 
-    builder.addCase(siteRequest.pending, (state) => ({
+    builder.addCase(siteRequest.pending, (state, action) => ({
       ...state,
+      siteRequestId: action.meta.requestId,
       loading: true,
       error: null,
     }));
@@ -403,24 +435,22 @@ const selectedSiteSlice = createSlice({
       error: null,
     }));
 
-    builder.addCase(
-      latestDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['latestData']>) => ({
-        ...state,
-        latestData: action.payload,
-      }),
+    builder.addCase(latestDataRequest.fulfilled, (state, action) =>
+      action.meta.requestId !== state.latestDataRequestId
+        ? state
+        : { ...state, latestData: action.payload },
     );
 
-    builder.addCase(
-      latestDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-      }),
+    builder.addCase(latestDataRequest.rejected, (state, action) =>
+      action.meta.requestId !== state.latestDataRequestId
+        ? state
+        : { ...state, error: action.payload as SelectedSiteState['error'] },
     );
 
-    builder.addCase(latestDataRequest.pending, (state) => ({
+    builder.addCase(latestDataRequest.pending, (state, action) => ({
       ...state,
+      latestDataRequestId: action.meta.requestId,
+      latestDataUntil: parseSiteRequestArgs(action.meta.arg).until,
       error: null,
     }));
 
@@ -604,6 +634,14 @@ const selectedSiteSlice = createSlice({
     }));
   },
 });
+
+export const siteDetailsUntilSelector = (
+  state: RootState,
+): SelectedSiteState['detailsUntil'] => state.selectedSite.detailsUntil;
+
+export const latestDataUntilSelector = (
+  state: RootState,
+): SelectedSiteState['latestDataUntil'] => state.selectedSite.latestDataUntil;
 
 export const siteDetailsSelector = (
   state: RootState,
