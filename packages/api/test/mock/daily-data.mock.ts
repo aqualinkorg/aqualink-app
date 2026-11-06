@@ -71,6 +71,9 @@ export const getMockSpotterData = (
       value: random(900, 1100, true),
     })),
     barometricTopDiff: [],
+    odoConcentration: [],
+    odoSaturation: [],
+    odoQuality: [],
     surfaceTemperature: times(diffDays, (i) => ({
       timestamp: start.plus({ days: i }).toISOString(),
       value: random(900, 1100, true),

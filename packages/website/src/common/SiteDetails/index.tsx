@@ -48,6 +48,7 @@ import { Value } from './CardWithTitle/types';
 import CombinedCharts from '../Chart/CombinedCharts';
 import WaterSamplingCard from './WaterSampling';
 import SeapHOxCard from './SeapHOx';
+import DissolvedOxygenCard from './DissolvedOxygen';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
@@ -147,6 +148,7 @@ function SiteDetails({
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
   const [hasHWOData, setHasHWOData] = useState<boolean>(false);
   const [hasSeapHOxData, setHasSeapHOxData] = useState<boolean>(false);
+  const [hasSpotterDOData, setHasSpotterDOData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
@@ -254,8 +256,16 @@ function SiteDetails({
           timeSeriesRange,
         );
 
+      const hasSpotterDO = latestData.some(
+        (x) =>
+          x.source === 'spotter' &&
+          (x.metric === 'odo_saturation' || x.metric === 'odo_concentration') &&
+          now - new Date(x.timestamp).getTime() < spotterValidityLimit,
+      );
+
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotterTemperature);
+      setHasSpotterDOData(hasSpotterDO);
       setHasSpotterWindWaveData(hasSpotterWindWave);
       setHasHUIData(hasHUI);
       setHasHWOData(hasHWO);
@@ -341,6 +351,10 @@ function SiteDetails({
                   data={latestDataAsSofarValues}
                 />
               );
+            }
+
+            if (hasSpotterDOData) {
+              return <DissolvedOxygenCard data={latestDataAsSofarValues} />;
             }
 
             if (hasHWOData) {
