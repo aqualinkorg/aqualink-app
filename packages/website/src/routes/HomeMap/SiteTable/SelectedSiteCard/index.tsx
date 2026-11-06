@@ -11,6 +11,10 @@ import {
   siteErrorSelector,
   siteLoadingSelector,
 } from 'store/Sites/selectedSiteSlice';
+import {
+  sitesListDateSelector,
+  sitesListSelector,
+} from 'store/Sites/sitesListSlice';
 import { surveyListSelector } from 'store/Survey/surveyListSlice';
 import { sortByDate } from 'helpers/dates';
 import LoadingSkeleton from 'common/LoadingSkeleton';
@@ -41,6 +45,20 @@ function SelectedSiteCard() {
   const loading = useSelector(siteLoadingSelector);
   const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
+  const historicalDate = useSelector(sitesListDateSelector);
+  const sitesList = useSelector(sitesListSelector);
+
+  // When a past date is selected on the map, show the values of that date
+  // (from the sites list) instead of the latest ones.
+  const displayedSite =
+    site && historicalDate
+      ? {
+          ...site,
+          collectionData:
+            sitesList?.find((item) => item.id === site.id)?.collectionData ||
+            {},
+        }
+      : site;
 
   const isFeatured = (site?.id || '').toString() === featuredSiteId;
 
@@ -70,6 +88,7 @@ function SelectedSiteCard() {
           {site && (
             <Typography variant="h5" color="textSecondary">
               {isFeatured ? 'Featured Site' : 'Selected Site'}
+              {historicalDate && ` (${historicalDate})`}
               {!hasMedia && (
                 <Link to={`/sites/${site?.id}`}>
                   <LaunchIcon className={classes.launchIcon} />
@@ -82,7 +101,7 @@ function SelectedSiteCard() {
 
       <Card>
         <SelectedSiteCardContent
-          site={site}
+          site={displayedSite}
           loading={loading}
           error={error}
           imageUrl={

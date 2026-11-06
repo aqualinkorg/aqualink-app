@@ -8,6 +8,7 @@ import {
   pick,
   isString,
 } from 'lodash';
+import { DateTime } from 'luxon-extensions';
 import { isBefore } from 'helpers/dates';
 import { longDHW } from 'helpers/siteUtils';
 import siteServices from 'services/siteServices';
@@ -391,6 +392,8 @@ export const parseLatestData = (
   );
 };
 
+export const HISTORICAL_DATE_PARAM = 'date';
+
 /**
  * Persist the filters {@link SiteFilters} to the URL
  * Use filter categories as query parameters and filter values as query values
@@ -400,6 +403,13 @@ export const parseLatestData = (
  */
 export const writeFiltersToUrl = (filters: SiteFilters) => {
   const params = new URLSearchParams();
+  // Keep the selected historical date when filters change
+  const date = new URLSearchParams(window.location.search).get(
+    HISTORICAL_DATE_PARAM,
+  );
+  if (date) {
+    params.append(HISTORICAL_DATE_PARAM, date);
+  }
   Object.entries(filters).forEach(([category, filterValues]) => {
     Object.keys(filterValues).forEach((filter) => {
       params.append(category, filter);
@@ -435,4 +445,47 @@ export const readFiltersFromUrl = (): SiteFilters => {
       [key]: filterValues,
     };
   }, {} as SiteFilters);
+};
+
+/**
+ * Returns true for a valid YYYY-MM-DD day strictly before today (UTC).
+ * Today and future days are displayed with live data.
+ */
+export const isValidHistoricalDate = (
+  date: string | null | undefined,
+): date is string => {
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return false;
+  }
+  const day = DateTime.fromISO(date, { zone: 'utc' });
+  return day.isValid && day < DateTime.now().setZone('utc').startOf('day');
+};
+
+/**
+ * Read the historical date (`?date=YYYY-MM-DD`) from the URL.
+ * Invalid, current or future dates are ignored.
+ */
+export const readHistoricalDateFromUrl = (): string | null => {
+  const date = new URLSearchParams(window.location.search).get(
+    HISTORICAL_DATE_PARAM,
+  );
+  return isValidHistoricalDate(date) ? date : null;
+};
+
+/**
+ * Persist the historical date to the URL, keeping the other query parameters.
+ */
+export const writeHistoricalDateToUrl = (date: string | null) => {
+  const params = new URLSearchParams(window.location.search);
+  if (date) {
+    params.set(HISTORICAL_DATE_PARAM, date);
+  } else {
+    params.delete(HISTORICAL_DATE_PARAM);
+  }
+  const search = params.toString();
+  window.history.replaceState(
+    null,
+    '',
+    `${window.location.pathname}${search ? `?${search}` : ''}`,
+  );
 };

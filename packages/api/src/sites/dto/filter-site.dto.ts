@@ -9,8 +9,9 @@ import {
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { SiteStatus } from '../sites.entity';
+import { SiteDataDateDto } from './site-data-date.dto';
 
-export class FilterSiteDto {
+export class FilterSiteDto extends SiteDataDateDto {
   @ApiProperty({ example: 'Duxbury Site' })
   @IsOptional()
   @IsString()

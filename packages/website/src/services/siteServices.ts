@@ -83,10 +83,11 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (date?: string | null) =>
   requests.send<SiteResponse[]>({
     url: 'sites',
     method: 'GET',
+    ...(date ? { params: { date } } : {}),
   });
 
 const getSiteSurveyPoints = (

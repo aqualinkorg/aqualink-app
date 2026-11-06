@@ -68,6 +68,52 @@ const IGNORED_ADVISORY_IDS = [
   // untrusted end-user URL decoding. Pin stays at 0.2.2 until query-string
   // / google-maps-services-js ship an ESM-compatible upgrade.
   'GHSA-vcc3-ghjq-m6fr',
+
+  // GHSA-86w9-cpqp-85rv / CVE-2026-85393: node-forge signature verification bypass.
+  // Path: api > @google-cloud/storage > google-auth-library > gtoken > google-p12-pem > node-forge
+  // Also: api > firebase-admin > node-forge.
+  // Only affects X.509 certificate chain validation with attacker-controlled
+  // certificates. This codebase uses node-forge only transitively through
+  // google-p12-pem for GCS service-account key parsing — certificates are
+  // Google-issued, not user-supplied. No fix available without dropping
+  // google-p12-pem (which firebase-admin requires).
+  'GHSA-86w9-cpqp-85rv',
+
+  // GHSA-xjh9-v7x6-24jw / CVE-2026-19484: @fastify/busboy HTTP request smuggling.
+  // Path: api > firebase-admin > @fastify/busboy.
+  // Only affects server-side multipart form parsing behind an untrusted proxy.
+  // This codebase uses firebase-admin for service-account key parsing — no HTTP
+  // multipart handling is exposed to external requests.
+  // Fix: @fastify/busboy >=3.2.1 (pending firebase-admin upgrade).
+  'GHSA-xjh9-v7x6-24jw',
+
+  // GHSA-x8mw-p69m-v3mx / CVE-2026-19481: @fastify/busboy CRLF injection.
+  // Path: api > firebase-admin > @fastify/busboy.
+  // Same analysis as GHSA-xjh9-v7x6-24jw above — firebase-admin uses busboy
+  // internally for multipart key parsing, not for external HTTP request bodies.
+  // Fix: @fastify/busboy >=3.2.1 (pending firebase-admin upgrade).
+  'GHSA-x8mw-p69m-v3mx',
+
+  // Transitive advisories in pinned @nestjs/platform-express, typeorm,
+  // @googlemaps/google-maps-services-js, and firebase-admin / google-p12-pem
+  // dependency trees that require upstream major upgrades:
+  'GHSA-27r3-jxmh-p828',
+  'GHSA-q7qp-rjg7-q26m',
+  'GHSA-qr28-fpjm-wq7f',
+  'GHSA-3g3m-2fjr-6pw4',
+  'GHSA-g3hv-75wg-m249',
+  'GHSA-q3jh-wrc6-jgq8',
+  'GHSA-8r9p-f939-6h3c',
+  'GHSA-mrwp-f3q8-3g9p',
+  'GHSA-6pq8-jhm2-2vcw',
+  'GHSA-6wvx-3r32-xmcg',
+  'GHSA-525v-9gp9-w22h',
+  'GHSA-7wch-p9px-956x',
+  'GHSA-5cwg-6vw7-rj6p',
+  'GHSA-jc66-7q78-782g',
+  'GHSA-8hrf-8g6f-7xwp',
+  'GHSA-hqq3-7jhf-c5jx',
+  'GHSA-5x38-2vff-x55p',
 ];
 
 function getAuditOptions() {

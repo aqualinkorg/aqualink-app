@@ -8,7 +8,11 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
-import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
+import {
+  sitesRequest,
+  sitesListSelector,
+  sitesListDateSelector,
+} from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 
@@ -70,10 +74,12 @@ function Homepage({ classes }: HomepageProps) {
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
+  const historicalDate = useSelector(sitesListDateSelector);
 
+  // Refetch sites whenever the selected historical date changes
   useEffect(() => {
     dispatch(sitesRequest());
-  }, [dispatch]);
+  }, [dispatch, historicalDate]);
 
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
@@ -124,6 +130,7 @@ function Homepage({ classes }: HomepageProps) {
               showSiteTable={showSiteTable}
               initialZoom={initialZoom}
               initialCenter={initialCenter}
+              showDateSelector
             />
           </Grid>
           {showSiteTable && (

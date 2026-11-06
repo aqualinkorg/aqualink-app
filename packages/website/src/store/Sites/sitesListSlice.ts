@@ -25,12 +25,18 @@ import type {
   UpdateSiteNameFromListArgs,
 } from './types';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
-import { readFiltersFromUrl, writeFiltersToUrl } from './helpers';
+import {
+  readFiltersFromUrl,
+  readHistoricalDateFromUrl,
+  writeFiltersToUrl,
+  writeHistoricalDateToUrl,
+} from './helpers';
 
 const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
   filters: {},
+  date: null,
 };
 
 export const sitesRequest = createAsyncThunk<
@@ -39,9 +45,11 @@ export const sitesRequest = createAsyncThunk<
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (arg, { getState, rejectWithValue }) => {
+    // Sites are fetched for the selected historical date, or live when null
+    const { date } = getState().sitesList;
     try {
-      const { data } = await siteServices.getSites();
+      const { data } = await siteServices.getSites(date);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,6 +57,7 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        date,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
@@ -57,9 +66,9 @@ export const sitesRequest = createAsyncThunk<
   {
     condition(arg: undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, listDate, date },
       } = getState();
-      return !list;
+      return !list || (listDate ?? null) !== date;
     },
   },
 );
@@ -69,6 +78,7 @@ const sitesListSlice = createSlice({
   initialState: () => ({
     ...sitesListInitialState,
     filters: readFiltersFromUrl(),
+    date: readHistoricalDateFromUrl(),
   }),
   reducers: {
     patchSiteFilters: (
@@ -90,6 +100,13 @@ const sitesListSlice = createSlice({
         }),
       },
     }),
+    setSitesListDate: (
+      state: SitesListState,
+      action: PayloadAction<string | null>,
+    ) => ({
+      ...state,
+      date: action.payload,
+    }),
     clearSiteFilters: (state: SitesListState) => ({
       ...state,
       filters: {},
@@ -105,11 +122,18 @@ const sitesListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
-        ...state,
-        list: action.payload.list,
-        loading: false,
-      }),
+      (state, action: PayloadAction<SitesRequestData>) =>
+        // Ignore responses for a date that is no longer selected
+        // (the request for the selected date is still in flight)
+        state.list && action.payload.date !== state.date
+          ? state
+          : {
+              ...state,
+              list: action.payload.list,
+              listDate: action.payload.date,
+              loading: false,
+              refreshing: false,
+            },
     );
 
     builder.addCase(sitesRequest.rejected, (state, action) => ({
@@ -118,11 +142,15 @@ const sitesListSlice = createSlice({
         ? action.error.message
         : action.error.toString(),
       loading: false,
+      refreshing: false,
     }));
 
+    // When switching dates, keep the current list (and the map) displayed
+    // while the new data loads instead of unmounting everything.
     builder.addCase(sitesRequest.pending, (state) => ({
       ...state,
-      loading: true,
+      loading: !state.list,
+      refreshing: !!state.list,
       error: null,
     }));
   },
@@ -138,6 +166,14 @@ siteFiltersMiddleware.startListening({
       sitesList: { filters },
     } = listenerApi.getState() as RootState;
     writeFiltersToUrl(filters);
+  },
+});
+
+// Update URL when the historical date is changed
+siteFiltersMiddleware.startListening({
+  actionCreator: sitesListSlice.actions.setSitesListDate,
+  effect: (action) => {
+    writeHistoricalDateToUrl(action.payload);
   },
 });
 
@@ -175,11 +211,19 @@ export const sitesListLoadingSelector = (
   state: RootState,
 ): SitesListState['loading'] => state.sitesList.loading;
 
+export const sitesListDateSelector = (
+  state: RootState,
+): SitesListState['date'] => state.sitesList.date;
+
+export const sitesListRefreshingSelector = (state: RootState): boolean =>
+  !!state.sitesList.refreshing;
+
 export const sitesListErrorSelector = (
   state: RootState,
 ): SitesListState['error'] => state.sitesList.error;
 
-export const { clearSiteFilters, setSiteName } = sitesListSlice.actions;
+export const { clearSiteFilters, setSiteName, setSitesListDate } =
+  sitesListSlice.actions;
 
 // Re-export to keep function as generic
 export const patchSiteFilters = sitesListSlice.actions.patchSiteFilters as <
