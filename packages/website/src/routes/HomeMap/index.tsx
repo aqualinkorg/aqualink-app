@@ -8,9 +8,19 @@ import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
-import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
+import {
+  selectedDateSelector,
+  setSelectedDate,
+  sitesRequest,
+  sitesListSelector,
+} from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import {
+  readHistoricalDateFromUrl,
+  writeHistoricalDateToUrl,
+} from 'store/Sites/historicalDateHelpers';
+import type { Site } from 'store/Sites/types';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
@@ -32,31 +42,47 @@ interface MapQueryParams {
 const INITIAL_CENTER = new LatLng(0, 121.3);
 const INITIAL_ZOOM = 4;
 
-function useQuery() {
-  const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
+const resolveInitialSiteId = (
+  sitesList: Site[],
+  queryParamSiteId: string,
+): string => {
+  const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
+  if (!queryParamSiteId) {
+    return featuredSiteId;
+  }
+  const matchedQuerySite = findSiteById(sitesList, queryParamSiteId);
+  if (matchedQuerySite) {
+    return matchedQuerySite.id.toString();
+  }
+  return findSiteById(sitesList, featuredSiteId)?.id.toString() || '';
+};
+
+const resetBottomSheetScroll = (isDrawerOpen: boolean): void => {
+  if (isDrawerOpen) {
+    return;
+  }
+  const className = 'ReactSwipeableBottomSheet';
+  const drawer =
+    document.getElementsByClassName(`${className}--opened`)[0] ||
+    document.getElementsByClassName(`${className}--closed`)[0];
+  if (!drawer) {
+    return;
+  }
+  // eslint-disable-next-line fp/no-mutation
+  drawer.scrollTop = 0;
+};
+
+function useQuery(): MapQueryParams {
+  const { search } = useLocation();
+  const urlParams = new URLSearchParams(search);
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
-  const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
+  const initialZoom = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
   const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || '';
   const sitesList = useSelector(sitesListSelector) || [];
-  const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || '';
-  const initialSiteId = queryParamSiteId
-    ? findSiteById(sitesList, queryParamSiteId)?.id.toString() ||
-      findSiteById(sitesList, featuredSiteId)?.id.toString() ||
-      ''
-    : featuredSiteId;
-
-  // Focus on the site provided in the queryParamSiteId or the site with highest alert level.
-  // const initialCenter =
-  //   findInitialSitePosition(
-  //     sitesList,
-  //     queryParamSiteId === initialSiteId ? initialSiteId : undefined,
-  //   ) || INITIAL_CENTER;
-
-  // WARNING - temporarily zoom to Australia during summer
-  const initialCenter = INITIAL_CENTER;
+  const initialSiteId = resolveInitialSiteId(sitesList, queryParamSiteId);
 
   return {
-    initialCenter,
+    initialCenter: INITIAL_CENTER,
     initialSiteId,
     initialZoom,
   };
@@ -64,46 +90,53 @@ function useQuery() {
 
 function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
+  const { search } = useLocation();
   const siteOnMap = useSelector(siteOnMapSelector);
+  const selectedDate = useSelector(selectedDateSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();
 
   useEffect(() => {
-    dispatch(sitesRequest());
-  }, [dispatch]);
+    const urlDate = readHistoricalDateFromUrl(search);
+    if (urlDate) {
+      dispatch(setSelectedDate(urlDate));
+      return;
+    }
+    if (selectedDate) {
+      writeHistoricalDateToUrl(selectedDate);
+    }
+    // Synchronize only when route search string changes so manual date resets are preserved.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, search]);
 
   useEffect(() => {
-    if (!siteOnMap && initialSiteId) {
-      dispatch(siteRequest(initialSiteId));
-      dispatch(surveysRequest(initialSiteId));
-    } else if (siteOnMap) {
-      dispatch(siteRequest(`${siteOnMap.id}`));
-      dispatch(surveysRequest(`${siteOnMap.id}`));
-    }
-  }, [dispatch, initialSiteId, siteOnMap]);
+    dispatch(sitesRequest(selectedDate));
+  }, [dispatch, selectedDate]);
 
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  useEffect(() => {
+    const targetSiteId = siteOnMap ? `${siteOnMap.id}` : initialSiteId;
+    if (!targetSiteId) {
+      return;
+    }
+    dispatch(
+      siteRequest(
+        selectedDate ? { id: targetSiteId, date: selectedDate } : targetSiteId,
+      ),
+    );
+    dispatch(surveysRequest(targetSiteId));
+  }, [dispatch, initialSiteId, selectedDate, siteOnMap]);
+
+  useEffect(() => {
+    resetBottomSheetScroll(isDrawerOpen);
+  });
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
   };
-
-  // scroll drawer to top when its closed.
-  // the lib we use doesn't support passing ID or ref, so we rely on class name here.
-  // scrollTopAtClose prop doesn't work with manually controlled state
-  useEffect(() => {
-    if (isDrawerOpen) return;
-    const className = 'ReactSwipeableBottomSheet';
-    const drawer =
-      document.getElementsByClassName(`${className}--opened`)[0] ||
-      document.getElementsByClassName(`${className}--closed`)[0];
-    if (!drawer) return;
-    // eslint-disable-next-line fp/no-mutation
-    drawer.scrollTop = 0;
-  });
 
   return (
     <>

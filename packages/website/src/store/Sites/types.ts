@@ -401,18 +401,29 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  loadedDate?: string | null;
 }
 
 export interface SitesListState {
   list?: Site[];
   filters: SiteFilters;
+  selectedDate?: string | null;
+  loadedDate?: string | null;
   loading: boolean;
   error?: string | null;
 }
 
+export type SiteRequestArgs =
+  | string
+  | {
+      id: string;
+      date?: string | null;
+    };
+
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  requestedDate?: string | null;
   spotterPosition?: {
     position?: {
       longitude: number;

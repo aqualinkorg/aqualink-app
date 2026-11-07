@@ -26,22 +26,39 @@ import type {
 } from './types';
 import type { CreateAsyncThunkTypes, RootState } from '../configure';
 import { readFiltersFromUrl, writeFiltersToUrl } from './helpers';
+import {
+  readHistoricalDateFromUrl,
+  writeHistoricalDateToUrl,
+} from './historicalDateHelpers';
+
+type OptionalHistoricalDate = SitesListState['selectedDate'];
 
 const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
   filters: {},
+  selectedDate: null,
+  loadedDate: null,
 };
+
+const resolveRequestedDate = (
+  arg: OptionalHistoricalDate,
+  selectedDate: OptionalHistoricalDate,
+): string | null => (arg !== undefined ? arg : selectedDate) || null;
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  OptionalHistoricalDate,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (arg, { getState, rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const targetDate = resolveRequestedDate(
+        arg,
+        getState().sitesList.selectedDate,
+      );
+      const { data } = await siteServices.getSites(targetDate || undefined);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,17 +66,19 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        loadedDate: targetDate,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(arg: OptionalHistoricalDate, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, loadedDate, selectedDate },
       } = getState();
-      return !list;
+      const targetDate = resolveRequestedDate(arg, selectedDate);
+      return !list || (loadedDate || null) !== targetDate;
     },
   },
 );
@@ -69,6 +88,7 @@ const sitesListSlice = createSlice({
   initialState: () => ({
     ...sitesListInitialState,
     filters: readFiltersFromUrl(),
+    selectedDate: readHistoricalDateFromUrl(),
   }),
   reducers: {
     patchSiteFilters: (
@@ -94,6 +114,13 @@ const sitesListSlice = createSlice({
       ...state,
       filters: {},
     }),
+    setSelectedDate: (
+      state: SitesListState,
+      action: PayloadAction<OptionalHistoricalDate>,
+    ) => ({
+      ...state,
+      selectedDate: action.payload || null,
+    }),
     setSiteName: (
       state,
       action: PayloadAction<UpdateSiteNameFromListArgs>,
@@ -108,6 +135,7 @@ const sitesListSlice = createSlice({
       (state, action: PayloadAction<SitesRequestData>) => ({
         ...state,
         list: action.payload.list,
+        loadedDate: action.payload.loadedDate ?? null,
         loading: false,
       }),
     );
@@ -130,27 +158,44 @@ const sitesListSlice = createSlice({
 
 export const siteFiltersMiddleware = createListenerMiddleware();
 
-// Update URL when filters are changed
+// Update URL when filters are changed while preserving any active historical date
 siteFiltersMiddleware.startListening({
   actionCreator: sitesListSlice.actions.patchSiteFilters,
   effect: (action, listenerApi) => {
     const {
-      sitesList: { filters },
+      sitesList: { filters, selectedDate },
     } = listenerApi.getState() as RootState;
     writeFiltersToUrl(filters);
+    writeHistoricalDateToUrl(selectedDate);
   },
 });
 
-// Clear filters when the clear action is dispatched
+// Clear filters when the clear action is dispatched while preserving any active historical date
 siteFiltersMiddleware.startListening({
   actionCreator: sitesListSlice.actions.clearSiteFilters,
-  effect: () => {
+  effect: (action, listenerApi) => {
+    const {
+      sitesList: { selectedDate },
+    } = listenerApi.getState() as RootState;
     writeFiltersToUrl({});
+    writeHistoricalDateToUrl(selectedDate);
+  },
+});
+
+// Synchronize historical date selection with the URL query string
+siteFiltersMiddleware.startListening({
+  actionCreator: sitesListSlice.actions.setSelectedDate,
+  effect: (action) => {
+    writeHistoricalDateToUrl(action.payload);
   },
 });
 
 export const sitesListSelector = (state: RootState): SitesListState['list'] =>
   state.sitesList.list;
+
+export const selectedDateSelector = (
+  state: RootState,
+): SitesListState['selectedDate'] => state.sitesList.selectedDate ?? null;
 
 export const sitesToDisplayListSelector = createSelector(
   sitesListSelector,
@@ -179,7 +224,8 @@ export const sitesListErrorSelector = (
   state: RootState,
 ): SitesListState['error'] => state.sitesList.error;
 
-export const { clearSiteFilters, setSiteName } = sitesListSlice.actions;
+export const { clearSiteFilters, setSelectedDate, setSiteName } =
+  sitesListSlice.actions;
 
 // Re-export to keep function as generic
 export const patchSiteFilters = sitesListSlice.actions.patchSiteFilters as <
