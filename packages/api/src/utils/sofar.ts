@@ -381,6 +381,16 @@ export async function getSpotterData(
     [[], [], []],
   );
 
+  const getSmartMooringValues = (
+    dataTypePrefix: string,
+  ): ValueWithTimestamp[] =>
+    smartMooringData
+      .filter(
+        (data) =>
+          data.data_type_name?.startsWith(dataTypePrefix) && !isNil(data.value),
+      )
+      .map((data) => ({ timestamp: data.timestamp, value: data.value }));
+
   console.timeEnd(`getSpotterData for sensor ${sensorId}`);
 
   return {
@@ -399,6 +409,9 @@ export async function getSpotterData(
       ? [spotterBarometricTopDiff]
       : [],
     surfaceTemperature: sofarSpotterSurfaceTemp,
+    odoConcentration: getSmartMooringValues('bm_do_mg_per_l_mean'),
+    odoSaturation: getSmartMooringValues('bm_do_saturation_pct_mean'),
+    odoQuality: getSmartMooringValues('bm_do_quality_mean'),
     latitude: spotterLatitude,
     longitude: spotterLongitude,
     raw: smartMooringData,

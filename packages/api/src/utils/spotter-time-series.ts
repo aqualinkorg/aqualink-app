@@ -253,6 +253,9 @@ export const addSpotterData = async (
               ['barometerBottom', Metric.BAROMETRIC_PRESSURE_BOTTOM],
               ['barometricTopDiff', Metric.BAROMETRIC_PRESSURE_TOP_DIFF],
               ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
+              ['odoConcentration', Metric.ODO_CONCENTRATION],
+              ['odoSaturation', Metric.ODO_SATURATION],
+              ['odoQuality', Metric.ODO_QUALITY],
             ];
 
             // Save standard spotter data to time_series
