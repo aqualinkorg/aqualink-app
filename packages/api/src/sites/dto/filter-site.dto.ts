@@ -5,11 +5,16 @@ import {
   IsInt,
   IsEnum,
   IsBooleanString,
+  IsDateString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { SiteStatus } from '../sites.entity';
 
+/**
+ * Query filter contract for listing public monitoring sites, including
+ * optional historical snapshot lookup by ISO calendar date.
+ */
 export class FilterSiteDto {
   @ApiProperty({ example: 'Duxbury Site' })
   @IsOptional()
@@ -37,4 +42,9 @@ export class FilterSiteDto {
   @IsOptional()
   @IsBooleanString()
   readonly hasSpotter?: string;
+
+  @ApiProperty({ example: '2024-04-15', required: false })
+  @IsOptional()
+  @IsDateString()
+  readonly date?: string;
 }

@@ -27,33 +27,90 @@ import {
 import requests from 'helpers/requests';
 import { constructTimeSeriesDataRequestUrl } from 'helpers/siteUtils';
 
-const getSite = (id: string) =>
+type SiteIdParam = TimeSeriesDataRequestParams['siteId'];
+type NumericSiteId = Site['id'];
+type AuthToken = GetSiteContactInfoProps['token'];
+type OptionalAuthToken = AuthToken | null | undefined;
+type SiteDateParam = TimeSeriesDataRequestParams['start'];
+type RegisterSiteTuple = [
+  Site['name'],
+  number,
+  number,
+  NonNullable<Site['depth']>,
+  AuthToken,
+];
+type ApplySiteTuple = [
+  NumericSiteId,
+  SiteApplication['appId'],
+  SiteApplyParams,
+  AuthToken,
+];
+type AuthenticatedSiteMutationTuple<T> = [NumericSiteId, T, AuthToken];
+
+interface SiteMutationOptions {
+  method: 'POST' | 'PUT';
+  suffix?: string;
+}
+
+/**
+ * Builds the optional query suffix for daily_data requests, supporting both bounded
+ * [start, end] windows and historical 90-day lookbacks anchored at an end date.
+ */
+const buildDailyDataQuery = (
+  start?: SiteDateParam,
+  end?: SiteDateParam,
+): string => {
+  if (start && end) {
+    return `?end=${end}&start=${start}`;
+  }
+  if (end) {
+    return `?end=${end}`;
+  }
+  return '';
+};
+
+const sendAuthenticatedSiteMutation = <TResponse, TPayload>(
+  options: SiteMutationOptions,
+  args: AuthenticatedSiteMutationTuple<TPayload>,
+) => {
+  const [siteId, data, token] = args;
+  const suffix = options.suffix ? `/${options.suffix}` : '';
+  return requests.send<TResponse>({
+    url: `sites/${siteId}${suffix}`,
+    method: options.method,
+    data,
+    token,
+  });
+};
+
+const getSite = (id: SiteIdParam, date?: SiteDateParam) =>
   requests.send<Site>({
-    url: `sites/${id}`,
+    url: date ? `sites/${id}?date=${encodeURIComponent(date)}` : `sites/${id}`,
     method: 'GET',
   });
 
-const getSiteDailyData = (id: string, start?: string, end?: string) =>
+const getSiteDailyData = (
+  id: SiteIdParam,
+  ...range: [SiteDateParam?, SiteDateParam?]
+) =>
   requests.send<DailyData[]>({
-    url: `sites/${id}/daily_data${
-      start && end ? `?end=${end}&start=${start}` : ''
-    }`,
+    url: `sites/${id}/daily_data${buildDailyDataQuery(range[0], range[1])}`,
     method: 'GET',
   });
 
-const getSiteForecastData = (id: string) =>
+const getSiteForecastData = (id: SiteIdParam) =>
   requests.send<ForecastData[]>({
     url: `wind-wave-data-hindcast/sites/${id}`,
     method: 'GET',
   });
 
-const getSiteLatestData = (id: string) =>
+const getSiteLatestData = (id: SiteIdParam) =>
   requests.send<{ latestData: LatestData[] }>({
     url: `sites/${id}/latest_data`,
     method: 'GET',
   });
 
-const getSiteSpotterPosition = (id: string) =>
+const getSiteSpotterPosition = (id: SiteIdParam) =>
   requests.send<{
     position?: {
       longitude: number;
@@ -83,14 +140,14 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+const getSites = (date?: SiteDateParam) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: date ? `sites?date=${encodeURIComponent(date)}` : 'sites',
     method: 'GET',
   });
 
 const getSiteSurveyPoints = (
-  id: string,
+  id: SiteIdParam,
   cancelToken?: AxiosRequestConfig['cancelToken'],
 ) =>
   requests.send<SurveyPoints[]>({
@@ -99,20 +156,15 @@ const getSiteSurveyPoints = (
     cancelToken,
   });
 
-const deleteSiteSurveyPoint = (id: number, token?: string | null) =>
+const deleteSiteSurveyPoint = (id: NumericSiteId, token?: OptionalAuthToken) =>
   requests.send({
     url: `site-survey-points/${id}`,
     method: 'DELETE',
     token,
   });
 
-const registerSite = (
-  name: string,
-  latitude: number,
-  longitude: number,
-  depth: number,
-  token: string,
-) => {
+const registerSite = (...args: RegisterSiteTuple) => {
+  const [name, latitude, longitude, depth, token] = args;
   const data = {
     siteApplication: {},
     site: {
@@ -131,41 +183,34 @@ const registerSite = (
   });
 };
 
-const applySite = (
-  siteId: number,
-  appId: string,
-  data: SiteApplyParams,
-  token: string,
-) =>
-  requests.send({
+const applySite = (...args: ApplySiteTuple) => {
+  const [siteId, appId, data, token] = args;
+  return requests.send({
     url: `site-applications/${appId}/sites/${siteId}`,
     method: 'PUT',
     data,
     token,
   });
+};
 
-const getSiteApplication = (siteId: number, token: string) =>
+const getSiteApplication = (siteId: NumericSiteId, token: AuthToken) =>
   requests.send<SiteApplication>({
     url: `site-applications/sites/${siteId}`,
     method: 'GET',
     token,
   });
 
-const getSiteUploadHistory = (siteId: number) =>
+const getSiteUploadHistory = (siteId: NumericSiteId) =>
   requests.send<SiteUploadHistory>({
     url: `data-uploads/sites/${siteId}`,
     method: 'GET',
   });
 
-const updateSite = (siteId: number, data: SiteUpdateParams, token: string) =>
-  requests.send<Site>({
-    url: `sites/${siteId}`,
-    method: 'PUT',
-    data,
-    token,
-  });
+const updateSite = (
+  ...args: AuthenticatedSiteMutationTuple<SiteUpdateParams>
+) => sendAuthenticatedSiteMutation<Site, SiteUpdateParams>({ method: 'PUT' }, args);
 
-const getExclusionDates = (siteId: number, token: string) =>
+const getExclusionDates = (siteId: NumericSiteId, token: AuthToken) =>
   requests.send<ExclusionDateResponse>({
     url: `sites/${siteId}/exclusion_dates`,
     method: 'GET',
@@ -173,28 +218,20 @@ const getExclusionDates = (siteId: number, token: string) =>
   });
 
 const deploySpotter = (
-  siteId: number,
-  data: DeploySpotterParams,
-  token: string,
+  ...args: AuthenticatedSiteMutationTuple<DeploySpotterParams>
 ) =>
-  requests.send({
-    url: `sites/${siteId}/deploy`,
-    method: 'POST',
-    data,
-    token,
-  });
+  sendAuthenticatedSiteMutation<unknown, DeploySpotterParams>(
+    { method: 'POST', suffix: 'deploy' },
+    args,
+  );
 
 const maintainSpotter = (
-  siteId: number,
-  data: MaintainSpotterParams,
-  token: string,
+  ...args: AuthenticatedSiteMutationTuple<MaintainSpotterParams>
 ) =>
-  requests.send({
-    url: `sites/${siteId}/exclusion_dates`,
-    method: 'POST',
-    data,
-    token,
-  });
+  sendAuthenticatedSiteMutation<unknown, MaintainSpotterParams>(
+    { method: 'POST', suffix: 'exclusion_dates' },
+    args,
+  );
 
 const getOceanSenseData = ({
   sensorID,
@@ -206,7 +243,7 @@ const getOceanSenseData = ({
     method: 'GET',
   });
 
-const getSpotterInfo = (query: string, token?: string) =>
+const getSpotterInfo = (query: SiteIdParam, token?: AuthToken) =>
   requests.send<SpotterInfoResponse>({
     url: `sensor-data/info/${query}`,
     method: 'GET',

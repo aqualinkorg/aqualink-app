@@ -36,6 +36,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import InfoIcon from '@mui/icons-material/Info';
 import { mapIconSize } from 'layout/App/theme';
+import HistoricalDatePicker from 'common/HistoricalDatePicker';
 import { SiteMarkers } from './Markers';
 import { SofarLayers } from './sofarLayers';
 import { InfoDialog } from './InfoDialog';
@@ -77,6 +78,154 @@ function MapEventsHandler({
   return null;
 }
 
+function useMapGeolocation(mapRef: React.RefObject<L.Map | null>) {
+  const [currentLocation, setCurrentLocation] = useState<[number, number]>();
+  const [currentLocationAccuracy, setCurrentLocationAccuracy] =
+    useState<number>();
+  const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
+    useState<string>();
+
+  const onLocationSearch = () => {
+    if (!navigator.geolocation) {
+      setCurrentLocationErrorMessage(
+        'Geolocation is not supported by your browser',
+      );
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latLng: [number, number] = [
+          position.coords.latitude,
+          position.coords.longitude,
+        ];
+        setCurrentLocation(latLng);
+        setCurrentLocationAccuracy(position.coords.accuracy);
+
+        const map = mapRef.current;
+        if (map) {
+          const newZoom = Math.max(map.getZoom() || 6, 8);
+          map.flyTo(latLng, newZoom, { duration: 2 });
+        }
+      },
+      () => {
+        setCurrentLocationErrorMessage('Unable to find your location');
+      },
+    );
+  };
+
+  const onLocationErrorAlertClose = () =>
+    setCurrentLocationErrorMessage(undefined);
+
+  return {
+    currentLocation,
+    currentLocationAccuracy,
+    currentLocationErrorMessage,
+    onLocationSearch,
+    onLocationErrorAlertClose,
+  };
+}
+
+function useMapViewportSync(
+  mapRef: React.RefObject<L.Map | null>,
+  options: { mapReady: boolean; onMapLoad?: (map: L.Map) => void },
+) {
+  const searchResult = useSelector(searchResultSelector);
+  const siteOnMap = useSelector(siteOnMapSelector);
+
+  useEffect(() => {
+    if (mapRef.current && options.onMapLoad) {
+      options.onMapLoad(mapRef.current);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapRef.current, options.onMapLoad]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && searchResult) {
+      map.fitBounds([searchResult.bbox.southWest, searchResult.bbox.northEast]);
+    }
+  }, [mapRef, searchResult]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !options.mapReady) {
+      return;
+    }
+    if (siteOnMap?.polygon.type !== 'Point') {
+      return;
+    }
+    const [lng, lat] = siteOnMap.polygon.coordinates;
+    const finalLng = siteOnMap.displayLng ?? lng;
+    focusMapOnSite(map, [lat, finalLng]);
+  }, [mapRef, options.mapReady, siteOnMap]);
+}
+
+function CurrentLocationOverlay({
+  currentLocation,
+  currentLocationAccuracy,
+}: {
+  currentLocation?: [number, number];
+  currentLocationAccuracy?: number;
+}) {
+  if (!currentLocation) {
+    return null;
+  }
+  return (
+    <>
+      <Marker icon={currentLocationMarker} position={currentLocation} />
+      {currentLocationAccuracy && (
+        <Circle
+          center={{ lat: currentLocation[0], lng: currentLocation[1] }}
+          radius={currentLocationAccuracy}
+        />
+      )}
+    </>
+  );
+}
+
+function MapToolbarButtons({
+  classes,
+  showSiteTable,
+  geolocationEnabled,
+  onToggleSiteTable,
+  onOpenInfo,
+  onLocationSearch,
+}: {
+  classes: HomepageMapProps['classes'];
+  showSiteTable: boolean;
+  geolocationEnabled: boolean;
+  onToggleSiteTable: () => void;
+  onOpenInfo: () => void;
+  onLocationSearch: () => void;
+}) {
+  const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
+
+  return (
+    <>
+      <Hidden mdDown>
+        <div className={classes.expandIconButton}>
+          <IconButton onClick={onToggleSiteTable} size="large">
+            <ExpandIcon color="primary" className={classes.expandIcon} />
+          </IconButton>
+        </div>
+      </Hidden>
+      <div className={classes.infoIconButton}>
+        <IconButton onClick={onOpenInfo} size="large">
+          <InfoIcon color="primary" />
+        </IconButton>
+      </div>
+      {geolocationEnabled && (
+        <div className={classes.locationIconButton}>
+          <IconButton onClick={onLocationSearch} size="large">
+            <MyLocationIcon color="primary" />
+          </IconButton>
+        </div>
+      )}
+    </>
+  );
+}
+
 function HomepageMap({
   initialCenter,
   initialZoom,
@@ -95,103 +244,21 @@ function HomepageMap({
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
-  const [currentLocation, setCurrentLocation] = useState<[number, number]>();
-  const [currentLocationAccuracy, setCurrentLocationAccuracy] =
-    useState<number>();
-  const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
-    useState<string>();
   const [mapReady, setMapReady] = useState(false);
   const loading = useSelector(sitesListLoadingSelector);
-  const searchResult = useSelector(searchResultSelector);
-  const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<L.Map>(null);
+  const geolocation = useMapGeolocation(ref);
 
-  useEffect(() => {
-    if (ref.current && onMapLoad) {
-      onMapLoad(ref.current);
-    }
-    // We only want this effect to run once when the ref is set, or when onMapLoad changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref.current, onMapLoad]);
+  useMapViewportSync(ref, { mapReady, onMapLoad });
 
-  const onLocationSearch = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latLng = [
-            position.coords.latitude,
-            position.coords.longitude,
-          ] as [number, number];
-          setCurrentLocation(latLng);
-          setCurrentLocationAccuracy(position.coords.accuracy);
-
-          // zoom to user location
-          const { current: map } = ref;
-          if (map) {
-            const newZoom = Math.max(map.getZoom() || 6, 8);
-            map.flyTo(latLng, newZoom, { duration: 2 });
-          }
-        },
-        () => {
-          setCurrentLocationErrorMessage('Unable to find your location');
-        },
-      );
-    } else {
-      setCurrentLocationErrorMessage(
-        'Geolocation is not supported by your browser',
-      );
-    }
-  };
-
-  const onLocationErrorAlertClose = () =>
-    setCurrentLocationErrorMessage(undefined);
-
-  useEffect(() => {
-    const { current: map } = ref;
-    if (map) {
-      if (searchResult) {
-        map.fitBounds([
-          searchResult.bbox.southWest,
-          searchResult.bbox.northEast,
-        ]);
-      }
-    }
-  }, [searchResult]);
-
-  useEffect(() => {
-    const { current: map } = ref;
-    if (map && mapReady && siteOnMap?.polygon.type === 'Point') {
-      const [lng, lat] = siteOnMap.polygon.coordinates;
-
-      // Use the pre-calculated displayLng if available, otherwise use original lng
-      const finalLng = siteOnMap.displayLng ?? lng;
-
-      focusMapOnSite(map, [lat, finalLng]);
-    }
-  }, [siteOnMap, mapReady]);
-
-  const onBaseLayerChange = ({ name }: LayersControlEvent) => {
-    setLegendName(name);
-  };
-
-  const onMapReady = () => {
-    setMapReady(true);
-  };
-
-  const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
-
-  // Memoize the layers to prevent unnecessary re-renders
   const sofarLayers = useMemo(
     () => <SofarLayers defaultLayerName={defaultLayerName} />,
     [defaultLayerName],
   );
-
   const siteMarkers = useMemo(
     () => <SiteMarkers collection={collection} />,
     [collection],
   );
-
-  // Memoize the TileLayer to prevent unnecessary redraws
   const tileLayer = useMemo(
     () => (
       <TileLayer
@@ -200,26 +267,30 @@ function HomepageMap({
         keepBuffer={6}
         updateWhenIdle
         updateInterval={400}
-        // Prevent tile fading animation which can cause flicker
         className="no-tile-fade"
       />
     ),
     [],
   );
 
-  const handleInfoClick = () => {
-    setInfoDialogOpen(true);
+  const handleToggleSiteTable = () => {
+    if (setShowSiteTable) {
+      setShowSiteTable((prev) => !prev);
+    }
+    setTimeout(() => {
+      ref.current?.invalidateSize();
+    });
   };
 
-  const handleInfoClose = () => {
-    setInfoDialogOpen(false);
-  };
+  if (loading) {
+    return (
+      <div className={classes.loading}>
+        <CircularProgress size="4rem" thickness={1} />
+      </div>
+    );
+  }
 
-  return loading ? (
-    <div className={classes.loading}>
-      <CircularProgress size="4rem" thickness={1} />
-    </div>
-  ) : (
+  return (
     <MapContainer
       id="sites-map"
       ref={ref}
@@ -229,74 +300,47 @@ function HomepageMap({
       className={classes.map}
       center={initialCenter}
       zoom={initialZoom}
-      minZoom={collection ? 1 : 2} // If we're on dashboard page, the map's wrapping div is smaller, so we need to allow higher zoom
+      minZoom={collection ? 1 : 2}
       worldCopyJump
       bounds={initialBounds}
       maxBounds={mapConstants.MAX_BOUNDS}
     >
       <Snackbar
-        open={Boolean(currentLocationErrorMessage)}
+        open={Boolean(geolocation.currentLocationErrorMessage)}
         autoHideDuration={5000}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        onClose={onLocationErrorAlertClose}
+        onClose={geolocation.onLocationErrorAlertClose}
       >
-        <Alert severity="error" onClose={onLocationErrorAlertClose}>
-          {currentLocationErrorMessage}
+        <Alert severity="error" onClose={geolocation.onLocationErrorAlertClose}>
+          {geolocation.currentLocationErrorMessage}
         </Alert>
       </Snackbar>
-      <Hidden mdDown>
-        <div className={classes.expandIconButton}>
-          <IconButton
-            onClick={() => {
-              if (setShowSiteTable) {
-                setShowSiteTable((prev) => !prev);
-              }
-              setTimeout(() => {
-                if (ref.current) {
-                  ref.current.invalidateSize();
-                }
-              });
-            }}
-            size="large"
-          >
-            <ExpandIcon color="primary" className={classes.expandIcon} />
-          </IconButton>
-        </div>
-      </Hidden>
-      <div className={classes.infoIconButton}>
-        <IconButton onClick={handleInfoClick} size="large">
-          <InfoIcon color="primary" />
-        </IconButton>
-      </div>
+      <MapToolbarButtons
+        classes={classes}
+        showSiteTable={showSiteTable}
+        geolocationEnabled={geolocationEnabled}
+        onToggleSiteTable={handleToggleSiteTable}
+        onOpenInfo={() => setInfoDialogOpen(true)}
+        onLocationSearch={geolocation.onLocationSearch}
+      />
+      {!collection && <HistoricalDatePicker variant="map" />}
       <InfoDialog
         infoDialogOpen={infoDialogOpen}
-        handleInfoClose={handleInfoClose}
+        handleInfoClose={() => setInfoDialogOpen(false)}
       />
       {tileLayer}
       {sofarLayers}
       {siteMarkers}
-      {currentLocation && (
-        <Marker icon={currentLocationMarker} position={currentLocation} />
-      )}
-      {currentLocation && currentLocationAccuracy && (
-        <Circle
-          center={{ lat: currentLocation[0], lng: currentLocation[1] }}
-          radius={currentLocationAccuracy}
-        />
-      )}
+      <CurrentLocationOverlay
+        currentLocation={geolocation.currentLocation}
+        currentLocationAccuracy={geolocation.currentLocationAccuracy}
+      />
       <Legend legendName={legendName} bottom={legendBottom} left={legendLeft} />
       {showAlertLevelLegend && <AlertLevelLegend />}
       {showWaterMark && <div className="mapbox-wordmark" />}
-      {geolocationEnabled && (
-        <div className={classes.locationIconButton}>
-          <IconButton onClick={onLocationSearch} size="large">
-            <MyLocationIcon color="primary" />
-          </IconButton>
-        </div>
-      )}
       <MapEventsHandler
-        onBaseLayerChange={onBaseLayerChange}
-        onMapReady={onMapReady}
+        onBaseLayerChange={({ name }) => setLegendName(name)}
+        onMapReady={() => setMapReady(true)}
       />
     </MapContainer>
   );

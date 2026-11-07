@@ -1,5 +1,10 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { sortBy } from 'lodash';
+import {
+  ActionReducerMapBuilder,
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+} from '@reduxjs/toolkit';
+import { isNil, omit, omitBy, sortBy } from 'lodash';
 import { getAxiosErrorMessage } from 'helpers/errors';
 import siteServices from 'services/siteServices';
 import type {
@@ -8,6 +13,7 @@ import type {
   SurveyPoints,
   SiteUpdateParams,
   SelectedSiteState,
+  SiteRequestArgs,
   TimeSeriesDataRangeRequestParams,
   TimeSeriesDataRequestParams,
   GetSiteContactInfoProps,
@@ -21,9 +27,15 @@ import {
   mapTimeSeriesDataRanges,
   timeSeriesRequest,
 } from './helpers';
+import {
+  buildHistoricalLatestData,
+  normalizeSiteRequestArgs,
+  toHistoricalEndOfDayIso,
+} from './historicalDateHelpers';
 
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
+  requestedDate: null,
   loading: true,
   loadingSpotterPosition: 0,
   timeSeriesDataLoading: false,
@@ -37,6 +49,65 @@ const selectedSiteInitialState: SelectedSiteState = {
 };
 
 const AlreadyLoadingErrorMessage = 'Request already loading';
+
+const resolveUpdatedPolygon = (
+  polygon: Site['polygon'],
+  coordinates?: SiteUpdateParams['coordinates'],
+): Site['polygon'] => {
+  if (polygon.type !== 'Point') {
+    return { ...polygon };
+  }
+  return {
+    ...polygon,
+    coordinates: [
+      coordinates?.longitude || polygon.coordinates[0],
+      coordinates?.latitude || polygon.coordinates[1],
+    ],
+  };
+};
+
+const applySiteUpdateToDetails = (
+  details: Site,
+  payload: SiteUpdateParams,
+): Site => {
+  const definedFields = omitBy(omit(payload, ['coordinates', 'videoStream']), (val) =>
+    isNil(val) || val === '',
+  );
+  return {
+    ...details,
+    ...definedFields,
+    polygon: resolveUpdatedPolygon(details.polygon, payload.coordinates),
+    videoStream:
+      payload.videoStream !== undefined
+        ? payload.videoStream
+        : details.videoStream,
+  };
+};
+
+const mergeTimeSeriesByMetric = (
+  oldTimeSeries: SelectedSiteState['timeSeriesData'] = {},
+  newTimeSeries: SelectedSiteState['timeSeriesData'] = {},
+): Partial<Record<Metrics, TimeSeries>> => {
+  const keys = [
+    ...new Set([
+      ...Object.keys(oldTimeSeries),
+      ...Object.keys(newTimeSeries),
+    ]),
+  ] as Metrics[];
+
+  return keys.reduce<Partial<Record<Metrics, TimeSeries>>>((acc, key) => {
+    const existingSeries = oldTimeSeries[key];
+    const incomingSeries = newTimeSeries[key];
+    if (existingSeries && incomingSeries) {
+      const incomingTypes = incomingSeries.map((x) => x.type);
+      const preserved = existingSeries.filter(
+        (x) => !incomingTypes.includes(x.type),
+      );
+      return { ...acc, [key]: [...preserved, ...incomingSeries] };
+    }
+    return { ...acc, [key]: incomingSeries || existingSeries };
+  }, {});
+};
 
 export const forecastDataRequest = createAsyncThunk<
   SelectedSiteState['forecastData'],
@@ -90,15 +161,20 @@ export const latestDataRequest = createAsyncThunk<
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState['details'],
-  string,
+  SiteRequestArgs,
   CreateAsyncThunkTypes
 >(
   'selectedSite/request',
-  async (id: string, { rejectWithValue }) => {
+  async (args: SiteRequestArgs, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSite(id);
-      const { data: dailyData } = await siteServices.getSiteDailyData(id);
-      const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
+      const { id, date } = normalizeSiteRequestArgs(args);
+      const dailyEnd = date ? toHistoricalEndOfDayIso(date) : undefined;
+      const [{ data }, { data: dailyData }, { data: surveyPoints }] =
+        await Promise.all([
+          siteServices.getSite(id, date),
+          siteServices.getSiteDailyData(id, undefined, dailyEnd),
+          siteServices.getSiteSurveyPoints(id),
+        ]);
 
       return {
         ...data,
@@ -123,11 +199,12 @@ export const siteRequest = createAsyncThunk<
     }
   },
   {
-    condition(id: string, { getState }) {
+    condition(args: SiteRequestArgs, { getState }) {
+      const { id, date } = normalizeSiteRequestArgs(args);
       const {
-        selectedSite: { details },
+        selectedSite: { details, requestedDate },
       } = getState();
-      return `${details?.id}` !== id;
+      return `${details?.id}` !== id || (requestedDate || undefined) !== date;
     },
   },
 );
@@ -227,6 +304,262 @@ export const siteContactInfoRequest = createAsyncThunk<
   },
 );
 
+const applyFulfilledSiteDetails = (
+  state: SelectedSiteState,
+  payload: SelectedSiteState['details'],
+): SelectedSiteState => {
+  if (!state.requestedDate) {
+    return {
+      ...state,
+      details: payload,
+      loading: false,
+    };
+  }
+  return {
+    ...state,
+    details: payload,
+    latestData: buildHistoricalLatestData(payload?.dailyData),
+    forecastData: [],
+    loading: false,
+  };
+};
+
+const registerSiteDetailReducers = (
+  builder: ActionReducerMapBuilder<SelectedSiteState>,
+) => {
+  builder.addCase(siteRequest.fulfilled, (state, action) => {
+    const requestDate = normalizeSiteRequestArgs(action.meta.arg).date ?? null;
+    if ((state.requestedDate ?? null) !== requestDate) {
+      return state;
+    }
+    return applyFulfilledSiteDetails(state, action.payload);
+  });
+
+  builder.addCase(
+    siteRequest.rejected,
+    (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      ...state,
+      error: action.payload,
+      loading: false,
+    }),
+  );
+
+  builder.addCase(siteRequest.pending, (state, action) => {
+    const nextDate = normalizeSiteRequestArgs(action.meta.arg).date ?? null;
+    const resetTelemetry = (state.requestedDate ?? null) !== nextDate;
+    return {
+      ...state,
+      requestedDate: nextDate,
+      latestData: resetTelemetry ? null : state.latestData,
+      forecastData: resetTelemetry ? null : state.forecastData,
+      loading: true,
+      error: null,
+    };
+  });
+};
+
+const registerLiveTelemetryReducers = (
+  builder: ActionReducerMapBuilder<SelectedSiteState>,
+) => {
+  builder.addCase(
+    forecastDataRequest.fulfilled,
+    (state, action: PayloadAction<SelectedSiteState['forecastData']>) => ({
+      ...state,
+      forecastData: state.requestedDate ? [] : action.payload,
+    }),
+  );
+  builder.addCase(
+    forecastDataRequest.rejected,
+    (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      ...state,
+      error: action.payload,
+    }),
+  );
+  builder.addCase(forecastDataRequest.pending, (state) => ({
+    ...state,
+    error: null,
+  }));
+
+  builder.addCase(
+    spotterPositionRequest.fulfilled,
+    (state, action: PayloadAction<SelectedSiteState['spotterPosition']>) => ({
+      ...state,
+      spotterPosition: action.payload,
+      loadingSpotterPosition: state.loadingSpotterPosition - 1,
+    }),
+  );
+  builder.addCase(
+    spotterPositionRequest.rejected,
+    (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      ...state,
+      error:
+        action.payload === AlreadyLoadingErrorMessage ? null : action.payload,
+      loadingSpotterPosition: state.loadingSpotterPosition - 1,
+    }),
+  );
+  builder.addCase(spotterPositionRequest.pending, (state) => ({
+    ...state,
+    loadingSpotterPosition: state.loadingSpotterPosition + 1,
+    error: null,
+  }));
+
+  builder.addCase(
+    latestDataRequest.fulfilled,
+    (state, action: PayloadAction<SelectedSiteState['latestData']>) => ({
+      ...state,
+      latestData: state.requestedDate ? state.latestData : action.payload,
+    }),
+  );
+  builder.addCase(
+    latestDataRequest.rejected,
+    (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      ...state,
+      error: action.payload,
+    }),
+  );
+  builder.addCase(latestDataRequest.pending, (state) => ({
+    ...state,
+    error: null,
+  }));
+};
+
+const registerOceanSenseReducers = (
+  builder: ActionReducerMapBuilder<SelectedSiteState>,
+) => {
+  builder.addCase(
+    siteOceanSenseDataRequest.fulfilled,
+    (
+      state,
+      action: PayloadAction<{ data: OceanSenseData; latest?: boolean }>,
+    ) => {
+      if (action.payload.latest) {
+        return {
+          ...state,
+          latestOceanSenseData: action.payload.data,
+          latestOceanSenseDataLoading: false,
+        };
+      }
+      return {
+        ...state,
+        oceanSenseData: action.payload.data,
+        oceanSenseDataLoading: false,
+      };
+    },
+  );
+
+  builder.addCase(siteOceanSenseDataRequest.rejected, (state, action) => {
+    if (action.meta.arg.latest) {
+      return {
+        ...state,
+        latestOceanSenseDataError: action.error.message,
+        latestOceanSenseDataLoading: false,
+      };
+    }
+    return {
+      ...state,
+      oceanSenseDataError: action.error.message,
+      oceanSenseDataLoading: false,
+    };
+  });
+
+  builder.addCase(siteOceanSenseDataRequest.pending, (state, action) => {
+    if (action.meta.arg.latest) {
+      return {
+        ...state,
+        latestOceanSenseDataLoading: true,
+        latestOceanSenseDataError: null,
+      };
+    }
+    return {
+      ...state,
+      oceanSenseDataLoading: true,
+      oceanSenseDataError: null,
+    };
+  });
+};
+
+const registerTimeSeriesReducers = (
+  builder: ActionReducerMapBuilder<SelectedSiteState>,
+) => {
+  builder.addCase(siteTimeSeriesDataRequest.fulfilled, (state, action) => ({
+    ...state,
+    granularDailyData: action.payload.granularDailyData,
+    timeSeriesData: mergeTimeSeriesByMetric(
+      state.timeSeriesData,
+      action.payload.timeSeriesData,
+    ),
+    timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
+    timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
+    timeSeriesDataLoading: false,
+  }));
+  builder.addCase(
+    siteTimeSeriesDataRequest.rejected,
+    (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      ...state,
+      error: action.payload,
+      timeSeriesDataLoading: false,
+    }),
+  );
+  builder.addCase(siteTimeSeriesDataRequest.pending, (state) => ({
+    ...state,
+    timeSeriesDataLoading: true,
+    error: null,
+  }));
+};
+
+const registerRangeAndContactReducers = (
+  builder: ActionReducerMapBuilder<SelectedSiteState>,
+) => {
+  builder.addCase(
+    siteTimeSeriesDataRangeRequest.fulfilled,
+    (
+      state,
+      action: PayloadAction<SelectedSiteState['timeSeriesDataRange']>,
+    ) => ({
+      ...state,
+      timeSeriesDataRange: action.payload,
+      timeSeriesDataRangeLoading: false,
+    }),
+  );
+  builder.addCase(
+    siteTimeSeriesDataRangeRequest.rejected,
+    (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      ...state,
+      error: action.payload,
+      timeSeriesDataRangeLoading: false,
+    }),
+  );
+  builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state) => ({
+    ...state,
+    timeSeriesDataRangeLoading: true,
+    error: null,
+  }));
+
+  builder.addCase(
+    siteContactInfoRequest.fulfilled,
+    (state, action: PayloadAction<Site['contactInformation']>) => ({
+      ...state,
+      details: state.details
+        ? { ...state.details, contactInformation: action.payload }
+        : state.details,
+      contactInfoLoading: false,
+    }),
+  );
+  builder.addCase(
+    siteContactInfoRequest.rejected,
+    (state, action: PayloadAction<SelectedSiteState['error']>) => ({
+      ...state,
+      error: action.payload,
+      contactInfoLoading: false,
+    }),
+  );
+  builder.addCase(siteContactInfoRequest.pending, (state) => ({
+    ...state,
+    contactInfoLoading: true,
+    error: null,
+  }));
+};
+
 const selectedSiteSlice = createSlice({
   name: 'selectedSite',
   initialState: selectedSiteInitialState,
@@ -261,58 +594,23 @@ const selectedSiteSlice = createSlice({
       ...state,
       forecastData: null,
     }),
-    setSiteData: (state, action: PayloadAction<SiteUpdateParams>) => {
-      if (state.details) {
-        return {
-          ...state,
-          details: {
-            ...state.details,
-            name: action.payload.name || state.details.name,
-            depth: action.payload.depth || state.details.depth,
-            sensorId: action.payload.sensorId || state.details.sensorId,
-            iframe: action.payload.iframe || state.details.iframe,
-            polygon:
-              state.details.polygon.type === 'Point'
-                ? {
-                    ...state.details.polygon,
-                    coordinates: [
-                      action.payload.coordinates?.longitude ||
-                        state.details.polygon.coordinates[0],
-                      action.payload.coordinates?.latitude ||
-                        state.details.polygon.coordinates[1],
-                    ],
-                  }
-                : { ...state.details.polygon },
-            status: action.payload.status || state.details.status,
-            display:
-              action.payload.display !== undefined
-                ? action.payload.display
-                : state.details.display,
-            videoStream:
-              action.payload.videoStream !== undefined
-                ? action.payload.videoStream
-                : state.details.videoStream,
-            contactInformation:
-              action.payload.contactInformation !== null
-                ? action.payload.contactInformation
-                : state.details.contactInformation,
-          },
-        };
-      }
-      return state;
-    },
-    setSiteSurveyPoints: (state, action: PayloadAction<SurveyPoints[]>) => {
-      if (state.details) {
-        return {
-          ...state,
-          details: {
-            ...state.details,
-            surveyPoints: action.payload,
-          },
-        };
-      }
-      return state;
-    },
+    setSiteData: (state, action: PayloadAction<SiteUpdateParams>) =>
+      state.details
+        ? {
+            ...state,
+            details: applySiteUpdateToDetails(state.details, action.payload),
+          }
+        : state,
+    setSiteSurveyPoints: (state, action: PayloadAction<SurveyPoints[]>) =>
+      state.details
+        ? {
+            ...state,
+            details: {
+              ...state.details,
+              surveyPoints: action.payload,
+            },
+          }
+        : state,
     clearTimeSeriesData: (state) => ({
       ...state,
       timeSeriesData: undefined,
@@ -334,274 +632,11 @@ const selectedSiteSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      siteRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['details']>) => ({
-        ...state,
-        details: action.payload,
-        loading: false,
-      }),
-    );
-
-    builder.addCase(
-      siteRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        loading: false,
-      }),
-    );
-
-    builder.addCase(siteRequest.pending, (state) => ({
-      ...state,
-      loading: true,
-      error: null,
-    }));
-
-    builder.addCase(
-      forecastDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['forecastData']>) => ({
-        ...state,
-        forecastData: action.payload,
-      }),
-    );
-
-    builder.addCase(
-      forecastDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-      }),
-    );
-
-    builder.addCase(forecastDataRequest.pending, (state) => ({
-      ...state,
-      error: null,
-    }));
-    builder.addCase(
-      spotterPositionRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['spotterPosition']>) => ({
-        ...state,
-        spotterPosition: action.payload,
-        loadingSpotterPosition: state.loadingSpotterPosition - 1,
-      }),
-    );
-
-    builder.addCase(
-      spotterPositionRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error:
-          action.payload === AlreadyLoadingErrorMessage ? null : action.payload,
-        loadingSpotterPosition: state.loadingSpotterPosition - 1,
-      }),
-    );
-
-    builder.addCase(spotterPositionRequest.pending, (state) => ({
-      ...state,
-      loadingSpotterPosition: state.loadingSpotterPosition + 1,
-      error: null,
-    }));
-
-    builder.addCase(
-      latestDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState['latestData']>) => ({
-        ...state,
-        latestData: action.payload,
-      }),
-    );
-
-    builder.addCase(
-      latestDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-      }),
-    );
-
-    builder.addCase(latestDataRequest.pending, (state) => ({
-      ...state,
-      error: null,
-    }));
-
-    builder.addCase(
-      siteOceanSenseDataRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<{ data: OceanSenseData; latest?: boolean }>,
-      ) => ({
-        ...state,
-        latestOceanSenseData: action.payload.latest
-          ? action.payload.data
-          : state.latestOceanSenseData,
-        latestOceanSenseDataLoading: action.payload.latest
-          ? false
-          : state.latestOceanSenseDataLoading,
-        oceanSenseData: !action.payload.latest
-          ? action.payload.data
-          : state.oceanSenseData,
-        oceanSenseDataLoading: !action.payload.latest
-          ? false
-          : state.oceanSenseDataLoading,
-      }),
-    );
-
-    builder.addCase(siteOceanSenseDataRequest.rejected, (state, action) => ({
-      ...state,
-      latestOceanSenseDataError: action.meta.arg.latest
-        ? action.error.message
-        : state.latestOceanSenseDataError,
-      latestOceanSenseDataLoading: action.meta.arg.latest
-        ? false
-        : state.latestOceanSenseDataLoading,
-      oceanSenseDataError: !action.meta.arg.latest
-        ? action.error.message
-        : state.oceanSenseDataError,
-      oceanSenseDataLoading: !action.meta.arg.latest
-        ? false
-        : state.oceanSenseDataLoading,
-    }));
-
-    builder.addCase(siteOceanSenseDataRequest.pending, (state, action) => ({
-      ...state,
-      latestOceanSenseDataLoading: action.meta.arg.latest
-        ? true
-        : state.latestOceanSenseDataLoading,
-      latestOceanSenseDataError: action.meta.arg.latest
-        ? null
-        : state.latestOceanSenseDataError,
-      oceanSenseDataLoading: !action.meta.arg.latest
-        ? true
-        : state.oceanSenseDataLoading,
-      oceanSenseDataError: !action.meta.arg.latest
-        ? null
-        : state.oceanSenseDataError,
-    }));
-
-    builder.addCase(
-      siteTimeSeriesDataRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<{
-          granularDailyData: SelectedSiteState['granularDailyData'];
-          timeSeriesData: SelectedSiteState['timeSeriesData'];
-          timeSeriesMinRequestDate: SelectedSiteState['timeSeriesMinRequestDate'];
-          timeSeriesMaxRequestDate: SelectedSiteState['timeSeriesMaxRequestDate'];
-        }>,
-      ) => {
-        const oldTimeSeries = state.timeSeriesData || {};
-        const newTimeSeries = action.payload.timeSeriesData || {};
-        const keys = [
-          ...new Set([
-            ...Object.keys(oldTimeSeries),
-            ...Object.keys(newTimeSeries),
-          ]),
-        ] as Metrics[];
-        const merged = {} as Partial<Record<Metrics, TimeSeries>>;
-        keys.forEach((key) => {
-          // If key exists in both objects, merge arrays
-          if (key in oldTimeSeries && key in newTimeSeries) {
-            const newTypes = newTimeSeries[key]?.map((x) => x.type);
-            const oldValues = oldTimeSeries[key]?.filter(
-              (x) => !newTypes?.includes(x.type),
-            );
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = [...(oldValues || []), ...(newTimeSeries[key] || [])];
-          } else if (key in oldTimeSeries) {
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = oldTimeSeries[key];
-          } else {
-            // eslint-disable-next-line fp/no-mutation
-            merged[key] = newTimeSeries[key];
-          }
-        });
-
-        return {
-          ...state,
-          granularDailyData: action.payload.granularDailyData,
-          timeSeriesData: merged,
-          timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
-          timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
-          timeSeriesDataLoading: false,
-        };
-      },
-    );
-
-    builder.addCase(
-      siteTimeSeriesDataRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        timeSeriesDataLoading: false,
-      }),
-    );
-
-    builder.addCase(siteTimeSeriesDataRequest.pending, (state) => ({
-      ...state,
-      timeSeriesDataLoading: true,
-      error: null,
-    }));
-
-    builder.addCase(
-      siteTimeSeriesDataRangeRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<SelectedSiteState['timeSeriesDataRange']>,
-      ) => ({
-        ...state,
-        timeSeriesDataRange: action.payload,
-        timeSeriesDataRangeLoading: false,
-      }),
-    );
-
-    builder.addCase(
-      siteTimeSeriesDataRangeRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        timeSeriesDataRangeLoading: false,
-      }),
-    );
-
-    builder.addCase(siteTimeSeriesDataRangeRequest.pending, (state) => ({
-      ...state,
-      timeSeriesDataRangeLoading: true,
-      error: null,
-    }));
-
-    builder.addCase(
-      siteContactInfoRequest.fulfilled,
-      (state, action: PayloadAction<Site['contactInformation']>) => {
-        const { details } = state;
-        const newDetails: Site | undefined | null = details && {
-          ...details,
-          contactInformation: action.payload,
-        };
-
-        if (newDetails)
-          return {
-            ...state,
-            details: newDetails,
-            contactInfoLoading: false,
-          };
-        return { ...state, contactInfoLoading: false };
-      },
-    );
-
-    builder.addCase(
-      siteContactInfoRequest.rejected,
-      (state, action: PayloadAction<SelectedSiteState['error']>) => ({
-        ...state,
-        error: action.payload,
-        contactInfoLoading: false,
-      }),
-    );
-
-    builder.addCase(siteContactInfoRequest.pending, (state) => ({
-      ...state,
-      contactInfoLoading: true,
-      error: null,
-    }));
+    registerSiteDetailReducers(builder);
+    registerLiveTelemetryReducers(builder);
+    registerOceanSenseReducers(builder);
+    registerTimeSeriesReducers(builder);
+    registerRangeAndContactReducers(builder);
   },
 });
 
@@ -699,11 +734,11 @@ export const {
   unsetSpotterPosition,
   unsetLatestData,
   unsetForecastData,
+  setSiteSurveyPoints,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   clearGranularDailyData,
   clearOceanSenseData,
-  setSiteSurveyPoints,
 } = selectedSiteSlice.actions;
 
 export default selectedSiteSlice.reducer;

@@ -27,116 +27,80 @@ vi.mock('common/Chart/MultipleSensorsCharts', () => ({
   default: 'Mock-MultipleSensorsCharts',
 }));
 
+vi.mock('common/HistoricalDatePicker', () => ({
+  default: () => null,
+}));
+
+const createSitePageStore = (hasData: boolean) => {
+  const store = mockStore({
+    selectedSite: {
+      details: hasData ? mockSite : { ...mockSite, dailyData: [] },
+      timeSeriesDataRange: mockDataRange,
+      loading: false,
+      error: null,
+    },
+    user: {
+      userInfo: mockUser,
+      error: null,
+      loading: false,
+    },
+    homepage: {
+      siteOnMap: mockSite,
+    },
+    sitesList: {
+      list: hasData ? [mockSite] : [],
+      loading: false,
+      error: null,
+    },
+    surveyList: {
+      list: hasData ? [mockSurveyList] : [],
+      loading: false,
+      error: null,
+    },
+    survey: {
+      selectedSurvey: {
+        details: hasData ? mockSurvey : null,
+      },
+    },
+    reefCheckSurveyList: {
+      list: [],
+    },
+    collection: {
+      details: mockCollection,
+      loading: false,
+      error: null,
+    },
+  });
+  store.dispatch = vi.fn();
+  return store;
+};
+
+const renderSiteRoute = (
+  store: ReturnType<typeof createSitePageStore>,
+  initialEntry = '/sites/1',
+) =>
+  render(
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <Router initialEntries={[initialEntry]}>
+          <Routes>
+            <Route path="/sites/:id" element={<Site />} />
+          </Routes>
+        </Router>
+      </Provider>
+    </ThemeProvider>,
+  ).container;
+
 describe('Site Detail Page', () => {
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;
+
   beforeEach(() => {
-    const emptyStore = mockStore({
-      selectedSite: {
-        details: { ...mockSite, dailyData: [] },
-        timeSeriesDataRange: mockDataRange,
-        loading: false,
-        error: null,
-      },
-      user: {
-        userInfo: mockUser,
-        error: null,
-        loading: false,
-      },
-      homepage: {
-        siteOnMap: mockSite,
-      },
-      sitesList: {
-        list: [],
-        loading: false,
-        error: null,
-      },
-      surveyList: {
-        list: [],
-        loading: false,
-        error: null,
-      },
-      survey: {
-        selectedSurvey: {
-          details: null,
-        },
-      },
-      reefCheckSurveyList: {
-        list: [],
-      },
-      collection: {
-        details: mockCollection,
-        loading: false,
-        error: null,
-      },
-    });
+    const emptyStore = createSitePageStore(false);
+    const fullStore = createSitePageStore(true);
 
-    const fullStore = mockStore({
-      selectedSite: {
-        details: mockSite,
-        timeSeriesDataRange: mockDataRange,
-        loading: false,
-        error: null,
-      },
-      user: {
-        userInfo: mockUser,
-        error: null,
-        loading: false,
-      },
-      homepage: {
-        siteOnMap: mockSite,
-      },
-      sitesList: {
-        list: [mockSite],
-        loading: false,
-        error: null,
-      },
-      surveyList: {
-        list: [mockSurveyList],
-        loading: false,
-        error: null,
-      },
-      reefCheckSurveyList: {
-        list: [],
-      },
-      survey: {
-        selectedSurvey: {
-          details: mockSurvey,
-        },
-      },
-      collection: {
-        details: mockCollection,
-        loading: false,
-        error: null,
-      },
-    });
-
-    emptyStore.dispatch = vi.fn();
-    fullStore.dispatch = vi.fn();
-
-    elementEmpty = render(
-      <ThemeProvider theme={theme}>
-        <Provider store={emptyStore}>
-          <Router initialEntries={['/sites/1']}>
-            <Routes>
-              <Route path="/sites/:id" element={<Site />} />
-            </Routes>
-          </Router>
-        </Provider>
-      </ThemeProvider>,
-    ).container;
-
-    elementFull = render(
-      <ThemeProvider theme={theme}>
-        <Provider store={fullStore}>
-          <Router initialEntries={['/sites/1']}>
-            <Routes>
-              <Route path="/sites/:id" element={<Site />} />
-            </Routes>
-          </Router>
-        </Provider>
-      </ThemeProvider>,
-    ).container;
+    elementEmpty = renderSiteRoute(emptyStore);
+    elementFull = renderSiteRoute(fullStore);
   });
 
   it('should render with given state from Redux store', () => {
@@ -145,5 +109,17 @@ describe('Site Detail Page', () => {
 
   it('should render with given state from Redux store', () => {
     expect(elementFull).toMatchSnapshot('snapshot-with-data');
+  });
+
+  it('hydrates historical date from URL query parameter on site route', () => {
+    const store = createSitePageStore(true);
+    renderSiteRoute(store, '/sites/1?date=2023-08-15');
+
+    expect(store.dispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'sitesList/setSelectedDate',
+        payload: '2023-08-15',
+      }),
+    );
   });
 });
