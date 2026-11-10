@@ -1,0 +1,57 @@
+# Aqualink
+
+> Aqualink is a free, open-source ocean monitoring platform built by a philanthropic engineering organization. It combines satellite data, in-water sensors and field surveys for every reef, in one map and one dashboard, for people on the front lines of ocean conservation.
+
+Every registered site gets daily satellite sea surface temperature, wind and waves, with heat stress and bleaching alerts calculated automatically. Site teams can add live streams from Sofar Spotter buoys and underwater cameras, upload batches from sondes, HOBO loggers or any CSV, and upload survey photos or full Reef Check surveys. Each dashboard has an AI assistant that answers questions using the site's own data. Over 6,000 sites are monitored worldwide, and the platform is used by hundreds of universities, NGOs and start-ups.
+
+## Main pages
+
+- [Map](https://aqualink.org/map): Interactive map of all monitored sites. Filter by heat stress level or installed sensors, for example https://aqualink.org/map?heatStress=2&siteOptions=activeBuoys
+- [About](https://aqualink.org/about): How the Aqualink platform works: the dashboard, the interactive map and how to start monitoring a site.
+- [Register a site](https://aqualink.org/register): Create a free account and register a reef. Satellite data and heat stress analysis start from day one.
+- [Site examples](https://aqualink.org/examples): Real sites that show each feature in action, from Smart Buoys to live video and 3D models.
+- [Projects](https://aqualink.org/projects): Software, hardware and storytelling from Aqualink.
+- [Blog](https://aqualink.org/blog): Stories from the field about how scientists, restoration teams and local divers use Aqualink data.
+
+## How the platform works
+
+Aqualink has two connected parts: a dashboard for every site and a global interactive map.
+
+### The dashboard
+
+Every dashboard combines three types of data, and interactive graphs are created automatically for all incoming data.
+
+- Satellite data: every site automatically gets daily sea surface temperature from [NOAA Coral Reef Watch](https://coralreefwatch.noaa.gov/product/5km/tutorial/welcome.php) and wind and wave data updated every 6 hours. Aqualink calculates the current heat stress level, 7-day temperature trend, historical temperature maximum and bleaching alert level.
+- In-water sensor data: data from virtually any marine sensor can be connected, either as continuous real-time streams (for example Sofar Spotter buoys) or periodic batch uploads (for example water quality sensors). Temperature, water quality, wind and wave data are integrated on the same graphs.
+- Visual observations: Aqualink surveys let users upload images and comments from the field. Standardized Reef Check surveys add data on reef composition, species, bleaching, disease and human impacts directly to the dashboard. Divers can [train as Reef Check divers](https://www.reefcheck.org/tropical-program/courses-products/).
+
+### The interactive map
+
+The map shows over 6,000 sites and uses the same NOAA satellite data as the dashboards. Map layers show global sea surface temperature, coral bleaching heat stress and sea surface temperature anomaly. Sites can be filtered by current heat stress level, type of in-water sensors and data available, and by species, reef composition and human impacts.
+
+### Getting started
+
+Create a free account and [register a site](https://aqualink.org/register). No sensors or surveys are needed to start: satellite wind, wave and temperature data with the built-in heat stress analysis work from day one, and surveys and sensor data can be added later.
+
+## Example sites
+
+- [Fagatele Bay National Marine Sanctuary, American Samoa](https://aqualink.org/sites/1144): Smart Buoy streaming real-time temperature, waves and wind next to the satellite reading.
+- [Keahole Point, Kona, Hawai'i](https://aqualink.org/sites/1006): AI assistant answering questions about heat stress and bleaching from the site's own data.
+- [Tamandaré, Pernambuco, Brazil](https://aqualink.org/sites/3331): Repeat survey photos showing the same coral healthy, bleached and dead in 2024.
+- [Utopia Village, Utila, Honduras](https://aqualink.org/sites/3301): Six underwater cameras streaming a 270° view of the reef.
+- [Coral City Camera, Miami, USA](https://aqualink.org/sites/1024): Urban reef in a busy port, streaming live next to its temperature record.
+- [Elbow Beach, Bermuda](https://aqualink.org/sites/2943/points/558): Over 30 surveys from 2021 to 2024 tracking the reef through the 2022 heatwave.
+- [Coral Gardeners Tiaia Nursery, Mo'orea, French Polynesia](https://aqualink.org/sites/3358): Restoration nursery monitored by a Smart Buoy.
+- [Fulhadhoo, Maldives](https://aqualink.org/sites/3492): Maldives Coral Institute restoration site with daily video highlights.
+- [Hui O Ka Wai Ola, Maui, Hawai'i](https://highlights.aqualink.org/huiokawaiola): Community water quality samples graphed next to temperature.
+- [Stanford University, Palau](https://aqualink.org/collections/779): HOBO temperature loggers across 38 sites.
+- [Makiminato, Okinawa, Japan](https://aqualink.org/sites/3323): 3D model of the reef on the site dashboard.
+- [La Niña sensor network, Western Australia](https://aqualink.org/collections/minderoo): Smart Buoys from the Minderoo Foundation and UWA grouped to follow one extreme event.
+- [Tai She Wan, Hong Kong](https://aqualink.org/sites/5795): Eight Reef Check surveys from 2005 to 2012.
+- [Caribbean Collection](https://aqualink.org/collections/804): Heat stress across a whole region in one view.
+
+## Open source
+
+- [Aqualink app source code](https://github.com/aqualinkorg/aqualink-app): The web app and API.
+- [Open-source drone](https://github.com/aqualinkorg/asv): DIY solar-powered surface drone built on Pixhawk and ROS.
+- [Bristlemouth Explorer](https://bristlemouth.aqualink.org): Live data from Bristlemouth sensors on Smart Moorings.

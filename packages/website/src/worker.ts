@@ -80,6 +80,21 @@ const metadata: Record<string, any> = {
     description:
       'View real-time data for {siteName}, including reef health, ocean temperature, wind and wave conditions. Monitor your local marine ecosystem with Aqualink.',
   },
+  examples: {
+    title: 'Site examples | Aqualink',
+    description:
+      'Real Aqualink sites that show each feature in action, from Smart Buoys to live video and 3D models.',
+  },
+  projects: {
+    title: 'Projects | Aqualink',
+    description:
+      'Software, hardware and storytelling from Aqualink: the reef monitoring app, Smart Mooring buoys, the heatwave tracker, Bristlemouth Explorer, an open-source drone and the film House of Fish.',
+  },
+  blog: {
+    title: 'Blog | Aqualink',
+    description:
+      'Stories from the field: how scientists, restoration teams and local divers use Aqualink data on their reefs.',
+  },
 };
 
 type Bindings = {
