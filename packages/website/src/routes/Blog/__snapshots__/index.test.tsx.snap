@@ -1,0 +1,425 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders as expected 1`] = `
+<div>
+  <mock-box
+    classname="Blog-root-1"
+  >
+    <mock-box
+      classname="InfoNavBar-header-15 InfoNavBar-light-16"
+      component="header"
+    >
+      <mock-box
+        classname="InfoNavBar-inner-17"
+      >
+        <mock-link
+          classname="InfoNavBar-logo-19"
+          component="[object Object]"
+          to="/"
+          underline="none"
+        >
+          Aqua
+          <span
+            class="InfoNavBar-logoAccent-21"
+          >
+            link
+          </span>
+        </mock-link>
+        <mock-box
+          aria-label="Main"
+          classname="InfoNavBar-nav-23"
+          component="nav"
+        >
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-24 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/map"
+            tabindex="0"
+          >
+            Map
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-24 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/examples"
+            tabindex="0"
+          >
+            Examples
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-24 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/projects"
+            tabindex="0"
+          >
+            Projects
+          </a>
+          <a
+            aria-current="page"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-24 InfoNavBar-activeNavLink-26 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/blog"
+            tabindex="0"
+          >
+            Blog
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-27 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/register"
+            tabindex="0"
+          >
+            Register a site
+          </a>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="Blog-blog-2"
+      component="section"
+      id="top"
+    >
+      <mock-typography
+        classname="Blog-eyebrow-3"
+      >
+        Blog
+      </mock-typography>
+      <mock-typography
+        classname="Blog-title-4"
+        variant="h1"
+      >
+        Stories from the field
+      </mock-typography>
+      <mock-typography
+        classname="Blog-intro-5"
+      >
+        How scientists, restoration teams and local divers use Aqualink data on their reefs.
+      </mock-typography>
+      <mock-box
+        aria-label="Stories"
+        classname="Blog-table-6"
+        role="table"
+      >
+        <mock-box
+          classname="Blog-headerRow-7"
+          role="row"
+        >
+          <mock-typography
+            classname="Blog-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            Story
+          </mock-typography>
+          <mock-typography
+            classname="Blog-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            Location
+          </mock-typography>
+          <mock-typography
+            classname="Blog-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            Summary
+          </mock-typography>
+          <mock-typography
+            classname="Blog-columnHeader-8"
+            component="span"
+            role="columnheader"
+          />
+        </mock-box>
+        <mock-link
+          classname="Blog-row-9"
+          href="https://highlights.aqualink.org/stories/fernando-de-noronha-archipelago"
+          rel="noopener noreferrer"
+          role="row"
+          target="_blank"
+          underline="none"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            Fernando de Noronha Archipelago
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-11"
+            component="span"
+            role="cell"
+          >
+            Brazil
+            <br />
+            <span
+              class="Blog-tag-12"
+            >
+              Smart Buoy
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-13"
+            component="span"
+            role="cell"
+          >
+            A Smart Buoy turns one or two measurements a year into a continuous record for Brazil's oceanic islands.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-14"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-link>
+        <mock-link
+          classname="Blog-row-9"
+          href="https://highlights.aqualink.org/stories/wellington-reef-galapagos-islands"
+          rel="noopener noreferrer"
+          role="row"
+          target="_blank"
+          underline="none"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            Wellington Reef
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-11"
+            component="span"
+            role="cell"
+          >
+            Galápagos, Ecuador
+            <br />
+            <span
+              class="Blog-tag-12"
+            >
+              Heatwave
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-13"
+            component="span"
+            role="cell"
+          >
+            The last structural reef in the Galápagos, and the heatwave it lived through in March 2022.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-14"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-link>
+        <mock-link
+          classname="Blog-row-9"
+          href="https://highlights.aqualink.org/stories/palos-verdes-reef-california"
+          rel="noopener noreferrer"
+          role="row"
+          target="_blank"
+          underline="none"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            Palos Verdes Reef
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-11"
+            component="span"
+            role="cell"
+          >
+            California, USA
+            <br />
+            <span
+              class="Blog-tag-12"
+            >
+              Tides and temperature
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-13"
+            component="span"
+            role="cell"
+          >
+            How tides drive seafloor temperature on a newly built restoration reef.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-14"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-link>
+        <mock-link
+          classname="Blog-row-9"
+          href="https://highlights.aqualink.org/stories/elbow-beach-bermuda"
+          rel="noopener noreferrer"
+          role="row"
+          target="_blank"
+          underline="none"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            Elbow Beach
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-11"
+            component="span"
+            role="cell"
+          >
+            Bermuda
+            <br />
+            <span
+              class="Blog-tag-12"
+            >
+              Citizen science
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-13"
+            component="span"
+            role="cell"
+          >
+            One free-diver, a GoPro and a reef that stayed above the bleaching threshold for six weeks.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-14"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-link>
+        <mock-link
+          classname="Blog-row-9"
+          href="https://highlights.aqualink.org/stories/ningaloo-reef-australia"
+          rel="noopener noreferrer"
+          role="row"
+          target="_blank"
+          underline="none"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            Ningaloo Reef
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-11"
+            component="span"
+            role="cell"
+          >
+            Western Australia
+            <br />
+            <span
+              class="Blog-tag-12"
+            >
+              Coral restoration
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-13"
+            component="span"
+            role="cell"
+          >
+            Environmental drivers of coral restoration success. By Camille Grimaldi, March 25, 2024.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-14"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-link>
+        <mock-link
+          classname="Blog-row-9"
+          href="https://highlights.aqualink.org/stories/coral-vita-bahamas"
+          rel="noopener noreferrer"
+          role="row"
+          target="_blank"
+          underline="none"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            Coral Vita
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-11"
+            component="span"
+            role="cell"
+          >
+            Grand Bahama, Bahamas
+            <br />
+            <span
+              class="Blog-tag-12"
+            >
+              Coral farming
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-13"
+            component="span"
+            role="cell"
+          >
+            A land-based coral farm that uses live data to decide when it is safe to plant.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-14"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-link>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="InfoFooter-footer-29"
+      component="footer"
+    >
+      <mock-box
+        classname="InfoFooter-inner-30"
+      >
+        <mock-box
+          classname="InfoFooter-content-31"
+        >
+          <mock-typography
+            classname="InfoFooter-logo-32"
+            component="div"
+          >
+            Aqua
+            <span
+              class="InfoFooter-logoAccent-33"
+            >
+              link
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="InfoFooter-text-34"
+          >
+            Aqualink is a philanthropic engineering organization dedicated to ocean monitoring and conservation. We build tools that give scientists, local communities and the public a clear view of marine health, so they can understand and protect our oceans.
+          </mock-typography>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+  </mock-box>
+</div>
+`;
