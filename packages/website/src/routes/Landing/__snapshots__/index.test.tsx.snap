@@ -300,7 +300,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               <mock-typography
                 classname="Hero-searchText-82"
               >
-                Filter monitored sites by heat stress and installed sensors
+                Filter monitored sites by heat stress and installed sensors.
               </mock-typography>
             </mock-box>
             <mock-box
