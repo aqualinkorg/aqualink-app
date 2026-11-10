@@ -112,6 +112,9 @@ const styles = (theme: Theme) =>
       background: colors.white,
       padding: 20,
       minWidth: 0,
+      [theme.breakpoints.down('sm')]: {
+        padding: 12,
+      },
     },
     hero: {
       position: 'relative',
@@ -123,10 +126,19 @@ const styles = (theme: Theme) =>
       backgroundImage: `linear-gradient(90deg, rgba(6,20,30,.55) 0%, rgba(6,20,30,.25) 40%, rgba(6,20,30,0) 65%), linear-gradient(180deg, rgba(6,20,30,.35) 0%, rgba(6,20,30,0) 30%, rgba(6,20,30,0) 75%, rgba(6,20,30,.35) 100%), url("${heroImage}")`,
       backgroundSize: 'auto, auto, 135%',
       backgroundPosition: '0 0, 0 0, 0% 50%',
+      [theme.breakpoints.down('md')]: {
+        height: 'auto',
+        backgroundSize: 'auto, auto, cover',
+        backgroundPosition: '0 0, 0 0, center',
+        backgroundRepeat: 'no-repeat',
+      },
     },
     content: {
       padding: '28px 40px 48px',
       flex: '1 1 auto',
+      [theme.breakpoints.down('md')]: {
+        padding: '12px 20px 40px',
+      },
     },
     title: {
       margin: 0,
@@ -158,6 +170,9 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down('md')]: {
         width: 'auto',
       },
+      [theme.breakpoints.down('sm')]: {
+        padding: 20,
+      },
     },
     searchTitle: {
       margin: 0,
@@ -177,8 +192,11 @@ const styles = (theme: Theme) =>
     },
     searchFields: {
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
+      gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
       gap: 12,
+      [theme.breakpoints.down('sm')]: {
+        gridTemplateColumns: 'minmax(0, 1fr)',
+      },
     },
     label: {
       display: 'block',

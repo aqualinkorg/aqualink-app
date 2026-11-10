@@ -31,7 +31,7 @@ exports[`renders as expected 1`] = `
           component="nav"
         >
           <a
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
             data-discover="true"
             href="/map"
             tabindex="0"
@@ -39,7 +39,7 @@ exports[`renders as expected 1`] = `
             Map
           </a>
           <a
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
             data-discover="true"
             href="/examples"
             tabindex="0"
@@ -48,7 +48,7 @@ exports[`renders as expected 1`] = `
           </a>
           <a
             aria-current="page"
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-activeNavLink-29 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 InfoNavBar-activeNavLink-29 css-1ysap08-MuiButtonBase-root-MuiButton-root"
             data-discover="true"
             href="/projects"
             tabindex="0"
@@ -56,7 +56,7 @@ exports[`renders as expected 1`] = `
             Projects
           </a>
           <a
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
             data-discover="true"
             href="/blog"
             tabindex="0"
@@ -64,13 +64,72 @@ exports[`renders as expected 1`] = `
             Blog
           </a>
           <a
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-30 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-30 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
             data-discover="true"
             href="/register"
             tabindex="0"
           >
             Register a site
           </a>
+          <mock-iconbutton
+            aria-haspopup="true"
+            aria-label="Open menu"
+            classname="InfoNavBar-menuButton-33"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="MenuIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
+              />
+            </svg>
+          </mock-iconbutton>
+          <mock-menu
+            anchororigin="[object Object]"
+            classes="[object Object]"
+            open="false"
+            transformorigin="[object Object]"
+          >
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-37"
+              component="[object Object]"
+              to="/map"
+            >
+              Map
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-37"
+              component="[object Object]"
+              to="/examples"
+            >
+              Examples
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-37"
+              component="[object Object]"
+              to="/projects"
+            >
+              Projects
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-37"
+              component="[object Object]"
+              to="/blog"
+            >
+              Blog
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-37"
+              component="[object Object]"
+              to="/register"
+            >
+              Register a site
+            </mock-menuitem>
+          </mock-menu>
         </mock-box>
       </mock-box>
     </mock-box>
@@ -396,28 +455,28 @@ exports[`renders as expected 1`] = `
       </mock-box>
     </mock-box>
     <mock-box
-      classname="InfoFooter-footer-32"
+      classname="InfoFooter-footer-38"
       component="footer"
     >
       <mock-box
-        classname="InfoFooter-inner-33"
+        classname="InfoFooter-inner-39"
       >
         <mock-box
-          classname="InfoFooter-content-34"
+          classname="InfoFooter-content-40"
         >
           <mock-typography
-            classname="InfoFooter-logo-35"
+            classname="InfoFooter-logo-41"
             component="div"
           >
             Aqua
             <span
-              class="InfoFooter-logoAccent-36"
+              class="InfoFooter-logoAccent-42"
             >
               link
             </span>
           </mock-typography>
           <mock-typography
-            classname="InfoFooter-text-37"
+            classname="InfoFooter-text-43"
           >
             Aqualink is a philanthropic engineering organization dedicated to ocean monitoring and conservation. We build tools that give scientists, local communities and the public a clear view of marine health, so they can understand and protect our oceans.
           </mock-typography>

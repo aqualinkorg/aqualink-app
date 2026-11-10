@@ -87,7 +87,6 @@ const styles = () =>
       fontWeight: 600,
       lineHeight: 'inherit',
       letterSpacing: 'normal',
-      whiteSpace: 'nowrap',
       color: colors.oceanBlue,
       '&:hover': {
         color: colors.darkOceanBlue,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Button, Link as MuiLink, Theme, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
@@ -16,12 +16,25 @@ import { exampleSites, tableHeaders } from './titles';
 const contactFormUrl =
   'https://docs.google.com/forms/d/e/1FAIpQLSfrxrgFxmlplxh4JvV8eVj1smpgwZzQV0DHIjY2ujZmHNRUEA/viewform';
 
+function ExampleLink({ to, href, className, children }: ExampleLinkProps) {
+  return to ? (
+    <MuiLink component={Link} to={to} underline="none" className={className}>
+      {children}
+    </MuiLink>
+  ) : (
+    <MuiLink href={href} underline="none" className={className}>
+      {children}
+    </MuiLink>
+  );
+}
+
 function Examples({ classes }: ExamplesProps) {
   return (
     <Box className={classes.root}>
       <InfoNavBar currentPage="/examples" />
 
       <Box component="section" id="more" className={classes.examples}>
+        <Typography className={classes.eyebrow}>Examples</Typography>
         <Typography variant="h1" className={classes.title}>
           Site Examples
         </Typography>
@@ -63,7 +76,13 @@ function Examples({ classes }: ExamplesProps) {
                     role="cell"
                     className={classes.featureCell}
                   >
-                    {feature}
+                    <ExampleLink
+                      to={to}
+                      href={href}
+                      className={classes.featureLink}
+                    >
+                      {feature}
+                    </ExampleLink>
                   </Typography>
                   <Typography
                     component="div"
@@ -83,24 +102,9 @@ function Examples({ classes }: ExamplesProps) {
                     {description}
                   </Typography>
                   <Box role="cell" className={classes.linkCell}>
-                    {to ? (
-                      <MuiLink
-                        component={Link}
-                        to={to}
-                        underline="none"
-                        className={classes.link}
-                      >
-                        {linkLabel}
-                      </MuiLink>
-                    ) : (
-                      <MuiLink
-                        href={href}
-                        underline="none"
-                        className={classes.link}
-                      >
-                        {linkLabel}
-                      </MuiLink>
-                    )}
+                    <ExampleLink to={to} href={href} className={classes.link}>
+                      {linkLabel}
+                    </ExampleLink>
                   </Box>
                 </Box>
               ),
@@ -145,7 +149,7 @@ function Examples({ classes }: ExamplesProps) {
   );
 }
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
       fontFamily: instrumentSansFontFamily,
@@ -162,13 +166,23 @@ const styles = () =>
       boxSizing: 'content-box',
       padding: '88px 24px 96px',
     },
+    eyebrow: {
+      margin: '0 0 16px',
+      fontFamily: ibmPlexMonoFontFamily,
+      fontSize: 14,
+      lineHeight: 'normal',
+      letterSpacing: '0.06em',
+      textTransform: 'uppercase',
+      color: colors.slateGray,
+    },
     title: {
       margin: 0,
       fontFamily: 'inherit',
-      fontSize: 36,
-      lineHeight: 1.1,
-      letterSpacing: '-0.02em',
+      fontSize: 56,
+      lineHeight: 1.05,
+      letterSpacing: '-0.03em',
       fontWeight: 700,
+      maxWidth: 860,
     },
     intro: {
       margin: '14px 0 0',
@@ -187,12 +201,18 @@ const styles = () =>
     },
     table: {
       minWidth: 900,
+      [theme.breakpoints.down('md')]: {
+        minWidth: 0,
+      },
     },
     headerRow: {
       display: 'grid',
       gridTemplateColumns: '190px 230px minmax(0, 1fr) 200px',
       alignItems: 'start',
       background: colors.mistGray,
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      },
     },
     columnHeader: {
       padding: '14px 20px',
@@ -207,6 +227,15 @@ const styles = () =>
       display: 'grid',
       gridTemplateColumns: '190px 230px minmax(0, 1fr) 200px',
       alignItems: 'start',
+      [theme.breakpoints.down('md')]: {
+        gridTemplateColumns: 'minmax(0, 1fr)',
+        gap: 8,
+        padding: 20,
+        borderTop: `1px solid ${colors.borderGray}`,
+        '&:nth-of-type(2)': {
+          borderTop: 'none',
+        },
+      },
     },
     featureCell: {
       padding: 20,
@@ -217,6 +246,20 @@ const styles = () =>
       letterSpacing: '0.04em',
       textTransform: 'uppercase',
       color: colors.oceanBlue,
+      [theme.breakpoints.down('md')]: {
+        padding: 0,
+        borderTop: 'none',
+      },
+    },
+    featureLink: {
+      fontFamily: 'inherit',
+      fontSize: 'inherit',
+      lineHeight: 'inherit',
+      letterSpacing: 'inherit',
+      color: colors.oceanBlue,
+      '&:hover': {
+        color: colors.darkOceanBlue,
+      },
     },
     siteCell: {
       padding: 20,
@@ -226,6 +269,10 @@ const styles = () =>
       fontWeight: 600,
       lineHeight: 'normal',
       letterSpacing: 'normal',
+      [theme.breakpoints.down('md')]: {
+        padding: 0,
+        borderTop: 'none',
+      },
     },
     location: {
       marginTop: 4,
@@ -244,10 +291,18 @@ const styles = () =>
       lineHeight: 1.55,
       letterSpacing: 'normal',
       color: colors.slateGray,
+      [theme.breakpoints.down('md')]: {
+        padding: 0,
+        borderTop: 'none',
+      },
     },
     linkCell: {
       padding: 20,
       borderTop: `1px solid ${colors.borderGray}`,
+      [theme.breakpoints.down('md')]: {
+        padding: 0,
+        borderTop: 'none',
+      },
     },
     link: {
       fontFamily: 'inherit',
@@ -336,6 +391,13 @@ const styles = () =>
       },
     },
   });
+
+interface ExampleLinkProps {
+  to?: string;
+  href?: string;
+  className: string;
+  children: React.ReactNode;
+}
 
 type ExamplesProps = WithStyles<typeof styles>;
 
