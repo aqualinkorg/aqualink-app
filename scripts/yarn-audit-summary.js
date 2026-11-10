@@ -68,6 +68,29 @@ const IGNORED_ADVISORY_IDS = [
   // untrusted end-user URL decoding. Pin stays at 0.2.2 until query-string
   // / google-maps-services-js ship an ESM-compatible upgrade.
   'GHSA-vcc3-ghjq-m6fr',
+
+  // GHSA-qr28-fpjm-wq7f / CVE-2026-118664: decode-uri-component quadratic
+  // replace on malformed percent-encoded runs. Affects <=0.5.0, fixed in 0.5.1.
+  // Same pin constraint as GHSA-vcc3-ghjq-m6fr: 0.5.x is ESM-only and breaks
+  // the CJS query-string@7 stack used by @googlemaps/google-maps-services-js.
+  // That client serializes outbound Maps request params, not inbound bodies.
+  'GHSA-qr28-fpjm-wq7f',
+
+  // GHSA-3g3m-2fjr-6pw4 / CVE-2026-118773: glob AbortSignal walk keeps reading
+  // after cancel. Affects glob() and globStream() in glob 9–14.0.1.
+  // Path: api > typeorm > glob ^10. TypeORM's DirectoryExportedClassesLoader
+  // only calls glob.sync() on entity/migration globs from ormconfig — no
+  // AbortSignal, and those patterns are server-controlled constants.
+  // The fix (glob >=14.0.2) is a major; a global resolution would also break
+  // packages/api's glob@7 devDependency (CJS callback API in add-entities.js).
+  'GHSA-3g3m-2fjr-6pw4',
+
+  // GHSA-g3hv-75wg-m249 / CVE-2026-118764: minimatch DoS via attacker-supplied
+  // glob pattern amplification. Path: api > typeorm > glob > minimatch ^9.
+  // Same reachability as the brace-expansion ignores above: patterns are
+  // ormconfig constants, not user input. minimatch >=11 requires glob 14,
+  // which is the same blocked upgrade as GHSA-3g3m-2fjr-6pw4.
+  'GHSA-g3hv-75wg-m249',
 ];
 
 function getAuditOptions() {
