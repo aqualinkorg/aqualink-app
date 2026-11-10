@@ -42,7 +42,7 @@ function Hero({ classes }: HeroProps) {
                 Find a reef
               </Typography>
               <Typography className={classes.searchText}>
-                Filter monitored sites by heat stress and installed sensors
+                Filter monitored sites by heat stress and installed sensors.
               </Typography>
             </Box>
             <Box className={classes.searchFields}>
