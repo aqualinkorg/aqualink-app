@@ -84,7 +84,20 @@ global.matchMedia =
     };
   };
 
-const svgs = ['watch', 'unwatch', 'caret', 'satellite'];
+const svgs = [
+  'watch',
+  'unwatch',
+  'caret',
+  'satellite',
+  'img/landing-page/icon-satellite',
+  'img/landing-page/icon-sensor',
+  'img/landing-page/icon-camera',
+  'img/landing-page/icon-chart',
+  'img/landing-page/icon-book',
+  'img/landing-page/icon-lightbulb',
+  'img/landing-page/icon-check',
+  'img/landing-page/icon-chevron-down',
+];
 svgs.forEach((svgName) => {
   vi.doMock(`assets/${svgName}.svg`, () => ({
     ReactComponent: (props: React.SVGProps<SVGSVGElement>) => (

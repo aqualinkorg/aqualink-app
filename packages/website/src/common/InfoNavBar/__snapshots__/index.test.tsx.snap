@@ -1,0 +1,77 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InfoNavBar hero > should render as expected 1`] = `<div />`;
+
+exports[`InfoNavBar light > should render as expected 1`] = `
+<div>
+  <mock-box
+    classname="InfoNavBar-header-1 InfoNavBar-light-2"
+    component="header"
+  >
+    <mock-box
+      classname="InfoNavBar-inner-3"
+    >
+      <mock-link
+        classname="InfoNavBar-logo-5"
+        component="[object Object]"
+        to="/"
+        underline="none"
+      >
+        Aqua
+        <span
+          class="InfoNavBar-logoAccent-7"
+        >
+          link
+        </span>
+      </mock-link>
+      <mock-box
+        aria-label="Main"
+        classname="InfoNavBar-nav-9"
+        component="nav"
+      >
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-10 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/map"
+          tabindex="0"
+        >
+          Map
+        </a>
+        <a
+          aria-current="page"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-10 InfoNavBar-activeNavLink-12 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/examples"
+          tabindex="0"
+        >
+          Examples
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-10 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/projects"
+          tabindex="0"
+        >
+          Projects
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-10 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/blog"
+          tabindex="0"
+        >
+          Blog
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-13 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/register"
+          tabindex="0"
+        >
+          Register a site
+        </a>
+      </mock-box>
+    </mock-box>
+  </mock-box>
+</div>
+`;
