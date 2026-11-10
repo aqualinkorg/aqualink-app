@@ -211,7 +211,14 @@ const styles = (theme: Theme) =>
       alignItems: 'start',
       background: colors.mistGray,
       [theme.breakpoints.down('md')]: {
-        display: 'none',
+        position: 'absolute',
+        width: 1,
+        height: 1,
+        margin: -1,
+        padding: 0,
+        border: 0,
+        overflow: 'hidden',
+        clip: 'rect(0 0 0 0)',
       },
     },
     columnHeader: {

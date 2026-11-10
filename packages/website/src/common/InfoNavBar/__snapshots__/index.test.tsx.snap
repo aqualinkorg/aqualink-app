@@ -71,6 +71,7 @@ exports[`InfoNavBar light > should render as expected 1`] = `
           Register a site
         </a>
         <mock-iconbutton
+          aria-expanded="false"
           aria-haspopup="true"
           aria-label="Open menu"
           classname="InfoNavBar-menuButton-16"
@@ -90,6 +91,7 @@ exports[`InfoNavBar light > should render as expected 1`] = `
         <mock-menu
           anchororigin="[object Object]"
           classes="[object Object]"
+          id="info-nav-menu"
           open="false"
           transformorigin="[object Object]"
         >

@@ -2,9 +2,135 @@
 
 exports[`Tracker > should render with given state from Redux store 1`] = `
 <div>
-  <mock-navbar
-    searchlocation="false"
-  />
+  <mock-box
+    classname="InfoNavBar-header-18 InfoNavBar-light-19"
+    component="header"
+  >
+    <mock-box
+      classname="InfoNavBar-inner-20"
+    >
+      <mock-link
+        classname="InfoNavBar-logo-22"
+        component="[object Object]"
+        to="/"
+        underline="none"
+      >
+        Aqua
+        <span
+          class="InfoNavBar-logoAccent-24"
+        >
+          link
+        </span>
+      </mock-link>
+      <mock-box
+        aria-label="Main"
+        classname="InfoNavBar-nav-26"
+        component="nav"
+      >
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/map"
+          tabindex="0"
+        >
+          Map
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/examples"
+          tabindex="0"
+        >
+          Examples
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/projects"
+          tabindex="0"
+        >
+          Projects
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/blog"
+          tabindex="0"
+        >
+          Blog
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-30 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/register"
+          tabindex="0"
+        >
+          Register a site
+        </a>
+        <mock-iconbutton
+          aria-expanded="false"
+          aria-haspopup="true"
+          aria-label="Open menu"
+          classname="InfoNavBar-menuButton-33"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="MenuIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
+            />
+          </svg>
+        </mock-iconbutton>
+        <mock-menu
+          anchororigin="[object Object]"
+          classes="[object Object]"
+          id="info-nav-menu"
+          open="false"
+          transformorigin="[object Object]"
+        >
+          <mock-menuitem
+            classname="InfoNavBar-menuItem-37"
+            component="[object Object]"
+            to="/map"
+          >
+            Map
+          </mock-menuitem>
+          <mock-menuitem
+            classname="InfoNavBar-menuItem-37"
+            component="[object Object]"
+            to="/examples"
+          >
+            Examples
+          </mock-menuitem>
+          <mock-menuitem
+            classname="InfoNavBar-menuItem-37"
+            component="[object Object]"
+            to="/projects"
+          >
+            Projects
+          </mock-menuitem>
+          <mock-menuitem
+            classname="InfoNavBar-menuItem-37"
+            component="[object Object]"
+            to="/blog"
+          >
+            Blog
+          </mock-menuitem>
+          <mock-menuitem
+            classname="InfoNavBar-menuItem-37"
+            component="[object Object]"
+            to="/register"
+          >
+            Register a site
+          </mock-menuitem>
+        </mock-menu>
+      </mock-box>
+    </mock-box>
+  </mock-box>
   <mock-box
     classname="makeStyles-hero-2 makeStyles-hero-14"
   >
@@ -179,7 +305,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1fb6z83-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item makeStyles-footPrintImageText-18 css-x7bhrq-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item makeStyles-footPrintImageText-38 css-x7bhrq-MuiGrid-root"
           >
             <mock-typography
               align="right"
@@ -188,7 +314,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item makeStyles-footPrintImageLink-19 css-x7bhrq-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item makeStyles-footPrintImageLink-39 css-x7bhrq-MuiGrid-root"
           >
             <a
               href="https://www.footprintcoalition.com/"
@@ -197,7 +323,7 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
             >
               <img
                 alt="footprint"
-                class="makeStyles-footPrintImage-20 makeStyles-footPrintImage-21"
+                class="makeStyles-footPrintImage-40 makeStyles-footPrintImage-41"
                 src="/src/assets/img/tracker-page/footprint.png"
               />
             </a>
@@ -387,6 +513,73 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
       </div>
     </div>
   </div>
-  <mock-footer />
+  <mock-box
+    classname="InfoFooter-footer-42"
+    component="footer"
+  >
+    <mock-box
+      classname="InfoFooter-inner-43"
+    >
+      <mock-box
+        classname="InfoFooter-content-44"
+      >
+        <mock-typography
+          classname="InfoFooter-logo-45"
+          component="div"
+        >
+          Aqua
+          <span
+            class="InfoFooter-logoAccent-46"
+          >
+            link
+          </span>
+        </mock-typography>
+        <mock-typography
+          classname="InfoFooter-text-47"
+        >
+          Aqualink is a philanthropic engineering organization dedicated to ocean monitoring and conservation. We build tools that give scientists, local communities and the public a clear view of marine health, so they can understand and protect our oceans.
+        </mock-typography>
+        <mock-box
+          aria-label="Footer"
+          classname="InfoFooter-links-48"
+          component="nav"
+        >
+          <mock-link
+            classname="InfoFooter-link-49"
+            component="[object Object]"
+            to="/about"
+            underline="none"
+          >
+            About
+          </mock-link>
+          <mock-link
+            classname="InfoFooter-link-49"
+            component="[object Object]"
+            to="/faq"
+            underline="none"
+          >
+            FAQ
+          </mock-link>
+          <mock-link
+            classname="InfoFooter-link-49"
+            component="[object Object]"
+            to="/tracker"
+            underline="none"
+          >
+            Heatwave tracker
+          </mock-link>
+          <mock-link
+            classname="InfoFooter-link-49"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfrxrgFxmlplxh4JvV8eVj1smpgwZzQV0DHIjY2ujZmHNRUEA/viewform"
+            rel="noopener noreferrer"
+            target="_blank"
+            underline="none"
+          >
+            Contact us
+          </mock-link>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+  </mock-box>
 </div>
 `;

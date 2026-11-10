@@ -87,8 +87,6 @@ function Projects({ classes }: ProjectsProps) {
                         key={label}
                         component={Link}
                         to={to}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         underline="none"
                         className={classes.link}
                       >
@@ -174,7 +172,14 @@ const styles = (theme: Theme) =>
       padding: '14px 8px',
       borderBottom: `1px solid ${colors.borderGray}`,
       [theme.breakpoints.down('md')]: {
-        display: 'none',
+        position: 'absolute',
+        width: 1,
+        height: 1,
+        margin: -1,
+        padding: 0,
+        border: 0,
+        overflow: 'hidden',
+        clip: 'rect(0 0 0 0)',
       },
     },
     columnHeader: {

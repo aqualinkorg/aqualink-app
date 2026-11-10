@@ -32,6 +32,18 @@ const menuRoutes = [
     text: 'Register a site',
     to: '/register',
   },
+  {
+    text: 'Examples',
+    to: '/examples',
+  },
+  {
+    text: 'Projects',
+    to: '/projects',
+  },
+  {
+    text: 'Blog',
+    to: '/blog',
+  },
 
   {
     text: 'Highlighted Sites',

@@ -72,6 +72,7 @@ exports[`renders as expected 1`] = `
             Register a site
           </a>
           <mock-iconbutton
+            aria-expanded="false"
             aria-haspopup="true"
             aria-label="Open menu"
             classname="InfoNavBar-menuButton-41"
@@ -91,6 +92,7 @@ exports[`renders as expected 1`] = `
           <mock-menu
             anchororigin="[object Object]"
             classes="[object Object]"
+            id="info-nav-menu"
             open="false"
             transformorigin="[object Object]"
           >
@@ -945,7 +947,7 @@ exports[`renders as expected 1`] = `
             Aqualink is a philanthropic engineering organization dedicated to ocean monitoring and conservation. We build tools that give scientists, local communities and the public a clear view of marine health, so they can understand and protect our oceans.
              
             <mock-link
-              classname="InfoFooter-projectsLink-52"
+              classname="InfoFooter-projectsLink-54"
               component="[object Object]"
               to="/projects"
               underline="none"
@@ -953,6 +955,45 @@ exports[`renders as expected 1`] = `
               Click here to find out more about the things we're doing →
             </mock-link>
           </mock-typography>
+          <mock-box
+            aria-label="Footer"
+            classname="InfoFooter-links-52"
+            component="nav"
+          >
+            <mock-link
+              classname="InfoFooter-link-53"
+              component="[object Object]"
+              to="/about"
+              underline="none"
+            >
+              About
+            </mock-link>
+            <mock-link
+              classname="InfoFooter-link-53"
+              component="[object Object]"
+              to="/faq"
+              underline="none"
+            >
+              FAQ
+            </mock-link>
+            <mock-link
+              classname="InfoFooter-link-53"
+              component="[object Object]"
+              to="/tracker"
+              underline="none"
+            >
+              Heatwave tracker
+            </mock-link>
+            <mock-link
+              classname="InfoFooter-link-53"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfrxrgFxmlplxh4JvV8eVj1smpgwZzQV0DHIjY2ujZmHNRUEA/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Contact us
+            </mock-link>
+          </mock-box>
         </mock-box>
       </mock-box>
     </mock-box>

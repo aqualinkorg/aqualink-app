@@ -5,13 +5,13 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 
-import NavBar from 'common/NavBar';
-import Footer from 'common/Footer';
+import InfoNavBar from 'common/InfoNavBar';
+import InfoFooter from 'common/InfoFooter';
 
 function Faq({ classes }: FaqProps) {
   return (
     <>
-      <NavBar searchLocation={false} />
+      <InfoNavBar />
       <div>
         {/* Main container */}
         <div className="page-container">
@@ -502,7 +502,7 @@ function Faq({ classes }: FaqProps) {
           {/* bloc-11 END */}
         </div>
       </div>
-      <Footer />
+      <InfoFooter />
     </>
   );
 }

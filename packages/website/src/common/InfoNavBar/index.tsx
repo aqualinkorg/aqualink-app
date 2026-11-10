@@ -79,6 +79,8 @@ function InfoNavBar({
           <IconButton
             aria-label="Open menu"
             aria-haspopup="true"
+            aria-expanded={Boolean(menuAnchor)}
+            aria-controls={menuAnchor ? 'info-nav-menu' : undefined}
             onClick={(event) => setMenuAnchor(event.currentTarget)}
             className={classNames(classes.menuButton, {
               [classes.heroMenuButton]: isHero,
@@ -87,6 +89,7 @@ function InfoNavBar({
             <MenuIcon />
           </IconButton>
           <Menu
+            id="info-nav-menu"
             anchorEl={menuAnchor}
             open={Boolean(menuAnchor)}
             onClose={() => setMenuAnchor(null)}
@@ -117,8 +120,13 @@ const styles = (theme: Theme) =>
     header: {
       fontFamily: instrumentSansFontFamily,
       lineHeight: 'normal',
+      WebkitFontSmoothing: 'auto',
+      MozOsxFontSmoothing: 'auto',
     },
     light: {
+      position: 'sticky',
+      top: 0,
+      zIndex: theme.zIndex.appBar,
       borderBottom: `1px solid ${colors.borderGray}`,
       background: colors.white,
     },

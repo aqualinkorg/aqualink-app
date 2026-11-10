@@ -23,9 +23,9 @@ interface Collection {
 const metadata: Record<string, any> = {
   // Home page
   '': {
-    title: 'Free Data Management Platform for Monitoring of Marine Ecosystems',
+    title: "Aqualink: real-time monitoring for the world's reefs",
     description:
-      'Integrate data from sensors and surveys to create an instant view of your marine ecosystem. Explore our interactive map & dashboards using advanced ocean technology.',
+      'Free, open-source ocean monitoring that combines satellite data, in-water sensors and field surveys for every reef.',
   },
   // Routes
   about: {

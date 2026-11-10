@@ -4,12 +4,16 @@ import {
   Button,
   CardMedia,
   Link as MuiLink,
+  Slide,
+  Theme,
   Typography,
+  useScrollTrigger,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
+import InfoNavBar from 'common/InfoNavBar';
 import InfoFooter from 'common/InfoFooter';
 import {
   colors,
@@ -31,8 +35,18 @@ import dashboardImage from '../../assets/img/landing-page/dashboard.jpg';
 import aiChatImage from '../../assets/img/landing-page/ai-chat.png';
 
 function LandingPage({ classes }: LandingPageProps) {
+  const isScrolled = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 120,
+  });
+
   return (
     <Box className={classes.root}>
+      <Slide appear={false} direction="down" in={isScrolled}>
+        <Box className={classes.stickyNav}>
+          <InfoNavBar />
+        </Box>
+      </Slide>
       <Hero />
 
       <Box
@@ -192,8 +206,6 @@ function LandingPage({ classes }: LandingPageProps) {
           <Button
             component={Link}
             to="/collections/804"
-            target="_blank"
-            rel="noopener noreferrer"
             className={classes.heatwavesButton}
           >
             Caribbean Collection
@@ -256,8 +268,15 @@ function LandingPage({ classes }: LandingPageProps) {
   );
 }
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
+    stickyNav: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: theme.zIndex.appBar,
+    },
     root: {
       fontFamily: instrumentSansFontFamily,
       color: colors.navy,
