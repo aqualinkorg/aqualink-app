@@ -1,0 +1,961 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders as expected 1`] = `
+<div>
+  <mock-box
+    classname="Examples-root-1"
+  >
+    <mock-box
+      classname="InfoNavBar-header-26 InfoNavBar-light-27"
+      component="header"
+    >
+      <mock-box
+        classname="InfoNavBar-inner-28"
+      >
+        <mock-link
+          classname="InfoNavBar-logo-30"
+          component="[object Object]"
+          to="/"
+          underline="none"
+        >
+          Aqua
+          <span
+            class="InfoNavBar-logoAccent-32"
+          >
+            link
+          </span>
+        </mock-link>
+        <mock-box
+          aria-label="Main"
+          classname="InfoNavBar-nav-34"
+          component="nav"
+        >
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-35 InfoNavBar-desktopOnly-40 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/map"
+            tabindex="0"
+          >
+            Map
+          </a>
+          <a
+            aria-current="page"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-35 InfoNavBar-desktopOnly-40 InfoNavBar-activeNavLink-37 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/examples"
+            tabindex="0"
+          >
+            Examples
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-35 InfoNavBar-desktopOnly-40 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/projects"
+            tabindex="0"
+          >
+            Projects
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-35 InfoNavBar-desktopOnly-40 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/blog"
+            tabindex="0"
+          >
+            Blog
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-38 InfoNavBar-desktopOnly-40 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/register"
+            tabindex="0"
+          >
+            Register a site
+          </a>
+          <mock-iconbutton
+            aria-haspopup="true"
+            aria-label="Open menu"
+            classname="InfoNavBar-menuButton-41"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="MenuIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
+              />
+            </svg>
+          </mock-iconbutton>
+          <mock-menu
+            anchororigin="[object Object]"
+            classes="[object Object]"
+            open="false"
+            transformorigin="[object Object]"
+          >
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-45"
+              component="[object Object]"
+              to="/map"
+            >
+              Map
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-45"
+              component="[object Object]"
+              to="/examples"
+            >
+              Examples
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-45"
+              component="[object Object]"
+              to="/projects"
+            >
+              Projects
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-45"
+              component="[object Object]"
+              to="/blog"
+            >
+              Blog
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-45"
+              component="[object Object]"
+              to="/register"
+            >
+              Register a site
+            </mock-menuitem>
+          </mock-menu>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="Examples-examples-2"
+      component="section"
+      id="more"
+    >
+      <mock-typography
+        classname="Examples-eyebrow-3"
+      >
+        Examples
+      </mock-typography>
+      <mock-typography
+        classname="Examples-title-4"
+        variant="h1"
+      >
+        Site Examples
+      </mock-typography>
+      <mock-typography
+        classname="Examples-intro-5"
+      >
+        We are highlighting sites that put the different capabilities of the platform to work. Open any dashboard to see the live data.
+      </mock-typography>
+      <mock-box
+        classname="Examples-tableWrapper-6"
+      >
+        <mock-box
+          aria-label="Features and example sites"
+          classname="Examples-table-7"
+          role="table"
+        >
+          <mock-box
+            classname="Examples-headerRow-8"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-columnHeader-9"
+              component="div"
+              role="columnheader"
+            >
+              Feature
+            </mock-typography>
+            <mock-typography
+              classname="Examples-columnHeader-9"
+              component="div"
+              role="columnheader"
+            >
+              Example site
+            </mock-typography>
+            <mock-typography
+              classname="Examples-columnHeader-9"
+              component="div"
+              role="columnheader"
+            >
+              What you'll see
+            </mock-typography>
+            <mock-typography
+              classname="Examples-columnHeader-9"
+              component="div"
+              role="columnheader"
+            >
+              Link
+            </mock-typography>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/1144"
+                underline="none"
+              >
+                Smart Buoy
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Fagatele Bay National Marine Sanctuary
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                American Samoa
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              A Smart Buoy managed by Old Dominion University streams real-time temperature, waves and wind, side by side with the satellite reading.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/1144"
+                underline="none"
+              >
+                Open the dashboard →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/1006"
+                underline="none"
+              >
+                AI assistant
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Keahole Point
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Kona, Hawai'i
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              Ask about heat stress or bleaching and get answers drawn from this site's own data.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/1006"
+                underline="none"
+              >
+                Ask the AI →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/3331"
+                underline="none"
+              >
+                Surveys
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Tamandaré
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Pernambuco, Brazil
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              Repeat photos from one survey point show the same coral healthy, bleached and dead in 2024.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/3331"
+                underline="none"
+              >
+                See the surveys →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/3301"
+                underline="none"
+              >
+                Live video
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Utopia Village
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Utila, Honduras
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              Six underwater cameras give a 270° view of the reef, streamed alongside the site's data.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/3301"
+                underline="none"
+              >
+                Watch the reef →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/1024"
+                underline="none"
+              >
+                Live video
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Coral City Camera
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Miami, USA
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              An urban reef in a busy port, streaming live next to its temperature record.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/1024"
+                underline="none"
+              >
+                Watch the reef →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/2943/points/558"
+                underline="none"
+              >
+                Surveys
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Elbow Beach
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Bermuda
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              Over 30 surveys from 2021 to 2024, many from the same anchor point, track the reef before, during and after the 2022 heatwave.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/2943/points/558"
+                underline="none"
+              >
+                View the site →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/3358"
+                underline="none"
+              >
+                Coral restoration
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Coral Gardeners Tiaia Nursery
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Mo'orea, French Polynesia
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              A restoration nursery monitored by a Smart Buoy, with daily temperature, wave and wind data.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/3358"
+                underline="none"
+              >
+                Open the dashboard →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/3492"
+                underline="none"
+              >
+                Coral restoration
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Fulhadhoo
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Maldives
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              The Maldives Coral Institute's restoration site, with daily video highlights.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/3492"
+                underline="none"
+              >
+                Open the dashboard →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                href="https://highlights.aqualink.org/huiokawaiola"
+                underline="none"
+              >
+                Water quality
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Hui O Ka Wai Ola
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Maui, Hawai'i
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              Community volunteers upload nutrient and water quality samples that graph next to temperature.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                href="https://highlights.aqualink.org/huiokawaiola"
+                underline="none"
+              >
+                See the data →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/collections/779"
+                underline="none"
+              >
+                Temperature loggers
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Stanford University
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Palau
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              HOBO loggers across 38 sites, uploaded in batches and ready to view or download.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/collections/779"
+                underline="none"
+              >
+                View the collection →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/3323"
+                underline="none"
+              >
+                3D models
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Makiminato
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Okinawa, Japan
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              A 3D model of the reef by YUMA Inc., one of seven sites with models on their dashboards.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/3323"
+                underline="none"
+              >
+                Explore the model →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/collections/minderoo"
+                underline="none"
+              >
+                Collections
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              La Niña sensor network
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Western Australia
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              Smart Buoys from the Minderoo Foundation and UWA, grouped to follow one extreme event.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/collections/minderoo"
+                underline="none"
+              >
+                Open the collection →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+          <mock-box
+            classname="Examples-row-10"
+            role="row"
+          >
+            <mock-typography
+              classname="Examples-featureCell-11"
+              component="div"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-featureLink-12"
+                component="[object Object]"
+                to="/sites/5795"
+                underline="none"
+              >
+                Reef Check surveys
+              </mock-link>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-siteCell-13"
+              component="div"
+              role="cell"
+            >
+              Tai She Wan
+              <mock-typography
+                classname="Examples-location-14"
+                component="div"
+              >
+                Hong Kong
+              </mock-typography>
+            </mock-typography>
+            <mock-typography
+              classname="Examples-descriptionCell-15"
+              component="div"
+              role="cell"
+            >
+              Eight Reef Check surveys from 2005 to 2012 track species, reef composition, bleaching and human impacts at one site.
+            </mock-typography>
+            <mock-box
+              classname="Examples-linkCell-16"
+              role="cell"
+            >
+              <mock-link
+                classname="Examples-link-17"
+                component="[object Object]"
+                to="/sites/5795"
+                underline="none"
+              >
+                See the surveys →
+              </mock-link>
+            </mock-box>
+          </mock-box>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="Examples-featured-18"
+      component="section"
+      id="register"
+    >
+      <mock-box
+        classname="Examples-featuredInner-19"
+      >
+        <mock-box
+          classname="Examples-featuredText-20"
+        >
+          <mock-typography
+            classname="Examples-featuredTitle-21"
+            variant="h2"
+          >
+            Using a feature in a new way?
+          </mock-typography>
+          <mock-typography
+            classname="Examples-featuredIntro-22"
+          >
+            Tell us about your site. We feature reefs that show others what monitoring can do.
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Examples-featuredButtons-23"
+        >
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Examples-registerButton-24 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/register"
+            tabindex="0"
+          >
+            Register a site
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Examples-contactButton-25 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfrxrgFxmlplxh4JvV8eVj1smpgwZzQV0DHIjY2ujZmHNRUEA/viewform"
+            rel="noopener noreferrer"
+            tabindex="0"
+            target="_blank"
+          >
+            Contact us
+          </a>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="InfoFooter-footer-46"
+      component="footer"
+    >
+      <mock-box
+        classname="InfoFooter-inner-47"
+      >
+        <mock-box
+          classname="InfoFooter-content-48"
+        >
+          <mock-typography
+            classname="InfoFooter-logo-49"
+            component="div"
+          >
+            Aqua
+            <span
+              class="InfoFooter-logoAccent-50"
+            >
+              link
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="InfoFooter-text-51"
+          >
+            Aqualink is a philanthropic engineering organization dedicated to ocean monitoring and conservation. We build tools that give scientists, local communities and the public a clear view of marine health, so they can understand and protect our oceans.
+             
+            <mock-link
+              classname="InfoFooter-projectsLink-52"
+              component="[object Object]"
+              to="/projects"
+              underline="none"
+            >
+              Click here to find out more about the things we're doing →
+            </mock-link>
+          </mock-typography>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+  </mock-box>
+</div>
+`;
