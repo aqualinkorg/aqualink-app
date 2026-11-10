@@ -12,32 +12,32 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
         classname="Hero-hero-56"
       >
         <mock-box
-          classname="InfoNavBar-header-69"
+          classname="InfoNavBar-header-72"
           component="header"
         >
           <mock-box
-            classname="InfoNavBar-heroInner-72"
+            classname="InfoNavBar-heroInner-75"
           >
             <mock-link
-              classname="InfoNavBar-logo-73 InfoNavBar-heroLogo-74"
+              classname="InfoNavBar-logo-76 InfoNavBar-heroLogo-77"
               component="[object Object]"
               to="/"
               underline="none"
             >
               Aqua
               <span
-                class="InfoNavBar-heroLogoAccent-76"
+                class="InfoNavBar-heroLogoAccent-79"
               >
                 link
               </span>
             </mock-link>
             <mock-box
               aria-label="Main"
-              classname="InfoNavBar-nav-77"
+              classname="InfoNavBar-nav-80"
               component="nav"
             >
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-78 InfoNavBar-heroNavLink-79 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-81 InfoNavBar-heroNavLink-82 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 data-discover="true"
                 href="/map"
                 tabindex="0"
@@ -45,7 +45,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                 Map
               </a>
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-78 InfoNavBar-heroNavLink-79 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-81 InfoNavBar-heroNavLink-82 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 data-discover="true"
                 href="/examples"
                 tabindex="0"
@@ -53,7 +53,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                 Examples
               </a>
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-78 InfoNavBar-heroNavLink-79 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-81 InfoNavBar-heroNavLink-82 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 data-discover="true"
                 href="/projects"
                 tabindex="0"
@@ -61,7 +61,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                 Projects
               </a>
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-78 InfoNavBar-heroNavLink-79 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-81 InfoNavBar-heroNavLink-82 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 data-discover="true"
                 href="/blog"
                 tabindex="0"
@@ -69,7 +69,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                 Blog
               </a>
               <a
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-81 InfoNavBar-heroRegisterButton-82 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-84 InfoNavBar-heroRegisterButton-85 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                 data-discover="true"
                 href="/register"
                 tabindex="0"
@@ -183,7 +183,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               </mock-box>
             </mock-box>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Hero-searchButton-67 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Hero-searchButton-70 css-1ysap08-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="submit"
             >
@@ -191,7 +191,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             </button>
           </mock-box>
           <mock-typography
-            classname="Hero-text-68"
+            classname="Hero-text-71"
           >
             A free, open-source tool for people on the front lines of ocean conservation: satellite data, in-water sensors and field surveys for every reef, in one app.
           </mock-typography>
@@ -284,7 +284,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
         classname="LandingPage-cardGrid-10"
       >
         <mock-box
-          classname="Card-card-83"
+          classname="Card-card-86"
         >
           <svg
             aria-hidden="true"
@@ -292,24 +292,24 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             img/landing-page/icon-satellite.svg
           </svg>
           <mock-typography
-            classname="Card-title-84"
+            classname="Card-title-87"
             variant="h3"
           >
             Satellite
           </mock-typography>
           <mock-typography
-            classname="Card-text-85"
+            classname="Card-text-88"
           >
             Daily sea surface temperature, wind and waves, with heat stress and bleaching alerts calculated for you.
           </mock-typography>
           <mock-typography
-            classname="Card-tag-86"
+            classname="Card-tag-89"
           >
             Automatic for every site
           </mock-typography>
         </mock-box>
         <mock-box
-          classname="Card-card-83"
+          classname="Card-card-86"
         >
           <svg
             aria-hidden="true"
@@ -317,24 +317,24 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             img/landing-page/icon-sensor.svg
           </svg>
           <mock-typography
-            classname="Card-title-84"
+            classname="Card-title-87"
             variant="h3"
           >
             In-water sensors
           </mock-typography>
           <mock-typography
-            classname="Card-text-85"
+            classname="Card-text-88"
           >
             Live streams from Sofar Spotter buoys and live video, or upload batches from sondes, HOBO loggers or any CSV.
           </mock-typography>
           <mock-typography
-            classname="Card-tag-86"
+            classname="Card-tag-89"
           >
             Graphs build themselves
           </mock-typography>
         </mock-box>
         <mock-box
-          classname="Card-card-83"
+          classname="Card-card-86"
         >
           <svg
             aria-hidden="true"
@@ -342,18 +342,18 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             img/landing-page/icon-camera.svg
           </svg>
           <mock-typography
-            classname="Card-title-84"
+            classname="Card-title-87"
             variant="h3"
           >
             Field surveys
           </mock-typography>
           <mock-typography
-            classname="Card-text-85"
+            classname="Card-text-88"
           >
             Upload photos and notes to fixed survey points, or run a full Reef Check survey that lands on your dashboard.
           </mock-typography>
           <mock-typography
-            classname="Card-tag-86"
+            classname="Card-tag-89"
           >
             See how the reef responds
           </mock-typography>
@@ -803,28 +803,28 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
       </mock-box>
     </mock-box>
     <mock-box
-      classname="InfoFooter-footer-87"
+      classname="InfoFooter-footer-90"
       component="footer"
     >
       <mock-box
-        classname="InfoFooter-inner-88"
+        classname="InfoFooter-inner-91"
       >
         <mock-box
-          classname="InfoFooter-content-89"
+          classname="InfoFooter-content-92"
         >
           <mock-typography
-            classname="InfoFooter-logo-90"
+            classname="InfoFooter-logo-93"
             component="div"
           >
             Aqua
             <span
-              class="InfoFooter-logoAccent-91"
+              class="InfoFooter-logoAccent-94"
             >
               link
             </span>
           </mock-typography>
           <mock-typography
-            classname="InfoFooter-text-92"
+            classname="InfoFooter-text-95"
           >
             Aqualink is a philanthropic engineering organization dedicated to ocean monitoring and conservation. We build tools that give scientists, local communities and the public a clear view of marine health, so they can understand and protect our oceans.
           </mock-typography>

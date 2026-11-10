@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`renders as expected 1`] = `
+exports[`InfoFooter > should render as expected 1`] = `
 <div>
   <mock-box
     classname="InfoFooter-footer-1"
@@ -33,3 +33,5 @@ exports[`renders as expected 1`] = `
   </mock-box>
 </div>
 `;
+
+exports[`InfoFooter with projects link > should render as expected 1`] = `<div />`;

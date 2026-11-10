@@ -27,6 +27,7 @@ import Faq from 'routes/Faq';
 import Dashboard from 'routes/Dashboard';
 import Spotter from 'routes/Spotter';
 import Tracker from 'routes/Tracker';
+import Examples from 'routes/Examples';
 import app from '../../firebase';
 import ErrorBoundary from './ErrorBoundary';
 import theme from './theme';
@@ -69,6 +70,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/map" element={<HomeMap />} />
+                  <Route path="/examples" element={<Examples />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/register" element={<RegisterSite />} />
                   <Route path="/buoy" element={<Buoy />} />

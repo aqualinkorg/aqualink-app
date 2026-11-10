@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { colors, instrumentSansFontFamily } from 'layout/App/theme';
 
-function InfoFooter({ classes }: InfoFooterProps) {
+function InfoFooter({ showProjectsLink = false, classes }: InfoFooterProps) {
   return (
     <Box component="footer" className={classes.footer}>
       <Box className={classes.inner}>
@@ -18,6 +19,20 @@ function InfoFooter({ classes }: InfoFooterProps) {
             ocean monitoring and conservation. We build tools that give
             scientists, local communities and the public a clear view of marine
             health, so they can understand and protect our oceans.
+            {showProjectsLink && (
+              <>
+                {' '}
+                <MuiLink
+                  component={Link}
+                  to="/projects"
+                  underline="none"
+                  className={classes.projectsLink}
+                >
+                  Click here to find out more about the things we&apos;re doing
+                  →
+                </MuiLink>
+              </>
+            )}
           </Typography>
         </Box>
       </Box>
@@ -67,8 +82,23 @@ const styles = () =>
       color: colors.slateGray,
       maxWidth: 720,
     },
+    projectsLink: {
+      fontFamily: 'inherit',
+      fontWeight: 600,
+      lineHeight: 'inherit',
+      letterSpacing: 'normal',
+      whiteSpace: 'nowrap',
+      color: colors.oceanBlue,
+      '&:hover': {
+        color: colors.darkOceanBlue,
+      },
+    },
   });
 
-type InfoFooterProps = WithStyles<typeof styles>;
+interface InfoFooterIncomingProps {
+  showProjectsLink?: boolean;
+}
+
+type InfoFooterProps = InfoFooterIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(InfoFooter);
