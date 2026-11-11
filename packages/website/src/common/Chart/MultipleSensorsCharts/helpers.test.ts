@@ -17,7 +17,6 @@ test('mean is arithmetic', () => {
   expect(mean).toBeCloseTo(20 / 3);
 });
 
-
 test('NOAA SURFACE chart consumes satellite temperature time-series values', () => {
   const surface = generateTempAnalysisDatasets(points).find(
     (dataset) => dataset.label === 'SURFACE' && dataset.source === 'noaa',
