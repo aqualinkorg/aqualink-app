@@ -22,7 +22,7 @@ import Alert from '@mui/material/Alert';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
 
-import { userInfoSelector, getSelf } from 'store/User/userSlice';
+import { userInfoSelector, getSelf, signOutUser } from 'store/User/userSlice';
 import validators from 'helpers/validators';
 import InfoNavBar from 'common/InfoNavBar';
 import InfoFooter from 'common/InfoFooter';
@@ -155,8 +155,13 @@ function Apply({ classes }: ApplyProps) {
             }
           })
           .catch((error) => {
-            setDatabaseSubmissionOk(false);
-            setSnackbarOpenFromDatabase(true);
+            if ([401, 403].includes(error?.response?.status)) {
+              dispatch(signOutUser());
+              handleSignInDialog(true);
+            } else {
+              setDatabaseSubmissionOk(false);
+              setSnackbarOpenFromDatabase(true);
+            }
             console.error(error);
           })
           .finally(() => setSubmitLoading(false));

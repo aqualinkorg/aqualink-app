@@ -5,8 +5,8 @@ import { mockUser } from 'mocks/mockUser';
 import { renderWithProviders } from 'utils/test-utils';
 import Tracker from '.';
 
-vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
-vi.mock('common/Footer', () => ({ default: 'Mock-Footer' }));
+vi.mock('common/InfoNavBar', () => ({ default: 'Mock-InfoNavBar' }));
+vi.mock('common/InfoFooter', () => ({ default: 'Mock-InfoFooter' }));
 
 const mockStore = configureStore([]);
 describe('Tracker', () => {

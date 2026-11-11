@@ -18,6 +18,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import classNames from 'classnames';
 import { colors, instrumentSansFontFamily } from 'layout/App/theme';
 import { useGoogleTranslation } from 'utils/google-translate';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import infoPageStyles from '../styles/infoPageStyles';
 
 const navLinks = [
@@ -28,6 +29,13 @@ const navLinks = [
 ];
 
 const menuLinks = [...navLinks, { label: 'Register a site', to: '/register' }];
+
+const trackNavClick = (label: string) =>
+  trackButtonClick(
+    GaCategory.BUTTON_CLICK,
+    GaAction.NAV_BAR_BUTTON_CLICK,
+    label,
+  );
 
 function InfoNavBar({
   variant = 'light',
@@ -47,6 +55,7 @@ function InfoNavBar({
         <MuiLink
           component={Link}
           to="/"
+          onClick={() => trackNavClick('Logo')}
           underline="none"
           className={classNames(classes.logo, { [classes.heroLogo]: isHero })}
         >
@@ -63,6 +72,7 @@ function InfoNavBar({
               key={label}
               component={Link}
               to={to}
+              onClick={() => trackNavClick(label)}
               aria-current={currentPage === to ? 'page' : undefined}
               className={classNames(classes.navLink, classes.desktopOnly, {
                 [classes.heroNavLink]: isHero,
@@ -75,6 +85,7 @@ function InfoNavBar({
           <Button
             component={Link}
             to="/register"
+            onClick={() => trackNavClick('Register a site')}
             className={classNames(classes.registerButton, classes.desktopOnly, {
               [classes.heroRegisterButton]: isHero,
             })}
@@ -84,7 +95,13 @@ function InfoNavBar({
           <Tooltip title="Translate">
             <IconButton
               aria-label="Translate"
-              onClick={() => setTranslationOpen((prev) => !prev)}
+              onClick={() => {
+                trackNavClick('Translate');
+                setTranslationOpen(
+                  document.getElementById('google_translate_element')?.style
+                    .display !== 'inline',
+                );
+              }}
               className={classNames(classes.iconButton, {
                 [classes.heroIconButton]: isHero,
               })}
@@ -118,7 +135,10 @@ function InfoNavBar({
                 key={label}
                 component={Link}
                 to={to}
-                onClick={() => setMenuAnchor(null)}
+                onClick={() => {
+                  trackNavClick(label);
+                  setMenuAnchor(null);
+                }}
                 className={classes.menuItem}
               >
                 {label}

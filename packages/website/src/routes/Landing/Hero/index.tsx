@@ -37,6 +37,7 @@ function Hero({ classes }: HeroProps) {
       GaAction.LANDING_PAGE_BUTTON_CLICK,
       'Show Map',
     );
+    navigate('/map');
     dispatch(clearSiteFilters());
     if (searchValues.heatStress) {
       dispatch(
@@ -56,12 +57,6 @@ function Hero({ classes }: HeroProps) {
         }),
       );
     }
-    navigate({
-      pathname: '/map',
-      search: new URLSearchParams(
-        Object.entries(searchValues).filter(([, value]) => value),
-      ).toString(),
-    });
   };
 
   return (
