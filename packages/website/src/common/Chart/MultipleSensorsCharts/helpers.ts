@@ -195,7 +195,7 @@ export const hasAtLeastNData = (n: number) => (data?: ValueWithTimestamp[]) =>
 
 /**
  * A util function used to generate the temperature analysis chart datasets.
- * @param dailyData A daily data array
+ * @param satelliteTemperature NOAA satellite temperature time-series observations
  * @param spotterBottom An array of spotter bottom temperatures
  * @param spotterTop An array of spotter top temperatures
  * @param hoboBottom An array of hobo top temperatures
@@ -209,7 +209,7 @@ export const hasAtLeastNData = (n: number) => (data?: ValueWithTimestamp[]) =>
  * @returns An array of datasets to display on the chart
  */
 export const generateTempAnalysisDatasets = (
-  dailyData?: DailyData[],
+  satelliteTemperature?: ValueWithTimestamp[],
   spotterBottom?: ValueWithTimestamp[],
   spotterTop?: ValueWithTimestamp[],
   seaphoxTemp?: ValueWithTimestamp[],
@@ -222,9 +222,6 @@ export const generateTempAnalysisDatasets = (
   timezone?: string | null,
   depth?: number | null,
 ): Dataset[] => {
-  const processedDailyData = convertDailyToSofar(dailyData, [
-    'satelliteTemperature',
-  ])?.satelliteTemperature;
   const localMonthlyMeanData =
     convertHistoricalMonthlyMeanToSofar(
       filterHistoricalMonthlyMeanData(
@@ -239,13 +236,13 @@ export const generateTempAnalysisDatasets = (
       ),
     ) || [];
   const [
-    localDailyData,
+    localSatelliteTemperatureData,
     localSpotterBottomData,
     localSpotterTopData,
     localSeaphoxTempData,
     ...localHoboBottomData
   ] = [
-    processedDailyData,
+    satelliteTemperature,
     spotterBottom,
     spotterTop,
     seaphoxTemp,
@@ -256,13 +253,13 @@ export const generateTempAnalysisDatasets = (
     hasEnoughSpotterBottomData,
     hasEnoughSpotterTopData,
     hasEnoughSeaphoxTempData,
-    hasEnoughDailyData,
+    hasEnoughSatelliteTemperatureData,
     ...hasEnoughHoboBottomData
   ] = [
     localSpotterBottomData,
     localSpotterTopData,
     localSeaphoxTempData,
-    localDailyData,
+    localSatelliteTemperatureData,
     ...localHoboBottomData,
   ]
     .map(filterSofarData(chartStartDate, chartEndDate))
@@ -287,7 +284,7 @@ export const generateTempAnalysisDatasets = (
     },
     {
       label: 'SURFACE',
-      data: localDailyData,
+      data: localSatelliteTemperatureData,
       curveColor: DAILY_DATA_CURVE_COLOR,
       maxHoursGap: 48,
       tooltipMaxHoursGap: 24,
@@ -296,13 +293,13 @@ export const generateTempAnalysisDatasets = (
       cardColumnName: 'SST',
       surveysAttached: true,
       isDailyUpdated: true,
-      displayData: hasEnoughDailyData,
+      displayData: hasEnoughSatelliteTemperatureData,
       displayCardColumn:
         !hasEnoughSpotterBottomData &&
         !hasEnoughSpotterTopData &&
         !hasEnoughHoboBottomData.find((x) => x) &&
-        hasEnoughDailyData,
-      metric: 'sstAnomaly',
+        hasEnoughSatelliteTemperatureData,
+      metric: 'satelliteTemperature',
       source: 'noaa',
     },
     {
