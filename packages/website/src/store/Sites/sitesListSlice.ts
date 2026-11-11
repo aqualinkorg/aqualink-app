@@ -31,17 +31,20 @@ const sitesListInitialState: SitesListState = {
   loading: false,
   error: null,
   filters: {},
+  selectedDate: null,
+  activeRequestId: null,
 };
 
 export const sitesRequest = createAsyncThunk<
   SitesRequestData,
-  undefined,
+  string | undefined,
   CreateAsyncThunkTypes
 >(
   'sitesList/request',
-  async (arg, { rejectWithValue }) => {
+  async (date, { rejectWithValue }) => {
     try {
-      const { data } = await siteServices.getSites();
+      const normalizedDate = date?.trim() || undefined;
+      const { data } = await siteServices.getSites(normalizedDate);
       const sortedData = sortBy(data, 'name');
       const transformedData = sortedData.map((item) => ({
         ...item,
@@ -49,17 +52,22 @@ export const sitesRequest = createAsyncThunk<
       }));
       return {
         list: transformedData,
+        selectedDate: normalizedDate || null,
       };
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
-    condition(arg: undefined, { getState }) {
+    condition(date: string | undefined, { getState }) {
       const {
-        sitesList: { list },
+        sitesList: { list, selectedDate, loading },
       } = getState();
-      return !list;
+      const targetDate = date?.trim() || null;
+      if (loading && selectedDate === targetDate) {
+        return false;
+      }
+      return !list || selectedDate !== targetDate;
     },
   },
 );
@@ -103,25 +111,43 @@ const sitesListSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      sitesRequest.fulfilled,
-      (state, action: PayloadAction<SitesRequestData>) => ({
+    builder.addCase(sitesRequest.fulfilled, (state, action) => {
+      if (
+        state.activeRequestId &&
+        state.activeRequestId !== action.meta.requestId
+      ) {
+        return state;
+      }
+      return {
         ...state,
         list: action.payload.list,
+        selectedDate: action.payload.selectedDate ?? null,
+        activeRequestId: null,
         loading: false,
-      }),
-    );
+      };
+    });
 
-    builder.addCase(sitesRequest.rejected, (state, action) => ({
-      ...state,
-      error: action.error.message
-        ? action.error.message
-        : action.error.toString(),
-      loading: false,
-    }));
+    builder.addCase(sitesRequest.rejected, (state, action) => {
+      if (
+        state.activeRequestId &&
+        state.activeRequestId !== action.meta.requestId
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        error: action.error.message
+          ? action.error.message
+          : action.error.toString(),
+        activeRequestId: null,
+        loading: false,
+      };
+    });
 
-    builder.addCase(sitesRequest.pending, (state) => ({
+    builder.addCase(sitesRequest.pending, (state, action) => ({
       ...state,
+      selectedDate: action.meta.arg?.trim() || null,
+      activeRequestId: action.meta.requestId,
       loading: true,
       error: null,
     }));

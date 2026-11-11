@@ -401,11 +401,14 @@ export type SiteUploadHistory = DataUploadsSites[];
 
 export interface SitesRequestData {
   list: Site[];
+  selectedDate?: string | null;
 }
 
 export interface SitesListState {
   list?: Site[];
   filters: SiteFilters;
+  selectedDate?: string | null;
+  activeRequestId?: string | null;
   loading: boolean;
   error?: string | null;
 }
