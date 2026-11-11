@@ -13,11 +13,8 @@ import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 import InfoNavBar from 'common/InfoNavBar';
 import InfoFooter from 'common/InfoFooter';
-import {
-  colors,
-  ibmPlexMonoFontFamily,
-  instrumentSansFontFamily,
-} from 'layout/App/theme';
+import infoPageStyles from 'common/styles/infoPageStyles';
+import { colors, ibmPlexMonoFontFamily } from 'layout/App/theme';
 import { projects, tableHeaders } from './titles';
 
 function Projects({ classes }: ProjectsProps) {
@@ -119,48 +116,11 @@ function Projects({ classes }: ProjectsProps) {
 
 const styles = (theme: Theme) =>
   createStyles({
-    root: {
-      fontFamily: instrumentSansFontFamily,
-      color: colors.navy,
-      background: colors.white,
-      lineHeight: 'normal',
-      minWidth: 0,
-      WebkitFontSmoothing: 'auto',
-      MozOsxFontSmoothing: 'auto',
-    },
-    projects: {
-      maxWidth: 1200,
-      margin: '0 auto',
-      boxSizing: 'content-box',
-      padding: '88px 24px 112px',
-    },
-    eyebrow: {
-      margin: '0 0 16px',
-      fontFamily: ibmPlexMonoFontFamily,
-      fontSize: 14,
-      lineHeight: 'normal',
-      letterSpacing: '0.06em',
-      textTransform: 'uppercase',
-      color: colors.slateGray,
-    },
-    title: {
-      margin: 0,
-      fontFamily: 'inherit',
-      fontSize: 56,
-      lineHeight: 1.05,
-      letterSpacing: '-0.03em',
-      fontWeight: 700,
-      maxWidth: 860,
-    },
-    intro: {
-      margin: '20px 0 0',
-      fontFamily: 'inherit',
-      fontSize: 20,
-      lineHeight: 1.55,
-      letterSpacing: 'normal',
-      color: colors.slateGray,
-      maxWidth: 680,
-    },
+    root: infoPageStyles.root,
+    projects: infoPageStyles.section,
+    eyebrow: infoPageStyles.eyebrow,
+    title: infoPageStyles.title,
+    intro: infoPageStyles.intro,
     table: {
       marginTop: 56,
       borderTop: `1px solid ${colors.navy}`,

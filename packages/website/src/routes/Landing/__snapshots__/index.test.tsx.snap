@@ -74,11 +74,31 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             >
               Register a site
             </a>
+            <mock-tooltip
+              title="Translate"
+            >
+              <mock-iconbutton
+                aria-label="Translate"
+                classname="InfoNavBar-iconButton-71"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="LanguageIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
+                  />
+                </svg>
+              </mock-iconbutton>
+            </mock-tooltip>
             <mock-iconbutton
               aria-expanded="false"
               aria-haspopup="true"
               aria-label="Open menu"
-              classname="InfoNavBar-menuButton-71"
+              classname="InfoNavBar-iconButton-71 InfoNavBar-menuButton-73"
             >
               <svg
                 aria-hidden="true"
@@ -100,35 +120,35 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               transformorigin="[object Object]"
             >
               <mock-menuitem
-                classname="InfoNavBar-menuItem-75"
+                classname="InfoNavBar-menuItem-76"
                 component="[object Object]"
                 to="/map"
               >
                 Map
               </mock-menuitem>
               <mock-menuitem
-                classname="InfoNavBar-menuItem-75"
+                classname="InfoNavBar-menuItem-76"
                 component="[object Object]"
                 to="/examples"
               >
                 Examples
               </mock-menuitem>
               <mock-menuitem
-                classname="InfoNavBar-menuItem-75"
+                classname="InfoNavBar-menuItem-76"
                 component="[object Object]"
                 to="/projects"
               >
                 Projects
               </mock-menuitem>
               <mock-menuitem
-                classname="InfoNavBar-menuItem-75"
+                classname="InfoNavBar-menuItem-76"
                 component="[object Object]"
                 to="/blog"
               >
                 Blog
               </mock-menuitem>
               <mock-menuitem
-                classname="InfoNavBar-menuItem-75"
+                classname="InfoNavBar-menuItem-76"
                 component="[object Object]"
                 to="/register"
               >
@@ -140,10 +160,10 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
       </mock-box>
     </mock-box>
     <mock-box
-      classname="Hero-wrapper-76"
+      classname="Hero-wrapper-77"
     >
       <mock-box
-        classname="Hero-hero-77"
+        classname="Hero-hero-78"
       >
         <mock-box
           classname="InfoNavBar-header-56"
@@ -210,11 +230,31 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               >
                 Register a site
               </a>
+              <mock-tooltip
+                title="Translate"
+              >
+                <mock-iconbutton
+                  aria-label="Translate"
+                  classname="InfoNavBar-iconButton-71 InfoNavBar-heroIconButton-72"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="LanguageIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
+                    />
+                  </svg>
+                </mock-iconbutton>
+              </mock-tooltip>
               <mock-iconbutton
                 aria-expanded="false"
                 aria-haspopup="true"
                 aria-label="Open menu"
-                classname="InfoNavBar-menuButton-71 InfoNavBar-heroMenuButton-72"
+                classname="InfoNavBar-iconButton-71 InfoNavBar-menuButton-73 InfoNavBar-heroIconButton-72"
               >
                 <svg
                   aria-hidden="true"
@@ -236,35 +276,35 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                 transformorigin="[object Object]"
               >
                 <mock-menuitem
-                  classname="InfoNavBar-menuItem-75"
+                  classname="InfoNavBar-menuItem-76"
                   component="[object Object]"
                   to="/map"
                 >
                   Map
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="InfoNavBar-menuItem-75"
+                  classname="InfoNavBar-menuItem-76"
                   component="[object Object]"
                   to="/examples"
                 >
                   Examples
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="InfoNavBar-menuItem-75"
+                  classname="InfoNavBar-menuItem-76"
                   component="[object Object]"
                   to="/projects"
                 >
                   Projects
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="InfoNavBar-menuItem-75"
+                  classname="InfoNavBar-menuItem-76"
                   component="[object Object]"
                   to="/blog"
                 >
                   Blog
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="InfoNavBar-menuItem-75"
+                  classname="InfoNavBar-menuItem-76"
                   component="[object Object]"
                   to="/register"
                 >
@@ -275,52 +315,50 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
           </mock-box>
         </mock-box>
         <mock-box
-          classname="Hero-content-78"
+          classname="Hero-content-79"
         >
           <mock-typography
-            classname="Hero-title-79"
+            classname="Hero-title-80"
             variant="h1"
           >
             Real-time monitoring for the world's reefs
           </mock-typography>
           <mock-box
-            action="/map"
-            classname="Hero-search-80"
+            classname="Hero-search-81"
             component="form"
-            method="get"
             role="search"
           >
             <mock-box>
               <mock-typography
-                classname="Hero-searchTitle-81"
+                classname="Hero-searchTitle-82"
                 variant="h2"
               >
                 Find a reef
               </mock-typography>
               <mock-typography
-                classname="Hero-searchText-82"
+                classname="Hero-searchText-83"
               >
                 Filter monitored sites by heat stress and installed sensors.
               </mock-typography>
             </mock-box>
             <mock-box
-              classname="Hero-searchFields-83"
+              classname="Hero-searchFields-84"
             >
               <mock-box>
                 <label
-                  class="MuiFormLabel-root MuiFormLabel-colorPrimary Hero-label-84 css-1wpqwwp-MuiFormLabel-root"
+                  class="MuiFormLabel-root MuiFormLabel-colorPrimary Hero-label-85 css-1wpqwwp-MuiFormLabel-root"
                   id="hero-alert-label"
                 >
                   Alert level
                 </label>
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary Hero-select-85 MuiSelect-root css-12kco1g-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary Hero-select-86 MuiSelect-root css-12kco1g-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-labelledby="hero-alert-label hero-alert"
-                    class="MuiSelect-select Hero-selectInput-86 MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    class="MuiSelect-select Hero-selectInput-87 MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                     id="hero-alert"
                     role="combobox"
                     tabindex="0"
@@ -335,7 +373,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                     value=""
                   />
                   <svg
-                    class="MuiSelect-icon Hero-icon-87 MuiSelect-iconStandard css-10pfg7h-MuiNativeSelect-root-MuiSelect-icon"
+                    class="MuiSelect-icon Hero-icon-88 MuiSelect-iconStandard css-10pfg7h-MuiNativeSelect-root-MuiSelect-icon"
                   >
                     img/landing-page/icon-chevron-down.svg
                   </svg>
@@ -343,19 +381,19 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               </mock-box>
               <mock-box>
                 <label
-                  class="MuiFormLabel-root MuiFormLabel-colorPrimary Hero-label-84 css-1wpqwwp-MuiFormLabel-root"
+                  class="MuiFormLabel-root MuiFormLabel-colorPrimary Hero-label-85 css-1wpqwwp-MuiFormLabel-root"
                   id="hero-sensor-label"
                 >
                   Sensor type
                 </label>
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary Hero-select-85 MuiSelect-root css-12kco1g-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary Hero-select-86 MuiSelect-root css-12kco1g-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-labelledby="hero-sensor-label hero-sensor"
-                    class="MuiSelect-select Hero-selectInput-86 MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    class="MuiSelect-select Hero-selectInput-87 MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                     id="hero-sensor"
                     role="combobox"
                     tabindex="0"
@@ -370,7 +408,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                     value=""
                   />
                   <svg
-                    class="MuiSelect-icon Hero-icon-87 MuiSelect-iconStandard css-10pfg7h-MuiNativeSelect-root-MuiSelect-icon"
+                    class="MuiSelect-icon Hero-icon-88 MuiSelect-iconStandard css-10pfg7h-MuiNativeSelect-root-MuiSelect-icon"
                   >
                     img/landing-page/icon-chevron-down.svg
                   </svg>
@@ -378,7 +416,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               </mock-box>
             </mock-box>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Hero-searchButton-91 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Hero-searchButton-92 css-1ysap08-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="submit"
             >
@@ -386,7 +424,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             </button>
           </mock-box>
           <mock-typography
-            classname="Hero-text-92"
+            classname="Hero-text-93"
           >
             A free, open-source tool for people on the front lines of ocean conservation: satellite data, in-water sensors and field surveys for every reef, in one app.
           </mock-typography>
@@ -479,7 +517,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
         classname="LandingPage-cardGrid-11"
       >
         <mock-box
-          classname="Card-card-93"
+          classname="Card-card-94"
         >
           <svg
             aria-hidden="true"
@@ -487,24 +525,24 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             img/landing-page/icon-satellite.svg
           </svg>
           <mock-typography
-            classname="Card-title-94"
+            classname="Card-title-95"
             variant="h3"
           >
             Satellite
           </mock-typography>
           <mock-typography
-            classname="Card-text-95"
+            classname="Card-text-96"
           >
             Daily sea surface temperature, wind and waves, with heat stress and bleaching alerts calculated for you.
           </mock-typography>
           <mock-typography
-            classname="Card-tag-96"
+            classname="Card-tag-97"
           >
             Automatic for every site
           </mock-typography>
         </mock-box>
         <mock-box
-          classname="Card-card-93"
+          classname="Card-card-94"
         >
           <svg
             aria-hidden="true"
@@ -512,24 +550,24 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             img/landing-page/icon-sensor.svg
           </svg>
           <mock-typography
-            classname="Card-title-94"
+            classname="Card-title-95"
             variant="h3"
           >
             In-water sensors
           </mock-typography>
           <mock-typography
-            classname="Card-text-95"
+            classname="Card-text-96"
           >
             Live streams from Sofar Spotter buoys and live video, or upload batches from sondes, HOBO loggers or any CSV.
           </mock-typography>
           <mock-typography
-            classname="Card-tag-96"
+            classname="Card-tag-97"
           >
             Graphs build themselves
           </mock-typography>
         </mock-box>
         <mock-box
-          classname="Card-card-93"
+          classname="Card-card-94"
         >
           <svg
             aria-hidden="true"
@@ -537,18 +575,18 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
             img/landing-page/icon-camera.svg
           </svg>
           <mock-typography
-            classname="Card-title-94"
+            classname="Card-title-95"
             variant="h3"
           >
             Field surveys
           </mock-typography>
           <mock-typography
-            classname="Card-text-95"
+            classname="Card-text-96"
           >
             Upload photos and notes to fixed survey points, or run a full Reef Check survey that lands on your dashboard.
           </mock-typography>
           <mock-typography
-            classname="Card-tag-96"
+            classname="Card-tag-97"
           >
             See how the reef responds
           </mock-typography>
@@ -996,38 +1034,38 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
       </mock-box>
     </mock-box>
     <mock-box
-      classname="InfoFooter-footer-97"
+      classname="InfoFooter-footer-98"
       component="footer"
     >
       <mock-box
-        classname="InfoFooter-inner-98"
+        classname="InfoFooter-inner-99"
       >
         <mock-box
-          classname="InfoFooter-content-99"
+          classname="InfoFooter-content-100"
         >
           <mock-typography
-            classname="InfoFooter-logo-100"
+            classname="InfoFooter-logo-101"
             component="div"
           >
             Aqua
             <span
-              class="InfoFooter-logoAccent-101"
+              class="InfoFooter-logoAccent-102"
             >
               link
             </span>
           </mock-typography>
           <mock-typography
-            classname="InfoFooter-text-102"
+            classname="InfoFooter-text-103"
           >
             Aqualink is a philanthropic engineering organization dedicated to ocean monitoring and conservation. We build tools that give scientists, local communities and the public a clear view of marine health, so they can understand and protect our oceans.
           </mock-typography>
           <mock-box
             aria-label="Footer"
-            classname="InfoFooter-links-103"
+            classname="InfoFooter-links-104"
             component="nav"
           >
             <mock-link
-              classname="InfoFooter-link-104"
+              classname="InfoFooter-link-105"
               component="[object Object]"
               to="/about"
               underline="none"
@@ -1035,7 +1073,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               About
             </mock-link>
             <mock-link
-              classname="InfoFooter-link-104"
+              classname="InfoFooter-link-105"
               component="[object Object]"
               to="/faq"
               underline="none"
@@ -1043,7 +1081,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               FAQ
             </mock-link>
             <mock-link
-              classname="InfoFooter-link-104"
+              classname="InfoFooter-link-105"
               component="[object Object]"
               to="/tracker"
               underline="none"
@@ -1051,7 +1089,7 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
               Heatwave tracker
             </mock-link>
             <mock-link
-              classname="InfoFooter-link-104"
+              classname="InfoFooter-link-105"
               href="https://docs.google.com/forms/d/e/1FAIpQLSfrxrgFxmlplxh4JvV8eVj1smpgwZzQV0DHIjY2ujZmHNRUEA/viewform"
               rel="noopener noreferrer"
               target="_blank"

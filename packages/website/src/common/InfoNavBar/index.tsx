@@ -7,14 +7,18 @@ import {
   Menu,
   MenuItem,
   Theme,
+  Tooltip,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import MenuIcon from '@mui/icons-material/Menu';
+import LanguageIcon from '@mui/icons-material/Language';
 import classNames from 'classnames';
 import { colors, instrumentSansFontFamily } from 'layout/App/theme';
+import { useGoogleTranslation } from 'utils/google-translate';
+import infoPageStyles from '../styles/infoPageStyles';
 
 const navLinks = [
   { label: 'Map', to: '/map' },
@@ -31,6 +35,7 @@ function InfoNavBar({
   classes,
 }: InfoNavBarProps) {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+  const [, setTranslationOpen] = useGoogleTranslation();
   const isHero = variant === 'hero';
 
   return (
@@ -76,14 +81,25 @@ function InfoNavBar({
           >
             Register a site
           </Button>
+          <Tooltip title="Translate">
+            <IconButton
+              aria-label="Translate"
+              onClick={() => setTranslationOpen((prev) => !prev)}
+              className={classNames(classes.iconButton, {
+                [classes.heroIconButton]: isHero,
+              })}
+            >
+              <LanguageIcon />
+            </IconButton>
+          </Tooltip>
           <IconButton
             aria-label="Open menu"
             aria-haspopup="true"
             aria-expanded={Boolean(menuAnchor)}
             aria-controls={menuAnchor ? 'info-nav-menu' : undefined}
             onClick={(event) => setMenuAnchor(event.currentTarget)}
-            className={classNames(classes.menuButton, {
-              [classes.heroMenuButton]: isHero,
+            className={classNames(classes.iconButton, classes.menuButton, {
+              [classes.heroIconButton]: isHero,
             })}
           >
             <MenuIcon />
@@ -248,45 +264,29 @@ const styles = (theme: Theme) =>
         display: 'none',
       },
     },
+    iconButton: {
+      color: colors.navy,
+    },
+    heroIconButton: {
+      color: colors.white,
+    },
     menuButton: {
       display: 'none',
-      color: colors.navy,
       [theme.breakpoints.down('md')]: {
         display: 'inline-flex',
       },
     },
-    heroMenuButton: {
-      color: colors.white,
-    },
     menuPaper: {
-      marginTop: 4,
+      ...infoPageStyles.menuPaper,
       minWidth: 200,
-      color: colors.white,
-      background: 'rgba(40,44,50,.72)',
-      WebkitBackdropFilter: 'blur(20px) saturate(160%)',
-      backdropFilter: 'blur(20px) saturate(160%)',
-      border: '1px solid rgba(255,255,255,.14)',
-      borderRadius: 8,
-      boxShadow: '0 10px 30px rgba(0,0,0,.35)',
     },
-    menuList: {
-      padding: 4,
-    },
+    menuList: infoPageStyles.menuList,
     menuItem: {
-      minHeight: 0,
+      ...infoPageStyles.menuItem,
       padding: '10px 14px',
-      borderRadius: 4,
-      fontFamily: instrumentSansFontFamily,
       fontSize: 16,
       fontWeight: 500,
       lineHeight: 'normal',
-      letterSpacing: 'normal',
-      WebkitFontSmoothing: 'auto',
-      MozOsxFontSmoothing: 'auto',
-      '&:hover, &.Mui-focusVisible': {
-        backgroundColor: colors.oceanBlue,
-        color: colors.white,
-      },
     },
   });
 

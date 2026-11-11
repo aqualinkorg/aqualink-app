@@ -6,15 +6,10 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import InfoNavBar from 'common/InfoNavBar';
 import InfoFooter from 'common/InfoFooter';
-import {
-  colors,
-  ibmPlexMonoFontFamily,
-  instrumentSansFontFamily,
-} from 'layout/App/theme';
+import infoPageStyles from 'common/styles/infoPageStyles';
+import { colors, ibmPlexMonoFontFamily } from 'layout/App/theme';
+import { contactFormUrl } from 'constants/links';
 import { exampleSites, tableHeaders } from './titles';
-
-const contactFormUrl =
-  'https://docs.google.com/forms/d/e/1FAIpQLSfrxrgFxmlplxh4JvV8eVj1smpgwZzQV0DHIjY2ujZmHNRUEA/viewform';
 
 function ExampleLink({ to, href, className, children }: ExampleLinkProps) {
   return to ? (
@@ -22,7 +17,13 @@ function ExampleLink({ to, href, className, children }: ExampleLinkProps) {
       {children}
     </MuiLink>
   ) : (
-    <MuiLink href={href} underline="none" className={className}>
+    <MuiLink
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      underline="none"
+      className={className}
+    >
       {children}
     </MuiLink>
   );
@@ -151,47 +152,17 @@ function Examples({ classes }: ExamplesProps) {
 
 const styles = (theme: Theme) =>
   createStyles({
-    root: {
-      fontFamily: instrumentSansFontFamily,
-      color: colors.navy,
-      background: colors.white,
-      lineHeight: 'normal',
-      minWidth: 0,
-      WebkitFontSmoothing: 'auto',
-      MozOsxFontSmoothing: 'auto',
-    },
+    root: infoPageStyles.root,
     examples: {
-      maxWidth: 1200,
-      margin: '0 auto',
-      boxSizing: 'content-box',
+      ...infoPageStyles.section,
       padding: '88px 24px 96px',
     },
-    eyebrow: {
-      margin: '0 0 16px',
-      fontFamily: ibmPlexMonoFontFamily,
-      fontSize: 14,
-      lineHeight: 'normal',
-      letterSpacing: '0.06em',
-      textTransform: 'uppercase',
-      color: colors.slateGray,
-    },
-    title: {
-      margin: 0,
-      fontFamily: 'inherit',
-      fontSize: 56,
-      lineHeight: 1.05,
-      letterSpacing: '-0.03em',
-      fontWeight: 700,
-      maxWidth: 860,
-    },
+    eyebrow: infoPageStyles.eyebrow,
+    title: infoPageStyles.title,
     intro: {
+      ...infoPageStyles.intro,
       margin: '14px 0 0',
-      fontFamily: 'inherit',
       fontSize: 18,
-      lineHeight: 1.55,
-      letterSpacing: 'normal',
-      color: colors.slateGray,
-      maxWidth: 680,
     },
     tableWrapper: {
       marginTop: 36,

@@ -24,8 +24,8 @@ import { useAppDispatch } from 'store/hooks';
 
 import { userInfoSelector, getSelf } from 'store/User/userSlice';
 import validators from 'helpers/validators';
-import NavBar from 'common/NavBar';
-import Footer from 'common/Footer';
+import InfoNavBar from 'common/InfoNavBar';
+import InfoFooter from 'common/InfoFooter';
 import RegisterDialog from 'common/RegisterDialog';
 import SignInDialog from 'common/SignInDialog';
 import siteServices from 'services/siteServices';
@@ -174,7 +174,7 @@ function Apply({ classes }: ApplyProps) {
   return (
     <>
       {newSiteId && <Navigate to={`/sites/${newSiteId}`} replace />}
-      <NavBar searchLocation={false} />
+      <InfoNavBar />
       <Box className={classes.boxBar} height="100%" pt={4}>
         <Container>
           <Grid container spacing={6}>
@@ -329,7 +329,7 @@ function Apply({ classes }: ApplyProps) {
             : 'Something went wrong, please try again'}
         </Alert>
       </Snackbar>
-      <Footer />
+      <InfoFooter />
       <RegisterDialog
         open={registerDialogOpen}
         handleRegisterOpen={handleRegisterDialog}

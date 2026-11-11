@@ -15,11 +15,9 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import InfoNavBar from 'common/InfoNavBar';
 import InfoFooter from 'common/InfoFooter';
-import {
-  colors,
-  instrumentSansFontFamily,
-  ibmPlexMonoFontFamily,
-} from 'layout/App/theme';
+import infoPageStyles from 'common/styles/infoPageStyles';
+import { colors, ibmPlexMonoFontFamily } from 'layout/App/theme';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
 import { ReactComponent as CheckIcon } from 'assets/img/landing-page/icon-check.svg';
 import Card from './Card';
 import Hero from './Hero';
@@ -33,6 +31,13 @@ import {
 } from './titles';
 import dashboardImage from '../../assets/img/landing-page/dashboard.jpg';
 import aiChatImage from '../../assets/img/landing-page/ai-chat.png';
+
+const trackClick = (label: string) => () =>
+  trackButtonClick(
+    GaCategory.BUTTON_CLICK,
+    GaAction.LANDING_PAGE_BUTTON_CLICK,
+    label,
+  );
 
 function LandingPage({ classes }: LandingPageProps) {
   const isScrolled = useScrollTrigger({
@@ -113,6 +118,7 @@ function LandingPage({ classes }: LandingPageProps) {
             <MuiLink
               component={Link}
               to="/sites/1006"
+              onClick={trackClick('Explore a live site')}
               underline="always"
               className={classes.liveSiteLink}
             >
@@ -122,6 +128,7 @@ function LandingPage({ classes }: LandingPageProps) {
               <MuiLink
                 component={Link}
                 to="/examples"
+                onClick={trackClick('Explore reef examples')}
                 underline="always"
                 className={classes.examplesLink}
               >
@@ -206,6 +213,7 @@ function LandingPage({ classes }: LandingPageProps) {
           <Button
             component={Link}
             to="/collections/804"
+            onClick={trackClick('Caribbean Collection')}
             className={classes.heatwavesButton}
           >
             Caribbean Collection
@@ -255,6 +263,7 @@ function LandingPage({ classes }: LandingPageProps) {
             <Button
               component={Link}
               to="/register"
+              onClick={trackClick('Register your site')}
               className={classes.startButton}
             >
               Register your site
@@ -277,15 +286,7 @@ const styles = (theme: Theme) =>
       right: 0,
       zIndex: theme.zIndex.appBar,
     },
-    root: {
-      fontFamily: instrumentSansFontFamily,
-      color: colors.navy,
-      background: colors.white,
-      lineHeight: 'normal',
-      minWidth: 0,
-      WebkitFontSmoothing: 'auto',
-      MozOsxFontSmoothing: 'auto',
-    },
+    root: infoPageStyles.root,
     facts: {
       borderTop: `1px solid ${colors.borderGray}`,
       borderBottom: `1px solid ${colors.borderGray}`,

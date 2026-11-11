@@ -8,11 +8,17 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import InfoNavBar from 'common/InfoNavBar';
-import { colors, instrumentSansFontFamily } from 'layout/App/theme';
+import infoPageStyles from 'common/styles/infoPageStyles';
+import { useAppDispatch } from 'store/hooks';
+import { clearSiteFilters, patchSiteFilters } from 'store/Sites/sitesListSlice';
+import { SiteOption } from 'store/Sites/types';
+import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
+import { colors } from 'layout/App/theme';
 import { ReactComponent as ChevronIcon } from 'assets/img/landing-page/icon-chevron-down.svg';
 import heroImage from '../../../assets/img/landing-page/hero-clownfish.jpg';
 import { searchFields, SearchFieldName } from '../titles';
@@ -21,6 +27,42 @@ function Hero({ classes }: HeroProps) {
   const [searchValues, setSearchValues] = useState<
     Record<SearchFieldName, string>
   >({ heatStress: '', siteOptions: '' });
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    trackButtonClick(
+      GaCategory.BUTTON_CLICK,
+      GaAction.LANDING_PAGE_BUTTON_CLICK,
+      'Show Map',
+    );
+    dispatch(clearSiteFilters());
+    if (searchValues.heatStress) {
+      dispatch(
+        patchSiteFilters({
+          category: 'heatStress',
+          filter: Number(searchValues.heatStress),
+          value: true,
+        }),
+      );
+    }
+    if (searchValues.siteOptions) {
+      dispatch(
+        patchSiteFilters({
+          category: 'siteOptions',
+          filter: searchValues.siteOptions as SiteOption,
+          value: true,
+        }),
+      );
+    }
+    navigate({
+      pathname: '/map',
+      search: new URLSearchParams(
+        Object.entries(searchValues).filter(([, value]) => value),
+      ).toString(),
+    });
+  };
 
   return (
     <Box className={classes.wrapper}>
@@ -32,9 +74,8 @@ function Hero({ classes }: HeroProps) {
           </Typography>
           <Box
             component="form"
-            action="/map"
-            method="get"
             role="search"
+            onSubmit={onSearch}
             className={classes.search}
           >
             <Box>
@@ -54,7 +95,6 @@ function Hero({ classes }: HeroProps) {
                   <Select
                     id={id}
                     labelId={`${id}-label`}
-                    name={searchValues[name] ? name : undefined}
                     value={searchValues[name]}
                     onChange={(event) => {
                       const { value } = event.target;
@@ -245,43 +285,19 @@ const styles = (theme: Theme) =>
         height: 14,
       },
     },
-    menuPaper: {
-      marginTop: 4,
-      color: colors.white,
-      background: 'rgba(40,44,50,.72)',
-      WebkitBackdropFilter: 'blur(20px) saturate(160%)',
-      backdropFilter: 'blur(20px) saturate(160%)',
-      border: '1px solid rgba(255,255,255,.14)',
-      borderRadius: 8,
-      boxShadow: '0 10px 30px rgba(0,0,0,.35)',
-    },
-    menuList: {
-      padding: 4,
-    },
+    menuPaper: infoPageStyles.menuPaper,
+    menuList: infoPageStyles.menuList,
     menuItem: {
+      ...infoPageStyles.menuItem,
       position: 'relative',
-      minHeight: 0,
       padding: '3px 12px 3px 22px',
-      borderRadius: 4,
-      fontFamily: instrumentSansFontFamily,
       fontSize: 15,
       lineHeight: 1.35,
-      letterSpacing: 'normal',
-      WebkitFontSmoothing: 'auto',
-      MozOsxFontSmoothing: 'auto',
-      '&.Mui-selected': {
-        backgroundColor: 'transparent',
-      },
       '&.Mui-selected::before': {
         content: '"✓"',
         position: 'absolute',
         left: 7,
       },
-      '&:hover, &.Mui-selected:hover, &.Mui-focusVisible, &.Mui-selected.Mui-focusVisible':
-        {
-          backgroundColor: colors.oceanBlue,
-          color: colors.white,
-        },
     },
     searchButton: {
       marginTop: 4,

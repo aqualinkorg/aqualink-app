@@ -6,7 +6,8 @@ import Apply from '.';
 
 const mockStore = configureStore([]);
 
-vi.mock('common/NavBar', () => ({ default: 'Mock-NavBar' }));
+vi.mock('common/InfoNavBar', () => ({ default: 'Mock-InfoNavBar' }));
+vi.mock('common/InfoFooter', () => ({ default: 'Mock-InfoFooter' }));
 vi.mock('./LocationMap', () => ({ default: 'Mock-LocationMap' }));
 
 describe('Site registration page', () => {

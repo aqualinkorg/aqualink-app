@@ -5,6 +5,7 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { colors, instrumentSansFontFamily } from 'layout/App/theme';
+import { contactFormUrl } from 'constants/links';
 
 const footerLinks = [
   { label: 'About', to: '/about' },
@@ -12,7 +13,7 @@ const footerLinks = [
   { label: 'Heatwave tracker', to: '/tracker' },
   {
     label: 'Contact us',
-    href: 'https://docs.google.com/forms/d/e/1FAIpQLSfrxrgFxmlplxh4JvV8eVj1smpgwZzQV0DHIjY2ujZmHNRUEA/viewform',
+    href: contactFormUrl,
   },
 ];
 
