@@ -12,7 +12,6 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 import InfoNavBar from 'common/InfoNavBar';
-import InfoFooter from 'common/InfoFooter';
 import infoPageStyles from 'common/styles/infoPageStyles';
 import { colors, ibmPlexMonoFontFamily } from 'layout/App/theme';
 import { projects, tableHeaders } from './titles';
@@ -108,8 +107,6 @@ function Projects({ classes }: ProjectsProps) {
           )}
         </Box>
       </Box>
-
-      <InfoFooter />
     </Box>
   );
 }

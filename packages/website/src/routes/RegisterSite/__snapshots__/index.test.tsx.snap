@@ -432,7 +432,6 @@ exports[`Site registration page > should render with given state from Redux stor
       </div>
     </div>
   </mock-snackbar>
-  <mock-infofooter />
   <mock-dialog
     maxwidth="xs"
     open="false"

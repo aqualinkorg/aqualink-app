@@ -6,7 +6,6 @@ import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 
 import InfoNavBar from 'common/InfoNavBar';
-import InfoFooter from 'common/InfoFooter';
 
 import dashboardAndReef from '../../assets/img/dashboard.jpg';
 import mapOfSites from '../../assets/img/map.jpg';
@@ -453,7 +452,6 @@ function About({ classes }: AboutProps) {
           </div>
         </div>
       </div>
-      <InfoFooter />
     </>
   );
 }

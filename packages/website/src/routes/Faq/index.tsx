@@ -6,7 +6,6 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 
 import InfoNavBar from 'common/InfoNavBar';
-import InfoFooter from 'common/InfoFooter';
 
 function Faq({ classes }: FaqProps) {
   return (
@@ -502,7 +501,6 @@ function Faq({ classes }: FaqProps) {
           {/* bloc-11 END */}
         </div>
       </div>
-      <InfoFooter />
     </>
   );
 }

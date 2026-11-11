@@ -385,6 +385,5 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
       </div>
     </div>
   </div>
-  <mock-infofooter />
 </div>
 `;

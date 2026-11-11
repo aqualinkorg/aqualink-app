@@ -5,7 +5,6 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import InfoNavBar from 'common/InfoNavBar';
-import InfoFooter from 'common/InfoFooter';
 import infoPageStyles from 'common/styles/infoPageStyles';
 import { colors, ibmPlexMonoFontFamily } from 'layout/App/theme';
 import { contactFormUrl } from 'constants/links';
@@ -144,8 +143,6 @@ function Examples({ classes }: ExamplesProps) {
           </Box>
         </Box>
       </Box>
-
-      <InfoFooter showProjectsLink />
     </Box>
   );
 }

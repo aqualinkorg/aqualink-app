@@ -25,7 +25,6 @@ import { useAppDispatch } from 'store/hooks';
 import { userInfoSelector, getSelf, signOutUser } from 'store/User/userSlice';
 import validators from 'helpers/validators';
 import InfoNavBar from 'common/InfoNavBar';
-import InfoFooter from 'common/InfoFooter';
 import RegisterDialog from 'common/RegisterDialog';
 import SignInDialog from 'common/SignInDialog';
 import siteServices from 'services/siteServices';
@@ -334,7 +333,6 @@ function Apply({ classes }: ApplyProps) {
             : 'Something went wrong, please try again'}
         </Alert>
       </Snackbar>
-      <InfoFooter />
       <RegisterDialog
         open={registerDialogOpen}
         handleRegisterOpen={handleRegisterDialog}

@@ -4,7 +4,6 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import InfoNavBar from 'common/InfoNavBar';
-import InfoFooter from 'common/InfoFooter';
 import infoPageStyles from 'common/styles/infoPageStyles';
 import { colors, ibmPlexMonoFontFamily } from 'layout/App/theme';
 import { stories, tableHeaders } from './titles';
@@ -80,8 +79,6 @@ function Blog({ classes }: BlogProps) {
           ))}
         </Box>
       </Box>
-
-      <InfoFooter />
     </Box>
   );
 }

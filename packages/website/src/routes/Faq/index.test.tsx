@@ -8,7 +8,6 @@ import { mockUser } from 'mocks/mockUser';
 import Faq from '.';
 
 vi.mock('common/InfoNavBar', () => ({ default: 'Mock-InfoNavBar' }));
-vi.mock('common/InfoFooter', () => ({ default: 'Mock-InfoFooter' }));
 
 const mockStore = configureStore([]);
 describe('Faq', () => {

@@ -6,7 +6,6 @@ import { renderWithProviders } from 'utils/test-utils';
 import Tracker from '.';
 
 vi.mock('common/InfoNavBar', () => ({ default: 'Mock-InfoNavBar' }));
-vi.mock('common/InfoFooter', () => ({ default: 'Mock-InfoFooter' }));
 
 const mockStore = configureStore([]);
 describe('Tracker', () => {

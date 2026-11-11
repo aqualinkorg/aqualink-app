@@ -9,7 +9,6 @@ import { mockUser } from 'mocks/mockUser';
 import About from '.';
 
 vi.mock('common/InfoNavBar', () => ({ default: 'Mock-InfoNavBar' }));
-vi.mock('common/InfoFooter', () => ({ default: 'Mock-InfoFooter' }));
 
 const mockStore = configureStore([]);
 const theme = createTheme(); // Create a simple theme instance

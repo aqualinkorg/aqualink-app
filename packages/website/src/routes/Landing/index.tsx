@@ -14,7 +14,6 @@ import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import InfoNavBar from 'common/InfoNavBar';
-import InfoFooter from 'common/InfoFooter';
 import infoPageStyles from 'common/styles/infoPageStyles';
 import { colors, ibmPlexMonoFontFamily } from 'layout/App/theme';
 import { GaAction, GaCategory, trackButtonClick } from 'utils/google-analytics';
@@ -271,8 +270,6 @@ function LandingPage({ classes }: LandingPageProps) {
           </Box>
         </Box>
       </Box>
-
-      <InfoFooter />
     </Box>
   );
 }
