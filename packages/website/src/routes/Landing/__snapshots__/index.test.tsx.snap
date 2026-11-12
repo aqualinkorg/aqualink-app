@@ -2,229 +2,103 @@
 
 exports[`Landing Page > should render with given state from Redux store 1`] = `
 <div>
-  <mock-appbar
-    classname="NavBar-appBar-7"
-    color="primary"
-    position="static"
+  <mock-box
+    classname="LandingPage-root-2"
   >
-    <mock-toolbar
-      classname="NavBar-toolbar-10"
+    <mock-box
+      classname="LandingPage-stickyNav-1"
+      style="visibility: hidden; -webkit-transform: translateY(-0px); transform: translateY(-0px);"
     >
-      <mock-drawer
-        anchor="left"
-        classes="[object Object]"
-        open="false"
+      <mock-box
+        classname="InfoNavBar-header-56 InfoNavBar-light-57"
+        component="header"
       >
-        <mock-iconbutton
-          size="large"
-          style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
-        >
-          <mock-clear />
-        </mock-iconbutton>
-        <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          data-discover="true"
-          href="/"
-          tabindex="0"
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Home
-          </mock-typography>
-        </a>
-        <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          data-discover="true"
-          href="/map"
-          tabindex="0"
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Map
-          </mock-typography>
-        </a>
-        <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          data-discover="true"
-          href="/register"
-          tabindex="0"
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Register a site
-          </mock-typography>
-        </a>
-        <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          href="https://highlights.aqualink.org"
-          tabindex="0"
-          target="_blank"
-          to=""
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Highlighted Sites
-          </mock-typography>
-        </mock-link>
-        <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          href="https://bristlemouth.aqualink.org"
-          tabindex="0"
-          target="_blank"
-          to=""
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Bristlemouth Explorer
-          </mock-typography>
-        </mock-link>
-        <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          data-discover="true"
-          href="/tracker"
-          tabindex="0"
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Track a heatwave
-          </mock-typography>
-        </a>
-        <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          data-discover="true"
-          href="/about"
-          tabindex="0"
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            About
-          </mock-typography>
-        </a>
-        <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          data-discover="true"
-          href="/faq"
-          tabindex="0"
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Faq
-          </mock-typography>
-        </a>
-        <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          data-discover="true"
-          href="/buoy"
-          tabindex="0"
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Buoy
-          </mock-typography>
-        </a>
-        <a
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          data-discover="true"
-          href="/drones"
-          tabindex="0"
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Drone
-          </mock-typography>
-        </a>
-        <mock-link
-          classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-21 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
-          href="https://highlights.aqualink.org/contact-us"
-          tabindex="0"
-          target="_blank"
-          to=""
-        >
-          <mock-typography
-            style="text-transform: uppercase;"
-            variant="h6"
-          >
-            Contact us
-          </mock-typography>
-        </mock-link>
         <mock-box
-          margintop="auto"
-          padding="1rem"
-          paddingtop="0px"
+          classname="InfoNavBar-inner-58"
         >
-          <mock-typography
-            variant="subtitle1"
+          <mock-link
+            classname="InfoNavBar-logo-60"
+            component="[object Object]"
+            to="/"
+            underline="none"
           >
-            Aqualink is open-source (MIT)
-            <br />
-            Join us and contribute!
-          </mock-typography>
-          <div
-            class="MuiButtonGroup-root MuiButtonGroup-contained MuiButtonGroup-horizontal MuiButtonGroup-colorPrimary css-tlut1a-MuiButtonGroup-root"
-            role="group"
-          >
-            <a
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-20 MuiButtonGroup-firstButton css-z31nbn-MuiButtonBase-root-MuiButton-root"
-              href="https://github.com/aqualinkorg/aqualink-app"
-              tabindex="0"
-              target="_blank"
+            Aqua
+            <span
+              class="InfoNavBar-logoAccent-62"
             >
-              <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
-              >
-                <mock-github />
-              </span>
-              GitHub
-            </a>
-            <a
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MenuDrawer-contributeButton-20 MuiButtonGroup-lastButton css-z31nbn-MuiButtonBase-root-MuiButton-root"
-              href="https://ovio.org/project/aqualinkorg/aqualink-app"
-              tabindex="0"
-              target="_blank"
-            >
-              <img
-                alt="Ovio Logo"
-                src="/src/assets/img/ovio_logo.png"
-              />
-            </a>
-          </div>
-        </mock-box>
-      </mock-drawer>
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-ytge4g-MuiGrid-root"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-2 MuiGrid-grid-md-2 css-3nmqko-MuiGrid-root"
-        >
+              link
+            </span>
+          </mock-link>
           <mock-box
-            alignitems="center"
-            display="flex"
-            flexwrap="nowrap"
+            aria-label="Main"
+            classname="InfoNavBar-nav-64"
+            component="nav"
           >
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-65 InfoNavBar-desktopOnly-70 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+              data-discover="true"
+              href="/map"
+              tabindex="0"
+            >
+              Map
+            </a>
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-65 InfoNavBar-desktopOnly-70 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+              data-discover="true"
+              href="/examples"
+              tabindex="0"
+            >
+              Examples
+            </a>
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-65 InfoNavBar-desktopOnly-70 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+              data-discover="true"
+              href="/projects"
+              tabindex="0"
+            >
+              Projects
+            </a>
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-65 InfoNavBar-desktopOnly-70 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+              data-discover="true"
+              href="/blog"
+              tabindex="0"
+            >
+              Blog
+            </a>
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-68 InfoNavBar-desktopOnly-70 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+              data-discover="true"
+              href="/register"
+              tabindex="0"
+            >
+              Register a site
+            </a>
+            <mock-tooltip
+              title="Translate"
+            >
+              <mock-iconbutton
+                aria-label="Translate"
+                classname="InfoNavBar-iconButton-71"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="LanguageIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
+                  />
+                </svg>
+              </mock-iconbutton>
+            </mock-tooltip>
             <mock-iconbutton
-              color="inherit"
-              edge="start"
-              size="large"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Open menu"
+              classname="InfoNavBar-iconButton-71 InfoNavBar-menuButton-73"
             >
               <svg
                 aria-hidden="true"
@@ -238,1155 +112,927 @@ exports[`Landing Page > should render with given state from Redux store 1`] = `
                 />
               </svg>
             </mock-iconbutton>
-            <mock-link
-              classname="NavBar-navBarLink-8"
-              href="/map"
-              underline="hover"
-            >
-              <mock-typography
-                color="textPrimary"
-                variant="h4"
-              >
-                Aqua
-              </mock-typography>
-              <mock-typography
-                style="color: rgb(138, 198, 222);"
-                variant="h4"
-              >
-                link
-              </mock-typography>
-            </mock-link>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8 MuiGrid-grid-sm-4 MuiGrid-grid-md-8 NavBar-languageUserWrapper-18 css-kdnu70-MuiGrid-root"
-        >
-          <mock-tooltip
-            title="Translate"
-          >
-            <mock-iconbutton
-              size="large"
-              style="color: white;"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                data-testid="LanguageIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
-                />
-              </svg>
-            </mock-iconbutton>
-          </mock-tooltip>
-          <mock-box
-            alignitems="center"
-            display="flex"
-            flexwrap="nowrap"
-          >
-            Mock User
-            <mock-iconbutton
-              classname="NavBar-button-17"
-              size="large"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium NavBar-expandIcon-16 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                />
-              </svg>
-            </mock-iconbutton>
             <mock-menu
-              classname="NavBar-userMenu-13"
-              keepmounted="true"
-              menulistprops="[object Object]"
+              anchororigin="[object Object]"
+              classes="[object Object]"
+              id="info-nav-menu"
               open="false"
-              popoverclasses="[object Object]"
+              transformorigin="[object Object]"
             >
-              <mock-divider
-                classname="NavBar-userMenuDivider-12"
-              />
-              <a
-                class="NavBar-menuItemLink-15"
-                data-discover="true"
-                href="/dashboard"
-              >
-                <mock-menuitem
-                  classname="NavBar-menuItem-14"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                        data-testid="DashboardTwoToneIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z"
-                          opacity=".3"
-                        />
-                        <path
-                          d="M3 13h8V3H3zm2-8h4v6H5zm8 16h8V11h-8zm2-8h4v6h-4zM13 3v6h8V3zm6 4h-4V5h4zM3 21h8v-6H3zm2-4h4v2H5z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                    >
-                      Dashboard
-                    </div>
-                  </div>
-                </mock-menuitem>
-              </a>
-              <mock-divider
-                classname="NavBar-userMenuDivider-12"
-              />
               <mock-menuitem
-                classname="NavBar-menuItem-14"
+                classname="InfoNavBar-menuItem-76"
+                component="[object Object]"
+                to="/map"
               >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-iqna23-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                      data-testid="PowerSettingsNewIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M13 3h-2v10h2zm4.83 2.17-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-                  >
-                    Logout
-                  </div>
-                </div>
+                Map
+              </mock-menuitem>
+              <mock-menuitem
+                classname="InfoNavBar-menuItem-76"
+                component="[object Object]"
+                to="/examples"
+              >
+                Examples
+              </mock-menuitem>
+              <mock-menuitem
+                classname="InfoNavBar-menuItem-76"
+                component="[object Object]"
+                to="/projects"
+              >
+                Projects
+              </mock-menuitem>
+              <mock-menuitem
+                classname="InfoNavBar-menuItem-76"
+                component="[object Object]"
+                to="/blog"
+              >
+                Blog
+              </mock-menuitem>
+              <mock-menuitem
+                classname="InfoNavBar-menuItem-76"
+                component="[object Object]"
+                to="/register"
+              >
+                Register a site
               </mock-menuitem>
             </mock-menu>
           </mock-box>
-        </div>
-      </div>
-    </mock-toolbar>
-  </mock-appbar>
-  <mock-dialog
-    maxwidth="xs"
-    open="false"
-    scroll="body"
-    transitionprops="[object Object]"
-  >
-    <mock-card>
-      <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-23 css-149tc0y-MuiCardHeader-root"
-      >
-        <div
-          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
-        >
-          <span
-            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
-                >
-                  <mock-typography
-                    variant="h4"
-                  >
-                    Aqua
-                  </mock-typography>
-                  <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-24"
-                    variant="h4"
-                  >
-                    link
-                  </mock-typography>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-              >
-                <mock-iconbutton
-                  classname="RegisterDialog-closeButton-22"
-                  size="small"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="CloseIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </mock-iconbutton>
-              </div>
-            </div>
-          </span>
-        </div>
-      </div>
-      <mock-cardcontent>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-25 css-9ve18c-MuiGrid-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-            >
-              <mock-typography
-                color="textSecondary"
-                variant="h5"
-              >
-                Create an account
-              </mock-typography>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
-          >
-            <form
-              class="RegisterDialog-form-26"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="firstName"
-                    id="firstName-label"
-                  >
-                    First Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="firstName"
-                      name="firstName"
-                      placeholder="First Name"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          First Name
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="lastName"
-                    id="lastName-label"
-                  >
-                    Last Name
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="lastName"
-                      name="lastName"
-                      placeholder="Last Name"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Last Name
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="organization"
-                    id="organization-label"
-                  >
-                    Organization
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="organization"
-                      name="organization"
-                      placeholder="Organization"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Organization
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="emailAddress"
-                    id="emailAddress-label"
-                  >
-                    Email Address
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="emailAddress"
-                      name="emailAddress"
-                      placeholder="Email Address"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Email Address
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-27 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="password"
-                    id="password-label"
-                  >
-                    Password
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-28 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Password
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-16uec2a-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-gxu77u-MuiGrid-root"
-                >
-                  <mock-checkbox
-                    checked="false"
-                    classname="RegisterDialog-termsCheckbox-31"
-                    color="primary"
-                  />
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11 css-1ow5ctt-MuiGrid-root"
-                >
-                  <mock-box>
-                    <mock-typography
-                      classname="RegisterDialog-formText-29"
-                      color="textSecondary"
-                      variant="subtitle1"
-                    >
-                      I have read the
-                       
-                      <a
-                        class="RegisterDialog-termsLink-32"
-                        data-discover="true"
-                        href="/terms"
-                      >
-                        Terms and Conditions
-                      </a>
-                    </mock-typography>
-                  </mock-box>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-30 css-z4k4cw-MuiGrid-root"
-              >
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
-                  disabled=""
-                  tabindex="-1"
-                  type="submit"
-                >
-                  CREATE ACCOUNT
-                </button>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-              >
-                <mock-typography
-                  classname="RegisterDialog-formText-29"
-                  color="textSecondary"
-                  variant="subtitle1"
-                >
-                  Have an account?
-                   
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
-                    tabindex="0"
-                    type="button"
-                  >
-                    SIGN IN
-                  </button>
-                </mock-typography>
-              </div>
-            </form>
-          </div>
-        </div>
-      </mock-cardcontent>
-    </mock-card>
-  </mock-dialog>
-  <mock-dialog
-    maxwidth="xs"
-    open="false"
-    transitionprops="[object Object]"
-  >
-    <mock-card
-      elevation="0"
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="Hero-wrapper-77"
     >
-      <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-34 css-149tc0y-MuiCardHeader-root"
+      <mock-box
+        classname="Hero-hero-78"
       >
-        <div
-          class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
+        <mock-box
+          classname="InfoNavBar-header-56"
+          component="header"
         >
-          <span
-            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1c6scqg-MuiTypography-root"
+          <mock-box
+            classname="InfoNavBar-heroInner-59"
           >
-            <div
-              class="MuiGrid-root MuiGrid-container css-1ydalx3-MuiGrid-root"
+            <mock-link
+              classname="InfoNavBar-logo-60 InfoNavBar-heroLogo-61"
+              component="[object Object]"
+              to="/"
+              underline="none"
             >
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
+              Aqua
+              <span
+                class="InfoNavBar-heroLogoAccent-63"
               >
-                <div
-                  class="MuiGrid-root MuiGrid-container css-1dphqhe-MuiGrid-root"
-                >
-                  <mock-typography
-                    variant="h4"
-                  >
-                    Aqua
-                  </mock-typography>
-                  <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-35"
-                    variant="h4"
-                  >
-                    link
-                  </mock-typography>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
+                link
+              </span>
+            </mock-link>
+            <mock-box
+              aria-label="Main"
+              classname="InfoNavBar-nav-64"
+              component="nav"
+            >
+              <a
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-65 InfoNavBar-desktopOnly-70 InfoNavBar-heroNavLink-66 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                data-discover="true"
+                href="/map"
+                tabindex="0"
+              >
+                Map
+              </a>
+              <a
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-65 InfoNavBar-desktopOnly-70 InfoNavBar-heroNavLink-66 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                data-discover="true"
+                href="/examples"
+                tabindex="0"
+              >
+                Examples
+              </a>
+              <a
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-65 InfoNavBar-desktopOnly-70 InfoNavBar-heroNavLink-66 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                data-discover="true"
+                href="/projects"
+                tabindex="0"
+              >
+                Projects
+              </a>
+              <a
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-65 InfoNavBar-desktopOnly-70 InfoNavBar-heroNavLink-66 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                data-discover="true"
+                href="/blog"
+                tabindex="0"
+              >
+                Blog
+              </a>
+              <a
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-68 InfoNavBar-desktopOnly-70 InfoNavBar-heroRegisterButton-69 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                data-discover="true"
+                href="/register"
+                tabindex="0"
+              >
+                Register a site
+              </a>
+              <mock-tooltip
+                title="Translate"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-33"
-                  size="small"
+                  aria-label="Translate"
+                  classname="InfoNavBar-iconButton-71 InfoNavBar-heroIconButton-72"
                 >
                   <svg
                     aria-hidden="true"
                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="CloseIcon"
+                    data-testid="LanguageIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
                     />
                   </svg>
                 </mock-iconbutton>
-              </div>
-            </div>
-          </span>
-        </div>
-      </div>
-      <div
-        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
-        style="min-height: 0px;"
-      >
-        <div
-          class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
-        >
-          <div
-            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
-          >
-            <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorSuccess MuiAlert-standardSuccess MuiAlert-standard css-1v1cteu-MuiPaper-root-MuiAlert-root"
-              role="alert"
-              style="--Paper-shadow: none;"
-            >
-              <div
-                class="MuiAlert-icon css-vab54s-MuiAlert-icon"
+              </mock-tooltip>
+              <mock-iconbutton
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-label="Open menu"
+                classname="InfoNavBar-iconButton-71 InfoNavBar-menuButton-73 InfoNavBar-heroIconButton-72"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
-                  data-testid="SuccessOutlinedIcon"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="MenuIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+                    d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
                   />
                 </svg>
-              </div>
-              <div
-                class="MuiAlert-message css-zioonp-MuiAlert-message"
+              </mock-iconbutton>
+              <mock-menu
+                anchororigin="[object Object]"
+                classes="[object Object]"
+                id="info-nav-menu"
+                open="false"
+                transformorigin="[object Object]"
               >
-                Password reset email sent to .
-              </div>
-              <div
-                class="MuiAlert-action css-rgppqo-MuiAlert-action"
-              >
-                <mock-iconbutton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
+                <mock-menuitem
+                  classname="InfoNavBar-menuItem-76"
+                  component="[object Object]"
+                  to="/map"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1ckov0h-MuiSvgIcon-root"
-                    data-testid="CloseIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </mock-iconbutton>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <mock-cardcontent>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
+                  Map
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="InfoNavBar-menuItem-76"
+                  component="[object Object]"
+                  to="/examples"
+                >
+                  Examples
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="InfoNavBar-menuItem-76"
+                  component="[object Object]"
+                  to="/projects"
+                >
+                  Projects
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="InfoNavBar-menuItem-76"
+                  component="[object Object]"
+                  to="/blog"
+                >
+                  Blog
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="InfoNavBar-menuItem-76"
+                  component="[object Object]"
+                  to="/register"
+                >
+                  Register a site
+                </mock-menuitem>
+              </mock-menu>
+            </mock-box>
+          </mock-box>
+        </mock-box>
+        <mock-box
+          classname="Hero-content-79"
         >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-36 css-9ve18c-MuiGrid-root"
+          <mock-typography
+            classname="Hero-title-80"
+            variant="h1"
           >
-            <div
-              class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-            >
+            Real-time monitoring for the world's reefs
+          </mock-typography>
+          <mock-box
+            classname="Hero-search-81"
+            component="form"
+            role="search"
+          >
+            <mock-box>
               <mock-typography
-                color="textSecondary"
-                variant="h5"
+                classname="Hero-searchTitle-82"
+                variant="h2"
               >
-                Sign In
+                Find a reef
               </mock-typography>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
-          >
-            <form
-              class="SignInDialog-form-37"
+              <mock-typography
+                classname="Hero-searchText-83"
+              >
+                Filter monitored sites by heat stress and installed sensors.
+              </mock-typography>
+            </mock-box>
+            <mock-box
+              classname="Hero-searchFields-84"
             >
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-38 css-z4k4cw-MuiGrid-root"
-              >
+              <mock-box>
+                <label
+                  class="MuiFormLabel-root MuiFormLabel-colorPrimary Hero-label-85 css-1wpqwwp-MuiFormLabel-root"
+                  id="hero-alert-label"
+                >
+                  Alert level
+                </label>
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary Hero-select-86 MuiSelect-root css-12kco1g-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="emailAddress"
-                    id="emailAddress-label"
-                  >
-                    Email Address
-                  </label>
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-39 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="emailAddress"
-                      name="emailAddress"
-                      placeholder="Email Address"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Email Address
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-38 css-z4k4cw-MuiGrid-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1kijxy5-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="password"
-                    id="password-label"
-                  >
-                    Password
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1y8xqzk-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-39 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-1n64csd-MuiNotchedOutlined-root"
-                      >
-                        <span>
-                          Password
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-              >
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-42 css-1ysap08-MuiButtonBase-root-MuiButton-root"
-                  tabindex="0"
-                  type="button"
-                >
-                  <mock-typography
-                    color="textSecondary"
-                    variant="subtitle2"
-                  >
-                    Forgot your password?
-                  </mock-typography>
-                </button>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-41 css-z4k4cw-MuiGrid-root"
-              >
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
-                  tabindex="0"
-                  type="submit"
-                >
-                  SIGN IN
-                </button>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-              >
-                <mock-typography
-                  classname="SignInDialog-formText-40"
-                  color="textSecondary"
-                  variant="subtitle1"
-                >
-                  Don't have an account?
-                   
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-labelledby="hero-alert-label hero-alert"
+                    class="MuiSelect-select Hero-selectInput-87 MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    id="hero-alert"
+                    role="combobox"
                     tabindex="0"
-                    type="button"
                   >
-                    SIGN UP
-                  </button>
-                </mock-typography>
-              </div>
-            </form>
-          </div>
-        </div>
-      </mock-cardcontent>
-    </mock-card>
-  </mock-dialog>
-  <div>
-    <mock-box
-      alignitems="top"
-      classname="LandingPage-landingImage-1"
-      display="flex"
-    >
-      <div
-        class="MuiContainer-root MuiContainer-maxWidthLg LandingPage-container-2 css-5c1adp-MuiContainer-root"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-9 css-lbmya4-MuiGrid-root"
-        >
-          <mock-box
-            display="flex"
-          >
-            <mock-typography
-              color="textPrimary"
-              variant="h1"
-            >
-              Aqua
-            </mock-typography>
-            <mock-typography
-              classname="LandingPage-aqualinkSecondPart-3"
-              color="textPrimary"
-              variant="h1"
-            >
-              link
-            </mock-typography>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-11 MuiGrid-grid-md-7 css-1kc02px-MuiGrid-root"
-        >
-          <mock-box
-            display="flex"
-            mt="1.5rem"
-          >
-            <mock-typography
-              color="textPrimary"
-              variant="h1"
-            >
-              Monitoring for marine ecosystems
-            </mock-typography>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-9 MuiGrid-grid-md-4 css-1afkc2h-MuiGrid-root"
-        >
-          <mock-box
-            display="flex"
-            mt="4rem"
-          >
-            <mock-typography
-              color="textPrimary"
-              variant="h4"
-            >
-              A tool for people on the front lines of ocean conservation
-            </mock-typography>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-r5meod-MuiGrid-root"
-        >
-          <mock-box
-            mt="2rem"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-8po1oh-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-              >
-                <a
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary LandingPage-buttons-5 css-z31nbn-MuiButtonBase-root-MuiButton-root"
-                  data-discover="true"
-                  href="/map"
-                  tabindex="0"
+                    Any level
+                  </div>
+                  <input
+                    aria-hidden="true"
+                    aria-invalid="false"
+                    class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
+                    tabindex="-1"
+                    value=""
+                  />
+                  <svg
+                    class="MuiSelect-icon Hero-icon-88 MuiSelect-iconStandard css-10pfg7h-MuiNativeSelect-root-MuiSelect-icon"
+                  >
+                    img/landing-page/icon-chevron-down.svg
+                  </svg>
+                </div>
+              </mock-box>
+              <mock-box>
+                <label
+                  class="MuiFormLabel-root MuiFormLabel-colorPrimary Hero-label-85 css-1wpqwwp-MuiFormLabel-root"
+                  id="hero-sensor-label"
                 >
-                  <mock-typography
-                    variant="h5"
-                  >
-                    View The Map
-                  </mock-typography>
-                </a>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
-              >
-                <a
-                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary LandingPage-buttons-5 LandingPage-whiteColorButton-6 css-17b85jl-MuiButtonBase-root-MuiButton-root"
-                  data-discover="true"
-                  href="/register"
-                  tabindex="0"
+                  Sensor type
+                </label>
+                <div
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary Hero-select-86 MuiSelect-root css-12kco1g-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
-                  <mock-typography
-                    variant="h5"
+                  <div
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-labelledby="hero-sensor-label hero-sensor"
+                    class="MuiSelect-select Hero-selectInput-87 MuiSelect-standard MuiInputBase-input MuiInput-input css-1f2i9o-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    id="hero-sensor"
+                    role="combobox"
+                    tabindex="0"
                   >
-                    Register Your Site
-                  </mock-typography>
-                </a>
-              </div>
-            </div>
+                    Any sensor
+                  </div>
+                  <input
+                    aria-hidden="true"
+                    aria-invalid="false"
+                    class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
+                    tabindex="-1"
+                    value=""
+                  />
+                  <svg
+                    class="MuiSelect-icon Hero-icon-88 MuiSelect-iconStandard css-10pfg7h-MuiNativeSelect-root-MuiSelect-icon"
+                  >
+                    img/landing-page/icon-chevron-down.svg
+                  </svg>
+                </div>
+              </mock-box>
+            </mock-box>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary Hero-searchButton-92 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="submit"
+            >
+              Show Map
+            </button>
           </mock-box>
-        </div>
-      </div>
+          <mock-typography
+            classname="Hero-text-93"
+          >
+            A free, open-source tool for people on the front lines of ocean conservation: satellite data, in-water sensors and field surveys for every reef, in one app.
+          </mock-typography>
+        </mock-box>
+      </mock-box>
     </mock-box>
-  </div>
-  <div
-    class="MuiContainer-root MuiContainer-maxWidthLg LandingPage-cardContainer-4 css-5c1adp-MuiContainer-root"
-  >
-    <div>
+    <mock-box
+      aria-label="Aqualink at a glance"
+      classname="LandingPage-facts-3"
+      component="section"
+    >
       <mock-box
-        bgcolor="rgba(69, 76, 79, 0.05)"
-        classname="ForwardRef-container-43"
+        classname="LandingPage-factsInner-4"
       >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-154kc58-MuiGrid-root"
+        <mock-box>
+          <mock-typography
+            classname="LandingPage-factValue-5"
+            component="div"
           >
-            <mock-box
-              classname="ForwardRef-textContainer-44"
-            >
-              <mock-box
-                mb="1rem"
-              >
-                <mock-typography
-                  align="inherit"
-                  classname="ForwardRef-cardTitle-45"
-                  variant="h5"
-                >
-                  Centralized information
-                </mock-typography>
-              </mock-box>
-              <mock-typography
-                variant="h6"
-              >
-                Aqualink integrates data from sensors, models, satellite observations, surveys, images, and video to give you an instant view of your ecosystem.
-              </mock-typography>
-            </mock-box>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-154kc58-MuiGrid-root"
+            6,000+
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-factLabel-6"
+            component="div"
           >
-            <img
-              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImage-46 css-1kuwa16-MuiCardMedia-root"
-              src="/src/assets/img/landing-page/metrics.jpg"
-            />
-          </div>
-        </div>
+            sites monitored worldwide
+          </mock-typography>
+        </mock-box>
+        <mock-box>
+          <mock-typography
+            classname="LandingPage-factValue-5"
+            component="div"
+          >
+            Daily
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-factLabel-6"
+            component="div"
+          >
+            satellite temperature and heat stress
+          </mock-typography>
+        </mock-box>
+        <mock-box>
+          <mock-typography
+            classname="LandingPage-factValue-5"
+            component="div"
+          >
+            Hundreds
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-factLabel-6"
+            component="div"
+          >
+            of universities, NGOs and start-ups
+          </mock-typography>
+        </mock-box>
+        <mock-box>
+          <mock-typography
+            classname="LandingPage-factValue-5"
+            component="div"
+          >
+            $0
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-factLabel-6"
+            component="div"
+          >
+            free to use, open source code
+          </mock-typography>
+        </mock-box>
       </mock-box>
-    </div>
-    <div>
+    </mock-box>
+    <mock-box
+      classname="LandingPage-how-7"
+      component="section"
+      id="how"
+    >
+      <mock-typography
+        classname="LandingPage-howTitle-9"
+        variant="h2"
+      >
+        Multiple sources of data, one clear picture
+      </mock-typography>
+      <mock-typography
+        classname="LandingPage-howText-10"
+      >
+        Every site starts with satellite data automatically. Add sensors and surveys whenever you are ready.
+      </mock-typography>
       <mock-box
-        bgcolor="#ffffff"
-        classname="ForwardRef-container-43"
+        classname="LandingPage-cardGrid-11"
       >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12 css-1s227ez-MuiGrid-root"
+        <mock-box
+          classname="Card-card-94"
         >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-154kc58-MuiGrid-root"
+          <svg
+            aria-hidden="true"
           >
-            <mock-box
-              classname="ForwardRef-textContainer-44"
-            >
-              <mock-box
-                mb="1rem"
-              >
-                <mock-typography
-                  align="inherit"
-                  classname="ForwardRef-cardTitle-45"
-                  variant="h5"
-                >
-                  Integrated sensors for automated data collection
-                </mock-typography>
-              </mock-box>
-              <mock-typography
-                variant="h6"
-              >
-                Sofar spotter for real-time telemetry, Fathom for live underwater video, a multi-parameter sonde for water quality information, and hobo temperature logger. Additionally any data in csv format can be uploaded to Aqualink.
-              </mock-typography>
-            </mock-box>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-154kc58-MuiGrid-root"
+            img/landing-page/icon-satellite.svg
+          </svg>
+          <mock-typography
+            classname="Card-title-95"
+            variant="h3"
           >
-            <img
-              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="/src/assets/img/landing-page/sensors.png"
-            />
-          </div>
-        </div>
+            Satellite
+          </mock-typography>
+          <mock-typography
+            classname="Card-text-96"
+          >
+            Daily sea surface temperature, wind and waves, with heat stress and bleaching alerts calculated for you.
+          </mock-typography>
+          <mock-typography
+            classname="Card-tag-97"
+          >
+            Automatic for every site
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Card-card-94"
+        >
+          <svg
+            aria-hidden="true"
+          >
+            img/landing-page/icon-sensor.svg
+          </svg>
+          <mock-typography
+            classname="Card-title-95"
+            variant="h3"
+          >
+            In-water sensors
+          </mock-typography>
+          <mock-typography
+            classname="Card-text-96"
+          >
+            Live streams from Sofar Spotter buoys and live video, or upload batches from sondes, HOBO loggers or any CSV.
+          </mock-typography>
+          <mock-typography
+            classname="Card-tag-97"
+          >
+            Graphs build themselves
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Card-card-94"
+        >
+          <svg
+            aria-hidden="true"
+          >
+            img/landing-page/icon-camera.svg
+          </svg>
+          <mock-typography
+            classname="Card-title-95"
+            variant="h3"
+          >
+            Field surveys
+          </mock-typography>
+          <mock-typography
+            classname="Card-text-96"
+          >
+            Upload photos and notes to fixed survey points, or run a full Reef Check survey that lands on your dashboard.
+          </mock-typography>
+          <mock-typography
+            classname="Card-tag-97"
+          >
+            See how the reef responds
+          </mock-typography>
+        </mock-box>
       </mock-box>
-    </div>
-    <div>
+    </mock-box>
+    <mock-box
+      classname="LandingPage-dashboard-12"
+      component="section"
+      id="dashboard"
+    >
       <mock-box
-        bgcolor="rgba(69, 76, 79, 0.05)"
-        classname="ForwardRef-container-43"
+        classname="LandingPage-dashboardRow-13"
       >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
+        <mock-box
+          classname="LandingPage-dashboardText-14"
         >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-154kc58-MuiGrid-root"
+          <mock-typography
+            classname="LandingPage-sectionTitle-8"
+            variant="h2"
           >
-            <mock-box
-              classname="ForwardRef-textContainer-44"
+            Every site gets its own dashboard
+          </mock-typography>
+          <mock-box
+            classname="LandingPage-featureList-15"
+            component="ul"
+          >
+            <mock-typography
+              classname="LandingPage-featureItem-16"
+              component="li"
             >
-              <mock-box
-                mb="1rem"
+              <svg
+                aria-hidden="true"
+                class="LandingPage-featureIcon-17"
               >
-                <mock-typography
-                  align="inherit"
-                  classname="ForwardRef-cardTitle-45"
-                  variant="h5"
-                >
-                  A structured approach to survey management
-                </mock-typography>
-              </mock-box>
-              <mock-typography
-                variant="h6"
-              >
-                Collect data and conduct photographic surveys in a structured way based on best practices. Create a grid of survey points and upload data and imagery to each point.
-              </mock-typography>
-            </mock-box>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-154kc58-MuiGrid-root"
-          >
-            <img
-              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="/src/assets/img/landing-page/survey-images.jpg"
-            />
-          </div>
-        </div>
-      </mock-box>
-    </div>
-    <div>
-      <mock-box
-        bgcolor="#ffffff"
-        classname="ForwardRef-container-43"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12 css-1s227ez-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-154kc58-MuiGrid-root"
-          >
-            <mock-box
-              classname="ForwardRef-textContainer-44"
+                img/landing-page/icon-check.svg
+              </svg>
+              <span>
+                Heat stress level, 7-day trend and historical maximum at a glance
+              </span>
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-featureItem-16"
+              component="li"
             >
-              <mock-box
-                mb="1rem"
+              <svg
+                aria-hidden="true"
+                class="LandingPage-featureIcon-17"
               >
-                <mock-typography
-                  align="inherit"
-                  classname="ForwardRef-cardTitle-45"
-                  variant="h5"
-                >
-                  Open source and free to use globally
-                </mock-typography>
-              </mock-box>
-              <mock-typography
-                variant="h6"
-              >
-                All of the aqualink code is open source. Let us know what we should build, or build extensions yourself. The system is provided for free by Aqualink, a philanthropic engineering organization.
-              </mock-typography>
-            </mock-box>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-154kc58-MuiGrid-root"
-          >
-            <img
-              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="/src/assets/img/landing-page/map.png"
-            />
-          </div>
-        </div>
-      </mock-box>
-    </div>
-    <div>
-      <mock-box
-        bgcolor="#ffffff"
-        classname="ForwardRef-container-43"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12 css-1s227ez-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 css-1deaqy1-MuiGrid-root"
-          >
-            <mock-box
-              classname="ForwardRef-textContainer-44"
+                img/landing-page/icon-check.svg
+              </svg>
+              <span>
+                Satellite and buoy temperatures side by side
+              </span>
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-featureItem-16"
+              component="li"
             >
-              <mock-box
-                mb="1rem"
+              <svg
+                aria-hidden="true"
+                class="LandingPage-featureIcon-17"
               >
-                <mock-typography
-                  align="center"
-                  classname="ForwardRef-cardTitle-45"
-                  variant="h5"
-                >
-                  Over 6,000 sites across hundreds of organizations
-                </mock-typography>
-              </mock-box>
-              <mock-typography
-                variant="h6"
-              />
-            </mock-box>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 css-1deaqy1-MuiGrid-root"
-          >
-            <img
-              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img ForwardRef-cardImageScaleDown-47 css-1kuwa16-MuiCardMedia-root"
-              src="/src/assets/img/landing-page/customers.jpg"
-            />
-          </div>
-        </div>
-      </mock-box>
-    </div>
-  </div>
-  <mock-appbar
-    classname="Footer-appBar-48"
-    position="static"
-  >
-    <mock-toolbar>
-      <div
-        class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
-        >
+                img/landing-page/icon-check.svg
+              </svg>
+              <span>
+                Live underwater video where a camera is installed
+              </span>
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-featureItem-16"
+              component="li"
+            >
+              <svg
+                aria-hidden="true"
+                class="LandingPage-featureIcon-17"
+              >
+                img/landing-page/icon-check.svg
+              </svg>
+              <span>
+                Group sites into a collection to follow a heatwave or a region
+              </span>
+            </mock-typography>
+          </mock-box>
           <mock-link
-            classname="Footer-navBarLink-49"
-            href="/map"
-            underline="hover"
+            classname="LandingPage-liveSiteLink-18"
+            component="[object Object]"
+            to="/sites/1006"
+            underline="always"
+          >
+            Explore a live site →
+          </mock-link>
+          <mock-box
+            classname="LandingPage-examplesBlock-19"
+          >
+            <mock-link
+              classname="LandingPage-examplesLink-20"
+              component="[object Object]"
+              to="/examples"
+              underline="always"
+            >
+              Explore reef examples from around the world →
+            </mock-link>
+            <mock-typography
+              classname="LandingPage-examplesText-21"
+            >
+              Examples showcase the full range of capabilities: Smart Buoys, the AI assistant, surveys and Reef Check, live video, water quality, temperature loggers, 3D models, coral restoration and collections.
+            </mock-typography>
+          </mock-box>
+        </mock-box>
+        <mock-box
+          classname="LandingPage-dashboardImageWrapper-22"
+        >
+          <img
+            alt="An Aqualink site dashboard showing a map, live video, satellite and buoy temperatures, heat stress and wind and waves"
+            class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img LandingPage-dashboardImage-23 css-1kuwa16-MuiCardMedia-root"
+            src="/src/assets/img/landing-page/dashboard.jpg"
+          />
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="LandingPage-ai-24"
+      component="section"
+      id="ai"
+    >
+      <mock-box
+        classname="LandingPage-aiInner-25"
+      >
+        <mock-box
+          classname="LandingPage-aiText-26"
+        >
+          <mock-typography
+            classname="LandingPage-aiEyebrow-27"
+          >
+            AI insights
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-sectionTitle-8"
+            variant="h2"
+          >
+            Ask your reef what it needs
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-aiIntro-28"
+          >
+            Every dashboard has an AI assistant. It reads everything Aqualink knows about your site, combines it with what reef science and conservation practice have learned, and turns it into plain advice.
+          </mock-typography>
+          <mock-box
+            classname="LandingPage-aiSteps-29"
+            component="ol"
+          >
+            <mock-box
+              classname="LandingPage-aiStep-30"
+              component="li"
+            >
+              <mock-box
+                classname="LandingPage-aiIconBox-31"
+                component="span"
+              >
+                <svg
+                  aria-hidden="true"
+                >
+                  img/landing-page/icon-chart.svg
+                </svg>
+              </mock-box>
+              <mock-box>
+                <mock-typography
+                  classname="LandingPage-aiStepTitle-32"
+                  component="div"
+                >
+                  Reads your site's data
+                </mock-typography>
+                <mock-typography
+                  classname="LandingPage-aiStepText-33"
+                  component="div"
+                >
+                  Satellite temperature and heat stress, buoy and water quality readings, wind and waves, surveys and 90 days of history.
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+            <mock-box
+              classname="LandingPage-aiStep-30"
+              component="li"
+            >
+              <mock-box
+                classname="LandingPage-aiIconBox-31"
+                component="span"
+              >
+                <svg
+                  aria-hidden="true"
+                >
+                  img/landing-page/icon-book.svg
+                </svg>
+              </mock-box>
+              <mock-box>
+                <mock-typography
+                  classname="LandingPage-aiStepTitle-32"
+                  component="div"
+                >
+                  Adds what the world has learned
+                </mock-typography>
+                <mock-typography
+                  classname="LandingPage-aiStepText-33"
+                  component="div"
+                >
+                  Decades of coral science, bleaching response protocols and survey best practice, plus the local context around your reef.
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+            <mock-box
+              classname="LandingPage-aiStep-30"
+              component="li"
+            >
+              <mock-box
+                classname="LandingPage-aiIconBox-31"
+                component="span"
+              >
+                <svg
+                  aria-hidden="true"
+                >
+                  img/landing-page/icon-lightbulb.svg
+                </svg>
+              </mock-box>
+              <mock-box>
+                <mock-typography
+                  classname="LandingPage-aiStepTitle-32"
+                  component="div"
+                >
+                  Tells you what to do next
+                </mock-typography>
+                <mock-typography
+                  classname="LandingPage-aiStepText-33"
+                  component="div"
+                >
+                  Clear answers on risk and next steps for your site, and an honest note when the data is thin or uncertain.
+                </mock-typography>
+              </mock-box>
+            </mock-box>
+          </mock-box>
+        </mock-box>
+        <mock-box
+          classname="LandingPage-aiImageWrapper-34"
+        >
+          <img
+            alt="Example AI chat for Keahole Point, Hawai'i. The assistant reports no heat stress: water at 25.0 °C, 2.2 °C below the historical maximum. A user asks whether pale Montipora capitata at 15 m is bleaching. The assistant answers that it is probably not heat, since the buoy reads 24.9 °C at 15 m. It lists other common causes (low-salinity groundwater, sediment or nutrients after rain, natural colony variation) and suggests re-photographing the colonies in 7 days."
+            class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img LandingPage-aiImage-35 css-1kuwa16-MuiCardMedia-root"
+            src="/src/assets/img/landing-page/ai-chat.png"
+          />
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="LandingPage-heatwaves-36"
+      component="section"
+      id="heatwaves"
+    >
+      <mock-box
+        classname="LandingPage-heatwavesInner-37"
+      >
+        <mock-box
+          classname="LandingPage-heatwavesText-38"
+        >
+          <mock-typography
+            classname="LandingPage-heatwavesEyebrow-39"
+          >
+            Site Collections
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-sectionTitle-8"
+            variant="h2"
+          >
+            Track heatwaves with collections
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-heatwavesIntro-40"
+          >
+            Set up collections of sites and view heat stress data in aggregate. Follow a marine heatwave or a whole region, from Brazil to Florida, in one view.
+          </mock-typography>
+        </mock-box>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary LandingPage-heatwavesButton-41 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/collections/804"
+          tabindex="0"
+        >
+          Caribbean Collection
+        </a>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="LandingPage-about-42"
+      component="section"
+      id="about"
+    >
+      <mock-typography
+        classname="LandingPage-aboutTitle-43"
+        variant="h2"
+      >
+        Trusted by researchers and conservation groups
+      </mock-typography>
+      <mock-box
+        classname="LandingPage-partnerGrid-44"
+      >
+        <mock-box>
+          <mock-typography
+            classname="LandingPage-partnerLabel-45"
+          >
+            Universities
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-partnerNames-46"
+          >
+            University of Western Australia, Stanford, Florida State, UC Santa Barbara, University of Guam, University of Malaya
+          </mock-typography>
+        </mock-box>
+        <mock-box>
+          <mock-typography
+            classname="LandingPage-partnerLabel-45"
+          >
+            NGOs
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-partnerNames-46"
+          >
+            The Nature Conservancy, Minderoo Foundation, Reef Check, CARMABI, Beneath the Waves
+          </mock-typography>
+        </mock-box>
+        <mock-box>
+          <mock-typography
+            classname="LandingPage-partnerLabel-45"
+          >
+            Start-ups
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-partnerNames-46"
+          >
+            Coral Gardeners, Coral Vita, Project Vesta, Crystal Blue, coralive.org
+          </mock-typography>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="LandingPage-start-47"
+      component="section"
+      id="register"
+    >
+      <mock-box
+        classname="LandingPage-startBox-48"
+      >
+        <mock-typography
+          classname="LandingPage-sectionTitle-8"
+          variant="h2"
+        >
+          Start monitoring your reef
+        </mock-typography>
+        <mock-typography
+          classname="LandingPage-startIntro-49"
+        >
+          No sensors or surveys yet? That is fine. Satellite data and heat stress analysis work from day one.
+        </mock-typography>
+        <mock-box
+          classname="LandingPage-startSteps-50"
+          component="ol"
+        >
+          <mock-box
+            component="li"
           >
             <mock-typography
-              color="textPrimary"
-              variant="h4"
+              classname="LandingPage-startNumber-51"
+              component="div"
             >
-              Aqua
+              01
             </mock-typography>
             <mock-typography
-              style="color: rgb(138, 198, 222);"
-              variant="h4"
+              classname="LandingPage-startTitle-52"
+              component="div"
             >
-              link
+              Create a free account
             </mock-typography>
-          </mock-link>
-        </div>
-      </div>
-    </mock-toolbar>
-  </mock-appbar>
+            <mock-typography
+              classname="LandingPage-startText-53"
+              component="div"
+            >
+              Takes a minute, no cost ever.
+            </mock-typography>
+          </mock-box>
+          <mock-box
+            component="li"
+          >
+            <mock-typography
+              classname="LandingPage-startNumber-51"
+              component="div"
+            >
+              02
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-startTitle-52"
+              component="div"
+            >
+              Register your site
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-startText-53"
+              component="div"
+            >
+              Drop a pin and your dashboard starts filling with satellite data.
+            </mock-typography>
+          </mock-box>
+          <mock-box
+            component="li"
+          >
+            <mock-typography
+              classname="LandingPage-startNumber-51"
+              component="div"
+            >
+              03
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-startTitle-52"
+              component="div"
+            >
+              Add sensors and surveys
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-startText-53"
+              component="div"
+            >
+              Whenever you are ready, for a fuller picture.
+            </mock-typography>
+          </mock-box>
+        </mock-box>
+        <mock-box
+          classname="LandingPage-startButtons-54"
+        >
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary LandingPage-startButton-55 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/register"
+            tabindex="0"
+          >
+            Register your site
+          </a>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+  </mock-box>
 </div>
 `;

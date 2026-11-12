@@ -2,9 +2,7 @@
 
 exports[`Faq > should render with given state from Redux store 1`] = `
 <div>
-  <mock-navbar
-    searchlocation="false"
-  />
+  <mock-infonavbar />
   <div>
     <div
       class="page-container"
@@ -544,6 +542,5 @@ exports[`Faq > should render with given state from Redux store 1`] = `
       </div>
     </div>
   </div>
-  <mock-footer />
 </div>
 `;

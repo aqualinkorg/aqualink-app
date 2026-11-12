@@ -14,8 +14,7 @@ import { Link } from 'react-router-dom';
 
 import { useImageAspectRatio } from 'hooks/useImageAspectRatio';
 import { isPositiveNumber } from 'helpers/numberUtils';
-import NavBar from 'common/NavBar';
-import Footer from 'common/Footer';
+import InfoNavBar from 'common/InfoNavBar';
 import FootPrintImage from './FootPrintImage';
 
 import hero from '../../assets/img/tracker-page/hero.png';
@@ -124,13 +123,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface TrackerProps {
   shouldShowNav?: boolean;
-  shouldShowFooter?: boolean;
 }
 
-function Tracker({
-  shouldShowNav = true,
-  shouldShowFooter = true,
-}: TrackerProps) {
+function Tracker({ shouldShowNav = true }: TrackerProps) {
   const heroAspectRatio = useImageAspectRatio(hero);
   const image1AspectRatio = useImageAspectRatio(image1);
   const image2AspectRatio = useImageAspectRatio(image2);
@@ -145,7 +140,7 @@ function Tracker({
 
   return (
     <>
-      {shouldShowNav && <NavBar searchLocation={false} />}
+      {shouldShowNav && <InfoNavBar />}
       <Box className={classes.hero}>
         <CardMedia className={classes.image} image={hero} />
         <Container className={classes.titleWrapper}>
@@ -412,7 +407,6 @@ function Tracker({
           </Grid>
         </Grid>
       </Container>
-      {shouldShowFooter && <Footer />}
     </>
   );
 }

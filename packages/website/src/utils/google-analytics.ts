@@ -75,6 +75,7 @@ export enum GaAction {
   LANDING_PAGE_BUTTON_CLICK = 'Landing page button click',
   SIDE_MENU_BUTTON_CLICK = 'Side menu button click',
   MAP_PAGE_BUTTON_CLICK = 'Map page button click',
+  NAV_BAR_BUTTON_CLICK = 'Nav bar button click',
 }
 
 export const trackButtonClick = (

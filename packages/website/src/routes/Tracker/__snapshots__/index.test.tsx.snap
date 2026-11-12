@@ -2,9 +2,7 @@
 
 exports[`Tracker > should render with given state from Redux store 1`] = `
 <div>
-  <mock-navbar
-    searchlocation="false"
-  />
+  <mock-infonavbar />
   <mock-box
     classname="makeStyles-hero-2 makeStyles-hero-14"
   >
@@ -387,6 +385,5 @@ exports[`Tracker > should render with given state from Redux store 1`] = `
       </div>
     </div>
   </div>
-  <mock-footer />
 </div>
 `;

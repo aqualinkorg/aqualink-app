@@ -2,9 +2,7 @@
 
 exports[`About > should render with given state from Redux store 1`] = `
 <div>
-  <mock-navbar
-    searchlocation="false"
-  />
+  <mock-infonavbar />
   <div
     class="About-root-1"
   >
@@ -523,6 +521,5 @@ exports[`About > should render with given state from Redux store 1`] = `
       </div>
     </div>
   </div>
-  <mock-footer />
 </div>
 `;

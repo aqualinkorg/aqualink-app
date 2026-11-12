@@ -23,9 +23,9 @@ interface Collection {
 const metadata: Record<string, any> = {
   // Home page
   '': {
-    title: 'Free Data Management Platform for Monitoring of Marine Ecosystems',
+    title: "Aqualink: real-time monitoring for the world's reefs",
     description:
-      'Integrate data from sensors and surveys to create an instant view of your marine ecosystem. Explore our interactive map & dashboards using advanced ocean technology.',
+      'Free, open-source ocean monitoring that combines satellite data, in-water sensors and field surveys for every reef.',
   },
   // Routes
   about: {
@@ -79,6 +79,21 @@ const metadata: Record<string, any> = {
     title: 'Monitoring {siteName} | Aqualink Dashboard',
     description:
       'View real-time data for {siteName}, including reef health, ocean temperature, wind and wave conditions. Monitor your local marine ecosystem with Aqualink.',
+  },
+  examples: {
+    title: 'Site examples | Aqualink',
+    description:
+      'Real Aqualink sites that show each feature in action, from Smart Buoys to live video and 3D models.',
+  },
+  projects: {
+    title: 'Projects | Aqualink',
+    description:
+      'Software, hardware and storytelling from Aqualink: the reef monitoring app, Smart Mooring buoys, the heatwave tracker, Bristlemouth Explorer, an open-source drone and the film House of Fish.',
+  },
+  blog: {
+    title: 'Blog | Aqualink',
+    description:
+      'Stories from the field: how scientists, restoration teams and local divers use Aqualink data on their reefs.',
   },
 };
 
