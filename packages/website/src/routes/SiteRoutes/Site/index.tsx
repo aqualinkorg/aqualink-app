@@ -31,6 +31,7 @@ import { useQueryParam } from 'hooks/useQueryParams';
 import { isAdmin } from 'helpers/user';
 import { findAdministeredSite } from 'helpers/findAdministeredSite';
 import { sortByDate } from 'helpers/dates';
+import { chartWindowForDay, isPastOrTodayDay } from 'helpers/historicalDay';
 import { findSurveyPointFromList } from 'helpers/siteUtils';
 import SiteNavBar from 'common/NavBar';
 import SiteFooter from 'common/Footer';
@@ -122,6 +123,24 @@ function Site({ classes }: SiteProps) {
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const [querySurveyPointId] = useQueryParam('surveyPoint');
   const [refresh, setRefresh] = useQueryParam('refresh');
+  // `?date=YYYY-MM-DD`, set when opening a site from the map on a past day
+  const [historicalDay, setHistoricalDay] = useQueryParam(
+    'date',
+    isPastOrTodayDay,
+  );
+  const [startParam, setStartParam] = useQueryParam('start');
+  const [endParam, setEndParam] = useQueryParam('end');
+
+  // Open the charts on the month leading up to the selected day, unless a window is already set.
+  // Runs on mount, before the charts mount and read these params.
+  useEffect(() => {
+    if (historicalDay && !startParam && !endParam) {
+      const { start, end } = chartWindowForDay(historicalDay);
+      setStartParam(start);
+      setEndParam(end);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -252,6 +271,8 @@ function Site({ classes }: SiteProps) {
               surveys={surveyList}
               featuredSurveyPoint={featuredSurveyPoint}
               surveyDiveDate={diveDate}
+              historicalDay={historicalDay}
+              onShowLatest={() => setHistoricalDay(undefined)}
             />
           </div>
         </Container>

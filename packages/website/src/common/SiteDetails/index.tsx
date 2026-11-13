@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Theme, Box, useTheme, useMediaQuery } from '@mui/material';
+import {
+  Grid,
+  Theme,
+  Box,
+  useTheme,
+  useMediaQuery,
+  Alert,
+  Button,
+} from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
@@ -29,7 +37,9 @@ import {
   unsetLatestData,
   unsetSpotterPosition,
 } from 'store/Sites/selectedSiteSlice';
-import { parseLatestData } from 'store/Sites/helpers';
+import { dailyDataToSofarValues, parseLatestData } from 'store/Sites/helpers';
+import { useHistoricalDailyData } from 'hooks/useHistoricalDailyData';
+import { formatDay } from 'helpers/historicalDay';
 import { getMiddlePoint } from 'helpers/map';
 import { formatNumber } from 'helpers/numberUtils';
 import { displayTimeInLocalTimezone } from 'helpers/dates';
@@ -133,6 +143,8 @@ function SiteDetails({
   featuredSurveyId = null,
   featuredSurveyPoint = null,
   surveyDiveDate = null,
+  historicalDay = null,
+  onShowLatest,
 }: SiteDetailsProps) {
   const classes = useStyles();
   const theme = useTheme();
@@ -153,7 +165,13 @@ function SiteDetails({
   const siteDetails = useSelector(siteDetailsSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
-  const isLoading = !site;
+  // Two weeks, so the 7-days change card can compare the week before the selected day
+  const historicalDailyData = useHistoricalDailyData(
+    site?.id,
+    historicalDay,
+    14,
+  );
+  const isLoading = !site || (!!historicalDay && !historicalDailyData);
 
   useEffect(() => {
     if (site && !spotterPosition) {
@@ -299,7 +317,24 @@ function SiteDetails({
 
   const { videoStream } = site || {};
 
-  const cards =
+  const historicalValues =
+    historicalDailyData && dailyDataToSofarValues(historicalDailyData);
+
+  // On a past day only satellite metrics are available (daily_data), sensor and wave cards stay empty
+  const historicalCards =
+    site && historicalDailyData && historicalValues
+      ? [
+          <Satellite
+            data={historicalValues}
+            maxMonthlyMean={site.maxMonthlyMean}
+          />,
+          <TemperatureChange dailyData={historicalDailyData} />,
+          <CoralBleaching data={historicalValues} />,
+          <Waves data={{}} hasSpotter={false} />,
+        ]
+      : times(4, () => null);
+
+  const latestCards =
     site && latestDataAsSofarValues
       ? [
           // CARD 1: Satellite (always shown)
@@ -370,6 +405,8 @@ function SiteDetails({
           />,
         ]
       : times(4, () => null);
+
+  const cards = historicalDay ? historicalCards : latestCards;
 
   const mapTitleItems: Value[] = [
     {
@@ -502,6 +539,28 @@ function SiteDetails({
         )}
       </Grid>
 
+      {historicalDay && site && (
+        <Box mt={2}>
+          <Alert
+            severity="info"
+            action={
+              onShowLatest && (
+                <Button color="inherit" size="small" onClick={onShowLatest}>
+                  Show latest
+                </Button>
+              )
+            }
+          >
+            {`Data on ${formatDay(historicalDay)}. `}
+            {historicalValues && Object.keys(historicalValues).length === 0
+              ? 'No satellite data is available for this day. '
+              : ''}
+            Only daily satellite values (temperature, heat stress, alert level)
+            are kept for past days, so sensor and wave readings are not shown.
+          </Alert>
+        </Box>
+      )}
+
       <Grid
         className={classes.metricsWrapper}
         container
@@ -556,6 +615,9 @@ interface SiteDetailsProps {
   surveys: SurveyListItem[];
   featuredSurveyPoint?: SurveyPoint | null;
   surveyDiveDate?: string | null;
+  /** Show the summary cards for this past day (YYYY-MM-DD) instead of the latest data */
+  historicalDay?: string | null;
+  onShowLatest?: () => void;
 }
 
 export default SiteDetails;

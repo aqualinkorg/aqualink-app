@@ -23,7 +23,10 @@ import withStyles, {
   CSSProperties,
 } from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
-import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
+import {
+  sitesListLoadingSelector,
+  sitesListSelector,
+} from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
   siteOnMapSelector,
@@ -101,7 +104,9 @@ function HomepageMap({
   const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
     useState<string>();
   const [mapReady, setMapReady] = useState(false);
-  const loading = useSelector(sitesListLoadingSelector);
+  const sitesList = useSelector(sitesListSelector);
+  // Keep the map mounted (and its position) while the list is refetched for another date
+  const loading = useSelector(sitesListLoadingSelector) && !sitesList;
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const ref = useRef<L.Map>(null);

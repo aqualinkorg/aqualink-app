@@ -7,6 +7,7 @@ import {
   keyBy,
   pick,
   isString,
+  pickBy,
 } from 'lodash';
 import { isBefore } from 'helpers/dates';
 import { longDHW } from 'helpers/siteUtils';
@@ -435,4 +436,30 @@ export const readFiltersFromUrl = (): SiteFilters => {
       [key]: filterValues,
     };
   }, {} as SiteFilters);
+};
+
+/**
+ * Summary card values for a past day, built from that site's most recent daily_data row
+ * (`dailyData` newest first). Only satellite metrics are stored per day.
+ */
+export const dailyDataToSofarValues = (
+  dailyData: DailyData[],
+): LatestDataASSofarValue => {
+  const [latest] = dailyData;
+  if (!latest) return {};
+  const { date: timestamp } = latest;
+  const withTimestamp = (value?: number | null) =>
+    isNil(value) ? undefined : { value, timestamp };
+
+  return pickBy(
+    {
+      satelliteTemperature: withTimestamp(latest.satelliteTemperature),
+      dhw: withTimestamp(
+        isNil(latest.degreeHeatingDays) ? null : latest.degreeHeatingDays / 7,
+      ),
+      tempAlert: withTimestamp(latest.dailyAlertLevel),
+      tempWeeklyAlert: withTimestamp(latest.weeklyAlertLevel),
+    },
+    Boolean,
+  );
 };

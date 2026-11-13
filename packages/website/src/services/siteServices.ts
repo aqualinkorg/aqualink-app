@@ -83,9 +83,10 @@ const getSiteTimeSeriesDataRange = ({
     method: 'GET',
   });
 
-const getSites = () =>
+// `date` (YYYY-MM-DD) returns each site's collection data as it was on that day.
+const getSites = (date?: string) =>
   requests.send<SiteResponse[]>({
-    url: 'sites',
+    url: `sites${date ? `?date=${date}` : ''}`,
     method: 'GET',
   });
 
