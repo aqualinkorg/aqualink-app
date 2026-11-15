@@ -29,8 +29,11 @@ import { dhwColorFinder } from 'helpers/degreeHeatingWeeks';
 import { formatNumber } from 'helpers/numberUtils';
 import { alertColorFinder } from 'helpers/bleachingAlertIntervals';
 import { colors } from 'layout/App/theme';
-import { calculateAdjustedLng } from 'helpers/map';
-import L from 'leaflet';
+import type { Map as LeafletMap } from 'leaflet';
+import {
+  longitudeForSiteSelection,
+  type HomepageMapHandle,
+} from 'helpers/homepageMapHandle';
 import { getComparator, Order, OrderKeys, stableSort } from './utils';
 import { Collection } from '../../Dashboard/collection';
 
@@ -192,7 +195,7 @@ function SiteTableBody({
     const targetSite = sitesList[site.tableData.id];
     if (!targetSite || targetSite.polygon.type !== 'Point') return;
     const [lng] = targetSite.polygon.coordinates;
-    const adjustedLng = calculateAdjustedLng(map || null, lng);
+    const adjustedLng = longitudeForSiteSelection(map, lng);
     dispatch(setSiteOnMap({ ...targetSite, displayLng: adjustedLng }));
 
     const mapElement = document.getElementById('sites-map');
@@ -386,7 +389,7 @@ interface SiteTableBodyIncomingProps {
   collection?: Collection;
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
-  map?: L.Map | null;
+  map?: LeafletMap | HomepageMapHandle | null;
   onEmptyColumnsChange: (emptyColumns: OrderKeys[]) => void;
 }
 

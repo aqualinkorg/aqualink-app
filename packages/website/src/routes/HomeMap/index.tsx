@@ -1,4 +1,4 @@
-import L, { LatLng } from 'leaflet';
+import { LatLng } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
@@ -11,6 +11,7 @@ import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import { sitesRequest, sitesListSelector } from 'store/Sites/sitesListSlice';
 import { siteRequest } from 'store/Sites/selectedSiteSlice';
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
+import type { HomepageMapHandle } from 'helpers/homepageMapHandle';
 
 import { surveysRequest } from 'store/Survey/surveyListSlice';
 import { findSiteById } from 'helpers/siteUtils';
@@ -30,7 +31,7 @@ interface MapQueryParams {
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
-const INITIAL_ZOOM = 4;
+const INITIAL_ZOOM = 3;
 
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
@@ -66,7 +67,9 @@ function Homepage({ classes }: HomepageProps) {
   const dispatch = useAppDispatch();
   const siteOnMap = useSelector(siteOnMapSelector);
   const [showSiteTable, setShowSiteTable] = React.useState(true);
-  const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [mapInstance, setMapInstance] = useState<HomepageMapHandle | null>(
+    null,
+  );
 
   const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
     useQuery();

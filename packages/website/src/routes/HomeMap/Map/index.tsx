@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  MapContainer,
-  TileLayer,
+/* eslint-disable import/no-unresolved -- package exports map; node resolver predates exports */
+import Map, {
+  Layer,
   Marker,
-  Circle,
-  useMapEvents,
-} from 'react-leaflet';
-import L, { LatLng, LatLngBounds, LayersControlEvent } from 'leaflet';
+  NavigationControl,
+  Source,
+  type MapRef,
+} from 'react-map-gl/maplibre';
+/* eslint-enable import/no-unresolved */
+import type { Map as MaplibreMap, MapLibreEvent } from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   CircularProgress,
   IconButton,
@@ -23,6 +26,9 @@ import withStyles, {
   CSSProperties,
 } from '@mui/styles/withStyles';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
+import InfoIcon from '@mui/icons-material/Info';
 import { sitesListLoadingSelector } from 'store/Sites/sitesListSlice';
 import {
   searchResultSelector,
@@ -30,52 +36,29 @@ import {
 } from 'store/Homepage/homepageSlice';
 import { CollectionDetails } from 'store/Collection/types';
 import { MapLayerName } from 'store/Homepage/types';
-import { mapConstants } from 'constants/maps';
-import { focusMapOnSite } from 'helpers/map';
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
-import InfoIcon from '@mui/icons-material/Info';
+import type { HomepageMapHandle } from 'helpers/homepageMapHandle';
+import { createHomepageMapHandle } from 'helpers/maplibreFocus';
 import { mapIconSize } from 'layout/App/theme';
-import { SiteMarkers } from './Markers';
-import { SofarLayers } from './sofarLayers';
+import { GlobeSiteMarkers } from './GlobeMarkers';
 import { InfoDialog } from './InfoDialog';
 import Legend from './Legend';
 import AlertLevelLegend from './alertLevelLegend';
-
-const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-
-const tileURL = accessToken
-  ? `https://api.mapbox.com/styles/v1/eric-ovio/ckesyzu658klw19s6zc0adlgp/tiles/{z}/{x}/{y}@2x?access_token=${accessToken}`
-  : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}@2x';
-
-const attribution = accessToken
-  ? '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
-  : '';
-
-const currentLocationMarker = L.divIcon({
-  className: 'current-position-marker',
-  iconSize: L.point(16, 16, true),
-});
-
-function MapEventsHandler({
-  onBaseLayerChange,
-  onMapReady,
-}: {
-  onBaseLayerChange: (e: LayersControlEvent) => void;
-  onMapReady: () => void;
-}) {
-  const map = useMapEvents({
-    baselayerchange: (e) => onBaseLayerChange(e),
-  });
-
-  useEffect(() => {
-    if (map) {
-      onMapReady();
-    }
-  }, [map, onMapReady]);
-
-  return null;
-}
+import LayerSwitcher from './LayerSwitcher';
+import {
+  SATELLITE_IMAGERY_LAYER_NAME,
+  SOFAR_LAYERS,
+  SST_ANOMALY_LAYER,
+  sofarTileUrl,
+  useLatestOisstAnomalyWmsUrl,
+} from './sofarLayers';
+import { buildOisstAnomalyTileTemplate } from './oisstAnomalyWms';
+import { accuracyCirclePolygon } from './accuracyCircle';
+import {
+  globeMapStyle,
+  globeSky,
+  satelliteAttribution,
+  satelliteTileUrl,
+} from './basemap';
 
 function HomepageMap({
   initialCenter,
@@ -94,7 +77,9 @@ function HomepageMap({
   onMapLoad,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
-  const [legendName, setLegendName] = useState<string>(defaultLayerName || '');
+  const [activeLayer, setActiveLayer] = useState<string>(
+    defaultLayerName || SATELLITE_IMAGERY_LAYER_NAME,
+  );
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] =
     useState<number>();
@@ -104,15 +89,23 @@ function HomepageMap({
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
-  const ref = useRef<L.Map>(null);
+  const mapRef = useRef<MapRef>(null);
+  const handleRef = useRef<HomepageMapHandle | null>(null);
+  const sstAnomalyWmsUrl = useLatestOisstAnomalyWmsUrl();
 
-  useEffect(() => {
-    if (ref.current && onMapLoad) {
-      onMapLoad(ref.current);
-    }
-    // We only want this effect to run once when the ref is set, or when onMapLoad changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref.current, onMapLoad]);
+  const onLoad = (event: MapLibreEvent) => {
+    const map = event.target as MaplibreMap;
+    const handle = createHomepageMapHandle(map);
+    handleRef.current = handle;
+    setMapReady(true);
+    onMapLoad?.(handle);
+  };
+
+  const resizeMap = () => {
+    window.setTimeout(() => {
+      mapRef.current?.resize();
+    }, 0);
+  };
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -125,11 +118,15 @@ function HomepageMap({
           setCurrentLocation(latLng);
           setCurrentLocationAccuracy(position.coords.accuracy);
 
-          // zoom to user location
-          const { current: map } = ref;
+          const map = mapRef.current;
           if (map) {
             const newZoom = Math.max(map.getZoom() || 6, 8);
-            map.flyTo(latLng, newZoom, { duration: 2 });
+            map.flyTo({
+              center: [latLng[1], latLng[0]],
+              zoom: newZoom,
+              duration: 2000,
+              essential: true,
+            });
           }
         },
         () => {
@@ -147,158 +144,210 @@ function HomepageMap({
     setCurrentLocationErrorMessage(undefined);
 
   useEffect(() => {
-    const { current: map } = ref;
-    if (map) {
-      if (searchResult) {
-        map.fitBounds([
-          searchResult.bbox.southWest,
-          searchResult.bbox.northEast,
-        ]);
-      }
+    if (!mapReady || !searchResult) {
+      return;
     }
-  }, [searchResult]);
+    handleRef.current?.fitBounds(
+      searchResult.bbox.southWest,
+      searchResult.bbox.northEast,
+    );
+  }, [searchResult, mapReady]);
 
   useEffect(() => {
-    const { current: map } = ref;
-    if (map && mapReady && siteOnMap?.polygon.type === 'Point') {
-      const [lng, lat] = siteOnMap.polygon.coordinates;
-
-      // Use the pre-calculated displayLng if available, otherwise use original lng
-      const finalLng = siteOnMap.displayLng ?? lng;
-
-      focusMapOnSite(map, [lat, finalLng]);
+    if (!mapReady || siteOnMap?.polygon.type !== 'Point') {
+      return;
     }
+    const [lng, lat] = siteOnMap.polygon.coordinates;
+    const finalLng = siteOnMap.displayLng ?? lng;
+    handleRef.current?.focusOnSite(lat, finalLng);
   }, [siteOnMap, mapReady]);
 
-  const onBaseLayerChange = ({ name }: LayersControlEvent) => {
-    setLegendName(name);
-  };
+  useEffect(() => {
+    if (!mapReady || !initialBounds) {
+      return;
+    }
+    const southWest = initialBounds.getSouthWest();
+    const northEast = initialBounds.getNorthEast();
+    handleRef.current?.fitBounds(
+      [southWest.lat, southWest.lng],
+      [northEast.lat, northEast.lng],
+    );
+  }, [initialBounds, mapReady]);
 
-  const onMapReady = () => {
-    setMapReady(true);
-  };
+  useEffect(() => {
+    if (mapReady) {
+      resizeMap();
+    }
+  }, [showSiteTable, mapReady]);
 
   const ExpandIcon = showSiteTable ? FullscreenIcon : FullscreenExitIcon;
-
-  // Memoize the layers to prevent unnecessary re-renders
-  const sofarLayers = useMemo(
-    () => <SofarLayers defaultLayerName={defaultLayerName} />,
-    [defaultLayerName],
-  );
-
-  const siteMarkers = useMemo(
-    () => <SiteMarkers collection={collection} />,
-    [collection],
-  );
-
-  // Memoize the TileLayer to prevent unnecessary redraws
-  const tileLayer = useMemo(
-    () => (
-      <TileLayer
-        attribution={attribution}
-        url={tileURL}
-        keepBuffer={6}
-        updateWhenIdle
-        updateInterval={400}
-        // Prevent tile fading animation which can cause flicker
-        className="no-tile-fade"
-      />
-    ),
-    [],
-  );
-
-  const handleInfoClick = () => {
-    setInfoDialogOpen(true);
-  };
-
-  const handleInfoClose = () => {
-    setInfoDialogOpen(false);
-  };
 
   return loading ? (
     <div className={classes.loading}>
       <CircularProgress size="4rem" thickness={1} />
     </div>
   ) : (
-    <MapContainer
-      id="sites-map"
-      ref={ref}
-      preferCanvas
-      renderer={L.canvas({ tolerance: 15 })}
-      maxBoundsViscosity={1.0}
-      className={classes.map}
-      center={initialCenter}
-      zoom={initialZoom}
-      minZoom={collection ? 1 : 2} // If we're on dashboard page, the map's wrapping div is smaller, so we need to allow higher zoom
-      worldCopyJump
-      bounds={initialBounds}
-      maxBounds={mapConstants.MAX_BOUNDS}
-    >
-      <Snackbar
-        open={Boolean(currentLocationErrorMessage)}
-        autoHideDuration={5000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        onClose={onLocationErrorAlertClose}
+    <div className={classes.map}>
+      <Map
+        id="sites-map"
+        ref={mapRef}
+        initialViewState={{
+          longitude: initialCenter.lng,
+          latitude: initialCenter.lat,
+          zoom: initialZoom ?? 10,
+        }}
+        mapStyle={globeMapStyle}
+        projection="globe"
+        sky={globeSky}
+        minZoom={collection ? 1 : 2}
+        maxZoom={18}
+        renderWorldCopies={false}
+        dragRotate={false}
+        pitchWithRotate={false}
+        touchPitch={false}
+        fadeDuration={0}
+        style={{ width: '100%', height: '100%' }}
+        onLoad={onLoad}
       >
-        <Alert severity="error" onClose={onLocationErrorAlertClose}>
-          {currentLocationErrorMessage}
-        </Alert>
-      </Snackbar>
-      <Hidden mdDown>
-        <div className={classes.expandIconButton}>
-          <IconButton
-            onClick={() => {
-              if (setShowSiteTable) {
-                setShowSiteTable((prev) => !prev);
-              }
-              setTimeout(() => {
-                if (ref.current) {
-                  ref.current.invalidateSize();
-                }
-              });
-            }}
-            size="large"
+        <NavigationControl position="top-left" showCompass={false} />
+        <Source
+          id="satellite"
+          type="raster"
+          tiles={[satelliteTileUrl]}
+          tileSize={256}
+          attribution={satelliteAttribution || undefined}
+        >
+          <Layer id="satellite" type="raster" />
+        </Source>
+        {SOFAR_LAYERS.map((def) => (
+          <Source
+            key={def.variableId}
+            id={`sofar-${def.variableId}`}
+            type="raster"
+            tiles={[sofarTileUrl(def)]}
+            tileSize={256}
+            maxzoom={9}
           >
-            <ExpandIcon color="primary" className={classes.expandIcon} />
-          </IconButton>
+            <Layer
+              id={`sofar-${def.variableId}`}
+              type="raster"
+              paint={{ 'raster-opacity': 0.5 }}
+              layout={{
+                visibility: activeLayer === def.name ? 'visible' : 'none',
+              }}
+            />
+          </Source>
+        ))}
+        {sstAnomalyWmsUrl && (
+          <Source
+            id="oisst-anomaly"
+            type="raster"
+            tiles={[buildOisstAnomalyTileTemplate(sstAnomalyWmsUrl)]}
+            tileSize={256}
+          >
+            <Layer
+              id="oisst-anomaly"
+              type="raster"
+              paint={{ 'raster-opacity': 0.7 }}
+              layout={{
+                visibility:
+                  activeLayer === SST_ANOMALY_LAYER.name ? 'visible' : 'none',
+              }}
+            />
+          </Source>
+        )}
+        <GlobeSiteMarkers collection={collection} />
+        {currentLocation && (
+          <Marker
+            longitude={currentLocation[1]}
+            latitude={currentLocation[0]}
+            anchor="center"
+          >
+            <div
+              className="current-position-marker"
+              style={{ width: 16, height: 16 }}
+            />
+          </Marker>
+        )}
+        {currentLocation && currentLocationAccuracy ? (
+          <Source
+            id="geolocation-accuracy"
+            type="geojson"
+            data={accuracyCirclePolygon(
+              currentLocation[0],
+              currentLocation[1],
+              currentLocationAccuracy,
+            )}
+          >
+            <Layer
+              id="geolocation-accuracy-fill"
+              type="fill"
+              paint={{ 'fill-color': '#3388ff', 'fill-opacity': 0.2 }}
+            />
+            <Layer
+              id="geolocation-accuracy-line"
+              type="line"
+              paint={{ 'line-color': '#3388ff', 'line-width': 3 }}
+            />
+          </Source>
+        ) : null}
+        <div className={classes.overlay}>
+          <Snackbar
+            open={Boolean(currentLocationErrorMessage)}
+            autoHideDuration={5000}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            onClose={onLocationErrorAlertClose}
+          >
+            <Alert severity="error" onClose={onLocationErrorAlertClose}>
+              {currentLocationErrorMessage}
+            </Alert>
+          </Snackbar>
+          <Hidden mdDown>
+            <div className={classes.expandIconButton}>
+              <IconButton
+                onClick={() => {
+                  if (setShowSiteTable) {
+                    setShowSiteTable((prev) => !prev);
+                  }
+                  resizeMap();
+                }}
+                size="large"
+              >
+                <ExpandIcon color="primary" className={classes.expandIcon} />
+              </IconButton>
+            </div>
+          </Hidden>
+          <div className={classes.infoIconButton}>
+            <IconButton onClick={() => setInfoDialogOpen(true)} size="large">
+              <InfoIcon color="primary" />
+            </IconButton>
+          </div>
+          <InfoDialog
+            infoDialogOpen={infoDialogOpen}
+            handleInfoClose={() => setInfoDialogOpen(false)}
+          />
+          <LayerSwitcher
+            activeLayer={activeLayer}
+            showSstAnomaly={Boolean(sstAnomalyWmsUrl)}
+            onChange={setActiveLayer}
+          />
+          <Legend
+            legendName={activeLayer}
+            bottom={legendBottom}
+            left={legendLeft}
+          />
+          {showAlertLevelLegend && <AlertLevelLegend />}
+          {showWaterMark && <div className="mapbox-wordmark" />}
+          {geolocationEnabled && (
+            <div className={classes.locationIconButton}>
+              <IconButton onClick={onLocationSearch} size="large">
+                <MyLocationIcon color="primary" />
+              </IconButton>
+            </div>
+          )}
         </div>
-      </Hidden>
-      <div className={classes.infoIconButton}>
-        <IconButton onClick={handleInfoClick} size="large">
-          <InfoIcon color="primary" />
-        </IconButton>
-      </div>
-      <InfoDialog
-        infoDialogOpen={infoDialogOpen}
-        handleInfoClose={handleInfoClose}
-      />
-      {tileLayer}
-      {sofarLayers}
-      {siteMarkers}
-      {currentLocation && (
-        <Marker icon={currentLocationMarker} position={currentLocation} />
-      )}
-      {currentLocation && currentLocationAccuracy && (
-        <Circle
-          center={{ lat: currentLocation[0], lng: currentLocation[1] }}
-          radius={currentLocationAccuracy}
-        />
-      )}
-      <Legend legendName={legendName} bottom={legendBottom} left={legendLeft} />
-      {showAlertLevelLegend && <AlertLevelLegend />}
-      {showWaterMark && <div className="mapbox-wordmark" />}
-      {geolocationEnabled && (
-        <div className={classes.locationIconButton}>
-          <IconButton onClick={onLocationSearch} size="large">
-            <MyLocationIcon color="primary" />
-          </IconButton>
-        </div>
-      )}
-      <MapEventsHandler
-        onBaseLayerChange={onBaseLayerChange}
-        onMapReady={onMapReady}
-      />
-    </MapContainer>
+      </Map>
+    </div>
   );
 }
 
@@ -315,6 +364,7 @@ const mapButtonStyles: CSSProperties | CreateCSSProperties<{}> = {
   backgroundColor: 'white',
   backgroundClip: 'padding-box',
   border: '2px solid rgba(0,0,0,0.2)',
+  pointerEvents: 'auto',
 };
 
 const styles = (theme: Theme) =>
@@ -322,8 +372,13 @@ const styles = (theme: Theme) =>
     map: {
       flex: 1,
       width: '100%',
-      // Gaps between tiles during pan/zoom otherwise flash #ddd
+      display: 'flex',
+      minHeight: 0,
       backgroundColor: '#0b1d2a',
+      // Covered markers stay in the DOM at opacity 0 and would still take clicks.
+      '& .maplibregl-marker-covered': {
+        pointerEvents: 'none',
+      },
     },
     loading: {
       height: '100%',
@@ -332,23 +387,29 @@ const styles = (theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
+    overlay: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 1,
+    },
     locationIconButton: {
       ...mapButtonStyles,
       left: 0,
       top: 90,
-      zIndex: 1000,
+      zIndex: 2,
     },
     expandIconButton: {
       ...mapButtonStyles,
       right: 0,
       top: 50,
-      zIndex: 400,
+      zIndex: 2,
     },
     infoIconButton: {
       ...mapButtonStyles,
       right: 0,
       top: 100,
-      zIndex: 400,
+      zIndex: 2,
       [theme.breakpoints.down('lg')]: {
         top: 50,
       },
@@ -356,22 +417,24 @@ const styles = (theme: Theme) =>
     expandIcon: {
       fontSize: '34px',
     },
-    '@global': {
-      // Disable tile fade animation
-      '.no-tile-fade': {
-        '& .leaflet-tile-loaded': {
-          opacity: '1 !important',
-        },
-      },
-    },
   });
 
+interface LatLngLike {
+  lat: number;
+  lng: number;
+}
+
+interface BoundsLike {
+  getSouthWest: () => LatLngLike;
+  getNorthEast: () => LatLngLike;
+}
+
 interface HomepageMapIncomingProps {
-  initialCenter: LatLng;
+  initialCenter: LatLngLike;
   initialZoom?: number;
   showSiteTable?: boolean;
   setShowSiteTable?: React.Dispatch<React.SetStateAction<boolean>>;
-  initialBounds?: LatLngBounds;
+  initialBounds?: BoundsLike;
   collection?: CollectionDetails;
   showAlertLevelLegend?: boolean;
   showWaterMark?: boolean;
@@ -379,7 +442,7 @@ interface HomepageMapIncomingProps {
   defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
-  onMapLoad?: (map: L.Map) => void;
+  onMapLoad?: (map: HomepageMapHandle) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

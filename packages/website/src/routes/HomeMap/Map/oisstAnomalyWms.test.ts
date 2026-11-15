@@ -1,4 +1,5 @@
 import {
+  buildOisstAnomalyTileTemplate,
   buildOisstAnomalyWmsUrl,
   parseLatestOisstDatasetPath,
 } from './oisstAnomalyWms';
@@ -20,6 +21,18 @@ describe('parseLatestOisstDatasetPath', () => {
 
   it('returns null when catalog has no dataset path', () => {
     expect(parseLatestOisstDatasetPath('<catalog></catalog>')).toBeNull();
+  });
+});
+
+describe('buildOisstAnomalyTileTemplate', () => {
+  it('keeps the WMS query and adds a MapLibre bbox template', () => {
+    expect(
+      buildOisstAnomalyTileTemplate(
+        'https://www.ncei.noaa.gov/thredds/wms/daily.nc?COLORSCALERANGE=-5,5',
+      ),
+    ).toBe(
+      'https://www.ncei.noaa.gov/thredds/wms/daily.nc?COLORSCALERANGE=-5,5&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=anom&STYLES=raster%2Fx-Sst&SRS=EPSG%3A3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}',
+    );
   });
 });
 
