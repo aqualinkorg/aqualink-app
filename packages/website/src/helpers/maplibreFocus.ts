@@ -3,27 +3,26 @@ import type { HomepageMapHandle } from './homepageMapHandle';
 import { HOMEPAGE_MAP_KIND } from './homepageMapHandle';
 import { planSiteMapFocus } from './map';
 
-/** Matches Leaflet focusMapOnSite: site sits 100px below the camera center. */
-const SITE_FOCUS_SHIFT_Y = -100;
-
 /**
- * Globe `project()` still returns a screen point for locations on the back of
- * the planet, and `unproject()` of that point is a different place. Panning
- * toward it leaves the camera on the wrong side of the earth.
+ * Site sits 100px below the camera center, same as Leaflet.
+ * Globe `flyTo` retargets through `setLocationAtPoint`, and `unproject` of a
+ * point off the disc hits the north pole. Ease to the real coordinates so a
+ * far site arrives in one move.
  */
-const globeHidesSite = (
-  map: MaplibreMap,
-  longitude: number,
-  latitude: number,
-) => {
-  const { transform } = map as MaplibreMap & {
-    transform?: {
-      isLocationOccluded?: (lngLat: { lng: number; lat: number }) => boolean;
-    };
-  };
-  return Boolean(
-    transform?.isLocationOccluded?.({ lng: longitude, lat: latitude }),
+const SITE_FOCUS_SHIFT_PX = 100;
+const MAX_FOCUS_LATITUDE = 85;
+
+const shortestLngDelta = (from: number, to: number) =>
+  ((to - from + 540) % 360) - 180;
+
+const focusCenter = (longitude: number, latitude: number, zoom: number) => {
+  const worldSize = 512 * 2 ** zoom;
+  const shiftDeg = (SITE_FOCUS_SHIFT_PX / worldSize) * 360;
+  const latitudeNorth = Math.min(
+    MAX_FOCUS_LATITUDE,
+    Math.max(-MAX_FOCUS_LATITUDE, latitude + shiftDeg),
   );
+  return { longitude, latitude: latitudeNorth, worldSize };
 };
 
 export const focusMaplibreOnSite = (
@@ -32,28 +31,15 @@ export const focusMaplibreOnSite = (
   latitude: number,
 ) => {
   const zoom = map.getZoom() ?? 6;
-
-  if (globeHidesSite(map, longitude, latitude)) {
-    const container = map.getContainer();
-    const plan = planSiteMapFocus({
-      distancePx: Math.hypot(container.clientWidth, container.clientHeight),
-      viewportWidth: container.clientWidth,
-      viewportHeight: container.clientHeight,
-    });
-    map.flyTo({
-      center: [longitude, latitude],
-      zoom,
-      duration: plan.duration * 1000,
-      essential: true,
-    });
-    return;
-  }
-
-  const target = map.project([longitude, latitude]);
-  const centerLngLat = map.unproject([target.x, target.y + SITE_FOCUS_SHIFT_Y]);
-  const current = map.project(map.getCenter());
-  const next = map.project(centerLngLat);
-  const distancePx = Math.hypot(current.x - next.x, current.y - next.y);
+  const center = focusCenter(longitude, latitude, zoom);
+  const current = map.getCenter();
+  const distancePx =
+    (Math.hypot(
+      shortestLngDelta(current.lng, center.longitude),
+      center.latitude - current.lat,
+    ) /
+      360) *
+    center.worldSize;
   const container = map.getContainer();
   const plan = planSiteMapFocus({
     distancePx,
@@ -65,15 +51,12 @@ export const focusMaplibreOnSite = (
     return;
   }
 
-  const center: [number, number] = [centerLngLat.lng, centerLngLat.lat];
-  const duration = plan.duration * 1000;
-
-  if (plan.mode === 'pan') {
-    map.easeTo({ center, duration, essential: true });
-    return;
-  }
-
-  map.flyTo({ center, zoom, duration, essential: true });
+  map.easeTo({
+    center: [center.longitude, center.latitude],
+    zoom,
+    duration: plan.duration * 1000,
+    essential: true,
+  });
 };
 
 export const createHomepageMapHandle = (

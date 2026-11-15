@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 /* eslint-disable import/no-unresolved -- package exports map; node resolver predates exports */
 import Map, {
@@ -6,10 +6,11 @@ import Map, {
   Marker,
   NavigationControl,
   Source,
+  useMap,
   type MapRef,
 } from 'react-map-gl/maplibre';
 /* eslint-enable import/no-unresolved */
-import type { Map as MaplibreMap, MapLibreEvent } from 'maplibre-gl';
+import type { Map as MaplibreMap } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   CircularProgress,
@@ -60,6 +61,18 @@ import {
   satelliteTileUrl,
 } from './basemap';
 
+function MapHandleBinder({ onReady }: { onReady: (map: MaplibreMap) => void }) {
+  const { current } = useMap();
+
+  useEffect(() => {
+    if (current) {
+      onReady(current.getMap() as MaplibreMap);
+    }
+  }, [current, onReady]);
+
+  return null;
+}
+
 function HomepageMap({
   initialCenter,
   initialZoom,
@@ -93,13 +106,18 @@ function HomepageMap({
   const handleRef = useRef<HomepageMapHandle | null>(null);
   const sstAnomalyWmsUrl = useLatestOisstAnomalyWmsUrl();
 
-  const onLoad = (event: MapLibreEvent) => {
-    const map = event.target as MaplibreMap;
-    const handle = createHomepageMapHandle(map);
-    handleRef.current = handle;
-    setMapReady(true);
-    onMapLoad?.(handle);
-  };
+  const onMapReady = useCallback(
+    (map: MaplibreMap) => {
+      if (handleRef.current) {
+        return;
+      }
+      const handle = createHomepageMapHandle(map);
+      handleRef.current = handle;
+      setMapReady(true);
+      onMapLoad?.(handle);
+    },
+    [onMapLoad],
+  );
 
   const resizeMap = () => {
     window.setTimeout(() => {
@@ -207,8 +225,8 @@ function HomepageMap({
         touchPitch={false}
         fadeDuration={0}
         style={{ width: '100%', height: '100%' }}
-        onLoad={onLoad}
       >
+        <MapHandleBinder onReady={onMapReady} />
         <NavigationControl position="top-left" showCompass={false} />
         <Source
           id="satellite"

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Theme } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
 import withStyles from '@mui/styles/withStyles';
 import LayersIcon from '@mui/icons-material/Layers';
+import { mapIconSize } from 'layout/App/theme';
 import {
   SATELLITE_IMAGERY_LAYER_NAME,
   SOFAR_LAYERS,
@@ -16,14 +17,40 @@ function LayerSwitcher({
   showSstAnomaly,
   classes,
 }: LayerSwitcherProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const layerNames = [
     SATELLITE_IMAGERY_LAYER_NAME,
     ...SOFAR_LAYERS.map((layer) => layer.name),
     ...(showSstAnomaly ? [SST_ANOMALY_LAYER.name] : []),
   ];
 
+  useEffect(() => {
+    const closeOnOutsidePointerDown = (event: PointerEvent) => {
+      const root = rootRef.current;
+      const { target } = event;
+      if (!root || !(target instanceof Node) || root.contains(target)) {
+        return;
+      }
+      const { activeElement } = document;
+      if (
+        activeElement instanceof HTMLElement &&
+        root.contains(activeElement)
+      ) {
+        activeElement.blur();
+      }
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsidePointerDown, true);
+    return () =>
+      document.removeEventListener(
+        'pointerdown',
+        closeOnOutsidePointerDown,
+        true,
+      );
+  }, []);
+
   return (
-    <div className={classes.root}>
+    <div className={classes.root} ref={rootRef}>
       <button
         type="button"
         className={classes.toggle}
@@ -77,11 +104,12 @@ const styles = (theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      width: 36,
-      height: 36,
+      width: mapIconSize,
+      height: mapIconSize,
       padding: 0,
-      borderRadius: 4,
-      border: '2px solid rgba(0,0,0,0.2)',
+      borderRadius: 5,
+      border: 'none',
+      appearance: 'none',
       backgroundColor: 'white',
       cursor: 'pointer',
     },
@@ -89,7 +117,7 @@ const styles = (theme: Theme) =>
       display: 'none',
       position: 'absolute',
       top: 0,
-      right: 42,
+      right: `calc(${mapIconSize} + 6px)`,
       margin: 0,
       padding: '8px 12px',
       minWidth: 230,

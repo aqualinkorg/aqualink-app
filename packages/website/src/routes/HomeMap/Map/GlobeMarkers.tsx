@@ -16,6 +16,7 @@ import {
   setSearchResult,
   setSiteOnMap,
   siteOnMapSelector,
+  unsetSiteOnMap,
 } from 'store/Homepage/homepageSlice';
 import { alertColorFinder } from 'helpers/bleachingAlertIntervals';
 import { useMarkerIcon } from 'helpers/map';
@@ -134,6 +135,7 @@ export function GlobeSiteMarkers({
   const storedSites = useSelector(sitesToDisplayListSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const dispatch = useAppDispatch();
+  const { current: map } = useMap();
   const sites = useMemo(
     () => collection?.sites || storedSites || [],
     [collection?.sites, storedSites],
@@ -174,6 +176,28 @@ export function GlobeSiteMarkers({
     },
     [dispatch],
   );
+
+  useEffect(() => {
+    if (!map) {
+      return undefined;
+    }
+
+    const clearSiteOnMapClick = (event: MapLayerMouseEvent) => {
+      const hits = map.getLayer(SITE_CIRCLE_LAYER_ID)
+        ? map.queryRenderedFeatures(event.point, {
+            layers: [SITE_CIRCLE_LAYER_ID],
+          })
+        : [];
+      if (hits.length === 0) {
+        dispatch(unsetSiteOnMap());
+      }
+    };
+
+    map.on('click', clearSiteOnMapClick);
+    return () => {
+      map.off('click', clearSiteOnMapClick);
+    };
+  }, [dispatch, map]);
 
   return (
     <>
