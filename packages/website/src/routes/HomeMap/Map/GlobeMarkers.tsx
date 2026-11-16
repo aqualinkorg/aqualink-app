@@ -21,7 +21,6 @@ import {
 import { alertColorFinder } from 'helpers/bleachingAlertIntervals';
 import { useMarkerIcon } from 'helpers/map';
 import { hasDeployedSpotter } from 'helpers/siteUtils';
-import type { CollectionDetails } from 'store/Collection/types';
 import GlobePopup from './GlobePopup';
 
 const SITE_CIRCLE_LAYER_ID = 'site-circles';
@@ -38,7 +37,7 @@ function CircleInteractions({
   const { current: map } = useMap();
 
   useEffect(() => {
-    if (!map?.getLayer(SITE_CIRCLE_LAYER_ID)) {
+    if (!map) {
       return undefined;
     }
 
@@ -127,19 +126,12 @@ function SensorMarker({
   );
 }
 
-export function GlobeSiteMarkers({
-  collection,
-}: {
-  collection?: CollectionDetails;
-}) {
+export function GlobeSiteMarkers() {
   const storedSites = useSelector(sitesToDisplayListSelector);
   const siteOnMap = useSelector(siteOnMapSelector);
   const dispatch = useAppDispatch();
   const { current: map } = useMap();
-  const sites = useMemo(
-    () => collection?.sites || storedSites || [],
-    [collection?.sites, storedSites],
-  );
+  const sites = useMemo(() => storedSites || [], [storedSites]);
   const pointSites = useMemo(() => sites.filter(isPointSite), [sites]);
   const sensorSites = useMemo(() => pointSites.filter(hasSensor), [pointSites]);
   const circleSites = useMemo(

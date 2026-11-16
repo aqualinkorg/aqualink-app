@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 /* eslint-disable import/no-unresolved -- package exports map; node resolver predates exports */
 import Map, {
@@ -35,8 +41,6 @@ import {
   searchResultSelector,
   siteOnMapSelector,
 } from 'store/Homepage/homepageSlice';
-import { CollectionDetails } from 'store/Collection/types';
-import { MapLayerName } from 'store/Homepage/types';
 import type { HomepageMapHandle } from 'helpers/homepageMapHandle';
 import { createHomepageMapHandle } from 'helpers/maplibreFocus';
 import { mapIconSize } from 'layout/App/theme';
@@ -61,13 +65,18 @@ import {
   satelliteTileUrl,
 } from './basemap';
 
-function MapHandleBinder({ onReady }: { onReady: (map: MaplibreMap) => void }) {
+function MapHandleBinder({
+  onReady,
+}: {
+  onReady: (map: MaplibreMap) => void | (() => void);
+}) {
   const { current } = useMap();
 
   useEffect(() => {
-    if (current) {
-      onReady(current.getMap() as MaplibreMap);
+    if (!current) {
+      return undefined;
     }
+    return onReady(current.getMap() as MaplibreMap);
   }, [current, onReady]);
 
   return null;
@@ -78,20 +87,14 @@ function HomepageMap({
   initialZoom,
   showSiteTable = true,
   setShowSiteTable,
-  initialBounds,
-  collection,
   showAlertLevelLegend = true,
-  showWaterMark = true,
   geolocationEnabled = true,
-  defaultLayerName,
-  legendBottom,
-  legendLeft,
   classes,
   onMapLoad,
 }: HomepageMapProps) {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [activeLayer, setActiveLayer] = useState<string>(
-    defaultLayerName || SATELLITE_IMAGERY_LAYER_NAME,
+    SATELLITE_IMAGERY_LAYER_NAME,
   );
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] =
@@ -105,16 +108,30 @@ function HomepageMap({
   const mapRef = useRef<MapRef>(null);
   const handleRef = useRef<HomepageMapHandle | null>(null);
   const sstAnomalyWmsUrl = useLatestOisstAnomalyWmsUrl();
+  const locationAccuracyCircle = useMemo(() => {
+    if (!currentLocation || !currentLocationAccuracy) {
+      return null;
+    }
+    return accuracyCirclePolygon(
+      currentLocation[0],
+      currentLocation[1],
+      currentLocationAccuracy,
+    );
+  }, [currentLocation, currentLocationAccuracy]);
 
   const onMapReady = useCallback(
     (map: MaplibreMap) => {
-      if (handleRef.current) {
-        return;
-      }
       const handle = createHomepageMapHandle(map);
       handleRef.current = handle;
       setMapReady(true);
       onMapLoad?.(handle);
+      return () => {
+        if (handleRef.current === handle) {
+          handleRef.current = null;
+          setMapReady(false);
+        }
+        onMapLoad?.(null);
+      };
     },
     [onMapLoad],
   );
@@ -181,18 +198,6 @@ function HomepageMap({
   }, [siteOnMap, mapReady]);
 
   useEffect(() => {
-    if (!mapReady || !initialBounds) {
-      return;
-    }
-    const southWest = initialBounds.getSouthWest();
-    const northEast = initialBounds.getNorthEast();
-    handleRef.current?.fitBounds(
-      [southWest.lat, southWest.lng],
-      [northEast.lat, northEast.lng],
-    );
-  }, [initialBounds, mapReady]);
-
-  useEffect(() => {
     if (mapReady) {
       resizeMap();
     }
@@ -217,7 +222,7 @@ function HomepageMap({
         mapStyle={globeMapStyle}
         projection="globe"
         sky={globeSky}
-        minZoom={collection ? 1 : 2}
+        minZoom={2}
         maxZoom={18}
         renderWorldCopies={false}
         dragRotate={false}
@@ -274,7 +279,7 @@ function HomepageMap({
             />
           </Source>
         )}
-        <GlobeSiteMarkers collection={collection} />
+        <GlobeSiteMarkers />
         {currentLocation && (
           <Marker
             longitude={currentLocation[1]}
@@ -287,15 +292,11 @@ function HomepageMap({
             />
           </Marker>
         )}
-        {currentLocation && currentLocationAccuracy ? (
+        {locationAccuracyCircle ? (
           <Source
             id="geolocation-accuracy"
             type="geojson"
-            data={accuracyCirclePolygon(
-              currentLocation[0],
-              currentLocation[1],
-              currentLocationAccuracy,
-            )}
+            data={locationAccuracyCircle}
           >
             <Layer
               id="geolocation-accuracy-fill"
@@ -316,7 +317,11 @@ function HomepageMap({
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             onClose={onLocationErrorAlertClose}
           >
-            <Alert severity="error" onClose={onLocationErrorAlertClose}>
+            <Alert
+              className={classes.locationAlert}
+              severity="error"
+              onClose={onLocationErrorAlertClose}
+            >
               {currentLocationErrorMessage}
             </Alert>
           </Snackbar>
@@ -327,7 +332,6 @@ function HomepageMap({
                   if (setShowSiteTable) {
                     setShowSiteTable((prev) => !prev);
                   }
-                  resizeMap();
                 }}
                 size="large"
               >
@@ -349,13 +353,9 @@ function HomepageMap({
             showSstAnomaly={Boolean(sstAnomalyWmsUrl)}
             onChange={setActiveLayer}
           />
-          <Legend
-            legendName={activeLayer}
-            bottom={legendBottom}
-            left={legendLeft}
-          />
+          <Legend legendName={activeLayer} />
           {showAlertLevelLegend && <AlertLevelLegend />}
-          {showWaterMark && <div className="mapbox-wordmark" />}
+          <div className="mapbox-wordmark" />
           {geolocationEnabled && (
             <div className={classes.locationIconButton}>
               <IconButton onClick={onLocationSearch} size="large">
@@ -411,6 +411,9 @@ const styles = (theme: Theme) =>
       pointerEvents: 'none',
       zIndex: 1,
     },
+    locationAlert: {
+      pointerEvents: 'auto',
+    },
     locationIconButton: {
       ...mapButtonStyles,
       left: 0,
@@ -442,25 +445,14 @@ interface LatLngLike {
   lng: number;
 }
 
-interface BoundsLike {
-  getSouthWest: () => LatLngLike;
-  getNorthEast: () => LatLngLike;
-}
-
 interface HomepageMapIncomingProps {
   initialCenter: LatLngLike;
   initialZoom?: number;
   showSiteTable?: boolean;
   setShowSiteTable?: React.Dispatch<React.SetStateAction<boolean>>;
-  initialBounds?: BoundsLike;
-  collection?: CollectionDetails;
   showAlertLevelLegend?: boolean;
-  showWaterMark?: boolean;
   geolocationEnabled?: boolean;
-  defaultLayerName?: MapLayerName;
-  legendBottom?: number;
-  legendLeft?: number;
-  onMapLoad?: (map: HomepageMapHandle) => void;
+  onMapLoad?: (map: HomepageMapHandle | null) => void;
 }
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;

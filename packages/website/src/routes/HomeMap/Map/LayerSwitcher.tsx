@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Theme } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import createStyles from '@mui/styles/createStyles';
@@ -18,6 +18,7 @@ function LayerSwitcher({
   classes,
 }: LayerSwitcherProps) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
   const layerNames = [
     SATELLITE_IMAGERY_LAYER_NAME,
     ...SOFAR_LAYERS.map((layer) => layer.name),
@@ -31,13 +32,7 @@ function LayerSwitcher({
       if (!root || !(target instanceof Node) || root.contains(target)) {
         return;
       }
-      const { activeElement } = document;
-      if (
-        activeElement instanceof HTMLElement &&
-        root.contains(activeElement)
-      ) {
-        activeElement.blur();
-      }
+      setOpen(false);
     };
 
     document.addEventListener('pointerdown', closeOnOutsidePointerDown, true);
@@ -56,11 +51,14 @@ function LayerSwitcher({
         className={classes.toggle}
         aria-label="Map layers"
         aria-haspopup="true"
+        aria-expanded={open}
+        onClick={() => setOpen((current) => !current)}
       >
         <LayersIcon color="primary" />
       </button>
       <div
         className={classes.panel}
+        style={{ display: open ? 'block' : 'none' }}
         role="group"
         aria-labelledby="map-layers-title"
       >
@@ -96,9 +94,6 @@ const styles = (theme: Theme) =>
       right: 10,
       zIndex: 2,
       pointerEvents: 'auto',
-      '&:hover $panel, &:focus-within $panel': {
-        display: 'block',
-      },
     },
     toggle: {
       display: 'flex',
@@ -114,7 +109,6 @@ const styles = (theme: Theme) =>
       cursor: 'pointer',
     },
     panel: {
-      display: 'none',
       position: 'absolute',
       top: 0,
       right: `calc(${mapIconSize} + 6px)`,
