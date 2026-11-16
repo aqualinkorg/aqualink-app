@@ -16,7 +16,7 @@ import Map, {
   type MapRef,
 } from 'react-map-gl/maplibre';
 /* eslint-enable import/no-unresolved */
-import type { Map as MaplibreMap } from 'maplibre-gl';
+import { setWorkerUrl, type Map as MaplibreMap } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   CircularProgress,
@@ -64,6 +64,11 @@ import {
   satelliteAttribution,
   satelliteTileUrl,
 } from './basemap';
+
+// MapLibre 6 builds its worker URL from import.meta.url, which rspack turns
+// into a module stub. GeoJSON (non-sensor site dots) is parsed in that worker,
+// so point it at the files served from the site root.
+setWorkerUrl('/maplibre-gl-worker.mjs');
 
 function MapHandleBinder({
   onReady,

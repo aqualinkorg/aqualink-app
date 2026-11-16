@@ -24,55 +24,9 @@ import { hasDeployedSpotter } from 'helpers/siteUtils';
 import GlobePopup from './GlobePopup';
 
 const SITE_CIRCLE_LAYER_ID = 'site-circles';
+const SITE_CIRCLE_SOURCE_ID = 'site-circle-source';
 
 const hasSensor = (site: Site) => site.hasHobo || hasDeployedSpotter(site);
-
-function CircleInteractions({
-  sites,
-  onSelect,
-}: {
-  sites: Site[];
-  onSelect: (site: Site) => void;
-}) {
-  const { current: map } = useMap();
-
-  useEffect(() => {
-    if (!map) {
-      return undefined;
-    }
-
-    const handleClick = (event: MapLayerMouseEvent) => {
-      const siteId = event.features?.[0]?.properties?.siteId;
-      const site = sites.find((item) => String(item.id) === String(siteId));
-      if (site) {
-        onSelect(site);
-      }
-    };
-    const canvas = map.getCanvas();
-    const onEnter = () => {
-      // eslint-disable-next-line fp/no-mutation
-      canvas.style.cursor = 'pointer';
-    };
-    const onLeave = () => {
-      // eslint-disable-next-line fp/no-mutation
-      canvas.style.cursor = '';
-    };
-
-    map.on('click', SITE_CIRCLE_LAYER_ID, handleClick);
-    map.on('mouseenter', SITE_CIRCLE_LAYER_ID, onEnter);
-    map.on('mouseleave', SITE_CIRCLE_LAYER_ID, onLeave);
-
-    return () => {
-      map.off('click', SITE_CIRCLE_LAYER_ID, handleClick);
-      map.off('mouseenter', SITE_CIRCLE_LAYER_ID, onEnter);
-      map.off('mouseleave', SITE_CIRCLE_LAYER_ID, onLeave);
-      // eslint-disable-next-line fp/no-mutation
-      canvas.style.cursor = '';
-    };
-  }, [map, onSelect, sites]);
-
-  return null;
-}
 
 const isPointSite = (
   site: Site,
@@ -138,19 +92,19 @@ export function GlobeSiteMarkers() {
     () => pointSites.filter((site) => !hasSensor(site)),
     [pointSites],
   );
-
-  const circleData = useMemo<GeoJSON.FeatureCollection>(
+  const circleData = useMemo(
     () => ({
-      type: 'FeatureCollection',
+      type: 'FeatureCollection' as const,
       features: circleSites.map((site) => ({
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: site.polygon.coordinates,
-        },
+        type: 'Feature' as const,
+        id: site.id,
         properties: {
-          siteId: site.id,
+          id: site.id,
           color: alertColorFinder(site.collectionData?.tempWeeklyAlert),
+        },
+        geometry: {
+          type: 'Point' as const,
+          coordinates: site.polygon.coordinates,
         },
       })),
     }),
@@ -174,26 +128,37 @@ export function GlobeSiteMarkers() {
       return undefined;
     }
 
-    const clearSiteOnMapClick = (event: MapLayerMouseEvent) => {
-      const hits = map.getLayer(SITE_CIRCLE_LAYER_ID)
-        ? map.queryRenderedFeatures(event.point, {
-            layers: [SITE_CIRCLE_LAYER_ID],
-          })
-        : [];
-      if (hits.length === 0) {
-        dispatch(unsetSiteOnMap());
+    const sitesById = new Map(circleSites.map((site) => [site.id, site]));
+    const onMapClick = (event: MapLayerMouseEvent) => {
+      const { target } = event.originalEvent;
+      if (target instanceof Element && target.closest('.maplibregl-marker')) {
+        return;
       }
+      if (!map.getLayer(SITE_CIRCLE_LAYER_ID)) {
+        dispatch(unsetSiteOnMap());
+        return;
+      }
+      const [hit] = map.queryRenderedFeatures(event.point, {
+        layers: [SITE_CIRCLE_LAYER_ID],
+      });
+      const id = hit?.properties?.id;
+      const site = typeof id === 'number' ? sitesById.get(id) : undefined;
+      if (site) {
+        selectSite(site);
+        return;
+      }
+      dispatch(unsetSiteOnMap());
     };
 
-    map.on('click', clearSiteOnMapClick);
+    map.on('click', onMapClick);
     return () => {
-      map.off('click', clearSiteOnMapClick);
+      map.off('click', onMapClick);
     };
-  }, [dispatch, map]);
+  }, [circleSites, dispatch, map, selectSite]);
 
   return (
     <>
-      <Source id={SITE_CIRCLE_LAYER_ID} type="geojson" data={circleData}>
+      <Source id={SITE_CIRCLE_SOURCE_ID} type="geojson" data={circleData}>
         <Layer
           id={SITE_CIRCLE_LAYER_ID}
           type="circle"
@@ -202,10 +167,9 @@ export function GlobeSiteMarkers() {
             'circle-color': ['get', 'color'],
             'circle-opacity': 1,
             'circle-stroke-width': 1,
-            'circle-stroke-color': '#000000',
+            'circle-stroke-color': '#000',
           }}
         />
-        <CircleInteractions sites={sites} onSelect={selectSite} />
       </Source>
       {sensorSites.map((site) => (
         <SensorMarker key={site.id} site={site} onSelect={selectSite} />
