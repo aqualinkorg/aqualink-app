@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, loadEnv } from '@rsbuild/core';
@@ -7,9 +8,10 @@ import { pluginEslint } from "@rsbuild/plugin-eslint";
 
 const { publicVars, rawPublicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
 const websiteRoot = path.dirname(fileURLToPath(import.meta.url));
-const maplibreDist = path.resolve(
-  websiteRoot,
-  '../../node_modules/maplibre-gl/dist',
+const require = createRequire(import.meta.url);
+const maplibreDist = path.join(
+  path.dirname(require.resolve('maplibre-gl/package.json')),
+  'dist',
 );
 
 export default defineConfig((env) => ({
@@ -24,8 +26,7 @@ export default defineConfig((env) => ({
   server: {
     publicDir: [
       { name: path.join(websiteRoot, 'public') },
-      // Dev only. The worker imports ./maplibre-gl-shared.mjs, so both files
-      // have to be served from the same directory. Production copies them below.
+      // Dev only. The worker imports ./maplibre-gl-shared.mjs from the same directory.
       { name: maplibreDist, copyOnBuild: false },
     ],
   },
@@ -34,16 +35,12 @@ export default defineConfig((env) => ({
       root: 'build',
     },
     sourceMap: env.envMode === 'development',
-    copy: [
-      {
-        from: path.join(maplibreDist, 'maplibre-gl-worker.mjs'),
-        to: 'maplibre-gl-worker.mjs',
-      },
-      {
-        from: path.join(maplibreDist, 'maplibre-gl-shared.mjs'),
-        to: 'maplibre-gl-shared.mjs',
-      },
-    ],
+    copy: ['maplibre-gl-worker.mjs', 'maplibre-gl-shared.mjs'].map(
+      (fileName) => ({
+        from: path.join(maplibreDist, fileName),
+        to: fileName,
+      }),
+    ),
   },
   source: {
     define: {

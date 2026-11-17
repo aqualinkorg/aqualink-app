@@ -65,9 +65,9 @@ import {
   satelliteTileUrl,
 } from './basemap';
 
-// MapLibre 6 builds its worker URL from import.meta.url, which rspack turns
-// into a module stub. GeoJSON (non-sensor site dots) is parsed in that worker,
-// so point it at the files served from the site root.
+// Rspack rewrites import.meta.url inside maplibre-gl, so the library cannot
+// find its worker. 6.4.1's worker imports ./maplibre-gl-shared.mjs, and
+// `new URL(...)` emits the worker without that sibling.
 setWorkerUrl('/maplibre-gl-worker.mjs');
 
 function MapHandleBinder({

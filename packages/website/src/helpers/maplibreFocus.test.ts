@@ -1,5 +1,5 @@
 import type { Map as MaplibreMap } from 'maplibre-gl';
-import { focusMaplibreOnSite } from './maplibreFocus';
+import { createHomepageMapHandle, focusMaplibreOnSite } from './maplibreFocus';
 
 const mercatorY = (latitude: number) =>
   (180 -
@@ -23,6 +23,23 @@ const mockMap = (center: { lng: number; lat: number }, zoom = 4) => {
 
   return { map, easeTo, flyTo };
 };
+
+describe('createHomepageMapHandle.fitBounds', () => {
+  it('adds 360 to the east longitude when the bbox crosses the antimeridian', () => {
+    const fitBounds = vi.fn();
+    const map = { fitBounds } as unknown as MaplibreMap;
+
+    createHomepageMapHandle(map).fitBounds([-20, 177], [-15, -178]);
+
+    expect(fitBounds).toHaveBeenCalledWith(
+      [
+        [177, -20],
+        [182, -15],
+      ],
+      { padding: 40, duration: 1000 },
+    );
+  });
+});
 
 describe('focusMaplibreOnSite', () => {
   it('eases to the site longitude, shifted 100px north, and keeps the zoom', () => {

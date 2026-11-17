@@ -98,10 +98,14 @@ export const createHomepageMapHandle = (
     });
   },
   fitBounds: (southWest, northEast) => {
+    const southWestLng = southWest[1];
+    // East lng below west lng crosses 180°. Adding 360 keeps the short arc.
+    const northEastLng =
+      northEast[1] < southWestLng ? northEast[1] + 360 : northEast[1];
     map.fitBounds(
       [
-        [southWest[1], southWest[0]],
-        [northEast[1], northEast[0]],
+        [southWestLng, southWest[0]],
+        [northEastLng, northEast[0]],
       ],
       { padding: 40, duration: 1000 },
     );

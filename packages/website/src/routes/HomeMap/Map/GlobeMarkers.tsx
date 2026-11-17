@@ -150,9 +150,22 @@ export function GlobeSiteMarkers() {
       dispatch(unsetSiteOnMap());
     };
 
+    const setSiteCircleCursor = (cursor: string) => {
+      // MapLibre exposes the hover cursor only by writing the canvas style.
+      // eslint-disable-next-line fp/no-mutation
+      map.getCanvas().style.cursor = cursor;
+    };
+
+    const onSiteCircleEnter = () => setSiteCircleCursor('pointer');
+    const onSiteCircleLeave = () => setSiteCircleCursor('');
+
     map.on('click', onMapClick);
+    map.on('mouseenter', SITE_CIRCLE_LAYER_ID, onSiteCircleEnter);
+    map.on('mouseleave', SITE_CIRCLE_LAYER_ID, onSiteCircleLeave);
     return () => {
       map.off('click', onMapClick);
+      map.off('mouseenter', SITE_CIRCLE_LAYER_ID, onSiteCircleEnter);
+      map.off('mouseleave', SITE_CIRCLE_LAYER_ID, onSiteCircleLeave);
     };
   }, [circleSites, dispatch, map, selectSite]);
 
