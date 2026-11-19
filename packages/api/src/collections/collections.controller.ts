@@ -14,6 +14,10 @@ import {
 import {
   ApiBearerAuth,
   ApiOperation,
+  ApiCreatedResponse,
+  ApiExtraModels,
+  ApiOkResponse,
+  getSchemaPath,
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
@@ -26,6 +30,8 @@ import {
   ApiNestUnauthorizedResponse,
 } from '../docs/api-response';
 import { CollectionsService } from './collections.service';
+import { Collection } from './collections.entity';
+import { Site } from '../sites/sites.entity';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
@@ -38,6 +44,7 @@ export class CollectionsController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Creates a new collection' })
+  @ApiCreatedResponse({ type: Collection })
   @Post()
   create(
     @Body() createCollectionDto: CreateCollectionDto,
@@ -48,6 +55,7 @@ export class CollectionsController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: "Fetch all user's private collections" })
+  @ApiOkResponse({ type: Collection, isArray: true })
   @Get()
   find(
     @Query() filterCollectionDto: FilterCollectionDto,
@@ -57,6 +65,19 @@ export class CollectionsController {
   }
 
   @ApiOperation({ summary: 'Fetch the heat stress tracker' })
+  @ApiExtraModels(Site)
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      required: ['name', 'isPublic', 'siteIds', 'sites'],
+      properties: {
+        name: { type: 'string' },
+        isPublic: { type: 'boolean' },
+        siteIds: { type: 'array', items: { type: 'integer' } },
+        sites: { type: 'array', items: { $ref: getSchemaPath(Site) } },
+      },
+    },
+  })
   @Public()
   @Get('heat-stress-tracker')
   getHeatStressTracker() {
@@ -64,6 +85,7 @@ export class CollectionsController {
   }
 
   @ApiOperation({ summary: 'Fetch all public collections' })
+  @ApiOkResponse({ type: Collection, isArray: true })
   @Public()
   @Get('public')
   findPublic(@Query() filterCollectionDto: FilterCollectionDto) {
@@ -73,6 +95,7 @@ export class CollectionsController {
   @ApiOperation({
     summary: 'Fetch detailed data from specified public collection',
   })
+  @ApiOkResponse({ type: Collection })
   @ApiNestNotFoundResponse('No collection was found with the specified id')
   @ApiParam({ name: 'collectionId', example: 1 })
   @Public()
@@ -85,6 +108,7 @@ export class CollectionsController {
   @ApiOperation({
     summary: 'Fetch detailed data from specified private collection',
   })
+  @ApiOkResponse({ type: Collection })
   @ApiNestNotFoundResponse('No collection was found with the specified id')
   @ApiNestUnauthorizedResponse('Collection selected is not public')
   @ApiParam({ name: 'collectionId', example: 1 })
@@ -96,6 +120,7 @@ export class CollectionsController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update specified collection' })
+  @ApiOkResponse({ type: Collection })
   @ApiNestNotFoundResponse('No collection was found with the specified id')
   @ApiParam({ name: 'collectionId', example: 1 })
   @UseGuards(CollectionGuard)
