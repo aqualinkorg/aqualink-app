@@ -4,6 +4,10 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    ignore:
+      # wrangler >=4.87 requires Node >=22; CI and runtime are on Node 20.
+      - dependency-name: wrangler
+        versions: [">=4.87.0"]
     groups:
       minor-and-patch:
         applies-to: version-updates
