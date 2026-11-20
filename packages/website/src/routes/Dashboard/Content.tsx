@@ -40,7 +40,7 @@ function Content() {
     return (
       <>
         <Banner message={bannerMessage} />
-        <Tracker shouldShowNav={false} shouldShowFooter={false} />
+        <Tracker shouldShowNav={false} />
       </>
     );
   }

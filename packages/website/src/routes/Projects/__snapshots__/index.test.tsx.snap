@@ -1,0 +1,475 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders as expected 1`] = `
+<div>
+  <mock-box
+    classname="Projects-root-1"
+  >
+    <mock-box
+      classname="InfoNavBar-header-18 InfoNavBar-light-19"
+      component="header"
+    >
+      <mock-box
+        classname="InfoNavBar-inner-20"
+      >
+        <mock-link
+          classname="InfoNavBar-logo-22"
+          component="[object Object]"
+          to="/"
+          underline="none"
+        >
+          Aqua
+          <span
+            class="InfoNavBar-logoAccent-24"
+          >
+            link
+          </span>
+        </mock-link>
+        <mock-box
+          aria-label="Main"
+          classname="InfoNavBar-nav-26"
+          component="nav"
+        >
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/map"
+            tabindex="0"
+          >
+            Map
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/examples"
+            tabindex="0"
+          >
+            Examples
+          </a>
+          <a
+            aria-current="page"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 InfoNavBar-activeNavLink-29 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/projects"
+            tabindex="0"
+          >
+            Projects
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-27 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/blog"
+            tabindex="0"
+          >
+            Blog
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-30 InfoNavBar-desktopOnly-32 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/register"
+            tabindex="0"
+          >
+            Register a site
+          </a>
+          <mock-tooltip
+            title="Translate"
+          >
+            <mock-iconbutton
+              aria-label="Translate"
+              classname="InfoNavBar-iconButton-33"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="LanguageIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
+                />
+              </svg>
+            </mock-iconbutton>
+          </mock-tooltip>
+          <mock-iconbutton
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-label="Open menu"
+            classname="InfoNavBar-iconButton-33 InfoNavBar-menuButton-35"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="MenuIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
+              />
+            </svg>
+          </mock-iconbutton>
+          <mock-menu
+            anchororigin="[object Object]"
+            classes="[object Object]"
+            id="info-nav-menu"
+            open="false"
+            transformorigin="[object Object]"
+          >
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-38"
+              component="[object Object]"
+              to="/map"
+            >
+              Map
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-38"
+              component="[object Object]"
+              to="/examples"
+            >
+              Examples
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-38"
+              component="[object Object]"
+              to="/projects"
+            >
+              Projects
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-38"
+              component="[object Object]"
+              to="/blog"
+            >
+              Blog
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-38"
+              component="[object Object]"
+              to="/register"
+            >
+              Register a site
+            </mock-menuitem>
+          </mock-menu>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="Projects-projects-2"
+      component="section"
+      id="top"
+    >
+      <mock-typography
+        classname="Projects-eyebrow-3"
+      >
+        Projects
+      </mock-typography>
+      <mock-typography
+        classname="Projects-title-4"
+        variant="h1"
+      >
+        What we build
+      </mock-typography>
+      <mock-typography
+        classname="Projects-intro-5"
+      >
+        Software, hardware and storytelling from Aqualink, all made to help people watch over and protect the ocean.
+      </mock-typography>
+      <mock-box
+        aria-label="Projects"
+        classname="Projects-table-6"
+        role="table"
+      >
+        <mock-box
+          classname="Projects-headerRow-7"
+          role="row"
+        >
+          <mock-typography
+            classname="Projects-columnHeader-8"
+            component="span"
+            role="columnheader"
+          />
+          <mock-typography
+            classname="Projects-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            Project
+          </mock-typography>
+          <mock-typography
+            classname="Projects-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            What it does
+          </mock-typography>
+          <mock-typography
+            classname="Projects-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            Links
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Projects-row-9"
+          role="row"
+        >
+          <mock-box
+            role="cell"
+          >
+            <img
+              alt="Aqualink site dashboard with temperature charts"
+              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img Projects-image-10 css-1kuwa16-MuiCardMedia-root"
+              src="/src/assets/img/landing-page/dashboard.jpg"
+            />
+          </mock-box>
+          <mock-box
+            role="cell"
+          >
+            <mock-typography
+              classname="Projects-projectTitle-13"
+              component="div"
+            >
+              Aqualink app
+            </mock-typography>
+            <mock-typography
+              classname="Projects-projectTag-14"
+              component="div"
+            >
+              Monitoring platform
+            </mock-typography>
+          </mock-box>
+          <mock-typography
+            classname="Projects-description-15"
+            role="cell"
+          >
+            A free application for monitoring your reef. Each site brings satellite temperature, Smart Buoy readings, heat stress alerts and diver surveys together on one dashboard, with an AI assistant that answers questions using the site's own data.
+          </mock-typography>
+          <mock-box
+            classname="Projects-links-16"
+            role="cell"
+          >
+            <mock-link
+              classname="Projects-link-17"
+              component="[object Object]"
+              to="/map"
+              underline="none"
+            >
+              Open the map →
+            </mock-link>
+          </mock-box>
+        </mock-box>
+        <mock-box
+          classname="Projects-row-9"
+          role="row"
+        >
+          <mock-box
+            role="cell"
+          >
+            <img
+              alt="Yellow solar-powered Spotter buoy floating at sea"
+              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img Projects-image-10 css-1kuwa16-MuiCardMedia-root"
+              src="/src/assets/img/projects-page/smart-buoy.jpg"
+            />
+          </mock-box>
+          <mock-box
+            role="cell"
+          >
+            <mock-typography
+              classname="Projects-projectTitle-13"
+              component="div"
+            >
+              Smart Mooring program
+            </mock-typography>
+            <mock-typography
+              classname="Projects-projectTag-14"
+              component="div"
+            >
+              Hardware
+            </mock-typography>
+          </mock-box>
+          <mock-typography
+            classname="Projects-description-15"
+            role="cell"
+          >
+            We deploy Smart Moorings throughout the planet alongside partners. A solar-powered Spotter buoy with a seafloor sensor gives reef teams real-time water temperature, plus dissolved oxygen, acoustics and other data.
+          </mock-typography>
+          <mock-box
+            classname="Projects-links-16"
+            role="cell"
+          >
+            <mock-link
+              classname="Projects-link-17"
+              component="[object Object]"
+              to="/buoy"
+              underline="none"
+            >
+              About the buoy →
+            </mock-link>
+          </mock-box>
+        </mock-box>
+        <mock-box
+          classname="Projects-row-9"
+          role="row"
+        >
+          <mock-box
+            role="cell"
+          >
+            <img
+              alt="Bristlemouth connectors, logo and circuit board"
+              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img Projects-image-10 Projects-imageContain-11 css-1kuwa16-MuiCardMedia-root"
+              src="/src/assets/img/projects-page/bristlemouth.png"
+            />
+          </mock-box>
+          <mock-box
+            role="cell"
+          >
+            <mock-typography
+              classname="Projects-projectTitle-13"
+              component="div"
+            >
+              Bristlemouth Explorer
+            </mock-typography>
+            <mock-typography
+              classname="Projects-projectTag-14"
+              component="div"
+            >
+              Sensor data
+            </mock-typography>
+          </mock-box>
+          <mock-typography
+            classname="Projects-description-15"
+            role="cell"
+          >
+            Bristlemouth is an open standard for plug-and-play marine hardware: one connector that works for the whole ocean. Aqualink is a strategic partner, and the Explorer shows live data from Bristlemouth sensors on Smart Moorings. It is a development tool that helps you inspect the data.
+          </mock-typography>
+          <mock-box
+            classname="Projects-links-16"
+            role="cell"
+          >
+            <mock-link
+              classname="Projects-link-17"
+              href="https://bristlemouth.aqualink.org"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Open the explorer →
+            </mock-link>
+          </mock-box>
+        </mock-box>
+        <mock-box
+          classname="Projects-row-9"
+          role="row"
+        >
+          <mock-box
+            role="cell"
+          >
+            <img
+              alt="Yellow solar-powered autonomous surface drone"
+              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img Projects-image-10 css-1kuwa16-MuiCardMedia-root"
+              src="/src/assets/img/projects-page/drone.jpg"
+            />
+          </mock-box>
+          <mock-box
+            role="cell"
+          >
+            <mock-typography
+              classname="Projects-projectTitle-13"
+              component="div"
+            >
+              Open-source drone
+            </mock-typography>
+            <mock-typography
+              classname="Projects-projectTag-14"
+              component="div"
+            >
+              Open hardware
+            </mock-typography>
+          </mock-box>
+          <mock-typography
+            classname="Projects-description-15"
+            role="cell"
+          >
+            A DIY kit for building a solar-powered surface drone, built on Pixhawk and ROS, with an NVIDIA Jetson for machine vision and sonar for depth. Electronics and motors cost under $2,500.
+          </mock-typography>
+          <mock-box
+            classname="Projects-links-16"
+            role="cell"
+          >
+            <mock-link
+              classname="Projects-link-17"
+              component="[object Object]"
+              to="/drones"
+              underline="none"
+            >
+              About the drone →
+            </mock-link>
+            <mock-link
+              classname="Projects-link-17"
+              href="https://github.com/aqualinkorg/asv"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Code on GitHub →
+            </mock-link>
+          </mock-box>
+        </mock-box>
+        <mock-box
+          classname="Projects-row-9"
+          role="row"
+        >
+          <mock-box
+            role="cell"
+          >
+            <img
+              alt="House of Fish film poster: a fisherman in a green jacket, a crane barge at sunset and marble sculptures underwater"
+              class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img Projects-image-10 Projects-imagePoster-12 css-1kuwa16-MuiCardMedia-root"
+              src="/src/assets/img/projects-page/house-of-fish.jpg"
+            />
+          </mock-box>
+          <mock-box
+            role="cell"
+          >
+            <mock-typography
+              classname="Projects-projectTitle-13"
+              component="div"
+            >
+              House of Fish
+            </mock-typography>
+            <mock-typography
+              classname="Projects-projectTag-14"
+              component="div"
+            >
+              Documentary film
+            </mock-typography>
+          </mock-box>
+          <mock-typography
+            classname="Projects-description-15"
+            role="cell"
+          >
+            A film by Santiago Burin des Roziers, made in association with Aqualink. To block trawlers and rebuild marine habitats, fisherman Paolo Fanciulli and local artisans installed concrete blocks and 44 carved marble sculptures underwater, creating an art museum in the sea near Talamone, Italy.
+          </mock-typography>
+          <mock-box
+            classname="Projects-links-16"
+            role="cell"
+          >
+            <mock-link
+              classname="Projects-link-17"
+              href="https://vimeo.com/1165618582?fl=pl&fe=sh"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Film website →
+            </mock-link>
+          </mock-box>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+  </mock-box>
+</div>
+`;

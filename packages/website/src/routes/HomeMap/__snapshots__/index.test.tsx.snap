@@ -21,7 +21,7 @@ exports[`Homepage > should render with given state from Redux store 1`] = `
       >
         <mock-map
           initialcenter="LatLng(0, 121.3)"
-          initialzoom="4"
+          initialzoom="3"
           showsitetable="true"
         />
       </div>

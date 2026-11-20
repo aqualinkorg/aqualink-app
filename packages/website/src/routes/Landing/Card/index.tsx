@@ -1,99 +1,62 @@
-import React, { forwardRef } from 'react';
-import {
-  Box,
-  Grid,
-  Typography,
-  GridProps,
-  CardMedia,
-  Theme,
-} from '@mui/material';
-
+import React from 'react';
+import { Box, Typography } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
+import { colors, ibmPlexMonoFontFamily } from 'layout/App/theme';
 
-const Card = forwardRef<HTMLDivElement, CardProps>(
-  (
-    {
-      title,
-      text,
-      backgroundColor,
-      direction,
-      image,
-      scaleDown = false,
-      classes,
-    },
-    ref,
-  ) => {
-    const titleOnly = !text;
+function Card({ title, text, tag, icon: Icon, classes }: CardProps) {
+  return (
+    <Box className={classes.card}>
+      <Icon aria-hidden="true" />
+      <Typography variant="h3" className={classes.title}>
+        {title}
+      </Typography>
+      <Typography className={classes.text}>{text}</Typography>
+      <Typography className={classes.tag}>{tag}</Typography>
+    </Box>
+  );
+}
 
-    return (
-      <div ref={ref}>
-        <Box bgcolor={backgroundColor} className={classes.container}>
-          <Grid container direction={direction} item xs={12}>
-            <Grid item xs={12} md={titleOnly ? 12 : 6}>
-              <Box className={classes.textContainer}>
-                <Box mb="1rem">
-                  <Typography
-                    className={classes.cardTitle}
-                    variant="h5"
-                    align={titleOnly ? 'center' : 'inherit'}
-                  >
-                    {title}
-                  </Typography>
-                </Box>
-                <Typography variant="h6">{text}</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={titleOnly ? 12 : 6}>
-              <CardMedia
-                className={
-                  scaleDown ? classes.cardImageScaleDown : classes.cardImage
-                }
-                component="img"
-                src={image}
-              />
-            </Grid>
-          </Grid>
-        </Box>
-      </div>
-    );
-  },
-);
-
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
-    container: {
-      marginTop: '5rem',
-      [theme.breakpoints.down('md')]: {
-        marginTop: '2rem',
-      },
+    card: {
+      background: colors.mistGray,
+      borderRadius: 14,
+      padding: 32,
     },
-    textContainer: {
-      padding: '4rem',
-      [theme.breakpoints.down('md')]: {
-        padding: '1rem',
-      },
+    title: {
+      margin: '20px 0 0',
+      fontFamily: 'inherit',
+      fontSize: 22,
+      fontWeight: 600,
+      lineHeight: 'normal',
+      letterSpacing: 'normal',
     },
-    cardTitle: {
-      fontWeight: 500,
+    text: {
+      margin: '10px 0 0',
+      fontFamily: 'inherit',
+      fontSize: 17,
+      lineHeight: 1.55,
+      letterSpacing: 'normal',
+      color: colors.slateGray,
     },
-    cardImage: {
-      height: '100%',
-    },
-    cardImageScaleDown: {
-      height: '100%',
-      objectFit: 'scale-down',
+    tag: {
+      margin: '16px 0 0',
+      fontFamily: ibmPlexMonoFontFamily,
+      fontSize: 13,
+      lineHeight: 'normal',
+      letterSpacing: '0.04em',
+      textTransform: 'uppercase',
+      color: colors.oceanBlue,
     },
   });
 
 export interface CardIncomingProps {
   title: string;
-  text?: string;
-  backgroundColor: string;
-  direction: GridProps['direction'];
-  image: string;
-  scaleDown?: boolean;
+  text: string;
+  tag: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
 type CardProps = CardIncomingProps & WithStyles<typeof styles>;

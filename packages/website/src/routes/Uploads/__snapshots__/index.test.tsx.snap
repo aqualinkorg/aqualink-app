@@ -218,6 +218,45 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             Register a site
           </mock-typography>
         </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/examples"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Examples
+          </mock-typography>
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/projects"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Projects
+          </mock-typography>
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/blog"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Blog
+          </mock-typography>
+        </a>
         <mock-link
           classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-29 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
           href="https://highlights.aqualink.org"
@@ -1264,8 +1303,8 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-47g1cz-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for=":ru:"
-            id=":ru:-label"
+            for=":r11:"
+            id=":r11:-label"
           >
             Sensor type
           </label>
@@ -1275,9 +1314,9 @@ exports[`Multi Site Uploads > should render with given state from Redux store 1`
             <div
               aria-expanded="false"
               aria-haspopup="listbox"
-              aria-labelledby=":ru:-label :ru:"
+              aria-labelledby=":r11:-label :r11:"
               class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-6scorh-MuiNativeSelect-root-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-              id=":ru:"
+              id=":r11:"
               role="combobox"
               tabindex="0"
             >

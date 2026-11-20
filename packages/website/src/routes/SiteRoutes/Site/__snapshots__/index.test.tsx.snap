@@ -60,6 +60,45 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             Register a site
           </mock-typography>
         </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-826 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/examples"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Examples
+          </mock-typography>
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-826 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/projects"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Projects
+          </mock-typography>
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-826 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/blog"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Blog
+          </mock-typography>
+        </a>
         <mock-link
           classname="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-826 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
           href="https://highlights.aqualink.org"
@@ -3050,6 +3089,45 @@ exports[`Site Detail Page > should render with given state from Redux store > sn
             variant="h6"
           >
             Register a site
+          </mock-typography>
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/examples"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Examples
+          </mock-typography>
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/projects"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Projects
+          </mock-typography>
+        </a>
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MenuDrawer-menuDrawerButton-17 css-gw5l4k-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/blog"
+          tabindex="0"
+        >
+          <mock-typography
+            style="text-transform: uppercase;"
+            variant="h6"
+          >
+            Blog
           </mock-typography>
         </a>
         <mock-link

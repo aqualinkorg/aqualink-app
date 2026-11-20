@@ -1,0 +1,501 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders as expected 1`] = `
+<div>
+  <mock-box
+    classname="Blog-root-1"
+  >
+    <mock-box
+      classname="InfoNavBar-header-16 InfoNavBar-light-17"
+      component="header"
+    >
+      <mock-box
+        classname="InfoNavBar-inner-18"
+      >
+        <mock-link
+          classname="InfoNavBar-logo-20"
+          component="[object Object]"
+          to="/"
+          underline="none"
+        >
+          Aqua
+          <span
+            class="InfoNavBar-logoAccent-22"
+          >
+            link
+          </span>
+        </mock-link>
+        <mock-box
+          aria-label="Main"
+          classname="InfoNavBar-nav-24"
+          component="nav"
+        >
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-25 InfoNavBar-desktopOnly-30 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/map"
+            tabindex="0"
+          >
+            Map
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-25 InfoNavBar-desktopOnly-30 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/examples"
+            tabindex="0"
+          >
+            Examples
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-25 InfoNavBar-desktopOnly-30 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/projects"
+            tabindex="0"
+          >
+            Projects
+          </a>
+          <a
+            aria-current="page"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-navLink-25 InfoNavBar-desktopOnly-30 InfoNavBar-activeNavLink-27 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/blog"
+            tabindex="0"
+          >
+            Blog
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary InfoNavBar-registerButton-28 InfoNavBar-desktopOnly-30 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+            data-discover="true"
+            href="/register"
+            tabindex="0"
+          >
+            Register a site
+          </a>
+          <mock-tooltip
+            title="Translate"
+          >
+            <mock-iconbutton
+              aria-label="Translate"
+              classname="InfoNavBar-iconButton-31"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="LanguageIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2m6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56m2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2z"
+                />
+              </svg>
+            </mock-iconbutton>
+          </mock-tooltip>
+          <mock-iconbutton
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-label="Open menu"
+            classname="InfoNavBar-iconButton-31 InfoNavBar-menuButton-33"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+              data-testid="MenuIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"
+              />
+            </svg>
+          </mock-iconbutton>
+          <mock-menu
+            anchororigin="[object Object]"
+            classes="[object Object]"
+            id="info-nav-menu"
+            open="false"
+            transformorigin="[object Object]"
+          >
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-36"
+              component="[object Object]"
+              to="/map"
+            >
+              Map
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-36"
+              component="[object Object]"
+              to="/examples"
+            >
+              Examples
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-36"
+              component="[object Object]"
+              to="/projects"
+            >
+              Projects
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-36"
+              component="[object Object]"
+              to="/blog"
+            >
+              Blog
+            </mock-menuitem>
+            <mock-menuitem
+              classname="InfoNavBar-menuItem-36"
+              component="[object Object]"
+              to="/register"
+            >
+              Register a site
+            </mock-menuitem>
+          </mock-menu>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+    <mock-box
+      classname="Blog-blog-2"
+      component="section"
+      id="top"
+    >
+      <mock-typography
+        classname="Blog-eyebrow-3"
+      >
+        Blog
+      </mock-typography>
+      <mock-typography
+        classname="Blog-title-4"
+        variant="h1"
+      >
+        Stories from the field
+      </mock-typography>
+      <mock-typography
+        classname="Blog-intro-5"
+      >
+        How scientists, restoration teams and local divers use Aqualink data on their reefs.
+      </mock-typography>
+      <mock-box
+        aria-label="Stories"
+        classname="Blog-table-6"
+        role="table"
+      >
+        <mock-box
+          classname="Blog-headerRow-7"
+          role="row"
+        >
+          <mock-typography
+            classname="Blog-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            Story
+          </mock-typography>
+          <mock-typography
+            classname="Blog-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            Location
+          </mock-typography>
+          <mock-typography
+            classname="Blog-columnHeader-8"
+            component="span"
+            role="columnheader"
+          >
+            Summary
+          </mock-typography>
+          <mock-typography
+            classname="Blog-columnHeader-8"
+            component="span"
+            role="columnheader"
+          />
+        </mock-box>
+        <mock-box
+          classname="Blog-row-9"
+          role="row"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            <mock-link
+              classname="Blog-storyLink-11"
+              href="https://highlights.aqualink.org/stories/fernando-de-noronha-archipelago"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Fernando de Noronha Archipelago
+            </mock-link>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-12"
+            component="span"
+            role="cell"
+          >
+            Brazil
+            <br />
+            <span
+              class="Blog-tag-13"
+            >
+              Smart Buoy
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-14"
+            component="span"
+            role="cell"
+          >
+            A Smart Buoy turns one or two measurements a year into a continuous record for Brazil's oceanic islands.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-15"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Blog-row-9"
+          role="row"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            <mock-link
+              classname="Blog-storyLink-11"
+              href="https://highlights.aqualink.org/stories/wellington-reef-galapagos-islands"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Wellington Reef
+            </mock-link>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-12"
+            component="span"
+            role="cell"
+          >
+            Galápagos, Ecuador
+            <br />
+            <span
+              class="Blog-tag-13"
+            >
+              Heatwave
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-14"
+            component="span"
+            role="cell"
+          >
+            The last structural reef in the Galápagos, and the heatwave it lived through in March 2022.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-15"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Blog-row-9"
+          role="row"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            <mock-link
+              classname="Blog-storyLink-11"
+              href="https://highlights.aqualink.org/stories/palos-verdes-reef-california"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Palos Verdes Reef
+            </mock-link>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-12"
+            component="span"
+            role="cell"
+          >
+            California, USA
+            <br />
+            <span
+              class="Blog-tag-13"
+            >
+              Tides and temperature
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-14"
+            component="span"
+            role="cell"
+          >
+            How tides drive seafloor temperature on a newly built restoration reef.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-15"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Blog-row-9"
+          role="row"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            <mock-link
+              classname="Blog-storyLink-11"
+              href="https://highlights.aqualink.org/stories/elbow-beach-bermuda"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Elbow Beach
+            </mock-link>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-12"
+            component="span"
+            role="cell"
+          >
+            Bermuda
+            <br />
+            <span
+              class="Blog-tag-13"
+            >
+              Citizen science
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-14"
+            component="span"
+            role="cell"
+          >
+            One free-diver, a GoPro and a reef that stayed above the bleaching threshold for six weeks.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-15"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Blog-row-9"
+          role="row"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            <mock-link
+              classname="Blog-storyLink-11"
+              href="https://highlights.aqualink.org/stories/ningaloo-reef-australia"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Ningaloo Reef
+            </mock-link>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-12"
+            component="span"
+            role="cell"
+          >
+            Western Australia
+            <br />
+            <span
+              class="Blog-tag-13"
+            >
+              Coral restoration
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-14"
+            component="span"
+            role="cell"
+          >
+            Environmental drivers of coral restoration success. By Camille Grimaldi, March 25, 2024.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-15"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-box>
+        <mock-box
+          classname="Blog-row-9"
+          role="row"
+        >
+          <mock-typography
+            classname="Blog-storyTitle-10"
+            component="span"
+            role="cell"
+          >
+            <mock-link
+              classname="Blog-storyLink-11"
+              href="https://highlights.aqualink.org/stories/coral-vita-bahamas"
+              rel="noopener noreferrer"
+              target="_blank"
+              underline="none"
+            >
+              Coral Vita
+            </mock-link>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-location-12"
+            component="span"
+            role="cell"
+          >
+            Grand Bahama, Bahamas
+            <br />
+            <span
+              class="Blog-tag-13"
+            >
+              Coral farming
+            </span>
+          </mock-typography>
+          <mock-typography
+            classname="Blog-summary-14"
+            component="span"
+            role="cell"
+          >
+            A land-based coral farm that uses live data to decide when it is safe to plant.
+          </mock-typography>
+          <mock-typography
+            classname="Blog-readMore-15"
+            component="span"
+            role="cell"
+          >
+            Read story →
+          </mock-typography>
+        </mock-box>
+      </mock-box>
+    </mock-box>
+  </mock-box>
+</div>
+`;

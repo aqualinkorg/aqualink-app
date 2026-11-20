@@ -5,8 +5,7 @@ import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import classNames from 'classnames';
 
-import NavBar from 'common/NavBar';
-import Footer from 'common/Footer';
+import InfoNavBar from 'common/InfoNavBar';
 
 import dashboardAndReef from '../../assets/img/dashboard.jpg';
 import mapOfSites from '../../assets/img/map.jpg';
@@ -20,7 +19,7 @@ import ericb from '../../assets/img/ericb.jpg';
 function About({ classes }: AboutProps) {
   return (
     <>
-      <NavBar searchLocation={false} />
+      <InfoNavBar />
       <div className={classes.root}>
         <div className="page-container">
           <div className="bloc l-bloc" id="bloc-0">
@@ -453,7 +452,6 @@ function About({ classes }: AboutProps) {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

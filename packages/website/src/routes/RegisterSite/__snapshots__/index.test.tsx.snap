@@ -2,9 +2,7 @@
 
 exports[`Site registration page > should render with given state from Redux store 1`] = `
 <div>
-  <mock-navbar
-    searchlocation="false"
-  />
+  <mock-infonavbar />
   <mock-box
     classname="Apply-boxBar-1"
     height="100%"
@@ -434,39 +432,6 @@ exports[`Site registration page > should render with given state from Redux stor
       </div>
     </div>
   </mock-snackbar>
-  <mock-appbar
-    classname="Footer-appBar-6"
-    position="static"
-  >
-    <mock-toolbar>
-      <div
-        class="MuiGrid-root MuiGrid-container css-1ry8ypg-MuiGrid-root"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
-        >
-          <mock-link
-            classname="Footer-navBarLink-7"
-            href="/map"
-            underline="hover"
-          >
-            <mock-typography
-              color="textPrimary"
-              variant="h4"
-            >
-              Aqua
-            </mock-typography>
-            <mock-typography
-              style="color: rgb(138, 198, 222);"
-              variant="h4"
-            >
-              link
-            </mock-typography>
-          </mock-link>
-        </div>
-      </div>
-    </mock-toolbar>
-  </mock-appbar>
   <mock-dialog
     maxwidth="xs"
     open="false"
@@ -475,7 +440,7 @@ exports[`Site registration page > should render with given state from Redux stor
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-9 css-149tc0y-MuiCardHeader-root"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-7 css-149tc0y-MuiCardHeader-root"
       >
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
@@ -498,7 +463,7 @@ exports[`Site registration page > should render with given state from Redux stor
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-10"
+                    classname="RegisterDialog-dialogHeaderSecondPart-8"
                     variant="h4"
                   >
                     link
@@ -509,7 +474,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <mock-iconbutton
-                  classname="RegisterDialog-closeButton-8"
+                  classname="RegisterDialog-closeButton-6"
                   size="small"
                 >
                   <svg
@@ -534,7 +499,7 @@ exports[`Site registration page > should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-11 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 RegisterDialog-dialogContentTitle-9 css-9ve18c-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
@@ -551,10 +516,10 @@ exports[`Site registration page > should render with given state from Redux stor
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
           >
             <form
-              class="RegisterDialog-form-12"
+              class="RegisterDialog-form-10"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-11 css-z4k4cw-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -572,7 +537,7 @@ exports[`Site registration page > should render with given state from Redux stor
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-12 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="firstName"
                       name="firstName"
                       placeholder="First Name"
@@ -595,7 +560,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-11 css-z4k4cw-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -613,7 +578,7 @@ exports[`Site registration page > should render with given state from Redux stor
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-12 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="lastName"
                       name="lastName"
                       placeholder="Last Name"
@@ -636,7 +601,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-11 css-z4k4cw-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -654,7 +619,7 @@ exports[`Site registration page > should render with given state from Redux stor
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-12 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="organization"
                       name="organization"
                       placeholder="Organization"
@@ -677,7 +642,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-11 css-z4k4cw-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -695,7 +660,7 @@ exports[`Site registration page > should render with given state from Redux stor
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-12 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="emailAddress"
                       name="emailAddress"
                       placeholder="Email Address"
@@ -718,7 +683,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-13 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-textFieldWrapper-11 css-z4k4cw-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -736,7 +701,7 @@ exports[`Site registration page > should render with given state from Redux stor
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-14 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiInputBase-input MuiOutlinedInput-input RegisterDialog-textField-12 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -766,7 +731,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-17"
+                    classname="RegisterDialog-termsCheckbox-15"
                     color="primary"
                   />
                 </div>
@@ -775,14 +740,14 @@ exports[`Site registration page > should render with given state from Redux stor
                 >
                   <mock-box>
                     <mock-typography
-                      classname="RegisterDialog-formText-15"
+                      classname="RegisterDialog-formText-13"
                       color="textSecondary"
                       variant="subtitle1"
                     >
                       I have read the
                        
                       <a
-                        class="RegisterDialog-termsLink-18"
+                        class="RegisterDialog-termsLink-16"
                         data-discover="true"
                         href="/terms"
                       >
@@ -793,7 +758,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-16 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 RegisterDialog-button-14 css-z4k4cw-MuiGrid-root"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth Mui-disabled MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
@@ -808,7 +773,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-15"
+                  classname="RegisterDialog-formText-13"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -838,7 +803,7 @@ exports[`Site registration page > should render with given state from Redux stor
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-20 css-149tc0y-MuiCardHeader-root"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-18 css-149tc0y-MuiCardHeader-root"
       >
         <div
           class="MuiCardHeader-content css-1jkp9bu-MuiCardHeader-content"
@@ -861,7 +826,7 @@ exports[`Site registration page > should render with given state from Redux stor
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-21"
+                    classname="SignInDialog-dialogHeaderSecondPart-19"
                     variant="h4"
                   >
                     link
@@ -872,7 +837,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-19"
+                  classname="SignInDialog-closeButton-17"
                   size="small"
                 >
                   <svg
@@ -957,7 +922,7 @@ exports[`Site registration page > should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ldi2p4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-22 css-9ve18c-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 SignInDialog-dialogContentTitle-20 css-9ve18c-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-x7bhrq-MuiGrid-root"
@@ -974,10 +939,10 @@ exports[`Site registration page > should render with given state from Redux stor
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10 css-9ve18c-MuiGrid-root"
           >
             <form
-              class="SignInDialog-form-23"
+              class="SignInDialog-form-21"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-24 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-22 css-z4k4cw-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -995,7 +960,7 @@ exports[`Site registration page > should render with given state from Redux stor
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-25 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-23 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="emailAddress"
                       name="emailAddress"
                       placeholder="Email Address"
@@ -1018,7 +983,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-24 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-textFieldWrapper-22 css-z4k4cw-MuiGrid-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
@@ -1036,7 +1001,7 @@ exports[`Site registration page > should render with given state from Redux stor
                   >
                     <input
                       aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-25 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiInputBase-input MuiOutlinedInput-input SignInDialog-textField-23 css-p1pyuz-MuiInputBase-input-MuiOutlinedInput-input"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -1062,7 +1027,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-28 css-1ysap08-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary SignInDialog-forgotPasswordButton-26 css-1ysap08-MuiButtonBase-root-MuiButton-root"
                   tabindex="0"
                   type="button"
                 >
@@ -1075,7 +1040,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 </button>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-27 css-z4k4cw-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 SignInDialog-button-25 css-z4k4cw-MuiGrid-root"
               >
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-colorPrimary MuiButton-fullWidth css-14fik5b-MuiButtonBase-root-MuiButton-root"
@@ -1089,7 +1054,7 @@ exports[`Site registration page > should render with given state from Redux stor
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-wcmnoq-MuiGrid-root"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-26"
+                  classname="SignInDialog-formText-24"
                   color="textSecondary"
                   variant="subtitle1"
                 >

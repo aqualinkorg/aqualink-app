@@ -18,7 +18,8 @@ import withStyles from '@mui/styles/withStyles';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
-import L from 'leaflet';
+import type { Map as LeafletMap } from 'leaflet';
+import type { HomepageMapHandle } from 'helpers/homepageMapHandle';
 
 import { siteOnMapSelector } from 'store/Homepage/homepageSlice';
 import { getSiteNameAndRegion } from 'store/Sites/helpers';
@@ -277,7 +278,7 @@ interface SiteTableIncomingProps {
   collection?: Collection;
   scrollTableOnSelection?: boolean;
   scrollPageOnSelection?: boolean;
-  map?: L.Map | null; // Add map prop type
+  map?: LeafletMap | HomepageMapHandle | null;
 }
 
 export default withStyles(styles)(SiteTable);
