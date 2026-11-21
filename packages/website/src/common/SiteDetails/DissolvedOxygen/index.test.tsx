@@ -76,3 +76,25 @@ test('ignores quality when its timestamp differs from the readings', () => {
   expect(queryByText(/Good|Bad/)).not.toBeInTheDocument();
   expect(container.querySelector('[style*="opacity: 0.6"]')).toBeNull();
 });
+
+test('shows the older reading time when readings have different timestamps', () => {
+  vi.useFakeTimers({ toFake: ['Date'] });
+  vi.setSystemTime(new Date('2026-11-20T13:00:00.000Z'));
+  try {
+    const { getByText } = renderWithProviders(
+      <DissolvedOxygenCard
+        data={{
+          odoConcentration: {
+            value: 6.9,
+            timestamp: '2026-11-20T10:00:00.000Z',
+          },
+          odoSaturation: { value: 111.9, timestamp: sampleTimestamp },
+        }}
+      />,
+    );
+
+    expect(getByText(/3 hours ago/)).toBeInTheDocument();
+  } finally {
+    vi.useRealTimers();
+  }
+});
