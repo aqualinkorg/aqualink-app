@@ -33,15 +33,18 @@ function DissolvedOxygenCard({ data, classes }: DissolvedOxygenCardProps) {
   const readingsShareTimestamp =
     Boolean(odoConcentration?.timestamp) &&
     odoConcentration?.timestamp === odoSaturation?.timestamp;
-  const timestamp = readingsShareTimestamp
-    ? odoConcentration?.timestamp
-    : odoSaturation?.timestamp || odoConcentration?.timestamp;
-  const relativeTime =
-    readingsShareTimestamp ||
-    !odoConcentration?.timestamp ||
-    !odoSaturation?.timestamp
-      ? timestamp && toRelativeTime(timestamp)
-      : undefined;
+  // When the readings come from different samples, show the older time so the
+  // card never looks fresher than its stalest value.
+  const timestamp = [odoConcentration?.timestamp, odoSaturation?.timestamp]
+    .filter((x): x is string => Boolean(x))
+    .reduce<string | undefined>(
+      (oldest, x) =>
+        !oldest || new Date(x).getTime() < new Date(oldest).getTime()
+          ? x
+          : oldest,
+      undefined,
+    );
+  const relativeTime = timestamp && toRelativeTime(timestamp);
 
   // Quality describes one sample. Both readings must exist and share it.
   const hasQuality =
