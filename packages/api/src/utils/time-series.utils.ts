@@ -278,29 +278,43 @@ export const getDataRangeQuery = (
   siteId: number,
   surveyPointId?: number,
 ): Promise<TimeSeriesRange[]> => {
-  const surveyPointCondition = surveyPointId
-    ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
-    : '1=1';
+  const params: number[] = [siteId];
+  const surveyPointCondition =
+    surveyPointId !== undefined
+      ? `AND (source.survey_point_id = $${params.push(
+          surveyPointId,
+        )} OR source.survey_point_id IS NULL)`
+      : '';
 
-  return timeSeriesRepository
-    .createQueryBuilder('time_series')
-    .select('metric')
-    .addSelect('source.type', 'source')
-    .addSelect('source.depth', 'depth')
-    .addSelect('MIN(timestamp)', 'minDate')
-    .addSelect('MAX(timestamp)', 'maxDate')
-    .innerJoin(
-      'time_series.source',
-      'source',
-      `source.site_id = :siteId AND ${surveyPointCondition}`,
-      { siteId },
-    )
-    .leftJoin('source.surveyPoint', 'surveyPoint')
-    .addSelect('surveyPoint.id', 'surveyPointId')
-    .addSelect('surveyPoint.name', 'surveyPointName')
-    .groupBy('metric, source.type, surveyPoint.id, source.depth')
-    .orderBy('MAX(timestamp)', 'ASC')
-    .getRawMany();
+  // Drive the query from the (few) sources of the site and probe the
+  // (metric, source_id, timestamp DESC) index once per metric/source pair.
+  // Postgres turns each MIN/MAX into a 1-row index scan, instead of scanning
+  // the whole time_series table to filter on source_id (no index leads with
+  // source_id), which made this endpoint take ~10s for every site.
+  return timeSeriesRepository.query(
+    `SELECT
+      m.metric AS "metric",
+      source.type AS "source",
+      source.depth AS "depth",
+      MIN(r.min_date) AS "minDate",
+      MAX(r.max_date) AS "maxDate",
+      survey_point.id AS "surveyPointId",
+      survey_point.name AS "surveyPointName"
+    FROM sources source
+    CROSS JOIN unnest(enum_range(NULL::time_series_metric_enum)) AS m(metric)
+    CROSS JOIN LATERAL (
+      SELECT MIN(ts.timestamp) AS min_date, MAX(ts.timestamp) AS max_date
+      FROM time_series ts
+      WHERE ts.metric = m.metric AND ts.source_id = source.id
+    ) r
+    LEFT JOIN site_survey_point survey_point
+      ON survey_point.id = source.survey_point_id
+    WHERE source.site_id = $1 ${surveyPointCondition}
+      AND r.max_date IS NOT NULL
+    GROUP BY m.metric, source.type, survey_point.id, source.depth
+    ORDER BY MAX(r.max_date) ASC`,
+    params,
+  );
 };
 
 /**
