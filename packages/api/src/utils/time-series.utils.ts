@@ -278,13 +278,11 @@ export const getDataRangeQuery = (
   siteId: number,
   surveyPointId?: number,
 ): Promise<TimeSeriesRange[]> => {
-  const params: number[] = [siteId];
-  const surveyPointCondition =
-    surveyPointId !== undefined
-      ? `AND (source.survey_point_id = $${params.push(
-          surveyPointId,
-        )} OR source.survey_point_id IS NULL)`
-      : '';
+  const hasSurveyPoint = surveyPointId !== undefined;
+  const params = hasSurveyPoint ? [siteId, surveyPointId] : [siteId];
+  const surveyPointCondition = hasSurveyPoint
+    ? 'AND (source.survey_point_id = $2 OR source.survey_point_id IS NULL)'
+    : '';
 
   // Drive the query from the (few) sources of the site and probe the
   // (metric, source_id, timestamp DESC) index once per metric/source pair.
