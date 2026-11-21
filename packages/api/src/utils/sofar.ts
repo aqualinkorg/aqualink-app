@@ -228,12 +228,41 @@ export async function getSofarHindcastData(
   return filterSofarResponse(hindcastVariables);
 }
 
+/** Rows whose `data_type_name` starts with `dataTypePrefix`, ignoring nil values. */
+export function smartMooringValuesByPrefix(
+  smartMooringData: {
+    data_type_name?: string;
+    value?: number | null;
+    timestamp: string;
+  }[],
+  dataTypePrefix: string,
+): ValueWithTimestamp[] {
+  return smartMooringData
+    .filter(
+      (data) =>
+        data.data_type_name?.startsWith(dataTypePrefix) && !isNil(data.value),
+    )
+    .map((data) => ({
+      timestamp: data.timestamp,
+      value: data.value as number,
+    }));
+}
+
+/** Standard mooring temps stay. `bm_*` temps are optional so DO fetch does not mix them in. */
+export function foldIntoMooringTemperature(
+  dataTypeName: string | undefined,
+  foldBristlemouthTemperature: boolean,
+): boolean {
+  return foldBristlemouthTemperature || !dataTypeName?.startsWith('bm_');
+}
+
 export async function getSpotterData(
   sensorId: string,
   sofarToken?: string,
   endDate?: Date,
   startDate?: Date,
-  includeSeapHOxData?: boolean,
+  includeSmartMooringData?: boolean,
+  foldBristlemouthTemperature?: boolean,
 ): Promise<SpotterData> {
   console.time(`getSpotterData for sensor ${sensorId}`);
   const [start, end] =
@@ -254,8 +283,11 @@ export async function getSpotterData(
     sofarToken,
     start,
     end,
-    includeSeapHOxData,
+    includeSmartMooringData,
   )) || { data: [] };
+
+  const foldBristlemouth =
+    foldBristlemouthTemperature ?? Boolean(includeSmartMooringData);
 
   const sofarSpotterSurfaceTemp: ValueWithTimestamp[] = surfaceTemp.map(
     (x) => ({
@@ -342,6 +374,10 @@ export async function getSpotterData(
     ValueWithTimestamp[],
   ] = smartMooringData.reduce(
     ([topTemp, bottomTemp, bottomPressure], data) => {
+      if (!foldIntoMooringTemperature(data.data_type_name, foldBristlemouth)) {
+        return [topTemp, bottomTemp, bottomPressure];
+      }
+
       const { sensorPosition, unit_type: unitType } = data;
 
       if (sensorPosition === 1 && unitType === 'temperature') {
@@ -384,12 +420,7 @@ export async function getSpotterData(
   const getSmartMooringValues = (
     dataTypePrefix: string,
   ): ValueWithTimestamp[] =>
-    smartMooringData
-      .filter(
-        (data) =>
-          data.data_type_name?.startsWith(dataTypePrefix) && !isNil(data.value),
-      )
-      .map((data) => ({ timestamp: data.timestamp, value: data.value }));
+    smartMooringValuesByPrefix(smartMooringData, dataTypePrefix);
 
   console.timeEnd(`getSpotterData for sensor ${sensorId}`);
 

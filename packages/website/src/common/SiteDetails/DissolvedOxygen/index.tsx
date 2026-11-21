@@ -30,10 +30,24 @@ const QUALITY_TOOLTIP =
 function DissolvedOxygenCard({ data, classes }: DissolvedOxygenCardProps) {
   const { odoConcentration, odoSaturation, odoQuality } = data;
 
-  const timestamp = odoSaturation?.timestamp || odoConcentration?.timestamp;
-  const relativeTime = timestamp && toRelativeTime(timestamp);
+  const readingsShareTimestamp =
+    Boolean(odoConcentration?.timestamp) &&
+    odoConcentration?.timestamp === odoSaturation?.timestamp;
+  const timestamp = readingsShareTimestamp
+    ? odoConcentration?.timestamp
+    : odoSaturation?.timestamp || odoConcentration?.timestamp;
+  const relativeTime =
+    readingsShareTimestamp ||
+    !odoConcentration?.timestamp ||
+    !odoSaturation?.timestamp
+      ? timestamp && toRelativeTime(timestamp)
+      : undefined;
 
-  const hasQuality = typeof odoQuality?.value === 'number';
+  // Quality describes one sample. Both readings must exist and share it.
+  const hasQuality =
+    typeof odoQuality?.value === 'number' &&
+    readingsShareTimestamp &&
+    odoConcentration?.timestamp === odoQuality.timestamp;
   const isGoodQuality = (odoQuality?.value ?? 0) >= QUALITY_THRESHOLD;
 
   const metrics = [

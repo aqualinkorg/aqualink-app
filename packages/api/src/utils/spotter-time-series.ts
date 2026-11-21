@@ -205,13 +205,18 @@ export const addSpotterData = async (
 
               const sofarToken =
                 site.spotterApiToken || process.env.SOFAR_API_TOKEN;
-              // Fetch spotter and wave data from sofar
+              // Fetch spotter and wave data from sofar.
+              // `bm_do_*` is smart-mooring data, so request that payload for
+              // every site. Fold `bm_*` temperature and pressure into the
+              // mooring series only for SeapHOx sites; standard
+              // sofar_temperature rows stay for everyone.
               const spotterData = await getSpotterData(
                 site.sensorId,
                 sofarToken,
                 endDate,
                 startDate,
-                site.hasSeaphox,
+                true,
+                Boolean(site.hasSeaphox),
               ).then((data) => excludeSpotterData(data, sensorExclusionDates));
 
               if (
