@@ -284,11 +284,11 @@ export const getDataRangeQuery = (
     ? 'AND (source.survey_point_id = $2 OR source.survey_point_id IS NULL)'
     : '';
 
-  // Drive the query from the (few) sources of the site and probe the
-  // (metric, source_id, timestamp DESC) index once per metric/source pair.
-  // Postgres turns each MIN/MAX into a 1-row index scan, instead of scanning
-  // the whole time_series table to filter on source_id (no index leads with
-  // source_id), which made this endpoint take ~10s for every site.
+  // Drive from the site's sources. Each bound is ORDER BY timestamp LIMIT 1
+  // on (metric, source_id), so Postgres stops after one leaf of
+  // no_duplicate_data or IDX_time_series_metric_source_timestamp_DESC.
+  // A combined MIN()+MAX() would scan the whole slice. Empty metrics return
+  // NULL and are dropped below.
   return timeSeriesRepository.query(
     `SELECT
       m.metric AS "metric",
@@ -301,9 +301,17 @@ export const getDataRangeQuery = (
     FROM sources source
     CROSS JOIN unnest(enum_range(NULL::time_series_metric_enum)) AS m(metric)
     CROSS JOIN LATERAL (
-      SELECT MIN(ts.timestamp) AS min_date, MAX(ts.timestamp) AS max_date
-      FROM time_series ts
-      WHERE ts.metric = m.metric AND ts.source_id = source.id
+      SELECT
+        (SELECT ts.timestamp
+         FROM time_series ts
+         WHERE ts.metric = m.metric AND ts.source_id = source.id
+         ORDER BY ts.timestamp ASC
+         LIMIT 1) AS min_date,
+        (SELECT ts.timestamp
+         FROM time_series ts
+         WHERE ts.metric = m.metric AND ts.source_id = source.id
+         ORDER BY ts.timestamp DESC
+         LIMIT 1) AS max_date
     ) r
     LEFT JOIN site_survey_point survey_point
       ON survey_point.id = source.survey_point_id
