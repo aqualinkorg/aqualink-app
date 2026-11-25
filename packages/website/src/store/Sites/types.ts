@@ -78,6 +78,7 @@ export const metricsKeysList = [
   'conductivity',
   'cholorophyll_rfu',
   'odo_saturation',
+  'odo_quality',
   'specific_conductance',
   'tds',
   'total_suspended_solids',
