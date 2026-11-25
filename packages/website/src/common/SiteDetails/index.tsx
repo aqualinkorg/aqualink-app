@@ -10,10 +10,12 @@ import { useAppDispatch } from 'store/hooks';
 import { oceanSenseConfig } from 'constants/oceanSenseConfig';
 import type {
   Site,
+  LatestData,
   LatestDataASSofarValue,
   DataRange,
   Sources,
   TimeSeriesDataRange,
+  MetricsKeys,
 } from 'store/Sites/types';
 import { SurveyListItem, SurveyPoint } from 'store/Survey/types';
 import {
@@ -48,6 +50,7 @@ import { Value } from './CardWithTitle/types';
 import CombinedCharts from '../Chart/CombinedCharts';
 import WaterSamplingCard from './WaterSampling';
 import SeapHOxCard from './SeapHOx';
+import DissolvedOxygenCard from './DissolvedOxygen';
 import { styles as incomingStyles } from './styles';
 import LoadingSkeleton from '../LoadingSkeleton';
 import playIcon from '../../assets/play-icon.svg';
@@ -125,6 +128,33 @@ const sondeMetrics: (keyof LatestDataASSofarValue)[] = [
 ];
 
 const MINIMUM_SONDE_METRICS_TO_SHOW_CARD = 3;
+const SPOTTER_READING_VALIDITY_MS = 12 * 60 * 60 * 1000;
+
+function latestRecentSpotterMetric(
+  latestData: LatestData[],
+  metric: MetricsKeys,
+  now: number,
+): { timestamp: string; value: number } | undefined {
+  return latestData.reduce<{ timestamp: string; value: number } | undefined>(
+    (latest, row) => {
+      if (row.source !== 'spotter' || row.metric !== metric) return latest;
+      if (
+        now - new Date(row.timestamp).getTime() >=
+        SPOTTER_READING_VALIDITY_MS
+      ) {
+        return latest;
+      }
+      if (
+        !latest ||
+        new Date(row.timestamp).getTime() > new Date(latest.timestamp).getTime()
+      ) {
+        return { timestamp: row.timestamp, value: row.value };
+      }
+      return latest;
+    },
+    undefined,
+  );
+}
 
 function SiteDetails({
   site,
@@ -147,6 +177,7 @@ function SiteDetails({
   const [hasHUIData, setHasHUIData] = useState<boolean>(false);
   const [hasHWOData, setHasHWOData] = useState<boolean>(false);
   const [hasSeapHOxData, setHasSeapHOxData] = useState<boolean>(false);
+  const [hasSpotterDOData, setHasSpotterDOData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const timeSeriesRange = useSelector(siteTimeSeriesDataRangeSelector);
@@ -183,7 +214,6 @@ function SiteDetails({
 
       // Check for Spotter TEMPERATURE data (for BUOY OBSERVATION card)
       // Excludes seaphox source AND checks if data is recent (within 12 hours)
-      const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
       const now = Date.now();
 
       const hasRecentSpotterTemperature = latestData.some((x) => {
@@ -197,7 +227,7 @@ function SiteDetails({
         if (!isTemperatureMetric) return false;
 
         const dataAge = now - new Date(x.timestamp).getTime();
-        return dataAge < spotterValidityLimit;
+        return dataAge < SPOTTER_READING_VALIDITY_MS;
       });
 
       const hasSpotterTemperature = Boolean(
@@ -205,11 +235,11 @@ function SiteDetails({
         (parsedData.topTemperature &&
           parsedData.topTemperature.timestamp &&
           now - new Date(parsedData.topTemperature.timestamp).getTime() <
-            spotterValidityLimit) ||
+            SPOTTER_READING_VALIDITY_MS) ||
         (parsedData.surfaceTemperature &&
           parsedData.surfaceTemperature.timestamp &&
           now - new Date(parsedData.surfaceTemperature.timestamp).getTime() <
-            spotterValidityLimit),
+            SPOTTER_READING_VALIDITY_MS),
       );
 
       // Check for Spotter WIND/WAVE data (for Waves component LIVE indicator)
@@ -226,9 +256,17 @@ function SiteDetails({
         ),
       );
 
+      // Spotter DO shares odo_concentration with sonde. Counting the Spotter
+      // row made SeapHOx pH + salinity look like a sonde.
+      const hasSondeOdo = latestData.some(
+        (x) => x.source === 'sonde' && x.metric === 'odo_concentration',
+      );
       const hasSonde =
-        sondeMetrics.filter((x) => Boolean(parsedData[x])).length >=
-        MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
+        sondeMetrics.filter((metric) =>
+          metric === 'odoConcentration'
+            ? hasSondeOdo
+            : Boolean(parsedData[metric]),
+        ).length >= MINIMUM_SONDE_METRICS_TO_SHOW_CARD;
 
       const hasHUI =
         latestData.some(
@@ -254,8 +292,16 @@ function SiteDetails({
           timeSeriesRange,
         );
 
+      const hasSpotterDO = latestData.some(
+        (x) =>
+          x.source === 'spotter' &&
+          (x.metric === 'odo_saturation' || x.metric === 'odo_concentration') &&
+          now - new Date(x.timestamp).getTime() < SPOTTER_READING_VALIDITY_MS,
+      );
+
       setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotterTemperature);
+      setHasSpotterDOData(hasSpotterDO);
       setHasSpotterWindWaveData(hasSpotterWindWave);
       setHasHUIData(hasHUI);
       setHasHWOData(hasHWO);
@@ -332,7 +378,8 @@ function SiteDetails({
             );
           })(),
 
-          // CARD 3: SeapHOx (priority) or WaterSampling/CoralBleaching (fallback)
+          // CARD 3: SeapHOx, then water sampling. Spotter DO only replaces
+          // the CoralBleaching fallback so HWO, HUI and sonde stay visible.
           (() => {
             if (hasSeapHOxData) {
               return (
@@ -349,7 +396,6 @@ function SiteDetails({
               );
             }
 
-            // FALLBACK: Original Card 3 logic
             if (hasHUIData) {
               return (
                 <WaterSamplingCard siteId={site.id.toString()} source="hui" />
@@ -358,6 +404,30 @@ function SiteDetails({
             if (hasSondeData) {
               return (
                 <WaterSamplingCard siteId={site.id.toString()} source="sonde" />
+              );
+            }
+            if (hasSpotterDOData && latestData) {
+              const spotterNow = Date.now();
+              return (
+                <DissolvedOxygenCard
+                  data={{
+                    odoConcentration: latestRecentSpotterMetric(
+                      latestData,
+                      'odo_concentration',
+                      spotterNow,
+                    ),
+                    odoSaturation: latestRecentSpotterMetric(
+                      latestData,
+                      'odo_saturation',
+                      spotterNow,
+                    ),
+                    odoQuality: latestRecentSpotterMetric(
+                      latestData,
+                      'odo_quality',
+                      spotterNow,
+                    ),
+                  }}
+                />
               );
             }
             return <CoralBleaching data={latestDataAsSofarValues} />;

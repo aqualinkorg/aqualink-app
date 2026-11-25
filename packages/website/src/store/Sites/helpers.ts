@@ -356,14 +356,29 @@ export const parseLatestData = (
     'dissolved_oxygen',
   ]);
 
+  // Drop stale Spotter rows only. Sonde still publishes these metrics, so
+  // they cannot join spotterTempWhitelist (that list also drops other sources).
+  const spotterStaleMetrics = new Set([
+    'odo_concentration',
+    'odo_saturation',
+    'odo_quality',
+  ]);
+
   const filtered = copy.filter((value) => {
     if (waveMetrics.has(value.metric)) {
       return value.source === 'open_meteo';
     }
 
+    const isStaleSpotter =
+      value.source === 'spotter' &&
+      new Date(value.timestamp).getTime() <= validityDate;
+
+    if (isStaleSpotter && spotterStaleMetrics.has(value.metric)) {
+      return false;
+    }
+
     return (
-      (value.source === 'spotter' &&
-        new Date(value.timestamp).getTime() > validityDate) ||
+      (value.source === 'spotter' && !isStaleSpotter) ||
       value.source === 'seaphox' ||
       !spotterTempWhitelist.has(value.metric)
     );

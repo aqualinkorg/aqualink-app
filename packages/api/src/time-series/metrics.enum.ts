@@ -25,6 +25,7 @@ export enum Metric {
   WATER_DEPTH = 'water_depth',
   ODO_SATURATION = 'odo_saturation',
   ODO_CONCENTRATION = 'odo_concentration',
+  ODO_QUALITY = 'odo_quality',
   SALINITY = 'salinity',
   SPECIFIC_CONDUCTANCE = 'specific_conductance',
   TDS = 'tds',
