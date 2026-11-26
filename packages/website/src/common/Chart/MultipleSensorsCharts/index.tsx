@@ -17,7 +17,6 @@ import {
   HWO_DATA_COLOR,
 } from 'constants/charts';
 import {
-  siteGranularDailyDataSelector,
   siteOceanSenseDataRequest,
   siteOceanSenseDataSelector,
   siteTimeSeriesDataRangeLoadingSelector,
@@ -118,7 +117,6 @@ function MultipleSensorsCharts({
   const [startParam, setStartParam] = useQueryParam('start', isISODate);
   const [endParam, setEndParam] = useQueryParam('end', isISODate);
   const [chartParam] = useQueryParam('chart');
-  const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
   const user = useSelector(userInfoSelector);
@@ -171,7 +169,7 @@ function MultipleSensorsCharts({
   const hasOceanSenseId = Boolean(oceanSenseConfig?.[site.id]);
 
   const tempAnalysisDatasets = generateTempAnalysisDatasets(
-    granularDailyData,
+    timeSeriesData?.satelliteTemperature?.find((x) => x.type === 'noaa')?.data,
     timeSeriesData?.bottomTemperature?.find((x) => x.type === 'spotter')?.data,
     timeSeriesData?.topTemperature?.find((x) => x.type === 'spotter')?.data,
     timeSeriesData?.bottomTemperature?.find((x) => x.type === 'seaphox')?.data,
@@ -645,6 +643,7 @@ function MultipleSensorsCharts({
 
       const allMetrics = [
         ...DEFAULT_METRICS,
+        'satellite_temperature' as const,
         ...sondeRanges.map((x) => x.metric),
         ...metlogRanges.map((x) => x.metric),
         // SeapHOx metrics
