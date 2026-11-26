@@ -12,6 +12,15 @@ const lightGray = '#939393';
 const specialSensorColor = '#f78c21';
 const greenCardColor = '#37a692';
 const backgroundGray = '#f5f5f5';
+const navy = '#0E2433';
+const slateGray = '#4A5D6A';
+const oceanBlue = '#0A6E9C';
+const darkOceanBlue = '#08506F';
+const borderGray = '#DCE3E7';
+const mistGray = '#F4F7F8';
+const paleGrayBlue = '#C9D6DD';
+const paleSkyBlue = '#8FD3F0';
+const sunsetOrange = '#F2A65A';
 
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
@@ -38,9 +47,24 @@ export const colors = {
   specialSensorColor,
   greenCardColor,
   backgroundGray,
+  white,
+  navy,
+  slateGray,
+  oceanBlue,
+  darkOceanBlue,
+  borderGray,
+  mistGray,
+  paleGrayBlue,
+  paleSkyBlue,
+  sunsetOrange,
 };
 
 export const mapIconSize = '2rem';
+
+export const instrumentSansFontFamily =
+  "'Instrument Sans', system-ui, sans-serif";
+
+export const ibmPlexMonoFontFamily = "'IBM Plex Mono', monospace";
 
 const theme: Theme = createTheme({
   palette: {

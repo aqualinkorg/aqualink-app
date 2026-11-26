@@ -8,24 +8,44 @@ export const DEFAULT_METRICS = createSubMetricsKeysArray(
   'barometric_pressure_top',
   'barometric_pressure_bottom',
   'surface_temperature',
+  'odo_concentration',
+  'odo_saturation',
 );
 
 export type SpotterMetricsKeys = (typeof DEFAULT_METRICS)[number];
 
 const spotterConfig: Record<SpotterMetricsKeys, BaseSourceConfig> = {
+  odo_concentration: {
+    units: 'mg/L',
+    title: 'Dissolved Oxygen Concentration',
+    description: '',
+    visibility: 'public',
+    order: 0,
+    decimalPlaces: 2,
+    yAxisStepSize: 0.5,
+    yAxisPadding: 0.05,
+  },
+  odo_saturation: {
+    units: '%',
+    title: 'Dissolved Oxygen Saturation',
+    description: '',
+    visibility: 'public',
+    order: 1,
+    decimalPlaces: 1,
+  },
   top_temperature: {
     units: '°C',
     title: 'Top Temperature',
     description: '',
     visibility: 'none',
-    order: 1,
+    order: 2,
   },
   bottom_temperature: {
     units: '°C',
     title: 'Bottom temperature',
     description: '',
     visibility: 'none',
-    order: 1,
+    order: 2,
   },
   wind_speed: {
     units: 'km/h',
@@ -34,35 +54,35 @@ const spotterConfig: Record<SpotterMetricsKeys, BaseSourceConfig> = {
     convert: 3.6,
     description: '',
     visibility: 'public',
-    order: 1,
+    order: 3,
   },
   barometric_pressure_top: {
     units: 'hPa',
     title: 'Surface Barometric Pressure',
     description: '',
     visibility: 'public',
-    order: 2,
+    order: 4,
   },
   barometric_pressure_bottom: {
     units: 'hPa',
     title: 'Bottom Pressure',
     description: '',
     visibility: 'public',
-    order: 3,
+    order: 5,
   },
   significant_wave_height: {
     units: 'm',
     title: 'Significant Wave Height',
     description: '',
     visibility: 'public',
-    order: 4,
+    order: 6,
   },
   surface_temperature: {
     units: '°C',
     title: 'Surface Temperature',
     description: '',
     visibility: 'public',
-    order: 5,
+    order: 7,
   },
 };
 

@@ -15,7 +15,11 @@ export function useGoogleTranslation() {
   };
 
   const addScript = () => {
+    if (document.getElementById('google-translate-script')) {
+      return;
+    }
     const script = document.createElement('script');
+    script.setAttribute('id', 'google-translate-script');
     script.setAttribute('type', 'text/javascript');
     script.setAttribute(
       'src',

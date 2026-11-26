@@ -16,6 +16,12 @@ export function buildOisstAnomalyWmsUrl(datasetPath: string): string {
   return `${NCEI_THREDDS_BASE}/wms/${datasetPath}?COLORSCALERANGE=-5,5`;
 }
 
+/** MapLibre raster tile template equivalent to Leaflet's WMSTileLayer. */
+export function buildOisstAnomalyTileTemplate(wmsUrl: string): string {
+  const separator = wmsUrl.includes('?') ? '&' : '?';
+  return `${wmsUrl}${separator}SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=anom&STYLES=${encodeURIComponent('raster/x-Sst')}&SRS=EPSG%3A3857&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}`;
+}
+
 export async function fetchLatestOisstAnomalyWmsUrl(
   signal?: AbortSignal,
 ): Promise<string | null> {

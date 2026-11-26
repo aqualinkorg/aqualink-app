@@ -10,7 +10,9 @@ type SofarLayerDefinition = {
   cmap: string;
 };
 
-const SOFAR_LAYERS: SofarLayerDefinition[] = [
+export const SATELLITE_IMAGERY_LAYER_NAME = 'Satellite Imagery';
+
+export const SOFAR_LAYERS: SofarLayerDefinition[] = [
   {
     name: 'Sea Surface Temperature',
     model: 'NOAACoralReefWatch',
@@ -25,17 +27,21 @@ const SOFAR_LAYERS: SofarLayerDefinition[] = [
   },
 ];
 
-const SST_ANOMALY_LAYER = {
+export const SST_ANOMALY_LAYER = {
   name: 'SST Anomaly' as const satisfies MapLayerName,
   layer: 'anom',
 };
 
 const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 
-const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
+export const sofarTileUrl = ({
+  model,
+  cmap,
+  variableId,
+}: SofarLayerDefinition) =>
   `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
 
-function useLatestOisstAnomalyWmsUrl() {
+export function useLatestOisstAnomalyWmsUrl() {
   const [url, setUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -64,7 +70,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
     <LayersControl position="topright">
       <LayersControl.BaseLayer
         checked={!defaultLayerName}
-        name="Satellite Imagery"
+        name={SATELLITE_IMAGERY_LAYER_NAME}
         key="no-verlay"
       >
         <TileLayer url="" key="no-overlay" />
@@ -78,7 +84,7 @@ export function SofarLayers({ defaultLayerName }: SofarLayersProps) {
           <TileLayer
             // Sofar tiles have a max native zoom of 9
             maxNativeZoom={9}
-            url={sofarUrlFromDef(def)}
+            url={sofarTileUrl(def)}
             key={def.variableId}
             opacity={0.5}
           />

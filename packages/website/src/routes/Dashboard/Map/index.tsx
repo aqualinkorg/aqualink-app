@@ -7,7 +7,7 @@ import { LatLng } from 'leaflet';
 
 import { CollectionDetails } from 'store/Collection/types';
 import { getCollectionCenterAndBounds } from 'helpers/map';
-import Map from '../../HomeMap/Map';
+import Map from '../../HomeMap/Map/LeafletMap';
 
 function DashboardMap({ collection, classes }: DashboardMapProps) {
   const theme = useTheme();

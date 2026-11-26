@@ -24,6 +24,9 @@ export interface SpotterData {
   barometerBottom: ValueWithTimestamp[];
   barometricTopDiff: ValueWithTimestamp[];
   surfaceTemperature: ValueWithTimestamp[];
+  odoConcentration: ValueWithTimestamp[];
+  odoSaturation: ValueWithTimestamp[];
+  odoQuality: ValueWithTimestamp[];
   latitude?: ValueWithTimestamp[];
   longitude?: ValueWithTimestamp[];
   raw?: any[];
@@ -41,6 +44,9 @@ export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
   barometerBottom: [],
   barometricTopDiff: [],
   surfaceTemperature: [],
+  odoConcentration: [],
+  odoSaturation: [],
+  odoQuality: [],
 };
 
 export interface HindcastResponse {
