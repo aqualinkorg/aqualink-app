@@ -1,3 +1,4 @@
+import type { StrategyCreatedStatic } from 'passport';
 import { Strategy } from 'passport-custom';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
@@ -21,7 +22,9 @@ export class FirebaseAuthStrategy extends PassportStrategy(Strategy) {
   }
 
   async authenticate(req: any, props?: any): Promise<void> {
-    const self = this;
+    // passport attaches `success`/`fail` to the strategy at request time;
+    // passport-custom's typings no longer declare them.
+    const self = this as this & StrategyCreatedStatic;
     const firebaseUser = await extractAndVerifyToken(req);
     if (!firebaseUser) {
       return self.fail(new UnauthorizedException(), 401);
