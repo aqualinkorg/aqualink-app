@@ -3,6 +3,7 @@ import {
   chartWindowForDay,
   formatDay,
   isPastOrTodayDay,
+  searchWithChartWindow,
   siteLinkForDay,
 } from './historicalDay';
 
@@ -33,5 +34,23 @@ describe('historicalDay helpers', () => {
 
   it('formats a day for display', () => {
     expect(formatDay('2024-03-05')).toBe('Mar 5, 2024');
+  });
+});
+
+describe('searchWithChartWindow', () => {
+  it('adds the month ending on the day and keeps the other params', () => {
+    expect(searchWithChartWindow('?date=2024-03-15&surveyPoint=2')).toBe(
+      'date=2024-03-15&surveyPoint=2&start=2024-02-15&end=2024-03-15',
+    );
+  });
+
+  it('adds nothing when a window is set or the day is missing or invalid', () => {
+    expect(searchWithChartWindow('?date=2024-03-15&start=2023-01-01')).toBe(
+      null,
+    );
+    expect(searchWithChartWindow('?date=2024-03-15&end=2023-06-30')).toBe(null);
+    expect(searchWithChartWindow('?surveyPoint=2')).toBe(null);
+    expect(searchWithChartWindow('?date=2024-02-30')).toBe(null);
+    expect(searchWithChartWindow('?date=2999-01-01')).toBe(null);
   });
 });

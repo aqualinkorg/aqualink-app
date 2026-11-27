@@ -26,5 +26,25 @@ export const chartWindowForDay = (day: string) => ({
   end: day,
 });
 
+/**
+ * The query string with the chart window for a past day (`?date=`) added, or
+ * null when there is nothing to add: no valid day, or a window already set.
+ */
+export const searchWithChartWindow = (search: string): string | null => {
+  const params = new URLSearchParams(search);
+  const day = params.get('date');
+  if (
+    !day ||
+    !isPastOrTodayDay(day) ||
+    params.get('start') ||
+    params.get('end')
+  )
+    return null;
+  const { start, end } = chartWindowForDay(day);
+  params.set('start', start);
+  params.set('end', end);
+  return params.toString();
+};
+
 export const formatDay = (day: string): string =>
   DateTime.fromFormat(day, DAY_FORMAT).toFormat('LLL d, yyyy');

@@ -17,9 +17,17 @@ vi.mock('common/SiteDetails/Map', () => ({ default: 'Mock-Map' }));
 vi.mock('common/SiteDetails/FeaturedMedia', () => ({
   default: 'Mock-FeaturedMedia',
 }));
-vi.mock('common/Chart/MultipleSensorsCharts', () => ({
-  default: 'Mock-MultipleSensorsCharts',
-}));
+// Like the real charts, reads its window from the URL once, when it mounts.
+vi.mock('common/Chart/MultipleSensorsCharts', async () => {
+  const { useQueryParam } = await import('hooks/useQueryParams');
+  return {
+    default: function MockMultipleSensorsCharts() {
+      const [start] = useQueryParam('start');
+      const [end] = useQueryParam('end');
+      return <div data-testid="sensor-charts-window">{`${start} ${end}`}</div>;
+    },
+  };
+});
 vi.mock('common/AiChatWidget', () => ({ default: 'Mock-AiChatWidget' }));
 
 const renderSite = (url: string) => {
@@ -78,6 +86,32 @@ describe('Site page on a past day', () => {
       '2024-03-02T00:00:00.000Z',
       '2024-03-15T23:59:59.999Z',
     );
+  });
+
+  it('opens the sensor charts on the month ending on that day', async () => {
+    vi.spyOn(siteServices, 'getSiteDailyData').mockResolvedValue({
+      data: [],
+    } as any);
+
+    renderSite(`/sites/${mockSite.id}?date=2024-03-15`);
+
+    expect(
+      (await screen.findByTestId('sensor-charts-window')).textContent,
+    ).toBe('2024-02-15 2024-03-15');
+  });
+
+  it('keeps a chart window that is already in the URL', async () => {
+    vi.spyOn(siteServices, 'getSiteDailyData').mockResolvedValue({
+      data: [],
+    } as any);
+
+    renderSite(
+      `/sites/${mockSite.id}?date=2024-03-15&start=2023-01-01&end=2023-06-30`,
+    );
+
+    expect(
+      (await screen.findByTestId('sensor-charts-window')).textContent,
+    ).toBe('2023-01-01 2023-06-30');
   });
 
   it('shows no historical notice without a date', () => {

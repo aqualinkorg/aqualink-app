@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Container, Box } from '@mui/material';
 import { WithStyles } from '@mui/styles';
 import withStyles from '@mui/styles/withStyles';
 import createStyles from '@mui/styles/createStyles';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'store/hooks';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import {
   siteDetailsSelector,
@@ -31,7 +31,7 @@ import { useQueryParam } from 'hooks/useQueryParams';
 import { isAdmin } from 'helpers/user';
 import { findAdministeredSite } from 'helpers/findAdministeredSite';
 import { sortByDate } from 'helpers/dates';
-import { chartWindowForDay, isPastOrTodayDay } from 'helpers/historicalDay';
+import { isPastOrTodayDay, searchWithChartWindow } from 'helpers/historicalDay';
 import { findSurveyPointFromList } from 'helpers/siteUtils';
 import SiteNavBar from 'common/NavBar';
 import SiteFooter from 'common/Footer';
@@ -128,19 +128,24 @@ function Site({ classes }: SiteProps) {
     'date',
     isPastOrTodayDay,
   );
-  const [startParam, setStartParam] = useQueryParam('start');
-  const [endParam, setEndParam] = useQueryParam('end');
+  const { search } = useLocation();
+  const navigate = useNavigate();
 
-  // Open the charts on the month leading up to the selected day, unless a window is already set.
-  // Runs on mount, before the charts mount and read these params.
+  // On a past day, open the charts on the month leading up to it, unless the URL already has a
+  // window. The charts read `start` and `end` from the URL only when they mount, so the window is
+  // put in the URL first (replacing the history entry) and the site details wait until it's there.
+  const [chartWindowSearch, setChartWindowSearch] = useState(() =>
+    searchWithChartWindow(search),
+  );
   useEffect(() => {
-    if (historicalDay && !startParam && !endParam) {
-      const { start, end } = chartWindowForDay(historicalDay);
-      setStartParam(start);
-      setEndParam(end);
+    if (chartWindowSearch === null) return;
+    if (new URLSearchParams(search).toString() === chartWindowSearch) {
+      setChartWindowSearch(null);
+    } else {
+      navigate({ search: chartWindowSearch }, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [search]);
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -265,7 +270,9 @@ function Site({ classes }: SiteProps) {
           )}
           <div key={siteId}>
             <SiteDetails
-              site={siteWithFeaturedImage}
+              site={
+                chartWindowSearch === null ? siteWithFeaturedImage : undefined
+              }
               selectedSurveyPointId={selectedSurveyPointId}
               featuredSurveyId={featuredSurveyId}
               surveys={surveyList}
