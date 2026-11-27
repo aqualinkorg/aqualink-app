@@ -1,7 +1,11 @@
 /* eslint-disable fp/no-mutation */
-// We need to assign cloud env variable to node env variables
+// 2nd gen Cloud Functions. Environment variables are injected at startup from
+// the `.env.<projectId>` file written by `yarn config:cloud-functions:<project>`.
+// `functions.config()` is 1st gen only and is not available here.
 import Axios from 'axios';
-import * as functions from 'firebase-functions/v1';
+import { setGlobalOptions } from 'firebase-functions/v2';
+import { onRequest } from 'firebase-functions/v2/https';
+import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { DataSource } from 'typeorm';
 import { runDailyUpdate } from '../src/workers/dailyData';
 import {
@@ -44,8 +48,26 @@ function hasProjectId(config: any): config is { projectId: string } {
   return config && 'projectId' in config;
 }
 
+// Match 1st gen: one request per instance, same CPU sizing. 2nd gen otherwise
+// defaults to 80 concurrent requests per instance, and each request opens a
+// TypeORM connection.
+setGlobalOptions({
+  region: 'us-central1',
+  concurrency: 1,
+  cpu: 'gcf_gen1',
+});
+
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing environment variable ${name}`);
+  }
+  return value;
+}
+
 async function sendErrorToSlack(method: string, err: any) {
-  const { token, channel } = functions.config().slack;
+  const token = process.env.SLACK_BOT_TOKEN;
+  const channel = process.env.SLACK_BOT_CHANNEL;
 
   if (!token || !channel) {
     console.error(
@@ -80,7 +102,7 @@ async function runWithDataSource(
   functionName: string,
   callback: (conn: DataSource) => void | Promise<void>,
 ) {
-  const dbUrl = functions.config().database.url;
+  const dbUrl = requireEnv('DATABASE_URL');
   // eslint-disable-next-line no-undef
   const entities = dbEntities.map(extractEntityDefinition);
   const dataSource = new DataSource({
@@ -99,25 +121,38 @@ async function runWithDataSource(
   }
 }
 
+const longRunning = {
+  timeoutSeconds: 540,
+  memory: '512MiB' as const,
+};
+
 // Start a daily update for each sites.
-exports.dailyUpdate = functions
-  .runWith({ timeoutSeconds: 540 })
-  .https.onRequest(async (req, res) => {
-    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+// Public invoker matches 1st gen HTTPS, which allowed unauthenticated calls.
+exports.dailyUpdate = onRequest(
+  {
+    ...longRunning,
+    memory: '256MiB',
+    invoker: 'public',
+  },
+  async (req, res) => {
+    requireEnv('SOFAR_API_TOKEN');
 
     await runWithDataSource('dailyUpdate', async (conn: DataSource) => {
       await runDailyUpdate(conn);
       res.json({ result: `Daily update on ${new Date()}` });
     });
-  });
+  },
+);
 
-exports.scheduledDailyUpdate = functions
-  .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  .pubsub.schedule('0 4 * * *')
-  .timeZone('America/Los_Angeles')
-  .retryConfig({ retryCount: 2 })
-  .onRun(async () => {
-    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+exports.scheduledDailyUpdate = onSchedule(
+  {
+    ...longRunning,
+    schedule: '0 4 * * *',
+    timeZone: 'America/Los_Angeles',
+    retryCount: 2,
+  },
+  async () => {
+    requireEnv('SOFAR_API_TOKEN');
 
     await runWithDataSource(
       'scheduledDailyUpdate',
@@ -126,12 +161,15 @@ exports.scheduledDailyUpdate = functions
         console.log(`Daily update on ${new Date()}`);
       },
     );
-  });
+  },
+);
 
-exports.pingService = functions.pubsub
-  .schedule('*/5 * * * *')
-  .onRun(async () => {
-    const backendBaseUrl: string = functions.config().api.base_url;
+exports.pingService = onSchedule(
+  {
+    schedule: '*/5 * * * *',
+  },
+  async () => {
+    const backendBaseUrl = requireEnv('BACKEND_BASE_URL');
     console.log('Pinging server');
     try {
       await Axios.get(
@@ -141,22 +179,25 @@ exports.pingService = functions.pubsub
       await sendErrorToSlack('pingService', err);
       throw err;
     }
-  });
+  },
+);
 
-exports.scheduledSpotterTimeSeriesUpdate = functions
-  .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // Run spotter data update every hour
-  .pubsub.schedule('0 * * * *')
-  .timeZone('America/Los_Angeles')
-  .retryConfig({ retryCount: 2 })
-  .onRun(async () => {
-    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+exports.scheduledSpotterTimeSeriesUpdate = onSchedule(
+  {
+    ...longRunning,
+    // Run spotter data update every hour
+    schedule: '0 * * * *',
+    timeZone: 'America/Los_Angeles',
+    retryCount: 2,
+  },
+  async () => {
+    requireEnv('SOFAR_API_TOKEN');
     // Spotter data will not be saved in time-series,
     // if the spotter is too far from it's site.
     // This check is skipped for staging and test environments.
-    const skipDistanceCheck = functions
-      .config()
-      .api.base_url.includes('ocean-systems');
+    const skipDistanceCheck = requireEnv('BACKEND_BASE_URL').includes(
+      'ocean-systems',
+    );
 
     await runWithDataSource(
       'scheduledSpotterTimeSeriesUpdate',
@@ -165,23 +206,23 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
         console.log(`Spotter data hourly update on ${new Date()}`);
       },
     );
-  });
+  },
+);
 
 // Wave (Open-Meteo) and wind (Sofar GFS) run as separate scheduled
 // functions so each stays under the 540s Cloud Function timeout. The
 // previous combined job timed out mid Sofar-wind loop and left ~30% of
 // sites without a fresh open_meteo row. Wind is staggered +10 min.
-exports.scheduledWaveTimeSeriesUpdate = functions
-  .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // Open-Meteo Marine updates every 6 hours (00/06/12/18 UTC). Schedule
-  // ~4x/day, timed after each model cycle typically finishes publishing.
-  .pubsub.schedule('20 4,10,16,22 * * *')
-  .timeZone('America/Los_Angeles')
-  .retryConfig({ retryCount: 2 })
-  .onRun(async () => {
-    process.env.OPEN_METEO_API_KEY = functions.config().open_meteo?.api_key;
-    process.env.OPEN_METEO_ENABLED = functions.config().open_meteo?.enabled;
-
+exports.scheduledWaveTimeSeriesUpdate = onSchedule(
+  {
+    ...longRunning,
+    // Open-Meteo Marine updates every 6 hours (00/06/12/18 UTC). Schedule
+    // ~4x/day, timed after each model cycle typically finishes publishing.
+    schedule: '20 4,10,16,22 * * *',
+    timeZone: 'America/Los_Angeles',
+    retryCount: 2,
+  },
+  async () => {
     await runWithDataSource(
       'scheduledWaveTimeSeriesUpdate',
       async (conn: DataSource) => {
@@ -189,15 +230,18 @@ exports.scheduledWaveTimeSeriesUpdate = functions
         console.log(`Wave data update on ${new Date()}`);
       },
     );
-  });
+  },
+);
 
-exports.scheduledWindTimeSeriesUpdate = functions
-  .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  .pubsub.schedule('30 4,10,16,22 * * *')
-  .timeZone('America/Los_Angeles')
-  .retryConfig({ retryCount: 2 })
-  .onRun(async () => {
-    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+exports.scheduledWindTimeSeriesUpdate = onSchedule(
+  {
+    ...longRunning,
+    schedule: '30 4,10,16,22 * * *',
+    timeZone: 'America/Los_Angeles',
+    retryCount: 2,
+  },
+  async () => {
+    requireEnv('SOFAR_API_TOKEN');
 
     await runWithDataSource(
       'scheduledWindTimeSeriesUpdate',
@@ -206,16 +250,19 @@ exports.scheduledWindTimeSeriesUpdate = functions
         console.log(`Wind data update on ${new Date()}`);
       },
     );
-  });
+  },
+);
 
-exports.scheduledSSTTimeSeriesUpdate = functions
-  .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // Run sst data update every hour
-  .pubsub.schedule('0 * * * *')
-  .timeZone('America/Los_Angeles')
-  .retryConfig({ retryCount: 2 })
-  .onRun(async () => {
-    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+exports.scheduledSSTTimeSeriesUpdate = onSchedule(
+  {
+    ...longRunning,
+    // Run sst data update every hour
+    schedule: '0 * * * *',
+    timeZone: 'America/Los_Angeles',
+    retryCount: 2,
+  },
+  async () => {
+    requireEnv('SOFAR_API_TOKEN');
 
     await runWithDataSource(
       'scheduledSSTTimeSeriesUpdate',
@@ -224,19 +271,17 @@ exports.scheduledSSTTimeSeriesUpdate = functions
         console.log(`SST data hourly update on ${new Date()}`);
       },
     );
-  });
+  },
+);
 
-exports.scheduledVideoStreamsCheck = functions
-  .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // VideoStreamCheck will run daily at 12:00 AM
-  .pubsub.schedule('0 0 * * *')
-  .timeZone('America/Los_Angeles')
-  .onRun(async () => {
-    process.env.FIREBASE_API_KEY = functions.config().google.api_key;
-    process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
-    process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
-    process.env.FRONT_END_BASE_URL = functions.config().front.base_url;
-
+exports.scheduledVideoStreamsCheck = onSchedule(
+  {
+    ...longRunning,
+    // VideoStreamCheck will run daily at 12:00 AM
+    schedule: '0 0 * * *',
+    timeZone: 'America/Los_Angeles',
+  },
+  async () => {
     if (!process.env.FIREBASE_CONFIG) {
       console.error('Firebase config env variable has not be set');
       return;
@@ -259,17 +304,17 @@ exports.scheduledVideoStreamsCheck = functions
         console.log(`Video stream daily check on ${new Date()} is complete.`);
       },
     );
-  });
+  },
+);
 
-exports.scheduledBuoysStatusCheck = functions
-  .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // BuoysStatusCheck will run daily at 12:00 AM
-  .pubsub.schedule('0 0 * * *')
-  .timeZone('America/Los_Angeles')
-  .onRun(async () => {
-    process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
-    process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
-
+exports.scheduledBuoysStatusCheck = onSchedule(
+  {
+    ...longRunning,
+    // BuoysStatusCheck will run daily at 12:00 AM
+    schedule: '0 0 * * *',
+    timeZone: 'America/Los_Angeles',
+  },
+  async () => {
     await runWithDataSource(
       'scheduledBuoysStatusCheck',
       async (conn: DataSource) => {
@@ -277,14 +322,17 @@ exports.scheduledBuoysStatusCheck = functions
         console.log(`Buoys status daily check on ${new Date()} is complete.`);
       },
     );
-  });
+  },
+);
 
-exports.scheduledNOAALocationUpdate = functions
-  .runWith({ timeoutSeconds: 540, memory: '512MB' })
-  // NOAALocationUpdate will run daily at 1:00 AM
-  .pubsub.schedule('0 1 * * *')
-  .timeZone('America/Los_Angeles')
-  .onRun(async () => {
+exports.scheduledNOAALocationUpdate = onSchedule(
+  {
+    ...longRunning,
+    // NOAALocationUpdate will run daily at 1:00 AM
+    schedule: '0 1 * * *',
+    timeZone: 'America/Los_Angeles',
+  },
+  async () => {
     await runWithDataSource(
       'scheduledNOAALocationUpdate',
       async (conn: DataSource) => {
@@ -294,4 +342,5 @@ exports.scheduledNOAALocationUpdate = functions
         );
       },
     );
-  });
+  },
+);
