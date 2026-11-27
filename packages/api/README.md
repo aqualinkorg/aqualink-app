@@ -97,7 +97,9 @@ We run daily updates using Firebase Cloud Functions.
 
 Before running daily updates for the first time, you will need to augment your site table with timezone and maximum monthly mean temperature. To do so, you can simply use the convenience script `yarn augment-sites`.
 
-In addition, you will need to set the environment variables in Firebase:
+Cloud Functions are 2nd gen. They read environment variables, not `functions.config()` (1st gen Runtime Config).
+
+Before each functions deploy, write the project dotenv file (also run automatically by `yarn deploy:cloud-functions:<project>`):
 
 ```
 yarn config:cloud-functions:<project>
@@ -105,11 +107,19 @@ yarn config:cloud-functions:<project>
 
 where `<project>` can take one of the three following values:
 
-1. `prod`: production project (`ocean-systems`, loads `.env.prod`)
-2. `staging`: staging project (`aqualink-dev`, loads `.env.staging`)
-3. `programize`: programize staging project (`aqualink-programize`, loads `.env.programize`)
+1. `prod`: production project (`ocean-systems`, loads `packages/api/.env.prod`, writes repo-root `.env.ocean-systems`)
+2. `staging`: staging project (`aqualink-dev`, loads `packages/api/.env.staging`, writes repo-root `.env.aqualink-dev`)
+3. `programize`: programize staging project (`aqualink-programize`, loads `packages/api/.env.programize`, writes repo-root `.env.aqualink-programize`)
 
-Each command loads the matching env file via `DOTENV_CONFIG_PATH` — do not rely on a copied `.env`. The script prints the env file path and database host to stderr before applying config so you can confirm the target.
+Each command loads the matching API env file via `DOTENV_CONFIG_PATH` — do not rely on a copied `.env`. The script prints the env file path and database host to stderr before writing the dotenv file so you can confirm the target. The generated file is gitignored.
+
+A 2nd gen function cannot replace a 1st gen function of the same name. On the first deploy to a project, delete the existing functions (this stops schedules until the new deploy finishes), then deploy:
+
+```
+firebase functions:delete pingService scheduledDailyUpdate scheduledSpotterTimeSeriesUpdate scheduledWaveTimeSeriesUpdate scheduledWindTimeSeriesUpdate scheduledSSTTimeSeriesUpdate scheduledVideoStreamsCheck scheduledBuoysStatusCheck scheduledNOAALocationUpdate --region us-central1 -P <project-id> --force
+yarn deploy:cloud-functions:<project>
+```
+
 #### Deploy
 
 ##### API
